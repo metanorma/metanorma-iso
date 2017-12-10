@@ -2,7 +2,6 @@ require "asciidoctor"
 
 require "asciidoctor/iso/version"
 require "asciidoctor/iso/base"
-require "asciidoctor/iso/front"
 require "asciidoctor/iso/validate"
 
 module Asciidoctor
@@ -13,9 +12,8 @@ module Asciidoctor
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
 
-      include ::Asciidoctor::RFC::Base
-      include ::Asciidoctor::RFC::Front
-      include ::Asciidoctor::RFC::Validate
+      include ::Asciidoctor::ISO::Base
+      include ::Asciidoctor::ISO::Validate
 
       register_for "iso"
 
