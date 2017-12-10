@@ -11,6 +11,7 @@
 :subcommittee-number: 4
 :subcommittee: Cereals and pulses
 :stem:
+:appendix-caption: Annex
 
 .Foreword 
 ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.
@@ -193,25 +194,367 @@ The levels of additives and pesticide residues and other contaminants shall not 
 
 The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.
 
-21 ISO :2016(E) 4.2 Physical and chemical characteristics The mass fraction of moisture, determined in accordance with ISO 712, using an oven complying with the requirements of IEC , shall not be greater than 15 % 2). The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with Annex A, shall not be greater than the values specified in Table 1. NOTE Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see ISO , ISO and ISO The defect tolerance for the categories considered, and determined in accordance with the method given in Annex A, shall not exceed the limits given in Table 1. Defect Table 1 Maximum permissible mass fraction of defects in husked rice Maximum permissible mass fraction of defects w max % in milled rice (non-glutinous) in husked parboiled rice in milled parboiled rice Extraneous matter: organic a 1,0 0,5 1,0 0,5 inorganic b 0,5 0,5 0,5 0,5 Paddy 2,5 0,3 2,5 0,3 Husked rice, non-parboiled Not applicable 1,0 1,0 1,0 Milled rice, non-parboiled 1,0 Not applicable 1,0 1,0 Husked rice, parboiled 1,0 1,0 Not applicable 1,0 Milled rice, parboiled 1,0 1,0 1,0 Not applicable Chips 0,1 0,1 0,1 0,1 HDK 2,0 c 2,0 2,0 c 2,0 Damaged kernels 4,0 3,0 4,0 3,0 Immature and/or malformed kernels 8,0 2,0 8,0 2,0 Chalky kernels 5,0 c 5,0 Not applicable Not applicable Red kernels and red-streaked kernels 12,0 12,0 12,0 c 12,0 Partly gelatinized kernels Not applicable Not applicable 11,0 c 11,0 Pecks Not applicable Not applicable 4,0 2,0 Waxy rice 1,0 c 1,0 1,0 c 1,0 Live insects shall not be present. Dead insects shall be included in extraneous matter. NOTE 1 This table is based on ISO 7301:2011, Table 1. NOTE 2 Some commercial contracts require information in addition to that provided in this table. NOTE 3 Only full red husked (cargo) rice is considered in this table. a Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc. b Inorganic extraneous matter includes stones, sand, dust, etc. c The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling. 2) Formerly denoted as 15 % (m/m). 4 ISO 2016 All rights reserved ISO Model document of an International Standard 19
-22 Reference is made to a specific document, e.g. ISO 24333:2009, Clause 5, rather than repeating the relevant text from that document. References to documents in the Bibliography can be cited in a sentence, e.g. see Reference [16]. Alternatively, they can be presented in superscript, e.g. that is adapted to the type of cereals or pulses [13][14] and to their use. If needed, one of the following Warning notices is used : DANGER ; CAUTION ; WARNING ; IMPORTANT ; SAFETY PRECAUTIONS For further information on Warning notices, see ISO/IEC Directives, Part 2, 2016, Clause 19. Examples of Warning notices are given in ISO/IEC Directives, Part 2, 2016, See ISO 78-2 for examples of presenting precision, repeatability and reproducibility. 20 ISO Model document of an International Standard
-23 ISO :2016(E) 5 Sampling Sampling shall be carried out in accordance with ISO 24333:2009, Clause 5. 6 Test methods 6.1 Moisture content Determine the mass fraction of moisture in accordance with the method specified in ISO Waxy rice content Determine the mass fraction of waxy rice. Annex B gives an example of a suitable method. 6.3 Nitrogen content and crude protein content Determine the nitrogen content and crude protein content in accordance with either ISO 16634:, Clause 9, or ISO For details on the determination of protein content using the Kjeldahl method, see Reference [12] in the Bibliography. For details concerning the use of the Dumas method, see References [10] and [16]. Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in ISO 20483:2013, Annex C and Table C.1, that is adapted to the type of cereals or pulses [13][14] and to their use. 6.4 Gelatinization time Determine the gelatinization time, t 90, for rice kernels during cooking. An example of a typical curve is given in Figure C.1. Three typical stages of gelatinization are shown in Figure C.2. Report the results as specified in Clause Husked rice yield Determination CAUTION Only use paddy or parboiled rice for the determination of husked rice yield. Determine the husked rice yield in accordance with ISO Precision Interlaboratory test The results of an interlaboratory test are given in Annex D for information Repeatability The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for r obtained from the interlaboratory study for husked rice in more than 5 % of cases: r = 1 % where r is the repeatability limit. ISO 2016 All rights reserved 5 ISO Model document of an International Standard 21
-24 This is an example of a typical Test report clause, listing the minimum information needed, including a reference to the document itself [shown in item b)] because the test report needs to include the number of the ISO document. If there is a need to identify the elements of the test report, they can be designated using a lower-case letter followed by a parenthesis, i.e. a), b), c), etc. as shown in Clause 7. For further information on Test reports, see ISO/IEC Directives, Part 2, 2016, Lists can be numbered or unnumbered. For further information on Lists, see ISO/IEC Directives, Part 2, 2016, Clause 23. ISO :1994, Clause 9, and ISO are examples of dated and undated normative references. 22 ISO Model document of an International Standard
-25 ISO :2016(E) Reproducibility The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for R obtained from the interlaboratory study in more than 5 % of cases: R = 3 % where R is the reproducibility limit. 7 Test report For each test method, the test report shall specify the following: a) all information necessary for the complete identification of the sample; b) a reference to this document (i.e. ISO ); c) the sampling method used; d) the test method used; e) the test result(s) obtained or, if the repeatability has been checked, the final quoted result obtained; f) all operating details not specified in this document, or regarded as optional, together with details of any incidents which may have influenced the test result(s); g) any unusual features (anomalies) observed during the test; h) the date of the test. 8 Packaging The packaging shall not transmit any odour or flavour to the product and shall not contain substances which may damage the product or constitute a health risk. If bags are used, they shall comply with the requirements of ISO :1994, Clause 9, or ISO , as appropriate. 9 Marking The packages shall be marked or labelled as required by the country of destination. 6 ISO 2016 All rights reserved ISO Model document of an International Standard 23
-26 Annexes shall be designated by a capital letter (A, B, C,...). The status of an annex (normative or informative) is determined by how it is cited in the text. In this case, Annex A is cited normatively in 4.2. All annexes have a title. For further information on Annexes, see ISO/IEC Directives, Part 2, 2016, Clause 20. Test methods shall be presented in accordance with ISO/IEC Directives, Part 2, 2016, Clause 18. For methods of chemical analysis, see ISO The text under the heading Apparatus is an introductory phrase before an apparatus list. It is not a hanging paragraph (as described in ISO/IEC Directives, Part 2, 2016, ). The apparatus is listed in the Apparatus clause as shown here : reference number (in bold) name of item (in bold) descriptive text (if necessary) For further information on Apparatus clauses, see ISO/IEC Directives, Part 2, 2016, Instructions to carry out the procedure, expressed here using the imperative, are requirements. Recommendations are expressed using the verbal form should. 24 ISO Model document of an International Standard
-27 ISO :2016(E) Annex A (normative) Determination of defects A.1 Principle Extraneous matter, broken kernels, damaged kernels and other kinds of rice are separated manually according to the following types: husked rice, milled rice, husked parboiled rice and milled parboiled rice. Each type is then weighed. A.2 Apparatus The usual laboratory apparatus and, in particular, the following. A.2.1 Sample divider, consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. Split-it-right sample divider, such as that shown in Figure A.1. A.2.2 A.2.3 A.2.4 A.2.5 A.2.6 Sieve, with round perforations of diameter 1,4 mm. Tweezers. Scalpel. Paintbrush. Steel bowls, of diameter 100 mm ± 5 mm; seven per test sample. A.2.7 Balance, which can be read to the nearest 0,01 g. A.3 Sampling See Clause 5. A.4 Procedure A.4.1 Preparation of test sample Carefully mix the laboratory sample to make it as uniform as possible, then proceed to reduce it, using a divider (A.2.1), until a quantity of about 30 g is obtained. All parts of kernels which get stuck in the perforations of a sieve should be considered to be retained by the sieve. ISO 2016 All rights reserved 7 ISO Model document of an International Standard 25
-28 Since the Split-it-right sample divider, shown in Figure A.1, is the subject of patent rights, it is necessary to provide details in the Introduction. The meanings of the symbols used in a formula are explained in a list underneath (as shown) unless the symbols are listed in a seperate Symbols clause (see ISO/IEC Directives, Part 2, 2016, Clause 17). For further information on Mathematical formulae, see ISO/IEC Directives, Part 2, 2016, Clause ISO Model document of an International Standard
-29 ISO :2016(E) Figure A.1 Split-it-right sample divider A.5 Determination Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with A.4.1 and separate the different defects into the bowls (A.2.6). When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see Table 1). Weigh, to the nearest 0,01 g, the fractions so obtained. A.6 Calculation Express the mass fraction of each defect using Formula (A.1): m w = D ms (A.1) where w is the mass fraction of grains with a particular defect in the test sample; m D is the mass, in grams, of grains with that defect; m S is the mass, in grams, of the test sample. A.7 Test report Report the results as specified in Clause 7. 8 ISO 2016 All rights reserved ISO Model document of an International Standard 27
-30 Annex B is informative because the use of the method is optional (see 6.2 where Annex B is cited). However, it does contain requirements because it specifies the procedure to be followed if the user of the document chooses to follow this method. An optional clause entitled Principle indicates the essential steps in a test method. B.2.4 shows an example of how to express tolerances. If any dangerous reagents are listed in the Reagents clause, provide a warning (in bold). As in the Apparatus clauses (Clauses A.2 and B.2), if there is an introductory phrase before the list of reagents, this is not a hanging paragraph. The layout of a Reagents clause is similar to that of an Apparatus clause : reference number (in bold) name of item (in bold) descriptive text (if necessary) For further information on Reagents clauses, see ISO/IEC Directives, Part 2, 2016, The use of trade names should be avoided. A designation or description of a product should be given instead. If a trade name is given (see B.3.2), a footnote should be added. Footnote 3) gives an example of suitable wording to be used when a trade name is given. For further information on the Use of trade names and trademarks, see ISO/IEC Directives, Part 2, 2016, Clause ISO Model document of an International Standard
-31 ISO :2016(E) Annex B (informative) Determination of the waxy rice content of parboiled rice B.1 Principle Waxy rice kernels have a reddish brown colour when stained in an iodine solution, while non-waxy rice kernels show a dark blue colour. B.2 Apparatus The usual laboratory apparatus and, in particular, the following. B.2.1 Balance, capable of weighing to the nearest 0,01 g. B.2.2 B.2.3 Glass beaker, of capacity 250 ml. Small white colour bowls, or any white colour container of a suitable size , + B.2.4 Wire sieve, with long rounded apertures of (1 mm 0 mm) (20 mm 2 1 mm). B.2.5 B.2.6 B.2.7 Stirrer rod. Tweezers or forceps. Tissue paper. B.3 Reagents WARNING Direct contact of iodine with skin can cause lesions so care should be taken in handling iodine. Iodine vapour is very irritating to eyes and mucous membranes. B.3.1 Deionized water, Grade 3 quality as specified in ISO B.3.2 Iodine stock solution, containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols 3). B.3.3 Iodine working solution, obtained by diluting the stock solution (B.3.2) two times (by volume) with deionized water (B.3.1). Prepare fresh daily. B.4 Sampling Sampling shall be carried out in accordance with Clause 5. 3) Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product. ISO 2016 All rights reserved 9 ISO Model document of an International Standard 29
-32 The International System of units (SI), as set out in ISO and IEC 80000, shall be used. The numerical values of the measured quantities should have the same unit, otherwise a conversion factor is necessary. For further information on Numbers, quantities, units and values, see ISO/IEC Directives, Part 2, 2016, Clause ISO Model document of an International Standard
-33 ISO :2016(E) B.5 Determination B.5.1 Weigh a portion of about 100 g of milled rice and put it into a glass beaker (B.2.2). B.5.2 Add enough iodine working solution (B.3.3) to soak the kernels, and stir (B.2.5) until all the kernels are submerged under the solution. Let the kernels soak in the solution for 30 s. B.5.3 Pour the rice and solution into a wire sieve (B.2.4), and shake the basket slightly in order to drain out the solution. Then place the wire sieve on a piece of tissue paper (B.2.7) to absorb the excess liquid. B.5.4 Pour the stained kernels into a bowl (B.2.3). Using tweezers or forceps (B.2.6), separate the reddish brown kernels of waxy rice from the dark blue kernels of non-waxy rice. B.5.5 Weigh the waxy rice portion (m 1 ) and the non-waxy rice portion (m 2 ) to the nearest 0,1 g. B.6 Calculation Calculate the mass fraction, expressed as a percentage, of the waxy rice, w wax, using Formula (B.1): where m w wax = 1 m + m (B.1) m 1 m 2 is the mass, expressed in grams, of the waxy rice portion; is the mass, expressed in grams, of the non-waxy rice portion. B.7 Test report Report the results as specified in Clause 7, giving the results calculated using Formula (B.1). 10 ISO 2016 All rights reserved ISO Model document of an International Standard 31
-34 If there is only one clause in an annex, it shall not be numbered and shall not have a clause heading. Figures shall be language independent. The axes shall be labelled using symbols (as shown here) or using X and Y, rather than using words. For further information on Figures, see ISO/IEC Directives, Part 2, 2016, Clause ISO Model document of an International Standard
-35 ISO :2016(E) Annex C (informative) Gelatinization Figure C.1 gives an example of a typical gelatinization curve. Figure C.2 shows the three stages of gelatinization. Key w t t 90 P a NOTE mass fraction of gelatinized kernels, expressed in per cent cooking time, expressed in minutes time required to gelatinize 90 % of the kernels point of the curve corresponding to a cooking time of t 90 The time t 90 was estimated to be 18,2 min for this example. These results are based on a study carried out on three different types of kernel. Figure C.1 Typical gelatinization curve ISO 2016 All rights reserved 11 ISO Model document of an International Standard 33
-36 Figures may be subdivided as shown in Figure C.2. The subfigures are identified using alphabetic characters followed by a parenthesis, i.e. a), b), etc. There should be only one key per figure do not provide separate keys for each subfigure. 34 ISO Model document of an International Standard
-37 ISO :2016(E) a) Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels) b) Intermediate stages: Some fully gelatinized kernels are visible c) Final stages: All kernels are fully gelatinized Figure C.2 Stages of gelatinization 12 ISO 2016 All rights reserved ISO Model document of an International Standard 35
-38 Annex D is informative because of the way it is cited in The results presented in Table D.1 are not part of the test method. Tables and Figures are numbered even if there is only one. Each table and each figure should be explicitly referred to in the text. Table D.1 is an example of how to express precision results. 36 ISO Model document of an International Standard
-39 ISO :2016(E) Annex D (informative) Results of interlaboratory test for husked rice yields An interlaboratory test [15] was carried out by the ENR [Rice Research Centre (Italy)] in accordance with ISO and ISO , with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in Table D.1. Table D.1 Repeatability and reproducibility of husked rice yield Description Rice sample Arborio Drago a Balilla Thaibonnet Number of laboratories retained after eliminating outliers Mean value, g/100 g 81,2 82,0 81,8 77,7 Standard deviation of repeatability, s r, g/100 g 0,41 0,15 0,31 0,53 Coefficient of variation of repeatability, % 0,5 0,2 0,4 0,7 Repeatability limit, r (= 2,83 s r ) 1,16 0,42 0,88 1,50 Standard deviation of reproducibility, s R, g/100 g 1,02 0,20 0,80 2,14 Coefficient of variation of reproducibility, % 1,3 0,2 1,0 2,7 Reproducibility limit, R (= 2,83 s R ) 2,89 0,57 2,26 6,06 a Parboiled rice. ISO 2016 All rights reserved 13 ISO Model document of an International Standard 37
+=== Physical and chemical characteristics 
+
+==== {blank}
+
+The mass fraction of moisture, determined in accordance with ISO 712, using an oven complying with the requirements of IEC 61010-2, shall not be greater than 15 %.footnote:[Formerly denoted as 15 % (m/m).] 
+
+The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <<AnnexA>>, shall not be greater than the values specified in Table 1. 
+
+NOTE: Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see ISO 6322-1, ISO 6322-2 and ISO 6322-3.
+
+The defect tolerance for the categories considered, and determined in accordance with the method given in <<AnnexA>>, shall not exceed the limits given in Table 1. 
+
+[cols="5"]
+.Maximum permissible mass fraction of defects
+|===
+.2+|Defect 4+| Maximum permissible mass fraction of defects in husked rice +
+stem:[w~max~]
+| in husked rice | in milled rice (non-glutinous) | in husked parboiled rice | in milled parboiled rice
+
+| Extraneous matter: organic footnote:[Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc.] | 1,0 | 0,5 | 1,0 | 0,5
+// not rendered list here
+| Extraneous matter: inorganic footnote:[Inorganic extraneous matter includes stones, sand, dust, etc.] | 0,5 | 0,5 | 0,5 | 0,5
+| Paddy | 2,5 | 0,3 | 2,5 | 0,3 
+| Husked rice, non-parboiled | Not applicable | 1,0 | 1,0 | 1,0 
+| Milled rice, non-parboiled | 1,0 | Not applicable | 1,0 | 1,0 
+| Husked rice, parboiled | 1,0 | 1,0 | Not applicable | 1,0 
+| Milled rice, parboiled | 1,0 | 1,0 | 1,0 | Not applicable 
+| Chips | 0,1 | 0,1 | 0,1 | 0,1 
+| HDK | 2,0 footnoteref:[defectsmass,The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.] | 2,0 | 2,0 footnoteref:[defectsmass] | 2,0 
+| Damaged kernels | 4,0 | 3,0 | 4,0 | 3,0 
+| Immature and/or malformed kernels | 8,0 | 2,0 | 8,0 | 2,0 
+| Chalky kernels | 5,0 footnoteref:[defectsmass] | 5,0 | Not applicable | Not applicable 
+| Red kernels and red-streaked kernels | 12,0 | 12,0 | 12,0 footnoteref:[defectsmass] | 12,0 
+| Partly gelatinized kernels | Not applicable | Not applicable | 11,0 footnoteref:[defectsmass] | 11,0 
+| Pecks | Not applicable | Not applicable | 4,0 | 2,0 
+| Waxy rice | 1,0 footnoteref:[defectsmass] | 1,0 | 1,0 footnoteref:[defectsmass] | 1,0
+
++5a| Live insects shall not be present. Dead insects shall be included in extraneous matter.
+
+NOTE: This table is based on ISO 7301:2011, Table 1.
+
+NOTE: Some commercial contracts require information in addition to that provided in this table.
+
+NOTE: Only full red husked (cargo) rice is considered in this table.
+|===
+
+[#clause5]
+== Sampling 
+Sampling shall be carried out in accordance with ISO 24333:2009, Clause 5. 
+
+== Test methods 
+
+=== Moisture content 
+
+Determine the mass fraction of moisture in accordance with the method specified in ISO 712.
+
+=== Waxy rice content 
+
+Determine the mass fraction of waxy rice. <<AnnexB>> gives an example of a suitable method. 
+
+=== Nitrogen content and crude protein content 
+
+Determine the nitrogen content and crude protein content in accordance with either ISO 16634:--, Clause 9, or ISO 20483. For details on the determination of protein content using the Kjeldahl method, see Reference [<<ref12>>] in the Bibliography. For details concerning the use of the Dumas method, see References [<<ref10>>] and [<<ref16>>]. 
+
+// superscript refs
+Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in ISO 20483:2013, Annex C and Table C.1, that is adapted to the type of cereals or pulses [<<ref13>>][<<ref14>>] and to their use.
+
+=== Gelatinization time 
+
+Determine the gelatinization time, stem:[t~90~], for rice kernels during cooking. An example of a typical curve is given in Figure <<FigureC.1>>. Three typical stages of gelatinization are shown in Figure <<FigureC.2>>. 
+
+Report the results as specified in <<clause7>>.
+
+=== Husked rice yield 
+
+==== Determination 
+
+CAUTION: Only use paddy or parboiled rice for the determination of husked rice yield. 
+
+Determine the husked rice yield in accordance with ISO 6646.
+
+==== Precision 
+
+===== Interlaboratory test 
+
+The results of an interlaboratory test are given in <<AnnexD>> for information 
+
+===== Repeatability 
+
+The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for stem:[r] obtained from the interlaboratory study for husked rice in more than 5 % of cases: 
+
+[stem]
+r = 1 % 
+
+where stem:[r] is the repeatability limit. 
+
+===== Reproducibility 
+
+The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for stem:[R] obtained from the interlaboratory study in more than 5 % of cases: 
+
+[stem]
+R = 3 % 
+
+where stem:[R] is the reproducibility limit. 
+
+[#clause7]
+== Test report 
+
+For each test method, the test report shall specify the following: 
+
+. all information necessary for the complete identification of the sample; 
+. a reference to this document (i.e. ISO {docnumber}-{partnumber}); 
+. the sampling method used; 
+. the test method used; 
+. the test result(s) obtained or, if the repeatability has been checked, the final quoted result obtained; 
+. all operating details not specified in this document, or regarded as optional, together with details of any incidents which may have influenced the test result(s); 
+. any unusual features (anomalies) observed during the test; 
+. the date of the test. 
+
+== Packaging 
+
+The packaging shall not transmit any odour or flavour to the product and shall not contain substances which may damage the product or constitute a health risk. 
+
+If bags are used, they shall comply with the requirements of ISO 8531-1:1994, Clause 9, or ISO 8351-2, as appropriate. 
+
+== Marking 
+
+The packages shall be marked or labelled as required by the country of destination. 
+
+// "normative" follows title
+[appendix]
+== Determination of defects (normative)
+
+=== Principle 
+
+Extraneous matter, broken kernels, damaged kernels and other kinds of rice are separated manually according to the following types: husked rice, milled rice, husked parboiled rice and milled parboiled rice. Each type is then weighed. 
+
+=== Apparatus 
+
+The usual laboratory apparatus and, in particular, the following. 
+
+// inline
+[#AnnexA.2.1]
+==== Sample divider, 
+
+consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. Split-it-right sample divider, such as that shown in Figure <<FigureA.1>>. 
+
+==== Sieve, 
+
+with round perforations of diameter 1,4 mm. 
+
+==== Tweezers. 
+
+==== Scalpel. 
+
+==== Paintbrush. 
+
+[#AnnexA.2.6]
+==== Steel bowls, 
+
+of diameter 100 mm ± 5 mm; seven per test sample. 
+
+==== Balance, 
+
+which can be read to the nearest 0,01 g. 
+
+=== Sampling 
+
+See Clause <<clause5>>. 
+
+=== Procedure 
+
+[#AnnexA.4.1]
+==== Preparation of test sample 
+
+Carefully mix the laboratory sample to make it as uniform as possible, then proceed to reduce it, using a divider <<AnnexA.2.1>>, until a quantity of about 30 g is obtained. 
+
+All parts of kernels which get stuck in the perforations of a sieve should be considered to be retained by the sieve. 
+
+[#figureA.1]
+.Figure A.1. Split-it-right sample divider
+image::splititright.gif
+
+=== Determination 
+
+Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <<AnnexA.4.1>> and separate the different defects into the bowls <<AnnexA.2.6>>. When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see Table 1). 
+
+Weigh, to the nearest 0,01 g, the fractions so obtained. 
+
+=== Calculation 
+
+Express the mass fraction of each defect using Formula (<<formulaA.1>>): 
+
+[#formulaA.1]
+[stem]
+w = m~D~ / m~s~ 
+
+where 
+
+stem:[w]:: is the mass fraction of grains with a particular defect in the test sample; 
+stem:[m~D~]:: is the mass, in grams, of grains with that defect; 
+stem:[m~S~] is the mass, in grams, of the test sample. 
+
+=== Test report 
+
+Report the results as specified in Clause <<clause7>>. 
+
+[appendix]
+== Determination of the waxy rice content of parboiled rice (informative)
+
+=== Principle 
+
+Waxy rice kernels have a reddish brown colour when stained in an iodine solution, while non-waxy rice kernels show a dark blue colour. 
+
+=== Apparatus 
+
+The usual laboratory apparatus and, in particular, the following. 
+
+[#AnnexB.2.1]
+==== Balance, 
+
+capable of weighing to the nearest 0,01 g. 
+
+[#AnnexB.2.2]
+==== Glass beaker, 
+
+of capacity 250 ml. 
+
+[#AnnexB.2.3]
+==== Small white colour bowls, 
+
+or any white colour container of a suitable size.
+
+[#AnnexB.2.4]
+==== Wire sieve, 
+
+with long rounded apertures of (1 mm stem:[+0.02 0] mm) &times; (20 mm stem:[+2 -1] mm). 
+
+[#AnnexB.2.5]
+==== Stirrer rod. 
+
+[#AnnexB.2.6]
+==== Tweezers or forceps. 
+
+[#AnnexB.2.7]
+==== Tissue paper. 
+
+===  Reagents 
+
+WARNING: Direct contact of iodine with skin can cause lesions so care should be taken in handling iodine. Iodine vapour is very irritating to eyes and mucous membranes. 
+
+[#AnnexB.3.1]
+==== Deionized water, 
+
+Grade 3 quality as specified in ISO 3696.
+
+[#AnnexB.3.2]
+==== Iodine stock solution, 
+
+containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols.footnote:[Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.] 
+
+==== Iodine working solution, 
+
+obtained by diluting the stock solution (<<AnnexB.3.2>>) two times (by volume) with deionized water (<<AnnexB.3.1>>). 
+
+Prepare fresh daily. 
+
+=== Sampling 
+
+Sampling shall be carried out in accordance with Clause <<clause5>>. 
+
+=== Determination 
+
+==== {blank}
+Weigh a portion of about 100 g of milled rice and put it into a glass beaker (<<AnnexB.2.2>>). 
+
+==== {blank}
+Add enough iodine working solution (<<AnnexB.3.3>>) to soak the kernels, and stir (<<AnnexB.2.5>>) until all the kernels are submerged under the solution. Let the kernels soak in the solution for 30 s. 
+
+==== {blank}
+Pour the rice and solution into a wire sieve (<<AnnexB.2.4>>), and shake the basket slightly in order to drain out the solution. Then place the wire sieve on a piece of tissue paper (<<AnnexB.2.7>>) to absorb the excess liquid. 
+
+==== {blank}
+Pour the stained kernels into a bowl (<<AnnexB.2.3>>). Using tweezers or forceps (<<AnnexB.2.6>>), separate the reddish brown kernels of waxy rice from the dark blue kernels of non-waxy rice. 
+
+==== {blank}
+Weigh the waxy rice portion (stem:[m~1~]) and the non-waxy rice portion (stem:[m~2~]) to the nearest 0,1 g. 
+
+=== Calculation 
+
+Calculate the mass fraction, expressed as a percentage, of the waxy rice, stem:[w~wax~], using Formula (<<formulaB.1>>): 
+
+// Indexing formulas
+[#formulaB.1]
+[stem]
+w~wax~ = m~1~ / (m~1~ + m~2~) &times; 100
+
+where 
+
+stem:[m~1~]:: is the mass, expressed in grams, of the waxy rice portion; 
+stem:[m~2~]:: is the mass, expressed in grams, of the non-waxy rice portion. 
+
+=== Test report 
+
+Report the results as specified in Clause <<clause7>>, giving the results calculated using Formula (<<formulaB.1>>). 
+
+[appendix]
+== Gelatinization (informative) 
+
+Figure <<figureC.1>> gives an example of a typical gelatinization curve. Figure <<figureC.2>> shows the three stages of gelatinization. 
+
+[#figureC.1]
+.Typical gelatinization curve
+====
+image::[figc1.gif] footnote:[The time stem:[t~90~] was estimated to be 18,2 min for this example.]
+
+*Key*
+
+stem:[w]:: mass fraction of gelatinized kernels, expressed in per cent
+stem:[t]:: cooking time, expressed in minutes
+stem:[t~90~]:: time required to gelatinize 90 % of the kernels
+P:: point of the curve corresponding to a cooking time of stem:[t~90~]
+
+NOTE: These results are based on a study carried out on three different types of kernel.
+====
+
+[#figureC.2]
+.Stages of gelatinization
+====
+.Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)
+image::[figc2a.gif]
+
+.Intermediate stages: Some fully gelatinized kernels are visible
+image::[figc2b.gif]
+
+.Final stages: All kernels are fully gelatinized
+image::[fig2c.gif]
+
+====
+
+[appendix]
+== Results of interlaboratory test for husked rice yields (informative) 
+
+An interlaboratory test [<<ref15>>] was carried out by the ENR [Rice Research Centre (Italy)] in accordance with ISO 5725-1and ISO 5725-2, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in Table <<tableD.1>>. 
+
+[#tableD.1]
+.Repeatability and reproducibility of husked rice yield 
+
+|===
+.+2| Description 4+| Rice sample 
+| Arborio | Drago footnote[Parboiled rice.] | Balilla | Thaibonnet 
+
+| Number of laboratories retained after eliminating outliers | 13 | 11 | 13 | 13
+| Mean value, g/100 g | 81,2 | 82,0 | 81,8 | 77,7 
+| Standard deviation of repeatability, stem:[s~r~], g/100 g | 0,41 | 0,15 | 0,31 | 0,53 
+| Coefficient of variation of repeatability, % | 0,5 | 0,2 | 0,4 | 0,7 
+| Repeatability limit, stem:[r] (= 2,83 stem:[s~r~]) | 1,16 | 0,42 | 0,88 | 1,50 
+| Standard deviation of reproducibility, stem:[s~R~], g/100 g | 1,02 | 0,20 | 0,80 | 2,14 
+| Coefficient of variation of reproducibility, % | 1,3 | 0,2 | 1,0 | 2,7 
+| Reproducibility limit, stem:[R] (= 2,83 stem:[s~R~]) | 2,89 | 0,57 | 2,26 | 6,06 
+
 40 The Bibliography is an optional element. It is not an annex. When present, it shall be placed after the last annex. For further information on the Bibliography, see ISO/IEC Directives, Part 2, 2016, Clause 21. Reference [7], for example, is dated because a specific part of it (a table) is cited in the text. See Table 1. For online reference documents for which a URL is given, as far as possible, the URL should remain valid for the expected life of the document. If this cannot be guaranteed, sufficient information should be provided to identify and locate the source (preferably the primary source) of the reference document. The bibliographic reference shall include the method of access to the reference document and the full network address, with the same punctuation and use of upper case and lower case letters as given in the source. Reference [10] provides an example of a reference identified by a URL. There are two ways of structuring the Bibliography : by numerical order of the standards, followed by literature references, as follows (and as shown opposite): ISO standards followed by IEC standards and then other international standards regional standards national standards literature references in the order in which the references are cited in the text Examples are given of the correct styles for various types of bibliographic reference. ISO 690 provides further examples. It is good practice to list only those reference documents that are cited in the text. 38 ISO Model document of an International Standard
 41 ISO :2016(E) Bibliography [1] ISO 3696, Water for analytical laboratory use Specification and test methods [2] ISO , Accuracy (trueness and precision) of measurement methods and results Part 1: General principles and definitions [3] ISO , Accuracy (trueness and precision) of measurement methods and results Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method [4] ISO , Storage of cereals and pulses Part 1: General recommendations for the keeping of cereals [5] ISO , Storage of cereals and pulses Part 2: Practical recommendations [6] ISO , Storage of cereals and pulses Part 3: Control of attack by pests [7] ISO 7301:2011, Rice Specification [8] ISO 14864:1998, Rice Evaluation of gelatinization time of kernels during cooking [9] IEC , Safety requirements for electric equipment for measurement, control, and laboratory use Part 2: Particular requirements for laboratory equipment for the heating of material [10] Standard No I.C.C Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method (see [11] Nitrogen-ammonia-protein modified Kjeldahl method Titanium oxide and copper sulfate catalyst. Official Methods and Recommended Practices of the AOCS (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL [12] Berner D.L., & Brown J. Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. J. Am. Oil Chem. Soc. 1994, 71 (11) pp [13] Buckee G.K. Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method Collaborative trial. J. Inst. Brew. 1994, 100 (2) pp [14] Frister H. Direct determination of nitrogen content by Dumas analysis; Interlaboratory study on precision characteristics. AOAC International, Europe Section 4th International Symposium, Nyon, Switzerland, 1994, 33 pp [15] Ranghino F. Evaluation of rice resistance to cooking, based on the gelatinization time of kernels. II Riso. 1966, XV pp [16] Tkachuk R. Nitrogen-to-protein conversion factors for cereals and oilseed meals. Cereal Chem. 1969, 46 (4) pp ISO 2016 All rights reserved ISO Model document of an International Standard 39
 42 40 ISO Model document of an International Standard
