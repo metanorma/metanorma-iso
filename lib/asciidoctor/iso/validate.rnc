@@ -12,13 +12,89 @@ front =
     introduction?
   }
 
-title =
-  element title {
-    titlesect | (titlesect, titlesect) | (titlesect, titlesect, titlesect)
-  }
+title |= element title { titlesect } 
+title |= element title { titlesect, titlesect } 
+title |= element title { titlesect, titlesect, titlesect } 
 
 titlesect =
   element titlesect { text }
+
+foreword =
+  element foreword { para+ }
+
+introduction =
+  element introduction { para+, patentnotice? }
+
+patent_notice =
+  element patent_notice { para+ }
+
+middle =
+  element middle {
+    scope, norm_ref, terms_defs, clause+
+  }
+
+scope =
+  element scope { para+ }
+
+norm_ref =
+  element norm_ref { iso_ref_title* }
+
+iso_ref_title =
+  element iso_ref_title { isocode, isodate?, isotitle }
+
+isocode =
+  element isocode { text }
+
+isodate = 
+  element isodate { text | date_footnote }
+
+date_footnote =
+  element date_footnote { text }
+
+isotitle = 
+  element isotitle { text }
+
+terms_defs = 
+  element terms_defs { termdef+ }
+
+termdef = 
+  element termdef { term, admitted_term?, symbol?, deprecated_term?,
+                    domain?, para, termnote*, termexample*, termref* }
+
+term = 
+  element term { text }
+
+admitted_term = 
+  element admitted_term { text }
+
+symbol = 
+  element symbol { text }
+
+deprecated_term = 
+  element deprecated_term { text }
+
+domain = 
+  element domain { text }
+
+termnote = 
+  element termnote { text }
+
+termexample = 
+  element termexample { text }
+
+termref = 
+  element termref { isocode, (isodate, (isosection, modification?)?)? }
+
+isosection =
+  element isosection { text }
+
+modification =
+  element modification { text }
+
+clause =
+  element clause {
+    ( para | table | note | stem | warning | olist | ulist )*, clause*
+  }
 
 back = 
   element back {
@@ -26,20 +102,74 @@ back =
     bibliography
   }
 
-clause = 
-  element clause {
-  }
+annex =
+  element annex { para+ }
+
+bibliography =
+  element bibliography { para+ }
 
 para =
      element para {
-       (text
-        | cref
-        | em
-        | eref
-        | strong
-        | sub
-        | sup
-        | tt
-        | xref)*
+       (text | em | eref | strong | sub | sup | tt | xref)*
      }
 
+ol =
+  element ol { li+ }
+
+ul = 
+  element ul { li+ }
+
+li =
+  element li {
+    ( para | table | note | stem | warning | olist | ulist )+
+  }
+
+xref =
+  element xref { 
+    attribute render { "footnote" | "inline" }?,
+    ( text | iso_ref )
+  }
+
+iso_ref =
+  element iso_ref { isocode, (isodate, (isosection?)?)? }
+
+eref =
+  element eref { text }
+
+em =
+  element em { text }
+
+strong =
+  element strong { text }
+
+sub =
+  element sub { text }
+
+sub =
+  element sub { text }
+
+tt =
+  element tt { text }
+
+table =
+  element table {
+    name?, thead?, tbody+, tfoot?
+  }
+
+thead =
+  element thead { tr+ }
+
+tbody =
+  element tbody { tr+ }
+
+tfoot =
+  element tfoot { tr+ }
+
+tr =
+  element tfoot { (td | th)+ }
+
+th =
+  element th { (text | em | eref | strong | sub | sup | tt | xref)* }
+
+td =
+  element td { (text | em | eref | strong | sub | sup | tt | xref)* }
