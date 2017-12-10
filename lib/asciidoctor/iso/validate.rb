@@ -1,3 +1,20 @@
+require "nokogiri"
+
+module Asciidoctor
+  module ISO
+    module Validate
+      class << self
+        def validate(doc)
+          schemadoc = relaxng
+          schema = Nokogiri::XML::RelaxNG(schemadoc)
+          schema.validate(doc).each do |error|
+            $stderr.puts "RELAXNG Validation: #{error.message}"
+          end
+        end
+
+        def relaxng
+          <<~RELAXNG
+
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
@@ -473,3 +490,9 @@
     </element>
   </define>
 </grammar>
+RELAXNG
+        end
+      end
+    end
+  end
+end

@@ -1,3 +1,5 @@
+start = iso_standard
+
 iso_standard = 
   element iso_standard {
     front,
@@ -23,7 +25,7 @@ foreword =
   element foreword { para+ }
 
 introduction =
-  element introduction { para+, patentnotice? }
+  element introduction { para+, patent_notice? }
 
 patent_notice =
   element patent_notice { para+ }
@@ -93,7 +95,10 @@ modification =
 
 clause =
   element clause {
-    ( para | table | note | stem | warning | olist | ulist )*, clause*
+    attribute anchor { xsd:ID }?,
+    name?,
+    ( para | table | note | stem | warning | ol | ul )*, 
+    clause*
   }
 
 back = 
@@ -121,8 +126,17 @@ ul =
 
 li =
   element li {
-    ( para | table | note | stem | warning | olist | ulist )+
+    ( para | table | note | stem | warning | ol | ul )+
   }
+
+note =
+  element note { para+ }
+
+warning =
+  element warning { para+ }
+
+stem =
+  element stem { text }
 
 xref =
   element xref { 
@@ -145,8 +159,8 @@ strong =
 sub =
   element sub { text }
 
-sub =
-  element sub { text }
+sup =
+  element sup { text }
 
 tt =
   element tt { text }
@@ -155,6 +169,9 @@ table =
   element table {
     name?, thead?, tbody+, tfoot?
   }
+
+name =
+  element name { text }
 
 thead =
   element thead { tr+ }

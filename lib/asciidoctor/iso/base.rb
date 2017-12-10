@@ -35,14 +35,15 @@ module Asciidoctor
       def document(node)
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
-	root = noko { |xml| xml.iso_standard }.join
-        result << root
-        result << noko { |xml| front node, xml }
-        result << node.content if node.blocks?
+        result << "<iso_standard>"
+            result << noko { |ixml| front node, ixml }
+            result << noko { |ixml| middle node, ixml }
+            # result << node.content if node.blocks?
         result << "</iso_standard>"
         result = result.flatten
         ret = result * "\n"
         ret1 = Nokogiri::XML(ret)
+        Validate::validate(ret1)
         ret1
       end
 
@@ -52,10 +53,16 @@ module Asciidoctor
         end
       end
 
-      # split on " -- "
+      def middle(node, xml)
+        xml.middle do |xml_middle|
+          xml_middle << node.content if node.blocks?
+        end
+      end
+
+      # split on " -- " = "&#8201;&#8212;&#8201;"
       def title(node, xml)
         xml.title do |t|
-          title_components = node.doctitle.split(/ -- /)
+          title_components = node.doctitle.split(/ -- |&#8201;&#8212;&#8201;/)
           title_components.each do |c|
             t.titlesect {|t1| t1 << c }
           end
@@ -97,11 +104,11 @@ module Asciidoctor
 
           section_attributes = {
             anchor: node.id,
-            title: node.title,
           }
 
           result << noko do |xml|
-            xml.section **attr_code(section_attributes) do |xml_section|
+            xml.clause **attr_code(section_attributes) do |xml_section|
+              xml_section.name { |name| name << node.title } unless node.title.nil?
               xml_section << node.content
             end
           end
