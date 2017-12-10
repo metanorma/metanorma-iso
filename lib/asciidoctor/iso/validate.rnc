@@ -1,0 +1,45 @@
+iso_standard = 
+  element iso_standard {
+    front,
+    middle,
+    back?
+  }
+
+front =
+  element front {
+    title,
+    foreword,
+    introduction?
+  }
+
+title =
+  element title {
+    titlesect | (titlesect, titlesect) | (titlesect, titlesect, titlesect)
+  }
+
+titlesect =
+  element titlesect { text }
+
+back = 
+  element back {
+    annex*,
+    bibliography
+  }
+
+clause = 
+  element clause {
+  }
+
+para =
+     element para {
+       (text
+        | cref
+        | em
+        | eref
+        | strong
+        | sub
+        | sup
+        | tt
+        | xref)*
+     }
+
