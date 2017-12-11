@@ -555,9 +555,37 @@ An interlaboratory test [<<ref15>>] was carried out by the ENR [Rice Research Ce
 | Coefficient of variation of reproducibility, % | 1,3 | 0,2 | 1,0 | 2,7 
 | Reproducibility limit, stem:[R] (= 2,83 stem:[s~R~]) | 2,89 | 0,57 | 2,26 | 6,06 
 
-40 The Bibliography is an optional element. It is not an annex. When present, it shall be placed after the last annex. For further information on the Bibliography, see ISO/IEC Directives, Part 2, 2016, Clause 21. Reference [7], for example, is dated because a specific part of it (a table) is cited in the text. See Table 1. For online reference documents for which a URL is given, as far as possible, the URL should remain valid for the expected life of the document. If this cannot be guaranteed, sufficient information should be provided to identify and locate the source (preferably the primary source) of the reference document. The bibliographic reference shall include the method of access to the reference document and the full network address, with the same punctuation and use of upper case and lower case letters as given in the source. Reference [10] provides an example of a reference identified by a URL. There are two ways of structuring the Bibliography : by numerical order of the standards, followed by literature references, as follows (and as shown opposite): ISO standards followed by IEC standards and then other international standards regional standards national standards literature references in the order in which the references are cited in the text Examples are given of the correct styles for various types of bibliographic reference. ISO 690 provides further examples. It is good practice to list only those reference documents that are cited in the text. 38 ISO Model document of an International Standard
-41 ISO :2016(E) Bibliography [1] ISO 3696, Water for analytical laboratory use Specification and test methods [2] ISO , Accuracy (trueness and precision) of measurement methods and results Part 1: General principles and definitions [3] ISO , Accuracy (trueness and precision) of measurement methods and results Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method [4] ISO , Storage of cereals and pulses Part 1: General recommendations for the keeping of cereals [5] ISO , Storage of cereals and pulses Part 2: Practical recommendations [6] ISO , Storage of cereals and pulses Part 3: Control of attack by pests [7] ISO 7301:2011, Rice Specification [8] ISO 14864:1998, Rice Evaluation of gelatinization time of kernels during cooking [9] IEC , Safety requirements for electric equipment for measurement, control, and laboratory use Part 2: Particular requirements for laboratory equipment for the heating of material [10] Standard No I.C.C Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method (see [11] Nitrogen-ammonia-protein modified Kjeldahl method Titanium oxide and copper sulfate catalyst. Official Methods and Recommended Practices of the AOCS (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL [12] Berner D.L., & Brown J. Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. J. Am. Oil Chem. Soc. 1994, 71 (11) pp [13] Buckee G.K. Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method Collaborative trial. J. Inst. Brew. 1994, 100 (2) pp [14] Frister H. Direct determination of nitrogen content by Dumas analysis; Interlaboratory study on precision characteristics. AOAC International, Europe Section 4th International Symposium, Nyon, Switzerland, 1994, 33 pp [15] Ranghino F. Evaluation of rice resistance to cooking, based on the gelatinization time of kernels. II Riso. 1966, XV pp [16] Tkachuk R. Nitrogen-to-protein conversion factors for cereals and oilseed meals. Cereal Chem. 1969, 46 (4) pp ISO 2016 All rights reserved ISO Model document of an International Standard 39
-42 40 ISO Model document of an International Standard
-43 ISO :2016(E) ICS Price based on 14 pages ISO 2016 All rights reserved ISO Model document of an International Standard 41
-<div><img alt="About ISO ISO (International Organization for Standardization) is an independent, non-governmental international organization with a membership of 163* national standards bodies." title="Through its members, it brings together experts to share knowledge and develop voluntary, consensus-based, market-relevant International Standards that support innovation and provide solutions to" src="/docs-images/65/53714352/images/44-0.jpg"></div>
-44 About ISO ISO (International Organization for Standardization) is an independent, non-governmental international organization with a membership of 163* national standards bodies. Through its members, it brings together experts to share knowledge and develop voluntary, consensus-based, market-relevant International Standards that support innovation and provide solutions to global challenges. ISO has published more than * International Standards and related documents covering almost every industry, from technology to food safety, to agriculture and healthcare. For more information, please visit *November 2016 International Organization for Standardization ISO Central Secretariat Chemin de Blandonnet 8 Case Postale 401 CH 1214 Vernier, Geneva Switzerland iso.org ISO, 2016 All rights reserved ISBN
+== Bibliography 
+
+* [#ref1] ISO 3696, _Water for analytical laboratory use -- Specification and test methods_
+
+* [#ref2] ISO 5725-1, _Accuracy (trueness and precision) of measurement methods and results -- Part 1: General principles and definitions_
+
+* [#ref3] ISO 5725-2, _Accuracy (trueness and precision) of measurement methods and results -- Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method_
+
+* [#ref4] ISO 6322-1, _Storage of cereals and pulses -- Part 1: General recommendations for the keeping of cereals_
+
+* [#ref5] ISO 6322-2, _Storage of cereals and pulses -- Part 2: Practical recommendations_
+
+* [#ref6] ISO 6322-3, _Storage of cereals and pulses -- Part 3: Control of attack by pests_
+
+* [#ref7] ISO 7301:2011, _Rice -- Specification_
+
+* [#ref8] ISO 14864:1998, _Rice -- Evaluation of gelatinization time of kernels during cooking_
+
+* [#ref9] IEC 14864:1998, _Safety requirements for electric equipment for measurement, control, and laboratory use -- Part 2: Particular requirements for laboratory equipment for the heating of material_
+
+* [#ref10] [smallcap]#Standard No I.C.C 167#. _Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method_ (see http://www.icc.or.at)
+
+* [#ref11] Nitrogen-ammonia-protein modified Kjeldahl method -- Titanium oxide and copper sulfate catalyst. _Official Methods and Recommended Practices of the AOCS_ (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL 
+
+* [#ref12] [smallcap]#Berner D.L., & Brown J.# Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. _J. Am. Oil Chem. Soc._ 1994, *71* (11) pp 1291-1293
+
+* [#ref13] [smallcap]#Buckee G.K.# Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method -- Collaborative trial. _J. Inst. Brew._ 1994, *100* (2) pp 57-64
+
+* [#ref14] [smallcap]#Frister H.# _Direct determination of nitrogen content by Dumas analysis; Interlaboratory study on precision characteristics_. AOAC International, Europe Section 4th International Symposium, Nyon, Switzerland, 1994, 33 pp 
+
+* [#ref15] [smallcap]#Ranghino F.# Evaluation of rice resistance to cooking, based on the gelatinization time of kernels. _Il Riso_. 1966, *XV* pp 117-127
+
+* [#ref16] [smallcap]#Tkachuk R.# Nitrogen-to-protein conversion factors for cereals and oilseed meals. _Cereal Chem._ 1969, *46* (4) pp 419-423
+
