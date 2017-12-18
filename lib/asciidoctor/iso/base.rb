@@ -136,6 +136,16 @@ module Asciidoctor
         result
       end
 
+      def inline_footnote(node)
+        result = []
+        result << noko do |xml|
+          xml.fn do |xml_t|
+            xml_t << node.text
+          end
+        end
+        result
+      end
+
       def open(node)
         # open block is a container of multiple blocks, treated as a single block.
         # We append each contained block to its parent
@@ -150,6 +160,13 @@ module Asciidoctor
         result
       end
 
+      def inline_break(node)
+        noko do |xml|
+          xml << node.text
+          xml.br 
+        end.join
+      end
+
       def inline_quoted(node)
         noko do |xml|
           case node.type
@@ -161,7 +178,7 @@ module Asciidoctor
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
           else
-              xml << node.text
+            xml << node.text
           end
         end.join
       end
@@ -203,6 +220,14 @@ HERE
           return "Section: #{node.title}" if !node.nil? and node.context == :section
         end
         return "??"
+      end
+
+      def terms_and_definitions(node)
+        while !node.nil? and node.level > 0 and node.context != :section
+          node = node.parent
+          return true if !node.nil? and node.level == 0 and node.title == "Terms and definitions"
+        end
+        return false
       end
     end
   end

@@ -110,7 +110,7 @@ ISO and IEC maintain terminological databases for use in standardization at the 
 
 rice retaining its husk after threshing 
 
-[source]
+[.source]
 ISO 7301:2011, 3.1
 
 [[husked_rice]]
@@ -119,7 +119,7 @@ ISO 7301:2011, 3.1
 
 _paddy_ (<<paddy>>) from which the husk only has been removed 
 
-[source]
+[.source]
 ISO 7301:2011, 3.2, modified The term cargo rice is shown as deprecated, and Note 1 to entry is not included here
 
 === milled rice 
@@ -127,7 +127,7 @@ ISO 7301:2011, 3.2, modified The term cargo rice is shown as deprecated, and Not
 
 _husked rice_ (<<husked_rice>>) from which almost all of the bran and embryo have been removed by milling 
 
-[source]
+[.source]
 ISO 7301:2011, 3.3
 
 === parboiled rice 
@@ -167,7 +167,7 @@ kernel, whole or broken, which is unripe and/or underdeveloped
 === husked rice yield 
 amount of husked rice obtained from paddy 
 
-[source]
+[.source]
 ISO 6646:2011, 3.1
 
 === nitrogen content 
@@ -175,7 +175,7 @@ quantity of nitrogen determined after application of the procedure described
 
 NOTE: It is expressed as a mass fraction of dry product, as a percentage. 
 
-[source]
+[.source]
 ISO 20483:2013, 3.1
 
 === crude protein content 
@@ -183,7 +183,7 @@ quantity of crude protein obtained from the nitrogen content as determined by ap
 
 NOTE: It is expressed as a mass fraction of dry product, as a percentage. 
 
-[source]
+[.source]
 ISO 20483:2013, 3.2
 
 [[gelatinization]]
@@ -192,14 +192,14 @@ hydration process conferring the jelly-like state typical of the coagulated coll
 
 NOTE: See <<figureC-1>>. 
 
-[source]
+[.source]
 ISO 14864:1998, 3.1
 
 [[gel_state]]
 === gel state 
 condition reached as a consequence of _gelatinization_ (<<gelatinization>>), when the kernel is fully transparent and absolutely free from whitish and opaque granules after being pressed between two glass sheets 
 
-[source]
+[.source]
 ISO 14864:1998, 3.2
 
 === gelatinization time 
@@ -207,7 +207,7 @@ stem:[t_90]
 
 time necessary for 90 % of the kernels to pass from their natural state to the _gel state_ (<<gel_state>>) 
 
-[source]
+[.source]
 ISO 14864:1998, 3.3
 
 == Specifications 

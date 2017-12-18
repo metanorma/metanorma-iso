@@ -4,6 +4,8 @@ require "asciidoctor/iso/version"
 require "asciidoctor/iso/base"
 require "asciidoctor/iso/lists"
 require "asciidoctor/iso/inline_anchor"
+require "asciidoctor/iso/blocks"
+require "asciidoctor/iso/table"
 require "asciidoctor/iso/validate"
 
 module Asciidoctor
@@ -17,6 +19,8 @@ module Asciidoctor
       include ::Asciidoctor::ISO::Base
       include ::Asciidoctor::ISO::Lists
       include ::Asciidoctor::ISO::InlineAnchor
+      include ::Asciidoctor::ISO::Blocks
+      include ::Asciidoctor::ISO::Table
       include ::Asciidoctor::ISO::Validate
 
       register_for "iso"

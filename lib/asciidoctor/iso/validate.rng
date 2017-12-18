@@ -277,6 +277,25 @@
           <ref name="sup"/>
           <ref name="tt"/>
           <ref name="xref"/>
+          <ref name="fn"/>
+          <ref name="br"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="fn">
+    <element name="fn">
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="em"/>
+          <ref name="eref"/>
+          <ref name="strong"/>
+          <ref name="sub"/>
+          <ref name="sup"/>
+          <ref name="tt"/>
+          <ref name="xref"/>
+          <ref name="br"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -339,6 +358,7 @@
           </choice>
         </attribute>
       </optional>
+      <attribute name="target"/>
       <choice>
         <text/>
         <ref name="iso_ref"/>
@@ -360,7 +380,13 @@
   </define>
   <define name="eref">
     <element name="eref">
+      <attribute name="target"/>
       <text/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <empty/>
     </element>
   </define>
   <define name="em">
@@ -391,7 +417,7 @@
   <define name="table">
     <element name="table">
       <optional>
-        <ref name="name"/>
+        <ref name="tname"/>
       </optional>
       <optional>
         <ref name="thead"/>
@@ -404,7 +430,7 @@
       </optional>
     </element>
   </define>
-  <define name="name">
+  <define name="tname">
     <element name="name">
       <text/>
     </element>
@@ -452,6 +478,8 @@
           <ref name="sup"/>
           <ref name="tt"/>
           <ref name="xref"/>
+          <ref name="fn"/>
+          <ref name="br"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -468,6 +496,8 @@
           <ref name="sup"/>
           <ref name="tt"/>
           <ref name="xref"/>
+          <ref name="fn"/>
+          <ref name="br"/>
         </choice>
       </zeroOrMore>
     </element>

@@ -115,7 +115,12 @@ bibliography =
 
 para =
      element para {
-       (text | em | eref | strong | sub | sup | tt | xref)*
+       (text | em | eref | strong | sub | sup | tt | xref | fn | br)*
+     }
+
+fn =
+  element fn { 
+       (text | em | eref | strong | sub | sup | tt | xref | br)*
      }
 
 ol =
@@ -154,6 +159,9 @@ eref =
     text 
   }
 
+br =
+  element br { empty }
+
 em =
   element em { text }
 
@@ -171,10 +179,10 @@ tt =
 
 table =
   element table {
-    name?, thead?, tbody+, tfoot?
+    tname?, thead?, tbody+, tfoot?
   }
 
-name =
+tname =
   element name { text }
 
 thead =
@@ -190,7 +198,7 @@ tr =
   element tfoot { (td | th)+ }
 
 th =
-  element th { (text | em | eref | strong | sub | sup | tt | xref)* }
+  element th { (text | em | eref | strong | sub | sup | tt | xref | fn | br)* }
 
 td =
-  lement td { (text | em | eref | strong | sub | sup | tt | xref)* }
+  element td { (text | em | eref | strong | sub | sup | tt | xref | fn | br)* }
