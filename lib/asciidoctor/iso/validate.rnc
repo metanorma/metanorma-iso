@@ -97,7 +97,7 @@ clause =
   element clause {
     attribute anchor { xsd:ID }?,
     name?,
-    ( para | table | note | stem | warning | ol | ul )*, 
+    ( para | table | note | stem | warning | ol | ul | figure )*, 
     clause*
   }
 
@@ -117,6 +117,13 @@ para =
      element para {
        (text | em | eref | strong | sub | sup | tt | xref | fn | br)*
      }
+
+figure = 
+  element figure {
+    attribute src { text },
+    attribute id { text },
+    empty
+  }
 
 fn =
   element fn { 

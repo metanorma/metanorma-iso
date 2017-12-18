@@ -183,6 +183,19 @@ module Asciidoctor
         end.join
       end
 
+      def image(node)
+        uri = node.image_uri node.attr("target")
+        artwork_attributes = {
+          anchor: node.id,
+          src: uri,
+        }
+
+        noko do |xml|
+          xml.img **attr_code(artwork_attributes)
+        end
+      end
+
+
       # block for processing XML document fragments as XHTML, to allow for HTMLentities
       def noko(&block)
         # fragment = ::Nokogiri::XML::DocumentFragment.parse("")
@@ -213,13 +226,13 @@ HERE
       end
 
       def current_location(node)
-        return "Line #{node.lineno}" if !node.lineno.nil? and !node.lineno.empty?
-        return "ID #{node.id}" if !node.id.nil? 
-        while !node.nil? and node.level > 0 and node.context != :section
+        return "Line #{node.lineno}" if node.respond_to?(:lineno) && !node.lineno.nil? && !node.lineno.empty?
+        return "ID #{node.id}" if node.respond_to?(:id) && !node.id.nil?
+        while !node.nil? && (!node.respond_to?(:level) || node.level > 0) && node.context != :section
           node = node.parent
-          return "Section: #{node.title}" if !node.nil? and node.context == :section
+          return "Section: #{node.title}" if !node.nil? && node.context == :section
         end
-        return "??"
+        "??"
       end
 
       def terms_and_definitions(node)
