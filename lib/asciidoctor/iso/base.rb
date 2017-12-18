@@ -36,9 +36,9 @@ module Asciidoctor
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         result << "<iso_standard>"
-            result << noko { |ixml| front node, ixml }
-            result << noko { |ixml| middle node, ixml }
-            # result << node.content if node.blocks?
+        result << noko { |ixml| front node, ixml }
+        result << noko { |ixml| middle node, ixml }
+        # result << node.content if node.blocks?
         result << "</iso_standard>"
         result = result.flatten
         ret = result * "\n"
@@ -63,19 +63,15 @@ module Asciidoctor
       def title(node, xml)
         xml.title do |t|
           title_components = node.doctitle.split(/ -- |&#8201;&#8212;&#8201;/)
-          title_components.each do |c|
+            title_components.each do |c|
             t.titlesect {|t1| t1 << c }
           end
         end
       end
 
-
       def preamble(node)
         result = []
-
-        # NOTE: *list is V3, verse is V2, paragraph is both
         abstractable_contexts = %i{paragraph dlist olist ulist verse open}
-
         abstract_blocks = node.blocks.take_while do |block|
           abstractable_contexts.include? block.context
         end
@@ -97,24 +93,23 @@ module Asciidoctor
 
       def section(node)
         result = []
-          if node.attr("style") == "appendix"
-            result << "</middle><back>" unless $seen_back_matter
-            $seen_back_matter = true
-          end
+        if node.attr("style") == "appendix"
+          result << "</middle><back>" unless $seen_back_matter
+          $seen_back_matter = true
+        end
 
-          section_attributes = {
-            anchor: node.id,
-          }
+        section_attributes = {
+          anchor: node.id,
+        }
 
-          result << noko do |xml|
-            xml.clause **attr_code(section_attributes) do |xml_section|
-              xml_section.name { |name| name << node.title } unless node.title.nil?
-              xml_section << node.content
-            end
+        result << noko do |xml|
+          xml.clause **attr_code(section_attributes) do |xml_section|
+            xml_section.name { |name| name << node.title } unless node.title.nil?
+            xml_section << node.content
           end
+        end
 
         result
-
       end
 
       def paragraph1(node)
@@ -133,7 +128,6 @@ module Asciidoctor
 
       def paragraph(node)
         result = []
-
         result << noko do |xml|
           xml.para do |xml_t|
             xml_t << node.content
@@ -141,7 +135,6 @@ module Asciidoctor
         end
         result
       end
-
 
       def open(node)
         # open block is a container of multiple blocks, treated as a single block.
@@ -155,6 +148,22 @@ module Asciidoctor
           result = paragraph(node)
         end
         result
+      end
+
+      def inline_quoted(node)
+        noko do |xml|
+          case node.type
+          when :emphasis then xml.em node.text
+          when :strong then xml.strong node.text
+          when :monospaced then xml.tt node.text
+          when :double then xml << "\"#{node.text}\""
+          when :single then xml << "'#{node.text}'"
+          when :superscript then xml.sup node.text
+          when :subscript then xml.sub node.text
+          else
+              xml << node.text
+          end
+        end.join
       end
 
       # block for processing XML document fragments as XHTML, to allow for HTMLentities
@@ -187,15 +196,14 @@ HERE
       end
 
       def current_location(node)
-return "Line #{node.lineno}" if !node.lineno.nil? and !node.lineno.empty?
-return "ID #{node.id}" if !node.id.nil? 
+        return "Line #{node.lineno}" if !node.lineno.nil? and !node.lineno.empty?
+        return "ID #{node.id}" if !node.id.nil? 
         while !node.nil? and node.level > 0 and node.context != :section
-node = node.parent
-return "Section: #{node.title}" if !node.nil? and node.context == :section
-end
-return "??"
+          node = node.parent
+          return "Section: #{node.title}" if !node.nil? and node.context == :section
+        end
+        return "??"
       end
-
     end
   end
 end

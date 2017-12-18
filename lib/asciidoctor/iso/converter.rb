@@ -2,6 +2,8 @@ require "asciidoctor"
 
 require "asciidoctor/iso/version"
 require "asciidoctor/iso/base"
+require "asciidoctor/iso/lists"
+require "asciidoctor/iso/inline_anchor"
 require "asciidoctor/iso/validate"
 
 module Asciidoctor
@@ -13,11 +15,12 @@ module Asciidoctor
       include ::Asciidoctor::Writer
 
       include ::Asciidoctor::ISO::Base
+      include ::Asciidoctor::ISO::Lists
+      include ::Asciidoctor::ISO::InlineAnchor
       include ::Asciidoctor::ISO::Validate
 
       register_for "iso"
 
-      $seen_back_matter = false
       $xreftext = {}
 
       def initialize(backend, opts)

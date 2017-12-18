@@ -141,6 +141,7 @@ stem =
 xref =
   element xref { 
     attribute render { "footnote" | "inline" }?,
+    attribute target { text },
     ( text | iso_ref )
   }
 
@@ -148,7 +149,10 @@ iso_ref =
   element iso_ref { isocode, (isodate, (isosection?)?)? }
 
 eref =
-  element eref { text }
+  element eref { 
+    attribute target { text },
+    text 
+  }
 
 em =
   element em { text }
@@ -189,4 +193,4 @@ th =
   element th { (text | em | eref | strong | sub | sup | tt | xref)* }
 
 td =
-  element td { (text | em | eref | strong | sub | sup | tt | xref)* }
+  lement td { (text | em | eref | strong | sub | sup | tt | xref)* }
