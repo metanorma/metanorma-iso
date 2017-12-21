@@ -20,7 +20,7 @@ module Asciidoctor
             end
             warn "asciidoctor: WARNING (#{current_location(node)}): tables must have at least one body row" unless has_body
 
-            xml_table.tname node.title if node.title?
+            xml_table.name node.title if node.title?
             table_head_body_and_foot node, xml_table
           end
         end

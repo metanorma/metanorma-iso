@@ -126,13 +126,13 @@ title_part =
 
 foreword =
   element foreword { 
-    ( para | table | note | stem | warning | ol | ul | figure )*
+    ( para | table | note | formula | warning | ol | ul | figure )*
   }
 
 introduction =
   element introduction { 
     attribute anchor { xsd:ID }?,
-    ( para | table | note | stem | warning | ol | ul | figure )*,
+    ( para | table | note | formula | warning | ol | ul | figure )*,
     patent_notice? 
   }
 
@@ -198,7 +198,7 @@ admitted_term =
   element admitted_term { text }
 
 termsymbol = 
-  element termsymbol { inline_stem }
+  element termsymbol { stem }
 
 deprecated_term = 
   element deprecated_term { text }
@@ -225,7 +225,7 @@ clause =
   element clause {
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | stem | warning | ol | ul | figure )*, 
+    ( para | table | note | formula | warning | ol | ul | figure )*, 
     clause*
   }
 
@@ -237,7 +237,10 @@ back =
 
 annex =
   element annex { 
-    ( para | table | note | stem | warning | ol | ul | figure )*
+    attribute anchor { xsd:ID }?,
+    tname?,
+    ( para | table | note | formula | warning | ol | ul | figure )*,
+    clause*
   }
 
 bibliography =
@@ -245,7 +248,7 @@ bibliography =
 
 para =
      element p {
-       (text | em | eref | strong | inline_stem | sub | sup | tt | xref | fn | br)*
+       (text | em | eref | strong | stem | sub | sup | tt | xref | fn | br)*
      }
 
 figure = 
@@ -257,7 +260,7 @@ figure =
 
 fn =
   element fn { 
-       (text | em | eref | inline_stem | strong | sub | sup | tt | xref | br)*
+       (text | em | eref | stem | strong | sub | sup | tt | xref | br)*
      }
 
 ol =
@@ -271,7 +274,7 @@ ul =
 
 li =
   element li {
-    ( para | table | note | stem | warning | ol | ul )+
+    ( para | table | note | formula | warning | ol | ul )+
   }
 
 dl =
@@ -281,12 +284,12 @@ dl =
 
 dt =
   element dt {
-    (text | em | eref | inline_stem | strong | sub | sup | tt | xref | br)
+    (text | em | eref | stem | strong | sub | sup | tt | xref | br)
   }
 
 dd =
   element dd {
-    ( para | table | note | stem | warning | ol | ul)*
+    ( para | table | note | formula | warning | ol | ul)*
   }
 
 note =
@@ -295,8 +298,12 @@ note =
 warning =
   element warning { para+ }
 
-stem =
-  element stem { text }
+formula =
+  element formula { 
+    attribute anchor { xsd:ID }?,
+    stem,
+    dl?
+  }
 
 xref =
   element xref { 
@@ -323,8 +330,8 @@ em =
 strong =
   element strong { text }
 
-inline_stem =
-  element inline_stem { text }
+stem =
+  element stem { text }
 
 sub =
   element sub { text }
@@ -337,7 +344,8 @@ tt =
 
 table =
   element table {
-    tname?, thead?, tbody+, tfoot?
+    attribute anchor { xsd:ID }?,
+    tname?, thead?, tbody, tfoot?, note*
   }
 
 tname =
@@ -353,10 +361,20 @@ tfoot =
   element tfoot { tr+ }
 
 tr =
-  element tfoot { (td | th)+ }
+  element tr { (td | th)+ }
 
 th =
-  element th { (text | em | eref | inline_stem | strong | sub | sup | tt | xref | fn | br)* }
+  element th { 
+    attribute colspan { text }?,
+    attribute rowspan { text }?,
+    attribute align { text }?,
+    (text | em | eref | stem | strong | sub | sup | tt | xref | fn | br | para)* 
+  }
 
 td =
-  element td { (text | em | eref | inline_stem | strong | sub | sup | tt | xref | fn | br)* }
+  element td { 
+    attribute colspan { text }?,
+    attribute rowspan { text }?,
+    attribute align { text }?,
+    (text | em | eref | stem | strong | sub | sup | tt | xref | fn | br | para)* 
+  }

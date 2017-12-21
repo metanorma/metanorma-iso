@@ -243,7 +243,7 @@ NOTE: Lower mass fractions of moisture are sometimes needed for certain destinat
 
 The defect tolerance for the categories considered, and determined in accordance with the method given in <<AnnexA>>, shall not exceed the limits given in Table 1. 
 
-[cols="5"]
+[cols="5",options="footer"]
 .Maximum permissible mass fraction of defects
 |===
 .2+|Defect 4+| Maximum permissible mass fraction of defects in husked rice +

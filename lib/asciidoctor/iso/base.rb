@@ -135,13 +135,11 @@ module Asciidoctor
       end
 
       def inline_footnote(node)
-        result = []
-        result << noko do |xml|
+        noko do |xml|
           xml.fn do |xml_t|
             xml_t << node.text
           end
-        end
-        result
+        end.join
       end
 
       def open(node)
@@ -180,7 +178,7 @@ module Asciidoctor
           when :single then xml << "'#{node.text}'"
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
-          when :asciimath then xml.inline_stem node.text
+          when :asciimath then xml.stem node.text
           else
             if node.role == "alt"
               xml.admitted_term { |a| a << node.text }
@@ -214,7 +212,7 @@ module Asciidoctor
           nodes[0].parent.replace(nodes[0].parent.children)
           nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol | //p/deprecated_term")
         end
-        xmldoc.xpath("//termdef/p/inline_stem").each do |a|
+        xmldoc.xpath("//termdef/p/stem").each do |a|
           if a.parent.elements.size == 1 # para containing just a stem expression
             t = Nokogiri::XML::Element.new("termsymbol", xmldoc)
             parent = a.parent
@@ -227,6 +225,36 @@ module Asciidoctor
           prev = a.parent.previous
           a.remove
           prev.next = a
+        end
+
+        xmldoc.xpath("//tfoot/tr/td/note | //tfoot/tr/th/note").each do |n|
+          target = n.parent.parent.parent.parent
+          n.remove
+          target << n
+        end
+
+        # include where definition list inside stem block
+        xmldoc.xpath("//formula").each do |s|
+          if !s.next_element.nil? && s.next_element.name == "p" && s.next_element.content == "where"
+            if !s.next_element.next_element.nil? && s.next_element.next_element.name == "dl"
+              dl = s.next_element.next_element.remove
+              s.next_element.remove
+              s << dl
+            end
+          end
+        end
+
+        if !xmldoc.xpath("//annex | //bibliography").empty?
+          b = Nokogiri::XML::Element.new("back", xmldoc)
+          xmldoc.root << b
+          xmldoc.xpath("//annex").each do |e|
+            e.remove
+            b << e
+          end
+          xmldoc.xpath("//bibliography").each do |e|
+            e.remove
+            b << e
+          end
         end
 
         xmldoc

@@ -13,13 +13,15 @@ module Asciidoctor
         stem_content = node.lines.join("\n")
 
         noko do |xml|
-          xml.stem stem_content, **attr_code(stem_attributes)
+          xml.formula **attr_code(stem_attributes) do |s|
+            s.stem stem_content
+          end
         end
       end
 
       def admonition(node)
         result = []
-        cref_attributes = {
+        note_attributes = {
           anchor: node.id,
         }
 
@@ -30,15 +32,19 @@ module Asciidoctor
           WARNING_MESSAGE
 
           result << noko do |xml|
-            xml.termnote **attr_code(cref_attributes) do |xml_cref|
+            xml.termnote **attr_code(note_attributes) do |xml_cref|
               xml_cref << termnote_contents
             end
           end
         else
           cref_contents = node.content
           result << noko do |xml|
-            xml.cref **attr_code(cref_attributes) do |xml_cref|
-              xml_cref << cref_contents
+            xml.note **attr_code(note_attributes) do |xml_cref|
+              if node.blocks?
+                xml_cref << cref_contents
+              else
+                xml_cref.p { |p| p << cref_contents }
+              end
             end
           end
         end
@@ -61,7 +67,7 @@ module Asciidoctor
         else
           example_contents = node.content
           result << noko do |xml|
-            xml.example **attr_code(example_attributes) do |ex|
+            xml.figure **attr_code(example_attributes) do |ex|
               ex << example_contents
             end
           end
@@ -81,12 +87,9 @@ module Asciidoctor
 
       def section(node)
         result = []
-        if node.attr("style") == "appendix"
-          $seen_back_matter = true
-        end
 
         section_attributes = {
-          anchor: node.id,
+          anchor: node.id.empty? ? nil : node.id,
         }
 
         result << noko do |xml|
@@ -115,10 +118,19 @@ module Asciidoctor
               xml_section << node.content
               $term_def = false
             end
+          when "bibliography"
+            xml.bibliography **attr_code(section_attributes) do |xml_section|
+              xml_section << node.content
+            end
           else
             if $term_def
               xml.termdef **attr_code(section_attributes) do |xml_section|
                 xml_section.term { |name| name << node.title } 
+                xml_section << node.content
+              end
+            elsif node.attr("style") == "appendix"
+              xml.annex **attr_code(section_attributes) do |xml_section|
+                xml_section.name { |name| name << node.title } 
                 xml_section << node.content
               end
             else
