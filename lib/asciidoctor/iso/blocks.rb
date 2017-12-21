@@ -67,7 +67,7 @@ module Asciidoctor
         else
           example_contents = node.content
           result << noko do |xml|
-            xml.figure **attr_code(example_attributes) do |ex|
+            xml.example **attr_code(example_attributes) do |ex|
               ex << example_contents
             end
           end
@@ -120,7 +120,9 @@ module Asciidoctor
             end
           when "bibliography"
             xml.bibliography **attr_code(section_attributes) do |xml_section|
+              $biblio = true
               xml_section << node.content
+              $biblio = true
             end
           else
             if $term_def
@@ -153,7 +155,9 @@ module Asciidoctor
         }
 
         noko do |xml|
-          xml.img **attr_code(artwork_attributes)
+          xml.figure **attr_code(artwork_attributes) do |f|
+            f.name { |name| name << node.title } unless node.title.nil?
+          end
         end
       end
 

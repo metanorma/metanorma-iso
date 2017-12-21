@@ -422,9 +422,7 @@ All parts of kernels which get stuck in the perforations of a sieve should be co
 
 [[figureA-1]]
 .Split-it-right sample divider
-====
-image::splititright.gif
-====
+image::splititright.gif[]
 
 === Determination 
 
@@ -563,8 +561,7 @@ Report the results as specified in <<clause7>>, giving the results calculated us
 
 [[figureC-1]]
 .Typical gelatinization curve
-====
-image::[figc1.gif] footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
+image::figc1.gif[] footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
 
 *Key*
 
@@ -574,19 +571,18 @@ stem:[t_90]:: time required to gelatinize 90 % of the kernels
 P:: point of the curve corresponding to a cooking time of stem:[t_90]
 
 NOTE: These results are based on a study carried out on three different types of kernel.
-====
 
 [[figureC-2]]
 .Stages of gelatinization
 ====
 .Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)
-image::[figc2a.gif]
+image::figc2a.gif[]
 
 .Intermediate stages: Some fully gelatinized kernels are visible
-image::[figc2b.gif]
+image::figc2b.gif[]
 
 .Final stages: All kernels are fully gelatinized
-image::[fig2c.gif]
+image::fig2c.gif[]
 
 ====
 

@@ -49,7 +49,7 @@ module Asciidoctor
       def inline_anchor_bibref(node)
         eref_contents = node.target == node.text ? nil : node.text
         eref_attributes = {
-          id: node.target,
+          anchor: node.target,
         }
 
         noko do |xml|

@@ -511,9 +511,30 @@
   </define>
   <define name="bibliography">
     <element name="bibliography">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
-        <ref name="para"/>
+        <ref name="reference"/>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="reference">
+    <element name="reference">
+      <ref name="ref"/>
+      <ref name="para"/>
+    </element>
+  </define>
+  <define name="ref">
+    <element name="ref">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <text/>
     </element>
   </define>
   <define name="para">
@@ -537,9 +558,23 @@
   </define>
   <define name="figure">
     <element name="figure">
-      <attribute name="src"/>
-      <attribute name="id"/>
-      <empty/>
+      <optional>
+        <attribute name="src"/>
+      </optional>
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="figure"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="fn">

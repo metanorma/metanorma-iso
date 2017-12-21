@@ -227,6 +227,7 @@ module Asciidoctor
           prev.next = a
         end
 
+        # move notes after table footer
         xmldoc.xpath("//tfoot/tr/td/note | //tfoot/tr/th/note").each do |n|
           target = n.parent.parent.parent.parent
           n.remove
@@ -244,6 +245,25 @@ module Asciidoctor
           end
         end
 
+        # include key definition list inside figure
+        xmldoc.xpath("//figure").each do |s|
+          if !s.next_element.nil? && s.next_element.name == "p" && s.next_element.content =~ /^\s*Key\s*$/m
+            if !s.next_element.next_element.nil? && s.next_element.next_element.name == "dl"
+              dl = s.next_element.next_element.remove
+              s.next_element.remove
+              s << dl
+            end
+          end
+        end
+
+        # examples containing only figures become subfigures of figures
+        nodes = xmldoc.xpath("//example/figure")
+        while !nodes.empty?
+          nodes[0].parent.name = "figure"
+          nodes = xmldoc.xpath("//example/figure")
+        end
+
+        # move annex/bibliography to back
         if !xmldoc.xpath("//annex | //bibliography").empty?
           b = Nokogiri::XML::Element.new("back", xmldoc)
           xmldoc.root << b
@@ -255,6 +275,13 @@ module Asciidoctor
             e.remove
             b << e
           end
+        end
+
+        # move ref before p
+        xmldoc.xpath("//p/ref").each do |r|
+          parent = r.parent
+          r.remove
+          parent.previous = r
         end
 
         xmldoc

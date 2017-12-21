@@ -244,7 +244,19 @@ annex =
   }
 
 bibliography =
-  element bibliography { para+ }
+  element bibliography { 
+    attribute anchor { xsd:ID }?,
+    reference+ 
+  }
+
+reference = 
+  element reference { ref, para }
+
+ref =
+  element ref {
+    attribute anchor { xsd:ID }?,
+    text
+  }
 
 para =
      element p {
@@ -253,9 +265,11 @@ para =
 
 figure = 
   element figure {
-    attribute src { text },
-    attribute id { text },
-    empty
+    attribute src { text }?,
+    attribute anchor { xsd:ID }?,
+    tname?,
+    dl?,
+    figure*
   }
 
 fn =

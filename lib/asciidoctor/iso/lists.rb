@@ -4,6 +4,7 @@ module Asciidoctor
     module Lists
       def ulist(node)
         return norm_ref(node) if $norm_ref
+        return biblio_ref(node) if $biblio
         result = []
         result << noko do |xml|
           ul_attributes = {
@@ -63,6 +64,19 @@ module Asciidoctor
         result
       end
 
+      def biblio_ref(node)
+        result = []
+        result << noko do |xml|
+          node.items.each do |item|
+            xml.reference do |t|
+              t.p { |p| p << item.text }
+            end
+          end
+        end
+        result
+      end
+
+
       def olist(node)
         result = []
 
@@ -119,7 +133,7 @@ module Asciidoctor
                     end
                     xml_dd << dd.content
                   else
-                      xml_dd.p { |t| t << dd.text }
+                    xml_dd.p { |t| t << dd.text }
                   end
                 end
               end
