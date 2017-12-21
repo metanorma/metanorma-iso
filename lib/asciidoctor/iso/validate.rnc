@@ -9,23 +9,60 @@ iso_standard =
 
 front =
   element front {
-    title,
+    title_en,
+    title_fr,
+    documentnumber,
+    technical_committee,
+    subcommittee?,
     foreword,
     introduction?
   }
 
-title |= element title { titlesect } 
-title |= element title { titlesect, titlesect } 
-title |= element title { titlesect, titlesect, titlesect } 
+documentnumber = 
+  element documentnumber { 
+    attribute partnumber { text }?,
+    text 
+   }
 
-titlesect =
-  element titlesect { text }
+technical_committee =
+  element technical_committee {
+    attribute number { text }?,
+    text
+  }
+
+subcommittee =
+  element subcommittee {
+    attribute number { text }?,
+    text
+  }
+
+title_en = 
+  element title_en { title_intro?, title_main, title_part? } 
+
+title_fr = 
+  element title_fr { title_intro?, title_main, title_part? } 
+
+title_intro =
+  element title_intro { text }
+
+title_main =
+  element title_main { text }
+
+title_part =
+  element title_part { 
+    text 
+  }
 
 foreword =
-  element foreword { para+ }
+  element foreword { 
+    ( para | table | note | stem | warning | ol | ul | figure )*
+  }
 
 introduction =
-  element introduction { para+, patent_notice? }
+  element introduction { 
+    ( para | table | note | stem | warning | ol | ul | figure )*,
+    patent_notice? 
+  }
 
 patent_notice =
   element patent_notice { para+ }
@@ -96,7 +133,7 @@ modification =
 clause =
   element clause {
     attribute anchor { xsd:ID }?,
-    name?,
+    tname?,
     ( para | table | note | stem | warning | ol | ul | figure )*, 
     clause*
   }
@@ -108,7 +145,9 @@ back =
   }
 
 annex =
-  element annex { para+ }
+  element annex { 
+    ( para | table | note | stem | warning | ol | ul | figure )*
+  }
 
 bibliography =
   element bibliography { para+ }

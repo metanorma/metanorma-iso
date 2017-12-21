@@ -13,7 +13,7 @@ module Asciidoctor
         stem_content = node.lines.join("\n")
 
         noko do |xml|
-            xml.stem stem_content, **attr_code(stem_attributes)
+          xml.stem stem_content, **attr_code(stem_attributes)
         end
       end
 
@@ -67,6 +67,49 @@ module Asciidoctor
           end
         end
         result
+      end
+
+      def preamble(node)
+        result = []
+        result << noko do |xml|
+          xml.foreword do |xml_abstract|
+            xml_abstract << node.content
+          end
+        end
+        result
+      end
+
+      def section(node)
+        result = []
+        if node.attr("style") == "appendix"
+          result << "</middle><back>" unless $seen_back_matter
+          $seen_back_matter = true
+        end
+
+        section_attributes = {
+          anchor: node.id,
+        }
+
+        result << noko do |xml|
+          xml.clause **attr_code(section_attributes) do |xml_section|
+            xml_section.name { |name| name << node.title } unless node.title.nil?
+            xml_section << node.content
+          end
+        end
+
+        result
+      end
+
+      def image(node)
+        uri = node.image_uri node.attr("target")
+        artwork_attributes = {
+          anchor: node.id,
+          src: uri,
+        }
+
+        noko do |xml|
+          xml.img **attr_code(artwork_attributes)
+        end
       end
 
     end

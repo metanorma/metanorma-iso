@@ -14,48 +14,110 @@
   </define>
   <define name="front">
     <element name="front">
-      <ref name="title"/>
+      <ref name="title_en"/>
+      <ref name="title_fr"/>
+      <ref name="documentnumber"/>
+      <ref name="technical_committee"/>
+      <optional>
+        <ref name="subcommittee"/>
+      </optional>
       <ref name="foreword"/>
       <optional>
         <ref name="introduction"/>
       </optional>
     </element>
   </define>
-  <define name="title" combine="choice">
-    <element name="title">
-      <ref name="titlesect"/>
+  <define name="documentnumber">
+    <element name="documentnumber">
+      <optional>
+        <attribute name="partnumber"/>
+      </optional>
+      <text/>
     </element>
   </define>
-  <define name="title" combine="choice">
-    <element name="title">
-      <ref name="titlesect"/>
-      <ref name="titlesect"/>
+  <define name="technical_committee">
+    <element name="technical_committee">
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <text/>
     </element>
   </define>
-  <define name="title" combine="choice">
-    <element name="title">
-      <ref name="titlesect"/>
-      <ref name="titlesect"/>
-      <ref name="titlesect"/>
+  <define name="subcommittee">
+    <element name="subcommittee">
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <text/>
     </element>
   </define>
-  <define name="titlesect">
-    <element name="titlesect">
+  <define name="title_en">
+    <element name="title_en">
+      <optional>
+        <ref name="title_intro"/>
+      </optional>
+      <ref name="title_main"/>
+      <optional>
+        <ref name="title_part"/>
+      </optional>
+    </element>
+  </define>
+  <define name="title_fr">
+    <element name="title_fr">
+      <optional>
+        <ref name="title_intro"/>
+      </optional>
+      <ref name="title_main"/>
+      <optional>
+        <ref name="title_part"/>
+      </optional>
+    </element>
+  </define>
+  <define name="title_intro">
+    <element name="title_intro">
+      <text/>
+    </element>
+  </define>
+  <define name="title_main">
+    <element name="title_main">
+      <text/>
+    </element>
+  </define>
+  <define name="title_part">
+    <element name="title_part">
       <text/>
     </element>
   </define>
   <define name="foreword">
     <element name="foreword">
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="table"/>
+          <ref name="note"/>
+          <ref name="stem"/>
+          <ref name="warning"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+          <ref name="figure"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="introduction">
     <element name="introduction">
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="table"/>
+          <ref name="note"/>
+          <ref name="stem"/>
+          <ref name="warning"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+          <ref name="figure"/>
+        </choice>
+      </zeroOrMore>
       <optional>
         <ref name="patent_notice"/>
       </optional>
@@ -225,7 +287,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="name"/>
+        <ref name="tname"/>
       </optional>
       <zeroOrMore>
         <choice>
@@ -254,9 +316,18 @@
   </define>
   <define name="annex">
     <element name="annex">
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="table"/>
+          <ref name="note"/>
+          <ref name="stem"/>
+          <ref name="warning"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+          <ref name="figure"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="bibliography">

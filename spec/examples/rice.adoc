@@ -5,6 +5,9 @@
 :title-intro: Cereals and pulses
 :title-main: Specifications and test methods
 :title-part: Rice
+:title-intro-fr: Céréales et légumineuses
+:title-main-fr: Spécification et éthodes d'essai
+:title-part-fr: Riz
 :doctype: international-standard
 :technical-committee-number: 34
 :technical-committee: Food products

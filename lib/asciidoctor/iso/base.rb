@@ -43,13 +43,16 @@ module Asciidoctor
         result = result.flatten
         ret = result * "\n"
         ret1 = Nokogiri::XML(ret)
+        ret1 = cleanup(ret1)
         Validate::validate(ret1)
-        ret1
+        ret1.to_xml(indent: 2)
       end
 
       def front(node, xml)
         xml.front do |xml_front|
           title node, xml_front
+          metadata node, xml_front
+          xml_front << node.content
         end
       end
 
@@ -59,57 +62,30 @@ module Asciidoctor
         end
       end
 
-      # split on " -- " = "&#8201;&#8212;&#8201;"
+      def metadata(node, xml)
+        docnum_attrs = { partnumber: node.attr("partnumber") }
+        xml.documentnumber  node.attr("docnumber"), **attr_code(docnum_attrs)
+        tc_attrs = { number: node.attr("technical-committee-number") }
+        xml.technical_committee node.attr("technical-committee"), **attr_code(tc_attrs)
+        sc_attrs = { number: node.attr("subcommittee-number") }
+        xml.subcommittee node.attr("subcommittee"), **attr_code(sc_attrs) if node.attr("subcommittee")
+      end
+
       def title(node, xml)
-        xml.title do |t|
-          title_components = node.doctitle.split(/ -- |&#8201;&#8212;&#8201;/)
-            title_components.each do |c|
-            t.titlesect {|t1| t1 << c }
+        xml.title_en do |t|
+          t.title_intro {|t1| t1 << node.attr("title-intro") } if  node.attr("title-intro")
+          t.title_main {|t1| t1 << node.attr("title-main") } if  node.attr("title-main")
+          if  node.attr("title-part")
+            t.title_part node.attr("title-part")
           end
         end
-      end
-
-      def preamble(node)
-        result = []
-        abstractable_contexts = %i{paragraph dlist olist ulist verse open}
-        abstract_blocks = node.blocks.take_while do |block|
-          abstractable_contexts.include? block.context
-        end
-
-        remainder_blocks = node.blocks[abstract_blocks.length..-1]
-
-        result << noko do |xml|
-          if abstract_blocks.any?
-            xml.abstract do |xml_abstract|
-              xml_abstract << abstract_blocks.map(&:render).flatten.join("\n")
-            end
-          end
-          xml << remainder_blocks.map(&:render).flatten.join("\n")
-        end
-
-        result << "</front><middle>"
-        result
-      end
-
-      def section(node)
-        result = []
-        if node.attr("style") == "appendix"
-          result << "</middle><back>" unless $seen_back_matter
-          $seen_back_matter = true
-        end
-
-        section_attributes = {
-          anchor: node.id,
-        }
-
-        result << noko do |xml|
-          xml.clause **attr_code(section_attributes) do |xml_section|
-            xml_section.name { |name| name << node.title } unless node.title.nil?
-            xml_section << node.content
+        xml.title_fr do |t|
+          t.title_intro {|t1| t1 << node.attr("title-intro-fr") } if  node.attr("title-intro-fr")
+          t.title_main {|t1| t1 << node.attr("title-main-fr") } if  node.attr("title-main-fr")
+          if  node.attr("title-part-fr")
+            t.title_part node.attr("title-part-fr")
           end
         end
-
-        result
       end
 
       def paragraph1(node)
@@ -128,9 +104,17 @@ module Asciidoctor
 
       def paragraph(node)
         result = []
-        result << noko do |xml|
-          xml.para do |xml_t|
-            xml_t << node.content
+        if node.role == "source"
+          result << noko do |xml|
+            xml.termref do |xml_t|
+              xml_t << node.content
+            end
+          end
+        else
+          result << noko do |xml|
+            xml.para do |xml_t|
+              xml_t << node.content
+            end
           end
         end
         result
@@ -178,23 +162,28 @@ module Asciidoctor
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
           else
-            xml << node.text
+            if node.role == "alt"
+              xml.admitted_term << node.text
+            elsif node.role == "deprecated"
+              xml.deprecated_term << node.text
+            elsif node.role == "domain"
+              xml.domain << node.text
+            else
+              xml << node.text
+            end
           end
         end.join
       end
 
-      def image(node)
-        uri = node.image_uri node.attr("target")
-        artwork_attributes = {
-          anchor: node.id,
-          src: uri,
-        }
-
-        noko do |xml|
-          xml.img **attr_code(artwork_attributes)
+      def cleanup(xmldoc)
+        intro = xmldoc.at("//intro")
+        front = xmldoc.at("//front")
+        unless intro.nil? or front.nil?
+          intro.remove
+          front << intro
         end
+        xmldoc
       end
-
 
       # block for processing XML document fragments as XHTML, to allow for HTMLentities
       def noko(&block)

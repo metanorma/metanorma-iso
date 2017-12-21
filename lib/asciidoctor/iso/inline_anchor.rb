@@ -7,8 +7,8 @@ module Asciidoctor
           inline_anchor_xref node
         when :link
           inline_anchor_link node
-        # when :bibref
-          # inline_anchor_bibref node
+        when :bibref
+          inline_anchor_bibref node
         # when :ref
           # inline_anchor_ref node
         else
@@ -20,9 +20,9 @@ module Asciidoctor
         xref_contents = node.text
         matched = /^fn: (?<text>.*)?$/.match xref_contents
         if matched.nil?
-          format = "footnote"
-        else
           format = "inline"
+        else
+          format = "footnote"
         xref_contents = matched[:text] unless matched.nil?
         end
         xref_attributes = {
@@ -43,6 +43,17 @@ module Asciidoctor
 
         noko do |xml|
           xml.eref eref_contents, **attr_code(eref_attributes)
+        end.join
+      end
+
+      def inline_anchor_bibref(node)
+        eref_contents = node.target == node.text ? nil : node.text
+        eref_attributes = {
+          id: node.target,
+        }
+
+        noko do |xml|
+          xml.ref eref_contents, **attr_code(eref_attributes)
         end.join
       end
 
