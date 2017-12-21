@@ -215,10 +215,12 @@ module Asciidoctor
           nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol | //p/deprecated_term")
         end
         xmldoc.xpath("//termdef/p/inline_stem").each do |a|
-          if a.parent.children.size == 1 # para containing just a stem expression
+          if a.parent.elements.size == 1 # para containing just a stem expression
             t = Nokogiri::XML::Element.new("termsymbol", xmldoc)
-            t.children = a.parent.children
-            a.parent.replace(t)
+            parent = a.parent
+            a.remove
+            t.children = a
+            parent.replace(t)
           end
         end
         xmldoc.xpath("//p/termdomain").each do |a|
