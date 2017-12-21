@@ -129,12 +129,16 @@ foreword =
 
 introduction =
   element introduction { 
+    attribute anchor { xsd:ID }?,
     ( para | table | note | stem | warning | ol | ul | figure )*,
     patent_notice? 
   }
 
 patent_notice =
-  element patent_notice { para+ }
+  element patent_notice { 
+    attribute anchor { xsd:ID }?,
+    para+ 
+  }
 
 middle =
   element middle {
@@ -142,10 +146,16 @@ middle =
   }
 
 scope =
-  element scope { para+ }
+  element scope { 
+    attribute anchor { xsd:ID }?,
+    para+ 
+  }
 
 norm_ref =
-  element norm_ref { iso_ref_title* }
+  element norm_ref { 
+    attribute anchor { xsd:ID }?,
+    iso_ref_title* 
+  }
 
 iso_ref_title =
   element iso_ref_title { isocode, isodate?, isotitle }
@@ -163,7 +173,10 @@ isotitle =
   element isotitle { text }
 
 terms_defs = 
-  element terms_defs { termdef+ }
+  element terms_defs { 
+    attribute anchor { xsd:ID }?,
+    termdef+ 
+  }
 
 termdef = 
   element termdef { term, admitted_term?, symbol?, deprecated_term?,
@@ -275,7 +288,7 @@ stem =
 
 xref =
   element xref { 
-    attribute render { "footnote" | "inline" }?,
+    attribute format { "footnote" | "inline" }?,
     attribute target { text },
     ( text | iso_ref )
   }

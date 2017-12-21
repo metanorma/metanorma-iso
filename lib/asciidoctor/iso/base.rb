@@ -52,7 +52,6 @@ module Asciidoctor
         xml.front do |xml_front|
           title node, xml_front
           metadata node, xml_front
-          xml_front << node.content
         end
       end
 
@@ -194,8 +193,13 @@ module Asciidoctor
       end
 
       def cleanup(xmldoc)
-        intro = xmldoc.at("//intro")
+        intro = xmldoc.at("//introduction")
+        foreword = xmldoc.at("//foreword")
         front = xmldoc.at("//front")
+        unless foreword.nil? or front.nil?
+          foreword.remove
+          front << foreword
+        end
         unless intro.nil? or front.nil?
           intro.remove
           front << intro

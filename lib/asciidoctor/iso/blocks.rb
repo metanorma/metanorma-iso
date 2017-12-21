@@ -91,9 +91,32 @@ module Asciidoctor
         }
 
         result << noko do |xml|
-          xml.clause **attr_code(section_attributes) do |xml_section|
-            xml_section.name { |name| name << node.title } unless node.title.nil?
-            xml_section << node.content
+          case node.title.downcase
+          when "introduction"
+            xml.introduction **attr_code(section_attributes) do |xml_section|
+              xml_section << node.content
+            end
+          when "patent notice"
+            xml.patent_notice **attr_code(section_attributes) do |xml_section|
+              xml_section << node.content
+            end
+          when "scope"
+            xml.scope **attr_code(section_attributes) do |xml_section|
+              xml_section << node.content
+            end
+          when "normative references"
+            xml.norm_ref **attr_code(section_attributes) do |xml_section|
+              xml_section << node.content
+            end
+          when "terms and definitions"
+            xml.terms_defs **attr_code(section_attributes) do |xml_section|
+              xml_section << node.content
+            end
+          else
+            xml.clause **attr_code(section_attributes) do |xml_section|
+              xml_section.name { |name| name << node.title } unless node.title.nil?
+              xml_section << node.content
+            end
           end
         end
 

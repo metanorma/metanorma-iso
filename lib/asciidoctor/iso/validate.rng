@@ -227,6 +227,11 @@
   </define>
   <define name="introduction">
     <element name="introduction">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <zeroOrMore>
         <choice>
           <ref name="para"/>
@@ -246,6 +251,11 @@
   </define>
   <define name="patent_notice">
     <element name="patent_notice">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="para"/>
       </oneOrMore>
@@ -263,6 +273,11 @@
   </define>
   <define name="scope">
     <element name="scope">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="para"/>
       </oneOrMore>
@@ -270,6 +285,11 @@
   </define>
   <define name="norm_ref">
     <element name="norm_ref">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <zeroOrMore>
         <ref name="iso_ref_title"/>
       </zeroOrMore>
@@ -309,6 +329,11 @@
   </define>
   <define name="terms_defs">
     <element name="terms_defs">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="termdef"/>
       </oneOrMore>
@@ -589,7 +614,7 @@
   <define name="xref">
     <element name="xref">
       <optional>
-        <attribute name="render">
+        <attribute name="format">
           <choice>
             <value>footnote</value>
             <value>inline</value>

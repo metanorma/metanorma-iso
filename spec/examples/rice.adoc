@@ -87,7 +87,7 @@ It is applicable to husked rice, husked parboiled rice, milled rice and milled p
 
 It is not applicable to cooked rice products. 
 
-== Normative references 
+== Normative References 
 
 The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies. 
 
@@ -105,7 +105,7 @@ The following documents are referred to in the text in such a way that some or a
 
 * ISO 24333:2009, _Cereals and cereal products -- Sampling_
 
-== Terms and definitions 
+== Terms and Definitions 
 
 For the purposes of this document, the following terms and definitions apply. 
 
