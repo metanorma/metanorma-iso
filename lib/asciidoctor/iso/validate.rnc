@@ -156,6 +156,7 @@ scope =
 norm_ref =
   element norm_ref { 
     attribute anchor { xsd:ID }?,
+    # boilerplate
     para,
     iso_ref_title* 
   }
@@ -178,14 +179,16 @@ isotitle =
 terms_defs = 
   element terms_defs { 
     attribute anchor { xsd:ID }?,
+    # boilerplate
+    para, para, ul,
     termdef+ 
   }
 
 termdef = 
   element termdef { 
     attribute anchor { xsd:ID }?,
-    term, admitted_term*, symbol?, deprecated_term*,
-    domain?, para, termnote*, termexample*, termref* 
+    term, admitted_term*, termsymbol?, deprecated_term*,
+    termdomain?, para, termnote*, termexample*, termref* 
   }
 
 term = 
@@ -194,17 +197,17 @@ term =
 admitted_term = 
   element admitted_term { text }
 
-symbol = 
-  element symbol { text }
+termsymbol = 
+  element termsymbol { inline_stem }
 
 deprecated_term = 
   element deprecated_term { text }
 
-domain = 
-  element domain { text }
+termdomain = 
+  element termdomain { text }
 
 termnote = 
-  element termnote { text }
+  element termnote { (text | xref | eref)* }
 
 termexample = 
   element termexample { text }
@@ -242,7 +245,7 @@ bibliography =
 
 para =
      element p {
-       (text | em | eref | strong | sub | sup | tt | xref | fn | br)*
+       (text | em | eref | strong | inline_stem | sub | sup | tt | xref | fn | br)*
      }
 
 figure = 
@@ -254,7 +257,7 @@ figure =
 
 fn =
   element fn { 
-       (text | em | eref | strong | sub | sup | tt | xref | br)*
+       (text | em | eref | inline_stem | strong | sub | sup | tt | xref | br)*
      }
 
 ol =
@@ -278,7 +281,7 @@ dl =
 
 dt =
   element dt {
-    (text | em | eref | strong | sub | sup | tt | xref | br)
+    (text | em | eref | inline_stem | strong | sub | sup | tt | xref | br)
   }
 
 dd =
@@ -320,6 +323,9 @@ em =
 strong =
   element strong { text }
 
+inline_stem =
+  element inline_stem { text }
+
 sub =
   element sub { text }
 
@@ -350,7 +356,7 @@ tr =
   element tfoot { (td | th)+ }
 
 th =
-  element th { (text | em | eref | strong | sub | sup | tt | xref | fn | br)* }
+  element th { (text | em | eref | inline_stem | strong | sub | sup | tt | xref | fn | br)* }
 
 td =
-  element td { (text | em | eref | strong | sub | sup | tt | xref | fn | br)* }
+  element td { (text | em | eref | inline_stem | strong | sub | sup | tt | xref | fn | br)* }

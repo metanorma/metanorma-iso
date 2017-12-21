@@ -295,6 +295,7 @@
           <data type="ID"/>
         </attribute>
       </optional>
+      <!-- boilerplate -->
       <ref name="para"/>
       <zeroOrMore>
         <ref name="iso_ref_title"/>
@@ -340,6 +341,10 @@
           <data type="ID"/>
         </attribute>
       </optional>
+      <!-- boilerplate -->
+      <ref name="para"/>
+      <ref name="para"/>
+      <ref name="ul"/>
       <oneOrMore>
         <ref name="termdef"/>
       </oneOrMore>
@@ -347,18 +352,23 @@
   </define>
   <define name="termdef">
     <element name="termdef">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <ref name="term"/>
       <zeroOrMore>
         <ref name="admitted_term"/>
       </zeroOrMore>
       <optional>
-        <ref name="symbol"/>
+        <ref name="termsymbol"/>
       </optional>
       <zeroOrMore>
         <ref name="deprecated_term"/>
       </zeroOrMore>
       <optional>
-        <ref name="domain"/>
+        <ref name="termdomain"/>
       </optional>
       <ref name="para"/>
       <zeroOrMore>
@@ -382,9 +392,9 @@
       <text/>
     </element>
   </define>
-  <define name="symbol">
-    <element name="symbol">
-      <text/>
+  <define name="termsymbol">
+    <element name="termsymbol">
+      <ref name="inline_stem"/>
     </element>
   </define>
   <define name="deprecated_term">
@@ -392,14 +402,20 @@
       <text/>
     </element>
   </define>
-  <define name="domain">
-    <element name="domain">
+  <define name="termdomain">
+    <element name="termdomain">
       <text/>
     </element>
   </define>
   <define name="termnote">
     <element name="termnote">
-      <text/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="xref"/>
+          <ref name="eref"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="termexample">
@@ -497,6 +513,7 @@
           <ref name="em"/>
           <ref name="eref"/>
           <ref name="strong"/>
+          <ref name="inline_stem"/>
           <ref name="sub"/>
           <ref name="sup"/>
           <ref name="tt"/>
@@ -521,6 +538,7 @@
           <text/>
           <ref name="em"/>
           <ref name="eref"/>
+          <ref name="inline_stem"/>
           <ref name="strong"/>
           <ref name="sub"/>
           <ref name="sup"/>
@@ -575,6 +593,7 @@
         <text/>
         <ref name="em"/>
         <ref name="eref"/>
+        <ref name="inline_stem"/>
         <ref name="strong"/>
         <ref name="sub"/>
         <ref name="sup"/>
@@ -669,6 +688,11 @@
       <text/>
     </element>
   </define>
+  <define name="inline_stem">
+    <element name="inline_stem">
+      <text/>
+    </element>
+  </define>
   <define name="sub">
     <element name="sub">
       <text/>
@@ -743,6 +767,7 @@
           <text/>
           <ref name="em"/>
           <ref name="eref"/>
+          <ref name="inline_stem"/>
           <ref name="strong"/>
           <ref name="sub"/>
           <ref name="sup"/>
@@ -761,6 +786,7 @@
           <text/>
           <ref name="em"/>
           <ref name="eref"/>
+          <ref name="inline_stem"/>
           <ref name="strong"/>
           <ref name="sub"/>
           <ref name="sup"/>

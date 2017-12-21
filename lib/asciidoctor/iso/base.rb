@@ -107,26 +107,21 @@ module Asciidoctor
         end
       end
 
-      def paragraph1(node)
-        result = []
-        result1 = node.content
-        if result1 =~ /^(<t>|<dl>|<ol>|<ul>)/
-          result = result1
-        else
-          t_attributes = {
-            anchor: node.id,
-          }
-          result << noko { |xml| xml.t result1, **attr_code(t_attributes) }
-        end
-        result
-      end
-
       def paragraph(node)
         result = []
         if node.role == "source"
           result << noko do |xml|
             xml.termref do |xml_t|
-              xml_t << node.content
+              # matched = /^ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match flatten_rawtext(node).flatten.join("")
+              matched = /^ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match node.content
+              if matched.nil?
+                warn %(asciidoctor: WARNING (#{current_location(node)}): term reference not in expected format: #{node.content})
+              else
+                xml_t.isocode matched[:code]
+                xml_t.isodate matched[:year] if matched[:year]
+                xml_t.isosection matched[:section] if matched[:section]
+                xml_t.modification { |m| m << matched[:text] } if matched[:text]
+              end
             end
           end
         else
@@ -185,13 +180,14 @@ module Asciidoctor
           when :single then xml << "'#{node.text}'"
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
+          when :asciimath then xml.inline_stem node.text
           else
             if node.role == "alt"
-              xml.admitted_term << node.text
+              xml.admitted_term { |a| a << node.text }
             elsif node.role == "deprecated"
-              xml.deprecated_term << node.text
+              xml.deprecated_term { |a| a << node.text }
             elsif node.role == "domain"
-              xml.domain << node.text
+              xml.termdomain { |a| a << node.text }
             else
               xml << node.text
             end
@@ -211,6 +207,26 @@ module Asciidoctor
           intro.remove
           front << intro
         end
+
+        # release termdef tags from surrounding paras
+        nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol | //p/deprecated_term")
+        while !nodes.empty?
+          nodes[0].parent.replace(nodes[0].parent.children)
+          nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol | //p/deprecated_term")
+        end
+        xmldoc.xpath("//termdef/p/inline_stem").each do |a|
+          if a.parent.children.size == 1 # para containing just a stem expression
+            t = Nokogiri::XML::Element.new("termsymbol", xmldoc)
+            t.children = a.parent.children
+            a.parent.replace(t)
+          end
+        end
+        xmldoc.xpath("//p/termdomain").each do |a|
+          prev = a.parent.previous
+          a.remove
+          prev.next = a
+        end
+
         xmldoc
       end
 
@@ -252,6 +268,29 @@ HERE
         end
         "??"
       end
+
+      # if node contains blocks, flatten them into a single line; and extract only raw text
+      def flatten_rawtext(node)
+        result = []
+        if node.respond_to?(:blocks) && node.blocks?
+          node.blocks.each { |b| result << flatten_rawtext(b) }
+        elsif node.respond_to?(:lines)
+          node.lines.each do |x|
+            result << if node.respond_to?(:context) && (node.context == :literal || node.context == :listing)
+                        x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+            else
+              # strip not only HTML tags <tag>, but also Asciidoc crossreferences <<xref>>
+              x.gsub(/<[^>]*>+/, "")
+            end
+          end
+        elsif node.respond_to?(:text)
+          result << node.text.gsub(/<[^>]*>+/, "")
+        else
+          result << node.content.gsub(/<[^>]*>+/, "")
+        end
+        result.reject(&:empty?)
+      end
+
 
 =begin
       def terms_and_definitions(node)

@@ -131,7 +131,7 @@ ISO 7301:2011, 3.1
 _paddy_ (<<paddy>>) from which the husk only has been removed 
 
 [.source]
-ISO 7301:2011, 3.2, modified The term cargo rice is shown as deprecated, and Note 1 to entry is not included here
+ISO 7301:2011, 3.2, modified The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
 
 === milled rice 
 [alt]#white rice#
