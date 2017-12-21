@@ -9,8 +9,7 @@ iso_standard =
 
 front =
   element front {
-    title_en,
-    title_fr,
+    title,
     documenttype,
     documentstatus?,
     id,
@@ -105,11 +104,14 @@ copyright_year =
 edition =
   element edition { text }
 
+title =
+  element title {title_en, title_fr}
+
 title_en = 
-  element title_en { title_intro?, title_main, title_part? } 
+  element en { title_intro?, title_main, title_part? } 
 
 title_fr = 
-  element title_fr { title_intro?, title_main, title_part? } 
+  element fr { title_intro?, title_main, title_part? } 
 
 title_intro =
   element title_intro { text }
@@ -154,6 +156,7 @@ scope =
 norm_ref =
   element norm_ref { 
     attribute anchor { xsd:ID }?,
+    para,
     iso_ref_title* 
   }
 
@@ -179,8 +182,11 @@ terms_defs =
   }
 
 termdef = 
-  element termdef { term, admitted_term?, symbol?, deprecated_term?,
-                    domain?, para, termnote*, termexample*, termref* }
+  element termdef { 
+    attribute anchor { xsd:ID }?,
+    term, admitted_term*, symbol?, deprecated_term*,
+    domain?, para, termnote*, termexample*, termref* 
+  }
 
 term = 
   element term { text }
@@ -235,7 +241,7 @@ bibliography =
   element bibliography { para+ }
 
 para =
-     element para {
+     element p {
        (text | em | eref | strong | sub | sup | tt | xref | fn | br)*
      }
 
@@ -252,7 +258,10 @@ fn =
      }
 
 ol =
-  element ol { li+ }
+  element ol { 
+    attribute type { text },
+    li+ 
+  }
 
 ul = 
   element ul { li+ }

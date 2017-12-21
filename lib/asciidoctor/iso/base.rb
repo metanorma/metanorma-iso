@@ -89,18 +89,20 @@ module Asciidoctor
       end
 
       def title(node, xml)
-        xml.title_en do |t|
-          t.title_intro {|t1| t1 << node.attr("title-intro") } if  node.attr("title-intro")
-          t.title_main {|t1| t1 << node.attr("title-main") } if  node.attr("title-main")
-          if  node.attr("title-part")
-            t.title_part node.attr("title-part")
+        xml.title do |t0|
+          t0.en do |t|
+            t.title_intro {|t1| t1 << node.attr("title-intro") } if  node.attr("title-intro")
+            t.title_main {|t1| t1 << node.attr("title-main") } if  node.attr("title-main")
+            if node.attr("title-part")
+              t.title_part node.attr("title-part")
+            end
           end
-        end
-        xml.title_fr do |t|
-          t.title_intro {|t1| t1 << node.attr("title-intro-fr") } if  node.attr("title-intro-fr")
-          t.title_main {|t1| t1 << node.attr("title-main-fr") } if  node.attr("title-main-fr")
-          if  node.attr("title-part-fr")
-            t.title_part node.attr("title-part-fr")
+          t0.fr do |t|
+            t.title_intro {|t1| t1 << node.attr("title-intro-fr") } if  node.attr("title-intro-fr")
+            t.title_main {|t1| t1 << node.attr("title-main-fr") } if  node.attr("title-main-fr")
+            if node.attr("title-part-fr")
+              t.title_part node.attr("title-part-fr")
+            end
           end
         end
       end
@@ -129,7 +131,7 @@ module Asciidoctor
           end
         else
           result << noko do |xml|
-            xml.para do |xml_t|
+            xml.p do |xml_t|
               xml_t << node.content
             end
           end
@@ -171,7 +173,12 @@ module Asciidoctor
       def inline_quoted(node)
         noko do |xml|
           case node.type
-          when :emphasis then xml.em node.text
+          when :emphasis then 
+            if $norm_ref
+              xml << node.text # ignore italics
+            else
+              xml.em node.text
+            end
           when :strong then xml.strong node.text
           when :monospaced then xml.tt node.text
           when :double then xml << "\"#{node.text}\""
@@ -246,6 +253,7 @@ HERE
         "??"
       end
 
+=begin
       def terms_and_definitions(node)
         while !node.nil? and node.level > 0 and node.context != :section
           node = node.parent
@@ -253,6 +261,7 @@ HERE
         end
         return false
       end
+=end
     end
   end
 end

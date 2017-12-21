@@ -23,7 +23,7 @@ module Asciidoctor
           anchor: node.id,
         }
 
-        if terms_and_definitions(node)
+        if $term_def
           termnote_contents = node.content
           warn <<~WARNING_MESSAGE if node.blocks?
             asciidoctor: WARNING (#{current_location(node)}): comment can not contain blocks of text in XML RFC:\n #{node.content}
@@ -51,7 +51,7 @@ module Asciidoctor
           anchor: node.id,
         }
 
-        if terms_and_definitions(node)
+        if $term_def
           termexample_contents = node.content
           result << noko do |xml|
             xml.termexample **attr_code(example_attributes) do |ex|
@@ -82,7 +82,6 @@ module Asciidoctor
       def section(node)
         result = []
         if node.attr("style") == "appendix"
-          result << "</middle><back>" unless $seen_back_matter
           $seen_back_matter = true
         end
 
@@ -106,16 +105,27 @@ module Asciidoctor
             end
           when "normative references"
             xml.norm_ref **attr_code(section_attributes) do |xml_section|
+              $norm_ref = true
               xml_section << node.content
+              $norm_ref = false
             end
           when "terms and definitions"
             xml.terms_defs **attr_code(section_attributes) do |xml_section|
+              $term_def = true
               xml_section << node.content
+              $term_def = false
             end
           else
-            xml.clause **attr_code(section_attributes) do |xml_section|
-              xml_section.name { |name| name << node.title } unless node.title.nil?
-              xml_section << node.content
+            if $term_def
+              xml.termdef **attr_code(section_attributes) do |xml_section|
+                xml_section.term { |name| name << node.title } 
+                xml_section << node.content
+              end
+            else
+              xml.clause **attr_code(section_attributes) do |xml_section|
+                xml_section.name { |name| name << node.title } unless node.title.nil?
+                xml_section << node.content
+              end
             end
           end
         end

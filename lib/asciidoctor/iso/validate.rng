@@ -14,8 +14,7 @@
   </define>
   <define name="front">
     <element name="front">
-      <ref name="title_en"/>
-      <ref name="title_fr"/>
+      <ref name="title"/>
       <ref name="documenttype"/>
       <optional>
         <ref name="documentstatus"/>
@@ -172,8 +171,14 @@
       <text/>
     </element>
   </define>
+  <define name="title">
+    <element name="title">
+      <ref name="title_en"/>
+      <ref name="title_fr"/>
+    </element>
+  </define>
   <define name="title_en">
-    <element name="title_en">
+    <element name="en">
       <optional>
         <ref name="title_intro"/>
       </optional>
@@ -184,7 +189,7 @@
     </element>
   </define>
   <define name="title_fr">
-    <element name="title_fr">
+    <element name="fr">
       <optional>
         <ref name="title_intro"/>
       </optional>
@@ -290,6 +295,7 @@
           <data type="ID"/>
         </attribute>
       </optional>
+      <ref name="para"/>
       <zeroOrMore>
         <ref name="iso_ref_title"/>
       </zeroOrMore>
@@ -342,15 +348,15 @@
   <define name="termdef">
     <element name="termdef">
       <ref name="term"/>
-      <optional>
+      <zeroOrMore>
         <ref name="admitted_term"/>
-      </optional>
+      </zeroOrMore>
       <optional>
         <ref name="symbol"/>
       </optional>
-      <optional>
+      <zeroOrMore>
         <ref name="deprecated_term"/>
-      </optional>
+      </zeroOrMore>
       <optional>
         <ref name="domain"/>
       </optional>
@@ -484,7 +490,7 @@
     </element>
   </define>
   <define name="para">
-    <element name="para">
+    <element name="p">
       <zeroOrMore>
         <choice>
           <text/>
@@ -527,6 +533,7 @@
   </define>
   <define name="ol">
     <element name="ol">
+      <attribute name="type"/>
       <oneOrMore>
         <ref name="li"/>
       </oneOrMore>
