@@ -16,12 +16,12 @@ module Asciidoctor
 
               xml_ul.li **attr_code(li_attributes) do |xml_li|
                 if item.blocks?
-                  xml_li.t do |t|
+                  xml_li.para do |t|
                     t << item.text
                   end
                   xml_li << item.content
                 else
-                  xml_li << item.text
+                  xml_li.para item.text
                 end
               end
             end
@@ -46,12 +46,12 @@ module Asciidoctor
               }
               xml_ol.li **attr_code(li_attributes) do |xml_li|
                 if item.blocks?
-                  xml_li.t do |t|
+                  xml_li.para do |t|
                     t << item.text
                   end
                   xml_li << item.content
                 else
-                  xml_li << item.text
+                  xml_li.para item.text
                 end
               end
             end
@@ -82,11 +82,11 @@ module Asciidoctor
                 xml_dl.dd do |xml_dd|
                   if dd.blocks?
                     if dd.text?
-                      xml_dd.t { |t| t << dd.text }
+                      xml_dd.para { |t| t << dd.text }
                     end
                     xml_dd << dd.content
                   else
-                    xml_dd << dd.text
+                    xml_dd.para dd.text
                   end
                 end
               end

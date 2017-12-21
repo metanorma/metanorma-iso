@@ -16,15 +16,103 @@
     <element name="front">
       <ref name="title_en"/>
       <ref name="title_fr"/>
-      <ref name="documentnumber"/>
-      <ref name="technical_committee"/>
+      <ref name="documenttype"/>
       <optional>
-        <ref name="subcommittee"/>
+        <ref name="documentstatus"/>
       </optional>
+      <ref name="id"/>
+      <optional>
+        <ref name="version"/>
+      </optional>
+      <ref name="author"/>
       <ref name="foreword"/>
       <optional>
         <ref name="introduction"/>
       </optional>
+    </element>
+  </define>
+  <define name="version">
+    <element name="version">
+      <optional>
+        <ref name="edition"/>
+      </optional>
+      <optional>
+        <ref name="revdate"/>
+      </optional>
+      <optional>
+        <ref name="copyright_year"/>
+      </optional>
+    </element>
+  </define>
+  <define name="id">
+    <element name="id">
+      <ref name="documentnumber"/>
+      <optional>
+        <ref name="tc_documentnumber"/>
+      </optional>
+      <optional>
+        <ref name="ref_documentnumber"/>
+      </optional>
+    </element>
+  </define>
+  <define name="author">
+    <element name="author">
+      <ref name="technical_committee"/>
+      <optional>
+        <ref name="subcommittee"/>
+      </optional>
+      <optional>
+        <ref name="workgroup"/>
+      </optional>
+    </element>
+  </define>
+  <define name="documenttype">
+    <element name="documenttype">
+      <choice>
+        <value>international-standard</value>
+        <value>technical-specification</value>
+        <value>technical-report</value>
+        <value>publicly-available-specification</value>
+        <value>international-workshop-agreement</value>
+        <value>guide</value>
+      </choice>
+    </element>
+  </define>
+  <define name="documentstatus">
+    <element name="documentstatus">
+      <ref name="stage"/>
+      <optional>
+        <ref name="substage"/>
+      </optional>
+    </element>
+  </define>
+  <define name="stage">
+    <element name="stage">
+      <choice>
+        <value>00</value>
+        <value>10</value>
+        <value>20</value>
+        <value>30</value>
+        <value>40</value>
+        <value>50</value>
+        <value>60</value>
+        <value>90</value>
+        <value>95</value>
+      </choice>
+    </element>
+  </define>
+  <define name="substage">
+    <element name="substage">
+      <choice>
+        <value>00</value>
+        <value>20</value>
+        <value>60</value>
+        <value>90</value>
+        <value>92</value>
+        <value>93</value>
+        <value>98</value>
+        <value>99</value>
+      </choice>
     </element>
   </define>
   <define name="documentnumber">
@@ -32,6 +120,16 @@
       <optional>
         <attribute name="partnumber"/>
       </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="tc_documentnumber">
+    <element name="tc_documentnumber">
+      <text/>
+    </element>
+  </define>
+  <define name="ref_documentnumber">
+    <element name="ref_documentnumber">
       <text/>
     </element>
   </define>
@@ -48,6 +146,29 @@
       <optional>
         <attribute name="number"/>
       </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="workgroup">
+    <element name="workgroup">
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="revdate">
+    <element name="revdate">
+      <text/>
+    </element>
+  </define>
+  <define name="copyright_year">
+    <element name="copyright_year">
+      <text/>
+    </element>
+  </define>
+  <define name="edition">
+    <element name="edition">
       <text/>
     </element>
   </define>
@@ -406,6 +527,44 @@
           <ref name="ul"/>
         </choice>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="dl">
+    <element name="dl">
+      <oneOrMore>
+        <ref name="dt"/>
+        <ref name="dd"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="dt">
+    <element name="dt">
+      <choice>
+        <text/>
+        <ref name="em"/>
+        <ref name="eref"/>
+        <ref name="strong"/>
+        <ref name="sub"/>
+        <ref name="sup"/>
+        <ref name="tt"/>
+        <ref name="xref"/>
+        <ref name="br"/>
+      </choice>
+    </element>
+  </define>
+  <define name="dd">
+    <element name="dd">
+      <zeroOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="table"/>
+          <ref name="note"/>
+          <ref name="stem"/>
+          <ref name="warning"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="note">

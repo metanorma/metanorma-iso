@@ -63,12 +63,30 @@ module Asciidoctor
       end
 
       def metadata(node, xml)
+        xml.documenttype  node.attr("doctype")
+        xml.documentstatus do |s|
+          s.stage node.attr("docstage")
+          s.substage node.attr("docsubstage") if node.attr("docsubstage")
+        end
         docnum_attrs = { partnumber: node.attr("partnumber") }
-        xml.documentnumber  node.attr("docnumber"), **attr_code(docnum_attrs)
-        tc_attrs = { number: node.attr("technical-committee-number") }
-        xml.technical_committee node.attr("technical-committee"), **attr_code(tc_attrs)
-        sc_attrs = { number: node.attr("subcommittee-number") }
-        xml.subcommittee node.attr("subcommittee"), **attr_code(sc_attrs) if node.attr("subcommittee")
+        xml.id do |i|
+          i.documentnumber node.attr("docnumber"), **attr_code(docnum_attrs)
+          i.tc_documentnumber node.attr("tc-docnumber") if node.attr("tc-docnumber")
+          i.ref_documentnumber node.attr("ref-docnumber") if node.attr("ref-docnumber")
+        end
+        xml.version do |v|
+          v.edition node.attr("edition") if node.attr("edition")
+          v.revdate node.attr("revdate") if node.attr("revdate")
+          v.copyright_year node.attr("copyright-year") if node.attr("copyright-year")
+        end
+        xml.author do |a| 
+          tc_attrs = { number: node.attr("technical-committee-number") }
+          a.technical_committee node.attr("technical-committee"), **attr_code(tc_attrs)
+          sc_attrs = { number: node.attr("subcommittee-number") }
+          a.subcommittee node.attr("subcommittee"), **attr_code(sc_attrs) if node.attr("subcommittee")
+          wg_attrs = { number: node.attr("workgroup-number") }
+          a.workgroup node.attr("workgroup"), **attr_code(wg_attrs) if node.attr("workgroup")
+        end
       end
 
       def title(node, xml)

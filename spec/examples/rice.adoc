@@ -1,7 +1,11 @@
 = Rice model
 :docnumber: 17301
+:tc-docnumber: 17301
+:ref-docnumber: ISO 17301-1:2016(E)
 :partnumber: 1
+:edition: 2
 :revdate: 2016-05-01
+:copyright-year: 2016
 :title-intro: Cereals and pulses
 :title-main: Specifications and test methods
 :title-part: Rice
@@ -9,10 +13,14 @@
 :title-main-fr: Spécification et éthodes d'essai
 :title-part-fr: Riz
 :doctype: international-standard
+:docstage: 60
+:docsubstage: 60
 :technical-committee-number: 34
 :technical-committee: Food products
 :subcommittee-number: 4
 :subcommittee: Cereals and pulses
+:workgroup-number: 3
+:workgroup: Rice Group
 :toc:
 :sectnumlevels: 9
 :stem:

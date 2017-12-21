@@ -11,16 +11,70 @@ front =
   element front {
     title_en,
     title_fr,
-    documentnumber,
-    technical_committee,
-    subcommittee?,
+    documenttype,
+    documentstatus?,
+    id,
+    version?,
+    author,
     foreword,
     introduction?
+  }
+
+version =
+  element version {
+    edition?,
+    revdate?,
+    copyright_year?
+  }
+
+id =
+  element id {
+    documentnumber,
+    tc_documentnumber?,
+    ref_documentnumber?
+  }
+
+author =
+  element author {
+    technical_committee,
+    subcommittee?,
+    workgroup?
+  }
+
+documenttype =
+  element documenttype {
+     ("international-standard" | "technical-specification" | "technical-report" | "publicly-available-specification" | "international-workshop-agreement" | "guide" )
+  }
+
+documentstatus =
+  element documentstatus {
+     stage,
+     substage?
+  }
+
+stage = 
+  element stage {
+    ("00" | "10" | "20" | "30" | "40" | "50" | "60" | "90" | "95" )
+  }
+
+substage = 
+  element substage {
+    ("00" | "20" | "60" | "90" | "92" | "93" | "98" | "99" )
   }
 
 documentnumber = 
   element documentnumber { 
     attribute partnumber { text }?,
+    text 
+   }
+
+tc_documentnumber = 
+  element tc_documentnumber { 
+    text 
+   }
+
+ref_documentnumber = 
+  element ref_documentnumber { 
     text 
    }
 
@@ -35,6 +89,21 @@ subcommittee =
     attribute number { text }?,
     text
   }
+
+workgroup =
+  element workgroup {
+    attribute number { text }?,
+    text
+  }
+
+revdate =
+  element revdate { text }
+
+copyright_year =
+  element copyright_year { text }
+
+edition =
+  element edition { text }
 
 title_en = 
   element title_en { title_intro?, title_main, title_part? } 
@@ -178,6 +247,21 @@ ul =
 li =
   element li {
     ( para | table | note | stem | warning | ol | ul )+
+  }
+
+dl =
+  element dl {
+    (dt, dd)+
+  }
+
+dt =
+  element dt {
+    (text | em | eref | strong | sub | sup | tt | xref | br)
+  }
+
+dd =
+  element dd {
+    ( para | table | note | stem | warning | ol | ul)*
   }
 
 note =
