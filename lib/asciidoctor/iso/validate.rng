@@ -4,7 +4,7 @@
     <ref name="iso_standard"/>
   </start>
   <define name="iso_standard">
-    <element name="iso_standard">
+    <element name="iso-standard">
       <ref name="front"/>
       <ref name="middle"/>
       <optional>

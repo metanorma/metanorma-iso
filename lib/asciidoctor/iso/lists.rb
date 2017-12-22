@@ -168,6 +168,27 @@ module Asciidoctor
         end
         result
       end
+
+      def colist(node)
+        result = []
+        result << noko do |xml|
+          ul_attributes = {
+            anchor: node.id,
+          }
+
+          xml.colist **attr_code(ul_attributes) do |xml_ul|
+            node.items.each_with_index do |item, i|
+              li_attributes = {
+                id: i
+              }
+              xml_ul.annotation **attr_code(li_attributes) do |xml_li|
+                    xml_li << item.text
+              end
+            end
+          end
+        end
+        result
+      end
     end
   end
 end

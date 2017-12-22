@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<iso_standard>
+<iso-standard>
 <front>
   <title>
     <en>
@@ -762,4 +762,4 @@ World<br/>
   <reference>
   <ref anchor="ref16">[16]</ref><p> Tkachuk R. Nitrogen-to-protein conversion factors for cereals and oilseed meals. <em>Cereal Chem.</em> 1969, <strong>46</strong> (4) pp 419-423</p>
 </reference>
-</bibliography></back></iso_standard>
+</bibliography></back></iso-standard>

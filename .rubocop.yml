@@ -1,0 +1,32 @@
+inherit_from: .oss-guides.rubocop.yml
+
+AllCops:
+  TargetRubyVersion: 2.3
+
+Metrics/LineLength:
+  Exclude:
+  - "spec/**/*"
+
+Rails:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Naming/VariableName:
+  Enabled: false

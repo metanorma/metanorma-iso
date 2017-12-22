@@ -1,7 +1,7 @@
 start = iso_standard
 
 iso_standard = 
-  element iso_standard {
+  element iso-standard {
     front,
     middle,
     back?
@@ -126,13 +126,13 @@ title_part =
 
 foreword =
   element foreword { 
-    ( para | table | note | formula | warning | ol | ul | dl | figure )*
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*
   }
 
 introduction =
   element introduction { 
     attribute anchor { xsd:ID }?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure )*,
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*,
     patent_notice? 
   }
 
@@ -228,9 +228,16 @@ clause =
   element clause {
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure )*, 
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*, 
     clause*
   }
+
+quote =
+  element quote {
+    attribute anchor { xsd:ID }?,
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*
+  }
+
 
 back = 
   element back {
@@ -242,7 +249,7 @@ annex =
   element annex { 
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure )*,
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*,
     clause*
   }
 
@@ -275,6 +282,30 @@ figure =
     figure*
   }
 
+sourcecode =
+  element sourcecode {
+    attribute anchor { xsd:ID }?,
+    tname?,
+    ( text | callout )*,
+    colist?
+  }
+
+callout =
+  element callout {
+    xsd:ID
+  }
+
+colist = 
+  element colist {
+    annotation+
+  }
+
+annotation =
+  element annotation {
+    attribute anchor { xsd:ID }?,
+    text
+  }
+
 fn =
   element fn { 
        (text | em | eref | stem | strong | sub | sup | tt | xref | br)*
@@ -291,7 +322,7 @@ ul =
 
 li =
   element li {
-    ( para | table | note | formula | warning | ol | ul | dl )+
+    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode )+
   }
 
 dl =
@@ -306,7 +337,7 @@ dt =
 
 dd =
   element dd {
-    ( para | table | note | formula | warning | ol | ul | dl )*
+    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode )*
   }
 
 note =

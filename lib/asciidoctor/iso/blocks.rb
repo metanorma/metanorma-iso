@@ -161,6 +161,42 @@ module Asciidoctor
         end
       end
 
+      def quote(node)
+        blockquote_attributes = {
+          anchor: node.id,
+        }
+
+        noko do |xml|
+          xml.quote **attr_code(blockquote_attributes) do |xml_blockquote|
+              if node.blocks?
+                xml_blockquote << node.content
+              else
+                xml_blockquote.p { |p| p << node.content }
+              end
+          end
+        end
+      end
+      def listing(node)
+        sourcecode_attributes = {
+          anchor: node.id,
+        }
+
+        # NOTE: html escaping is performed by Nokogiri
+        sourcecode_content =
+          sourcecode_attributes[:src].nil? ? node.lines.join("\n") : ""
+
+        noko do |xml|
+          if node.parent.context != :example
+            xml.figure do |xml_figure|
+              xml_figure.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+            end
+          else
+            xml.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+          end
+        end
+      end
+
+
     end
   end
 end
