@@ -5,11 +5,22 @@ This gem processes http://asciidoctor.org/[Asciidoctor] documents and outputs an
 
 The document model intends to introduce rigour into the ISO standards authoring process; the existing https://www.iso.org/iso-templates.html[Microsoft Word template from ISO] do not support such rigour down to the element level. The ISO International Standard format is prescribed in http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"], to a level that is amenable to an explicit document model. A formal document model would allow checking for consistency in format and content, and expedite authoring and quality control of ISO standards.
 
-The document model is under development, but it already contains all the markup needed to render the https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's model document of an international standard. It is expressed as a link:lib/asciidoctor/iso/validate.rnc[Relax NG Compact schema]; actual validation occurs against its link:lib/asciidoctor/iso/validate.rng[full Relax NG counterpart]. A UML representation of the document model is given below.
+The document model ("ISO XML") is under development, but it already contains all the markup needed to render the https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's model document of an international standard. It is expressed as a link:lib/asciidoctor/iso/validate.rnc[Relax NG Compact schema]; actual validation occurs against its link:lib/asciidoctor/iso/validate.rng[full Relax NG counterpart]. A UML representation of the document model is given below. Note that the document model is currently still in the exploratory phase, and will likely be changing significantly.
 
 Asciidoctor has been selected as the authoring tool to generate the document model representation of ISO standards. It is a document formatting tool like Markdown and DocBook, which combines the relative ease of use of the former (using relatively lightweight markup), and the rigour and expressively of the latter (it has a well-defined syntax, and was in fact initially developed as a DocBook document authoring tool). Asciidoctor has built-in capability to output Text, DocBook and HTML; so it can be used to preview the file as it is being authored.
 
+The gem uses built-in Asciidoc formatting as much as possible, so that users can retain the ability to preview documents; for _Terms and Definitions_ clauses, which have a good deal of explicit structure, macros have been introduced for semantic markup (admitted terms, deprecated terms, etc). The default HTML output of an Asciidoc-formatted ISO document is quite close to the intended final output, with the following exceptions: 
 
+* _Terms and Definitions_: each term is marked up as an unnumbered subclause, the semantic markup of alternate and other terms is not rendered visually.
+* _Formuals_: Asciidoctor has no provision for the automated numbering of isolated block formulas ("stem"), although it does provide automated numbering of examples. The encoding of formulas may change in future versions, although the final numbering is meant to be provided by downstream tools processing the ISO XML output.
+* _Missing elements_: The document model does not yet include Asciidoc elements that do not occur in the Rice document: in particular, source code, definition lists (except when used as keys for formuals or figures), examples (as distinct from figures; examples within _Terms and Definitions_ are catered for), sidebars (as distinct from warnings), quotes.
+* _ISO Standard crossreferences_: Have not yet been realised, though the Normative References section does encode the referenced ISO standards in a structured fashion.
+* Some connecting text which is used to convey markup structure is left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting macros).
+* _Tables_: Table footnotes are treated like all other footnotes, and rendered at the bottom of the document, rather than the bottom of the table.
+
+Note that in order to generate output close to what is intended, the Asciidoc document includes a fair amount of formatting instructions (e.g. disabling section numbering where appropriate), as well as ISO boilerplate text, and predefined section headers (sections are recognised by fixed titles such as `Normative References`). Authoring ISO standards in this fashion assumes that users will be populating an Asciidoc template.
+
+The gem translates the document into ISO XML format, and then validates its output against the ISO XML document model; errors are reported to console against the XML, and are intended for users to check that they have provided all necessary components of the document.
 
 == Usage
 [source,console]
@@ -28,5 +39,7 @@ image::grammar4.gif[]
 
 == Examples
 The gem has been tested to date against the https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's model document of an international standard. This repository includes:
+
 * the link:spec/examples/rice.adoc[Asciidoc version of the Rice document].
-* the link:spec/examples/rice.adoc[Asciidoc version of the Rice document].
+* the link:spec/examples/rice.html[Asciidoc rendering of the Rice document as HTML].
+* the link:spec/examples/rice.xml[ISO XML rendering of the Rice document].

@@ -114,6 +114,7 @@ ISO and IEC maintain terminological databases for use in standardization at the 
 * ISO Online browsing platform: available at http://www.iso.org/obp
 * IEC Electropedia: available at http://www.electropedia.org
 
+:sectnums!:
 [[paddy]]
 === paddy 
 [alt]#paddy rice#
@@ -221,6 +222,7 @@ time necessary for 90 % of the kernels to pass from their natural state to the _
 [.source]
 ISO 14864:1998, 3.3
 
+:sectnums:
 == Specifications 
 
 === General, organoleptic and health characteristics 
