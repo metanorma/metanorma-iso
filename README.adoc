@@ -18,7 +18,32 @@ The gem uses built-in Asciidoc formatting as much as possible, so that users can
 * Some connecting text which is used to convey markup structure is left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting macros).
 * _Tables_: Table footnotes are treated like all other footnotes, and rendered at the bottom of the document, rather than the bottom of the table.
 
-Note that in order to generate output close to what is intended, the Asciidoc document includes a fair amount of formatting instructions (e.g. disabling section numbering where appropriate), as well as ISO boilerplate text, and predefined section headers (sections are recognised by fixed titles such as `Normative References`). Authoring ISO standards in this fashion assumes that users will be populating an Asciidoc template.
+Note that in order to generate output close to what is intended, the Asciidoc document includes a fair amount of formatting instructions (e.g. disabling section numbering where appropriate, the titling of Appendixes as Annexes), as well as ISO boilerplate text, and predefined section headers (sections are recognised by fixed titles such as `Normative References`). Authoring ISO standards in this fashion assumes that users will be populating an Asciidoc template, and not removing needed formatting instructions.
+
+The gem also relies on Asciidoc document attributes to provide necessary metadata about the document. These include:
+
+`:docnumber:`:: The ISO document number (mandatory)
+`:tc-docnumber:`:: The document number assigned by the Technical committee
+`:ref-docnumber:`:: The reference document number (appearing in page headers)
+`:partnumber`:: The ISO document part number
+`:edition`:: The document edition
+`:revdate`:: The date the document was last updated
+`:copyright-year`:: The year which will be claimed as when the copyright for the document was issued
+`:title-intro`:: The introductory component of the title of the document
+`:title-main`:: The main component of the title of the document (mandatory). (The first line of the Asciidoc document, which contains the title introduced with `=`, is ignored)
+`:title-part`:: The title of the document part
+`:title-intro-fr`:: The introductory component of the French title of the document. (This document template presupposes authoring in English; a different template will be needed for French, including French titles of document components such as annexes.)
+`:title-main-fr`:: The main component of the French title of the document (mandatory). 
+`:title-part-fr`:: The French title of the document part
+`:doctype`:: The document type (see https://www.iso.org/deliverables-all.html[ISO deliverables: The different types of ISO publications] (mandatory). The permitted types are: `international-standard, technical-specification, technical-report, publicly-available-specification, international-workshop-agreement, guide`.
+`:docstage`:: The stage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes]
+`:docsubstage`:: The substage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes]
+`:technical-committee-number`:: The number of the relevant ISO technical committee
+`:technical-committee`:: The name of the relevant ISO technical committee (mandatory)
+`:subcommittee-number`:: The number of the relevant ISO subcommittee
+`:subcommittee`:: The name of the relevant ISO subcommittee
+`:workgroup-number`:: The number of the relevant ISO workgroup
+`:workgroup`:: The name of the relevant ISO workgroup
 
 The gem translates the document into ISO XML format, and then validates its output against the ISO XML document model; errors are reported to console against the XML, and are intended for users to check that they have provided all necessary components of the document.
 
