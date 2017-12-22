@@ -62,6 +62,7 @@ The gem also relies on Asciidoc document attributes to provide necessary metadat
 `:subcommittee`:: The name of the relevant ISO subcommittee
 `:workgroup-number`:: The number of the relevant ISO workgroup
 `:workgroup`:: The name of the relevant ISO workgroup
+`:language` :: The language of the document (`en` or `fr`)  (mandatory)
 
 The gem translates the document into ISO XML format, and then validates its output against the ISO XML document model; errors are reported to console against the XML, and are intended for users to check that they have provided all necessary components of the document.
 

@@ -20,6 +20,7 @@
         <ref name="documentstatus"/>
       </optional>
       <ref name="id"/>
+      <ref name="language"/>
       <optional>
         <ref name="version"/>
       </optional>
@@ -28,6 +29,14 @@
       <optional>
         <ref name="introduction"/>
       </optional>
+    </element>
+  </define>
+  <define name="language">
+    <element name="language">
+      <choice>
+        <value>en</value>
+        <value>fr</value>
+      </choice>
     </element>
   </define>
   <define name="version">
@@ -227,6 +236,8 @@
           <ref name="ul"/>
           <ref name="dl"/>
           <ref name="figure"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -249,6 +260,8 @@
           <ref name="ul"/>
           <ref name="dl"/>
           <ref name="figure"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
         </choice>
       </zeroOrMore>
       <optional>
@@ -470,10 +483,36 @@
           <ref name="ul"/>
           <ref name="dl"/>
           <ref name="figure"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
         </choice>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="clause"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="quote">
+    <element name="quote">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="table"/>
+          <ref name="note"/>
+          <ref name="formula"/>
+          <ref name="warning"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+          <ref name="dl"/>
+          <ref name="figure"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>
@@ -506,6 +545,8 @@
           <ref name="ul"/>
           <ref name="dl"/>
           <ref name="figure"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
         </choice>
       </zeroOrMore>
       <zeroOrMore>
@@ -584,6 +625,49 @@
       </zeroOrMore>
     </element>
   </define>
+  <define name="sourcecode">
+    <element name="sourcecode">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="callout"/>
+        </choice>
+      </zeroOrMore>
+      <optional>
+        <ref name="colist"/>
+      </optional>
+    </element>
+  </define>
+  <define name="callout">
+    <element name="callout">
+      <data type="ID"/>
+    </element>
+  </define>
+  <define name="colist">
+    <element name="colist">
+      <oneOrMore>
+        <ref name="annotation"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="annotation">
+    <element name="annotation">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <text/>
+    </element>
+  </define>
   <define name="fn">
     <element name="fn">
       <zeroOrMore>
@@ -629,6 +713,8 @@
           <ref name="ol"/>
           <ref name="ul"/>
           <ref name="dl"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
         </choice>
       </oneOrMore>
     </element>
@@ -669,6 +755,8 @@
           <ref name="ol"/>
           <ref name="ul"/>
           <ref name="dl"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
         </choice>
       </zeroOrMore>
     </element>

@@ -13,10 +13,16 @@ front =
     documenttype,
     documentstatus?,
     id,
+    language,
     version?,
     author,
     foreword,
     introduction?
+  }
+
+language =
+  element language {
+    ( "en" | "fr" )
   }
 
 version =

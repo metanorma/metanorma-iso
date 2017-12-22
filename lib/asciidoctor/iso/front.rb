@@ -22,6 +22,7 @@ module Asciidoctor
           i.tc_documentnumber node.attr("tc-docnumber") if node.attr("tc-docnumber")
           i.ref_documentnumber node.attr("ref-docnumber") if node.attr("ref-docnumber")
         end
+        xml.language node.attr("lanuage") 
         xml.version do |v|
           v.edition node.attr("edition") if node.attr("edition")
           v.revdate node.attr("revdate") if node.attr("revdate")
