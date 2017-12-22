@@ -47,6 +47,7 @@ module Asciidoctor
       alias_method :inline_image, :skip
 
       alias_method :quote, :paragraph
+      alias_method :inline_callout, :content
     end
   end
 end
