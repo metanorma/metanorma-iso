@@ -35,9 +35,9 @@ The gem also relies on Asciidoc document attributes to provide necessary metadat
 `:title-intro-fr`:: The introductory component of the French title of the document. (This document template presupposes authoring in English; a different template will be needed for French, including French titles of document components such as annexes.)
 `:title-main-fr`:: The main component of the French title of the document (mandatory). 
 `:title-part-fr`:: The French title of the document part
-`:doctype`:: The document type (see https://www.iso.org/deliverables-all.html[ISO deliverables: The different types of ISO publications] (mandatory). The permitted types are: `international-standard, technical-specification, technical-report, publicly-available-specification, international-workshop-agreement, guide`.
-`:docstage`:: The stage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes]
-`:docsubstage`:: The substage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes]
+`:doctype`:: The document type (see https://www.iso.org/deliverables-all.html[ISO deliverables: The different types of ISO publications]) (mandatory). The permitted types are: `international-standard, technical-specification, technical-report, publicly-available-specification, international-workshop-agreement, guide`.
+`:docstage`:: The stage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes])
+`:docsubstage`:: The substage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes])
 `:technical-committee-number`:: The number of the relevant ISO technical committee
 `:technical-committee`:: The name of the relevant ISO technical committee (mandatory)
 `:subcommittee-number`:: The number of the relevant ISO subcommittee
