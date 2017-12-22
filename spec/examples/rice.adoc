@@ -297,7 +297,6 @@ Determine the mass fraction of waxy rice. <<AnnexB>> gives an example of a suita
 
 Determine the nitrogen content and crude protein content in accordance with either ISO 16634:--, Clause 9, or ISO 20483. For details on the determination of protein content using the Kjeldahl method, see Reference <<ref12>> in the Bibliography. For details concerning the use of the Dumas method, see References <<ref10>> and <<ref16>>. 
 
-// superscript refs
 Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in ISO 20483:2013, Annex C and Table C.1, that is adapted to the type of cereals or pulses <<ref13,fn>><<ref14,fn>> and to their use.
 
 === Gelatinization time 

@@ -225,6 +225,7 @@
           <ref name="warning"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="dl"/>
           <ref name="figure"/>
         </choice>
       </zeroOrMore>
@@ -246,6 +247,7 @@
           <ref name="warning"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="dl"/>
           <ref name="figure"/>
         </choice>
       </zeroOrMore>
@@ -466,6 +468,7 @@
           <ref name="warning"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="dl"/>
           <ref name="figure"/>
         </choice>
       </zeroOrMore>
@@ -501,6 +504,7 @@
           <ref name="warning"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="dl"/>
           <ref name="figure"/>
         </choice>
       </zeroOrMore>
@@ -621,6 +625,7 @@
           <ref name="warning"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="dl"/>
         </choice>
       </oneOrMore>
     </element>
@@ -660,6 +665,7 @@
           <ref name="warning"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="dl"/>
         </choice>
       </zeroOrMore>
     </element>

@@ -126,13 +126,13 @@ title_part =
 
 foreword =
   element foreword { 
-    ( para | table | note | formula | warning | ol | ul | figure )*
+    ( para | table | note | formula | warning | ol | ul | dl | figure )*
   }
 
 introduction =
   element introduction { 
     attribute anchor { xsd:ID }?,
-    ( para | table | note | formula | warning | ol | ul | figure )*,
+    ( para | table | note | formula | warning | ol | ul | dl | figure )*,
     patent_notice? 
   }
 
@@ -225,7 +225,7 @@ clause =
   element clause {
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | figure )*, 
+    ( para | table | note | formula | warning | ol | ul | dl | figure )*, 
     clause*
   }
 
@@ -239,7 +239,7 @@ annex =
   element annex { 
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | figure )*,
+    ( para | table | note | formula | warning | ol | ul | dl | figure )*,
     clause*
   }
 
@@ -288,7 +288,7 @@ ul =
 
 li =
   element li {
-    ( para | table | note | formula | warning | ol | ul )+
+    ( para | table | note | formula | warning | ol | ul | dl )+
   }
 
 dl =
@@ -303,7 +303,7 @@ dt =
 
 dd =
   element dd {
-    ( para | table | note | formula | warning | ol | ul)*
+    ( para | table | note | formula | warning | ol | ul | dl )*
   }
 
 note =
