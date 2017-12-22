@@ -38,7 +38,6 @@ module Asciidoctor
         result << "<iso_standard>"
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
-        # result << node.content if node.blocks?
         result << "</iso_standard>"
         result = result.flatten
         ret = result * "\n"
@@ -107,28 +106,32 @@ module Asciidoctor
         end
       end
 
-      def paragraph(node)
+      def termsource(node)
         result = []
-        if node.role == "source"
-          result << noko do |xml|
-            xml.termref do |xml_t|
-              # matched = /^ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match flatten_rawtext(node).flatten.join("")
-              matched = /^ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match node.content
-              if matched.nil?
-                warn %(asciidoctor: WARNING (#{current_location(node)}): term reference not in expected format: #{node.content})
-              else
-                xml_t.isocode matched[:code]
-                xml_t.isodate matched[:year] if matched[:year]
-                xml_t.isosection matched[:section] if matched[:section]
-                xml_t.modification { |m| m << matched[:text] } if matched[:text]
-              end
+        result << noko do |xml|
+          xml.termref do |xml_t|
+            # matched = /^ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match flatten_rawtext(node).flatten.join("")
+            matched = /^(?<xref><xref[^>]+>)(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match node.content
+            if matched.nil?
+              warn %(asciidoctor: WARNING (#{current_location(node)}): term reference not in expected format: #{node.content})
+            else
+              # xml_t.xref matched[:xref]
+              seen_xref = Nokogiri::XML.fragment(matched[:xref])
+              xml_t.xref seen_xref.children[0].content, **attr_code(target: seen_xref.children[0]["target"], format: seen_xref.children[0]["format"])
+              xml_t.isosection matched[:section] if matched[:section]
+              xml_t.modification { |m| m << matched[:text] } if matched[:text]
             end
           end
-        else
-          result << noko do |xml|
-            xml.p do |xml_t|
-              xml_t << node.content
-            end
+        end
+        result
+      end
+
+      def paragraph(node)
+        return termsource(node) if node.role == "source"
+        result = []
+        result << noko do |xml|
+          xml.p do |xml_t|
+            xml_t << node.content
           end
         end
         result
@@ -167,11 +170,7 @@ module Asciidoctor
         noko do |xml|
           case node.type
           when :emphasis then 
-            if $norm_ref
-              xml << node.text # ignore italics
-            else
-              xml.em node.text
-            end
+            xml.em node.text
           when :strong then xml.strong node.text
           when :monospaced then xml.tt node.text
           when :double then xml << "\"#{node.text}\""
@@ -225,6 +224,13 @@ module Asciidoctor
           prev = a.parent.previous
           a.remove
           prev.next = a
+        end
+
+        # Remove italicised ISO titles
+        xmldoc.xpath("//isotitle").each do |a|
+          if a.elements.size == 1 && a.elements[0].name == "em"
+            a.children = a.elements[0].children
+          end
         end
 
         # move notes after table footer

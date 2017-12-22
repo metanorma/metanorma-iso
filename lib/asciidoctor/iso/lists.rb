@@ -33,30 +33,48 @@ module Asciidoctor
         result
       end
 
+      def isorefmatches(xml, matched)
+        ref_attributes = {
+          anchor: matched[:anchor],
+        }
+        xml.iso_ref_title **attr_code(ref_attributes) do |t|
+          t.isocode matched[:code]
+          t.isodate matched[:year] if matched[:year]
+          t.isotitle { |i| i << ref_normalise(matched[:text]) }
+        end
+      end
+
+      def isorefmatches2(xml, matched2)
+        ref_attributes = {
+          anchor: matched2[:anchor],
+        }
+        xml.iso_ref_title **attr_code(ref_attributes) do |t|
+          t.isocode matched2[:code]
+          t.isodate "--"
+          t.date_footnote matched2[:fn]
+          t.isotitle { |i| i << ref_normalise(matched2[:text]) }
+        end
+      end
+
+      def ref_normalise(ref)
+        ref.gsub(/&#8201;&#8212;&#8201;/, " -- ").
+          gsub(/&amp;amp;/, "&amp;")
+      end
+
       def norm_ref(node)
         result = []
         result << noko do |xml|
           node.items.each do |item|
-            #   element iso_ref_title { isocode, isodate?, isotitle }
-            matched = /^ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?, (?<text>.*)$/.match item.text
-            matched2 = %r{^ISO (?<code>[0-9-]+):-- <fn>(?<fn>[^\]]+)</fn>, (?<text>.*)$}.match item.text
+            matched = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,? (?<text>.*)$}.match item.text
+            matched2 = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+):--\]</ref>,?[ ]?<fn>(?<fn>[^\]]+)</fn>,?[ ]?(?<text>.*)$}.match item.text
             if matched2.nil?
               if matched.nil?
                 warn %(asciidoctor: WARNING (#{current_location(node)}): normative reference not in expected format: #{item.text})
               else
-                xml.iso_ref_title do |t|
-                  t.isocode matched[:code]
-                  t.isodate matched[:year] if matched[:year]
-                  t.isotitle { |i| i << matched[:text].gsub(/&#8201;&#8212;&#8201;/, " -- ") }
-                end
+                isorefmatches(xml, matched)
               end
             else
-              xml.iso_ref_title do |t|
-                t.isocode matched2[:code]
-                t.isodate "--"
-                  t.date_footnote matched2[:fn]
-                t.isotitle { |i| i << matched2[:text].gsub(/&#8201;&#8212;&#8201;/, " -- ") }
-              end
+              isorefmatches2(xml, matched2)
             end
           end
         end
@@ -67,14 +85,23 @@ module Asciidoctor
         result = []
         result << noko do |xml|
           node.items.each do |item|
-            xml.reference do |t|
-              t.p { |p| p << item.text }
+            matched = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,? (?<text>.*)$}.match item.text
+            matched2 = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+):--\]</ref>,?[ ]?<fn>(?<fn>[^\]]+)</fn>,?[ ]?(?<text>.*)$}.match item.text
+            if matched2.nil?
+              if matched.nil?
+                xml.reference do |t|
+                  t.p { |p| p << ref_normalise(item.text) }
+                end
+              else
+                isorefmatches(xml, matched)
+              end
+            else
+              isorefmatches2(xml, matched2)
             end
           end
         end
         result
       end
-
 
       def olist(node)
         result = []

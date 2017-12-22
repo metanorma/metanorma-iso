@@ -306,6 +306,9 @@
   </define>
   <define name="iso_ref_title">
     <element name="iso_ref_title">
+      <attribute name="anchor">
+        <data type="ID"/>
+      </attribute>
       <ref name="isocode"/>
       <optional>
         <ref name="isodate"/>
@@ -427,14 +430,11 @@
   </define>
   <define name="termref">
     <element name="termref">
-      <ref name="isocode"/>
+      <ref name="xref"/>
       <optional>
-        <ref name="isodate"/>
+        <ref name="isosection"/>
         <optional>
-          <ref name="isosection"/>
-          <optional>
-            <ref name="modification"/>
-          </optional>
+          <ref name="modification"/>
         </optional>
       </optional>
     </element>
@@ -521,7 +521,10 @@
         </attribute>
       </optional>
       <oneOrMore>
-        <ref name="reference"/>
+        <choice>
+          <ref name="iso_ref_title"/>
+          <ref name="reference"/>
+        </choice>
       </oneOrMore>
     </element>
   </define>

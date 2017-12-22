@@ -162,7 +162,10 @@ norm_ref =
   }
 
 iso_ref_title =
-  element iso_ref_title { isocode, (isodate, date_footnote?)?, isotitle }
+  element iso_ref_title { 
+    attribute anchor { xsd:ID },
+    isocode, (isodate, date_footnote?)?, isotitle 
+  }
 
 isocode =
   element isocode { text }
@@ -213,7 +216,7 @@ termexample =
   element termexample { text }
 
 termref = 
-  element termref { isocode, (isodate, (isosection, modification?)?)? }
+  element termref { xref, (isosection, modification?)? }
 
 isosection =
   element isosection { text }
@@ -246,7 +249,7 @@ annex =
 bibliography =
   element bibliography { 
     attribute anchor { xsd:ID }?,
-    reference+ 
+    (iso_ref_title | reference)+ 
   }
 
 reference = 
