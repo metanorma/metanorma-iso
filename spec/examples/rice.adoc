@@ -99,7 +99,7 @@ The following documents are referred to in the text in such a way that some or a
 
 * ISO 8351-2, _Packaging -- Method of specification for sacks -- Part 2: Sacks made from thermoplastic flexible film_
 
-* ISO 16634: [Under preparation. (Stage at the time of publication ISO/DIS 16634)], _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_ 
+* ISO 16634:-- footnote:[Under preparation. (Stage at the time of publication ISO/DIS 16634)], _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_ 
 
 * ISO 20483:2013, _Cereals and pulses -- Determination of the nitrogen content and calculation of the crude protein content -- Kjeldahl method_
 
@@ -239,16 +239,17 @@ The presence of living insects which are visible to the naked eye is not permitt
 
 The mass fraction of moisture, determined in accordance with ISO 712, using an oven complying with the requirements of IEC 61010-2, shall not be greater than 15 %.footnote:[Formerly denoted as 15 % (m/m).] 
 
-The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <<AnnexA>>, shall not be greater than the values specified in Table 1. 
+The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <<AnnexA>>, shall not be greater than the values specified in <<table1>. 
 
 NOTE: Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see ISO 6322-1, ISO 6322-2 and ISO 6322-3.
 
-The defect tolerance for the categories considered, and determined in accordance with the method given in <<AnnexA>>, shall not exceed the limits given in Table 1. 
+The defect tolerance for the categories considered, and determined in accordance with the method given in <<AnnexA>>, shall not exceed the limits given in <<table1>>. 
 
-[cols="5",options="footer"]
+[#table1]
+[cols="<,^,^,^,^",options="footer"]
 .Maximum permissible mass fraction of defects
 |===
-.2+|Defect 4+| Maximum permissible mass fraction of defects in husked rice +
+.2+|Defect 4+^| Maximum permissible mass fraction of defects in husked rice +
 stem:[w_max]
 | in husked rice | in milled rice (non-glutinous) | in husked parboiled rice | in milled parboiled rice
 
@@ -387,7 +388,7 @@ The usual laboratory apparatus and, in particular, the following.
 [[AnnexA-2-1]]
 ==== Sample divider, 
 
-consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. Split-it-right sample divider, such as that shown in <<figureA.1>>. 
+consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. "Split-it-right" sample divider, such as that shown in <<figureA-1>>. 
 
 ==== Sieve, 
 
@@ -417,7 +418,7 @@ See <<clause5>>.
 [[AnnexA-4-1]]
 ==== Preparation of test sample 
 
-Carefully mix the laboratory sample to make it as uniform as possible, then proceed to reduce it, using a divider <<AnnexA-2-1>>, until a quantity of about 30 g is obtained. 
+Carefully mix the laboratory sample to make it as uniform as possible, then proceed to reduce it, using a divider (<<AnnexA-2-1>>), until a quantity of about 30 g is obtained. 
 
 All parts of kernels which get stuck in the perforations of a sieve should be considered to be retained by the sieve. 
 
@@ -427,7 +428,7 @@ image::splititright.gif[]
 
 === Determination 
 
-Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <<AnnexA-4-1>> and separate the different defects into the bowls <<AnnexA-2-6>>. When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see Table 1). 
+Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <<AnnexA-4-1>> and separate the different defects into the bowls (<<AnnexA-2-6>>). When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see <<table1>). 
 
 Weigh, to the nearest 0,01 g, the fractions so obtained. 
 
@@ -435,7 +436,7 @@ Weigh, to the nearest 0,01 g, the fractions so obtained.
 
 Express the mass fraction of each defect using Formula (<<formulaA-1>>): 
 
-[[formulaA-1]]
+[[formulaA-1,A.1]]
 [stem]
 ++++
 w = m_D/m_s 
@@ -445,7 +446,7 @@ where
 
 stem:[w]:: is the mass fraction of grains with a particular defect in the test sample; 
 stem:[m_D]:: is the mass, in grams, of grains with that defect; 
-stem:[m_S] is the mass, in grams, of the test sample. 
+stem:[m_S]:: is the mass, in grams, of the test sample. 
 
 === Test report 
 
@@ -536,10 +537,10 @@ Weigh the waxy rice portion (stem:[m_1]) and the non-waxy rice portion (stem:[m_
 
 === Calculation 
 
-Calculate the mass fraction, expressed as a percentage, of the waxy rice, stem:[w_(wax)], using Formula (<<formulaB.1>>): 
+Calculate the mass fraction, expressed as a percentage, of the waxy rice, stem:[w_(wax)], using Formula (<<formulaB-1>>): 
 
 // Indexing formulas
-[[formulaB-1]]
+[[formulaB-1,B.1]]
 [stem]
 ++++
 w_(wax) = m_1/(m_1 + m_2) xx 100
@@ -562,7 +563,9 @@ Report the results as specified in <<clause7>>, giving the results calculated us
 
 [[figureC-1]]
 .Typical gelatinization curve
-image::figc1.gif[] footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
+// Footnote macro cannot contain stem macro!
+image::figc1.gif[] 
+footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
 
 *Key*
 
@@ -594,6 +597,7 @@ image::fig2c.gif[]
 An interlaboratory test <<ref15>> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with ISO 5725-1 and ISO 5725-2, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <<tableD-1>>. 
 
 [[tableD-1]]
+[cols="<,^,^,^,^"]
 .Repeatability and reproducibility of husked rice yield 
 
 |===

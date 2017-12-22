@@ -162,13 +162,13 @@ norm_ref =
   }
 
 iso_ref_title =
-  element iso_ref_title { isocode, isodate?, isotitle }
+  element iso_ref_title { isocode, (isodate, date_footnote?)?, isotitle }
 
 isocode =
   element isocode { text }
 
 isodate = 
-  element isodate { text | date_footnote }
+  element isodate { text }
 
 date_footnote =
   element date_footnote { text }

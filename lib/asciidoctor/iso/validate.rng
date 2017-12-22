@@ -309,6 +309,9 @@
       <ref name="isocode"/>
       <optional>
         <ref name="isodate"/>
+        <optional>
+          <ref name="date_footnote"/>
+        </optional>
       </optional>
       <ref name="isotitle"/>
     </element>
@@ -320,10 +323,7 @@
   </define>
   <define name="isodate">
     <element name="isodate">
-      <choice>
-        <text/>
-        <ref name="date_footnote"/>
-      </choice>
+      <text/>
     </element>
   </define>
   <define name="date_footnote">

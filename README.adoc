@@ -12,13 +12,23 @@ Asciidoctor has been selected as the authoring tool to generate the document mod
 The gem uses built-in Asciidoc formatting as much as possible, so that users can retain the ability to preview documents; for _Terms and Definitions_ clauses, which have a good deal of explicit structure, macros have been introduced for semantic markup (admitted terms, deprecated terms, etc). The default HTML output of an Asciidoc-formatted ISO document is quite close to the intended final output, with the following exceptions: 
 
 * _Terms and Definitions_: each term is marked up as an unnumbered subclause, the semantic markup of alternate and other terms is not rendered visually.
-* _Formuals_: Asciidoctor has no provision for the automated numbering of isolated block formulas ("stem"), although it does provide automated numbering of examples. The encoding of formulas may change in future versions, although the final numbering is meant to be provided by downstream tools processing the ISO XML output.
+* _Formuals_: Asciidoctor has no provision for the automated numbering of isolated block formulas ("stem"), and does not display the number assigned a block formula in its default HTML processor—although it does provide automated numbering of examples. The encoding of formulas may change in future versions, although the final numbering is meant to be provided by downstream tools processing the ISO XML output.
 * _Missing elements_: The document model does not yet include Asciidoc elements that do not occur in the Rice document: in particular, source code, definition lists (except when used as keys for formuals or figures), examples (as distinct from figures; examples within _Terms and Definitions_ are catered for), sidebars (as distinct from warnings), quotes.
 * _ISO Standard crossreferences_: Have not yet been realised, though the Normative References section does encode the referenced ISO standards in a structured fashion.
 * Some connecting text which is used to convey markup structure is left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting macros).
-* _Tables_: Table footnotes are treated like all other footnotes, and rendered at the bottom of the document, rather than the bottom of the table.
-* _Crossreferences_: Footnoted crossreferences are indicated with the reference text `fn` in isolation, or `fn:` as a prefix to the reference text. The default HTML processor leaves these as is.
+* _Tables_: Table footnotes are treated like all other footnotes: they are rendered at the bottom of the document, rather than the bottom of the table, and they are not numbered separately.
+* _Crossreferences_: Footnoted crossreferences are indicated with the reference text `fn` in isolation, or `fn:` as a prefix to the reference text. The default HTML processor leaves these as is: if no reference text is given, only `fn` will be displayed (though it will still hyperlink to the right reference).
 * _Annexes_: Subheadings cannot preserve subsection numbering, while also appearing inline with their text (e.g. Rice document, Annex B.2): they appear as headings in separate lines.
+* _Annexes_: Crossreferences to Annex subclauses are automatically prefixed with `Clause` rather than `Annex` or nothing.
+* _Metadata_: Document metadata such as document numbers, technical committees and title wording are not rendered in the default HTML output.
+* _Patent Notice_: Patent notices are treated and rendered as a subsection of the introduction, with an explicit subheading.
+* _Numbering_: The numbering of figures and tables is sequential in the default HTML processor: it does not include the Clause or Annex number. This, _Figure 1_, not _Figure A.1_.
+* _Notes_: There is no automatic note numbering by the default HTML processor.
+* _Keys_: Keys to formulas and figures are expected to be marked up as definition lists consistently, rather than as inline prose.
+* _Figures_: Simple figures are marked up as images, figures containing subfigures as examples. Numbering by the default HTML processor may be inconsistent. Subfigures are automatically numbered as independent figures.
+* _Markup_: The default HTML processor does not support CSS extensions such as small caps or strike through, though these can be marked up as CSS classes through custom macros in Asciidoc: a custom CSS stylesheet will be needed to render them.
+
+TODO: May need to only encode figures as examples.
 
 Note that in order to generate output close to what is intended, the Asciidoc document includes a fair amount of formatting instructions (e.g. disabling section numbering where appropriate, the titling of Appendixes as Annexes), as well as ISO boilerplate text, and predefined section headers (sections are recognised by fixed titles such as `Normative References`). Authoring ISO standards in this fashion assumes that users will be populating an Asciidoc template, and not removing needed formatting instructions.
 

@@ -81,9 +81,8 @@ World<br/>
   <isotitle>Packaging -- Method of specification for sacks -- Part 2: Sacks made from thermoplastic flexible film</isotitle>
 </iso_ref_title><iso_ref_title>
   <isocode>16634</isocode>
-  <isodate>
-    <date_footnote>Under preparation. (Stage at the time of publication ISO/DIS 16634)</date_footnote>
-  </isodate>
+  <isodate>--</isodate>
+  <date_footnote>Under preparation. (Stage at the time of publication ISO/DIS 16634)</date_footnote>
   <isotitle>Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content</isotitle>
 </iso_ref_title><iso_ref_title>
   <isocode>20483</isocode>
@@ -200,136 +199,136 @@ World<br/>
 <clause anchor="_physical_and_chemical_characteristics">
   <name>Physical and chemical characteristics</name>
   <clause><name/><p>The mass fraction of moisture, determined in accordance with ISO 712, using an oven complying with the requirements of IEC 61010-2, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
-<p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in Table 1.</p>
+<p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in &lt;&lt;table1&gt;.</p>
 <note>
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see ISO 6322-1, ISO 6322-2 and ISO 6322-3.</p>
 </note>
-<p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA" format="inline"/>, shall not exceed the limits given in Table 1.</p>
-<table>
+<p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA" format="inline"/>, shall not exceed the limits given in <xref target="table1" format="inline"/>.</p>
+<table anchor="table1">
   <name>Maximum permissible mass fraction of defects</name>
   <tbody>
     <tr>
       <td rowspan="2" align="left">Defect</td>
-      <td colspan="4" align="left">Maximum permissible mass fraction of defects in husked rice<br/>
+      <td colspan="4" align="center">Maximum permissible mass fraction of defects in husked rice<br/>
 <stem>w_max</stem></td>
     </tr>
     <tr>
       <td align="left">in husked rice</td>
-      <td align="left">in milled rice (non-glutinous)</td>
-      <td align="left">in husked parboiled rice</td>
-      <td align="left">in milled parboiled rice</td>
+      <td align="center">in milled rice (non-glutinous)</td>
+      <td align="center">in husked parboiled rice</td>
+      <td align="center">in milled parboiled rice</td>
     </tr>
     <tr>
       <td align="left">Extraneous matter: organic <fn>Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc.</fn></td>
-      <td align="left">1,0</td>
-      <td align="left">0,5</td>
-      <td align="left">1,0</td>
-      <td align="left">0,5</td>
+      <td align="center">1,0</td>
+      <td align="center">0,5</td>
+      <td align="center">1,0</td>
+      <td align="center">0,5</td>
     </tr>
     <tr>
       <td align="left">Extraneous matter: inorganic <fn>Inorganic extraneous matter includes stones, sand, dust, etc.</fn></td>
-      <td align="left">0,5</td>
-      <td align="left">0,5</td>
-      <td align="left">0,5</td>
-      <td align="left">0,5</td>
+      <td align="center">0,5</td>
+      <td align="center">0,5</td>
+      <td align="center">0,5</td>
+      <td align="center">0,5</td>
     </tr>
     <tr>
       <td align="left">Paddy</td>
-      <td align="left">2,5</td>
-      <td align="left">0,3</td>
-      <td align="left">2,5</td>
-      <td align="left">0,3</td>
+      <td align="center">2,5</td>
+      <td align="center">0,3</td>
+      <td align="center">2,5</td>
+      <td align="center">0,3</td>
     </tr>
     <tr>
       <td align="left">Husked rice, non-parboiled</td>
-      <td align="left">Not applicable</td>
-      <td align="left">1,0</td>
-      <td align="left">1,0</td>
-      <td align="left">1,0</td>
+      <td align="center">Not applicable</td>
+      <td align="center">1,0</td>
+      <td align="center">1,0</td>
+      <td align="center">1,0</td>
     </tr>
     <tr>
       <td align="left">Milled rice, non-parboiled</td>
-      <td align="left">1,0</td>
-      <td align="left">Not applicable</td>
-      <td align="left">1,0</td>
-      <td align="left">1,0</td>
+      <td align="center">1,0</td>
+      <td align="center">Not applicable</td>
+      <td align="center">1,0</td>
+      <td align="center">1,0</td>
     </tr>
     <tr>
       <td align="left">Husked rice, parboiled</td>
-      <td align="left">1,0</td>
-      <td align="left">1,0</td>
-      <td align="left">Not applicable</td>
-      <td align="left">1,0</td>
+      <td align="center">1,0</td>
+      <td align="center">1,0</td>
+      <td align="center">Not applicable</td>
+      <td align="center">1,0</td>
     </tr>
     <tr>
       <td align="left">Milled rice, parboiled</td>
-      <td align="left">1,0</td>
-      <td align="left">1,0</td>
-      <td align="left">1,0</td>
-      <td align="left">Not applicable</td>
+      <td align="center">1,0</td>
+      <td align="center">1,0</td>
+      <td align="center">1,0</td>
+      <td align="center">Not applicable</td>
     </tr>
     <tr>
       <td align="left">Chips</td>
-      <td align="left">0,1</td>
-      <td align="left">0,1</td>
-      <td align="left">0,1</td>
-      <td align="left">0,1</td>
+      <td align="center">0,1</td>
+      <td align="center">0,1</td>
+      <td align="center">0,1</td>
+      <td align="center">0,1</td>
     </tr>
     <tr>
       <td align="left">HDK</td>
-      <td align="left">2,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
-      <td align="left">2,0</td>
-      <td align="left">2,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
-      <td align="left">2,0</td>
+      <td align="center">2,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
+      <td align="center">2,0</td>
+      <td align="center">2,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
+      <td align="center">2,0</td>
     </tr>
     <tr>
       <td align="left">Damaged kernels</td>
-      <td align="left">4,0</td>
-      <td align="left">3,0</td>
-      <td align="left">4,0</td>
-      <td align="left">3,0</td>
+      <td align="center">4,0</td>
+      <td align="center">3,0</td>
+      <td align="center">4,0</td>
+      <td align="center">3,0</td>
     </tr>
     <tr>
       <td align="left">Immature and/or malformed kernels</td>
-      <td align="left">8,0</td>
-      <td align="left">2,0</td>
-      <td align="left">8,0</td>
-      <td align="left">2,0</td>
+      <td align="center">8,0</td>
+      <td align="center">2,0</td>
+      <td align="center">8,0</td>
+      <td align="center">2,0</td>
     </tr>
     <tr>
       <td align="left">Chalky kernels</td>
-      <td align="left">5,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
-      <td align="left">5,0</td>
-      <td align="left">Not applicable</td>
-      <td align="left">Not applicable</td>
+      <td align="center">5,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
+      <td align="center">5,0</td>
+      <td align="center">Not applicable</td>
+      <td align="center">Not applicable</td>
     </tr>
     <tr>
       <td align="left">Red kernels and red-streaked kernels</td>
-      <td align="left">12,0</td>
-      <td align="left">12,0</td>
-      <td align="left">12,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
-      <td align="left">12,0</td>
+      <td align="center">12,0</td>
+      <td align="center">12,0</td>
+      <td align="center">12,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
+      <td align="center">12,0</td>
     </tr>
     <tr>
       <td align="left">Partly gelatinized kernels</td>
-      <td align="left">Not applicable</td>
-      <td align="left">Not applicable</td>
-      <td align="left">11,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
-      <td align="left">11,0</td>
+      <td align="center">Not applicable</td>
+      <td align="center">Not applicable</td>
+      <td align="center">11,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
+      <td align="center">11,0</td>
     </tr>
     <tr>
       <td align="left">Pecks</td>
-      <td align="left">Not applicable</td>
-      <td align="left">Not applicable</td>
-      <td align="left">4,0</td>
-      <td align="left">2,0</td>
+      <td align="center">Not applicable</td>
+      <td align="center">Not applicable</td>
+      <td align="center">4,0</td>
+      <td align="center">2,0</td>
     </tr>
     <tr>
       <td align="left">Waxy rice</td>
-      <td align="left">1,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
-      <td align="left">1,0</td>
-      <td align="left">1,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
-      <td align="left">1,0</td>
+      <td align="center">1,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
+      <td align="center">1,0</td>
+      <td align="center">1,0 <fn>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</fn></td>
+      <td align="center">1,0</td>
     </tr>
   </tbody>
   <tfoot>
@@ -443,7 +442,7 @@ World<br/>
 <clause anchor="_apparatus"><name>Apparatus</name><p>The usual laboratory apparatus and, in particular, the following.</p>
 <clause anchor="AnnexA-2-1">
   <name>Sample divider,</name>
-  <p>consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. Split-it-right sample divider, such as that shown in <xref target="figureA.1" format="inline"/>.</p>
+  <p>consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. "Split-it-right" sample divider, such as that shown in <xref target="figureA-1" format="inline"/>.</p>
 </clause>
 <clause anchor="_sieve">
   <name>Sieve,</name>
@@ -472,13 +471,13 @@ World<br/>
 </clause>
 <clause anchor="_procedure">
   <name>Procedure</name>
-  <clause anchor="AnnexA-4-1"><name>Preparation of test sample</name><p>Carefully mix the laboratory sample to make it as uniform as possible, then proceed to reduce it, using a divider <xref target="AnnexA-2-1" format="inline"/>, until a quantity of about 30 g is obtained.</p>
+  <clause anchor="AnnexA-4-1"><name>Preparation of test sample</name><p>Carefully mix the laboratory sample to make it as uniform as possible, then proceed to reduce it, using a divider (<xref target="AnnexA-2-1" format="inline"/>), until a quantity of about 30 g is obtained.</p>
 <p>All parts of kernels which get stuck in the perforations of a sieve should be considered to be retained by the sieve.</p>
 <figure anchor="figureA-1" src="splititright.gif">
   <name>Split-it-right sample divider</name>
 </figure></clause>
 </clause>
-<clause anchor="_determination_2"><name>Determination</name><p>Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <xref target="AnnexA-4-1" format="inline"/> and separate the different defects into the bowls <xref target="AnnexA-2-6" format="inline"/>. When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see Table 1).</p>
+<clause anchor="_determination_2"><name>Determination</name><p>Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <xref target="AnnexA-4-1" format="inline"/> and separate the different defects into the bowls (<xref target="AnnexA-2-6" format="inline"/>). When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see &lt;&lt;table1&gt;).</p>
 <p>Weigh, to the nearest 0,01 g, the fractions so obtained.</p></clause>
 <clause anchor="_calculation"><name>Calculation</name><p>Express the mass fraction of each defect using Formula (<xref target="formulaA-1" format="inline"/>):</p>
 <formula anchor="formulaA-1">
@@ -494,8 +493,13 @@ World<br/>
     <stem>m_D</stem>
   </dt>
   <dd>
-    <p>is the mass, in grams, of grains with that defect;
-<stem>m_S</stem> is the mass, in grams, of the test sample.</p>
+    <p>is the mass, in grams, of grains with that defect;</p>
+  </dd>
+  <dt>
+    <stem>m_S</stem>
+  </dt>
+  <dd>
+    <p>is the mass, in grams, of the test sample.</p>
   </dd>
 </dl></formula>
 
@@ -570,7 +574,7 @@ World<br/>
   <name/>
   <p>Weigh the waxy rice portion (<stem>m_1</stem>) and the non-waxy rice portion (<stem>m_2</stem>) to the nearest 0,1 g.</p>
 </clause></clause>
-<clause anchor="_calculation_2"><name>Calculation</name><p>Calculate the mass fraction, expressed as a percentage, of the waxy rice, <stem>w_(wax)</stem>, using Formula (<xref target="formulaB.1" format="inline"/>):</p>
+<clause anchor="_calculation_2"><name>Calculation</name><p>Calculate the mass fraction, expressed as a percentage, of the waxy rice, <stem>w_(wax)</stem>, using Formula (<xref target="formulaB-1" format="inline"/>):</p>
 <formula anchor="formulaB-1">
   <stem>w_(wax) = m_1/(m_1 + m_2) xx 100</stem>
 <dl>
@@ -595,6 +599,13 @@ World<br/>
 </clause></annex><annex anchor="AnnexC"><name>Gelatinization (informative)</name><p><xref target="figureC-1" format="inline"/> gives an example of a typical gelatinization curve. <xref target="figureC-2" format="inline"/> shows the three stages of gelatinization.</p>
 <figure anchor="figureC-1" src="figc1.gif">
   <name>Typical gelatinization curve</name>
+</figure>
+<p>
+  <fn>The time <stem>t_90</stem> was estimated to be 18,2 min for this example.</fn>
+</p>
+<p>
+  <strong>Key</strong>
+</p>
 <dl>
   <dt>
     <stem>w</stem>
@@ -618,9 +629,7 @@ World<br/>
   <dd>
     <p>point of the curve corresponding to a cooking time of <stem>t_90</stem></p>
   </dd>
-</dl></figure>
-
-
+</dl>
 <note>
   <p>These results are based on a study carried out on three different types of kernel.</p>
 </note>
@@ -638,69 +647,69 @@ World<br/>
   <tbody>
     <tr>
       <td rowspan="2" align="left">Description</td>
-      <td colspan="4" align="left">Rice sample</td>
+      <td colspan="4" align="center">Rice sample</td>
     </tr>
     <tr>
       <td align="left">Arborio</td>
-      <td align="left">Drago <fn>Parboiled rice.</fn></td>
-      <td align="left">Balilla</td>
-      <td align="left">Thaibonnet</td>
+      <td align="center">Drago <fn>Parboiled rice.</fn></td>
+      <td align="center">Balilla</td>
+      <td align="center">Thaibonnet</td>
     </tr>
     <tr>
       <td align="left">Number of laboratories retained after eliminating outliers</td>
-      <td align="left">13</td>
-      <td align="left">11</td>
-      <td align="left">13</td>
-      <td align="left">13</td>
+      <td align="center">13</td>
+      <td align="center">11</td>
+      <td align="center">13</td>
+      <td align="center">13</td>
     </tr>
     <tr>
       <td align="left">Mean value, g/100 g</td>
-      <td align="left">81,2</td>
-      <td align="left">82,0</td>
-      <td align="left">81,8</td>
-      <td align="left">77,7</td>
+      <td align="center">81,2</td>
+      <td align="center">82,0</td>
+      <td align="center">81,8</td>
+      <td align="center">77,7</td>
     </tr>
     <tr>
       <td align="left">Standard deviation of repeatability, <stem>s_r</stem>, g/100 g</td>
-      <td align="left">0,41</td>
-      <td align="left">0,15</td>
-      <td align="left">0,31</td>
-      <td align="left">0,53</td>
+      <td align="center">0,41</td>
+      <td align="center">0,15</td>
+      <td align="center">0,31</td>
+      <td align="center">0,53</td>
     </tr>
     <tr>
       <td align="left">Coefficient of variation of repeatability, %</td>
-      <td align="left">0,5</td>
-      <td align="left">0,2</td>
-      <td align="left">0,4</td>
-      <td align="left">0,7</td>
+      <td align="center">0,5</td>
+      <td align="center">0,2</td>
+      <td align="center">0,4</td>
+      <td align="center">0,7</td>
     </tr>
     <tr>
       <td align="left">Repeatability limit, <stem>r</stem> (= 2,83 <stem>s_r</stem>)</td>
-      <td align="left">1,16</td>
-      <td align="left">0,42</td>
-      <td align="left">0,88</td>
-      <td align="left">1,50</td>
+      <td align="center">1,16</td>
+      <td align="center">0,42</td>
+      <td align="center">0,88</td>
+      <td align="center">1,50</td>
     </tr>
     <tr>
       <td align="left">Standard deviation of reproducibility, <stem>s_R</stem>, g/100 g</td>
-      <td align="left">1,02</td>
-      <td align="left">0,20</td>
-      <td align="left">0,80</td>
-      <td align="left">2,14</td>
+      <td align="center">1,02</td>
+      <td align="center">0,20</td>
+      <td align="center">0,80</td>
+      <td align="center">2,14</td>
     </tr>
     <tr>
       <td align="left">Coefficient of variation of reproducibility, %</td>
-      <td align="left">1,3</td>
-      <td align="left">0,2</td>
-      <td align="left">1,0</td>
-      <td align="left">2,7</td>
+      <td align="center">1,3</td>
+      <td align="center">0,2</td>
+      <td align="center">1,0</td>
+      <td align="center">2,7</td>
     </tr>
     <tr>
       <td align="left">Reproducibility limit, <stem>R</stem> (= 2,83 <stem>s_R</stem>)</td>
-      <td align="left">2,89</td>
-      <td align="left">0,57</td>
-      <td align="left">2,26</td>
-      <td align="left">6,06</td>
+      <td align="center">2,89</td>
+      <td align="center">0,57</td>
+      <td align="center">2,26</td>
+      <td align="center">6,06</td>
     </tr>
   </tbody>
 </table></annex><bibliography anchor="_bibliography">
