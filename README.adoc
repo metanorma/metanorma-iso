@@ -17,6 +17,8 @@ The gem uses built-in Asciidoc formatting as much as possible, so that users can
 * _ISO Standard crossreferences_: Have not yet been realised, though the Normative References section does encode the referenced ISO standards in a structured fashion.
 * Some connecting text which is used to convey markup structure is left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting macros).
 * _Tables_: Table footnotes are treated like all other footnotes, and rendered at the bottom of the document, rather than the bottom of the table.
+* _Crossreferences_: Footnoted crossreferences are indicated with the reference text `fn` in isolation, or `fn:` as a prefix to the reference text. The default HTML processor leaves these as is.
+* _Annexes_: Subheadings cannot preserve subsection numbering, while also appearing inline with their text (e.g. Rice document, Annex B.2): they appear as headings in separate lines.
 
 Note that in order to generate output close to what is intended, the Asciidoc document includes a fair amount of formatting instructions (e.g. disabling section numbering where appropriate, the titling of Appendixes as Annexes), as well as ISO boilerplate text, and predefined section headers (sections are recognised by fixed titles such as `Normative References`). Authoring ISO standards in this fashion assumes that users will be populating an Asciidoc template, and not removing needed formatting instructions.
 

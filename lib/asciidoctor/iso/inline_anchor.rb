@@ -18,7 +18,7 @@ module Asciidoctor
 
       def inline_anchor_xref(node)
         xref_contents = node.text
-        matched = /^fn: (?<text>.*)?$/.match xref_contents
+        matched = /^fn(:  (?<text>.*))?$/.match xref_contents
         if matched.nil?
           format = "inline"
         else
