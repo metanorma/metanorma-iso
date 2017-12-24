@@ -12,10 +12,10 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "asciidoctor-iso lets you write ISO standards in AsciiDoc."
   spec.description   = <<~DESCRIPTION
-asciidoctor-iso lets you write ISO standards in a native
-"asciidoctor" syntax.
+    asciidoctor-iso lets you write ISO standards in a native
+    "asciidoctor" syntax.
 
-This gem is in active development.
+    This gem is in active development.
   DESCRIPTION
 
   spec.homepage      = "https://github.com/riboseinc/ribose-iso"
@@ -33,13 +33,13 @@ This gem is in active development.
   spec.add_dependency "thread_safe"
 
   spec.add_development_dependency "bundler", "~> 1.15"
-  spec.add_development_dependency "rake", "~> 12.0"
-  spec.add_development_dependency "rspec", "~> 3.6"
-  spec.add_development_dependency "simplecov", "~> 0.15"
   spec.add_development_dependency "byebug", "~> 9.1"
+  spec.add_development_dependency "equivalent-xml", "~> 0.6"
   spec.add_development_dependency "guard", "~> 2.14"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
-  spec.add_development_dependency "timecop", "~> 0.9"
-  spec.add_development_dependency "equivalent-xml", "~> 0.6"
+  spec.add_development_dependency "rake", "~> 12.0"
+  spec.add_development_dependency "rspec", "~> 3.6"
   spec.add_development_dependency "rubocop", "~> 0.50"
+  spec.add_development_dependency "simplecov", "~> 0.15"
+  spec.add_development_dependency "timecop", "~> 0.9"
 end

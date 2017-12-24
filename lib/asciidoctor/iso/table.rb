@@ -1,25 +1,15 @@
 module Asciidoctor
   module ISO
     module Table
-      # Syntax:
-      #   [[id]]
-      #   .Title
-      #   |===
-      #   |col | col
-      #   |===
       def table(node)
         noko do |xml|
           has_body = false
-          table_attributes = {
-            anchor: node.id,
-          }
-
-          xml.table **attr_code(table_attributes) do |xml_table|
-            [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
+          xml.table **attr_code(anchor: node.id) do |xml_table|
+            %i(head body foot).reject do |tblsec|
+              node.rows[tblsec].empty?
+            end.each do |tblsec|
               has_body = true if tblsec == :body
             end
-            warn "asciidoctor: WARNING (#{current_location(node)}): tables must have at least one body row" unless has_body
-
             xml_table.name node.title if node.title?
             table_head_body_and_foot node, xml_table
           end
@@ -29,12 +19,13 @@ module Asciidoctor
       private
 
       def table_head_body_and_foot(node, xml)
-        [:head, :body, :foot].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
+        %i(head body foot).reject do |tblsec|
+          node.rows[tblsec].empty?
+        end.each do |tblsec|
           tblsec_tag = "t#{tblsec}"
           # "anchor" attribute from tblsec.id not supported
           xml.send tblsec_tag do |xml_tblsec|
             node.rows[tblsec].each_with_index do |row, i|
-              # id not supported on row
               xml_tblsec.tr do |xml_tr|
                 rowlength = 0
                 row.each do |cell|
@@ -45,14 +36,13 @@ module Asciidoctor
                     align: cell.attr("halign"),
                   }
 
-                  cell_tag = (tblsec == :head || cell.style == :header ? "th" : "td")
-
+                  cell_tag = "td"
+                  cell_tag = "th" if tblsec == :head || cell.style == :header
                   rowlength += cell.text.size
                   xml_tr.send cell_tag, **attr_code(cell_attributes) do |thd|
                     thd << (cell.style == :asciidoc ? cell.content : cell.text)
                   end
                 end
-                warn "asciidoctor: WARNING (#{current_location(node)}): row #{i} of table (count including header rows) is longer than 72 ascii characters" if rowlength > 72
               end
             end
           end

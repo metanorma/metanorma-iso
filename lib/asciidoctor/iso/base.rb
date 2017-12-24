@@ -14,26 +14,19 @@ module Asciidoctor
       end
 
       def skip(node, name = nil)
-        if node.respond_to?(:lineno)
-          warn %(asciidoctor: WARNING (#{current_location(node)}): converter missing for #{name || node.node_name} node in ISO backend)
-        else
-          warn %(asciidoctor: WARNING (#{current_location(node)}): converter missing for #{name || node.node_name} node in ISO backend)
-        end
+        warn %(asciidoctor: WARNING (#{current_location(node)}): \
+          converter missing for #{name || node.node_name} node in ISO backend)
         nil
       end
 
       def document(node)
-        result = []
-        result << '<?xml version="1.0" encoding="UTF-8"?>'
-        result << "<iso-standard>"
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
         $draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
-        result = result.flatten
-        ret = result * "\n"
-        ret1 = Nokogiri::XML(ret)
-        ret1 = cleanup(ret1)
+        ret = result.flatten * "\n"
+        ret1 = cleanup(Nokogiri::XML(ret))
         Validate::validate(ret1)
         ret1.to_xml(indent: 2)
       end
@@ -55,14 +48,18 @@ module Asciidoctor
         result = []
         result << noko do |xml|
           xml.termref do |xml_t|
-            # matched = /^ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match flatten_rawtext(node).flatten.join("")
-            matched = /^(?<xref><xref[^>]+>)(, (?<section>.[^, ]+))?(, (?<text>.*))?$/.match node.content
+            matched = /^(?<xref><xref[^>]+>)
+            (,\s(?<section>.[^, ]+))?
+              (,\s(?<text>.*))?$/x.match node.content
             if matched.nil?
               warn %(asciidoctor: WARNING (#{current_location(node)}): term reference not in expected format: #{node.content})
             else
-              # xml_t.xref matched[:xref]
               seen_xref = Nokogiri::XML.fragment(matched[:xref])
-              xml_t.xref seen_xref.children[0].content, **attr_code(target: seen_xref.children[0]["target"], format: seen_xref.children[0]["format"])
+              attr = {
+                target: seen_xref.children[0]["target"], 
+                format: seen_xref.children[0]["format"],
+              }
+              xml_t.xref seen_xref.children[0].content, **attr_code(attr)
               xml_t.isosection matched[:section] if matched[:section]
               xml_t.modification { |m| m << matched[:text] } if matched[:text]
             end
@@ -91,7 +88,8 @@ module Asciidoctor
       end
 
       def open(node)
-        # open block is a container of multiple blocks, treated as a single block.
+        # open block is a container of multiple blocks,
+        # treated as a single block.
         # We append each contained block to its parent
         result = []
         if node.blocks?
@@ -107,7 +105,7 @@ module Asciidoctor
       def inline_break(node)
         noko do |xml|
           xml << node.text
-          xml.br 
+          xml.br
         end.join
       end
 
@@ -121,8 +119,7 @@ module Asciidoctor
       def inline_quoted(node)
         noko do |xml|
           case node.type
-          when :emphasis then 
-            xml.em node.text
+          when :emphasis then xml.em node.text
           when :strong then xml.strong node.text
           when :monospaced then xml.tt node.text
           when :double then xml << "\"#{node.text}\""

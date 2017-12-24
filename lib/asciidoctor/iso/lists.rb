@@ -5,23 +5,12 @@ module Asciidoctor
       def ulist(node)
         return norm_ref(node) if $norm_ref
         return biblio_ref(node) if $biblio
-        result = []
-        result << noko do |xml|
-          ul_attributes = {
-            anchor: node.id,
-          }
-
-          xml.ul **attr_code(ul_attributes) do |xml_ul|
+        noko do |xml|
+          xml.ul **attr_code(anchor: node.id) do |xml_ul|
             node.items.each do |item|
-              li_attributes = {
-                anchor: item.id,
-              }
-
-              xml_ul.li **attr_code(li_attributes) do |xml_li|
+              xml_ul.li **attr_code(anchor: item.id) do |xml_li|
                 if item.blocks?
-                  xml_li.p do |t|
-                    t << item.text
-                  end
+                  xml_li.p { |t| t << item.text }
                   xml_li << item.content
                 else
                   xml_li.p { |p| p << item.text }
@@ -29,8 +18,7 @@ module Asciidoctor
               end
             end
           end
-        end
-        result
+        end.join
       end
 
       def isorefmatches(xml, matched)
@@ -62,11 +50,14 @@ module Asciidoctor
       end
 
       def norm_ref(node)
-        result = []
-        result << noko do |xml|
+        noko do |xml|
           node.items.each do |item|
-            matched = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,? (?<text>.*)$}.match item.text
-            matched2 = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+):--\]</ref>,?[ ]?<fn>(?<fn>[^\]]+)</fn>,?[ ]?(?<text>.*)$}.match item.text
+            matched = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+            \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
+            (?<text>.*)$}x.match item.text
+            matched2 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+            \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
+            <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x.match item.text
             if matched2.nil?
               if matched.nil?
                 warn %(asciidoctor: WARNING (#{current_location(node)}): normative reference not in expected format: #{item.text})
@@ -77,16 +68,18 @@ module Asciidoctor
               isorefmatches2(xml, matched2)
             end
           end
-        end
-        result
+        end.join
       end
 
       def biblio_ref(node)
-        result = []
-        result << noko do |xml|
+        noko do |xml|
           node.items.each do |item|
-            matched = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,? (?<text>.*)$}.match item.text
-            matched2 = %r{^<ref anchor="(?<anchor>[^"]+)">\[ISO (?<code>[0-9-]+):--\]</ref>,?[ ]?<fn>(?<fn>[^\]]+)</fn>,?[ ]?(?<text>.*)$}.match item.text
+            matched = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+            \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
+            (?<text>.*)$}.match item.text
+            matched2 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+            \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
+            <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}.match item.text
             if matched2.nil?
               if matched.nil?
                 xml.reference do |t|
@@ -99,29 +92,16 @@ module Asciidoctor
               isorefmatches2(xml, matched2)
             end
           end
-        end
-        result
+        end.join
       end
 
       def olist(node)
-        result = []
-
-        result << noko do |xml|
-          ol_attributes = {
-            anchor: node.id,
-            type: node.style,
-          }
-
-          xml.ol **attr_code(ol_attributes) do |xml_ol|
+        noko do |xml|
+          xml.ol **attr_code(anchor: node.id, type: node.style) do |xml_ol|
             node.items.each do |item|
-              li_attributes = {
-                anchor: item.id,
-              }
-              xml_ol.li **attr_code(li_attributes) do |xml_li|
+              xml_ol.li **attr_code(anchor: item.id) do |xml_li|
                 if item.blocks?
-                  xml_li.p do |t|
-                    t << item.text
-                  end
+                  xml_li.p { |t| t << item.text }
                   xml_li << item.content
                 else
                   xml_li.p { |p| p << item.text }
@@ -129,18 +109,12 @@ module Asciidoctor
               end
             end
           end
-        end
-        result
+        end.join
       end
 
       def dlist(node)
-        result = []
-        result << noko do |xml|
-          dl_attributes = {
-            anchor: node.id,
-          }
-
-          xml.dl **attr_code(dl_attributes) do |xml_dl|
+        noko do |xml|
+          xml.dl **attr_code(anchor: node.id) do |xml_dl|
             node.items.each do |terms, dd|
               terms.each_with_index do |dt, idx|
                 xml_dl.dt { |xml_dt| xml_dt << dt.text }
@@ -165,31 +139,20 @@ module Asciidoctor
               end
             end
           end
-        end
-        result
+        end.join
       end
 
       def colist(node)
-        result = []
-        result << noko do |xml|
-          ul_attributes = {
-            anchor: node.id,
-          }
-
-          xml.colist **attr_code(ul_attributes) do |xml_ul|
+        noko do |xml|
+          xml.colist **attr_code(anchor: node.id) do |xml_ul|
             node.items.each_with_index do |item, i|
-              li_attributes = {
-                id: i+1
-              }
-              xml_ul.annotation **attr_code(li_attributes) do |xml_li|
-                    xml_li << item.text
+              xml_ul.annotation **attr_code(id: i + 1) do |xml_li|
+                xml_li << item.text
               end
             end
           end
-        end
-        result
+        end.join
       end
     end
   end
 end
-
