@@ -12,13 +12,12 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "asciidoctor-iso lets you write ISO standards in AsciiDoc."
   spec.description   = <<~DESCRIPTION
-    asciidoctor-iso lets you write ISO standards in a native
-    "asciidoctor" syntax.
+    asciidoctor-iso lets you write ISO standards in AsciiDoc syntax.
 
     This gem is in active development.
   DESCRIPTION
 
-  spec.homepage      = "https://github.com/riboseinc/ribose-iso"
+  spec.homepage      = "https://github.com/riboseinc/asciidoctor-iso"
   spec.license       = "MIT"
 
   spec.bindir        = "bin"

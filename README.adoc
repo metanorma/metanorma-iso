@@ -1,9 +1,9 @@
-# ribose-iso
+# asciidoctor-iso
 = Asciidoctor processor for ISO standards
 
 image:https://img.shields.io/gem/v/asciidoctor-rfc.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-iso"]
-image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.org/riboseinc/ribose-iso"]
-image:https://codeclimate.com/github/riboseinc/asciidoctor-rfc/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/ribose-iso"]
+image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-iso"]
+image:https://codeclimate.com/github/riboseinc/asciidoctor-rfc/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-iso"]
 
 This gem processes http://asciidoctor.org/[Asciidoctor] documents and outputs an XML representation of the document, intended as a document model for ISO International Standards. The XML representation can then be processed in turn to generate PDF or Microsoft Word output (via DocBook).
 
