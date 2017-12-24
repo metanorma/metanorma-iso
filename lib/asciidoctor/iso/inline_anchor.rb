@@ -60,7 +60,7 @@ module Asciidoctor
       def inline_callout(node)
         noko do |xml|
           xml.ref node.text
-        end
+        end.join
       end
     end
   end

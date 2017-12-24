@@ -179,7 +179,7 @@ module Asciidoctor
           xml.colist **attr_code(ul_attributes) do |xml_ul|
             node.items.each_with_index do |item, i|
               li_attributes = {
-                id: i
+                id: i+1
               }
               xml_ul.annotation **attr_code(li_attributes) do |xml_li|
                     xml_li << item.text

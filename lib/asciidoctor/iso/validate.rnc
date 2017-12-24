@@ -43,7 +43,8 @@ author =
   element author {
     technical_committee,
     subcommittee?,
-    workgroup?
+    workgroup?,
+    secretariat?
   }
 
 documenttype =
@@ -101,6 +102,9 @@ workgroup =
     text
   }
 
+secretariat =
+  element secretariat { text }
+
 revdate =
   element revdate { text }
 
@@ -132,13 +136,13 @@ title_part =
 
 foreword =
   element foreword { 
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*
   }
 
 introduction =
   element introduction { 
     attribute anchor { xsd:ID }?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*,
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
     patent_notice? 
   }
 
@@ -234,14 +238,14 @@ clause =
   element clause {
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*, 
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*, 
     clause*
   }
 
 quote =
   element quote {
     attribute anchor { xsd:ID }?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*
   }
 
 
@@ -255,7 +259,7 @@ annex =
   element annex { 
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode )*,
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
     clause*
   }
 
@@ -296,6 +300,12 @@ sourcecode =
     colist?
   }
 
+review_note =
+  element review_note {
+    attribute color { text }?,
+    text
+  }
+
 callout =
   element callout {
     xsd:ID
@@ -328,7 +338,7 @@ ul =
 
 li =
   element li {
-    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode )+
+    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note )+
   }
 
 dl =
@@ -343,7 +353,7 @@ dt =
 
 dd =
   element dd {
-    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode )*
+    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note )*
   }
 
 note =

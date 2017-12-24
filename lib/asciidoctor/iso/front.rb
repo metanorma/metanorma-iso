@@ -11,7 +11,7 @@ module Asciidoctor
     module Front
 
       def metadata(node, xml)
-        xml.documenttype  node.attr("doctype")
+        xml.documenttype node.attr("doctype")
         xml.documentstatus do |s|
           s.stage node.attr("docstage")
           s.substage node.attr("docsubstage") if node.attr("docsubstage")
@@ -35,16 +35,17 @@ module Asciidoctor
           a.subcommittee node.attr("subcommittee"), **attr_code(sc_attrs) if node.attr("subcommittee")
           wg_attrs = { number: node.attr("workgroup-number") }
           a.workgroup node.attr("workgroup"), **attr_code(wg_attrs) if node.attr("workgroup")
+          a.secretariat node.attr("secretariat") if node.attr("secretariat")
         end
       end
 
       def title(node, xml)
         xml.title do |t0|
           t0.en do |t|
-            t.title_intro {|t1| t1 << node.attr("title-intro") } if  node.attr("title-intro")
-            t.title_main {|t1| t1 << node.attr("title-main") } if  node.attr("title-main")
-            if node.attr("title-part")
-              t.title_part node.attr("title-part")
+            t.title_intro {|t1| t1 << node.attr("title-intro-en") } if  node.attr("title-intro-en")
+            t.title_main {|t1| t1 << node.attr("title-main-en") } if  node.attr("title-main-en")
+            if node.attr("title-part-en")
+              t.title_part node.attr("title-part-en")
             end
           end
           t0.fr do |t|

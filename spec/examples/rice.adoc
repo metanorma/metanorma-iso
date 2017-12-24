@@ -7,9 +7,9 @@
 :revdate: 2016-05-01
 :copyright-year: 2016
 :language: en
-:title-intro: Cereals and pulses
-:title-main: Specifications and test methods
-:title-part: Rice
+:title-intro-en: Cereals and pulses
+:title-main-en: Specifications and test methods
+:title-part-en: Rice
 :title-intro-fr: Céréales et légumineuses
 :title-main-fr: Spécification et éthodes d'essai
 :title-part-fr: Riz

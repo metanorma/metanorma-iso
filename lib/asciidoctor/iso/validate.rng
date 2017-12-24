@@ -72,6 +72,9 @@
       <optional>
         <ref name="workgroup"/>
       </optional>
+      <optional>
+        <ref name="secretariat"/>
+      </optional>
     </element>
   </define>
   <define name="documenttype">
@@ -165,6 +168,11 @@
       <text/>
     </element>
   </define>
+  <define name="secretariat">
+    <element name="secretariat">
+      <text/>
+    </element>
+  </define>
   <define name="revdate">
     <element name="revdate">
       <text/>
@@ -238,6 +246,7 @@
           <ref name="figure"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
+          <ref name="review_note"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -262,6 +271,7 @@
           <ref name="figure"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
+          <ref name="review_note"/>
         </choice>
       </zeroOrMore>
       <optional>
@@ -485,6 +495,7 @@
           <ref name="figure"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
+          <ref name="review_note"/>
         </choice>
       </zeroOrMore>
       <zeroOrMore>
@@ -512,6 +523,7 @@
           <ref name="figure"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
+          <ref name="review_note"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -547,6 +559,7 @@
           <ref name="figure"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
+          <ref name="review_note"/>
         </choice>
       </zeroOrMore>
       <zeroOrMore>
@@ -646,6 +659,14 @@
       </optional>
     </element>
   </define>
+  <define name="review_note">
+    <element name="review_note">
+      <optional>
+        <attribute name="color"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
   <define name="callout">
     <element name="callout">
       <data type="ID"/>
@@ -715,6 +736,7 @@
           <ref name="dl"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
+          <ref name="review_note"/>
         </choice>
       </oneOrMore>
     </element>
@@ -757,6 +779,7 @@
           <ref name="dl"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
+          <ref name="review_note"/>
         </choice>
       </zeroOrMore>
     </element>

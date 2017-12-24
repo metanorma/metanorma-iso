@@ -19,6 +19,18 @@ module Asciidoctor
         end
       end
 
+      def sidebar (node)
+        if $draft 
+          note_attributes = {
+            color: node.attr("color") ? node.attr("color") : "red",
+          }
+          content = flatten_rawtext(node.content).join("\n")
+          noko do |xml|
+            xml.review_note content, **attr_code(note_attributes)
+          end
+        end
+      end
+
       def admonition(node)
         result = []
         note_attributes = {
@@ -168,11 +180,11 @@ module Asciidoctor
 
         noko do |xml|
           xml.quote **attr_code(blockquote_attributes) do |xml_blockquote|
-              if node.blocks?
-                xml_blockquote << node.content
-              else
-                xml_blockquote.p { |p| p << node.content }
-              end
+            if node.blocks?
+              xml_blockquote << node.content
+            else
+              xml_blockquote.p { |p| p << node.content }
+            end
           end
         end
       end
@@ -183,15 +195,16 @@ module Asciidoctor
 
         # NOTE: html escaping is performed by Nokogiri
         sourcecode_content =
-          sourcecode_attributes[:src].nil? ? node.lines.join("\n") : ""
+          # sourcecode_attributes[:src].nil? ? node.lines.join("\n") : ""
+          node.content
 
         noko do |xml|
           if node.parent.context != :example
             xml.figure do |xml_figure|
-              xml_figure.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+              xml_figure.sourcecode { |s| s << node.content }
             end
           else
-            xml.sourcecode sourcecode_content, **attr_code(sourcecode_attributes)
+            xml.sourcecode { |s| s << node.content }
           end
         end
       end

@@ -26,6 +26,7 @@ module Asciidoctor
         result = []
         result << '<?xml version="1.0" encoding="UTF-8"?>'
         result << "<iso-standard>"
+        $draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
