@@ -1,6 +1,10 @@
 # ribose-iso
 = Asciidoctor processor for ISO standards
 
+image:https://img.shields.io/gem/v/asciidoctor-rfc.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-rfc"]
+image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-rfc"]
+image:https://codeclimate.com/github/riboseinc/asciidoctor-rfc/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-rfc"]
+
 This gem processes http://asciidoctor.org/[Asciidoctor] documents and outputs an XML representation of the document, intended as a document model for ISO International Standards. The XML representation can then be processed in turn to generate PDF or Microsoft Word output (via DocBook).
 
 The document model intends to introduce rigour into the ISO standards authoring process; the existing https://www.iso.org/iso-templates.html[Microsoft Word template from ISO] do not support such rigour down to the element level. The ISO International Standard format is prescribed in http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"], to a level that is amenable to an explicit document model. A formal document model would allow checking for consistency in format and content, and expedite authoring and quality control of ISO standards.
