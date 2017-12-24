@@ -20,7 +20,7 @@ module Asciidoctor
       end
 
       def document(node)
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard#{document_ns_attributes node}>"]
         $draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }

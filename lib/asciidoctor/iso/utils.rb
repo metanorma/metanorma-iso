@@ -15,7 +15,8 @@ module Asciidoctor
       end
 
       def document_ns_attributes(_doc)
-        ' xmlns="http://riboseinc.com/isoxml"'
+        # ' xmlns="http://riboseinc.com/isoxml"'
+        nil
       end
 
       def cleanup(xmldoc)
