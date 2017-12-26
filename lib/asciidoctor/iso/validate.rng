@@ -58,9 +58,6 @@
       <optional>
         <ref name="tc_documentnumber"/>
       </optional>
-      <optional>
-        <ref name="ref_documentnumber"/>
-      </optional>
     </element>
   </define>
   <define name="author">
@@ -136,11 +133,6 @@
   </define>
   <define name="tc_documentnumber">
     <element name="tc_documentnumber">
-      <text/>
-    </element>
-  </define>
-  <define name="ref_documentnumber">
-    <element name="ref_documentnumber">
       <text/>
     </element>
   </define>
@@ -281,11 +273,6 @@
   </define>
   <define name="patent_notice">
     <element name="patent_notice">
-      <optional>
-        <attribute name="anchor">
-          <data type="ID"/>
-        </attribute>
-      </optional>
       <oneOrMore>
         <ref name="para"/>
       </oneOrMore>
@@ -669,7 +656,7 @@
   </define>
   <define name="callout">
     <element name="callout">
-      <data type="ID"/>
+      <text/>
     </element>
   </define>
   <define name="colist">

@@ -21,7 +21,7 @@ module Asciidoctor
       def sidebar(node)
         if $draft
           note_attributes = {
-            color: node.attr("color") ? node.attr("color") : "red",
+            source: node.attr("source") 
           }
           content = flatten_rawtext(node.content).join("\n")
           noko do |xml|

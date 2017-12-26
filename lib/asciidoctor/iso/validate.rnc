@@ -35,8 +35,7 @@ version =
 id =
   element id {
     documentnumber,
-    tc_documentnumber?,
-    ref_documentnumber?
+    tc_documentnumber?
   }
 
 author =
@@ -76,11 +75,6 @@ documentnumber =
 
 tc_documentnumber = 
   element tc_documentnumber { 
-    text 
-   }
-
-ref_documentnumber = 
-  element ref_documentnumber { 
     text 
    }
 
@@ -147,10 +141,7 @@ introduction =
   }
 
 patent_notice =
-  element patent_notice { 
-    attribute anchor { xsd:ID }?,
-    para+ 
-  }
+  element patent_notice { para+ }
 
 middle =
   element middle {
@@ -302,13 +293,13 @@ sourcecode =
 
 review_note =
   element review_note {
-    attribute color { text }?,
+    attribute source { text }?,
     text
   }
 
 callout =
   element callout {
-    xsd:ID
+    text
   }
 
 colist = 
