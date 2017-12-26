@@ -82,10 +82,8 @@ $ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output
 
 == Document model
 
-image::grammar1.gif[]
-image::grammar2.gif[]
-image::grammar3.gif[]
-image::grammar4.gif[]
+image::grammar1.png[]
+image::grammar2.png[]
 
 
 == Examples
