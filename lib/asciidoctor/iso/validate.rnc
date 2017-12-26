@@ -163,7 +163,7 @@ norm_ref =
     attribute anchor { xsd:ID }?,
     # boilerplate
     para,
-    iso_ref_title* 
+    ( iso_ref_title | reference)* 
   }
 
 symbols_abbrevs =
@@ -179,7 +179,10 @@ iso_ref_title =
   }
 
 isocode =
-  element isocode { text }
+  element isocode { 
+    attribute allparts { "true" | "false" }?,
+    text 
+  }
 
 isodate = 
   element isodate { text }

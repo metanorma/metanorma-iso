@@ -313,7 +313,10 @@
       <!-- boilerplate -->
       <ref name="para"/>
       <zeroOrMore>
-        <ref name="iso_ref_title"/>
+        <choice>
+          <ref name="iso_ref_title"/>
+          <ref name="reference"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>
@@ -344,6 +347,14 @@
   </define>
   <define name="isocode">
     <element name="isocode">
+      <optional>
+        <attribute name="allparts">
+          <choice>
+            <value>true</value>
+            <value>false</value>
+          </choice>
+        </attribute>
+      </optional>
       <text/>
     </element>
   </define>

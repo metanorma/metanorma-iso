@@ -688,30 +688,40 @@
     </tr>
   </tbody>
 </table></annex><bibliography anchor="_bibliography">
-  <reference>
-  <ref anchor="ISO3696">[ISO 3696]</ref><p>, <em>Water for analytical laboratory use -- Specification and test methods</em></p>
-</reference>
-  <reference>
-  <ref anchor="ISO5725-1">[ISO 5725-1]</ref><p>, <em>Accuracy (trueness and precision) of measurement methods and results -- Part 1: General principles and definitions</em></p>
-</reference>
-  <reference>
-  <ref anchor="ISO5725-2">[ISO 5725-2]</ref><p>, <em>Accuracy (trueness and precision) of measurement methods and results -- Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method</em></p>
-</reference>
-  <reference>
-  <ref anchor="ISO6322-1">[ISO 6322-1]</ref><p>, <em>Storage of cereals and pulses -- Part 1: General recommendations for the keeping of cereals</em></p>
-</reference>
-  <reference>
-  <ref anchor="ISO6322-2">[ISO 6322-2]</ref><p>, <em>Storage of cereals and pulses -- Part 2: Practical recommendations</em></p>
-</reference>
-  <reference>
-  <ref anchor="ISO6322-3">[ISO 6322-3]</ref><p>, <em>Storage of cereals and pulses -- Part 3: Control of attack by pests</em></p>
-</reference>
-  <reference>
-  <ref anchor="ISO7301">[ISO 7301:2011]</ref><p>, <em>Rice -- Specification</em></p>
-</reference>
-  <reference>
-  <ref anchor="ISO14864">[ISO 14864:1998]</ref><p>, <em>Rice -- Evaluation of gelatinization time of kernels during cooking</em></p>
-</reference>
+  <iso_ref_title anchor="ISO3696">
+  <isocode>3696</isocode>
+  <isotitle>Water for analytical laboratory use -- Specification and test methods</isotitle>
+</iso_ref_title>
+  <iso_ref_title anchor="ISO5725-1">
+  <isocode>5725-1</isocode>
+  <isotitle>Accuracy (trueness and precision) of measurement methods and results -- Part 1: General principles and definitions</isotitle>
+</iso_ref_title>
+  <iso_ref_title anchor="ISO5725-2">
+  <isocode>5725-2</isocode>
+  <isotitle>Accuracy (trueness and precision) of measurement methods and results -- Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method</isotitle>
+</iso_ref_title>
+  <iso_ref_title anchor="ISO6322-1">
+  <isocode>6322-1</isocode>
+  <isotitle>Storage of cereals and pulses -- Part 1: General recommendations for the keeping of cereals</isotitle>
+</iso_ref_title>
+  <iso_ref_title anchor="ISO6322-2">
+  <isocode>6322-2</isocode>
+  <isotitle>Storage of cereals and pulses -- Part 2: Practical recommendations</isotitle>
+</iso_ref_title>
+  <iso_ref_title anchor="ISO6322-3">
+  <isocode>6322-3</isocode>
+  <isotitle>Storage of cereals and pulses -- Part 3: Control of attack by pests</isotitle>
+</iso_ref_title>
+  <iso_ref_title anchor="ISO7301">
+  <isocode>7301</isocode>
+  <isodate>2011</isodate>
+  <isotitle>Rice -- Specification</isotitle>
+</iso_ref_title>
+  <iso_ref_title anchor="ISO14864">
+  <isocode>14864</isocode>
+  <isodate>1998</isodate>
+  <isotitle>Rice -- Evaluation of gelatinization time of kernels during cooking</isotitle>
+</iso_ref_title>
   <reference>
   <ref anchor="IEC61010-2">[IEC 61010-2:1998]</ref><p>, <em>Safety requirements for electric equipment for measurement, control, and laboratory use -- Part 2: Particular requirements for laboratory equipment for the heating of material</em></p>
 </reference>
@@ -722,7 +732,7 @@
   <ref anchor="ref11">[11]</ref><p> Nitrogen-ammonia-protein modified Kjeldahl method -- Titanium oxide and copper sulfate catalyst. <em>Official Methods and Recommended Practices of the AOCS</em> (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL</p>
 </reference>
   <reference>
-  <ref anchor="ref12">[12]</ref><p> Berner D.L., &amp; Brown J. Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. <em>J. Am. Oil Chem. Soc.</em> 1994, <strong>71</strong> (11) pp 1291-1293</p>
+  <ref anchor="ref12">[12]</ref><p> Berner D.L., &amp;amp; Brown J. Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. <em>J. Am. Oil Chem. Soc.</em> 1994, <strong>71</strong> (11) pp 1291-1293</p>
 </reference>
   <reference>
   <ref anchor="ref13">[13]</ref><p> Buckee G.K. Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method -- Collaborative trial. <em>J. Inst. Brew.</em> 1994, <strong>100</strong> (2) pp 57-64</p>

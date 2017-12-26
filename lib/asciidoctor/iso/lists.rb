@@ -3,8 +3,8 @@ module Asciidoctor
   module ISO
     module Lists
       def ulist(node)
-        return norm_ref(node) if $norm_ref
-        return biblio_ref(node) if $biblio
+        return reference(node, true) if $norm_ref
+        return reference(node, false) if $biblio
         noko do |xml|
           xml.ul **attr_code(anchor: node.id) do |xml_ul|
             node.items.each do |item|
@@ -45,12 +45,22 @@ module Asciidoctor
         end
       end
 
+      def isorefmatches3(xml, matched2)
+        ref_attributes = {
+          anchor: matched2[:anchor],
+        }
+        xml.iso_ref_title **attr_code(ref_attributes) do |t|
+          t.isocode matched2[:code], **attr_code(allparts: true)
+          t.isotitle { |i| i << ref_normalise(matched2[:text]) }
+        end
+      end
+
       def ref_normalise(ref)
         ref.gsub(/&#8201;&#8212;&#8201;/, " -- ").
           gsub(/&amp;amp;/, "&amp;")
       end
 
-      def norm_ref(node)
+      def reference(node, normative)
         noko do |xml|
           node.items.each do |item|
             matched = %r{^<ref\sanchor="(?<anchor>[^"]+)">
@@ -59,38 +69,26 @@ module Asciidoctor
             matched2 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
             \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
             <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x.match item.text
-            if matched2.nil?
-              if matched.nil?
-                warning(node, "normative reference not in expected format", item.text)
-              else
-                isorefmatches(xml, matched)
-              end
-            else
-              isorefmatches2(xml, matched2)
-            end
-          end
-        end.join("\n")
-      end
-
-      def biblio_ref(node)
-        noko do |xml|
-          node.items.each do |item|
-            matched = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-            \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
-            (?<text>.*)$}.match item.text
-            matched2 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-            \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
-            <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}.match item.text
-            if matched2.nil?
-              if matched.nil?
-                xml.reference do |t|
-                  t.p { |p| p << ref_normalise(item.text) }
+            matched3 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+            \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
+            (?<text>.*)(</p>)?$}x.match item.text
+            if matched3.nil?
+              if matched2.nil?
+                if matched.nil?
+                  xml.reference do |t|
+                    t.p { |p| p << ref_normalise(item.text) }
+                  end
+                  if normative
+                    warning(node, "non-ISO/IEC reference not expected as normative", item.text)
+                  end
+                else
+                  isorefmatches(xml, matched)
                 end
               else
-                isorefmatches(xml, matched)
+                isorefmatches2(xml, matched2)
               end
             else
-              isorefmatches2(xml, matched2)
+              isorefmatches3(xml, matched3)
             end
           end
         end.join("\n")
