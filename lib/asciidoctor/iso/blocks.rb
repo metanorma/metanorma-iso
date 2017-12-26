@@ -24,7 +24,7 @@ module Asciidoctor
           note_attributes = {
             source: node.attr("source") 
           }
-          content = flatten_rawtext(node.content).join("\n")
+          content = Utils::flatten_rawtext(node.content).join("\n")
           noko do |xml|
             xml.review_note content, **attr_code(note_attributes)
           end
@@ -37,7 +37,7 @@ module Asciidoctor
         noko do |xml|
           xml.termnote **attr_code(note_attributes) do |xml_cref|
             xml_cref << node.content
-            Validate::style(node, flatten_rawtext(node.content).join("\n"))
+            Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
           end
         end.join("\n")
       end
@@ -51,7 +51,7 @@ module Asciidoctor
             else
               xml_cref.p { |p| p << node.content }
             end
-            Validate::style(node, flatten_rawtext(node.content).join("\n"))
+            Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
           end
         end.join("\n")
       end
@@ -60,7 +60,7 @@ module Asciidoctor
         noko do |xml|
           xml.termexample **attr_code(anchor: node.id) do |ex|
             ex << node.content
-            Validate::style(node, flatten_rawtext(node.content).join("\n"))
+            Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
           end
         end.join("\n")
       end
@@ -70,7 +70,7 @@ module Asciidoctor
         noko do |xml|
           xml.example **attr_code(anchor: node.id) do |ex|
             ex << node.content
-            Validate::style(node, flatten_rawtext(node.content).join("\n"))
+            Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
           end
         end.join("\n")
       end
@@ -79,7 +79,9 @@ module Asciidoctor
         result = []
         result << noko do |xml|
           xml.foreword do |xml_abstract|
-            xml_abstract << node.content
+            content = node.content
+            xml_abstract << content
+            Validate::foreword_style(node, Utils::flatten_rawtext(content).join("\n"))
           end
         end
         result

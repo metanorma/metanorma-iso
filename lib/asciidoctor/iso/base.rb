@@ -72,7 +72,7 @@ module Asciidoctor
         noko do |xml|
           xml.p do |xml_t|
             xml_t << node.content
-            Validate::style(node, flatten_rawtext(node).join(" "))
+            Validate::style(node, Utils::flatten_rawtext(node).join(" "))
           end
         end.join("")
       end

@@ -18,8 +18,9 @@ module Asciidoctor
           if node.respond_to?(:id) && !node.id.nil?
             return "ID #{node.id}"
           end
-          while !node.nil? && (!node.respond_to?(:level) ||
-              node.level.positive?) && node.context != :section
+          while !node.nil? && 
+              (!node.respond_to?(:level) || node.level.positive?) && 
+              (!node.respond_to?(:context) || node.context != :section )
             node = node.parent
             if !node.nil? && node.context == :section
               return "Section: #{node.title}"
@@ -28,12 +29,30 @@ module Asciidoctor
           "??"
         end
 
-        def style_warning(node, msg, text)
-          warntext = "ISO style: WARNING (#{current_location(node)}): #{msg}"
-          warntext += ": #{text}" if text
-          warn warntext
+        # if node contains blocks, flatten them into a single line;
+        # and extract only raw text
+        def flatten_rawtext(node)
+          result = []
+          if node.respond_to?(:blocks) && node.blocks?
+            node.blocks.each { |b| result << flatten_rawtext(b) }
+          elsif node.respond_to?(:lines)
+            node.lines.each do |x|
+              if node.respond_to?(:context) && (node.context == :literal ||
+                  node.context == :listing)
+                result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
+              else
+                # strip not only HTML tags <tag>,
+                # but also Asciidoc crossreferences <<xref>>
+                result << x.gsub(/<[^>]*>+/, "")
+              end
+            end
+          elsif node.respond_to?(:text)
+            result << node.text.gsub(/<[^>]*>+/, "")
+          else
+            result << node.content.gsub(/<[^>]*>+/, "")
+          end
+          result.reject(&:empty?)
         end
-
       end
 
       def convert(node, transform = nil, opts = {})
@@ -228,30 +247,6 @@ HERE
         warn warntext
       end
 
-      # if node contains blocks, flatten them into a single line;
-      # and extract only raw text
-      def flatten_rawtext(node)
-        result = []
-        if node.respond_to?(:blocks) && node.blocks?
-          node.blocks.each { |b| result << flatten_rawtext(b) }
-        elsif node.respond_to?(:lines)
-          node.lines.each do |x|
-            if node.respond_to?(:context) && (node.context == :literal ||
-                node.context == :listing)
-              result << x.gsub(/</, "&lt;").gsub(/>/, "&gt;")
-            else
-              # strip not only HTML tags <tag>,
-              # but also Asciidoc crossreferences <<xref>>
-              result << x.gsub(/<[^>]*>+/, "")
-            end
-          end
-        elsif node.respond_to?(:text)
-          result << node.text.gsub(/<[^>]*>+/, "")
-        else
-          result << node.content.gsub(/<[^>]*>+/, "")
-        end
-        result.reject(&:empty?)
-      end
     end
   end
 end
