@@ -9,13 +9,39 @@ require "pp"
 module Asciidoctor
   module ISO
     module Utils
+      class << self
+        def current_location(node)
+          if node.respond_to?(:lineno) && !node.lineno.nil? &&
+              !node.lineno.empty?
+            return "Line #{node.lineno}"
+          end
+          if node.respond_to?(:id) && !node.id.nil?
+            return "ID #{node.id}"
+          end
+          while !node.nil? && (!node.respond_to?(:level) ||
+              node.level.positive?) && node.context != :section
+            node = node.parent
+            if !node.nil? && node.context == :section
+              return "Section: #{node.title}"
+            end
+          end
+          "??"
+        end
+
+        def style_warning(node, msg, text)
+          warntext = "ISO style: WARNING (#{current_location(node)}): #{msg}"
+          warntext += ": #{text}" if text
+          warn warntext
+        end
+
+      end
+
       def convert(node, transform = nil, opts = {})
         transform ||= node.node_name
         opts.empty? ? (send transform, node) : (send transform, node, opts)
       end
 
       def document_ns_attributes(_doc)
-        # ' xmlns="http://riboseinc.com/isoxml"'
         nil
       end
 
@@ -28,6 +54,7 @@ module Asciidoctor
         figure_cleanup(xmldoc)
         back_cleanup(xmldoc)
         ref_cleanup(xmldoc)
+        xmldoc
       end
 
       def intro_cleanup(xmldoc)
@@ -193,6 +220,12 @@ HERE
           end
         end
         "??"
+      end
+
+      def warning(node, msg, text)
+        warntext = "asciidoctor: WARNING (#{current_location(node)}): #{msg}"
+        warntext += ": #{text}" if text
+        warn warntext
       end
 
       # if node contains blocks, flatten them into a single line;

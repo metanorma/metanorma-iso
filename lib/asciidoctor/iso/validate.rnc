@@ -1,3 +1,7 @@
+default namespace = "http://riboseinc.com/isoxml"
+
+grammar {
+
 start = iso_standard
 
 iso_standard = 
@@ -145,7 +149,7 @@ patent_notice =
 
 middle =
   element middle {
-    scope, norm_ref, terms_defs, clause+
+    scope, norm_ref, terms_defs, symbols_abbrevs?, clause+
   }
 
 scope =
@@ -160,6 +164,12 @@ norm_ref =
     # boilerplate
     para,
     iso_ref_title* 
+  }
+
+symbols_abbrevs =
+  element symbols_abbrevs { 
+    attribute anchor { xsd:ID }?,
+    dl
   }
 
 iso_ref_title =
@@ -249,6 +259,7 @@ back =
 annex =
   element annex { 
     attribute anchor { xsd:ID }?,
+    attribute subtype { "normative" | "informative" }?,
     tname?,
     ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
     clause*
@@ -433,3 +444,5 @@ td =
     attribute align { text }?,
     (text | em | eref | stem | strong | sub | sup | tt | xref | fn | br | para)* 
   }
+
+}

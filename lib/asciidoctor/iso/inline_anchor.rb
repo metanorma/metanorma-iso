@@ -10,7 +10,7 @@ module Asciidoctor
         when :bibref
           inline_anchor_bibref node
         else
-          warn %(asciidoctor: WARNING (#{current_location(node)}): unknown anchor type: #{node.type.inspect})
+          warning(node, "unknown anchor type", node.type.inspect)
         end
       end
 

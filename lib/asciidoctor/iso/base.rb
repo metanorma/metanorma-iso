@@ -14,19 +14,19 @@ module Asciidoctor
       end
 
       def skip(node, name = nil)
-        warn %(asciidoctor: WARNING (#{current_location(node)}): \
-          converter missing for #{name || node.node_name} node in ISO backend)
+        warning(node, "converter missing for #{name || node.node_name} node in ISO backend", nil)
         nil
       end
 
       def document(node)
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard#{document_ns_attributes node}>"]
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
         $draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
         ret = result.flatten * "\n"
         ret1 = cleanup(Nokogiri::XML(ret))
+        ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
         Validate::validate(ret1)
         ret1.to_xml(indent: 2)
       end
@@ -45,14 +45,13 @@ module Asciidoctor
       end
 
       def termsource(node)
-        result = []
-        result << noko do |xml|
+        noko do |xml|
           xml.termref do |xml_t|
             matched = /^(?<xref><xref[^>]+>)
             (,\s(?<section>.[^, ]+))?
               (,\s(?<text>.*))?$/x.match node.content
             if matched.nil?
-              warn %(asciidoctor: WARNING (#{current_location(node)}): term reference not in expected format: #{node.content})
+              warning(node, "term reference not in expected format", node.content)
             else
               seen_xref = Nokogiri::XML.fragment(matched[:xref])
               attr = {
@@ -62,21 +61,20 @@ module Asciidoctor
               xml_t.xref seen_xref.children[0].content, **attr_code(attr)
               xml_t.isosection matched[:section] if matched[:section]
               xml_t.modification { |m| m << matched[:text] } if matched[:text]
+              Validate::style(node, matched[:text])
             end
           end
-        end
-        result
+        end.join("\n")
       end
 
       def paragraph(node)
         return termsource(node) if node.role == "source"
-        result = []
-        result << noko do |xml|
+        noko do |xml|
           xml.p do |xml_t|
             xml_t << node.content
+            Validate::style(node, flatten_rawtext(node).join(" "))
           end
-        end
-        result
+        end.join("")
       end
 
       def inline_footnote(node)
@@ -84,7 +82,7 @@ module Asciidoctor
           xml.fn do |xml_t|
             xml_t << node.text
           end
-        end.join
+        end.join("\n")
       end
 
       def open(node)
@@ -106,14 +104,14 @@ module Asciidoctor
         noko do |xml|
           xml << node.text
           xml.br
-        end.join
+        end.join("\n")
       end
 
       def page_break(node)
         noko do |xml|
           xml << node.text
           xml.pagebreak
-        end.join
+        end.join("\n")
       end
 
       def inline_quoted(node)

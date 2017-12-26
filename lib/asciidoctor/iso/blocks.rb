@@ -14,6 +14,7 @@ module Asciidoctor
         noko do |xml|
           xml.formula **attr_code(stem_attributes) do |s|
             s.stem stem_content
+            Validate::style(node, stem_content)
           end
         end
       end
@@ -32,17 +33,13 @@ module Asciidoctor
 
       def termnote(node)
         note_attributes = { anchor: node.id }
-
-        warn <<~WARNING_MESSAGE if node.blocks?
-          asciidoctor: WARNING (#{current_location(node)}): \
-          comment can not contain blocks of text in XML RFC:\n #{node.content}
-        WARNING_MESSAGE
-
+        warning(node, "comment can not contain blocks of text in XML RFC", node.content) if node.blocks?
         noko do |xml|
           xml.termnote **attr_code(note_attributes) do |xml_cref|
             xml_cref << node.content
+            Validate::style(node, flatten_rawtext(node.content).join("\n"))
           end
-        end.join
+        end.join("\n")
       end
 
       def admonition(node)
@@ -54,16 +51,18 @@ module Asciidoctor
             else
               xml_cref.p { |p| p << node.content }
             end
+            Validate::style(node, flatten_rawtext(node.content).join("\n"))
           end
-        end.join
+        end.join("\n")
       end
 
       def term_example(node)
         noko do |xml|
           xml.termexample **attr_code(anchor: node.id) do |ex|
             ex << node.content
+            Validate::style(node, flatten_rawtext(node.content).join("\n"))
           end
-        end.join
+        end.join("\n")
       end
 
       def example(node)
@@ -71,8 +70,9 @@ module Asciidoctor
         noko do |xml|
           xml.example **attr_code(anchor: node.id) do |ex|
             ex << node.content
+            Validate::style(node, flatten_rawtext(node.content).join("\n"))
           end
-        end.join
+        end.join("\n")
       end
 
       def preamble(node)
@@ -86,52 +86,57 @@ module Asciidoctor
       end
 
       def section(node)
-        attr = { anchor: node.id.empty? ? nil : node.id }
+        attrs = { anchor: node.id.empty? ? nil : node.id }
         noko do |xml|
           case node.title.downcase
           when "introduction"
-            xml.introduction **attr_code(attr) do |xml_section|
+            xml.introduction **attr_code(attrs) do |xml_section|
               xml_section << node.content
             end
           when "patent notice"
-            xml.patent_notice **attr_code(attr) do |xml_section|
+            xml.patent_notice do |xml_section|
               xml_section << node.content
             end
           when "scope"
-            xml.scope **attr_code(attr) do |xml_section|
+            xml.scope **attr_code(attrs) do |xml_section|
               xml_section << node.content
             end
           when "normative references"
             $norm_ref = true
-            xml.norm_ref **attr_code(attr) do |xml_section|
+            xml.norm_ref **attr_code(attrs) do |xml_section|
               xml_section << node.content
             end
             $norm_ref = false
           when "terms and definitions"
             $term_def = true
-            xml.terms_defs **attr_code(attr) do |xml_section|
+            xml.terms_defs **attr_code(attrs) do |xml_section|
               xml_section << node.content
             end
             $term_def = false
+          when "symbols and abbreviations"
+            xml.symbols_abbrevs **attr_code(attrs) do |xml_section|
+              xml_section << node.content
+            end
           when "bibliography"
             $biblio = true
-            xml.bibliography **attr_code(attr) do |xml_section|
+            xml.bibliography **attr_code(attrs) do |xml_section|
               xml_section << node.content
             end
             $biblio = true
           else
             if $term_def
-              xml.termdef **attr_code(attr) do |xml_section|
+              xml.termdef **attr_code(attrs) do |xml_section|
                 xml_section.term { |name| name << node.title }
                 xml_section << node.content
               end
             elsif node.attr("style") == "appendix"
-              xml.annex **attr_code(attr) do |xml_section|
+              attrs[:subtype] = node.attributes.has_key?("subtype") ? node.attr("subtype") : "informative"
+              xml.annex **attr_code(attrs) do |xml_section|
                 xml_section.name { |name| name << node.title }
                 xml_section << node.content
               end
             else
-              xml.clause **attr_code(attr) do |xml_section|
+              xml.clause **attr_code(attrs) do |xml_section|
                 unless node.title.nil?
                   xml_section.name { |name| name << node.title }
                 end
@@ -139,7 +144,7 @@ module Asciidoctor
               end
             end
           end
-        end.join
+        end.join("\n")
       end
 
       def image(node)

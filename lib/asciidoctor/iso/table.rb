@@ -41,6 +41,7 @@ module Asciidoctor
                   rowlength += cell.text.size
                   xml_tr.send cell_tag, **attr_code(cell_attributes) do |thd|
                     thd << (cell.style == :asciidoc ? cell.content : cell.text)
+                    Validate::style(cell, cell.text) unless cell.style == :asciidoc
                   end
                 end
               end

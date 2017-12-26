@@ -35,6 +35,8 @@
 .Foreword 
 ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.
 
+Within 1 ± 2 %
+
 The procedures used to develop this document and those intended for its further maintenance are described in the ISO/IEC Directives, Part 1. In particular the different approval criteria needed for the different types of ISO documents should be noted. This document was drafted in accordance with the editorial rules of the ISO/IEC Directives, Part 2 (see www.iso.org/directives).
 
 Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO shall not be held responsible for identifying any or all such patent rights. Details of any patent rights identified during the development of the document will be in the Introduction and/or on the ISO list of patent declarations received (see www.iso.org/patents).
@@ -375,8 +377,8 @@ If bags are used, they shall comply with the requirements of <<ISO8531-1>>, Clau
 The packages shall be marked or labelled as required by the country of destination. 
 
 [[AnnexA]]
-[appendix]
-== Determination of defects (normative)
+[appendix,subtype=normative]
+== Determination of defects
 
 // "normative" follows title
 === Principle 
@@ -431,7 +433,7 @@ image::splititright.gif[]
 
 === Determination 
 
-Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <<AnnexA-4-1>> and separate the different defects into the bowls (<<AnnexA-2-6>>). When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see <<table1>). 
+Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <<AnnexA-4-1>> and separate the different defects into the bowls (<<AnnexA-2-6>>). When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see <<table1>>). 
 
 Weigh, to the nearest 0,01 g, the fractions so obtained. 
 
@@ -457,7 +459,7 @@ Report the results as specified in <<clause7>>.
 
 [[AnnexB]]
 [appendix]
-== Determination of the waxy rice content of parboiled rice (informative)
+== Determination of the waxy rice content of parboiled rice
 
 === Principle 
 
@@ -559,8 +561,8 @@ stem:[m_2]:: is the mass, expressed in grams, of the non-waxy rice portion.
 Report the results as specified in <<clause7>>, giving the results calculated using Formula (<<formulaB-1>>). 
 
 [[AnnexC]]
-[appendix]
-== Gelatinization (informative) 
+[appendix,subtype=informative]
+== Gelatinization
 
 <<figureC-1>> gives an example of a typical gelatinization curve. <<figureC-2>> shows the three stages of gelatinization. 
 
@@ -595,7 +597,7 @@ image::fig2c.gif[]
 
 [[AnnexD]]
 [appendix]
-== Results of interlaboratory test for husked rice yields (informative) 
+== Results of interlaboratory test for husked rice yields
 
 An interlaboratory test <<ref15>> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <<ISO5725-1>> and <<ISO5725-2>>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <<tableD-1>>. 
 

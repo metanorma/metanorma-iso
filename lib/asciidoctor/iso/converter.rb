@@ -1,5 +1,4 @@
 require "asciidoctor"
-
 require "asciidoctor/iso/version"
 require "asciidoctor/iso/base"
 require "asciidoctor/iso/front"

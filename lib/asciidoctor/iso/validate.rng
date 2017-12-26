@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar ns="http://riboseinc.com/isoxml" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <ref name="iso_standard"/>
   </start>
@@ -283,6 +283,9 @@
       <ref name="scope"/>
       <ref name="norm_ref"/>
       <ref name="terms_defs"/>
+      <optional>
+        <ref name="symbols_abbrevs"/>
+      </optional>
       <oneOrMore>
         <ref name="clause"/>
       </oneOrMore>
@@ -312,6 +315,16 @@
       <zeroOrMore>
         <ref name="iso_ref_title"/>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="symbols_abbrevs">
+    <element name="symbols_abbrevs">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <ref name="dl"/>
     </element>
   </define>
   <define name="iso_ref_title">
@@ -531,6 +544,14 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name="subtype">
+          <choice>
+            <value>normative</value>
+            <value>informative</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
         <ref name="tname"/>
       </optional>
       <zeroOrMore>
@@ -649,7 +670,7 @@
   <define name="review_note">
     <element name="review_note">
       <optional>
-        <attribute name="color"/>
+        <attribute name="source"/>
       </optional>
       <text/>
     </element>

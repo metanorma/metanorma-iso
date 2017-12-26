@@ -16,9 +16,6 @@ module Asciidoctor
           if node.attr("tc-docnumber")
             i.tc_documentnumber node.attr("tc-docnumber")
           end
-          if node.attr("ref-docnumber")
-            i.ref_documentnumber node.attr("ref-docnumber")
-          end
         end
       end
 
