@@ -1,9 +1,9 @@
 # asciidoctor-iso
 = Asciidoctor processor for ISO standards
 
-image:https://img.shields.io/gem/v/asciidoctor-rfc.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-iso"]
-image:https://img.shields.io/travis/riboseinc/asciidoctor-rfc/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-iso"]
-image:https://codeclimate.com/github/riboseinc/asciidoctor-rfc/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-iso"]
+image:https://img.shields.io/gem/v/asciidoctor-iso.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-iso"]
+image:https://img.shields.io/travis/riboseinc/asciidoctor-iso/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-iso"]
+image:https://codeclimate.com/github/riboseinc/asciidoctor-iso/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-iso"]
 
 This gem processes http://asciidoctor.org/[Asciidoctor] documents and outputs an XML representation of the document, intended as a document model for ISO International Standards. The XML representation can then be processed in turn to generate PDF or Microsoft Word output (via DocBook).
 
@@ -46,7 +46,6 @@ The gem also relies on Asciidoc document attributes to provide necessary metadat
 
 `:docnumber:`:: The ISO document number (mandatory)
 `:tc-docnumber:`:: The document number assigned by the Technical committee
-`:ref-docnumber:`:: The reference document number (appearing in page headers)
 `:partnumber:`:: The ISO document part number
 `:edition:`:: The document edition
 `:revdate:`:: The date the document was last updated
