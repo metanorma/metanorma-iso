@@ -140,6 +140,30 @@ module Asciidoctor
           style_warning(node, "Foreword may contain recommendation", r) if r
         end
 
+        def scope_style(node, foreword_text)
+          r = requirement(foreword_text)
+          style_warning(node, "Foreword may contain requirement", r) if r
+          r = permission(foreword_text)
+          style_warning(node, "Foreword may contain permission", r) if r
+          r = recommendation(foreword_text)
+          style_warning(node, "Foreword may contain recommendation", r) if r
+        end
+
+        def introduction_style(node, text)
+          r = requirement(text)
+          style_warning(node, "Introduction may contain requirement", r) if r
+        end
+
+        def termexample_style(node, text)
+          r = requirement(text)
+          style_warning(node, "Term example may contain requirement", r) if r
+          r = permission(text)
+          style_warning(node, "Term example may contain permission", r) if r
+          r = recommendation(text)
+          style_warning(node, "Term example may contain recommendation", r) if r
+          style(node, text)
+        end
+
         def style_warning(node, msg, text)
           warntext = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
           warntext += ": #{text}" if text

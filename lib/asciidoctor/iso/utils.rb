@@ -90,6 +90,19 @@ module Asciidoctor
         end
       end
 
+      def termdef_style(xmldoc)
+        xmldoc.xpath("//termdef").each do |t|
+          para = t.at("./p")
+          return if para.nil?
+          if para.text =~ /^(the|a)\b/i
+            warn "ISO style: #{t.at("term").text}: term definition starts with article"
+          end
+          if para.text =~ /\.$/i
+            warn "ISO style: #{t.at("term").text}: term definition ends with period"
+          end
+        end
+      end
+
       def termdef_cleanup(xmldoc)
         # release termdef tags from surrounding paras
         nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol |
@@ -114,6 +127,18 @@ module Asciidoctor
           a.remove
           prev.next = a
         end
+        xmldoc.xpath("//termdef").each do |d|
+          t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
+          first_child = d.at("./p | ./figure | ./formula")
+          first_child.replace(t)
+          first_child.remove
+          t << first_child
+          d.xpath("./p | ./figure | ./formula").each do |n|
+            n.remove
+            t << n
+          end
+        end
+        termdef_style(xmldoc)
       end
 
       def isotitle_cleanup(xmldoc)

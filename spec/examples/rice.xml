@@ -101,72 +101,72 @@
   </li>
 </ul>
 <termdef anchor="paddy"><term>paddy</term><admitted_term>paddy rice</admitted_term><admitted_term>rough rice</admitted_term>
-<p>rice retaining its husk after threshing</p>
+<termdefinition><p>rice retaining its husk after threshing</p></termdefinition>
 <termref>
   <xref target="ISO7301" format="inline"/>
   <isosection>3.1</isosection>
 </termref></termdef>
 <termdef anchor="husked_rice"><term>husked rice</term>  <deprecated_term>cargo rice</deprecated_term>
-<p><em>paddy</em> (<xref target="paddy" format="inline"/>) from which the husk only has been removed</p>
+<termdefinition><p><em>paddy</em> (<xref target="paddy" format="inline"/>) from which the husk only has been removed</p></termdefinition>
 <termref>
   <xref target="ISO7301" format="inline"/>
   <isosection>3.2</isosection>
   <modification>modified The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</modification>
 </termref></termdef>
 <termdef anchor="_milled_rice"><term>milled rice</term>  <admitted_term>white rice</admitted_term>
-<p><em>husked rice</em> (<xref target="husked_rice" format="inline"/>) from which almost all of the bran and embryo have been removed by milling</p>
+<termdefinition><p><em>husked rice</em> (<xref target="husked_rice" format="inline"/>) from which almost all of the bran and embryo have been removed by milling</p></termdefinition>
 <termref>
   <xref target="ISO7301" format="inline"/>
   <isosection>3.3</isosection>
 </termref></termdef>
 <termdef anchor="_parboiled_rice">
   <term>parboiled rice</term>
-  <p>rice whose starch has been fully gelatinized by soaking <em>paddy</em> (<xref target="paddy" format="inline"/>) rice or <em>husked rice</em> (<xref target="husked_rice" format="inline"/>) in water followed by a heat treatment and a drying process</p>
+  <termdefinition><p>rice whose starch has been fully gelatinized by soaking <em>paddy</em> (<xref target="paddy" format="inline"/>) rice or <em>husked rice</em> (<xref target="husked_rice" format="inline"/>) in water followed by a heat treatment and a drying process</p></termdefinition>
 </termdef>
-<termdef anchor="_waxy_rice"><term>waxy rice</term><p>variety of rice whose kernels have a white and opaque appearance</p>
+<termdef anchor="_waxy_rice"><term>waxy rice</term><termdefinition><p>variety of rice whose kernels have a white and opaque appearance</p></termdefinition>
 <termnote>The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</termnote></termdef>
 <termdef anchor="_extraneous_matter"><term>extraneous matter</term><admitted_term>EM</admitted_term><termdomain>rice</termdomain>
-<p>organic and inorganic components other than whole or broken kernels</p>
+<termdefinition><p>organic and inorganic components other than whole or broken kernels</p></termdefinition>
 <termexample>Foreign seeds, husks, bran, sand, dust.</termexample></termdef>
 <termdef anchor="HDK"><term>HDK</term>  <admitted_term>heat-damaged kernel</admitted_term>
-<p>kernel, whole or broken, which has changed its normal colour as a result of heating</p>
+<termdefinition><p>kernel, whole or broken, which has changed its normal colour as a result of heating</p></termdefinition>
 <termnote>This category includes whole or broken kernels that are yellow due to alteration. Parboiled rice in a batch of non-parboiled rice is also included in this category.</termnote></termdef>
 <termdef anchor="_damaged_kernel">
   <term>damaged kernel</term>
-  <p>kernel, whole or broken, showing obvious deterioration due to moisture, pests, disease or other causes, but excluding <em>HDK</em> (<xref target="HDK" format="inline"/>)</p>
+  <termdefinition><p>kernel, whole or broken, showing obvious deterioration due to moisture, pests, disease or other causes, but excluding <em>HDK</em> (<xref target="HDK" format="inline"/>)</p></termdefinition>
 </termdef>
 <termdef anchor="_immature_kernel"><term>immature kernel</term>  <admitted_term>unripe kernel</admitted_term>
-<p>kernel, whole or broken, which is unripe and/or underdeveloped</p></termdef>
-<termdef anchor="_husked_rice_yield"><term>husked rice yield</term><p>amount of husked rice obtained from paddy</p>
+<termdefinition><p>kernel, whole or broken, which is unripe and/or underdeveloped</p></termdefinition></termdef>
+<termdef anchor="_husked_rice_yield"><term>husked rice yield</term><termdefinition><p>amount of husked rice obtained from paddy</p></termdefinition>
 <termref>
   <xref target="ISO6646" format="inline"/>
   <isosection>3.1</isosection>
 </termref></termdef>
-<termdef anchor="_nitrogen_content"><term>nitrogen content</term><p>quantity of nitrogen determined after application of the procedure described</p>
+<termdef anchor="_nitrogen_content"><term>nitrogen content</term><termdefinition><p>quantity of nitrogen determined after application of the procedure described</p></termdefinition>
 <termnote>It is expressed as a mass fraction of dry product, as a percentage.</termnote>
 <termref>
   <xref target="ISO20483" format="inline"/>
   <isosection>3.1</isosection>
 </termref></termdef>
-<termdef anchor="_crude_protein_content"><term>crude protein content</term><p>quantity of crude protein obtained from the nitrogen content as determined by applying the specified method, calculated by multiplying this content by an appropriate factor depending on the type of cereal or pulse</p>
+<termdef anchor="_crude_protein_content"><term>crude protein content</term><termdefinition><p>quantity of crude protein obtained from the nitrogen content as determined by applying the specified method, calculated by multiplying this content by an appropriate factor depending on the type of cereal or pulse</p></termdefinition>
 <termnote>It is expressed as a mass fraction of dry product, as a percentage.</termnote>
 <termref>
   <xref target="ISO20483" format="inline"/>
   <isosection>3.2</isosection>
 </termref></termdef>
-<termdef anchor="gelatinization"><term>gelatinization</term><p>hydration process conferring the jelly-like state typical of the coagulated colloids, which are named gels, on kernels</p>
+<termdef anchor="gelatinization"><term>gelatinization</term><termdefinition><p>hydration process conferring the jelly-like state typical of the coagulated colloids, which are named gels, on kernels</p></termdefinition>
 <termnote>See <xref target="figureC-1" format="inline"/>.</termnote>
 <termref>
   <xref target="ISO14864" format="inline"/>
   <isosection>3.1</isosection>
 </termref></termdef>
-<termdef anchor="gel_state"><term>gel state</term><p>condition reached as a consequence of <em>gelatinization</em> (<xref target="gelatinization" format="inline"/>), when the kernel is fully transparent and absolutely free from whitish and opaque granules after being pressed between two glass sheets</p>
+<termdef anchor="gel_state"><term>gel state</term><termdefinition><p>condition reached as a consequence of <em>gelatinization</em> (<xref target="gelatinization" format="inline"/>), when the kernel is fully transparent and absolutely free from whitish and opaque granules after being pressed between two glass sheets</p></termdefinition>
 <termref>
   <xref target="ISO14864" format="inline"/>
   <isosection>3.2</isosection>
 </termref></termdef>
 <termdef anchor="_gelatinization_time"><term>gelatinization time</term><termsymbol><stem>t_90</stem></termsymbol>
-<p>time necessary for 90 % of the kernels to pass from their natural state to the <em>gel state</em> (<xref target="gel_state" format="inline"/>)</p>
+<termdefinition><p>time necessary for 90 % of the kernels to pass from their natural state to the <em>gel state</em> (<xref target="gel_state" format="inline"/>)</p></termdefinition>
 <termref>
   <xref target="ISO14864" format="inline"/>
   <isosection>3.3</isosection>

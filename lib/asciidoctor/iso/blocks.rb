@@ -59,8 +59,9 @@ module Asciidoctor
       def term_example(node)
         noko do |xml|
           xml.termexample **attr_code(anchor: node.id) do |ex|
-            ex << node.content
-            Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
+            content = node.content
+            ex << content
+            Validate::termexample_style(node, Utils::flatten_rawtext(content).join("\n"))
           end
         end.join("\n")
       end
@@ -69,8 +70,9 @@ module Asciidoctor
         return term_example(node) if $term_def
         noko do |xml|
           xml.example **attr_code(anchor: node.id) do |ex|
-            ex << node.content
-            Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
+            content = node.content
+            ex << content
+            Validate::style(node, Utils::flatten_rawtext(content).join("\n"))
           end
         end.join("\n")
       end
@@ -93,16 +95,22 @@ module Asciidoctor
           case node.title.downcase
           when "introduction"
             xml.introduction **attr_code(attrs) do |xml_section|
-              xml_section << node.content
+              content = node.content
+              xml_section << content
+              Validate::introduction_style(node, Utils::flatten_rawtext(content).join("\n"))
             end
           when "patent notice"
             xml.patent_notice do |xml_section|
               xml_section << node.content
             end
           when "scope"
+            $scope = true
             xml.scope **attr_code(attrs) do |xml_section|
-              xml_section << node.content
+              content = node.content
+              xml_section << content
+              Validate::scope_style(node, Utils::flatten_rawtext(content).join("\n"))
             end
+            $scope = false
           when "normative references"
             $norm_ref = true
             xml.norm_ref **attr_code(attrs) do |xml_section|
@@ -110,6 +118,12 @@ module Asciidoctor
             end
             $norm_ref = false
           when "terms and definitions"
+            $term_def = true
+            xml.terms_defs **attr_code(attrs) do |xml_section|
+              xml_section << node.content
+            end
+            $term_def = false
+          when "terms, definitions, symbols and abbreviated terms"
             $term_def = true
             xml.terms_defs **attr_code(attrs) do |xml_section|
               xml_section << node.content
@@ -138,6 +152,7 @@ module Asciidoctor
                 xml_section << node.content
               end
             else
+              Validate::style_warning(node, "Scope contains subsections: should be succint", nil) if $scope
               xml.clause **attr_code(attrs) do |xml_section|
                 unless node.title.nil?
                   xml_section.name { |name| name << node.title }

@@ -140,7 +140,9 @@ foreword =
 introduction =
   element introduction { 
     attribute anchor { xsd:ID }?,
+    tname?,
     ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
+    clause*,
     patent_notice? 
   }
 
@@ -155,7 +157,9 @@ middle =
 scope =
   element scope { 
     attribute anchor { xsd:ID }?,
-    para+ 
+    tname?,
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
+    clause*
   }
 
 norm_ref =
@@ -196,16 +200,17 @@ isotitle =
 terms_defs = 
   element terms_defs { 
     attribute anchor { xsd:ID }?,
+    tname?,
     # boilerplate
-    para, para, ul,
-    termdef+ 
+    para*, ul?,
+    (termdef+ | terms_defs? )
   }
 
 termdef = 
   element termdef { 
     attribute anchor { xsd:ID }?,
     term, admitted_term*, termsymbol?, deprecated_term*,
-    termdomain?, para, termnote*, termexample*, termref* 
+    termdomain?, termdefinition, termnote*, termexample*, termref* 
   }
 
 term = 
@@ -222,6 +227,11 @@ deprecated_term =
 
 termdomain = 
   element termdomain { text }
+
+termdefinition =
+  element termdefinition {
+    ( para | figure | formula )+
+  }
 
 termnote = 
   element termnote { (text | xref | eref)* }

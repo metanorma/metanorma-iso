@@ -250,6 +250,9 @@
           <data type="ID"/>
         </attribute>
       </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
       <zeroOrMore>
         <choice>
           <ref name="para"/>
@@ -265,6 +268,9 @@
           <ref name="sourcecode"/>
           <ref name="review_note"/>
         </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="clause"/>
       </zeroOrMore>
       <optional>
         <ref name="patent_notice"/>
@@ -298,9 +304,28 @@
           <data type="ID"/>
         </attribute>
       </optional>
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="table"/>
+          <ref name="note"/>
+          <ref name="formula"/>
+          <ref name="warning"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+          <ref name="dl"/>
+          <ref name="figure"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+          <ref name="review_note"/>
+        </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="clause"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="norm_ref">
@@ -380,13 +405,24 @@
           <data type="ID"/>
         </attribute>
       </optional>
-      <!-- boilerplate -->
-      <ref name="para"/>
-      <ref name="para"/>
-      <ref name="ul"/>
-      <oneOrMore>
-        <ref name="termdef"/>
-      </oneOrMore>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <zeroOrMore>
+        <!-- boilerplate -->
+        <ref name="para"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="ul"/>
+      </optional>
+      <choice>
+        <oneOrMore>
+          <ref name="termdef"/>
+        </oneOrMore>
+        <optional>
+          <ref name="terms_defs"/>
+        </optional>
+      </choice>
     </element>
   </define>
   <define name="termdef">
@@ -409,7 +445,7 @@
       <optional>
         <ref name="termdomain"/>
       </optional>
-      <ref name="para"/>
+      <ref name="termdefinition"/>
       <zeroOrMore>
         <ref name="termnote"/>
       </zeroOrMore>
@@ -444,6 +480,17 @@
   <define name="termdomain">
     <element name="termdomain">
       <text/>
+    </element>
+  </define>
+  <define name="termdefinition">
+    <element name="termdefinition">
+      <oneOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="figure"/>
+          <ref name="formula"/>
+        </choice>
+      </oneOrMore>
     </element>
   </define>
   <define name="termnote">
