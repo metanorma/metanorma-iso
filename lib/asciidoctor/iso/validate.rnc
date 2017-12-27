@@ -403,7 +403,10 @@ note =
   }
 
 warning =
-  element warning { para+ }
+  element warning { 
+    tname,
+    para+ 
+  }
 
 formula =
   element formula { 

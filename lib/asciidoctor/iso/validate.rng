@@ -944,6 +944,7 @@
   </define>
   <define name="warning">
     <element name="warning">
+      <ref name="tname"/>
       <oneOrMore>
         <ref name="para"/>
       </oneOrMore>

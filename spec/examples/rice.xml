@@ -341,9 +341,10 @@
 <p>Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in <xref target="ISO20483" format="inline"/>, Annex C and Table C.1, that is adapted to the type of cereals or pulses <xref target="ref13" format="footnote"/><xref target="ref14" format="footnote"/> and to their use.</p></clause>
 <clause anchor="_gelatinization_time_2"><name>Gelatinization time</name><p>Determine the gelatinization time, <stem>t_90</stem>, for rice kernels during cooking. An example of a typical curve is given in <xref target="figureC-1" format="inline"/>. Three typical stages of gelatinization are shown in <xref target="figureC-2" format="inline"/>.</p>
 <p>Report the results as specified in <xref target="clause7" format="inline"/>.</p></clause>
-<clause anchor="_husked_rice_yield_2"><name>Husked rice yield</name><clause anchor="_determination"><name>Determination</name><note>
+<clause anchor="_husked_rice_yield_2"><name>Husked rice yield</name><clause anchor="_determination"><name>Determination</name><warning>
+  <name>CAUTION</name>
   <p>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
-</note>
+</warning>
 <p>Determine the husked rice yield in accordance with <xref target="ISO6646" format="inline"/>.</p></clause>
 <clause anchor="_precision"><name>Precision</name><clause anchor="_interlaboratory_test">
   <name>Interlaboratory test</name>
@@ -515,9 +516,10 @@
 <clause anchor="AnnexB-2-7">
   <name>Tissue paper.</name>
 </clause></clause>
-<clause anchor="_reagents"><name>Reagents</name><note>
+<clause anchor="_reagents"><name>Reagents</name><warning>
+  <name>WARNING</name>
   <p>Direct contact of iodine with skin can cause lesions so care should be taken in handling iodine. Iodine vapour is very irritating to eyes and mucous membranes.</p>
-</note>
+</warning>
 <clause anchor="AnnexB-3-1">
   <name>Deionized water,</name>
   <p>Grade 3 quality as specified in <xref target="ISO3696" format="inline"/>.</p>

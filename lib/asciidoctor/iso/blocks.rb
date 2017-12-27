@@ -45,13 +45,29 @@ module Asciidoctor
       def admonition(node)
         return termnote(node) if $term_def
         noko do |xml|
-          xml.note **attr_code(anchor: node.id) do |xml_cref|
-            if node.blocks?
-              xml_cref << node.content
-            else
-              xml_cref.p { |p| p << node.content }
+          if node.attr("name") == "note"
+            xml.note **attr_code(anchor: node.id) do |xml_cref|
+              if node.blocks?
+                xml_cref << node.content
+              else
+                xml_cref.p { |p| p << node.content }
+              end
+              Validate::note_style(node, Utils::flatten_rawtext(node.content).join("\n"))
             end
-            Validate::note_style(node, Utils::flatten_rawtext(node.content).join("\n"))
+          else
+            name = node.attr("name")
+            unless node.attr("type").nil?
+              name = "danger" if node.attr("type").downcase == "danger"
+              name = "safety precautions" if node.attr("type").downcase == "safety precautions"
+            end
+            xml.warning do |xml_cref|
+              xml_cref.name name.upcase
+              if node.blocks?
+                xml_cref << node.content
+              else
+                xml_cref.p { |p| p << node.content }
+              end
+            end
           end
         end.join("\n")
       end
