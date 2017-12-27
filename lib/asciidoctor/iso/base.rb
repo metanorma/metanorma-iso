@@ -81,6 +81,7 @@ module Asciidoctor
         noko do |xml|
           xml.fn do |xml_t|
             xml_t << node.text
+            Validate::footnote_style(node, node.text)
           end
         end.join("\n")
       end

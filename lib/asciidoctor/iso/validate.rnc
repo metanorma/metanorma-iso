@@ -134,15 +134,17 @@ title_part =
 
 foreword =
   element foreword { 
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*
   }
 
 introduction =
   element introduction { 
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
-    clause*,
+    (
+      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+      clause+ 
+    ),
     patent_notice? 
   }
 
@@ -158,8 +160,10 @@ scope =
   element scope { 
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
-    clause*
+    ( 
+     ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+      clause+
+    )
   }
 
 norm_ref =
@@ -230,7 +234,7 @@ termdomain =
 
 termdefinition =
   element termdefinition {
-    ( para | figure | formula )+
+    ( para_no_fn | figure | formula )+
   }
 
 termnote = 
@@ -252,21 +256,32 @@ clause =
   element clause {
     attribute anchor { xsd:ID }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*, 
-    clause*
+    ( 
+      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+       clause+
+    )
+  }
+
+clause_hanging_para =
+  element clause {
+    attribute anchor { xsd:ID }?,
+    tname?,
+    # allow hanging paragraphs in annexes: they introduce lists
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
+    clause_hanging_para*
   }
 
 quote =
   element quote {
     attribute anchor { xsd:ID }?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*
   }
 
 
 back = 
   element back {
     annex*,
-    bibliography
+    bibliography?
   }
 
 annex =
@@ -274,14 +289,17 @@ annex =
     attribute anchor { xsd:ID }?,
     attribute subtype { "normative" | "informative" }?,
     tname?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note )*,
-    clause*
+    # allow hanging paragraphs in annexes: they introduce lists
+    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
+    clause_hanging_para*
   }
 
 bibliography =
   element bibliography { 
     attribute anchor { xsd:ID }?,
-    (iso_ref_title | reference)+ 
+    tname?,
+    (iso_ref_title | reference)+,
+    bibliography*
   }
 
 reference = 
@@ -298,13 +316,20 @@ para =
        (text | em | eref | strong | stem | sub | sup | tt | xref | fn | br)*
      }
 
+para_no_fn =
+     element p {
+       (text | em | eref | strong | stem | sub | sup | tt | xref | br)*
+     }
+
 figure = 
   element figure {
     attribute src { text }?,
     attribute anchor { xsd:ID }?,
     tname?,
+    fn*,
     dl?,
-    figure*
+    figure*,
+    note*
   }
 
 sourcecode =
@@ -353,7 +378,7 @@ ul =
 
 li =
   element li {
-    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note )+
+    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )+
   }
 
 dl =
@@ -368,11 +393,14 @@ dt =
 
 dd =
   element dd {
-    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note )*
+    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )*
   }
 
 note =
-  element note { para+ }
+  element note { 
+    attribute anchor { xsd:ID }?,
+    para+ 
+  }
 
 warning =
   element warning { para+ }
@@ -382,6 +410,12 @@ formula =
     attribute anchor { xsd:ID }?,
     stem,
     dl?
+  }
+
+example = 
+  element example {
+    attribute anchor { xsd:ID }?,
+    ( para | formula | ol | ul | dl | quote | sourcecode | review_note )+
   }
 
 xref =
@@ -424,7 +458,7 @@ tt =
 table =
   element table {
     attribute anchor { xsd:ID }?,
-    tname?, thead?, tbody, tfoot?, note*
+    tname?, thead?, tbody, tfoot?, dl?, note*
   }
 
 tname =

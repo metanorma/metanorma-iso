@@ -239,6 +239,7 @@
           <ref name="quote"/>
           <ref name="sourcecode"/>
           <ref name="review_note"/>
+          <ref name="example"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -253,25 +254,28 @@
       <optional>
         <ref name="tname"/>
       </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="para"/>
-          <ref name="table"/>
-          <ref name="note"/>
-          <ref name="formula"/>
-          <ref name="warning"/>
-          <ref name="ol"/>
-          <ref name="ul"/>
-          <ref name="dl"/>
-          <ref name="figure"/>
-          <ref name="quote"/>
-          <ref name="sourcecode"/>
-          <ref name="review_note"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="clause"/>
-      </zeroOrMore>
+      <choice>
+        <oneOrMore>
+          <choice>
+            <ref name="para"/>
+            <ref name="table"/>
+            <ref name="note"/>
+            <ref name="formula"/>
+            <ref name="warning"/>
+            <ref name="ol"/>
+            <ref name="ul"/>
+            <ref name="dl"/>
+            <ref name="figure"/>
+            <ref name="quote"/>
+            <ref name="sourcecode"/>
+            <ref name="review_note"/>
+            <ref name="example"/>
+          </choice>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="clause"/>
+        </oneOrMore>
+      </choice>
       <optional>
         <ref name="patent_notice"/>
       </optional>
@@ -307,25 +311,28 @@
       <optional>
         <ref name="tname"/>
       </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="para"/>
-          <ref name="table"/>
-          <ref name="note"/>
-          <ref name="formula"/>
-          <ref name="warning"/>
-          <ref name="ol"/>
-          <ref name="ul"/>
-          <ref name="dl"/>
-          <ref name="figure"/>
-          <ref name="quote"/>
-          <ref name="sourcecode"/>
-          <ref name="review_note"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="clause"/>
-      </zeroOrMore>
+      <choice>
+        <oneOrMore>
+          <choice>
+            <ref name="para"/>
+            <ref name="table"/>
+            <ref name="note"/>
+            <ref name="formula"/>
+            <ref name="warning"/>
+            <ref name="ol"/>
+            <ref name="ul"/>
+            <ref name="dl"/>
+            <ref name="figure"/>
+            <ref name="quote"/>
+            <ref name="sourcecode"/>
+            <ref name="review_note"/>
+            <ref name="example"/>
+          </choice>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="clause"/>
+        </oneOrMore>
+      </choice>
     </element>
   </define>
   <define name="norm_ref">
@@ -486,7 +493,7 @@
     <element name="termdefinition">
       <oneOrMore>
         <choice>
-          <ref name="para"/>
+          <ref name="para_no_fn"/>
           <ref name="figure"/>
           <ref name="formula"/>
         </choice>
@@ -540,7 +547,42 @@
       <optional>
         <ref name="tname"/>
       </optional>
+      <choice>
+        <oneOrMore>
+          <choice>
+            <ref name="para"/>
+            <ref name="table"/>
+            <ref name="note"/>
+            <ref name="formula"/>
+            <ref name="warning"/>
+            <ref name="ol"/>
+            <ref name="ul"/>
+            <ref name="dl"/>
+            <ref name="figure"/>
+            <ref name="quote"/>
+            <ref name="sourcecode"/>
+            <ref name="review_note"/>
+            <ref name="example"/>
+          </choice>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="clause"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="clause_hanging_para">
+    <element name="clause">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
       <zeroOrMore>
+        <!-- allow hanging paragraphs in annexes: they introduce lists -->
         <choice>
           <ref name="para"/>
           <ref name="table"/>
@@ -554,10 +596,11 @@
           <ref name="quote"/>
           <ref name="sourcecode"/>
           <ref name="review_note"/>
+          <ref name="example"/>
         </choice>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="clause"/>
+        <ref name="clause_hanging_para"/>
       </zeroOrMore>
     </element>
   </define>
@@ -582,6 +625,7 @@
           <ref name="quote"/>
           <ref name="sourcecode"/>
           <ref name="review_note"/>
+          <ref name="example"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -591,7 +635,9 @@
       <zeroOrMore>
         <ref name="annex"/>
       </zeroOrMore>
-      <ref name="bibliography"/>
+      <optional>
+        <ref name="bibliography"/>
+      </optional>
     </element>
   </define>
   <define name="annex">
@@ -613,6 +659,7 @@
         <ref name="tname"/>
       </optional>
       <zeroOrMore>
+        <!-- allow hanging paragraphs in annexes: they introduce lists -->
         <choice>
           <ref name="para"/>
           <ref name="table"/>
@@ -626,10 +673,11 @@
           <ref name="quote"/>
           <ref name="sourcecode"/>
           <ref name="review_note"/>
+          <ref name="example"/>
         </choice>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="clause"/>
+        <ref name="clause_hanging_para"/>
       </zeroOrMore>
     </element>
   </define>
@@ -640,12 +688,18 @@
           <data type="ID"/>
         </attribute>
       </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
       <oneOrMore>
         <choice>
           <ref name="iso_ref_title"/>
           <ref name="reference"/>
         </choice>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="bibliography"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="reference">
@@ -683,6 +737,24 @@
       </zeroOrMore>
     </element>
   </define>
+  <define name="para_no_fn">
+    <element name="p">
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="em"/>
+          <ref name="eref"/>
+          <ref name="strong"/>
+          <ref name="stem"/>
+          <ref name="sub"/>
+          <ref name="sup"/>
+          <ref name="tt"/>
+          <ref name="xref"/>
+          <ref name="br"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
   <define name="figure">
     <element name="figure">
       <optional>
@@ -696,11 +768,17 @@
       <optional>
         <ref name="tname"/>
       </optional>
+      <zeroOrMore>
+        <ref name="fn"/>
+      </zeroOrMore>
       <optional>
         <ref name="dl"/>
       </optional>
       <zeroOrMore>
         <ref name="figure"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
       </zeroOrMore>
     </element>
   </define>
@@ -803,6 +881,7 @@
           <ref name="quote"/>
           <ref name="sourcecode"/>
           <ref name="review_note"/>
+          <ref name="example"/>
         </choice>
       </oneOrMore>
     </element>
@@ -846,12 +925,18 @@
           <ref name="quote"/>
           <ref name="sourcecode"/>
           <ref name="review_note"/>
+          <ref name="example"/>
         </choice>
       </zeroOrMore>
     </element>
   </define>
   <define name="note">
     <element name="note">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="para"/>
       </oneOrMore>
@@ -875,6 +960,27 @@
       <optional>
         <ref name="dl"/>
       </optional>
+    </element>
+  </define>
+  <define name="example">
+    <element name="example">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <ref name="para"/>
+          <ref name="formula"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+          <ref name="dl"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+          <ref name="review_note"/>
+        </choice>
+      </oneOrMore>
     </element>
   </define>
   <define name="xref">
@@ -964,6 +1070,9 @@
       <ref name="tbody"/>
       <optional>
         <ref name="tfoot"/>
+      </optional>
+      <optional>
+        <ref name="dl"/>
       </optional>
       <zeroOrMore>
         <ref name="note"/>

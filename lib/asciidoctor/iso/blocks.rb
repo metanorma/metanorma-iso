@@ -51,7 +51,7 @@ module Asciidoctor
             else
               xml_cref.p { |p| p << node.content }
             end
-            Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
+            Validate::note_style(node, Utils::flatten_rawtext(node.content).join("\n"))
           end
         end.join("\n")
       end
@@ -72,7 +72,7 @@ module Asciidoctor
           xml.example **attr_code(anchor: node.id) do |ex|
             content = node.content
             ex << content
-            Validate::style(node, Utils::flatten_rawtext(content).join("\n"))
+            Validate::termexample_style(node, Utils::flatten_rawtext(content).join("\n"))
           end
         end.join("\n")
       end
@@ -153,6 +153,8 @@ module Asciidoctor
               end
             else
               Validate::style_warning(node, "Scope contains subsections: should be succint", nil) if $scope
+              # won't come up, Asciidoctor limits to 5 levels of nesting, which is 4 levels of subclauses
+              Validate::style_warning(node, "Five levels of subclause", nil) if node.level == 7
               xml.clause **attr_code(attrs) do |xml_section|
                 unless node.title.nil?
                   xml_section.name { |name| name << node.title }

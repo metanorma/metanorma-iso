@@ -68,7 +68,7 @@ module Asciidoctor
         intro_cleanup(xmldoc)
         termdef_cleanup(xmldoc)
         isotitle_cleanup(xmldoc)
-        tablenote_cleanup(xmldoc)
+        table_cleanup(xmldoc)
         formula_cleanup(xmldoc)
         figure_cleanup(xmldoc)
         back_cleanup(xmldoc)
@@ -150,7 +150,17 @@ module Asciidoctor
         end
       end
 
-      def tablenote_cleanup(xmldoc)
+      def table_cleanup(xmldoc)
+        # move Key dl after table footer
+        xmldoc.xpath("//tfoot/tr/td/dl | //tfoot/tr/th/dl").each do |n|
+          if !n.previous_element.nil? && n.previous_element.name == "p" &&
+              n.previous_element.content =~ /^\s*Key\s*$/m
+            n.previous_element.remove
+            target = n.parent.parent.parent.parent
+            n.remove
+            target << n
+          end
+        end
         # move notes after table footer
         xmldoc.xpath("//tfoot/tr/td/note | //tfoot/tr/th/note").each do |n|
           target = n.parent.parent.parent.parent

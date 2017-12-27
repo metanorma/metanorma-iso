@@ -35,8 +35,26 @@ module Asciidoctor
           end
         end
 
+        def onlychild_clause_validate(root)
+          root.xpath("//clause/clause | //annex/clause | //scope/clause").each do |c|
+            clauses = c.xpath("../clause")
+            if clauses.size == 1
+              title = c.at("./title")
+              location = if c["anchor"].nil? && title.nil?
+                           c.text[0..60] + "..."
+                         elsif title.nil?
+                           c["anchor"] 
+                         else 
+                           c["anchor"] + ":#{title.text}"
+                         end
+              warn "ISO style: #{location}: subclause is only child"
+            end
+          end
+        end
+
         def validate(doc)
           title_validate(doc.root)
+          onlychild_clause_validate(doc.root)
           filename = File.join(File.dirname(__FILE__), "validate.rng")
 =begin
           filename = File.join(File.dirname(__FILE__), "validate.rng")
@@ -131,22 +149,21 @@ module Asciidoctor
           nil
         end
 
-        def foreword_style(node, foreword_text)
-          r = requirement(foreword_text)
-          style_warning(node, "Foreword may contain requirement", r) if r
-          r = permission(foreword_text)
-          style_warning(node, "Foreword may contain permission", r) if r
-          r = recommendation(foreword_text)
-          style_warning(node, "Foreword may contain recommendation", r) if r
+        def style_no_guidance(node, text, docpart)
+          r = requirement(text)
+          style_warning(node, "#{docpart} may contain requirement", r) if r
+          r = permission(text)
+          style_warning(node, "#{docpart} may contain permission", r) if r
+          r = recommendation(text)
+          style_warning(node, "#{docpart} may contain recommendation", r) if r
         end
 
-        def scope_style(node, foreword_text)
-          r = requirement(foreword_text)
-          style_warning(node, "Foreword may contain requirement", r) if r
-          r = permission(foreword_text)
-          style_warning(node, "Foreword may contain permission", r) if r
-          r = recommendation(foreword_text)
-          style_warning(node, "Foreword may contain recommendation", r) if r
+        def foreword_style(node, text)
+          style_no_guidance(node, text, "Foreword")
+        end
+
+        def scope_style(node, text)
+          style_no_guidance(node, text, "Scope")
         end
 
         def introduction_style(node, text)
@@ -155,12 +172,17 @@ module Asciidoctor
         end
 
         def termexample_style(node, text)
-          r = requirement(text)
-          style_warning(node, "Term example may contain requirement", r) if r
-          r = permission(text)
-          style_warning(node, "Term example may contain permission", r) if r
-          r = recommendation(text)
-          style_warning(node, "Term example may contain recommendation", r) if r
+          style_no_guidance(node, text, "Term Example")
+          style(node, text)
+        end
+
+        def note_style(node, text)
+          style_no_guidance(node, text, "Note")
+          style(node, text)
+        end
+
+        def footnote_style(node, text)
+          style_no_guidance(node, text, "Foonote")
           style(node, text)
         end
 
@@ -173,7 +195,7 @@ module Asciidoctor
         def style(node, text)
           matched = /\b(?<number>[0-9]+\.[0-9]+)\b/.match text
           style_warning(node, "possible decimal point", matched[:number]) unless matched.nil?
-          matched = /(?<!ISO )\b(?<number>[0-9][0-9][0-9][0-9]+)\b/.match text
+          matched = /(?<!(ISO|IEC) )\b(?<number>[0-9][0-9][0-9][0-9]+)\b/.match text
           style_warning(node, "number not broken up in threes", matched[:number]) unless matched.nil?
           matched = /\b(?<number>[0-9.,]+%)/.match text
           style_warning(node, "no space before percent sign", matched[:number]) unless matched.nil?

@@ -23,7 +23,7 @@
 :workgroup-number: 3
 :workgroup: Rice Group
 :toc:
-:sectnumlevels: 9
+:sectnumlevels: 7
 :stem:
 :xrefstyle: short
 :appendix-caption: Annex
@@ -281,6 +281,7 @@ NOTE: This table is based on <<ISO7301>>, Table 1.
 NOTE: Some commercial contracts require information in addition to that provided in this table.
 
 NOTE: Only full red husked (cargo) rice is considered in this table.
+
 |===
 
 [[clause5]]
