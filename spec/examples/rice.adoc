@@ -11,7 +11,7 @@
 :title-main-en: Specifications and test methods
 :title-part-en: Rice
 :title-intro-fr: Céréales et légumineuses
-:title-main-fr: Spécification et éthodes d'essai
+:title-main-fr: Spécification et méthodes d'essai
 :title-part-fr: Riz
 :doctype: international-standard
 :docstage: 60
