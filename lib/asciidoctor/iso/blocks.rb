@@ -1,5 +1,6 @@
 require "htmlentities"
 require "uri"
+require "uuidtools"
 
 module Asciidoctor
   module ISO
@@ -106,7 +107,8 @@ module Asciidoctor
       end
 
       def section(node)
-        attrs = { anchor: node.id.empty? ? nil : node.id }
+        attrs = { anchor: node.id.empty? ? UUIDTools::UUID.random_create : 
+                  node.id }
         noko do |xml|
           case node.title.downcase
           when "introduction"

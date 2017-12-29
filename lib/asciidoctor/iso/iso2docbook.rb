@@ -2,6 +2,8 @@ require "nokogiri"
 require "htmlentities"
 require "pp"
 
+$anchors = {}
+
 def convert(doc)
   docxml = Nokogiri::XML(doc)
   docxml.root.default_namespace = ""
@@ -9,7 +11,9 @@ def convert(doc)
     xml.article do |a|
       # a.parent.add_namespace_definition("xlink", "http://www.w3.org/1999/xlink")
       a.parent.add_namespace_definition("xml", "http://www.w3.org/XML/1998/namespace")
+      anchor_names docxml
       info docxml, a
+      middle docxml, a
     end
   end.join("\n")
   puts result
@@ -17,6 +21,49 @@ end
 
 def ns(xpath)
   xpath.gsub(%r{/([a-zA-z])}, "/xmlns:\\1")
+end
+
+def section_names(clause, num)
+  $anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}" }
+  clause.xpath(ns("./clause")).each_with_index do |c, i|
+    section_names(c, "#{num}.#{i + 1}")
+  end
+end
+
+def annex_names(clause, num)
+  obligation = clause["subtype"] == "normative" ? "(Normative)" : "(Informative)"
+  $anchors[clause["anchor"]] = { label: "Annex #{num} #{obligation}", xref: "Annex #{num}" }
+  clause.xpath(ns("./clause")).each_with_index do |c, i|
+    annex_names1(c, "#{num}.#{i + 1}")
+  end
+end
+
+def annex_names1(clause, num)
+  $anchors[clause["anchor"]] = { label: num, xref: num }
+  clause.xpath(ns(".//clause")).each_with_index do |c, i|
+    annex_names1(c, "#{num}.#{i + 1}")
+  end
+end
+
+# extract names for all anchors, xref and label
+def anchor_names(docxml)
+  # section numbering
+  section_names(docxml.at(ns("//scope")), "1")
+  section_names(docxml.at(ns("//norm_ref")), "2")
+  section_names(docxml.at(ns("//terms_defs")), "3")
+  symbols_abbrevs = docxml.at(ns("//symbols_abbrevs"))
+  sect_num = 4
+  if symbols_abbrevs
+    section_names(symbols_abbrevs, "#{sect_num}")
+    sect_num += 1
+  end
+  docxml.xpath(ns("//middle/clause")).each_with_index do |c, i|
+    section_names(c, "#{i + sect_num}")
+  end
+  docxml.xpath(ns("//annex")).each_with_index do |c, i|
+    annex_names(c, "#{(65 + i).chr}")
+  end
+
 end
 
 def info(isoxml, out)
@@ -29,9 +76,16 @@ def info(isoxml, out)
   end
   foreword isoxml, out
   introduction isoxml, out
+end
+
+def middle(isoxml, out)
   scope isoxml, out
+  norm_ref isoxml, out
+  terms_defs isoxml, out
+  symbols_abbrevs isoxml, out
   clause isoxml, out
   annex isoxml, out
+  bibliography isoxml, out
 end
 
 def parse(node, out)
@@ -50,22 +104,32 @@ def parse(node, out)
     when "name" then out.title { |e| e << node.text }
     when "clause" 
       out.section **attr_code("id": node["anchor"]) do |s|
-        node.children.each { |n| parse(n, s) }
+        node.children.each do |c1| 
+          if c1.name == "name"
+            s.title { |t| t << "#{$anchors[node["anchor"]][:label]}. #{c1.text}" }
+          else
+            parse(c1, s)
+          end
+        end
       end
     when "xref" 
+      linkend = node["target"]
+      if $anchors.has_key? node["target"]
+        linkend = $anchors[node["target"]][:xref]
+      end
       if node["format"] == "footnote"
         out.superscript do |s|
           if !node.text.empty?
-          s.link **{"endterm": node["target"]} { |l| l << node.text }
+            s.link **{"endterm": node["target"]} { |l| l << node.text }
           else
-          s.link **{"endterm": node["target"], linkend: node["target"]} 
+            s.link **{"endterm": node["target"], linkend: linkend} 
           end
         end
       else
         if !node.text.empty?
-        out.link **{"endterm": node["target"]} { |l| l << node.text }
+          out.link **{"endterm": node["target"]} { |l| l << node.text }
         else
-        out.link **{endterm: node["target"], linkend: node["target"]} 
+          out.link **{endterm: node["target"], linkend: linkend} 
         end
       end
     when "eref" 
@@ -103,7 +167,13 @@ def clause(isoxml, out)
   return unless clauses
   clauses.each do |c|
     out.sect1 **attr_code("id": c["anchor"]) do |s| 
-      c.elements.each { |c1| parse(c1, s) }
+      c.elements.each do |c1| 
+        if c1.name == "name"
+          s.title { |t| t << "#{$anchors[c["anchor"]][:label]}. #{c1.text}" }
+        else
+          parse(c1, s) 
+        end
+      end
     end
   end
 end
@@ -122,7 +192,51 @@ def scope(isoxml, out)
   f = isoxml.at(ns("//scope"))
   return unless f
   out.sect1 **{label: "1"} do |s|
-    s.title "Scope"
+    s.title "1. Scope"
+    f.elements.each do |e|
+      parse(e, s)
+    end
+  end
+end
+
+def norm_ref(isoxml, out)
+  f = isoxml.at(ns("//norm_ref"))
+  return unless f
+  out.sect1 do |s|
+    s.title "2. Normative References"
+    f.elements.each do |e|
+      parse(e, s)
+    end
+  end
+end
+
+def bibliography(isoxml, out)
+  f = isoxml.at(ns("//bibliography"))
+  return unless f
+  out.sect1 do |s|
+    s.title "Bibliography"
+    f.elements.each do |e|
+      parse(e, s)
+    end
+  end
+end
+
+def terms_defs(isoxml, out)
+  f = isoxml.at(ns("//terms_defs"))
+  return unless f
+  out.sect1 do |s|
+    s.title "3. Terms and Definitions"
+    f.elements.each do |e|
+      parse(e, s)
+    end
+  end
+end
+
+def symbols_abbrevs(isoxml, out)
+  f = isoxml.at(ns("//symbols_abbrevs"))
+  return unless f
+  out.sect1 do |s|
+    s.title "4. Symbols and Abbreviations"
     f.elements.each do |e|
       parse(e, s)
     end
