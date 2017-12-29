@@ -23,10 +23,47 @@ def ns(xpath)
   xpath.gsub(%r{/([a-zA-z])}, "/xmlns:\\1")
 end
 
+def sequential_asset_names(clause)
+  clause.xpath(ns(".//table")).each_with_index do |t, i|
+    $anchors[t["anchor"]] = { label: "Table #{i + 1}", xref: "Table #{i + 1}" }
+  end
+  clause.xpath(ns(".//figure")).each_with_index do |t, i|
+    $anchors[t["anchor"]] = { label: "Figure #{i + 1}", xref: "Figure #{i + 1}" }
+  end
+  clause.xpath(ns(".//formula")).each_with_index do |t, i|
+    $anchors[t["anchor"]] = { label: "Formula #{i + 1}", xref: "Formula #{i + 1}" }
+  end
+end
+
+def hierarchical_asset_names(clause, num)
+  clause.xpath(ns(".//table")).each_with_index do |t, i|
+    $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", xref: "Table #{num}.#{i + 1}" }
+  end
+  clause.xpath(ns(".//figure")).each_with_index do |t, i|
+    $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", xref: "Figure #{num}.#{i + 1}" }
+  end
+  clause.xpath(ns(".//formula")).each_with_index do |t, i|
+    $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", xref: "Formula #{num}.#{i + 1}" }
+  end
+end
+
+def introduction_names(clause)
+  clause.xpath(ns("./clause")).each_with_index do |c, i|
+    section_names(c, "0.#{i + 1}")
+  end
+end
+
 def section_names(clause, num)
   $anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}" }
   clause.xpath(ns("./clause")).each_with_index do |c, i|
-    section_names(c, "#{num}.#{i + 1}")
+    section_names1(c, "#{num}.#{i + 1}")
+  end
+end
+
+def section_names1(clause, num)
+  $anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}" }
+  clause.xpath(ns("./clause")).each_with_index do |c, i|
+    section_names1(c, "#{num}.#{i + 1}")
   end
 end
 
@@ -36,6 +73,7 @@ def annex_names(clause, num)
   clause.xpath(ns("./clause")).each_with_index do |c, i|
     annex_names1(c, "#{num}.#{i + 1}")
   end
+  hierarchical_asset_names(clause, num)
 end
 
 def annex_names1(clause, num)
@@ -48,6 +86,7 @@ end
 # extract names for all anchors, xref and label
 def anchor_names(docxml)
   # section numbering
+  introduction_names(docxml.at(ns("//introduction")))
   section_names(docxml.at(ns("//scope")), "1")
   section_names(docxml.at(ns("//norm_ref")), "2")
   section_names(docxml.at(ns("//terms_defs")), "3")
@@ -60,10 +99,10 @@ def anchor_names(docxml)
   docxml.xpath(ns("//middle/clause")).each_with_index do |c, i|
     section_names(c, "#{i + sect_num}")
   end
+  sequential_asset_names(docxml.xpath(ns("//middle")))
   docxml.xpath(ns("//annex")).each_with_index do |c, i|
     annex_names(c, "#{(65 + i).chr}")
   end
-
 end
 
 def info(isoxml, out)
@@ -141,6 +180,11 @@ def parse(node, out)
     when "ul" then out.itemizedlist do |ul| 
       node.children.each { |n| parse(n, ul) }
     end
+    when "ol" 
+      attrs = {numeration: node["type"] }
+      out.orderedlist **attr_code(attrs) do |ol| 
+      node.children.each { |n| parse(n, ol) }
+    end
     when "li" then out.listitem do |li| 
       node.children.each { |n| parse(n, li) }
     end
@@ -149,6 +193,54 @@ def parse(node, out)
         $block = true
         node.children.each { |n| parse(n, p) }
         $block = false
+      end
+    when "tr"
+      out.tr do |r|
+        node.elements.each do |td|
+          attrs = {
+            rowspan: node["rowspan"], 
+            colspan: node["colspan"], 
+            align: node["align"],
+          }
+          if td.name == "td"
+            r.td **attr_code(attrs) do |entry|
+              td.children.each { |n| parse(n, entry) }
+            end
+          else
+            r.th **attr_code(attrs) do |entry|
+              td.children.each { |n| parse(n, entry) }
+            end
+          end
+        end
+      end
+    when "table"
+      out.table **attr_code("id": node["anchor"]) do |t|
+        name = node.at(ns("./name"))
+        thead = node.at(ns("./thead"))
+        tbody = node.at(ns("./tbody"))
+        tfoot = node.at(ns("./tfoot"))
+        dl = node.at(ns("./dl"))
+        note = node.xpath(ns("./note"))
+        if name
+        t.info do |info|
+          info.title { |tt| tt << name.text } 
+        end
+        end
+        if thead
+          t.thead do |h|
+            thead.children.each { |n| parse(n, h) }
+          end
+        end
+        t.tbody do |h|
+          tbody.children.each { |n| parse(n, h) }
+        end
+        if tfoot
+          t.tfoot do |h|
+            tfoot.children.each { |n| parse(n, h) }
+          end
+        end
+        # dl
+        # note
       end
     else
       if $block
@@ -191,7 +283,7 @@ end
 def scope(isoxml, out)
   f = isoxml.at(ns("//scope"))
   return unless f
-  out.sect1 **{label: "1"} do |s|
+  out.sect1 do |s|
     s.title "1. Scope"
     f.elements.each do |e|
       parse(e, s)
