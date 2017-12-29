@@ -274,11 +274,7 @@ def parse(node, out)
         tfoot = node.at(ns("./tfoot"))
         dl = node.at(ns("./dl"))
         note = node.xpath(ns("./note"))
-        if name
-          t.info do |info|
-            info.title { |tt| tt << name.text } 
-          end
-        end
+          t.caption { |tt| tt << "#{$anchors[node["anchor"]][:label]}. #{name.text}" }  if name
         if thead
           t.thead do |h|
             thead.children.each { |n| parse(n, h) }
@@ -363,7 +359,7 @@ def iso_ref_entry(list, b)
     ref << reference
     if date_footnote
       ref.footnote do |fn|
-        fn.para { |p| date_footnote.text }
+        fn.para { |p| p << date_footnote.text }
       end
     end
     ref << " #{isotitle.text}"
@@ -384,14 +380,10 @@ def biblio_list(f, s)
     refbiblio = f.xpath(ns("./reference"))
     s.bibliolist do |list|
       isobiblio.each do |b|
-        list.bibliomixed **attr_code("id": b["anchor"]) do |ref|
           iso_ref_entry(list, b)
-        end
       end
         refbiblio.each do |b|
-          list.bibliomixed **attr_code("id": b["anchor"]) do |ref|
             ref_entry(list, b)
-          end
       end
     end
 end

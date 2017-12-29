@@ -176,7 +176,7 @@
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></clause>
 <clause anchor="_physical_and_chemical_characteristics">
   <name>Physical and chemical characteristics</name>
-  <clause anchor="af23b772-07e8-4e99-b294-faf5bbf4f327"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+  <clause anchor="a398a805-9ffa-4e0b-a13a-83a081236f27"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in <xref target="table1" format="inline"/>.</p>
 <note>
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <xref target="ISO6322-1" format="inline"/>, <xref target="ISO6322-2" format="inline"/> and <xref target="ISO6322-3" format="inline"/>.</p>
@@ -404,7 +404,7 @@
   </li>
 </ol></clause>
 <clause anchor="_packaging"><name>Packaging</name><p>The packaging shall not transmit any odour or flavour to the product and shall not contain substances which may damage the product or constitute a health risk.</p>
-<p>If bags are used, they shall comply with the requirements of <xref target="ISO8531-1" format="inline"/>, Clause 9, or &lt;&lt;ISO8351-2&gt;, as appropriate.</p></clause>
+<p>If bags are used, they shall comply with the requirements of <xref target="ISO8531-1" format="inline"/>, Clause 9, or <xref target="ISO8351-2" format="inline"/>, as appropriate.</p></clause>
 <clause anchor="_marking">
   <name>Marking</name>
   <p>The packages shall be marked or labelled as required by the country of destination.</p>

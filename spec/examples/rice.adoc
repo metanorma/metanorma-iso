@@ -369,7 +369,7 @@ For each test method, the test report shall specify the following:
 
 The packaging shall not transmit any odour or flavour to the product and shall not contain substances which may damage the product or constitute a health risk. 
 
-If bags are used, they shall comply with the requirements of <<ISO8531-1>>, Clause 9, or <<ISO8351-2>, as appropriate. 
+If bags are used, they shall comply with the requirements of <<ISO8531-1>>, Clause 9, or <<ISO8351-2>>, as appropriate. 
 
 == Marking 
 
