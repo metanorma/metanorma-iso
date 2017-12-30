@@ -972,10 +972,11 @@ span.SpellE
 	mso-fareast-language:EN-US;}
  /* Page Definitions */
 @page
-	{mso-footnote-separator:url("Title.fld/header.html") fs;
-	mso-footnote-continuation-separator:url("Title.fld/header.html") fcs;
-	mso-endnote-separator:url("Title.fld/header.html") es;
-	mso-endnote-continuation-separator:url("Title.fld/header.html") ecs;}
+{
+    size: 21cm 29.7cm;  /* A4 */
+    margin: 2cm 2cm 2cm 2cm; /* Margins: 2 cm on each side */
+    mso-page-orientation: portrait;
+}
 @page WordSection1
 	{size:595.05pt 840.85pt;
 	margin:72.0pt 89.85pt 72.0pt 89.85pt;
