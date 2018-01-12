@@ -260,27 +260,27 @@ levels of subsections.)
 
 === Standard Document Model
 
-image::Document__Standard Document_2.png[]
+image::diagrams/Document__Standard Document_2.png[]
 
 === Bibliographic Models
 
-image::Document__Bibliographic Items_1.png[]
+image::diagrams/Document__Bibliographic Items_1.png[]
 
 === Terms and References Model
 
-image::Document__Terms Of Reference_3.png[]
+image::diagrams/Document__Terms Of Reference_3.png[]
 
 === Text Section Model
 
-image::Document__Section_5.png[]
+image::diagrams/Document__Section_5.png[]
 
 === Text Block Model
 
-image::Document__Blocks_4.png[]
+image::diagrams/Document__Blocks_4.png[]
 
 === Text Model
 
-image::Document__Text_0.png[]
+image::diagrams/Document__Text_0.png[]
 
 
 
