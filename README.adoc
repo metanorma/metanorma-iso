@@ -1,104 +1,299 @@
-# asciidoctor-iso
-= Asciidoctor processor for ISO standards
+= AsciiISO: Asciidoctor processor for ISO standards
 
 image:https://img.shields.io/gem/v/asciidoctor-iso.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-iso"]
 image:https://img.shields.io/travis/riboseinc/asciidoctor-iso/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-iso"]
 image:https://codeclimate.com/github/riboseinc/asciidoctor-iso/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-iso"]
 
-This gem processes http://asciidoctor.org/[Asciidoctor] documents and outputs an XML representation of the document, intended as a document model for ISO International Standards. The XML representation can then be processed in turn to generate PDF or Microsoft Word output (via DocBook).
+This gem processes http://asciidoctor.org/[Asciidoctor] documents and outputs
+an XML representation of the document, intended as a document model for ISO
+International Standards. The XML representation can then be processed in turn
+to generate PDF or Microsoft Word output (via DocBook).
 
-The document model intends to introduce rigour into the ISO standards authoring process; the existing https://www.iso.org/iso-templates.html[Microsoft Word template from ISO] do not support such rigour down to the element level. The ISO International Standard format is prescribed in http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"], to a level that is amenable to an explicit document model. A formal document model would allow checking for consistency in format and content, and expedite authoring and quality control of ISO standards.
+This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
 
-The document model ("ISO XML") is under development, but it already contains all the markup needed to render the https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's model document of an international standard, and all the structures described in ISO/IEC DIR 2. It is expressed as a link:lib/asciidoctor/iso/validate.rnc[Relax NG Compact schema]; actual validation occurs against its link:lib/asciidoctor/iso/validate.rng[full Relax NG counterpart]. A UML representation of the document model is given below. Note that the document model is currently still in the exploratory phase, and will likely be changing significantly.
+The document model ("ISO XML") intends to introduce rigour into the ISO
+standards authoring process; the existing 
+https://www.iso.org/iso-templates.html[Microsoft Word template from ISO]
+do not support such rigour down to the element level.
 
-Asciidoctor has been selected as the authoring tool to generate the document model representation of ISO standards. It is a document formatting tool like Markdown and DocBook, which combines the relative ease of use of the former (using relatively lightweight markup), and the rigour and expressively of the latter (it has a well-defined syntax, and was in fact initially developed as a DocBook document authoring tool). Asciidoctor has built-in capability to output Text, DocBook and HTML; so it can be used to preview the file as it is being authored.
+The ISO International Standard format is prescribed in
+http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"],
+to a level that is amenable to an explicit document model. A formal document
+model would allow checking for consistency in format and content, and expedite
+authoring and quality control of ISO standards.
 
-Note that in order to generate output close to what is intended, the Asciidoc document includes a fair amount of formatting instructions (e.g. disabling section numbering where appropriate, the titling of Appendixes as Annexes), as well as ISO boilerplate text, and predefined section headers (sections are recognised by fixed titles such as `Normative References`). Authoring ISO standards in this fashion assumes that users will be populating an Asciidoc template, and not removing needed formatting instructions.
+The document model ("ISO XML") is under development, but it already contains
+all the markup needed to render the
+https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
+model document of an international standard, and all the structures described
+in ISO/IEC DIR 2. It is expressed as a
+link:lib/asciidoctor/iso/validate.rnc[Relax NG Compact schema]; actual
+validation occurs against its link:lib/asciidoctor/iso/validate.rng[full Relax
+NG counterpart]. A UML representation of the document model is given below.
+Note that the document model is currently still in the exploratory phase, and
+will likely be changing significantly.
+
+Asciidoctor has been selected as the authoring tool to generate the document
+model representation of ISO standards. It is a document formatting tool like
+Markdown and DocBook, which combines the relative ease of use of the former
+(using relatively lightweight markup), and the rigour and expressively of the
+latter (it has a well-defined syntax, and was in fact initially developed as a
+DocBook document authoring tool). Asciidoctor has built-in capability to output
+Text, DocBook and HTML; so it can be used to preview the file as it is being
+authored.
+
+Note that in order to generate output close to what is intended, the Asciidoc
+document includes a fair amount of formatting instructions (e.g. disabling
+section numbering where appropriate, the titling of Appendixes as Annexes), as
+well as ISO boilerplate text, and predefined section headers (sections are
+recognised by fixed titles such as `Normative References`). Authoring ISO
+standards in this fashion assumes that users will be populating an Asciidoc
+template, and not removing needed formatting instructions.
 
 == Features not visible in HTML preview
 
-The gem uses built-in Asciidoc formatting as much as possible, so that users can retain the ability to preview documents; for _Terms and Definitions_ clauses, which have a good deal of explicit structure, macros have been introduced for semantic markup (admitted terms, deprecated terms, etc). The default HTML output of an Asciidoc-formatted ISO document is quite close to the intended final output, with the following exceptions: 
+The gem uses built-in Asciidoc formatting as much as possible, so that users
+can retain the ability to preview documents; for _Terms and Definitions_
+clauses, which have a good deal of explicit structure, macros have been
+introduced for semantic markup (admitted terms, deprecated terms, etc). The
+default HTML output of an Asciidoc-formatted ISO document is quite close to the
+intended final output, with the following exceptions: 
 
-* _Terms and Definitions_: each term is marked up as an unnumbered subclause, the semantic markup of alternate and other terms is not rendered visually.
-* _Formuals_: Asciidoctor has no provision for the automated numbering of isolated block formulas ("stem"), and does not display the number assigned a block formula in its default HTML processor—although it does provide automated numbering of examples. The encoding of formulas may change in future versions, although the final numbering is meant to be provided by downstream tools processing the ISO XML output.
-* _Missing elements_: The document model does not yet include Asciidoc elements that do not occur in the Rice document: in particular, source code, definition lists (except when used as keys for formuals or figures), examples (as distinct from figures; examples within _Terms and Definitions_ are catered for), sidebars (as distinct from warnings), quotes.
-* _Markup_: Some connecting text which is used to convey markup structure is left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting macros).
-* _Tables_: Table footnotes are treated like all other footnotes: they are rendered at the bottom of the document, rather than the bottom of the table, and they are not numbered separately.
-* _Crossreferences_: Footnoted crossreferences are indicated with the reference text `fn` in isolation, or `fn:` as a prefix to the reference text. The default HTML processor leaves these as is: if no reference text is given, only `fn` will be displayed (though it will still hyperlink to the right reference).
-* _References_: The convention for references is that ISO documents are cited without brackets by ISO number, and optionally year, whether they are normative or in the bibliography (e.g. `ISO 20483:2013`); while all other references are cited by bracketed number in the bibliography (e.g. `[1]`). The default HTML processor treats all references the same, and will bracket them (e.g. `[ISO 20483:2013]`). For the same reason, ISO references listed in the bibliography will be listed under an ISO reference, rather than a bracketed number.
-* _References_: References are rendered cited throughout, since they are automated. For that reason, if reference is to be made to both an undated and a dated version of an ISO reference, these need to be explicitly listed as separate references. (This is not done in the Rice model document, which lists ISO 6646, but under _Terms and Definitions_ cites the dated ISO 6646:2011.
-* _References_: ISO references that are undated but published have their date indicated under the ISO standards format in an explanatory footnote. Because of constraints introduced by Asciidoctor, that explanation is instead given in square brackets in Asciidoc format.
-* _Annexes_: Subheadings cannot preserve subsection numbering, while also appearing inline with their text (e.g. Rice document, Annex B.2): they appear as headings in separate lines.
-* _Annexes_: Crossreferences to Annex subclauses are automatically prefixed with `Clause` rather than `Annex` or nothing.
-* _Metadata_: Document metadata such as document numbers, technical committees and title wording are not rendered in the default HTML output.
-* _Patent Notice_: Patent notices are treated and rendered as a subsection of the introduction, with an explicit subheading.
-* _Numbering_: The numbering of figures and tables is sequential in the default HTML processor: it does not include the Clause or Annex number. This, _Figure 1_, not _Figure A.1_.
+* _Terms and Definitions_: each term is marked up as an unnumbered subclause,
+the semantic markup of alternate and other terms is not rendered visually.
+
+* _Formulas_: Asciidoctor has no provision for the automated numbering of
+isolated block formulas ("stem"), and does not display the number assigned a
+block formula in its default HTML processor—although it does provide automated
+numbering of examples. The encoding of formulas may change in future versions,
+although the final numbering is meant to be provided by downstream tools
+processing the ISO XML output.
+
+* _Missing elements_: The document model does not yet include Asciidoc elements
+that do not occur in the Rice document: in particular, source code, definition
+lists (except when used as keys for formulas or figures), examples (as distinct
+from figures; examples within _Terms and Definitions_ are catered for),
+sidebars (as distinct from warnings), quotes.
+
+* _Markup_: Some connecting text which is used to convey markup structure is
+left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting
+macros).
+
+* _Tables_: Table footnotes are treated like all other footnotes: they are
+rendered at the bottom of the document, rather than the bottom of the table,
+and they are not numbered separately.
+
+* _Cross-references_: Footnoted cross-references are indicated with the reference
+text `fn` in isolation, or `fn:` as a prefix to the reference text. The default
+HTML processor leaves these as is: if no reference text is given, only `fn`
+will be displayed (though it will still hyperlink to the right reference).
+
+* _References_: The convention for references is that ISO documents are cited
+without brackets by ISO number, and optionally year, whether they are normative
+or in the bibliography (e.g. `ISO 20483:2013`); while all other references are
+cited by bracketed number in the bibliography (e.g. `[1]`). The default HTML
+processor treats all references the same, and will bracket them (e.g. `[ISO
+20483:2013]`). For the same reason, ISO references listed in the bibliography
+will be listed under an ISO reference, rather than a bracketed number.
+
+* _References_: References are rendered cited throughout, since they are
+automated. For that reason, if reference is to be made to both an undated and a
+dated version of an ISO reference, these need to be explicitly listed as
+separate references. (This is not done in the Rice model document, which lists
+ISO 6646, but under _Terms and Definitions_ cites the dated ISO 6646:2011.
+
+* _References_: ISO references that are undated but published have their date
+indicated under the ISO standards format in an explanatory footnote. Because of
+constraints introduced by Asciidoctor, that explanation is instead given in
+square brackets in Asciidoc format.
+
+* _Annexes_: Subheadings cannot preserve subsection numbering, while also
+appearing inline with their text (e.g. Rice document, Annex B.2): they appear
+as headings in separate lines.
+
+* _Annexes_: Cross-references to Annex subclauses are automatically prefixed
+with `Clause` rather than `Annex` or nothing.
+
+* _Metadata_: Document metadata such as document numbers, technical committees
+and title wording are not rendered in the default HTML output.
+
+* _Patent Notice_: Patent notices are treated and rendered as a subsection of
+the introduction, with an explicit subheading.
+
+* _Numbering_: The numbering of figures and tables is sequential in the default
+HTML processor: it does not include the Clause or Annex number. This,
+_Figure 1_, not _Figure A.1_.
+
 * _Notes_: There is no automatic note numbering by the default HTML processor.
-* _Keys_: Keys to formulas and figures are expected to be marked up as definition lists consistently, rather than as inline prose.
-* _Figures_: Simple figures are marked up as images, figures containing subfigures as examples. Numbering by the default HTML processor may be inconsistent. Subfigures are automatically numbered as independent figures.
-* _Markup_: The default HTML processor does not support CSS extensions such as small caps or strike through, though these can be marked up as CSS classes through custom macros in Asciidoc: a custom CSS stylesheet will be needed to render them.
+
+* _Keys_: Keys to formulas and figures are expected to be marked up as
+definition lists consistently, rather than as inline prose.
+
+* _Figures_: Simple figures are marked up as images, figures containing
+subfigures as examples. Numbering by the default HTML processor may be
+inconsistent. Subfigures are automatically numbered as independent figures.
+
+* _Markup_: The default HTML processor does not support CSS extensions such as
+small caps or strike through, though these can be marked up as CSS classes
+through custom macros in Asciidoctor: a custom CSS stylesheet will be needed to
+render them.
+
+
 
 TODO: May need to only encode figures as examples.
 
 == Document Attributes
 
-The gem also relies on Asciidoc document attributes to provide necessary metadata about the document. These include:
+The gem also relies on Asciidoctor document attributes to provide necessary
+metadata about the document. These include:
 
 `:docnumber:`:: The ISO document number (mandatory)
+
 `:tc-docnumber:`:: The document number assigned by the Technical committee
+
 `:partnumber:`:: The ISO document part number
+
 `:edition:`:: The document edition
+
 `:revdate:`:: The date the document was last updated
-`:copyright-year:`:: The year which will be claimed as when the copyright for the document was issued
-`:title-intro-en:`:: The introductory component of the English title of the document
-`:title-main-en:`:: The main component of the English title of the document (mandatory). (The first line of the Asciidoc document, which contains the title introduced with `=`, is ignored)
+
+`:copyright-year:`:: The year which will be claimed as when the copyright for
+the document was issued
+
+`:title-intro-en:`:: The introductory component of the English title of the
+document
+
+`:title-main-en:`:: The main component of the English title of the document
+(mandatory). (The first line of the AsciiDoc document, which contains the title
+introduced with `=`, is ignored)
+
 `:title-part-en:`:: The English title of the document part
-`:title-intro-fr:`:: The introductory component of the French title of the document. (This document template presupposes authoring in English; a different template will be needed for French, including French titles of document components such as annexes.)
-`:title-main-fr:`:: The main component of the French title of the document (mandatory). 
+
+`:title-intro-fr:`:: The introductory component of the French title of the
+document. (This document template presupposes authoring in English; a different
+template will be needed for French, including French titles of document
+components such as annexes.)
+
+`:title-main-fr:`:: The main component of the French title of the document
+(mandatory). 
+
 `:title-part-fr:`:: The French title of the document part
-`:doctype:`:: The document type (see https://www.iso.org/deliverables-all.html[ISO deliverables: The different types of ISO publications]) (mandatory). The permitted types are: `international-standard, technical-specification, technical-report, publicly-available-specification, international-workshop-agreement, guide`.
-`:docstage:`:: The stage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes])
-`:docsubstage:`:: The substage code for the document status (see https://www.iso.org/stage-codes.html[International harmonized stage codes])
-`:secretariat:`:: The national body acting as the secretariat for the document in the deafting stage
-`:technical-committee-number:`:: The number of the relevant ISO technical committee
-`:technical-committee:`:: The name of the relevant ISO technical committee (mandatory)
+
+`:doctype:`:: The document type (see
+https://www.iso.org/deliverables-all.html[ISO deliverables: The different types of ISO publications]
+) (mandatory). The permitted types are:
+`international-standard, technical-specification, technical-report,
+publicly-available-specification, international-workshop-agreement, guide`.
+
+`:docstage:`:: The stage code for the document status (see
+https://www.iso.org/stage-codes.html[International harmonized stage codes])
+
+`:docsubstage:`:: The substage code for the document status (see
+https://www.iso.org/stage-codes.html[International harmonized stage codes])
+
+`:secretariat:`:: The national body acting as the secretariat for the document
+in the deafting stage
+
+`:technical-committee-number:`:: The number of the relevant ISO technical
+committee
+
+`:technical-committee:`:: The name of the relevant ISO technical committee
+(mandatory)
+
 `:subcommittee-number:`:: The number of the relevant ISO subcommittee
+
 `:subcommittee:`:: The name of the relevant ISO subcommittee
+
 `:workgroup-number:`:: The number of the relevant ISO workgroup
+
 `:workgroup:`:: The name of the relevant ISO workgroup
+
 `:language:` :: The language of the document (`en` or `fr`)  (mandatory)
 
-The attribute `:draft:`, if present, includes review notes in the XML output; these are otherwise suppressed.
+
+The attribute `:draft:`, if present, includes review notes in the XML output;
+these are otherwise suppressed.
+
 
 == Usage
+
 [source,console]
 ----
 $ asciidoctor a.adoc  # HTML output of Asciidoc file
 $ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output
 ----
 
-The gem translates the document into ISO XML format, and then validates its output against the ISO XML document model; errors are reported to console against the XML, and are intended for users to check that they have provided all necessary components of the document. The gem also realises several format checks as prescribed in ISO/IEC DIR 2, and warns the user about them in the console:
+The gem translates the document into ISO XML format, and then validates its
+output against the ISO XML document model; errors are reported to console
+against the XML, and are intended for users to check that they have provided
+all necessary components of the document. The gem also realises several format
+checks as prescribed in ISO/IEC DIR 2, and warns the user about them in the
+console:
 
 * Numbers with what looks like dots instead of commas for decimal points.
-* Groups of numbers without spacing for every three digits. (The gem attempts to ignore ISO references.)
+
+* Groups of numbers without spacing for every three digits. (The gem attempts
+to ignore ISO references.)
+
 * No space before percent sign.
-* No bracketing of tolerance in percentage (e.g. 15 ± 7 % .)
-* No recommendations, permissions or requirements (detected by keyword) in: foreword, scope, introduction, term examples and examples, notes, footnotes.
-* No subclauses that are the only child of a clause. (In clauses, annexes, or scopes.)
-* 5 levels of subclause nesting. (Never actuated, Asciidoc only permits 4 levels of subsection.)
+
+* No bracketing of tolerance in percentage (e.g. `15 ± 7 % .`)
+
+* No recommendations, permissions or requirements (detected by keyword) in:
+foreword, scope, introduction, term examples and examples, notes, footnotes.
+
+* No subclauses that are the only child of a clause. (In clauses, annexes, or
+scopes.)
+
+* 5 levels of subclause nesting. (Never actuated, AsciiDoc only permits 4
+levels of subsections.)
+
 * Non-ISO/IEC reference turning up as normative.
+
 * Term definition starts with an article, or ends with a period.
+
 * Title intro or title part appears in only one of French or English.
 
-== Document model
 
-image::grammar1.png[]
-image::grammar2.png[]
+
+== Data Models
+
+=== Standard Document Model
+
+image::diagrams/Document__Standard Document_2.png[]
+
+=== Bibliographic Models
+
+image::diagrams/Document__Bibliographic Items_1.png[]
+
+=== Terms and References Model
+
+image::diagrams/Document__Terms Of Reference_3.png[]
+
+=== Text Section Model
+
+image::diagrams/Document__Section_5.png[]
+
+=== Text Block Model
+
+image::diagrams/Document__Blocks_4.png[]
+
+=== Text Model
+
+image::diagrams/Document__Text_0.png[]
+
 
 
 == Examples
-The gem has been tested to date against the https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's model document of an international standard. This repository includes:
 
-* the link:spec/examples/rice.adoc[Asciidoc version of the Rice document].
-* the link:spec/examples/rice.html[Asciidoc rendering of the Rice document as HTML].
+The gem has been tested to date against the
+https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
+model document of an international standard. This repository includes:
+
+* the link:spec/examples/rice.adoc[AsciiISO version of the Rice document].
+
+* the link:spec/examples/rice.html[AsciiISO rendering of the Rice document as HTML].
+
 * the link:spec/examples/rice.xml[ISO XML rendering of the Rice document].
+
+
