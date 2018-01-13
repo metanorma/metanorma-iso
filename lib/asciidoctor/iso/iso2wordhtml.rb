@@ -1,9 +1,14 @@
 require "nokogiri"
 require "mime"
+require "asciimath"
+require "xml/xslt"
 require "pp"
 
 $anchors = {}
 $footnotes = []
+
+$xslt = XML::XSLT.new()
+$xslt.xsl = File.read(File.join(File.dirname(__FILE__), "mathml2omml.xsl"))
 
 def convert(filename)
   doc = File.read(filename)
@@ -110,6 +115,7 @@ end
 def html_header(html, docxml, filename)
   html.parent.add_namespace_definition("o", "urn:schemas-microsoft-com:office:office")
   html.parent.add_namespace_definition("w", "urn:schemas-microsoft-com:office:word")
+  html.parent.add_namespace_definition("m", "http://schemas.microsoft.com/office/2004/12/omml")
   html.parent.add_namespace_definition(nil, "http://www.w3.org/TR/REC-html40")
   anchor_names docxml
   define_head html, filename
@@ -142,7 +148,7 @@ def define_head(html, filename)
 <w:DoNotOptimizeForBrowser/>
 </w:WordDocument>
 </xml>
-XML
+    XML
     head.meta **{"http-equiv": "Content-Type", content: "text/html; charset=utf-8"}
     head.link **{rel: "File-List", href: "#{filename}.fld/filelist.xml"}
     head.style do |style|
@@ -284,6 +290,27 @@ def middle(isoxml, out)
   bibliography isoxml, out
 end
 
+def footnote_parse(node, out)
+  fn = $footnotes.length + 1
+  out.a **{style: "mso-footnote-id:ftn#{fn}", href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
+    a.span **{class: "MsoFootnoteReference"} do |span|
+      span.span **{style: "mso-special-character:footnote"}
+    end
+  end
+  $footnotes << noko do |xml|
+    xml.div **{style: "mso-element:footnote", id: "ftn#{fn}"} do |div|
+      div.p **{class: "MsoFootnoteText"} do |p|
+        p.a **{style: "mso-footnote-id:ftn#{fn}", href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
+          a.span **{class: "MsoFootnoteReference"} do |span|
+            span.span **{style: "mso-special-character:footnote"}
+          end
+          node.children.each { |n| parse(n, p) }
+        end
+      end
+    end
+  end.join("\n")
+end
+
 def parse(node, out)
   if node.text?
     out << node.text
@@ -294,10 +321,16 @@ def parse(node, out)
     when "sup" then out.sup { |e| e << node.text }
     when "sub" then out.sub { |e| e << node.text }
     when "tt" then out.tt { |e| e << node.text }
-    when "br" 
-      # out.parent << Nokogiri::XML::ProcessingInstruction.new(out.doc, "asciidoc-br", "")
-      out.parent << "&#xa;"
+    when "br" then out.br
     when "name" then out.title { |e| e << node.text }
+    when "stem"
+#$xslt = XML::XSLT.new()
+#$xslt.xsl = File.read(File.join(File.dirname(__FILE__), "mathml2omml.xsl"))
+$xslt.xml = AsciiMath.parse(node.text).to_mathml.gsub(/<math>/, "<math xmlns='http://www.w3.org/1998/Math/MathML'>")
+ooml = $xslt.serve().gsub(/<\?[^>]+>\s*/, "").
+  gsub(/ xmlns:[^=]+="[^"]+"/, "")
+puts ooml
+      out.parent.add_child ooml
     when "clause" 
       out.div **attr_code("id": node["anchor"]) do |s|
         node.children.each do |c1| 
@@ -315,22 +348,13 @@ def parse(node, out)
       if $anchors.has_key? node["target"]
         linkend = $anchors[node["target"]][:xref]
       end
+      linkend = node.text if !node.text.empty?
       if node["format"] == "footnote"
         out.sup do |s|
-          if !node.text.empty?
-            s.a **{"href": node["target"]} { |l| l << node.text }
-          else
-            # s.link **{"endterm": node["target"], linkend: linkend} 
-            s.a **{"href": node["target"]} { |l| l << linkend }
-          end
+          s.a **{"href": node["target"]} { |l| l << linkend }
         end
       else
-        if !node.text.empty?
-          out.a **{"href": node["target"]} { |l| l << node.text }
-        else
-          #out.link **{endterm: node["target"], linkend: linkend} 
-          out.a **{"href": node["target"]} { |l| l << linkend }
-        end
+        out.a **{"href": node["target"]} { |l| l << linkend }
       end
     when "eref" 
       linktext = node.text
@@ -344,7 +368,7 @@ def parse(node, out)
       out.ol **attr_code(attrs) do |ol| 
         node.children.each { |n| parse(n, ol) }
       end
-    when "li" then out.li do |li| 
+    when "li" then out.li **{class: "MsoNormal"} do |li| 
       node.children.each { |n| parse(n, li) }
     end
     when "dl"
@@ -359,24 +383,7 @@ def parse(node, out)
         end
       end
     when "fn" 
-      fn = $footnotes.length + 1
-      out.a **{style: "mso-footnote-id:ftn#{fn}", href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
-        a.span **{class: "MsoFootnoteReference"} do |span|
-          span.span **{style: "mso-special-character:footnote"}
-        end
-      end
-      $footnotes << noko do |xml|
-        xml.div **{style: "mso-element:footnote", id: "ftn#{fn}"} do |div|
-          div.p **{class: "MsoFootnoteText"} do |p| 
-            p.a **{style: "mso-footnote-id:ftn#{fn}", href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
-              a.span **{class: "MsoFootnoteReference"} do |span|
-                span.span **{style: "mso-special-character:footnote"}
-              end
-              node.children.each { |n| parse(n, p) }
-            end
-          end
-        end
-      end.join("\n")
+      footnote_parse(node, out)
     when "p" 
       out.p **{class: "MsoNormal"} do |p| 
         $block = true
@@ -419,7 +426,13 @@ def parse(node, out)
         end
       end
     when "table"
-      out.table **attr_code("id": node["anchor"]) do |t|
+      table_attr = {id: node["anchor"],
+                    class: "MsoISOTable",
+                    border: 1,
+                    cellspacing: 0,
+                    cellpadding: 0,
+      }
+      out.table **attr_code(table_attr) do |t|
         name = node.at(ns("./name"))
         thead = node.at(ns("./thead"))
         tbody = node.at(ns("./tbody"))
@@ -447,10 +460,10 @@ def parse(node, out)
       end
     else
       if $block
-        out.emphasis **{role: "strong"} { |e| e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") }
+        out.b **{role: "strong"} { |e| e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") }
       else
         out.para do |p|
-          p.emphasis **{role: "strong"} { |e| e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") }
+          p.b **{role: "strong"} { |e| e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") }
         end
       end
     end
@@ -492,8 +505,8 @@ end
 def scope(isoxml, out)
   f = isoxml.at(ns("//scope"))
   return unless f
-  out.h1 "1. Scope"
   out.div do |div|
+    div.h1 "1. Scope"
     f.elements.each do |e|
       parse(e, div)
     end
@@ -501,7 +514,7 @@ def scope(isoxml, out)
 end
 
 def iso_ref_entry(list, b)
-  list.li **attr_code("id": b["anchor"]) do |ref|
+  list.p **attr_code("id": b["anchor"], class: "MsoNormal") do |ref|
     isocode = b.at(ns("./isocode"))
     isodate = b.at(ns("./isodate"))
     isotitle = b.at(ns("./isotitle"))
@@ -510,9 +523,7 @@ def iso_ref_entry(list, b)
     reference += ": #{isodate.text}" if isodate
     ref << reference
     if date_footnote
-      ref.footnote do |fn|
-        fn.para { |p| p << date_footnote.text }
-      end
+      footnote_parse(date_footnote, ref)
     end
     ref.i { |i| i <<  " #{isotitle.text}" }
   end
@@ -521,7 +532,7 @@ end
 def ref_entry(list, b)
   ref = b.at(ns("./ref"))
   p = b.at(ns("./p"))
-  list.li **attr_code("id": ref["anchor"]) do |r|
+  list.p **attr_code("id": ref["anchor"], class: "MsoNormal") do |r|
     r << ref.text
     p.children.each { |n| parse(n, r) }
   end
@@ -530,21 +541,19 @@ end
 def biblio_list(f, s)
   isobiblio = f.xpath(ns("./iso_ref_title"))
   refbiblio = f.xpath(ns("./reference"))
-  s.ul do |list|
-    isobiblio.each do |b|
-      iso_ref_entry(list, b)
-    end
-    refbiblio.each do |b|
-      ref_entry(list, b)
-    end
+  isobiblio.each do |b|
+    iso_ref_entry(s, b)
+  end
+  refbiblio.each do |b|
+    ref_entry(s, b)
   end
 end
 
 def norm_ref(isoxml, out)
   f = isoxml.at(ns("//norm_ref"))
   return unless f
-  out.h1 "2. Normative References"
   out.div do |div|
+    div.h1 "2. Normative References"
     f.elements.each do |e|
       parse(e, div) unless ["iso_ref_title" , "reference"].include? e.name
     end
@@ -555,8 +564,8 @@ end
 def bibliography(isoxml, out)
   f = isoxml.at(ns("//bibliography"))
   return unless f
-  out.h1 "Bibliography"
   out.div do |div|
+    div.h1 "Bibliography"
     f.elements.each do |e|
       parse(e, div) unless ["iso_ref_title" , "reference"].include? e.name
     end
@@ -567,8 +576,8 @@ end
 def terms_defs(isoxml, out)
   f = isoxml.at(ns("//terms_defs"))
   return unless f
-  out.h1 "3. Terms and Definitions"
   out.div do |div|
+    div.h1 "3. Terms and Definitions"
     f.elements.each do |e|
       parse(e, div)
     end
@@ -578,8 +587,8 @@ end
 def symbols_abbrevs(isoxml, out)
   f = isoxml.at(ns("//symbols_abbrevs"))
   return unless f
-  out.title "4. Symbols and Abbreviations"
   out.div do |div|
+    div.h1 "4. Symbols and Abbreviations"
     f.elements.each do |e|
       parse(e, div)
     end
@@ -589,9 +598,12 @@ end
 def introduction(isoxml, out)
   f = isoxml.at(ns("//introduction"))
   return unless f
-  title_attr = {class: "IntroTitle", style: "page-break-before:always"}
-  out.p **attr_code(title_attr) { |p| p << "Introduction" }
+  title_attr = {class: "IntroTitle", 
+                style: "page-break-before:always"}
   out.div do |div|
+    div.h1 **attr_code(title_attr) do |p| 
+      p << "Introduction" 
+    end
     f.elements.each do |e|
       if e.name == "patent_notice"
         e.elements.each do |e1|
@@ -608,7 +620,17 @@ def foreword(isoxml, out)
   f = isoxml.at(ns("//foreword"))
   return unless f
   out.div  do |s|
-    s.p **{class: "ForewordTitle"} { |p| p << "Foreword" }
+    s.h1 "Foreword"
+=begin
+    s.p **{class: "ForewordTitle"} do |p| 
+      p.a **{name: "_Toc353342667"}
+      p.a **{name: "_Toc485815077"} do |a|
+        a.span **{style: "mso-bookmark:_Toc353342667"} do |span|
+          span.span << "Foreword" 
+        end
+      end
+    end
+=end
     f.elements.each do |e|
       parse(e, s)
     end
@@ -622,17 +644,17 @@ def author(isoxml, out)
   sc_num = isoxml.at(ns("//subcommittee/@number"))
   wg = isoxml.at(ns("//workgroup"))
   wg_num = isoxml.at(ns("//workgroup/@number"))
-  secretariat = isoxml.at(ns("//workgroup/@number"))
+  secretariat = isoxml.at(ns("//secretariat"))
   ret = tc.text
   ret = "ISO TC #{tc_num.text}: #{ret}" if tc_num
   ret += " SC #{sc_num.text}:" if sc_num
   ret += " #{sc.text}" if sc
   ret += " WG #{wg_num.text}:" if wg_num
   ret += " #{wg.text}" if wg
-  $iso_tc = ""
-  $iso_sc = ""
-  $iso_wg = ""
-  $iso_secretariat = ""
+  $iso_tc = "XXXX"
+  $iso_sc = "XXXX"
+  $iso_wg = "XXXX"
+  $iso_secretariat = "XXXX"
   $iso_tc = tc_num.text if tc_num
   $iso_sc = sc_num.text if sc_num
   $iso_wg = wg_num.text if wg_num
@@ -667,8 +689,8 @@ def title(isoxml, out)
     part = isoxml.at(ns("//title/en/title_part"))
     partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
     main = main.text
-    main = "#{intro.text} -- #{main}" if intro
-    main = "#{main} -- Part #{partnumber}: #{part.text}" if part
+    main = "#{intro.text} — #{main}" if intro
+    main = "#{main} — Part #{partnumber}: #{part.text}" if part
     $iso_doctitle = main
   end
 end
@@ -680,8 +702,8 @@ def subtitle(isoxml, out)
     part = isoxml.at(ns("//title/fr/title_part"))
     partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
     main = main.text
-    main = "#{intro.text} -- #{main}" if intro
-    main = "#{main} -- Part #{partnumber}: #{part.text}" if part
+    main = "#{intro.text} — #{main}" if intro
+    main = "#{main} — Part #{partnumber}: #{part.text}" if part
     $iso_docsubtitle = main
   end
 end
