@@ -1,5 +1,11 @@
-
-/* Font Definitions */
+  /* Font Definitions */
+@font-face
+	{font-family:Arial;
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-536859905 -1073711037 9 0 511 0;}
 @font-face
 	{font-family:"Courier New";
 	panose-1:2 7 3 9 2 2 5 2 4 4;
@@ -8,13 +14,6 @@
 	mso-font-pitch:fixed;
 	mso-font-signature:-536859905 -1073711037 9 0 511 0;}
 @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;
-	mso-font-charset:2;
-	mso-generic-font-family:auto;
-	mso-font-pitch:variable;
-	mso-font-signature:0 268435456 0 0 -2147483648 0;}
-@font-face
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;
 	mso-font-charset:0;
@@ -22,966 +21,1107 @@
 	mso-font-pitch:variable;
 	mso-font-signature:-536870145 1107305727 0 0 415 0;}
 @font-face
-	{font-family:"Calibri Light";
-	panose-1:2 15 3 2 2 2 4 3 2 4;
-	mso-font-charset:0;
-	mso-generic-font-family:swiss;
-	mso-font-pitch:variable;
-	mso-font-signature:-1610611985 1073750139 0 0 415 0;}
-@font-face
 	{font-family:Calibri;
 	panose-1:2 15 5 2 2 2 4 3 2 4;
 	mso-font-charset:0;
 	mso-generic-font-family:swiss;
 	mso-font-pitch:variable;
 	mso-font-signature:-536870145 1073786111 1 0 415 0;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1073743103 0 0 415 0;}
+@font-face
+	{font-family:"Malgun Gothic";
+	panose-1:2 11 5 3 2 0 0 2 0 4;
+	mso-font-charset:129;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-1879048145 701988091 18 0 524289 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;
+	mso-font-charset:128;
+	mso-generic-font-family:roman;
+	mso-font-pitch:fixed;
+	mso-font-signature:-536870145 1791491579 134217746 0 131231 0;}
  /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
-	margin:0cm;
-	margin-bottom:.0001pt;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	tab-stops:20.15pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
+	mso-ansi-language:EN-GB;}
 h1
-	{mso-style-priority:9;
+	{mso-style-priority:1;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-link:"Heading 1 Char";
 	mso-style-next:Normal;
-	margin-top:12.0pt;
+	margin-top:13.5pt;
 	margin-right:0cm;
-	margin-bottom:0cm;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan lines-together;
+	text-indent:0cm;
+	line-height:13.5pt;
+	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:1;
-	font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
+	mso-list:l1 level1 lfo6;
+	mso-hyphenate:none;
+	tab-stops:20.0pt list 21.6pt left 28.0pt;
+	font-size:13.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
 	mso-font-kerning:0pt;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-weight:normal;}
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	mso-bidi-font-weight:normal;}
 h2
-	{mso-style-noshow:yes;
-	mso-style-priority:9;
+	{mso-style-priority:2;
+	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-parent:"Heading 1";
 	mso-style-link:"Heading 2 Char";
 	mso-style-next:Normal;
-	margin-top:2.0pt;
+	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:0cm;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan lines-together;
+	text-indent:0cm;
+	line-height:12.5pt;
+	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:2;
-	font-size:13.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-weight:normal;}
+	mso-list:l1 level2 lfo6;
+	mso-hyphenate:none;
+	tab-stops:27.0pt 35.0pt;
+	font-size:12.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	mso-bidi-font-weight:normal;}
 h3
-	{mso-style-noshow:yes;
-	mso-style-priority:9;
+	{mso-style-priority:3;
+	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-parent:"Heading 1";
 	mso-style-link:"Heading 3 Char";
 	mso-style-next:Normal;
-	margin-top:2.0pt;
+	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:0cm;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan lines-together;
+	text-indent:0cm;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:3;
-	font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#1F3763;
-	mso-themecolor:accent1;
-	mso-themeshade:127;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-weight:normal;}
+	mso-list:l1 level3 lfo6;
+	mso-hyphenate:none;
+	tab-stops:list 36.0pt left 44.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	mso-bidi-font-weight:normal;}
 h4
-	{mso-style-noshow:yes;
-	mso-style-priority:9;
+	{mso-style-priority:4;
+	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-parent:"Heading 3";
 	mso-style-link:"Heading 4 Char";
 	mso-style-next:Normal;
-	margin-top:2.0pt;
+	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:0cm;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan lines-together;
+	text-indent:0cm;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:4;
-	font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-weight:normal;
-	font-style:italic;}
+	mso-list:l1 level4 lfo6;
+	mso-hyphenate:none;
+	tab-stops:51.05pt 57.0pt 68.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	mso-bidi-font-weight:normal;}
 h5
-	{mso-style-noshow:yes;
-	mso-style-priority:9;
+	{mso-style-priority:5;
+	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-parent:"Heading 4";
 	mso-style-link:"Heading 5 Char";
 	mso-style-next:Normal;
-	margin-top:2.0pt;
+	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:0cm;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan lines-together;
+	text-indent:0cm;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:5;
-	font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-weight:normal;}
+	mso-list:l1 level5 lfo6;
+	mso-hyphenate:none;
+	tab-stops:51.05pt list 54.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	mso-bidi-font-weight:normal;}
 h6
-	{mso-style-noshow:yes;
-	mso-style-priority:9;
+	{mso-style-priority:6;
+	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-parent:"Heading 5";
 	mso-style-link:"Heading 6 Char";
 	mso-style-next:Normal;
-	margin-top:2.0pt;
+	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:0cm;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan lines-together;
+	text-indent:0cm;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:6;
-	font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#1F3763;
-	mso-themecolor:accent1;
-	mso-themeshade:127;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-weight:normal;}
-p.MsoNormalIndent, li.MsoNormalIndent, div.MsoNormalIndent
-	{mso-style-priority:99;
-	margin-top:0cm;
-	margin-right:0cm;
+	mso-list:l1 level6 lfo6;
+	mso-hyphenate:none;
+	tab-stops:51.05pt list 72.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	mso-bidi-font-weight:normal;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-priority:39;
+	mso-style-unhide:no;
+	mso-style-next:Normal;
+	margin-top:6.0pt;
+	margin-right:25.0pt;
 	margin-bottom:0cm;
 	margin-left:36.0pt;
 	margin-bottom:.0001pt;
+	text-indent:-36.0pt;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	mso-hyphenate:none;
+	tab-stops:20.15pt 36.0pt right dotted 487.6pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
-	{mso-style-priority:99;
-	mso-style-link:"Footnote Text Char";
-	margin:0cm;
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-noshow:yes;
+	mso-style-priority:39;
+	mso-style-unhide:no;
+	mso-style-parent:"TOC 1";
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:25.0pt;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
 	margin-bottom:.0001pt;
+	text-indent:-36.0pt;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	mso-hyphenate:none;
+	tab-stops:20.15pt 36.0pt right dotted 487.6pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{mso-style-noshow:yes;
+	mso-style-priority:39;
+	mso-style-unhide:no;
+	mso-style-parent:"TOC 2";
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:25.0pt;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-36.0pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	mso-hyphenate:none;
+	tab-stops:20.15pt 36.0pt right dotted 487.6pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-link:"Header Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:30.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:11.0pt;
+	mso-line-height-rule:exactly;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-link:"Footer Char";
+	margin-top:18.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:11.0pt;
+	mso-line-height-rule:exactly;
+	mso-pagination:widow-orphan;
+	tab-stops:right 487.6pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;}
 span.MsoFootnoteReference
 	{mso-style-priority:99;
 	vertical-align:super;}
-p.MsoTitle, li.MsoTitle, div.MsoTitle
-	{mso-style-priority:10;
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
 	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-link:"Title Char";
-	mso-style-next:Normal;
-	margin:0cm;
-	margin-bottom:.0001pt;
-	mso-add-space:auto;
+	mso-style-link:"Body Text Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:28.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	letter-spacing:-.5pt;
-	mso-font-kerning:14.0pt;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
-	{mso-style-priority:10;
+	mso-ansi-language:EN-GB;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
 	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-link:"Title Char";
+	mso-style-parent:"";
+	color:blue;
+	mso-ansi-language:FR;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:#954F72;
+	mso-themecolor:followedhyperlink;
+	text-decoration:underline;
+	text-underline:single;}
+span.MsoPlaceholderText
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-parent:"";
+	color:gray;}
+span.Heading1Char
+	{mso-style-name:"Heading 1 Char";
+	mso-style-priority:1;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:"Heading 1";
+	mso-ansi-font-size:13.0pt;
+	font-family:"Cambria",serif;
+	mso-ascii-font-family:Cambria;
+	mso-fareast-font-family:"MS Mincho";
+	mso-hansi-font-family:Cambria;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-priority:2;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:"Heading 2";
+	mso-ansi-font-size:12.0pt;
+	font-family:"Cambria",serif;
+	mso-ascii-font-family:Cambria;
+	mso-fareast-font-family:"MS Mincho";
+	mso-hansi-font-family:Cambria;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.Heading3Char
+	{mso-style-name:"Heading 3 Char";
+	mso-style-priority:3;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:"Heading 3";
+	mso-ansi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-ascii-font-family:Cambria;
+	mso-fareast-font-family:"MS Mincho";
+	mso-hansi-font-family:Cambria;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.Heading4Char
+	{mso-style-name:"Heading 4 Char";
+	mso-style-priority:4;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:"Heading 4";
+	mso-ansi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-ascii-font-family:Cambria;
+	mso-fareast-font-family:"MS Mincho";
+	mso-hansi-font-family:Cambria;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.Heading5Char
+	{mso-style-name:"Heading 5 Char";
+	mso-style-priority:5;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:"Heading 5";
+	mso-ansi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-ascii-font-family:Cambria;
+	mso-fareast-font-family:"MS Mincho";
+	mso-hansi-font-family:Cambria;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.Heading6Char
+	{mso-style-name:"Heading 6 Char";
+	mso-style-priority:6;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:"Heading 6";
+	mso-ansi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-ascii-font-family:Cambria;
+	mso-fareast-font-family:"MS Mincho";
+	mso-hansi-font-family:Cambria;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.a2, li.a2, div.a2
+	{mso-style-name:a2;
+	mso-style-priority:11;
+	mso-style-unhide:no;
 	mso-style-next:Normal;
-	mso-style-type:export-only;
-	margin:0cm;
-	margin-bottom:.0001pt;
-	mso-add-space:auto;
+	margin-top:13.5pt;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	line-height:13.5pt;
 	mso-pagination:widow-orphan;
-	font-size:28.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l0 level2 lfo12;
+	tab-stops:1.0cm 36.0pt;
+	font-size:13.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	letter-spacing:-.5pt;
-	mso-font-kerning:14.0pt;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
-	{mso-style-priority:10;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.a3, li.a3, div.a3
+	{mso-style-name:a3;
+	mso-style-priority:12;
 	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-link:"Title Char";
 	mso-style-next:Normal;
-	mso-style-type:export-only;
-	margin:0cm;
-	margin-bottom:.0001pt;
-	mso-add-space:auto;
+	margin-top:3.0pt;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	line-height:12.5pt;
 	mso-pagination:widow-orphan;
-	font-size:28.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l0 level3 lfo12;
+	tab-stops:20.15pt list 36.0pt;
+	font-size:12.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	letter-spacing:-.5pt;
-	mso-font-kerning:14.0pt;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
-	{mso-style-priority:10;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.a4, li.a4, div.a4
+	{mso-style-name:a4;
+	mso-style-priority:13;
 	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-link:"Title Char";
 	mso-style-next:Normal;
-	mso-style-type:export-only;
-	margin:0cm;
-	margin-bottom:.0001pt;
-	mso-add-space:auto;
+	margin-top:3.0pt;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:28.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l0 level4 lfo12;
+	tab-stops:20.15pt 44.0pt list 54.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	letter-spacing:-.5pt;
-	mso-font-kerning:14.0pt;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
-	{mso-style-priority:11;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-style:italic;}
+p.a5, li.a5, div.a5
+	{mso-style-name:a5;
+	mso-style-priority:14;
 	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-link:"Subtitle Char";
+	mso-style-next:Normal;
+	margin-top:3.0pt;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l0 level5 lfo12;
+	tab-stops:20.15pt list 54.0pt left 62.35pt 68.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-style:italic;}
+p.a6, li.a6, div.a6
+	{mso-style-name:a6;
+	mso-style-priority:15;
+	mso-style-unhide:no;
+	mso-style-next:Normal;
+	margin-top:3.0pt;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l0 level6 lfo12;
+	tab-stops:20.15pt 62.35pt 68.0pt list 72.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;}
+p.ANNEX, li.ANNEX, div.ANNEX
+	{mso-style-name:ANNEX;
+	mso-style-priority:10;
+	mso-style-unhide:no;
 	mso-style-next:Normal;
 	margin-top:0cm;
 	margin-right:0cm;
-	margin-bottom:8.0pt;
+	margin-bottom:24.0pt;
 	margin-left:0cm;
-	mso-pagination:widow-orphan;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:minor-fareast;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	color:#5A5A5A;
-	mso-themecolor:text1;
-	mso-themetint:165;
-	letter-spacing:.75pt;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-p.MsoBlockText, li.MsoBlockText, div.MsoBlockText
-	{mso-style-priority:99;
-	margin-top:0cm;
-	margin-right:57.6pt;
-	margin-bottom:0cm;
-	margin-left:57.6pt;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan;
-	border:none;
-	mso-border-alt:solid #4472C4 .25pt;
-	mso-border-themecolor:accent1;
-	padding:0cm;
-	mso-padding-alt:10.0pt 10.0pt 10.0pt 10.0pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:minor-fareast;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	color:#4472C4;
-	mso-themecolor:accent1;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-style:italic;}
-p.MsoQuote, li.MsoQuote, div.MsoQuote
-	{mso-style-priority:29;
-	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-link:"Quote Char";
-	mso-style-next:Normal;
-	margin-top:10.0pt;
-	margin-right:43.2pt;
-	margin-bottom:8.0pt;
-	margin-left:43.2pt;
 	text-align:center;
+	text-indent:0cm;
+	line-height:15.5pt;
+	mso-line-height-rule:exactly;
+	page-break-before:always;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
-	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	color:#404040;
-	mso-themecolor:text1;
-	mso-themetint:191;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-style:italic;}
-p.MsoIntenseQuote, li.MsoIntenseQuote, div.MsoIntenseQuote
-	{mso-style-priority:30;
-	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-link:"Έντονο απόσπασμα Char";
-	mso-style-next:Normal;
-	margin-top:18.0pt;
-	margin-right:43.2pt;
-	margin-bottom:18.0pt;
-	margin-left:43.2pt;
-	text-align:center;
-	mso-pagination:widow-orphan;
-	border:none;
-	mso-border-top-alt:solid #4472C4 .5pt;
-	mso-border-top-themecolor:accent1;
-	mso-border-bottom-alt:solid #4472C4 .5pt;
-	mso-border-bottom-themecolor:accent1;
-	padding:0cm;
-	mso-padding-alt:10.0pt 0cm 10.0pt 0cm;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
-	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	color:#4472C4;
-	mso-themecolor:accent1;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;
-	font-style:italic;}
-p.Normal, li.Normal, div.Normal
-	{mso-style-name:Normal;
-	mso-style-unhide:no;
-	margin:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
-	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-span.1Char
-	{mso-style-name:"Heading 1 Char";
-	mso-style-priority:9;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 1";
-	mso-ansi-font-size:16.0pt;
-	mso-bidi-font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;}
-span.2Char
-	{mso-style-name:"Heading 2 Char";
-	mso-style-noshow:yes;
-	mso-style-priority:9;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 2";
-	mso-ansi-font-size:13.0pt;
-	mso-bidi-font-size:13.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;}
-span.3Char
-	{mso-style-name:"Heading 3 Char";
-	mso-style-noshow:yes;
-	mso-style-priority:9;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 3";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#1F3763;
-	mso-themecolor:accent1;
-	mso-themeshade:127;
-	mso-ansi-language:EN-AU;}
-span.4Char
-	{mso-style-name:"Heading 4 Char";
-	mso-style-noshow:yes;
-	mso-style-priority:9;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 4";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;
-	font-style:italic;}
-span.5Char
-	{mso-style-name:"Heading 5 Char";
-	mso-style-noshow:yes;
-	mso-style-priority:9;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 5";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;}
-span.6Char
-	{mso-style-name:"Heading 6 Char";
-	mso-style-noshow:yes;
-	mso-style-priority:9;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 6";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#1F3763;
-	mso-themecolor:accent1;
-	mso-themeshade:127;
-	mso-ansi-language:EN-AU;}
-span.Char
-	{mso-style-name:"Title Char";
-	mso-style-priority:10;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:Title;
-	mso-ansi-font-size:28.0pt;
-	mso-bidi-font-size:28.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	letter-spacing:-.5pt;
-	mso-font-kerning:14.0pt;
-	mso-ansi-language:EN-AU;}
-span.Char0
-	{mso-style-name:"Subtitle Char";
-	mso-style-priority:11;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:Subtitle;
-	mso-ansi-font-size:11.0pt;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l0 level1 lfo12;
+	tab-stops:20.15pt;
+	font-size:14.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Times New Roman",serif;
-	mso-ascii-font-family:"Times New Roman";
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:minor-fareast;
-	mso-hansi-font-family:"Times New Roman";
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
-	color:#5A5A5A;
-	mso-themecolor:text1;
-	mso-themetint:165;
-	letter-spacing:.75pt;
-	mso-ansi-language:EN-AU;}
-p.Heading1, li.Heading1, div.Heading1
-	{mso-style-name:"Heading 1";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.BiblioTitle, li.BiblioTitle, div.BiblioTitle
+	{mso-style-name:"Biblio Title";
+	mso-style-noshow:yes;
 	mso-style-unhide:no;
-	mso-style-link:"Heading 1 Char";
-	margin:0cm;
-	margin-bottom:.0001pt;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:15.5pt;
+	margin-left:0cm;
+	text-align:center;
+	line-height:15.5pt;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	mso-outline-level:1;
+	tab-stops:20.15pt;
+	font-size:14.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-span.Heading1Char
-	{mso-style-name:"Heading 1 Char";
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Definition, li.Definition, div.Definition
+	{mso-style-name:Definition;
 	mso-style-priority:9;
 	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 1";
-	mso-ansi-font-size:16.0pt;
-	mso-bidi-font-size:16.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;}
-p.Heading2, li.Heading2, div.Heading2
-	{mso-style-name:"Heading 2";
+	mso-ansi-language:EN-GB;}
+p.ForewordTitle, li.ForewordTitle, div.ForewordTitle
+	{mso-style-name:"Foreword Title";
+	mso-style-noshow:yes;
 	mso-style-unhide:no;
-	mso-style-link:"Heading 2 Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:15.5pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:15.5pt;
+	page-break-before:always;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-hyphenate:none;
+	tab-stops:20.15pt;
+	font-size:14.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.IntroTitle, li.IntroTitle, div.IntroTitle
+	{mso-style-name:"Intro Title";
+	mso-style-noshow:yes;
+	mso-style-unhide:no;
+	mso-style-parent:"Foreword Title";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:15.5pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:15.5pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-hyphenate:none;
+	tab-stops:20.15pt;
+	font-size:14.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Terms, li.Terms, div.Terms
+	{mso-style-name:"Term\(s\)";
+	mso-style-priority:8;
+	mso-style-unhide:no;
+	mso-style-next:Definition;
 	margin:0cm;
 	margin-bottom:.0001pt;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	page-break-after:avoid;
+	mso-hyphenate:none;
+	tab-stops:20.15pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-span.Heading2Char
-	{mso-style-name:"Heading 2 Char";
-	mso-style-priority:9;
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.TermNum, li.TermNum, div.TermNum
+	{mso-style-name:TermNum;
+	mso-style-priority:7;
 	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 2";
-	mso-ansi-font-size:13.0pt;
-	mso-bidi-font-size:13.0pt;
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;}
-p.Heading3, li.Heading3, div.Heading3
-	{mso-style-name:"Heading 3";
-	mso-style-unhide:no;
-	mso-style-link:"Heading 3 Char";
+	mso-style-next:"Term\(s\)";
 	margin:0cm;
 	margin-bottom:.0001pt;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	page-break-after:avoid;
+	tab-stops:20.15pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-span.Heading3Char
-	{mso-style-name:"Heading 3 Char";
-	mso-style-priority:9;
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.zzContents, li.zzContents, div.zzContents
+	{mso-style-name:zzContents;
+	mso-style-noshow:yes;
 	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 3";
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#1F3763;
-	mso-themecolor:accent1;
-	mso-themeshade:127;
-	mso-ansi-language:EN-AU;}
-p.Heading4, li.Heading4, div.Heading4
-	{mso-style-name:"Heading 4";
-	mso-style-unhide:no;
-	mso-style-link:"Heading 4 Char";
-	margin:0cm;
-	margin-bottom:.0001pt;
+	mso-style-next:"TOC 1";
+	margin-top:48.0pt;
+	margin-right:0cm;
+	margin-bottom:15.5pt;
+	margin-left:0cm;
+	line-height:15.5pt;
+	mso-line-height-rule:exactly;
+	page-break-before:always;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	page-break-after:avoid;
+	mso-hyphenate:none;
+	tab-stops:20.15pt;
+	font-size:14.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-span.Heading4Char
-	{mso-style-name:"Heading 4 Char";
-	mso-style-priority:9;
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.zzCopyright, li.zzCopyright, div.zzCopyright
+	{mso-style-name:zzCopyright;
+	mso-style-noshow:yes;
 	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 4";
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;
-	font-style:italic;}
-p.Heading5, li.Heading5, div.Heading5
-	{mso-style-name:"Heading 5";
-	mso-style-unhide:no;
-	mso-style-link:"Heading 5 Char";
-	margin:0cm;
-	margin-bottom:.0001pt;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:14.2pt;
+	margin-bottom:12.0pt;
+	margin-left:14.2pt;
+	text-align:justify;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	tab-stops:20.15pt 25.7pt 481.15pt;
+	border:none;
+	mso-border-alt:solid blue .5pt;
+	padding:0cm;
+	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-span.Heading5Char
-	{mso-style-name:"Heading 5 Char";
-	mso-style-priority:9;
+	color:blue;
+	mso-ansi-language:EN-GB;}
+p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
+	{mso-style-name:zzSTDTitle;
+	mso-style-noshow:yes;
 	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 5";
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#2F5496;
-	mso-themecolor:accent1;
-	mso-themeshade:191;
-	mso-ansi-language:EN-AU;}
-p.Heading6, li.Heading6, div.Heading6
-	{mso-style-name:"Heading 6";
-	mso-style-unhide:no;
-	mso-style-link:"Heading 6 Char";
-	margin:0cm;
-	margin-bottom:.0001pt;
+	mso-style-next:Normal;
+	margin-top:20.0pt;
+	margin-right:0cm;
+	margin-bottom:38.0pt;
+	margin-left:0cm;
+	line-height:17.5pt;
+	mso-line-height-rule:exactly;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	mso-hyphenate:none;
+	tab-stops:20.15pt;
+	font-size:16.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-AU;
-	mso-fareast-language:EN-US;}
-span.Heading6Char
-	{mso-style-name:"Heading 6 Char";
-	mso-style-priority:9;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Heading 6";
-	font-family:"Calibri Light",sans-serif;
-	mso-ascii-font-family:"Calibri Light";
-	mso-ascii-theme-font:major-latin;
-	mso-fareast-font-family:"Times New Roman";
-	mso-fareast-theme-font:major-fareast;
-	mso-hansi-font-family:"Calibri Light";
-	mso-hansi-theme-font:major-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:major-bidi;
-	color:#1F3763;
-	mso-themecolor:accent1;
-	mso-themeshade:127;
-	mso-ansi-language:EN-AU;}
-span.Char1
-	{mso-style-name:"Έντονο απόσπασμα Char";
-	mso-style-priority:30;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:"Έντονο απόσπασμα";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	color:#4472C4;
-	mso-themecolor:accent1;
-	mso-ansi-language:EN-AU;
-	font-style:italic;}
-span.Char2
-	{mso-style-name:"Quote Char";
-	mso-style-priority:29;
-	mso-style-unhide:no;
-	mso-style-locked:yes;
-	mso-style-link:Quote;
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	color:#404040;
-	mso-themecolor:text1;
-	mso-themetint:191;
-	mso-ansi-language:EN-AU;
-	font-style:italic;}
-span.Char3
-	{mso-style-name:"Footnote Text Char";
+	color:blue;
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-noshow:yes;
 	mso-style-priority:99;
 	mso-style-unhide:no;
 	mso-style-locked:yes;
-	mso-style-link:"Footnote Text";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	mso-ansi-language:EN-AU;}
-span.SpellE
-	{mso-style-name:"";
-	mso-spl-e:yes;}
+	mso-style-parent:"";
+	mso-style-link:Footer;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	mso-ansi-language:EN-GB;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:Header;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	mso-ansi-language:EN-GB;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Code, li.Code, div.Code
+	{mso-style-name:Code;
+	mso-style-priority:16;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	line-height:10.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:9.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Courier New",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;}
+span.BodyTextChar
+	{mso-style-name:"Body Text Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-parent:"";
+	mso-style-link:"Body Text";
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Times New Roman",serif;
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;}
+p.Formula, li.Formula, div.Formula
+	{mso-style-name:Formula;
+	mso-style-noshow:yes;
+	mso-style-unhide:no;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:11.0pt;
+	margin-left:20.15pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:right 487.45pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;}
+p.Tablebody, li.Tablebody, div.Tablebody
+	{mso-style-name:"Table body";
+	mso-style-noshow:yes;
+	mso-style-unhide:no;
+	margin-top:3.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	line-height:10.5pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
-	font-size:10.0pt;
-	mso-ansi-font-size:10.0pt;
-	mso-bidi-font-size:10.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-ascii-theme-font:minor-latin;
+	mso-ascii-font-family:Cambria;
 	mso-fareast-font-family:Calibri;
-	mso-fareast-theme-font:minor-latin;
-	mso-hansi-font-family:Calibri;
-	mso-hansi-theme-font:minor-latin;
-	mso-bidi-font-family:"Times New Roman";
-	mso-bidi-theme-font:minor-bidi;
-	mso-ansi-language:EN-US;
-	mso-fareast-language:EN-US;}
+	mso-hansi-font-family:Cambria;}
  /* Page Definitions */
 @page
-{
-    size: 21cm 29.7cm;  /* A4 */
-    margin: 2cm 2cm 2cm 2cm; /* Margins: 2 cm on each side */
+	{mso-mirror-margins:yes;
+	mso-footnote-separator:url("FILENAME.fld/header.html") fs;
+	mso-footnote-continuation-separator:url("FILENAME.fld/header.html") fcs;
+	mso-endnote-separator:url("FILENAME.fld/header.html") es;
+	mso-endnote-continuation-separator:url("FILENAME.fld/header.html") ecs;
+	mso-facing-pages:yes;
     mso-page-orientation: portrait;
-}
+	}
 @page WordSection1
-	{size:595.05pt 840.85pt;
-	margin:72.0pt 89.85pt 72.0pt 89.85pt;
+	{size:595.3pt 841.9pt;
+	margin:39.7pt 53.85pt 1.0cm 53.85pt;
 	mso-header-margin:35.45pt;
-	mso-footer-margin:35.45pt;
+	mso-footer-margin:14.2pt;
+	mso-even-header:url("FILENAME.fld/header.html") eh1;
+	mso-header:url("FILENAME.fld/header.html") h1;
+	mso-even-footer:url("FILENAME.fld/header.html") ef1;
 	mso-paper-source:0;}
 div.WordSection1
 	{page:WordSection1;}
+@page WordSection2
+	{size:595.3pt 841.9pt;
+	margin:39.7pt 53.85pt 1.0cm 53.85pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:14.2pt;
+	mso-page-numbers:roman-lower;
+	mso-even-header:url("FILENAME.fld/header.html") eh2;
+	mso-header:url("FILENAME.fld/header.html") h2;
+	mso-even-footer:url("FILENAME.fld/header.html") ef2;
+	mso-footer:url("FILENAME.fld/header.html") f2;
+	mso-paper-source:0;}
+div.WordSection2
+	{page:WordSection2;}
+@page WordSection3
+	{size:595.3pt 841.9pt;
+	margin:39.7pt 53.85pt 1.0cm 53.85pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:14.2pt;
+	mso-page-numbers:1;
+	mso-even-header:url("FILENAME.fld/header.html") eh2;
+	mso-header:url("FILENAME.fld/header.html") h2;
+	mso-even-footer:url("FILENAME.fld/header.html") ef3;
+	mso-footer:url("FILENAME.fld/header.html") f3;
+	mso-paper-source:0;}
+div.WordSection3
+	{page:WordSection3;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:145051656;
+	mso-list-template-ids:2112159680;}
+@list l0:level1
+	{mso-level-number-format:alpha-upper;
+	mso-level-style-link:ANNEX;
+	mso-level-suffix:none;
+	mso-level-text:Annex\00A0%1;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-ansi-font-size:14.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:"Cambria",serif;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l0:level2
+	{mso-level-style-link:a2;
+	mso-level-text:"%1\.%2";
+	mso-level-tab-stop:18.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l0:level3
+	{mso-level-style-link:a3;
+	mso-level-text:"%1\.%2\.%3";
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l0:level4
+	{mso-level-style-link:a4;
+	mso-level-text:"%1\.%2\.%3\.%4";
+	mso-level-tab-stop:54.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l0:level5
+	{mso-level-style-link:a5;
+	mso-level-text:"%1\.%2\.%3\.%4\.%5";
+	mso-level-tab-stop:54.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l0:level6
+	{mso-level-style-link:a6;
+	mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6";
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l0:level7
+	{mso-level-reset-level:level2;
+	mso-level-suffix:space;
+	mso-level-text:"Figure\00A0%1\.%7\00A0—";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";}
+@list l0:level8
+	{mso-level-reset-level:level2;
+	mso-level-suffix:space;
+	mso-level-text:"Table\00A0%1\.%8\00A0—";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-text:"\(%9\)";
+	mso-level-tab-stop:306.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";}
+@list l1
+	{mso-list-id:866942648;
+	mso-list-template-ids:-1756330000;}
+@list l1:level1
+	{mso-level-style-link:"Heading 1";
+	mso-level-text:%1;
+	mso-level-tab-stop:21.6pt;
+	mso-level-number-position:left;
+	margin-left:21.6pt;
+	text-indent:-21.6pt;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l1:level2
+	{mso-level-style-link:"Heading 2";
+	mso-level-text:"%1\.%2";
+	mso-level-tab-stop:18.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l1:level3
+	{mso-level-style-link:"Heading 3";
+	mso-level-text:"%1\.%2\.%3";
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l1:level4
+	{mso-level-style-link:"Heading 4";
+	mso-level-text:"%1\.%2\.%3\.%4";
+	mso-level-tab-stop:54.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l1:level5
+	{mso-level-style-link:"Heading 5";
+	mso-level-text:"%1\.%2\.%3\.%4\.%5";
+	mso-level-tab-stop:54.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l1:level6
+	{mso-level-style-link:"Heading 6";
+	mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6";
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-font-weight:bold;
+	mso-ansi-font-style:normal;}
+@list l1:level7
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7";
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";}
+@list l1:level8
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8";
+	mso-level-tab-stop:90.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";}
+@list l1:level9
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8\.%9";
+	mso-level-tab-stop:90.0pt;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-bidi-font-family:"Times New Roman";}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}

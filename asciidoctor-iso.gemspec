@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ruby-jing"
   spec.add_dependency "uuidtools"
   spec.add_dependency "thread_safe"
+  spec.add_dependency "mime"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "byebug", "~> 9.1"

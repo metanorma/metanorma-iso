@@ -1,37 +1,126 @@
 require "nokogiri"
-require "htmlentities"
+require "mime"
 require "pp"
 
 $anchors = {}
 $footnotes = []
 
-def convert(doc)
+def convert(filename)
+  doc = File.read(filename)
   docxml = Nokogiri::XML(doc)
   docxml.root.default_namespace = ""
   result = noko do |xml|
     xml.html do |html|
-      html.parent.add_namespace_definition("o", "urn:schemas-microsoft-com:office:office")
-      html.parent.add_namespace_definition("w", "urn:schemas-microsoft-com:office:word")
-      html.parent.add_namespace_definition(nil, "http://www.w3.org/TR/REC-html40")
-      anchor_names docxml
-      define_head html
-      xml.body do |body|
-        body.div **{class: "WordSection1"} do |div|
-          info docxml, div
-          middle docxml, div
-          footnotes div
+      html_header(html, docxml, filename)
+      body_attr = {lang: "EN-US",
+                   link: "blue",
+                   vlink: "#954F72",
+                   style: "tab-interval:36.0pt",
+      }
+      xml.body **attr_code(body_attr) do |body|
+        body.div **{class: "WordSection1"} do |div1|
+          titlepage docxml, div1
+        end
+        section_break(body)
+        body.div **{class: "WordSection2"} do |div2|
+          info docxml, div2
+        end
+        section_break(body)
+        body.div **{class: "WordSection3"} do |div3|
+          middle docxml, div3
+          footnotes div3
         end
       end
     end
   end.join("\n")
-  result = msword_fix(result)
-  puts result
+  result = populate_template(msword_fix(result))
+  doc_header_files(filename)
+  File.open("#{filename}.htm", "w") { |f| f.write(result) }
+  mime_package result, filename
+end
+
+def mime_package(result,filename)
+  mhtml = MIME::Multipart::Related.new
+  # mhtml.add("#{filename}.htm")
+  mhtml.add(MIME::Text.new(result, "html"))
+  Dir.foreach("#{filename}.fld") do |item|
+    next if item == '.' or item == '..'
+    f = File.join "#{filename}.fld", item
+    type = /\.(?<suffix>\S+)$/.match item
+    case type
+    when "jpeg", "jpg", "gif", "png"
+      image = MIME::DiscreteMediaFactory.create(f)
+      image.transfer_encoding = "binary"
+      mhtml.inline(image)
+    when "xml"
+      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8")), "xml")
+    when "html", "htm"
+      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8")), "html")
+    else
+      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8")))
+    end
+  end
+  File.open("#{filename}.doc", "w") do |f|
+    f.write mhtml
+  end
+end
+
+def section_break(body) 
+  body.br **{clear: "all", style: "page-break-before:always;mso-break-type:section-break"}
+end
+
+def titlepage(docxml, div)
+  titlepage = File.read(File.join(File.dirname(__FILE__), "iso_titlepage.html"), 
+                        :encoding => "UTF-8")
+  div.parent.add_child titlepage
+end
+
+def populate_template(docxml)
+  docxml.
+    gsub(/DOCYEAR/, $iso_docyear).
+    gsub(/DOCNUMBER/, $iso_docnumber).
+    gsub(/TCNUM/, $iso_tc).
+    gsub(/SCNUM/, $iso_sc).
+    gsub(/WGNUM/, $iso_wg).
+    gsub(/DOCTITLE/, $iso_doctitle).
+    gsub(/DOCSUBTITLE/, $iso_docsubtitle).
+    gsub(/SECRETARIAT/, $iso_secretariat)
+end
+
+def doc_header_files(filename)
+  Dir.mkdir("#{filename}.fld") unless File.exists?("#{filename}.fld")
+  File.open(File.join("#{filename}.fld", "filelist.xml"), "w") do |f|
+    # TODO images will go here
+    f.write(<<~"XML")
+<xml xmlns:o="urn:schemas-microsoft-com:office:office">
+ <o:MainFile HRef="../#{filename}.htm"/>
+ <o:File HRef="header.html"/>
+ <o:File HRef="filelist.xml"/>
+</xml>
+    XML
+  end
+  header = File.read(File.join(File.dirname(__FILE__), "header.html"), 
+                     :encoding => "UTF-8").
+                     gsub(/FILENAME/, filename).
+                     gsub(/DOCYEAR/, $iso_docyear).
+                     gsub(/DOCNUMBER/, $iso_docnumber)
+  File.open(File.join("#{filename}.fld", "header.html"), "w") { |f| f.write(header) }
+end
+
+def html_header(html, docxml, filename)
+  html.parent.add_namespace_definition("o", "urn:schemas-microsoft-com:office:office")
+  html.parent.add_namespace_definition("w", "urn:schemas-microsoft-com:office:word")
+  html.parent.add_namespace_definition(nil, "http://www.w3.org/TR/REC-html40")
+  anchor_names docxml
+  define_head html, filename
 end
 
 def msword_fix(result)
   # brain damage in MSWord parser
   result.gsub(%r{<span style="mso-special-character:footnote"/>}, 
-              %q{<span style="mso-special-character:footnote"></span>} )
+              %q{<span style="mso-special-character:footnote"></span>} ).
+  gsub(%r{<link rel="File-List"}, "<link rel=File-List").
+  gsub(%r{<meta http-equiv="Content-Type"}, "<meta http-equiv=Content-Type")
 end
 
 def footnotes(div)
@@ -39,15 +128,28 @@ def footnotes(div)
     $footnotes.each do |fn|
       div1.parent << fn
     end
-end
-end
-
-def define_head(html)
-  html.head do |head|
-    head.style do |style|
-      style.comment File.read(File.join(File.dirname(__FILE__), "wordstyle.css"))
   end
 end
+
+def define_head(html, filename)
+  html.head do |head|
+    head.title { |t| t << filename }
+    head.parent.add_child <<~XML
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+XML
+    head.meta **{"http-equiv": "Content-Type", content: "text/html; charset=utf-8"}
+    head.link **{rel: "File-List", href: "#{filename}.fld/filelist.xml"}
+    head.style do |style|
+      style.comment File.read(File.join(File.dirname(__FILE__), "wordstyle.css")).
+        gsub("FILENAME", filename)
+    end
+  end
 end
 
 def ns(xpath)
@@ -155,16 +257,24 @@ def anchor_names(docxml)
 end
 
 def info(isoxml, out)
-    title isoxml, out
-    subtitle isoxml, out
-    id isoxml, out
-    author isoxml, out
-    version isoxml, out
+  intropage = File.read(File.join(File.dirname(__FILE__), "iso_intro.html"), 
+                        :encoding => "UTF-8")
+  out.parent.add_child intropage
+  title isoxml, out
+  subtitle isoxml, out
+  id isoxml, out
+  author isoxml, out
+  version isoxml, out
   foreword isoxml, out
   introduction isoxml, out
 end
 
 def middle(isoxml, out)
+  title_attr = {class: "zzSTDTitle",
+                style: "margin-top:0cm;margin-right:0cm;margin-bottom:18.0pt;margin-left:0cm"}
+  out.p **attr_code(title_attr) do |p|
+    p << $iso_doctitle
+  end
   scope isoxml, out
   norm_ref isoxml, out
   terms_defs isoxml, out
@@ -240,12 +350,12 @@ def parse(node, out)
     when "dl"
       out.dl do |v|
         node.elements.each_slice(2) do |dt, dd|
-            v.dt do |term| 
-              dt.children.each { |n| parse(n, term) }
-            end
-            v.dd do |listitem| 
-              dd.children.each { |n| parse(n, listitem) }
-            end
+          v.dt do |term| 
+            dt.children.each { |n| parse(n, term) }
+          end
+          v.dd do |listitem| 
+            dd.children.each { |n| parse(n, listitem) }
+          end
         end
       end
     when "fn" 
@@ -351,7 +461,7 @@ def clause(isoxml, out)
   clauses = isoxml.xpath(ns("//middle/clause"))
   return unless clauses
   clauses.each do |c|
-    out.sect1 **attr_code("id": c["anchor"]) do |s| 
+    out.div **attr_code("id": c["anchor"]) do |s| 
       c.elements.each do |c1| 
         if c1.name == "name"
           s.h1 { |t| t << "#{$anchors[c["anchor"]][:label]}. #{c1.text}" }
@@ -367,7 +477,7 @@ def annex(isoxml, out)
   clauses = isoxml.xpath(ns("//annex"))
   return unless clauses
   clauses.each do |c|
-    out.appendix **attr_code("id": c["anchor"]) do |s| 
+    out.div **attr_code("id": c["anchor"]) do |s| 
       c.elements.each do |c1| 
         if c1.name == "name"
           s.h1 { |t| t << "#{$anchors[c["anchor"]][:label]}. #{c1.text}" }
@@ -383,8 +493,10 @@ def scope(isoxml, out)
   f = isoxml.at(ns("//scope"))
   return unless f
   out.h1 "1. Scope"
-  f.elements.each do |e|
-    parse(e, out)
+  out.div do |div|
+    f.elements.each do |e|
+      parse(e, div)
+    end
   end
 end
 
@@ -432,28 +544,34 @@ def norm_ref(isoxml, out)
   f = isoxml.at(ns("//norm_ref"))
   return unless f
   out.h1 "2. Normative References"
-  f.elements.each do |e|
-    parse(e, out) unless ["iso_ref_title" , "reference"].include? e.name
+  out.div do |div|
+    f.elements.each do |e|
+      parse(e, div) unless ["iso_ref_title" , "reference"].include? e.name
+    end
+    biblio_list(f, div)
   end
-  biblio_list(f, out)
 end
 
 def bibliography(isoxml, out)
   f = isoxml.at(ns("//bibliography"))
   return unless f
   out.h1 "Bibliography"
-  f.elements.each do |e|
-    parse(e, s) unless ["iso_ref_title" , "reference"].include? e.name
+  out.div do |div|
+    f.elements.each do |e|
+      parse(e, div) unless ["iso_ref_title" , "reference"].include? e.name
+    end
+    biblio_list(f, div)
   end
-  biblio_list(f, out)
 end
 
 def terms_defs(isoxml, out)
   f = isoxml.at(ns("//terms_defs"))
   return unless f
   out.h1 "3. Terms and Definitions"
-  f.elements.each do |e|
-    parse(e, out)
+  out.div do |div|
+    f.elements.each do |e|
+      parse(e, div)
+    end
   end
 end
 
@@ -461,22 +579,27 @@ def symbols_abbrevs(isoxml, out)
   f = isoxml.at(ns("//symbols_abbrevs"))
   return unless f
   out.title "4. Symbols and Abbreviations"
-  f.elements.each do |e|
-    parse(e, out)
+  out.div do |div|
+    f.elements.each do |e|
+      parse(e, div)
+    end
   end
 end
 
 def introduction(isoxml, out)
   f = isoxml.at(ns("//introduction"))
   return unless f
-  out.h1 "Introduction"
-  f.elements.each do |e|
-    if e.name == "patent_notice"
-      e.elements.each do |e1|
-        parse(e1, out)
+  title_attr = {class: "IntroTitle", style: "page-break-before:always"}
+  out.p **attr_code(title_attr) { |p| p << "Introduction" }
+  out.div do |div|
+    f.elements.each do |e|
+      if e.name == "patent_notice"
+        e.elements.each do |e1|
+          parse(e1, div)
+        end
+      else
+        parse(e, div)
       end
-    else
-      parse(e, out)
     end
   end
 end
@@ -485,7 +608,7 @@ def foreword(isoxml, out)
   f = isoxml.at(ns("//foreword"))
   return unless f
   out.div  do |s|
-    s.h1 "Foreword"
+    s.p **{class: "ForewordTitle"} { |p| p << "Foreword" }
     f.elements.each do |e|
       parse(e, s)
     end
@@ -499,13 +622,22 @@ def author(isoxml, out)
   sc_num = isoxml.at(ns("//subcommittee/@number"))
   wg = isoxml.at(ns("//workgroup"))
   wg_num = isoxml.at(ns("//workgroup/@number"))
+  secretariat = isoxml.at(ns("//workgroup/@number"))
   ret = tc.text
   ret = "ISO TC #{tc_num.text}: #{ret}" if tc_num
   ret += " SC #{sc_num.text}:" if sc_num
   ret += " #{sc.text}" if sc
   ret += " WG #{wg_num.text}:" if wg_num
   ret += " #{wg.text}" if wg
-  out.p ret
+  $iso_tc = ""
+  $iso_sc = ""
+  $iso_wg = ""
+  $iso_secretariat = ""
+  $iso_tc = tc_num.text if tc_num
+  $iso_sc = sc_num.text if sc_num
+  $iso_wg = wg_num.text if wg_num
+  $iso_secretariat = secretariat.text if secretariat
+  # out.p ret
 end
 
 def id(isoxml, out)
@@ -513,16 +645,19 @@ def id(isoxml, out)
   partnumber = isoxml.at(ns("//documentnumber/@partnumber"))
   ret = "ISO #{docnumber.text}"
   ret += "-#{partnumber.text}" if partnumber
-  out.p ret
+  $iso_docnumber = docnumber.text
+  $iso_docnumber += "-#{partnumber.text}" if partnumber
+  # out.p ret
 end
 
 def version(isoxml, out)
   e =  isoxml.at(ns("//edition"))
-  out.p "Edition: #{e.text}" if e
+  # out.p "Edition: #{e.text}" if e
   e =  isoxml.at(ns("//revdate"))
-  out.p "Revised: #{e.text}" if e
+  # out.p "Revised: #{e.text}" if e
   yr =  isoxml.at(ns("//copyright_year"))
-  out.p "© ISO #{yr.text}" if yr
+  $iso_docyear = yr.text
+  # out.p "© ISO #{yr.text}" if yr
 end
 
 def title(isoxml, out)
@@ -534,7 +669,7 @@ def title(isoxml, out)
     main = main.text
     main = "#{intro.text} -- #{main}" if intro
     main = "#{main} -- Part #{partnumber}: #{part.text}" if part
-    t << main
+    $iso_doctitle = main
   end
 end
 
@@ -547,7 +682,7 @@ def subtitle(isoxml, out)
     main = main.text
     main = "#{intro.text} -- #{main}" if intro
     main = "#{main} -- Part #{partnumber}: #{part.text}" if part
-    t << main
+    $iso_docsubtitle = main
   end
 end
 
@@ -575,8 +710,9 @@ end
 def attr_code(attributes)
   attributes = attributes.reject { |_, val| val.nil? }.map
   attributes.map do |k, v|
-    [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
+    # [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
+    [k, v]
   end.to_h
 end
 
-convert($stdin.read)
+convert(ARGV[0])
