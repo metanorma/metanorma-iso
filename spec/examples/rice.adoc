@@ -134,7 +134,7 @@ rice retaining its husk after threshing
 _paddy_ (<<paddy>>) from which the husk only has been removed 
 
 [.source]
-<<ISO7301>>, 3.2, modified The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
+<<ISO7301>>, 3.2, The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
 
 === milled rice 
 [alt]#white rice#
@@ -443,7 +443,7 @@ Express the mass fraction of each defect using Formula (<<formulaA-1>>):
 [[formulaA-1,A.1]]
 [stem]
 ++++
-w = m_D/m_s 
+w = (m_D) / (m_s)
 ++++
 
 where 
@@ -547,7 +547,7 @@ Calculate the mass fraction, expressed as a percentage, of the waxy rice, stem:[
 [[formulaB-1,B.1]]
 [stem]
 ++++
-w_(wax) = m_1/(m_1 + m_2) xx 100
+w_(wax) = (m_1) / (m_1 + m_2) xx 100
 ++++
 
 where 

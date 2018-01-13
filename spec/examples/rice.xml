@@ -111,7 +111,7 @@
 <termref>
   <xref target="ISO7301" format="inline"/>
   <isosection>3.2</isosection>
-  <modification>modified The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</modification>
+  <modification>The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</modification>
 </termref></termdef>
 <termdef anchor="_milled_rice"><term>milled rice</term>  <admitted_term>white rice</admitted_term>
 <termdefinition><p><em>husked rice</em> (<xref target="husked_rice" format="inline"/>) from which almost all of the bran and embryo have been removed by milling</p></termdefinition>
@@ -176,7 +176,7 @@
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></clause>
 <clause anchor="_physical_and_chemical_characteristics">
   <name>Physical and chemical characteristics</name>
-  <clause anchor="a398a805-9ffa-4e0b-a13a-83a081236f27"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+  <clause anchor="_109e72b1-7c07-4ae7-ab2d-fec0379b287e"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in <xref target="table1" format="inline"/>.</p>
 <note>
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <xref target="ISO6322-1" format="inline"/>, <xref target="ISO6322-2" format="inline"/> and <xref target="ISO6322-3" format="inline"/>.</p>
@@ -351,7 +351,7 @@
   <p>The results of an interlaboratory test are given in <xref target="AnnexD" format="inline"/> for information</p>
 </clause>
 <clause anchor="_repeatability"><name>Repeatability</name><p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <stem>r</stem> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<formula>
+<formula anchor="_20fb0daa-afe9-47fd-a32f-e51d8afe39b9">
   <stem>r = 1 %</stem>
 <dl>
   <dt>
@@ -364,7 +364,7 @@
 
 </clause>
 <clause anchor="_reproducibility"><name>Reproducibility</name><p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <stem>R</stem> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<formula>
+<formula anchor="_c638a060-fad4-4be3-95ec-6a7f4c65bfdf">
   <stem>R = 3 %</stem>
 <dl>
   <dt>
@@ -460,7 +460,7 @@
 <p>Weigh, to the nearest 0,01 g, the fractions so obtained.</p></clause>
 <clause anchor="_calculation"><name>Calculation</name><p>Express the mass fraction of each defect using Formula (<xref target="formulaA-1" format="inline"/>):</p>
 <formula anchor="formulaA-1">
-  <stem>w = m_D/m_s</stem>
+  <stem>w = (m_D) / (m_s)</stem>
 <dl>
   <dt>
     <stem>w</stem>
@@ -556,7 +556,7 @@
 </clause></clause>
 <clause anchor="_calculation_2"><name>Calculation</name><p>Calculate the mass fraction, expressed as a percentage, of the waxy rice, <stem>w_(wax)</stem>, using Formula (<xref target="formulaB-1" format="inline"/>):</p>
 <formula anchor="formulaB-1">
-  <stem>w_(wax) = m_1/(m_1 + m_2) xx 100</stem>
+  <stem>w_(wax) = (m_1) / (m_1 + m_2) xx 100</stem>
 <dl>
   <dt>
     <stem>m_1</stem>

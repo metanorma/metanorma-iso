@@ -6,7 +6,7 @@ require "pp"
 
 $anchors = {}
 $footnotes = []
-
+$termdomain = ""
 $xslt = XML::XSLT.new()
 $xslt.xsl = File.read(File.join(File.dirname(__FILE__), "mathml2omml.xsl"))
 
@@ -71,11 +71,13 @@ def mime_package(result,filename)
 end
 
 def section_break(body) 
-  body.br **{clear: "all", style: "page-break-before:always;mso-break-type:section-break"}
+  body.br **{clear: "all", 
+             style: "page-break-before:always;mso-break-type:section-break"}
 end
 
 def titlepage(docxml, div)
-  titlepage = File.read(File.join(File.dirname(__FILE__), "iso_titlepage.html"), 
+  titlepage = File.read(File.join(File.dirname(__FILE__), 
+                                  "iso_titlepage.html"), 
                         :encoding => "UTF-8")
   div.parent.add_child titlepage
 end
@@ -89,7 +91,11 @@ def populate_template(docxml)
     gsub(/WGNUM/, $iso_wg).
     gsub(/DOCTITLE/, $iso_doctitle).
     gsub(/DOCSUBTITLE/, $iso_docsubtitle).
-    gsub(/SECRETARIAT/, $iso_secretariat)
+    gsub(/SECRETARIAT/, $iso_secretariat).
+    gsub(/\[TERMREF\]\s*/, "[SOURCE: ").
+    gsub(/\s*\[\/TERMREF\]\s*/, "]").
+    gsub(/\s*\[ISOSECTION\]/, ", ").
+    gsub(/\s*\[MODIFICATION\]/, ", modified — ")
 end
 
 def doc_header_files(filename)
@@ -109,14 +115,19 @@ def doc_header_files(filename)
                      gsub(/FILENAME/, filename).
                      gsub(/DOCYEAR/, $iso_docyear).
                      gsub(/DOCNUMBER/, $iso_docnumber)
-  File.open(File.join("#{filename}.fld", "header.html"), "w") { |f| f.write(header) }
+  File.open(File.join("#{filename}.fld", "header.html"), "w") do |f| 
+    f.write(header) 
+  end
 end
 
 def html_header(html, docxml, filename)
-  html.parent.add_namespace_definition("o", "urn:schemas-microsoft-com:office:office")
-  html.parent.add_namespace_definition("w", "urn:schemas-microsoft-com:office:word")
-  html.parent.add_namespace_definition("m", "http://schemas.microsoft.com/office/2004/12/omml")
-  html.parent.add_namespace_definition(nil, "http://www.w3.org/TR/REC-html40")
+  parent = html.parent
+  parent.add_namespace_definition("o", 
+                                  "urn:schemas-microsoft-com:office:office")
+  parent.add_namespace_definition("w", "urn:schemas-microsoft-com:office:word")
+  parent.add_namespace_definition("m", 
+                                  "http://schemas.microsoft.com/office/2004/12/omml")
+  parent.add_namespace_definition(nil, "http://www.w3.org/TR/REC-html40")
   anchor_names docxml
   define_head html, filename
 end
@@ -149,10 +160,12 @@ def define_head(html, filename)
 </w:WordDocument>
 </xml>
     XML
-    head.meta **{"http-equiv": "Content-Type", content: "text/html; charset=utf-8"}
+    head.meta **{"http-equiv": "Content-Type", 
+                 content: "text/html; charset=utf-8"}
     head.link **{rel: "File-List", href: "#{filename}.fld/filelist.xml"}
     head.style do |style|
-      style.comment File.read(File.join(File.dirname(__FILE__), "wordstyle.css")).
+      style.comment File.read(File.join(File.dirname(__FILE__), 
+                                        "wordstyle.css")).
         gsub("FILENAME", filename)
     end
   end
@@ -167,22 +180,26 @@ def sequential_asset_names(clause)
     $anchors[t["anchor"]] = { label: "Table #{i + 1}", xref: "Table #{i + 1}" }
   end
   clause.xpath(ns(".//figure")).each_with_index do |t, i|
-    $anchors[t["anchor"]] = { label: "Figure #{i + 1}", xref: "Figure #{i + 1}" }
+    $anchors[t["anchor"]] = { label: "Figure #{i + 1}", 
+                              xref: "Figure #{i + 1}" }
   end
   clause.xpath(ns(".//formula")).each_with_index do |t, i|
-    $anchors[t["anchor"]] = { label: "Formula #{i + 1}", xref: "Formula #{i + 1}" }
+    $anchors[t["anchor"]] = { label: "#{i + 1}", xref: "Formula #{i + 1}" }
   end
 end
 
 def hierarchical_asset_names(clause, num)
   clause.xpath(ns(".//table")).each_with_index do |t, i|
-    $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", xref: "Table #{num}.#{i + 1}" }
+    $anchors[t["anchor"]] = { label: "Table #{num}.#{i + 1}", 
+                              xref: "Table #{num}.#{i + 1}" }
   end
   clause.xpath(ns(".//figure")).each_with_index do |t, i|
-    $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", xref: "Figure #{num}.#{i + 1}" }
+    $anchors[t["anchor"]] = { label: "Figure #{num}.#{i + 1}", 
+                              xref: "Figure #{num}.#{i + 1}" }
   end
   clause.xpath(ns(".//formula")).each_with_index do |t, i|
-    $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", xref: "Formula #{num}.#{i + 1}" }
+    $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", 
+                              xref: "Formula #{num}.#{i + 1}" }
   end
 end
 
@@ -193,22 +210,26 @@ def introduction_names(clause)
 end
 
 def section_names(clause, num, level)
-  $anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}", level: level }
-  clause.xpath(ns("./clause")).each_with_index do |c, i|
+  $anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}", 
+                                 level: level }
+  clause.xpath(ns("./clause | ./termdef")).each_with_index do |c, i|
     section_names1(c, "#{num}.#{i + 1}", level + 1)
   end
 end
 
 def section_names1(clause, num, level)
-  $anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}", level: level }
-  clause.xpath(ns("./clause")).each_with_index do |c, i|
+  $anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}", 
+                                 level: level }
+  clause.xpath(ns("./clause | ./termdef")).each_with_index do |c, i|
     section_names1(c, "#{num}.#{i + 1}", level + 1)
   end
 end
 
 def annex_names(clause, num)
-  obligation = clause["subtype"] == "normative" ? "(Normative)" : "(Informative)"
-  $anchors[clause["anchor"]] = { label: "Annex #{num} #{obligation}", xref: "Annex #{num}" , level: 1 }
+  obligation = clause["subtype"] == "normative" ? 
+    "(Normative)" : "(Informative)"
+  $anchors[clause["anchor"]] = { label: "Annex #{num} #{obligation}", 
+                                 xref: "Annex #{num}" , level: 1 }
   clause.xpath(ns("./clause")).each_with_index do |c, i|
     annex_names1(c, "#{num}.#{i + 1}", 2 )
   end
@@ -292,7 +313,8 @@ end
 
 def footnote_parse(node, out)
   fn = $footnotes.length + 1
-  out.a **{style: "mso-footnote-id:ftn#{fn}", href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
+  out.a **{style: "mso-footnote-id:ftn#{fn}", 
+           href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
     a.span **{class: "MsoFootnoteReference"} do |span|
       span.span **{style: "mso-special-character:footnote"}
     end
@@ -300,7 +322,8 @@ def footnote_parse(node, out)
   $footnotes << noko do |xml|
     xml.div **{style: "mso-element:footnote", id: "ftn#{fn}"} do |div|
       div.p **{class: "MsoFootnoteText"} do |p|
-        p.a **{style: "mso-footnote-id:ftn#{fn}", href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
+        p.a **{style: "mso-footnote-id:ftn#{fn}", 
+               href: "#_ftn#{fn}", name: "_ftnref#{fn}", title: ""} do |a|
           a.span **{class: "MsoFootnoteReference"} do |span|
             span.span **{style: "mso-special-character:footnote"}
           end
@@ -324,13 +347,13 @@ def parse(node, out)
     when "br" then out.br
     when "name" then out.title { |e| e << node.text }
     when "stem"
-#$xslt = XML::XSLT.new()
-#$xslt.xsl = File.read(File.join(File.dirname(__FILE__), "mathml2omml.xsl"))
-$xslt.xml = AsciiMath.parse(node.text).to_mathml.gsub(/<math>/, "<math xmlns='http://www.w3.org/1998/Math/MathML'>")
-ooml = $xslt.serve().gsub(/<\?[^>]+>\s*/, "").
-  gsub(/ xmlns:[^=]+="[^"]+"/, "")
-puts ooml
-      out.parent.add_child ooml
+      $xslt.xml = AsciiMath.parse(node.text).to_mathml.
+        gsub(/<math>/, "<math xmlns='http://www.w3.org/1998/Math/MathML'>")
+      ooml = $xslt.serve().gsub(/<\?[^>]+>\s*/, "").
+        gsub(/ xmlns:[^=]+="[^"]+"/, "")
+      out.span **{class: "stem"} do |span|
+        span.parent.add_child ooml
+      end
     when "clause" 
       out.div **attr_code("id": node["anchor"]) do |s|
         node.children.each do |c1| 
@@ -386,31 +409,18 @@ puts ooml
       footnote_parse(node, out)
     when "p" 
       out.p **{class: "MsoNormal"} do |p| 
+        unless $termdomain.empty?
+          p << "&lt;#{$termdomain}&gt; "
+          $termdomain = ""
+        end
         $block = true
         node.children.each { |n| parse(n, p) }
         $block = false
       end
-    when "tr"
-      out.tr do |r|
-        node.elements.each do |td|
-          attrs = {
-            rowspan: td["rowspan"], 
-            colspan: td["colspan"], 
-            align: td["align"],
-          }
-          if td.name == "td"
-            r.td **attr_code(attrs) do |entry|
-              td.children.each { |n| parse(n, entry) }
-            end
-          else
-            r.th **attr_code(attrs) do |entry|
-              td.children.each { |n| parse(n, entry) }
-            end
-          end
-        end
-      end
+    when "tr" then tr_parse(node, out)
     when "note"
-      out.div **attr_code("id": node["anchor"], class: "MsoNormalIndent" ) do |t|
+      out.div **attr_code("id": node["anchor"], 
+                          class: "MsoNormalIndent" ) do |t|
         node.children.each { |n| parse(n, t) }
       end
     when "warning"
@@ -425,38 +435,68 @@ puts ooml
           parse(n, t) unless n.name == "name"
         end
       end
-    when "table"
-      table_attr = {id: node["anchor"],
-                    class: "MsoISOTable",
-                    border: 1,
-                    cellspacing: 0,
-                    cellpadding: 0,
-      }
-      out.table **attr_code(table_attr) do |t|
-        name = node.at(ns("./name"))
-        thead = node.at(ns("./thead"))
-        tbody = node.at(ns("./tbody"))
-        tfoot = node.at(ns("./tfoot"))
-        dl = node.at(ns("./dl"))
-        note = node.xpath(ns("./note"))
-        t.caption { |tt| tt << "#{$anchors[node["anchor"]][:label]}. #{name.text}" }  if name
-        if thead
-          t.thead do |h|
-            thead.children.each { |n| parse(n, h) }
-          end
+    when "formula"
+      stem = node.at(ns("./stem"))
+      dl = node.at(ns("./dl"))
+      out.div **attr_code(id: node["anchor"], class: "formula") do |div|
+        parse(stem, out)
+        div.span **attr_code(style: "mso-tab-count:1") do |span|
+          span << "&#xA0; "
         end
-        t.tbody do |h|
-          tbody.children.each { |n| parse(n, h) }
+        div << "(#{$anchors[node["anchor"]][:label]})"
+      end
+      out.p { |p| p << "where" }
+      parse(dl, out) if dl
+    when "table" then table_parse(node, out)
+    when "termdef"
+      out.p **{class: "TermNum", id: node["anchor"]} do |p|
+        p << $anchors[node["anchor"]][:label]
+      end
+      $termdomain = ""
+      $termnotenumber = 0
+      node.children.each { |n| parse(n, out) }
+    when "term"
+      out.p **{class: "Terms"} { |p| p << node.text }
+    when "admitted_term"
+      out.p **{class: "AltTerms"} { |p| p << node.text }
+    when "termsymbol"
+      out.p **{class: "AltTerms"} do |p| 
+      node.children.each { |n| parse(n, out) }
+      end
+    when "deprecated_term"
+      out.p **{class: "AltTerms"} do |p| 
+        p << "DEPRECATED: "
+        p << node.text 
+      end
+    when "termdomain"
+      $termdomain = node.text
+    when "termdefinition"
+      node.children.each { |n| parse(n, out) }
+    when "termref"
+      out.p **{class: "MsoNormal"} do |p|
+        p << "[TERMREF]"
+        node.children.each { |n| parse(n, p) }
+        p << "[/TERMREF]"
+      end
+    when "isosection"
+      out << "[ISOSECTION]"
+      out << node.text
+    when "modification"
+      out << "[MODIFICATION]"
+      node.children.each { |n| parse(n, out) }
+    when "termnote"
+      out.p **{class: "Note"} do |p|
+        $termnotenumber += 1
+        p << "Note #{$termnotenumber} to entry: "
+        node.children.each { |n| parse(n, p) }
+      end
+          when "termexample"
+      out.p **{class: "Note"} do |p|
+        p << "EXAMPLE:"
+        p.span **attr_code(style: "mso-tab-count:1") do |span|
+          span << "&#xA0; "
         end
-        if tfoot
-          t.tfoot do |h|
-            tfoot.children.each { |n| parse(n, h) }
-          end
-        end
-        parse(dl, out) if dl
-        note.each do |n|
-          parse(n, out) 
-        end
+        node.children.each { |n| parse(n, p) }
       end
     else
       if $block
@@ -464,6 +504,64 @@ puts ooml
       else
         out.para do |p|
           p.b **{role: "strong"} { |e| e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") }
+        end
+      end
+    end
+  end
+end
+
+def table_parse(node, out)
+  table_attr = {id: node["anchor"],
+                class: "MsoISOTable",
+                border: 1,
+                cellspacing: 0,
+                cellpadding: 0,
+  }
+  out.table **attr_code(table_attr) do |t|
+    name = node.at(ns("./name"))
+    thead = node.at(ns("./thead"))
+    tbody = node.at(ns("./tbody"))
+    tfoot = node.at(ns("./tfoot"))
+    dl = node.at(ns("./dl"))
+    note = node.xpath(ns("./note"))
+    if name
+      t.caption do |tt| 
+        tt << "#{$anchors[node["anchor"]][:label]}. #{name.text}" 
+      end 
+    end
+    if thead
+      t.thead do |h|
+        thead.children.each { |n| parse(n, h) }
+      end
+    end
+    t.tbody do |h|
+      tbody.children.each { |n| parse(n, h) }
+    end
+    if tfoot
+      t.tfoot do |h|
+        tfoot.children.each { |n| parse(n, h) }
+      end
+    end
+    parse(dl, out) if dl
+    note.each { |n| parse(n, out) }
+  end
+end
+
+def tr_parse(node, out)
+  out.tr do |r|
+    node.elements.each do |td|
+      attrs = {
+        rowspan: td["rowspan"],
+        colspan: td["colspan"],
+        align: td["align"],
+      }
+      if td.name == "td"
+        r.td **attr_code(attrs) do |entry|
+          td.children.each { |n| parse(n, entry) }
+        end
+      else
+        r.th **attr_code(attrs) do |entry|
+          td.children.each { |n| parse(n, entry) }
         end
       end
     end
@@ -620,7 +718,7 @@ def foreword(isoxml, out)
   f = isoxml.at(ns("//foreword"))
   return unless f
   out.div  do |s|
-    s.h1 "Foreword"
+    s.h1 **{class: "ForewordTitle"} { |h1| h1 << "Foreword" }
 =begin
     s.p **{class: "ForewordTitle"} do |p| 
       p.a **{name: "_Toc353342667"}

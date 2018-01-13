@@ -5,9 +5,15 @@ require "uuidtools"
 module Asciidoctor
   module ISO
     module Blocks
+      def uuid
+        "_" + UUIDTools::UUID.random_create
+      end
+
       def stem(node)
         stem_attributes = {
-          anchor: node.id,
+          anchor: node.id.nil? ? uuid :
+          node.id.empty? ? uuid :
+          node.id
         }
         # NOTE: html escaping is performed by Nokogiri
         stem_content = node.lines.join("\n")
@@ -107,8 +113,7 @@ module Asciidoctor
       end
 
       def section(node)
-        attrs = { anchor: node.id.empty? ? UUIDTools::UUID.random_create : 
-                  node.id }
+        attrs = { anchor: node.id.empty? ? uuid : node.id }
         noko do |xml|
           case node.title.downcase
           when "introduction"
