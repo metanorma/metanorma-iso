@@ -38,7 +38,8 @@ module Asciidoctor
 
       # alias_method :pass, :content
       alias_method :embedded, :content
-      alias_method :verse, :content
+      alias_method :aside, :admonition
+      alias_method :verse, :quote
       alias_method :literal, :content
       alias_method :audio, :skip
       alias_method :thematic_break, :skip

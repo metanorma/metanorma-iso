@@ -133,7 +133,9 @@ can retain the ability to preview documents; for _Terms and Definitions_
 clauses, which have a good deal of explicit structure, macros have been
 introduced for semantic markup (admitted terms, deprecated terms, etc). The
 default HTML output of an Asciidoc-formatted ISO document is quite close to the
-intended final output, with the following exceptions: 
+intended final output, with the following exceptions. Note that the final
+outputs of the conversion (Microsoft Word, PDF, HTML) do not have these exceptions,
+and comply with the ISO Standard specifications.
 
 * _Terms and Definitions_: each term is marked up as an unnumbered subclause,
 the semantic markup of alternate and other terms is not rendered visually.
@@ -141,15 +143,15 @@ the semantic markup of alternate and other terms is not rendered visually.
 * _Formulas_: Asciidoctor has no provision for the automated numbering of
 isolated block formulas ("stem"), and does not display the number assigned a
 block formula in its default HTML processor—although it does provide automated
-numbering of examples. The encoding of formulas may change in future versions,
-although the final numbering is meant to be provided by downstream tools
-processing the ISO XML output.
+numbering of examples. Formula numbering is provided in the final outputs
+of the conversion.
 
 * _Missing elements_: The document model does not yet include Asciidoc elements
-that do not occur in the Rice document: in particular, source code, definition
-lists (except when used as keys for formulas or figures), examples (as distinct
-from figures; examples within _Terms and Definitions_ are catered for),
-sidebars (as distinct from warnings), quotes.
+that do not appear to be relevant to ISO Standards; these will be ignored in
+generating ISO XML. Those elements include:
+* sidebars (`aside`) (as distinct from warnings),
+* ASCII art/preformatted text (`literal`) (as distinct from sourcecode listings),
+* page breaks (`thematic break`).
 
 * _Markup_: Some connecting text which is used to convey markup structure is
 left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting
