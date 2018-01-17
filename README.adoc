@@ -19,8 +19,7 @@ if you do not get expected results, try bracketting terms your in AsciiMathML
 expressions.
 * an XML representation of the document, intended as a document model for ISO
 International Standards. 
-+
-The XML representation is processed in turn to generate the following outputs
+* The XML representation is processed in turn to generate the following outputs
 as end deliverable ISO standard drafts.
 ** Microsoft Word output, following the conventions of the ISO Standard
 Microsoft Word template. (In development)
