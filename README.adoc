@@ -21,8 +21,9 @@ expressions.
 International Standards. 
 * The XML representation is processed in turn to generate the following outputs
 as end deliverable ISO standard drafts.
-** Microsoft Word output, following the conventions of the ISO Standard
-Microsoft Word template. (In development)
+** Microsoft Word output (`.doc`), following the style conventions of the 
+https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template]. 
+(In development)
 ** PDF (forthcoming)
 ** HTML (forthcoming)
 
