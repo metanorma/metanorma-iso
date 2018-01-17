@@ -4,10 +4,28 @@ image:https://img.shields.io/gem/v/asciidoctor-iso.svg["Gem Version", link="http
 image:https://img.shields.io/travis/riboseinc/asciidoctor-iso/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-iso"]
 image:https://codeclimate.com/github/riboseinc/asciidoctor-iso/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-iso"]
 
-This gem processes http://asciidoctor.org/[Asciidoctor] documents and outputs
-an XML representation of the document, intended as a document model for ISO
-International Standards. The XML representation can then be processed in turn
-to generate PDF or Microsoft Word output (via DocBook).
+WARNING: This gem is still under development.
+
+This gem processes http://asciidoctor.org/[Asciidoctor] documents following
+a template for generating ISO International Standards. The following
+outputs are generated.
+
+* (Optional) An HTML preview generated directly from the Asciidoctor document,
+using native Asciidocot formatting. 
+** http://asciimath.org[AsciiMathML] is to be used for mathematical formatting.
+The gem uses the https://github.com/asciidoctor/asciimath[Ruby AsciiMath parser],
+which is syntactically stricter than the common MathJax processor;
+if you do not get expected results, try bracketting terms your in AsciiMathML
+expressions.
+* an XML representation of the document, intended as a document model for ISO
+International Standards. 
++
+The XML representation is processed in turn to generate the following outputs
+as end deliverable ISO standard drafts.
+** Microsoft Word output, following the conventions of the ISO Standard
+Microsoft Word template. (In development)
+** PDF (forthcoming)
+** HTML (forthcoming)
 
 This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
 
@@ -18,7 +36,7 @@ do not support such rigour down to the element level.
 
 The ISO International Standard format is prescribed in
 http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"],
-to a level that is amenable to an explicit document model. A formal document
+to a level amenable to an explicit document model. A formal document
 model would allow checking for consistency in format and content, and expedite
 authoring and quality control of ISO standards.
 
@@ -33,6 +51,8 @@ NG counterpart]. A UML representation of the document model is given below.
 Note that the document model is currently still in the exploratory phase, and
 will likely be changing significantly.
 
+WARNING: The current RNG model of ISO XML is out of sync with the UML.
+
 Asciidoctor has been selected as the authoring tool to generate the document
 model representation of ISO standards. It is a document formatting tool like
 Markdown and DocBook, which combines the relative ease of use of the former
@@ -42,7 +62,8 @@ DocBook document authoring tool). Asciidoctor has built-in capability to output
 Text, DocBook and HTML; so it can be used to preview the file as it is being
 authored.
 
-Note that in order to generate output close to what is intended, the Asciidoc
+Note that in order to generate HTML preview output close to what is intended
+in the ISO standard, the Asciidoc
 document includes a fair amount of formatting instructions (e.g. disabling
 section numbering where appropriate, the titling of Appendixes as Annexes), as
 well as ISO boilerplate text, and predefined section headers (sections are
@@ -226,7 +247,11 @@ $ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output
 The gem translates the document into ISO XML format, and then validates its
 output against the ISO XML document model; errors are reported to console
 against the XML, and are intended for users to check that they have provided
-all necessary components of the document. The gem also realises several format
+all necessary components of the document. 
+
+=== Content Warnings
+
+The gem also realises several format
 checks as prescribed in ISO/IEC DIR 2, and warns the user about them in the
 console:
 
