@@ -6,6 +6,8 @@ image:https://codeclimate.com/github/riboseinc/asciidoctor-iso/badges/gpa.svg["C
 
 WARNING: This gem is still under development.
 
+== Functionality
+
 This gem processes http://asciidoctor.org/[Asciidoctor] documents following
 a template for generating ISO International Standards. The following
 outputs are generated.
@@ -28,6 +30,57 @@ https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template].
 ** HTML (forthcoming)
 
 This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
+
+== Usage
+
+[source,console]
+----
+$ asciidoctor a.adoc  # HTML output of Asciidoc file
+$ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output
+----
+
+The gem translates the document into ISO XML format, and then validates its
+output against the ISO XML document model; errors are reported to console
+against the XML, and are intended for users to check that they have provided
+all necessary components of the document.
+
+TODO: The gem will then convert the XML to Word Document, HTML, and PDF,
+and output those files with the appropriate file suffixes.
+`lib/asciidoctor/iso/iso2wordhtml.rb` is work in progress, and not yet
+integrated into the executable.
+
+=== Content Warnings
+
+The gem also realises several format
+checks as prescribed in ISO/IEC DIR 2, and warns the user about them in the
+console:
+
+* Numbers with what looks like dots instead of commas for decimal points.
+
+* Groups of numbers without spacing for every three digits. (The gem attempts
+to ignore ISO references.)
+
+* No space before percent sign.
+
+* No bracketing of tolerance in percentage (e.g. `15 ± 7 % .`)
+
+* No recommendations, permissions or requirements (detected by keyword) in:
+foreword, scope, introduction, term examples and examples, notes, footnotes.
+
+* No subclauses that are the only child of a clause. (In clauses, annexes, or
+scopes.)
+
+* 5 levels of subclause nesting. (Never actuated, AsciiDoc only permits 4
+levels of subsections.)
+
+* Non-ISO/IEC reference turning up as normative.
+
+* Term definition starts with an article, or ends with a period.
+
+* Title intro or title part appears in only one of French or English.
+
+== Approach
+=== Document model
 
 The document model ("ISO XML") intends to introduce rigour into the ISO
 standards authoring process; the existing 
@@ -53,6 +106,8 @@ will likely be changing significantly.
 
 WARNING: The current RNG model of ISO XML is out of sync with the UML.
 
+=== Asciidoctor
+
 Asciidoctor has been selected as the authoring tool to generate the document
 model representation of ISO standards. It is a document formatting tool like
 Markdown and DocBook, which combines the relative ease of use of the former
@@ -71,7 +126,7 @@ recognised by fixed titles such as `Normative References`). Authoring ISO
 standards in this fashion assumes that users will be populating an Asciidoc
 template, and not removing needed formatting instructions.
 
-== Features not visible in HTML preview
+=== Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users
 can retain the ability to preview documents; for _Terms and Definitions_
@@ -165,7 +220,7 @@ TODO: May need to only encode figures as examples.
 
 == Document Attributes
 
-The gem also relies on Asciidoctor document attributes to provide necessary
+The gem relies on Asciidoctor document attributes to provide necessary
 metadata about the document. These include:
 
 `:docnumber:`:: The ISO document number (mandatory)
