@@ -320,9 +320,8 @@ https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
 model document of an international standard. This repository includes:
 
 * the link:spec/examples/rice.adoc[AsciiISO version of the Rice document].
-
 * the link:spec/examples/rice.html[AsciiISO rendering of the Rice document as HTML].
-
 * the link:spec/examples/rice.xml[ISO XML rendering of the Rice document].
+* the link:spec/examples/rice.xml.doc[Word .doc rendering of the Rice document] (Work in progress).
 
 
