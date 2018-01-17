@@ -248,6 +248,11 @@ output against the ISO XML document model; errors are reported to console
 against the XML, and are intended for users to check that they have provided
 all necessary components of the document. 
 
+TODO: The gem will then convert the XML to Word Document, HTML, and PDF,
+and output those files with the appropriate file suffixes. 
+`lib/asciidoctor/iso/iso2wordhtml.rb` is work in progress, and not yet
+integrated into the executable.
+
 === Content Warnings
 
 The gem also realises several format
