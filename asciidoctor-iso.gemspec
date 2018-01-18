@@ -35,6 +35,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mime"
   spec.add_dependency "asciimath"
   spec.add_dependency "ruby-xslt"
+  spec.add_dependency "mime-types"
+  spec.add_dependency "image_size"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "byebug", "~> 9.1"

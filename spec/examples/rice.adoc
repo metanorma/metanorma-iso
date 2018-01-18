@@ -426,9 +426,12 @@ Carefully mix the laboratory sample to make it as uniform as possible, then proc
 
 All parts of kernels which get stuck in the perforations of a sieve should be considered to be retained by the sieve. 
 
+image::rice_images/decoded.gif[]
+
+
 [[figureA-1]]
 .Split-it-right sample divider
-image::splititright.gif[]
+image::rice_images/rice_image1.png[]
 
 === Determination 
 
@@ -568,7 +571,7 @@ Report the results as specified in <<clause7>>, giving the results calculated us
 [[figureC-1]]
 .Typical gelatinization curve
 // Footnote macro cannot contain stem macro!
-image::figc1.gif[] 
+image::rice_images/rice_image2.png[] 
 footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
 
 *Key*
@@ -584,13 +587,13 @@ NOTE: These results are based on a study carried out on three different types of
 .Stages of gelatinization
 ====
 .Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)
-image::figc2a.gif[]
+image::rice_images/rice_image3_1.png[]
 
 .Intermediate stages: Some fully gelatinized kernels are visible
-image::figc2b.gif[]
+image::rice_images/rice_image3_2.png[]
 
 .Final stages: All kernels are fully gelatinized
-image::fig2c.gif[]
+image::rice_images/rice_image3_3.png[]
 
 ====
 

@@ -2,21 +2,29 @@ require "nokogiri"
 require "mime"
 require "asciimath"
 require "xml/xslt"
+require "uuidtools"
+require "base64"
+require "mime/types"
+require "image_size"
 require "pp"
 
 $anchors = {}
 $footnotes = []
 $termdomain = ""
+$filename = ""
 $xslt = XML::XSLT.new()
 $xslt.xsl = File.read(File.join(File.dirname(__FILE__), "mathml2omml.xsl"))
 
 def convert(filename)
+  $filename = filename.gsub(%r{\.[^/.]+$}, "")
+  Dir.mkdir("#{$filename}_files") unless File.exists?("#{$filename}_files")
+  system "rm -r #{$filename}_files/*"
   doc = File.read(filename)
   docxml = Nokogiri::XML(doc)
   docxml.root.default_namespace = ""
   result = noko do |xml|
     xml.html do |html|
-      html_header(html, docxml, filename)
+      html_header(html, docxml, $filename)
       body_attr = {lang: "EN-US",
                    link: "blue",
                    vlink: "#954F72",
@@ -38,36 +46,93 @@ def convert(filename)
       end
     end
   end.join("\n")
+  # see http://sebsauvage.net/wiki/doku.php?id=word_document_generation
   result = populate_template(msword_fix(result))
-  doc_header_files(filename)
-  File.open("#{filename}.htm", "w") { |f| f.write(result) }
-  mime_package result, filename
+  doc_header_files($filename)
+  File.open("#{$filename}.htm", "w") { |f| f.write(result) }
+  mime_package result, $filename
 end
 
-def mime_package(result,filename)
-  mhtml = MIME::Multipart::Related.new
-  # mhtml.add("#{filename}.htm")
-  mhtml.add(MIME::Text.new(result, "html"))
-  Dir.foreach("#{filename}.fld") do |item|
-    next if item == '.' or item == '..'
-    f = File.join "#{filename}.fld", item
-    type = /\.(?<suffix>\S+)$/.match item
-    case type
-    when "jpeg", "jpg", "gif", "png"
+def mime_package1(result,filename)
+  # first, parse all images, and change their references in document to inline
+  images = []
+  Dir.foreach("#{filename}_files") do |item|
+    next if item == '.' or item == '..' or item =~ /^\./
+    f = File.join "#{filename}_files", item
+    matched = /\.(?<suffix>\S+)$/.match item
+    case matched[:suffix]
+    when "jpeg", "jpg", "gif", "png", "tiff", "tif"
       image = MIME::DiscreteMediaFactory.create(f)
       image.transfer_encoding = "binary"
-      mhtml.inline(image)
+      #image.transfer_encoding = "base64"
+      result.gsub!(Regexp.new(Regexp.escape f), "cid:#{image.id}")
+      images << image
+    end
+  end
+
+  # now build MIME: first HTML proper, then images, then all other files
+  mhtml = MIME::Multipart::Related.new
+  mhtml.add(MIME::Text.new(result, "html", charset: "utf8-8"))
+  #images.each { |image| mhtml.inline(image) }
+
+  Dir.foreach("#{filename}_files") do |item|
+    next if item == '.' or item == '..' or item =~ /^\./
+    f = File.join "#{filename}_files", item
+    matched = /\.(?<suffix>\S+)$/.match item
+    case matched[:suffix]
+    when "jpeg", "jpg", "gif", "png", "tiff", "tif"
+      # nop
     when "xml"
-      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8")), "xml")
+      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8"), "xml", charset: "UTF-8"))
     when "html", "htm"
-      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8")), "html")
+      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8"), "html", charset: "UTF-8"))
     else
-      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8")))
+      mhtml.add(MIME::Text.new(File.read(f, :encoding => "UTF-8"), "", charset: "UTF-8"))
     end
   end
   File.open("#{filename}.doc", "w") do |f|
     f.write mhtml
   end
+end
+
+def mime_package(result,filename)
+  boundary = "----=_NextPart_#{UUIDTools::UUID.random_create.to_s.gsub(/-/, '.')[0..17]}"
+  mhtml = <<~"EOF"
+  MIME-Version: 1.0
+  Content-Type: multipart/related; boundary="#{boundary}"
+
+  --#{boundary}
+  Content-Location: file:///C:/Doc/#{filename}.htm
+  Content-Type: text/html; charset="utf-8"
+
+  #{result}
+
+  EOF
+
+  Dir.foreach("#{filename}_files") do |item|
+    next if item == '.' or item == '..' or /^\./.match item
+    f = File.join "#{filename}_files", item
+    # matched = /\.(?<suffix>\S+)$/.match item
+    types = MIME::Types.type_for(item)
+    type = types ? types.first : %Q{text/plain; charset="utf-8"}
+    type = %Q{#{type}; charset="utf-8"} if /^text/.match type and types
+
+    mhtml += <<~"EOF"
+    --#{boundary}
+    Content-Location: file:///C:/Doc/#{filename}_files/#{item}
+    Content-Transfer-Encoding: base64
+    Content-Type: #{type}
+
+    #{Base64.strict_encode64(File.read("#{filename}_files/#{item}")).gsub(/(.{76})/, "\\1\n")}
+
+    EOF
+  end
+  mhtml += "--#{boundary}--"
+
+  File.open("#{filename}.doc", "w") do |f|
+    f.write mhtml
+  end
+
 end
 
 def section_break(body) 
@@ -78,7 +143,7 @@ end
 def titlepage(docxml, div)
   titlepage = File.read(File.join(File.dirname(__FILE__), 
                                   "iso_titlepage.html"), 
-                        :encoding => "UTF-8")
+                                  :encoding => "UTF-8")
   div.parent.add_child titlepage
 end
 
@@ -99,24 +164,26 @@ def populate_template(docxml)
 end
 
 def doc_header_files(filename)
-  Dir.mkdir("#{filename}.fld") unless File.exists?("#{filename}.fld")
-  File.open(File.join("#{filename}.fld", "filelist.xml"), "w") do |f|
-    # TODO images will go here
-    f.write(<<~"XML")
-<xml xmlns:o="urn:schemas-microsoft-com:office:office">
- <o:MainFile HRef="../#{filename}.htm"/>
- <o:File HRef="header.html"/>
- <o:File HRef="filelist.xml"/>
-</xml>
-    XML
-  end
   header = File.read(File.join(File.dirname(__FILE__), "header.html"), 
                      :encoding => "UTF-8").
                      gsub(/FILENAME/, filename).
                      gsub(/DOCYEAR/, $iso_docyear).
                      gsub(/DOCNUMBER/, $iso_docnumber)
-  File.open(File.join("#{filename}.fld", "header.html"), "w") do |f| 
+  File.open(File.join("#{filename}_files", "header.html"), "w") do |f| 
     f.write(header) 
+  end
+
+  File.open(File.join("#{filename}_files", "filelist.xml"), "w") do |f|
+    # TODO images will go here
+    f.write(<<~"XML")
+<xml xmlns:o="urn:schemas-microsoft-com:office:office">
+ <o:MainFile HRef="../#{filename}.htm"/>
+    XML
+    Dir.foreach("#{filename}_files") do |item|
+      next if item == '.' or item == '..'
+      f.write %Q{  <o:File HRef="#{item}"/>\n}
+    end
+    f.write("</xml>\n")
   end
 end
 
@@ -162,11 +229,11 @@ def define_head(html, filename)
     XML
     head.meta **{"http-equiv": "Content-Type", 
                  content: "text/html; charset=utf-8"}
-    head.link **{rel: "File-List", href: "#{filename}.fld/filelist.xml"}
+    head.link **{rel: "File-List", href: "#{filename}_files/filelist.xml"}
     head.style do |style|
       style.comment File.read(File.join(File.dirname(__FILE__), 
                                         "wordstyle.css")).
-        gsub("FILENAME", filename)
+                                       gsub("FILENAME", filename)
     end
   end
 end
@@ -448,6 +515,38 @@ def parse(node, out)
       out.p { |p| p << "where" }
       parse(dl, out) if dl
     when "table" then table_parse(node, out)
+    when "figure" 
+      name = node.at(ns("./name"))
+      out.div **attr_code(id: node["anchor"]) do |div|
+        if node["src"]
+          orig_filename = node["src"] #.gsub(%r{/}, File::ALT_SEPARATOR || File::PATH_SEPARATOR)
+          matched = /\.(?<suffix>\S+)$/.match orig_filename
+          new_filename = "#{UUIDTools::UUID.random_create.to_s[0..17]}.#{matched[:suffix]}"
+          new_full_filename = File.join("#{$filename}_files", new_filename)
+          system "cp #{orig_filename} #{new_full_filename}"
+          image_size = ImageSize.path(orig_filename).size
+          # max width is 400
+          if image_size[0] > 400
+            image_size[1] = (image_size[1] * 400 / image_size[0]).ceil
+            image_size[0] = 400
+          end
+          # TODO ditto max height
+          div.img **attr_code(src: new_full_filename,
+                              height: image_size[1],
+                              width: image_size[0])
+        end
+        node.children.each { |n| parse(n, div) }
+        if name
+          div.p **{class: "MsoNormal",
+                   align: "center",
+                   style: "margin-bottom:6.0pt;text-align:center;page-break-before:avoid",
+          } do |p|
+            p.b do |b|
+              b << "#{$anchors[node["anchor"]][:label]}&nbsp;&mdash; #{name.text}"
+            end
+          end
+        end
+      end
     when "termdef"
       out.p **{class: "TermNum", id: node["anchor"]} do |p|
         p << $anchors[node["anchor"]][:label]
@@ -461,7 +560,7 @@ def parse(node, out)
       out.p **{class: "AltTerms"} { |p| p << node.text }
     when "termsymbol"
       out.p **{class: "AltTerms"} do |p| 
-      node.children.each { |n| parse(n, out) }
+        node.children.each { |n| parse(n, out) }
       end
     when "deprecated_term"
       out.p **{class: "AltTerms"} do |p| 
@@ -490,7 +589,7 @@ def parse(node, out)
         p << "Note #{$termnotenumber} to entry: "
         node.children.each { |n| parse(n, p) }
       end
-          when "termexample"
+    when "termexample"
       out.p **{class: "Note"} do |p|
         p << "EXAMPLE:"
         p.span **attr_code(style: "mso-tab-count:1") do |span|
@@ -517,18 +616,23 @@ def table_parse(node, out)
                 cellspacing: 0,
                 cellpadding: 0,
   }
+  name = node.at(ns("./name"))
+  if name
+    out.p **{class: "MsoNormal",
+             align: "center", 
+             style: "margin-bottom:6.0pt;text-align:center;page-break-before:always;page-break-after:avoid",
+    } do |p| 
+      p.b do |b|
+        b << "#{$anchors[node["anchor"]][:label]}&nbsp;&mdash; #{name.text}" 
+      end
+    end 
+  end
   out.table **attr_code(table_attr) do |t|
-    name = node.at(ns("./name"))
     thead = node.at(ns("./thead"))
     tbody = node.at(ns("./tbody"))
     tfoot = node.at(ns("./tfoot"))
     dl = node.at(ns("./dl"))
     note = node.xpath(ns("./note"))
-    if name
-      t.caption do |tt| 
-        tt << "#{$anchors[node["anchor"]][:label]}. #{name.text}" 
-      end 
-    end
     if thead
       t.thead do |h|
         thead.children.each { |n| parse(n, h) }
