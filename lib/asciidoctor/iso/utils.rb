@@ -236,13 +236,13 @@ module Asciidoctor
       def noko(&block)
         # fragment = ::Nokogiri::XML::DocumentFragment.parse("")
         # fragment.doc.create_internal_subset("xml", nil, "xhtml.dtd")
-        head = <<HERE
+        head = <<~HERE
         <!DOCTYPE html SYSTEM
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml">
         <head> <title></title> <meta charset="UTF-8" /> </head>
         <body> </body> </html>
-HERE
+        HERE
         doc = ::Nokogiri::XML.parse(head)
         fragment = doc.fragment("")
         ::Nokogiri::XML::Builder.with fragment, &block
@@ -282,6 +282,18 @@ HERE
         warn warntext
       end
 
+      def stage_abbreviation(stage)
+        return "(Preliminary)" if stage == "00"
+        return "NWID" if stage == "10"
+        return "WD" if stage == "20"
+        return "CD" if stage == "30"
+        return "DIS" if stage == "40"
+        return "FDIS" if stage == "50"
+        return "(Published)" if stage == "60"
+        return "(Review)" if stage == "90"
+        return "(Withdrawal)" if stage == "95"
+        return "??"
+      end
     end
   end
 end

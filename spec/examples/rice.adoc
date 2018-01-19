@@ -14,8 +14,8 @@
 :title-main-fr: Spécification et méthodes d'essai
 :title-part-fr: Riz
 :doctype: international-standard
-:docstage: 60
-:docsubstage: 60
+:docstage: 30
+:docsubstage: 92
 :technical-committee-number: 34
 :technical-committee: Food products
 :subcommittee-number: 4
