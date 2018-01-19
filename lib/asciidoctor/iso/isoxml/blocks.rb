@@ -20,9 +20,7 @@ module Asciidoctor
 
         def sidebar(node)
           if $draft
-            note_attributes = {
-              source: node.attr("source") 
-            }
+            note_attributes = { source: node.attr("source") }
             content = Utils::flatten_rawtext(node.content).join("\n")
             noko do |xml|
               xml.review_note content, **attr_code(note_attributes)
@@ -30,40 +28,45 @@ module Asciidoctor
           end
         end
 
-        def termnote(node)
+        def termnote(n)
           # TODO: reinstate
           # note_attributes = { anchor: Utils::anchor_or_uuid(node) }
           note_attributes = {}
-          warning(node, "comment can not contain blocks of text in XML RFC", node.content) if node.blocks?
+          if n.blocks?
+            warning(n, "comment cannot contain blocks of text", n.content)
+          end
           noko do |xml|
             xml.termnote **attr_code(note_attributes) do |xml_cref|
-              xml_cref << node.content
-              Validate::style(node, Utils::flatten_rawtext(node.content).join("\n"))
+              xml_cref << n.content
+              Validate::style(n, Utils::flatten_rawtext(n.content).join("\n"))
             end
           end.join("\n")
         end
 
-        def note(node)
+        def note(n)
           noko do |xml|
-            xml.note **attr_code(anchor: Utils::anchor_or_uuid(node)) do |xml_cref|
-              if node.blocks?
-                xml_cref << node.content
+            xml.note **attr_code(anchor: Utils::anchor_or_uuid(n)) do |c|
+              if n.blocks?
+                c << n.content
               else
-                xml_cref.p { |p| p << node.content }
+                c.p { |p| p << n.content }
               end
-              Validate::note_style(node, Utils::flatten_rawtext(node.content).join("\n"))
+              text = Utils::flatten_rawtext(n.content).join("\n")
+              Validate::note_style(n, text)
             end
           end.join("\n")
         end
 
         def admonition(node)
+          name = node.attr("name")
           return termnote(node) if $term_def
-          return note(node) if node.attr("name") == "note"
+          return note(node) if name == "note"
           noko do |xml|
-            name = node.attr("name")
-            unless node.attr("type").nil?
-              name = "danger" if node.attr("type").downcase == "danger"
-              name = "safety precautions" if node.attr("type").downcase == "safety precautions"
+            type = node.attr("type")
+            unless type.nil?
+              ["danger", "safety precautions"].each do |t|
+                name = t if type.casecmp(t).zero?
+              end
             end
             xml.warning do |xml_cref|
               xml_cref.name name.upcase
@@ -81,7 +84,8 @@ module Asciidoctor
             xml.termexample **attr_code(anchor: node.id) do |ex|
               content = node.content
               ex << content
-              Validate::termexample_style(node, Utils::flatten_rawtext(content).join("\n"))
+              text = Utils::flatten_rawtext(content).join("\n")
+              Validate::termexample_style(node, text)
             end
           end.join("\n")
         end
@@ -92,7 +96,8 @@ module Asciidoctor
             xml.example **attr_code(anchor: node.id) do |ex|
               content = node.content
               ex << content
-              Validate::termexample_style(node, Utils::flatten_rawtext(content).join("\n"))
+              text = Utils::flatten_rawtext(content).join("\n")
+              Validate::termexample_style(node, text)
             end
           end.join("\n")
         end
@@ -103,7 +108,8 @@ module Asciidoctor
             xml.foreword do |xml_abstract|
               content = node.content
               xml_abstract << content
-              Validate::foreword_style(node, Utils::flatten_rawtext(content).join("\n"))
+              text = Utils::flatten_rawtext(content).join("\n")
+              Validate::foreword_style(node, text)
             end
           end
           result

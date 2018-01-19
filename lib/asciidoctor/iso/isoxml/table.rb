@@ -4,12 +4,9 @@ module Asciidoctor
       module Table
         def table(node)
           noko do |xml|
-            has_body = false
             xml.table **attr_code(anchor: node.id) do |xml_table|
               %i(head body foot).reject do |tblsec|
                 node.rows[tblsec].empty?
-              end.each do |tblsec|
-                has_body = true if tblsec == :body
               end
               xml_table.name node.title if node.title?
               table_head_body_and_foot node, xml_table
@@ -19,31 +16,32 @@ module Asciidoctor
 
         private
 
-        def table_head_body_and_foot(node, xml)
-          %i(head body foot).reject do |tblsec|
-            node.rows[tblsec].empty?
-          end.each do |tblsec|
-            tblsec_tag = "t#{tblsec}"
-            # "anchor" attribute from tblsec.id not supported
-            xml.send tblsec_tag do |xml_tblsec|
-              node.rows[tblsec].each_with_index do |row, i|
-                xml_tblsec.tr do |xml_tr|
-                  rowlength = 0
-                  row.each do |cell|
-                    cell_attributes = {
-                      anchor: cell.id,
-                      colspan: cell.colspan,
-                      rowspan: cell.rowspan,
-                      align: cell.attr("halign"),
-                    }
+        def table_cell1(cell, thd)
+          if cell.style == :asciidoc
+            thd << cell.content
+          else
+            thd << cell.text
+            Validate::style(cell, cell.text)
+          end
+        end
 
-                    cell_tag = "td"
-                    cell_tag = "th" if tblsec == :head || cell.style == :header
-                    rowlength += cell.text.size
-                    xml_tr.send cell_tag, **attr_code(cell_attributes) do |thd|
-                      thd << (cell.style == :asciidoc ? cell.content : cell.text)
-                      Validate::style(cell, cell.text) unless cell.style == :asciidoc
-                    end
+        def table_cell(c, xml_tr, tblsec)
+          cell_attributes = { anchor: c.id, colspan: c.colspan,
+                              rowspan: c.rowspan, align: c.attr("halign") }
+          cell_tag = "td"
+          cell_tag = "th" if tblsec == :head || c.style == :header
+          xml_tr.send cell_tag, **attr_code(cell_attributes) do |thd|
+            table_cell1(c, thd)
+          end
+        end
+
+        def table_head_body_and_foot(node, xml)
+          %i(head body foot).reject { |s| node.rows[s].empty? }.each do |s|
+            xml.send "t#{s}" do |xml_tblsec|
+              node.rows[s].each do |row|
+                xml_tblsec.tr do |xml_tr|
+                  row.each do |cell|
+                    table_cell(cell, xml_tr, s)
                   end
                 end
               end

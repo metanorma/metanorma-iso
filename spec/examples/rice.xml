@@ -176,9 +176,9 @@
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></clause>
 <clause anchor="_physical_and_chemical_characteristics">
   <name>Physical and chemical characteristics</name>
-  <clause anchor="_8738ee51-c184-464d-bd8a-5b25439337da"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+  <clause anchor="_aff5f076-f8e1-4b7d-8ca8-e0b7ed655318"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in <xref target="table1" format="inline"/>.</p>
-<note anchor="_f22dc939-11c8-4e4c-b5b1-cfe7e4d671c5">
+<note anchor="_9d165413-cd74-42dc-a870-1de76d9b3a17">
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <xref target="ISO6322-1" format="inline"/>, <xref target="ISO6322-2" format="inline"/> and <xref target="ISO6322-3" format="inline"/>.</p>
 </note>
 <p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA" format="inline"/>, shall not exceed the limits given in <xref target="table1" format="inline"/>.</p>
@@ -316,11 +316,11 @@
       </td>
     </tr>
   </tfoot>
-<note anchor="_384aab57-18dd-402d-8a21-2f25ecef0467">
+<note anchor="_51278bbd-394b-49b8-a31f-ba9fd67aa2d1">
   <p>This table is based on <xref target="ISO7301" format="inline"/>, Table 1.</p>
-</note><note anchor="_362123fd-d579-40c6-b40d-16de67615b18">
+</note><note anchor="_e634f84f-66a4-4e9f-afd6-16804250c70d">
   <p>Some commercial contracts require information in addition to that provided in this table.</p>
-</note><note anchor="_9eba1010-c2ec-46cb-88b1-6f17aa9e5af6">
+</note><note anchor="_1bb79309-1a81-4aa6-ac94-67cb2714f92b">
   <p>Only full red husked (cargo) rice is considered in this table.</p>
 </note></table>
 
@@ -353,7 +353,7 @@
   <p>The results of an interlaboratory test are given in <xref target="AnnexD" format="inline"/> for information</p>
 </clause>
 <clause anchor="_repeatability"><name>Repeatability</name><p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <stem>r</stem> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<formula anchor="_b06a0f45-6d86-437d-a151-cf0a5897779c">
+<formula anchor="_419d7238-4882-48f2-affc-3e49db381ed6">
   <stem>r = 1 %</stem>
 <dl>
   <dt>
@@ -366,7 +366,7 @@
 
 </clause>
 <clause anchor="_reproducibility"><name>Reproducibility</name><p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <stem>R</stem> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<formula anchor="_8267821a-09f2-43eb-b030-4601ab0c85a7">
+<formula anchor="_5e4b587e-3a13-4f21-8da2-776bb3369270">
   <stem>R = 3 %</stem>
 <dl>
   <dt>
@@ -608,16 +608,16 @@
 
 
 
-<note anchor="_4214c5f1-c04a-49c5-9b67-57bd49dc3bb3">
+<note anchor="_a6e16449-fad4-4850-adc7-b0b6dc59ab68">
   <p>These results are based on a study carried out on three different types of kernel.</p>
 </note>
-<figure anchor="figureC-2"><figure anchor="_87808312-867c-43e8-951e-5b3ecafea0d5" src="rice_images/rice_image3_1.png">
+<figure anchor="figureC-2"><figure anchor="_f8ba54a9-8f54-41b3-83b6-2eaccdaced03" src="rice_images/rice_image3_1.png">
   <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
 </figure>
-<figure anchor="_8cc1e6ea-de6e-43e7-8962-80a5478a7326" src="rice_images/rice_image3_2.png">
+<figure anchor="_966ca2a4-bcfa-46dd-94e5-6f5c303235df" src="rice_images/rice_image3_2.png">
   <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
 </figure>
-<figure anchor="_8e28f044-0950-49d6-b3e4-e0d8aff753b2" src="rice_images/rice_image3_3.png">
+<figure anchor="_0a1f66a2-cc13-4b6d-b109-cd6ba239332c" src="rice_images/rice_image3_3.png">
   <name>Final stages: All kernels are fully gelatinized</name>
 </figure></figure></annex><annex anchor="AnnexD" subtype="informative"><name>Results of interlaboratory test for husked rice yields</name><p>An interlaboratory test <xref target="ref15" format="inline"/> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <xref target="ISO5725-1" format="inline"/> and <xref target="ISO5725-2" format="inline"/>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <xref target="tableD-1" format="inline"/>.</p>
 <table anchor="tableD-1">
