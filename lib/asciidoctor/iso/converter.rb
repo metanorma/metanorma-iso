@@ -1,13 +1,15 @@
 require "asciidoctor"
 require "asciidoctor/iso/version"
-require "asciidoctor/iso/base"
-require "asciidoctor/iso/front"
-require "asciidoctor/iso/lists"
-require "asciidoctor/iso/inline_anchor"
-require "asciidoctor/iso/blocks"
-require "asciidoctor/iso/table"
-require "asciidoctor/iso/validate"
-require "asciidoctor/iso/utils"
+require "asciidoctor/iso/isoxml/base"
+require "asciidoctor/iso/isoxml/front"
+require "asciidoctor/iso/isoxml/lists"
+require "asciidoctor/iso/isoxml/inline_anchor"
+require "asciidoctor/iso/isoxml/blocks"
+require "asciidoctor/iso/isoxml/section"
+require "asciidoctor/iso/isoxml/table"
+require "asciidoctor/iso/isoxml/validate"
+require "asciidoctor/iso/isoxml/utils"
+require "asciidoctor/iso/isoxml/cleanup"
 
 module Asciidoctor
   module ISO
@@ -17,14 +19,16 @@ module Asciidoctor
       include ::Asciidoctor::Converter
       include ::Asciidoctor::Writer
 
-      include ::Asciidoctor::ISO::Base
-      include ::Asciidoctor::ISO::Front
-      include ::Asciidoctor::ISO::Lists
-      include ::Asciidoctor::ISO::InlineAnchor
-      include ::Asciidoctor::ISO::Blocks
-      include ::Asciidoctor::ISO::Table
-      include ::Asciidoctor::ISO::Utils
-      include ::Asciidoctor::ISO::Validate
+      include ::Asciidoctor::ISO::ISOXML::Base
+      include ::Asciidoctor::ISO::ISOXML::Front
+      include ::Asciidoctor::ISO::ISOXML::Lists
+      include ::Asciidoctor::ISO::ISOXML::InlineAnchor
+      include ::Asciidoctor::ISO::ISOXML::Blocks
+      include ::Asciidoctor::ISO::ISOXML::Section
+      include ::Asciidoctor::ISO::ISOXML::Table
+      include ::Asciidoctor::ISO::ISOXML::Utils
+      include ::Asciidoctor::ISO::ISOXML::Cleanup
+      include ::Asciidoctor::ISO::ISOXML::Validate
 
       register_for "iso"
 

@@ -6,7 +6,7 @@ require "uuidtools"
 require "base64"
 require "mime/types"
 require "image_size"
-require "asciidoctor/iso/utils"
+require "asciidoctor/iso/isoxml/utils"
 require "pp"
 
 module Asciidoctor
@@ -916,7 +916,8 @@ module Asciidoctor
           $iso_docnumber = docnumber.text
           $iso_docnumber += "-#{partnumber.text}" if partnumber
           $iso_stage = documentstatus.text if documentstatus
-          $iso_stageabbr = Utils::stage_abbreviation($iso_stage)
+          $iso_stageabbr = 
+            Asciidoctor::ISO::ISOXML::Utils::stage_abbreviation($iso_stage)
           if $iso_stage.to_i < 60
             $iso_docnumber = $iso_stageabbr + " " + $iso_docnumber
           end
