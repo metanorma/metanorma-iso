@@ -36,7 +36,9 @@ module Asciidoctor
         end
 
         def onlychild_clause_validate(root)
-          root.xpath("//clause/clause | //annex/clause | //scope/clause").each do |c|
+          root.
+            xpath("//clause/clause | //annex/clause | //scope/clause").
+            each do |c|
             clauses = c.xpath("../clause")
             if clauses.size == 1
               title = c.at("./title")
@@ -56,13 +58,6 @@ module Asciidoctor
           title_validate(doc.root)
           onlychild_clause_validate(doc.root)
           filename = File.join(File.dirname(__FILE__), "validate.rng")
-=begin
-          filename = File.join(File.dirname(__FILE__), "validate.rng")
-          schema = Nokogiri::XML::RelaxNG(File.read(filename))
-          schema.validate(doc).each do |error|
-            warn "RELAXNG Validation: #{error.message}"
-          end
-=end
           schema = Jing.new(filename)
           File.open(".tmp.xml", "w") { |f| f.write(doc.to_xml) }
           begin
@@ -80,8 +75,7 @@ module Asciidoctor
         end
 
         def requirement(text)
-          sentences = text.split(/\.\s+/)
-          sentences.each do |t|
+          text.split(/\.\s+/).each do |t|
             matched = /\b(?<w>
                           ( shall | (is|are)\sto |
                            (is|are)\srequired\s(not\s)?to |
@@ -100,8 +94,7 @@ module Asciidoctor
         end
 
         def recommendation(text)
-          sentences = text.split(/\.\s+/)
-          sentences.each do |t|
+          text.split(/\.\s+/).each do |t|
             matched = /\b(?<w>should |
                           ought\s(not\s)?to |
                           it\sis\s(not\s)?recommended\sthat 
@@ -112,8 +105,7 @@ module Asciidoctor
         end
 
         def permission(text)
-          sentences = text.split(/\.\s+/)
-          sentences.each do |t|
+          text.split(/\.\s+/).each do |t|
             matched = /\b(?<w>may |
                           (is|are)\s(permitted | allowed | permissible ) |
                           it\sis\snot\srequired\sthat |
@@ -125,8 +117,7 @@ module Asciidoctor
         end
 
         def posssibility(text)
-          sentences = text.split(/\.\s+/)
-          sentences.each do |t|
+          text.split(/\.\s+/).each do |t|
             matched = /\b(?<w>can | cannot |
                           be\sable\sto |
                           there\sis\sa\spossibility\sof |
@@ -141,68 +132,68 @@ module Asciidoctor
         end
 
         def external_constraint(text)
-          sentences = text.split(/\.\s+/)
-          sentences.each do |t|
-            matched = /\b(?<w>must)\b/xi.match t
-            return t unless matched.nil?
+          text.split(/\.\s+/).each do |t|
+            sentences.each do |t|
+              matched = /\b(?<w>must)\b/xi.match t
+              return t unless matched.nil?
+            end
+            nil
           end
-          nil
-        end
 
-        def style_no_guidance(node, text, docpart)
-          r = requirement(text)
-          style_warning(node, "#{docpart} may contain requirement", r) if r
-          r = permission(text)
-          style_warning(node, "#{docpart} may contain permission", r) if r
-          r = recommendation(text)
-          style_warning(node, "#{docpart} may contain recommendation", r) if r
-        end
+          def style_no_guidance(node, text, docpart)
+            r = requirement(text)
+            style_warning(node, "#{docpart} may contain requirement", r) if r
+            r = permission(text)
+            style_warning(node, "#{docpart} may contain permission", r) if r
+            r = recommendation(text)
+            style_warning(node, "#{docpart} may contain recommendation", r) if r
+          end
 
-        def foreword_style(node, text)
-          style_no_guidance(node, text, "Foreword")
-        end
+          def foreword_style(node, text)
+            style_no_guidance(node, text, "Foreword")
+          end
 
-        def scope_style(node, text)
-          style_no_guidance(node, text, "Scope")
-        end
+          def scope_style(node, text)
+            style_no_guidance(node, text, "Scope")
+          end
 
-        def introduction_style(node, text)
-          r = requirement(text)
-          style_warning(node, "Introduction may contain requirement", r) if r
-        end
+          def introduction_style(node, text)
+            r = requirement(text)
+            style_warning(node, "Introduction may contain requirement", r) if r
+          end
 
-        def termexample_style(node, text)
-          style_no_guidance(node, text, "Term Example")
-          style(node, text)
-        end
+          def termexample_style(node, text)
+            style_no_guidance(node, text, "Term Example")
+            style(node, text)
+          end
 
-        def note_style(node, text)
-          style_no_guidance(node, text, "Note")
-          style(node, text)
-        end
+          def note_style(node, text)
+            style_no_guidance(node, text, "Note")
+            style(node, text)
+          end
 
-        def footnote_style(node, text)
-          style_no_guidance(node, text, "Foonote")
-          style(node, text)
-        end
+          def footnote_style(node, text)
+            style_no_guidance(node, text, "Foonote")
+            style(node, text)
+          end
 
-        def style_warning(node, msg, text)
-          warntext = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
-          warntext += ": #{text}" if text
-          warn warntext
-        end
+          def style_warning(node, msg, text)
+            warntext = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
+            warntext += ": #{text}" if text
+            warn warntext
+          end
 
-        def style(node, text)
-          matched = /\b(?<number>[0-9]+\.[0-9]+)\b/.match text
-          style_warning(node, "possible decimal point", matched[:number]) unless matched.nil?
-          matched = /(?<!(ISO|IEC) )\b(?<number>[0-9][0-9][0-9][0-9]+)\b/.match text
-          style_warning(node, "number not broken up in threes", matched[:number]) unless matched.nil?
-          matched = /\b(?<number>[0-9.,]+%)/.match text
-          style_warning(node, "no space before percent sign", matched[:number]) unless matched.nil?
-          matched = /\b(?<number>[0-9.,]+ \u00b1 [0-9,.]+ %)/.match text
-          style_warning(node, "unbracketed tolerance before percent sign", matched[:number]) unless matched.nil?
+          def style(node, text)
+            matched = /\b(?<number>[0-9]+\.[0-9]+)\b/.match text
+            style_warning(node, "possible decimal point", matched[:number]) unless matched.nil?
+            matched = /(?<!(ISO|IEC) )\b(?<number>[0-9][0-9][0-9][0-9]+)\b/.match text
+            style_warning(node, "number not broken up in threes", matched[:number]) unless matched.nil?
+            matched = /\b(?<number>[0-9.,]+%)/.match text
+            style_warning(node, "no space before percent sign", matched[:number]) unless matched.nil?
+            matched = /\b(?<number>[0-9.,]+ \u00b1 [0-9,.]+ %)/.match text
+            style_warning(node, "unbracketed tolerance before percent sign", matched[:number]) unless matched.nil?
+          end
         end
       end
     end
   end
-end
