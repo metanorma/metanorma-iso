@@ -7,7 +7,7 @@ module Asciidoctor
     module ISOXML
       module Validate
         class << self
-          def title_validate(root)
+          def title_intro_validate(root)
             title_intro_en = root.at("//title/en/title_intro")
             title_intro_fr = root.at("//title/fr/title_intro")
             if title_intro_en.nil? && !title_intro_fr.nil?
@@ -16,6 +16,9 @@ module Asciidoctor
             if !title_intro_en.nil? && title_intro_fr.nil?
               warn "No French Title Intro!"
             end
+          end
+
+          def title_part_validate(root)
             title_part_en = root.at("//title/en/title_part")
             title_part_fr = root.at("//title/fr/title_part")
             if title_part_en.nil? && !title_part_fr.nil?
@@ -24,34 +27,39 @@ module Asciidoctor
             if !title_part_en.nil? && title_part_fr.nil?
               warn "No French Title Part!"
             end
-            if root.at("//title/en/title_main") =~ /International\sStandard |
-              Technical\sSpecification | Publicly\sAvailable\sSpecification |
-              Technical\sReport | Guide /xi
+          end
+
+          def title_names_type_validate(root)
+            doctypes = /International\sStandard | Technical\sSpecification |
+            Publicly\sAvailable\sSpecification | Technical\sReport |
+            Guide /xi
+            if doctypes.match? root.at("//title/en/title_main").text
               warn "Main Title may name document type"
             end
-            if title_part_en.text =~ /International\sStandard |
-              Technical\sSpecification | Publicly\sAvailable\sSpecification |
-              Technical\sReport | Guide /xi
+            title_intro_en = root.at("//title/en/title_intro")
+            if !title_intro_en.nil? && doctypes.match?(title_intro_en.text)
               warn "Part Title may name document type"
             end
           end
 
+          def title_validate(root)
+            title_intro_validate(root)
+            title_part_validate(root)
+            title_names_type_validate(root)
+          end
+
           def onlychild_clause_validate(root)
-            root.
-              xpath("//clause/clause | //annex/clause | //scope/clause").
-              each do |c|
-              clauses = c.xpath("../clause")
-              if clauses.size == 1
-                title = c.at("./title")
-                location = if c["anchor"].nil? && title.nil?
-                             c.text[0..60] + "..."
-                           elsif title.nil?
-                             c["anchor"] 
-                           else 
-                             c["anchor"] + ":#{title.text}"
-                           end
-                warn "ISO style: #{location}: subclause is only child"
-              end
+            q = "//clause/clause | //annex/clause | //scope/clause"
+            root.xpath(q).each do |c|
+              return unless c.xpath("../clause").size == 1
+              title = c.at("./title")
+              location = if c["anchor"].nil? && title.nil?
+                           c.text[0..60] + "..."
+                         else
+                           c["anchor"]
+                         end
+              location += ":#{title.text}" unless title.nil?
+              warn "ISO style: #{location}: subclause is only child"
             end
           end
 
@@ -59,10 +67,9 @@ module Asciidoctor
             title_validate(doc.root)
             onlychild_clause_validate(doc.root)
             filename = File.join(File.dirname(__FILE__), "validate.rng")
-            schema = Jing.new(filename)
             File.open(".tmp.xml", "w") { |f| f.write(doc.to_xml) }
             begin
-              errors = schema.validate(".tmp.xml")
+              errors = Jing.new(filename).validate(".tmp.xml")
             rescue Jing::Error => e
               abort "what what what #{e}"
             end
@@ -84,7 +91,8 @@ module Asciidoctor
                              only\b[^.,]+\b(is|are)\spermitted |
                              it\s\is\snecessary |
                              (needs|need)\sto |
-                             (is|are)\snot\s(allowed | permitted | acceptable | permissible) |
+                             (is|are)\snot\s(allowed | permitted |
+                             acceptable | permissible) |
                              (is|are)\snot\sto\sbe |
                              (need|needs)\snot |
                              do\snot )
@@ -98,7 +106,7 @@ module Asciidoctor
             text.split(/\.\s+/).each do |t|
               matched = /\b(?<w>should |
                             ought\s(not\s)?to |
-                            it\sis\s(not\s)?recommended\sthat 
+                            it\sis\s(not\s)?recommended\sthat
                            )\b/xi.match t
                            return t unless matched.nil?
             end
@@ -118,18 +126,17 @@ module Asciidoctor
           end
 
           def posssibility(text)
-            text.split(/\.\s+/).each do |t|
-              matched = /\b(?<w>can | cannot |
-                            be\sable\sto |
-                            there\sis\sa\spossibility\sof |
-                            it\sis\spossible\to |
-                            be\sunable\sto |
-                            there\sis\sno\spossibility\sof |
-                            it\sis\snot\spossible\sto
-                           )\b/xi.match t
-                           return t unless matched.nil?
-            end
-            nil
+            re = /\b(?<w>can | cannot | be\sable\sto |
+                      there\sis\sa\spossibility\sof |
+                      it\sis\spossible\to | be\sunable\sto |
+                      there\sis\sno\spossibility\sof |
+                      it\sis\snot\spossible\sto
+                     )\b/xi
+                      text.split(/\.\s+/).each do |t|
+                        matched = re.match t
+                        return t unless matched.nil?
+                      end
+                      nil
           end
 
           def external_constraint(text)
@@ -178,20 +185,27 @@ module Asciidoctor
           end
 
           def style_warning(node, msg, text)
-            warntext = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
-            warntext += ": #{text}" if text
-            warn warntext
+            w = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
+            w += ": #{text}" if text
+            warn w
           end
 
-          def style(node, text)
-            matched = /\b(?<number>[0-9]+\.[0-9]+)\b/.match text
-            style_warning(node, "possible decimal point", matched[:number]) unless matched.nil?
-            matched = /(?<!(ISO|IEC) )\b(?<number>[0-9][0-9][0-9][0-9]+)\b/.match text
-            style_warning(node, "number not broken up in threes", matched[:number]) unless matched.nil?
-            matched = /\b(?<number>[0-9.,]+%)/.match text
-            style_warning(node, "no space before percent sign", matched[:number]) unless matched.nil?
-            matched = /\b(?<number>[0-9.,]+ \u00b1 [0-9,.]+ %)/.match text
-            style_warning(node, "unbracketed tolerance before percent sign", matched[:number]) unless matched.nil?
+          def style1(n, text, re, warning)
+            m = re.match text
+            unless m.nil?
+              style_warning(n, warning, m[:num])
+            end
+          end
+
+          def style(n, text)
+            style1(n, text, /\b(?<num>[0-9]+\.[0-9]+)\b/,
+                   "possible decimal point")
+            style1(n, text, /(?<!(ISO|IEC) )\b(?<num>[0-9][0-9][0-9][0-9]+)\b/,
+                   "number not broken up in threes")
+            style1(n, text, /\b(?<num>[0-9.,]+%)/,
+                   "no space before percent sign")
+            style1(n, text, /\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
+                   "unbracketed tolerance before percent sign")
           end
         end
       end

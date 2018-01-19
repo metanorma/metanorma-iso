@@ -14,37 +14,34 @@ module Asciidoctor
         class << self
           def anchor_or_uuid(node)
             uuid = UUIDTools::UUID.random_create
-            (node.id.nil? || node.id.empty?) ? "_" + uuid : node.id
+            node.id.nil? || node.id.empty? ? "_" + uuid : node.id
           end
+
+          $stage_abbrs = {
+            "00": "PWI",
+            "10": "NWIP",
+            "20": "WD",
+            "30": "CD",
+            "40": "DIS",
+            "50": "FDIS",
+            "60": "IS",
+            "90": "(Review)",
+            "95": "(Withdrawal)",
+          }.freeze
 
           def stage_abbreviation(stage)
-            return "PWI" if stage == "00"
-            return "NWIP" if stage == "10"
-            return "WD" if stage == "20"
-            return "CD" if stage == "30"
-            return "DIS" if stage == "40"
-            return "FDIS" if stage == "50"
-            return "IS" if stage == "60"
-            return "(Review)" if stage == "90"
-            return "(Withdrawal)" if stage == "95"
-            return "??"
+            $stage_abbrs[stage.to_sym] || "??"
           end
 
-          def current_location(node)
-            if node.respond_to?(:lineno) && !node.lineno.nil? &&
-                !node.lineno.empty?
-              return "Line #{node.lineno}"
-            end
-            if node.respond_to?(:id) && !node.id.nil?
-              return "ID #{node.id}"
-            end
-            while !node.nil? && 
-                (!node.respond_to?(:level) || node.level.positive?) && 
-                (!node.respond_to?(:context) || node.context != :section )
-              node = node.parent
-              if !node.nil? && node.context == :section
-                return "Section: #{node.title}"
-              end
+          def current_location(n)
+            return "Line #{n.lineno}" if n.respond_to?(:lineno) &&
+              !n.lineno.nil? && !n.lineno.empty?
+            return "ID #{n.id}" if n.respond_to?(:id) && !n.id.nil?
+            while !n.nil? &&
+                (!n.respond_to?(:level) || n.level.positive?) &&
+                (!n.respond_to?(:context) || n.context != :section)
+              n = n.parent
+              return "Section: #{n.title}" if !n.nil? && n.context == :section
             end
             "??"
           end
@@ -84,19 +81,18 @@ module Asciidoctor
           nil
         end
 
+        $nokohead = <<~HERE
+          <!DOCTYPE html SYSTEM
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+          <html xmlns="http://www.w3.org/1999/xhtml">
+          <head> <title></title> <meta charset="UTF-8" /> </head>
+          <body> </body> </html>
+        HERE
+
         # block for processing XML document fragments as XHTML,
         # to allow for HTMLentities
         def noko(&block)
-          # fragment = ::Nokogiri::XML::DocumentFragment.parse("")
-          # fragment.doc.create_internal_subset("xml", nil, "xhtml.dtd")
-          head = <<~HERE
-        <!DOCTYPE html SYSTEM
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-        <html xmlns="http://www.w3.org/1999/xhtml">
-        <head> <title></title> <meta charset="UTF-8" /> </head>
-        <body> </body> </html>
-          HERE
-          doc = ::Nokogiri::XML.parse(head)
+          doc = ::Nokogiri::XML.parse($nokohead)
           fragment = doc.fragment("")
           ::Nokogiri::XML::Builder.with fragment, &block
           fragment.to_xml(encoding: "US-ASCII").lines.map do |l|
@@ -109,24 +105,6 @@ module Asciidoctor
           attributes.map do |k, v|
             [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
           end.to_h
-        end
-
-        def current_location(node)
-          if node.respond_to?(:lineno) && !node.lineno.nil? &&
-              !node.lineno.empty?
-            return "Line #{node.lineno}"
-          end
-          if node.respond_to?(:id) && !node.id.nil?
-            return "ID #{node.id}"
-          end
-          while !node.nil? && (!node.respond_to?(:level) ||
-              node.level.positive?) && node.context != :section
-            node = node.parent
-            if !node.nil? && node.context == :section
-              return "Section: #{node.title}"
-            end
-          end
-          "??"
         end
 
         def warning(node, msg, text)
