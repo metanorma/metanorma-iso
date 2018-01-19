@@ -176,9 +176,9 @@
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></clause>
 <clause anchor="_physical_and_chemical_characteristics">
   <name>Physical and chemical characteristics</name>
-  <clause anchor="_f7c81bf0-2f47-483a-a918-c7f8795a2e0b"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+  <clause anchor="_876036bb-8ba8-4078-98f9-f966248f9f58"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in <xref target="table1" format="inline"/>.</p>
-<note anchor="_a23569b8-c488-45f8-8f69-c29faecdc9f9">
+<note anchor="_cf7c9c68-fdb0-46e3-93ae-28f9bac7c33a">
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <xref target="ISO6322-1" format="inline"/>, <xref target="ISO6322-2" format="inline"/> and <xref target="ISO6322-3" format="inline"/>.</p>
 </note>
 <p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA" format="inline"/>, shall not exceed the limits given in <xref target="table1" format="inline"/>.</p>
@@ -317,11 +317,11 @@
 </td>
     </tr>
   </tfoot>
-<note anchor="_b6213e02-d58f-4cbb-8e95-eaffc590f385">
+<note anchor="_e6bcd811-68a2-48c8-94fd-9142d0906984">
   <p>This table is based on <xref target="ISO7301" format="inline"/>, Table 1.</p>
-</note><note anchor="_f9318958-2d97-4122-a7c3-159ab1c3cb96">
+</note><note anchor="_e29253e8-8a4f-4266-926f-1c611dd3726e">
   <p>Some commercial contracts require information in addition to that provided in this table.</p>
-</note><note anchor="_5b09a02a-b01d-4911-b1c4-6482f38f32fd">
+</note><note anchor="_09033e37-7faf-4d3b-b596-d7e80a65c03d">
   <p>Only full red husked (cargo) rice is considered in this table.</p>
 </note></table></clause>
 </clause></clause>
@@ -351,7 +351,7 @@
   <p>The results of an interlaboratory test are given in <xref target="AnnexD" format="inline"/> for information</p>
 </clause>
 <clause anchor="_repeatability"><name>Repeatability</name><p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <stem>r</stem> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<formula anchor="_df24c822-b44d-46e2-b841-9495b5028255">
+<formula anchor="_01b4ee28-59a3-4fa0-981b-24156654b154">
   <stem>r = 1 %</stem>
 <dl>
   <dt>
@@ -364,7 +364,7 @@
 
 </clause>
 <clause anchor="_reproducibility"><name>Reproducibility</name><p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <stem>R</stem> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<formula anchor="_dce492bf-8bf9-41ed-814c-f9a6afe575f7">
+<formula anchor="_d2609a95-911f-4f8f-8c0a-5f0da471566c">
   <stem>R = 3 %</stem>
 <dl>
   <dt>
@@ -606,16 +606,16 @@
     <p>point of the curve corresponding to a cooking time of <stem>t_90</stem></p>
   </dd>
 </dl>
-<note anchor="_e1761842-c69c-4e8e-aa41-76fda13a25e0">
+<note anchor="_249d25f2-2061-4624-a51e-a460fc49499f">
   <p>These results are based on a study carried out on three different types of kernel.</p>
 </note>
-<figure anchor="figureC-2"><figure anchor="_3e7e3eb9-7151-4644-a09b-0a9d4cef4ef7" src="rice_images/rice_image3_1.png">
+<figure anchor="figureC-2"><figure anchor="_5dde517e-14d8-4bb7-ba23-2fd90c19eca2" src="rice_images/rice_image3_1.png">
   <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
 </figure>
-<figure anchor="_3507a50f-f034-4802-a419-b64d3408dadc" src="rice_images/rice_image3_2.png">
+<figure anchor="_0ef749e8-a9b8-4c25-a957-05d62a5c329c" src="rice_images/rice_image3_2.png">
   <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
 </figure>
-<figure anchor="_673aa141-a4a1-487f-866c-7eab2c4c0ffe" src="rice_images/rice_image3_3.png">
+<figure anchor="_1598e3a8-7622-42f8-b4d1-46ecad548bea" src="rice_images/rice_image3_3.png">
   <name>Final stages: All kernels are fully gelatinized</name>
 </figure></figure></annex><annex anchor="AnnexD" subtype="informative"><name>Results of interlaboratory test for husked rice yields</name><p>An interlaboratory test <xref target="ref15" format="inline"/> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <xref target="ISO5725-1" format="inline"/> and <xref target="ISO5725-2" format="inline"/>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <xref target="tableD-1" format="inline"/>.</p>
 <table anchor="tableD-1">
@@ -733,7 +733,7 @@
   <ref anchor="ref11">[11]</ref><p> Nitrogen-ammonia-protein modified Kjeldahl method -- Titanium oxide and copper sulfate catalyst. <em>Official Methods and Recommended Practices of the AOCS</em> (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL</p>
 </reference>
   <reference>
-  <ref anchor="ref12">[12]</ref><p> Berner D.L., &amp;amp; Brown J. Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. <em>J. Am. Oil Chem. Soc.</em> 1994, <strong>71</strong> (11) pp 1291-1293</p>
+  <ref anchor="ref12">[12]</ref><p> Berner D.L., &amp; Brown J. Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. <em>J. Am. Oil Chem. Soc.</em> 1994, <strong>71</strong> (11) pp 1291-1293</p>
 </reference>
   <reference>
   <ref anchor="ref13">[13]</ref><p> Buckee G.K. Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method -- Collaborative trial. <em>J. Inst. Brew.</em> 1994, <strong>100</strong> (2) pp 57-64</p>

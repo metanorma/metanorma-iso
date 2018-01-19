@@ -3,21 +3,25 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Lists
+        def li(xml_ul, item)
+          xml_ul.li **attr_code(anchor: item.id) do |xml_li|
+            Validate::style(item, item.text)
+            if item.blocks?
+              xml_li.p { |t| t << item.text }
+              xml_li << item.content
+            else
+              xml_li.p { |p| p << item.text }
+            end
+          end
+        end
+
         def ulist(node)
           return reference(node, true) if $norm_ref
           return reference(node, false) if $biblio
           noko do |xml|
             xml.ul **attr_code(anchor: node.id) do |xml_ul|
               node.items.each do |item|
-                xml_ul.li **attr_code(anchor: item.id) do |xml_li|
-                  Validate::style(item, item.text)
-                  if item.blocks?
-                    xml_li.p { |t| t << item.text }
-                    xml_li << item.content
-                  else
-                    xml_li.p { |p| p << item.text }
-                  end
-                end
+                li(xml_ul, item)
               end
             end
           end.join("\n")
@@ -61,36 +65,42 @@ module Asciidoctor
             gsub(/&amp;amp;/, "&amp;")
         end
 
+        def reference2(matched, matched2, matched3, xml, item)
+          if matched3.nil? && matched2.nil? && matched.nil?
+            xml.reference do |t|
+              t.p { |p| p << ref_normalise(item) }
+            end
+          end
+          if !matched.nil?
+            isorefmatches(xml, matched)
+          elsif !matched2.nil?
+            isorefmatches2(xml, matched2)
+          elsif !matched3.nil?
+            isorefmatches3(xml, matched3)
+          end
+        end
+
+        def reference1(node, item, xml, normative)
+          matched = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+          \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
+          (?<text>.*)$}x.match item
+          matched2 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+          \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
+          <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x.match item
+          matched3 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+          \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
+          (?<text>.*)(</p>)?$}x.match item
+          reference2(matched, matched2, matched3, xml, item)
+          if matched3.nil? && matched2.nil? && matched.nil? && normative
+            warning(node, "non-ISO/IEC reference not expected as normative",
+                    item)
+          end
+        end
+
         def reference(node, normative)
           noko do |xml|
             node.items.each do |item|
-              matched = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-              \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
-              (?<text>.*)$}x.match item.text
-              matched2 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-              \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
-              <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x.match item.text
-              matched3 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-              \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
-              (?<text>.*)(</p>)?$}x.match item.text
-              if matched3.nil?
-                if matched2.nil?
-                  if matched.nil?
-                    xml.reference do |t|
-                      t.p { |p| p << ref_normalise(item.text) }
-                    end
-                    if normative
-                      warning(node, "non-ISO/IEC reference not expected as normative", item.text)
-                    end
-                  else
-                    isorefmatches(xml, matched)
-                  end
-                else
-                  isorefmatches2(xml, matched2)
-                end
-              else
-                isorefmatches3(xml, matched3)
-              end
+              reference1(node, item.text, xml, normative)
             end
           end.join("\n")
         end
@@ -99,48 +109,40 @@ module Asciidoctor
           noko do |xml|
             xml.ol **attr_code(anchor: node.id, type: node.style) do |xml_ol|
               node.items.each do |item|
-                xml_ol.li **attr_code(anchor: item.id) do |xml_li|
-                  Validate::style(item, item.text)
-                  if item.blocks?
-                    xml_li.p { |t| t << item.text }
-                    xml_li << item.content
-                  else
-                    xml_li.p { |p| p << item.text }
-                  end
-                end
+                li(xml_ol, item)
               end
             end
           end.join("\n")
+        end
+
+        def dt(terms, xml_dl)
+          terms.each_with_index do |dt, idx|
+            Validate::style(dt, dt.text)
+            xml_dl.dt { |xml_dt| xml_dt << dt.text }
+            if idx < terms.size - 1
+              xml_dl.dd
+            end
+          end
+        end
+
+        def dd(dd, xml_dl)
+          if dd.nil?
+            xml_dl.dd
+            return
+          end
+          xml_dl.dd do |xml_dd|
+            Validate::style(dd, dd.text)
+            xml_dd.p { |t| t << dd.text } if dd.text?
+            xml_dd << dd.content if dd.blocks?
+          end
         end
 
         def dlist(node)
           noko do |xml|
             xml.dl **attr_code(anchor: node.id) do |xml_dl|
               node.items.each do |terms, dd|
-                terms.each_with_index do |dt, idx|
-                  Validate::style(dt, dt.text)
-                  xml_dl.dt { |xml_dt| xml_dt << dt.text }
-                  if idx < terms.size - 1
-                    xml_dl.dd
-                  end
-                end
-
-                if dd.nil?
-                  xml_dl.dd
-                else
-                  xml_dl.dd do |xml_dd|
-                    Validate::style(dd, dd.text)
-                    if dd.blocks?
-                      if dd.text?
-                        xml_dd.p { |t| t << dd.text }
-                      end
-                      xml_dd << dd.content
-                    else
-                      Validate::style(dd, dd.text)
-                      xml_dd.p { |t| t << dd.text }
-                    end
-                  end
-                end
+                dt(terms, xml_dl)
+                dd(dd, xml_dl)
               end
             end
           end.join("\n")

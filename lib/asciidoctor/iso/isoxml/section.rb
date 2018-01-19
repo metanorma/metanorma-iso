@@ -5,29 +5,16 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Section
-
         def section(node)
           attrs = { anchor: Utils::anchor_or_uuid(node) }
           noko do |xml|
             case node.title.downcase
             when "introduction"
-              xml.introduction **attr_code(attrs) do |xml_section|
-                content = node.content
-                xml_section << content
-                Validate::introduction_style(node, Utils::flatten_rawtext(content).join("\n"))
-              end
+              introduction_parse(attrs, xml, node)
             when "patent notice"
-              xml.patent_notice do |xml_section|
-                xml_section << node.content
-              end
+              patent_notice_parse(xml, node)
             when "scope"
-              $scope = true
-              xml.scope **attr_code(attrs) do |xml_section|
-                content = node.content
-                xml_section << content
-                Validate::scope_style(node, Utils::flatten_rawtext(content).join("\n"))
-              end
-              $scope = false
+              scope_parse(attrs, xml, node)
             when "normative references"
               $norm_ref = true
               xml.norm_ref **attr_code(attrs) do |xml_section|
@@ -83,6 +70,31 @@ module Asciidoctor
           end.join("\n")
         end
 
+        def introduction_parse(attrs, xml, node)
+          xml.introduction **attr_code(attrs) do |xml_section|
+            content = node.content
+            xml_section << content
+            Validate::introduction_style(node,
+                                         Utils::flatten_rawtext(content).
+                                         join("\n"))
+          end
+        end
+
+        def patent_notice_parse(xml, node)
+          xml.patent_notice do |xml_section|
+            xml_section << node.content
+          end
+        end
+
+        def scope_parse(attrs, xml, node)
+          $scope = true
+          xml.scope **attr_code(attrs) do |xml_section|
+            content = node.content
+            xml_section << content
+            Validate::scope_style(node, Utils::flatten_rawtext(content).join("\n"))
+          end
+          $scope = false
+        end
       end
     end
   end
