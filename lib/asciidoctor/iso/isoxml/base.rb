@@ -15,7 +15,9 @@ module Asciidoctor
         end
 
         def skip(node, name = nil)
-          warning(node, "converter missing for #{name || node.node_name} node in ISO backend", nil)
+          name = name || node.node_name
+          w = "converter missing for #{name} node in ISO backend"
+          warning(node, w, nil)
           nil
         end
 
@@ -25,8 +27,7 @@ module Asciidoctor
           result << noko { |ixml| front node, ixml }
           result << noko { |ixml| middle node, ixml }
           result << "</iso-standard>"
-          ret = result.flatten * "\n"
-          ret1 = Cleanup::cleanup(Nokogiri::XML(ret))
+          ret1 = Cleanup::cleanup(Nokogiri::XML(result.flatten * "\n"))
           ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
           Validate::validate(ret1)
           ret1.to_xml(indent: 2)
@@ -45,6 +46,16 @@ module Asciidoctor
           end
         end
 
+        def add_term_source(xml_t, seen_xref, matched)
+          attr = {
+            target: seen_xref.children[0]["target"],
+            format: seen_xref.children[0]["format"],
+          }
+          xml_t.xref seen_xref.children[0].content, **attr_code(attr)
+          xml_t.isosection matched[:section] if matched[:section]
+          xml_t.modification { |m| m << matched[:text] } if matched[:text]
+        end
+
         def termsource(node)
           noko do |xml|
             xml.termref do |xml_t|
@@ -52,16 +63,11 @@ module Asciidoctor
               (,\s(?<section>.[^, ]+))?
                 (,\s(?<text>.*))?$/x.match node.content
               if matched.nil?
-                warning(node, "term reference not in expected format", node.content)
+                w = "term reference not in expected format"
+                warning(node, w, node.content)
               else
                 seen_xref = Nokogiri::XML.fragment(matched[:xref])
-                attr = {
-                  target: seen_xref.children[0]["target"], 
-                  format: seen_xref.children[0]["format"],
-                }
-                xml_t.xref seen_xref.children[0].content, **attr_code(attr)
-                xml_t.isosection matched[:section] if matched[:section]
-                xml_t.modification { |m| m << matched[:text] } if matched[:text]
+                add_term_source(xml_t, seen_xref, matched)
                 Validate::style(node, matched[:text])
               end
             end

@@ -15,6 +15,7 @@ require "asciidoctor/iso/word/references"
 require "asciidoctor/iso/word/terms"
 require "asciidoctor/iso/word/blocks"
 require "asciidoctor/iso/word/inline"
+require "asciidoctor/iso/isoxml/utils"
 require "pp"
 
 module Asciidoctor
@@ -30,51 +31,70 @@ module Asciidoctor
           include ::Asciidoctor::ISO::Word::Terms
           include ::Asciidoctor::ISO::Word::Blocks
           include ::Asciidoctor::ISO::Word::Inline
+          include ::Asciidoctor::ISO::ISOXML::Utils
 
           $anchors = {}
           $footnotes = []
           $termdomain = ""
           $filename = ""
           $dir = ""
-          $xslt = XML::XSLT.new()
+          $xslt = XML::XSLT.new
           $xslt.xsl = File.read(File.join(File.dirname(__FILE__),
                                           "mathml2omml.xsl"))
 
           def convert(filename)
-            $filename = filename.gsub(%r{\.[^/.]+$}, "")
-            $dir = "#{$filename}_files"
-            Dir.mkdir($dir) unless File.exists?($dir)
-            system "rm -r #{$dir}/*"
-
+            init_file(filename)
             docxml = Nokogiri::XML(File.read(filename))
             docxml.root.default_namespace = ""
             result = noko do |xml|
               xml.html do |html|
                 Postprocessing::html_header(html, docxml, $filename)
-                body_attr = {lang: "EN-US", link: "blue", vlink: "#954F72"}
-                xml.body **body_attr do |body|
-                  body.div **{class: "WordSection1"} do |div1|
-                    Postprocessing::titlepage docxml, div1
-                  end
-                  section_break(body)
-                  body.div **{class: "WordSection2"} do |div2|
-                    info docxml, div2
-                  end
-                  section_break(body)
-                  body.div **{class: "WordSection3"} do |div3|
-                    middle docxml, div3
-                    footnotes div3
-                  end
-                end
+                make_body(xml, docxml)
               end
             end.join("\n")
             Postprocessing::postprocess(result, $filename)
           end
 
+          def init_file(filename)
+            $filename = filename.gsub(%r{\.[^/.]+$}, "")
+            $dir = "#{$filename}_files"
+            Dir.mkdir($dir) unless File.exists?($dir)
+            system "rm -r #{$dir}/*"
+          end
+
+          def make_body(xml, docxml)
+            body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72" }
+            xml.body **body_attr do |body|
+              make_body1(body, docxml)
+              make_body2(body, docxml)
+              make_body3(body, docxml)
+            end
+          end
+
+          def make_body1(body, docxml)
+            body.div **{ class: "WordSection1" } do |div1|
+              Postprocessing::titlepage docxml, div1
+            end
+            section_break(body)
+          end
+
+          def make_body2(body, docxml)
+            body.div **{ class: "WordSection2" } do |div2|
+              info docxml, div2
+            end
+            section_break(body)
+          end
+
+          def make_body3(body, docxml)
+            body.div **{ class: "WordSection3" } do |div3|
+              middle docxml, div3
+              footnotes div3
+            end
+          end
+
           def info(isoxml, out)
-            intropage = File.read(File.join(File.dirname(__FILE__),
-                                            "iso_intro.html"),
-                                            :encoding => "UTF-8")
+            fn = File.join(File.dirname(__FILE__), "iso_intro.html")
+            intropage = File.read(fn, encoding: "UTF-8")
             out.parent.add_child intropage
             title isoxml, out
             subtitle isoxml, out
@@ -86,10 +106,7 @@ module Asciidoctor
           end
 
           def middle(isoxml, out)
-            title_attr = {class: "zzSTDTitle1"}
-            out.p **attr_code(title_attr) do |p|
-              p << $iso_doctitle
-            end
+            out.p **{ class: "zzSTDTitle1" } { |p| p << $iso_doctitle }
             scope isoxml, out
             norm_ref isoxml, out
             terms_defs isoxml, out

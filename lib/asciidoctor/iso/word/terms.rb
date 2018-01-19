@@ -1,66 +1,68 @@
 require "uuidtools"
 
 module Asciidoctor
-  module ISO::Word
-    module Terms
-      def modification_parse(node, out)
-        out << "[MODIFICATION]"
-        node.children.each { |n| parse(n, out) }
-      end
-
-      def deprecated_term_parse(node, out)
-        out.p **{class: "AltTerms"} do |p|
-          p << "DEPRECATED: #{node.text}"
-        end
-      end
-
-      def termsymbol_parse(node, out)
-        out.p **{class: "AltTerms"} do |p|
+  module ISO
+    module Word
+      module Terms
+        def modification_parse(node, out)
+          out << "[MODIFICATION]"
           node.children.each { |n| parse(n, out) }
         end
-      end
 
-      def admitted_term_parse(node, out)
-        out.p **{class: "AltTerms"} { |p| p << node.text }
-      end
-
-      def term_parse(node, out)
-        out.p **{class: "Terms"} { |p| p << node.text }
-      end
-
-      def termexample_parse(node, out)
-        out.p **{class: "Note"} do |p|
-          p << "EXAMPLE:"
-          p.span **attr_code(style: "mso-tab-count:1") do |span|
-            span << "&#xA0; "
+        def deprecated_term_parse(node, out)
+          out.p **{ class: "AltTerms" } do |p|
+            p << "DEPRECATED: #{node.text}"
           end
-          node.children.each { |n| parse(n, p) }
         end
-      end
 
-      def termnote_parse(node, out)
-        out.p **{class: "Note"} do |p|
-          $termnotenumber += 1
-          p << "Note #{$termnotenumber} to entry: "
-          node.children.each { |n| parse(n, p) }
+        def termsymbol_parse(node, out)
+          out.p **{ class: "AltTerms" } do |p|
+            node.children.each { |n| parse(n, p) }
+          end
         end
-      end
 
-      def termref_parse(node, out)
-        out.p **{class: "MsoNormal"} do |p|
-          p << "[TERMREF]"
-          node.children.each { |n| parse(n, p) }
-          p << "[/TERMREF]"
+        def admitted_term_parse(node, out)
+          out.p **{ class: "AltTerms" } { |p| p << node.text }
         end
-      end
 
-      def termdef_parse(node, out)
-        out.p **{class: "TermNum", id: node["anchor"]} do |p|
-          p << $anchors[node["anchor"]][:label]
+        def term_parse(node, out)
+          out.p **{ class: "Terms" } { |p| p << node.text }
         end
-        $termdomain = ""
-        $termnotenumber = 0
-        node.children.each { |n| parse(n, out) }
+
+        def termexample_parse(node, out)
+          out.p **{ class: "Note" } do |p|
+            p << "EXAMPLE:"
+            p.span **attr_code(style: "mso-tab-count:1") do |span|
+              span << "&#xA0; "
+            end
+            node.children.each { |n| parse(n, p) }
+          end
+        end
+
+        def termnote_parse(node, out)
+          out.p **{ class: "Note" } do |p|
+            $termnotenumber += 1
+            p << "Note #{$termnotenumber} to entry: "
+            node.children.each { |n| parse(n, p) }
+          end
+        end
+
+        def termref_parse(node, out)
+          out.p **{ class: "MsoNormal" } do |p|
+            p << "[TERMREF]"
+            node.children.each { |n| parse(n, p) }
+            p << "[/TERMREF]"
+          end
+        end
+
+        def termdef_parse(node, out)
+          out.p **{ class: "TermNum", id: node["anchor"] } do |p|
+            p << $anchors[node["anchor"]][:label]
+          end
+          $termdomain = ""
+          $termnotenumber = 0
+          node.children.each { |n| parse(n, out) }
+        end
       end
     end
   end
