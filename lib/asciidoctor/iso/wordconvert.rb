@@ -1,3 +1,3 @@
 require "asciidoctor/iso/iso2wordhtml"
 
-convert(ARGV[0])
+Asciidoctor::ISO::ISO2WordHTML::convert(ARGV[0])

@@ -10,6 +10,19 @@ module Asciidoctor
   module ISO
     module Utils
       class << self
+        def stage_abbreviation(stage)
+          return "PWI" if stage == "00"
+          return "NWIP" if stage == "10"
+          return "WD" if stage == "20"
+          return "CD" if stage == "30"
+          return "DIS" if stage == "40"
+          return "FDIS" if stage == "50"
+          return "IS" if stage == "60"
+          return "(Review)" if stage == "90"
+          return "(Withdrawal)" if stage == "95"
+          return "??"
+        end
+
         def current_location(node)
           if node.respond_to?(:lineno) && !node.lineno.nil? &&
               !node.lineno.empty?
@@ -280,19 +293,6 @@ module Asciidoctor
         warntext = "asciidoctor: WARNING (#{current_location(node)}): #{msg}"
         warntext += ": #{text}" if text
         warn warntext
-      end
-
-      def stage_abbreviation(stage)
-        return "(Preliminary)" if stage == "00"
-        return "NWID" if stage == "10"
-        return "WD" if stage == "20"
-        return "CD" if stage == "30"
-        return "DIS" if stage == "40"
-        return "FDIS" if stage == "50"
-        return "(Published)" if stage == "60"
-        return "(Review)" if stage == "90"
-        return "(Withdrawal)" if stage == "95"
-        return "??"
       end
     end
   end
