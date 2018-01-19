@@ -28,12 +28,10 @@ module Asciidoctor
             foreword = xmldoc.at("//foreword")
             front = xmldoc.at("//front")
             unless foreword.nil? || front.nil?
-              foreword.remove
-              front << foreword
+              front << foreword.remove
             end
             unless intro.nil? || front.nil?
-              intro.remove
-              front << intro
+              front << intro.remove
             end
           end
 
@@ -41,16 +39,48 @@ module Asciidoctor
             xmldoc.xpath("//termdef").each do |t|
               para = t.at("./p")
               return if para.nil?
-              if para.text =~ /^(the|a)\b/i
-                warn "ISO style: #{t.at("term").text}: term definition starts with article"
+              term = t.at("term").text
+              if /^(the|a)\b/i.match? para.text
+                warn "ISO style: #{term}: term definition starts with article"
               end
-              if para.text =~ /\.$/i
-                warn "ISO style: #{t.at("term").text}: term definition ends with period"
+              if /\.$/i.match? para.text
+                warn "ISO style: #{term}: term definition ends with period"
               end
             end
           end
 
-          def termdef_cleanup(xmldoc)
+          def termdef_stem_cleanup(xmldoc)
+            xmldoc.xpath("//termdef/p/stem").each do |a|
+              if a.parent.elements.size == 1
+                # para containing just a stem expression
+                t = Nokogiri::XML::Element.new("termsymbol", xmldoc)
+                parent = a.parent
+                t.children = a.remove
+                parent.replace(t)
+              end
+            end
+          end
+
+          def termdomain_cleanup(xmldoc)
+            xmldoc.xpath("//p/termdomain").each do |a|
+              prev = a.parent.previous
+              prev.next = a.remove
+            end
+          end
+
+          def termdefinition_cleanup(xmldoc)
+            xmldoc.xpath("//termdef").each do |d|
+              t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
+              first_child = d.at("./p | ./figure | ./formula")
+              first_child.replace(t)
+              t << first_child.remove
+              d.xpath("./p | ./figure | ./formula").each do |n|
+                t << n.remove
+              end
+            end
+          end
+
+          def termdef_unnest_cleanup(xmldoc)
             # release termdef tags from surrounding paras
             nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol |
                              //p/deprecated_term")
@@ -59,32 +89,13 @@ module Asciidoctor
               nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol |
                                //p/deprecated_term")
             end
-            xmldoc.xpath("//termdef/p/stem").each do |a|
-              if a.parent.elements.size == 1
-                # para containing just a stem expression
-                t = Nokogiri::XML::Element.new("termsymbol", xmldoc)
-                parent = a.parent
-                a.remove
-                t.children = a
-                parent.replace(t)
-              end
-            end
-            xmldoc.xpath("//p/termdomain").each do |a|
-              prev = a.parent.previous
-              a.remove
-              prev.next = a
-            end
-            xmldoc.xpath("//termdef").each do |d|
-              t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
-              first_child = d.at("./p | ./figure | ./formula")
-              first_child.replace(t)
-              first_child.remove
-              t << first_child
-              d.xpath("./p | ./figure | ./formula").each do |n|
-                n.remove
-                t << n
-              end
-            end
+          end
+
+          def termdef_cleanup(xmldoc)
+            termdef_unnest_cleanup(xmldoc)
+            termdef_stem_cleanup(xmldoc)
+            termdomain_cleanup(xmldoc)
+            termdefinition_cleanup(xmldoc)
             termdef_style(xmldoc)
           end
 
@@ -97,52 +108,75 @@ module Asciidoctor
             end
           end
 
-          def table_cleanup(xmldoc)
+          def dl_table_cleanup(xmldoc)
             # move Key dl after table footer
-            xmldoc.xpath("//tfoot/tr/td/dl | //tfoot/tr/th/dl").each do |n|
-              if !n.previous_element.nil? && n.previous_element.name == "p" &&
-                  n.previous_element.content =~ /^\s*Key\s*$/m
-                n.previous_element.remove
-                target = n.parent.parent.parent.parent
-                n.remove
-                target << n
+            q = "//table/following-sibling::*[1]"\
+              "[self::p and normalize-space() = 'Key']"
+            xmldoc.xpath(q).each do |s|
+              if !s.next_element.nil? && s.next_element.name == "dl"
+                s.previous_element << s.next_element.remove
+                s.remove
               end
-            end
-            # move notes after table footer
-            xmldoc.xpath("//tfoot/tr/td/note | //tfoot/tr/th/note").each do |n|
-              target = n.parent.parent.parent.parent
-              n.remove
-              target << n
             end
           end
 
-          def formula_cleanup(xmldoc)
+          def table_cleanup(xmldoc)
+            dl_table_cleanup(xmldoc)
+            notes_table_cleanup(xmldoc)
+          end
+
+          def notes_table_cleanup(xmldoc)
+            # move notes into table
+            nomatches = false
+            until nomatches
+              q = "//table/following-sibling::*[1][self::note]"
+              nomatches = true
+              xmldoc.xpath(q).each do |n|
+                n.previous_element << n.remove
+                nomatches = false
+              end
+            end
+          end
+
+          def formula_cleanup(x)
             # include where definition list inside stem block
-            xmldoc.xpath("//formula").each do |s|
-              if !s.next_element.nil? && s.next_element.name == "p" &&
-                  s.next_element.content == "where" &&
-                  !s.next_element.next_element.nil? &&
-                  s.next_element.next_element.name == "dl"
-                dl = s.next_element.next_element.remove
-                s.next_element.remove
-                s << dl
+            q = "//formula/following-sibling::*[1]"\
+              "[self::p and text() = 'where']"
+            x.xpath(q).each do |s|
+              if !s.next_element.nil? && s.next_element.name == "dl"
+                s.previous_element << s.next_element.remove
+                s.remove
               end
             end
           end
 
-          def figure_cleanup(xmldoc)
-            # include key definition list inside figure
-            xmldoc.xpath("//figure").each do |s|
-              if !s.next_element.nil? && s.next_element.name == "p" &&
-                  s.next_element.content =~ /^\s*Key\s*$/m &&
-                  !s.next_element.next_element.nil? &&
-                  s.next_element.next_element.name == "dl"
-                dl = s.next_element.next_element.remove
-                s.next_element.remove
-                s << dl
+          # include footnotes inside figure
+          def figure_footnote_cleanup(xmldoc)
+            nomatches = false
+            until nomatches
+              q = "//figure/following-sibling::*[1][self::p and *[1][self::fn]]"
+              nomatches = true
+              xmldoc.xpath(q).each do |s|
+                s.previous_element << s.first_element_child.remove
+                s.remove
+                nomatches = false
               end
             end
+          end
 
+          def figure_dl_cleanup(xmldoc)
+            # include key definition list inside figure
+            q = "//figure/following-sibling::*"\
+              "[self::p and normalize-space() = 'Key']"
+            xmldoc.xpath(q).each do |s|
+              if !s.next_element.nil? && s.next_element.name == "dl"
+                s.previous_element << s.next_element.remove
+                s.remove
+              end
+            end
+          end
+
+          def subfigure_cleanup(xmldoc)
             # examples containing only figures become subfigures of figures
             nodes = xmldoc.xpath("//example/figure")
             while !nodes.empty?
@@ -151,18 +185,22 @@ module Asciidoctor
             end
           end
 
+          def figure_cleanup(xmldoc)
+            figure_footnote_cleanup(xmldoc)
+            figure_dl_cleanup(xmldoc)
+            subfigure_cleanup(xmldoc)
+          end
+
           def back_cleanup(xmldoc)
             # move annex/bibliography to back
             if !xmldoc.xpath("//annex | //bibliography").empty?
               b = Nokogiri::XML::Element.new("back", xmldoc)
               xmldoc.root << b
               xmldoc.xpath("//annex").each do |e|
-                e.remove
-                b << e
+                b << e.remove
               end
               xmldoc.xpath("//bibliography").each do |e|
-                e.remove
-                b << e
+                b << e.remove
               end
             end
           end
@@ -171,8 +209,7 @@ module Asciidoctor
             # move ref before p
             xmldoc.xpath("//p/ref").each do |r|
               parent = r.parent
-              r.remove
-              parent.previous = r
+              parent.previous = r.remove
             end
 
             xmldoc
