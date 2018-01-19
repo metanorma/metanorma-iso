@@ -11,6 +11,7 @@ require "pp"
 
 module Asciidoctor
   module ISO
+    module Word
     module ISO2WordHTML
       class << self
         $anchors = {}
@@ -991,4 +992,5 @@ module Asciidoctor
       end
     end
   end
+end
 end
