@@ -28,7 +28,7 @@ module Asciidoctor
           $filename = ""
           $dir = ""
           $xslt = XML::XSLT.new()
-          $xslt.xsl = File.read(File.join(File.dirname(__FILE__), 
+          $xslt.xsl = File.read(File.join(File.dirname(__FILE__),
                                           "mathml2omml.xsl"))
 
           def convert(filename)
@@ -62,7 +62,7 @@ module Asciidoctor
             Postprocessing::postprocess(result, $filename)
           end
 
-          def section_break(body) 
+          def section_break(body)
             body.br **{clear: "all", class: "section"}
           end
 
@@ -75,8 +75,8 @@ module Asciidoctor
           end
 
           def info(isoxml, out)
-            intropage = File.read(File.join(File.dirname(__FILE__), 
-                                            "iso_intro.html"), 
+            intropage = File.read(File.join(File.dirname(__FILE__),
+                                            "iso_intro.html"),
                                             :encoding => "UTF-8")
             out.parent.add_child intropage
             title isoxml, out
@@ -114,12 +114,12 @@ module Asciidoctor
               end
             end
             $footnotes << noko do |xml|
-              xml.div **{style: "mso-element:footnote", 
+              xml.div **{style: "mso-element:footnote",
                          id: "ftn#{fn}"} do |div|
                 div.p **{class: "MsoFootnoteText"} do |p|
                   attrs = {style: "mso-footnote-id:ftn#{fn}",
-                           href: "#_ftn#{fn}", 
-                           name: "_ftnref#{fn}",  
+                           href: "#_ftn#{fn}",
+                           name: "_ftnref#{fn}", 
                            title: ""}
                   p.a **attrs do |a|
                     a.span **{class: "MsoFootnoteReference"} do |span|
@@ -206,13 +206,13 @@ module Asciidoctor
 
           def error_parse(node, out)
             if $block
-              out.b **{role: "strong"} do |e| 
-                e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") 
+              out.b **{role: "strong"} do |e|
+                e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;")
               end
             else
               out.para do |p|
-                p.b **{role: "strong"} do |e| 
-                  e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") 
+                p.b **{role: "strong"} do |e|
+                  e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;")
                 end
               end
             end
@@ -391,7 +391,7 @@ module Asciidoctor
 
           def stem_parse(node, out)
             $xslt.xml = AsciiMath.parse(node.text).to_mathml.
-              gsub(/<math>/, 
+              gsub(/<math>/,
                    "<math xmlns='http://www.w3.org/1998/Math/MathML'>")
             ooml = $xslt.serve().gsub(/<\?[^>]+>\s*/, "").
               gsub(/ xmlns:[^=]+="[^"]+"/, "")
@@ -401,7 +401,7 @@ module Asciidoctor
           end
 
           def image_parse(url, out, caption)
-            orig_filename = url 
+            orig_filename = url
             matched = /\.(?<suffix>\S+)$/.match orig_filename
             uuid = UUIDTools::UUID.random_create
             new_filename = "#{uuid.to_s[0..17]}.#{matched[:suffix]}"
@@ -436,13 +436,13 @@ module Asciidoctor
             name = node.at(ns("./name"))
             if name
               out.p **{class: "TableTitle",
-                       align: "center", 
-              } do |p| 
+                       align: "center",
+              } do |p|
                 p.b do |b|
                   b << "#{$anchors[node["anchor"]][:label]}&nbsp;&mdash; "
                   b << name.text
                 end
-              end 
+              end
             end
             out.table **attr_code(table_attr) do |t|
               thead = node.at(ns("./thead"))
@@ -487,7 +487,7 @@ module Asciidoctor
                   end
                 end
 =end
-                r.send td.name **attr_code(attrs) do |entry|
+                r.send td.name, **attr_code(attrs) do |entry|
                     td.children.each { |n| parse(n, entry) }
                   end
               end
@@ -498,14 +498,14 @@ module Asciidoctor
             clauses = isoxml.xpath(ns("//middle/clause"))
             return unless clauses
             clauses.each do |c|
-              out.div **attr_code("id": c["anchor"]) do |s| 
-                c.elements.each do |c1| 
+              out.div **attr_code("id": c["anchor"]) do |s|
+                c.elements.each do |c1|
                   if c1.name == "name"
-                    s.h1 do |t| 
-                      t << "#{$anchors[c["anchor"]][:label]}. #{c1.text}" }
+                    s.h1 do |t|
+                      t << "#{$anchors[c["anchor"]][:label]}. #{c1.text}"
                     end
                   else
-                    parse(c1, s) 
+                    parse(c1, s)
                   end
                 end
               end
@@ -516,14 +516,14 @@ module Asciidoctor
             clauses = isoxml.xpath(ns("//annex"))
             return unless clauses
             clauses.each do |c|
-              out.div **attr_code("id": c["anchor"]) do |s| 
-                c.elements.each do |c1| 
+              out.div **attr_code("id": c["anchor"]) do |s|
+                c.elements.each do |c1|
                   if c1.name == "name"
-                    s.h1 do |t| 
-                      t << "#{$anchors[c["anchor"]][:label]}. #{c1.text}" }
+                    s.h1 do |t|
+                      t << "#{$anchors[c["anchor"]][:label]}. #{c1.text}"
                     end
                   else
-                    parse(c1, s) 
+                    parse(c1, s)
                   end
                 end
               end
@@ -630,11 +630,11 @@ module Asciidoctor
           def introduction(isoxml, out)
             f = isoxml.at(ns("//introduction"))
             return unless f
-            title_attr = {class: "IntroTitle", 
+            title_attr = {class: "IntroTitle",
                           style: "page-break-before:always"}
             out.div do |div|
-              div.h1 **attr_code(title_attr) do |p| 
-                p << "Introduction" 
+              div.h1 **attr_code(title_attr) do |p|
+                p << "Introduction"
               end
               f.elements.each do |e|
                 if e.name == "patent_notice"
@@ -654,11 +654,11 @@ module Asciidoctor
             out.div  do |s|
               s.h1 **{class: "ForewordTitle"} { |h1| h1 << "Foreword" }
 =begin
-    s.p **{class: "ForewordTitle"} do |p| 
+    s.p **{class: "ForewordTitle"} do |p|
       p.a **{name: "_Toc353342667"}
       p.a **{name: "_Toc485815077"} do |a|
         a.span **{style: "mso-bookmark:_Toc353342667"} do |span|
-          span.span << "Foreword" 
+          span.span << "Foreword"
         end
       end
     end
