@@ -426,9 +426,6 @@ Carefully mix the laboratory sample to make it as uniform as possible, then proc
 
 All parts of kernels which get stuck in the perforations of a sieve should be considered to be retained by the sieve. 
 
-image::rice_images/decoded.gif[]
-
-
 [[figureA-1]]
 .Split-it-right sample divider
 image::rice_images/rice_image1.png[]

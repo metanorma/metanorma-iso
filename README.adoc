@@ -331,6 +331,6 @@ model document of an international standard. This repository includes:
 * the link:spec/examples/rice.html[AsciiISO rendering of the Rice document as an HTML preview] 
 (native Asciidoc rendering)
 * the link:spec/examples/rice.xml[ISO XML rendering of the Rice document].
-* the link:spec/examples/rice.xml.doc[Word .doc rendering of the Rice document] (Work in progress).
+* the link:spec/examples/rice.doc[Word .doc rendering of the Rice document] (Work in progress).
 
 

@@ -192,7 +192,9 @@ module Asciidoctor
       def image(node)
         uri = node.image_uri node.attr("target")
         artwork_attributes = {
-          anchor: node.id,
+          anchor: node.id.nil? ? uuid :
+          node.id.empty? ? uuid :
+          node.id,
           src: uri,
         }
 

@@ -246,9 +246,19 @@ def sequential_asset_names(clause)
   clause.xpath(ns(".//table")).each_with_index do |t, i|
     $anchors[t["anchor"]] = { label: "Table #{i + 1}", xref: "Table #{i + 1}" }
   end
-  clause.xpath(ns(".//figure")).each_with_index do |t, i|
-    $anchors[t["anchor"]] = { label: "Figure #{i + 1}", 
-                              xref: "Figure #{i + 1}" }
+  i = 0
+  j = 0
+  clause.xpath(ns(".//figure")).each do |t|
+    if t.parent.name == "figure"
+      j += 1
+      $anchors[t["anchor"]] = { label: "Figure #{i}-#{j}", 
+                                xref: "Figure #{i}-#{j}" }
+    else
+      j = 0
+      i += 1
+      $anchors[t["anchor"]] = { label: "Figure #{i}", 
+                                xref: "Figure #{i}" }
+    end
   end
   clause.xpath(ns(".//formula")).each_with_index do |t, i|
     $anchors[t["anchor"]] = { label: "#{i + 1}", xref: "Formula #{i + 1}" }
@@ -260,9 +270,19 @@ def hierarchical_asset_names(clause, num)
     $anchors[t["anchor"]] = { label: "Table #{num}.#{i + 1}", 
                               xref: "Table #{num}.#{i + 1}" }
   end
-  clause.xpath(ns(".//figure")).each_with_index do |t, i|
-    $anchors[t["anchor"]] = { label: "Figure #{num}.#{i + 1}", 
-                              xref: "Figure #{num}.#{i + 1}" }
+  i = 0
+  j = 0
+  clause.xpath(ns(".//figure")).each do |t|
+    if t.parent.name == "figure"
+      j += 1
+      $anchors[t["anchor"]] = { label: "Figure #{num}.#{i}-#{j}",
+                                xref: "Figure #{num}.#{i}-#{j}" }
+    else
+      j = 0
+      i += 1
+      $anchors[t["anchor"]] = { label: "Figure #{num}.#{i}",
+                                xref: "Figure #{num}.#{i}" }
+    end
   end
   clause.xpath(ns(".//formula")).each_with_index do |t, i|
     $anchors[t["anchor"]] = { label: "#{num}.#{i + 1}", 
@@ -412,7 +432,7 @@ def parse(node, out)
     when "sub" then out.sub { |e| e << node.text }
     when "tt" then out.tt { |e| e << node.text }
     when "br" then out.br
-    when "name" then out.title { |e| e << node.text }
+      # when "name" then out.title { |e| e << node.text }
     when "stem"
       $xslt.xml = AsciiMath.parse(node.text).to_mathml.
         gsub(/<math>/, "<math xmlns='http://www.w3.org/1998/Math/MathML'>")
@@ -519,30 +539,19 @@ def parse(node, out)
       name = node.at(ns("./name"))
       out.div **attr_code(id: node["anchor"]) do |div|
         if node["src"]
-          orig_filename = node["src"] #.gsub(%r{/}, File::ALT_SEPARATOR || File::PATH_SEPARATOR)
-          matched = /\.(?<suffix>\S+)$/.match orig_filename
-          new_filename = "#{UUIDTools::UUID.random_create.to_s[0..17]}.#{matched[:suffix]}"
-          new_full_filename = File.join("#{$filename}_files", new_filename)
-          system "cp #{orig_filename} #{new_full_filename}"
-          image_size = ImageSize.path(orig_filename).size
-          # max width is 400
-          if image_size[0] > 400
-            image_size[1] = (image_size[1] * 400 / image_size[0]).ceil
-            image_size[0] = 400
-          end
-          # TODO ditto max height
-          div.img **attr_code(src: new_full_filename,
-                              height: image_size[1],
-                              width: image_size[0])
+          image_parse(node["src"], div, nil)
         end
-        node.children.each { |n| parse(n, div) }
+        node.children.each do |n| 
+          parse(n, div) unless n.name == "name"
+        end
         if name
           div.p **{class: "MsoNormal",
                    align: "center",
                    style: "margin-bottom:6.0pt;text-align:center;page-break-before:avoid",
           } do |p|
             p.b do |b|
-              b << "#{$anchors[node["anchor"]][:label]}&nbsp;&mdash; #{name.text}"
+              b << "#{$anchors[node["anchor"]][:label]}&nbsp;&mdash; "
+              b << name.text
             end
           end
         end
@@ -604,6 +613,34 @@ def parse(node, out)
         out.para do |p|
           p.b **{role: "strong"} { |e| e << node.to_xml.gsub(/</,"&lt;").gsub(/>/,"&gt;") }
         end
+      end
+    end
+  end
+end
+
+def image_parse(url, out, caption)
+  orig_filename = url #.gsub(%r{/}, File::ALT_SEPARATOR || File::PATH_SEPARATOR)
+  matched = /\.(?<suffix>\S+)$/.match orig_filename
+  new_filename = "#{UUIDTools::UUID.random_create.to_s[0..17]}.#{matched[:suffix]}"
+  new_full_filename = File.join("#{$filename}_files", new_filename)
+  system "cp #{orig_filename} #{new_full_filename}"
+  image_size = ImageSize.path(orig_filename).size
+  # max width is 400
+  if image_size[0] > 400
+    image_size[1] = (image_size[1] * 400 / image_size[0]).ceil
+    image_size[0] = 400
+  end
+  # TODO ditto max height
+  out.img **attr_code(src: new_full_filename,
+                      height: image_size[1],
+                      width: image_size[0])
+  unless caption.nil?
+    out.p **{class: "MsoNormal",
+             align: "center",
+             style: "margin-bottom:6.0pt;text-align:center;page-break-before:avoid",
+    } do |p|
+      p.b do |b|
+        b << "#{caption}"
       end
     end
   end
