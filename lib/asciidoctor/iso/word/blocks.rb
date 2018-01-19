@@ -92,12 +92,15 @@ module Asciidoctor
 
         def image_resize(orig_filename)
           image_size = ImageSize.path(orig_filename).size
-          # max width is 400
+          # max width is 400, max height is 680
           if image_size[0] > 400
             image_size[1] = (image_size[1] * 400 / image_size[0]).ceil
             image_size[0] = 400
           end
-          # TODO ditto max height
+          if image_size[1] > 680
+            image_size[0] = (image_size[0] * 680 / image_size[1]).ceil
+            image_size[1] = 680
+          end
           image_size
         end
 
