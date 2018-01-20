@@ -65,30 +65,30 @@
 <norm_ref anchor="_normative_references"><p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
 <iso_ref_title anchor="ISO712">
   <isocode>712</isocode>
-  <isotitle>Cereals and cereal products -- Determination of moisture content -- Reference method</isotitle>
+  <isotitle>Cereals and cereal products — Determination of moisture content — Reference method</isotitle>
 </iso_ref_title><iso_ref_title anchor="ISO6646">
   <isocode>6646</isocode>
-  <isotitle>Rice -- Determination of the potential milling yield from paddy and from husked rice</isotitle>
+  <isotitle>Rice — Determination of the potential milling yield from paddy and from husked rice</isotitle>
 </iso_ref_title><iso_ref_title anchor="ISO8351-1">
   <isocode>8351-1</isocode>
   <isodate>1994</isodate>
-  <isotitle>Packaging -- Method of specification for sacks -- Part 1: Paper sacks</isotitle>
+  <isotitle>Packaging — Method of specification for sacks — Part 1: Paper sacks</isotitle>
 </iso_ref_title><iso_ref_title anchor="ISO8351-2">
   <isocode>8351-2</isocode>
-  <isotitle>Packaging -- Method of specification for sacks -- Part 2: Sacks made from thermoplastic flexible film</isotitle>
+  <isotitle>Packaging — Method of specification for sacks — Part 2: Sacks made from thermoplastic flexible film</isotitle>
 </iso_ref_title><iso_ref_title anchor="ISO16634">
   <isocode>16634</isocode>
   <isodate>--</isodate>
   <date_footnote>Under preparation. (Stage at the time of publication ISO/DIS 16634)</date_footnote>
-  <isotitle>Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content</isotitle>
+  <isotitle>Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs — Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content</isotitle>
 </iso_ref_title><iso_ref_title anchor="ISO20483">
   <isocode>20483</isocode>
   <isodate>2013</isodate>
-  <isotitle>Cereals and pulses -- Determination of the nitrogen content and calculation of the crude protein content -- Kjeldahl method</isotitle>
+  <isotitle>Cereals and pulses — Determination of the nitrogen content and calculation of the crude protein content — Kjeldahl method</isotitle>
 </iso_ref_title><iso_ref_title anchor="ISO24333">
   <isocode>24333</isocode>
   <isodate>2009</isodate>
-  <isotitle>Cereals and cereal products -- Sampling</isotitle>
+  <isotitle>Cereals and cereal products — Sampling</isotitle>
 </iso_ref_title></norm_ref>
 <terms_defs anchor="_terms_and_definitions"><p>For the purposes of this document, the following terms and definitions apply.</p>
 <p>ISO and IEC maintain terminological databases for use in standardization at the following addresses:</p>
@@ -176,9 +176,9 @@
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></clause>
 <clause anchor="_physical_and_chemical_characteristics">
   <name>Physical and chemical characteristics</name>
-  <clause anchor="_4620e1c3-b52a-45fd-b619-67fc8ed4b16e"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+  <clause anchor="_2e834c25-9a9f-47fd-80c1-29cf01ac922a"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in <xref target="table1" format="inline"/>.</p>
-<note anchor="_f9e30f3a-e7ab-42a1-a0c2-73670ea5cebe">
+<note anchor="_0ce6d9bf-2a41-4e61-ad67-7a418920667b">
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <xref target="ISO6322-1" format="inline"/>, <xref target="ISO6322-2" format="inline"/> and <xref target="ISO6322-3" format="inline"/>.</p>
 </note>
 <p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA" format="inline"/>, shall not exceed the limits given in <xref target="table1" format="inline"/>.</p>
@@ -316,11 +316,11 @@
       </td>
     </tr>
   </tfoot>
-<note anchor="_9714a052-cbce-4fbb-a7ab-f8797aa9236c">
+<note anchor="_a250e458-461c-4c8e-bc1f-abdc21c7a03d">
   <p>This table is based on <xref target="ISO7301" format="inline"/>, Table 1.</p>
-</note><note anchor="_7b8743fc-a24a-454e-9b1c-0f7cdd7f18f2">
+</note><note anchor="_eb1d355e-4987-4ac1-ab42-65891c4460ee">
   <p>Some commercial contracts require information in addition to that provided in this table.</p>
-</note><note anchor="_dcbc322d-ac99-480f-bb7f-d35f62aab36f">
+</note><note anchor="_af1d39aa-9e75-4f2f-881b-6656c54afc8c">
   <p>Only full red husked (cargo) rice is considered in this table.</p>
 </note></table>
 
@@ -353,7 +353,7 @@
   <p>The results of an interlaboratory test are given in <xref target="AnnexD" format="inline"/> for information</p>
 </clause>
 <clause anchor="_repeatability"><name>Repeatability</name><p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <stem>r</stem> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<formula anchor="_89ecbc2f-0b6f-45dc-b2de-d2c5d834ed1e">
+<formula anchor="_b6308e9a-f456-48e3-82f9-f5ec9b217b6f">
   <stem>r = 1 %</stem>
 <dl>
   <dt>
@@ -366,7 +366,7 @@
 
 </clause>
 <clause anchor="_reproducibility"><name>Reproducibility</name><p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <stem>R</stem> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<formula anchor="_10f80b27-9609-4f86-93c8-ba44f5d681c1">
+<formula anchor="_8b5afa4e-8d40-4b60-9c1c-30eb9cdd2aa7">
   <stem>R = 3 %</stem>
 <dl>
   <dt>
@@ -608,16 +608,16 @@
 
 
 
-<note anchor="_1a55d832-e0f5-47e9-9c1c-a70201b9c302">
+<note anchor="_485f017c-1975-4ae7-a7bf-9b76e9fbc6c7">
   <p>These results are based on a study carried out on three different types of kernel.</p>
 </note>
-<figure anchor="figureC-2"><figure anchor="_7f822ec9-5710-4846-bfb0-2f9ec53da3c3" src="rice_images/rice_image3_1.png">
+<figure anchor="figureC-2"><figure anchor="_c559a0e0-d8d2-424b-adda-aed5aff72c31" src="rice_images/rice_image3_1.png">
   <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
 </figure>
-<figure anchor="_cdf3819b-c465-480b-8506-a92756479392" src="rice_images/rice_image3_2.png">
+<figure anchor="_39a55760-9da5-481c-8861-3ec895245a17" src="rice_images/rice_image3_2.png">
   <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
 </figure>
-<figure anchor="_3fa78c31-cb1d-4eee-906f-e3aadd8329f8" src="rice_images/rice_image3_3.png">
+<figure anchor="_a0fa0a9b-94e4-4adf-b1d4-334d12b35808" src="rice_images/rice_image3_3.png">
   <name>Final stages: All kernels are fully gelatinized</name>
 </figure></figure></annex><annex anchor="AnnexD" subtype="informative"><name>Results of interlaboratory test for husked rice yields</name><p>An interlaboratory test <xref target="ref15" format="inline"/> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <xref target="ISO5725-1" format="inline"/> and <xref target="ISO5725-2" format="inline"/>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <xref target="tableD-1" format="inline"/>.</p>
 <table anchor="tableD-1">
@@ -693,52 +693,52 @@
 </table></annex><bibliography anchor="_bibliography">
   <iso_ref_title anchor="ISO3696">
   <isocode>3696</isocode>
-  <isotitle>Water for analytical laboratory use -- Specification and test methods</isotitle>
+  <isotitle>Water for analytical laboratory use — Specification and test methods</isotitle>
 </iso_ref_title>
   <iso_ref_title anchor="ISO5725-1">
   <isocode>5725-1</isocode>
-  <isotitle>Accuracy (trueness and precision) of measurement methods and results -- Part 1: General principles and definitions</isotitle>
+  <isotitle>Accuracy (trueness and precision) of measurement methods and results — Part 1: General principles and definitions</isotitle>
 </iso_ref_title>
   <iso_ref_title anchor="ISO5725-2">
   <isocode>5725-2</isocode>
-  <isotitle>Accuracy (trueness and precision) of measurement methods and results -- Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method</isotitle>
+  <isotitle>Accuracy (trueness and precision) of measurement methods and results — Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method</isotitle>
 </iso_ref_title>
   <iso_ref_title anchor="ISO6322-1">
   <isocode>6322-1</isocode>
-  <isotitle>Storage of cereals and pulses -- Part 1: General recommendations for the keeping of cereals</isotitle>
+  <isotitle>Storage of cereals and pulses — Part 1: General recommendations for the keeping of cereals</isotitle>
 </iso_ref_title>
   <iso_ref_title anchor="ISO6322-2">
   <isocode>6322-2</isocode>
-  <isotitle>Storage of cereals and pulses -- Part 2: Practical recommendations</isotitle>
+  <isotitle>Storage of cereals and pulses — Part 2: Practical recommendations</isotitle>
 </iso_ref_title>
   <iso_ref_title anchor="ISO6322-3">
   <isocode>6322-3</isocode>
-  <isotitle>Storage of cereals and pulses -- Part 3: Control of attack by pests</isotitle>
+  <isotitle>Storage of cereals and pulses — Part 3: Control of attack by pests</isotitle>
 </iso_ref_title>
   <iso_ref_title anchor="ISO7301">
   <isocode>7301</isocode>
   <isodate>2011</isodate>
-  <isotitle>Rice -- Specification</isotitle>
+  <isotitle>Rice — Specification</isotitle>
 </iso_ref_title>
   <iso_ref_title anchor="ISO14864">
   <isocode>14864</isocode>
   <isodate>1998</isodate>
-  <isotitle>Rice -- Evaluation of gelatinization time of kernels during cooking</isotitle>
+  <isotitle>Rice — Evaluation of gelatinization time of kernels during cooking</isotitle>
 </iso_ref_title>
   <reference>
-  <ref anchor="IEC61010-2">[IEC 61010-2:1998]</ref><p>, <em>Safety requirements for electric equipment for measurement, control, and laboratory use -- Part 2: Particular requirements for laboratory equipment for the heating of material</em></p>
+  <ref anchor="IEC61010-2">[IEC 61010-2:1998]</ref><p>, <em>Safety requirements for electric equipment for measurement, control, and laboratory use — Part 2: Particular requirements for laboratory equipment for the heating of material</em></p>
 </reference>
   <reference>
   <ref anchor="ref10">[10]</ref><p> Standard No I.C.C 167. <em>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</em> (see <eref target="http://www.icc.or.at"/>)</p>
 </reference>
   <reference>
-  <ref anchor="ref11">[11]</ref><p> Nitrogen-ammonia-protein modified Kjeldahl method -- Titanium oxide and copper sulfate catalyst. <em>Official Methods and Recommended Practices of the AOCS</em> (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL</p>
+  <ref anchor="ref11">[11]</ref><p> Nitrogen-ammonia-protein modified Kjeldahl method — Titanium oxide and copper sulfate catalyst. <em>Official Methods and Recommended Practices of the AOCS</em> (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL</p>
 </reference>
   <reference>
   <ref anchor="ref12">[12]</ref><p> Berner D.L., &amp; Brown J. Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. <em>J. Am. Oil Chem. Soc.</em> 1994, <strong>71</strong> (11) pp 1291-1293</p>
 </reference>
   <reference>
-  <ref anchor="ref13">[13]</ref><p> Buckee G.K. Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method -- Collaborative trial. <em>J. Inst. Brew.</em> 1994, <strong>100</strong> (2) pp 57-64</p>
+  <ref anchor="ref13">[13]</ref><p> Buckee G.K. Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method — Collaborative trial. <em>J. Inst. Brew.</em> 1994, <strong>100</strong> (2) pp 57-64</p>
 </reference>
   <reference>
   <ref anchor="ref14">[14]</ref><p> Frister H. <em>Direct determination of nitrogen content by Dumas analysis; Interlaboratory study on precision characteristics</em>. AOAC International, Europe Section 4th International Symposium, Nyon, Switzerland, 1994, 33 pp</p>

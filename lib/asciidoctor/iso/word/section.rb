@@ -21,7 +21,7 @@ module Asciidoctor
             out.div **attr_code("id": c["anchor"]) do |s|
               c.elements.each do |c1|
                 if c1.name == "name"
-                  s.h1 do |t| 
+                  s.h1 do |t|
                     t << "#{$anchors[c['anchor']][:label]}. "
                     t << c1.text
                   end
@@ -38,7 +38,7 @@ module Asciidoctor
             out.div **attr_code("id": c["anchor"]) do |s|
               c.elements.each do |c1|
                 if c1.name == "name"
-                  s.h1 do |t| 
+                  s.h1 do |t|
                     t << "#{$anchors[c['anchor']][:label]}. "
                     t << c1.text
                   end
@@ -104,16 +104,6 @@ module Asciidoctor
           return unless f
           out.div do |s|
             s.h1 **{ class: "ForewordTitle" } { |h1| h1 << "Foreword" }
-=begin
-    s.p **{class: "ForewordTitle"} do |p|
-      p.a **{name: "_Toc353342667"}
-      p.a **{name: "_Toc485815077"} do |a|
-        a.span **{style: "mso-bookmark:_Toc353342667"} do |span|
-          span.span << "Foreword"
-        end
-      end
-    end
-=end
             f.elements.each { |e| parse(e, s) }
           end
         end

@@ -58,7 +58,7 @@ module Asciidoctor
           dl = node.at(ns("./dl"))
           out.div **attr_code(id: node["anchor"], class: "formula") do |div|
             parse(node.at(ns("./stem")), out)
-            div.span **{ style: "mso-tab-count:1" } { |s| s << "&#xA0; " }
+            insert_tab(div, 1)
             div << "(#{$anchors[node['anchor']][:label]})"
           end
           out.p { |p| p << "where" }

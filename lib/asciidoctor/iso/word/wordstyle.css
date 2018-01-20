@@ -66,6 +66,23 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;}
+p.Biblio, li.Biblio, div.Biblio
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+    margin-left:33.15pt;
+    text-indent:-33.15pt;
+    tab-stops: 33.15pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;}
 p.FigureTitle
 	{mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -925,7 +942,6 @@ p.zzSTDTitle1, li.zzSTDTitle1, div.zzSTDTitle1
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
-	color:blue;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}

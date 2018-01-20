@@ -32,9 +32,7 @@ module Asciidoctor
         def termexample_parse(node, out)
           out.p **{ class: "Note" } do |p|
             p << "EXAMPLE:"
-            p.span **attr_code(style: "mso-tab-count:1") do |span|
-              span << "&#xA0; "
-            end
+            insert_tab(p, 1)
             node.children.each { |n| parse(n, p) }
           end
         end

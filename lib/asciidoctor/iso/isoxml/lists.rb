@@ -61,7 +61,8 @@ module Asciidoctor
         end
 
         def ref_normalise(ref)
-          ref.gsub(/&#8201;&#8212;&#8201;/, " -- ").
+          ref.
+            # gsub(/&#8201;&#8212;&#8201;/, " -- ").
             gsub(/&amp;amp;/, "&amp;")
         end
 

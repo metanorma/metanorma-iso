@@ -1,41 +1,79 @@
-require "uuidtools"
-
 module Asciidoctor
   module ISO
     module Word
       module References
-        def iso_ref_entry(list, b)
-          list.p **attr_code("id": b["anchor"], class: "MsoNormal") do |ref|
-            isocode = b.at(ns("./isocode"))
-            isodate = b.at(ns("./isodate"))
-            isotitle = b.at(ns("./isotitle"))
+        def iso_ref_code(b)
+          isocode = b.at(ns("./isocode"))
+          isodate = b.at(ns("./isodate"))
+          reference = "ISO #{isocode.text}"
+          reference += ": #{isodate.text}" if isodate
+          reference
+        end
+
+        def iso_ref_entry(list, b, ordinal, biblio)
+          attrs = { id: b["anchor"],
+                    class: biblio ? "Biblio" : "MsoNormal" }
+          list.p **attr_code(attrs) do |ref|
             date_footnote = b.at(ns("./date_footnote"))
-            reference = "ISO #{isocode.text}"
-            reference += ": #{isodate.text}" if isodate
-            ref << reference
+            if biblio
+              ref << "[#{ordinal}]"
+              insert_tab(ref, 1)
+            end
+            ref << iso_ref_code(b)
             footnote_parse(date_footnote, ref) if date_footnote
-            ref.i { |i| i << " #{isotitle.text}" }
+            ref << ", " if biblio
+            ref.i { |i| i << " #{b.at(ns('./isotitle')).text}" }
           end
         end
 
-        def ref_entry(list, b)
+        def ref_entry_code(r, ordinal, t)
+          if /^\d+$/.match?(t)
+            r << "[#{t}]"
+            insert_tab(r, 1)
+          else
+            r << "[#{ordinal}]"
+            insert_tab(r, 1)
+            r << t
+          end
+        end
+
+        def ref_entry(list, b, ordinal)
           ref = b.at(ns("./ref"))
-          p = b.at(ns("./p"))
-          list.p **attr_code("id": ref["anchor"], class: "MsoNormal") do |r|
-            r << ref.text
-            p.children.each { |n| parse(n, r) }
+          para = b.at(ns("./p"))
+          list.p **attr_code("id": ref["anchor"], class: "Biblio") do |r|
+            ref_entry_code(r, ordinal, ref.text.gsub(/[\[\]]/, ""))
+            para.children.each { |n| parse(n, r) }
           end
         end
 
-        def biblio_list(f, s)
+        def biblio_list(f, s, bibliography)
           isobiblio = f.xpath(ns("./iso_ref_title"))
           refbiblio = f.xpath(ns("./reference"))
-          isobiblio.each do |b|
-            iso_ref_entry(s, b)
+          isobiblio.each_with_index do |b, i|
+            iso_ref_entry(s, b, i + 1, bibliography)
           end
-          refbiblio.each do |b|
-            ref_entry(s, b)
+          refbiblio.each_with_index do |b, i|
+            ref_entry(s, b, i + 1 + isobiblio.size)
           end
+        end
+
+        @@norm_with_refs_pref = <<~BOILERPLATE
+          The following documents are referred to in the text in such a way
+          that some or all of their content constitutes requirements of this
+          document. For dated references, only the edition cited applies.
+          For undated references, the latest edition of the referenced
+          document (including any amendments) applies.
+        BOILERPLATE
+
+        @@norm_empty_pref =
+          "There are no normative references in this document."
+
+        def norm_ref_preface(f, div)
+          refs = f.elements.select do |e|
+            ["iso_ref_title", "reference"].include? e.name
+          end
+          pref = refs.empty? ? @@norm_empty_pref : @@norm_with_refs_pref
+          div.p pref, **{ class: "MsoNormal" }
         end
 
         def norm_ref(isoxml, out)
@@ -43,12 +81,8 @@ module Asciidoctor
           return unless f
           out.div do |div|
             div.h1 "2. Normative References"
-            f.elements.each do |e|
-              unless ["iso_ref_title", "reference"].include? e.name
-                parse(e, div)
-              end
-            end
-            biblio_list(f, div)
+            norm_ref_preface(f, div)
+            biblio_list(f, div, false)
           end
         end
 
@@ -57,12 +91,10 @@ module Asciidoctor
           return unless f
           out.div do |div|
             div.h1 "Bibliography"
-            f.elements.each do |e|
-              unless ["iso_ref_title", "reference"].include? e.name
-                parse(e, div)
-              end
-            end
-            biblio_list(f, div)
+            f.elements.reject do |e|
+              ["iso_ref_title", "reference"].include? e.name
+            end.each { |e| parse(e, div) }
+            biblio_list(f, div, true)
           end
         end
       end

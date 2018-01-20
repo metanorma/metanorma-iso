@@ -44,25 +44,29 @@ module Asciidoctor
           # out.p "© ISO #{yr.text}" if yr
         end
 
-        def title(isoxml, out)
+        def title(isoxml, _out)
           intro = isoxml.at(ns("//title/en/title_intro"))
           main = isoxml.at(ns("//title/en/title_main"))
           part = isoxml.at(ns("//title/en/title_part"))
           partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
           main = main.text
-          main = "#{intro.text} — #{main}" if intro
-          main = "#{main} — Part #{partnumber}: #{part.text}" if part
+          main = "#{intro.text}&nbsp;&mdash;#{main}" if intro
+          if part
+            main = "#{main}&nbsp;&mdash; Part&nbsp;#{partnumber}: #{part.text}"
+          end
           $iso_doctitle = main
         end
 
-        def subtitle(isoxml, out)
+        def subtitle(isoxml, _out)
           intro = isoxml.at(ns("//title/fr/title_intro"))
           main = isoxml.at(ns("//title/fr/title_main"))
           part = isoxml.at(ns("//title/fr/title_part"))
           partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
           main = main.text
-          main = "#{intro.text} — #{main}" if intro
-          main = "#{main} — Part #{partnumber}: #{part.text}" if part
+          main = "#{intro.text}&nbsp; #{main}" if intro
+          if part
+            main = "#{main}&nbsp;&mdash; Part&nbsp;#{partnumber}: #{part.text}"
+          end
           $iso_docsubtitle = main
         end
       end

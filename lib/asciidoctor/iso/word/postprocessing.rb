@@ -143,6 +143,8 @@ module Asciidoctor
             html.head do |head|
               head.title { |t| t << filename }
               head.parent.add_child <<~XML
+
+              <!--[if gte mso 9]>
               <xml>
               <w:WordDocument>
               <w:View>Print</w:View>
@@ -150,6 +152,7 @@ module Asciidoctor
               <w:DoNotOptimizeForBrowser/>
               </w:WordDocument>
               </xml>
+              <![endif]-->
               XML
               head.meta **{ "http-equiv": "Content-Type",
                             content: "text/html; charset=utf-8" }

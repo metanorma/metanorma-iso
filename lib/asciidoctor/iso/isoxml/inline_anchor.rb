@@ -34,7 +34,6 @@ module Asciidoctor
           eref_attributes = {
             target: node.target,
           }
-
           noko do |xml|
             xml.eref eref_contents, **attr_code(eref_attributes)
           end.join
@@ -45,7 +44,6 @@ module Asciidoctor
           eref_attributes = {
             anchor: node.target,
           }
-
           noko do |xml|
             xml.ref eref_contents, **attr_code(eref_attributes)
           end.join
