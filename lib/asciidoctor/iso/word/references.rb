@@ -89,8 +89,9 @@ module Asciidoctor
         def bibliography(isoxml, out)
           f = isoxml.at(ns("//bibliography"))
           return unless f
+          page_break(out)
           out.div do |div|
-            div.h1 "Bibliography"
+            div.h1 "Bibliography", **{ class: "Section3" }
             f.elements.reject do |e|
               ["iso_ref_title", "reference"].include? e.name
             end.each { |e| parse(e, div) }

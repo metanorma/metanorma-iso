@@ -8,6 +8,13 @@ module Asciidoctor
           body.br **{ clear: "all", class: "section" }
         end
 
+        def page_break(body)
+          body.br **{ 
+            clear: "all",
+            style: "mso-special-character:line-break;page-break-before:always",
+          }
+        end
+
         def eref_parse(node, out)
           linktext = node.text
           linktext = node["target"] if linktext.empty?

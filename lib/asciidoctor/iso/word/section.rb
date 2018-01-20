@@ -35,7 +35,8 @@ module Asciidoctor
 
         def annex(isoxml, out)
           isoxml.xpath(ns("//annex")).each do |c|
-            out.div **attr_code("id": c["anchor"]) do |s|
+            page_break(out)
+            out.div **attr_code("id": c["anchor"], class: "Section3" ) do |s|
               c.elements.each do |c1|
                 if c1.name == "name"
                   s.h1 do |t|
@@ -87,7 +88,8 @@ module Asciidoctor
           f = isoxml.at(ns("//introduction"))
           return unless f
           title_attr = { class: "IntroTitle" }
-          out.div do |div|
+          page_break(out)
+          out.div **{class: "Section3" } do |div|
             div.h1 "Introduction", **attr_code(title_attr)
             f.elements.each do |e|
               if e.name == "patent_notice"
