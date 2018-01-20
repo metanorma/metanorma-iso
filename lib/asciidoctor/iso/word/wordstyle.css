@@ -467,15 +467,17 @@ a:link, span.MsoHyperlink
 	{mso-style-priority:99;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	mso-ansi-language:FR;
-	text-decoration:underline;
-	text-underline:single;}
+	mso-ansi-language:EN;
+	color:black;
+	text-decoration:none;
+	text-underline:none;}
 a:visited, span.MsoHyperlinkFollowed
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
 	mso-themecolor:followedhyperlink;
-	text-decoration:underline;
-	text-underline:single;}
+	color:black;
+	text-decoration:none;
+	text-underline:none;}
 span.MsoPlaceholderText
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
