@@ -428,6 +428,24 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 span.MsoFootnoteReference
 	{mso-style-priority:99;
 	vertical-align:super;}
+p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"Footnote Text Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:10.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Cambria";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:EN-US;}
 p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
