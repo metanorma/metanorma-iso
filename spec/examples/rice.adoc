@@ -246,6 +246,8 @@ The mass fraction of extraneous matter and defective kernels in husked and mille
 
 NOTE: Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <<ISO6322-1>>, <<ISO6322-2>> and <<ISO6322-3>>.
 
+==== {blank}
+
 The defect tolerance for the categories considered, and determined in accordance with the method given in <<AnnexA>>, shall not exceed the limits given in <<table1>>. 
 
 [#table1]

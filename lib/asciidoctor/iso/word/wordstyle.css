@@ -120,7 +120,7 @@ p.TableTitle
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
-p.Note
+p.Note, div.Note, li.Note
 	{mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
@@ -914,7 +914,6 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
-	color:blue;
 	mso-ansi-language:EN-GB;}
 p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
 	{mso-style-name:zzSTDTitle;
@@ -935,7 +934,6 @@ p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
-	color:blue;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}

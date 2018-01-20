@@ -17,11 +17,29 @@ module Asciidoctor
           end
         end
 
-        def note_parse(node, out)
-          out.div **attr_code("id": node["anchor"],
-                              class: "MsoNormalIndent") do |t|
-            node.children.each { |n| parse(n, t) }
+        def note_p_parse(node, div)
+          div.p **{ class: "Note" } do |p|
+            p << "NOTE"
+            insert_tab(p, 1)
+            node.first_element_child.children.each { |n| parse(n, p) }
           end
+          node.element_children[1..-1].each { |n| parse(n, div) }
+        end
+
+        def note_parse(node, out)
+          $note = true
+          out.div **{ id: node["anchor"], class: "Note" } do |div|
+            if node.first_element_child.name == "p"
+              note_p_parse(node, div)
+            else
+              div.p **{ class: "Note" } do |p|
+                p << "NOTE"
+                insert_tab(p, 1)
+              end
+              node.children.each { |n| parse(n, div) }
+            end
+          end
+          $note = false
         end
 
         def figure_name_parse(node, div, name)
@@ -66,7 +84,7 @@ module Asciidoctor
         end
 
         def para_parse(node, out)
-          out.p **{ class: "MsoNormal" } do |p|
+          out.p **{ class: $note ? "Note" : "MsoNormal" } do |p|
             unless $termdomain.empty?
               p << "&lt;#{$termdomain}&gt; "
               $termdomain = ""
@@ -82,7 +100,9 @@ module Asciidoctor
             node.elements.each_slice(2) do |dt, dd|
               v.dt do |term|
                 if dt.elements.empty?
-                  term.p **{ class: "MsoNormal" } { |p| p << dt.text }
+                  term.p **{ class: $note ? "Note" : "MsoNormal" } do
+                    |p| p << dt.text 
+                  end
                 else
                   dt.children.each { |n| parse(n, term) }
                 end
