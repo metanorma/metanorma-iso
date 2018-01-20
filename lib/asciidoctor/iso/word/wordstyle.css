@@ -64,7 +64,7 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 p.Biblio, li.Biblio, div.Biblio
 	{mso-style-unhide:no;
@@ -81,7 +81,7 @@ p.Biblio, li.Biblio, div.Biblio
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 p.FigureTitle
 	{mso-style-unhide:no;
@@ -99,7 +99,7 @@ p.FigureTitle
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 p.TableTitle
 	{mso-style-unhide:no;
@@ -118,7 +118,7 @@ p.TableTitle
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 p.Note
 	{mso-style-unhide:no;
@@ -133,10 +133,10 @@ p.Note
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
 	font-size:10.0pt;
-	mso-bidi-font-size:11.0pt
+	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 	/* may need to be revised */
 p.MsoBlockText, li.MsoBlockText, div.MsoBlockText
@@ -156,11 +156,11 @@ p.MsoBlockText, li.MsoBlockText, div.MsoBlockText
 	font-family:"Calibri",sans-serif;
 	mso-ascii-font-family:Calibri;
 	mso-ascii-theme-font:minor-latin;
-	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-font-family:"Cambria";
 	mso-fareast-theme-font:minor-fareast;
 	mso-hansi-font-family:Calibri;
 	mso-hansi-theme-font:minor-latin;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-bidi-theme-font:minor-bidi;
 	color:#4472C4;
 	mso-themecolor:accent1;
@@ -335,7 +335,7 @@ p.MsoToc1, li.MsoToc1, div.MsoToc1
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -358,7 +358,7 @@ p.MsoToc2, li.MsoToc2, div.MsoToc2
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -381,7 +381,7 @@ p.MsoToc3, li.MsoToc3, div.MsoToc3
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -402,7 +402,7 @@ p.MsoHeader, li.MsoHeader, div.MsoHeader
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -423,7 +423,7 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 span.MsoFootnoteReference
 	{mso-style-priority:99;
@@ -460,21 +460,19 @@ p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
 	mso-pagination:widow-orphan;
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
-	mso-fareast-font-family:"Times New Roman";
-	mso-bidi-font-family:"Times New Roman";
+	mso-fareast-font-family:"Cambria";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 a:link, span.MsoHyperlink
 	{mso-style-priority:99;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	color:blue;
 	mso-ansi-language:FR;
 	text-decoration:underline;
 	text-underline:single;}
 a:visited, span.MsoHyperlinkFollowed
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
-	color:#954F72;
 	mso-themecolor:followedhyperlink;
 	text-decoration:underline;
 	text-underline:single;}
@@ -600,7 +598,7 @@ p.a2, li.a2, div.a2
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:"MS Mincho";
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;
@@ -625,7 +623,7 @@ p.a3, li.a3, div.a3
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:"MS Mincho";
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;
@@ -649,7 +647,7 @@ p.a4, li.a4, div.a4
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:"MS Mincho";
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;
@@ -673,7 +671,7 @@ p.a5, li.a5, div.a5
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:"MS Mincho";
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;
@@ -697,7 +695,7 @@ p.a6, li.a6, div.a6
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:"MS Mincho";
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;}
@@ -724,7 +722,7 @@ p.ANNEX, li.ANNEX, div.ANNEX
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:"MS Mincho";
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;
@@ -746,7 +744,7 @@ p.BiblioTitle, li.BiblioTitle, div.BiblioTitle
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -765,7 +763,7 @@ p.Definition, li.Definition, div.Definition
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 p.ForewordTitle, li.ForewordTitle, div.ForewordTitle, h1.ForewordTitle
 	{mso-style-name:"Foreword Title";
@@ -787,7 +785,7 @@ p.ForewordTitle, li.ForewordTitle, div.ForewordTitle, h1.ForewordTitle
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -812,7 +810,7 @@ p.IntroTitle, li.IntroTitle, div.IntroTitle
 	page-break-before:always;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -831,7 +829,7 @@ p.Terms, li.Terms, div.Terms
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -850,7 +848,7 @@ p.AltTerms, li.AltTerms, div.AltTerms
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-bidi-font-weight:normal;}
 p.TermNum, li.TermNum, div.TermNum
@@ -867,7 +865,7 @@ p.TermNum, li.TermNum, div.TermNum
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -891,7 +889,7 @@ p.zzContents, li.zzContents, div.zzContents
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -915,7 +913,7 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	color:blue;
 	mso-ansi-language:EN-GB;}
 p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
@@ -936,7 +934,7 @@ p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	color:blue;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
@@ -959,7 +957,7 @@ p.zzSTDTitle1, li.zzSTDTitle1, div.zzSTDTitle1
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
@@ -1001,7 +999,7 @@ p.Code, li.Code, div.Code
 	mso-bidi-font-size:11.0pt;
 	font-family:"Courier New",serif;
 	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 span.BodyTextChar
 	{mso-style-name:"Body Text Char";
@@ -1013,8 +1011,8 @@ span.BodyTextChar
 	mso-style-link:"Body Text";
 	mso-ansi-font-size:11.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Times New Roman",serif;
-	mso-fareast-font-family:"Times New Roman";
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 p.Formula, li.Formula, div.Formula
 	{mso-style-name:Formula;
@@ -1029,8 +1027,8 @@ p.Formula, li.Formula, div.Formula
 	tab-stops:right 487.45pt;
 	font-size:11.0pt;
 	font-family:"Cambria",serif;
-	mso-fareast-font-family:"Times New Roman";
-	mso-bidi-font-family:"Times New Roman";
+	mso-fareast-font-family:"Cambria";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 p.Tablebody, li.Tablebody, div.Tablebody
 	{mso-style-name:"Table body";
@@ -1045,8 +1043,8 @@ p.Tablebody, li.Tablebody, div.Tablebody
 	font-size:10.0pt;
 	mso-bidi-font-size:11.0pt;
 	font-family:"Cambria",serif;
-	mso-fareast-font-family:"Times New Roman";
-	mso-bidi-font-family:"Times New Roman";
+	mso-fareast-font-family:"Cambria";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 .MsoChpDefault
 	{mso-style-type:export-only;
@@ -1117,7 +1115,7 @@ div.WordSection3
 	mso-ansi-font-size:14.0pt;
 	mso-bidi-font-size:14.0pt;
 	font-family:"Cambria",serif;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l0:level2
@@ -1127,7 +1125,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l0:level3
@@ -1137,7 +1135,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l0:level4
@@ -1147,7 +1145,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l0:level5
@@ -1157,7 +1155,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l0:level6
@@ -1167,7 +1165,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l0:level7
@@ -1178,7 +1176,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";}
+	mso-bidi-font-family:"Cambria";}
 @list l0:level8
 	{mso-level-reset-level:level2;
 	mso-level-suffix:space;
@@ -1187,7 +1185,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";}
+	mso-bidi-font-family:"Cambria";}
 @list l0:level9
 	{mso-level-number-format:roman-lower;
 	mso-level-text:"\(%9\)";
@@ -1195,7 +1193,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";}
+	mso-bidi-font-family:"Cambria";}
 @list l1
 	{mso-list-id:866942648;
 	mso-list-template-ids:-1756330000;}
@@ -1206,7 +1204,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:21.6pt;
 	text-indent:-21.6pt;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l1:level2
@@ -1216,7 +1214,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l1:level3
@@ -1226,7 +1224,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l1:level4
@@ -1236,7 +1234,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l1:level5
@@ -1246,7 +1244,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l1:level6
@@ -1256,7 +1254,7 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Cambria";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
 @list l1:level7
@@ -1265,21 +1263,21 @@ div.WordSection3
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";}
+	mso-bidi-font-family:"Cambria";}
 @list l1:level8
 	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8";
 	mso-level-tab-stop:90.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";}
+	mso-bidi-font-family:"Cambria";}
 @list l1:level9
 	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8\.%9";
 	mso-level-tab-stop:90.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:"Times New Roman";}
+	mso-bidi-font-family:"Cambria";}
 ol
 	{margin-bottom:0cm;}
 ul

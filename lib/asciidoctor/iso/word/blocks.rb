@@ -61,7 +61,7 @@ module Asciidoctor
             insert_tab(div, 1)
             div << "(#{$anchors[node['anchor']][:label]})"
           end
-          out.p { |p| p << "where" }
+          out.p **{ class: "MsoNormal" } { |p| p << "where" }
           parse(dl, out) if dl
         end
 
@@ -81,7 +81,11 @@ module Asciidoctor
           out.dl do |v|
             node.elements.each_slice(2) do |dt, dd|
               v.dt do |term|
-                dt.children.each { |n| parse(n, term) }
+                if dt.elements.empty?
+                  term.p **{ class: "MsoNormal" } { |p| p << dt.text }
+                else
+                  dt.children.each { |n| parse(n, term) }
+                end
               end
               v.dd do |listitem|
                 dd.children.each { |n| parse(n, listitem) }

@@ -79,7 +79,7 @@ module Asciidoctor
               gsub(/\[TERMREF\]\s*/, "[SOURCE: ").
               gsub(/\s*\[\/TERMREF\]\s*/, "]").
               gsub(/\s*\[ISOSECTION\]/, ", ").
-              gsub(/\s*\[MODIFICATION\]/, ", modified ?~@~T ").
+              gsub(/\s*\[MODIFICATION\]/, ", modified &mdash; ").
               gsub(%r{WD/CD/DIS/FDIS}, $iso_stageabbr)
           end
 
