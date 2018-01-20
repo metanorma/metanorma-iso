@@ -42,6 +42,16 @@ module Asciidoctor
           $note = false
         end
 
+        # TODO will probably replace this with Word comments
+        def review_note_parse(node, out)
+          out.div **{ class: "MsoBlockText" } do |t|
+            t.p.b { |b| b << node["source"] } if node["source"]
+            node.children.each do |n|
+              parse(n, t) 
+            end
+          end
+        end
+
         def figure_name_parse(node, div, name)
           div.p **{ class: "FigureTitle", align: "center" } do |p|
             p.b do |b|

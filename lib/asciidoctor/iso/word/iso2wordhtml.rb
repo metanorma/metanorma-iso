@@ -139,6 +139,7 @@ module Asciidoctor
               when "p" then para_parse(node, out)
               when "tr" then tr_parse(node, out)
               when "note" then note_parse(node, out)
+              when "review_note" then review_note_parse(node, out)
               when "warning" then warning_parse(node, out)
               when "formula" then formula_parse(node, out)
               when "table" then table_parse(node, out)

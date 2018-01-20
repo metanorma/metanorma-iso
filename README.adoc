@@ -204,6 +204,8 @@ _Figure 1_, not _Figure A.1_.
 
 * _Notes_: There is no automatic note numbering by the default HTML processor.
 
+* _Review Notes_: The reviewer on the review note is not displayed.
+
 * _Keys_: Keys to formulas and figures are expected to be marked up as
 definition lists consistently, rather than as inline prose.
 
