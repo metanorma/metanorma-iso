@@ -51,7 +51,7 @@ module Asciidoctor
           def onlychild_clause_validate(root)
             q = "//clause/clause | //annex/clause | //scope/clause"
             root.xpath(q).each do |c|
-              return unless c.xpath("../clause").size == 1
+              next unless c.xpath("../clause").size == 1
               title = c.at("./title")
               location = if c["anchor"].nil? && title.nil?
                            c.text[0..60] + "..."

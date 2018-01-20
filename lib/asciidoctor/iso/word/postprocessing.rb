@@ -143,9 +143,13 @@ module Asciidoctor
             html.head do |head|
               head.title { |t| t << filename }
               head.parent.add_child <<~XML
-                <xml> <w:WordDocument> <w:View>Print</w:View>
-                <w:Zoom>100</w:Zoom> <w:DoNotOptimizeForBrowser/>
-                </w:WordDocument> </xml>
+              <xml>
+              <w:WordDocument>
+              <w:View>Print</w:View>
+              <w:Zoom>100</w:Zoom>
+              <w:DoNotOptimizeForBrowser/>
+              </w:WordDocument>
+              </xml>
               XML
               head.meta **{ "http-equiv": "Content-Type",
                             content: "text/html; charset=utf-8" }

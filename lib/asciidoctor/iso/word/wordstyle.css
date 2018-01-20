@@ -1319,3 +1319,6 @@ body
 br.section
     {page-break-before:always;
     mso-break-type:section-break;}
+dt
+    {page-break-inside:avoid;
+    page-break-after:avoid}
