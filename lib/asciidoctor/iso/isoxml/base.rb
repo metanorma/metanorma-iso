@@ -5,6 +5,7 @@ require "json"
 require "pathname"
 require "open-uri"
 require "pp"
+require "asciidoctor/iso/word/iso2wordhtml"
 
 module Asciidoctor
   module ISO

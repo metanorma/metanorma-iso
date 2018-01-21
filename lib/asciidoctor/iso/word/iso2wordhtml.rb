@@ -1,5 +1,4 @@
 require "nokogiri"
-require "mime"
 require "asciimath"
 require "xml/xslt"
 require "uuidtools"
