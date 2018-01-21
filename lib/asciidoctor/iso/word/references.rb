@@ -37,7 +37,7 @@ module Asciidoctor
           end
         end
 
-        def ref_entry(list, b, ordinal)
+        def ref_entry(list, b, ordinal, bibliography)
           ref = b.at(ns("./ref"))
           para = b.at(ns("./p"))
           list.p **attr_code("id": ref["anchor"], class: "Biblio") do |r|
@@ -53,7 +53,7 @@ module Asciidoctor
             iso_ref_entry(s, b, i + 1, bibliography)
           end
           refbiblio.each_with_index do |b, i|
-            ref_entry(s, b, i + 1 + isobiblio.size)
+            ref_entry(s, b, i + 1 + isobiblio.size, bibliography)
           end
         end
 
@@ -80,7 +80,7 @@ module Asciidoctor
           f = isoxml.at(ns("//norm_ref"))
           return unless f
           out.div do |div|
-            div.h1 "2. Normative References"
+            clause_name("2.", "Normative References", div)
             norm_ref_preface(f, div)
             biblio_list(f, div, false)
           end

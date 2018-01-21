@@ -190,22 +190,38 @@ module Asciidoctor
             warn w
           end
 
-          def style1(n, text, re, warning)
+          # style check with a single regex
+          def style_single_regex(n, text, re, warning)
             m = re.match text
             unless m.nil?
               style_warning(n, warning, m[:num])
             end
           end
 
+          # style check with a regex on a token 
+          # and a negative match on its preceding token
+          def style_two_regex_not_prev(n, text, re, re_prev, warning)
+            return if text.nil?
+            words = text.split(/\W+/).each_index do |i|
+              next if i == 0
+              m = re.match text[i]
+              m_prev = re_prev.match text[i-1]
+              if !m.nil? && m_prev.nil?
+                style_warning(n, warning, m[:num])
+              end
+            end
+          end
+
           def style(n, text)
-            style1(n, text, /\b(?<num>[0-9]+\.[0-9]+)\b/,
-                   "possible decimal point")
-            style1(n, text, /(?<!(ISO|IEC) )\b(?<num>[0-9][0-9][0-9][0-9]+)\b/,
-                   "number not broken up in threes")
-            style1(n, text, /\b(?<num>[0-9.,]+%)/,
-                   "no space before percent sign")
-            style1(n, text, /\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
-                   "unbracketed tolerance before percent sign")
+            style_single_regex(n, text, /\b(?<num>[0-9]+\.[0-9]+)\b/,
+                               "possible decimal point")
+            style_two_regex_not_prev(n, text, /^(?<num>[0-9]{4,})$/, 
+                                     %r{(\bISO|\bIEC|\bIEEE|/)$},
+                                     "number not broken up in threes")
+            style_single_regex(n, text, /\b(?<num>[0-9.,]+%)/,
+                               "no space before percent sign")
+            style_single_regex(n, text, /\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
+                               "unbracketed tolerance before percent sign")
           end
         end
       end

@@ -1,9 +1,11 @@
-require "uuidtools"
+require "asciidoctor/iso/word/xref_gen"
 
 module Asciidoctor
   module ISO
     module Word
       module Terms
+        include ::Asciidoctor::ISO::Word::XrefGen
+
         def modification_parse(node, out)
           out << "[MODIFICATION]"
           node.children.each { |n| parse(n, out) }
@@ -55,9 +57,9 @@ module Asciidoctor
 
         def termdef_parse(node, out)
           out.p **{ class: "TermNum", id: node["anchor"] } do |p|
-            p << $anchors[node["anchor"]][:label]
+            p << get_anchors()[node["anchor"]][:label]
           end
-          $termdomain = ""
+          set_termdomain("")
           $termnotenumber = 0
           node.children.each { |n| parse(n, out) }
         end

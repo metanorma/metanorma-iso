@@ -4,6 +4,17 @@ module Asciidoctor
   module ISO
     module Word
       module Blocks
+        @@termdomain = ""
+
+        def set_termdomain(termdomain)
+        @@termdomain = termdomain
+      end
+
+def get_termdomain
+  @@termdomain
+end
+
+
         def ul_parse(node, out)
           out.ul do |ul|
             node.children.each { |n| parse(n, ul) }
@@ -42,20 +53,10 @@ module Asciidoctor
           $note = false
         end
 
-        # TODO will probably replace this with Word comments
-        def review_note_parse(node, out)
-          out.div **{ class: "MsoBlockText" } do |t|
-            t.p.b { |b| b << node["source"] } if node["source"]
-            node.children.each do |n|
-              parse(n, t) 
-            end
-          end
-        end
-
         def figure_name_parse(node, div, name)
           div.p **{ class: "FigureTitle", align: "center" } do |p|
             p.b do |b|
-              b << "#{$anchors[node['anchor']][:label]}&nbsp;&mdash; "
+              b << "#{get_anchors()[node['anchor']][:label]}&nbsp;&mdash; "
               b << name.text
             end
           end
@@ -69,6 +70,38 @@ module Asciidoctor
               parse(n, div) unless n.name == "name"
             end
             figure_name_parse(node, div, name) if name
+          end
+        end
+
+        def sourcecode_name_parse(node, div, name)
+          div.p **{ class: "FigureTitle", align: "center" } do |p|
+            p.b do |b|
+              b << name.text
+            end
+          end
+        end
+
+        def sourcecode_parse(node, out)
+          name = node.at(ns("./name"))
+          out.p **attr_code(id: node["anchor"], class: "Sourcecode") do |div|
+            $sourcecode = true
+            node.children.each do |n|
+              parse(n, div) unless n.name == "name"
+            end
+            $sourcecode = false
+            sourcecode_name_parse(node, div, name) if name
+          end
+        end
+
+        def colist_parse(node, out)
+          out.ul do |ul|
+            node.children.each { |n| parse(n, ul) }
+          end
+        end
+
+        def annotation_parse(node, out)
+          out.li **{ class: "Sourcecode" } do |li|
+            node.children.each { |n| parse(n, li) }
           end
         end
 
@@ -87,7 +120,7 @@ module Asciidoctor
           out.div **attr_code(id: node["anchor"], class: "formula") do |div|
             parse(node.at(ns("./stem")), out)
             insert_tab(div, 1)
-            div << "(#{$anchors[node['anchor']][:label]})"
+            div << "(#{get_anchors()[node['anchor']][:label]})"
           end
           out.p **{ class: "MsoNormal" } { |p| p << "where" }
           parse(dl, out) if dl
@@ -95,9 +128,9 @@ module Asciidoctor
 
         def para_parse(node, out)
           out.p **{ class: $note ? "Note" : "MsoNormal" } do |p|
-            unless $termdomain.empty?
-              p << "&lt;#{$termdomain}&gt; "
-              $termdomain = ""
+            unless @@termdomain.empty?
+              p << "&lt;#{@@termdomain}&gt; "
+              @@termdomain = ""
             end
             $block = true
             node.children.each { |n| parse(n, p) }
@@ -159,83 +192,6 @@ module Asciidoctor
                               height: image_size[1],
                               width: image_size[0])
           image_title_parse(out, caption)
-        end
-
-        def table_title_parse(node, out)
-          name = node.at(ns("./name"))
-          if name
-            out.p **{ class: "TableTitle", align: "center" } do |p|
-              p.b do |b|
-                b << "#{$anchors[node['anchor']][:label]}&nbsp;&mdash; "
-                b << name.text
-              end
-            end
-          end
-        end
-
-        def thead_parse(node, t)
-          thead = node.at(ns("./thead"))
-          if thead
-            t.thead do |h|
-              thead.children.each { |n| parse(n, h) }
-            end
-          end
-        end
-
-        def tbody_parse(node, t)
-          tbody = node.at(ns("./tbody"))
-          t.tbody do |h|
-            tbody.children.each { |n| parse(n, h) }
-          end
-        end
-
-        def tfoot_parse(node, t)
-          tfoot = node.at(ns("./tfoot"))
-          if tfoot
-            t.tfoot do |h|
-              tfoot.children.each { |n| parse(n, h) }
-            end
-          end
-        end
-
-        def make_table_attr(node)
-          {
-            id: node["anchor"],
-            class: "MsoISOTable",
-            border: 1,
-            cellspacing: 0,
-            cellpadding: 0,
-          }
-        end
-
-        def table_parse(node, out)
-          table_title_parse(node, out)
-          out.table **make_table_attr(node) do |t|
-            thead_parse(node, t)
-            tbody_parse(node, t)
-            tfoot_parse(node, t)
-            dl = node.at(ns("./dl"))
-            parse(dl, out) if dl
-            node.xpath(ns("./note")).each { |n| parse(n, out) }
-          end
-        end
-
-        def make_tr_attr(td)
-          {
-            rowspan: td["rowspan"],
-            colspan: td["colspan"],
-            align: td["align"],
-          }
-        end
-
-        def tr_parse(node, out)
-          out.tr do |r|
-            node.elements.each do |td|
-              r.send td.name, **attr_code(make_tr_attr(td)) do |entry|
-                td.children.each { |n| parse(n, entry) }
-              end
-            end
-          end
         end
       end
     end

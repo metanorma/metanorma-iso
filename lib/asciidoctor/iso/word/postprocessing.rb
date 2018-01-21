@@ -5,7 +5,8 @@ module Asciidoctor
   module ISO
     module Word
       module Postprocessing
-        class << self
+                include ::Asciidoctor::ISO::Word::XrefGen
+
           def postprocess(result, _filename)
             # http://sebsauvage.net/wiki/doku.php?id=word_document_generation
             result = populate_template(msword_fix(result))
@@ -115,14 +116,13 @@ module Asciidoctor
 
           def msword_fix(r)
             # brain damage in MSWord parser
-            r.gsub(
-              %r{<span style="mso-special-character:footnote"/>},
-              '<span style="mso-special-character:footnote"></span>',
-            ).gsub(
-              %r{<link rel="File-List"},
-              "<link rel=File-List",
-              ).gsub(%r{<meta http-equiv="Content-Type"},
-                     "<meta http-equiv=Content-Type")
+            r.gsub(%r{<span style="mso-special-character:footnote"/>},
+                   '<span style="mso-special-character:footnote"></span>').
+                   gsub(%r{<link rel="File-List"}, "<link rel=File-List").
+                   gsub(%r{<meta http-equiv="Content-Type"},
+                        "<meta http-equiv=Content-Type").
+                   gsub(%r{&tab;|&amp;tab;}, 
+                        '<span style="mso-tab-count:1">&#xA0; </span>')
           end
 
           # these are in fact preprocess,
@@ -135,7 +135,7 @@ module Asciidoctor
               m: "http://schemas.microsoft.com/office/2004/12/omml",
               nil: "http://www.w3.org/TR/REC-html40",
             }.each { |k, v| p.add_namespace_definition(k.to_s, v) }
-            XrefGen::anchor_names docxml
+            anchor_names docxml
             define_head html, filename
           end
 
@@ -173,4 +173,3 @@ module Asciidoctor
       end
     end
   end
-end

@@ -4,13 +4,14 @@ module Asciidoctor
       module Table
         def table(node)
           noko do |xml|
-            xml.table **attr_code(anchor: node.id) do |xml_table|
+            xml.table **{anchor: Utils::anchor_or_uuid(node)} do |xml_table|
               %i(head body foot).reject do |tblsec|
                 node.rows[tblsec].empty?
               end
               xml_table.name node.title if node.title?
               table_head_body_and_foot node, xml_table
             end
+            xml.p "&nbsp;"
           end
         end
 

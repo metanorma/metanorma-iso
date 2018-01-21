@@ -4,6 +4,13 @@ module Asciidoctor
   module ISO
     module Word
       module Inline
+
+        @@footnotes = []
+        @@comments = []
+        @@xslt = XML::XSLT.new
+        @@xslt.xsl = File.read(File.join(File.dirname(__FILE__),
+                                         "mathml2omml.xsl"))
+
         def section_break(body)
           body.br **{ clear: "all", class: "section" }
         end
@@ -29,8 +36,8 @@ module Asciidoctor
 
         def get_linkend(node)
           linkend = node["target"]
-          if $anchors.has_key? node["target"]
-            linkend = $anchors[node["target"]][:xref]
+          if get_anchors().has_key? node["target"]
+            linkend = get_anchors()[node["target"]][:xref]
           end
           linkend = node.text unless node.text.empty?
           linkend
@@ -48,10 +55,10 @@ module Asciidoctor
         end
 
         def stem_parse(node, out)
-          $xslt.xml = AsciiMath.parse(node.text).to_mathml.
+          @@xslt.xml = AsciiMath.parse(node.text).to_mathml.
             gsub(/<math>/,
                  "<math xmlns='http://www.w3.org/1998/Math/MathML'>")
-          ooml = $xslt.serve.gsub(/<\?[^>]+>\s*/, "").
+          ooml = @@xslt.serve.gsub(/<\?[^>]+>\s*/, "").
             gsub(/ xmlns:[^=]+="[^"]+"/, "")
           out.span **{ class: "stem" } do |span|
             span.parent.add_child ooml
@@ -70,8 +77,9 @@ module Asciidoctor
         end
 
         def footnotes(div)
+          return if @@footnotes.empty?
           div.div **{ style: "mso-element:footnote-list" } do |div1|
-            $footnotes.each do |fn|
+            @@footnotes.each do |fn|
               div1.parent << fn
             end
           end
@@ -106,9 +114,49 @@ module Asciidoctor
         end
 
         def footnote_parse(node, out)
-          fn = $footnotes.length + 1
+          fn = @@footnotes.length + 1
           out.a **footnote_attributes(fn) { |a| make_footnote_link(a) }
-          $footnotes << make_footnote_text(node, fn)
+          @@footnotes << make_footnote_text(node, fn)
+        end
+
+        def comments(div)
+          return if @@comments.empty?
+          div.div **{ style: "mso-element:comment-list" } do |div1|
+            @@comments.each do |fn|
+              div1.parent << fn
+            end
+          end
+        end
+
+        # We want dates of comments as well
+        def make_comment_link(out, fn, from)
+          out.span **{ style: "MsoCommentReference" } do |s1|
+            s1.span **{ lang: "EN-GB", style: "font-size:9.0pt"} do |s2|
+              s2.a **{ style: "mso-comment-reference:SMC_#{fn};"\
+                       "mso-comment-date:20171128T1540" } if from
+              s2.span **{ style: "mso-special-character:comment" } do |s|
+                s << "&nbsp;"
+              end
+            end
+          end
+        end
+
+        def make_comment_text(node, fn)
+          noko do |xml|
+            xml.div **{ style: "mso-element:comment" } do |div|
+              div.span **{ style: %{mso-comment-author:"#{node["source"]}"} }
+              div.p **{ class: "MsoCommentText" } do |p|
+                make_comment_link(p, fn, false)
+                node.children.each { |n| parse(n, p) }
+              end
+            end
+          end.join("\n")
+        end
+
+        def review_note_parse(node, out)
+          fn = @@comments.length + 1
+          make_comment_link(out, fn, true)
+          @@comments << make_comment_text(node, fn)
         end
       end
     end

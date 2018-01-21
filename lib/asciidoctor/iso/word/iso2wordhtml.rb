@@ -13,7 +13,9 @@ require "asciidoctor/iso/word/section"
 require "asciidoctor/iso/word/references"
 require "asciidoctor/iso/word/terms"
 require "asciidoctor/iso/word/blocks"
+require "asciidoctor/iso/word/table"
 require "asciidoctor/iso/word/inline"
+require "asciidoctor/iso/word/xref_gen"
 require "asciidoctor/iso/isoxml/utils"
 require "pp"
 
@@ -29,17 +31,13 @@ module Asciidoctor
           include ::Asciidoctor::ISO::Word::References
           include ::Asciidoctor::ISO::Word::Terms
           include ::Asciidoctor::ISO::Word::Blocks
+          include ::Asciidoctor::ISO::Word::Table
           include ::Asciidoctor::ISO::Word::Inline
+          include ::Asciidoctor::ISO::Word::XrefGen
           include ::Asciidoctor::ISO::ISOXML::Utils
 
-          $anchors = {}
-          $footnotes = []
-          $termdomain = ""
           $filename = ""
           $dir = ""
-          $xslt = XML::XSLT.new
-          $xslt.xsl = File.read(File.join(File.dirname(__FILE__),
-                                          "mathml2omml.xsl"))
 
           def convert(filename)
             init_file(filename)
@@ -47,11 +45,11 @@ module Asciidoctor
             docxml.root.default_namespace = ""
             result = noko do |xml|
               xml.html do |html|
-                Postprocessing::html_header(html, docxml, $filename)
+                html_header(html, docxml, $filename)
                 make_body(xml, docxml)
               end
             end.join("\n")
-            Postprocessing::postprocess(result, $filename)
+            postprocess(result, $filename)
           end
 
           def init_file(filename)
@@ -72,7 +70,7 @@ module Asciidoctor
 
           def make_body1(body, docxml)
             body.div **{ class: "WordSection1" } do |div1|
-              Postprocessing::titlepage docxml, div1
+              titlepage docxml, div1
             end
             section_break(body)
           end
@@ -87,7 +85,8 @@ module Asciidoctor
           def make_body3(body, docxml)
             body.div **{ class: "WordSection3" } do |div3|
               middle docxml, div3
-              footnotes div3
+              footnotes div3 
+              comments div3 
             end
           end
 
@@ -115,9 +114,15 @@ module Asciidoctor
             bibliography isoxml, out
           end
 
+          def text_parse(node, out)
+            text = node.text
+            text.gsub!("\n", "<br/>").gsub!(" ", "&nbsp;") if $sourcecode
+            out << text
+          end
+
           def parse(node, out)
             if node.text?
-              out << node.text
+              text_parse(node, out)
             else
               case node.name
               when "em" then out.i { |e| e << node.text }
@@ -126,6 +131,7 @@ module Asciidoctor
               when "sub" then out.sub { |e| e << node.text }
               when "tt" then out.tt { |e| e << node.text }
               when "br" then out.br
+              when "callout" then out << " &lt;#{node.text}&gt;"
               when "stem" then stem_parse(node, out)
               when "clause" then clause_parse(node, out)
               when "xref" then xref_parse(node, out)
@@ -143,12 +149,15 @@ module Asciidoctor
               when "formula" then formula_parse(node, out)
               when "table" then table_parse(node, out)
               when "figure" then figure_parse(node, out)
+              when "sourcecode" then sourcecode_parse(node, out)
+              when "colist" then colist_parse(node, out)
+              when "annotation" then annotation_parse(node, out)
               when "termdef" then termdef_parse(node, out)
               when "term" then term_parse(node, out)
               when "admitted_term" then admitted_term_parse(node, out)
               when "termsymbol" then termsymbol_parse(node, out)
               when "deprecated_term" then deprecated_term_parse(node, out)
-              when "termdomain" then $termdomain = node.text
+              when "termdomain" then set_termdomain(node.text)
               when "termdefinition"
                 node.children.each { |n| parse(n, out) }
               when "termref" then termref_parse(node, out)
