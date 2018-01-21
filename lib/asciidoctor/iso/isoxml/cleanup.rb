@@ -71,8 +71,9 @@ module Asciidoctor
 
           def termdefinition_cleanup(xmldoc)
             xmldoc.xpath("//termdef").each do |d|
-              t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
               first_child = d.at("./p | ./figure | ./formula")
+              return if first_child.nil?
+              t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
               first_child.replace(t)
               t << first_child.remove
               d.xpath("./p | ./figure | ./formula").each do |n|
