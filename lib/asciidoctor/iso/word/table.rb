@@ -20,7 +20,9 @@ module Asciidoctor
           thead = node.at(ns("./thead"))
           if thead
             t.thead do |h|
-              thead.children.each { |n| parse(n, h) }
+              thead.element_children.each_with_index do |n, i|
+                tr_parse(n, h, i, thead.element_children.size)
+              end
             end
           end
         end
@@ -28,7 +30,9 @@ module Asciidoctor
         def tbody_parse(node, t)
           tbody = node.at(ns("./tbody"))
           t.tbody do |h|
-            tbody.children.each { |n| parse(n, h) }
+            tbody.element_children.each_with_index do |n, i|
+              tr_parse(n, h, i, tbody.element_children.size)
+            end
           end
         end
 
@@ -36,7 +40,9 @@ module Asciidoctor
           tfoot = node.at(ns("./tfoot"))
           if tfoot
             t.tfoot do |h|
-              tfoot.children.each { |n| parse(n, h) }
+              tfoot.element_children.each_with_index do |n, i|
+                tr_parse(n, h, i, tfoot.element_children.size)
+              end
             end
           end
         end
@@ -63,18 +69,25 @@ module Asciidoctor
           end
         end
 
-        def make_tr_attr(td)
-          {
-            rowspan: td["rowspan"],
-            colspan: td["colspan"],
-            align: td["align"],
-          }
+        def make_tr_attr(td, row, totalrows, col, totalcols)
+          style = ""
+          style += td.name == "th" ? "font-weight:bold;" : ""
+          style += <<~STYLE
+          border-left:#{col.zero? ? "solid windowtext 1.5pt;" : "none;"}
+          border-right:solid windowtext #{col == totalcols ? "1.5" : "1.0"}pt;
+          border-top:#{row.zero? ? "solid windowtext 1.5pt;" : "none;"}
+          border-bottom:solid windowtext #{row == totalrows ? "1.5" : "1.0"}pt;
+          STYLE
+          { rowspan: td["rowspan"], colspan: td["colspan"],
+            align: td["align"], style: style.gsub(/\n/, "") }
         end
 
-        def tr_parse(node, out)
+        def tr_parse(node, out, ord, totalrows)
           out.tr do |r|
-            node.elements.each do |td|
-              r.send td.name, **attr_code(make_tr_attr(td)) do |entry|
+            node.elements.each_with_index do |td, i|
+              attrs = make_tr_attr(td, ord, totalrows - 1, 
+                                   i, node.elements.size - 1)
+              r.send td.name, **attr_code(attrs) do |entry|
                 td.children.each { |n| parse(n, entry) }
               end
             end
