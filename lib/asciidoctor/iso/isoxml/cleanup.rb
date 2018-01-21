@@ -20,6 +20,7 @@ module Asciidoctor
             figure_cleanup(xmldoc)
             back_cleanup(xmldoc)
             ref_cleanup(xmldoc)
+            review_note_cleanup(xmldoc)
             xmldoc
           end
 
@@ -211,8 +212,16 @@ module Asciidoctor
               parent = r.parent
               parent.previous = r.remove
             end
-
             xmldoc
+          end
+
+          def review_note_cleanup(xmldoc)
+            xmldoc.xpath("//review_note").each do |n|
+              prev = n.previous_element
+              if !prev.nil? and prev.name == "p"
+                n.parent = prev
+              end
+            end
           end
         end
       end
