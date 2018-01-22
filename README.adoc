@@ -303,7 +303,7 @@ image::diagrams/Document__Standard Document_2.png[]
 
 === Bibliographic Models
 
-image::diagrams/Document__Bibliographic Items_1.png[]
+image::models/bibliography.png[]
 
 === Terms and References Model
 
