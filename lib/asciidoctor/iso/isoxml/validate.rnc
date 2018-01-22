@@ -6,44 +6,53 @@ start = iso_standard
 
 iso_standard = 
   element iso-standard {
-    front,
-    middle,
-    back?
-  }
-
-front =
-  element front {
-    title,
-    documenttype,
-    documentstatus?,
-    id,
+    title+,
+    documentstatus,
+    creator,
     language,
+    script,
+    documenttype,
+    identifier,
     version?,
-    author,
-    foreword,
-    introduction?
+    copyright_owner,
+    sections
   }
 
 language =
-  element language {
-    ( "en" | "fr" )
-  }
+  element language { ( "en" | "fr" ) }
+
+script =
+  element script { "latn" }
 
 version =
   element version {
     edition?,
-    revdate?,
-    copyright_year?
+    revdate?
   }
 
-id =
-  element id {
+copyright_owner = 
+  element copyright_owner {
+    from, owner
+}
+
+from = element from { text }
+
+owner = 
+  element owner {
+    owner_affiliation  
+}
+
+owner_affiliation = element affiliation { "ISO" }
+
+identifier =
+  element identifier {
     documentnumber,
     tc_documentnumber?
   }
 
-author =
-  element author {
+creator =
+  element creator {
+    attribute role { "author" },
     technical_committee,
     subcommittee?,
     workgroup?,
@@ -51,12 +60,12 @@ author =
   }
 
 documenttype =
-  element documenttype {
+  element type {
      ("international-standard" | "technical-specification" | "technical-report" | "publicly-available-specification" | "international-workshop-agreement" | "guide" )
   }
 
 documentstatus =
-  element documentstatus {
+  element status {
      stage,
      substage?
   }
@@ -72,8 +81,8 @@ substage =
   }
 
 documentnumber = 
-  element documentnumber { 
-    attribute partnumber { text }?,
+  element projectnumber { 
+    attribute part { text }?,
     text 
    }
 
@@ -104,7 +113,7 @@ secretariat =
   element secretariat { text }
 
 revdate =
-  element revdate { text }
+  element revision_date { text }
 
 copyright_year =
   element copyright_year { text }
@@ -112,23 +121,11 @@ copyright_year =
 edition =
   element edition { text }
 
-title =
-  # element title {title_en, title_fr}
-  element title { title_info+ }
-
-title_info = 
-  element title_info { 
-attribute language { text }, 
-title_intro?, title_main, title_part? 
+title = 
+  element title { 
+    attribute language { text }, 
+    title_intro?, title_main, title_part? 
 }
-
-# Killl
-title_en = 
-  element en { title_intro?, title_main, title_part? } 
-
-# Kill
-title_fr = 
-  element fr { title_intro?, title_main, title_part? } 
 
 title_intro =
   element title_intro { text }
@@ -158,9 +155,11 @@ introduction =
 patent_notice =
   element patent_notice { para+ }
 
-middle =
-  element middle {
-    scope, norm_ref, terms_defs, symbols_abbrevs?, clause+
+sections =
+  element sections {
+    foreword, introduction?,
+    scope, norm_ref, terms_defs, symbols_abbrevs?, clause+,
+    annex*, bibliography?
   }
 
 scope =
@@ -284,12 +283,6 @@ quote =
     ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*
   }
 
-
-back = 
-  element back {
-    annex*,
-    bibliography?
-  }
 
 annex =
   element annex { 

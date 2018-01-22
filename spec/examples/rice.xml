@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iso-standard xmlns="http://riboseinc.com/isoxml">
-<front>
-  <title>
-    <title_info language="en">
-      <title_intro>Cereals and pulses</title_intro>
-      <title_main>Specifications and test methods</title_main>
-      <title_part>Rice</title_part>
-    </title_info>
-    <title_info language="fr">
-      <title_intro>Céréales et légumineuses</title_intro>
-      <title_main>Spécification et méthodes d'essai</title_main>
-      <title_part>Riz</title_part>
-    </title_info>
-  </title>
-  <documenttype>international-standard</documenttype>
-  <documentstatus>
-    <stage>30</stage>
-    <substage>92</substage>
-  </documentstatus>
-  <id>
-    <documentnumber partnumber="1">17301</documentnumber>
-    <tc_documentnumber>17301</tc_documentnumber>
-  </id>
-  <language>en</language>
-  <version>
-    <edition>2</edition>
-    <revdate>2016-05-01</revdate>
-    <copyright_year>2016</copyright_year>
-  </version>
-  <author>
-    <technical_committee number="34">Food products</technical_committee>
-    <subcommittee number="4">Cereals and pulses</subcommittee>
-    <workgroup number="3">Rice Group</workgroup>
-  </author>
-<foreword><p>ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.</p>
+<title language="en">
+  <title_intro>Cereals and pulses</title_intro>
+  <title_main>Specifications and test methods</title_main>
+  <title_part>Rice</title_part>
+</title><title language="fr">
+  <title_intro>Céréales et légumineuses</title_intro>
+  <title_main>Spécification et méthodes d'essai</title_main>
+  <title_part>Riz</title_part>
+</title><status>
+  <stage>30</stage>
+  <substage>92</substage>
+</status><creator role="author">
+  <technical_committee number="34">Food products</technical_committee>
+  <subcommittee number="4">Cereals and pulses</subcommittee>
+  <workgroup number="3">Rice Group</workgroup>
+</creator><language>en</language><script>latn</script><type>international-standard</type><identifier>
+  <projectnumber part="1">17301</projectnumber>
+  <tc_documentnumber>17301</tc_documentnumber>
+</identifier><version>
+  <edition>2</edition>
+  <revision_date>2016-05-01</revision_date>
+</version><copyright_owner>
+  <from>2016</from>
+  <owner>
+    <affiliation>ISO</affiliation>
+  </owner>
+</copyright_owner>
+<sections><foreword><p>ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.</p>
 <p>The procedures used to develop this document and those intended for its further maintenance are described in the ISO/IEC Directives, Part 1. In particular the different approval criteria needed for the different types of ISO documents should be noted. This document was drafted in accordance with the editorial rules of the ISO/IEC Directives, Part 2 (see www.iso.org/directives).</p>
 <p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO shall not be held responsible for identifying any or all such patent rights. Details of any patent rights identified during the development of the document will be in the Introduction and/or on the ISO list of patent declarations received (see www.iso.org/patents).</p>
 <p>Any trade name used in this document is information given for the convenience of users and does not constitute an endorsement.</p>
@@ -49,16 +43,15 @@
     <p>deletion of 4.3.</p>
   </li>
 </ul>
-<p>A list of all parts in the ISO 17301 series can be found on the ISO website.</p></foreword><introduction anchor="_introduction"><p>This document was developed in response to worldwide demand for minimum specifications for rice traded internationally, since most commercial bulks of grain, which have not been screened or aspirated, contain a proportion of other grains, weed seeds, chaff, straw, stones, sand, etc. The vegetable materials can have physical and biological properties which differ from those of the main constituent and can therefore affect the storage behaviour.</p>
+<p>A list of all parts in the ISO 17301 series can be found on the ISO website.</p></foreword>
+<introduction anchor="_introduction"><p>This document was developed in response to worldwide demand for minimum specifications for rice traded internationally, since most commercial bulks of grain, which have not been screened or aspirated, contain a proportion of other grains, weed seeds, chaff, straw, stones, sand, etc. The vegetable materials can have physical and biological properties which differ from those of the main constituent and can therefore affect the storage behaviour.</p>
 <p>Rice is a permanent host to a considerable microflora; most of these microorganisms are cosmopolitan, the majority are innocuous, but some produce harmful by-products. Microflora communities present on freshly harvested rice include many types of bacteria, moulds and yeasts. While the rice is ripening and its moisture content is falling, the number of field microorganisms, mainly bacteria, diminishes. When the rice is harvested, it is invaded by storage microorganisms and the field microflora gradually dies out. If the mass fraction of moisture (formerly expressed as moisture content) is less than 18 %, the microflora does not multiply, whereas above 18 % it does so rapidly. Thus, at harvest, the qualitative and the quantitative composition of the microflora depends more upon ecological factors than upon the variety of the rice. During transport and storage, additions to the microfloral population occur. Microorganisms on the rice at harvest tend to die out during storage and are replaced by microorganisms adapted to storage conditions.</p>
 <p>Storage losses have been estimated as being an average of 5 %, and as much as 30 %, especially in countries with climates favourable to the rapid development of agents of deterioration and where storage techniques are poorly developed, such as developing countries in the damp tropics. The magnitude of these figures highlights the need to promote throughout the world a rapid improvement in techniques of conservation.</p>
 <patent_notice><p>The International Organization for Standardization (ISO) draws attention to the fact that it is claimed that compliance with this document may involve the use of a patent concerning sample dividers given in <xref target="AnnexA" format="inline"/> and shown in <xref target="figureA-1" format="inline"/>.</p>
 <p>ISO takes no position concerning the evidence, validity and scope of this patent right.</p>
 <p>The holder of this patent right has assured ISO that he/she is willing to negotiate licences under reasonable and non-discriminatory terms and conditions with applicants throughout the world. In this respect, the statement of the holder of this patent right is registered with ISO. Information may be obtained from:</p>
 <p>Vache Equipment<br/>Fictitious<br/>World<br/><eref target="mailto:gehf@vacheequipment.fic">gehf@vacheequipment.fic</eref></p>
-<p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights other than those identified above. ISO shall not be held responsible for identifying any or all such patent rights.</p></patent_notice></introduction></front>
-<middle>
-
+<p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights other than those identified above. ISO shall not be held responsible for identifying any or all such patent rights.</p></patent_notice></introduction>
 <scope anchor="_scope"><p>This document specifies minimum requirements and test methods for rice (<em>Oryza sativa L.</em>).</p>
 <p>It is applicable to husked rice, husked parboiled rice, milled rice and milled parboiled rice, suitable for human consumption, directly or after reconditioning.</p>
 <p>It is not applicable to cooked rice products.</p></scope>
@@ -165,9 +158,9 @@
 <clause anchor="_specifications"><name>Specifications</name><clause anchor="_general_organoleptic_and_health_characteristics"><name>General, organoleptic and health characteristics</name><p>Kernels of rice, whether parboiled, husked or milled, and whether whole or broken, shall be sound, clean and free from foreign odours or odour which indicates deterioration.</p>
 <p>The levels of additives and pesticide residues and other contaminants shall not exceed the maximum limits permitted in the country of destination.</p>
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></clause>
-<clause anchor="_physical_and_chemical_characteristics"><name>Physical and chemical characteristics</name><clause anchor="_42026348-fa67-4ee9-805b-9b86b814d133"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+<clause anchor="_physical_and_chemical_characteristics"><name>Physical and chemical characteristics</name><clause anchor="_9f1f957a-e720-47f7-a71b-757641237f5e"><name/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in <xref target="table1" format="inline"/>.</p>
-<note anchor="_7a9b5ef4-33a1-4c51-8d51-ce3090a7fe83">
+<note anchor="_1a40817a-5bc6-4ac1-a52b-297858d6c6f4">
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <xref target="ISO6322-1" format="inline"/>, <xref target="ISO6322-2" format="inline"/> and <xref target="ISO6322-3" format="inline"/>.</p>
 </note></clause>
 <clause anchor="_2"><name/><p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA" format="inline"/>, shall not exceed the limits given in <xref target="table1" format="inline"/>.</p>
@@ -308,13 +301,13 @@
     </tr>
   </tfoot>
 </table><p>&amp;nbsp;</p>
-<note anchor="_e2c3a40e-2fe8-4314-8069-80b5cab13d65">
+<note anchor="_190f3254-1181-44f1-b436-2759eac3c0d5">
   <p>This table is based on <xref target="ISO7301" format="inline"/>, Table 1.</p>
 </note>
-<note anchor="_7c093f65-058f-4d7c-9166-f183e2366151">
+<note anchor="_935896b2-917c-4d6c-9fba-577fc1fa879a">
   <p>Some commercial contracts require information in addition to that provided in this table.</p>
 </note>
-<note anchor="_b96f0e92-9d47-4eaf-93e0-08dbd910a291">
+<note anchor="_860096b0-9e38-47be-847e-e4090122c780">
   <p>Only full red husked (cargo) rice is considered in this table.</p>
 </note></clause></clause></clause>
 <clause anchor="clause5">
@@ -343,7 +336,7 @@
   <p>The results of an interlaboratory test are given in <xref target="AnnexD" format="inline"/> for information</p>
 </clause>
 <clause anchor="_repeatability"><name>Repeatability</name><p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <stem>r</stem> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<formula anchor="_7a73d019-896a-47aa-bc82-7aa1cde0c7e2">
+<formula anchor="_fcc84ac3-76b3-4210-8fe4-76a72fa34039">
   <stem>r = 1 %</stem>
 <dl>
   <dt>
@@ -356,7 +349,7 @@
 
 </clause>
 <clause anchor="_reproducibility"><name>Reproducibility</name><p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <stem>R</stem> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<formula anchor="_75982ed2-554e-4500-bf8b-05ef6069cce7">
+<formula anchor="_24b9546c-d43c-4774-bb6a-32245bd19760">
   <stem>R = 3 %</stem>
 <dl>
   <dt>
@@ -401,12 +394,7 @@
   <name>Marking</name>
   <p>The packages shall be marked or labelled as required by the country of destination.</p>
 </clause>
-
-
-
-
-</middle>
-<back><annex anchor="AnnexA" subtype="normative"><name>Determination of defects</name><clause anchor="_principle">
+<annex anchor="AnnexA" subtype="normative"><name>Determination of defects</name><clause anchor="_principle">
   <name>Principle</name>
   <p>Extraneous matter, broken kernels, damaged kernels and other kinds of rice are separated manually according to the following types: husked rice, milled rice, husked parboiled rice and milled parboiled rice. Each type is then weighed.</p>
 </clause>
@@ -478,7 +466,8 @@
 <clause anchor="_test_report">
   <name>Test report</name>
   <p>Report the results as specified in <xref target="clause7" format="inline"/>.</p>
-</clause></annex><annex anchor="AnnexB" subtype="informative"><name>Determination of the waxy rice content of parboiled rice</name><clause anchor="_principle_2">
+</clause></annex>
+<annex anchor="AnnexB" subtype="informative"><name>Determination of the waxy rice content of parboiled rice</name><clause anchor="_principle_2">
   <name>Principle</name>
   <p>Waxy rice kernels have a reddish brown colour when stained in an iodine solution, while non-waxy rice kernels show a dark blue colour.</p>
 </clause>
@@ -568,7 +557,8 @@
 <clause anchor="_test_report_2">
   <name>Test report</name>
   <p>Report the results as specified in <xref target="clause7" format="inline"/>, giving the results calculated using Formula (<xref target="formulaB-1" format="inline"/>).</p>
-</clause></annex><annex anchor="AnnexC" subtype="informative"><name>Gelatinization</name><p><xref target="figureC-1" format="inline"/> gives an example of a typical gelatinization curve. <xref target="figureC-2" format="inline"/> shows the three stages of gelatinization.</p>
+</clause></annex>
+<annex anchor="AnnexC" subtype="informative"><name>Gelatinization</name><p><xref target="figureC-1" format="inline"/> gives an example of a typical gelatinization curve. <xref target="figureC-2" format="inline"/> shows the three stages of gelatinization.</p>
 <figure anchor="figureC-1" src="rice_images/rice_image2.png">
   <name>Typical gelatinization curve</name>
 <fn>The time <stem>t_90</stem> was estimated to be 18,2 min for this example.</fn><dl>
@@ -598,18 +588,19 @@
 
 
 
-<note anchor="_352e8990-25c6-4478-b243-71934f50a1a8">
+<note anchor="_36256b52-991b-4a78-bffc-458105a9ad6d">
   <p>These results are based on a study carried out on three different types of kernel.</p>
 </note>
-<figure anchor="figureC-2"><figure anchor="_3bc2a491-9e84-4497-8348-0e547551569f" src="rice_images/rice_image3_1.png">
+<figure anchor="figureC-2"><figure anchor="_2e9099c7-7b67-4619-aa27-d695f800e478" src="rice_images/rice_image3_1.png">
   <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
 </figure>
-<figure anchor="_0b5ab9ad-2123-412a-835f-5d80f3152f7d" src="rice_images/rice_image3_2.png">
+<figure anchor="_123c2c51-e62b-4068-9e58-5ccbcb269a57" src="rice_images/rice_image3_2.png">
   <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
 </figure>
-<figure anchor="_322a27a1-14e7-43a7-99c6-234fc24a556f" src="rice_images/rice_image3_3.png">
+<figure anchor="_92e62ea5-e742-4ab7-8647-5adfd7667868" src="rice_images/rice_image3_3.png">
   <name>Final stages: All kernels are fully gelatinized</name>
-</figure></figure></annex><annex anchor="AnnexD" subtype="informative"><name>Results of interlaboratory test for husked rice yields</name><p>An interlaboratory test <xref target="ref15" format="inline"/> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <xref target="ISO5725-1" format="inline"/> and <xref target="ISO5725-2" format="inline"/>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <xref target="tableD-1" format="inline"/>.</p>
+</figure></figure></annex>
+<annex anchor="AnnexD" subtype="informative"><name>Results of interlaboratory test for husked rice yields</name><p>An interlaboratory test <xref target="ref15" format="inline"/> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <xref target="ISO5725-1" format="inline"/> and <xref target="ISO5725-2" format="inline"/>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <xref target="tableD-1" format="inline"/>.</p>
 <table anchor="tableD-1">
   <name>Repeatability and reproducibility of husked rice yield</name>
   <tbody>
@@ -680,7 +671,8 @@
       <td align="center">6,06</td>
     </tr>
   </tbody>
-</table><p>&amp;nbsp;</p></annex><bibliography anchor="_bibliography">
+</table><p>&amp;nbsp;</p></annex>
+<bibliography anchor="_bibliography">
   <reference>
   <ref anchor="ISO3696">[ISO 3696]</ref><p>, <em>Water for analytical laboratory use — Specification and test methods</em></p>
 </reference>
@@ -729,4 +721,5 @@
   <reference>
   <ref anchor="ref16">[16]</ref><p> Tkachuk R. Nitrogen-to-protein conversion factors for cereals and oilseed meals. <em>Cereal Chem.</em> 1969, <strong>46</strong> (4) pp 419-423</p>
 </reference>
-</bibliography></back></iso-standard>
+</bibliography></sections>
+</iso-standard>

@@ -5,30 +5,20 @@
   </start>
   <define name="iso_standard">
     <element name="iso-standard">
-      <ref name="front"/>
-      <ref name="middle"/>
-      <optional>
-        <ref name="back"/>
-      </optional>
-    </element>
-  </define>
-  <define name="front">
-    <element name="front">
-      <ref name="title"/>
-      <ref name="documenttype"/>
-      <optional>
-        <ref name="documentstatus"/>
-      </optional>
-      <ref name="id"/>
+      <oneOrMore>
+        <ref name="title"/>
+      </oneOrMore>
+      <ref name="documentstatus"/>
+      <ref name="creator"/>
       <ref name="language"/>
+      <ref name="script"/>
+      <ref name="documenttype"/>
+      <ref name="identifier"/>
       <optional>
         <ref name="version"/>
       </optional>
-      <ref name="author"/>
-      <ref name="foreword"/>
-      <optional>
-        <ref name="introduction"/>
-      </optional>
+      <ref name="copyright_owner"/>
+      <ref name="sections"/>
     </element>
   </define>
   <define name="language">
@@ -39,6 +29,11 @@
       </choice>
     </element>
   </define>
+  <define name="script">
+    <element name="script">
+      <value>latn</value>
+    </element>
+  </define>
   <define name="version">
     <element name="version">
       <optional>
@@ -47,21 +42,42 @@
       <optional>
         <ref name="revdate"/>
       </optional>
-      <optional>
-        <ref name="copyright_year"/>
-      </optional>
     </element>
   </define>
-  <define name="id">
-    <element name="id">
+  <define name="copyright_owner">
+    <element name="copyright_owner">
+      <ref name="from"/>
+      <ref name="owner"/>
+    </element>
+  </define>
+  <define name="from">
+    <element name="from">
+      <text/>
+    </element>
+  </define>
+  <define name="owner">
+    <element name="owner">
+      <ref name="owner_affiliation"/>
+    </element>
+  </define>
+  <define name="owner_affiliation">
+    <element name="affiliation">
+      <value>ISO</value>
+    </element>
+  </define>
+  <define name="identifier">
+    <element name="identifier">
       <ref name="documentnumber"/>
       <optional>
         <ref name="tc_documentnumber"/>
       </optional>
     </element>
   </define>
-  <define name="author">
-    <element name="author">
+  <define name="creator">
+    <element name="creator">
+      <attribute name="role">
+        <value>author</value>
+      </attribute>
       <ref name="technical_committee"/>
       <optional>
         <ref name="subcommittee"/>
@@ -75,7 +91,7 @@
     </element>
   </define>
   <define name="documenttype">
-    <element name="documenttype">
+    <element name="type">
       <choice>
         <value>international-standard</value>
         <value>technical-specification</value>
@@ -87,7 +103,7 @@
     </element>
   </define>
   <define name="documentstatus">
-    <element name="documentstatus">
+    <element name="status">
       <ref name="stage"/>
       <optional>
         <ref name="substage"/>
@@ -124,9 +140,9 @@
     </element>
   </define>
   <define name="documentnumber">
-    <element name="documentnumber">
+    <element name="projectnumber">
       <optional>
-        <attribute name="partnumber"/>
+        <attribute name="part"/>
       </optional>
       <text/>
     </element>
@@ -166,7 +182,7 @@
     </element>
   </define>
   <define name="revdate">
-    <element name="revdate">
+    <element name="revision_date">
       <text/>
     </element>
   </define>
@@ -182,23 +198,7 @@
   </define>
   <define name="title">
     <element name="title">
-      <ref name="title_en"/>
-      <ref name="title_fr"/>
-    </element>
-  </define>
-  <define name="title_en">
-    <element name="en">
-      <optional>
-        <ref name="title_intro"/>
-      </optional>
-      <ref name="title_main"/>
-      <optional>
-        <ref name="title_part"/>
-      </optional>
-    </element>
-  </define>
-  <define name="title_fr">
-    <element name="fr">
+      <attribute name="language"/>
       <optional>
         <ref name="title_intro"/>
       </optional>
@@ -288,8 +288,12 @@
       </oneOrMore>
     </element>
   </define>
-  <define name="middle">
-    <element name="middle">
+  <define name="sections">
+    <element name="sections">
+      <ref name="foreword"/>
+      <optional>
+        <ref name="introduction"/>
+      </optional>
       <ref name="scope"/>
       <ref name="norm_ref"/>
       <ref name="terms_defs"/>
@@ -299,6 +303,12 @@
       <oneOrMore>
         <ref name="clause"/>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="annex"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="bibliography"/>
+      </optional>
     </element>
   </define>
   <define name="scope">
@@ -628,16 +638,6 @@
           <ref name="example"/>
         </choice>
       </zeroOrMore>
-    </element>
-  </define>
-  <define name="back">
-    <element name="back">
-      <zeroOrMore>
-        <ref name="annex"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="bibliography"/>
-      </optional>
     </element>
   </define>
   <define name="annex">

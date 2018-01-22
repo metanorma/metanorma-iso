@@ -8,10 +8,8 @@ module Asciidoctor
       module Validate
         class << self
           def title_intro_validate(root)
-            #title_intro_en = root.at("//title/en/title_intro")
-            #title_intro_fr = root.at("//title/fr/title_intro")
-            title_intro_en = root.at("//title_info[@language='en']/title_intro")
-            title_intro_fr = root.at("//title_info[@language='fr']/title_intro")
+            title_intro_en = root.at("//title[@language='en']/title_intro")
+            title_intro_fr = root.at("//title[@language='fr']/title_intro")
             if title_intro_en.nil? && !title_intro_fr.nil?
               warn "No English Title Intro!"
             end
@@ -21,8 +19,8 @@ module Asciidoctor
           end
 
           def title_part_validate(root)
-            title_part_en = root.at("//title_info[@language='en']/title_part")
-            title_part_fr = root.at("//title_info[@language='fr']/title_part")
+            title_part_en = root.at("//title[@language='en']/title_part")
+            title_part_fr = root.at("//title[@language='fr']/title_part")
             if title_part_en.nil? && !title_part_fr.nil?
               warn "No English Title Part!"
             end
@@ -34,11 +32,11 @@ module Asciidoctor
           def title_names_type_validate(root)
             doctypes = /International\sStandard | Technical\sSpecification |
             Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
-            title_main_en = root.at("//title_info[@language='en']/title_main")
+            title_main_en = root.at("//title[@language='en']/title_main")
             if doctypes.match? title_main_en.text
               warn "Main Title may name document type"
             end
-            title_intro_en = root.at("//title_info[@language='en']/title_intro")
+            title_intro_en = root.at("//title[@language='en']/title_intro")
             if !title_intro_en.nil? && doctypes.match?(title_intro_en.text)
               warn "Part Title may name document type"
             end

@@ -30,7 +30,10 @@ module Asciidoctor
             section_names(docxml.at(ns("//scope")), "1", 1)
             section_names(docxml.at(ns("//norm_ref")), "2", 1)
             section_names(docxml.at(ns("//terms_defs")), "3", 1)
-            sequential_asset_names(docxml.xpath(ns("//middle")))
+            #sequential_asset_names(docxml.xpath(ns("//middle")))
+            middle_sections = "//scope | //norm_ref | //terms_defs | "\
+              "//symbols_abbrevs | //clause[not(ancestor::annex)]"
+            sequential_asset_names(docxml.xpath(ns(middle_sections)))
           end
 
           def middle_anchor_names(docxml)
@@ -40,7 +43,8 @@ module Asciidoctor
               section_names(symbols_abbrevs, sect_num.to_s, 1)
               sect_num += 1
             end
-            docxml.xpath(ns("//middle/clause")).each_with_index do |c, i|
+            # docxml.xpath(ns("//middle/clause")).each_with_index do |c, i|
+            docxml.xpath(ns("//clause[not(ancestor::annex)]")).each_with_index do |c, i|
               section_names(c, (i + sect_num).to_s, 1)
             end
           end
@@ -59,12 +63,12 @@ module Asciidoctor
               if t.parent.name == "figure"
                 j += 1
                 @@anchors[t["anchor"]] = { label: "Figure #{i}-#{j}",
-                                          xref: "Figure #{i}-#{j}" }
+                                           xref: "Figure #{i}-#{j}" }
               else
                 j = 0
                 i += 1
                 @@anchors[t["anchor"]] = { label: "Figure #{i}",
-                                          xref: "Figure #{i}" }
+                                           xref: "Figure #{i}" }
               end
             end
           end
@@ -72,12 +76,12 @@ module Asciidoctor
           def sequential_asset_names(clause)
             clause.xpath(ns(".//table")).each_with_index do |t, i|
               @@anchors[t["anchor"]] = { label: "Table #{i + 1}",
-                                        xref: "Table #{i + 1}" }
+                                         xref: "Table #{i + 1}" }
             end
             sequential_figure_names(clause)
             clause.xpath(ns(".//formula")).each_with_index do |t, i|
               @@anchors[t["anchor"]] = { label: (i + 1).to_s,
-                                        xref: "Formula #{i + 1}" }
+                                         xref: "Formula #{i + 1}" }
             end
           end
 
@@ -88,12 +92,12 @@ module Asciidoctor
               if t.parent.name == "figure"
                 j += 1
                 @@anchors[t["anchor"]] = { label: "Figure #{num}.#{i}-#{j}",
-                                          xref: "Figure #{num}.#{i}-#{j}" }
+                                           xref: "Figure #{num}.#{i}-#{j}" }
               else
                 j = 0
                 i += 1
                 @@anchors[t["anchor"]] = { label: "Figure #{num}.#{i}",
-                                          xref: "Figure #{num}.#{i}" }
+                                           xref: "Figure #{num}.#{i}" }
               end
             end
           end
@@ -101,12 +105,12 @@ module Asciidoctor
           def hierarchical_asset_names(clause, num)
             clause.xpath(ns(".//table")).each_with_index do |t, i|
               @@anchors[t["anchor"]] = { label: "Table #{num}.#{i + 1}",
-                                        xref: "Table #{num}.#{i + 1}" }
+                                         xref: "Table #{num}.#{i + 1}" }
             end
             hierarchical_figure_names(clause, num)
             clause.xpath(ns(".//formula")).each_with_index do |t, i|
               @@anchors[t["anchor"]] = { label: "#{num}.#{i + 1}",
-                                        xref: "Formula #{num}.#{i + 1}" }
+                                         xref: "Formula #{num}.#{i + 1}" }
             end
           end
 
@@ -118,7 +122,7 @@ module Asciidoctor
 
           def section_names(clause, num, level)
             @@anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}",
-                                           level: level }
+                                            level: level }
             clause.xpath(ns("./clause | ./termdef")).each_with_index do |c, i|
               section_names1(c, "#{num}.#{i + 1}", level + 1)
             end
@@ -126,7 +130,7 @@ module Asciidoctor
 
           def section_names1(clause, num, level)
             @@anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}",
-                                           level: level }
+                                            level: level }
             clause.xpath(ns("./clause | ./termdef")).each_with_index do |c, i|
               section_names1(c, "#{num}.#{i + 1}", level + 1)
             end
@@ -137,7 +141,7 @@ module Asciidoctor
             obligation = "(Normative)" if clause["subtype"] == "normative"
             label = "<b>Annex #{num}</b><br/>#{obligation}"
             @@anchors[clause["anchor"]] = { label: label,
-                                           xref: "Annex #{num}", level: 1 }
+                                            xref: "Annex #{num}", level: 1 }
             clause.xpath(ns("./clause")).each_with_index do |c, i|
               annex_names1(c, "#{num}.#{i + 1}", 2)
             end
@@ -146,8 +150,8 @@ module Asciidoctor
 
           def annex_names1(clause, num, level)
             @@anchors[clause["anchor"]] = { label: num,
-                                           xref: num,
-                                           level: level }
+                                            xref: num,
+                                            level: level }
             clause.xpath(ns(".//clause")).each_with_index do |c, i|
               annex_names1(c, "#{num}.#{i + 1}", level + 1)
             end
@@ -166,7 +170,7 @@ module Asciidoctor
             linkend.gsub!(/[\[\]]/, "") unless /^\[\d+\]$/.match linkend
             @@anchors[ref["anchor"]] = { xref: linkend }
           end
-        end
       end
     end
   end
+end

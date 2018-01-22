@@ -11,9 +11,9 @@ module Asciidoctor
     module ISOXML
       module Front
         def metadata_id(node, xml)
-          xml.id do |i|
-            i.documentnumber node.attr("docnumber"),
-              **attr_code(partnumber: node.attr("partnumber"))
+          xml.identifier do |i|
+            i.projectnumber node.attr("docnumber"),
+              **attr_code(part: node.attr("partnumber"))
             if node.attr("tc-docnumber")
               i.tc_documentnumber node.attr("tc-docnumber")
             end
@@ -23,15 +23,12 @@ module Asciidoctor
         def metadata_version(node, xml)
           xml.version do |v|
             v.edition node.attr("edition") if node.attr("edition")
-            v.revdate node.attr("revdate") if node.attr("revdate")
-            if node.attr("copyright-year")
-              v.copyright_year node.attr("copyright-year")
-            end
+            v.revision_date node.attr("revdate") if node.attr("revdate")
           end
         end
 
         def metadata_author(node, xml)
-          xml.author do |a|
+          xml.creator **{ role: "author" } do |a|
             a.technical_committee node.attr("technical-committee"),
               **attr_code(number: node.attr("technical-committee-number"))
             if node.attr("subcommittee")
@@ -46,29 +43,39 @@ module Asciidoctor
           end
         end
 
-        def metadata(node, xml)
-          xml.documenttype node.attr("doctype")
-          xml.documentstatus do |s|
-            s.stage node.attr("docstage")
-            s.substage node.attr("docsubstage") if node.attr("docsubstage")
+        def metadata_copyright(node, xml)
+          from = node.attr("copyright-year") || Date.today.year
+          xml.copyright_owner do |c|
+            c.from from
+            c.owner do |o|
+              o.affiliation "ISO"
+            end
           end
-          metadata_id(node, xml)
-          xml.language node.attr("language")
-          metadata_version(node, xml)
+        end
+
+        def metadata(node, xml)
+          xml.status do |s|
+            s.stage ( node.attr("docstage") || "60" )
+            s.substage ( node.attr("docsubstage") || "60" )
+          end
           metadata_author(node, xml)
+          xml.language node.attr("language")
+          xml.script "latn"
+          xml.type node.attr("doctype")
+          metadata_id(node, xml)
+          metadata_version(node, xml)
+          metadata_copyright(node, xml)
         end
 
         def title(node, xml)
-          xml.title do |t0|
-            ["en", "fr"].each do |lang|
-              t0.title_info **{ language: lang } do |t|
-                if node.attr("title-intro-#{lang}")
-                  t.title_intro { |t1| t1 << node.attr("title-intro-#{lang}") }
-                end
-                t.title_main { |t1| t1 << node.attr("title-main-#{lang}") }
-                if node.attr("title-part-#{lang}")
-                  t.title_part node.attr("title-part-#{lang}")
-                end
+          ["en", "fr"].each do |lang|
+            xml.title **{ language: lang } do |t|
+              if node.attr("title-intro-#{lang}")
+                t.title_intro { |t1| t1 << node.attr("title-intro-#{lang}") }
+              end
+              t.title_main { |t1| t1 << node.attr("title-main-#{lang}") }
+              if node.attr("title-part-#{lang}")
+                t.title_part node.attr("title-part-#{lang}")
               end
             end
           end

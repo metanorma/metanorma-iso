@@ -35,15 +35,13 @@ module Asciidoctor
         end
 
         def front(node, xml)
-          xml.front do |xml_front|
-            title node, xml_front
-            metadata node, xml_front
-          end
+            title node, xml
+            metadata node, xml
         end
 
         def middle(node, xml)
-          xml.middle do |xml_middle|
-            xml_middle << node.content if node.blocks?
+          xml.sections do |s|
+           s << node.content if node.blocks?
           end
         end
 

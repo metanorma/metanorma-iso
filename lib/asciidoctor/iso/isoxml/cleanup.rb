@@ -12,28 +12,14 @@ module Asciidoctor
       module Cleanup
         class << self
           def cleanup(xmldoc)
-            intro_cleanup(xmldoc)
             termdef_cleanup(xmldoc)
             isotitle_cleanup(xmldoc)
             table_cleanup(xmldoc)
             formula_cleanup(xmldoc)
             figure_cleanup(xmldoc)
-            back_cleanup(xmldoc)
             ref_cleanup(xmldoc)
             review_note_cleanup(xmldoc)
             xmldoc
-          end
-
-          def intro_cleanup(xmldoc)
-            intro = xmldoc.at("//introduction")
-            foreword = xmldoc.at("//foreword")
-            front = xmldoc.at("//front")
-            unless foreword.nil? || front.nil?
-              front << foreword.remove
-            end
-            unless intro.nil? || front.nil?
-              front << intro.remove
-            end
           end
 
           def termdef_warn(text, re, term, msg)
@@ -195,20 +181,6 @@ module Asciidoctor
             figure_footnote_cleanup(xmldoc)
             figure_dl_cleanup(xmldoc)
             subfigure_cleanup(xmldoc)
-          end
-
-          def back_cleanup(xmldoc)
-            # move annex/bibliography to back
-            if !xmldoc.xpath("//annex | //bibliography").empty?
-              b = Nokogiri::XML::Element.new("back", xmldoc)
-              xmldoc.root << b
-              xmldoc.xpath("//annex").each do |e|
-                b << e.remove
-              end
-              xmldoc.xpath("//bibliography").each do |e|
-                b << e.remove
-              end
-            end
           end
 
           def ref_cleanup(xmldoc)

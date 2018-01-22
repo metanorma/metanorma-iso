@@ -21,9 +21,9 @@ module Asciidoctor
         end
 
         def id(isoxml, _out)
-          docnumber = isoxml.at(ns("//documentnumber"))
-          partnumber = isoxml.at(ns("//documentnumber/@partnumber"))
-          documentstatus = isoxml.at(ns("//documentstatus/stage"))
+          docnumber = isoxml.at(ns("//projectnumber"))
+          partnumber = isoxml.at(ns("//projectnumber/@part"))
+          documentstatus = isoxml.at(ns("//status/stage"))
           $iso_docnumber = docnumber.text
           $iso_docnumber += "-#{partnumber.text}" if partnumber
           $iso_stage = documentstatus.text if documentstatus
@@ -37,18 +37,18 @@ module Asciidoctor
         def version(isoxml, _out)
           # e =  isoxml.at(ns("//edition"))
           # out.p "Edition: #{e.text}" if e
-          # e =  isoxml.at(ns("//revdate"))
+          # e =  isoxml.at(ns("//revision_date"))
           # out.p "Revised: #{e.text}" if e
-          yr =  isoxml.at(ns("//copyright_year"))
+          yr =  isoxml.at(ns("//copyright_owner/from"))
           $iso_docyear = yr.text
           # out.p "© ISO #{yr.text}" if yr
         end
 
         def title(isoxml, _out)
-          intro = isoxml.at(ns("//title_info[@language='en']/title_intro"))
-          main = isoxml.at(ns("//title_info[@language='en']/title_main"))
-          part = isoxml.at(ns("//title_info[@language='en']/title_part"))
-          partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
+          intro = isoxml.at(ns("//title[@language='en']/title_intro"))
+          main = isoxml.at(ns("//title[@language='en']/title_main"))
+          part = isoxml.at(ns("//title[@language='en']/title_part"))
+          partnumber = isoxml.at(ns("//identifier/projectnumber/@part"))
           main = main.text
           main = "#{intro.text}&nbsp;&mdash;#{main}" if intro
           if part
@@ -58,10 +58,10 @@ module Asciidoctor
         end
 
         def subtitle(isoxml, _out)
-          intro = isoxml.at(ns("//title_info[@language='fr']/title_intro"))
-          main = isoxml.at(ns("//title_info[@language='fr']/title_main"))
-          part = isoxml.at(ns("//title_info[@language='fr']/title_part"))
-          partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
+          intro = isoxml.at(ns("//title[@language='fr']/title_intro"))
+          main = isoxml.at(ns("//title[@language='fr']/title_main"))
+          part = isoxml.at(ns("//title[@language='fr']/title_part"))
+          partnumber = isoxml.at(ns("//identifier/projectnumber/@part"))
           main = main.text
           main = "#{intro.text}&nbsp; #{main}" if intro
           if part
