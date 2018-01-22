@@ -32,7 +32,7 @@ module Asciidoctor
             section_names(docxml.at(ns("//terms_defs")), "3", 1)
             #sequential_asset_names(docxml.xpath(ns("//middle")))
             middle_sections = "//scope | //norm_ref | //terms_defs | "\
-              "//symbols_abbrevs | //clause[not(ancestor::annex)]"
+              "//symbols_abbrevs | //clause[parent::sections]"
             sequential_asset_names(docxml.xpath(ns(middle_sections)))
           end
 
@@ -44,7 +44,7 @@ module Asciidoctor
               sect_num += 1
             end
             # docxml.xpath(ns("//middle/clause")).each_with_index do |c, i|
-            docxml.xpath(ns("//clause[not(ancestor::annex)]")).each_with_index do |c, i|
+            docxml.xpath(ns("//clause[parent::sections]")).each_with_index do |c, i|
               section_names(c, (i + sect_num).to_s, 1)
             end
           end

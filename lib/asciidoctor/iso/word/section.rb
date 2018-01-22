@@ -26,7 +26,7 @@ module Asciidoctor
 
         def clause(isoxml, out)
           # isoxml.xpath(ns("//middle/clause")).each do |c|
-          isoxml.xpath(ns("//clause[not(ancestor::annex)]")).each do |c|
+          isoxml.xpath(ns("//clause[parent::sections]")).each do |c|
             out.div **attr_code("id": c["anchor"]) do |s|
               c.elements.each do |c1|
                 if c1.name == "name"
