@@ -46,6 +46,12 @@ module Asciidoctor
             "??"
           end
 
+                    def warning(node, msg, text)
+            warntext = "asciidoctor: WARNING (#{current_location(node)}): #{msg}"
+            warntext += ": #{text}" if text
+            warn warntext
+          end
+
           # if node contains blocks, flatten them into a single line;
           # and extract only raw text
           def flatten_rawtext(node)
@@ -72,47 +78,42 @@ module Asciidoctor
           end
         end
 
-        def convert(node, transform = nil, opts = {})
-          transform ||= node.node_name
-          opts.empty? ? (send transform, node) : (send transform, node, opts)
-        end
+          def convert(node, transform = nil, opts = {})
+            transform ||= node.node_name
+            opts.empty? ? (send transform, node) : (send transform, node, opts)
+          end
 
-        def document_ns_attributes(_doc)
-          nil
-        end
+          def document_ns_attributes(_doc)
+            nil
+          end
 
-        $nokohead = <<~HERE
+          $nokohead = <<~HERE
           <!DOCTYPE html SYSTEM
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
           <html xmlns="http://www.w3.org/1999/xhtml">
           <head> <title></title> <meta charset="UTF-8" /> </head>
           <body> </body> </html>
-        HERE
+          HERE
 
-        # block for processing XML document fragments as XHTML,
-        # to allow for HTMLentities
-        def noko(&block)
-          doc = ::Nokogiri::XML.parse($nokohead)
-          fragment = doc.fragment("")
-          ::Nokogiri::XML::Builder.with fragment, &block
-          fragment.to_xml(encoding: "US-ASCII").lines.map do |l|
-            l.gsub(/\s*\n/, "")
+          # block for processing XML document fragments as XHTML,
+          # to allow for HTMLentities
+          def noko(&block)
+            doc = ::Nokogiri::XML.parse($nokohead)
+            fragment = doc.fragment("")
+            ::Nokogiri::XML::Builder.with fragment, &block
+            fragment.to_xml(encoding: "US-ASCII").lines.map do |l|
+              l.gsub(/\s*\n/, "")
+            end
           end
-        end
 
-        def attr_code(attributes)
-          attributes = attributes.reject { |_, val| val.nil? }.map
-          attributes.map do |k, v|
-            [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
-          end.to_h
-        end
+          def attr_code(attributes)
+            attributes = attributes.reject { |_, val| val.nil? }.map
+            attributes.map do |k, v|
+              [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
+            end.to_h
+          end
 
-        def warning(node, msg, text)
-          warntext = "asciidoctor: WARNING (#{current_location(node)}): #{msg}"
-          warntext += ": #{text}" if text
-          warn warntext
         end
       end
     end
   end
-end

@@ -113,11 +113,20 @@ edition =
   element edition { text }
 
 title =
-  element title {title_en, title_fr}
+  # element title {title_en, title_fr}
+  element title { title_info+ }
 
+title_info = 
+  element title_info { 
+attribute language { text }, 
+title_intro?, title_main, title_part? 
+}
+
+# Killl
 title_en = 
   element en { title_intro?, title_main, title_part? } 
 
+# Kill
 title_fr = 
   element fr { title_intro?, title_main, title_part? } 
 
@@ -128,9 +137,7 @@ title_main =
   element title_main { text }
 
 title_part =
-  element title_part { 
-    text 
-  }
+  element title_part { text }
 
 foreword =
   element foreword { 

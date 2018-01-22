@@ -68,33 +68,36 @@ module Asciidoctor
 
         def reference2(matched, matched2, matched3, xml, item)
           if matched3.nil? && matched2.nil? && matched.nil?
-            xml.reference do |t|
-              t.p { |p| p << ref_normalise(item) }
+            xml.reference do |r|
+              r.p { |p| p << ref_normalise(item) }
             end
-          end
-          if !matched.nil?
-            isorefmatches(xml, matched)
-          elsif !matched2.nil?
-            isorefmatches2(xml, matched2)
-          elsif !matched3.nil?
-            isorefmatches3(xml, matched3)
+          elsif !matched.nil? then isorefmatches(xml, matched)
+          elsif !matched2.nil? then isorefmatches2(xml, matched2)
+          elsif !matched3.nil? then isorefmatches3(xml, matched3)
           end
         end
 
+        @@iso_ref = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+        \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
+        (?<text>.*)$}
+
+        @@iso_ref_no_year = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+        \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
+        <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x
+
+        @@iso_ref_all_parts = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+        \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
+        (?<text>.*)(</p>)?$}x
+
         def reference1(node, item, xml, normative)
-          matched = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-          \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
-          (?<text>.*)$}x.match item
-          matched2 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-          \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
-          <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x.match item
-          matched3 = %r{^<ref\sanchor="(?<anchor>[^"]+)">
-          \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
-          (?<text>.*)(</p>)?$}x.match item
+          matched = @@iso_ref.match item
+          matched2 = @@iso_ref_no_year.match item
+          matched3 = @@iso_ref_all_parts.match item
           reference2(matched, matched2, matched3, xml, item)
           if matched3.nil? && matched2.nil? && matched.nil? && normative
-            warning(node, "non-ISO/IEC reference not expected as normative",
-                    item)
+            Utils::warning(node, 
+                           "non-ISO/IEC reference not expected as normative",
+                           item)
           end
         end
 

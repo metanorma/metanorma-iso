@@ -45,9 +45,9 @@ module Asciidoctor
         end
 
         def title(isoxml, _out)
-          intro = isoxml.at(ns("//title/en/title_intro"))
-          main = isoxml.at(ns("//title/en/title_main"))
-          part = isoxml.at(ns("//title/en/title_part"))
+          intro = isoxml.at(ns("//title_info[@language='en']/title_intro"))
+          main = isoxml.at(ns("//title_info[@language='en']/title_main"))
+          part = isoxml.at(ns("//title_info[@language='en']/title_part"))
           partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
           main = main.text
           main = "#{intro.text}&nbsp;&mdash;#{main}" if intro
@@ -58,9 +58,9 @@ module Asciidoctor
         end
 
         def subtitle(isoxml, _out)
-          intro = isoxml.at(ns("//title/fr/title_intro"))
-          main = isoxml.at(ns("//title/fr/title_main"))
-          part = isoxml.at(ns("//title/fr/title_part"))
+          intro = isoxml.at(ns("//title_info[@language='fr']/title_intro"))
+          main = isoxml.at(ns("//title_info[@language='fr']/title_main"))
+          part = isoxml.at(ns("//title_info[@language='fr']/title_part"))
           partnumber = isoxml.at(ns("//id/documentnumber/@partnumber"))
           main = main.text
           main = "#{intro.text}&nbsp; #{main}" if intro

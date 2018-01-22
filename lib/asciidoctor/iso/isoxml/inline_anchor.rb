@@ -16,17 +16,15 @@ module Asciidoctor
         end
 
         def inline_anchor_xref(node)
-          format = "inline"
-          xref_contents = node.text
+          f = "inline"
+          c = node.text
           matched = /^fn(:  (?<text>.*))?$/.match node.text
           unless matched.nil?
-            format = "footnote"
-            xref_contents = matched[:text]
+            f = "footnote"
+            c = matched[:text]
           end
-          target = node.target.gsub(/^#/, "").gsub(/(.)(\.xml)?#.*$/, "\\1")
-          noko do |xml|
-            xml.xref xref_contents, **attr_code(target: target, format: format)
-          end.join
+          t = node.target.gsub(/^#/, "").gsub(%r{(.)(\.xml)?#.*$}, "\\1")
+          noko { |xml| xml.xref c, **attr_code(target: t, format: f) }.join
         end
 
         def inline_anchor_link(node)

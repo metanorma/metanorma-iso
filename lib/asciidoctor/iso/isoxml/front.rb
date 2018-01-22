@@ -61,7 +61,7 @@ module Asciidoctor
         def title(node, xml)
           xml.title do |t0|
             ["en", "fr"].each do |lang|
-              t0.send lang do |t|
+              t0.title_info **{ language: lang } do |t|
                 if node.attr("title-intro-#{lang}")
                   t.title_intro { |t1| t1 << node.attr("title-intro-#{lang}") }
                 end

@@ -4,7 +4,7 @@ module Asciidoctor
       module Table
         def table(node)
           noko do |xml|
-            xml.table **{anchor: Utils::anchor_or_uuid(node)} do |xml_table|
+            xml.table **{ anchor: Utils::anchor_or_uuid(node) } do |xml_table|
               %i(head body foot).reject do |tblsec|
                 node.rows[tblsec].empty?
               end
@@ -41,9 +41,7 @@ module Asciidoctor
             xml.send "t#{s}" do |xml_tblsec|
               node.rows[s].each do |row|
                 xml_tblsec.tr do |xml_tr|
-                  row.each do |cell|
-                    table_cell(cell, xml_tr, s)
-                  end
+                  row.each { |cell| table_cell(cell, xml_tr, s) }
                 end
               end
             end

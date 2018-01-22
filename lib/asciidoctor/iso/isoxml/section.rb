@@ -9,8 +9,7 @@ module Asciidoctor
           a = { anchor: Utils::anchor_or_uuid(node) }
           noko do |xml|
             case node.title.downcase
-            when "introduction" then 
-              puts node.level
+            when "introduction" then
               if node.level == 1
                 introduction_parse(a, xml, node)
               else

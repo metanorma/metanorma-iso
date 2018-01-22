@@ -46,14 +46,14 @@ module Asciidoctor
           end
         end
 
-        def biblio_list(f, s, bibliography)
+        def biblio_list(f, div, bibliography)
           isobiblio = f.xpath(ns("./iso_ref_title"))
           refbiblio = f.xpath(ns("./reference"))
           isobiblio.each_with_index do |b, i|
-            iso_ref_entry(s, b, i + 1, bibliography)
+            iso_ref_entry(div, b, i + 1, bibliography)
           end
           refbiblio.each_with_index do |b, i|
-            ref_entry(s, b, i + 1 + isobiblio.size, bibliography)
+            ref_entry(div, b, i + 1 + isobiblio.size, bibliography)
           end
         end
 

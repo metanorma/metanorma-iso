@@ -8,8 +8,10 @@ module Asciidoctor
       module Validate
         class << self
           def title_intro_validate(root)
-            title_intro_en = root.at("//title/en/title_intro")
-            title_intro_fr = root.at("//title/fr/title_intro")
+            #title_intro_en = root.at("//title/en/title_intro")
+            #title_intro_fr = root.at("//title/fr/title_intro")
+            title_intro_en = root.at("//title_info[@language='en']/title_intro")
+            title_intro_fr = root.at("//title_info[@language='fr']/title_intro")
             if title_intro_en.nil? && !title_intro_fr.nil?
               warn "No English Title Intro!"
             end
@@ -19,8 +21,8 @@ module Asciidoctor
           end
 
           def title_part_validate(root)
-            title_part_en = root.at("//title/en/title_part")
-            title_part_fr = root.at("//title/fr/title_part")
+            title_part_en = root.at("//title_info[@language='en']/title_part")
+            title_part_fr = root.at("//title_info[@language='fr']/title_part")
             if title_part_en.nil? && !title_part_fr.nil?
               warn "No English Title Part!"
             end
@@ -31,12 +33,12 @@ module Asciidoctor
 
           def title_names_type_validate(root)
             doctypes = /International\sStandard | Technical\sSpecification |
-            Publicly\sAvailable\sSpecification | Technical\sReport |
-            Guide /xi
-            if doctypes.match? root.at("//title/en/title_main").text
+            Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
+            title_main_en = root.at("//title_info[@language='en']/title_main")
+            if doctypes.match? title_main_en.text
               warn "Main Title may name document type"
             end
-            title_intro_en = root.at("//title/en/title_intro")
+            title_intro_en = root.at("//title_info[@language='en']/title_intro")
             if !title_intro_en.nil? && doctypes.match?(title_intro_en.text)
               warn "Part Title may name document type"
             end
@@ -73,18 +75,15 @@ module Asciidoctor
             rescue Jing::Error => e
               abort "what what what #{e}"
             end
-            if errors.none?
-              puts "Valid!"
-            else
-              errors.each do |error|
-                puts "#{error[:message]} @ #{error[:line]}:#{error[:column]}"
-              end
+            puts "Valid!" if errors.none?
+            errors.each do |error|
+              puts "#{error[:message]} @ #{error[:line]}:#{error[:column]}"
             end
           end
 
-          def requirement(text)
-            text.split(/\.\s+/).each do |t|
-              matched = /\b(?<w>
+          @@requirement_re =
+            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
+              \b(?<w>
                             ( shall | (is|are)\sto |
                              (is|are)\srequired\s(not\s)?to |
                              has\sto |
@@ -92,51 +91,69 @@ module Asciidoctor
                              it\s\is\snecessary |
                              (needs|need)\sto |
                              (is|are)\snot\s(allowed | permitted |
-                             acceptable | permissible) |
-                             (is|are)\snot\sto\sbe |
-                             (need|needs)\snot |
-                             do\snot )
-                           )\b/ix.match t
-                           return t unless matched.nil?
+                                             acceptable | permissible) |
+                                             (is|are)\snot\sto\sbe |
+                                             (need|needs)\snot |
+                                             do\snot )
+                           )\b
+          REGEXP
+
+          def requirement(text)
+            text.split(/\.\s+/).each do |t|
+              matched = @@requirement_re.match t
+              return t unless matched.nil?
             end
             nil
           end
+
+          @@recommendation_re =
+            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
+              \b(?<w>should |
+              ought\s(not\s)?to |
+              it\sis\s(not\s)?recommended\sthat
+              )\b
+          REGEXP
 
           def recommendation(text)
             text.split(/\.\s+/).each do |t|
-              matched = /\b(?<w>should |
-                            ought\s(not\s)?to |
-                            it\sis\s(not\s)?recommended\sthat
-                           )\b/xi.match t
-                           return t unless matched.nil?
+              matched = @@recommendation_re.match t
+              return t unless matched.nil?
             end
             nil
           end
+
+          @@permission_re =            
+            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
+              \b(?<w>may |
+              (is|are)\s(permitted | allowed | permissible ) |
+              it\sis\snot\srequired\sthat |
+              no\b[^.,]+\b(is|are)\srequired
+             )\b
+          REGEXP
 
           def permission(text)
             text.split(/\.\s+/).each do |t|
-              matched = /\b(?<w>may |
-                            (is|are)\s(permitted | allowed | permissible ) |
-                            it\sis\snot\srequired\sthat |
-                            no\b[^.,]+\b(is|are)\srequired
-                           )\b/xi.match t
-                           return t unless matched.nil?
+              matched = @@permission_re.match t
+              return t unless matched.nil?
             end
             nil
           end
 
+          @@possibility_re =
+            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
+            \b(?<w>can | cannot | be\sable\sto |
+                  there\sis\sa\spossibility\sof |
+                  it\sis\spossible\to | be\sunable\sto |
+                  there\sis\sno\spossibility\sof |
+                  it\sis\snot\spossible\sto)\b
+          REGEXP
+
           def posssibility(text)
-            re = /\b(?<w>can | cannot | be\sable\sto |
-                      there\sis\sa\spossibility\sof |
-                      it\sis\spossible\to | be\sunable\sto |
-                      there\sis\sno\spossibility\sof |
-                      it\sis\snot\spossible\sto
-                     )\b/xi
-                      text.split(/\.\s+/).each do |t|
-                        matched = re.match t
-                        return t unless matched.nil?
-                      end
-                      nil
+            text.split(/\.\s+/).each do |t|
+              matched = @@possibility_re.match t
+              return t unless matched.nil?
+            end
+            nil
           end
 
           def external_constraint(text)
@@ -198,7 +215,7 @@ module Asciidoctor
             end
           end
 
-          # style check with a regex on a token 
+          # style check with a regex on a token
           # and a negative match on its preceding token
           def style_two_regex_not_prev(n, text, re, re_prev, warning)
             return if text.nil?
@@ -215,7 +232,7 @@ module Asciidoctor
           def style(n, text)
             style_single_regex(n, text, /\b(?<num>[0-9]+\.[0-9]+)\b/,
                                "possible decimal point")
-            style_two_regex_not_prev(n, text, /^(?<num>[0-9]{4,})$/, 
+            style_two_regex_not_prev(n, text, /^(?<num>[0-9]{4,})$/,
                                      %r{(\bISO|\bIEC|\bIEEE|/)$},
                                      "number not broken up in threes")
             style_single_regex(n, text, /\b(?<num>[0-9.,]+%)/,

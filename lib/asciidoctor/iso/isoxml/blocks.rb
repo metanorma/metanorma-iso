@@ -46,8 +46,7 @@ module Asciidoctor
         def note(n)
           noko do |xml|
             xml.note **attr_code(anchor: Utils::anchor_or_uuid(n)) do |c|
-              if n.blocks?
-                c << n.content
+              if n.blocks? then c << n.content
               else
                 c.p { |p| p << n.content }
               end

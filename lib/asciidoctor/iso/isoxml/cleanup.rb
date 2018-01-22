@@ -36,17 +36,21 @@ module Asciidoctor
             end
           end
 
+          def termdef_warn(text, re, term, msg)
+            if re.match? text
+              warn "ISO style: #{term}: #{msg}"
+            end
+          end
+
           def termdef_style(xmldoc)
             xmldoc.xpath("//termdef").each do |t|
               para = t.at("./p")
               return if para.nil?
               term = t.at("term").text
-              if /^(the|a)\b/i.match? para.text
-                warn "ISO style: #{term}: term definition starts with article"
-              end
-              if /\.$/i.match? para.text
-                warn "ISO style: #{term}: term definition ends with period"
-              end
+              termdef_warn(para.text, /^(the|a)\b/i, term,
+                           "term definition starts with article")
+              termdef_warn(para.text, /\.$/i, term,
+                           "term definition ends with period")
             end
           end
 
@@ -219,7 +223,7 @@ module Asciidoctor
           def review_note_cleanup(xmldoc)
             xmldoc.xpath("//review_note").each do |n|
               prev = n.previous_element
-              if !prev.nil? and prev.name == "p"
+              if !prev.nil? && prev.name == "p"
                 n.parent = prev
               end
             end

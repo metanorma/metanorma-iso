@@ -57,12 +57,18 @@ module Asciidoctor
           xml_t.modification { |m| m << matched[:text] } if matched[:text]
         end
 
+        @@term_reference_re = 
+          Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
+             ^(?<xref><xref[^>]+>)
+               (,\s(?<section>.[^, ]+))?
+               (,\s(?<text>.*))?
+             $
+        REGEXP
+
         def termsource(node)
           noko do |xml|
             xml.termref do |xml_t|
-              matched = /^(?<xref><xref[^>]+>)
-              (,\s(?<section>.[^, ]+))?
-                (,\s(?<text>.*))?$/x.match node.content
+              matched = @@term_reference_re.match node.content
               if matched.nil?
                 w = "term reference not in expected format"
                 warning(node, w, node.content)
