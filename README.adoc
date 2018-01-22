@@ -299,27 +299,27 @@ these are otherwise suppressed.
 
 === Standard Document Model
 
-image::diagrams/Document__Standard Document_2.png[]
+image::models/standard-document.png[]
 
 === Bibliographic Models
 
-image::diagrams/Document__Bibliographic Items_1.png[]
+image::models/bibliography.png[]
 
 === Terms and References Model
 
-image::diagrams/Document__Terms Of Reference_3.png[]
+image::models/terms.png[]
 
 === Text Section Model
 
-image::diagrams/Document__Section_5.png[]
+image::models/section.png[]
 
 === Text Block Model
 
-image::diagrams/Document__Blocks_4.png[]
+image::models/blocks.png[]
 
 === Text Model
 
-image::diagrams/Document__Text_0.png[]
+image::models/text.png[]
 
 
 
