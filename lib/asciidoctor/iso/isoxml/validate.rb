@@ -73,9 +73,9 @@ module Asciidoctor
             rescue Jing::Error => e
               abort "what what what #{e}"
             end
-            puts "Valid!" if errors.none?
+            warn "Valid!" if errors.none?
             errors.each do |error|
-              puts "#{error[:message]} @ #{error[:line]}:#{error[:column]}"
+              warn "#{error[:message]} @ #{error[:line]}:#{error[:column]}"
             end
           end
 
