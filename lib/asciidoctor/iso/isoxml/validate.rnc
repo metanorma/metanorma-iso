@@ -138,7 +138,9 @@ title_part =
 
 sections =
   element sections {
-    content, content?, references, clause, terms, clause+, annex*, references?
+    content, content?, 
+    clause, references, clause, terms, clause+, 
+    annex*, references?
   }
 
 content =

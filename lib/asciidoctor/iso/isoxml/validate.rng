@@ -223,79 +223,16 @@
       <text/>
     </element>
   </define>
-  <define name="foreword">
-    <element name="foreword">
-      <zeroOrMore>
-        <choice>
-          <ref name="para"/>
-          <ref name="table"/>
-          <ref name="note"/>
-          <ref name="formula"/>
-          <ref name="warning"/>
-          <ref name="ol"/>
-          <ref name="ul"/>
-          <ref name="dl"/>
-          <ref name="figure"/>
-          <ref name="quote"/>
-          <ref name="sourcecode"/>
-          <ref name="review_note"/>
-          <ref name="example"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="introduction">
-    <element name="introduction">
-      <optional>
-        <attribute name="anchor">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <choice>
-        <oneOrMore>
-          <choice>
-            <ref name="para"/>
-            <ref name="table"/>
-            <ref name="note"/>
-            <ref name="formula"/>
-            <ref name="warning"/>
-            <ref name="ol"/>
-            <ref name="ul"/>
-            <ref name="dl"/>
-            <ref name="figure"/>
-            <ref name="quote"/>
-            <ref name="sourcecode"/>
-            <ref name="review_note"/>
-            <ref name="example"/>
-          </choice>
-        </oneOrMore>
-        <oneOrMore>
-          <ref name="clause"/>
-        </oneOrMore>
-      </choice>
-      <optional>
-        <ref name="patent_notice"/>
-      </optional>
-    </element>
-  </define>
-  <define name="patent_notice">
-    <element name="patent_notice">
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
-    </element>
-  </define>
   <define name="sections">
     <element name="sections">
       <ref name="content"/>
       <optional>
         <ref name="content"/>
       </optional>
+      <ref name="clause"/>
       <ref name="references"/>
+      <ref name="clause"/>
       <ref name="terms"/>
-      <optional>
-        <ref name="terms"/>
-      </optional>
       <oneOrMore>
         <ref name="clause"/>
       </oneOrMore>
@@ -307,8 +244,8 @@
       </optional>
     </element>
   </define>
-  <define name="scope">
-    <element name="scope">
+  <define name="content">
+    <element name="content">
       <optional>
         <attribute name="anchor">
           <data type="ID"/>
@@ -336,9 +273,132 @@
           </choice>
         </oneOrMore>
         <oneOrMore>
-          <ref name="clause"/>
+          <ref name="content_subsection"/>
         </oneOrMore>
       </choice>
+    </element>
+  </define>
+  <define name="content_subsection">
+    <element name="subsection">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section_title"/>
+      </optional>
+      <choice>
+        <oneOrMore>
+          <choice>
+            <ref name="para"/>
+            <ref name="table"/>
+            <ref name="note"/>
+            <ref name="formula"/>
+            <ref name="warning"/>
+            <ref name="ol"/>
+            <ref name="ul"/>
+            <ref name="dl"/>
+            <ref name="figure"/>
+            <ref name="quote"/>
+            <ref name="sourcecode"/>
+            <ref name="review_note"/>
+            <ref name="example"/>
+          </choice>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="content_subsection"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="clause">
+    <element name="clause">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section_title"/>
+      </optional>
+      <choice>
+        <oneOrMore>
+          <choice>
+            <ref name="para"/>
+            <ref name="table"/>
+            <ref name="note"/>
+            <ref name="formula"/>
+            <ref name="warning"/>
+            <ref name="ol"/>
+            <ref name="ul"/>
+            <ref name="dl"/>
+            <ref name="figure"/>
+            <ref name="quote"/>
+            <ref name="sourcecode"/>
+            <ref name="review_note"/>
+            <ref name="example"/>
+          </choice>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="clause_subsection"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="clause_subsection">
+    <element name="clause">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section_title"/>
+      </optional>
+      <choice>
+        <oneOrMore>
+          <choice>
+            <ref name="para"/>
+            <ref name="table"/>
+            <ref name="note"/>
+            <ref name="formula"/>
+            <ref name="warning"/>
+            <ref name="ol"/>
+            <ref name="ul"/>
+            <ref name="dl"/>
+            <ref name="figure"/>
+            <ref name="quote"/>
+            <ref name="sourcecode"/>
+            <ref name="review_note"/>
+            <ref name="example"/>
+          </choice>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="clause_subsection"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="references">
+    <element name="references">
+      <optional>
+        <attribute name="anchor">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section_title"/>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="iso_ref_title"/>
+          <ref name="reference"/>
+        </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="references"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="norm_ref">
@@ -412,7 +472,7 @@
     </element>
   </define>
   <define name="terms_defs">
-    <element name="terms_defs">
+    <element name="terms">
       <optional>
         <attribute name="anchor">
           <data type="ID"/>
@@ -543,42 +603,8 @@
       <text/>
     </element>
   </define>
-  <define name="clause">
-    <element name="clause">
-      <optional>
-        <attribute name="anchor">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <ref name="section_title"/>
-      </optional>
-      <choice>
-        <oneOrMore>
-          <choice>
-            <ref name="para"/>
-            <ref name="table"/>
-            <ref name="note"/>
-            <ref name="formula"/>
-            <ref name="warning"/>
-            <ref name="ol"/>
-            <ref name="ul"/>
-            <ref name="dl"/>
-            <ref name="figure"/>
-            <ref name="quote"/>
-            <ref name="sourcecode"/>
-            <ref name="review_note"/>
-            <ref name="example"/>
-          </choice>
-        </oneOrMore>
-        <oneOrMore>
-          <ref name="clause"/>
-        </oneOrMore>
-      </choice>
-    </element>
-  </define>
   <define name="clause_hanging_para">
-    <element name="clause">
+    <element name="subsection">
       <optional>
         <attribute name="anchor">
           <data type="ID"/>

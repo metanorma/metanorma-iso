@@ -25,12 +25,13 @@ module Asciidoctor
         end
 
         def clause(isoxml, out)
-          # isoxml.xpath(ns("//middle/clause")).each do |c|
           isoxml.xpath(ns("//clause[parent::sections]")).each do |c|
+            next if c.at(ns("./title")).text == "Scope"
             out.div **attr_code("id": c["anchor"]) do |s|
               c.elements.each do |c1|
                 if c1.name == "title"
-                  clause_name("#{get_anchors()[c['anchor']][:label]}.", c1.text, s)
+                  clause_name("#{get_anchors()[c['anchor']][:label]}.", 
+                              c1.text, s)
                 else
                   parse(c1, s)
                 end
@@ -62,12 +63,12 @@ module Asciidoctor
         end
 
         def scope(isoxml, out)
-          f = isoxml.at(ns("//scope"))
+          f = isoxml.at(ns("//clause[title = 'Scope']"))
           return unless f
           out.div do |div|
-              clause_name("1.", "Scope", div)
+            clause_name("1.", "Scope", div)
             f.elements.each do |e|
-              parse(e, div)
+              parse(e, div) unless e.name == "title"
             end
           end
         end
@@ -76,50 +77,50 @@ module Asciidoctor
           f = isoxml.at(ns("//terms_defs"))
           return unless f
           out.div do |div|
-              clause_name("3.", "Terms and Definitions", div)
-              f.elements.each do |e|
-                parse(e, div)
+            clause_name("3.", "Terms and Definitions", div)
+            f.elements.each do |e|
+              parse(e, div)
+            end
+          end
+        end
+
+        def symbols_abbrevs(isoxml, out)
+          f = isoxml.at(ns("//symbols_abbrevs"))
+          return unless f
+          out.div do |div|
+            clause_name("4.", "Symbols and Abbreviations", div)
+            f.elements.each do |e|
+              parse(e, div)
+            end
+          end
+        end
+
+        def introduction(isoxml, out)
+          f = isoxml.at(ns("//content[title = 'Introduction']"))
+          return unless f
+          title_attr = { class: "IntroTitle" }
+          page_break(out)
+          out.div **{class: "Section3" } do |div|
+            div.h1 "Introduction", **attr_code(title_attr)
+            f.elements.each do |e|
+              if e.name == "patent_notice"
+                e.elements.each { |e1| parse(e1, div) }
+              else
+                parse(e, div) unless e.name == "title"
               end
             end
           end
+        end
 
-          def symbols_abbrevs(isoxml, out)
-            f = isoxml.at(ns("//symbols_abbrevs"))
-            return unless f
-            out.div do |div|
-              clause_name("4.", "Symbols and Abbreviations", div)
-              f.elements.each do |e|
-                parse(e, div)
-              end
-            end
-          end
-
-          def introduction(isoxml, out)
-            f = isoxml.at(ns("//introduction"))
-            return unless f
-            title_attr = { class: "IntroTitle" }
-            page_break(out)
-            out.div **{class: "Section3" } do |div|
-              div.h1 "Introduction", **attr_code(title_attr)
-              f.elements.each do |e|
-                if e.name == "patent_notice"
-                  e.elements.each { |e1| parse(e1, div) }
-                else
-                  parse(e, div)
-                end
-              end
-            end
-          end
-
-          def foreword(isoxml, out)
-            f = isoxml.at(ns("//foreword"))
-            return unless f
-            out.div do |s|
-              s.h1 **{ class: "ForewordTitle" } { |h1| h1 << "Foreword" }
-              f.elements.each { |e| parse(e, s) }
-            end
+        def foreword(isoxml, out)
+          f = isoxml.at(ns("//content[title = 'Foreword']"))
+          return unless f
+          out.div do |s|
+            s.h1 **{ class: "ForewordTitle" } { |h1| h1 << "Foreword" }
+            f.elements.each { |e| parse(e, s) unless e.name == "title" }
           end
         end
       end
     end
   end
+end

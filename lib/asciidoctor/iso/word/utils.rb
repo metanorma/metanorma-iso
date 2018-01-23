@@ -7,7 +7,8 @@ module Asciidoctor
       module Utils
         def ns(xpath)
           xpath.gsub(%r{/([a-zA-z])}, "/xmlns:\\1").
-            gsub(%r{::([a-zA-z])}, "::xmlns:\\1")
+            gsub(%r{::([a-zA-z])}, "::xmlns:\\1").
+            gsub(%r{\[([a-zA-z]+ ?=)}, "[xmlns:\\1")
         end
 
         def insert_tab(out, n)

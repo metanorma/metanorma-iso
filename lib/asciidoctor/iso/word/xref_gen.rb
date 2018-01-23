@@ -26,12 +26,11 @@ module Asciidoctor
           end
 
           def initial_anchor_names(docxml)
-            introduction_names(docxml.at(ns("//introduction")))
-            section_names(docxml.at(ns("//scope")), "1", 1)
+            introduction_names(docxml.at(ns("//content[title = 'Introduction']")))
+            section_names(docxml.at(ns("//clause[title = 'Scope']")), "1", 1)
             section_names(docxml.at(ns("//norm_ref")), "2", 1)
             section_names(docxml.at(ns("//terms_defs")), "3", 1)
-            #sequential_asset_names(docxml.xpath(ns("//middle")))
-            middle_sections = "//scope | //norm_ref | //terms_defs | "\
+            middle_sections = "//clause[title = 'Scope'] | //norm_ref | //terms_defs | "\
               "//symbols_abbrevs | //clause[parent::sections]"
             sequential_asset_names(docxml.xpath(ns(middle_sections)))
           end
@@ -44,7 +43,8 @@ module Asciidoctor
               sect_num += 1
             end
             # docxml.xpath(ns("//middle/clause")).each_with_index do |c, i|
-            docxml.xpath(ns("//clause[parent::sections]")).each_with_index do |c, i|
+            q = "//clause[parent::sections][not(xmlns:title = 'Scope')]"
+            docxml.xpath(ns(q)).each_with_index do |c, i|
               section_names(c, (i + sect_num).to_s, 1)
             end
           end

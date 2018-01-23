@@ -104,7 +104,8 @@ module Asciidoctor
         def preamble(node)
           result = []
           result << noko do |xml|
-            xml.foreword do |xml_abstract|
+            xml.content do |xml_abstract|
+              xml_abstract.title { |t| t << "Foreword" }
               content = node.content
               xml_abstract << content
               text = Utils::flatten_rawtext(content).join("\n")

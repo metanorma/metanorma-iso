@@ -95,7 +95,8 @@ module Asciidoctor
         end
 
         def introduction_parse(attrs, xml, node)
-          xml.introduction **attr_code(attrs) do |xml_section|
+          xml.content **attr_code(attrs) do |xml_section|
+            xml_section.title = "Introduction"
             content = node.content
             xml_section << content
             Validate::introduction_style(node,
@@ -112,7 +113,8 @@ module Asciidoctor
 
         def scope_parse(attrs, xml, node)
           $scope = true
-          xml.scope **attr_code(attrs) do |xml_section|
+          xml.clause **attr_code(attrs) do |xml_section|
+            xml_section.title { |t| t << "Scope" }
             content = node.content
             xml_section << content
             c = Utils::flatten_rawtext(content).join("\n")

@@ -11,12 +11,10 @@ module Asciidoctor
 =begin
 TODO
 New validations:
-foreword: no subsections
 symbols_abbrevs: can only be a dl
 norm_ref: no embedded reference section
+sequence of new sections
 =end
-
-
 
           def title_intro_validate(root)
             title_intro_en = root.at("//title[@language='en']/title_intro")
@@ -60,7 +58,7 @@ norm_ref: no embedded reference section
           end
 
           def onlychild_clause_validate(root)
-            q = "//clause/clause | //annex/clause | //scope/clause"
+            q = "//clause/subclause | //annex/subclause "
             root.xpath(q).each do |c|
               next unless c.xpath("../clause").size == 1
               title = c.at("./title")
@@ -74,9 +72,19 @@ norm_ref: no embedded reference section
             end
           end
 
-          def validate(doc)
+          def foreword_validate(root)
+            f = root.at("//content[title = 'Foreword']")
+            s = f.at("./subsection")
+            warn "ISO style: foreword contains subsections" unless s.nil?
+          end
+
+          def content_validate(doc)
             title_validate(doc.root)
+            foreword_validate(doc.root)
             onlychild_clause_validate(doc.root)
+          end
+
+          def schema_validate(doc)
             filename = File.join(File.dirname(__FILE__), "validate.rng")
             File.open(".tmp.xml", "w") { |f| f.write(doc.to_xml) }
             begin
@@ -88,6 +96,11 @@ norm_ref: no embedded reference section
             errors.each do |error|
               warn "#{error[:message]} @ #{error[:line]}:#{error[:column]}"
             end
+          end
+
+          def validate(doc)
+            content_validate(doc)
+            schema_validate(doc)
           end
 
           @@requirement_re =
