@@ -144,7 +144,6 @@ foreword =
 introduction =
   element introduction { 
     attribute anchor { xsd:ID }?,
-    tname?,
     (
       ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
       clause+ 
