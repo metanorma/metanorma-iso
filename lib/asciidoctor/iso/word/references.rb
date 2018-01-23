@@ -77,7 +77,7 @@ module Asciidoctor
         end
 
         def norm_ref(isoxml, out)
-          f = isoxml.at(ns("//norm_ref"))
+          f = isoxml.at(ns("//references[title = 'Normative References']"))
           return unless f
           out.div do |div|
             clause_name("2.", "Normative References", div)

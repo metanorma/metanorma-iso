@@ -80,7 +80,7 @@ module Asciidoctor
 
         def term_def_parse(attrs, xml, node)
           $term_def = true
-          xml.terms_defs **attr_code(attrs) do |xml_section|
+          xml.terms **attr_code(attrs) do |xml_section|
             xml_section << node.content
           end
           $term_def = false
@@ -88,7 +88,8 @@ module Asciidoctor
 
         def norm_ref_parse(attrs, xml, node)
           $norm_ref = true
-          xml.norm_ref **attr_code(attrs) do |xml_section|
+          xml.references **attr_code(attrs) do |xml_section|
+            xml_section.title { |t| t << "Normative References" }
             xml_section << node.content
           end
           $norm_ref = false
@@ -106,9 +107,10 @@ module Asciidoctor
         end
 
         def patent_notice_parse(xml, node)
-          xml.patent_notice do |xml_section|
-            xml_section << node.content
-          end
+          # xml.patent_notice do |xml_section|
+          #  xml_section << node.content
+          # end
+          xml << node.content
         end
 
         def scope_parse(attrs, xml, node)

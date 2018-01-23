@@ -25,14 +25,14 @@ module Asciidoctor
             end
           end
 
-          def initial_anchor_names(docxml)
-            introduction_names(docxml.at(ns("//content[title = 'Introduction']")))
-            section_names(docxml.at(ns("//clause[title = 'Scope']")), "1", 1)
-            section_names(docxml.at(ns("//norm_ref")), "2", 1)
-            section_names(docxml.at(ns("//terms_defs")), "3", 1)
-            middle_sections = "//clause[title = 'Scope'] | //norm_ref | //terms_defs | "\
+          def initial_anchor_names(d)
+            introduction_names(d.at(ns("//content[title = 'Introduction']")))
+            section_names(d.at(ns("//clause[title = 'Scope']")), "1", 1)
+            section_names(d.at(ns("//references[title = 'Normative References']")), "2", 1)
+            section_names(d.at(ns("//terms")), "3", 1)
+            middle_sections = "//clause[title = 'Scope'] | //references[title = 'Normative References'] | //terms | "\
               "//symbols_abbrevs | //clause[parent::sections]"
-            sequential_asset_names(docxml.xpath(ns(middle_sections)))
+            sequential_asset_names(d.xpath(ns(middle_sections)))
           end
 
           def middle_anchor_names(docxml)

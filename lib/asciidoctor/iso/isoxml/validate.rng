@@ -471,7 +471,7 @@
       <text/>
     </element>
   </define>
-  <define name="terms_defs">
+  <define name="terms">
     <element name="terms">
       <optional>
         <attribute name="anchor">
@@ -493,7 +493,7 @@
           <ref name="termdef"/>
         </oneOrMore>
         <optional>
-          <ref name="terms_defs"/>
+          <ref name="terms"/>
         </optional>
       </choice>
     </element>

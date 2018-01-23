@@ -12,7 +12,6 @@ module Asciidoctor
 TODO
 New validations:
 symbols_abbrevs: can only be a dl
-norm_ref: no embedded reference section
 sequence of new sections
 =end
 
@@ -78,9 +77,18 @@ sequence of new sections
             warn "ISO style: foreword contains subsections" unless s.nil?
           end
 
+          def normref_validate(root)
+            f = root.at("//references[title = 'Normative References']")
+            s = f.at("./references")
+            unless s.nil?
+              warn "ISO style: normative references contains subsections"
+            end
+          end
+
           def content_validate(doc)
             title_validate(doc.root)
             foreword_validate(doc.root)
+            normref_validate(doc.root)
             onlychild_clause_validate(doc.root)
           end
 

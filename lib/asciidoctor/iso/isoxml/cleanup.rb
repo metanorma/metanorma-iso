@@ -19,6 +19,7 @@ module Asciidoctor
             figure_cleanup(xmldoc)
             ref_cleanup(xmldoc)
             review_note_cleanup(xmldoc)
+            normref_cleanup(xmldoc)
             xmldoc
           end
 
@@ -197,6 +198,16 @@ module Asciidoctor
               prev = n.previous_element
               if !prev.nil? && prev.name == "p"
                 n.parent = prev
+              end
+            end
+          end
+
+          def normref_cleanup(xmldoc)
+            q = "//references[title = 'Normative References']"
+            r = xmldoc.at(q)
+            r.elements.each do |n|
+              unless ["title", "reference"].include? n.name
+                n.remove
               end
             end
           end

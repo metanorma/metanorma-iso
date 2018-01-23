@@ -222,13 +222,13 @@ date_footnote =
 isotitle = 
   element isotitle { text }
 
-terms_defs = 
+terms = 
   element terms { 
     attribute anchor { xsd:ID }?,
     section_title?,
     # boilerplate
     para*, ul?,
-    (termdef+ | terms_defs? )
+    (termdef+ | terms? )
   }
 
 termdef = 

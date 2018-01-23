@@ -74,7 +74,7 @@ module Asciidoctor
         end
 
         def terms_defs(isoxml, out)
-          f = isoxml.at(ns("//terms_defs"))
+          f = isoxml.at(ns("//terms"))
           return unless f
           out.div do |div|
             clause_name("3.", "Terms and Definitions", div)
