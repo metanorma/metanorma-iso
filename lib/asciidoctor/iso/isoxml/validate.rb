@@ -7,6 +7,17 @@ module Asciidoctor
     module ISOXML
       module Validate
         class << self
+
+=begin
+TODO
+New validations:
+foreword: no subsections
+symbols_abbrevs: can only be a dl
+norm_ref: no embedded reference section
+=end
+
+
+
           def title_intro_validate(root)
             title_intro_en = root.at("//title[@language='en']/title_intro")
             title_intro_fr = root.at("//title[@language='fr']/title_intro")

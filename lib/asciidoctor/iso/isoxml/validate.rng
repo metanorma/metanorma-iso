@@ -251,9 +251,6 @@
           <data type="ID"/>
         </attribute>
       </optional>
-      <optional>
-        <ref name="tname"/>
-      </optional>
       <choice>
         <oneOrMore>
           <choice>
@@ -290,15 +287,14 @@
   </define>
   <define name="sections">
     <element name="sections">
-      <ref name="foreword"/>
+      <ref name="content"/>
       <optional>
-        <ref name="introduction"/>
+        <ref name="content"/>
       </optional>
-      <ref name="scope"/>
-      <ref name="norm_ref"/>
-      <ref name="terms_defs"/>
+      <ref name="references"/>
+      <ref name="terms"/>
       <optional>
-        <ref name="symbols_abbrevs"/>
+        <ref name="terms"/>
       </optional>
       <oneOrMore>
         <ref name="clause"/>
@@ -307,7 +303,7 @@
         <ref name="annex"/>
       </zeroOrMore>
       <optional>
-        <ref name="bibliography"/>
+        <ref name="references"/>
       </optional>
     </element>
   </define>
@@ -319,7 +315,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="tname"/>
+        <ref name="section_title"/>
       </optional>
       <choice>
         <oneOrMore>
@@ -423,7 +419,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="tname"/>
+        <ref name="section_title"/>
       </optional>
       <zeroOrMore>
         <!-- boilerplate -->
@@ -555,7 +551,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="tname"/>
+        <ref name="section_title"/>
       </optional>
       <choice>
         <oneOrMore>
@@ -589,7 +585,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="tname"/>
+        <ref name="section_title"/>
       </optional>
       <zeroOrMore>
         <!-- allow hanging paragraphs in annexes: they introduce lists -->
@@ -656,7 +652,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="tname"/>
+        <ref name="section_title"/>
       </optional>
       <zeroOrMore>
         <!-- allow hanging paragraphs in annexes: they introduce lists -->
@@ -689,7 +685,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="tname"/>
+        <ref name="section_title"/>
       </optional>
       <oneOrMore>
         <choice>
@@ -1082,6 +1078,11 @@
   </define>
   <define name="tname">
     <element name="name">
+      <text/>
+    </element>
+  </define>
+  <define name="section_title">
+    <element name="title">
       <text/>
     </element>
   </define>

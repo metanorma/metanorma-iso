@@ -5,7 +5,7 @@ module Asciidoctor
         def clause_parse(node, out)
           out.div **attr_code("id": node["anchor"]) do |s|
             node.children.each do |c1|
-              if c1.name == "name"
+              if c1.name == "title"
                 s.send "h#{get_anchors()[node['anchor']][:level]}" do |h|
                   h << "#{get_anchors()[node['anchor']][:label]}. #{c1.text}"
                 end
@@ -29,7 +29,7 @@ module Asciidoctor
           isoxml.xpath(ns("//clause[parent::sections]")).each do |c|
             out.div **attr_code("id": c["anchor"]) do |s|
               c.elements.each do |c1|
-                if c1.name == "name"
+                if c1.name == "title"
                   clause_name("#{get_anchors()[c['anchor']][:label]}.", c1.text, s)
                 else
                   parse(c1, s)
@@ -51,7 +51,7 @@ module Asciidoctor
             page_break(out)
             out.div **attr_code("id": c["anchor"], class: "Section3" ) do |s|
               c.elements.each do |c1|
-                if c1.name == "name"
+                if c1.name == "title"
                   annex_name(c, c1, s)
                 else
                   parse(c1, s)

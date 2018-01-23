@@ -136,40 +136,54 @@ title_main =
 title_part =
   element title_part { text }
 
-foreword =
-  element foreword { 
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*
-  }
-
-introduction =
-  element introduction { 
-    attribute anchor { xsd:ID }?,
-    (
-      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
-      clause+ 
-    ),
-    patent_notice? 
-  }
-
-patent_notice =
-  element patent_notice { para+ }
-
 sections =
   element sections {
-    foreword, introduction?,
-    scope, norm_ref, terms_defs, symbols_abbrevs?, clause+,
-    annex*, bibliography?
+    content, content?, references, clause, terms, clause+, annex*, references?
   }
 
-scope =
-  element scope { 
+content =
+  element content { 
     attribute anchor { xsd:ID }?,
-    tname?,
-    ( 
-     ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
-      clause+
+    section_title?,
+    ( ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+      content_subsection+ )
+  }
+
+content_subsection =
+  element subsection {
+    attribute anchor { xsd:ID }?,
+    section_title?,
+    ( ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+      content_subsection+ )
+  }
+
+clause =
+  element clause {
+    attribute anchor { xsd:ID }?,
+    section_title?,
+    (
+      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+       clause_subsection+
     )
   }
+
+clause_subsection =
+  element clause {
+    attribute anchor { xsd:ID }?,
+    section_title?,
+    (
+      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+       clause_subsection+
+    )
+  }
+
+references =
+  element references {
+    attribute anchor { xsd:ID }?,
+    section_title?,
+    ( iso_ref_title | reference )*,
+    references*
+}
 
 norm_ref =
   element norm_ref { 
@@ -207,9 +221,9 @@ isotitle =
   element isotitle { text }
 
 terms_defs = 
-  element terms_defs { 
+  element terms { 
     attribute anchor { xsd:ID }?,
-    tname?,
+    section_title?,
     # boilerplate
     para*, ul?,
     (termdef+ | terms_defs? )
@@ -257,20 +271,10 @@ isosection =
 modification =
   element modification { text }
 
-clause =
-  element clause {
-    attribute anchor { xsd:ID }?,
-    tname?,
-    ( 
-      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
-       clause+
-    )
-  }
-
 clause_hanging_para =
-  element clause {
+  element subsection {
     attribute anchor { xsd:ID }?,
-    tname?,
+    section_title?,
     # allow hanging paragraphs in annexes: they introduce lists
     ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
     clause_hanging_para*
@@ -287,7 +291,7 @@ annex =
   element annex { 
     attribute anchor { xsd:ID }?,
     attribute subtype { "normative" | "informative" }?,
-    tname?,
+    section_title?,
     # allow hanging paragraphs in annexes: they introduce lists
     ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
     clause_hanging_para*
@@ -296,7 +300,7 @@ annex =
 bibliography =
   element bibliography { 
     attribute anchor { xsd:ID }?,
-    tname?,
+    section_title?,
     (iso_ref_title | reference)+,
     bibliography*
   }
@@ -465,6 +469,9 @@ table =
 
 tname =
   element name { text }
+
+section_title =
+  element title { text }
 
 thead =
   element thead { tr+ }

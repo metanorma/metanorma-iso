@@ -41,7 +41,7 @@ module Asciidoctor
           # Not testing max depth of sections: Asciidoctor already limits
           # it to 5 levels of nesting
           xml.clause **attr_code(attrs) do |xml_section|
-            xml_section.name { |n| n << node.title } unless node.title.nil?
+            xml_section.title { |n| n << node.title } unless node.title.nil?
             xml_section << node.content
           end
         end
@@ -52,7 +52,7 @@ module Asciidoctor
             attrs[:subtype] = node.attr("subtype")
           end
           xml.annex **attr_code(attrs) do |xml_section|
-            xml_section.name { |name| name << node.title }
+            xml_section.title { |name| name << node.title }
             xml_section << node.content
           end
         end
