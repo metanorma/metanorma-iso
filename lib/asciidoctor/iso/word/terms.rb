@@ -56,8 +56,8 @@ module Asciidoctor
         end
 
         def termdef_parse(node, out)
-          out.p **{ class: "TermNum", id: node["anchor"] } do |p|
-            p << get_anchors()[node["anchor"]][:label]
+          out.p **{ class: "TermNum", id: node["id"] } do |p|
+            p << get_anchors()[node["id"]][:label]
           end
           set_termdomain("")
           $termnotenumber = 0

@@ -4,7 +4,7 @@ module Asciidoctor
     module ISOXML
       module Lists
         def li(xml_ul, item)
-          xml_ul.li **attr_code(anchor: item.id) do |xml_li|
+          xml_ul.li **attr_code(id: item.id) do |xml_li|
             Validate::style(item, item.text)
             if item.blocks?
               xml_li.p { |t| t << item.text }
@@ -19,7 +19,7 @@ module Asciidoctor
           return reference(node, true) if $norm_ref
           return reference(node, false) if $biblio
           noko do |xml|
-            xml.ul **attr_code(anchor: node.id) do |xml_ul|
+            xml.ul **attr_code(id: node.id) do |xml_ul|
               node.items.each do |item|
                 li(xml_ul, item)
               end
@@ -29,7 +29,7 @@ module Asciidoctor
 
         def isorefmatches(xml, matched)
           ref_attributes = {
-            anchor: matched[:anchor],
+            id: matched[:anchor],
           }
           xml.iso_ref_title **attr_code(ref_attributes) do |t|
             t.isocode matched[:code]
@@ -40,7 +40,7 @@ module Asciidoctor
 
         def isorefmatches2(xml, matched2)
           ref_attributes = {
-            anchor: matched2[:anchor],
+            id: matched2[:anchor],
           }
           xml.iso_ref_title **attr_code(ref_attributes) do |t|
             t.isocode matched2[:code]
@@ -52,7 +52,7 @@ module Asciidoctor
 
         def isorefmatches3(xml, matched2)
           ref_attributes = {
-            anchor: matched2[:anchor],
+            id: matched2[:anchor],
           }
           xml.iso_ref_title **attr_code(ref_attributes) do |t|
             t.isocode matched2[:code], **attr_code(allparts: true)
@@ -77,15 +77,15 @@ module Asciidoctor
           end
         end
 
-        @@iso_ref = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+        @@iso_ref = %r{^<ref\sid="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
         (?<text>.*)$}x
 
-        @@iso_ref_no_year = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+        @@iso_ref_no_year = %r{^<ref\sid="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
         <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x
 
-        @@iso_ref_all_parts = %r{^<ref\sanchor="(?<anchor>[^"]+)">
+        @@iso_ref_all_parts = %r{^<ref\sid="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
         (?<text>.*)(</p>)?$}x
 
@@ -111,7 +111,7 @@ module Asciidoctor
 
         def olist(node)
           noko do |xml|
-            xml.ol **attr_code(anchor: node.id, type: node.style) do |xml_ol|
+            xml.ol **attr_code(id: node.id, type: node.style) do |xml_ol|
               node.items.each do |item|
                 li(xml_ol, item)
               end
@@ -143,7 +143,7 @@ module Asciidoctor
 
         def dlist(node)
           noko do |xml|
-            xml.dl **attr_code(anchor: node.id) do |xml_dl|
+            xml.dl **attr_code(id: node.id) do |xml_dl|
               node.items.each do |terms, dd|
                 dt(terms, xml_dl)
                 dd(dd, xml_dl)
@@ -154,7 +154,7 @@ module Asciidoctor
 
         def colist(node)
           noko do |xml|
-            xml.colist **attr_code(anchor: node.id) do |xml_ul|
+            xml.colist **attr_code(id: node.id) do |xml_ul|
               node.items.each_with_index do |item, i|
                 xml_ul.annotation **attr_code(id: i + 1) do |xml_li|
                   Validate::style(item, item.text)

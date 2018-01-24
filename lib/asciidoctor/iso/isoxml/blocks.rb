@@ -6,7 +6,7 @@ module Asciidoctor
     module ISOXML
       module Blocks
         def stem(node)
-          stem_attributes = { anchor: Utils::anchor_or_uuid(node) }
+          stem_attributes = { id: Utils::anchor_or_uuid(node) }
           # NOTE: html escaping is performed by Nokogiri
           stem_content = node.lines.join("\n")
 
@@ -30,7 +30,7 @@ module Asciidoctor
 
         def termnote(n)
           # TODO: reinstate
-          # note_attributes = { anchor: Utils::anchor_or_uuid(node) }
+          # note_attributes = { id: Utils::anchor_or_uuid(node) }
           note_attributes = {}
           if n.blocks?
             warning(n, "comment cannot contain blocks of text", n.content)
@@ -45,7 +45,7 @@ module Asciidoctor
 
         def note(n)
           noko do |xml|
-            xml.note **attr_code(anchor: Utils::anchor_or_uuid(n)) do |c|
+            xml.note **attr_code(id: Utils::anchor_or_uuid(n)) do |c|
               if n.blocks? then c << n.content
               else
                 c.p { |p| p << n.content }
@@ -80,7 +80,7 @@ module Asciidoctor
 
         def term_example(node)
           noko do |xml|
-            xml.termexample **attr_code(anchor: node.id) do |ex|
+            xml.termexample **attr_code(id: node.id) do |ex|
               content = node.content
               ex << content
               text = Utils::flatten_rawtext(content).join("\n")
@@ -92,7 +92,7 @@ module Asciidoctor
         def example(node)
           return term_example(node) if $term_def
           noko do |xml|
-            xml.example **attr_code(anchor: node.id) do |ex|
+            xml.example **attr_code(id: node.id) do |ex|
               content = node.content
               ex << content
               text = Utils::flatten_rawtext(content).join("\n")
@@ -118,7 +118,7 @@ module Asciidoctor
         def image(node)
           uri = node.image_uri node.attr("target")
           artwork_attributes = {
-            anchor: Utils::anchor_or_uuid(node),
+            id: Utils::anchor_or_uuid(node),
             src: uri,
           }
 
@@ -131,7 +131,7 @@ module Asciidoctor
 
         def quote(node)
           noko do |xml|
-            xml.quote **attr_code(anchor: node.id) do |xml_blockquote|
+            xml.quote **attr_code(id: node.id) do |xml_blockquote|
               if node.blocks?
                 xml_blockquote << node.content
               else

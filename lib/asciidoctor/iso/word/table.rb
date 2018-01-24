@@ -9,7 +9,7 @@ module Asciidoctor
           if name
             out.p **{ class: "TableTitle", align: "center" } do |p|
               p.b do |b|
-                b << "#{get_anchors()[node['anchor']][:label]}&nbsp;&mdash; "
+                b << "#{get_anchors()[node['id']][:label]}&nbsp;&mdash; "
                 b << name.text
               end
             end
@@ -49,7 +49,7 @@ module Asciidoctor
 
         def make_table_attr(node)
           {
-            id: node["anchor"],
+            id: node["id"],
             class: "MsoISOTable",
             border: 1,
             cellspacing: 0,

@@ -4,7 +4,7 @@ module Asciidoctor
       module Table
         def table(node)
           noko do |xml|
-            xml.table **{ anchor: Utils::anchor_or_uuid(node) } do |xml_table|
+            xml.table **{ id: Utils::anchor_or_uuid(node) } do |xml_table|
               %i(head body foot).reject do |tblsec|
                 node.rows[tblsec].empty?
               end
@@ -27,7 +27,7 @@ module Asciidoctor
         end
 
         def table_cell(c, xml_tr, tblsec)
-          cell_attributes = { anchor: c.id, colspan: c.colspan,
+          cell_attributes = { id: c.id, colspan: c.colspan,
                               rowspan: c.rowspan, align: c.attr("halign") }
           cell_tag = "td"
           cell_tag = "th" if tblsec == :head || c.style == :header

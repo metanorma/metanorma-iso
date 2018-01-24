@@ -39,7 +39,7 @@ end
 
         def note_parse(node, out)
           $note = true
-          out.div **{ id: node["anchor"], class: "Note" } do |div|
+          out.div **{ id: node["id"], class: "Note" } do |div|
             if node.first_element_child.name == "p"
               note_p_parse(node, div)
             else
@@ -56,7 +56,7 @@ end
         def figure_name_parse(node, div, name)
           div.p **{ class: "FigureTitle", align: "center" } do |p|
             p.b do |b|
-              b << "#{get_anchors()[node['anchor']][:label]}&nbsp;&mdash; "
+              b << "#{get_anchors()[node['id']][:label]}&nbsp;&mdash; "
               b << name.text
             end
           end
@@ -64,7 +64,7 @@ end
 
         def figure_parse(node, out)
           name = node.at(ns("./name"))
-          out.div **attr_code(id: node["anchor"]) do |div|
+          out.div **attr_code(id: node["id"]) do |div|
             image_parse(node["src"], div, nil) if node["src"]
             node.children.each do |n|
               parse(n, div) unless n.name == "name"
@@ -83,7 +83,7 @@ end
 
         def sourcecode_parse(node, out)
           name = node.at(ns("./name"))
-          out.p **attr_code(id: node["anchor"], class: "Sourcecode") do |div|
+          out.p **attr_code(id: node["id"], class: "Sourcecode") do |div|
             $sourcecode = true
             node.children.each do |n|
               parse(n, div) unless n.name == "name"
@@ -117,10 +117,10 @@ end
 
         def formula_parse(node, out)
           dl = node.at(ns("./dl"))
-          out.div **attr_code(id: node["anchor"], class: "formula") do |div|
+          out.div **attr_code(id: node["id"], class: "formula") do |div|
             parse(node.at(ns("./stem")), out)
             insert_tab(div, 1)
-            div << "(#{get_anchors()[node['anchor']][:label]})"
+            div << "(#{get_anchors()[node['id']][:label]})"
           end
           out.p **{ class: "MsoNormal" } { |p| p << "where" }
           parse(dl, out) if dl
