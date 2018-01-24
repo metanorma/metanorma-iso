@@ -55,10 +55,10 @@ module Asciidoctor
             root.xpath(q).each do |c|
               next unless c.xpath("../subsection").size == 1
               title = c.at("./title")
-              location = if c["anchor"].nil? && title.nil?
+              location = if c["id"].nil? && title.nil?
                            c.text[0..60] + "..."
                          else
-                           c["anchor"]
+                           c["id"]
                          end
               location += ":#{title.text}" unless title.nil?
               warn "ISO style: #{location}: subsection is only child"

@@ -11,7 +11,7 @@ module Asciidoctor
         end
 
         def iso_ref_entry(list, b, ordinal, biblio)
-          attrs = { id: b["anchor"],
+          attrs = { id: b["id"],
                     class: biblio ? "Biblio" : "MsoNormal" }
           list.p **attr_code(attrs) do |ref|
             date_footnote = b.at(ns("./date_footnote"))
@@ -40,7 +40,7 @@ module Asciidoctor
         def ref_entry(list, b, ordinal, bibliography)
           ref = b.at(ns("./ref"))
           para = b.at(ns("./p"))
-          list.p **attr_code("id": ref["anchor"], class: "Biblio") do |r|
+          list.p **attr_code("id": ref["id"], class: "Biblio") do |r|
             ref_entry_code(r, ordinal, ref.text.gsub(/[\[\]]/, ""))
             para.children.each { |n| parse(n, r) }
           end

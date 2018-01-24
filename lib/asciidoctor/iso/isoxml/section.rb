@@ -6,7 +6,7 @@ module Asciidoctor
     module ISOXML
       module Section
         def section(node)
-          a = { anchor: Utils::anchor_or_uuid(node) }
+          a = { id: Utils::anchor_or_uuid(node) }
           noko do |xml|
             case node.title.downcase
             when "introduction" then
