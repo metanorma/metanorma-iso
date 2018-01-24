@@ -79,7 +79,7 @@ module Asciidoctor
 
         @@iso_ref = %r{^<ref\sanchor="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
-        (?<text>.*)$}
+        (?<text>.*)$}x
 
         @@iso_ref_no_year = %r{^<ref\sanchor="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?

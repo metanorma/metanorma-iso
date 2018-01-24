@@ -115,7 +115,7 @@ module Asciidoctor
           end
 
           def introduction_names(clause)
-            clause.xpath(ns("./clause")).each_with_index do |c, i|
+            clause.xpath(ns("./subsection")).each_with_index do |c, i|
               section_names(c, "0.#{i + 1}")
             end
           end
@@ -123,7 +123,7 @@ module Asciidoctor
           def section_names(clause, num, level)
             @@anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}",
                                             level: level }
-            clause.xpath(ns("./clause | ./termdef")).each_with_index do |c, i|
+            clause.xpath(ns("./subsection | ./termdef")).each_with_index do |c, i|
               section_names1(c, "#{num}.#{i + 1}", level + 1)
             end
           end
@@ -131,7 +131,7 @@ module Asciidoctor
           def section_names1(clause, num, level)
             @@anchors[clause["anchor"]] = { label: num, xref: "Clause #{num}",
                                             level: level }
-            clause.xpath(ns("./clause | ./termdef")).each_with_index do |c, i|
+            clause.xpath(ns("./subsection | ./subsection")).each_with_index do |c, i|
               section_names1(c, "#{num}.#{i + 1}", level + 1)
             end
           end
@@ -142,7 +142,7 @@ module Asciidoctor
             label = "<b>Annex #{num}</b><br/>#{obligation}"
             @@anchors[clause["anchor"]] = { label: label,
                                             xref: "Annex #{num}", level: 1 }
-            clause.xpath(ns("./clause")).each_with_index do |c, i|
+            clause.xpath(ns("./subsection")).each_with_index do |c, i|
               annex_names1(c, "#{num}.#{i + 1}", 2)
             end
             hierarchical_asset_names(clause, num)
@@ -152,7 +152,7 @@ module Asciidoctor
             @@anchors[clause["anchor"]] = { label: num,
                                             xref: num,
                                             level: level }
-            clause.xpath(ns(".//clause")).each_with_index do |c, i|
+            clause.xpath(ns(".//subsection")).each_with_index do |c, i|
               annex_names1(c, "#{num}.#{i + 1}", level + 1)
             end
           end

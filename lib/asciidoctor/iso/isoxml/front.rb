@@ -11,7 +11,7 @@ module Asciidoctor
     module ISOXML
       module Front
         def metadata_id(node, xml)
-          xml.identifier do |i|
+          xml.id do |i|
             i.projectnumber node.attr("docnumber"),
               **attr_code(part: node.attr("partnumber"))
             if node.attr("tc-docnumber")
@@ -45,7 +45,7 @@ module Asciidoctor
 
         def metadata_copyright(node, xml)
           from = node.attr("copyright-year") || Date.today.year
-          xml.copyright_owner do |c|
+          xml.copyright do |c|
             c.from from
             c.owner do |o|
               o.affiliation "ISO"

@@ -12,9 +12,9 @@ iso_standard =
     language,
     script,
     documenttype,
-    identifier,
+    id,
     version?,
-    copyright_owner,
+    copyright,
     sections
   }
 
@@ -30,8 +30,8 @@ version =
     revdate?
   }
 
-copyright_owner = 
-  element copyright_owner {
+copyright = 
+  element copyright {
     from, owner
 }
 
@@ -44,8 +44,8 @@ owner =
 
 owner_affiliation = element affiliation { "ISO" }
 
-identifier =
-  element identifier {
+id =
+  element id {
     documentnumber,
     tc_documentnumber?
   }
@@ -139,7 +139,7 @@ title_part =
 sections =
   element sections {
     content, content?, 
-    clause, references, clause, terms, clause+, 
+    clause, references, terms, clause+, 
     annex*, references?
   }
 
@@ -170,7 +170,7 @@ clause =
   }
 
 clause_subsection =
-  element clause {
+  element subsection {
     attribute anchor { xsd:ID }?,
     section_title?,
     (

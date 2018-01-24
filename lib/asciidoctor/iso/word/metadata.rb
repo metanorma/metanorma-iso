@@ -39,7 +39,7 @@ module Asciidoctor
           # out.p "Edition: #{e.text}" if e
           # e =  isoxml.at(ns("//revision_date"))
           # out.p "Revised: #{e.text}" if e
-          yr =  isoxml.at(ns("//copyright_owner/from"))
+          yr =  isoxml.at(ns("//copyright/from"))
           $iso_docyear = yr.text
           # out.p "© ISO #{yr.text}" if yr
         end
@@ -48,7 +48,7 @@ module Asciidoctor
           intro = isoxml.at(ns("//title[@language='en']/title_intro"))
           main = isoxml.at(ns("//title[@language='en']/title_main"))
           part = isoxml.at(ns("//title[@language='en']/title_part"))
-          partnumber = isoxml.at(ns("//identifier/projectnumber/@part"))
+          partnumber = isoxml.at(ns("//id/projectnumber/@part"))
           main = main.text
           main = "#{intro.text}&nbsp;&mdash;#{main}" if intro
           if part
@@ -61,7 +61,7 @@ module Asciidoctor
           intro = isoxml.at(ns("//title[@language='fr']/title_intro"))
           main = isoxml.at(ns("//title[@language='fr']/title_main"))
           part = isoxml.at(ns("//title[@language='fr']/title_part"))
-          partnumber = isoxml.at(ns("//identifier/projectnumber/@part"))
+          partnumber = isoxml.at(ns("//id/projectnumber/@part"))
           main = main.text
           main = "#{intro.text}&nbsp; #{main}" if intro
           if part

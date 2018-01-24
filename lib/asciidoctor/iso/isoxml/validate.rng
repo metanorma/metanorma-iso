@@ -13,11 +13,11 @@
       <ref name="language"/>
       <ref name="script"/>
       <ref name="documenttype"/>
-      <ref name="identifier"/>
+      <ref name="id"/>
       <optional>
         <ref name="version"/>
       </optional>
-      <ref name="copyright_owner"/>
+      <ref name="copyright"/>
       <ref name="sections"/>
     </element>
   </define>
@@ -44,8 +44,8 @@
       </optional>
     </element>
   </define>
-  <define name="copyright_owner">
-    <element name="copyright_owner">
+  <define name="copyright">
+    <element name="copyright">
       <ref name="from"/>
       <ref name="owner"/>
     </element>
@@ -65,8 +65,8 @@
       <value>ISO</value>
     </element>
   </define>
-  <define name="identifier">
-    <element name="identifier">
+  <define name="id">
+    <element name="id">
       <ref name="documentnumber"/>
       <optional>
         <ref name="tc_documentnumber"/>
@@ -231,7 +231,6 @@
       </optional>
       <ref name="clause"/>
       <ref name="references"/>
-      <ref name="clause"/>
       <ref name="terms"/>
       <oneOrMore>
         <ref name="clause"/>
@@ -347,7 +346,7 @@
     </element>
   </define>
   <define name="clause_subsection">
-    <element name="clause">
+    <element name="subsection">
       <optional>
         <attribute name="anchor">
           <data type="ID"/>

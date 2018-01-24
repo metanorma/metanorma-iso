@@ -26,7 +26,7 @@ module Asciidoctor
             else
               if $term_def
                 term_def_subclause_parse(a, xml, node)
-              elsif node.attr("style") == "appendix"
+              elsif node.attr("style") == "appendix" && node.level == 1
                 annex_parse(a, xml, node)
               else
                 clause_parse(a, xml, node)
@@ -40,7 +40,8 @@ module Asciidoctor
           Validate::style_warning(node, w, nil) if $scope
           # Not testing max depth of sections: Asciidoctor already limits
           # it to 5 levels of nesting
-          xml.clause **attr_code(attrs) do |xml_section|
+          sect = node.level == 1 ? "clause" : "subsection"
+          xml.send sect, **attr_code(attrs) do |xml_section|
             xml_section.title { |n| n << node.title } unless node.title.nil?
             xml_section << node.content
           end

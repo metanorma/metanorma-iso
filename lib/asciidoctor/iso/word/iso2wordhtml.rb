@@ -134,6 +134,7 @@ module Asciidoctor
               when "callout" then out << " &lt;#{node.text}&gt;"
               when "stem" then stem_parse(node, out)
               when "clause" then clause_parse(node, out)
+              when "subsection" then clause_parse(node, out)
               when "xref" then xref_parse(node, out)
               when "eref" then eref_parse(node, out)
               when "ul" then ul_parse(node, out)

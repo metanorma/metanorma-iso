@@ -57,9 +57,9 @@ sequence of new sections
           end
 
           def onlychild_clause_validate(root)
-            q = "//clause/subclause | //annex/subclause "
+            q = "//subsection"
             root.xpath(q).each do |c|
-              next unless c.xpath("../clause").size == 1
+              next unless c.xpath("../subsection").size == 1
               title = c.at("./title")
               location = if c["anchor"].nil? && title.nil?
                            c.text[0..60] + "..."
@@ -67,7 +67,7 @@ sequence of new sections
                            c["anchor"]
                          end
               location += ":#{title.text}" unless title.nil?
-              warn "ISO style: #{location}: subclause is only child"
+              warn "ISO style: #{location}: subsection is only child"
             end
           end
 
@@ -85,11 +85,67 @@ sequence of new sections
             end
           end
 
+          def sections_sequence_validate(root)
+            f = root.xpath(" //sections/content | //sections/terms | "\
+                           "//sections/clause | //sections/references | "\
+                           "//sections/annex")
+            names = f.map { |s| { tag: s.name, title: s.at("./title").text } }
+            n = names.shift
+            unless n == { tag: "content", title: "Foreword" }
+              warn "ISO style: Initial section must be (content) Foreword"
+              return
+            end
+            return if names.empty?
+            n = names.shift
+            unless n == { tag: "content", title: "Introduction" } or
+                n == { tag: "clause", title: "Scope" }
+              warn "ISO style: Foreword must be followed by "\
+                "(content) Introduction or (clause) Scope"
+              return
+            end
+            return if names.empty?
+            n = names.shift if n == { tag: "content", title: "Introduction" }
+            unless n == { tag: "clause", title: "Scope" }
+              warn "ISO style: Prefatory material must be followed by "\
+                "(clause) Scope"
+              return
+            end
+            return if names.empty?
+            n == name.shift
+            unless n == { tag: "references", title: "Normative References" }
+              warn "ISO style: Scope must be followed by Normative References"
+              return
+            end
+            return if names.empty?
+            n == name.shift
+            unless n == { tag: "terms", title: "Terms and Definitions" } or
+                n == { tag: "terms", title: "Terms, Definitions, Symbols and Abbreviations" }
+              warn "ISO style: Normative References must be followed by "\
+                "Terms and Definitions"
+              return
+            end
+            return if names.empty?
+            n == name.shift
+            if n == { tag: "clause", title: "Symbols and Abbreviations" }
+              n == name.shift
+            return if names.empty?
+            end
+            unless n[:tag] == "clause"
+              warn "ISO style: Document must contain at least one clause"A
+            end
+            if n == { tag: "clause", title: "Scope" }
+              warn "ISO style: Scope must occur before Terms and Definitions"
+            end
+            while n[:tag] == "clause"
+            end
+          end
+
           def content_validate(doc)
             title_validate(doc.root)
             foreword_validate(doc.root)
             normref_validate(doc.root)
             onlychild_clause_validate(doc.root)
+            sections_sequence_validate(doc.root)
           end
 
           def schema_validate(doc)
@@ -111,85 +167,92 @@ sequence of new sections
             schema_validate(doc)
           end
 
-          @@requirement_re =
-            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
-              \b(?<w>
-                            ( shall | (is|are)\sto |
-                             (is|are)\srequired\s(not\s)?to |
-                             has\sto |
-                             only\b[^.,]+\b(is|are)\spermitted |
-                             it\s\is\snecessary |
-                             (needs|need)\sto |
-                             (is|are)\snot\s(allowed | permitted |
-                                             acceptable | permissible) |
-                                             (is|are)\snot\sto\sbe |
-                                             (need|needs)\snot |
-                                             do\snot )
-                           )\b
+          @@requirement_re_str = <<~REGEXP
+            \\b
+             ( shall | (is|are)_to |
+                   (is|are)_required_(not_)?to |
+                   has_to |
+                   only\\b[^.,]+\\b(is|are)_permitted |
+                   it_is_necessary |
+                   (needs|need)_to |
+                   (is|are)_not_(allowed | permitted |
+                                   acceptable | permissible) |
+                   (is|are)_not_to_be |
+                   (need|needs)_not |
+                   do_not )
+                \\b
           REGEXP
+          @@requirement_re = 
+            Regexp.new(@@requirement_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+                       Regexp::IGNORECASE)
 
           def requirement(text)
             text.split(/\.\s+/).each do |t|
-              matched = @@requirement_re.match t
-              return t unless matched.nil?
+              return t if @@requirement_re.match? t
             end
             nil
           end
 
-          @@recommendation_re =
-            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
-              \b(?<w>should |
-              ought\s(not\s)?to |
-              it\sis\s(not\s)?recommended\sthat
-              )\b
+          @@recommendation_re_str = <<~REGEXP
+            \\b
+                should |
+                ought_(not_)?to |
+                it_is_(not_)?recommended_that
+            \\b
           REGEXP
+          @@recommendation_re = 
+            Regexp.new(@@recommendation_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+                       Regexp::IGNORECASE)
 
           def recommendation(text)
             text.split(/\.\s+/).each do |t|
-              matched = @@recommendation_re.match t
-              return t unless matched.nil?
+              return t if @@recommendation_re.match? t
             end
             nil
           end
 
-          @@permission_re =            
-            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
-              \b(?<w>may |
-              (is|are)\s(permitted | allowed | permissible ) |
-              it\sis\snot\srequired\sthat |
-              no\b[^.,]+\b(is|are)\srequired
-             )\b
+          @@permission_re_str = <<~REGEXP
+            \\b
+                 may |
+                (is|are)_(permitted | allowed | permissible ) |
+                it_is_not_required_that |
+                no\\b[^.,]+\\b(is|are)_required
+            \\b
           REGEXP
+          @@permission_re = 
+            Regexp.new(@@permission_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+                       Regexp::IGNORECASE)
 
           def permission(text)
             text.split(/\.\s+/).each do |t|
-              matched = @@permission_re.match t
-              return t unless matched.nil?
+              return t if @@permission_re.match? t
             end
             nil
           end
 
-          @@possibility_re =
-            Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
-            \b(?<w>can | cannot | be\sable\sto |
-                  there\sis\sa\spossibility\sof |
-                  it\sis\spossible\to | be\sunable\sto |
-                  there\sis\sno\spossibility\sof |
-                  it\sis\snot\spossible\sto)\b
+          @@possibility_re_str = <<~REGEXP
+            \\b
+               can | cannot | be_able_to |
+               there_is_a_possibility_of |
+               it_is_possible_to | be_unable_to |
+               there_is_no_possibility_of |
+               it_is_not_possible_to
+            \\b
           REGEXP
+          @@possibility_re = 
+            Regexp.new(@@possibility_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+                       Regexp::IGNORECASE)
 
           def posssibility(text)
             text.split(/\.\s+/).each do |t|
-              matched = @@possibility_re.match t
-              return t unless matched.nil?
+              return t if @@possibility_re.match? t
             end
             nil
           end
 
           def external_constraint(text)
             text.split(/\.\s+/).each do |t|
-              matched = /\b(?<w>must)\b/xi.match t
-              return t unless matched.nil?
+              return t if /\b(must)\b/xi.match? t
             end
             nil
           end
