@@ -82,11 +82,11 @@ module Asciidoctor
         def paragraph(node)
           return termsource(node) if node.role == "source"
           noko do |xml|
-            xml.p do |xml_t|
+            xml.p **attr_code(align: node.attr("align")) do |xml_t|
               xml_t << node.content
               Validate::style(node, Utils::flatten_rawtext(node).join(" "))
             end
-          end.join("")
+          end.join("\n")
         end
 
         def inline_footnote(node)

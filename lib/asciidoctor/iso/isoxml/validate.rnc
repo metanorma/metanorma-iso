@@ -250,7 +250,7 @@ modification =
   element modification { text }
 
 BasicBlock = 
-para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example
+(para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | example)
 
 clause_hanging_para =
   element subsection {
@@ -309,12 +309,16 @@ TextElement =
 
 para =
      element p {
-       (text | TextElement | fn )*
+       attribute align { ( "left" | "center" | "right" | "justified" ) }?,
+       (text | TextElement | fn )*,
+       review_note*
      }
 
 para_no_fn =
+     attribute align { ( "left" | "center" | "right" | "justified" )}?,
      element p {
-       (text | TextElement )*
+       (text | TextElement )*,
+       review_note*
      }
 
 figure = 

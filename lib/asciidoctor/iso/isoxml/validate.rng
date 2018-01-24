@@ -506,7 +506,6 @@
       <ref name="figure"/>
       <ref name="quote"/>
       <ref name="sourcecode"/>
-      <ref name="review_note"/>
       <ref name="example"/>
     </choice>
   </define>
@@ -639,6 +638,16 @@
   </define>
   <define name="para">
     <element name="p">
+      <optional>
+        <attribute name="align">
+          <choice>
+            <value>left</value>
+            <value>center</value>
+            <value>right</value>
+            <value>justified</value>
+          </choice>
+        </attribute>
+      </optional>
       <zeroOrMore>
         <choice>
           <text/>
@@ -646,15 +655,31 @@
           <ref name="fn"/>
         </choice>
       </zeroOrMore>
+      <zeroOrMore>
+        <ref name="review_note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="para_no_fn">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>justified</value>
+        </choice>
+      </attribute>
+    </optional>
     <element name="p">
       <zeroOrMore>
         <choice>
           <text/>
           <ref name="TextElement"/>
         </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="review_note"/>
       </zeroOrMore>
     </element>
   </define>

@@ -7,13 +7,12 @@ module Asciidoctor
         @@termdomain = ""
 
         def set_termdomain(termdomain)
-        @@termdomain = termdomain
-      end
+          @@termdomain = termdomain
+        end
 
-def get_termdomain
-  @@termdomain
-end
-
+        def get_termdomain
+          @@termdomain
+        end
 
         def ul_parse(node, out)
           out.ul do |ul|
@@ -126,8 +125,17 @@ end
           parse(dl, out) if dl
         end
 
+        def para_attrs(node)
+          attrs = { class: $note ? "Note" : "MsoNormal" }
+          unless node["align"].nil?
+            attrs[:align] = node["align"] unless node["align"] == "justify"
+            attrs[:style] = "text-align:#{node["align"]}"
+          end
+          attrs
+        end
+
         def para_parse(node, out)
-          out.p **{ class: $note ? "Note" : "MsoNormal" } do |p|
+          out.p **attr_code(para_attrs(node)) do |p|
             unless @@termdomain.empty?
               p << "&lt;#{@@termdomain}&gt; "
               @@termdomain = ""
