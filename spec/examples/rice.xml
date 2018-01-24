@@ -27,7 +27,7 @@
     <affiliation>ISO</affiliation>
   </owner>
 </copyright_owner>
-<sections><foreword><p>ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.</p>
+<sections><foreword><p>ISO (the International Organization for Standardization)is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.</p>
 <p>The procedures used to develop this document and those intended for its further maintenance are described in the ISO/IEC Directives, Part 1. In particular the different approval criteria needed for the different types of ISO documents should be noted. This document was drafted in accordance with the editorial rules of the ISO/IEC Directives, Part 2 (see www.iso.org/directives).</p>
 <p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO shall not be held responsible for identifying any or all such patent rights. Details of any patent rights identified during the development of the document will be in the Introduction and/or on the ISO list of patent declarations received (see www.iso.org/patents).</p>
 <p>Any trade name used in this document is information given for the convenience of users and does not constitute an endorsement.</p>
@@ -158,9 +158,9 @@
 <clause anchor="_specifications"><title>Specifications</title><clause anchor="_general_organoleptic_and_health_characteristics"><title>General, organoleptic and health characteristics</title><p>Kernels of rice, whether parboiled, husked or milled, and whether whole or broken, shall be sound, clean and free from foreign odours or odour which indicates deterioration.</p>
 <p>The levels of additives and pesticide residues and other contaminants shall not exceed the maximum limits permitted in the country of destination.</p>
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></clause>
-<clause anchor="_physical_and_chemical_characteristics"><title>Physical and chemical characteristics</title><clause anchor="_481aac14-397a-4105-a12a-48be3fd9c359"><title/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+<clause anchor="_physical_and_chemical_characteristics"><title>Physical and chemical characteristics</title><clause anchor="_97c17d2c-335c-409b-9302-fdbb213ba717"><title/><p>The mass fraction of moisture, determined in accordance with <xref target="ISO712" format="inline"/>, using an oven complying with the requirements of <xref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA" format="inline"/>, shall not be greater than the values specified in <xref target="table1" format="inline"/>.</p>
-<note anchor="_92985529-6bdc-4743-a9a7-64e4dc9e49a8">
+<note anchor="_7d3556dd-f322-420c-9f80-560554a3cd8b">
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <xref target="ISO6322-1" format="inline"/>, <xref target="ISO6322-2" format="inline"/> and <xref target="ISO6322-3" format="inline"/>.</p>
 </note></clause>
 <clause anchor="_2"><title/><p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA" format="inline"/>, shall not exceed the limits given in <xref target="table1" format="inline"/>.</p>
@@ -301,13 +301,13 @@
     </tr>
   </tfoot>
 </table><p>&amp;nbsp;</p>
-<note anchor="_9210a402-65b8-454a-a182-fc3f5b379a5d">
+<note anchor="_12ebc259-742f-4814-a0b2-43f2e6bcc6d2">
   <p>This table is based on <xref target="ISO7301" format="inline"/>, Table 1.</p>
 </note>
-<note anchor="_e0399cda-2795-4265-8cf8-53cdaeb1aff0">
+<note anchor="_ebb7c2fc-91c0-487d-a20e-470be8f7058a">
   <p>Some commercial contracts require information in addition to that provided in this table.</p>
 </note>
-<note anchor="_cfce8f6f-8e2d-4068-9ee8-182b39d5ecf3">
+<note anchor="_d8aad17f-a6f6-4006-84b9-a586d5793de8">
   <p>Only full red husked (cargo) rice is considered in this table.</p>
 </note></clause></clause></clause>
 <clause anchor="clause5">
@@ -336,7 +336,7 @@
   <p>The results of an interlaboratory test are given in <xref target="AnnexD" format="inline"/> for information</p>
 </clause>
 <clause anchor="_repeatability"><title>Repeatability</title><p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <stem>r</stem> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<formula anchor="_c3890cc5-28ad-4c08-9799-58265f5ff80a">
+<formula anchor="_7970c1c4-c130-4d6a-9e40-db50dd16604f">
   <stem>r = 1 %</stem>
 <dl>
   <dt>
@@ -349,7 +349,7 @@
 
 </clause>
 <clause anchor="_reproducibility"><title>Reproducibility</title><p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <stem>R</stem> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<formula anchor="_4edb7faa-8cbb-455d-917a-2fe756cd0a41">
+<formula anchor="_3d8f9048-bf3a-46ce-955c-02dfb0e6d6da">
   <stem>R = 3 %</stem>
 <dl>
   <dt>
@@ -588,16 +588,16 @@
 
 
 
-<note anchor="_d8aa1428-5532-4736-a062-1246a9679479">
+<note anchor="_b2d4052a-17fa-48ea-a6cd-e8657e6d2353">
   <p>These results are based on a study carried out on three different types of kernel.</p>
 </note>
-<figure anchor="figureC-2"><figure anchor="_3caf39a9-839b-4226-9ed7-22ac5777f9ca" src="rice_images/rice_image3_1.png">
+<figure anchor="figureC-2"><figure anchor="_cbed90dc-936b-4abc-9396-df0d2860ebb6" src="rice_images/rice_image3_1.png">
   <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
 </figure>
-<figure anchor="_5103fe31-a701-4f29-bc87-7bf60713e533" src="rice_images/rice_image3_2.png">
+<figure anchor="_06af07a4-2008-4f37-88c3-cc5dc2970f5c" src="rice_images/rice_image3_2.png">
   <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
 </figure>
-<figure anchor="_18d1cd6a-fe34-4a36-bf58-84873f43efaa" src="rice_images/rice_image3_3.png">
+<figure anchor="_2303e8e3-8984-4915-af29-4481f7a6d29c" src="rice_images/rice_image3_3.png">
   <name>Final stages: All kernels are fully gelatinized</name>
 </figure></figure></annex>
 <annex anchor="AnnexD" subtype="informative"><title>Results of interlaboratory test for husked rice yields</title><p>An interlaboratory test <xref target="ref15" format="inline"/> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <xref target="ISO5725-1" format="inline"/> and <xref target="ISO5725-2" format="inline"/>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <xref target="tableD-1" format="inline"/>.</p>

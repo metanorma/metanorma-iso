@@ -86,7 +86,7 @@ module Asciidoctor
               xml_t << node.content
               Validate::style(node, Utils::flatten_rawtext(node).join(" "))
             end
-          end.join("")
+          end.join("\n")
         end
 
         def inline_footnote(node)
