@@ -1,19 +1,13 @@
 require "asciidoctor/iso/isoxml/utils"
 require "nokogiri"
 require "jing"
+require "pp"
 
 module Asciidoctor
   module ISO
     module ISOXML
       module Validate
         class << self
-
-=begin
-TODO
-New validations:
-symbols_abbrevs: can only be a dl
-sequence of new sections
-=end
 
           def title_intro_validate(root)
             title_intro_en = root.at("//title[@language='en']/title_intro")
@@ -85,6 +79,18 @@ sequence of new sections
             end
           end
 
+          def symbols_validate(root)
+            f = root.at("//clause[title = 'Symbols and Abbreviations']")
+            return if f.nil?
+            f.elements do |e|
+              unless e.name == "dl"
+                warn "ISO style: Symbols and Abbreviations can only contain "\
+                  "a definition list"
+                return
+              end
+            end
+          end
+
           def sections_sequence_validate(root)
             f = root.xpath(" //sections/content | //sections/terms | "\
                            "//sections/clause | //sections/references | "\
@@ -111,13 +117,13 @@ sequence of new sections
               return
             end
             return if names.empty?
-            n == name.shift
+            n = names.shift
             unless n == { tag: "references", title: "Normative References" }
               warn "ISO style: Scope must be followed by Normative References"
               return
             end
             return if names.empty?
-            n == name.shift
+            n = names.shift
             unless n == { tag: "terms", title: "Terms and Definitions" } or
                 n == { tag: "terms", title: "Terms, Definitions, Symbols and Abbreviations" }
               warn "ISO style: Normative References must be followed by "\
@@ -125,18 +131,42 @@ sequence of new sections
               return
             end
             return if names.empty?
-            n == name.shift
+            n = names.shift
             if n == { tag: "clause", title: "Symbols and Abbreviations" }
-              n == name.shift
-            return if names.empty?
+              n = names.shift
+              return if names.empty?
             end
             unless n[:tag] == "clause"
-              warn "ISO style: Document must contain at least one clause"A
+              warn "ISO style: Document must contain at least one clause"
             end
             if n == { tag: "clause", title: "Scope" }
               warn "ISO style: Scope must occur before Terms and Definitions"
             end
+            n = names.shift
+            return if names.empty?
             while n[:tag] == "clause"
+              if n[:title] == "Scope"
+                warn "ISO style: Scope must occur before Terms and Definitions"
+              end
+              if n[:title] == "Symbols and Abbreviations"
+                warn "ISO style: Symbols and Abbreviations must occur "\
+                  "right after Terms and Definitions"
+              end
+              n = names.shift
+              return if names.empty?
+            end
+            unless n[:tag] == "annex" or n[:tag] == "references"
+              warn "ISO style: Only annexes and references can follow clauses"
+            end
+            while n[:tag] == "annex"
+              n = names.shift
+              return if names.empty?
+            end
+            unless n == { tag: "references", title: "bibliography" }
+              warn "ISO style: Final section must be (references) Bibliography"
+            end
+            unless names.empty?
+              warn "ISO style: There are sections after the final Bibliography"
             end
           end
 
@@ -144,6 +174,7 @@ sequence of new sections
             title_validate(doc.root)
             foreword_validate(doc.root)
             normref_validate(doc.root)
+            symbols_validate(doc.root)
             onlychild_clause_validate(doc.root)
             sections_sequence_validate(doc.root)
           end

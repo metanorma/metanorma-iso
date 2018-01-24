@@ -18,14 +18,17 @@ module Asciidoctor
             when "patent notice" then patent_notice_parse(xml, node)
             when "scope" then scope_parse(a, xml, node)
             when "normative references" then norm_ref_parse(a, xml, node)
-            when "terms and definitions" then term_def_parse(a, xml, node)
-            when "terms, definitions, symbols and abbreviated terms"
-              term_def_parse(a, xml, node)
+            when "terms and definitions" 
+              term_def_parse(a, xml, node, node.title.downcase)
+            when "terms, definitions, symbols and abbreviations"
+              term_def_parse(a, xml, node, node.title.downcase)
             when "symbols and abbreviations" then symbols_parse(a, xml, node)
             when "bibliography" then bibliography_parse(a, xml, node)
             else
               if $term_def
                 term_def_subclause_parse(a, xml, node)
+              elsif $biblio
+                bibliography_parse(a, xml, node)
               elsif node.attr("style") == "appendix" && node.level == 1
                 annex_parse(a, xml, node)
               else
@@ -60,7 +63,9 @@ module Asciidoctor
 
         def bibliography_parse(attrs, xml, node)
           $biblio = true
-          xml.bibliography **attr_code(attrs) do |xml_section|
+          xml.references **attr_code(attrs) do |xml_section|
+            title = node.level == 1 ? "Bibliography" : node.title
+            xml_section.title { |t| t << title }
             xml_section << node.content
           end
           $biblio = true
@@ -79,9 +84,15 @@ module Asciidoctor
           end
         end
 
-        def term_def_parse(attrs, xml, node)
+        def term_def_parse(attrs, xml, node, title)
           $term_def = true
           xml.terms **attr_code(attrs) do |xml_section|
+            if title == "terms, definitions, symbols and abbreviations"
+              title = "Terms, Definitions, Symbols and Abbreviations"
+            else
+              title = "Terms and Definitions"
+            end
+            xml_section.title { |t| t << title }
             xml_section << node.content
           end
           $term_def = false
