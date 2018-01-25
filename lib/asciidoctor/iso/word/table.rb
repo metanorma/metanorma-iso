@@ -67,6 +67,7 @@ module Asciidoctor
             parse(dl, out) if dl
             node.xpath(ns("./note")).each { |n| parse(n, out) }
           end
+          out.p { |p| p << "&nbsp;" }
         end
 
         def make_tr_attr(td, row, totalrows, col, totalcols)

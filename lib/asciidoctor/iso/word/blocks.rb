@@ -20,9 +20,33 @@ module Asciidoctor
           end
         end
 
+        @@ol_styleW = {
+          arabic: "",
+          roman: "roman-lower",
+          alphabet: "alpha-lower",
+          upperroman: "roman-upper",
+          upperalpha: "alpha-upper",
+        }.freeze
+
+        @@ol_style = {
+          arabic: "1",
+          roman: "i",
+          alphabet: "a",
+          upperroman: "I",
+          upperalpha: "A",
+        }.freeze
+
+        def ol_style(type)
+          style = @@ol_style[node["type"].to_sym]
+          #ret = nil
+          #ret = "mso-level-number-format: #{style};" unless style.empty?
+          style
+        end
+
         def ol_parse(node, out)
-          attrs = { numeration: node["type"] }
-          out.ol **attr_code(attrs) do |ol|
+          # attrs = { numeration: node["type"] }
+          style = ol_style(node["type"])
+          out.ol **attr_code(type: style) do |ol|
             node.children.each { |n| parse(n, ol) }
           end
         end
@@ -61,11 +85,17 @@ module Asciidoctor
           end
         end
 
+        def figure_key(out)
+                out.p **{ class: "MsoNormal" } do |p| 
+                  p.b { |b| b << "Key" }
+                end
+          end
+
         def figure_parse(node, out)
           name = node.at(ns("./name"))
           out.div **attr_code(id: node["id"]) do |div|
-            image_parse(node["src"], div, nil) if node["src"]
             node.children.each do |n|
+              figure_key(out) if n.name == "dl"
               parse(n, div) unless n.name == "name"
             end
             figure_name_parse(node, div, name) if name
@@ -121,8 +151,10 @@ module Asciidoctor
             insert_tab(div, 1)
             div << "(#{get_anchors()[node['id']][:label]})"
           end
-          out.p **{ class: "MsoNormal" } { |p| p << "where" }
-          parse(dl, out) if dl
+          if dl
+            out.p **{ class: "MsoNormal" } { |p| p << "where" }
+            parse(dl, out) 
+          end
         end
 
         def para_attrs(node)

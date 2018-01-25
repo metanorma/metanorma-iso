@@ -63,8 +63,7 @@ module Asciidoctor
         end
 
         def scope(isoxml, out)
-          f = isoxml.at(ns("//clause[title = 'Scope']"))
-          return unless f
+          f = isoxml.at(ns("//clause[title = 'Scope']")) or return
           out.div do |div|
             clause_name("1.", "Scope", div)
             f.elements.each do |e|
@@ -74,30 +73,27 @@ module Asciidoctor
         end
 
         def terms_defs(isoxml, out)
-          f = isoxml.at(ns("//terms"))
-          return unless f
+          f = isoxml.at(ns("//terms")) or return
           out.div do |div|
             clause_name("3.", "Terms and Definitions", div)
             f.elements.each do |e|
-              parse(e, div)
+              parse(e, div) unless e.name == "title"
             end
           end
         end
 
         def symbols_abbrevs(isoxml, out)
-          f = isoxml.at(ns("//symbols_abbrevs"))
-          return unless f
+          f = isoxml.at(ns("//symbols_abbrevs")) or return
           out.div do |div|
             clause_name("4.", "Symbols and Abbreviations", div)
             f.elements.each do |e|
-              parse(e, div)
+              parse(e, div) unless e.name == "title"
             end
           end
         end
 
         def introduction(isoxml, out)
-          f = isoxml.at(ns("//content[title = 'Introduction']"))
-          return unless f
+          f = isoxml.at(ns("//content[title = 'Introduction']")) or return
           title_attr = { class: "IntroTitle" }
           page_break(out)
           out.div **{class: "Section3" } do |div|
@@ -113,8 +109,7 @@ module Asciidoctor
         end
 
         def foreword(isoxml, out)
-          f = isoxml.at(ns("//content[title = 'Foreword']"))
-          return unless f
+          f = isoxml.at(ns("//content[title = 'Foreword']")) or return
           out.div do |s|
             s.h1 **{ class: "ForewordTitle" } { |h1| h1 << "Foreword" }
             f.elements.each { |e| parse(e, s) unless e.name == "title" }

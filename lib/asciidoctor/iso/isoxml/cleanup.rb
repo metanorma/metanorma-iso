@@ -11,6 +11,10 @@ module Asciidoctor
     module ISOXML
       module Cleanup
         class << self
+          def textcleanup(text)
+            text.gsub(/ <fn>/, "<fn>")
+          end
+
           def cleanup(xmldoc)
             termdef_cleanup(xmldoc)
             isotitle_cleanup(xmldoc)
@@ -20,7 +24,18 @@ module Asciidoctor
             ref_cleanup(xmldoc)
             review_note_cleanup(xmldoc)
             normref_cleanup(xmldoc)
+            xref_cleanup(xmldoc)
             xmldoc
+          end
+
+          def xref_cleanup(xmldoc)
+            xmldoc.xpath("//xref").each do |x|
+              if InlineAnchor::is_refid? x["target"]
+                x.name = "eref"
+              else
+                x.delete('format')
+              end
+            end
           end
 
           def termdef_warn(text, re, term, msg)
@@ -31,8 +46,7 @@ module Asciidoctor
 
           def termdef_style(xmldoc)
             xmldoc.xpath("//termdef").each do |t|
-              para = t.at("./p")
-              return if para.nil?
+              para = t.at("./p") or return
               term = t.at("term").text
               termdef_warn(para.text, /^(the|a)\b/i, term,
                            "term definition starts with article")
@@ -62,8 +76,7 @@ module Asciidoctor
 
           def termdefinition_cleanup(xmldoc)
             xmldoc.xpath("//termdef").each do |d|
-              first_child = d.at("./p | ./figure | ./formula")
-              return if first_child.nil?
+              first_child = d.at("./p | ./figure | ./formula") or return
               t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
               first_child.replace(t)
               t << first_child.remove
@@ -206,7 +219,7 @@ module Asciidoctor
             q = "//references[title = 'Normative References']"
             r = xmldoc.at(q)
             r.elements.each do |n|
-              unless ["title", "reference"].include? n.name
+              unless ["title", "reference", "iso_ref_title"].include? n.name
                 n.remove
               end
             end

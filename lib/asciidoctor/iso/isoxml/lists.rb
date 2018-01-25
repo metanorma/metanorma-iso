@@ -66,17 +66,6 @@ module Asciidoctor
             gsub(/&amp;amp;/, "&amp;")
         end
 
-        def reference2(matched, matched2, matched3, xml, item)
-          if matched3.nil? && matched2.nil? && matched.nil?
-            xml.reference do |r|
-              r.p { |p| p << ref_normalise(item) }
-            end
-          elsif !matched.nil? then isorefmatches(xml, matched)
-          elsif !matched2.nil? then isorefmatches2(xml, matched2)
-          elsif !matched3.nil? then isorefmatches3(xml, matched3)
-          end
-        end
-
         @@iso_ref = %r{^<ref\sid="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
         (?<text>.*)$}x
@@ -93,7 +82,14 @@ module Asciidoctor
           matched = @@iso_ref.match item
           matched2 = @@iso_ref_no_year.match item
           matched3 = @@iso_ref_all_parts.match item
-          reference2(matched, matched2, matched3, xml, item)
+          if matched3.nil? && matched2.nil? && matched.nil?
+            xml.reference do |r|
+              r.p { |p| p << ref_normalise(item) }
+            end
+          elsif !matched.nil? then isorefmatches(xml, matched)
+          elsif !matched2.nil? then isorefmatches2(xml, matched2)
+          elsif !matched3.nil? then isorefmatches3(xml, matched3)
+          end
           if matched3.nil? && matched2.nil? && matched.nil? && normative
             Utils::warning(node, 
                            "non-ISO/IEC reference not expected as normative",
@@ -109,9 +105,16 @@ module Asciidoctor
           end.join("\n")
         end
 
+        def olist_style(style)
+          return "alphabet" if style == "loweralpha"
+          return "roman" if style == "lowerroman"
+          return style
+        end
+
         def olist(node)
           noko do |xml|
-            xml.ol **attr_code(id: node.id, type: node.style) do |xml_ol|
+            xml.ol **attr_code(id: node.id, 
+                               type: olist_style(node.style)) do |xml_ol|
               node.items.each do |item|
                 li(xml_ol, item)
               end

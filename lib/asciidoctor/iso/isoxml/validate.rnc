@@ -235,13 +235,13 @@ termdefinition =
   }
 
 termnote = 
-  element termnote { (text | xref | eref)* }
+  element termnote { (text | xref | eref | link)* }
 
 termexample = 
   element termexample { text }
 
 termref = 
-  element termref { xref, (isosection, modification?)? }
+  element termref { eref, (isosection, modification?)? }
 
 isosection =
   element isosection { text }
@@ -305,7 +305,7 @@ ref =
   }
 
 TextElement = 
-  text | em | eref | strong | stem | sub | sup | tt | xref | br
+  text | em | eref | link | strong | stem | sub | sup | tt | xref | br
 
 para =
      element p {
@@ -323,14 +323,20 @@ para_no_fn =
 
 figure = 
   element figure {
-    attribute src { text }?,
     attribute id { xsd:ID }?,
     tname?,
+    ( image | figure+ ),
     fn*,
     dl?,
-    figure*,
     note*
   }
+
+image =
+  element image {
+    attribute src { text }?,
+    attribute id { xsd:ID }?,
+    attribute imagetype { text }
+}
 
 sourcecode =
   element sourcecode {
@@ -428,16 +434,22 @@ example =
 
 xref =
   element xref { 
-    attribute format { "footnote" | "inline" }?,
     attribute target { text },
-    ( text | iso_ref )
+    text
   }
 
 iso_ref =
   element iso_ref { isocode, (isodate, (isosection?)?)? }
 
+link =
+  element link {
+    attribute target {xsd:anyURI},
+    text
+}
+
 eref =
   element eref { 
+    attribute format { "footnote" | "inline" }?,
     attribute target { text },
     text 
   }
@@ -452,7 +464,10 @@ strong =
   element strong { text }
 
 stem =
-  element stem { text }
+  element stem { 
+    attribute type { "MathML" },
+    text 
+}
 
 sub =
   element sub { text }

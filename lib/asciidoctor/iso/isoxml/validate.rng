@@ -463,6 +463,7 @@
           <text/>
           <ref name="xref"/>
           <ref name="eref"/>
+          <ref name="link"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -474,7 +475,7 @@
   </define>
   <define name="termref">
     <element name="termref">
-      <ref name="xref"/>
+      <ref name="eref"/>
       <optional>
         <ref name="isosection"/>
         <optional>
@@ -628,6 +629,7 @@
       <text/>
       <ref name="em"/>
       <ref name="eref"/>
+      <ref name="link"/>
       <ref name="strong"/>
       <ref name="stem"/>
       <ref name="sub"/>
@@ -683,9 +685,6 @@
   <define name="figure">
     <element name="figure">
       <optional>
-        <attribute name="src"/>
-      </optional>
-      <optional>
         <attribute name="id">
           <data type="ID"/>
         </attribute>
@@ -693,6 +692,12 @@
       <optional>
         <ref name="tname"/>
       </optional>
+      <choice>
+        <ref name="image"/>
+        <oneOrMore>
+          <ref name="figure"/>
+        </oneOrMore>
+      </choice>
       <zeroOrMore>
         <ref name="fn"/>
       </zeroOrMore>
@@ -700,11 +705,21 @@
         <ref name="dl"/>
       </optional>
       <zeroOrMore>
-        <ref name="figure"/>
-      </zeroOrMore>
-      <zeroOrMore>
         <ref name="note"/>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="image">
+    <element name="image">
+      <optional>
+        <attribute name="src"/>
+      </optional>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <attribute name="imagetype"/>
     </element>
   </define>
   <define name="sourcecode">
@@ -730,9 +745,7 @@
   </define>
   <define name="review_note">
     <element name="review_note">
-      <optional>
-        <attribute name="reviewer"/>
-      </optional>
+      <attribute name="reviewer"/>
       <attribute name="date"/>
       <text/>
     </element>
@@ -870,19 +883,8 @@
   </define>
   <define name="xref">
     <element name="xref">
-      <optional>
-        <attribute name="format">
-          <choice>
-            <value>footnote</value>
-            <value>inline</value>
-          </choice>
-        </attribute>
-      </optional>
       <attribute name="target"/>
-      <choice>
-        <text/>
-        <ref name="iso_ref"/>
-      </choice>
+      <text/>
     </element>
   </define>
   <define name="iso_ref">
@@ -898,8 +900,24 @@
       </optional>
     </element>
   </define>
+  <define name="link">
+    <element name="link">
+      <attribute name="target">
+        <data type="anyURI"/>
+      </attribute>
+      <text/>
+    </element>
+  </define>
   <define name="eref">
     <element name="eref">
+      <optional>
+        <attribute name="format">
+          <choice>
+            <value>footnote</value>
+            <value>inline</value>
+          </choice>
+        </attribute>
+      </optional>
       <attribute name="target"/>
       <text/>
     </element>
@@ -921,6 +939,9 @@
   </define>
   <define name="stem">
     <element name="stem">
+      <attribute name="type">
+        <value>MathML</value>
+      </attribute>
       <text/>
     </element>
   </define>

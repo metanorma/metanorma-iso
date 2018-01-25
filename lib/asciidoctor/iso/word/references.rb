@@ -78,8 +78,7 @@ module Asciidoctor
 
         def norm_ref(isoxml, out)
           q = "//sections/references[title = 'Normative References']"
-          f = isoxml.at(ns(q))
-          return unless f
+          f = isoxml.at(ns(q)) or return
           out.div do |div|
             clause_name("2.", "Normative References", div)
             norm_ref_preface(f, div)
@@ -89,8 +88,7 @@ module Asciidoctor
 
         def bibliography(isoxml, out)
           q = "//sections/references[title = 'Bibliography']"
-          f = isoxml.at(ns(q))
-          return unless f
+          f = isoxml.at(ns(q)) or return
           page_break(out)
           out.div do |div|
             div.h1 "Bibliography", **{ class: "Section3" }

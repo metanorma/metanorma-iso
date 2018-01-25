@@ -11,7 +11,6 @@ module Asciidoctor
               xml_table.name node.title if node.title?
               table_head_body_and_foot node, xml_table
             end
-            xml.p "&nbsp;"
           end
         end
 

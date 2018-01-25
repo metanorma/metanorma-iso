@@ -22,7 +22,7 @@ module Asciidoctor
           }
         end
 
-        def eref_parse(node, out)
+        def link_parse(node, out)
           linktext = node.text
           linktext = node["target"] if linktext.empty?
           out.a **{ "href": node["target"] } { |l| l << linktext }
@@ -44,6 +44,11 @@ module Asciidoctor
         end
 
         def xref_parse(node, out)
+          linkend = get_linkend(node)
+            out.a **{ "href": node["target"] } { |l| l << linkend }
+        end
+
+        def eref_parse(node, out)
           linkend = get_linkend(node)
           if node["format"] == "footnote"
             out.sup do |s|
@@ -95,8 +100,8 @@ module Asciidoctor
         end
 
         def make_footnote_link(a)
-          a.span **{ class: "MsoFootnoteReference" } do |span|
-            span.span **{ style: "mso-special-character:footnote" }
+          a.span **{ class: "MsoFootnoteReference" } do |s|
+            s.span **{ style: "mso-special-character:footnote" }
           end
         end
 
@@ -115,7 +120,9 @@ module Asciidoctor
 
         def footnote_parse(node, out)
           fn = @@footnotes.length + 1
-          out.a **footnote_attributes(fn) { |a| make_footnote_link(a) }
+          out.a **footnote_attributes(fn) do |a| 
+            make_footnote_link(a) 
+          end
           @@footnotes << make_footnote_text(node, fn)
         end
 

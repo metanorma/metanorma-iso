@@ -28,20 +28,21 @@ module Asciidoctor
           result << noko { |ixml| front node, ixml }
           result << noko { |ixml| middle node, ixml }
           result << "</iso-standard>"
-          ret1 = Cleanup::cleanup(Nokogiri::XML(result.flatten * "\n"))
+          result = Cleanup::textcleanup(result.flatten * "\n")
+          ret1 = Cleanup::cleanup(Nokogiri::XML(result))
           ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
           Validate::validate(ret1)
           ret1.to_xml(indent: 2)
         end
 
         def front(node, xml)
-            title node, xml
-            metadata node, xml
+          title node, xml
+          metadata node, xml
         end
 
         def middle(node, xml)
           xml.sections do |s|
-           s << node.content if node.blocks?
+            s << node.content if node.blocks?
           end
         end
 
@@ -137,7 +138,7 @@ module Asciidoctor
             when :single then xml << "'#{node.text}'"
             when :superscript then xml.sup node.text
             when :subscript then xml.sub node.text
-            when :asciimath then xml.stem node.text
+            when :asciimath then xml.stem node.text, **{ type: "MathML" }
             else
               if node.role == "alt"
                 xml.admitted_term { |a| a << node.text }

@@ -73,14 +73,12 @@ module Asciidoctor
 
           def normref_validate(root)
             f = root.at("//references[title = 'Normative References']")
-            s = f.at("./references")
-            unless s.nil?
+            f.at("./references") and
               warn "ISO style: normative references contains subsections"
-            end
           end
 
           def symbols_validate(root)
-            f = root.at("//clause[title = 'Symbols and Abbreviations']")
+            f = root.at("//clause[title = 'Symbols and Abbreviations']") 
             return if f.nil?
             f.elements do |e|
               unless e.name == "dl"
@@ -91,90 +89,91 @@ module Asciidoctor
             end
           end
 
+          def seqcheck(names, msg, accepted)
+            n = names.shift
+            unless accepted.include? n
+              warn "ISO style: #{msg}"
+              names = []
+            end
+            names
+          end
+
+          # spec of permissible section sequence
+          @@seq = [
+            {
+              msg: "Initial section must be (content) Foreword",
+              val:  [{ tag: "content", title: "Foreword" }],
+            },
+            {
+              msg: "Prefatory material must be followed by (clause) Scope",
+              val:  [{ tag: "content", title: "Introduction" },
+                          { tag: "clause", title: "Scope" }],
+            },
+            {
+              msg: "Prefatory material must be followed by (clause) Scope",
+              val: [{ tag: "clause", title: "Scope" }],
+            },
+            {
+              msg: "Scope must be followed by Normative References",
+              val: [{ tag: "references", title: "Normative References" }]
+            },
+            { 
+              msg: "Normative References must be followed by "\
+              "Terms and Definitions",
+              val: [
+                { tag: "terms", title: "Terms and Definitions" },
+                { tag: "terms", 
+                  title: "Terms, Definitions, Symbols and Abbreviations" }
+              ]
+            },
+          ]
+
           def sections_sequence_validate(root)
             f = root.xpath(" //sections/content | //sections/terms | "\
                            "//sections/clause | //sections/references | "\
                            "//sections/annex")
             names = f.map { |s| { tag: s.name, title: s.at("./title").text } }
-            n = names.shift
-            unless n == { tag: "content", title: "Foreword" }
-              warn "ISO style: Initial section must be (content) Foreword"
-              return
+            names = seqcheck(names, @@seq[0][:msg], @@seq[0][:val]) or return
+            n = names[0]
+            names = seqcheck(names, @@seq[1][:msg], @@seq[1][:val]) or return
+            if n == { tag: "content", title: "Introduction" }
+              names = seqcheck(names, @@seq[2][:msg], @@seq[2][:val]) or return
             end
-            return if names.empty?
-            n = names.shift
-            unless n == { tag: "content", title: "Introduction" } or
-                n == { tag: "clause", title: "Scope" }
-              warn "ISO style: Foreword must be followed by "\
-                "(content) Introduction or (clause) Scope"
-              return
-            end
-            return if names.empty?
-            n = names.shift if n == { tag: "content", title: "Introduction" }
-            unless n == { tag: "clause", title: "Scope" }
-              warn "ISO style: Prefatory material must be followed by "\
-                "(clause) Scope"
-              return
-            end
-            return if names.empty?
-            n = names.shift
-            unless n == { tag: "references", title: "Normative References" }
-              warn "ISO style: Scope must be followed by Normative References"
-              return
-            end
-            return if names.empty?
-            n = names.shift
-            unless n == { tag: "terms", title: "Terms and Definitions" } or
-                n == { tag: "terms", title: "Terms, Definitions, Symbols and Abbreviations" }
-              warn "ISO style: Normative References must be followed by "\
-                "Terms and Definitions"
-              return
-            end
-            return if names.empty?
+            names = seqcheck(names, @@seq[3][:msg], @@seq[3][:val]) or return
+            names = seqcheck(names, @@seq[4][:msg], @@seq[4][:val]) or return
             n = names.shift
             if n == { tag: "clause", title: "Symbols and Abbreviations" }
-              n = names.shift
-              return if names.empty?
+              n = names.shift or return
             end
-            unless n[:tag] == "clause"
+            n[:tag] == "clause" or
               warn "ISO style: Document must contain at least one clause"
-            end
-            if n == { tag: "clause", title: "Scope" }
+            n == { tag: "clause", title: "Scope" } and
               warn "ISO style: Scope must occur before Terms and Definitions"
-            end
-            n = names.shift
-            return if names.empty?
+            n = names.shift or return
             while n[:tag] == "clause"
-              if n[:title] == "Scope"
+              n[:title] == "Scope" and
                 warn "ISO style: Scope must occur before Terms and Definitions"
-              end
-              if n[:title] == "Symbols and Abbreviations"
+              n[:title] == "Symbols and Abbreviations" and
                 warn "ISO style: Symbols and Abbreviations must occur "\
-                  "right after Terms and Definitions"
-              end
-              n = names.shift
-              return if names.empty?
+                "right after Terms and Definitions"
+              n = names.shift or return
             end
             unless n[:tag] == "annex" or n[:tag] == "references"
               warn "ISO style: Only annexes and references can follow clauses"
             end
             while n[:tag] == "annex"
-              n = names.shift
-              return if names.empty?
+              n = names.shift or return
             end
-            unless n == { tag: "references", title: "bibliography" }
+            n == { tag: "references", title: "Bibliography" } or
               warn "ISO style: Final section must be (references) Bibliography"
-            end
-            unless names.empty?
+            names.empty? or
               warn "ISO style: There are sections after the final Bibliography"
-            end
           end
 
           def iso8601_validate(root)
             root.xpath("//review_note/@date | //revision_date").each do |d|
-              unless /^\d{8}(T\d{4,6})?$/.match? d.text
+              /^\d{8}(T\d{4,6})?$/.match? d.text or
                 warn "ISO style: #{d.text} is not an ISO 8601 date"
-              end
             end
           end
 
@@ -222,8 +221,8 @@ module Asciidoctor
                    do_not )
                 \\b
           REGEXP
-          @@requirement_re = 
-            Regexp.new(@@requirement_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+          @@requirement_re =
+            Regexp.new(@@requirement_re_str.gsub(/\s/, "").gsub(/_/, "\\s"),
                        Regexp::IGNORECASE)
 
           def requirement(text)
@@ -240,8 +239,8 @@ module Asciidoctor
                 it_is_(not_)?recommended_that
             \\b
           REGEXP
-          @@recommendation_re = 
-            Regexp.new(@@recommendation_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+          @@recommendation_re =
+            Regexp.new(@@recommendation_re_str.gsub(/\s/, "").gsub(/_/, "\\s"),
                        Regexp::IGNORECASE)
 
           def recommendation(text)
@@ -259,8 +258,8 @@ module Asciidoctor
                 no\\b[^.,]+\\b(is|are)_required
             \\b
           REGEXP
-          @@permission_re = 
-            Regexp.new(@@permission_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+          @@permission_re =
+            Regexp.new(@@permission_re_str.gsub(/\s/, "").gsub(/_/, "\\s"),
                        Regexp::IGNORECASE)
 
           def permission(text)
@@ -279,8 +278,8 @@ module Asciidoctor
                it_is_not_possible_to
             \\b
           REGEXP
-          @@possibility_re = 
-            Regexp.new(@@possibility_re_str.gsub(/\s/,"").gsub(/_/, "\\s"), 
+          @@possibility_re =
+            Regexp.new(@@possibility_re_str.gsub(/\s/, "").gsub(/_/, "\\s"),
                        Regexp::IGNORECASE)
 
           def posssibility(text)
@@ -342,10 +341,7 @@ module Asciidoctor
 
           # style check with a single regex
           def style_single_regex(n, text, re, warning)
-            m = re.match text
-            unless m.nil?
-              style_warning(n, warning, m[:num])
-            end
+            m = re.match(text) and style_warning(n, warning, m[:num])
           end
 
           # style check with a regex on a token
@@ -355,7 +351,7 @@ module Asciidoctor
             words = text.split(/\W+/).each_index do |i|
               next if i == 0
               m = re.match text[i]
-              m_prev = re_prev.match text[i-1]
+              m_prev = re_prev.match text[i - 1]
               if !m.nil? && m_prev.nil?
                 style_warning(n, warning, m[:num])
               end

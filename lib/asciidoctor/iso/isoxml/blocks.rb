@@ -12,7 +12,7 @@ module Asciidoctor
 
           noko do |xml|
             xml.formula **attr_code(stem_attributes) do |s|
-              s.stem stem_content
+              s.stem stem_content, **{ type: "MathML" }
               Validate::style(node, stem_content)
             end
           end
@@ -61,12 +61,10 @@ module Asciidoctor
           return termnote(node) if $term_def
           return note(node) if name == "note"
           noko do |xml|
-            type = node.attr("type")
-            unless type.nil?
+            type = node.attr("type") and
               ["danger", "safety precautions"].each do |t|
                 name = t if type.casecmp(t).zero?
               end
-            end
             xml.warning do |xml_cref|
               xml_cref.name name.upcase
               if node.blocks?
@@ -117,14 +115,19 @@ module Asciidoctor
 
         def image(node)
           uri = node.image_uri node.attr("target")
-          artwork_attributes = {
+          types = MIME::Types.type_for(uri)
+          fig_attributes = {
             id: Utils::anchor_or_uuid(node),
+          }
+          img_attributes = {
             src: uri,
+            imagetype: types.first.sub_type.upcase
           }
 
           noko do |xml|
-            xml.figure **attr_code(artwork_attributes) do |f|
+            xml.figure **attr_code(fig_attributes) do |f|
               f.name { |name| name << node.title } unless node.title.nil?
+              f.image **attr_code(img_attributes)
             end
           end
         end
