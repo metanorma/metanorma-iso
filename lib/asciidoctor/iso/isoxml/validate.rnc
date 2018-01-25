@@ -305,19 +305,19 @@ ref =
   }
 
 TextElement = 
-  em | eref | strong | stem | sub | sup | tt | xref | br
+  text | em | eref | strong | stem | sub | sup | tt | xref | br
 
 para =
      element p {
        attribute align { ( "left" | "center" | "right" | "justified" ) }?,
-       (text | TextElement | fn )*,
+       ( TextElement | fn )*,
        review_note*
      }
 
 para_no_fn =
-     attribute align { ( "left" | "center" | "right" | "justified" )}?,
      element p {
-       (text | TextElement )*,
+       attribute align { ( "left" | "center" | "right" | "justified" )}?,
+       ( TextElement )*,
        review_note*
      }
 
@@ -342,7 +342,8 @@ sourcecode =
 
 review_note =
   element review_note {
-    attribute source { text }?,
+    attribute reviewer { text },
+    attribute date { text },
     text
   }
 
@@ -364,7 +365,7 @@ annotation =
 
 fn =
   element fn { 
-       (text | TextElement )*
+       ( TextElement )*
      }
 
 ol =
@@ -390,7 +391,7 @@ dl =
 
 dt =
   element dt {
-    (text | TextElement )
+    ( TextElement )
   }
 
 dd =
@@ -491,7 +492,7 @@ th =
     attribute colspan { text }?,
     attribute rowspan { text }?,
     attribute align { text }?,
-    (text | TextElement | fn | para)* 
+    ( TextElement | fn | para)* 
   }
 
 td =
@@ -499,7 +500,7 @@ td =
     attribute colspan { text }?,
     attribute rowspan { text }?,
     attribute align { text }?,
-    (text | TextElement | fn | para)* 
+    ( TextElement | fn | para)* 
   }
 
 CreatorInfo =

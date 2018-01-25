@@ -170,11 +170,20 @@ module Asciidoctor
             end
           end
 
+          def iso8601_validate(root)
+            root.xpath("//review_note/@date | //revision_date").each do |d|
+              unless /^\d{8}(T\d{4,6})?$/.match? d.text
+                warn "ISO style: #{d.text} is not an ISO 8601 date"
+              end
+            end
+          end
+
           def content_validate(doc)
             title_validate(doc.root)
             foreword_validate(doc.root)
             normref_validate(doc.root)
             symbols_validate(doc.root)
+            iso8601_validate(doc.root)
             onlychild_clause_validate(doc.root)
             sections_sequence_validate(doc.root)
           end

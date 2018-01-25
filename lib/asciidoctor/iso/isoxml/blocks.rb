@@ -19,13 +19,13 @@ module Asciidoctor
         end
 
         def sidebar(node)
-          if $draft
-            note_attributes = { source: node.attr("source") }
-            content = Utils::flatten_rawtext(node.content).join("\n")
-            noko do |xml|
-              xml.review_note content, **attr_code(note_attributes)
-            end
-          end
+          return unless $draft
+          date = node.attr("date") || DateTime.now.iso8601.gsub(/\+.*$/, "")
+          date += "T0000" unless /T/.match? date
+          attrs = { reviewer: node.attr("reviewer") || "(Unknown)",
+                              date: date.gsub(/[:-]/, "") }
+          content = Utils::flatten_rawtext(node.content).join("\n")
+          noko { |xml| xml.review_note content, **attr_code(attrs) }
         end
 
         def termnote(n)

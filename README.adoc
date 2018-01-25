@@ -126,7 +126,9 @@ recognised by fixed titles such as `Normative References`). Authoring ISO
 standards in this fashion assumes that users will be populating an Asciidoc
 template, and not removing needed formatting instructions.
 
-== Asciidoctor attribute additions
+=== Asciidoctor model additions
+
+==== Paragraph alignment
 
 Alignment is defined as an attribute for paragraphs:
 
@@ -143,6 +145,21 @@ This paragraph is aligned center
 
 [align=justified]
 This paragraph is justified, which is the default
+--
+
+==== Dates on reviewer notes
+
+Reviewer notes are encoded as sidebars. A date attribute (in ISO 8601 format)
+and a reviewer attribute (naming the reviewer) 
+are mandatory for reviewer notes; supplying the time as well as the date
+is optional.
+
+[source,asciidoctor]
+--
+[reviewer="Nick Nicholas",date=20180125T0121]
+****
+I do not agree with this statement.
+****
 --
 
 === Features not visible in HTML preview

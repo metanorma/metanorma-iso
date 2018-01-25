@@ -625,6 +625,7 @@
   </define>
   <define name="TextElement">
     <choice>
+      <text/>
       <ref name="em"/>
       <ref name="eref"/>
       <ref name="strong"/>
@@ -650,7 +651,6 @@
       </optional>
       <zeroOrMore>
         <choice>
-          <text/>
           <ref name="TextElement"/>
           <ref name="fn"/>
         </choice>
@@ -661,22 +661,19 @@
     </element>
   </define>
   <define name="para_no_fn">
-    <optional>
-      <attribute name="align">
-        <choice>
-          <value>left</value>
-          <value>center</value>
-          <value>right</value>
-          <value>justified</value>
-        </choice>
-      </attribute>
-    </optional>
     <element name="p">
+      <optional>
+        <attribute name="align">
+          <choice>
+            <value>left</value>
+            <value>center</value>
+            <value>right</value>
+            <value>justified</value>
+          </choice>
+        </attribute>
+      </optional>
       <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="TextElement"/>
-        </choice>
+        <ref name="TextElement"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="review_note"/>
@@ -734,8 +731,9 @@
   <define name="review_note">
     <element name="review_note">
       <optional>
-        <attribute name="source"/>
+        <attribute name="reviewer"/>
       </optional>
+      <attribute name="date"/>
       <text/>
     </element>
   </define>
@@ -764,10 +762,7 @@
   <define name="fn">
     <element name="fn">
       <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="TextElement"/>
-        </choice>
+        <ref name="TextElement"/>
       </zeroOrMore>
     </element>
   </define>
@@ -805,10 +800,7 @@
   </define>
   <define name="dt">
     <element name="dt">
-      <choice>
-        <text/>
-        <ref name="TextElement"/>
-      </choice>
+      <ref name="TextElement"/>
     </element>
   </define>
   <define name="dd">
@@ -1026,7 +1018,6 @@
       </optional>
       <zeroOrMore>
         <choice>
-          <text/>
           <ref name="TextElement"/>
           <ref name="fn"/>
           <ref name="para"/>
@@ -1047,7 +1038,6 @@
       </optional>
       <zeroOrMore>
         <choice>
-          <text/>
           <ref name="TextElement"/>
           <ref name="fn"/>
           <ref name="para"/>
