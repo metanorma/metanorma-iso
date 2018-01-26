@@ -6,20 +6,19 @@ module Asciidoctor
       module Terms
         include ::Asciidoctor::ISO::Word::XrefGen
 
+        def definition_parse(node, out)
+          node.children.each { |n| parse(n, out) }
+        end
+
         def modification_parse(node, out)
           out << "[MODIFICATION]"
-          node.children.each { |n| parse(n, out) }
+          para = node.at(ns("./p"))
+          para.children.each { |n| parse(n, out) }
         end
 
         def deprecated_term_parse(node, out)
           out.p **{ class: "AltTerms" } do |p|
             p << "DEPRECATED: #{node.text}"
-          end
-        end
-
-        def termsymbol_parse(node, out)
-          out.p **{ class: "AltTerms" } do |p|
-            node.children.each { |n| parse(n, p) }
           end
         end
 

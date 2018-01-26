@@ -47,13 +47,16 @@ module Asciidoctor
         end
 
         def add_term_source(xml_t, seen_xref, matched)
-          attr = {
-            target: seen_xref.children[0]["target"],
-            format: seen_xref.children[0]["format"],
-          }
-          xml_t.xref seen_xref.children[0].content, **attr_code(attr)
+          attr = { target: seen_xref.children[0]["target"],
+                   format: seen_xref.children[0]["format"] }
+          xml_t.origin seen_xref.children[0].content, **attr_code(attr)
+          # TODO add isosection into origin
           xml_t.isosection matched[:section] if matched[:section]
-          xml_t.modification { |m| m << matched[:text] } if matched[:text]
+          if matched[:text]
+            xml_t.modification do |m| 
+              m.p { |p| p << matched[:text] }
+            end
+          end
         end
 
         @@term_reference_re = 
@@ -64,18 +67,22 @@ module Asciidoctor
              $
         REGEXP
 
+        def extract_termsource_refs(text)
+          matched = @@term_reference_re.match text
+          if matched.nil?
+            warning(node, "term reference not in expected format", text)
+          end
+          matched
+        end
+
         def termsource(node)
+          matched = extract_termsource_refs(node.content) or return
           noko do |xml|
-            xml.termref do |xml_t|
-              matched = @@term_reference_re.match node.content
-              if matched.nil?
-                w = "term reference not in expected format"
-                warning(node, w, node.content)
-              else
-                seen_xref = Nokogiri::XML.fragment(matched[:xref])
-                add_term_source(xml_t, seen_xref, matched)
-                Validate::style(node, matched[:text])
-              end
+            attrs = { status: matched[:text] ? "identical" : "modified" }
+            xml.termsource **attrs do |xml_t|
+              seen_xref = Nokogiri::XML.fragment(matched[:xref])
+              add_term_source(xml_t, seen_xref, matched)
+              Validate::style(node, matched[:text])
             end
           end.join("\n")
         end
@@ -141,11 +148,11 @@ module Asciidoctor
             when :asciimath then xml.stem node.text, **{ type: "MathML" }
             else
               if node.role == "alt"
-                xml.admitted_term { |a| a << node.text }
+                xml.admitted { |a| a << node.text }
               elsif node.role == "deprecated"
-                xml.deprecated_term { |a| a << node.text }
+                xml.deprecates { |a| a << node.text }
               elsif node.role == "domain"
-                xml.termdomain { |a| a << node.text }
+                xml.domain { |a| a << node.text }
               else
                 xml << node.text
               end

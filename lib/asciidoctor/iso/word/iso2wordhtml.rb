@@ -131,12 +131,13 @@ module Asciidoctor
               when "sub" then out.sub { |e| e << node.text }
               when "tt" then out.tt { |e| e << node.text }
               when "br" then out.br
-              when "callout" then out << " &lt;#{node.text}&gt;"
+              when "callout" then callout_parse(node, out)
               when "stem" then stem_parse(node, out)
               when "clause" then clause_parse(node, out)
               when "subsection" then clause_parse(node, out)
               when "xref" then xref_parse(node, out)
               when "eref" then eref_parse(node, out)
+              when "origin" then eref_parse(node, out)
               when "link" then link_parse(node, out)
               when "ul" then ul_parse(node, out)
               when "ol" then ol_parse(node, out)
@@ -144,26 +145,24 @@ module Asciidoctor
               when "dl" then dl_parse(node, out)
               when "fn" then footnote_parse(node, out)
               when "p" then para_parse(node, out)
+              when "quote" then quote_parse(node, out)
               when "tr" then tr_parse(node, out)
               when "note" then note_parse(node, out)
-              when "review_note" then review_note_parse(node, out)
-              when "warning" then warning_parse(node, out)
+              when "review" then review_note_parse(node, out)
+              when "admonition" then admonition_parse(node, out)
               when "formula" then formula_parse(node, out)
               when "table" then table_parse(node, out)
               when "figure" then figure_parse(node, out)
               when "image" then image_parse(node["src"], out, nil)
               when "sourcecode" then sourcecode_parse(node, out)
-              when "colist" then colist_parse(node, out)
               when "annotation" then annotation_parse(node, out)
-              when "termdef" then termdef_parse(node, out)
-              when "term" then term_parse(node, out)
-              when "admitted_term" then admitted_term_parse(node, out)
-              when "termsymbol" then termsymbol_parse(node, out)
-              when "deprecated_term" then deprecated_term_parse(node, out)
-              when "termdomain" then set_termdomain(node.text)
-              when "termdefinition"
-                node.children.each { |n| parse(n, out) }
-              when "termref" then termref_parse(node, out)
+              when "term" then termdef_parse(node, out)
+              when "preferred" then term_parse(node, out)
+              when "admitted" then admitted_term_parse(node, out)
+              when "deprecates" then deprecated_term_parse(node, out)
+              when "domain" then set_termdomain(node.text)
+              when "definition" then definition_parse(node, out)
+              when "termsource" then termref_parse(node, out)
               when "isosection"
                 out << "[ISOSECTION] #{node.text}"
               when "modification" then modification_parse(node, out)

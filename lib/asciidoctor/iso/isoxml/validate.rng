@@ -380,7 +380,7 @@
       </optional>
       <choice>
         <oneOrMore>
-          <ref name="termdef"/>
+          <ref name="term"/>
         </oneOrMore>
         <optional>
           <ref name="terms"/>
@@ -388,27 +388,24 @@
       </choice>
     </element>
   </define>
-  <define name="termdef">
-    <element name="termdef">
+  <define name="term">
+    <element name="term">
       <optional>
         <attribute name="id">
           <data type="ID"/>
         </attribute>
       </optional>
-      <ref name="term"/>
+      <ref name="preferred"/>
       <zeroOrMore>
-        <ref name="admitted_term"/>
+        <ref name="admitted"/>
       </zeroOrMore>
-      <optional>
-        <ref name="termsymbol"/>
-      </optional>
       <zeroOrMore>
-        <ref name="deprecated_term"/>
+        <ref name="deprecates"/>
       </zeroOrMore>
       <optional>
         <ref name="termdomain"/>
       </optional>
-      <ref name="termdefinition"/>
+      <ref name="definition"/>
       <zeroOrMore>
         <ref name="termnote"/>
       </zeroOrMore>
@@ -416,37 +413,40 @@
         <ref name="termexample"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="termref"/>
+        <ref name="termsource"/>
       </zeroOrMore>
     </element>
   </define>
-  <define name="term">
-    <element name="term">
-      <text/>
+  <define name="preferred">
+    <element name="preferred">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
-  <define name="admitted_term">
-    <element name="admitted_term">
-      <text/>
+  <define name="admitted">
+    <element name="admitted">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
-  <define name="termsymbol">
-    <element name="termsymbol">
-      <ref name="stem"/>
-    </element>
-  </define>
-  <define name="deprecated_term">
-    <element name="deprecated_term">
-      <text/>
+  <define name="deprecates">
+    <element name="deprecates">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="termdomain">
-    <element name="termdomain">
-      <text/>
+    <element name="domain">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
-  <define name="termdefinition">
-    <element name="termdefinition">
+  <define name="definition">
+    <element name="definition">
       <oneOrMore>
         <choice>
           <ref name="para_no_fn"/>
@@ -470,28 +470,36 @@
   </define>
   <define name="termexample">
     <element name="termexample">
-      <text/>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <ref name="BasicBlock"/>
     </element>
   </define>
-  <define name="termref">
-    <element name="termref">
-      <ref name="eref"/>
+  <define name="termsource">
+    <element name="termsource">
+      <attribute name="status">
+        <choice>
+          <value>identical</value>
+          <value>modified</value>
+        </choice>
+      </attribute>
+      <ref name="origin"/>
       <optional>
-        <ref name="isosection"/>
-        <optional>
-          <ref name="modification"/>
-        </optional>
+        <ref name="modification"/>
       </optional>
     </element>
   </define>
-  <define name="isosection">
-    <element name="isosection">
-      <text/>
+  <define name="origin">
+    <element name="origin">
+      <ref name="CitationType"/>
     </element>
   </define>
   <define name="modification">
     <element name="modification">
-      <text/>
+      <ref name="para_no_fn"/>
     </element>
   </define>
   <define name="BasicBlock">
@@ -500,7 +508,7 @@
       <ref name="table"/>
       <ref name="note"/>
       <ref name="formula"/>
-      <ref name="warning"/>
+      <ref name="admonition"/>
       <ref name="ol"/>
       <ref name="ul"/>
       <ref name="dl"/>
@@ -534,6 +542,16 @@
       <optional>
         <attribute name="id">
           <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="align">
+          <choice>
+            <value>left</value>
+            <value>center</value>
+            <value>right</value>
+            <value>justified</value>
+          </choice>
         </attribute>
       </optional>
       <optional>
@@ -578,7 +596,7 @@
       <zeroOrMore>
         <!--
           allow hanging paragraphs in annexes: they introduce lists
-          ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
+          ( para | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | review | example )*,
         -->
         <ref name="BasicBlock"/>
       </zeroOrMore>
@@ -658,7 +676,7 @@
         </choice>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="review_note"/>
+        <ref name="review"/>
       </zeroOrMore>
     </element>
   </define>
@@ -678,7 +696,7 @@
         <ref name="TextElement"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="review_note"/>
+        <ref name="review"/>
       </zeroOrMore>
     </element>
   </define>
@@ -738,13 +756,13 @@
           <ref name="callout"/>
         </choice>
       </zeroOrMore>
-      <optional>
-        <ref name="colist"/>
-      </optional>
+      <zeroOrMore>
+        <ref name="annotation"/>
+      </zeroOrMore>
     </element>
   </define>
-  <define name="review_note">
-    <element name="review_note">
+  <define name="review">
+    <element name="review">
       <attribute name="reviewer"/>
       <attribute name="date"/>
       <text/>
@@ -752,14 +770,9 @@
   </define>
   <define name="callout">
     <element name="callout">
-      <text/>
-    </element>
-  </define>
-  <define name="colist">
-    <element name="colist">
-      <oneOrMore>
-        <ref name="annotation"/>
-      </oneOrMore>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
     </element>
   </define>
   <define name="annotation">
@@ -781,7 +794,20 @@
   </define>
   <define name="ol">
     <element name="ol">
-      <attribute name="type"/>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <attribute name="type">
+        <choice>
+          <value>roman</value>
+          <value>alphabet</value>
+          <value>arabic</value>
+          <value>roman_upper</value>
+          <value>alphabet_upper</value>
+        </choice>
+      </attribute>
       <oneOrMore>
         <ref name="li"/>
       </oneOrMore>
@@ -789,6 +815,11 @@
   </define>
   <define name="ul">
     <element name="ul">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="li"/>
       </oneOrMore>
@@ -797,7 +828,7 @@
   <define name="li">
     <element name="li">
       <oneOrMore>
-        <!-- ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )+ -->
+        <!-- ( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )+ -->
         <ref name="BasicBlock"/>
       </oneOrMore>
       <!-- exclude figures? -->
@@ -805,6 +836,11 @@
   </define>
   <define name="dl">
     <element name="dl">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="dt"/>
         <ref name="dd"/>
@@ -820,7 +856,7 @@
     <element name="dd">
       <oneOrMore>
         <!--
-          ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )*
+          ( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )*
           exclude figures?
         -->
         <ref name="BasicBlock"/>
@@ -839,9 +875,22 @@
       </oneOrMore>
     </element>
   </define>
-  <define name="warning">
-    <element name="warning">
-      <ref name="tname"/>
+  <define name="admonition">
+    <element name="admonition">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <attribute name="type">
+        <choice>
+          <value>danger</value>
+          <value>caution</value>
+          <value>warning</value>
+          <value>important</value>
+          <value>safety precautions</value>
+        </choice>
+      </attribute>
       <oneOrMore>
         <ref name="para"/>
       </oneOrMore>
@@ -876,7 +925,7 @@
           <ref name="dl"/>
           <ref name="quote"/>
           <ref name="sourcecode"/>
-          <ref name="review_note"/>
+          <ref name="review"/>
         </choice>
       </oneOrMore>
     </element>
@@ -898,6 +947,11 @@
           </optional>
         </optional>
       </optional>
+    </element>
+  </define>
+  <define name="isosection">
+    <element name="isosection">
+      <text/>
     </element>
   </define>
   <define name="link">
@@ -1213,84 +1267,37 @@
     </element>
   </define>
   <define name="CitationType">
-    <ref name="destination"/>
-    <ref name="source"/>
-    <ref name="date"/>
+    <ref name="work"/>
+    <optional>
+      <ref name="bibLocality"/>
+    </optional>
+    <optional>
+      <ref name="date"/>
+    </optional>
   </define>
-  <!--
-    source is the text element that the citation belongs to; this is in context the text element
-    the citation occurs in (or next to), so it does not need to be included in a schema
-  -->
   <define name="date">
     <element name="date">
       <data type="string" datatypeLibrary=""/>
     </element>
   </define>
-  <define name="destination">
-    <element name="destination">
-      <ref name="bibLocality"/>
-      <ref name="bibItem"/>
+  <define name="work">
+    <element name="work">
+      <data type="string" datatypeLibrary=""/>
     </element>
   </define>
-  <!--
-    well, no, that's conceptual model thinking. destination contains a pointer to a bibItem,
-    not the bibItem itself. The bibItem appers in the document model only in the references,
-    never in the citation.
-  -->
   <define name="bibLocality">
     <element name="bibLocality">
-      <group>
-        <ref name="section"/>
-        <ref name="pclause"/>
-        <ref name="part"/>
-        <ref name="pparagraph"/>
-        <ref name="chapter"/>
-        <ref name="page"/>
-        <ref name="whole"/>
-      </group>
-      <!--
-        all of these need to be optional (in reality, choice of one or more,
-        with page and whole mutually exclusive to the remainder)
-      -->
-    </element>
-  </define>
-  <define name="section">
-    <element name="section">
-      <text/>
-    </element>
-  </define>
-  <define name="pclause">
-    <element name="clause">
-      <text/>
-    </element>
-  </define>
-  <define name="pparagraph">
-    <element name="paragraph">
-      <text/>
-    </element>
-  </define>
-  <!--
-    would be nice to use unique name, both clause and paragraph already used elsewhere. (clauseref, pararef?)
-    That applies for most ambiguous element names,
-    though am ok for "name" to be reused, it always means the same thing
-  -->
-  <define name="part">
-    <element name="part">
-      <text/>
-    </element>
-  </define>
-  <define name="chapter">
-    <element name="chapter">
-      <text/>
-    </element>
-  </define>
-  <define name="page">
-    <element name="page">
-      <text/>
-    </element>
-  </define>
-  <define name="whole">
-    <element name="whole">
+      <attribute name="type">
+        <choice>
+          <value>section</value>
+          <value>clause</value>
+          <value>part</value>
+          <value>paragraph</value>
+          <value>chapter</value>
+          <value>page</value>
+          <value>whole</value>
+        </choice>
+      </attribute>
       <text/>
     </element>
   </define>
@@ -1318,33 +1325,41 @@
       </attribute>
     </optional>
     <ref name="bname"/>
-    <ref name="source"/>
+    <optional>
+      <ref name="source"/>
+    </optional>
     <ref name="publishDate"/>
-    <ref name="code"/>
-    <ref name="accessedDate"/>
+    <zeroOrMore>
+      <ref name="code"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="accessedDate"/>
+    </optional>
     <zeroOrMore>
       <ref name="creator"/>
     </zeroOrMore>
-    <ref name="publisher"/>
-    <ref name="edition"/>
-    <ref name="comments"/>
+    <zeroOrMore>
+      <ref name="publisher"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="edition"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="comment"/>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="partOf"/>
     </zeroOrMore>
     <optional>
       <ref name="creationDate"/>
     </optional>
-    <optional>
+    <zeroOrMore>
       <ref name="language"/>
-    </optional>
-    <optional>
+    </zeroOrMore>
+    <zeroOrMore>
       <ref name="script"/>
-    </optional>
+    </zeroOrMore>
   </define>
-  <!--
-    type has been mentioned twice, and not identified as of enum type BibItemType
-    what is code for?
-  -->
   <define name="bname">
     <element name="name">
       <text/>
@@ -1352,10 +1367,9 @@
   </define>
   <define name="source">
     <element name="source">
-      <text/>
+      <data type="anyURI"/>
     </element>
   </define>
-  <!-- is a uri throughout -->
   <define name="publishDate">
     <element name="publishDate">
       <text/>
@@ -1376,12 +1390,13 @@
       <text/>
     </element>
   </define>
-  <define name="comments">
-    <element name="comments">
-      <data type="string" datatypeLibrary=""/>
+  <define name="comment">
+    <element name="comment">
+      <oneOrMore>
+        <ref name="para"/>
+      </oneOrMore>
     </element>
   </define>
-  <!-- consider making this paragraph[1..*] -->
   <define name="partOf">
     <element name="partOf">
       <ref name="BibItemType"/>

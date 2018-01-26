@@ -122,15 +122,16 @@ module Asciidoctor
         def section_names(clause, num, level)
           @@anchors[clause["id"]] = { label: num, xref: "Clause #{num}",
                                       level: level }
-          clause.xpath(ns("./subsection | ./termdef")).each_with_index do |c, i|
+          clause.xpath(ns("./subsection | ./term")).each_with_index do |c, i|
             section_names1(c, "#{num}.#{i + 1}", level + 1)
           end
         end
 
         def section_names1(clause, num, level)
-          @@anchors[clause["id"]] = { label: num, xref: "Clause #{num}",
-                                      level: level }
-          clause.xpath(ns("./subsection | ./subsection")).
+          @@anchors[clause["id"]] = 
+            { label: num, level: level,
+              xref: clause.name == "term" ? num : "Clause #{num}" }
+          clause.xpath(ns("./subsection ")).
             each_with_index do |c, i|
             section_names1(c, "#{num}.#{i + 1}", level + 1)
           end

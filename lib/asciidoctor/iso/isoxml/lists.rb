@@ -19,7 +19,7 @@ module Asciidoctor
           return reference(node, true) if $norm_ref
           return reference(node, false) if $biblio
           noko do |xml|
-            xml.ul **attr_code(id: node.id) do |xml_ul|
+            xml.ul **attr_code(id: Utils::anchor_or_uuid(node)) do |xml_ul|
               node.items.each do |item|
                 li(xml_ul, item)
               end
@@ -108,16 +108,16 @@ module Asciidoctor
         def olist_style(style)
           return "alphabet" if style == "loweralpha"
           return "roman" if style == "lowerroman"
+          return "roman_upper" if style == "upperroman"
+          return "alphabet_upper" if style == "upperalpha"
           return style
         end
 
         def olist(node)
           noko do |xml|
-            xml.ol **attr_code(id: node.id, 
+            xml.ol **attr_code(id: Utils::anchor_or_uuid(node),
                                type: olist_style(node.style)) do |xml_ol|
-              node.items.each do |item|
-                li(xml_ol, item)
-              end
+              node.items.each { |item| li(xml_ol, item) }
             end
           end.join("\n")
         end
@@ -146,7 +146,7 @@ module Asciidoctor
 
         def dlist(node)
           noko do |xml|
-            xml.dl **attr_code(id: node.id) do |xml_dl|
+            xml.dl **attr_code(id: Utils::anchor_or_uuid(node)) do |xml_dl|
               node.items.each do |terms, dd|
                 dt(terms, xml_dl)
                 dd(dd, xml_dl)
@@ -157,12 +157,10 @@ module Asciidoctor
 
         def colist(node)
           noko do |xml|
-            xml.colist **attr_code(id: node.id) do |xml_ul|
-              node.items.each_with_index do |item, i|
-                xml_ul.annotation **attr_code(id: i + 1) do |xml_li|
-                  Validate::style(item, item.text)
-                  xml_li << item.text
-                end
+            node.items.each_with_index do |item, i|
+              xml_ul.annotation **attr_code(id: i + 1) do |xml_li|
+                Validate::style(item, item.text)
+                xml_li << item.text
               end
             end
           end.join("\n")

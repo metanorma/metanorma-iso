@@ -18,14 +18,24 @@ module Asciidoctor
           end
         end
 
-        def sidebar(node)
-          return unless $draft
+        def sidebar_attrs(node)
           date = node.attr("date") || DateTime.now.iso8601.gsub(/\+.*$/, "")
           date += "T0000" unless /T/.match? date
-          attrs = { reviewer: node.attr("reviewer") || "(Unknown)",
-                              date: date.gsub(/[:-]/, "") }
+          { 
+            reviewer: node.attr("reviewer") || "(Unknown)",
+            id: Utils::anchor_or_uuid(node),
+            date: date.gsub(/[:-]/, ""),
+          }
+        end
+
+        def sidebar(node)
+          return unless $draft
           content = Utils::flatten_rawtext(node.content).join("\n")
-          noko { |xml| xml.review_note content, **attr_code(attrs) }
+          noko do |xml| 
+            xml.review **attr_code(sidebar_attrs(node)) do |r|
+              r << content
+            end
+          end
         end
 
         def termnote(n)
@@ -56,21 +66,23 @@ module Asciidoctor
           end.join("\n")
         end
 
-        def admonition(node)
+        def admonition_attrs(node)
           name = node.attr("name")
+          type = node.attr("type") and
+            ["danger", "safety precautions"].each do |t|
+            name = t if type.casecmp(t).zero?
+          end
+          { id: Utils::anchor_or_uuid(node), type: name }
+        end
+
+        def admonition(node)
           return termnote(node) if $term_def
-          return note(node) if name == "note"
+          return note(node) if node.attr("name") == "note"
           noko do |xml|
-            type = node.attr("type") and
-              ["danger", "safety precautions"].each do |t|
-                name = t if type.casecmp(t).zero?
-              end
-            xml.warning do |xml_cref|
-              xml_cref.name name.upcase
-              if node.blocks?
-                xml_cref << node.content
+            xml.admonition **admonition_attrs(node) do |a|
+              if node.blocks? then a << node.content
               else
-                xml_cref.p { |p| p << node.content }
+                a.p { |p| p << node.content }
               end
             end
           end.join("\n")
@@ -78,10 +90,11 @@ module Asciidoctor
 
         def term_example(node)
           noko do |xml|
-            xml.termexample **attr_code(id: node.id) do |ex|
-              content = node.content
-              ex << content
-              text = Utils::flatten_rawtext(content).join("\n")
+            attrs = { id: Utils::anchor_or_uuid(node) }
+            xml.termexample **attr_code(attrs) do |ex|
+              c = node.content
+              if node.blocks? then ex << c else ex.p { |p| p << c } end
+              text = Utils::flatten_rawtext(c).join("\n")
               Validate::termexample_style(node, text)
             end
           end.join("\n")
@@ -90,7 +103,8 @@ module Asciidoctor
         def example(node)
           return term_example(node) if $term_def
           noko do |xml|
-            xml.example **attr_code(id: node.id) do |ex|
+            attrs = { id: Utils::anchor_or_uuid(node) }
+            xml.example **attr_code(attrs) do |ex|
               content = node.content
               ex << content
               text = Utils::flatten_rawtext(content).join("\n")
@@ -100,8 +114,7 @@ module Asciidoctor
         end
 
         def preamble(node)
-          result = []
-          result << noko do |xml|
+          noko do |xml|
             xml.content do |xml_abstract|
               xml_abstract.title { |t| t << "Foreword" }
               content = node.content
@@ -109,20 +122,14 @@ module Asciidoctor
               text = Utils::flatten_rawtext(content).join("\n")
               Validate::foreword_style(node, text)
             end
-          end
-          result
+          end.join("\n")
         end
 
         def image(node)
           uri = node.image_uri node.attr("target")
           types = MIME::Types.type_for(uri)
-          fig_attributes = {
-            id: Utils::anchor_or_uuid(node),
-          }
-          img_attributes = {
-            src: uri,
-            imagetype: types.first.sub_type.upcase
-          }
+          fig_attributes = { id: Utils::anchor_or_uuid(node) }
+          img_attributes = { src: uri, imagetype: types.first.sub_type.upcase }
 
           noko do |xml|
             xml.figure **attr_code(fig_attributes) do |f|
@@ -132,13 +139,32 @@ module Asciidoctor
           end
         end
 
+        def quote_attrs(node)
+          { 
+            id: Utils::anchor_or_uuid(node), 
+            align: node.attr("align"),
+          }
+        end
+
+        def quote_attribution(node, out)
+          if node.attr("attribution")
+            out.fullname do |f|
+              f.surname { |s| s << node.attr("attribution") }
+              # TODO: will break up into name components
+            end
+          end
+          if node.attr("citetitle")
+            # TODO: eref
+          end
+        end
+
         def quote(node)
           noko do |xml|
-            xml.quote **attr_code(id: node.id) do |xml_blockquote|
-              if node.blocks?
-                xml_blockquote << node.content
+            xml.quote **attr_code(quote_attrs(node)) do |q|
+              quote_attribution(node, out)
+              if node.blocks? then q << node.content
               else
-                xml_blockquote.p { |p| p << node.content }
+                q.p { |p| p << node.content }
               end
             end
           end

@@ -35,7 +35,7 @@
 <p>This document was prepared by Technical Committee ISO/TC 34, <em>Food products</em>, Subcommittee SC 4, <em>Cereals and pulses</em>.</p>
 <p>This second edition cancels and replaces the first edition (ISO 17301-1:2009), which has been technically revised.</p>
 <p>The main changes compared to the previous edition are:</p>
-<ul>
+<ul id="_365ca530-d5ed-46ef-aeb5-6dde71a1e7d1">
   <li>
     <p>updated normative references;</p>
   </li>
@@ -88,7 +88,7 @@ World<br/>
 </iso_ref_title></references>
 <terms id="_terms_and_definitions"><title>Terms and Definitions</title><p>For the purposes of this document, the following terms and definitions apply.</p>
 <p>ISO and IEC maintain terminological databases for use in standardization at the following addresses:</p>
-<ul>
+<ul id="_47b259bf-93f3-44ca-9646-fe0943f48a95">
   <li>
     <p>ISO Online browsing platform: available at <link target="http://www.iso.org/obp"/></p>
   </li>
@@ -96,93 +96,99 @@ World<br/>
     <p>IEC Electropedia: available at <link target="http://www.electropedia.org"/></p>
   </li>
 </ul>
-<termdef id="paddy"><term>paddy</term><admitted_term>paddy rice</admitted_term>
-<admitted_term>rough rice</admitted_term>
-<termdefinition><p>rice retaining its husk after threshing</p></termdefinition>
-<termref>
-  <eref target="ISO7301" format="inline"/>
+<term id="paddy"><preferred>paddy</preferred><admitted>paddy rice</admitted>
+<admitted>rough rice</admitted>
+<definition><p>rice retaining its husk after threshing</p></definition>
+<termsource status="modified">
+  <origin target="ISO7301"/>
   <isosection> 3.1</isosection>
-</termref></termdef>
-<termdef id="husked_rice"><term>husked rice</term>
-  <deprecated_term>cargo rice</deprecated_term>
+</termsource></term>
+<term id="husked_rice"><preferred>husked rice</preferred>
+  <deprecates>cargo rice</deprecates>
 
-<termdefinition><p><em>paddy</em> (<xref target="paddy"/>) from which the husk only has been removed</p></termdefinition>
-<termref>
-  <eref target="ISO7301" format="inline"/>
+<definition><p><em>paddy</em> (<xref target="paddy"/>) from which the husk only has been removed</p></definition>
+<termsource status="identical">
+  <origin target="ISO7301"/>
   <isosection> 3.2</isosection>
-  <modification> The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</modification>
-</termref></termdef>
-<termdef id="_milled_rice"><term>milled rice</term>
-  <admitted_term>white rice</admitted_term>
+  <modification>
+    <p> The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</p>
+  </modification>
+</termsource></term>
+<term id="_milled_rice"><preferred>milled rice</preferred>
+  <admitted>white rice</admitted>
 
-<termdefinition><p><em>husked rice</em> (<xref target="husked_rice"/>) from which almost all of the bran and embryo have been removed by milling</p></termdefinition>
-<termref>
-  <eref target="ISO7301" format="inline"/>
+<definition><p><em>husked rice</em> (<xref target="husked_rice"/>) from which almost all of the bran and embryo have been removed by milling</p></definition>
+<termsource status="modified">
+  <origin target="ISO7301"/>
   <isosection> 3.3</isosection>
-</termref></termdef>
-<termdef id="_parboiled_rice">
-  <term>parboiled rice</term>
-  <termdefinition><p>rice whose starch has been fully gelatinized by soaking <em>paddy</em> (<xref target="paddy"/>) rice or <em>husked rice</em> (<xref target="husked_rice"/>) in water followed by a heat treatment and a drying process</p></termdefinition>
-</termdef>
-<termdef id="_waxy_rice"><term>waxy rice</term><termdefinition><p>variety of rice whose kernels have a white and opaque appearance</p></termdefinition>
-<termnote>The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</termnote></termdef>
-<termdef id="_extraneous_matter"><term>extraneous matter</term><admitted_term>EM</admitted_term>
-<termdomain>rice</termdomain>
-<termdefinition><p>organic and inorganic components other than whole or broken kernels</p></termdefinition>
-<termexample>Foreign seeds, husks, bran, sand, dust.</termexample></termdef>
-<termdef id="HDK"><term>HDK</term>
-  <admitted_term>heat-damaged kernel</admitted_term>
+</termsource></term>
+<term id="_parboiled_rice">
+  <preferred>parboiled rice</preferred>
+  <definition><p>rice whose starch has been fully gelatinized by soaking <em>paddy</em> (<xref target="paddy"/>) rice or <em>husked rice</em> (<xref target="husked_rice"/>) in water followed by a heat treatment and a drying process</p></definition>
+</term>
+<term id="_waxy_rice"><preferred>waxy rice</preferred><definition><p>variety of rice whose kernels have a white and opaque appearance</p></definition>
+<termnote>The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</termnote></term>
+<term id="_extraneous_matter"><preferred>extraneous matter</preferred><admitted>EM</admitted>
+<domain>rice</domain>
+<definition><p>organic and inorganic components other than whole or broken kernels</p></definition>
+<termexample id="_5da1955d-2de8-4231-98a3-465c1dcd8794">
+  <p>Foreign seeds, husks, bran, sand, dust.</p>
+</termexample></term>
+<term id="HDK"><preferred>HDK</preferred>
+  <admitted>heat-damaged kernel</admitted>
 
-<termdefinition><p>kernel, whole or broken, which has changed its normal colour as a result of heating</p></termdefinition>
-<termnote>This category includes whole or broken kernels that are yellow due to alteration. Parboiled rice in a batch of non-parboiled rice is also included in this category.</termnote></termdef>
-<termdef id="_damaged_kernel">
-  <term>damaged kernel</term>
-  <termdefinition><p>kernel, whole or broken, showing obvious deterioration due to moisture, pests, disease or other causes, but excluding <em>HDK</em> (<xref target="HDK"/>)</p></termdefinition>
-</termdef>
-<termdef id="_immature_kernel"><term>immature kernel</term>
-  <admitted_term>unripe kernel</admitted_term>
+<definition><p>kernel, whole or broken, which has changed its normal colour as a result of heating</p></definition>
+<termnote>This category includes whole or broken kernels that are yellow due to alteration. Parboiled rice in a batch of non-parboiled rice is also included in this category.</termnote></term>
+<term id="_damaged_kernel">
+  <preferred>damaged kernel</preferred>
+  <definition><p>kernel, whole or broken, showing obvious deterioration due to moisture, pests, disease or other causes, but excluding <em>HDK</em> (<xref target="HDK"/>)</p></definition>
+</term>
+<term id="_immature_kernel"><preferred>immature kernel</preferred>
+  <admitted>unripe kernel</admitted>
 
-<termdefinition><p>kernel, whole or broken, which is unripe and/or underdeveloped</p></termdefinition></termdef>
-<termdef id="_husked_rice_yield"><term>husked rice yield</term><termdefinition><p>amount of husked rice obtained from paddy</p></termdefinition>
-<termref>
-  <eref target="ISO6646" format="inline"/>
+<definition><p>kernel, whole or broken, which is unripe and/or underdeveloped</p></definition></term>
+<term id="_husked_rice_yield"><preferred>husked rice yield</preferred><definition><p>amount of husked rice obtained from paddy</p></definition>
+<termsource status="modified">
+  <origin target="ISO6646"/>
   <isosection> 3.1</isosection>
-</termref></termdef>
-<termdef id="_nitrogen_content"><term>nitrogen content</term><termdefinition><p>quantity of nitrogen determined after application of the procedure described</p></termdefinition>
+</termsource></term>
+<term id="_nitrogen_content"><preferred>nitrogen content</preferred><definition><p>quantity of nitrogen determined after application of the procedure described</p></definition>
 <termnote>It is expressed as a mass fraction of dry product, as a percentage.</termnote>
-<termref>
-  <eref target="ISO20483" format="inline"/>
+<termsource status="modified">
+  <origin target="ISO20483"/>
   <isosection> 3.1</isosection>
-</termref></termdef>
-<termdef id="_crude_protein_content"><term>crude protein content</term><termdefinition><p>quantity of crude protein obtained from the nitrogen content as determined by applying the specified method, calculated by multiplying this content by an appropriate factor depending on the type of cereal or pulse</p></termdefinition>
+</termsource></term>
+<term id="_crude_protein_content"><preferred>crude protein content</preferred><definition><p>quantity of crude protein obtained from the nitrogen content as determined by applying the specified method, calculated by multiplying this content by an appropriate factor depending on the type of cereal or pulse</p></definition>
 <termnote>It is expressed as a mass fraction of dry product, as a percentage.</termnote>
-<termref>
-  <eref target="ISO20483" format="inline"/>
+<termsource status="modified">
+  <origin target="ISO20483"/>
   <isosection> 3.2</isosection>
-</termref></termdef>
-<termdef id="gelatinization"><term>gelatinization</term><termdefinition><p>hydration process conferring the jelly-like state typical of the coagulated colloids, which are named gels, on kernels</p></termdefinition>
+</termsource></term>
+<term id="gelatinization"><preferred>gelatinization</preferred><definition><p>hydration process conferring the jelly-like state typical of the coagulated colloids, which are named gels, on kernels</p></definition>
 <termnote>See <xref target="figureC-1"/>.</termnote>
-<termref>
-  <eref target="ISO14864" format="inline"/>
+<termsource status="modified">
+  <origin target="ISO14864"/>
   <isosection> 3.1</isosection>
-</termref></termdef>
-<termdef id="gel_state"><term>gel state</term><termdefinition><p>condition reached as a consequence of <em>gelatinization</em> (<xref target="gelatinization"/>), when the kernel is fully transparent and absolutely free from whitish and opaque granules after being pressed between two glass sheets</p></termdefinition>
-<termref>
-  <eref target="ISO14864" format="inline"/>
+</termsource></term>
+<term id="gel_state"><preferred>gel state</preferred><definition><p>condition reached as a consequence of <em>gelatinization</em> (<xref target="gelatinization"/>), when the kernel is fully transparent and absolutely free from whitish and opaque granules after being pressed between two glass sheets</p></definition>
+<termsource status="modified">
+  <origin target="ISO14864"/>
   <isosection> 3.2</isosection>
-</termref></termdef>
-<termdef id="_gelatinization_time"><term>gelatinization time</term><termsymbol><stem type="MathML">t_90</stem></termsymbol>
-<termdefinition><p>time necessary for 90 % of the kernels to pass from their natural state to the <em>gel state</em> (<xref target="gel_state"/>)</p></termdefinition>
-<termref>
-  <eref target="ISO14864" format="inline"/>
+</termsource></term>
+<term id="_gelatinization_time"><preferred>gelatinization time</preferred><definition><p>
+  <stem type="MathML">t_90</stem>
+</p><p>time necessary for 90 % of the kernels to pass from their natural state to the <em>gel state</em> (<xref target="gel_state"/>)</p></definition>
+
+<termsource status="modified">
+  <origin target="ISO14864"/>
   <isosection> 3.3</isosection>
-</termref></termdef></terms>
+</termsource></term></terms>
 <clause id="_specifications"><title>Specifications</title><subsection id="_general_organoleptic_and_health_characteristics"><title>General, organoleptic and health characteristics</title><p>Kernels of rice, whether parboiled, husked or milled, and whether whole or broken, shall be sound, clean and free from foreign odours or odour which indicates deterioration.</p>
 <p>The levels of additives and pesticide residues and other contaminants shall not exceed the maximum limits permitted in the country of destination.</p>
 <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p></subsection>
-<subsection id="_physical_and_chemical_characteristics"><title>Physical and chemical characteristics</title><subsection id="_4178a7c0-681b-4ac4-adb4-194dedc9bbec"><title/><p>The mass fraction of moisture, determined in accordance with <eref target="ISO712" format="inline"/>, using an oven complying with the requirements of <eref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
+<subsection id="_physical_and_chemical_characteristics"><title>Physical and chemical characteristics</title><subsection id="_9995e26f-5735-43b7-9e4a-3ef047b2ce78"><title/><p>The mass fraction of moisture, determined in accordance with <eref target="ISO712" format="inline"/>, using an oven complying with the requirements of <eref target="IEC61010-2" format="inline"/>, shall not be greater than 15 %.<fn>Formerly denoted as 15 % (m/m).</fn></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <xref target="AnnexA"/>, shall not be greater than the values specified in <xref target="table1"/>.</p>
-<note id="_8b1bb812-727a-45db-ba00-1f99f8aabec3">
+<note id="_68ce0a70-ecb0-4214-af1d-5b2195956d9e">
   <p>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <eref target="ISO6322-1" format="inline"/>, <eref target="ISO6322-2" format="inline"/> and <eref target="ISO6322-3" format="inline"/>.</p>
 </note></subsection>
 <subsection id="_2"><title/><p>The defect tolerance for the categories considered, and determined in accordance with the method given in <xref target="AnnexA"/>, shall not exceed the limits given in <xref target="table1"/>.</p>
@@ -322,11 +328,11 @@ World<br/>
       </td>
     </tr>
   </tfoot>
-<note id="_46451802-9014-4fb7-8339-8cf311142365">
+<note id="_adb45424-a964-47c9-a575-dbdab2c36974">
   <p>This table is based on <eref target="ISO7301" format="inline"/>, Table 1.</p>
-</note><note id="_b97e951b-d51e-4432-9d84-3e34380f86a8">
+</note><note id="_a600e0ad-9f53-46d1-bec5-f74cd826b39b">
   <p>Some commercial contracts require information in addition to that provided in this table.</p>
-</note><note id="_c5f3ce9e-45b7-4dda-98b5-271773f1183d">
+</note><note id="_6b630021-b908-45d5-be72-b55b741c763b">
   <p>Only full red husked (cargo) rice is considered in this table.</p>
 </note></table>
 
@@ -348,19 +354,18 @@ World<br/>
 <p>Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in <eref target="ISO20483" format="inline"/>, Annex C and Table C.1, that is adapted to the type of cereals or pulses <eref target="ref13" format="footnote"/><eref target="ref14" format="footnote"/> and to their use.</p></subsection>
 <subsection id="_gelatinization_time_2"><title>Gelatinization time</title><p>Determine the gelatinization time, <stem type="MathML">t_90</stem>, for rice kernels during cooking. An example of a typical curve is given in <xref target="figureC-1"/>. Three typical stages of gelatinization are shown in <xref target="figureC-2"/>.</p>
 <p>Report the results as specified in <xref target="clause7"/>.</p></subsection>
-<subsection id="_husked_rice_yield_2"><title>Husked rice yield</title><subsection id="_determination"><title>Determination</title><warning>
-  <name>CAUTION</name>
+<subsection id="_husked_rice_yield_2"><title>Husked rice yield</title><subsection id="_determination"><title>Determination</title><admonition id="_7d73c331-a541-4e20-af35-21c5ac5edef1" type="caution">
   <p>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
-</warning>
+</admonition>
 <p>Determine the husked rice yield in accordance with <eref target="ISO6646" format="inline"/>.</p></subsection>
 <subsection id="_precision"><title>Precision</title><subsection id="_interlaboratory_test">
   <title>Interlaboratory test</title>
   <p>The results of an interlaboratory test are given in <xref target="AnnexD"/> for information</p>
 </subsection>
 <subsection id="_repeatability"><title>Repeatability</title><p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <stem type="MathML">r</stem> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<formula id="_39140de7-bffc-4fab-b70c-433bc9051ae4">
+<formula id="_f7074872-e7c5-4b43-a25d-4001e3a4ec51">
   <stem type="MathML">r = 1 %</stem>
-<dl>
+<dl id="_0917ec0a-d88d-425f-b3b9-2267c4ddf6ee">
   <dt>
     <stem type="MathML">r</stem>
   </dt>
@@ -371,9 +376,9 @@ World<br/>
 
 </subsection>
 <subsection id="_reproducibility"><title>Reproducibility</title><p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <stem type="MathML">R</stem> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<formula id="_c65b931c-5bef-47c3-b405-85f77e543bf8">
+<formula id="_e9cb616a-ff40-4f69-beae-b699ee73b103">
   <stem type="MathML">R = 3 %</stem>
-<dl>
+<dl id="_9ffb0643-8116-423d-a169-98ae9a1e4669">
   <dt>
     <stem type="MathML">R</stem>
   </dt>
@@ -384,7 +389,7 @@ World<br/>
 
 </subsection></subsection></subsection></clause>
 <clause id="clause7"><title>Test report</title><p>For each test method, the test report shall specify the following:</p>
-<ol type="alphabet">
+<ol id="_10821688-919b-4154-9c0b-93a6bfbec2ce" type="alphabet">
   <li>
     <p>all information necessary for the complete identification of the sample;</p>
   </li>
@@ -464,7 +469,7 @@ World<br/>
 <subsection id="_calculation"><title>Calculation</title><p>Express the mass fraction of each defect using Formula (<xref target="formulaA-1"/>):</p>
 <formula id="formulaA-1">
   <stem type="MathML">w = (m_D) / (m_s)</stem>
-<dl>
+<dl id="_ded90238-cbde-43dd-aedc-da25772ad9f8">
   <dt>
     <stem type="MathML">w</stem>
   </dt>
@@ -520,10 +525,9 @@ World<br/>
 <subsection id="AnnexB-2-7">
   <title>Tissue paper.</title>
 </subsection></subsection>
-<subsection id="_reagents"><title>Reagents</title><warning>
-  <name>WARNING</name>
+<subsection id="_reagents"><title>Reagents</title><admonition id="_1257a138-e660-47c5-9cb9-e0357544c6a4" type="warning">
   <p>Direct contact of iodine with skin can cause lesions so care should be taken in handling iodine. Iodine vapour is very irritating to eyes and mucous membranes.</p>
-</warning>
+</admonition>
 <subsection id="AnnexB-3-1">
   <title>Deionized water,</title>
   <p>Grade 3 quality as specified in <eref target="ISO3696" format="inline"/>.</p>
@@ -561,7 +565,7 @@ World<br/>
 <subsection id="_calculation_2"><title>Calculation</title><p>Calculate the mass fraction, expressed as a percentage, of the waxy rice, <stem type="MathML">w_(wax)</stem>, using Formula (<xref target="formulaB-1"/>):</p>
 <formula id="formulaB-1">
   <stem type="MathML">w_(wax) = (m_1) / (m_1 + m_2) xx 100</stem>
-<dl>
+<dl id="_207b140f-cf93-4ce8-ac0e-9ea54273c4d7">
   <dt>
     <stem type="MathML">m_1</stem>
   </dt>
@@ -585,7 +589,7 @@ World<br/>
 <figure id="figureC-1">
   <name>Typical gelatinization curve</name>
   <image src="rice_images/rice_image2.png" imagetype="PNG"/>
-<fn>The time <stem type="MathML">t_90</stem> was estimated to be 18,2 min for this example.</fn><dl>
+<fn>The time <stem type="MathML">t_90</stem> was estimated to be 18,2 min for this example.</fn><dl id="_7f270292-9fbb-459b-b6de-bffd92926886">
   <dt>
     <stem type="MathML">w</stem>
   </dt>
@@ -612,18 +616,18 @@ World<br/>
 
 
 
-<note id="_75b6b23e-bab0-447f-a3be-91adf092e53b">
+<note id="_0ac6b803-5df4-4f23-84a4-17507d35e1bc">
   <p>These results are based on a study carried out on three different types of kernel.</p>
 </note>
-<figure id="figureC-2"><figure id="_4e1ea3a7-b32b-4456-85bd-510cfbc0085e">
+<figure id="figureC-2"><figure id="_004e8834-c2c5-44e7-a007-c9460a98c038">
   <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
   <image src="rice_images/rice_image3_1.png" imagetype="PNG"/>
 </figure>
-<figure id="_3d05712b-c5d0-4f03-8d8b-b9e864305da6">
+<figure id="_ed182d6a-12e6-426f-90a5-1c61ff5f74c9">
   <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
   <image src="rice_images/rice_image3_2.png" imagetype="PNG"/>
 </figure>
-<figure id="_57d6db34-fad6-40f0-8f08-d770f6176c94">
+<figure id="_3bb3ebfc-87d7-4209-abfc-22183870fd13">
   <name>Final stages: All kernels are fully gelatinized</name>
   <image src="rice_images/rice_image3_3.png" imagetype="PNG"/>
 </figure></figure></annex>

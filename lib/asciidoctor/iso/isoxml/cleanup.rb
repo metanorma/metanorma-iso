@@ -15,6 +15,8 @@ module Asciidoctor
             text.gsub(/ <fn>/, "<fn>")
           end
 
+          @@anchors = {}
+
           def cleanup(xmldoc)
             termdef_cleanup(xmldoc)
             isotitle_cleanup(xmldoc)
@@ -38,6 +40,14 @@ module Asciidoctor
             end
           end
 
+          def origin_cleanup(xmldoc)
+            xmldoc.xpath("//origin").each do |x|
+              if InlineAnchor::is_refid? x["target"]
+                x.delete('format')
+              end
+            end
+          end
+
           def termdef_warn(text, re, term, msg)
             if re.match? text
               warn "ISO style: #{term}: #{msg}"
@@ -45,9 +55,9 @@ module Asciidoctor
           end
 
           def termdef_style(xmldoc)
-            xmldoc.xpath("//termdef").each do |t|
+            xmldoc.xpath("//term").each do |t|
               para = t.at("./p") or return
-              term = t.at("term").text
+              term = t.at("preferred").text
               termdef_warn(para.text, /^(the|a)\b/i, term,
                            "term definition starts with article")
               termdef_warn(para.text, /\.$/i, term,
@@ -59,7 +69,7 @@ module Asciidoctor
             xmldoc.xpath("//termdef/p/stem").each do |a|
               if a.parent.elements.size == 1
                 # para containing just a stem expression
-                t = Nokogiri::XML::Element.new("termsymbol", xmldoc)
+                t = Nokogiri::XML::Element.new("admitted", xmldoc)
                 parent = a.parent
                 t.children = a.remove
                 parent.replace(t)
@@ -68,16 +78,16 @@ module Asciidoctor
           end
 
           def termdomain_cleanup(xmldoc)
-            xmldoc.xpath("//p/termdomain").each do |a|
+            xmldoc.xpath("//p/domain").each do |a|
               prev = a.parent.previous
               prev.next = a.remove
             end
           end
 
           def termdefinition_cleanup(xmldoc)
-            xmldoc.xpath("//termdef").each do |d|
+            xmldoc.xpath("//term").each do |d|
               first_child = d.at("./p | ./figure | ./formula") or return
-              t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
+              t = Nokogiri::XML::Element.new("definition", xmldoc)
               first_child.replace(t)
               t << first_child.remove
               d.xpath("./p | ./figure | ./formula").each do |n|
@@ -88,12 +98,10 @@ module Asciidoctor
 
           def termdef_unnest_cleanup(xmldoc)
             # release termdef tags from surrounding paras
-            nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol |
-                             //p/deprecated_term")
+            nodes = xmldoc.xpath("//p/admitted | //p/deprecates")
             while !nodes.empty?
               nodes[0].parent.replace(nodes[0].parent.children)
-              nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol |
-                               //p/deprecated_term")
+              nodes = xmldoc.xpath("//p/admitted | //p/deprecates")
             end
           end
 
@@ -103,6 +111,7 @@ module Asciidoctor
             termdomain_cleanup(xmldoc)
             termdefinition_cleanup(xmldoc)
             termdef_style(xmldoc)
+            origin_cleanup(xmldoc)
           end
 
           def isotitle_cleanup(xmldoc)
@@ -207,7 +216,7 @@ module Asciidoctor
           end
 
           def review_note_cleanup(xmldoc)
-            xmldoc.xpath("//review_note").each do |n|
+            xmldoc.xpath("//review").each do |n|
               prev = n.previous_element
               if !prev.nil? && prev.name == "p"
                 n.parent = prev
@@ -224,6 +233,21 @@ module Asciidoctor
               end
             end
           end
+
+          def iso_ref_names(ref)
+            isocode = ref.at(ns("./isocode"))
+            isodate = ref.at(ns("./isodate"))
+            reference = "ISO #{isocode.text}"
+            reference += ": #{isodate.text}" if isodate
+            @@anchors[ref["id"]] = { xref: reference }
+          end
+
+          def ref_names(ref)
+            linkend = ref.text
+            linkend.gsub!(/[\[\]]/, "") unless /^\[\d+\]$/.match? linkend
+            @@anchors[ref["id"]] = { xref: linkend }
+          end
+
         end
       end
     end

@@ -34,6 +34,10 @@ module Asciidoctor
           end
         end
 
+        def callout_parse(node, out)
+          out << " &lt;#{node["id"]}&gt;"
+        end
+
         def get_linkend(node)
           linkend = node["target"]
           if get_anchors().has_key? node["target"]

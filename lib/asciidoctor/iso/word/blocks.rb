@@ -20,24 +20,16 @@ module Asciidoctor
           end
         end
 
-        @@ol_styleW = {
-          arabic: "",
-          roman: "roman-lower",
-          alphabet: "alpha-lower",
-          upperroman: "roman-upper",
-          upperalpha: "alpha-upper",
-        }.freeze
-
         @@ol_style = {
           arabic: "1",
           roman: "i",
           alphabet: "a",
-          upperroman: "I",
-          upperalpha: "A",
+          roman_upper: "I",
+          alphabet_upper: "A",
         }.freeze
 
         def ol_style(type)
-          style = @@ol_style[node["type"].to_sym]
+          style = @@ol_style[type.to_sym]
           #ret = nil
           #ret = "mso-level-number-format: #{style};" unless style.empty?
           style
@@ -86,10 +78,10 @@ module Asciidoctor
         end
 
         def figure_key(out)
-                out.p **{ class: "MsoNormal" } do |p| 
-                  p.b { |b| b << "Key" }
-                end
+          out.p **{ class: "MsoNormal" } do |p| 
+            p.b { |b| b << "Key" }
           end
+        end
 
         def figure_parse(node, out)
           name = node.at(ns("./name"))
@@ -122,24 +114,18 @@ module Asciidoctor
           end
         end
 
-        def colist_parse(node, out)
-          out.ul do |ul|
-            node.children.each { |n| parse(n, ul) }
-          end
-        end
-
         def annotation_parse(node, out)
-          out.li **{ class: "Sourcecode" } do |li|
+          out.p **{ class: "Sourcecode" } do |li|
             node.children.each { |n| parse(n, li) }
           end
         end
 
-        def warning_parse(node, out)
-          name = node.at(ns("./name"))
+        def admonition_parse(node, out)
+          name = node["type"]
           out.div **{ class: "MsoBlockText" } do |t|
-            t.p.b { |b| b << name.text } if name
+            t.p.b { |b| b << name.upcase } if name
             node.children.each do |n|
-              parse(n, t) unless n.name == "name"
+              parse(n, t)
             end
           end
         end
@@ -175,6 +161,23 @@ module Asciidoctor
             $block = true
             node.children.each { |n| parse(n, p) }
             $block = false
+          end
+        end
+
+        def quote_attribution(node, out)
+          author = node.at(ns("./author/fullname/"))
+          source = node.at(ns("./source"))
+          # TODO implement
+        end
+
+        def quote_parse(node, out)
+          attrs = para_attrs(node)
+          attrs[:class] = "MsoNormalIndent"
+          out.p **attr_code(attrs) do |p|
+            node.children.each do 
+              |n| parse(n, p) unless ["author", "source"].include? n.name
+            end
+            quote_attribution(node, out)
           end
         end
 

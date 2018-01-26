@@ -171,7 +171,7 @@ module Asciidoctor
           end
 
           def iso8601_validate(root)
-            root.xpath("//review_note/@date | //revision_date").each do |d|
+            root.xpath("//review/@date | //revision_date").each do |d|
               /^\d{8}(T\d{4,6})?$/.match? d.text or
                 warn "ISO style: #{d.text} is not an ISO 8601 date"
             end
@@ -329,7 +329,7 @@ module Asciidoctor
           end
 
           def footnote_style(node, text)
-            style_no_guidance(node, text, "Foonote")
+            style_no_guidance(node, text, "Footnote")
             style(node, text)
           end
 

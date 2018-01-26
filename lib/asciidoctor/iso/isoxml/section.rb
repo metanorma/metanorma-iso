@@ -78,8 +78,8 @@ module Asciidoctor
         end
 
         def term_def_subclause_parse(attrs, xml, node)
-          xml.termdef **attr_code(attrs) do |xml_section|
-            xml_section.term { |name| name << node.title }
+          xml.term **attr_code(attrs) do |xml_section|
+            xml_section.preferred { |name| name << node.title }
             xml_section << node.content
           end
         end

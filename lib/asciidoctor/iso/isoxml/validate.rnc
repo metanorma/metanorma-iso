@@ -204,33 +204,30 @@ terms =
     section_title?,
     # boilerplate
     para*, ul?,
-    (termdef+ | terms? )
-  }
-
-termdef = 
-  element termdef { 
-    attribute id { xsd:ID }?,
-    term, admitted_term*, termsymbol?, deprecated_term*,
-    termdomain?, termdefinition, termnote*, termexample*, termref* 
+    (term+ | terms? )
   }
 
 term = 
-  element term { text }
+  element term { 
+    attribute id { xsd:ID }?,
+    preferred, admitted*, deprecates*,
+    termdomain?, definition, termnote*, termexample*, termsource* 
+  }
 
-admitted_term = 
-  element admitted_term { text }
+preferred = 
+  element preferred { TextElement+ }
 
-termsymbol = 
-  element termsymbol { stem }
+admitted = 
+  element admitted { TextElement+ }
 
-deprecated_term = 
-  element deprecated_term { text }
+deprecates = 
+  element deprecates { TextElement+ }
 
 termdomain = 
-  element termdomain { text }
+  element domain { TextElement+ }
 
-termdefinition =
-  element termdefinition {
+definition =
+  element definition {
     ( para_no_fn | figure | formula )+
   }
 
@@ -238,19 +235,26 @@ termnote =
   element termnote { (text | xref | eref | link)* }
 
 termexample = 
-  element termexample { text }
+  element termexample { 
+    attribute id { xsd:ID }?,
+    BasicBlock 
+  }
 
-termref = 
-  element termref { eref, (isosection, modification?)? }
+termsource = 
+  element termsource { 
+    attribute status { ( "identical" | "modified" ) },
+    origin, modification?
+}
 
-isosection =
-  element isosection { text }
+origin =
+  element origin { CitationType }
+
 
 modification =
-  element modification { text }
+  element modification { para_no_fn }
 
 BasicBlock = 
-(para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | example)
+(para | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | example)
 
 clause_hanging_para =
   element subsection {
@@ -264,6 +268,7 @@ clause_hanging_para =
 quote =
   element quote {
     attribute id { xsd:ID }?,
+    attribute align { ( "left" | "center" | "right" | "justified" ) }?,
     quote_source?,
     quote_author?,
     BasicBlock*
@@ -282,7 +287,7 @@ annex =
     attribute subtype { "normative" | "informative" }?,
     section_title?,
     # allow hanging paragraphs in annexes: they introduce lists
-    #( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
+    #( para | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | review | example )*,
     BasicBlock*,
     clause_hanging_para*
   }
@@ -311,14 +316,14 @@ para =
      element p {
        attribute align { ( "left" | "center" | "right" | "justified" ) }?,
        ( TextElement | fn )*,
-       review_note*
+       review*
      }
 
 para_no_fn =
      element p {
        attribute align { ( "left" | "center" | "right" | "justified" )}?,
        ( TextElement )*,
-       review_note*
+       review*
      }
 
 figure = 
@@ -343,11 +348,11 @@ sourcecode =
     attribute id { xsd:ID }?,
     tname?,
     ( text | callout )*,
-    colist?
+    annotation*
   }
 
-review_note =
-  element review_note {
+review =
+  element review {
     attribute reviewer { text },
     attribute date { text },
     text
@@ -355,12 +360,7 @@ review_note =
 
 callout =
   element callout {
-    text
-  }
-
-colist = 
-  element colist {
-    annotation+
+    attribute id { xsd:ID }
   }
 
 annotation =
@@ -376,22 +376,27 @@ fn =
 
 ol =
   element ol { 
-    attribute type { text },
+    attribute id { xsd:ID }?,
+    attribute type { "roman" | "alphabet" | "arabic" | "roman_upper" | "alphabet_upper" },
     li+ 
   }
 
 ul = 
-  element ul { li+ }
+  element ul { 
+    attribute id { xsd:ID }?,
+    li+ 
+}
 
 li =
   element li {
-    #( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )+
+    #( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )+
     BasicBlock+
     # exclude figures?
   }
 
 dl =
   element dl {
+    attribute id { xsd:ID }?,
     (dt, dd)+
   }
 
@@ -402,7 +407,7 @@ dt =
 
 dd =
   element dd {
-    #( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )*
+    #( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )*
     # exclude figures?
     BasicBlock+
   }
@@ -413,9 +418,10 @@ note =
     para+ 
   }
 
-warning =
-  element warning { 
-    tname,
+admonition =
+  element admonition { 
+    attribute id { xsd:ID }?,
+    attribute type { ( "danger" | "caution" | "warning" | "important" | "safety precautions" ) },
     para+ 
   }
 
@@ -429,7 +435,7 @@ formula =
 example = 
   element example {
     attribute id { xsd:ID }?,
-    ( para | formula | ol | ul | dl | quote | sourcecode | review_note )+
+    ( para | formula | ol | ul | dl | quote | sourcecode | review )+
   }
 
 xref =
@@ -440,6 +446,8 @@ xref =
 
 iso_ref =
   element iso_ref { isocode, (isodate, (isosection?)?)? }
+
+isosection = element isosection { text }
 
 link =
   element link {
@@ -574,38 +582,16 @@ org_identifier =
   }
 
 CitationType = 
-    destination, source, date
-
-# source is the text element that the citation belongs to; this is in context the text element
-# the citation occurs in (or next to), so it does not need to be included in a schema
+    work, bibLocality?, date?
 
 date = element date { string }
-
-destination =
-  element destination {
-    bibLocality, bibItem
-}
-# well, no, that's conceptual model thinking. destination contains a pointer to a bibItem,
-# not the bibItem itself. The bibItem appers in the document model only in the references,
-# never in the citation.
+work = element work { string }
 
 bibLocality =
   element bibLocality {
-    section, pclause, part, pparagraph, chapter, page, whole
-    # all of these need to be optional (in reality, choice of one or more,
-    # with page and whole mutually exclusive to the remainder)
+    attribute type { ( "section" | "clause" | "part" | "paragraph" | "chapter" | "page" | "whole" ) },
+    text
 }
-
-section = element section { text }
-pclause = element clause { text }
-pparagraph = element paragraph { text }
-# would be nice to use unique name, both clause and paragraph already used elsewhere. (clauseref, pararef?)
-# That applies for most ambiguous element names,
-# though am ok for "name" to be reused, it always means the same thing
-part = element part { text }
-chapter = element chapter { text }
-page = element page { text }
-whole = element whole { text }
 
 bibItem =
   element bibItem { BibItemType }
@@ -614,20 +600,16 @@ BibItemType =
      attribute type { ( "article" | "book" | "booklet" | "conference" | "manual" |
                       "proceedings" | "presentation" | "thesis" | "techreport" |
                       "standard" | "unpublished" ) }?,
-    bname, source, publishDate, code, accessedDate, creator*, publisher, edition,
-    comments, partOf*, creationDate?, language?, script?
-    # type has been mentioned twice, and not identified as of enum type BibItemType
-    # what is code for?
+bname, source?, publishDate, code*, accessedDate?, creator*, publisher*, edition?,
+    comment*, partOf*, creationDate?, language*, script*
 
 bname = element name { text }
-source = element source { text }
-# is a uri throughout
+source = element source { xsd:anyURI }
 publishDate = element publishDate { text }
 code = element code { text }
 accessedDate = element accessedDate { text }
 creationDate = element creationDate { text }
-comments = element comments { string }
-# consider making this paragraph[1..*]
+comment = element comment { para+ }
 
 partOf = element partOf { BibItemType }
 
