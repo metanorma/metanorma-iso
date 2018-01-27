@@ -48,26 +48,28 @@ module Asciidoctor
           end
         end
 
-        def add_term_source(xml_t, seen_xref, matched)
-          attr = { target: seen_xref.children[0]["target"],
+        def add_term_source(xml_t, seen_xref, m)
+          attr = { bibitemid: seen_xref.children[0]["target"],
                    format: seen_xref.children[0]["format"] }
           xml_t.origin seen_xref.children[0].content, **attr_code(attr)
-          # TODO add isosection into origin
-          xml_t.isosection matched[:section] if matched[:section]
-          if matched[:text]
-            xml_t.modification do |m| 
-              m.p { |p| p << matched[:text]  }
+          xml_t.isosection m[:section].gsub(/ /, "")  if m[:section]
+          if m[:text]
+            xml_t.modification do |mod| 
+              mod.p { |p| p << m[:text]  }
             end
           end
         end
 
-        @@term_reference_re = 
-          Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
+        @@term_reference_re_str = <<~REGEXP
              ^(?<xref><xref[^>]+>)
-               (,\s(?<section>.[^, ]+))?
+               (,\s(?<section>[^, ]+))?
                (,\s(?<text>.*))?
              $
         REGEXP
+        @@term_reference_re =
+          Regexp.new(@@term_reference_re_str.gsub(/\s/, "").gsub(/_/, "\\s"),
+                     Regexp::IGNORECASE)
+
 
         def extract_termsource_refs(text)
           matched = @@term_reference_re.match text

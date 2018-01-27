@@ -44,11 +44,16 @@ module Asciidoctor
         end
 
         def get_linkend(node)
-          linkend = node["target"]
+          linkend = node["target"] || node["citeas"]
           if get_anchors().has_key? node["target"]
             linkend = get_anchors()[node["target"]][:xref]
           end
-          linkend = node.text unless node.text.empty?
+          if node["citeas"].nil? && get_anchors().has_key?(node["bibitemid"])
+            linkend = get_anchors()[node["bibitemid"]][:xref]
+          end
+          linkend = node.text if !node.child.nil? && node.child.text? 
+          # so not <origin bibitemid="ISO7301" citeas="ISO 7301">
+          # <locality type="section">3.1</locality></origin>
           linkend
         end
 
@@ -59,12 +64,15 @@ module Asciidoctor
 
         def eref_parse(node, out)
           linkend = get_linkend(node)
+          section = node.at(ns("./locality"))
+          section.nil? or
+            linkend += ", #{section["type"].capitalize} #{section.text}"
           if node["format"] == "footnote"
             out.sup do |s|
-              s.a **{ "href": node["target"] } { |l| l << linkend }
+              s.a **{ "href": node["bibitemid"] } { |l| l << linkend }
             end
           else
-            out.a **{ "href": node["target"] } { |l| l << linkend }
+            out.a **{ "href": node["bibitemid"] } { |l| l << linkend }
           end
         end
 

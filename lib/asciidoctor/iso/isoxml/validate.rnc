@@ -176,7 +176,7 @@ references =
     attribute id { xsd:ID }?,
     section_title?,
     # ( iso_ref_title | reference )*,
-    bibItem*,
+    bibitem*,
     references*
 }
 
@@ -254,8 +254,10 @@ termsource =
 }
 
 origin =
-  element origin { CitationType }
-
+  element origin { 
+    attribute citeas { text },
+    CitationType 
+}
 
 modification =
   element modification { para_no_fn }
@@ -367,7 +369,7 @@ review =
 
 callout =
   element callout {
-    attribute target { xsd:ID },
+    attribute target { xsd:IDREF },
     text
   }
 
@@ -451,7 +453,7 @@ example =
 
 xref =
   element xref { 
-    attribute target { text },
+    attribute target { xsd:IDREF },
     text
   }
 
@@ -473,7 +475,7 @@ ReferenceFormat = ( "external" | "inline" | "footnote" | "callout" )
 eref =
   element eref { 
     attribute type { ReferenceFormat }?,
-    attribute normative { xsd:boolean },
+    attribute normative { xsd:boolean }?,
     attribute citeas { text },
     CitationType,
     text 
@@ -571,7 +573,7 @@ affiliation =
   element affiliation { Organization }
 
 Organization =  
-    orgname, uri, address, org_identifier*
+    orgname, uri?, address?, org_identifier*
 
 orgname =
   element name { text }
@@ -604,37 +606,39 @@ org_identifier =
   }
 
 CitationType = 
-   attribute bibItemId { xsd:ID },
-   bibLocality*, date?
+   attribute bibitemid { xsd:IDREF },
+   locality*, date?
 
 date = element date { string }
 
-bibLocality =
-  element bibLocality {
+locality =
+  element locality {
     attribute type { 
       ( "section" | "clause" | "part" | "paragraph" | "chapter" | "page" | 
         "whole" ) },
     text
 }
 
-bibItem =
-  element bibItem { BibItemType }
+bibitem =
+  element bibitem { BibItemType }
 
 BibItemType =
+  attribute id { xsd:ID },
   attribute type { 
     ( "article" | "book" | "booklet" | "conference" | "manual" |
      "proceedings" | "presentation" | "thesis" | "techreport" | "standard" | 
      "unpublished" ) }?,
-  bname, source?, publishDate, code*, accessedDate?, creator*, publisher*, 
-  edition?, comment*, partOf*, creationDate?, language*, script*
+  ( bname | formatted ), 
+  source?, publishdate?, docidentifier*, accesseddate?, creator*, 
+  publisher*, edition?, note*, partOf*, creationdate?, language*, script*
 
 bname = element name { text }
+formatted = element formatted { TextElement+ }
 source = element source { xsd:anyURI }
-publishDate = element publishDate { text }
-code = element code { text }
-accessedDate = element accessedDate { text }
-creationDate = element creationDate { text }
-comment = element comment { para+ }
+publishdate = element publishdate { text }
+docidentifier = element docidentifier { text }
+accesseddate = element accesseddate { text }
+creationdate = element creationdate { text }
 
 partOf = element partOf { BibItemType }
 

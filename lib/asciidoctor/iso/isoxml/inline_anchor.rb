@@ -32,7 +32,7 @@ module Asciidoctor
             c = matched[:text]
           end
           t = node.target.gsub(/^#/, "").gsub(%r{(.)(\.xml)?#.*$}, "\\1")
-            noko { |xml| xml.xref c, **attr_code(target: t, format: f) }.join
+            noko { |xml| xml.xref c, **attr_code(target: t, type: f) }.join
         end
 
         def inline_anchor_link(node)
@@ -54,7 +54,7 @@ module Asciidoctor
 
         def inline_callout(node)
           noko do |xml|
-            xml.callout **{ id: node.text }
+            xml.callout node.text
           end.join
         end
       end

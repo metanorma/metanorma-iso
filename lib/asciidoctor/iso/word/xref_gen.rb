@@ -17,20 +17,19 @@ module Asciidoctor
           docxml.xpath(ns("//annex")).each_with_index do |c, i|
             annex_names(c, (65 + i).chr.to_s)
           end
-          docxml.xpath(ns("//iso_ref_title")).each do |ref|
-            iso_ref_names(ref)
-          end
-          docxml.xpath(ns("//ref")).each do |ref|
-            ref_names(ref)
+          docxml.xpath(ns("//bibitem")).each do |ref|
+            reference_names(ref)
           end
         end
 
         def initial_anchor_names(d)
           introduction_names(d.at(ns("//content[title = 'Introduction']")))
           section_names(d.at(ns("//clause[title = 'Scope']")), "1", 1)
-          section_names(d.at(ns("//references[title = 'Normative References']")), "2", 1)
+          section_names(d.at(ns(
+            "//references[title = 'Normative References']")), "2", 1)
           section_names(d.at(ns("//terms")), "3", 1)
-          middle_sections = "//clause[title = 'Scope'] | //references[title = 'Normative References'] | //terms | "\
+          middle_sections = "//clause[title = 'Scope'] | "\
+            "//references[title = 'Normative References'] | //terms | "\
             "//symbols_abbrevs | //clause[parent::sections]"
           sequential_asset_names(d.xpath(ns(middle_sections)))
         end
@@ -158,11 +157,19 @@ module Asciidoctor
           end
         end
 
-        def iso_ref_names(ref)
-          isocode = ref.at(ns("./isocode"))
-          isodate = ref.at(ns("./isodate"))
-          reference = "ISO #{isocode.text}"
-          reference += ": #{isodate.text}" if isodate
+          def format_ref(ref, isopub)
+            return "ISO #{ref}" if isopub
+            return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref)
+            ref
+          end
+
+        def reference_names(ref)
+          isopub = ref.at(ns("./publisher/affiliation[name = 'ISO']"))
+          docid = ref.at(ns("./docidentifier"))
+          return ref_names(ref) unless docid
+          date = ref.at(ns("./publisherdate"))
+          reference = format_ref(docid.text, isopub)
+          reference += ": #{date.text}" if date && isopub
           @@anchors[ref["id"]] = { xref: reference }
         end
 

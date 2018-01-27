@@ -28,29 +28,54 @@ module Asciidoctor
             normref_cleanup(xmldoc)
             xref_cleanup(xmldoc)
             para_cleanup(xmldoc)
+            callout_cleanup(xmldoc)
+            origin_cleanup(xmldoc)
             xmldoc
           end
 
+          def callout_cleanup(xmldoc)
+            xmldoc.xpath("//sourcecode").each do |x|
+              callouts = x.elements.select { |e| e.name == "callout" }
+              annotations = x.elements.select { |e| e.name == "annotation" }
+              if callouts.size == annotations.size
+                callouts.each_with_index do |c, i|
+                  c["target"] = UUIDTools::UUID.random_create
+                  annotations[i]["id"] = c["id"]
+                end
+              else
+                warn "#{x["id"]}: mismatch of callouts and annotations"
+              end
+            end
+          end
+
           def para_cleanup(xmldoc)
-            xmldoc.xpath("//p[not(@id)]").each do |x|
+            xmldoc.xpath("//p[not(@id)] | //note[not(@id)]").each do |x|
               x["id"] = Utils::anchor_or_uuid
             end
           end
 
           def xref_cleanup(xmldoc)
+            reference_names(xmldoc)
             xmldoc.xpath("//xref").each do |x|
               if InlineAnchor::is_refid? x["target"]
                 x.name = "eref"
+                x["bibitemid"] = x["target"]
+                x["citeas"] = @@anchors[x["target"]][:xref]
+                x.delete("target")
               else
-                x.delete('format')
+                x.delete("type")
               end
             end
           end
 
           def origin_cleanup(xmldoc)
             xmldoc.xpath("//origin").each do |x|
-              if InlineAnchor::is_refid? x["target"]
-                x.delete('format')
+              x["citeas"] = @@anchors[x["bibitemid"]][:xref]
+              n = x.next_element
+              if !n.nil? && n.name == "isosection"
+                n.name = "locality"
+                n["type"] = "section"
+                n.parent = x
               end
             end
           end
@@ -118,7 +143,6 @@ module Asciidoctor
             termdomain_cleanup(xmldoc)
             termdefinition_cleanup(xmldoc)
             termdef_style(xmldoc)
-            origin_cleanup(xmldoc)
           end
 
           def isotitle_cleanup(xmldoc)
@@ -235,24 +259,27 @@ module Asciidoctor
             q = "//references[title = 'Normative References']"
             r = xmldoc.at(q)
             r.elements.each do |n|
-              unless ["title", "reference", "iso_ref_title"].include? n.name
+              unless ["title", "bibitem"].include? n.name
                 n.remove
               end
             end
           end
 
-          def iso_ref_names(ref)
-            isocode = ref.at(ns("./isocode"))
-            isodate = ref.at(ns("./isodate"))
-            reference = "ISO #{isocode.text}"
-            reference += ": #{isodate.text}" if isodate
-            @@anchors[ref["id"]] = { xref: reference }
+          def format_ref(ref, isopub)
+            return "ISO #{ref}" if isopub
+            return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref) 
+            ref
           end
 
-          def ref_names(ref)
-            linkend = ref.text
-            linkend.gsub!(/[\[\]]/, "") unless /^\[\d+\]$/.match? linkend
-            @@anchors[ref["id"]] = { xref: linkend }
+          def reference_names(xmldoc)
+            xmldoc.xpath("//bibitem").each do |ref|
+              isopub = ref.at(("./publisher/affiliation[name = 'ISO']"))
+              docid = ref.at(("./docidentifier"))
+              date = ref.at(("./publisherdate"))
+              reference = format_ref(docid.text, isopub)
+              reference += ": #{date.text}" if date && isopub
+              @@anchors[ref["id"]] = { xref: reference }
+            end
           end
 
         end

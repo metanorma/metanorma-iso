@@ -309,13 +309,14 @@
       </optional>
       <zeroOrMore>
         <!-- ( iso_ref_title | reference )*, -->
-        <ref name="bibItem"/>
+        <ref name="bibitem"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="references"/>
       </zeroOrMore>
     </element>
   </define>
+  <!-- ELIM -->
   <define name="iso_ref_title">
     <element name="iso_ref_title">
       <attribute name="id">
@@ -331,6 +332,7 @@
       <ref name="isotitle"/>
     </element>
   </define>
+  <!-- ELIM -->
   <define name="isocode">
     <element name="isocode">
       <optional>
@@ -344,11 +346,13 @@
       <text/>
     </element>
   </define>
+  <!-- ELIM -->
   <define name="isodate">
     <element name="isodate">
       <text/>
     </element>
   </define>
+  <!-- ELIM -->
   <define name="date_footnote">
     <element name="date_footnote">
       <text/>
@@ -490,6 +494,7 @@
   </define>
   <define name="origin">
     <element name="origin">
+      <attribute name="citeas"/>
       <ref name="CitationType"/>
     </element>
   </define>
@@ -743,7 +748,7 @@
   <define name="callout">
     <element name="callout">
       <attribute name="target">
-        <data type="ID"/>
+        <data type="IDREF"/>
       </attribute>
       <text/>
     </element>
@@ -890,7 +895,9 @@
   </define>
   <define name="xref">
     <element name="xref">
-      <attribute name="target"/>
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
       <text/>
     </element>
   </define>
@@ -937,9 +944,11 @@
           <ref name="ReferenceFormat"/>
         </attribute>
       </optional>
-      <attribute name="normative">
-        <data type="boolean"/>
-      </attribute>
+      <optional>
+        <attribute name="normative">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
       <attribute name="citeas"/>
       <ref name="CitationType"/>
       <text/>
@@ -1174,8 +1183,12 @@
   </define>
   <define name="Organization">
     <ref name="orgname"/>
-    <ref name="uri"/>
-    <ref name="address"/>
+    <optional>
+      <ref name="uri"/>
+    </optional>
+    <optional>
+      <ref name="address"/>
+    </optional>
     <zeroOrMore>
       <ref name="org_identifier"/>
     </zeroOrMore>
@@ -1254,11 +1267,11 @@
     </element>
   </define>
   <define name="CitationType">
-    <attribute name="bibItemId">
-      <data type="ID"/>
+    <attribute name="bibitemid">
+      <data type="IDREF"/>
     </attribute>
     <zeroOrMore>
-      <ref name="bibLocality"/>
+      <ref name="locality"/>
     </zeroOrMore>
     <optional>
       <ref name="date"/>
@@ -1269,8 +1282,8 @@
       <data type="string" datatypeLibrary=""/>
     </element>
   </define>
-  <define name="bibLocality">
-    <element name="bibLocality">
+  <define name="locality">
+    <element name="locality">
       <attribute name="type">
         <choice>
           <value>section</value>
@@ -1285,12 +1298,15 @@
       <text/>
     </element>
   </define>
-  <define name="bibItem">
-    <element name="bibItem">
+  <define name="bibitem">
+    <element name="bibitem">
       <ref name="BibItemType"/>
     </element>
   </define>
   <define name="BibItemType">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
     <optional>
       <attribute name="type">
         <choice>
@@ -1308,16 +1324,21 @@
         </choice>
       </attribute>
     </optional>
-    <ref name="bname"/>
+    <choice>
+      <ref name="bname"/>
+      <ref name="formatted"/>
+    </choice>
     <optional>
       <ref name="source"/>
     </optional>
-    <ref name="publishDate"/>
+    <optional>
+      <ref name="publishdate"/>
+    </optional>
     <zeroOrMore>
-      <ref name="code"/>
+      <ref name="docidentifier"/>
     </zeroOrMore>
     <optional>
-      <ref name="accessedDate"/>
+      <ref name="accesseddate"/>
     </optional>
     <zeroOrMore>
       <ref name="creator"/>
@@ -1329,13 +1350,13 @@
       <ref name="edition"/>
     </optional>
     <zeroOrMore>
-      <ref name="comment"/>
+      <ref name="note"/>
     </zeroOrMore>
     <zeroOrMore>
       <ref name="partOf"/>
     </zeroOrMore>
     <optional>
-      <ref name="creationDate"/>
+      <ref name="creationdate"/>
     </optional>
     <zeroOrMore>
       <ref name="language"/>
@@ -1349,36 +1370,36 @@
       <text/>
     </element>
   </define>
+  <define name="formatted">
+    <element name="formatted">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="source">
     <element name="source">
       <data type="anyURI"/>
     </element>
   </define>
-  <define name="publishDate">
-    <element name="publishDate">
+  <define name="publishdate">
+    <element name="publishdate">
       <text/>
     </element>
   </define>
-  <define name="code">
-    <element name="code">
+  <define name="docidentifier">
+    <element name="docidentifier">
       <text/>
     </element>
   </define>
-  <define name="accessedDate">
-    <element name="accessedDate">
+  <define name="accesseddate">
+    <element name="accesseddate">
       <text/>
     </element>
   </define>
-  <define name="creationDate">
-    <element name="creationDate">
+  <define name="creationdate">
+    <element name="creationdate">
       <text/>
-    </element>
-  </define>
-  <define name="comment">
-    <element name="comment">
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
     </element>
   </define>
   <define name="partOf">
