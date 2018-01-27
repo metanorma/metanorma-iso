@@ -2,6 +2,14 @@ module Asciidoctor
   module ISO
     module ISOXML
       module InlineAnchor
+        class << self
+          @@refids = Set.new
+
+          def is_refid?(x)
+            @@refids.include? x
+          end
+        end
+
         def inline_anchor(node)
           case node.type
           when :xref
@@ -24,24 +32,21 @@ module Asciidoctor
             c = matched[:text]
           end
           t = node.target.gsub(/^#/, "").gsub(%r{(.)(\.xml)?#.*$}, "\\1")
-          noko { |xml| xml.xref c, **attr_code(target: t, format: f) }.join
+            noko { |xml| xml.xref c, **attr_code(target: t, type: f) }.join
         end
 
         def inline_anchor_link(node)
-          eref_contents = node.target == node.text ? nil : node.text
-          eref_attributes = {
-            target: node.target,
-          }
+          contents = node.target == node.text ? nil : node.text
+          attributes = { "target": node.target }
           noko do |xml|
-            xml.eref eref_contents, **attr_code(eref_attributes)
+            xml.link contents, **attr_code(attributes)
           end.join
         end
 
         def inline_anchor_bibref(node)
           eref_contents = node.target == node.text ? nil : node.text
-          eref_attributes = {
-            anchor: node.target,
-          }
+          eref_attributes = { id: node.target }
+          @@refids << node.target
           noko do |xml|
             xml.ref eref_contents, **attr_code(eref_attributes)
           end.join
@@ -49,7 +54,7 @@ module Asciidoctor
 
         def inline_callout(node)
           noko do |xml|
-            xml.ref node.text
+            xml.callout node.text
           end.join
         end
       end

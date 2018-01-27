@@ -17,11 +17,27 @@ module Asciidoctor
         end
 
         def cleanup(docxml)
+          comment_cleanup(docxml)
+          footnote_cleanup(docxml)
+        end
+
+        def comment_cleanup(docxml)
           docxml.xpath('//xmlns:div/xmlns:span[@style="MsoCommentReference"]').
             each do |x|
             prev = x.previous_element
             if !prev.nil?
               x.parent = prev
+            end
+          end
+          docxml
+        end
+
+        def footnote_cleanup(docxml)
+          docxml.xpath('//xmlns:div[@style="mso-element:footnote"]/xmlns:a').
+            each do |x|
+            n = x.next_element
+            if !n.nil?
+              n.children.first.add_previous_sibling(x.remove)
             end
           end
           docxml

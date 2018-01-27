@@ -12,9 +12,9 @@ iso_standard =
     language,
     script,
     documenttype,
-    identifier,
+    id,
     version?,
-    copyright_owner,
+    copyright,
     sections
   }
 
@@ -30,8 +30,8 @@ version =
     revdate?
   }
 
-copyright_owner = 
-  element copyright_owner {
+copyright = 
+  element copyright {
     from, owner
 }
 
@@ -44,15 +44,15 @@ owner =
 
 owner_affiliation = element affiliation { "ISO" }
 
-identifier =
-  element identifier {
+id =
+  element id {
     documentnumber,
     tc_documentnumber?
   }
 
 creator =
-  element creator {
-    attribute role { "author" },
+  element creator { 
+    attribute role { text },
     technical_committee,
     subcommittee?,
     workgroup?,
@@ -61,7 +61,9 @@ creator =
 
 documenttype =
   element type {
-     ("international-standard" | "technical-specification" | "technical-report" | "publicly-available-specification" | "international-workshop-agreement" | "guide" )
+     ( "international-standard" | "technical-specification" | 
+       "technical-report" | "publicly-available-specification" | 
+        "international-workshop-agreement" | "guide" )
   }
 
 documentstatus =
@@ -138,310 +140,350 @@ title_part =
 
 sections =
   element sections {
-    content, content?, references, clause, terms, clause+, annex*, references?
+    content, content?, 
+    clause, references, terms, clause+, 
+    annex*, references?
   }
 
 content =
-  element content { 
-    attribute anchor { xsd:ID }?,
-    section_title?,
-    ( ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
-      content_subsection+ )
-  }
+  element content { Content_Section }
 
 content_subsection =
-  element subsection {
-    attribute anchor { xsd:ID }?,
+  element subsection { Content_Section }
+
+Content_Section = 
+    attribute id { xsd:ID }?,
     section_title?,
-    ( ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+    ( BasicBlock+ |
       content_subsection+ )
-  }
 
 clause =
-  element clause {
-    attribute anchor { xsd:ID }?,
+  element clause { Clause_Section }
+
+Clause_Section =
+    attribute id { xsd:ID }?,
     section_title?,
     (
-      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
+      BasicBlock+ |
        clause_subsection+
     )
-  }
 
 clause_subsection =
-  element clause {
-    attribute anchor { xsd:ID }?,
-    section_title?,
-    (
-      ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )+ |
-       clause_subsection+
-    )
-  }
+  element subsection { Clause_Section }
 
 references =
   element references {
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID }?,
     section_title?,
-    ( iso_ref_title | reference )*,
+    # ( iso_ref_title | reference )*,
+    bibitem*,
     references*
 }
 
-norm_ref =
-  element norm_ref { 
-    attribute anchor { xsd:ID }?,
-    # boilerplate
-    para,
-    ( iso_ref_title | reference)* 
-  }
-
-symbols_abbrevs =
-  element symbols_abbrevs { 
-    attribute anchor { xsd:ID }?,
-    dl
-  }
-
+# ELIM
 iso_ref_title =
   element iso_ref_title { 
-    attribute anchor { xsd:ID },
+    attribute id { xsd:ID },
     isocode, (isodate, date_footnote?)?, isotitle 
   }
 
+# ELIM
 isocode =
   element isocode { 
     attribute allparts { "true" | "false" }?,
     text 
   }
 
+# ELIM
 isodate = 
   element isodate { text }
 
+# ELIM
 date_footnote =
   element date_footnote { text }
 
 isotitle = 
   element isotitle { text }
 
-terms_defs = 
+terms = 
   element terms { 
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID }?,
     section_title?,
     # boilerplate
     para*, ul?,
-    (termdef+ | terms_defs? )
-  }
-
-termdef = 
-  element termdef { 
-    attribute anchor { xsd:ID }?,
-    term, admitted_term*, termsymbol?, deprecated_term*,
-    termdomain?, termdefinition, termnote*, termexample*, termref* 
+    (term+ | terms? )
   }
 
 term = 
-  element term { text }
+  element term { 
+    attribute id { xsd:ID }?,
+    preferred, admitted*, deprecates*,
+    termdomain?, definition, termnote*, termexample*, termsource* 
+  }
 
-admitted_term = 
-  element admitted_term { text }
+preferred = 
+  element preferred { TextElement+ }
 
-termsymbol = 
-  element termsymbol { stem }
+admitted = 
+  element admitted { TextElement+ }
 
-deprecated_term = 
-  element deprecated_term { text }
+deprecates = 
+  element deprecates { TextElement+ }
 
 termdomain = 
-  element termdomain { text }
+  element domain { TextElement+ }
 
-termdefinition =
-  element termdefinition {
+definition =
+  element definition {
     ( para_no_fn | figure | formula )+
   }
 
 termnote = 
-  element termnote { (text | xref | eref)* }
+  element termnote { (text | xref | eref | link)* }
 
 termexample = 
-  element termexample { text }
+  element termexample { 
+    attribute id { xsd:ID },
+    BasicBlock 
+  }
 
-termref = 
-  element termref { xref, (isosection, modification?)? }
+termsource = 
+  element termsource { 
+    attribute status { ( "identical" | "modified" ) },
+    origin, modification?
+}
 
-isosection =
-  element isosection { text }
+origin =
+  element origin { 
+    attribute citeas { text },
+    CitationType 
+}
 
 modification =
-  element modification { text }
+  element modification { para_no_fn }
+
+BasicBlock = 
+( para | table | note | formula | admonition | ol | ul | dl | figure | 
+  quote | sourcecode | example )
 
 clause_hanging_para =
   element subsection {
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID }?,
     section_title?,
     # allow hanging paragraphs in annexes: they introduce lists
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
+    BasicBlock*,
     clause_hanging_para*
   }
 
 quote =
   element quote {
-    attribute anchor { xsd:ID }?,
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*
+    attribute id { xsd:ID },
+    attribute align { Alignments }?,
+    quote_source?,
+    quote_author?,
+    BasicBlock*
   }
+
+quote_source =
+  element source { CitationType }
+
+quote_author =
+  element author { CreatorInfo }
 
 
 annex =
   element annex { 
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID }?,
     attribute subtype { "normative" | "informative" }?,
     section_title?,
     # allow hanging paragraphs in annexes: they introduce lists
-    ( para | table | note | formula | warning | ol | ul | dl | figure | quote | sourcecode | review_note | example )*,
+    #( para | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | review | example )*,
+    BasicBlock*,
     clause_hanging_para*
   }
 
-bibliography =
-  element bibliography { 
-    attribute anchor { xsd:ID }?,
-    section_title?,
-    (iso_ref_title | reference)+,
-    bibliography*
-  }
-
+# ELIM
 reference = 
   element reference { ref, para }
 
+# ELIM
 ref =
   element ref {
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID }?,
     text
   }
 
+TextElement = 
+  text | em | eref | link | strong | stem | sub | sup | tt | strike |
+  smallcap | xref | br | hr | pagebreak
+
+Alignments = ( "left" | "center" | "right" | "justified" )
+
 para =
      element p {
-       (text | em | eref | strong | stem | sub | sup | tt | xref | fn | br)*
+       attribute id { xsd:ID },
+       attribute align { Alignments }?,
+       ( TextElement | fn )*,
+       review*
      }
 
 para_no_fn =
      element p {
-       (text | em | eref | strong | stem | sub | sup | tt | xref | br)*
+       attribute id { xsd:ID },
+       attribute align { Alignments }?,
+       ( TextElement )*,
+       review*
      }
 
 figure = 
   element figure {
-    attribute src { text }?,
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID },
     tname?,
+    ( image | figure+ ),
     fn*,
     dl?,
-    figure*,
     note*
   }
 
+image =
+  element image {
+    attribute src { text }?,
+    attribute id { xsd:ID },
+    attribute imagetype { text }
+}
+
 sourcecode =
   element sourcecode {
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID },
     tname?,
     ( text | callout )*,
-    colist?
+    annotation*
   }
 
-review_note =
-  element review_note {
-    attribute source { text }?,
+review =
+  element review {
+    attribute reviewer { text },
+    attribute date { text },
     text
   }
 
 callout =
   element callout {
+    attribute target { xsd:IDREF },
     text
-  }
-
-colist = 
-  element colist {
-    annotation+
   }
 
 annotation =
   element annotation {
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID },
     text
   }
 
 fn =
   element fn { 
-       (text | em | eref | stem | strong | sub | sup | tt | xref | br)*
+    attribute reference { text },
+       para_no_fn+
      }
 
 ol =
   element ol { 
-    attribute type { text },
+    attribute id { xsd:ID },
+    attribute type { 
+      ( "roman" | "alphabet" | "arabic" | "roman_upper" | "alphabet_upper" ) },
     li+ 
   }
 
 ul = 
-  element ul { li+ }
+  element ul { 
+    attribute id { xsd:ID },
+    li+ 
+}
 
 li =
   element li {
-    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )+
+    #( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )+
+    BasicBlock+
+    # exclude figures?
   }
 
 dl =
   element dl {
+    attribute id { xsd:ID },
     (dt, dd)+
   }
 
 dt =
   element dt {
-    (text | em | eref | stem | strong | sub | sup | tt | xref | br)
+    ( TextElement )
   }
 
 dd =
   element dd {
-    ( para | table | note | formula | warning | ol | ul | dl | quote | sourcecode | review_note | example )*
+    #( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )*
+    # exclude figures?
+    BasicBlock+
   }
 
 note =
   element note { 
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID },
     para+ 
   }
 
-warning =
-  element warning { 
-    tname,
+admonition =
+  element admonition { 
+    attribute id { xsd:ID },
+    attribute type { 
+     ( "danger" | "caution" | "warning" | "important" | "safety precautions" )},
     para+ 
   }
 
 formula =
   element formula { 
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID },
     stem,
     dl?
   }
 
 example = 
   element example {
-    attribute anchor { xsd:ID }?,
-    ( para | formula | ol | ul | dl | quote | sourcecode | review_note )+
+    attribute id { xsd:ID },
+    ( para | formula | ol | ul | dl | quote | sourcecode | review )+
   }
 
 xref =
   element xref { 
-    attribute format { "footnote" | "inline" }?,
-    attribute target { text },
-    ( text | iso_ref )
+    attribute target { xsd:IDREF },
+    text
   }
 
+# ELIM
 iso_ref =
   element iso_ref { isocode, (isodate, (isosection?)?)? }
 
+# ELIM
+isosection = element isosection { text }
+
+link =
+  element link {
+    attribute target {xsd:anyURI},
+    text
+}
+
+ReferenceFormat = ( "external" | "inline" | "footnote" | "callout" )
+
 eref =
   element eref { 
-    attribute target { text },
+    attribute type { ReferenceFormat }?,
+    attribute normative { xsd:boolean }?,
+    attribute citeas { text },
+    CitationType,
     text 
   }
 
-br =
-  element br { empty }
+br = element br { empty }
+hr = element hr { empty }
+pagebreak = element pagebreak { empty }
 
 em =
   element em { text }
@@ -450,7 +492,10 @@ strong =
   element strong { text }
 
 stem =
-  element stem { text }
+  element stem { 
+    attribute type { "MathML" },
+    text 
+}
 
 sub =
   element sub { text }
@@ -461,9 +506,13 @@ sup =
 tt =
   element tt { text }
 
+strike = element strike { text }
+
+smallcap = element smallcap { text }
+
 table =
   element table {
-    attribute anchor { xsd:ID }?,
+    attribute id { xsd:ID },
     tname?, thead?, tbody, tfoot?, dl?, note*
   }
 
@@ -490,7 +539,7 @@ th =
     attribute colspan { text }?,
     attribute rowspan { text }?,
     attribute align { text }?,
-    (text | em | eref | stem | strong | sub | sup | tt | xref | fn | br | para)* 
+    ( TextElement | fn | para)* 
   }
 
 td =
@@ -498,7 +547,102 @@ td =
     attribute colspan { text }?,
     attribute rowspan { text }?,
     attribute align { text }?,
-    (text | em | eref | stem | strong | sub | sup | tt | xref | fn | br | para)* 
+    ( TextElement | fn | para)* 
   }
 
+CreatorInfo =
+    attribute role { text },
+    fullname?, affiliation?, person_identifier*
+
+publisher = 
+  element publisher { CreatorInfo }
+# a publisher has a subset of the roles of a creator
+
+fullname =
+  element fullname {
+    prefix*, forename*, initial*, surname, addition*
 }
+
+prefix = element prefix { text }
+initial = element initial { text }
+addition = element addition { text }
+surname = element surname { text }
+forename = element forename { text }
+
+affiliation =
+  element affiliation { Organization }
+
+Organization =  
+    orgname, uri?, address?, org_identifier*
+
+orgname =
+  element name { text }
+
+uri =
+  element uri { text }
+
+address =
+  element address {
+    # iso191606 TODO
+    street+, city, state?, country, postcode?
+}
+
+street = element street { text }
+city = element city { text }
+state = element state { text }
+country = element country { text }
+postcode = element postcode { text }
+
+person_identifier =
+  element identifier {
+    attribute type { ("isni" | "uri") },
+    text
+  }
+
+org_identifier =
+  element identifier {
+    attribute type { ("orcid" | "uri") },
+    text
+  }
+
+CitationType = 
+   attribute bibitemid { xsd:IDREF },
+   locality*, date?
+
+date = element date { string }
+
+locality =
+  element locality {
+    attribute type { 
+      ( "section" | "clause" | "part" | "paragraph" | "chapter" | "page" | 
+        "whole" ) },
+    text
+}
+
+bibitem =
+  element bibitem { BibItemType }
+
+BibItemType =
+  attribute id { xsd:ID },
+  attribute type { 
+    ( "article" | "book" | "booklet" | "conference" | "manual" |
+     "proceedings" | "presentation" | "thesis" | "techreport" | "standard" | 
+     "unpublished" ) }?,
+  ( bname | formatted ), 
+  source?, publishdate?, docidentifier*, accesseddate?, creator*, 
+  publisher*, edition?, note*, partOf*, creationdate?, language*, script*
+
+bname = element name { text }
+formatted = element formatted { TextElement+ }
+source = element source { xsd:anyURI }
+publishdate = element publishdate { text }
+docidentifier = element docidentifier { text }
+accesseddate = element accesseddate { text }
+creationdate = element creationdate { text }
+
+partOf = element partOf { BibItemType }
+
+
+}
+
+

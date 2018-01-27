@@ -11,6 +11,12 @@ module Asciidoctor
     module ISOXML
       module Cleanup
         class << self
+          def textcleanup(text)
+            text.gsub(/ <fn>/, "<fn>")
+          end
+
+          @@anchors = {}
+
           def cleanup(xmldoc)
             termdef_cleanup(xmldoc)
             isotitle_cleanup(xmldoc)
@@ -19,7 +25,59 @@ module Asciidoctor
             figure_cleanup(xmldoc)
             ref_cleanup(xmldoc)
             review_note_cleanup(xmldoc)
+            normref_cleanup(xmldoc)
+            xref_cleanup(xmldoc)
+            para_cleanup(xmldoc)
+            callout_cleanup(xmldoc)
+            origin_cleanup(xmldoc)
             xmldoc
+          end
+
+          def callout_cleanup(xmldoc)
+            xmldoc.xpath("//sourcecode").each do |x|
+              callouts = x.elements.select { |e| e.name == "callout" }
+              annotations = x.elements.select { |e| e.name == "annotation" }
+              if callouts.size == annotations.size
+                callouts.each_with_index do |c, i|
+                  c["target"] = UUIDTools::UUID.random_create
+                  annotations[i]["id"] = c["id"]
+                end
+              else
+                warn "#{x["id"]}: mismatch of callouts and annotations"
+              end
+            end
+          end
+
+          def para_cleanup(xmldoc)
+            xmldoc.xpath("//p[not(@id)] | //note[not(@id)]").each do |x|
+              x["id"] = Utils::anchor_or_uuid
+            end
+          end
+
+          def xref_cleanup(xmldoc)
+            reference_names(xmldoc)
+            xmldoc.xpath("//xref").each do |x|
+              if InlineAnchor::is_refid? x["target"]
+                x.name = "eref"
+                x["bibitemid"] = x["target"]
+                x["citeas"] = @@anchors[x["target"]][:xref]
+                x.delete("target")
+              else
+                x.delete("type")
+              end
+            end
+          end
+
+          def origin_cleanup(xmldoc)
+            xmldoc.xpath("//origin").each do |x|
+              x["citeas"] = @@anchors[x["bibitemid"]][:xref]
+              n = x.next_element
+              if !n.nil? && n.name == "isosection"
+                n.name = "locality"
+                n["type"] = "section"
+                n.parent = x
+              end
+            end
           end
 
           def termdef_warn(text, re, term, msg)
@@ -29,10 +87,9 @@ module Asciidoctor
           end
 
           def termdef_style(xmldoc)
-            xmldoc.xpath("//termdef").each do |t|
-              para = t.at("./p")
-              return if para.nil?
-              term = t.at("term").text
+            xmldoc.xpath("//term").each do |t|
+              para = t.at("./p") or return
+              term = t.at("preferred").text
               termdef_warn(para.text, /^(the|a)\b/i, term,
                            "term definition starts with article")
               termdef_warn(para.text, /\.$/i, term,
@@ -44,7 +101,7 @@ module Asciidoctor
             xmldoc.xpath("//termdef/p/stem").each do |a|
               if a.parent.elements.size == 1
                 # para containing just a stem expression
-                t = Nokogiri::XML::Element.new("termsymbol", xmldoc)
+                t = Nokogiri::XML::Element.new("admitted", xmldoc)
                 parent = a.parent
                 t.children = a.remove
                 parent.replace(t)
@@ -53,17 +110,16 @@ module Asciidoctor
           end
 
           def termdomain_cleanup(xmldoc)
-            xmldoc.xpath("//p/termdomain").each do |a|
+            xmldoc.xpath("//p/domain").each do |a|
               prev = a.parent.previous
               prev.next = a.remove
             end
           end
 
           def termdefinition_cleanup(xmldoc)
-            xmldoc.xpath("//termdef").each do |d|
-              first_child = d.at("./p | ./figure | ./formula")
-              return if first_child.nil?
-              t = Nokogiri::XML::Element.new("termdefinition", xmldoc)
+            xmldoc.xpath("//term").each do |d|
+              first_child = d.at("./p | ./figure | ./formula") or return
+              t = Nokogiri::XML::Element.new("definition", xmldoc)
               first_child.replace(t)
               t << first_child.remove
               d.xpath("./p | ./figure | ./formula").each do |n|
@@ -74,12 +130,10 @@ module Asciidoctor
 
           def termdef_unnest_cleanup(xmldoc)
             # release termdef tags from surrounding paras
-            nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol |
-                             //p/deprecated_term")
+            nodes = xmldoc.xpath("//p/admitted | //p/deprecates")
             while !nodes.empty?
               nodes[0].parent.replace(nodes[0].parent.children)
-              nodes = xmldoc.xpath("//p/admitted_term | //p/termsymbol |
-                               //p/deprecated_term")
+              nodes = xmldoc.xpath("//p/admitted | //p/deprecates")
             end
           end
 
@@ -193,13 +247,41 @@ module Asciidoctor
           end
 
           def review_note_cleanup(xmldoc)
-            xmldoc.xpath("//review_note").each do |n|
+            xmldoc.xpath("//review").each do |n|
               prev = n.previous_element
               if !prev.nil? && prev.name == "p"
                 n.parent = prev
               end
             end
           end
+
+          def normref_cleanup(xmldoc)
+            q = "//references[title = 'Normative References']"
+            r = xmldoc.at(q)
+            r.elements.each do |n|
+              unless ["title", "bibitem"].include? n.name
+                n.remove
+              end
+            end
+          end
+
+          def format_ref(ref, isopub)
+            return "ISO #{ref}" if isopub
+            return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref) 
+            ref
+          end
+
+          def reference_names(xmldoc)
+            xmldoc.xpath("//bibitem").each do |ref|
+              isopub = ref.at(("./publisher/affiliation[name = 'ISO']"))
+              docid = ref.at(("./docidentifier"))
+              date = ref.at(("./publisherdate"))
+              reference = format_ref(docid.text, isopub)
+              reference += ": #{date.text}" if date && isopub
+              @@anchors[ref["id"]] = { xref: reference }
+            end
+          end
+
         end
       end
     end

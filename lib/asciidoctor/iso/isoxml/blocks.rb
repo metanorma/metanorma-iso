@@ -5,32 +5,45 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Blocks
+        def id_attr(node = nil)
+          { id: Utils::anchor_or_uuid(node) }
+        end
+
         def stem(node)
-          stem_attributes = { anchor: Utils::anchor_or_uuid(node) }
           # NOTE: html escaping is performed by Nokogiri
           stem_content = node.lines.join("\n")
 
           noko do |xml|
-            xml.formula **attr_code(stem_attributes) do |s|
-              s.stem stem_content
+            xml.formula **id_attr(node) do |s|
+              s.stem stem_content, **{ type: "MathML" }
               Validate::style(node, stem_content)
             end
           end
         end
 
+        def sidebar_attrs(node)
+          date = node.attr("date") || DateTime.now.iso8601.gsub(/\+.*$/, "")
+          date += "T0000" unless /T/.match? date
+          { 
+            reviewer: node.attr("reviewer") || "(Unknown)",
+            id: Utils::anchor_or_uuid(node),
+            date: date.gsub(/[:-]/, ""),
+          }
+        end
+
         def sidebar(node)
-          if $draft
-            note_attributes = { source: node.attr("source") }
-            content = Utils::flatten_rawtext(node.content).join("\n")
-            noko do |xml|
-              xml.review_note content, **attr_code(note_attributes)
+          return unless $draft
+          content = Utils::flatten_rawtext(node.content).join("\n")
+          noko do |xml| 
+            xml.review **attr_code(sidebar_attrs(node)) do |r|
+              r << content
             end
           end
         end
 
         def termnote(n)
           # TODO: reinstate
-          # note_attributes = { anchor: Utils::anchor_or_uuid(node) }
+          # note_attributes = { id: Utils::anchor_or_uuid(node) }
           note_attributes = {}
           if n.blocks?
             warning(n, "comment cannot contain blocks of text", n.content)
@@ -45,7 +58,7 @@ module Asciidoctor
 
         def note(n)
           noko do |xml|
-            xml.note **attr_code(anchor: Utils::anchor_or_uuid(n)) do |c|
+            xml.note **id_attr(n) do |c|
               if n.blocks? then c << n.content
               else
                 c.p { |p| p << n.content }
@@ -56,23 +69,23 @@ module Asciidoctor
           end.join("\n")
         end
 
-        def admonition(node)
+        def admonition_attrs(node)
           name = node.attr("name")
+          type = node.attr("type") and
+            ["danger", "safety precautions"].each do |t|
+            name = t if type.casecmp(t).zero?
+          end
+          { id: Utils::anchor_or_uuid(node), type: name }
+        end
+
+        def admonition(node)
           return termnote(node) if $term_def
-          return note(node) if name == "note"
+          return note(node) if node.attr("name") == "note"
           noko do |xml|
-            type = node.attr("type")
-            unless type.nil?
-              ["danger", "safety precautions"].each do |t|
-                name = t if type.casecmp(t).zero?
-              end
-            end
-            xml.warning do |xml_cref|
-              xml_cref.name name.upcase
-              if node.blocks?
-                xml_cref << node.content
+            xml.admonition **admonition_attrs(node) do |a|
+              if node.blocks? then a << node.content
               else
-                xml_cref.p { |p| p << node.content }
+                a.p { |p| p << node.content }
               end
             end
           end.join("\n")
@@ -80,10 +93,13 @@ module Asciidoctor
 
         def term_example(node)
           noko do |xml|
-            xml.termexample **attr_code(anchor: node.id) do |ex|
-              content = node.content
-              ex << content
-              text = Utils::flatten_rawtext(content).join("\n")
+            xml.termexample **id_attr(node) do |ex|
+              c = node.content
+              if node.blocks? then ex << c 
+              else 
+                ex.p {|p| p << c }
+              end
+              text = Utils::flatten_rawtext(c).join("\n")
               Validate::termexample_style(node, text)
             end
           end.join("\n")
@@ -92,7 +108,7 @@ module Asciidoctor
         def example(node)
           return term_example(node) if $term_def
           noko do |xml|
-            xml.example **attr_code(anchor: node.id) do |ex|
+            xml.example **id_attr(node) do |ex|
               content = node.content
               ex << content
               text = Utils::flatten_rawtext(content).join("\n")
@@ -102,39 +118,56 @@ module Asciidoctor
         end
 
         def preamble(node)
-          result = []
-          result << noko do |xml|
-            xml.foreword do |xml_abstract|
+          noko do |xml|
+            xml.content do |xml_abstract|
+              xml_abstract.title { |t| t << "Foreword" }
               content = node.content
               xml_abstract << content
               text = Utils::flatten_rawtext(content).join("\n")
               Validate::foreword_style(node, text)
             end
-          end
-          result
+          end.join("\n")
         end
 
         def image(node)
           uri = node.image_uri node.attr("target")
-          artwork_attributes = {
-            anchor: Utils::anchor_or_uuid(node),
-            src: uri,
-          }
-
+          types = MIME::Types.type_for(uri)
+          img_attributes = { src: uri, id: Utils::anchor_or_uuid,
+                             imagetype: types.first.sub_type.upcase }
           noko do |xml|
-            xml.figure **attr_code(artwork_attributes) do |f|
+            xml.figure **id_attr(node) do |f|
               f.name { |name| name << node.title } unless node.title.nil?
+              f.image **attr_code(img_attributes)
             end
+          end
+        end
+
+        def quote_attrs(node)
+          { 
+            id: Utils::anchor_or_uuid(node), 
+            align: node.attr("align"),
+          }
+        end
+
+        def quote_attribution(node, out)
+          if node.attr("attribution")
+            out.fullname do |f|
+              f.surname { |s| s << node.attr("attribution") }
+              # TODO: will break up into name components
+            end
+          end
+          if node.attr("citetitle")
+            # TODO: eref
           end
         end
 
         def quote(node)
           noko do |xml|
-            xml.quote **attr_code(anchor: node.id) do |xml_blockquote|
-              if node.blocks?
-                xml_blockquote << node.content
+            xml.quote **attr_code(quote_attrs(node)) do |q|
+              quote_attribution(node, out)
+              if node.blocks? then q << node.content
               else
-                xml_blockquote.p { |p| p << node.content }
+                q.p { |p| p << node.content }
               end
             end
           end
@@ -142,13 +175,14 @@ module Asciidoctor
 
         def listing(node)
           # NOTE: html escaping is performed by Nokogiri
+          attrs = id_attr(node)
           noko do |xml|
             if node.parent.context != :example
               xml.figure do |xml_figure|
-                xml_figure.sourcecode { |s| s << node.content }
+                xml_figure.sourcecode **attrs { |s| s << node.content }
               end
             else
-              xml.sourcecode { |s| s << node.content }
+              xml.sourcecode **attrs { |s| s << node.content }
             end
           end
         end

@@ -5,15 +5,19 @@ module Asciidoctor
     module Word
       module Blocks
         @@termdomain = ""
+        @@termexample = false
 
         def set_termdomain(termdomain)
-        @@termdomain = termdomain
-      end
+          @@termdomain = termdomain
+        end
 
-def get_termdomain
-  @@termdomain
-end
+        def get_termexample
+          @@termexample
+        end
 
+        def set_termexample(value)
+          @@termexample = value
+        end
 
         def ul_parse(node, out)
           out.ul do |ul|
@@ -21,9 +25,25 @@ end
           end
         end
 
+        @@ol_style = {
+          arabic: "1",
+          roman: "i",
+          alphabet: "a",
+          roman_upper: "I",
+          alphabet_upper: "A",
+        }.freeze
+
+        def ol_style(type)
+          style = @@ol_style[type.to_sym]
+          #ret = nil
+          #ret = "mso-level-number-format: #{style};" unless style.empty?
+          style
+        end
+
         def ol_parse(node, out)
-          attrs = { numeration: node["type"] }
-          out.ol **attr_code(attrs) do |ol|
+          # attrs = { numeration: node["type"] }
+          style = ol_style(node["type"])
+          out.ol **attr_code(type: style) do |ol|
             node.children.each { |n| parse(n, ol) }
           end
         end
@@ -39,7 +59,7 @@ end
 
         def note_parse(node, out)
           $note = true
-          out.div **{ id: node["anchor"], class: "Note" } do |div|
+          out.div **{ id: node["id"], class: "Note" } do |div|
             if node.first_element_child.name == "p"
               note_p_parse(node, div)
             else
@@ -56,17 +76,23 @@ end
         def figure_name_parse(node, div, name)
           div.p **{ class: "FigureTitle", align: "center" } do |p|
             p.b do |b|
-              b << "#{get_anchors()[node['anchor']][:label]}&nbsp;&mdash; "
+              b << "#{get_anchors()[node['id']][:label]}&nbsp;&mdash; "
               b << name.text
             end
           end
         end
 
+        def figure_key(out)
+          out.p **{ class: "MsoNormal" } do |p| 
+            p.b { |b| b << "Key" }
+          end
+        end
+
         def figure_parse(node, out)
           name = node.at(ns("./name"))
-          out.div **attr_code(id: node["anchor"]) do |div|
-            image_parse(node["src"], div, nil) if node["src"]
+          out.div **attr_code(id: node["id"]) do |div|
             node.children.each do |n|
+              figure_key(out) if n.name == "dl"
               parse(n, div) unless n.name == "name"
             end
             figure_name_parse(node, div, name) if name
@@ -83,7 +109,7 @@ end
 
         def sourcecode_parse(node, out)
           name = node.at(ns("./name"))
-          out.p **attr_code(id: node["anchor"], class: "Sourcecode") do |div|
+          out.p **attr_code(id: node["id"], class: "Sourcecode") do |div|
             $sourcecode = true
             node.children.each do |n|
               parse(n, div) unless n.name == "name"
@@ -93,41 +119,49 @@ end
           end
         end
 
-        def colist_parse(node, out)
-          out.ul do |ul|
-            node.children.each { |n| parse(n, ul) }
-          end
-        end
-
         def annotation_parse(node, out)
-          out.li **{ class: "Sourcecode" } do |li|
+          out.p **{ class: "Sourcecode" } do |li|
             node.children.each { |n| parse(n, li) }
           end
         end
 
-        def warning_parse(node, out)
-          name = node.at(ns("./name"))
+        def admonition_parse(node, out)
+          name = node["type"]
           out.div **{ class: "MsoBlockText" } do |t|
-            t.p.b { |b| b << name.text } if name
+            t.p.b { |b| b << name.upcase } if name
             node.children.each do |n|
-              parse(n, t) unless n.name == "name"
+              parse(n, t)
             end
           end
         end
 
         def formula_parse(node, out)
           dl = node.at(ns("./dl"))
-          out.div **attr_code(id: node["anchor"], class: "formula") do |div|
+          out.div **attr_code(id: node["id"], class: "formula") do |div|
             parse(node.at(ns("./stem")), out)
             insert_tab(div, 1)
-            div << "(#{get_anchors()[node['anchor']][:label]})"
+            div << "(#{get_anchors()[node['id']][:label]})"
           end
-          out.p **{ class: "MsoNormal" } { |p| p << "where" }
-          parse(dl, out) if dl
+          if dl
+            out.p **{ class: "MsoNormal" } { |p| p << "where" }
+            parse(dl, out) 
+          end
+        end
+
+        def para_attrs(node)
+          classtype = "MsoNormal"
+          classtype = "Note" if $note
+          classtype = "MsoFootnoteText" if in_footnote
+          attrs = { class: classtype }
+          unless node["align"].nil?
+            attrs[:align] = node["align"] unless node["align"] == "justify"
+            attrs[:style] = "text-align:#{node["align"]}"
+          end
+          attrs
         end
 
         def para_parse(node, out)
-          out.p **{ class: $note ? "Note" : "MsoNormal" } do |p|
+          out.p **attr_code(para_attrs(node)) do |p|
             unless @@termdomain.empty?
               p << "&lt;#{@@termdomain}&gt; "
               @@termdomain = ""
@@ -135,6 +169,23 @@ end
             $block = true
             node.children.each { |n| parse(n, p) }
             $block = false
+          end
+        end
+
+        def quote_attribution(node, out)
+          author = node.at(ns("./author/fullname/"))
+          source = node.at(ns("./source"))
+          # TODO implement
+        end
+
+        def quote_parse(node, out)
+          attrs = para_attrs(node)
+          attrs[:class] = "MsoNormalIndent"
+          out.p **attr_code(attrs) do |p|
+            node.children.each do 
+              |n| parse(n, p) unless ["author", "source"].include? n.name
+            end
+            quote_attribution(node, out)
           end
         end
 

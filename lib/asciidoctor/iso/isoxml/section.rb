@@ -6,7 +6,7 @@ module Asciidoctor
     module ISOXML
       module Section
         def section(node)
-          a = { anchor: Utils::anchor_or_uuid(node) }
+          a = { id: Utils::anchor_or_uuid(node) }
           noko do |xml|
             case node.title.downcase
             when "introduction" then
@@ -18,15 +18,19 @@ module Asciidoctor
             when "patent notice" then patent_notice_parse(xml, node)
             when "scope" then scope_parse(a, xml, node)
             when "normative references" then norm_ref_parse(a, xml, node)
-            when "terms and definitions" then term_def_parse(a, xml, node)
-            when "terms, definitions, symbols and abbreviated terms"
-              term_def_parse(a, xml, node)
-            when "symbols and abbreviations" then symbols_parse(a, xml, node)
+            when "terms and definitions" 
+              term_def_parse(a, xml, node, node.title.downcase)
+            when "terms, definitions, symbols and abbreviations"
+              term_def_parse(a, xml, node, node.title.downcase)
+            when "symbols and abbreviated terms" 
+              symbols_parse(a, xml, node)
             when "bibliography" then bibliography_parse(a, xml, node)
             else
               if $term_def
                 term_def_subclause_parse(a, xml, node)
-              elsif node.attr("style") == "appendix"
+              elsif $biblio
+                bibliography_parse(a, xml, node)
+              elsif node.attr("style") == "appendix" && node.level == 1
                 annex_parse(a, xml, node)
               else
                 clause_parse(a, xml, node)
@@ -40,7 +44,8 @@ module Asciidoctor
           Validate::style_warning(node, w, nil) if $scope
           # Not testing max depth of sections: Asciidoctor already limits
           # it to 5 levels of nesting
-          xml.clause **attr_code(attrs) do |xml_section|
+          sect = node.level == 1 ? "clause" : "subsection"
+          xml.send sect, **attr_code(attrs) do |xml_section|
             xml_section.title { |n| n << node.title } unless node.title.nil?
             xml_section << node.content
           end
@@ -59,7 +64,9 @@ module Asciidoctor
 
         def bibliography_parse(attrs, xml, node)
           $biblio = true
-          xml.bibliography **attr_code(attrs) do |xml_section|
+          xml.references **attr_code(attrs) do |xml_section|
+            title = node.level == 1 ? "Bibliography" : node.title
+            xml_section.title { |t| t << title }
             xml_section << node.content
           end
           $biblio = true
@@ -72,15 +79,21 @@ module Asciidoctor
         end
 
         def term_def_subclause_parse(attrs, xml, node)
-          xml.termdef **attr_code(attrs) do |xml_section|
-            xml_section.term { |name| name << node.title }
+          xml.term **attr_code(attrs) do |xml_section|
+            xml_section.preferred { |name| name << node.title }
             xml_section << node.content
           end
         end
 
-        def term_def_parse(attrs, xml, node)
+        def term_def_parse(attrs, xml, node, title)
           $term_def = true
-          xml.terms_defs **attr_code(attrs) do |xml_section|
+          xml.terms **attr_code(attrs) do |xml_section|
+            if title == "terms, definitions, symbols and abbreviations"
+              title = "Terms, Definitions, Symbols and Abbreviations"
+            else
+              title = "Terms and Definitions"
+            end
+            xml_section.title { |t| t << title }
             xml_section << node.content
           end
           $term_def = false
@@ -88,14 +101,16 @@ module Asciidoctor
 
         def norm_ref_parse(attrs, xml, node)
           $norm_ref = true
-          xml.norm_ref **attr_code(attrs) do |xml_section|
+          xml.references **attr_code(attrs) do |xml_section|
+            xml_section.title { |t| t << "Normative References" }
             xml_section << node.content
           end
           $norm_ref = false
         end
 
         def introduction_parse(attrs, xml, node)
-          xml.introduction **attr_code(attrs) do |xml_section|
+          xml.content **attr_code(attrs) do |xml_section|
+            xml_section.title = "Introduction"
             content = node.content
             xml_section << content
             Validate::introduction_style(node,
@@ -105,14 +120,16 @@ module Asciidoctor
         end
 
         def patent_notice_parse(xml, node)
-          xml.patent_notice do |xml_section|
-            xml_section << node.content
-          end
+          # xml.patent_notice do |xml_section|
+          #  xml_section << node.content
+          # end
+          xml << node.content
         end
 
         def scope_parse(attrs, xml, node)
           $scope = true
-          xml.scope **attr_code(attrs) do |xml_section|
+          xml.clause **attr_code(attrs) do |xml_section|
+            xml_section.title { |t| t << "Scope" }
             content = node.content
             xml_section << content
             c = Utils::flatten_rawtext(content).join("\n")

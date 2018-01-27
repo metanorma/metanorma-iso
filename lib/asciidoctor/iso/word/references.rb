@@ -2,27 +2,31 @@ module Asciidoctor
   module ISO
     module Word
       module References
-        def iso_ref_code(b)
-          isocode = b.at(ns("./isocode"))
-          isodate = b.at(ns("./isodate"))
+        def iso_bibitem_ref_code(b)
+          isocode = b.at(ns("./docidentifier"))
+          isodate = b.at(ns("./publishdate"))
           reference = "ISO #{isocode.text}"
           reference += ": #{isodate.text}" if isodate
           reference
         end
 
-        def iso_ref_entry(list, b, ordinal, biblio)
-          attrs = { id: b["anchor"],
+        def iso_bibitem_entry(list, b, ordinal, biblio)
+          attrs = { id: b["id"],
                     class: biblio ? "Biblio" : "MsoNormal" }
           list.p **attr_code(attrs) do |ref|
-            date_footnote = b.at(ns("./date_footnote"))
+            date_note = b.at(ns("./note[text()][contains(.,'ISO DATE:')]"))
             if biblio
               ref << "[#{ordinal}]"
               insert_tab(ref, 1)
             end
-            ref << iso_ref_code(b)
-            footnote_parse(date_footnote, ref) if date_footnote
+            ref << iso_bibitem_ref_code(b)
+            if date_note
+              first = date_note.at(ns("./p"))
+              first.content = first.content.gsub(/ISO DATE: /, "")
+            footnote_parse(date_note, ref)
+            end
             ref << ", " if biblio
-            ref.i { |i| i << " #{b.at(ns('./isotitle')).text}" }
+            ref.i { |i| i << " #{b.at(ns('./name')).text}" }
           end
         end
 
@@ -33,27 +37,52 @@ module Asciidoctor
           else
             r << "[#{ordinal}]"
             insert_tab(r, 1)
-            r << t
+            r << "#{t},"
           end
         end
 
         def ref_entry(list, b, ordinal, bibliography)
           ref = b.at(ns("./ref"))
           para = b.at(ns("./p"))
-          list.p **attr_code("id": ref["anchor"], class: "Biblio") do |r|
+          list.p **attr_code("id": ref["id"], class: "Biblio") do |r|
             ref_entry_code(r, ordinal, ref.text.gsub(/[\[\]]/, ""))
             para.children.each { |n| parse(n, r) }
           end
         end
 
-        def biblio_list(f, div, bibliography)
-          isobiblio = f.xpath(ns("./iso_ref_title"))
-          refbiblio = f.xpath(ns("./reference"))
-          isobiblio.each_with_index do |b, i|
-            iso_ref_entry(div, b, i + 1, bibliography)
+        def noniso_bibitem(list, b, ordinal, bibliography)
+          ref = b.at(ns("./docidentifier"))
+          para = b.at(ns("./formatted"))
+          list.p **attr_code("id": b["id"], class: "Biblio") do |r|
+            ref_entry_code(r, ordinal, ref.text.gsub(/[\[\]]/, ""))
+            para.children.each { |n| parse(n, r) }
           end
+        end
+
+        def split_bibitems(f)
+          iso_bibitem = []
+          non_iso_bibitem = []
+          f.xpath(ns("./bibitem")).each do |x|
+            if x.at(ns("./publisher/affiliation[name = 'ISO']")).nil?
+              non_iso_bibitem << x
+            else
+              iso_bibitem << x
+            end
+          end
+          { iso: iso_bibitem, noniso: non_iso_bibitem }
+        end
+
+        def biblio_list(f, div, bibliography)
+          refbiblio = f.xpath(ns("./reference"))
+          bibitems = split_bibitems(f)
           refbiblio.each_with_index do |b, i|
-            ref_entry(div, b, i + 1 + isobiblio.size, bibliography)
+            ref_entry(div, b, i + 1, bibliography)
+          end
+          bibitems[:iso].each_with_index do |b, i|
+            iso_bibitem_entry(div, b, (i + 1 + refbiblio.size), bibliography)
+          end
+          bibitems[:noniso].each_with_index do |b, i|
+            noniso_bibitem(div, b, (i + 1 + refbiblio.size + bibitems[:iso].size), bibliography)
           end
         end
 
@@ -70,15 +99,15 @@ module Asciidoctor
 
         def norm_ref_preface(f, div)
           refs = f.elements.select do |e|
-            ["iso_ref_title", "reference"].include? e.name
+            ["reference", "bibitem"].include? e.name
           end
           pref = refs.empty? ? @@norm_empty_pref : @@norm_with_refs_pref
           div.p pref, **{ class: "MsoNormal" }
         end
 
         def norm_ref(isoxml, out)
-          f = isoxml.at(ns("//norm_ref"))
-          return unless f
+          q = "//sections/references[title = 'Normative References']"
+          f = isoxml.at(ns(q)) or return
           out.div do |div|
             clause_name("2.", "Normative References", div)
             norm_ref_preface(f, div)
@@ -87,13 +116,13 @@ module Asciidoctor
         end
 
         def bibliography(isoxml, out)
-          f = isoxml.at(ns("//bibliography"))
-          return unless f
+          q = "//sections/references[title = 'Bibliography']"
+          f = isoxml.at(ns(q)) or return
           page_break(out)
           out.div do |div|
             div.h1 "Bibliography", **{ class: "Section3" }
             f.elements.reject do |e|
-              ["iso_ref_title", "reference"].include? e.name
+              ["reference", "title", "bibitem"].include? e.name
             end.each { |e| parse(e, div) }
             biblio_list(f, div, true)
           end

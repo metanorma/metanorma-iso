@@ -11,6 +11,8 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Base
+        @@fn_number = 0
+
         def content(node)
           node.content
         end
@@ -28,61 +30,73 @@ module Asciidoctor
           result << noko { |ixml| front node, ixml }
           result << noko { |ixml| middle node, ixml }
           result << "</iso-standard>"
-          ret1 = Cleanup::cleanup(Nokogiri::XML(result.flatten * "\n"))
+          result = Cleanup::textcleanup(result.flatten * "\n")
+          ret1 = Cleanup::cleanup(Nokogiri::XML(result))
           ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
           Validate::validate(ret1)
           ret1.to_xml(indent: 2)
         end
 
         def front(node, xml)
-            title node, xml
-            metadata node, xml
+          title node, xml
+          metadata node, xml
         end
 
         def middle(node, xml)
           xml.sections do |s|
-           s << node.content if node.blocks?
+            s << node.content if node.blocks?
           end
         end
 
-        def add_term_source(xml_t, seen_xref, matched)
-          attr = {
-            target: seen_xref.children[0]["target"],
-            format: seen_xref.children[0]["format"],
-          }
-          xml_t.xref seen_xref.children[0].content, **attr_code(attr)
-          xml_t.isosection matched[:section] if matched[:section]
-          xml_t.modification { |m| m << matched[:text] } if matched[:text]
+        def add_term_source(xml_t, seen_xref, m)
+          attr = { bibitemid: seen_xref.children[0]["target"],
+                   format: seen_xref.children[0]["format"] }
+          xml_t.origin seen_xref.children[0].content, **attr_code(attr)
+          xml_t.isosection m[:section].gsub(/ /, "")  if m[:section]
+          if m[:text]
+            xml_t.modification do |mod| 
+              mod.p { |p| p << m[:text]  }
+            end
+          end
         end
 
-        @@term_reference_re = 
-          Regexp.new(<<~"REGEXP", Regexp::EXTENDED | Regexp::IGNORECASE)
+        @@term_reference_re_str = <<~REGEXP
              ^(?<xref><xref[^>]+>)
-               (,\s(?<section>.[^, ]+))?
+               (,\s(?<section>[^, ]+))?
                (,\s(?<text>.*))?
              $
         REGEXP
+        @@term_reference_re =
+          Regexp.new(@@term_reference_re_str.gsub(/\s/, "").gsub(/_/, "\\s"),
+                     Regexp::IGNORECASE)
+
+
+        def extract_termsource_refs(text)
+          matched = @@term_reference_re.match text
+          if matched.nil?
+            warning(node, "term reference not in expected format", text)
+          end
+          matched
+        end
 
         def termsource(node)
+          matched = extract_termsource_refs(node.content) or return
           noko do |xml|
-            xml.termref do |xml_t|
-              matched = @@term_reference_re.match node.content
-              if matched.nil?
-                w = "term reference not in expected format"
-                warning(node, w, node.content)
-              else
-                seen_xref = Nokogiri::XML.fragment(matched[:xref])
-                add_term_source(xml_t, seen_xref, matched)
-                Validate::style(node, matched[:text])
-              end
+            attrs = { status: matched[:text] ? "identical" : "modified" }
+            xml.termsource **attrs do |xml_t|
+              seen_xref = Nokogiri::XML.fragment(matched[:xref])
+              add_term_source(xml_t, seen_xref, matched)
+              Validate::style(node, matched[:text])
             end
           end.join("\n")
         end
 
         def paragraph(node)
           return termsource(node) if node.role == "source"
+          attrs = { align: node.attr("align"), 
+                    id: Utils::anchor_or_uuid(node) }
           noko do |xml|
-            xml.p do |xml_t|
+            xml.p **attr_code(attrs) do |xml_t|
               xml_t << node.content
               Validate::style(node, Utils::flatten_rawtext(node).join(" "))
             end
@@ -91,8 +105,10 @@ module Asciidoctor
 
         def inline_footnote(node)
           noko do |xml|
-            xml.fn do |xml_t|
-              xml_t << node.text
+            @@fn_number += 1
+            xml.fn **{reference: @@fn_number} do |fn|
+              # TODO multi-paragraph footnotes
+              fn.p { |p| p << node.text }
               Validate::footnote_style(node, node.text)
             end
           end.join("\n")
@@ -127,6 +143,13 @@ module Asciidoctor
           end.join("\n")
         end
 
+        def thematic_break(node)
+          noko do |xml|
+            xml << node.text
+            xml.hr
+          end.join("\n")
+        end
+
         def inline_quoted(node)
           noko do |xml|
             case node.type
@@ -137,14 +160,14 @@ module Asciidoctor
             when :single then xml << "'#{node.text}'"
             when :superscript then xml.sup node.text
             when :subscript then xml.sub node.text
-            when :asciimath then xml.stem node.text
+            when :asciimath then xml.stem node.text, **{ type: "MathML" }
             else
-              if node.role == "alt"
-                xml.admitted_term { |a| a << node.text }
-              elsif node.role == "deprecated"
-                xml.deprecated_term { |a| a << node.text }
-              elsif node.role == "domain"
-                xml.termdomain { |a| a << node.text }
+              case node.role
+              when "alt" then xml.admitted { |a| a << node.text }
+              when "deprecated" then xml.deprecates { |a| a << node.text }
+              when "domain" then xml.domain { |a| a << node.text }
+              when "strike" then xml.strike node.text
+              when "smallcap" then xml.smallcap node.text
               else
                 xml << node.text
               end

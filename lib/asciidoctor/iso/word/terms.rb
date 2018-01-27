@@ -6,20 +6,19 @@ module Asciidoctor
       module Terms
         include ::Asciidoctor::ISO::Word::XrefGen
 
+        def definition_parse(node, out)
+          node.children.each { |n| parse(n, out) }
+        end
+
         def modification_parse(node, out)
           out << "[MODIFICATION]"
-          node.children.each { |n| parse(n, out) }
+          para = node.at(ns("./p"))
+          para.children.each { |n| parse(n, out) }
         end
 
         def deprecated_term_parse(node, out)
           out.p **{ class: "AltTerms" } do |p|
             p << "DEPRECATED: #{node.text}"
-          end
-        end
-
-        def termsymbol_parse(node, out)
-          out.p **{ class: "AltTerms" } do |p|
-            node.children.each { |n| parse(n, p) }
           end
         end
 
@@ -32,10 +31,18 @@ module Asciidoctor
         end
 
         def termexample_parse(node, out)
-          out.p **{ class: "Note" } do |p|
-            p << "EXAMPLE:"
-            insert_tab(p, 1)
-            node.children.each { |n| parse(n, p) }
+          out.div **{ class: "Note" } do |div|
+            first = node.first_element_child
+            div.p **{ class: "Note" } do |p|
+              p << "EXAMPLE:"
+              insert_tab(p, 1)
+              if first.name == "p"
+                first.children.each { |n| parse(n, p) }
+                node.elements.drop(1).each { |n| parse(n, div) }
+              else
+                node.elements.each { |n| parse(n, div) }
+              end
+            end
           end
         end
 
@@ -56,8 +63,8 @@ module Asciidoctor
         end
 
         def termdef_parse(node, out)
-          out.p **{ class: "TermNum", id: node["anchor"] } do |p|
-            p << get_anchors()[node["anchor"]][:label]
+          out.p **{ class: "TermNum", id: node["id"] } do |p|
+            p << get_anchors()[node["id"]][:label]
           end
           set_termdomain("")
           $termnotenumber = 0

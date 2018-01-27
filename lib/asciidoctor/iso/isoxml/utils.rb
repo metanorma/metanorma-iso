@@ -12,9 +12,9 @@ module Asciidoctor
     module ISOXML
       module Utils
         class << self
-          def anchor_or_uuid(node)
+          def anchor_or_uuid(node = nil)
             uuid = UUIDTools::UUID.random_create
-            node.id.nil? || node.id.empty? ? "_" + uuid : node.id
+            node.nil? || node.id.nil? || node.id.empty? ? "_" + uuid : node.id
           end
 
           $stage_abbrs = {
@@ -46,8 +46,9 @@ module Asciidoctor
             "??"
           end
 
-                    def warning(node, msg, text)
-            warntext = "asciidoctor: WARNING (#{current_location(node)}): #{msg}"
+          def warning(node, msg, text)
+            warntext = "asciidoctor: WARNING"\
+              "(#{current_location(node)}): #{msg}"
             warntext += ": #{text}" if text
             warn warntext
           end
@@ -78,42 +79,42 @@ module Asciidoctor
           end
         end
 
-          def convert(node, transform = nil, opts = {})
-            transform ||= node.node_name
-            opts.empty? ? (send transform, node) : (send transform, node, opts)
-          end
+        def convert(node, transform = nil, opts = {})
+          transform ||= node.node_name
+          opts.empty? ? (send transform, node) : (send transform, node, opts)
+        end
 
-          def document_ns_attributes(_doc)
-            nil
-          end
+        def document_ns_attributes(_doc)
+          nil
+        end
 
-          $nokohead = <<~HERE
+        $nokohead = <<~HERE
           <!DOCTYPE html SYSTEM
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
           <html xmlns="http://www.w3.org/1999/xhtml">
           <head> <title></title> <meta charset="UTF-8" /> </head>
           <body> </body> </html>
-          HERE
+        HERE
 
-          # block for processing XML document fragments as XHTML,
-          # to allow for HTMLentities
-          def noko(&block)
-            doc = ::Nokogiri::XML.parse($nokohead)
-            fragment = doc.fragment("")
-            ::Nokogiri::XML::Builder.with fragment, &block
-            fragment.to_xml(encoding: "US-ASCII").lines.map do |l|
-              l.gsub(/\s*\n/, "")
-            end
+        # block for processing XML document fragments as XHTML,
+        # to allow for HTMLentities
+        def noko(&block)
+          doc = ::Nokogiri::XML.parse($nokohead)
+          fragment = doc.fragment("")
+          ::Nokogiri::XML::Builder.with fragment, &block
+          fragment.to_xml(encoding: "US-ASCII").lines.map do |l|
+            l.gsub(/\s*\n/, "")
           end
-
-          def attr_code(attributes)
-            attributes = attributes.reject { |_, val| val.nil? }.map
-            attributes.map do |k, v|
-              [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
-            end.to_h
-          end
-
         end
+
+        def attr_code(attributes)
+          attributes = attributes.reject { |_, val| val.nil? }.map
+          attributes.map do |k, v|
+            [k, (v.is_a? String) ? HTMLEntities.new.decode(v) : v]
+          end.to_h
+        end
+
       end
     end
   end
+end
