@@ -175,14 +175,17 @@ module Asciidoctor
 
         def listing(node)
           # NOTE: html escaping is performed by Nokogiri
-          attrs = id_attr(node)
           noko do |xml|
             if node.parent.context != :example
               xml.figure do |xml_figure|
-                xml_figure.sourcecode **attrs { |s| s << node.content }
+                xml_figure.sourcecode **id_attr(node) do |s| 
+                  s << node.content 
+                end
               end
             else
-              xml.sourcecode **attrs { |s| s << node.content }
+              xml.sourcecode **id_attr(node) do |s|
+                s << node.content 
+              end
             end
           end
         end
