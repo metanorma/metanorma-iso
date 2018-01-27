@@ -10,6 +10,11 @@ module Asciidoctor
         @@xslt = XML::XSLT.new
         @@xslt.xsl = File.read(File.join(File.dirname(__FILE__),
                                          "mathml2omml.xsl"))
+        @@in_footnote = false
+
+        def in_footnote
+          @@in_footnote
+        end
 
         def section_break(body)
           body.br **{ clear: "all", class: "section" }
@@ -74,6 +79,11 @@ module Asciidoctor
           end
         end
 
+        def pagebreak_parse(node, out)
+          attrs = { clear: all, class: "pagebreak" }
+          out.br **attrs
+        end
+
         def error_parse(node, out)
           text = node.to_xml.gsub(/</, "&lt;").gsub(/>/, "&gt;")
           if $block
@@ -112,22 +122,22 @@ module Asciidoctor
         def make_footnote_text(node, fn)
           noko do |xml|
             xml.div **{ style: "mso-element:footnote", id: "ftn#{fn}" } do |div|
-              div.p **{ class: "MsoFootnoteText" } do |p|
-                p.a **footnote_attributes(fn) do |a|
+                div.a **footnote_attributes(fn) do |a|
                   make_footnote_link(a)
-                  node.children.each { |n| parse(n, p) }
                 end
-              end
-            end
+                  node.children.each { |n| parse(n, div) }
+                end
           end.join("\n")
         end
 
         def footnote_parse(node, out)
-          fn = @@footnotes.length + 1
+          fn = node["reference"]
           out.a **footnote_attributes(fn) do |a| 
             make_footnote_link(a) 
           end
+                  @@in_footnote = true
           @@footnotes << make_footnote_text(node, fn)
+                  @@in_footnote = false
         end
 
         def comments(div)

@@ -61,7 +61,9 @@ creator =
 
 documenttype =
   element type {
-     ("international-standard" | "technical-specification" | "technical-report" | "publicly-available-specification" | "international-workshop-agreement" | "guide" )
+     ( "international-standard" | "technical-specification" | 
+       "technical-report" | "publicly-available-specification" | 
+        "international-workshop-agreement" | "guide" )
   }
 
 documentstatus =
@@ -173,25 +175,30 @@ references =
   element references {
     attribute id { xsd:ID }?,
     section_title?,
-    ( iso_ref_title | reference )*,
+    # ( iso_ref_title | reference )*,
+    bibItem*,
     references*
 }
 
+# ELIM
 iso_ref_title =
   element iso_ref_title { 
     attribute id { xsd:ID },
     isocode, (isodate, date_footnote?)?, isotitle 
   }
 
+# ELIM
 isocode =
   element isocode { 
     attribute allparts { "true" | "false" }?,
     text 
   }
 
+# ELIM
 isodate = 
   element isodate { text }
 
+# ELIM
 date_footnote =
   element date_footnote { text }
 
@@ -236,7 +243,7 @@ termnote =
 
 termexample = 
   element termexample { 
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     BasicBlock 
   }
 
@@ -254,7 +261,8 @@ modification =
   element modification { para_no_fn }
 
 BasicBlock = 
-(para | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | example)
+( para | table | note | formula | admonition | ol | ul | dl | figure | 
+  quote | sourcecode | example )
 
 clause_hanging_para =
   element subsection {
@@ -267,8 +275,8 @@ clause_hanging_para =
 
 quote =
   element quote {
-    attribute id { xsd:ID }?,
-    attribute align { ( "left" | "center" | "right" | "justified" ) }?,
+    attribute id { xsd:ID },
+    attribute align { Alignments }?,
     quote_source?,
     quote_author?,
     BasicBlock*
@@ -292,17 +300,11 @@ annex =
     clause_hanging_para*
   }
 
-bibliography =
-  element bibliography { 
-    attribute id { xsd:ID }?,
-    section_title?,
-    (iso_ref_title | reference)+,
-    bibliography*
-  }
-
+# ELIM
 reference = 
   element reference { ref, para }
 
+# ELIM
 ref =
   element ref {
     attribute id { xsd:ID }?,
@@ -310,25 +312,30 @@ ref =
   }
 
 TextElement = 
-  text | em | eref | link | strong | stem | sub | sup | tt | xref | br
+  text | em | eref | link | strong | stem | sub | sup | tt | strike |
+  smallcap | xref | br | hr | pagebreak
+
+Alignments = ( "left" | "center" | "right" | "justified" )
 
 para =
      element p {
-       attribute align { ( "left" | "center" | "right" | "justified" ) }?,
+       attribute id { xsd:ID },
+       attribute align { Alignments }?,
        ( TextElement | fn )*,
        review*
      }
 
 para_no_fn =
      element p {
-       attribute align { ( "left" | "center" | "right" | "justified" )}?,
+       attribute id { xsd:ID },
+       attribute align { Alignments }?,
        ( TextElement )*,
        review*
      }
 
 figure = 
   element figure {
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     tname?,
     ( image | figure+ ),
     fn*,
@@ -339,13 +346,13 @@ figure =
 image =
   element image {
     attribute src { text }?,
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     attribute imagetype { text }
 }
 
 sourcecode =
   element sourcecode {
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     tname?,
     ( text | callout )*,
     annotation*
@@ -360,30 +367,33 @@ review =
 
 callout =
   element callout {
-    attribute id { xsd:ID }
+    attribute target { xsd:ID },
+    text
   }
 
 annotation =
   element annotation {
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     text
   }
 
 fn =
   element fn { 
-       ( TextElement )*
+    attribute reference { text },
+       para_no_fn+
      }
 
 ol =
   element ol { 
-    attribute id { xsd:ID }?,
-    attribute type { "roman" | "alphabet" | "arabic" | "roman_upper" | "alphabet_upper" },
+    attribute id { xsd:ID },
+    attribute type { 
+      ( "roman" | "alphabet" | "arabic" | "roman_upper" | "alphabet_upper" ) },
     li+ 
   }
 
 ul = 
   element ul { 
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     li+ 
 }
 
@@ -396,7 +406,7 @@ li =
 
 dl =
   element dl {
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     (dt, dd)+
   }
 
@@ -414,27 +424,28 @@ dd =
 
 note =
   element note { 
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     para+ 
   }
 
 admonition =
   element admonition { 
-    attribute id { xsd:ID }?,
-    attribute type { ( "danger" | "caution" | "warning" | "important" | "safety precautions" ) },
+    attribute id { xsd:ID },
+    attribute type { 
+     ( "danger" | "caution" | "warning" | "important" | "safety precautions" )},
     para+ 
   }
 
 formula =
   element formula { 
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     stem,
     dl?
   }
 
 example = 
   element example {
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     ( para | formula | ol | ul | dl | quote | sourcecode | review )+
   }
 
@@ -444,9 +455,11 @@ xref =
     text
   }
 
+# ELIM
 iso_ref =
   element iso_ref { isocode, (isodate, (isosection?)?)? }
 
+# ELIM
 isosection = element isosection { text }
 
 link =
@@ -455,15 +468,20 @@ link =
     text
 }
 
+ReferenceFormat = ( "external" | "inline" | "footnote" | "callout" )
+
 eref =
   element eref { 
-    attribute format { "footnote" | "inline" }?,
-    attribute target { text },
+    attribute type { ReferenceFormat }?,
+    attribute normative { xsd:boolean },
+    attribute citeas { text },
+    CitationType,
     text 
   }
 
-br =
-  element br { empty }
+br = element br { empty }
+hr = element hr { empty }
+pagebreak = element pagebreak { empty }
 
 em =
   element em { text }
@@ -486,9 +504,13 @@ sup =
 tt =
   element tt { text }
 
+strike = element strike { text }
+
+smallcap = element smallcap { text }
+
 table =
   element table {
-    attribute id { xsd:ID }?,
+    attribute id { xsd:ID },
     tname?, thead?, tbody, tfoot?, dl?, note*
   }
 
@@ -582,14 +604,16 @@ org_identifier =
   }
 
 CitationType = 
-    work, bibLocality?, date?
+   attribute bibItemId { xsd:ID },
+   bibLocality*, date?
 
 date = element date { string }
-work = element work { string }
 
 bibLocality =
   element bibLocality {
-    attribute type { ( "section" | "clause" | "part" | "paragraph" | "chapter" | "page" | "whole" ) },
+    attribute type { 
+      ( "section" | "clause" | "part" | "paragraph" | "chapter" | "page" | 
+        "whole" ) },
     text
 }
 
@@ -597,11 +621,12 @@ bibItem =
   element bibItem { BibItemType }
 
 BibItemType =
-     attribute type { ( "article" | "book" | "booklet" | "conference" | "manual" |
-                      "proceedings" | "presentation" | "thesis" | "techreport" |
-                      "standard" | "unpublished" ) }?,
-bname, source?, publishDate, code*, accessedDate?, creator*, publisher*, edition?,
-    comment*, partOf*, creationDate?, language*, script*
+  attribute type { 
+    ( "article" | "book" | "booklet" | "conference" | "manual" |
+     "proceedings" | "presentation" | "thesis" | "techreport" | "standard" | 
+     "unpublished" ) }?,
+  bname, source?, publishDate, code*, accessedDate?, creator*, publisher*, 
+  edition?, comment*, partOf*, creationDate?, language*, script*
 
 bname = element name { text }
 source = element source { xsd:anyURI }

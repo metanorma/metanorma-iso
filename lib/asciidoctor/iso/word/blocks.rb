@@ -5,13 +5,18 @@ module Asciidoctor
     module Word
       module Blocks
         @@termdomain = ""
+        @@termexample = false
 
         def set_termdomain(termdomain)
           @@termdomain = termdomain
         end
 
-        def get_termdomain
-          @@termdomain
+        def get_termexample
+          @@termexample
+        end
+
+        def set_termexample(value)
+          @@termexample = value
         end
 
         def ul_parse(node, out)
@@ -144,7 +149,10 @@ module Asciidoctor
         end
 
         def para_attrs(node)
-          attrs = { class: $note ? "Note" : "MsoNormal" }
+          classtype = "MsoNormal"
+          classtype = "Note" if $note
+          classtype = "MsoFootnoteText" if in_footnote
+          attrs = { class: classtype }
           unless node["align"].nil?
             attrs[:align] = node["align"] unless node["align"] == "justify"
             attrs[:style] = "text-align:#{node["align"]}"

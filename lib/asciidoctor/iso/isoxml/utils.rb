@@ -12,9 +12,9 @@ module Asciidoctor
     module ISOXML
       module Utils
         class << self
-          def anchor_or_uuid(node)
+          def anchor_or_uuid(node = nil)
             uuid = UUIDTools::UUID.random_create
-            node.id.nil? || node.id.empty? ? "_" + uuid : node.id
+            node.nil? || node.id.nil? || node.id.empty? ? "_" + uuid : node.id
           end
 
           $stage_abbrs = {

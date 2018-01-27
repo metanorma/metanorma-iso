@@ -27,7 +27,14 @@ module Asciidoctor
             review_note_cleanup(xmldoc)
             normref_cleanup(xmldoc)
             xref_cleanup(xmldoc)
+            para_cleanup(xmldoc)
             xmldoc
+          end
+
+          def para_cleanup(xmldoc)
+            xmldoc.xpath("//p[not(@id)]").each do |x|
+              x["id"] = Utils::anchor_or_uuid
+            end
           end
 
           def xref_cleanup(xmldoc)

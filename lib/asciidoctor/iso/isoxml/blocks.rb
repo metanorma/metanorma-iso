@@ -5,13 +5,16 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Blocks
+        def id_attr(node = nil)
+          { id: Utils::anchor_or_uuid(node) }
+        end
+
         def stem(node)
-          stem_attributes = { id: Utils::anchor_or_uuid(node) }
           # NOTE: html escaping is performed by Nokogiri
           stem_content = node.lines.join("\n")
 
           noko do |xml|
-            xml.formula **attr_code(stem_attributes) do |s|
+            xml.formula **id_attr(node) do |s|
               s.stem stem_content, **{ type: "MathML" }
               Validate::style(node, stem_content)
             end
@@ -55,7 +58,7 @@ module Asciidoctor
 
         def note(n)
           noko do |xml|
-            xml.note **attr_code(id: Utils::anchor_or_uuid(n)) do |c|
+            xml.note **id_attr(n) do |c|
               if n.blocks? then c << n.content
               else
                 c.p { |p| p << n.content }
@@ -90,10 +93,12 @@ module Asciidoctor
 
         def term_example(node)
           noko do |xml|
-            attrs = { id: Utils::anchor_or_uuid(node) }
-            xml.termexample **attr_code(attrs) do |ex|
+            xml.termexample **id_attr(node) do |ex|
               c = node.content
-              if node.blocks? then ex << c else ex.p { |p| p << c } end
+              if node.blocks? then ex << c 
+              else 
+                ex.p {|p| p << c }
+              end
               text = Utils::flatten_rawtext(c).join("\n")
               Validate::termexample_style(node, text)
             end
@@ -103,8 +108,7 @@ module Asciidoctor
         def example(node)
           return term_example(node) if $term_def
           noko do |xml|
-            attrs = { id: Utils::anchor_or_uuid(node) }
-            xml.example **attr_code(attrs) do |ex|
+            xml.example **id_attr(node) do |ex|
               content = node.content
               ex << content
               text = Utils::flatten_rawtext(content).join("\n")
@@ -128,11 +132,10 @@ module Asciidoctor
         def image(node)
           uri = node.image_uri node.attr("target")
           types = MIME::Types.type_for(uri)
-          fig_attributes = { id: Utils::anchor_or_uuid(node) }
-          img_attributes = { src: uri, imagetype: types.first.sub_type.upcase }
-
+          img_attributes = { src: uri, id: Utils::anchor_or_uuid,
+                             imagetype: types.first.sub_type.upcase }
           noko do |xml|
-            xml.figure **attr_code(fig_attributes) do |f|
+            xml.figure **id_attr(node) do |f|
               f.name { |name| name << node.title } unless node.title.nil?
               f.image **attr_code(img_attributes)
             end
@@ -172,13 +175,14 @@ module Asciidoctor
 
         def listing(node)
           # NOTE: html escaping is performed by Nokogiri
+          attrs = id_attr(node)
           noko do |xml|
             if node.parent.context != :example
               xml.figure do |xml_figure|
-                xml_figure.sourcecode { |s| s << node.content }
+                xml_figure.sourcecode **attrs { |s| s << node.content }
               end
             else
-              xml.sourcecode { |s| s << node.content }
+              xml.sourcecode **attrs { |s| s << node.content }
             end
           end
         end

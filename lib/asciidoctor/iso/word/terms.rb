@@ -31,10 +31,18 @@ module Asciidoctor
         end
 
         def termexample_parse(node, out)
-          out.p **{ class: "Note" } do |p|
-            p << "EXAMPLE:"
-            insert_tab(p, 1)
-            node.children.each { |n| parse(n, p) }
+          out.div **{ class: "Note" } do |div|
+            first = node.first_element_child
+            div.p **{ class: "Note" } do |p|
+              p << "EXAMPLE:"
+              insert_tab(p, 1)
+              if first.name == "p"
+                first.children.each { |n| parse(n, p) }
+                node.elements.drop(1).each { |n| parse(n, div) }
+              else
+                node.elements.each { |n| parse(n, div) }
+              end
+            end
           end
         end
 

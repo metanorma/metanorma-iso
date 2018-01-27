@@ -11,6 +11,8 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Base
+        @@fn_number = 0
+
         def content(node)
           node.content
         end
@@ -54,7 +56,7 @@ module Asciidoctor
           xml_t.isosection matched[:section] if matched[:section]
           if matched[:text]
             xml_t.modification do |m| 
-              m.p { |p| p << matched[:text] }
+              m.p { |p| p << matched[:text]  }
             end
           end
         end
@@ -89,8 +91,10 @@ module Asciidoctor
 
         def paragraph(node)
           return termsource(node) if node.role == "source"
+          attrs = { align: node.attr("align"), 
+                    id: Utils::anchor_or_uuid(node) }
           noko do |xml|
-            xml.p **attr_code(align: node.attr("align")) do |xml_t|
+            xml.p **attr_code(attrs) do |xml_t|
               xml_t << node.content
               Validate::style(node, Utils::flatten_rawtext(node).join(" "))
             end
@@ -99,8 +103,10 @@ module Asciidoctor
 
         def inline_footnote(node)
           noko do |xml|
-            xml.fn do |xml_t|
-              xml_t << node.text
+            @@fn_number += 1
+            xml.fn **{reference: @@fn_number} do |fn|
+              # TODO multi-paragraph footnotes
+              fn.p { |p| p << node.text }
               Validate::footnote_style(node, node.text)
             end
           end.join("\n")
@@ -135,6 +141,13 @@ module Asciidoctor
           end.join("\n")
         end
 
+        def thematic_break(node)
+          noko do |xml|
+            xml << node.text
+            xml.hr
+          end.join("\n")
+        end
+
         def inline_quoted(node)
           noko do |xml|
             case node.type
@@ -147,12 +160,12 @@ module Asciidoctor
             when :subscript then xml.sub node.text
             when :asciimath then xml.stem node.text, **{ type: "MathML" }
             else
-              if node.role == "alt"
-                xml.admitted { |a| a << node.text }
-              elsif node.role == "deprecated"
-                xml.deprecates { |a| a << node.text }
-              elsif node.role == "domain"
-                xml.domain { |a| a << node.text }
+              case node.role
+              when "alt" then xml.admitted { |a| a << node.text }
+              when "deprecated" then xml.deprecates { |a| a << node.text }
+              when "domain" then xml.domain { |a| a << node.text }
+              when "strike" then xml.strike node.text
+              when "smallcap" then xml.smallcap node.text
               else
                 xml << node.text
               end

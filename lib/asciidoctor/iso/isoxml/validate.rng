@@ -308,10 +308,8 @@
         <ref name="section_title"/>
       </optional>
       <zeroOrMore>
-        <choice>
-          <ref name="iso_ref_title"/>
-          <ref name="reference"/>
-        </choice>
+        <!-- ( iso_ref_title | reference )*, -->
+        <ref name="bibItem"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="references"/>
@@ -470,11 +468,9 @@
   </define>
   <define name="termexample">
     <element name="termexample">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <ref name="BasicBlock"/>
     </element>
   </define>
@@ -539,19 +535,12 @@
   </define>
   <define name="quote">
     <element name="quote">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <optional>
         <attribute name="align">
-          <choice>
-            <value>left</value>
-            <value>center</value>
-            <value>right</value>
-            <value>justified</value>
-          </choice>
+          <ref name="Alignments"/>
         </attribute>
       </optional>
       <optional>
@@ -605,33 +594,14 @@
       </zeroOrMore>
     </element>
   </define>
-  <define name="bibliography">
-    <element name="bibliography">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <ref name="section_title"/>
-      </optional>
-      <oneOrMore>
-        <choice>
-          <ref name="iso_ref_title"/>
-          <ref name="reference"/>
-        </choice>
-      </oneOrMore>
-      <zeroOrMore>
-        <ref name="bibliography"/>
-      </zeroOrMore>
-    </element>
-  </define>
+  <!-- ELIM -->
   <define name="reference">
     <element name="reference">
       <ref name="ref"/>
       <ref name="para"/>
     </element>
   </define>
+  <!-- ELIM -->
   <define name="ref">
     <element name="ref">
       <optional>
@@ -653,20 +623,30 @@
       <ref name="sub"/>
       <ref name="sup"/>
       <ref name="tt"/>
+      <ref name="strike"/>
+      <ref name="smallcap"/>
       <ref name="xref"/>
       <ref name="br"/>
+      <ref name="hr"/>
+      <ref name="pagebreak"/>
+    </choice>
+  </define>
+  <define name="Alignments">
+    <choice>
+      <value>left</value>
+      <value>center</value>
+      <value>right</value>
+      <value>justified</value>
     </choice>
   </define>
   <define name="para">
     <element name="p">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <optional>
         <attribute name="align">
-          <choice>
-            <value>left</value>
-            <value>center</value>
-            <value>right</value>
-            <value>justified</value>
-          </choice>
+          <ref name="Alignments"/>
         </attribute>
       </optional>
       <zeroOrMore>
@@ -682,14 +662,12 @@
   </define>
   <define name="para_no_fn">
     <element name="p">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <optional>
         <attribute name="align">
-          <choice>
-            <value>left</value>
-            <value>center</value>
-            <value>right</value>
-            <value>justified</value>
-          </choice>
+          <ref name="Alignments"/>
         </attribute>
       </optional>
       <zeroOrMore>
@@ -702,11 +680,9 @@
   </define>
   <define name="figure">
     <element name="figure">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <optional>
         <ref name="tname"/>
       </optional>
@@ -732,21 +708,17 @@
       <optional>
         <attribute name="src"/>
       </optional>
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <attribute name="imagetype"/>
     </element>
   </define>
   <define name="sourcecode">
     <element name="sourcecode">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <optional>
         <ref name="tname"/>
       </optional>
@@ -770,35 +742,33 @@
   </define>
   <define name="callout">
     <element name="callout">
-      <attribute name="id">
+      <attribute name="target">
         <data type="ID"/>
       </attribute>
+      <text/>
     </element>
   </define>
   <define name="annotation">
     <element name="annotation">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <text/>
     </element>
   </define>
   <define name="fn">
     <element name="fn">
-      <zeroOrMore>
-        <ref name="TextElement"/>
-      </zeroOrMore>
+      <attribute name="reference"/>
+      <oneOrMore>
+        <ref name="para_no_fn"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="ol">
     <element name="ol">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <attribute name="type">
         <choice>
           <value>roman</value>
@@ -815,11 +785,9 @@
   </define>
   <define name="ul">
     <element name="ul">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <oneOrMore>
         <ref name="li"/>
       </oneOrMore>
@@ -836,11 +804,9 @@
   </define>
   <define name="dl">
     <element name="dl">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <oneOrMore>
         <ref name="dt"/>
         <ref name="dd"/>
@@ -865,11 +831,9 @@
   </define>
   <define name="note">
     <element name="note">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <oneOrMore>
         <ref name="para"/>
       </oneOrMore>
@@ -877,11 +841,9 @@
   </define>
   <define name="admonition">
     <element name="admonition">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <attribute name="type">
         <choice>
           <value>danger</value>
@@ -898,11 +860,9 @@
   </define>
   <define name="formula">
     <element name="formula">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <ref name="stem"/>
       <optional>
         <ref name="dl"/>
@@ -911,11 +871,9 @@
   </define>
   <define name="example">
     <element name="example">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <oneOrMore>
         <choice>
           <ref name="para"/>
@@ -936,6 +894,7 @@
       <text/>
     </element>
   </define>
+  <!-- ELIM -->
   <define name="iso_ref">
     <element name="iso_ref">
       <ref name="isocode"/>
@@ -949,6 +908,7 @@
       </optional>
     </element>
   </define>
+  <!-- ELIM -->
   <define name="isosection">
     <element name="isosection">
       <text/>
@@ -962,22 +922,41 @@
       <text/>
     </element>
   </define>
+  <define name="ReferenceFormat">
+    <choice>
+      <value>external</value>
+      <value>inline</value>
+      <value>footnote</value>
+      <value>callout</value>
+    </choice>
+  </define>
   <define name="eref">
     <element name="eref">
       <optional>
-        <attribute name="format">
-          <choice>
-            <value>footnote</value>
-            <value>inline</value>
-          </choice>
+        <attribute name="type">
+          <ref name="ReferenceFormat"/>
         </attribute>
       </optional>
-      <attribute name="target"/>
+      <attribute name="normative">
+        <data type="boolean"/>
+      </attribute>
+      <attribute name="citeas"/>
+      <ref name="CitationType"/>
       <text/>
     </element>
   </define>
   <define name="br">
     <element name="br">
+      <empty/>
+    </element>
+  </define>
+  <define name="hr">
+    <element name="hr">
+      <empty/>
+    </element>
+  </define>
+  <define name="pagebreak">
+    <element name="pagebreak">
       <empty/>
     </element>
   </define>
@@ -1014,13 +993,21 @@
       <text/>
     </element>
   </define>
+  <define name="strike">
+    <element name="strike">
+      <text/>
+    </element>
+  </define>
+  <define name="smallcap">
+    <element name="smallcap">
+      <text/>
+    </element>
+  </define>
   <define name="table">
     <element name="table">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <optional>
         <ref name="tname"/>
       </optional>
@@ -1267,21 +1254,18 @@
     </element>
   </define>
   <define name="CitationType">
-    <ref name="work"/>
-    <optional>
+    <attribute name="bibItemId">
+      <data type="ID"/>
+    </attribute>
+    <zeroOrMore>
       <ref name="bibLocality"/>
-    </optional>
+    </zeroOrMore>
     <optional>
       <ref name="date"/>
     </optional>
   </define>
   <define name="date">
     <element name="date">
-      <data type="string" datatypeLibrary=""/>
-    </element>
-  </define>
-  <define name="work">
-    <element name="work">
       <data type="string" datatypeLibrary=""/>
     </element>
   </define>

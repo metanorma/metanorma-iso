@@ -162,6 +162,16 @@ I do not agree with this statement.
 ****
 --
 
+==== Strikethrough and Small Caps
+
+The following formatting macros are used for strikethrough and small caps text:
+
+[source,asciidoctor]
+--
+[strike]#strike through text#
+[smallcap]#small caps text#
+--
+
 === Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users

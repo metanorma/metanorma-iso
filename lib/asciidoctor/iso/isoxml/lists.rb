@@ -4,13 +4,17 @@ module Asciidoctor
     module ISOXML
       module Lists
         def li(xml_ul, item)
-          xml_ul.li **attr_code(id: item.id) do |xml_li|
+          xml_ul.li do |xml_li|
             Validate::style(item, item.text)
             if item.blocks?
-              xml_li.p { |t| t << item.text }
+              xml_li.p **id_attr(item) do |t|
+                t << item.text 
+              end
               xml_li << item.content
             else
-              xml_li.p { |p| p << item.text }
+              xml_li.p **id_attr(item) do |p|
+                p << item.text 
+              end
             end
           end
         end
@@ -19,7 +23,7 @@ module Asciidoctor
           return reference(node, true) if $norm_ref
           return reference(node, false) if $biblio
           noko do |xml|
-            xml.ul **attr_code(id: Utils::anchor_or_uuid(node)) do |xml_ul|
+            xml.ul **id_attr(node) do |xml_ul|
               node.items.each do |item|
                 li(xml_ul, item)
               end
@@ -68,15 +72,15 @@ module Asciidoctor
 
         @@iso_ref = %r{^<ref\sid="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
-        (?<text>.*)$}x
+        (?<text>.*)$}xm
 
         @@iso_ref_no_year = %r{^<ref\sid="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
-        <fn>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}x
+        <fn[^>]*>(?<fn>[^\]]+)</fn>,?\s?(?<text>.*)$}xm
 
         @@iso_ref_all_parts = %r{^<ref\sid="(?<anchor>[^"]+)">
         \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
-        (?<text>.*)(</p>)?$}x
+        (?<text>.*)(</p>)?$}xm
 
         def reference1(node, item, xml, normative)
           matched = @@iso_ref.match item
@@ -84,7 +88,9 @@ module Asciidoctor
           matched3 = @@iso_ref_all_parts.match item
           if matched3.nil? && matched2.nil? && matched.nil?
             xml.reference do |r|
-              r.p { |p| p << ref_normalise(item) }
+              r.p **id_attr do |p| 
+                p << ref_normalise(item) 
+              end
             end
           elsif !matched.nil? then isorefmatches(xml, matched)
           elsif !matched2.nil? then isorefmatches2(xml, matched2)
@@ -146,7 +152,7 @@ module Asciidoctor
 
         def dlist(node)
           noko do |xml|
-            xml.dl **attr_code(id: Utils::anchor_or_uuid(node)) do |xml_dl|
+            xml.dl **id_attr(node) do |xml_dl|
               node.items.each do |terms, dd|
                 dt(terms, xml_dl)
                 dd(dd, xml_dl)

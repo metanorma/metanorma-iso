@@ -114,6 +114,12 @@ module Asciidoctor
             bibliography isoxml, out
           end
 
+          def smallcap_parse(node, xml)
+            xml.span **{style: "font-variant:small-caps;"} do |s|
+              s << node.text
+            end
+          end
+
           def text_parse(node, out)
             text = node.text
             text.gsub!("\n", "<br/>").gsub!(" ", "&nbsp;") if $sourcecode
@@ -130,7 +136,11 @@ module Asciidoctor
               when "sup" then out.sup { |e| e << node.text }
               when "sub" then out.sub { |e| e << node.text }
               when "tt" then out.tt { |e| e << node.text }
+              when "strike" then out.s { |e| e << node.text }
+              when "smallcap" then smallcap_parse(node, out)
               when "br" then out.br
+              when "hr" then out.hr
+              when "pagebreak" then pagebreak_parse(node, out)
               when "callout" then callout_parse(node, out)
               when "stem" then stem_parse(node, out)
               when "clause" then clause_parse(node, out)

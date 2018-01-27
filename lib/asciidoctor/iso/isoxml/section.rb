@@ -22,7 +22,8 @@ module Asciidoctor
               term_def_parse(a, xml, node, node.title.downcase)
             when "terms, definitions, symbols and abbreviations"
               term_def_parse(a, xml, node, node.title.downcase)
-            when "symbols and abbreviations" then symbols_parse(a, xml, node)
+            when "symbols and abbreviated terms" 
+              symbols_parse(a, xml, node)
             when "bibliography" then bibliography_parse(a, xml, node)
             else
               if $term_def

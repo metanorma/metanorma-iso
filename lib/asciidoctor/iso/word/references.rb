@@ -93,7 +93,7 @@ module Asciidoctor
           out.div do |div|
             div.h1 "Bibliography", **{ class: "Section3" }
             f.elements.reject do |e|
-              ["iso_ref_title", "reference"].include? e.name
+              ["iso_ref_title", "reference", "title"].include? e.name
             end.each { |e| parse(e, div) }
             biblio_list(f, div, true)
           end
