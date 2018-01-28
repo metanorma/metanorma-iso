@@ -3,8 +3,8 @@ module Asciidoctor
     module Word
       module Metadata
         def author(isoxml, _out)
-          # tc = isoxml.at(ns("//technical_committee"))
-          tc_num = isoxml.at(ns("//technical_committee/@number"))
+          # tc = isoxml.at(ns("//technical-committee"))
+          tc_num = isoxml.at(ns("//technical-committee/@number"))
           # sc = isoxml.at(ns("//subcommittee"))
           sc_num = isoxml.at(ns("//subcommittee/@number"))
           # wg = isoxml.at(ns("//workgroup"))
@@ -45,9 +45,9 @@ module Asciidoctor
         end
 
         def title(isoxml, _out)
-          intro = isoxml.at(ns("//title[@language='en']/title_intro"))
-          main = isoxml.at(ns("//title[@language='en']/title_main"))
-          part = isoxml.at(ns("//title[@language='en']/title_part"))
+          intro = isoxml.at(ns("//title[@language='en']/title-intro"))
+          main = isoxml.at(ns("//title[@language='en']/title-main"))
+          part = isoxml.at(ns("//title[@language='en']/title-part"))
           partnumber = isoxml.at(ns("//id/projectnumber/@part"))
           main = main.text
           main = "#{intro.text}&nbsp;&mdash;#{main}" if intro
@@ -58,9 +58,9 @@ module Asciidoctor
         end
 
         def subtitle(isoxml, _out)
-          intro = isoxml.at(ns("//title[@language='fr']/title_intro"))
-          main = isoxml.at(ns("//title[@language='fr']/title_main"))
-          part = isoxml.at(ns("//title[@language='fr']/title_part"))
+          intro = isoxml.at(ns("//title[@language='fr']/title-intro"))
+          main = isoxml.at(ns("//title[@language='fr']/title-main"))
+          part = isoxml.at(ns("//title[@language='fr']/title-part"))
           partnumber = isoxml.at(ns("//id/projectnumber/@part"))
           main = main.text
           main = "#{intro.text}&nbsp; #{main}" if intro

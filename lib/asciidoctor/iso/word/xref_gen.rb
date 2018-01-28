@@ -30,7 +30,7 @@ module Asciidoctor
           section_names(d.at(ns("//terms")), "3", 1)
           middle_sections = "//clause[title = 'Scope'] | "\
             "//references[title = 'Normative References'] | //terms | "\
-            "//symbols_abbrevs | //clause[parent::sections]"
+            "//symbols-abbrevs | //clause[parent::sections]"
           sequential_asset_names(d.xpath(ns(middle_sections)))
         end
 
@@ -52,7 +52,7 @@ module Asciidoctor
         end
 
         def middle_anchor_names(docxml)
-          symbols_abbrevs = docxml.at(ns("//symbols_abbrevs"))
+          symbols_abbrevs = docxml.at(ns("//symbols-abbrevs"))
           sect_num = 4
           if symbols_abbrevs
             section_names(symbols_abbrevs, sect_num.to_s, 1)

@@ -83,7 +83,7 @@ module Asciidoctor
         end
 
         def symbols_abbrevs(isoxml, out)
-          f = isoxml.at(ns("//symbols_abbrevs")) or return
+          f = isoxml.at(ns("//symbols-abbrevs")) or return
           out.div do |div|
             clause_name("4.", "Symbols and Abbreviations", div)
             f.elements.each do |e|
@@ -99,7 +99,7 @@ module Asciidoctor
           out.div **{class: "Section3" } do |div|
             div.h1 "Introduction", **attr_code(title_attr)
             f.elements.each do |e|
-              if e.name == "patent_notice"
+              if e.name == "patent-notice"
                 e.elements.each { |e1| parse(e1, div) }
               else
                 parse(e, div) unless e.name == "title"

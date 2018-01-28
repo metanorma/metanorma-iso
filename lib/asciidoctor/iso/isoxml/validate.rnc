@@ -2,9 +2,9 @@ default namespace = "http://riboseinc.com/isoxml"
 
 grammar {
 
-start = iso_standard
+start = iso-standard
 
-iso_standard = 
+iso-standard = 
   element iso-standard {
     title+,
     documentstatus,
@@ -39,21 +39,21 @@ from = element from { xsd:gYear }
 
 owner = 
   element owner {
-    owner_affiliation  
+    owner-affiliation  
 }
 
-owner_affiliation = element affiliation { "ISO" }
+owner-affiliation = element affiliation { "ISO" }
 
 id =
   element id {
     documentnumber,
-    tc_documentnumber?
+    tc-documentnumber?
   }
 
 creator =
   element creator { 
     attribute role { text },
-    technical_committee,
+    technical-committee,
     subcommittee?,
     workgroup?,
     secretariat?
@@ -88,13 +88,13 @@ documentnumber =
     xsd:int 
    }
 
-tc_documentnumber = 
-  element tc_documentnumber { 
+tc-documentnumber = 
+  element tc-documentnumber { 
     xsd:int 
    }
 
-technical_committee =
-  element technical_committee {
+technical-committee =
+  element technical-committee {
     attribute number { xsd:int }?,
     text
   }
@@ -115,7 +115,7 @@ secretariat =
   element secretariat { text }
 
 revdate =
-  element revision_date { xsd:date }
+  element revision-date { xsd:date }
 
 edition =
   element edition { xsd:int }
@@ -123,17 +123,17 @@ edition =
 title = 
   element title { 
     attribute language { text }, 
-    title_intro?, title_main, title_part? 
+    title-intro?, title-main, title-part? 
 }
 
-title_intro =
-  element title_intro { text }
+title-intro =
+  element title-intro { text }
 
-title_main =
-  element title_main { text }
+title-main =
+  element title-main { text }
 
-title_part =
-  element title_part { text }
+title-part =
+  element title-part { text }
 
 sections =
   element sections {
@@ -143,35 +143,35 @@ sections =
   }
 
 content =
-  element content { Content_Section }
+  element content { Content-Section }
 
-content_subsection =
-  element subsection { Content_Section }
+content-subsection =
+  element subsection { Content-Section }
 
-Content_Section = 
+Content-Section = 
     attribute id { xsd:ID }?,
-    section_title?,
+    section-title?,
     ( BasicBlock+ |
-      content_subsection+ )
+      content-subsection+ )
 
 clause =
-  element clause { Clause_Section }
+  element clause { Clause-Section }
 
-Clause_Section =
+Clause-Section =
     attribute id { xsd:ID }?,
-    section_title?,
+    section-title?,
     (
       BasicBlock+ |
-       clause_subsection+
+       clause-subsection+
     )
 
-clause_subsection =
-  element subsection { Clause_Section }
+clause-subsection =
+  element subsection { Clause-Section }
 
 references =
   element references {
     attribute id { xsd:ID }?,
-    section_title?,
+    section-title?,
     bibitem*,
     references*
 }
@@ -182,7 +182,7 @@ isotitle =
 terms = 
   element terms { 
     attribute id { xsd:ID }?,
-    section_title?,
+    section-title?,
     # boilerplate
     para*, ul?,
     (term+ | terms? )
@@ -209,7 +209,7 @@ termdomain =
 
 definition =
   element definition {
-    ( para_no_fn | figure | formula )+
+    ( para-no-fn | figure | formula )+
   }
 
 termnote = 
@@ -237,34 +237,34 @@ origin =
 }
 
 modification =
-  element modification { para_no_fn }
+  element modification { para-no-fn }
 
 BasicBlock = 
 ( para | table | note | formula | admonition | ol | ul | dl | figure | 
   quote | sourcecode | example )
 
-clause_hanging_para =
+clause-hanging-para =
   element subsection {
     attribute id { xsd:ID }?,
-    section_title?,
+    section-title?,
     # allow hanging paragraphs in annexes: they introduce lists
     BasicBlock*,
-    clause_hanging_para*
+    clause-hanging-para*
   }
 
 quote =
   element quote {
     attribute id { xsd:ID },
     attribute align { Alignments }?,
-    quote_source?,
-    quote_author?,
+    quote-source?,
+    quote-author?,
     BasicBlock*
   }
 
-quote_source =
+quote-source =
   element source { CitationType }
 
-quote_author =
+quote-author =
   element author { CreatorInfo }
 
 
@@ -272,11 +272,11 @@ annex =
   element annex { 
     attribute id { xsd:ID }?,
     attribute subtype { "normative" | "informative" }?,
-    section_title?,
+    section-title?,
     # allow hanging paragraphs in annexes: they introduce lists
     #( para | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | review | example )*,
     BasicBlock*,
-    clause_hanging_para*
+    clause-hanging-para*
   }
 
 TextElement = 
@@ -293,7 +293,7 @@ para =
        review*
      }
 
-para_no_fn =
+para-no-fn =
      element p {
        attribute id { xsd:ID },
        attribute align { Alignments }?,
@@ -350,7 +350,7 @@ annotation =
 fn =
   element fn { 
     attribute reference { text },
-       para_no_fn+
+       para-no-fn+
      }
 
 ol =
@@ -480,7 +480,7 @@ table =
 tname =
   element name { text }
 
-section_title =
+section-title =
   element title { text }
 
 thead =
@@ -513,7 +513,7 @@ td =
 
 CreatorInfo =
     attribute role { text },
-    fullname?, affiliation?, person_identifier*
+    fullname?, affiliation?, person-identifier*
 
 publisher = 
   element publisher { CreatorInfo }
@@ -534,7 +534,7 @@ affiliation =
   element affiliation { Organization }
 
 Organization =  
-    orgname, uri?, address?, org_identifier*
+    orgname, uri?, address?, org-identifier*
 
 orgname =
   element name { text }
@@ -554,13 +554,13 @@ state = element state { text }
 country = element country { text }
 postcode = element postcode { text }
 
-person_identifier =
+person-identifier =
   element identifier {
     attribute type { ("isni" | "uri") },
     text
   }
 
-org_identifier =
+org-identifier =
   element identifier {
     attribute type { ("orcid" | "uri") },
     text

@@ -10,8 +10,8 @@ module Asciidoctor
         class << self
 
           def title_intro_validate(root)
-            title_intro_en = root.at("//title[@language='en']/title_intro")
-            title_intro_fr = root.at("//title[@language='fr']/title_intro")
+            title_intro_en = root.at("//title[@language='en']/title-intro")
+            title_intro_fr = root.at("//title[@language='fr']/title-intro")
             if title_intro_en.nil? && !title_intro_fr.nil?
               warn "No English Title Intro!"
             end
@@ -21,8 +21,8 @@ module Asciidoctor
           end
 
           def title_part_validate(root)
-            title_part_en = root.at("//title[@language='en']/title_part")
-            title_part_fr = root.at("//title[@language='fr']/title_part")
+            title_part_en = root.at("//title[@language='en']/title-part")
+            title_part_fr = root.at("//title[@language='fr']/title-part")
             if title_part_en.nil? && !title_part_fr.nil?
               warn "No English Title Part!"
             end
@@ -34,11 +34,11 @@ module Asciidoctor
           def title_names_type_validate(root)
             doctypes = /International\sStandard | Technical\sSpecification |
             Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
-            title_main_en = root.at("//title[@language='en']/title_main")
+            title_main_en = root.at("//title[@language='en']/title-main")
             if doctypes.match? title_main_en.text
               warn "Main Title may name document type"
             end
-            title_intro_en = root.at("//title[@language='en']/title_intro")
+            title_intro_en = root.at("//title[@language='en']/title-intro")
             if !title_intro_en.nil? && doctypes.match?(title_intro_en.text)
               warn "Part Title may name document type"
             end
@@ -171,7 +171,7 @@ module Asciidoctor
           end
 
           def iso8601_validate(root)
-            root.xpath("//review/@date | //revision_date").each do |d|
+            root.xpath("//review/@date | //revision-date").each do |d|
               /^\d{8}(T\d{4,6})?$/.match? d.text or
                 warn "ISO style: #{d.text} is not an ISO 8601 date"
             end

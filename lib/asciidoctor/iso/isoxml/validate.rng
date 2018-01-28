@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar ns="http://riboseinc.com/isoxml" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
-    <ref name="iso_standard"/>
+    <ref name="iso-standard"/>
   </start>
-  <define name="iso_standard">
+  <define name="iso-standard">
     <element name="iso-standard">
       <oneOrMore>
         <ref name="title"/>
@@ -57,10 +57,10 @@
   </define>
   <define name="owner">
     <element name="owner">
-      <ref name="owner_affiliation"/>
+      <ref name="owner-affiliation"/>
     </element>
   </define>
-  <define name="owner_affiliation">
+  <define name="owner-affiliation">
     <element name="affiliation">
       <value>ISO</value>
     </element>
@@ -69,14 +69,14 @@
     <element name="id">
       <ref name="documentnumber"/>
       <optional>
-        <ref name="tc_documentnumber"/>
+        <ref name="tc-documentnumber"/>
       </optional>
     </element>
   </define>
   <define name="creator">
     <element name="creator">
       <attribute name="role"/>
-      <ref name="technical_committee"/>
+      <ref name="technical-committee"/>
       <optional>
         <ref name="subcommittee"/>
       </optional>
@@ -147,13 +147,13 @@
       <data type="int"/>
     </element>
   </define>
-  <define name="tc_documentnumber">
-    <element name="tc_documentnumber">
+  <define name="tc-documentnumber">
+    <element name="tc-documentnumber">
       <data type="int"/>
     </element>
   </define>
-  <define name="technical_committee">
-    <element name="technical_committee">
+  <define name="technical-committee">
+    <element name="technical-committee">
       <optional>
         <attribute name="number">
           <data type="int"/>
@@ -188,7 +188,7 @@
     </element>
   </define>
   <define name="revdate">
-    <element name="revision_date">
+    <element name="revision-date">
       <data type="date"/>
     </element>
   </define>
@@ -201,26 +201,26 @@
     <element name="title">
       <attribute name="language"/>
       <optional>
-        <ref name="title_intro"/>
+        <ref name="title-intro"/>
       </optional>
-      <ref name="title_main"/>
+      <ref name="title-main"/>
       <optional>
-        <ref name="title_part"/>
+        <ref name="title-part"/>
       </optional>
     </element>
   </define>
-  <define name="title_intro">
-    <element name="title_intro">
+  <define name="title-intro">
+    <element name="title-intro">
       <text/>
     </element>
   </define>
-  <define name="title_main">
-    <element name="title_main">
+  <define name="title-main">
+    <element name="title-main">
       <text/>
     </element>
   </define>
-  <define name="title_part">
-    <element name="title_part">
+  <define name="title-part">
+    <element name="title-part">
       <text/>
     </element>
   </define>
@@ -246,58 +246,58 @@
   </define>
   <define name="content">
     <element name="content">
-      <ref name="Content_Section"/>
+      <ref name="Content-Section"/>
     </element>
   </define>
-  <define name="content_subsection">
+  <define name="content-subsection">
     <element name="subsection">
-      <ref name="Content_Section"/>
+      <ref name="Content-Section"/>
     </element>
   </define>
-  <define name="Content_Section">
+  <define name="Content-Section">
     <optional>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
     </optional>
     <optional>
-      <ref name="section_title"/>
+      <ref name="section-title"/>
     </optional>
     <choice>
       <oneOrMore>
         <ref name="BasicBlock"/>
       </oneOrMore>
       <oneOrMore>
-        <ref name="content_subsection"/>
+        <ref name="content-subsection"/>
       </oneOrMore>
     </choice>
   </define>
   <define name="clause">
     <element name="clause">
-      <ref name="Clause_Section"/>
+      <ref name="Clause-Section"/>
     </element>
   </define>
-  <define name="Clause_Section">
+  <define name="Clause-Section">
     <optional>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
     </optional>
     <optional>
-      <ref name="section_title"/>
+      <ref name="section-title"/>
     </optional>
     <choice>
       <oneOrMore>
         <ref name="BasicBlock"/>
       </oneOrMore>
       <oneOrMore>
-        <ref name="clause_subsection"/>
+        <ref name="clause-subsection"/>
       </oneOrMore>
     </choice>
   </define>
-  <define name="clause_subsection">
+  <define name="clause-subsection">
     <element name="subsection">
-      <ref name="Clause_Section"/>
+      <ref name="Clause-Section"/>
     </element>
   </define>
   <define name="references">
@@ -308,7 +308,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="section_title"/>
+        <ref name="section-title"/>
       </optional>
       <zeroOrMore>
         <ref name="bibitem"/>
@@ -331,7 +331,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="section_title"/>
+        <ref name="section-title"/>
       </optional>
       <zeroOrMore>
         <!-- boilerplate -->
@@ -413,7 +413,7 @@
     <element name="definition">
       <oneOrMore>
         <choice>
-          <ref name="para_no_fn"/>
+          <ref name="para-no-fn"/>
           <ref name="figure"/>
           <ref name="formula"/>
         </choice>
@@ -465,7 +465,7 @@
   </define>
   <define name="modification">
     <element name="modification">
-      <ref name="para_no_fn"/>
+      <ref name="para-no-fn"/>
     </element>
   </define>
   <define name="BasicBlock">
@@ -484,7 +484,7 @@
       <ref name="example"/>
     </choice>
   </define>
-  <define name="clause_hanging_para">
+  <define name="clause-hanging-para">
     <element name="subsection">
       <optional>
         <attribute name="id">
@@ -492,14 +492,14 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="section_title"/>
+        <ref name="section-title"/>
       </optional>
       <zeroOrMore>
         <!-- allow hanging paragraphs in annexes: they introduce lists -->
         <ref name="BasicBlock"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="clause_hanging_para"/>
+        <ref name="clause-hanging-para"/>
       </zeroOrMore>
     </element>
   </define>
@@ -514,22 +514,22 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="quote_source"/>
+        <ref name="quote-source"/>
       </optional>
       <optional>
-        <ref name="quote_author"/>
+        <ref name="quote-author"/>
       </optional>
       <zeroOrMore>
         <ref name="BasicBlock"/>
       </zeroOrMore>
     </element>
   </define>
-  <define name="quote_source">
+  <define name="quote-source">
     <element name="source">
       <ref name="CitationType"/>
     </element>
   </define>
-  <define name="quote_author">
+  <define name="quote-author">
     <element name="author">
       <ref name="CreatorInfo"/>
     </element>
@@ -550,7 +550,7 @@
         </attribute>
       </optional>
       <optional>
-        <ref name="section_title"/>
+        <ref name="section-title"/>
       </optional>
       <zeroOrMore>
         <!--
@@ -560,7 +560,7 @@
         <ref name="BasicBlock"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="clause_hanging_para"/>
+        <ref name="clause-hanging-para"/>
       </zeroOrMore>
     </element>
   </define>
@@ -612,7 +612,7 @@
       </zeroOrMore>
     </element>
   </define>
-  <define name="para_no_fn">
+  <define name="para-no-fn">
     <element name="p">
       <attribute name="id">
         <data type="ID"/>
@@ -722,7 +722,7 @@
     <element name="fn">
       <attribute name="reference"/>
       <oneOrMore>
-        <ref name="para_no_fn"/>
+        <ref name="para-no-fn"/>
       </oneOrMore>
     </element>
   </define>
@@ -955,16 +955,6 @@
         <data type="ID"/>
       </attribute>
       <optional>
-        <attribute name="headerrows">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="footerrows">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <optional>
         <ref name="tname"/>
       </optional>
       <optional>
@@ -987,7 +977,7 @@
       <text/>
     </element>
   </define>
-  <define name="section_title">
+  <define name="section-title">
     <element name="title">
       <text/>
     </element>
@@ -1072,7 +1062,7 @@
       <ref name="affiliation"/>
     </optional>
     <zeroOrMore>
-      <ref name="person_identifier"/>
+      <ref name="person-identifier"/>
     </zeroOrMore>
   </define>
   <define name="publisher">
@@ -1137,7 +1127,7 @@
       <ref name="address"/>
     </optional>
     <zeroOrMore>
-      <ref name="org_identifier"/>
+      <ref name="org-identifier"/>
     </zeroOrMore>
   </define>
   <define name="orgname">
@@ -1191,7 +1181,7 @@
       <text/>
     </element>
   </define>
-  <define name="person_identifier">
+  <define name="person-identifier">
     <element name="identifier">
       <attribute name="type">
         <choice>
@@ -1202,7 +1192,7 @@
       <text/>
     </element>
   </define>
-  <define name="org_identifier">
+  <define name="org-identifier">
     <element name="identifier">
       <attribute name="type">
         <choice>

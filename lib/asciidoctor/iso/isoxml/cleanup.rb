@@ -30,7 +30,12 @@ module Asciidoctor
             para_cleanup(xmldoc)
             callout_cleanup(xmldoc)
             origin_cleanup(xmldoc)
+            element_name_cleanup(xmldoc)
             xmldoc
+          end
+
+          def element_name_cleanup(xmldoc)
+            xmldoc.traverse { |n| n.name = n.name.gsub(/_/, "-") }
           end
 
           def callout_cleanup(xmldoc)
