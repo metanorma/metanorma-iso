@@ -367,7 +367,9 @@
       <optional>
         <ref name="termdomain"/>
       </optional>
-      <ref name="definition"/>
+      <optional>
+        <ref name="definition"/>
+      </optional>
       <zeroOrMore>
         <ref name="termnote"/>
       </zeroOrMore>
