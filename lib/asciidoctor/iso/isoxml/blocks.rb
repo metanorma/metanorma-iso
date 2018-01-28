@@ -129,15 +129,21 @@ module Asciidoctor
           end.join("\n")
         end
 
-        def image(node)
+        def image_attributes(node)
           uri = node.image_uri node.attr("target")
           types = MIME::Types.type_for(uri)
-          img_attributes = { src: uri, id: Utils::anchor_or_uuid,
-                             imagetype: types.first.sub_type.upcase }
+          { src: uri, 
+            id: Utils::anchor_or_uuid,
+            imagetype: types.first.sub_type.upcase,
+            height: node.attr("height"),
+            width: node.attr("width") }
+        end
+
+        def image(node)
           noko do |xml|
             xml.figure **id_attr(node) do |f|
               f.name { |name| name << node.title } unless node.title.nil?
-              f.image **attr_code(img_attributes)
+              f.image **attr_code(image_attributes(node))
             end
           end
         end

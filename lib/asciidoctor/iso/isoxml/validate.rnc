@@ -35,7 +35,7 @@ copyright =
     from, owner
 }
 
-from = element from { text }
+from = element from { xsd:gYear }
 
 owner = 
   element owner {
@@ -84,30 +84,30 @@ substage =
 
 documentnumber = 
   element projectnumber { 
-    attribute part { text }?,
-    text 
+    attribute part { xsd:int }?,
+    xsd:int 
    }
 
 tc_documentnumber = 
   element tc_documentnumber { 
-    text 
+    xsd:int 
    }
 
 technical_committee =
   element technical_committee {
-    attribute number { text }?,
+    attribute number { xsd:int }?,
     text
   }
 
 subcommittee =
   element subcommittee {
-    attribute number { text }?,
+    attribute number { xsd:int }?,
     text
   }
 
 workgroup =
   element workgroup {
-    attribute number { text }?,
+    attribute number { xsd:int }?,
     text
   }
 
@@ -115,13 +115,10 @@ secretariat =
   element secretariat { text }
 
 revdate =
-  element revision_date { text }
-
-copyright_year =
-  element copyright_year { text }
+  element revision_date { xsd:date }
 
 edition =
-  element edition { text }
+  element edition { xsd:int }
 
 title = 
   element title { 
@@ -175,32 +172,9 @@ references =
   element references {
     attribute id { xsd:ID }?,
     section_title?,
-    # ( iso_ref_title | reference )*,
     bibitem*,
     references*
 }
-
-# ELIM
-iso_ref_title =
-  element iso_ref_title { 
-    attribute id { xsd:ID },
-    isocode, (isodate, date_footnote?)?, isotitle 
-  }
-
-# ELIM
-isocode =
-  element isocode { 
-    attribute allparts { "true" | "false" }?,
-    text 
-  }
-
-# ELIM
-isodate = 
-  element isodate { text }
-
-# ELIM
-date_footnote =
-  element date_footnote { text }
 
 isotitle = 
   element isotitle { text }
@@ -302,17 +276,6 @@ annex =
     clause_hanging_para*
   }
 
-# ELIM
-reference = 
-  element reference { ref, para }
-
-# ELIM
-ref =
-  element ref {
-    attribute id { xsd:ID }?,
-    text
-  }
-
 TextElement = 
   text | em | eref | link | strong | stem | sub | sup | tt | strike |
   smallcap | xref | br | hr | pagebreak
@@ -349,7 +312,9 @@ image =
   element image {
     attribute src { text }?,
     attribute id { xsd:ID },
-    attribute imagetype { text }
+    attribute imagetype { text },
+    attribute width {xsd:int}?,
+    attribute height {xsd:int}?
 }
 
 sourcecode =
@@ -456,13 +421,6 @@ xref =
     attribute target { xsd:IDREF },
     text
   }
-
-# ELIM
-iso_ref =
-  element iso_ref { isocode, (isodate, (isosection?)?)? }
-
-# ELIM
-isosection = element isosection { text }
 
 link =
   element link {

@@ -52,7 +52,7 @@
   </define>
   <define name="from">
     <element name="from">
-      <text/>
+      <data type="gYear"/>
     </element>
   </define>
   <define name="owner">
@@ -140,20 +140,24 @@
   <define name="documentnumber">
     <element name="projectnumber">
       <optional>
-        <attribute name="part"/>
+        <attribute name="part">
+          <data type="int"/>
+        </attribute>
       </optional>
-      <text/>
+      <data type="int"/>
     </element>
   </define>
   <define name="tc_documentnumber">
     <element name="tc_documentnumber">
-      <text/>
+      <data type="int"/>
     </element>
   </define>
   <define name="technical_committee">
     <element name="technical_committee">
       <optional>
-        <attribute name="number"/>
+        <attribute name="number">
+          <data type="int"/>
+        </attribute>
       </optional>
       <text/>
     </element>
@@ -161,7 +165,9 @@
   <define name="subcommittee">
     <element name="subcommittee">
       <optional>
-        <attribute name="number"/>
+        <attribute name="number">
+          <data type="int"/>
+        </attribute>
       </optional>
       <text/>
     </element>
@@ -169,7 +175,9 @@
   <define name="workgroup">
     <element name="workgroup">
       <optional>
-        <attribute name="number"/>
+        <attribute name="number">
+          <data type="int"/>
+        </attribute>
       </optional>
       <text/>
     </element>
@@ -181,17 +189,12 @@
   </define>
   <define name="revdate">
     <element name="revision_date">
-      <text/>
-    </element>
-  </define>
-  <define name="copyright_year">
-    <element name="copyright_year">
-      <text/>
+      <data type="date"/>
     </element>
   </define>
   <define name="edition">
     <element name="edition">
-      <text/>
+      <data type="int"/>
     </element>
   </define>
   <define name="title">
@@ -308,54 +311,11 @@
         <ref name="section_title"/>
       </optional>
       <zeroOrMore>
-        <!-- ( iso_ref_title | reference )*, -->
         <ref name="bibitem"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="references"/>
       </zeroOrMore>
-    </element>
-  </define>
-  <!-- ELIM -->
-  <define name="iso_ref_title">
-    <element name="iso_ref_title">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <ref name="isocode"/>
-      <optional>
-        <ref name="isodate"/>
-        <optional>
-          <ref name="date_footnote"/>
-        </optional>
-      </optional>
-      <ref name="isotitle"/>
-    </element>
-  </define>
-  <!-- ELIM -->
-  <define name="isocode">
-    <element name="isocode">
-      <optional>
-        <attribute name="allparts">
-          <choice>
-            <value>true</value>
-            <value>false</value>
-          </choice>
-        </attribute>
-      </optional>
-      <text/>
-    </element>
-  </define>
-  <!-- ELIM -->
-  <define name="isodate">
-    <element name="isodate">
-      <text/>
-    </element>
-  </define>
-  <!-- ELIM -->
-  <define name="date_footnote">
-    <element name="date_footnote">
-      <text/>
     </element>
   </define>
   <define name="isotitle">
@@ -599,24 +559,6 @@
       </zeroOrMore>
     </element>
   </define>
-  <!-- ELIM -->
-  <define name="reference">
-    <element name="reference">
-      <ref name="ref"/>
-      <ref name="para"/>
-    </element>
-  </define>
-  <!-- ELIM -->
-  <define name="ref">
-    <element name="ref">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <text/>
-    </element>
-  </define>
   <define name="TextElement">
     <choice>
       <text/>
@@ -717,6 +659,16 @@
         <data type="ID"/>
       </attribute>
       <attribute name="imagetype"/>
+      <optional>
+        <attribute name="width">
+          <data type="int"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="height">
+          <data type="int"/>
+        </attribute>
+      </optional>
     </element>
   </define>
   <define name="sourcecode">
@@ -898,26 +850,6 @@
       <attribute name="target">
         <data type="IDREF"/>
       </attribute>
-      <text/>
-    </element>
-  </define>
-  <!-- ELIM -->
-  <define name="iso_ref">
-    <element name="iso_ref">
-      <ref name="isocode"/>
-      <optional>
-        <ref name="isodate"/>
-        <optional>
-          <optional>
-            <ref name="isosection"/>
-          </optional>
-        </optional>
-      </optional>
-    </element>
-  </define>
-  <!-- ELIM -->
-  <define name="isosection">
-    <element name="isosection">
       <text/>
     </element>
   </define>
