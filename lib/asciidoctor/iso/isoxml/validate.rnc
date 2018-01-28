@@ -213,7 +213,10 @@ definition =
   }
 
 termnote = 
-  element termnote { (text | xref | eref | link)* }
+  element termnote { 
+    attribute id { xsd:ID },
+    (text | xref | eref | link)* 
+}
 
 termexample = 
   element termexample { 

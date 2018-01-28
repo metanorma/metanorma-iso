@@ -166,9 +166,22 @@ module Asciidoctor
             end
           end
 
+          def header_rows_cleanup(xmldoc)
+            q = "//table[@headerrows]"
+            xmldoc.xpath(q).each do |s|
+              thead = s.at("./thead")
+              [1..s["headerrows"].to_i].each do
+                row = s.at("./tbody/tr")
+                row.parent = thead
+              end
+              s.delete("headerrows")
+            end
+          end
+
           def table_cleanup(xmldoc)
             dl_table_cleanup(xmldoc)
             notes_table_cleanup(xmldoc)
+            header_rows_cleanup(xmldoc)
           end
 
           def notes_table_cleanup(xmldoc)

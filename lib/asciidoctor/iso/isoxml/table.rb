@@ -2,9 +2,14 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Table
+        def table_attrs(node)
+          { id: Utils::anchor_or_uuid(node),
+            headerrows: node.attr("headerrows") }
+        end
+
         def table(node)
           noko do |xml|
-            xml.table **{ id: Utils::anchor_or_uuid(node) } do |xml_table|
+            xml.table **attr_code(table_attrs(node)) do |xml_table|
               %i(head body foot).reject do |tblsec|
                 node.rows[tblsec].empty?
               end

@@ -422,6 +422,9 @@
   </define>
   <define name="termnote">
     <element name="termnote">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
       <zeroOrMore>
         <choice>
           <text/>
@@ -951,6 +954,16 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
+      <optional>
+        <attribute name="headerrows">
+          <data type="int"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="footerrows">
+          <data type="int"/>
+        </attribute>
+      </optional>
       <optional>
         <ref name="tname"/>
       </optional>

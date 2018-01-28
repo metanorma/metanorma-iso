@@ -42,14 +42,11 @@ module Asciidoctor
         end
 
         def termnote(n)
-          # TODO: reinstate
-          # note_attributes = { id: Utils::anchor_or_uuid(node) }
-          note_attributes = {}
           if n.blocks?
             warning(n, "comment cannot contain blocks of text", n.content)
           end
           noko do |xml|
-            xml.termnote **attr_code(note_attributes) do |xml_cref|
+            xml.termnote **id_attr(n) do |xml_cref|
               xml_cref << n.content
               Validate::style(n, Utils::flatten_rawtext(n.content).join("\n"))
             end

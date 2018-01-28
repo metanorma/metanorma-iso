@@ -172,14 +172,36 @@ The following formatting macros are used for strikethrough and small caps text:
 [smallcap]#small caps text#
 --
 
+==== Count of table header and footer rows
+
+In Asciidoc, a table can have at most one header row or footer row. In ISO,
+a nominal single header row is routinely broken up into multiple rows in order
+to accommodate units or symbols, that line up against each other, though
+they are displayed as merged cells with no grid between them. To address this,
+tables can be marked up with an optional `headerrows` attribute:
+
+[source,asciidoctor]
+--
+[headerrows=2]
+|===
+.2+|Defect 4+^| Maximum permissible mass fraction of defects in husked rice +
+stem:[w_max]
+| in husked rice | in milled rice (non-glutinous) | in husked parboiled rice | in milled parboiled rice
+
+| Extraneous matter: organic footnote:[Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc.] | 1,0 | 0,5 | 1,0 | 0,5
+|===
+--
+
 === Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users
 can retain the ability to preview documents; for _Terms and Definitions_
 clauses, which have a good deal of explicit structure, macros have been
-introduced for semantic markup (admitted terms, deprecated terms, etc). The
-default HTML output of an Asciidoc-formatted ISO document is quite close to the
-intended final output, with the following exceptions. Note that the final
+introduced for semantic markup (admitted terms, deprecated terms, etc). 
+
+The default HTML output of an Asciidoc-formatted ISO document is quite close to the
+intended final output, with the following exceptions, and with the additional
+exceptions listed above as markup introduced for ISO markup. Note that the final
 outputs of the conversion (Microsoft Word, PDF, HTML) do not have these exceptions,
 and comply with the ISO Standard specifications.
 
@@ -195,9 +217,9 @@ of the conversion.
 * _Missing elements_: The document model does not yet include Asciidoc elements
 that do not appear to be relevant to ISO Standards; these will be ignored in
 generating ISO XML. Those elements include:
-* sidebars (`aside`) (as distinct from warnings),
-* ASCII art/preformatted text (`literal`) (as distinct from sourcecode listings),
-* page breaks (`thematic break`).
+** sidebars (`aside`) (as distinct from warnings),
+** ASCII art/preformatted text (`literal`) (as distinct from sourcecode listings),
+** page breaks (`thematic break`).
 
 * _Markup_: Some connecting text which is used to convey markup structure is
 left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting
@@ -264,9 +286,6 @@ small caps or strike through, though these can be marked up as CSS classes
 through custom macros in Asciidoctor: a custom CSS stylesheet will be needed to
 render them.
 
-
-
-TODO: May need to only encode figures as examples.
 
 == Document Attributes
 
