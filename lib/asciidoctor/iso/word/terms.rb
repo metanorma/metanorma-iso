@@ -48,8 +48,7 @@ module Asciidoctor
 
         def termnote_parse(node, out)
           out.p **{ class: "Note" } do |p|
-            $termnotenumber += 1
-            p << "Note #{$termnotenumber} to entry: "
+            p << "#{get_anchors()[node["id"]][:label]}: "
             node.children.each { |n| parse(n, p) }
           end
         end

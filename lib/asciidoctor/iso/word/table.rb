@@ -75,10 +75,10 @@ module Asciidoctor
         def make_tr_attr(td, row, totalrows, col, totalcols, header)
           style = td.name == "th" ? "font-weight:bold;" : ""
           style += <<~STYLE
-          border-left:#{col.zero? ? "#{sw} 1.5pt;" : "none;"}
-          border-right:#{sw} #{col == totalcols && !header ? "1.5" : "1.0"}pt;
-          border-top:#{row.zero? ? "#{sw} 1.5pt;" : "none;"}
-          border-bottom:#{sw} #{row == totalrows ? "1.5" : "1.0"}pt;
+          border-left:#{col.zero? ? "#{@@sw} 1.5pt;" : "none;"}
+          border-right:#{@@sw} #{col == totalcols && !header ? "1.5" : "1.0"}pt;
+          border-top:#{row.zero? ? "#{@@sw} 1.5pt;" : "none;"}
+          border-bottom:#{@@sw} #{row == totalrows ? "1.5" : "1.0"}pt;
           STYLE
           { rowspan: td["rowspan"], colspan: td["colspan"],
             align: td["align"], style: style.gsub(/\n/, "") }

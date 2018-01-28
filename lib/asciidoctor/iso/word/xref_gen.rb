@@ -34,6 +34,23 @@ module Asciidoctor
           sequential_asset_names(d.xpath(ns(middle_sections)))
         end
 
+        def clause_names(docxml,sect_num)
+          q = "//clause[parent::sections][not(xmlns:title = 'Scope')]"
+          docxml.xpath(ns(q)).each_with_index do |c, i|
+            section_names(c, (i + sect_num).to_s, 1)
+          end
+        end
+
+        def termnote_anchor_names(docxml)
+          docxml.xpath(ns("//term[termnote]")).each do |t|
+            t.xpath(ns("./termnote")).each_with_index do |n, i|
+              @@anchors[n["id"]] = { label: "Note #{i + 1} to entry",
+                                     xref: "#{@@anchors[t["id"]][:xref]},"\
+                                     "Note #{i + 1}" }
+            end
+          end
+        end
+
         def middle_anchor_names(docxml)
           symbols_abbrevs = docxml.at(ns("//symbols_abbrevs"))
           sect_num = 4
@@ -41,11 +58,8 @@ module Asciidoctor
             section_names(symbols_abbrevs, sect_num.to_s, 1)
             sect_num += 1
           end
-          # docxml.xpath(ns("//middle/clause")).each_with_index do |c, i|
-          q = "//clause[parent::sections][not(xmlns:title = 'Scope')]"
-          docxml.xpath(ns(q)).each_with_index do |c, i|
-            section_names(c, (i + sect_num).to_s, 1)
-          end
+          clause_names(docxml, sect_num)
+          termnote_anchor_names(docxml)
         end
 
         # extract names for all anchors, xref and label
@@ -157,11 +171,11 @@ module Asciidoctor
           end
         end
 
-          def format_ref(ref, isopub)
-            return "ISO #{ref}" if isopub
-            return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref)
-            ref
-          end
+        def format_ref(ref, isopub)
+          return "ISO #{ref}" if isopub
+          return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref)
+          ref
+        end
 
         def reference_names(ref)
           isopub = ref.at(ns("./publisher/affiliation[name = 'ISO']"))
