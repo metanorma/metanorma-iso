@@ -26,7 +26,7 @@ module Asciidoctor
 
         def document(node)
           result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
-          $draft = node.attributes.has_key?("draft")
+          @@draft = node.attributes.has_key?("draft")
           result << noko { |ixml| front node, ixml }
           result << noko { |ixml| middle node, ixml }
           result << "</iso-standard>"
@@ -35,6 +35,10 @@ module Asciidoctor
           ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
           Validate::validate(ret1)
           ret1.to_xml(indent: 2)
+        end
+        
+        def is_draft
+          @@draft
         end
 
         def front(node, xml)

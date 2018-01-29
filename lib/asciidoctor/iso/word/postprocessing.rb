@@ -7,13 +7,13 @@ module Asciidoctor
       module Postprocessing
         include ::Asciidoctor::ISO::Word::XrefGen
 
-        def postprocess(result, _filename)
+        def postprocess(result, filename, dir)
           # http://sebsauvage.net/wiki/doku.php?id=word_document_generation
           result = cleanup(Nokogiri::XML(result)).to_xml
           result = populate_template(msword_fix(result))
-          doc_header_files($filename)
-          File.open("#{$filename}.htm", "w") { |f| f.write(result) }
-          mime_package result, $filename
+          doc_header_files(filename, dir)
+          File.open("#{filename}.htm", "w") { |f| f.write(result) }
+          mime_package result, filename, dir
         end
 
         def cleanup(docxml)
@@ -57,9 +57,9 @@ module Asciidoctor
           PREAMBLE
         end
 
-        def mime_attachment(boundary, filename, item)
+        def mime_attachment(boundary, filename, item, dir)
           encoded_file = Base64.strict_encode64(
-            File.read("#{$dir}/#{item}"),
+            File.read("#{dir}/#{item}"),
           ).gsub(/(.{76})/, "\\1\n")
           <<~"FILE"
           --#{boundary}
@@ -84,12 +84,12 @@ module Asciidoctor
           "----=_NextPart_#{salt}"
         end
 
-        def mime_package(result, filename)
+        def mime_package(result, filename, dir)
           boundary = mime_boundary
           mhtml = mime_preamble(boundary, filename, result)
-          Dir.foreach($dir) do |item|
+          Dir.foreach(dir) do |item|
             next if item == "." || item == ".." || /^\./.match(item)
-            mhtml += mime_attachment(boundary, filename, item)
+            mhtml += mime_attachment(boundary, filename, item, dir)
           end
           mhtml += "--#{boundary}--"
           File.open("#{filename}.doc", "w") { |f| f.write mhtml }
@@ -112,24 +112,24 @@ module Asciidoctor
             gsub(%r{WD/CD/DIS/FDIS}, $iso_stageabbr)
         end
 
-        def generate_header(filename)
+        def generate_header(filename, dir)
           hdr_file = File.join(File.dirname(__FILE__), "header.html")
           header = File.read(hdr_file, encoding: "UTF-8").
             gsub(/FILENAME/, filename).
             gsub(/DOCYEAR/, $iso_docyear).
             gsub(/DOCNUMBER/, $iso_docnumber)
-          File.open(File.join($dir, "header.html"), "w") do |f|
+          File.open(File.join(dir, "header.html"), "w") do |f|
             f.write(header)
           end
         end
 
-        def generate_filelist(filename)
-          File.open(File.join($dir, "filelist.xml"), "w") do |f|
+        def generate_filelist(filename, dir)
+          File.open(File.join(dir, "filelist.xml"), "w") do |f|
             f.write(<<~"XML")
                 <xml xmlns:o="urn:schemas-microsoft-com:office:office">
                  <o:MainFile HRef="../#{filename}.htm"/>
             XML
-            Dir.foreach($dir) do |item|
+            Dir.foreach(dir) do |item|
               next if item == "." || item == ".." || /^\./.match(item)
               f.write %{  <o:File HRef="#{item}"/>\n}
             end
@@ -137,9 +137,9 @@ module Asciidoctor
           end
         end
 
-        def doc_header_files(filename)
-          generate_header(filename)
-          generate_filelist(filename)
+        def doc_header_files(filename, dir)
+          generate_header(filename, dir)
+          generate_filelist(filename, dir)
         end
 
         def msword_fix(r)
@@ -157,7 +157,7 @@ module Asciidoctor
 
         # these are in fact preprocess,
         # but they are extraneous to main HTML file
-        def html_header(html, docxml, filename)
+        def html_header(html, docxml, filename, dir)
           p = html.parent
           {
             o: "urn:schemas-microsoft-com:office:office",
@@ -166,10 +166,10 @@ module Asciidoctor
           }.each { |k, v| p.add_namespace_definition(k.to_s, v) }
           p.add_namespace(nil, "http://www.w3.org/TR/REC-html40")
           anchor_names docxml
-          define_head html, filename
+          define_head html, filename, dir
         end
 
-        def define_head(html, filename)
+        def define_head(html, filename, dir)
           html.head do |head|
             head.title { |t| t << filename }
             head.parent.add_child <<~XML
@@ -186,7 +186,7 @@ module Asciidoctor
             XML
             head.meta **{ "http-equiv": "Content-Type",
                           content: "text/html; charset=utf-8" }
-            head.link **{ rel: "File-List", href: "#{$dir}/filelist.xml" }
+            head.link **{ rel: "File-List", href: "#{dir}/filelist.xml" }
             head.style do |style|
               fn = File.join(File.dirname(__FILE__), "wordstyle.css")
               style.comment File.read(fn).gsub("FILENAME", filename)

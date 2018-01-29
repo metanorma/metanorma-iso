@@ -36,27 +36,25 @@ module Asciidoctor
           include ::Asciidoctor::ISO::Word::XrefGen
           include ::Asciidoctor::ISO::ISOXML::Utils
 
-          $filename = ""
-          $dir = ""
-
           def convert(filename)
-            init_file(filename)
+            filename, dir = init_file(filename)
             docxml = Nokogiri::XML(File.read(filename))
             docxml.root.default_namespace = ""
             result = noko do |xml|
               xml.html do |html|
-                html_header(html, docxml, $filename)
+                html_header(html, docxml, filename, dir)
                 make_body(xml, docxml)
               end
             end.join("\n")
-            postprocess(result, $filename)
+            postprocess(result, filename, dir)
           end
 
           def init_file(filename)
-            $filename = filename.gsub(%r{\.[^/.]+$}, "")
-            $dir = "#{$filename}_files"
-            Dir.mkdir($dir) unless File.exists?($dir)
-            system "rm -r #{$dir}/*"
+            filename = filename.gsub(%r{\.[^/.]+$}, "")
+            dir = "#{filename}_files"
+            Dir.mkdir(dir) unless File.exists?(dir)
+            system "rm -r #{dir}/*"
+            [filename, dir]
           end
 
           def make_body(xml, docxml)
@@ -122,7 +120,7 @@ module Asciidoctor
 
           def text_parse(node, out)
             text = node.text
-            text.gsub!("\n", "<br/>").gsub!(" ", "&nbsp;") if $sourcecode
+            text.gsub!("\n", "<br/>").gsub!(" ", "&nbsp;") if in_sourcecode
             out << text
           end
 

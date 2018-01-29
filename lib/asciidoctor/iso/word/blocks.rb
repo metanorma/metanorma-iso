@@ -6,6 +6,8 @@ module Asciidoctor
       module Blocks
         @@termdomain = ""
         @@termexample = false
+        @@note = false
+        @@sourcecode = false
 
         def set_termdomain(termdomain)
           @@termdomain = termdomain
@@ -17,6 +19,10 @@ module Asciidoctor
 
         def set_termexample(value)
           @@termexample = value
+        end
+
+        def in_sourcecode
+          @@sourcecode
         end
 
         def ul_parse(node, out)
@@ -58,7 +64,7 @@ module Asciidoctor
         end
 
         def note_parse(node, out)
-          $note = true
+          @@note = true
           out.div **{ id: node["id"], class: "Note" } do |div|
             if node.first_element_child.name == "p"
               note_p_parse(node, div)
@@ -70,7 +76,7 @@ module Asciidoctor
               node.children.each { |n| parse(n, div) }
             end
           end
-          $note = false
+          @@note = false
         end
 
         def figure_name_parse(node, div, name)
@@ -110,11 +116,11 @@ module Asciidoctor
         def sourcecode_parse(node, out)
           name = node.at(ns("./name"))
           out.p **attr_code(id: node["id"], class: "Sourcecode") do |div|
-            $sourcecode = true
+            @@sourcecode = true
             node.children.each do |n|
               parse(n, div) unless n.name == "name"
             end
-            $sourcecode = false
+            @@sourcecode = false
             sourcecode_name_parse(node, div, name) if name
           end
         end
@@ -150,7 +156,7 @@ module Asciidoctor
 
         def para_attrs(node)
           classtype = "MsoNormal"
-          classtype = "Note" if $note
+          classtype = "Note" if @@note
           classtype = "MsoFootnoteText" if in_footnote
           attrs = { class: classtype }
           unless node["align"].nil?
@@ -166,9 +172,7 @@ module Asciidoctor
               p << "&lt;#{@@termdomain}&gt; "
               @@termdomain = ""
             end
-            $block = true
             node.children.each { |n| parse(n, p) }
-            $block = false
           end
         end
 
@@ -194,7 +198,7 @@ module Asciidoctor
             node.elements.each_slice(2) do |dt, dd|
               v.dt do |term|
                 if dt.elements.empty?
-                  term.p **{ class: $note ? "Note" : "MsoNormal" } do
+                  term.p **{ class: @@note ? "Note" : "MsoNormal" } do
                     |p| p << dt.text 
                   end
                 else
@@ -210,7 +214,7 @@ module Asciidoctor
 
         def image_resize(orig_filename)
           image_size = ImageSize.path(orig_filename).size
-          # max width is 400, max height is 680
+          # max width for Word document is 400, max height is 680
           if image_size[0] > 400
             image_size[1] = (image_size[1] * 400 / image_size[0]).ceil
             image_size[0] = 400

@@ -32,7 +32,7 @@ module Asciidoctor
         end
 
         def sidebar(node)
-          return unless $draft
+          return unless is_draft
           content = Utils::flatten_rawtext(node.content).join("\n")
           noko do |xml| 
             xml.review **attr_code(sidebar_attrs(node)) do |r|
@@ -76,7 +76,7 @@ module Asciidoctor
         end
 
         def admonition(node)
-          return termnote(node) if $term_def
+          return termnote(node) if in_terms
           return note(node) if node.attr("name") == "note"
           noko do |xml|
             xml.admonition **admonition_attrs(node) do |a|
@@ -103,7 +103,7 @@ module Asciidoctor
         end
 
         def example(node)
-          return term_example(node) if $term_def
+          return term_example(node) if in_terms
           noko do |xml|
             xml.example **id_attr(node) do |ex|
               content = node.content

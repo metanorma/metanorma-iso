@@ -20,8 +20,8 @@ module Asciidoctor
         end
 
         def ulist(node)
-          return reference(node, true) if $norm_ref
-          return reference(node, false) if $biblio
+          return reference(node, true) if in_norm_ref
+          return reference(node, false) if in_biblio
           noko do |xml|
             xml.ul **id_attr(node) do |xml_ul|
               node.items.each do |item|
