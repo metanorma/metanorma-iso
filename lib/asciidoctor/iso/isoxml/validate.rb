@@ -1,5 +1,5 @@
 require "asciidoctor/iso/isoxml/utils"
-require_relative './style.rb'
+require_relative './validate_style.rb'
 require "nokogiri"
 require "jing"
 require "pp"
