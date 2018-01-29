@@ -212,20 +212,6 @@ module Asciidoctor
           end
         end
 
-        def image_resize(orig_filename)
-          image_size = ImageSize.path(orig_filename).size
-          # max width for Word document is 400, max height is 680
-          if image_size[0] > 400
-            image_size[1] = (image_size[1] * 400 / image_size[0]).ceil
-            image_size[0] = 400
-          end
-          if image_size[1] > 680
-            image_size[0] = (image_size[0] * 680 / image_size[1]).ceil
-            image_size[1] = 680
-          end
-          image_size
-        end
-
         def image_title_parse(out, caption)
           unless caption.nil?
             out.p **{ class: "FigureTitle", align: "center" } do |p|
@@ -237,15 +223,7 @@ module Asciidoctor
         end
 
         def image_parse(url, out, caption)
-          matched = /\.(?<suffix>\S+)$/.match url
-          uuid = UUIDTools::UUID.random_create
-          new_filename = "#{uuid.to_s[0..17]}.#{matched[:suffix]}"
-          new_full_filename = File.join($dir, new_filename)
-          system "cp #{url} #{new_full_filename}"
-          image_size = image_resize(url)
-          out.img **attr_code(src: new_full_filename,
-                              height: image_size[1],
-                              width: image_size[0])
+          out.img **attr_code(src: url)
           image_title_parse(out, caption)
         end
       end

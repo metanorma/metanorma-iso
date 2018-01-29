@@ -2,6 +2,12 @@ module Asciidoctor
   module ISO
     module Word
       module Metadata
+        @@meta = {}
+
+        def get_metadata
+          @@meta
+        end
+
         def author(isoxml, _out)
           # tc = isoxml.at(ns("//technical-committee"))
           tc_num = isoxml.at(ns("//technical-committee/@number"))
@@ -10,27 +16,27 @@ module Asciidoctor
           # wg = isoxml.at(ns("//workgroup"))
           wg_num = isoxml.at(ns("//workgroup/@number"))
           secretariat = isoxml.at(ns("//secretariat"))
-          $iso_tc = "XXXX"
-          $iso_sc = "XXXX"
-          $iso_wg = "XXXX"
-          $iso_secretariat = "XXXX"
-          $iso_tc = tc_num.text if tc_num
-          $iso_sc = sc_num.text if sc_num
-          $iso_wg = wg_num.text if wg_num
-          $iso_secretariat = secretariat.text if secretariat
+          @@meta[:tc] = "XXXX"
+          @@meta[:sc] = "XXXX"
+          @@meta[:wg] = "XXXX"
+          @@meta[:secretariat] = "XXXX"
+          @@meta[:tc] = tc_num.text if tc_num
+          @@meta[:sc] = sc_num.text if sc_num
+          @@meta[:wg] = wg_num.text if wg_num
+          @@meta[:secretariat] = secretariat.text if secretariat
         end
 
         def id(isoxml, _out)
           docnumber = isoxml.at(ns("//projectnumber"))
           partnumber = isoxml.at(ns("//projectnumber/@part"))
           documentstatus = isoxml.at(ns("//status/stage"))
-          $iso_docnumber = docnumber.text
-          $iso_docnumber += "-#{partnumber.text}" if partnumber
-          $iso_stage = documentstatus.text if documentstatus
-          $iso_stageabbr =
-            Asciidoctor::ISO::ISOXML::Utils::stage_abbreviation($iso_stage)
-          if $iso_stage.to_i < 60
-            $iso_docnumber = $iso_stageabbr + " " + $iso_docnumber
+          @@meta[:docnumber] = docnumber.text
+          @@meta[:docnumber] += "-#{partnumber.text}" if partnumber
+          @@meta[:stage] = documentstatus.text if documentstatus
+          @@meta[:stageabbr] =
+            Asciidoctor::ISO::ISOXML::Utils::stage_abbreviation(:stage)
+          if @@meta[:stage].to_i < 60
+            @@meta[:docnumber] = @@meta[:stageabbr] + " " + @@meta[:docnumber]
           end
         end
 
@@ -40,7 +46,7 @@ module Asciidoctor
           # e =  isoxml.at(ns("//revision_date"))
           # out.p "Revised: #{e.text}" if e
           yr =  isoxml.at(ns("//copyright/from"))
-          $iso_docyear = yr.text
+          @@meta[:docyear] = yr.text
           # out.p "© ISO #{yr.text}" if yr
         end
 
@@ -54,7 +60,7 @@ module Asciidoctor
           if part
             main = "#{main}&nbsp;&mdash; Part&nbsp;#{partnumber}: #{part.text}"
           end
-          $iso_doctitle = main
+          @@meta[:doctitle] = main
         end
 
         def subtitle(isoxml, _out)
@@ -67,7 +73,7 @@ module Asciidoctor
           if part
             main = "#{main}&nbsp;&mdash; Part&nbsp;#{partnumber}: #{part.text}"
           end
-          $iso_docsubtitle = main
+          @@meta[:docsubtitle] = main
         end
       end
     end

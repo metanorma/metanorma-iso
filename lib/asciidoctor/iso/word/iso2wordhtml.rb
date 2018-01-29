@@ -37,8 +37,8 @@ module Asciidoctor
           include ::Asciidoctor::ISO::ISOXML::Utils
 
           def convert(filename)
-            filename, dir = init_file(filename)
             docxml = Nokogiri::XML(File.read(filename))
+            filename, dir = init_file(filename)
             docxml.root.default_namespace = ""
             result = noko do |xml|
               xml.html do |html|
@@ -102,7 +102,9 @@ module Asciidoctor
           end
 
           def middle(isoxml, out)
-            out.p **{ class: "zzSTDTitle1" } { |p| p << $iso_doctitle }
+            out.p **{ class: "zzSTDTitle1" } do |p| 
+              p << get_metadata()[:doctitle] 
+            end
             scope isoxml, out
             norm_ref isoxml, out
             terms_defs isoxml, out

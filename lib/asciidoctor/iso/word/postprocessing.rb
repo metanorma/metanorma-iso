@@ -9,16 +9,46 @@ module Asciidoctor
 
         def postprocess(result, filename, dir)
           # http://sebsauvage.net/wiki/doku.php?id=word_document_generation
-          result = cleanup(Nokogiri::XML(result)).to_xml
+          result = cleanup(Nokogiri::XML(result), dir).to_xml
           result = populate_template(msword_fix(result))
           doc_header_files(filename, dir)
           File.open("#{filename}.htm", "w") { |f| f.write(result) }
           mime_package result, filename, dir
         end
 
-        def cleanup(docxml)
+        def cleanup(docxml, dir)
           comment_cleanup(docxml)
           footnote_cleanup(docxml)
+          image_cleanup(docxml, dir)
+          docxml
+        end
+
+        def image_resize(orig_filename)
+          image_size = ImageSize.path(orig_filename).size
+          # max width for Word document is 400, max height is 680
+          if image_size[0] > 400
+            image_size[1] = (image_size[1] * 400 / image_size[0]).ceil
+            image_size[0] = 400
+          end
+          if image_size[1] > 680
+            image_size[0] = (image_size[0] * 680 / image_size[1]).ceil
+            image_size[1] = 680
+          end
+          image_size
+        end
+
+        def image_cleanup(docxml, dir)
+          docxml.xpath(ns("//img")).each do |i|
+            matched = /\.(?<suffix>\S+)$/.match i["src"]
+            uuid = UUIDTools::UUID.random_create.to_s
+            new_full_filename = File.join(dir, "#{uuid}.#{matched[:suffix]}")
+            # presupposes that the image source is local
+            system "cp #{i["src"]} #{new_full_filename}"
+            image_size = image_resize(i["src"])
+            i["src"] = new_full_filename
+            i["height"] = image_size[1]
+            i["width"] = image_size[0]
+          end
         end
 
         def comment_cleanup(docxml)
@@ -96,28 +126,29 @@ module Asciidoctor
         end
 
         def populate_template(docxml)
+          meta = get_metadata
           docxml.
-            gsub(/DOCYEAR/, $iso_docyear).
-            gsub(/DOCNUMBER/, $iso_docnumber).
-            gsub(/TCNUM/, $iso_tc).
-            gsub(/SCNUM/, $iso_sc).
-            gsub(/WGNUM/, $iso_wg).
-            gsub(/DOCTITLE/, $iso_doctitle).
-            gsub(/DOCSUBTITLE/, $iso_docsubtitle).
-            gsub(/SECRETARIAT/, $iso_secretariat).
+            gsub(/DOCYEAR/, meta[:docyear]).
+            gsub(/DOCNUMBER/, meta[:docnumber]).
+            gsub(/TCNUM/, meta[:tc]).
+            gsub(/SCNUM/, meta[:sc]).
+            gsub(/WGNUM/, meta[:wg]).
+            gsub(/DOCTITLE/, meta[:doctitle]).
+            gsub(/DOCSUBTITLE/, meta[:docsubtitle]).
+            gsub(/SECRETARIAT/, meta[:secretariat]).
             gsub(/\[TERMREF\]\s*/, "[SOURCE: ").
             gsub(/\s*\[\/TERMREF\]\s*/, "]").
             gsub(/\s*\[ISOSECTION\]/, ", ").
             gsub(/\s*\[MODIFICATION\]/, ", modified &mdash; ").
-            gsub(%r{WD/CD/DIS/FDIS}, $iso_stageabbr)
+            gsub(%r{WD/CD/DIS/FDIS}, meta[:stageabbr])
         end
 
         def generate_header(filename, dir)
           hdr_file = File.join(File.dirname(__FILE__), "header.html")
           header = File.read(hdr_file, encoding: "UTF-8").
             gsub(/FILENAME/, filename).
-            gsub(/DOCYEAR/, $iso_docyear).
-            gsub(/DOCNUMBER/, $iso_docnumber)
+            gsub(/DOCYEAR/, get_metadata()[:docyear]).
+            gsub(/DOCNUMBER/, get_metadata()[:docnumber])
           File.open(File.join(dir, "header.html"), "w") do |f|
             f.write(header)
           end

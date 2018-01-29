@@ -66,7 +66,6 @@ module Asciidoctor
             p << get_anchors()[node["id"]][:label]
           end
           set_termdomain("")
-          $termnotenumber = 0
           node.children.each { |n| parse(n, out) }
         end
       end
