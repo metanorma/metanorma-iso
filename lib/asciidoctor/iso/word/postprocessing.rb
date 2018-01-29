@@ -89,21 +89,6 @@ module Asciidoctor
         def define_head(html, filename, dir)
           html.head do |head|
             head.title { |t| t << filename }
-            head.parent.add_child <<~XML
-
-              <!--[if gte mso 9]>
-              <xml>
-              <w:WordDocument>
-              <w:View>Print</w:View>
-              <w:Zoom>100</w:Zoom>
-              <w:DoNotOptimizeForBrowser/>
-              </w:WordDocument>
-              </xml>
-              <![endif]-->
-            XML
-            head.meta **{ "http-equiv": "Content-Type",
-                          content: "text/html; charset=utf-8" }
-            head.link **{ rel: "File-List", href: "#{dir}/filelist.xml" }
             head.style do |style|
               fn = File.join(File.dirname(__FILE__), "wordstyle.css")
               style.comment File.read(fn).gsub("FILENAME", filename)
