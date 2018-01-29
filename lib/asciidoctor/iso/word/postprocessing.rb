@@ -86,20 +86,23 @@ module Asciidoctor
           define_head html, filename, dir
         end
 
+        # isodoc.css overrides any CSS injected by Html2Doc, which
+        # is inserted before this CSS.
         def define_head(html, filename, dir)
           html.head do |head|
             head.title { |t| t << filename }
             head.style do |style|
-              fn = File.join(File.dirname(__FILE__), "wordstyle.css")
-              style.comment File.read(fn).gsub("FILENAME", filename)
+              fn = File.join(File.dirname(__FILE__), "isodoc.css")
+              stylesheet = File.read(fn).gsub("FILENAME", filename)
+              style.comment "\n#{stylesheet}\n"
             end
           end
+        end
 
-          def titlepage(_docxml, div)
-            fn = File.join(File.dirname(__FILE__), "iso_titlepage.html")
-            titlepage = File.read(fn, encoding: "UTF-8")
-            div.parent.add_child titlepage
-          end
+        def titlepage(_docxml, div)
+          fn = File.join(File.dirname(__FILE__), "iso_titlepage.html")
+          titlepage = File.read(fn, encoding: "UTF-8")
+          div.parent.add_child titlepage
         end
       end
     end

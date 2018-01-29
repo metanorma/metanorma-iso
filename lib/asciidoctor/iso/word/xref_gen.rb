@@ -28,6 +28,10 @@ module Asciidoctor
           section_names(d.at(ns(
             "//references[title = 'Normative References']")), "2", 1)
           section_names(d.at(ns("//terms")), "3", 1)
+          middle_section_asset_names(d)
+        end
+
+        def middle_section_asset_names(d)
           middle_sections = "//clause[title = 'Scope'] | "\
             "//references[title = 'Normative References'] | //terms | "\
             "//symbols-abbrevs | //clause[parent::sections]"
@@ -70,19 +74,17 @@ module Asciidoctor
         end
 
         def sequential_figure_names(clause)
-          i = 0
-          j = 0
+          i = j = 0
           clause.xpath(ns(".//figure")).each do |t|
+            label = "Figure #{i}" + ( j.zero ? "" : "-#{j}" )
             if t.parent.name == "figure"
               j += 1
-              @@anchors[t["id"]] = { label: "Figure #{i}-#{j}",
-                                     xref: "Figure #{i}-#{j}" }
             else
               j = 0
               i += 1
-              @@anchors[t["id"]] = { label: "Figure #{i}",
-                                     xref: "Figure #{i}" }
             end
+            label = "Figure #{i}" + ( j.zero ? "" : "-#{j}" )
+            @@anchors[t["id"]] = { label: label, xref: label }
           end
         end
 
@@ -103,14 +105,12 @@ module Asciidoctor
           clause.xpath(ns(".//figure")).each do |t|
             if t.parent.name == "figure"
               j += 1
-              @@anchors[t["id"]] = { label: "Figure #{num}.#{i}-#{j}",
-                                     xref: "Figure #{num}.#{i}-#{j}" }
             else
               j = 0
               i += 1
-              @@anchors[t["id"]] = { label: "Figure #{num}.#{i}",
-                                     xref: "Figure #{num}.#{i}" }
             end
+            label = "Figure #{num}.#{i}" + ( j.zero? ? "" : "-#{j}" )
+            @@anchors[t["id"]] = { label: label, xref: label }
           end
         end
 

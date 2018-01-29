@@ -35,9 +35,8 @@ module Asciidoctor
           @@meta[:stage] = documentstatus.text if documentstatus
           @@meta[:stageabbr] =
             Asciidoctor::ISO::ISOXML::Utils::stage_abbreviation(@@meta[:stage])
-          if @@meta[:stage].to_i < 60
+          @@meta[:stage].to_i < 60 and
             @@meta[:docnumber] = @@meta[:stageabbr] + " " + @@meta[:docnumber]
-          end
         end
 
         def version(isoxml, _out)

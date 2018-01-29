@@ -23,7 +23,7 @@ module Asciidoctor
             if date_note
               first = date_note.at(ns("./p"))
               first.content = first.content.gsub(/ISO DATE: /, "")
-            footnote_parse(date_note, ref)
+              footnote_parse(date_note, ref)
             end
             ref << ", " if biblio
             ref.i { |i| i << " #{b.at(ns('./name')).text}" }
@@ -73,16 +73,12 @@ module Asciidoctor
         end
 
         def biblio_list(f, div, bibliography)
-          refbiblio = f.xpath(ns("./reference"))
           bibitems = split_bibitems(f)
-          refbiblio.each_with_index do |b, i|
-            ref_entry(div, b, i + 1, bibliography)
-          end
           bibitems[:iso].each_with_index do |b, i|
-            iso_bibitem_entry(div, b, (i + 1 + refbiblio.size), bibliography)
+            iso_bibitem_entry(div, b, (i + 1), bibliography)
           end
           bibitems[:noniso].each_with_index do |b, i|
-            noniso_bibitem(div, b, (i + 1 + refbiblio.size + bibitems[:iso].size), bibliography)
+            noniso_bibitem(div, b, (i + 1 + bibitems[:iso].size), bibliography)
           end
         end
 

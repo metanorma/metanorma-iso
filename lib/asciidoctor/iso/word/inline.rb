@@ -40,7 +40,7 @@ module Asciidoctor
         end
 
         def callout_parse(node, out)
-          out << " &lt;#{node["id"]}&gt;"
+          out << " &lt;#{node.text}&gt;"
         end
 
         def get_linkend(node)
@@ -51,7 +51,8 @@ module Asciidoctor
           if node["citeas"].nil? && get_anchors().has_key?(node["bibitemid"])
             linkend = get_anchors()[node["bibitemid"]][:xref]
           end
-          linkend = node.text if !node.child.nil? && node.child.text? 
+          text = node.children.select { |c| c.text? && !c.text.empty? }
+          linkend = text.join(" ") unless text.nil? || text.empty?
           # so not <origin bibitemid="ISO7301" citeas="ISO 7301">
           # <locality type="section">3.1</locality></origin>
           linkend
@@ -59,7 +60,7 @@ module Asciidoctor
 
         def xref_parse(node, out)
           linkend = get_linkend(node)
-            out.a **{ "href": node["target"] } { |l| l << linkend }
+          out.a **{ "href": node["target"] } { |l| l << linkend }
         end
 
         def eref_parse(node, out)
@@ -94,8 +95,8 @@ module Asciidoctor
 
         def error_parse(node, out)
           text = node.to_xml.gsub(/</, "&lt;").gsub(/>/, "&gt;")
-            out.para do |p|
-              p.b **{ role: "strong" } { |e| e << text }
+          out.para do |p|
+            p.b **{ role: "strong" } { |e| e << text }
           end
         end
 
@@ -126,11 +127,11 @@ module Asciidoctor
         def make_footnote_text(node, fn)
           noko do |xml|
             xml.div **{ style: "mso-element:footnote", id: "ftn#{fn}" } do |div|
-                div.a **footnote_attributes(fn) do |a|
-                  make_footnote_link(a)
-                end
-                  node.children.each { |n| parse(n, div) }
-                end
+              div.a **footnote_attributes(fn) do |a|
+                make_footnote_link(a)
+              end
+              node.children.each { |n| parse(n, div) }
+            end
           end.join("\n")
         end
 
@@ -139,9 +140,9 @@ module Asciidoctor
           out.a **footnote_attributes(fn) do |a| 
             make_footnote_link(a) 
           end
-                  @@in_footnote = true
+          @@in_footnote = true
           @@footnotes << make_footnote_text(node, fn)
-                  @@in_footnote = false
+          @@in_footnote = false
         end
 
         def comments(div)
@@ -153,7 +154,6 @@ module Asciidoctor
           end
         end
 
-        # We want dates of comments as well
         def make_comment_link(out, fn, date, from)
           out.span **{ style: "MsoCommentReference" } do |s1|
             s1.span **{ lang: "EN-GB", style: "font-size:9.0pt"} do |s2|

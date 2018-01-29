@@ -83,8 +83,8 @@ module Asciidoctor
           def make_body3(body, docxml)
             body.div **{ class: "WordSection3" } do |div3|
               middle docxml, div3
-              footnotes div3 
-              comments div3 
+              footnotes div3
+              comments div3
             end
           end
 
@@ -101,8 +101,13 @@ module Asciidoctor
             introduction isoxml, out
           end
 
+          def middle_title(out)
+            m = get_metadata
+            out.p **{ class: "zzSTDTitle1" } { |p| p << m[:doctitle] }
+          end
+
           def middle(isoxml, out)
-            out.p **{ class: "zzSTDTitle1" } { |p| p << get_metadata()[:doctitle] }
+            middle_title(out)
             scope isoxml, out
             norm_ref isoxml, out
             terms_defs isoxml, out
