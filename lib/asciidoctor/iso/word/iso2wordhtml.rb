@@ -43,7 +43,7 @@ module Asciidoctor
             result = noko do |xml|
               xml.html do |html|
                 html_header(html, docxml, filename, dir)
-                make_body(xml, docxml)
+                make_body(html, docxml)
               end
             end.join("\n")
             postprocess(result, filename, dir)
@@ -102,9 +102,7 @@ module Asciidoctor
           end
 
           def middle(isoxml, out)
-            out.p **{ class: "zzSTDTitle1" } do |p| 
-              p << get_metadata()[:doctitle] 
-            end
+            out.p **{ class: "zzSTDTitle1" } { |p| p << get_metadata()[:doctitle] }
             scope isoxml, out
             norm_ref isoxml, out
             terms_defs isoxml, out

@@ -34,7 +34,7 @@ module Asciidoctor
           @@meta[:docnumber] += "-#{partnumber.text}" if partnumber
           @@meta[:stage] = documentstatus.text if documentstatus
           @@meta[:stageabbr] =
-            Asciidoctor::ISO::ISOXML::Utils::stage_abbreviation(:stage)
+            Asciidoctor::ISO::ISOXML::Utils::stage_abbreviation(@@meta[:stage])
           if @@meta[:stage].to_i < 60
             @@meta[:docnumber] = @@meta[:stageabbr] + " " + @@meta[:docnumber]
           end

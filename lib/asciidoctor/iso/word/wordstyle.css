@@ -1412,18 +1412,22 @@ table.MsoISOTable
 	mso-pagination:widow-orphan;
 	border-collapse:collapse;
 	mso-table-layout-alt:fixed;
-	border:none;
-	mso-border-alt:solid windowtext 1.5pt;
+	border:solid windowtext 2pt;
+	mso-border-alt:solid windowtext 2pt;
 	mso-yfti-tbllook:480;
 	mso-border-insideh:.75pt solid windowtext;
-	mso-border-insidev: .75pt solid windowtext;
+	mso-border-insidev:.75pt solid windowtext;
 	font-size:10.0pt;
 	font-family:"Cambria",serif;}
 table.MsoISOTable tr
     {page-break-inside:avoid;}
+table.MsoISOTable th
+    {border:solid windowtext 1pt;
+    mso-border-alt:solid windowtext 1pt;
+    padding:0cm 2.85pt 0cm 2.85pt;}
 table.MsoISOTable td
-    {border:solid windowtext 1.5pt;
-    mso-border-alt:solid windowtext 1.5pt;
+    {border:solid windowtext 1pt;
+    mso-border-alt:solid windowtext 1pt;
     padding:0cm 2.85pt 0cm 2.85pt;}
 table.MsoTableGrid
 	{mso-style-name:"Table Grid";

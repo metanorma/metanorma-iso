@@ -70,15 +70,18 @@ module Asciidoctor
           # out.p { |p| p << "&nbsp;" }
         end
 
-        @@sw = "solid windowtex"
+        @@sw = "solid windowtext"
 
+          #border-left:#{col.zero? ? "#{@@sw} 1.5pt;" : "none;"}
+          #border-right:#{@@sw} #{col == totalcols && !header ? "1.5" : "1.0"}pt;
         def make_tr_attr(td, row, totalrows, col, totalcols, header)
           style = td.name == "th" ? "font-weight:bold;" : ""
+          rowmax = td["rowspan"] ? row + td["rowspan"].to_i - 1 : row
           style += <<~STYLE
-          border-left:#{col.zero? ? "#{@@sw} 1.5pt;" : "none;"}
-          border-right:#{@@sw} #{col == totalcols && !header ? "1.5" : "1.0"}pt;
           border-top:#{row.zero? ? "#{@@sw} 1.5pt;" : "none;"}
-          border-bottom:#{@@sw} #{row == totalrows ? "1.5" : "1.0"}pt;
+          mso-border-top-alt:#{row.zero? ? "#{@@sw} 1.5pt;" : "none;"}
+          border-bottom:#{@@sw} #{rowmax == totalrows ? "1.5" : "1.0"}pt;
+          mso-border-bottom-alt:#{@@sw} #{rowmax == totalrows ? "1.5" : "1.0"}pt;
           STYLE
           { rowspan: td["rowspan"], colspan: td["colspan"],
             align: td["align"], style: style.gsub(/\n/, "") }

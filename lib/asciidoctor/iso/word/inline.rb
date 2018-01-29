@@ -67,7 +67,7 @@ module Asciidoctor
           section = node.at(ns("./locality"))
           section.nil? or
             linkend += ", #{section["type"].capitalize} #{section.text}"
-          if node["format"] == "footnote"
+          if node["type"] == "footnote"
             out.sup do |s|
               s.a **{ "href": node["bibitemid"] } { |l| l << linkend }
             end

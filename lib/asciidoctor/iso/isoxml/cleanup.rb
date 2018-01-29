@@ -12,7 +12,7 @@ module Asciidoctor
       module Cleanup
         class << self
           def textcleanup(text)
-            text.gsub(/ <fn>/, "<fn>")
+            text.gsub(/\s+<fn /, "<fn ")
           end
 
           @@anchors = {}
