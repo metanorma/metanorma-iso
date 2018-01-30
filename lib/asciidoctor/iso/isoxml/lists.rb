@@ -5,7 +5,7 @@ module Asciidoctor
       module Lists
         def li(xml_ul, item)
           xml_ul.li do |xml_li|
-            Validate::style(item, item.text)
+            style(item, item.text)
             if item.blocks?
               xml_li.p **id_attr(item) do |t|
                 t << item.text 
@@ -156,7 +156,7 @@ module Asciidoctor
 
         def dt(terms, xml_dl)
           terms.each_with_index do |dt, idx|
-            Validate::style(dt, dt.text)
+            style(dt, dt.text)
             xml_dl.dt { |xml_dt| xml_dt << dt.text }
             if idx < terms.size - 1
               xml_dl.dd
@@ -170,7 +170,7 @@ module Asciidoctor
             return
           end
           xml_dl.dd do |xml_dd|
-            Validate::style(dd, dd.text)
+            style(dd, dd.text)
             xml_dd.p { |t| t << dd.text } if dd.text?
             xml_dd << dd.content if dd.blocks?
           end
@@ -191,7 +191,7 @@ module Asciidoctor
           noko do |xml|
             node.items.each_with_index do |item, i|
               xml_ul.annotation **attr_code(id: i + 1) do |xml_li|
-                Validate::style(item, item.text)
+                style(item, item.text)
                 xml_li.p { |p| p << item.text }
               end
             end

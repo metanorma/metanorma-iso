@@ -8,7 +8,6 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Validate
-        class << self
 
           def title_intro_validate(root)
             title_intro_en = root.at("//title[@language='en']/title-intro")
@@ -210,4 +209,3 @@ module Asciidoctor
       end
     end
   end
-end

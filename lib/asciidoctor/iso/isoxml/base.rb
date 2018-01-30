@@ -12,6 +12,7 @@ module Asciidoctor
     module ISOXML
       module Base
         @@fn_number = 0
+        @@draft = false
 
         def content(node)
           node.content
@@ -30,10 +31,10 @@ module Asciidoctor
           result << noko { |ixml| front node, ixml }
           result << noko { |ixml| middle node, ixml }
           result << "</iso-standard>"
-          result = Cleanup::textcleanup(result.flatten * "\n")
-          ret1 = Cleanup::cleanup(Nokogiri::XML(result))
+          result = textcleanup(result.flatten * "\n")
+          ret1 = cleanup(Nokogiri::XML(result))
           ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
-          Validate::validate(ret1)
+          validate(ret1)
           ret1.to_xml(indent: 2)
         end
         
@@ -90,7 +91,7 @@ module Asciidoctor
             xml.termsource **attrs do |xml_t|
               seen_xref = Nokogiri::XML.fragment(matched[:xref])
               add_term_source(xml_t, seen_xref, matched)
-              Validate::style(node, matched[:text])
+              style(node, matched[:text])
             end
           end.join("\n")
         end
@@ -102,7 +103,7 @@ module Asciidoctor
           noko do |xml|
             xml.p **attr_code(attrs) do |xml_t|
               xml_t << node.content
-              Validate::style(node, Utils::flatten_rawtext(node).join(" "))
+              style(node, Utils::flatten_rawtext(node).join(" "))
             end
           end.join("\n")
         end
@@ -113,7 +114,7 @@ module Asciidoctor
             xml.fn **{reference: @@fn_number} do |fn|
               # TODO multi-paragraph footnotes
               fn.p { |p| p << node.text }
-              Validate::footnote_style(node, node.text)
+              footnote_style(node, node.text)
             end
           end.join("\n")
         end

@@ -10,7 +10,6 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Cleanup
-        class << self
           def textcleanup(text)
             text.gsub(/\s+<fn /, "<fn ")
           end
@@ -304,4 +303,3 @@ module Asciidoctor
       end
     end
   end
-end

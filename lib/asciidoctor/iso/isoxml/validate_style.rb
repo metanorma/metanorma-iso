@@ -7,7 +7,7 @@ module Asciidoctor
   module ISO
     module ISOXML
       module Validate
-        class << self
+
           @@requirement_re_str = <<~REGEXP
             \\b
              ( shall | (is|are)_to |
@@ -175,4 +175,3 @@ module Asciidoctor
       end
     end
   end
-end

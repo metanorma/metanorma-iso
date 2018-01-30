@@ -26,7 +26,7 @@ module Asciidoctor
             thd << cell.content
           else
             thd << cell.text
-            Validate::style(cell, cell.text)
+            style(cell, cell.text)
           end
         end
 

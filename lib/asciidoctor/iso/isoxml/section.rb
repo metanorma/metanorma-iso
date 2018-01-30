@@ -62,7 +62,7 @@ module Asciidoctor
 
         def clause_parse(attrs, xml, node)
           w = "Scope contains subsections: should be succint"
-          Validate::style_warning(node, w, nil) if @@scope
+          style_warning(node, w, nil) if @@scope
           # Not testing max depth of sections: Asciidoctor already limits
           # it to 5 levels of nesting
           sect = node.level == 1 ? "clause" : "subsection"
@@ -134,7 +134,7 @@ module Asciidoctor
             xml_section.title = "Introduction"
             content = node.content
             xml_section << content
-            Validate::introduction_style(node,
+            introduction_style(node,
                                          Utils::flatten_rawtext(content).
                                          join("\n"))
           end
@@ -154,7 +154,7 @@ module Asciidoctor
             content = node.content
             xml_section << content
             c = Utils::flatten_rawtext(content).join("\n")
-            Validate::scope_style(node, c)
+            scope_style(node, c)
           end
           @@scope = false
         end

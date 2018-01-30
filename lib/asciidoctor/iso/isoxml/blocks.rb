@@ -16,7 +16,7 @@ module Asciidoctor
           noko do |xml|
             xml.formula **id_attr(node) do |s|
               s.stem stem_content, **{ type: "MathML" }
-              Validate::style(node, stem_content)
+              style(node, stem_content)
             end
           end
         end
@@ -48,7 +48,7 @@ module Asciidoctor
           noko do |xml|
             xml.termnote **id_attr(n) do |xml_cref|
               xml_cref << n.content
-              Validate::style(n, Utils::flatten_rawtext(n.content).join("\n"))
+              style(n, Utils::flatten_rawtext(n.content).join("\n"))
             end
           end.join("\n")
         end
@@ -61,7 +61,7 @@ module Asciidoctor
                 c.p { |p| p << n.content }
               end
               text = Utils::flatten_rawtext(n.content).join("\n")
-              Validate::note_style(n, text)
+              note_style(n, text)
             end
           end.join("\n")
         end
@@ -97,7 +97,7 @@ module Asciidoctor
                 ex.p {|p| p << c }
               end
               text = Utils::flatten_rawtext(c).join("\n")
-              Validate::termexample_style(node, text)
+              termexample_style(node, text)
             end
           end.join("\n")
         end
@@ -109,7 +109,7 @@ module Asciidoctor
               content = node.content
               ex << content
               text = Utils::flatten_rawtext(content).join("\n")
-              Validate::termexample_style(node, text)
+              termexample_style(node, text)
             end
           end.join("\n")
         end
@@ -121,7 +121,7 @@ module Asciidoctor
               content = node.content
               xml_abstract << content
               text = Utils::flatten_rawtext(content).join("\n")
-              Validate::foreword_style(node, text)
+              foreword_style(node, text)
             end
           end.join("\n")
         end
