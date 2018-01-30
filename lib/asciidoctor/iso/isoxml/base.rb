@@ -5,7 +5,7 @@ require "json"
 require "pathname"
 require "open-uri"
 require "pp"
-require "asciidoctor/iso/word/iso2wordhtml"
+require "isodoc"
 
 module Asciidoctor
   module ISO
@@ -26,6 +26,16 @@ module Asciidoctor
         end
 
         def document(node)
+          ret1 = makexml(node)
+          validate(ret1)
+          ret = ret1.to_xml(indent: 2)
+          filename = node.attr("docfile").gsub(/\.adoc/, ".xml").gsub(%r{^.*/}, '')
+          File.open("#{filename}", "w") { |f| f.write(ret) }
+          IsoDoc::convert filename
+          ret
+        end
+
+        def makexml(node)
           result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
           @@draft = node.attributes.has_key?("draft")
           result << noko { |ixml| front node, ixml }
@@ -34,10 +44,9 @@ module Asciidoctor
           result = textcleanup(result.flatten * "\n")
           ret1 = cleanup(Nokogiri::XML(result))
           ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
-          validate(ret1)
-          ret1.to_xml(indent: 2)
+          ret1
         end
-        
+
         def is_draft
           @@draft
         end

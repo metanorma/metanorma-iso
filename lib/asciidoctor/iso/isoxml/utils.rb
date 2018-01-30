@@ -17,22 +17,6 @@ module Asciidoctor
             node.nil? || node.id.nil? || node.id.empty? ? "_" + uuid : node.id
           end
 
-          @@stage_abbrs = {
-            "00": "PWI",
-            "10": "NWIP",
-            "20": "WD",
-            "30": "CD",
-            "40": "DIS",
-            "50": "FDIS",
-            "60": "IS",
-            "90": "(Review)",
-            "95": "(Withdrawal)",
-          }.freeze
-
-          def stage_abbreviation(stage)
-            @@stage_abbrs[stage.to_sym] || "??"
-          end
-
           def current_location(n)
             return "Line #{n.lineno}" if n.respond_to?(:lineno) &&
               !n.lineno.nil? && !n.lineno.empty?
