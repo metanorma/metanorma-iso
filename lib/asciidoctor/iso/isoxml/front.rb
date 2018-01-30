@@ -53,11 +53,15 @@ module Asciidoctor
           end
         end
 
-        def metadata(node, xml)
+        def metadata_status(node, xml)
           xml.status do |s|
             s.stage ( node.attr("docstage") || "60" )
             s.substage ( node.attr("docsubstage") || "60" )
           end
+        end
+
+        def metadata(node, xml)
+          metadata_status(node, xml)
           metadata_author(node, xml)
           xml.language node.attr("language")
           xml.script "latn"
