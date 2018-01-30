@@ -318,11 +318,6 @@
       </zeroOrMore>
     </element>
   </define>
-  <define name="isotitle">
-    <element name="isotitle">
-      <text/>
-    </element>
-  </define>
   <define name="terms">
     <element name="terms">
       <optional>
@@ -1287,7 +1282,7 @@
       <ref name="edition"/>
     </optional>
     <zeroOrMore>
-      <ref name="note"/>
+      <ref name="biblioNote"/>
     </zeroOrMore>
     <zeroOrMore>
       <ref name="partOf"/>
@@ -1301,6 +1296,9 @@
     <zeroOrMore>
       <ref name="script"/>
     </zeroOrMore>
+    <optional>
+      <ref name="abstract"/>
+    </optional>
   </define>
   <define name="bname">
     <element name="name">
@@ -1336,6 +1334,16 @@
   </define>
   <define name="creationdate">
     <element name="creationdate">
+      <text/>
+    </element>
+  </define>
+  <define name="abstract">
+    <element name="abstract">
+      <text/>
+    </element>
+  </define>
+  <define name="biblioNote">
+    <element name="note">
       <text/>
     </element>
   </define>

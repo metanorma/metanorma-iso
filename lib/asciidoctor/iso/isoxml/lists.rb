@@ -56,9 +56,7 @@ module Asciidoctor
             t.publishDate "--"
             t.docidentifier matched[:code]
             iso_publisher(t)
-            t.note do |c|
-              c.p { |p| p << "ISO DATE: #{matched[:fn]}" }
-            end
+            t.note { |p| p << "ISO DATE: #{matched[:fn]}" }
           end
         end
 

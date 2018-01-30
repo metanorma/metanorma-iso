@@ -10,20 +10,25 @@ module Asciidoctor
           reference
         end
 
+        def date_note_process(b, ref)
+          date_note = b.xpath(ns("./note[text()][contains(.,'ISO DATE:')]"))
+          unless date_note.empty?
+            date_note.first.content =
+              date_note.first.content.gsub(/ISO DATE: /, "")
+            date_note.wrap("<p></p>")
+            footnote_parse(date_note.first, ref)
+          end
+        end
+
         def iso_bibitem_entry(list, b, ordinal, biblio)
           attrs = { id: b["id"], class: biblio ? "Biblio" : nil }
           list.p **attr_code(attrs) do |ref|
-            date_note = b.at(ns("./note[text()][contains(.,'ISO DATE:')]"))
             if biblio
               ref << "[#{ordinal}]"
               insert_tab(ref, 1)
             end
             ref << iso_bibitem_ref_code(b)
-            if date_note
-              first = date_note.at(ns("./p"))
-              first.content = first.content.gsub(/ISO DATE: /, "")
-              footnote_parse(date_note, ref)
-            end
+            date_note_process(b, ref)
             ref << ", " if biblio
             ref.i { |i| i << " #{b.at(ns('./name')).text}" }
           end

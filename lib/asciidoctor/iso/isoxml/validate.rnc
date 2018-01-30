@@ -176,9 +176,6 @@ references =
     references*
 }
 
-isotitle = 
-  element isotitle { text }
-
 terms = 
   element terms { 
     attribute id { xsd:ID }?,
@@ -591,7 +588,8 @@ BibItemType =
      "unpublished" ) }?,
   ( bname | formatted ), 
   source?, publishdate?, docidentifier*, accesseddate?, creator*, 
-  publisher*, edition?, note*, partOf*, creationdate?, language*, script*
+  publisher*, edition?, biblioNote*, partOf*, creationdate?, language*, script*,
+  abstract?
 
 bname = element name { text }
 formatted = element formatted { TextElement+ }
@@ -600,6 +598,8 @@ publishdate = element publishdate { text }
 docidentifier = element docidentifier { text }
 accesseddate = element accesseddate { text }
 creationdate = element creationdate { text }
+abstract = element abstract { text }
+biblioNote = element note { text }
 
 partOf = element partOf { BibItemType }
 
