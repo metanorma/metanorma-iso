@@ -54,7 +54,7 @@ module Asciidoctor
         end
 
         def termref_parse(node, out)
-          out.p **{ class: "MsoNormal" } do |p|
+          out.p do |p|
             p << "[TERMREF]"
             node.children.each { |n| parse(n, p) }
             p << "[/TERMREF]"

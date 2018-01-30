@@ -11,8 +11,7 @@ module Asciidoctor
         end
 
         def iso_bibitem_entry(list, b, ordinal, biblio)
-          attrs = { id: b["id"],
-                    class: biblio ? "Biblio" : "MsoNormal" }
+          attrs = { id: b["id"], class: biblio ? "Biblio" : nil }
           list.p **attr_code(attrs) do |ref|
             date_note = b.at(ns("./note[text()][contains(.,'ISO DATE:')]"))
             if biblio
@@ -98,7 +97,7 @@ module Asciidoctor
             ["reference", "bibitem"].include? e.name
           end
           pref = refs.empty? ? @@norm_empty_pref : @@norm_with_refs_pref
-          div.p pref, **{ class: "MsoNormal" }
+          div.p pref
         end
 
         def norm_ref(isoxml, out)

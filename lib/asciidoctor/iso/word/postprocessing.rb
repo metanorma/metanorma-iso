@@ -12,6 +12,9 @@ module Asciidoctor
           generate_header(filename, dir)
           result = cleanup(Nokogiri::XML(result)).to_xml
           result = populate_template(result)
+          File.open("#{filename}.out.html", "w") do |f|
+            f.write(result)
+          end
           Html2Doc.process(result, filename, "header.html", dir)
         end
 
@@ -22,7 +25,7 @@ module Asciidoctor
         end
 
         def comment_cleanup(docxml)
-          docxml.xpath('//xmlns:div/xmlns:span[@style="MsoCommentReference"]').
+          docxml.xpath('//div/span[@style="MsoCommentReference"]').
             each do |x|
             prev = x.previous_element
             if !prev.nil?
@@ -33,7 +36,7 @@ module Asciidoctor
         end
 
         def footnote_cleanup(docxml)
-          docxml.xpath('//xmlns:div[@style="mso-element:footnote"]/xmlns:a').
+          docxml.xpath('//div[@style="mso-element:footnote"]/a').
             each do |x|
             n = x.next_element
             if !n.nil?
@@ -75,13 +78,6 @@ module Asciidoctor
         # these are in fact preprocess,
         # but they are extraneous to main HTML file
         def html_header(html, docxml, filename, dir)
-          p = html.parent
-          {
-            o: "urn:schemas-microsoft-com:office:office",
-            w: "urn:schemas-microsoft-com:office:word",
-            m: "http://schemas.microsoft.com/office/2004/12/omml",
-          }.each { |k, v| p.add_namespace_definition(k.to_s, v) }
-          p.add_namespace(nil, "http://www.w3.org/TR/REC-html40")
           anchor_names docxml
           define_head html, filename, dir
         end

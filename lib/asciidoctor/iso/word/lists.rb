@@ -17,10 +17,7 @@ module Asciidoctor
         }.freeze
 
         def ol_style(type)
-          style = @@ol_style[type.to_sym]
-          #ret = nil
-          #ret = "mso-level-number-format: #{style};" unless style.empty?
-          style
+          @@ol_style[type.to_sym]
         end
 
         def ol_parse(node, out)
@@ -31,12 +28,18 @@ module Asciidoctor
           end
         end
 
+        def li_parse(node, out)
+          out.li do |li|
+            node.children.each { |n| parse(n, li) }
+          end
+        end
+
         def dl_parse(node, out)
           out.dl do |v|
             node.elements.each_slice(2) do |dt, dd|
               v.dt do |term|
                 if dt.elements.empty?
-                  term.p **{ class: is_note ? "Note" : "MsoNormal" } do
+                  term.p **attr_code(class: is_note ? "Note" : nil) do
                     |p| p << dt.text
                   end
                 else

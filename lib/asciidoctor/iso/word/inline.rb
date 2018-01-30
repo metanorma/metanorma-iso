@@ -33,12 +33,6 @@ module Asciidoctor
           out.a **{ "href": node["target"] } { |l| l << linktext }
         end
 
-        def li_parse(node, out)
-          out.li **{ class: "MsoNormal" } do |li|
-            node.children.each { |n| parse(n, li) }
-          end
-        end
-
         def callout_parse(node, out)
           out << " &lt;#{node.text}&gt;"
         end

@@ -62,7 +62,7 @@ module Asciidoctor
         end
 
         def figure_key(out)
-          out.p **{ class: "MsoNormal" } do |p| 
+          out.p do |p| 
             p.b { |b| b << "Key" }
           end
         end
@@ -106,7 +106,7 @@ module Asciidoctor
 
         def admonition_parse(node, out)
           name = node["type"]
-          out.div **{ class: "MsoBlockText" } do |t|
+          out.div **{ class: "Admonition" } do |t|
             t.p.b { |b| b << name.upcase } if name
             node.children.each do |n|
               parse(n, t)
@@ -122,13 +122,13 @@ module Asciidoctor
             div << "(#{get_anchors()[node['id']][:label]})"
           end
           if dl
-            out.p **{ class: "MsoNormal" } { |p| p << "where" }
+            out.p { |p| p << "where" }
             parse(dl, out) 
           end
         end
 
         def para_attrs(node)
-          classtype = "MsoNormal"
+          classtype = nil
           classtype = "Note" if @@note
           classtype = "MsoFootnoteText" if in_footnote
           attrs = { class: classtype }
@@ -157,7 +157,7 @@ module Asciidoctor
 
         def quote_parse(node, out)
           attrs = para_attrs(node)
-          attrs[:class] = "MsoNormalIndent"
+          attrs[:class] = "Quote"
           out.p **attr_code(attrs) do |p|
             node.children.each do 
               |n| parse(n, p) unless ["author", "source"].include? n.name
