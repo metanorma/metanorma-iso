@@ -8,7 +8,6 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module ISOXML
       module Cleanup
           def textcleanup(text)
             text.gsub(/\s+<fn /, "<fn ")
@@ -302,4 +301,3 @@ module Asciidoctor
         end
       end
     end
-  end

@@ -3,7 +3,6 @@ require "uri"
 
 module Asciidoctor
   module ISO
-    module ISOXML
       module Section
         @@scope = false
         @@biblio = false
@@ -161,4 +160,3 @@ module Asciidoctor
       end
     end
   end
-end

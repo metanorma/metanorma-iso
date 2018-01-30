@@ -1,7 +1,6 @@
 require "pp"
 module Asciidoctor
   module ISO
-    module ISOXML
       module Lists
         def li(xml_ul, item)
           xml_ul.li do |xml_li|
@@ -200,4 +199,3 @@ module Asciidoctor
       end
     end
   end
-end

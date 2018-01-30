@@ -8,8 +8,7 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module ISOXML
-      module Front
+    module Front
         def metadata_id(node, xml)
           xml.id do |i|
             i.projectnumber node.attr("docnumber"),
@@ -87,4 +86,3 @@ module Asciidoctor
       end
     end
   end
-end

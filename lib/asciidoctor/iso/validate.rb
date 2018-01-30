@@ -1,4 +1,4 @@
-require "asciidoctor/iso/isoxml/utils"
+require "asciidoctor/iso/utils"
 require_relative './validate_style.rb'
 require "nokogiri"
 require "jing"
@@ -6,7 +6,6 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module ISOXML
       module Validate
 
           def title_intro_validate(root)
@@ -208,4 +207,3 @@ module Asciidoctor
         end
       end
     end
-  end

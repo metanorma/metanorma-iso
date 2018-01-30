@@ -9,7 +9,6 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module ISOXML
       module Utils
         class << self
           def anchor_or_uuid(node = nil)
@@ -101,4 +100,3 @@ module Asciidoctor
       end
     end
   end
-end

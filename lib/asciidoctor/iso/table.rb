@@ -1,6 +1,5 @@
 module Asciidoctor
   module ISO
-    module ISOXML
       module Table
         def table_attrs(node)
           { id: Utils::anchor_or_uuid(node),
@@ -54,4 +53,3 @@ module Asciidoctor
       end
     end
   end
-end

@@ -9,7 +9,6 @@ require "isodoc"
 
 module Asciidoctor
   module ISO
-    module ISOXML
       module Base
         @@fn_number = 0
         @@draft = false
@@ -191,4 +190,3 @@ module Asciidoctor
       end
     end
   end
-end

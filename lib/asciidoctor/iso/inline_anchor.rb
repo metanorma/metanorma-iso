@@ -1,6 +1,5 @@
 module Asciidoctor
   module ISO
-    module ISOXML
       module InlineAnchor
         class << self
           @@refids = Set.new
@@ -60,4 +59,3 @@ module Asciidoctor
       end
     end
   end
-end
