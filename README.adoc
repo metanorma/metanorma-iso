@@ -362,30 +362,9 @@ these are otherwise suppressed.
 
 == Data Models
 
-=== Standard Document Model
-
-image::models/standard-document.png[]
-
-=== Bibliographic Models
-
-image::models/bibliography.png[]
-
-=== Terms and References Model
-
-image::models/terms.png[]
-
-=== Text Section Model
-
-image::models/section.png[]
-
-=== Text Block Model
-
-image::models/blocks.png[]
-
-=== Text Model
-
-image::models/text.png[]
-
+The IsoDoc data model (IsoStandardDocument) is instantiated from the
+https://github.com/riboseinc/isodoc-models[StandardDocument model]. For details
+please visit that page.
 
 
 == Examples
