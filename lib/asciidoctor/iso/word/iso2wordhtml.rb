@@ -13,6 +13,7 @@ require "asciidoctor/iso/word/section"
 require "asciidoctor/iso/word/references"
 require "asciidoctor/iso/word/terms"
 require "asciidoctor/iso/word/blocks"
+require "asciidoctor/iso/word/lists"
 require "asciidoctor/iso/word/table"
 require "asciidoctor/iso/word/inline"
 require "asciidoctor/iso/word/xref_gen"
@@ -31,6 +32,7 @@ module Asciidoctor
           include ::Asciidoctor::ISO::Word::References
           include ::Asciidoctor::ISO::Word::Terms
           include ::Asciidoctor::ISO::Word::Blocks
+          include ::Asciidoctor::ISO::Word::Lists
           include ::Asciidoctor::ISO::Word::Table
           include ::Asciidoctor::ISO::Word::Inline
           include ::Asciidoctor::ISO::Word::XrefGen
