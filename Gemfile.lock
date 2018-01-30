@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 19e66416cc076a4a64640dc5ff8ae1e0c052b40e
+  revision: 6ae6e344293a74920cc18a0bf01373f4f7c81d55
   specs:
     html2doc (0.0.1)
       htmlentities (~> 4.3.4)
@@ -20,7 +20,7 @@ PATH
       htmlentities (~> 4.3.4)
       image_size
       mime-types
-      nokogiri (~> 1.8.1)
+      nokogiri (= 1.8.1)
       ruby-jing
       ruby-xslt
       thread_safe
@@ -98,7 +98,7 @@ GEM
     rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
-    rspec-support (3.7.0)
+    rspec-support (3.7.1)
     rubocop (0.52.1)
       parallel (~> 1.10)
       parser (>= 2.4.0.2, < 3.0)
