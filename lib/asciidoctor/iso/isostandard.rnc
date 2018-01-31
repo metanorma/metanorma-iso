@@ -1,0 +1,169 @@
+default namespace  = "http://riboseinc.com/isoxml"
+grammar { start =   iso-standard                                                                                                                                 standard-document = element  standard-document  {   title + ,   status  ,   creator * ,   language  ,   script  ,   type ? ,   id * ,   version ? ,   copyright  ,   sections + } 
+  title = element  title  { attribute  language  { text  }  ,   title-intro ? ,   title-main  ,   title-part ? } 
+  status = element  status  {   stage  ,   substage ? } 
+  language = element  language  { (  "en"  |  "fr"  )  } 
+  script = element  script  {  "latn"  } 
+  type = element  type  { (  "international-standard"  |  "technical-specification"  |  "technical-report"  |  "publicly-available-specification"  |  "international-workshop-agreement"  |  "guide"  )  } 
+  id = element  id  {   documentnumber  ,   tc-documentnumber ? } 
+  version = element  version  {   edition ? ,   revision-date ? } 
+  edition = element  edition  {   xsd:int  } 
+  revision-date = element  revision-date  {   xsd:date  } 
+  copyright = element  copyright  {   from  ,   owner  } 
+  from = element  from  {   xsd:gYear  } 
+  to = element  to  {   xsd:gYear  } 
+  owner = element  owner  {   owner-affiliation  } 
+  sections = element  sections  {   content  ,   content ? ,   clause  ,   references  ,   terms  ,   clause + ,   annex * ,   references ? } 
+  section-title = element  title  { text  } 
+  content = element  content  {   Content-Section  } 
+  content-subsection = element  subsection  {   Content-Section  } 
+  Content-Section = attribute  id  {   xsd:ID  } ? ,   section-title ? , (   BasicBlock + |   content-subsection + )   clause = element  clause  {   Clause-Section  } 
+  Clause-Section = attribute  id  {   xsd:ID  } ? ,   section-title ? , (   BasicBlock + |   clause-subsection + )   clause-subsection = element  subsection  {   Clause-Section  } 
+  annex = element  annex  { attribute  id  {   xsd:ID  } ? , attribute  subtype  {  "normative"  |  "informative"  } ? ,   section-title ? ,   BasicBlock * ,   clause-hanging-paragraph-with-footnote * } 
+  references = element  references  { attribute  id  {   xsd:ID  } ? ,   section-title ? ,   bibitem * ,   references * } 
+  terms = element  terms  { attribute  id  {   xsd:ID  } ? ,   section-title ? ,   paragraph-with-footnote * ,   ul ? , (   term + |   terms ? )  } 
+  term = element  term  { attribute  id  {   xsd:ID  } ? ,   preferred  ,   admitted * ,   deprecates * ,   termdomain ? ,   definition ? ,   termnote * ,   termexample * ,   termsource * } 
+  preferred = element  preferred  {   TextElement + } 
+  admitted = element  admitted  {   TextElement + } 
+  deprecates = element  deprecates  {   TextElement + } 
+  termdomain = element  domain  {   TextElement + } 
+  definition = element  definition  { (   paragraph  |   figure  |   formula  ) + } 
+  termnote = element  termnote  { attribute  id  {   xsd:ID  }  ,   paragraph  } 
+  termexample = element  termexample  { attribute  id  {   xsd:ID  }  ,   BasicBlock  } 
+  termsource = element  termsource  { attribute  status  { (  "identical"  |  "modified"  )  }  ,   origin  ,   modification ? } 
+  origin = element  origin  { attribute  citeas  { text  }  ,   CitationType  } 
+  modification = element  modification  {   paragraph  } 
+  BasicBlock =   paragraph-with-footnote  |   table  |   note  |   formula  |   admonition  |   ol  |   ul  |   dl  |   figure  |   quote  |   sourcecode  |   example   paragraph = element  p  {   ParagraphType  } 
+  Alignments = (  "left"  |  "right"  |  "center"  |  "justified"  )   ParagraphType = attribute  id  {   xsd:ID  }  , attribute  alignment  {   Alignments  } ? , (   TextElement  ) * ,   review *  paragraph-with-footnote = element  p  { attribute  id  {   xsd:ID  }  , attribute  alignment  {   Alignments  } ? , (   TextElement  |   fn  ) * ,   review * } 
+  note = element  note  { attribute  id  {   xsd:ID  }  ,   paragraph-with-footnote + } 
+  review = element  review  { attribute  id  {   xsd:ID  }  , attribute  reviewer  { text  } ? , attribute  date  {   xsd:date  } ? , attribute  from  {   xsd:ID  }  , attribute  to  {   xsd:ID  }  ,   paragraph + } 
+  formula = element  formula  { attribute  id  {   xsd:ID  }  ,   stem  ,   dl ? } 
+  quote = element  quote  { attribute  id  {   xsd:ID  }  , attribute  alignment  {   Alignments  } ? ,   quote-source ? ,   quote-author ? ,   paragraph-with-footnote + } 
+  quote-source = element  source  {   CitationInfo  } 
+  quote-author = element  author  {   CreatorInfo  } 
+  sourcecode = element  sourcecode  { attribute  id  {   xsd:ID  }  ,   tname ? , ( text  |   callout  ) + ,   annotation * } 
+  table = element  table  { attribute  id  {   xsd:ID  }  ,   tname ? ,   thead ? ,   tfoot ? ,   tbody  ,   table-note * ,   dl ? } 
+  tname = element  tname  { text  } 
+  thead = element  thead  {   tr + } 
+  tfoot = element  tfoot  {   tr  } 
+  tbody = element  tbody  {   tr + } 
+  table-note = element  note  {   ParagraphType  } 
+  tr = element  tr  { (   td  |   th  ) + } 
+  td = element  td  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   review  ) * |   paragraph-with-footnote + )  } 
+  th = element  th  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   review  ) * |   paragraph-with-footnote + )  } 
+  example = element  example  { attribute  id  {   xsd:ID  }  , (   formula  |   ul  |   ol  |   dl  |   quote  |   sourcecode  |   paragraph-with-footnote  |   review  ) + } 
+  admonition = element  admonition  { attribute  id  {   xsd:ID  }  , attribute  type  { (  "danger"  |  "caution"  |  "warning"  |  "important"  |  "safety precautions"  )  }  ,   paragraph-with-footnote + } 
+  figure = element  figure  { attribute  id  {   xsd:ID  }  ,   tname ? , (   image  |   figure + )  ,   fn * ,   dl ? ,   note * } 
+  TextElement = text  |   em  |   eref  |   strong  |   stem  |   sub  |   sup  |   tt  |   strike  |   smallcap  |   xref  |   br  |   hyperlink  |   hr  |   pagebreak  |   bookmark   em = element  em  { text  } 
+  strong = element  strong  { text  } 
+  sub = element  sub  { text  } 
+  sup = element  sup  { text  } 
+  strike = element  strike  { text  } 
+  smallcap = element  smallcap  {   smallcap  } 
+  br = element  br  { empty  } 
+  hr = element  hr  { empty  } 
+  pagebreak = element  pagebreak  { empty  } 
+  bookmark = element  bookmark  { attribute  id  {   xsd:ID  }  , empty  } 
+  ReferenceFormat = (  "external"  |  "inline"  |  "footnote"  |  "callout"  )   eref = element  eref  { attribute  normative  {   xsd:boolean  } ? , attribute  citeas  { text  }  , attribute  type  {   ReferenceFormat  }  ,   CitationType  , text  } 
+  hyperlink = element  link  { attribute  target  {   xsd:anyURI  }  , text  } 
+  xref = element  xref  { attribute  target  {   xsd:IDREF  }  , text  } 
+  fn = element  fn  { attribute  reference  { text  }  ,   paragraph + } 
+  callout = element  callout  { attribute  target  {   xsd:IDREF  }  , text  } 
+  image = element  image  { attribute  id  {   xsd:ID  }  , attribute  src  {   xsd:anyURI  } ? , attribute  imageType  { (  "SVG"  |  "JPEG"  |  "GIF"  |  "PNG"  |  "PDF"  )  }  , attribute  width  {   xsd:int  } ? , attribute  height  {   xsd:int  } ? } 
+  stem = element  stem  { attribute  type  {  "MathML"  |  "AsciiML"  }  , text  } 
+  annotation = element  annotation  { attribute  id  {   xsd:ID  }  ,   paragraph  } 
+  ul = element  ul  { attribute  id  {   xsd:ID  }  ,   li + } 
+  li = element  li  {   BasicBlock + } 
+  ol = element  ol  { attribute  id  {   xsd:ID  }  , attribute  type  { (  "roman"  |  "alphabet"  |  "arabic"  |  "roman_upper"  |  "alphabet_upper"  )  }  ,   li + } 
+  dl = element  dl  { attribute  id  {   xsd:ID  }  , (   dt  ,   dd  ) + } 
+  dt = element  dt  {   TextElement  } 
+  dd = element  dd  {   BasicBlock  } 
+  creator = element  creator  { attribute  role  { text  }  ,   technical-committee  ,   subcommittee ? ,   workgroup ? ,   secretariat ? } 
+  CreatorInfo = attribute  role  { text  }  ,   fullname ? ,   affiliation ? ,   person-identifier *  publisher = element  publisher  {   CreatorInfo  } 
+  role = element  role  { attribute  type  { (  "author"  |  "edition"  |  "publisher"  |  "custom"  )  } ? , attribute  name  { text  }  , text  } 
+  fullname = element  fullname  {   prefix * ,   forename * ,   initial * ,   surname  ,   addition * } 
+  prefix = element  prefix  { text  } 
+  initial = element  initial  { text  } 
+  addition = element  addition  { text  } 
+  surname = element  surname  { text  } 
+  forename = element  forename  { text  } 
+  affiliation = element  affiliation  {   Organization  } 
+  Organization =   orgname  ,   uri ? ,   address ? ,   org-identifier *  orgname = element  name  { text  } 
+  uri = element  uri  {   xsd:anyURI  } 
+  address = element  address  {   street + ,   city  ,   state ? ,   country  ,   postcode ? } 
+  street = element  street  { text  } 
+  city = element  city  { text  } 
+  state = element  state  { text  } 
+  country = element  country  { text  } 
+  postcode = element  postcode  { text  } 
+  person-identifier = element  identifier  { attribute  type  { (  "isni"  |  "uri"  )  }  , text  } 
+  org-identifier = element  identifier  { attribute  type  { (  "orcid"  |  "uri"  )  }  , text  } 
+  citation = element  citation  {   CitationType  } 
+  CitationType = attribute  bibItemId  {   xsd:IDREF  }  ,   locality * ,   date ?  date = element  date  { (   xsd:gYear  |   xsd:date  )  } 
+  bibLocality = element  bibLocality  { attribute  type  { (  "section"  |  "clause"  |  "part"  |  "paragraph"  |  "chapter"  |  "page"  |  "whole"  )  }  , text  } 
+  bibItem = element  bibItem  {   BibliographicItem  } 
+  BibliographicItem = attribute  id  {   xsd:ID  }  , attribute  type  {  "article"  |  "book"  |  "booklet"  |  "conference"  |  "manual"  |  "proceedings"  |  "presentation"  |  "thesis"  |  "techreport"  |  "standard"  |  "unpublished"  } ? , (   bname  |   formatted  )  ,   source ? ,   publishDate  ,   docIdentifier * ,   accessedDate ? ,   creator * ,   publisher * ,   edition ? ,   biblioNote * ,   partOf * ,   creationDate ? ,   language * ,   script * ,   abstract ?  bname = element  name  { text  } 
+  formatted = element  formatted  { text  } 
+  source = element  source  {   xsd:anyURI  } 
+  publishDate = element  publishDate  { text  } 
+  docIdentifier = element  docIdentifier  { text  } 
+  accessedDate = element  accessedDate  { text  } 
+  creationDate = element  creationDate  { text  } 
+  biblioNote = element  note  { text  } 
+  abstract = element  abstract  { text  } 
+  partOf = element  partOf  {   BibliographicItem  } 
+  iso-standard = element  iso-standard  {   title + ,   status  ,   creator  ,   language  ,   script  ,   type  ,   id  ,   version ? ,   copyright  ,   sections  } 
+  owner-affiliation = element  affiliation  {  "ISO"  } 
+  stage = element  stage  { (  "00"  |  "10"  |  "20"  |  "30"  |  "40"  |  "50"  |  "60"  |  "90"  |  "95"  )  } 
+  substage = element  substage  { (  "00"  |  "20"  |  "60"  |  "90"  |  "92"  |  "93"  |  "98"  |  "99"  )  } 
+  documentnumber = element  projectnumber  { attribute  part  {   xsd:int  } ? ,   xsd:int  } 
+  tc-documentnumber = element  tc-documentnumber  {   xsd:int  } 
+  technical-committee = element  technical-committee  { attribute  number  {   xsd:int  } ? , text  } 
+  subcommittee = element  subcommittee  { attribute  number  {   xsd:int  } ? , text  } 
+  workgroup = element  workgroup  { attribute  number  {   xsd:int  } ? , text  } 
+  secretariat = element  secretariat  { text  } 
+  title-intro = element  title-intro  { text  } 
+  title-main = element  title-main  { text  } 
+  title-part = element  title-part  { text  } 
+  clause-hanging-paragraph-with-footnote = element  subsection  { attribute  id  {   xsd:ID  } ? ,   section-title ? ,   BasicBlock * ,   clause-hanging-paragraph-with-footnote * } 
+
+}
+
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

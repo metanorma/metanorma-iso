@@ -3,22 +3,50 @@
   <start>
     <ref name="iso-standard"/>
   </start>
-  <define name="iso-standard">
-    <element name="iso-standard">
+  <define name="standard-document">
+    <element name="standard-document">
       <oneOrMore>
         <ref name="title"/>
       </oneOrMore>
-      <ref name="documentstatus"/>
-      <ref name="creator"/>
+      <ref name="status"/>
+      <zeroOrMore>
+        <ref name="creator"/>
+      </zeroOrMore>
       <ref name="language"/>
       <ref name="script"/>
-      <ref name="documenttype"/>
-      <ref name="id"/>
+      <optional>
+        <ref name="type"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="id"/>
+      </zeroOrMore>
       <optional>
         <ref name="version"/>
       </optional>
       <ref name="copyright"/>
-      <ref name="sections"/>
+      <oneOrMore>
+        <ref name="sections"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="title">
+    <element name="title">
+      <attribute name="language"/>
+      <optional>
+        <ref name="title-intro"/>
+      </optional>
+      <ref name="title-main"/>
+      <optional>
+        <ref name="title-part"/>
+      </optional>
+    </element>
+  </define>
+  <define name="status">
+    <element name="status">
+      <ref name="stage"/>
+      <optional>
+        <ref name="substage"/>
+      </optional>
     </element>
   </define>
   <define name="language">
@@ -34,14 +62,44 @@
       <value>latn</value>
     </element>
   </define>
+  <define name="type">
+    <element name="type">
+      <choice>
+        <value>international-standard</value>
+        <value>technical-specification</value>
+        <value>technical-report</value>
+        <value>publicly-available-specification</value>
+        <value>international-workshop-agreement</value>
+        <value>guide</value>
+      </choice>
+    </element>
+  </define>
+  <define name="id">
+    <element name="id">
+      <ref name="documentnumber"/>
+      <optional>
+        <ref name="tc-documentnumber"/>
+      </optional>
+    </element>
+  </define>
   <define name="version">
     <element name="version">
       <optional>
         <ref name="edition"/>
       </optional>
       <optional>
-        <ref name="revdate"/>
+        <ref name="revision-date"/>
       </optional>
+    </element>
+  </define>
+  <define name="edition">
+    <element name="edition">
+      <data type="int"/>
+    </element>
+  </define>
+  <define name="revision-date">
+    <element name="revision-date">
+      <data type="date"/>
     </element>
   </define>
   <define name="copyright">
@@ -55,22 +113,857 @@
       <data type="gYear"/>
     </element>
   </define>
+  <define name="to">
+    <element name="to">
+      <data type="gYear"/>
+    </element>
+  </define>
   <define name="owner">
     <element name="owner">
       <ref name="owner-affiliation"/>
     </element>
   </define>
-  <define name="owner-affiliation">
-    <element name="affiliation">
-      <value>ISO</value>
+  <define name="sections">
+    <element name="sections">
+      <ref name="content"/>
+      <optional>
+        <ref name="content"/>
+      </optional>
+      <ref name="clause"/>
+      <ref name="references"/>
+      <ref name="terms"/>
+      <oneOrMore>
+        <ref name="clause"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="annex"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="references"/>
+      </optional>
     </element>
   </define>
-  <define name="id">
-    <element name="id">
-      <ref name="documentnumber"/>
+  <define name="section-title">
+    <element name="title">
+      <text/>
+    </element>
+  </define>
+  <define name="content">
+    <element name="content">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="content-subsection">
+    <element name="subsection">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="Content-Section">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <ref name="section-title"/>
+    </optional>
+    <choice>
+      <oneOrMore>
+        <ref name="BasicBlock"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="content-subsection"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="clause">
+    <element name="clause">
+      <ref name="Clause-Section"/>
+    </element>
+  </define>
+  <define name="Clause-Section">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <ref name="section-title"/>
+    </optional>
+    <choice>
+      <oneOrMore>
+        <ref name="BasicBlock"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="clause-subsection"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="clause-subsection">
+    <element name="subsection">
+      <ref name="Clause-Section"/>
+    </element>
+  </define>
+  <define name="annex">
+    <element name="annex">
       <optional>
-        <ref name="tc-documentnumber"/>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
       </optional>
+      <optional>
+        <attribute name="subtype">
+          <choice>
+            <value>normative</value>
+            <value>informative</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section-title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="BasicBlock"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="clause-hanging-paragraph-with-footnote"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="references">
+    <element name="references">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section-title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="bibitem"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="references"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="terms">
+    <element name="terms">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section-title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="ul"/>
+      </optional>
+      <choice>
+        <oneOrMore>
+          <ref name="term"/>
+        </oneOrMore>
+        <optional>
+          <ref name="terms"/>
+        </optional>
+      </choice>
+    </element>
+  </define>
+  <define name="term">
+    <element name="term">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <ref name="preferred"/>
+      <zeroOrMore>
+        <ref name="admitted"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="deprecates"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="termdomain"/>
+      </optional>
+      <optional>
+        <ref name="definition"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="termnote"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="termexample"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="termsource"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="preferred">
+    <element name="preferred">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="admitted">
+    <element name="admitted">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="deprecates">
+    <element name="deprecates">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="termdomain">
+    <element name="domain">
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="definition">
+    <element name="definition">
+      <oneOrMore>
+        <choice>
+          <ref name="paragraph"/>
+          <ref name="figure"/>
+          <ref name="formula"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="termnote">
+    <element name="termnote">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <ref name="paragraph"/>
+    </element>
+  </define>
+  <define name="termexample">
+    <element name="termexample">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <ref name="BasicBlock"/>
+    </element>
+  </define>
+  <define name="termsource">
+    <element name="termsource">
+      <attribute name="status">
+        <choice>
+          <value>identical</value>
+          <value>modified</value>
+        </choice>
+      </attribute>
+      <ref name="origin"/>
+      <optional>
+        <ref name="modification"/>
+      </optional>
+    </element>
+  </define>
+  <define name="origin">
+    <element name="origin">
+      <attribute name="citeas"/>
+      <ref name="CitationType"/>
+    </element>
+  </define>
+  <define name="modification">
+    <element name="modification">
+      <ref name="paragraph"/>
+    </element>
+  </define>
+  <define name="BasicBlock">
+    <choice>
+      <ref name="paragraph-with-footnote"/>
+      <ref name="table"/>
+      <ref name="note"/>
+      <ref name="formula"/>
+      <ref name="admonition"/>
+      <ref name="ol"/>
+      <ref name="ul"/>
+      <ref name="dl"/>
+      <ref name="figure"/>
+      <ref name="quote"/>
+      <ref name="sourcecode"/>
+      <ref name="example"/>
+    </choice>
+  </define>
+  <define name="paragraph">
+    <element name="p">
+      <ref name="ParagraphType"/>
+    </element>
+  </define>
+  <define name="Alignments">
+    <choice>
+      <value>left</value>
+      <value>right</value>
+      <value>center</value>
+      <value>justified</value>
+    </choice>
+  </define>
+  <define name="ParagraphType">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="alignment">
+        <ref name="Alignments"/>
+      </attribute>
+    </optional>
+    <zeroOrMore>
+      <ref name="TextElement"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="review"/>
+    </zeroOrMore>
+  </define>
+  <define name="paragraph-with-footnote">
+    <element name="p">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="alignment">
+          <ref name="Alignments"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="TextElement"/>
+          <ref name="fn"/>
+        </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="review"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="note">
+    <element name="note">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="review">
+    <element name="review">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="reviewer"/>
+      </optional>
+      <optional>
+        <attribute name="date">
+          <data type="date"/>
+        </attribute>
+      </optional>
+      <attribute name="from">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="to">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="paragraph"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="formula">
+    <element name="formula">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <ref name="stem"/>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+    </element>
+  </define>
+  <define name="quote">
+    <element name="quote">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="alignment">
+          <ref name="Alignments"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="quote-source"/>
+      </optional>
+      <optional>
+        <ref name="quote-author"/>
+      </optional>
+      <oneOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="quote-source">
+    <element name="source">
+      <ref name="CitationInfo"/>
+    </element>
+  </define>
+  <define name="quote-author">
+    <element name="author">
+      <ref name="CreatorInfo"/>
+    </element>
+  </define>
+  <define name="sourcecode">
+    <element name="sourcecode">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="callout"/>
+        </choice>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="annotation"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="table">
+    <element name="table">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <optional>
+        <ref name="thead"/>
+      </optional>
+      <optional>
+        <ref name="tfoot"/>
+      </optional>
+      <ref name="tbody"/>
+      <zeroOrMore>
+        <ref name="table-note"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+    </element>
+  </define>
+  <define name="tname">
+    <element name="tname">
+      <text/>
+    </element>
+  </define>
+  <define name="thead">
+    <element name="thead">
+      <oneOrMore>
+        <ref name="tr"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="tfoot">
+    <element name="tfoot">
+      <ref name="tr"/>
+    </element>
+  </define>
+  <define name="tbody">
+    <element name="tbody">
+      <oneOrMore>
+        <ref name="tr"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="table-note">
+    <element name="note">
+      <ref name="ParagraphType"/>
+    </element>
+  </define>
+  <define name="tr">
+    <element name="tr">
+      <oneOrMore>
+        <choice>
+          <ref name="td"/>
+          <ref name="th"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="td">
+    <element name="td">
+      <optional>
+        <attribute name="colspan"/>
+      </optional>
+      <optional>
+        <attribute name="rowspan"/>
+      </optional>
+      <optional>
+        <attribute name="align">
+          <choice>
+            <value>left</value>
+            <value>right</value>
+            <value>center</value>
+          </choice>
+        </attribute>
+      </optional>
+      <choice>
+        <zeroOrMore>
+          <choice>
+            <ref name="TextElement"/>
+            <ref name="review"/>
+          </choice>
+        </zeroOrMore>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="th">
+    <element name="th">
+      <optional>
+        <attribute name="colspan"/>
+      </optional>
+      <optional>
+        <attribute name="rowspan"/>
+      </optional>
+      <optional>
+        <attribute name="align">
+          <choice>
+            <value>left</value>
+            <value>right</value>
+            <value>center</value>
+          </choice>
+        </attribute>
+      </optional>
+      <choice>
+        <zeroOrMore>
+          <choice>
+            <ref name="TextElement"/>
+            <ref name="review"/>
+          </choice>
+        </zeroOrMore>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="example">
+    <element name="example">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <choice>
+          <ref name="formula"/>
+          <ref name="ul"/>
+          <ref name="ol"/>
+          <ref name="dl"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+          <ref name="paragraph-with-footnote"/>
+          <ref name="review"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="admonition">
+    <element name="admonition">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="type">
+        <choice>
+          <value>danger</value>
+          <value>caution</value>
+          <value>warning</value>
+          <value>important</value>
+          <value>safety precautions</value>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="figure">
+    <element name="figure">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <choice>
+        <ref name="image"/>
+        <oneOrMore>
+          <ref name="figure"/>
+        </oneOrMore>
+      </choice>
+      <zeroOrMore>
+        <ref name="fn"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="TextElement">
+    <choice>
+      <text/>
+      <ref name="em"/>
+      <ref name="eref"/>
+      <ref name="strong"/>
+      <ref name="stem"/>
+      <ref name="sub"/>
+      <ref name="sup"/>
+      <ref name="tt"/>
+      <ref name="strike"/>
+      <ref name="smallcap"/>
+      <ref name="xref"/>
+      <ref name="br"/>
+      <ref name="hyperlink"/>
+      <ref name="hr"/>
+      <ref name="pagebreak"/>
+      <ref name="bookmark"/>
+    </choice>
+  </define>
+  <define name="em">
+    <element name="em">
+      <text/>
+    </element>
+  </define>
+  <define name="strong">
+    <element name="strong">
+      <text/>
+    </element>
+  </define>
+  <define name="sub">
+    <element name="sub">
+      <text/>
+    </element>
+  </define>
+  <define name="sup">
+    <element name="sup">
+      <text/>
+    </element>
+  </define>
+  <define name="strike">
+    <element name="strike">
+      <text/>
+    </element>
+  </define>
+  <define name="smallcap">
+    <element name="smallcap">
+      <ref name="smallcap"/>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <empty/>
+    </element>
+  </define>
+  <define name="hr">
+    <element name="hr">
+      <empty/>
+    </element>
+  </define>
+  <define name="pagebreak">
+    <element name="pagebreak">
+      <empty/>
+    </element>
+  </define>
+  <define name="bookmark">
+    <element name="bookmark">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <empty/>
+    </element>
+  </define>
+  <define name="ReferenceFormat">
+    <choice>
+      <value>external</value>
+      <value>inline</value>
+      <value>footnote</value>
+      <value>callout</value>
+    </choice>
+  </define>
+  <define name="eref">
+    <element name="eref">
+      <optional>
+        <attribute name="normative">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <attribute name="citeas"/>
+      <attribute name="type">
+        <ref name="ReferenceFormat"/>
+      </attribute>
+      <ref name="CitationType"/>
+      <text/>
+    </element>
+  </define>
+  <define name="hyperlink">
+    <element name="link">
+      <attribute name="target">
+        <data type="anyURI"/>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="xref">
+    <element name="xref">
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="fn">
+    <element name="fn">
+      <attribute name="reference"/>
+      <oneOrMore>
+        <ref name="paragraph"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="callout">
+    <element name="callout">
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="image">
+    <element name="image">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="src">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <attribute name="imageType">
+        <choice>
+          <value>SVG</value>
+          <value>JPEG</value>
+          <value>GIF</value>
+          <value>PNG</value>
+          <value>PDF</value>
+        </choice>
+      </attribute>
+      <optional>
+        <attribute name="width">
+          <data type="int"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="height">
+          <data type="int"/>
+        </attribute>
+      </optional>
+    </element>
+  </define>
+  <define name="stem">
+    <element name="stem">
+      <attribute name="type">
+        <choice>
+          <value>MathML</value>
+          <value>AsciiML</value>
+        </choice>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="annotation">
+    <element name="annotation">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <ref name="paragraph"/>
+    </element>
+  </define>
+  <define name="ul">
+    <element name="ul">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="li">
+    <element name="li">
+      <oneOrMore>
+        <ref name="BasicBlock"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="ol">
+    <element name="ol">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="type">
+        <choice>
+          <value>roman</value>
+          <value>alphabet</value>
+          <value>arabic</value>
+          <value>roman_upper</value>
+          <value>alphabet_upper</value>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="dl">
+    <element name="dl">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="dt"/>
+        <ref name="dd"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="dt">
+    <element name="dt">
+      <ref name="TextElement"/>
+    </element>
+  </define>
+  <define name="dd">
+    <element name="dd">
+      <ref name="BasicBlock"/>
     </element>
   </define>
   <define name="creator">
@@ -88,24 +981,349 @@
       </optional>
     </element>
   </define>
-  <define name="documenttype">
-    <element name="type">
+  <define name="CreatorInfo">
+    <attribute name="role"/>
+    <optional>
+      <ref name="fullname"/>
+    </optional>
+    <optional>
+      <ref name="affiliation"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="person-identifier"/>
+    </zeroOrMore>
+  </define>
+  <define name="publisher">
+    <element name="publisher">
+      <ref name="CreatorInfo"/>
+    </element>
+  </define>
+  <define name="role">
+    <element name="role">
+      <optional>
+        <attribute name="type">
+          <choice>
+            <value>author</value>
+            <value>edition</value>
+            <value>publisher</value>
+            <value>custom</value>
+          </choice>
+        </attribute>
+      </optional>
+      <attribute name="name"/>
+      <text/>
+    </element>
+  </define>
+  <define name="fullname">
+    <element name="fullname">
+      <zeroOrMore>
+        <ref name="prefix"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="forename"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="initial"/>
+      </zeroOrMore>
+      <ref name="surname"/>
+      <zeroOrMore>
+        <ref name="addition"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="prefix">
+    <element name="prefix">
+      <text/>
+    </element>
+  </define>
+  <define name="initial">
+    <element name="initial">
+      <text/>
+    </element>
+  </define>
+  <define name="addition">
+    <element name="addition">
+      <text/>
+    </element>
+  </define>
+  <define name="surname">
+    <element name="surname">
+      <text/>
+    </element>
+  </define>
+  <define name="forename">
+    <element name="forename">
+      <text/>
+    </element>
+  </define>
+  <define name="affiliation">
+    <element name="affiliation">
+      <ref name="Organization"/>
+    </element>
+  </define>
+  <define name="Organization">
+    <ref name="orgname"/>
+    <optional>
+      <ref name="uri"/>
+    </optional>
+    <optional>
+      <ref name="address"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="org-identifier"/>
+    </zeroOrMore>
+  </define>
+  <define name="orgname">
+    <element name="name">
+      <text/>
+    </element>
+  </define>
+  <define name="uri">
+    <element name="uri">
+      <data type="anyURI"/>
+    </element>
+  </define>
+  <define name="address">
+    <element name="address">
+      <oneOrMore>
+        <ref name="street"/>
+      </oneOrMore>
+      <ref name="city"/>
+      <optional>
+        <ref name="state"/>
+      </optional>
+      <ref name="country"/>
+      <optional>
+        <ref name="postcode"/>
+      </optional>
+    </element>
+  </define>
+  <define name="street">
+    <element name="street">
+      <text/>
+    </element>
+  </define>
+  <define name="city">
+    <element name="city">
+      <text/>
+    </element>
+  </define>
+  <define name="state">
+    <element name="state">
+      <text/>
+    </element>
+  </define>
+  <define name="country">
+    <element name="country">
+      <text/>
+    </element>
+  </define>
+  <define name="postcode">
+    <element name="postcode">
+      <text/>
+    </element>
+  </define>
+  <define name="person-identifier">
+    <element name="identifier">
+      <attribute name="type">
+        <choice>
+          <value>isni</value>
+          <value>uri</value>
+        </choice>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="org-identifier">
+    <element name="identifier">
+      <attribute name="type">
+        <choice>
+          <value>orcid</value>
+          <value>uri</value>
+        </choice>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="citation">
+    <element name="citation">
+      <ref name="CitationType"/>
+    </element>
+  </define>
+  <define name="CitationType">
+    <attribute name="bibItemId">
+      <data type="IDREF"/>
+    </attribute>
+    <zeroOrMore>
+      <ref name="locality"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="date"/>
+    </optional>
+  </define>
+  <define name="date">
+    <element name="date">
       <choice>
-        <value>international-standard</value>
-        <value>technical-specification</value>
-        <value>technical-report</value>
-        <value>publicly-available-specification</value>
-        <value>international-workshop-agreement</value>
-        <value>guide</value>
+        <data type="gYear"/>
+        <data type="date"/>
       </choice>
     </element>
   </define>
-  <define name="documentstatus">
-    <element name="status">
-      <ref name="stage"/>
+  <define name="bibLocality">
+    <element name="bibLocality">
+      <attribute name="type">
+        <choice>
+          <value>section</value>
+          <value>clause</value>
+          <value>part</value>
+          <value>paragraph</value>
+          <value>chapter</value>
+          <value>page</value>
+          <value>whole</value>
+        </choice>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="bibItem">
+    <element name="bibItem">
+      <ref name="BibliographicItem"/>
+    </element>
+  </define>
+  <define name="BibliographicItem">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="type">
+        <choice>
+          <value>article</value>
+          <value>book</value>
+          <value>booklet</value>
+          <value>conference</value>
+          <value>manual</value>
+          <value>proceedings</value>
+          <value>presentation</value>
+          <value>thesis</value>
+          <value>techreport</value>
+          <value>standard</value>
+          <value>unpublished</value>
+        </choice>
+      </attribute>
+    </optional>
+    <choice>
+      <ref name="bname"/>
+      <ref name="formatted"/>
+    </choice>
+    <optional>
+      <ref name="source"/>
+    </optional>
+    <ref name="publishDate"/>
+    <zeroOrMore>
+      <ref name="docIdentifier"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="accessedDate"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="creator"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="publisher"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="edition"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="biblioNote"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="partOf"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="creationDate"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="language"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="script"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="abstract"/>
+    </optional>
+  </define>
+  <define name="bname">
+    <element name="name">
+      <text/>
+    </element>
+  </define>
+  <define name="formatted">
+    <element name="formatted">
+      <text/>
+    </element>
+  </define>
+  <define name="source">
+    <element name="source">
+      <data type="anyURI"/>
+    </element>
+  </define>
+  <define name="publishDate">
+    <element name="publishDate">
+      <text/>
+    </element>
+  </define>
+  <define name="docIdentifier">
+    <element name="docIdentifier">
+      <text/>
+    </element>
+  </define>
+  <define name="accessedDate">
+    <element name="accessedDate">
+      <text/>
+    </element>
+  </define>
+  <define name="creationDate">
+    <element name="creationDate">
+      <text/>
+    </element>
+  </define>
+  <define name="biblioNote">
+    <element name="note">
+      <text/>
+    </element>
+  </define>
+  <define name="abstract">
+    <element name="abstract">
+      <text/>
+    </element>
+  </define>
+  <define name="partOf">
+    <element name="partOf">
+      <ref name="BibliographicItem"/>
+    </element>
+  </define>
+  <define name="iso-standard">
+    <element name="iso-standard">
+      <oneOrMore>
+        <ref name="title"/>
+      </oneOrMore>
+      <ref name="status"/>
+      <ref name="creator"/>
+      <ref name="language"/>
+      <ref name="script"/>
+      <ref name="type"/>
+      <ref name="id"/>
       <optional>
-        <ref name="substage"/>
+        <ref name="version"/>
       </optional>
+      <ref name="copyright"/>
+      <ref name="sections"/>
+    </element>
+  </define>
+  <define name="owner-affiliation">
+    <element name="affiliation">
+      <value>ISO</value>
     </element>
   </define>
   <define name="stage">
@@ -187,28 +1405,6 @@
       <text/>
     </element>
   </define>
-  <define name="revdate">
-    <element name="revision-date">
-      <data type="date"/>
-    </element>
-  </define>
-  <define name="edition">
-    <element name="edition">
-      <data type="int"/>
-    </element>
-  </define>
-  <define name="title">
-    <element name="title">
-      <attribute name="language"/>
-      <optional>
-        <ref name="title-intro"/>
-      </optional>
-      <ref name="title-main"/>
-      <optional>
-        <ref name="title-part"/>
-      </optional>
-    </element>
-  </define>
   <define name="title-intro">
     <element name="title-intro">
       <text/>
@@ -224,262 +1420,7 @@
       <text/>
     </element>
   </define>
-  <define name="sections">
-    <element name="sections">
-      <ref name="content"/>
-      <optional>
-        <ref name="content"/>
-      </optional>
-      <ref name="clause"/>
-      <ref name="references"/>
-      <ref name="terms"/>
-      <oneOrMore>
-        <ref name="clause"/>
-      </oneOrMore>
-      <zeroOrMore>
-        <ref name="annex"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="references"/>
-      </optional>
-    </element>
-  </define>
-  <define name="content">
-    <element name="content">
-      <ref name="Content-Section"/>
-    </element>
-  </define>
-  <define name="content-subsection">
-    <element name="subsection">
-      <ref name="Content-Section"/>
-    </element>
-  </define>
-  <define name="Content-Section">
-    <optional>
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-    </optional>
-    <optional>
-      <ref name="section-title"/>
-    </optional>
-    <choice>
-      <oneOrMore>
-        <ref name="BasicBlock"/>
-      </oneOrMore>
-      <oneOrMore>
-        <ref name="content-subsection"/>
-      </oneOrMore>
-    </choice>
-  </define>
-  <define name="clause">
-    <element name="clause">
-      <ref name="Clause-Section"/>
-    </element>
-  </define>
-  <define name="Clause-Section">
-    <optional>
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-    </optional>
-    <optional>
-      <ref name="section-title"/>
-    </optional>
-    <choice>
-      <oneOrMore>
-        <ref name="BasicBlock"/>
-      </oneOrMore>
-      <oneOrMore>
-        <ref name="clause-subsection"/>
-      </oneOrMore>
-    </choice>
-  </define>
-  <define name="clause-subsection">
-    <element name="subsection">
-      <ref name="Clause-Section"/>
-    </element>
-  </define>
-  <define name="references">
-    <element name="references">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <ref name="section-title"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="bibitem"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="references"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="terms">
-    <element name="terms">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <ref name="section-title"/>
-      </optional>
-      <zeroOrMore>
-        <!-- boilerplate -->
-        <ref name="para"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="ul"/>
-      </optional>
-      <choice>
-        <oneOrMore>
-          <ref name="term"/>
-        </oneOrMore>
-        <optional>
-          <ref name="terms"/>
-        </optional>
-      </choice>
-    </element>
-  </define>
-  <define name="term">
-    <element name="term">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <ref name="preferred"/>
-      <zeroOrMore>
-        <ref name="admitted"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="deprecates"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="termdomain"/>
-      </optional>
-      <optional>
-        <ref name="definition"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="termnote"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="termexample"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="termsource"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="preferred">
-    <element name="preferred">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="admitted">
-    <element name="admitted">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="deprecates">
-    <element name="deprecates">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="termdomain">
-    <element name="domain">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="definition">
-    <element name="definition">
-      <oneOrMore>
-        <choice>
-          <ref name="para-no-fn"/>
-          <ref name="figure"/>
-          <ref name="formula"/>
-        </choice>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="termnote">
-    <element name="termnote">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="xref"/>
-          <ref name="eref"/>
-          <ref name="link"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="termexample">
-    <element name="termexample">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <ref name="BasicBlock"/>
-    </element>
-  </define>
-  <define name="termsource">
-    <element name="termsource">
-      <attribute name="status">
-        <choice>
-          <value>identical</value>
-          <value>modified</value>
-        </choice>
-      </attribute>
-      <ref name="origin"/>
-      <optional>
-        <ref name="modification"/>
-      </optional>
-    </element>
-  </define>
-  <define name="origin">
-    <element name="origin">
-      <attribute name="citeas"/>
-      <ref name="CitationType"/>
-    </element>
-  </define>
-  <define name="modification">
-    <element name="modification">
-      <ref name="para-no-fn"/>
-    </element>
-  </define>
-  <define name="BasicBlock">
-    <choice>
-      <ref name="para"/>
-      <ref name="table"/>
-      <ref name="note"/>
-      <ref name="formula"/>
-      <ref name="admonition"/>
-      <ref name="ol"/>
-      <ref name="ul"/>
-      <ref name="dl"/>
-      <ref name="figure"/>
-      <ref name="quote"/>
-      <ref name="sourcecode"/>
-      <ref name="example"/>
-    </choice>
-  </define>
-  <define name="clause-hanging-para">
+  <define name="clause-hanging-paragraph-with-footnote">
     <element name="subsection">
       <optional>
         <attribute name="id">
@@ -490,866 +1431,11 @@
         <ref name="section-title"/>
       </optional>
       <zeroOrMore>
-        <!-- allow hanging paragraphs in annexes: they introduce lists -->
         <ref name="BasicBlock"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="clause-hanging-para"/>
+        <ref name="clause-hanging-paragraph-with-footnote"/>
       </zeroOrMore>
-    </element>
-  </define>
-  <define name="quote">
-    <element name="quote">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <optional>
-        <attribute name="align">
-          <ref name="Alignments"/>
-        </attribute>
-      </optional>
-      <optional>
-        <ref name="quote-source"/>
-      </optional>
-      <optional>
-        <ref name="quote-author"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="BasicBlock"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="quote-source">
-    <element name="source">
-      <ref name="CitationType"/>
-    </element>
-  </define>
-  <define name="quote-author">
-    <element name="author">
-      <ref name="CreatorInfo"/>
-    </element>
-  </define>
-  <define name="annex">
-    <element name="annex">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="subtype">
-          <choice>
-            <value>normative</value>
-            <value>informative</value>
-          </choice>
-        </attribute>
-      </optional>
-      <optional>
-        <ref name="section-title"/>
-      </optional>
-      <zeroOrMore>
-        <!--
-          allow hanging paragraphs in annexes: they introduce lists
-          ( para | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | review | example )*,
-        -->
-        <ref name="BasicBlock"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="clause-hanging-para"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="TextElement">
-    <choice>
-      <text/>
-      <ref name="em"/>
-      <ref name="eref"/>
-      <ref name="link"/>
-      <ref name="strong"/>
-      <ref name="stem"/>
-      <ref name="sub"/>
-      <ref name="sup"/>
-      <ref name="tt"/>
-      <ref name="strike"/>
-      <ref name="smallcap"/>
-      <ref name="xref"/>
-      <ref name="br"/>
-      <ref name="hr"/>
-      <ref name="pagebreak"/>
-    </choice>
-  </define>
-  <define name="Alignments">
-    <choice>
-      <value>left</value>
-      <value>center</value>
-      <value>right</value>
-      <value>justified</value>
-    </choice>
-  </define>
-  <define name="para">
-    <element name="p">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <optional>
-        <attribute name="align">
-          <ref name="Alignments"/>
-        </attribute>
-      </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="TextElement"/>
-          <ref name="fn"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="review"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="para-no-fn">
-    <element name="p">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <optional>
-        <attribute name="align">
-          <ref name="Alignments"/>
-        </attribute>
-      </optional>
-      <zeroOrMore>
-        <ref name="TextElement"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="review"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="figure">
-    <element name="figure">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <optional>
-        <ref name="tname"/>
-      </optional>
-      <choice>
-        <ref name="image"/>
-        <oneOrMore>
-          <ref name="figure"/>
-        </oneOrMore>
-      </choice>
-      <zeroOrMore>
-        <ref name="fn"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="dl"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="note"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="image">
-    <element name="image">
-      <optional>
-        <attribute name="src"/>
-      </optional>
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <attribute name="imagetype"/>
-      <optional>
-        <attribute name="width">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="height">
-          <data type="int"/>
-        </attribute>
-      </optional>
-    </element>
-  </define>
-  <define name="sourcecode">
-    <element name="sourcecode">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <optional>
-        <ref name="tname"/>
-      </optional>
-      <zeroOrMore>
-        <choice>
-          <text/>
-          <ref name="callout"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="annotation"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="review">
-    <element name="review">
-      <attribute name="reviewer"/>
-      <attribute name="date"/>
-      <text/>
-    </element>
-  </define>
-  <define name="callout">
-    <element name="callout">
-      <attribute name="target">
-        <data type="IDREF"/>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="annotation">
-    <element name="annotation">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="fn">
-    <element name="fn">
-      <attribute name="reference"/>
-      <oneOrMore>
-        <ref name="para-no-fn"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="ol">
-    <element name="ol">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <attribute name="type">
-        <choice>
-          <value>roman</value>
-          <value>alphabet</value>
-          <value>arabic</value>
-          <value>roman_upper</value>
-          <value>alphabet_upper</value>
-        </choice>
-      </attribute>
-      <oneOrMore>
-        <ref name="li"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="ul">
-    <element name="ul">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <oneOrMore>
-        <ref name="li"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="li">
-    <element name="li">
-      <oneOrMore>
-        <!-- ( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )+ -->
-        <ref name="BasicBlock"/>
-      </oneOrMore>
-      <!-- exclude figures? -->
-    </element>
-  </define>
-  <define name="dl">
-    <element name="dl">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <oneOrMore>
-        <ref name="dt"/>
-        <ref name="dd"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="dt">
-    <element name="dt">
-      <ref name="TextElement"/>
-    </element>
-  </define>
-  <define name="dd">
-    <element name="dd">
-      <oneOrMore>
-        <!--
-          ( para | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )*
-          exclude figures?
-        -->
-        <ref name="BasicBlock"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="note">
-    <element name="note">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="admonition">
-    <element name="admonition">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <attribute name="type">
-        <choice>
-          <value>danger</value>
-          <value>caution</value>
-          <value>warning</value>
-          <value>important</value>
-          <value>safety precautions</value>
-        </choice>
-      </attribute>
-      <oneOrMore>
-        <ref name="para"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="formula">
-    <element name="formula">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <ref name="stem"/>
-      <optional>
-        <ref name="dl"/>
-      </optional>
-    </element>
-  </define>
-  <define name="example">
-    <element name="example">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <oneOrMore>
-        <choice>
-          <ref name="para"/>
-          <ref name="formula"/>
-          <ref name="ol"/>
-          <ref name="ul"/>
-          <ref name="dl"/>
-          <ref name="quote"/>
-          <ref name="sourcecode"/>
-          <ref name="review"/>
-        </choice>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="xref">
-    <element name="xref">
-      <attribute name="target">
-        <data type="IDREF"/>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="link">
-    <element name="link">
-      <attribute name="target">
-        <data type="anyURI"/>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="ReferenceFormat">
-    <choice>
-      <value>external</value>
-      <value>inline</value>
-      <value>footnote</value>
-      <value>callout</value>
-    </choice>
-  </define>
-  <define name="eref">
-    <element name="eref">
-      <optional>
-        <attribute name="type">
-          <ref name="ReferenceFormat"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="normative">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <attribute name="citeas"/>
-      <ref name="CitationType"/>
-      <text/>
-    </element>
-  </define>
-  <define name="br">
-    <element name="br">
-      <empty/>
-    </element>
-  </define>
-  <define name="hr">
-    <element name="hr">
-      <empty/>
-    </element>
-  </define>
-  <define name="pagebreak">
-    <element name="pagebreak">
-      <empty/>
-    </element>
-  </define>
-  <define name="em">
-    <element name="em">
-      <text/>
-    </element>
-  </define>
-  <define name="strong">
-    <element name="strong">
-      <text/>
-    </element>
-  </define>
-  <define name="stem">
-    <element name="stem">
-      <attribute name="type">
-        <value>MathML</value>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="sub">
-    <element name="sub">
-      <text/>
-    </element>
-  </define>
-  <define name="sup">
-    <element name="sup">
-      <text/>
-    </element>
-  </define>
-  <define name="tt">
-    <element name="tt">
-      <text/>
-    </element>
-  </define>
-  <define name="strike">
-    <element name="strike">
-      <text/>
-    </element>
-  </define>
-  <define name="smallcap">
-    <element name="smallcap">
-      <text/>
-    </element>
-  </define>
-  <define name="table">
-    <element name="table">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-      <optional>
-        <ref name="tname"/>
-      </optional>
-      <optional>
-        <ref name="thead"/>
-      </optional>
-      <ref name="tbody"/>
-      <optional>
-        <ref name="tfoot"/>
-      </optional>
-      <optional>
-        <ref name="dl"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="note"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="tname">
-    <element name="name">
-      <text/>
-    </element>
-  </define>
-  <define name="section-title">
-    <element name="title">
-      <text/>
-    </element>
-  </define>
-  <define name="thead">
-    <element name="thead">
-      <oneOrMore>
-        <ref name="tr"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="tbody">
-    <element name="tbody">
-      <oneOrMore>
-        <ref name="tr"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="tfoot">
-    <element name="tfoot">
-      <oneOrMore>
-        <ref name="tr"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="tr">
-    <element name="tr">
-      <oneOrMore>
-        <choice>
-          <ref name="td"/>
-          <ref name="th"/>
-        </choice>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="th">
-    <element name="th">
-      <optional>
-        <attribute name="colspan"/>
-      </optional>
-      <optional>
-        <attribute name="rowspan"/>
-      </optional>
-      <optional>
-        <attribute name="align"/>
-      </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="TextElement"/>
-          <ref name="fn"/>
-          <ref name="para"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="td">
-    <element name="td">
-      <optional>
-        <attribute name="colspan"/>
-      </optional>
-      <optional>
-        <attribute name="rowspan"/>
-      </optional>
-      <optional>
-        <attribute name="align"/>
-      </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="TextElement"/>
-          <ref name="fn"/>
-          <ref name="para"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="CreatorInfo">
-    <attribute name="role"/>
-    <optional>
-      <ref name="fullname"/>
-    </optional>
-    <optional>
-      <ref name="affiliation"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="person-identifier"/>
-    </zeroOrMore>
-  </define>
-  <define name="publisher">
-    <element name="publisher">
-      <ref name="CreatorInfo"/>
-    </element>
-  </define>
-  <!-- a publisher has a subset of the roles of a creator -->
-  <define name="fullname">
-    <element name="fullname">
-      <zeroOrMore>
-        <ref name="prefix"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="forename"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="initial"/>
-      </zeroOrMore>
-      <ref name="surname"/>
-      <zeroOrMore>
-        <ref name="addition"/>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="prefix">
-    <element name="prefix">
-      <text/>
-    </element>
-  </define>
-  <define name="initial">
-    <element name="initial">
-      <text/>
-    </element>
-  </define>
-  <define name="addition">
-    <element name="addition">
-      <text/>
-    </element>
-  </define>
-  <define name="surname">
-    <element name="surname">
-      <text/>
-    </element>
-  </define>
-  <define name="forename">
-    <element name="forename">
-      <text/>
-    </element>
-  </define>
-  <define name="affiliation">
-    <element name="affiliation">
-      <ref name="Organization"/>
-    </element>
-  </define>
-  <define name="Organization">
-    <ref name="orgname"/>
-    <optional>
-      <ref name="uri"/>
-    </optional>
-    <optional>
-      <ref name="address"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="org-identifier"/>
-    </zeroOrMore>
-  </define>
-  <define name="orgname">
-    <element name="name">
-      <text/>
-    </element>
-  </define>
-  <define name="uri">
-    <element name="uri">
-      <text/>
-    </element>
-  </define>
-  <define name="address">
-    <element name="address">
-      <oneOrMore>
-        <!-- iso191606 TODO -->
-        <ref name="street"/>
-      </oneOrMore>
-      <ref name="city"/>
-      <optional>
-        <ref name="state"/>
-      </optional>
-      <ref name="country"/>
-      <optional>
-        <ref name="postcode"/>
-      </optional>
-    </element>
-  </define>
-  <define name="street">
-    <element name="street">
-      <text/>
-    </element>
-  </define>
-  <define name="city">
-    <element name="city">
-      <text/>
-    </element>
-  </define>
-  <define name="state">
-    <element name="state">
-      <text/>
-    </element>
-  </define>
-  <define name="country">
-    <element name="country">
-      <text/>
-    </element>
-  </define>
-  <define name="postcode">
-    <element name="postcode">
-      <text/>
-    </element>
-  </define>
-  <define name="person-identifier">
-    <element name="identifier">
-      <attribute name="type">
-        <choice>
-          <value>isni</value>
-          <value>uri</value>
-        </choice>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="org-identifier">
-    <element name="identifier">
-      <attribute name="type">
-        <choice>
-          <value>orcid</value>
-          <value>uri</value>
-        </choice>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="CitationType">
-    <attribute name="bibitemid">
-      <data type="IDREF"/>
-    </attribute>
-    <zeroOrMore>
-      <ref name="locality"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="date"/>
-    </optional>
-  </define>
-  <define name="date">
-    <element name="date">
-      <data type="string" datatypeLibrary=""/>
-    </element>
-  </define>
-  <define name="locality">
-    <element name="locality">
-      <attribute name="type">
-        <choice>
-          <value>section</value>
-          <value>clause</value>
-          <value>part</value>
-          <value>paragraph</value>
-          <value>chapter</value>
-          <value>page</value>
-          <value>whole</value>
-        </choice>
-      </attribute>
-      <text/>
-    </element>
-  </define>
-  <define name="bibitem">
-    <element name="bibitem">
-      <ref name="BibItemType"/>
-    </element>
-  </define>
-  <define name="BibItemType">
-    <attribute name="id">
-      <data type="ID"/>
-    </attribute>
-    <optional>
-      <attribute name="type">
-        <choice>
-          <value>article</value>
-          <value>book</value>
-          <value>booklet</value>
-          <value>conference</value>
-          <value>manual</value>
-          <value>proceedings</value>
-          <value>presentation</value>
-          <value>thesis</value>
-          <value>techreport</value>
-          <value>standard</value>
-          <value>unpublished</value>
-        </choice>
-      </attribute>
-    </optional>
-    <choice>
-      <ref name="bname"/>
-      <ref name="formatted"/>
-    </choice>
-    <optional>
-      <ref name="source"/>
-    </optional>
-    <optional>
-      <ref name="publishdate"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="docidentifier"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="accesseddate"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="creator"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="publisher"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="edition"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="biblioNote"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="partOf"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="creationdate"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="language"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="script"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="abstract"/>
-    </optional>
-  </define>
-  <define name="bname">
-    <element name="name">
-      <text/>
-    </element>
-  </define>
-  <define name="formatted">
-    <element name="formatted">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="source">
-    <element name="source">
-      <data type="anyURI"/>
-    </element>
-  </define>
-  <define name="publishdate">
-    <element name="publishdate">
-      <text/>
-    </element>
-  </define>
-  <define name="docidentifier">
-    <element name="docidentifier">
-      <text/>
-    </element>
-  </define>
-  <define name="accesseddate">
-    <element name="accesseddate">
-      <text/>
-    </element>
-  </define>
-  <define name="creationdate">
-    <element name="creationdate">
-      <text/>
-    </element>
-  </define>
-  <define name="abstract">
-    <element name="abstract">
-      <text/>
-    </element>
-  </define>
-  <define name="biblioNote">
-    <element name="note">
-      <text/>
-    </element>
-  </define>
-  <define name="partOf">
-    <element name="partOf">
-      <ref name="BibItemType"/>
     </element>
   </define>
 </grammar>
