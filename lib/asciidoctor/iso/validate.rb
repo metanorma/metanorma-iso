@@ -186,8 +186,8 @@ module Asciidoctor
         sections_sequence_validate(doc.root)
       end
 
-      def schema_validate(doc)
-        filename = File.join(File.dirname(__FILE__), "validate.rng")
+      def schema_validate(doc, schema)
+        filename = File.join(File.dirname(__FILE__), schema)
         File.open(".tmp.xml", "w") { |f| f.write(doc.to_xml) }
         begin
           errors = Jing.new(filename).validate(".tmp.xml")
@@ -202,7 +202,7 @@ module Asciidoctor
 
       def validate(doc)
         content_validate(doc)
-        schema_validate(doc)
+        schema_validate(doc, "isostandard.rng")
       end
     end
   end

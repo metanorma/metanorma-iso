@@ -1,0 +1,241 @@
+default namespace = "http://riboseinc.com/isoxml"
+
+# grammar {
+
+start = iso-standard
+
+iso-standard = 
+  element iso-standard {
+    title+,
+    status,
+    creator,
+    language,
+    script,
+    type,
+    id,
+    version?,
+    copyright,
+    sections
+  }
+
+language =
+  element language { ( "en" | "fr" ) }
+
+script =
+  element script { "latn" }
+
+version =
+  element version {
+    edition?,
+    revision-date?
+  }
+
+copyright = 
+  element copyright {
+    from, owner
+}
+
+owner = 
+  element owner {
+    owner-affiliation  
+}
+
+owner-affiliation = element affiliation { "ISO" }
+
+id =
+  element id {
+    documentnumber,
+    tc-documentnumber?
+  }
+
+creator =
+  element creator { 
+    attribute role { text },
+    technical-committee,
+    subcommittee?,
+    workgroup?,
+    secretariat?
+  }
+
+type =
+  element type {
+     ( "international-standard" | "technical-specification" | 
+       "technical-report" | "publicly-available-specification" | 
+        "international-workshop-agreement" | "guide" )
+  }
+
+status =
+  element status {
+     stage,
+     substage?
+  }
+
+stage = 
+  element stage {
+    ("00" | "10" | "20" | "30" | "40" | "50" | "60" | "90" | "95" )
+  }
+
+substage = 
+  element substage {
+    ("00" | "20" | "60" | "90" | "92" | "93" | "98" | "99" )
+  }
+
+documentnumber = 
+  element projectnumber { 
+    attribute part { xsd:int }?,
+    xsd:int 
+   }
+
+tc-documentnumber = 
+  element tc-documentnumber { 
+    xsd:int 
+   }
+
+technical-committee =
+  element technical-committee {
+    attribute number { xsd:int }?,
+    text
+  }
+
+subcommittee =
+  element subcommittee {
+    attribute number { xsd:int }?,
+    text
+  }
+
+workgroup =
+  element workgroup {
+    attribute number { xsd:int }?,
+    text
+  }
+
+secretariat =
+  element secretariat { text }
+
+title = 
+  element title { 
+    attribute language { text }, 
+    title-intro?, title-main, title-part? 
+}
+
+title-intro =
+  element title-intro { text }
+
+title-main =
+  element title-main { text }
+
+title-part =
+  element title-part { text }
+
+sections =
+  element sections {
+    content, content?, 
+    clause, references, terms, clause+, 
+    annex*, references?
+  }
+
+references =
+  element references {
+    attribute id { xsd:ID }?,
+    section-title?,
+    bibitem*,
+    references*
+}
+
+terms = 
+  element terms { 
+    attribute id { xsd:ID }?,
+    section-title?,
+    # boilerplate
+    paragraph-with-footnote*, ul?,
+    (term+ | terms? )
+  }
+
+term = 
+  element term { 
+    attribute id { xsd:ID }?,
+    preferred, admitted*, deprecates*,
+    termdomain?, definition?, termnote*, termexample*, termsource* 
+  }
+
+definition =
+  element definition {
+    ( paragraph | figure | formula )+
+  }
+
+origin =
+  element origin { 
+    attribute citeas { text },
+    CitationType 
+}
+
+clause-hanging-paragraph-with-footnote =
+  element subsection {
+    attribute id { xsd:ID }?,
+    section-title?,
+    # allow hanging paragraphs in annexes: they introduce lists
+    BasicBlock*,
+    clause-hanging-paragraph-with-footnote*
+  }
+
+annex =
+  element annex { 
+    attribute id { xsd:ID }?,
+    attribute subtype { "normative" | "informative" }?,
+    section-title?,
+    # allow hanging paragraps in annexes: they introduce lists
+    #( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | review | example )*,
+    BasicBlock*,
+    clause-hanging-paragraph-with-footnote*
+  }
+
+figure = 
+  element figure {
+    attribute id { xsd:ID },
+    tname?,
+    ( image | figure+ ),
+    fn*,
+    dl?,
+    note*
+  }
+
+li =
+  element li {
+    #( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )+
+    BasicBlock+
+    # exclude figures?
+  }
+
+dd =
+  element dd {
+    #( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )*
+    # exclude figures?
+    BasicBlock
+  }
+
+admonition =
+  element admonition { 
+    attribute id { xsd:ID },
+    attribute type { 
+     ( "danger" | "caution" | "warning" | "important" | "safety precautions" )},
+    paragraph-with-footnote+ 
+  }
+
+xref =
+  element xref { 
+    attribute target { xsd:IDREF },
+    text
+  }
+
+hyperlink =
+  element link {
+    attribute target {xsd:anyURI},
+    text
+}
+
+thead =
+  element thead { tr+ }
+
+# }
+
+
