@@ -28,9 +28,10 @@ module Asciidoctor
         ret1 = makexml(node)
         validate(ret1)
         ret = ret1.to_xml(indent: 2)
-        filename = node.attr("docfile").gsub(/\.adoc/, ".xml").gsub(%r{^.*/}, '')
+        filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
+          gsub(%r{^.*/}, '')
         File.open("#{filename}", "w") { |f| f.write(ret) }
-        IsoDoc::convert filename
+        IsoDoc::Convert.convert filename
         ret
       end
 
