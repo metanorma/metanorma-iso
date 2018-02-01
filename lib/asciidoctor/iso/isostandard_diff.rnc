@@ -236,6 +236,40 @@ hyperlink =
 thead =
   element thead { tr+ }
 
+td =
+  element td {
+    attribute colspan { text }?,
+    attribute rowspan { text }?,
+    attribute align { "left" | "right" | "center" }?,
+    (
+      (TextElement | fn | review )* |
+      paragraph-with-footnote+
+    )
+}
+
+th =
+  element th {
+    attribute colspan { text }?,
+    attribute rowspan { text }?,
+    attribute align { "left" | "right" | "center" }?,
+    (
+      (TextElement | fn | review )* |
+      paragraph-with-footnote+
+    )
+}
+
+table-note = element note { paragraph }
+
+BibliographicItem =
+     attribute id { xsd:ID },
+     attribute type { "article" | "book" | "booklet" | "conference" | "manual" |
+                      "proceedings" | "presentation" | "thesis" | "techreport" |
+                      "standard" | "unpublished" }?,
+    (bname | formatted), source?, publishdate?, docidentifier*, accesseddate?, creator*,
+    publisher*, edition?,
+    biblionote*, partof*, creationdate?, language*, script*, abstract?
+
+
 # }
 
 

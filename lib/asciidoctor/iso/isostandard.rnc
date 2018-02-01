@@ -1,5 +1,5 @@
 default namespace  = "http://riboseinc.com/isoxml"
-grammar { start =   iso-standard                                                                                                                                 standard-document = element  standard-document  {   title + ,   status  ,   creator * ,   language  ,   script  ,   type ? ,   id * ,   version ? ,   copyright  ,   sections + } 
+grammar { start =   iso-standard                                                                                                                                  standard-document = element  standard-document  {   title + ,   status  ,   creator * ,   language  ,   script  ,   type ? ,   id * ,   version ? ,   copyright  ,   sections + } 
   title = element  title  { attribute  language  { text  }  ,   title-intro ? ,   title-main  ,   title-part ? } 
   status = element  status  {   stage  ,   substage ? } 
   language = element  language  { (  "en"  |  "fr"  )  } 
@@ -34,32 +34,33 @@ grammar { start =   iso-standard                                                
   origin = element  origin  { attribute  citeas  { text  }  ,   CitationType  } 
   modification = element  modification  {   paragraph  } 
   BasicBlock =   paragraph-with-footnote  |   table  |   note  |   formula  |   admonition  |   ol  |   ul  |   dl  |   figure  |   quote  |   sourcecode  |   example   paragraph = element  p  {   ParagraphType  } 
-  Alignments = (  "left"  |  "right"  |  "center"  |  "justified"  )   ParagraphType = attribute  id  {   xsd:ID  }  , attribute  alignment  {   Alignments  } ? , (   TextElement  ) * ,   review *  paragraph-with-footnote = element  p  { attribute  id  {   xsd:ID  }  , attribute  alignment  {   Alignments  } ? , (   TextElement  |   fn  ) * ,   review * } 
+  Alignments = (  "left"  |  "right"  |  "center"  |  "justified"  )   ParagraphType = attribute  id  {   xsd:ID  }  , attribute  align  {   Alignments  } ? , (   TextElement  ) * ,   review *  paragraph-with-footnote = element  p  { attribute  id  {   xsd:ID  }  , attribute  align  {   Alignments  } ? , (   TextElement  |   fn  ) * ,   review * } 
   note = element  note  { attribute  id  {   xsd:ID  }  ,   paragraph-with-footnote + } 
   review = element  review  { attribute  id  {   xsd:ID  }  , attribute  reviewer  { text  } ? , attribute  date  {   xsd:date  } ? , attribute  from  {   xsd:ID  }  , attribute  to  {   xsd:ID  }  ,   paragraph + } 
   formula = element  formula  { attribute  id  {   xsd:ID  }  ,   stem  ,   dl ? } 
   quote = element  quote  { attribute  id  {   xsd:ID  }  , attribute  alignment  {   Alignments  } ? ,   quote-source ? ,   quote-author ? ,   paragraph-with-footnote + } 
-  quote-source = element  source  {   CitationInfo  } 
+  quote-source = element  source  {   CitationType  } 
   quote-author = element  author  {   CreatorInfo  } 
   sourcecode = element  sourcecode  { attribute  id  {   xsd:ID  }  ,   tname ? , ( text  |   callout  ) + ,   annotation * } 
-  table = element  table  { attribute  id  {   xsd:ID  }  ,   tname ? ,   thead ? ,   tfoot ? ,   tbody  ,   table-note * ,   dl ? } 
-  tname = element  tname  { text  } 
+  table = element  table  { attribute  id  {   xsd:ID  }  ,   tname ? ,   thead ? ,   tbody  ,   tfoot ? ,   table-note * ,   dl ? } 
+  tname = element  name  { text  } 
   thead = element  thead  {   tr + } 
   tfoot = element  tfoot  {   tr  } 
   tbody = element  tbody  {   tr + } 
-  table-note = element  note  {   ParagraphType  } 
+  table-note = element  note  {   paragraph  } 
   tr = element  tr  { (   td  |   th  ) + } 
-  td = element  td  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   review  ) * |   paragraph-with-footnote + )  } 
-  th = element  th  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   review  ) * |   paragraph-with-footnote + )  } 
+  td = element  td  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   fn  |   review  ) * |   paragraph-with-footnote + )  } 
+  th = element  th  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   fn  |   review  ) * |   paragraph-with-footnote + )  } 
   example = element  example  { attribute  id  {   xsd:ID  }  , (   formula  |   ul  |   ol  |   dl  |   quote  |   sourcecode  |   paragraph-with-footnote  |   review  ) + } 
   admonition = element  admonition  { attribute  id  {   xsd:ID  }  , attribute  type  { (  "danger"  |  "caution"  |  "warning"  |  "important"  |  "safety precautions"  )  }  ,   paragraph-with-footnote + } 
   figure = element  figure  { attribute  id  {   xsd:ID  }  ,   tname ? , (   image  |   figure + )  ,   fn * ,   dl ? ,   note * } 
   TextElement = text  |   em  |   eref  |   strong  |   stem  |   sub  |   sup  |   tt  |   strike  |   smallcap  |   xref  |   br  |   hyperlink  |   hr  |   pagebreak  |   bookmark   em = element  em  { text  } 
   strong = element  strong  { text  } 
+  tt = element  tt  { text  } 
   sub = element  sub  { text  } 
   sup = element  sup  { text  } 
   strike = element  strike  { text  } 
-  smallcap = element  smallcap  {   smallcap  } 
+  smallcap = element  smallcap  { text  } 
   br = element  br  { empty  } 
   hr = element  hr  { empty  } 
   pagebreak = element  pagebreak  { empty  } 
@@ -69,7 +70,7 @@ grammar { start =   iso-standard                                                
   xref = element  xref  { attribute  target  {   xsd:IDREF  }  , text  } 
   fn = element  fn  { attribute  reference  { text  }  ,   paragraph + } 
   callout = element  callout  { attribute  target  {   xsd:IDREF  }  , text  } 
-  image = element  image  { attribute  id  {   xsd:ID  }  , attribute  src  {   xsd:anyURI  } ? , attribute  imageType  { (  "SVG"  |  "JPEG"  |  "GIF"  |  "PNG"  |  "PDF"  )  }  , attribute  width  {   xsd:int  } ? , attribute  height  {   xsd:int  } ? } 
+  image = element  image  { attribute  id  {   xsd:ID  }  , attribute  src  {   xsd:anyURI  } ? , attribute  imagetype  { (  "SVG"  |  "JPEG"  |  "GIF"  |  "PNG"  |  "PDF"  )  }  , attribute  width  {   xsd:int  } ? , attribute  height  {   xsd:int  } ? } 
   stem = element  stem  { attribute  type  {  "MathML"  |  "AsciiML"  }  , text  } 
   annotation = element  annotation  { attribute  id  {   xsd:ID  }  ,   paragraph  } 
   ul = element  ul  { attribute  id  {   xsd:ID  }  ,   li + } 
@@ -99,19 +100,19 @@ grammar { start =   iso-standard                                                
   person-identifier = element  identifier  { attribute  type  { (  "isni"  |  "uri"  )  }  , text  } 
   org-identifier = element  identifier  { attribute  type  { (  "orcid"  |  "uri"  )  }  , text  } 
   citation = element  citation  {   CitationType  } 
-  CitationType = attribute  bibItemId  {   xsd:IDREF  }  ,   locality * ,   date ?  date = element  date  { (   xsd:gYear  |   xsd:date  )  } 
-  bibLocality = element  bibLocality  { attribute  type  { (  "section"  |  "clause"  |  "part"  |  "paragraph"  |  "chapter"  |  "page"  |  "whole"  )  }  , text  } 
-  bibItem = element  bibItem  {   BibliographicItem  } 
-  BibliographicItem = attribute  id  {   xsd:ID  }  , attribute  type  {  "article"  |  "book"  |  "booklet"  |  "conference"  |  "manual"  |  "proceedings"  |  "presentation"  |  "thesis"  |  "techreport"  |  "standard"  |  "unpublished"  } ? , (   bname  |   formatted  )  ,   source ? ,   publishDate  ,   docIdentifier * ,   accessedDate ? ,   creator * ,   publisher * ,   edition ? ,   biblioNote * ,   partOf * ,   creationDate ? ,   language * ,   script * ,   abstract ?  bname = element  name  { text  } 
-  formatted = element  formatted  { text  } 
+  CitationType = attribute  bibitemid  {   xsd:IDREF  }  ,   locality * ,   date ?  date = element  date  { (   xsd:gYear  |   xsd:date  )  } 
+  locality = element  locality  { attribute  type  { (  "section"  |  "clause"  |  "part"  |  "paragraph"  |  "chapter"  |  "page"  |  "whole"  )  }  , text  } 
+  bibitem = element  bibitem  {   BibliographicItem  } 
+  BibliographicItem = attribute  id  {   xsd:ID  }  , attribute  type  {  "article"  |  "book"  |  "booklet"  |  "conference"  |  "manual"  |  "proceedings"  |  "presentation"  |  "thesis"  |  "techreport"  |  "standard"  |  "unpublished"  } ? , (   bname  |   formatted  )  ,   source ? ,   publishdate ? ,   docidentifier * ,   accesseddate ? ,   creator * ,   publisher * ,   edition ? ,   biblionote * ,   partof * ,   creationdate ? ,   language * ,   script * ,   abstract ?  bname = element  name  { text  } 
+  formatted = element  formatted  {   TextElement + } 
   source = element  source  {   xsd:anyURI  } 
-  publishDate = element  publishDate  { text  } 
-  docIdentifier = element  docIdentifier  { text  } 
-  accessedDate = element  accessedDate  { text  } 
-  creationDate = element  creationDate  { text  } 
-  biblioNote = element  note  { text  } 
+  publishdate = element  publishdate  { text  } 
+  docidentifier = element  docidentifier  { text  } 
+  accesseddate = element  accesseddate  { text  } 
+  creationdate = element  creationdate  { text  } 
+  biblionote = element  note  { text  } 
   abstract = element  abstract  { text  } 
-  partOf = element  partOf  {   BibliographicItem  } 
+  partof = element  partof  {   BibliographicItem  } 
   iso-standard = element  iso-standard  {   title + ,   status  ,   creator  ,   language  ,   script  ,   type  ,   id  ,   version ? ,   copyright  ,   sections  } 
   owner-affiliation = element  affiliation  {  "ISO"  } 
   stage = element  stage  { (  "00"  |  "10"  |  "20"  |  "30"  |  "40"  |  "50"  |  "60"  |  "90"  |  "95"  )  } 
@@ -130,6 +131,10 @@ grammar { start =   iso-standard                                                
 }
 
   
+ 
+ 
+ 
+ 
  
  
  

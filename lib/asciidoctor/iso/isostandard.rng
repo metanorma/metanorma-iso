@@ -419,7 +419,7 @@
       <data type="ID"/>
     </attribute>
     <optional>
-      <attribute name="alignment">
+      <attribute name="align">
         <ref name="Alignments"/>
       </attribute>
     </optional>
@@ -436,7 +436,7 @@
         <data type="ID"/>
       </attribute>
       <optional>
-        <attribute name="alignment">
+        <attribute name="align">
           <ref name="Alignments"/>
         </attribute>
       </optional>
@@ -519,7 +519,7 @@
   </define>
   <define name="quote-source">
     <element name="source">
-      <ref name="CitationInfo"/>
+      <ref name="CitationType"/>
     </element>
   </define>
   <define name="quote-author">
@@ -557,10 +557,10 @@
       <optional>
         <ref name="thead"/>
       </optional>
+      <ref name="tbody"/>
       <optional>
         <ref name="tfoot"/>
       </optional>
-      <ref name="tbody"/>
       <zeroOrMore>
         <ref name="table-note"/>
       </zeroOrMore>
@@ -570,7 +570,7 @@
     </element>
   </define>
   <define name="tname">
-    <element name="tname">
+    <element name="name">
       <text/>
     </element>
   </define>
@@ -595,7 +595,7 @@
   </define>
   <define name="table-note">
     <element name="note">
-      <ref name="ParagraphType"/>
+      <ref name="paragraph"/>
     </element>
   </define>
   <define name="tr">
@@ -629,6 +629,7 @@
         <zeroOrMore>
           <choice>
             <ref name="TextElement"/>
+            <ref name="fn"/>
             <ref name="review"/>
           </choice>
         </zeroOrMore>
@@ -659,6 +660,7 @@
         <zeroOrMore>
           <choice>
             <ref name="TextElement"/>
+            <ref name="fn"/>
             <ref name="review"/>
           </choice>
         </zeroOrMore>
@@ -761,6 +763,11 @@
       <text/>
     </element>
   </define>
+  <define name="tt">
+    <element name="tt">
+      <text/>
+    </element>
+  </define>
   <define name="sub">
     <element name="sub">
       <text/>
@@ -778,7 +785,7 @@
   </define>
   <define name="smallcap">
     <element name="smallcap">
-      <ref name="smallcap"/>
+      <text/>
     </element>
   </define>
   <define name="br">
@@ -869,7 +876,7 @@
           <data type="anyURI"/>
         </attribute>
       </optional>
-      <attribute name="imageType">
+      <attribute name="imagetype">
         <choice>
           <value>SVG</value>
           <value>JPEG</value>
@@ -1151,7 +1158,7 @@
     </element>
   </define>
   <define name="CitationType">
-    <attribute name="bibItemId">
+    <attribute name="bibitemid">
       <data type="IDREF"/>
     </attribute>
     <zeroOrMore>
@@ -1169,8 +1176,8 @@
       </choice>
     </element>
   </define>
-  <define name="bibLocality">
-    <element name="bibLocality">
+  <define name="locality">
+    <element name="locality">
       <attribute name="type">
         <choice>
           <value>section</value>
@@ -1185,8 +1192,8 @@
       <text/>
     </element>
   </define>
-  <define name="bibItem">
-    <element name="bibItem">
+  <define name="bibitem">
+    <element name="bibitem">
       <ref name="BibliographicItem"/>
     </element>
   </define>
@@ -1218,12 +1225,14 @@
     <optional>
       <ref name="source"/>
     </optional>
-    <ref name="publishDate"/>
+    <optional>
+      <ref name="publishdate"/>
+    </optional>
     <zeroOrMore>
-      <ref name="docIdentifier"/>
+      <ref name="docidentifier"/>
     </zeroOrMore>
     <optional>
-      <ref name="accessedDate"/>
+      <ref name="accesseddate"/>
     </optional>
     <zeroOrMore>
       <ref name="creator"/>
@@ -1235,13 +1244,13 @@
       <ref name="edition"/>
     </optional>
     <zeroOrMore>
-      <ref name="biblioNote"/>
+      <ref name="biblionote"/>
     </zeroOrMore>
     <zeroOrMore>
-      <ref name="partOf"/>
+      <ref name="partof"/>
     </zeroOrMore>
     <optional>
-      <ref name="creationDate"/>
+      <ref name="creationdate"/>
     </optional>
     <zeroOrMore>
       <ref name="language"/>
@@ -1260,7 +1269,9 @@
   </define>
   <define name="formatted">
     <element name="formatted">
-      <text/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="source">
@@ -1268,27 +1279,27 @@
       <data type="anyURI"/>
     </element>
   </define>
-  <define name="publishDate">
-    <element name="publishDate">
+  <define name="publishdate">
+    <element name="publishdate">
       <text/>
     </element>
   </define>
-  <define name="docIdentifier">
-    <element name="docIdentifier">
+  <define name="docidentifier">
+    <element name="docidentifier">
       <text/>
     </element>
   </define>
-  <define name="accessedDate">
-    <element name="accessedDate">
+  <define name="accesseddate">
+    <element name="accesseddate">
       <text/>
     </element>
   </define>
-  <define name="creationDate">
-    <element name="creationDate">
+  <define name="creationdate">
+    <element name="creationdate">
       <text/>
     </element>
   </define>
-  <define name="biblioNote">
+  <define name="biblionote">
     <element name="note">
       <text/>
     </element>
@@ -1298,8 +1309,8 @@
       <text/>
     </element>
   </define>
-  <define name="partOf">
-    <element name="partOf">
+  <define name="partof">
+    <element name="partof">
       <ref name="BibliographicItem"/>
     </element>
   </define>
