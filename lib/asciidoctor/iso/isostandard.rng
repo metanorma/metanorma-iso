@@ -900,7 +900,7 @@
       <attribute name="type">
         <choice>
           <value>MathML</value>
-          <value>AsciiML</value>
+          <value>AsciiMath</value>
         </choice>
       </attribute>
       <text/>

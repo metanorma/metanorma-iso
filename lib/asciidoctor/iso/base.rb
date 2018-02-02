@@ -191,7 +191,7 @@ module Asciidoctor
           when :single then xml << "'#{node.text}'"
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
-          when :asciimath then xml.stem node.text, **{ type: "MathML" }
+          when :asciimath then xml.stem node.text, **{ type: "AsciiMath" }
           else
             case node.role
             when "alt" then xml.admitted { |a| a << node.text }

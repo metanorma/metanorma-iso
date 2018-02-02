@@ -14,7 +14,7 @@ module Asciidoctor
 
         noko do |xml|
           xml.formula **id_attr(node) do |s|
-            s.stem stem_content, **{ type: "MathML" }
+            s.stem stem_content, **{ type: "AsciiMath" }
             style(node, stem_content)
           end
         end
