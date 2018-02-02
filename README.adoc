@@ -99,7 +99,7 @@ The ISO International Standard format is prescribed in
 http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"],
 to a level amenable to an explicit document model. A formal document
 model would allow checking for consistency in format and content, and expedite
-authoring and quality control of ISO standards.
+authoring and quality control of ISO standards. Authoring standards through a more abstract formal model also permit enhanced functionality such as cross reference link checking and auto numbering of sections, figures, tables and formulas.
 
 The document model for ISO Standards specifically is derived from a more general
 https://github.com/riboseinc/isodoc-models[StandardDocument model]. Other
