@@ -24,6 +24,23 @@ module Asciidoctor
         nil
       end
 
+      def html_doc_path(file)
+        File.join(File.dirname(__FILE__), File.join("html", file))
+      end
+
+      def doc_converter
+        IsoDoc::Convert.new(
+          htmlstylesheet: html_doc_path("htmlstyle.css"),
+          wordstylesheet: nil,
+          standardstylesheet: html_doc_path("isodoc.css"),
+          header: html_doc_path("header.html"),
+          htmlcoverpage: html_doc_path("iso_titlepage.html"),
+          wordcoverpage: html_doc_path("iso_titlepage.html"),
+          htmlintropage: html_doc_path("iso_intro.html"),
+          wordintropage: html_doc_path("iso_intro.html"),
+        )
+      end
+
       def document(node)
         ret1 = makexml(node)
         validate(ret1)
@@ -31,7 +48,7 @@ module Asciidoctor
         filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
           gsub(%r{^.*/}, '')
         File.open("#{filename}", "w") { |f| f.write(ret) }
-        IsoDoc::Convert.convert filename
+        doc_converter.convert filename
         ret
       end
 
