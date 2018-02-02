@@ -25,9 +25,8 @@ International Standards.
 as end deliverable ISO standard drafts.
 ** Microsoft Word output (`.doc`), following the style conventions of the 
 https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template]. 
-(In development)
 ** PDF (forthcoming)
-** HTML (forthcoming)
+** HTML (in development)
 
 This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
 
@@ -36,18 +35,26 @@ This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
 [source,console]
 ----
 $ asciidoctor a.adoc  # HTML output of Asciidoc file
-$ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output
+$ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output, 
 ----
 
-The gem translates the document into ISO XML format, and then validates its
+The initial step is optional, and can be used as a preview of what the gem
+will do; it generates a `{filename}.html` file.
+
+When invoked within Asciidoctor, The gem translates the document into 
+ISO XML format, and then validates its
 output against the ISO XML document model; errors are reported to console
 against the XML, and are intended for users to check that they have provided
 all necessary components of the document.
 
-TODO: The gem will then convert the XML to Word Document, HTML, and PDF,
-and output those files with the appropriate file suffixes.
-`lib/asciidoctor/iso/iso2wordhtml.rb` is work in progress, and not yet
-integrated into the executable.
+The gem then converts the XML to Micosoft Word (`{filename}.doc`), HTML (`{filename}.html`), 
+and PDF (forthcoming).
+
+In the process of generating the Microsoft Word document, the associated
+https://github.com/riboseinc/isodoc[IsoDoc] gem generates temporary files:
+`{filename}.htm` contains the Microsoft Word-specific HTML for inclusion in that file,
+and the `{filename}_files` folder contains any images and headers for the Word
+document.
 
 === Content Warnings
 
@@ -82,7 +89,8 @@ levels of subsections.)
 == Approach
 === Document model
 
-The document model ("ISO XML") intends to introduce rigour into the ISO
+The document model ("IsoDoc") used in document generation
+intends to introduce rigour into the ISO
 standards authoring process; the existing 
 https://www.iso.org/iso-templates.html[Microsoft Word template from ISO]
 do not support such rigour down to the element level.
@@ -93,18 +101,20 @@ to a level amenable to an explicit document model. A formal document
 model would allow checking for consistency in format and content, and expedite
 authoring and quality control of ISO standards.
 
-The document model ("ISO XML") is under development, but it already contains
+The document model for ISO Standards specifically is derived from a more general
+https://github.com/riboseinc/isodoc-models[StandardDocument model]. Other
+ISO-like standards can also be derived from this more general model;
+CSD (https://github.com/riboseinc/csd, https://github.com/riboseinc/asciidoctor-csd)
+is one such instance.
+
+The document model for ISO Standards is still under development, but it already contains
 all the markup needed to render the
 https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
 model document of an international standard, and all the structures described
 in ISO/IEC DIR 2. It is expressed as a
-link:lib/asciidoctor/iso/validate.rnc[Relax NG Compact schema]; actual
-validation occurs against its link:lib/asciidoctor/iso/validate.rng[full Relax
-NG counterpart]. A UML representation of the document model is given below.
-Note that the document model is currently still in the exploratory phase, and
-will likely be changing significantly.
-
-WARNING: The current RNG model of ISO XML is out of sync with the UML.
+link:lib/asciidoctor/iso/isostandard.rnc[Relax NG Compact schema]; actual
+validation occurs against its link:lib/asciidoctor/iso/isostandard.rng[full Relax
+NG counterpart]. 
 
 === Asciidoctor
 
@@ -366,6 +376,16 @@ The IsoDoc data model (IsoStandardDocument) is instantiated from the
 https://github.com/riboseinc/isodoc-models[StandardDocument model]. For details
 please visit that page.
 
+== Code Structure
+
+The gem invokes the following other gems as a division of labour.
+
+* This gem generates the IsoDoc XML proper
+* https://github.com/riboseinc/isodoc renders IsoDoc XML into HTML
+* https://github.com/riboseinc/html2doc converts HTML into Microsoft Word
+* https://github.com/riboseinc/isodoc-models derives the ISO Standard grammar
+used for validation from the generic IsoDoc grammar
+
 
 == Examples
 
@@ -374,9 +394,10 @@ https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
 model document of an international standard. This repository includes:
 
 * the link:spec/examples/rice.adoc[AsciiISO version of the Rice document].
-* the link:spec/examples/rice.html[AsciiISO rendering of the Rice document as an HTML preview] 
+* the link:spec/examples/rice.preview.html[AsciiISO rendering of the Rice document as an HTML preview] 
 (native Asciidoc rendering)
 * the link:spec/examples/rice.xml[ISO XML rendering of the Rice document].
-* the link:spec/examples/rice.doc[Word .doc rendering of the Rice document] (Work in progress).
+* the link:spec/examples/rice.doc[Word .doc rendering of the Rice document].
+* the link:spec/examples/rice.html[HTML rendering of the Rice document].
 
 
