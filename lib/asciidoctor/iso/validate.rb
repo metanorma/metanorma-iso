@@ -98,7 +98,7 @@ module Asciidoctor
       end
 
       # spec of permissible section sequence
-      @@seq = [
+      SEQ = [
         {
           msg: "Initial section must be (content) Foreword",
           val:  [{ tag: "content", title: "Foreword" }],
@@ -132,14 +132,14 @@ module Asciidoctor
                        "//sections/clause | //sections/references | "\
                        "//sections/annex")
         names = f.map { |s| { tag: s.name, title: s.at("./title").text } }
-        names = seqcheck(names, @@seq[0][:msg], @@seq[0][:val]) or return
+        names = seqcheck(names, SEQ[0][:msg], SEQ[0][:val]) or return
         n = names[0]
-        names = seqcheck(names, @@seq[1][:msg], @@seq[1][:val]) or return
+        names = seqcheck(names, SEQ[1][:msg], SEQ[1][:val]) or return
         if n == { tag: "content", title: "Introduction" }
-          names = seqcheck(names, @@seq[2][:msg], @@seq[2][:val]) or return
+          names = seqcheck(names, SEQ[2][:msg], SEQ[2][:val]) or return
         end
-        names = seqcheck(names, @@seq[3][:msg], @@seq[3][:val]) or return
-        names = seqcheck(names, @@seq[4][:msg], @@seq[4][:val]) or return
+        names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val]) or return
+        names = seqcheck(names, SEQ[4][:msg], SEQ[4][:val]) or return
         n = names.shift
         if n == { tag: "clause", title: "Symbols and Abbreviations" }
           n = names.shift or return

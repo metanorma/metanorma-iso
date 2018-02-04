@@ -70,7 +70,7 @@ module Asciidoctor
       end
 
       def refitem(xml, item, node)
-        m = @@non_iso_ref.match item
+        m = NON_ISO_REF.match item
         if m.nil? then Utils::warning(node, "no anchor on reference", item)
         else
           xml.bibitem **attr_code(id: m[:anchor]) do |t|
@@ -95,26 +95,26 @@ module Asciidoctor
           gsub(/&amp;amp;/, "&amp;")
       end
 
-      @@iso_ref = %r{^<ref\sid="(?<anchor>[^"]+)">
+      ISO_REF = %r{^<ref\sid="(?<anchor>[^"]+)">
       \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
       (?<text>.*)$}xm
 
-      @@iso_ref_no_year = %r{^<ref\sid="(?<anchor>[^"]+)">
+      ISO_REF_NO_YEAR = %r{^<ref\sid="(?<anchor>[^"]+)">
       \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
       <fn[^>]*>\s*<p>(?<fn>[^\]]+)</p>\s*</fn>,?\s?(?<text>.*)$}xm
 
-      @@iso_ref_all_parts = %r{^<ref\sid="(?<anchor>[^"]+)">
+      ISO_REF_ALL_PARTS = %r{^<ref\sid="(?<anchor>[^"]+)">
       \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
       (?<text>.*)(</p>)?$}xm
 
-      @@non_iso_ref = %r{^<ref\sid="(?<anchor>[^"]+)">
+      NON_ISO_REF = %r{^<ref\sid="(?<anchor>[^"]+)">
       \[(?<code>[^\]]+)\]</ref>,?\s
       (?<text>.*)$}xm
 
       def reference1(node, item, xml, normative)
-        matched = @@iso_ref.match item
-        matched2 = @@iso_ref_no_year.match item
-        matched3 = @@iso_ref_all_parts.match item
+        matched = ISO_REF.match item
+        matched2 = ISO_REF_NO_YEAR.match item
+        matched3 = ISO_REF_ALL_PARTS.match item
         if matched3.nil? && matched2.nil? && matched.nil?
           refitem(xml, item, node)
         elsif !matched.nil? then isorefmatches(xml, matched)

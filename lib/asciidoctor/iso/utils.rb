@@ -71,7 +71,7 @@ module Asciidoctor
         nil
       end
 
-      @@nokohead = <<~HERE
+      NOKOHEAD = <<~HERE
           <!DOCTYPE html SYSTEM
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
           <html xmlns="http://www.w3.org/1999/xhtml">
@@ -82,7 +82,7 @@ module Asciidoctor
       # block for processing XML document fragments as XHTML,
       # to allow for HTMLentities
       def noko(&block)
-        doc = ::Nokogiri::XML.parse(@@nokohead)
+        doc = ::Nokogiri::XML.parse(NOKOHEAD)
         fragment = doc.fragment("")
         ::Nokogiri::XML::Builder.with fragment, &block
         fragment.to_xml(encoding: "US-ASCII").lines.map do |l|

@@ -1,18 +1,20 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 0d441541bb6f36ee7c01e5373156d163fed403b6
+  revision: ebea2e5c21f609825320d76352d1dde6a2ea5e0a
   specs:
     html2doc (0.0.1)
+      asciimath
       htmlentities (~> 4.3.4)
       image_size
       mime-types
       nokogiri (~> 1.8.1)
+      ruby-xslt
       thread_safe
       uuidtools
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 1ae017e979c14373084bce2d08e00f0baf8a1881
+  revision: 8ef48ed146397daa96328dc3660207b45ad1d822
   specs:
     isodoc (0.0.1)
       asciimath

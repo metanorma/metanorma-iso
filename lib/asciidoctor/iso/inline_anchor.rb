@@ -1,13 +1,10 @@
 module Asciidoctor
   module ISO
     module InlineAnchor
-      class << self
-        @@refids = Set.new
 
         def is_refid?(x)
-          @@refids.include? x
+          @refids.include? x
         end
-      end
 
       def inline_anchor(node)
         case node.type
@@ -45,7 +42,7 @@ module Asciidoctor
       def inline_anchor_bibref(node)
         eref_contents = node.target == node.text ? nil : node.text
         eref_attributes = { id: node.target }
-        @@refids << node.target
+        @refids << node.target
         noko do |xml|
           xml.ref eref_contents, **attr_code(eref_attributes)
         end.join

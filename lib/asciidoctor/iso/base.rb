@@ -10,8 +10,6 @@ require "isodoc"
 module Asciidoctor
   module ISO
     module Base
-      @@fn_number = 0
-      @@draft = false
 
       def content(node)
         node.content
@@ -41,7 +39,15 @@ module Asciidoctor
         )
       end
 
+      def init
+            @fn_number = 0
+      @draft = false
+              @refids = Set.new
+                    @anchors = {}
+      end
+
       def document(node)
+        init
         ret1 = makexml(node)
         validate(ret1)
         ret = ret1.to_xml(indent: 2)
@@ -54,7 +60,7 @@ module Asciidoctor
 
       def makexml(node)
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
-        @@draft = node.attributes.has_key?("draft")
+        @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
@@ -65,7 +71,7 @@ module Asciidoctor
       end
 
       def is_draft
-        @@draft
+        @draft
       end
 
       def front(node, xml)
@@ -91,19 +97,19 @@ module Asciidoctor
         end
       end
 
-      @@term_reference_re_str = <<~REGEXP
+      TERM_REFERENCE_RE_STR = <<~REGEXP
              ^(?<xref><xref[^>]+>)
                (,\s(?<section>[^, ]+))?
                (,\s(?<text>.*))?
              $
       REGEXP
-      @@term_reference_re =
-        Regexp.new(@@term_reference_re_str.gsub(/\s/, "").gsub(/_/, "\\s"),
+      TERM_REFERENCE_RE =
+        Regexp.new(TERM_REFERENCE_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
 
       def extract_termsource_refs(text)
-        matched = @@term_reference_re.match text
+        matched = TERM_REFERENCE_RE.match text
         if matched.nil?
           warning(node, "term reference not in expected format", text)
         end
@@ -136,8 +142,8 @@ module Asciidoctor
 
       def inline_footnote(node)
         noko do |xml|
-          @@fn_number += 1
-          xml.fn **{reference: @@fn_number} do |fn|
+          @fn_number += 1
+          xml.fn **{reference: @fn_number} do |fn|
             # TODO multi-paragraph footnotes
             fn.p { |p| p << node.text }
             footnote_style(node, node.text)

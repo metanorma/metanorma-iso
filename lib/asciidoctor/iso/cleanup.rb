@@ -13,8 +13,6 @@ module Asciidoctor
         text.gsub(/\s+<fn /, "<fn ")
       end
 
-      @@anchors = {}
-
       def cleanup(xmldoc)
         termdef_cleanup(xmldoc)
         isotitle_cleanup(xmldoc)
@@ -60,10 +58,11 @@ module Asciidoctor
       def xref_cleanup(xmldoc)
         reference_names(xmldoc)
         xmldoc.xpath("//xref").each do |x|
-          if InlineAnchor::is_refid? x["target"]
+          #if InlineAnchor::is_refid? x["target"]
+          if is_refid? x["target"]
             x.name = "eref"
             x["bibitemid"] = x["target"]
-            x["citeas"] = @@anchors[x["target"]][:xref]
+            x["citeas"] = @anchors[x["target"]][:xref]
             x.delete("target")
           else
             x.delete("type")
@@ -73,7 +72,7 @@ module Asciidoctor
 
       def origin_cleanup(xmldoc)
         xmldoc.xpath("//origin").each do |x|
-          x["citeas"] = @@anchors[x["bibitemid"]][:xref]
+          x["citeas"] = @anchors[x["bibitemid"]][:xref]
           n = x.next_element
           if !n.nil? && n.name == "isosection"
             n.name = "locality"
@@ -294,7 +293,7 @@ module Asciidoctor
           date = ref.at(("./publisherdate"))
           reference = format_ref(docid.text, isopub)
           reference += ": #{date.text}" if date && isopub
-          @@anchors[ref["id"]] = { xref: reference }
+          @anchors[ref["id"]] = { xref: reference }
         end
       end
 
