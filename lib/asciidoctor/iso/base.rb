@@ -32,10 +32,10 @@ module Asciidoctor
           wordstylesheet: nil,
           standardstylesheet: html_doc_path("isodoc.css"),
           header: html_doc_path("header.html"),
-          htmlcoverpage: html_doc_path("iso_titlepage.html"),
-          wordcoverpage: html_doc_path("iso_titlepage.html"),
-          htmlintropage: html_doc_path("iso_intro.html"),
-          wordintropage: html_doc_path("iso_intro.html"),
+          htmlcoverpage: html_doc_path("word_iso_titlepage.html"),
+          wordcoverpage: html_doc_path("word_iso_titlepage.html"),
+          htmlintropage: html_doc_path("word_iso_intro.html"),
+          wordintropage: html_doc_path("word_iso_intro.html"),
         )
       end
 

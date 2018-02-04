@@ -537,3 +537,111 @@ body
 dt
     {page-break-inside:avoid;
     page-break-after:avoid}
+.coverpage_docnumber
+    {text-align:right;
+    font-size:14.0pt;
+    font-weight:bold;}
+.coverpage_techcommittee
+    {text-align:right;}
+.coverpage_docstage
+    {text-align:center;
+    font-size:30.0pt;
+    color:#485094;}
+div.doctitle
+    {margin-top:100.0pt;
+    text-align:left;
+    font-size:16.0pt;}
+div.coverpage_warning
+    {mso-element:para-border-div;
+    border:solid windowtext 1.0pt #485094; 
+    mso-border-alt:solid windowtext .5pt;
+    padding:1.0pt 4.0pt 1.0pt 4.0pt #485094;
+    margin-left:4.25pt;
+    margin-right:4.25pt}
+.coverpage_warning
+    {color:#485094;
+    font-size:10.0pt;}
+.coverpage {
+  text-align: center;
+  margin: 2em 0;
+}
+
+.coverpage-logo {
+  color: #485094;
+}
+
+.coverpage-tc-name {
+  color: #485094;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  margin: 0.25em 0;
+}
+
+.coverpage-doc-identity {
+  background-color: #485094;
+  color: white;
+  font-size: 2em;
+  line-height: 2em;
+  margin: 0.5em 0;
+}
+
+.coverpage-title {
+  font-weight: 400;
+}
+
+.coverpage-title .title-second {
+  display: none;
+}
+
+.coverpage-stage-block {
+  font-style: italic ;
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+.coverpage-warning {
+  border-top: solid 1px #f36f36;
+  border-bottom: solid 1px #f36f36;
+  margin: 1em 2em;
+  color: #485094;
+  padding: 1em;
+}
+
+.coverpage-warning .title {
+  color: #f36f36;
+  font-weight: 500;
+}
+
+.coverpage-warning .content {
+  font-style: italic;
+}
+
+.copyright {
+  padding: 1em;
+}
+
+.copyright .name {
+  color: #485094;
+  font-weight: 600;
+}
+
+.copyright .address {
+  color: #485094;
+}
+
+div.rule {
+  width: 100%;
+  height: 1px;
+  background-color: #485094;
+  margin: 2em 0;
+}
+
+#toc-list ul {
+  margin-bottom: 0.25em;
+}
+#toc-list li {
+  list-style-type: none;
+}
+
+
+
