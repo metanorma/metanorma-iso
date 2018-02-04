@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: a43f4ce11689091956c00b5a6dfdfe5026eb7733
+  revision: 2f4276de72c30a24798c697b31ffc9611069b362
   specs:
     html2doc (0.0.1)
       asciimath

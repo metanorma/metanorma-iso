@@ -41,7 +41,7 @@ $ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output,
 The initial step is optional, and can be used as a preview of what the gem
 will do; it generates a `{filename}.html` file.
 
-When invoked within Asciidoctor, The gem translates the document into 
+When invoked within Asciidoctor, the gem translates the document into 
 ISO XML format, and then validates its
 output against the ISO XML document model; errors are reported to console
 against the XML, and are intended for users to check that they have provided
@@ -136,6 +136,7 @@ recognised by fixed titles such as `Normative References`). Authoring ISO
 standards in this fashion assumes that users will be populating an Asciidoc
 template, and not removing needed formatting instructions.
 
+[[model_additions]]
 === Asciidoctor model additions
 
 ==== Paragraph alignment
@@ -202,6 +203,20 @@ stem:[w_max]
 |===
 --
 
+==== Inline clause numbers
+
+For some clauses (notably test methods), the clause heading appears inline with the clause, instead of being separated on a different line. This is indicated in Asciidoc by the option
+attribute `inline-header`:
+
+[source,asciidoctor]
+--
+[%inline-header]
+[[AnnexA-2-1]]
+==== Sample divider, 
+
+consisting of a conical sample divider
+--
+
 === Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users
@@ -211,7 +226,8 @@ introduced for semantic markup (admitted terms, deprecated terms, etc).
 
 The default HTML output of an Asciidoc-formatted ISO document is quite close to the
 intended final output, with the following exceptions, and with the additional
-exceptions listed above as markup introduced for ISO markup. Note that the final
+exceptions listed <<model_additions,above>> as markup introduced for ISO markup. 
+Note that the final
 outputs of the conversion (Microsoft Word, PDF, HTML) do not have these exceptions,
 and comply with the ISO Standard specifications.
 
@@ -295,6 +311,7 @@ inconsistent. Subfigures are automatically numbered as independent figures.
 small caps or strike through, though these can be marked up as CSS classes
 through custom macros in Asciidoctor: a custom CSS stylesheet will be needed to
 render them.
+
 
 
 == Document Attributes

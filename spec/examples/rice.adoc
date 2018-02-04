@@ -392,27 +392,33 @@ Extraneous matter, broken kernels, damaged kernels and other kinds of rice are s
 
 The usual laboratory apparatus and, in particular, the following. 
 
-// inline
+[%inline-header]
 [[AnnexA-2-1]]
 ==== Sample divider, 
 
 consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. "Split-it-right" sample divider, such as that shown in <<figureA-1>>. 
 
+[%inline-header]
 ==== Sieve, 
 
 with round perforations of diameter 1,4 mm. 
 
+[%inline-header]
 ==== Tweezers. 
 
+[%inline-header]
 ==== Scalpel. 
 
+[%inline-header]
 ==== Paintbrush. 
 
+[%inline-header]
 [[AnnexA-2-6]]
 ==== Steel bowls, 
 
 of diameter 100 mm ± 5 mm; seven per test sample. 
 
+[%inline-header]
 ==== Balance, 
 
 which can be read to the nearest 0,01 g. 
@@ -421,6 +427,7 @@ which can be read to the nearest 0,01 g.
 
 See <<clause5>>. 
 
+[%inline-header]
 === Procedure 
 
 [[AnnexA-4-1]]
@@ -472,32 +479,39 @@ Waxy rice kernels have a reddish brown colour when stained in an iodine solution
 
 The usual laboratory apparatus and, in particular, the following. 
 
+[%inline-header]
 [[AnnexB-2-1]]
 ==== Balance, 
 
 capable of weighing to the nearest 0,01 g. 
 
+[%inline-header]
 [[AnnexB-2-2]]
 ==== Glass beaker, 
 
 of capacity 250 ml. 
 
+[%inline-header]
 [[AnnexB-2-3]]
 ==== Small white colour bowls, 
 
 or any white colour container of a suitable size.
 
+[%inline-header]
 [[AnnexB-2-4]]
 ==== Wire sieve, 
 
 with long rounded apertures of (1 mm stem:[{:(+0.02),(0):}] mm) &times; (20 mm stem:[{:(+2),(-1):}] mm). 
 
+[%inline-header]
 [[AnnexB-2-5]]
 ==== Stirrer rod. 
 
+[%inline-header]
 [[AnnexB-2-6]]
 ==== Tweezers or forceps. 
 
+[%inline-header]
 [[AnnexB-2-7]]
 ==== Tissue paper. 
 
@@ -505,16 +519,19 @@ with long rounded apertures of (1 mm stem:[{:(+0.02),(0):}] mm) &times; (20 mm s
 
 WARNING: Direct contact of iodine with skin can cause lesions so care should be taken in handling iodine. Iodine vapour is very irritating to eyes and mucous membranes. 
 
+[%inline-header]
 [[AnnexB-3-1]]
 ==== Deionized water, 
 
 Grade 3 quality as specified in <<ISO3696>>.
 
+[%inline-header]
 [[AnnexB-3-2]]
 ==== Iodine stock solution, 
 
 containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols.footnote:[Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.] 
 
+[%inline-header]
 [[AnnexB-3-3]]
 ==== Iodine working solution, 
 

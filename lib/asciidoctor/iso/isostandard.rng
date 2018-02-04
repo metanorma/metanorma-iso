@@ -188,6 +188,11 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="inline-header">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
       <ref name="section-title"/>
     </optional>
     <choice>
@@ -209,6 +214,11 @@
       <optional>
         <attribute name="id">
           <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="inline-header">
+          <data type="boolean"/>
         </attribute>
       </optional>
       <optional>
@@ -1434,6 +1444,11 @@
       <optional>
         <attribute name="id">
           <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="inline-header">
+          <data type="boolean"/>
         </attribute>
       </optional>
       <optional>
