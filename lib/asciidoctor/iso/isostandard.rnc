@@ -47,7 +47,7 @@ grammar { start =   iso-standard                                                
   thead = element  thead  {   tr + } 
   tfoot = element  tfoot  {   tr  } 
   tbody = element  tbody  {   tr + } 
-  table-note = element  note  {   paragraph  } 
+  table-note = element  note  {   ParagraphType  } 
   tr = element  tr  { (   td  |   th  ) + } 
   td = element  td  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   fn  |   review  ) * |   paragraph-with-footnote + )  } 
   th = element  th  { attribute  colspan  { text  } ? , attribute  rowspan  { text  } ? , attribute  align  {  "left"  |  "right"  |  "center"  } ? , ( (   TextElement  |   fn  |   review  ) * |   paragraph-with-footnote + )  } 
@@ -131,7 +131,6 @@ grammar { start =   iso-standard                                                
 }
 
   
- 
  
  
  

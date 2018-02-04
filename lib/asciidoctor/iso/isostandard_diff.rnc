@@ -258,8 +258,6 @@ th =
     )
 }
 
-table-note = element note { paragraph }
-
 BibliographicItem =
      attribute id { xsd:ID },
      attribute type { "article" | "book" | "booklet" | "conference" | "manual" |

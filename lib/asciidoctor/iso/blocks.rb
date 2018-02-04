@@ -41,12 +41,12 @@ module Asciidoctor
       end
 
       def termnote(n)
-        if n.blocks?
-          warning(n, "comment cannot contain blocks of text", n.content)
-        end
         noko do |xml|
-          xml.termnote **id_attr(n) do |xml_cref|
-            xml_cref << n.content
+          xml.termnote **id_attr(n) do |ex|
+            if n.blocks? then ex << n.content
+            else 
+              ex.p {|p| p << n.content }
+            end
             style(n, Utils::flatten_rawtext(n.content).join("\n"))
           end
         end.join("\n")

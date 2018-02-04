@@ -50,7 +50,7 @@ module Asciidoctor
       end
 
       def para_cleanup(xmldoc)
-        xmldoc.xpath("//p[not(@id)] | //note[not(@id)]").each do |x|
+        xmldoc.xpath("//p[not(@id)] | //note[not(@id)][not(ancestor::bibitem)]").each do |x|
           x["id"] = Utils::anchor_or_uuid
         end
       end

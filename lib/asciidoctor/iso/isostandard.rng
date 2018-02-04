@@ -593,7 +593,7 @@
   </define>
   <define name="table-note">
     <element name="note">
-      <ref name="paragraph"/>
+      <ref name="ParagraphType"/>
     </element>
   </define>
   <define name="tr">
