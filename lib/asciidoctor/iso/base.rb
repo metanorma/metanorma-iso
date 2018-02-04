@@ -32,18 +32,18 @@ module Asciidoctor
           wordstylesheet: nil,
           standardstylesheet: html_doc_path("isodoc.css"),
           header: html_doc_path("header.html"),
-          htmlcoverpage: html_doc_path("word_iso_titlepage.html"),
+          htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
-          htmlintropage: html_doc_path("word_iso_intro.html"),
+          htmlintropage: html_doc_path("html_iso_intro.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),
         )
       end
 
       def init
-            @fn_number = 0
-      @draft = false
-              @refids = Set.new
-                    @anchors = {}
+        @fn_number = 0
+        @draft = false
+        @refids = Set.new
+        @anchors = {}
       end
 
       def document(node)
