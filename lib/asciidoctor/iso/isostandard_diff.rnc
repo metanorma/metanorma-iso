@@ -81,13 +81,13 @@ substage =
   }
 
 documentnumber = 
-  element projectnumber { 
+  element project-number { 
     attribute part { xsd:int }?,
     xsd:int 
    }
 
 tc-documentnumber = 
-  element tc-documentnumber { 
+  element tc-document-number { 
     xsd:int 
    }
 

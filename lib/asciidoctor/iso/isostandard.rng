@@ -1375,7 +1375,7 @@
     </element>
   </define>
   <define name="documentnumber">
-    <element name="projectnumber">
+    <element name="project-number">
       <optional>
         <attribute name="part">
           <data type="int"/>
@@ -1385,7 +1385,7 @@
     </element>
   </define>
   <define name="tc-documentnumber">
-    <element name="tc-documentnumber">
+    <element name="tc-document-number">
       <data type="int"/>
     </element>
   </define>

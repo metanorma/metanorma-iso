@@ -11,10 +11,10 @@ module Asciidoctor
     module Front
       def metadata_id(node, xml)
         xml.id do |i|
-          i.projectnumber node.attr("docnumber"),
+          i.project_number node.attr("docnumber"),
             **attr_code(part: node.attr("partnumber"))
           if node.attr("tc-docnumber")
-            i.tc_documentnumber node.attr("tc-docnumber")
+            i.tc_document_number node.attr("tc-docnumber")
           end
         end
       end
