@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>rice</title>
 <style>
   <!--
@@ -728,11 +728,12 @@ div.rule {
 -->
     </style>
   </head>
-  <body lang="EN-US" link="blue" vlink="#954F72">
+  <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US">
     <div class="WordSection1">
-<p class="coverpage_docnumber">ISO&#160;CD 17301-1:2016(E)</p>
 
-<p class="coverpage_techcommittee">ISO&#160;TC&#160;34/SC&#160;CNUM/WG&#160;3</p>
+<p class="coverpage_docnumber">ISO CD 17301-1:2016(E)</p>
+
+<p class="coverpage_techcommittee">ISO TC 34/SC CNUM/WG 3</p>
 
 <p class="coverpage_techcommittee"><a name="CVP_Secretariat_Loca">Secretariat</a>: XXXX</p>
 
@@ -743,7 +744,8 @@ div.rule {
 <div class="coverpage_warning">
 
 <p>Warning for WDs
-and CDs<p></p></p>
+and CDs</p>
+<p></p>
 
 <p>This
 document is not an ISO International Standard. It is distributed for review and
@@ -757,17 +759,19 @@ documentation.</p>
 
 </div>
 
-<p class="MsoNormal"><span lang="EN-GB"><p>&#160;</p></span></p>
+<p class="MsoNormal"><span lang="EN-GB"><p> </p></span></p>
 
 
 
-      <p></p>
+
+      <p> </p>
     </div>
     <br clear="all" class="section">
     <div class="WordSection2">
+
 <div class="copyright">
   <p class="year">
-    &#169; ISO 2016, Published in Switzerland
+    © ISO 2016, Published in Switzerland
   </p>
 
   <p class="message">
@@ -776,8 +780,69 @@ reserved. Unless otherwise specified, no part of this publication may be
 reproduced or utilized otherwise in any form or by any means, electronic or
 mechanical, including photocopying, or posting on the internet or an intranet,
 without prior written permission. Permission can be requested from either ISO
-at the address below or ISO</p>
+at the address below or ISO’s member body in the country of the requester.
+  </p>
+
+  <p class="name">ISO copyright office</p>
+  <p class="address">
+    Ch. de Blandonnet 8 • CP 401<br>
+    CH-1214 Vernier, Geneva, Switzerland<br>
+    Tel.  + 41 22 749 01 11<br>
+    Fax  + 41 22 749 09 47&gt;<br>
+    copyright@iso.org<br>
+    www.iso.org
+  </p>
 </div>
+
+
+
+
+<div class="rule"></div>
+
+<div class="toc">
+  <h1 class="toc-contents">Contents</h1>
+  <ul id="toc-list"></ul>
+</div>
+
+<div class="rule"></div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+
+<script>
+// http://tutorials.jenkov.com/jquery/generating-table-of-contents.html
+$(document).ready(function() {
+  $("#toc-list").empty();
+
+  var prevH2Item = null;
+  var prevH2List = null;
+
+  var index = 0;
+  $("h1, h2").each(function() {
+
+    if ($(this).hasClass("toc-contents")) {
+      return;
+    }
+    //insert an anchor to jump to, from the TOC link.
+    var anchor = "<a name='" + index + "'></a>";
+    $(this).before(anchor);
+
+    var li     = "<li><a href='#" + index + "'>" + $(this).text() + "</a></li>";
+
+    if ($(this).is("h1") ){
+      prevH2List = $("<ul></ul>");
+      prevH2Item = $(li);
+      prevH2Item.append(prevH2List);
+      prevH2Item.appendTo("#toc-list");
+    } else {
+      prevH2List.append(li);
+    }
+    index++;
+  });
+});
+</script>
+
+
       <br clear="all" style="mso-special-character:line-break;page-break-before:always">
       <div>
         <h1 class="ForewordTitle">Foreword</h1>
@@ -786,7 +851,7 @@ is a worldwide federation of national standards bodies (ISO member bodies). The 
         <p>The procedures used to develop this document and those intended for its further maintenance are described in the ISO/IEC Directives, Part 1. In particular the different approval criteria needed for the different types of ISO documents should be noted. This document was drafted in accordance with the editorial rules of the ISO/IEC Directives, Part 2 (see www.iso.org/directives).</p>
         <p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO shall not be held responsible for identifying any or all such patent rights. Details of any patent rights identified during the development of the document will be in the Introduction and/or on the ISO list of patent declarations received (see www.iso.org/patents).</p>
         <p>Any trade name used in this document is information given for the convenience of users and does not constitute an endorsement.</p>
-        <p>For an explanation on the voluntary nature of standards, the meaning of ISO specific terms and expressions related to conformity assessment, as well as information about ISO&#8217;s adherence to the World Trade Organization (WTO) principles in the Technical Barriers to Trade (TBT) see the following URL: www.iso.org/iso/foreword.html.</p>
+        <p>For an explanation on the voluntary nature of standards, the meaning of ISO specific terms and expressions related to conformity assessment, as well as information about ISO’s adherence to the World Trade Organization (WTO) principles in the Technical Barriers to Trade (TBT) see the following URL: www.iso.org/iso/foreword.html.</p>
         <p>This document was prepared by Technical Committee ISO/TC 34, <i>Food products</i>, Subcommittee SC 4, <i>Cereals and pulses</i>.</p>
         <p>This second edition cancels and replaces the first edition (ISO 17301-1:2009), which has been technically revised.</p>
         <p>The main changes compared to the previous edition are:</p>
@@ -818,31 +883,31 @@ World<br>
     </div>
     <br clear="all" class="section">
     <div class="WordSection3">
-      <p class="zzSTDTitle1">Cereals and pulses&#160;&#8212; Specifications and test methods&#160;&#8212; Part&#160;1: Rice</p>
+      <p class="zzSTDTitle1">Cereals and pulses — Specifications and test methods — Part 1: Rice</p>
       <div>
-        <h1>1.<span style="mso-tab-count:1">&#160; </span>Scope</h1>
+        <h1>1.<span style="mso-tab-count:1">  </span>Scope</h1>
         <p>This document specifies minimum requirements and test methods for rice (<i>Oryza sativa L.</i>).</p>
         <p>It is applicable to husked rice, husked parboiled rice, milled rice and milled parboiled rice, suitable for human consumption, directly or after reconditioning.</p>
         <p>It is not applicable to cooked rice products.</p>
       </div>
       <div>
-        <h1>2.<span style="mso-tab-count:1">&#160; </span>Normative References</h1>
+        <h1>2.<span style="mso-tab-count:1">  </span>Normative References</h1>
         <p>The following documents are referred to in the text in such a way
 that some or all of their content constitutes requirements of this
 document. For dated references, only the edition cited applies.
 For undated references, the latest edition of the referenced
 document (including any amendments) applies.
 </p>
-        <p id="ISO712">ISO 712<i> Cereals and cereal products&#8201;&#8212;&#8201;Determination of moisture content&#8201;&#8212;&#8201;Reference method</i></p>
-        <p id="ISO6646">ISO 6646<i> Rice&#8201;&#8212;&#8201;Determination of the potential milling yield from paddy and from husked rice</i></p>
-        <p id="ISO8351-1">ISO 8351-1: 1994<i> Packaging&#8201;&#8212;&#8201;Method of specification for sacks&#8201;&#8212;&#8201;Part 1: Paper sacks</i></p>
-        <p id="ISO8351-2">ISO 8351-2<i> Packaging&#8201;&#8212;&#8201;Method of specification for sacks&#8201;&#8212;&#8201;Part 2: Sacks made from thermoplastic flexible film</i></p>
-        <p id="ISO16634">ISO 16634: --<a style="mso-footnote-id:ftn" href="#_ftn" name="_ftnref" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a><i> Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs&#8201;&#8212;&#8201;Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content</i></p>
-        <p id="ISO20483">ISO 20483: 2013<i> Cereals and pulses&#8201;&#8212;&#8201;Determination of the nitrogen content and calculation of the crude protein content&#8201;&#8212;&#8201;Kjeldahl method</i></p>
-        <p id="ISO24333">ISO 24333: 2009<i> Cereals and cereal products&#8201;&#8212;&#8201;Sampling</i></p>
+        <p id="ISO712">ISO 712<i> Cereals and cereal products — Determination of moisture content — Reference method</i></p>
+        <p id="ISO6646">ISO 6646<i> Rice — Determination of the potential milling yield from paddy and from husked rice</i></p>
+        <p id="ISO8351-1">ISO 8351-1: 1994<i> Packaging — Method of specification for sacks — Part 1: Paper sacks</i></p>
+        <p id="ISO8351-2">ISO 8351-2<i> Packaging — Method of specification for sacks — Part 2: Sacks made from thermoplastic flexible film</i></p>
+        <p id="ISO16634">ISO 16634: --<a style="mso-footnote-id:ftn" href="#_ftn" name="_ftnref" title="" id="_ftnref"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a><i> Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs — Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content</i></p>
+        <p id="ISO20483">ISO 20483: 2013<i> Cereals and pulses — Determination of the nitrogen content and calculation of the crude protein content — Kjeldahl method</i></p>
+        <p id="ISO24333">ISO 24333: 2009<i> Cereals and cereal products — Sampling</i></p>
       </div>
       <div>
-<h1>3.<span style="mso-tab-count:1">&#160; </span>Terms and Definitions</h1>
+<h1>3.<span style="mso-tab-count:1">  </span>Terms and Definitions</h1>
 <p>For the purposes of this document, the following terms and definitions apply.</p>
 <p>ISO and IEC maintain terminological databases for use in standardization at the following addresses:</p>
 <ul>
@@ -883,7 +948,7 @@ document (including any amendments) applies.
 <p class="AltTerms">EM</p>
 
 <p>&lt;rice&gt; organic and inorganic components other than whole or broken kernels</p>
-<div class="Note"><p class="Note">EXAMPLE:<span style="mso-tab-count:1">&#160; </span>Foreign seeds, husks, bran, sand, dust.</p></div>
+<div class="Note"><p class="Note">EXAMPLE:<span style="mso-tab-count:1">  </span>Foreign seeds, husks, bran, sand, dust.</p></div>
 <p class="TermNum" id="HDK">3.7</p>
 <p class="Terms">HDK</p>
   <p class="AltTerms">heat-damaged kernel</p>
@@ -931,7 +996,7 @@ document (including any amendments) applies.
 <p>[SOURCE: <a href="ISO14864">ISO 14864, Section 3.3</a>]</p>
 </div>
       <div id="_specifications">
-        <h1>4.<span style="mso-tab-count:1">&#160; </span>Specifications</h1>
+        <h1>4.<span style="mso-tab-count:1">  </span>Specifications</h1>
         <div id="_general_organoleptic_and_health_characteristics">
 <h2>4.1. General, organoleptic and health characteristics</h2>
 <p>Kernels of rice, whether parboiled, husked or milled, and whether whole or broken, shall be sound, clean and free from foreign odours or odour which indicates deterioration.</p>
@@ -940,16 +1005,16 @@ document (including any amendments) applies.
 </div>
         <div id="_physical_and_chemical_characteristics">
 <h2>4.2. Physical and chemical characteristics</h2>
-<div id="_d88f99bd-3207-491b-ba35-c47e5a5967d9">
+<div id="_5a5ab112-e3db-4ba3-8aaf-98cd02a657e0">
 <h3>4.2.1. </h3>
-<p>The mass fraction of moisture, determined in accordance with <a href="ISO712">ISO 712</a>, using an oven complying with the requirements of <a href="IEC61010-2">IEC 61010-2:1998</a>, shall not be greater than 15 %.<a style="mso-footnote-id:ftn2" href="#_ftn2" name="_ftnref2" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a></p>
+<p>The mass fraction of moisture, determined in accordance with <a href="ISO712">ISO 712</a>, using an oven complying with the requirements of <a href="IEC61010-2">IEC 61010-2:1998</a>, shall not be greater than 15 %.<a style="mso-footnote-id:ftn2" href="#_ftn2" name="_ftnref2" title="" id="_ftnref2"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a></p>
 <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <a href="AnnexA">Annex A</a>, shall not be greater than the values specified in <a href="table1">Table 1</a>.</p>
-<div id="_d6aebcf6-dd21-46bd-b5e8-048711c2c76d" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">&#160; </span>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <a href="ISO6322-1">ISO 6322-1</a>, <a href="ISO6322-2">ISO 6322-2</a> and <a href="ISO6322-3">ISO 6322-3</a>.</p></div>
+<div id="_042113ff-6fe0-41ac-a7a1-3387bf8987d7" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">  </span>Lower mass fractions of moisture are sometimes needed for certain destinations depending on the climate, duration of transport and storage. For further details, see <a href="ISO6322-1">ISO 6322-1</a>, <a href="ISO6322-2">ISO 6322-2</a> and <a href="ISO6322-3">ISO 6322-3</a>.</p></div>
 </div>
 <div id="_2">
 <h3>4.2.2. </h3>
 <p>The defect tolerance for the categories considered, and determined in accordance with the method given in <a href="AnnexA">Annex A</a>, shall not exceed the limits given in <a href="table1">Table 1</a>.</p>
-<p class="TableTitle" align="center"><b>Table 1&#160;&#8212; Maximum permissible mass fraction of defects</b></p>
+<p class="TableTitle" align="center"><b>Table 1 — Maximum permissible mass fraction of defects</b></p>
 <table id="table1" class="MsoISOTable" border="1" cellspacing="0" cellpadding="0">
 <thead>
 <tr>
@@ -967,7 +1032,7 @@ document (including any amendments) applies.
 </thead>
 <tbody>
 <tr>
-<td align="left" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Extraneous matter: organic<a style="mso-footnote-id:ftn3" href="#_ftn3" name="_ftnref3" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="left" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Extraneous matter: organic<a style="mso-footnote-id:ftn3" href="#_ftn3" name="_ftnref3" title="" id="_ftnref3"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">1,0</td>
 <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">0,5</td>
@@ -975,7 +1040,7 @@ document (including any amendments) applies.
 <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">0,5</td>
 </tr>
 <tr>
-<td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Extraneous matter: inorganic<a style="mso-footnote-id:ftn5" href="#_ftn5" name="_ftnref5" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Extraneous matter: inorganic<a style="mso-footnote-id:ftn5" href="#_ftn5" name="_ftnref5" title="" id="_ftnref5"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">0,5</td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">0,5</td>
@@ -1026,10 +1091,10 @@ document (including any amendments) applies.
 </tr>
 <tr>
 <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">HDK</td>
-<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">2,0<a style="mso-footnote-id:ftn7" href="#_ftn7" name="_ftnref7" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">2,0<a style="mso-footnote-id:ftn7" href="#_ftn7" name="_ftnref7" title="" id="_ftnref7"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">2,0</td>
-<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">2,0<a style="mso-footnote-id:ftn9" href="#_ftn9" name="_ftnref9" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">2,0<a style="mso-footnote-id:ftn9" href="#_ftn9" name="_ftnref9" title="" id="_ftnref9"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">2,0</td>
 </tr>
@@ -1049,7 +1114,7 @@ document (including any amendments) applies.
 </tr>
 <tr>
 <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Chalky kernels</td>
-<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">5,0<a style="mso-footnote-id:ftn11" href="#_ftn11" name="_ftnref11" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">5,0<a style="mso-footnote-id:ftn11" href="#_ftn11" name="_ftnref11" title="" id="_ftnref11"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">5,0</td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Not applicable</td>
@@ -1059,7 +1124,7 @@ document (including any amendments) applies.
 <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Red kernels and red-streaked kernels</td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">12,0</td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">12,0</td>
-<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">12,0<a style="mso-footnote-id:ftn13" href="#_ftn13" name="_ftnref13" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">12,0<a style="mso-footnote-id:ftn13" href="#_ftn13" name="_ftnref13" title="" id="_ftnref13"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">12,0</td>
 </tr>
@@ -1067,7 +1132,7 @@ document (including any amendments) applies.
 <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Partly gelatinized kernels</td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Not applicable</td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Not applicable</td>
-<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">11,0<a style="mso-footnote-id:ftn15" href="#_ftn15" name="_ftnref15" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">11,0<a style="mso-footnote-id:ftn15" href="#_ftn15" name="_ftnref15" title="" id="_ftnref15"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">11,0</td>
 </tr>
@@ -1080,10 +1145,10 @@ document (including any amendments) applies.
 </tr>
 <tr>
 <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">Waxy rice</td>
-<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">1,0<a style="mso-footnote-id:ftn17" href="#_ftn17" name="_ftnref17" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">1,0<a style="mso-footnote-id:ftn17" href="#_ftn17" name="_ftnref17" title="" id="_ftnref17"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">1,0</td>
-<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">1,0<a style="mso-footnote-id:ftn19" href="#_ftn19" name="_ftnref19" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+<td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">1,0<a style="mso-footnote-id:ftn19" href="#_ftn19" name="_ftnref19" title="" id="_ftnref19"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
 <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">1,0</td>
 </tr>
@@ -1091,9 +1156,9 @@ document (including any amendments) applies.
 <tfoot><tr><td colspan="5" align="left" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
         <p>Live insects shall not be present. Dead insects shall be included in extraneous matter.</p>
       </td></tr></tfoot>
-<div id="" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">&#160; </span>This table is based on <a href="ISO7301">ISO 7301</a>, Table 1.</p></div>
-<div id="" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">&#160; </span>Some commercial contracts require information in addition to that provided in this table.</p></div>
-<div id="" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">&#160; </span>Only full red husked (cargo) rice is considered in this table.</p></div>
+<div id="" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">  </span>This table is based on <a href="ISO7301">ISO 7301</a>, Table 1.</p></div>
+<div id="" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">  </span>Some commercial contracts require information in addition to that provided in this table.</p></div>
+<div id="" class="Note"><p class="Note">NOTE<span style="mso-tab-count:1">  </span>Only full red husked (cargo) rice is considered in this table.</p></div>
 </table>
 
 
@@ -1101,11 +1166,11 @@ document (including any amendments) applies.
 </div>
       </div>
       <div id="clause5">
-        <h1>5.<span style="mso-tab-count:1">&#160; </span>Sampling</h1>
+        <h1>5.<span style="mso-tab-count:1">  </span>Sampling</h1>
         <p>Sampling shall be carried out in accordance with <a href="ISO24333">ISO 24333</a>, Clause 5.</p>
       </div>
       <div id="_test_methods">
-        <h1>6.<span style="mso-tab-count:1">&#160; </span>Test methods</h1>
+        <h1>6.<span style="mso-tab-count:1">  </span>Test methods</h1>
         <div id="_moisture_content">
   <h2>6.1. Moisture content</h2>
   <p>Determine the mass fraction of moisture in accordance with the method specified in <a href="ISO712">ISO 712</a>.</p>
@@ -1143,8 +1208,8 @@ document (including any amendments) applies.
 <div id="_repeatability">
 <h4>6.5.2.2. Repeatability</h4>
 <p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <span class="stem">`r`</span> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
-<div id="_f159d61e-0a73-4883-8e90-853fccb090e2" class="formula">
-<span class="stem">`r = 1 %`</span><span style="mso-tab-count:1">&#160; </span>(1)</div>
+<div id="_8321286a-ade7-4603-9454-50de7ea0e3fa" class="formula">
+<span class="stem">`r = 1 %`</span><span style="mso-tab-count:1">  </span>(1)</div>
 <p>where</p>
 <dl>
 <dt>
@@ -1159,8 +1224,8 @@ document (including any amendments) applies.
 <div id="_reproducibility">
 <h4>6.5.2.3. Reproducibility</h4>
 <p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <span class="stem">`R`</span> obtained from the interlaboratory study in more than 5 % of cases:</p>
-<div id="_5c3978d0-0ff0-4016-9b63-37f038fefb87" class="formula">
-<span class="stem">`R = 3 %`</span><span style="mso-tab-count:1">&#160; </span>(2)</div>
+<div id="_11f33e27-1c25-46a7-9746-41fb1e4c6722" class="formula">
+<span class="stem">`R = 3 %`</span><span style="mso-tab-count:1">  </span>(2)</div>
 <p>where</p>
 <dl>
 <dt>
@@ -1176,7 +1241,7 @@ document (including any amendments) applies.
 </div>
       </div>
       <div id="clause7">
-        <h1>7.<span style="mso-tab-count:1">&#160; </span>Test report</h1>
+        <h1>7.<span style="mso-tab-count:1">  </span>Test report</h1>
         <p>For each test method, the test report shall specify the following:</p>
         <ol type="a">
   <li>
@@ -1206,12 +1271,12 @@ document (including any amendments) applies.
 </ol>
       </div>
       <div id="_packaging">
-        <h1>8.<span style="mso-tab-count:1">&#160; </span>Packaging</h1>
+        <h1>8.<span style="mso-tab-count:1">  </span>Packaging</h1>
         <p>The packaging shall not transmit any odour or flavour to the product and shall not contain substances which may damage the product or constitute a health risk.</p>
         <p>If bags are used, they shall comply with the requirements of <a href="ISO8531-1">ISO8531-1</a>, Clause 9, or <a href="ISO8351-2">ISO 8351-2</a>, as appropriate.</p>
       </div>
       <div id="_marking">
-        <h1>9.<span style="mso-tab-count:1">&#160; </span>Marking</h1>
+        <h1>9.<span style="mso-tab-count:1">  </span>Marking</h1>
         <p>The packages shall be marked or labelled as required by the country of destination.</p>
       </div>
       <br clear="all" style="mso-special-character:line-break;page-break-before:always">
@@ -1227,29 +1292,32 @@ document (including any amendments) applies.
 <h2>A.2. Apparatus</h2>
 <p>The usual laboratory apparatus and, in particular, the following.</p>
 <div id="AnnexA-2-1">
-  <h3>A.2.1. Sample divider,</h3>
-  <p>consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. "Split-it-right" sample divider, such as that shown in <a href="figureA-1">Figure A.1</a>.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>A.2.1. Sample divider, </b></span>consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. "Split-it-right" sample divider, such as that shown in <a href="figureA-1">Figure A.1</a>.</p>
 </div>
 <div id="_sieve">
-  <h3>A.2.2. Sieve,</h3>
-  <p>with round perforations of diameter 1,4 mm.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>A.2.2. Sieve, </b></span>with round perforations of diameter 1,4 mm.</p>
 </div>
 <div id="_tweezers">
-  <h3>A.2.3. Tweezers.</h3>
+  
+<p></p>
 </div>
 <div id="_scalpel">
-  <h3>A.2.4. Scalpel.</h3>
+  
+<p></p>
 </div>
 <div id="_paintbrush">
-  <h3>A.2.5. Paintbrush.</h3>
+  
+<p></p>
 </div>
 <div id="AnnexA-2-6">
-  <h3>A.2.6. Steel bowls,</h3>
-  <p>of diameter 100 mm &#177; 5 mm; seven per test sample.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>A.2.6. Steel bowls, </b></span>of diameter 100 mm ± 5 mm; seven per test sample.</p>
 </div>
 <div id="_balance">
-  <h3>A.2.7. Balance,</h3>
-  <p>which can be read to the nearest 0,01 g.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>A.2.7. Balance, </b></span>which can be read to the nearest 0,01 g.</p>
 </div>
 </div>
         <div id="_sampling">
@@ -1265,7 +1333,7 @@ document (including any amendments) applies.
 <div id="figureA-1">
 
   <img src="rice_images/rice_image1.png">
-<p class="FigureTitle" align="center"><b>Figure A.1&#160;&#8212; Split-it-right sample divider</b></p>
+<p class="FigureTitle" align="center"><b>Figure A.1 — Split-it-right sample divider</b></p>
 </div>
 </div>
 </div>
@@ -1278,7 +1346,7 @@ document (including any amendments) applies.
 <h2>A.6. Calculation</h2>
 <p>Express the mass fraction of each defect using Formula (<a href="formulaA-1">Formula A.1</a>):</p>
 <div id="formulaA-1" class="formula">
-<span class="stem">`w = (m_D) / (m_s)`</span><span style="mso-tab-count:1">&#160; </span>(A.1)</div>
+<span class="stem">`w = (m_D) / (m_s)`</span><span style="mso-tab-count:1">  </span>(A.1)</div>
 <p>where</p>
 <dl>
 <dt>
@@ -1320,29 +1388,32 @@ document (including any amendments) applies.
 <h2>B.2. Apparatus</h2>
 <p>The usual laboratory apparatus and, in particular, the following.</p>
 <div id="AnnexB-2-1">
-  <h3>B.2.1. Balance,</h3>
-  <p>capable of weighing to the nearest 0,01 g.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>B.2.1. Balance, </b></span>capable of weighing to the nearest 0,01 g.</p>
 </div>
 <div id="AnnexB-2-2">
-  <h3>B.2.2. Glass beaker,</h3>
-  <p>of capacity 250 ml.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>B.2.2. Glass beaker, </b></span>of capacity 250 ml.</p>
 </div>
 <div id="AnnexB-2-3">
-  <h3>B.2.3. Small white colour bowls,</h3>
-  <p>or any white colour container of a suitable size.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>B.2.3. Small white colour bowls, </b></span>or any white colour container of a suitable size.</p>
 </div>
 <div id="AnnexB-2-4">
-  <h3>B.2.4. Wire sieve,</h3>
-  <p>with long rounded apertures of (1 mm <span class="stem">`{:(+0.02),(0):}`</span> mm) &#215; (20 mm <span class="stem">`{:(+2),(-1):}`</span> mm).</p>
+  
+  <p><span class="zzMoveToFollowing"><b>B.2.4. Wire sieve, </b></span>with long rounded apertures of (1 mm <span class="stem">`{:(+0.02),(0):}`</span> mm) × (20 mm <span class="stem">`{:(+2),(-1):}`</span> mm).</p>
 </div>
 <div id="AnnexB-2-5">
-  <h3>B.2.5. Stirrer rod.</h3>
+  
+<p></p>
 </div>
 <div id="AnnexB-2-6">
-  <h3>B.2.6. Tweezers or forceps.</h3>
+  
+<p></p>
 </div>
 <div id="AnnexB-2-7">
-  <h3>B.2.7. Tissue paper.</h3>
+  
+<p></p>
 </div>
 </div>
         <div id="_reagents">
@@ -1352,16 +1423,15 @@ document (including any amendments) applies.
   <p>Direct contact of iodine with skin can cause lesions so care should be taken in handling iodine. Iodine vapour is very irritating to eyes and mucous membranes.</p>
 </div>
 <div id="AnnexB-3-1">
-  <h3>B.3.1. Deionized water,</h3>
-  <p>Grade 3 quality as specified in <a href="ISO3696">ISO 3696</a>.</p>
+  
+  <p><span class="zzMoveToFollowing"><b>B.3.1. Deionized water, </b></span>Grade 3 quality as specified in <a href="ISO3696">ISO 3696</a>.</p>
 </div>
 <div id="AnnexB-3-2">
-  <h3>B.3.2. Iodine stock solution,</h3>
-  <p>containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols.<a style="mso-footnote-id:ftn21" href="#_ftn21" name="_ftnref21" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a></p>
+  
+  <p><span class="zzMoveToFollowing"><b>B.3.2. Iodine stock solution, </b></span>containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols.<a style="mso-footnote-id:ftn21" href="#_ftn21" name="_ftnref21" title="" id="_ftnref21"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a></p>
 </div>
 <div id="AnnexB-3-3">
-<h3>B.3.3. Iodine working solution,</h3>
-<p>obtained by diluting the stock solution (<a href="AnnexB-3-2">B.3.2</a>) two times (by volume) with deionized water (<a href="AnnexB-3-1">B.3.1</a>).</p>
+<p><span class="zzMoveToFollowing"><b>B.3.3. Iodine working solution, </b></span>obtained by diluting the stock solution (<a href="AnnexB-3-2">B.3.2</a>) two times (by volume) with deionized water (<a href="AnnexB-3-1">B.3.1</a>).</p>
 <p>Prepare fresh daily.</p>
 </div>
 </div>
@@ -1396,7 +1466,7 @@ document (including any amendments) applies.
 <h2>B.6. Calculation</h2>
 <p>Calculate the mass fraction, expressed as a percentage, of the waxy rice, <span class="stem">`w_(wax)`</span>, using Formula (<a href="formulaB-1">Formula B.1</a>):</p>
 <div id="formulaB-1" class="formula">
-<span class="stem">`w_(wax) = (m_1) / (m_1 + m_2) xx 100`</span><span style="mso-tab-count:1">&#160; </span>(B.1)</div>
+<span class="stem">`w_(wax) = (m_1) / (m_1 + m_2) xx 100`</span><span style="mso-tab-count:1">  </span>(B.1)</div>
 <p>where</p>
 <dl>
 <dt>
@@ -1428,7 +1498,7 @@ document (including any amendments) applies.
         <div id="figureC-1">
 
   <img src="rice_images/rice_image2.png">
-<a style="mso-footnote-id:ftn22" href="#_ftn22" name="_ftnref22" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a><p><b>Key</b></p>
+<a style="mso-footnote-id:ftn22" href="#_ftn22" name="_ftnref22" title="" id="_ftnref22"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a><p><b>Key</b></p>
 <dl>
 <dt>
     <span class="stem">`w`</span>
@@ -1453,26 +1523,26 @@ document (including any amendments) applies.
     <p>point of the curve corresponding to a cooking time of <span class="stem">`t_90`</span></p>
   </dd>
 </dl>
-<p class="FigureTitle" align="center"><b>Figure C.1&#160;&#8212; Typical gelatinization curve</b></p>
+<p class="FigureTitle" align="center"><b>Figure C.1 — Typical gelatinization curve</b></p>
 </div>
-        <div id="_321ae718-2c9f-42e9-8bdd-47c5a5443148" class="Note">
-          <p class="Note">NOTE<span style="mso-tab-count:1">&#160; </span>These results are based on a study carried out on three different types of kernel.</p>
+        <div id="_3771b1f6-e575-47a4-bebf-e06eae8939aa" class="Note">
+          <p class="Note">NOTE<span style="mso-tab-count:1">  </span>These results are based on a study carried out on three different types of kernel.</p>
         </div>
         <div id="figureC-2">
-<div id="_591a0708-c86b-4245-82ed-7dfbc6887eeb">
+<div id="_ef8598fb-02af-4843-997b-c80615fac725">
 
   <img src="rice_images/rice_image3_1.png">
-<p class="FigureTitle" align="center"><b>Figure C.2-1&#160;&#8212; Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</b></p>
+<p class="FigureTitle" align="center"><b>Figure C.2-1 — Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</b></p>
 </div>
-<div id="_ef662e05-b789-494c-86ab-0326cc8edf60">
+<div id="_36f97aa2-58a7-4135-836b-6251e9934bf0">
 
   <img src="rice_images/rice_image3_2.png">
-<p class="FigureTitle" align="center"><b>Figure C.2-2&#160;&#8212; Intermediate stages: Some fully gelatinized kernels are visible</b></p>
+<p class="FigureTitle" align="center"><b>Figure C.2-2 — Intermediate stages: Some fully gelatinized kernels are visible</b></p>
 </div>
-<div id="_abf245dd-2699-45e0-ae0f-ab96ca70acc0">
+<div id="_25f7360c-1fde-4497-9fe3-2810af413c21">
 
   <img src="rice_images/rice_image3_3.png">
-<p class="FigureTitle" align="center"><b>Figure C.2-3&#160;&#8212; Final stages: All kernels are fully gelatinized</b></p>
+<p class="FigureTitle" align="center"><b>Figure C.2-3 — Final stages: All kernels are fully gelatinized</b></p>
 </div>
 </div>
       </div>
@@ -1483,7 +1553,7 @@ document (including any amendments) applies.
 </h1>
         <p>An interlaboratory test <a href="ref15">[15]</a> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <a href="ISO5725-1">ISO 5725-1</a> and <a href="ISO5725-2">ISO 5725-2</a>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <a href="tableD-1">Table D.1</a>.</p>
         <p class="TableTitle" align="center">
-          <b>Table D.1&#160;&#8212; Repeatability and reproducibility of husked rice yield</b>
+          <b>Table D.1 — Repeatability and reproducibility of husked rice yield</b>
         </p>
         <table id="tableD-1" class="MsoISOTable" border="1" cellspacing="0" cellpadding="0">
           <tbody>
@@ -1493,7 +1563,7 @@ document (including any amendments) applies.
             </tr>
             <tr>
               <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Arborio</td>
-              <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Drago<a style="mso-footnote-id:ftn23" href="#_ftn23" name="_ftnref23" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
+              <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Drago<a style="mso-footnote-id:ftn23" href="#_ftn23" name="_ftnref23" title="" id="_ftnref23"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>
 </td>
               <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Balilla</td>
               <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Thaibonnet</td>
@@ -1560,66 +1630,66 @@ document (including any amendments) applies.
       <br clear="all" style="mso-special-character:line-break;page-break-before:always">
       <div>
         <h1 class="Section3">Bibliography</h1>
-        <p id="ISO3696" class="Biblio">[1]<span style="mso-tab-count:1">&#160; </span>ISO 3696, <i> Water for analytical laboratory use&#8201;&#8212;&#8201;Specification and test methods</i></p>
-        <p id="ISO5725-1" class="Biblio">[2]<span style="mso-tab-count:1">&#160; </span>ISO 5725-1, <i> Accuracy (trueness and precision) of measurement methods and results&#8201;&#8212;&#8201;Part 1: General principles and definitions</i></p>
-        <p id="ISO5725-2" class="Biblio">[3]<span style="mso-tab-count:1">&#160; </span>ISO 5725-2, <i> Accuracy (trueness and precision) of measurement methods and results&#8201;&#8212;&#8201;Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method</i></p>
-        <p id="ISO6322-1" class="Biblio">[4]<span style="mso-tab-count:1">&#160; </span>ISO 6322-1, <i> Storage of cereals and pulses&#8201;&#8212;&#8201;Part 1: General recommendations for the keeping of cereals</i></p>
-        <p id="ISO6322-2" class="Biblio">[5]<span style="mso-tab-count:1">&#160; </span>ISO 6322-2, <i> Storage of cereals and pulses&#8201;&#8212;&#8201;Part 2: Practical recommendations</i></p>
-        <p id="ISO6322-3" class="Biblio">[6]<span style="mso-tab-count:1">&#160; </span>ISO 6322-3, <i> Storage of cereals and pulses&#8201;&#8212;&#8201;Part 3: Control of attack by pests</i></p>
-        <p id="ISO7301" class="Biblio">[7]<span style="mso-tab-count:1">&#160; </span>ISO 7301: 2011, <i> Rice&#8201;&#8212;&#8201;Specification</i></p>
-        <p id="ISO14864" class="Biblio">[8]<span style="mso-tab-count:1">&#160; </span>ISO 14864: 1998, <i> Rice&#8201;&#8212;&#8201;Evaluation of gelatinization time of kernels during cooking</i></p>
-        <p id="IEC61010-2" class="Biblio">[9]<span style="mso-tab-count:1">&#160; </span>IEC 61010-2:1998,
-    <i>Safety requirements for electric equipment for measurement, control, and laboratory use&#8201;&#8212;&#8201;Part 2: Particular requirements for laboratory equipment for the heating of material</i>
+        <p id="ISO3696" class="Biblio">[1]<span style="mso-tab-count:1">  </span>ISO 3696, <i> Water for analytical laboratory use — Specification and test methods</i></p>
+        <p id="ISO5725-1" class="Biblio">[2]<span style="mso-tab-count:1">  </span>ISO 5725-1, <i> Accuracy (trueness and precision) of measurement methods and results — Part 1: General principles and definitions</i></p>
+        <p id="ISO5725-2" class="Biblio">[3]<span style="mso-tab-count:1">  </span>ISO 5725-2, <i> Accuracy (trueness and precision) of measurement methods and results — Part 2: Basic method for the determination of repeatability and reproducibility of a standard measurement method</i></p>
+        <p id="ISO6322-1" class="Biblio">[4]<span style="mso-tab-count:1">  </span>ISO 6322-1, <i> Storage of cereals and pulses — Part 1: General recommendations for the keeping of cereals</i></p>
+        <p id="ISO6322-2" class="Biblio">[5]<span style="mso-tab-count:1">  </span>ISO 6322-2, <i> Storage of cereals and pulses — Part 2: Practical recommendations</i></p>
+        <p id="ISO6322-3" class="Biblio">[6]<span style="mso-tab-count:1">  </span>ISO 6322-3, <i> Storage of cereals and pulses — Part 3: Control of attack by pests</i></p>
+        <p id="ISO7301" class="Biblio">[7]<span style="mso-tab-count:1">  </span>ISO 7301: 2011, <i> Rice — Specification</i></p>
+        <p id="ISO14864" class="Biblio">[8]<span style="mso-tab-count:1">  </span>ISO 14864: 1998, <i> Rice — Evaluation of gelatinization time of kernels during cooking</i></p>
+        <p id="IEC61010-2" class="Biblio">[9]<span style="mso-tab-count:1">  </span>IEC 61010-2:1998,
+    <i>Safety requirements for electric equipment for measurement, control, and laboratory use — Part 2: Particular requirements for laboratory equipment for the heating of material</i>
   </p>
-        <p id="ref10" class="Biblio">[10]<span style="mso-tab-count:1">&#160; </span><span style="font-variant:small-caps;">Standard No I.C.C 167</span>. <i>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</i> (see <a href="http://www.icc.or.at">http://www.icc.or.at</a>)</p>
-        <p id="ref11" class="Biblio">[11]<span style="mso-tab-count:1">&#160; </span>Nitrogen-ammonia-protein modified Kjeldahl method&#8201;&#8212;&#8201;Titanium oxide and copper sulfate catalyst. <i>Official Methods and Recommended Practices of the AOCS</i> (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL</p>
-        <p id="ref12" class="Biblio">[12]<span style="mso-tab-count:1">&#160; </span><span style="font-variant:small-caps;">Berner D.L., &amp; Brown J.</span> Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. <i>J. Am. Oil Chem. Soc.</i> 1994, <b>71</b> (11) pp 1291-1293</p>
-        <p id="ref13" class="Biblio">[13]<span style="mso-tab-count:1">&#160; </span><span style="font-variant:small-caps;">Buckee G.K.</span> Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method&#8201;&#8212;&#8201;Collaborative trial. <i>J. Inst. Brew.</i> 1994, <b>100</b> (2) pp 57-64</p>
-        <p id="ref14" class="Biblio">[14]<span style="mso-tab-count:1">&#160; </span><span style="font-variant:small-caps;">Frister H.</span> <i>Direct determination of nitrogen content by Dumas analysis; Interlaboratory study on precision characteristics</i>. AOAC International, Europe Section 4th International Symposium, Nyon, Switzerland, 1994, 33 pp</p>
-        <p id="ref15" class="Biblio">[15]<span style="mso-tab-count:1">&#160; </span><span style="font-variant:small-caps;">Ranghino F.</span> Evaluation of rice resistance to cooking, based on the gelatinization time of kernels. <i>Il Riso</i>. 1966, <b>XV</b> pp 117-127</p>
-        <p id="ref16" class="Biblio">[16]<span style="mso-tab-count:1">&#160; </span><span style="font-variant:small-caps;">Tkachuk R.</span> Nitrogen-to-protein conversion factors for cereals and oilseed meals. <i>Cereal Chem.</i> 1969, <b>46</b> (4) pp 419-423</p>
+        <p id="ref10" class="Biblio">[10]<span style="mso-tab-count:1">  </span><span style="font-variant:small-caps;">Standard No I.C.C 167</span>. <i>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</i> (see <a href="http://www.icc.or.at">http://www.icc.or.at</a>)</p>
+        <p id="ref11" class="Biblio">[11]<span style="mso-tab-count:1">  </span>Nitrogen-ammonia-protein modified Kjeldahl method — Titanium oxide and copper sulfate catalyst. <i>Official Methods and Recommended Practices of the AOCS</i> (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL</p>
+        <p id="ref12" class="Biblio">[12]<span style="mso-tab-count:1">  </span><span style="font-variant:small-caps;">Berner D.L., &amp; Brown J.</span> Protein nitrogen combustion method collaborative study I. Comparison with Smalley total Kjeldahl nitrogen and combustion results. <i>J. Am. Oil Chem. Soc.</i> 1994, <b>71</b> (11) pp 1291-1293</p>
+        <p id="ref13" class="Biblio">[13]<span style="mso-tab-count:1">  </span><span style="font-variant:small-caps;">Buckee G.K.</span> Determination of total nitrogen in barley, malt and beer by Kjeldahl procedures and the Dumas combustion method — Collaborative trial. <i>J. Inst. Brew.</i> 1994, <b>100</b> (2) pp 57-64</p>
+        <p id="ref14" class="Biblio">[14]<span style="mso-tab-count:1">  </span><span style="font-variant:small-caps;">Frister H.</span> <i>Direct determination of nitrogen content by Dumas analysis; Interlaboratory study on precision characteristics</i>. AOAC International, Europe Section 4th International Symposium, Nyon, Switzerland, 1994, 33 pp</p>
+        <p id="ref15" class="Biblio">[15]<span style="mso-tab-count:1">  </span><span style="font-variant:small-caps;">Ranghino F.</span> Evaluation of rice resistance to cooking, based on the gelatinization time of kernels. <i>Il Riso</i>. 1966, <b>XV</b> pp 117-127</p>
+        <p id="ref16" class="Biblio">[16]<span style="mso-tab-count:1">  </span><span style="font-variant:small-caps;">Tkachuk R.</span> Nitrogen-to-protein conversion factors for cereals and oilseed meals. <i>Cereal Chem.</i> 1969, <b>46</b> (4) pp 419-423</p>
       </div>
       <div style="mso-element:footnote-list">
         <div style="mso-element:footnote" id="ftn">
-<a style="mso-footnote-id:ftn" href="#_ftn" name="_ftnref" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Under preparation. (Stage at the time of publication ISO/DIS 16634)</div>
+<a style="mso-footnote-id:ftn" href="#_ftn" name="_ftnref" title="" id="_ftnref"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Under preparation. (Stage at the time of publication ISO/DIS 16634)</div>
         <div style="mso-element:footnote" id="ftn2">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn2" href="#_ftn2" name="_ftnref2" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Formerly denoted as 15 % (m/m).</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn2" href="#_ftn2" name="_ftnref2" title="" id="_ftnref2"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Formerly denoted as 15 % (m/m).</p>
 </div>
         <div style="mso-element:footnote" id="ftn3">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn3" href="#_ftn3" name="_ftnref3" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn3" href="#_ftn3" name="_ftnref3" title="" id="_ftnref3"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc.</p>
 </div>
         <div style="mso-element:footnote" id="ftn5">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn5" href="#_ftn5" name="_ftnref5" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Inorganic extraneous matter includes stones, sand, dust, etc.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn5" href="#_ftn5" name="_ftnref5" title="" id="_ftnref5"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Inorganic extraneous matter includes stones, sand, dust, etc.</p>
 </div>
         <div style="mso-element:footnote" id="ftn7">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn7" href="#_ftn7" name="_ftnref7" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn7" href="#_ftn7" name="_ftnref7" title="" id="_ftnref7"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
 </div>
         <div style="mso-element:footnote" id="ftn9">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn9" href="#_ftn9" name="_ftnref9" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn9" href="#_ftn9" name="_ftnref9" title="" id="_ftnref9"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
 </div>
         <div style="mso-element:footnote" id="ftn11">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn11" href="#_ftn11" name="_ftnref11" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn11" href="#_ftn11" name="_ftnref11" title="" id="_ftnref11"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
 </div>
         <div style="mso-element:footnote" id="ftn13">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn13" href="#_ftn13" name="_ftnref13" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn13" href="#_ftn13" name="_ftnref13" title="" id="_ftnref13"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
 </div>
         <div style="mso-element:footnote" id="ftn15">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn15" href="#_ftn15" name="_ftnref15" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn15" href="#_ftn15" name="_ftnref15" title="" id="_ftnref15"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
 </div>
         <div style="mso-element:footnote" id="ftn17">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn17" href="#_ftn17" name="_ftnref17" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn17" href="#_ftn17" name="_ftnref17" title="" id="_ftnref17"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
 </div>
         <div style="mso-element:footnote" id="ftn19">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn19" href="#_ftn19" name="_ftnref19" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn19" href="#_ftn19" name="_ftnref19" title="" id="_ftnref19"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p>
 </div>
         <div style="mso-element:footnote" id="ftn21">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn21" href="#_ftn21" name="_ftnref21" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn21" href="#_ftn21" name="_ftnref21" title="" id="_ftnref21"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.</p>
 </div>
         <div style="mso-element:footnote" id="ftn22">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn22" href="#_ftn22" name="_ftnref22" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The time <span class="stem">`t_90`</span> was estimated to be 18,2 min for this example.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn22" href="#_ftn22" name="_ftnref22" title="" id="_ftnref22"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>The time <span class="stem">`t_90`</span> was estimated to be 18,2 min for this example.</p>
 </div>
         <div style="mso-element:footnote" id="ftn23">
-  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn23" href="#_ftn23" name="_ftnref23" title=""><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Parboiled rice.</p>
+  <p class="MsoFootnoteText"><a style="mso-footnote-id:ftn23" href="#_ftn23" name="_ftnref23" title="" id="_ftnref23"><span class="MsoFootnoteReference"><span style="mso-special-character:footnote"></span></span></a>Parboiled rice.</p>
 </div>
       </div>
     </div>

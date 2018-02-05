@@ -427,7 +427,6 @@ which can be read to the nearest 0,01 g.
 
 See <<clause5>>. 
 
-[%inline-header]
 === Procedure 
 
 [[AnnexA-4-1]]
