@@ -644,4 +644,11 @@ div.rule {
 }
 
 
-
+MsoTocTextSpan {
+  color:windowtext;
+  display:none;
+  mso-hide:screen;
+  mso-ansi-language:EN-GB;
+  text-decoration:none;
+  text-underline:none;
+}
