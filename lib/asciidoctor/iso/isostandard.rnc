@@ -6,7 +6,7 @@ grammar { start =   iso-standard                                                
   script = element  script  {  "latn"  } 
   type = element  type  { (  "international-standard"  |  "technical-specification"  |  "technical-report"  |  "publicly-available-specification"  |  "international-workshop-agreement"  |  "guide"  )  } 
   id = element  id  {   documentnumber  ,   tc-documentnumber ? } 
-  version = element  version  {   edition ? ,   revision-date ? } 
+  version = element  version  {   edition ? ,   revision-date ? ,   draft ? } 
   edition = element  edition  {   xsd:int  } 
   revision-date = element  revision-date  {   xsd:date  } 
   copyright = element  copyright  {   from  ,   owner  } 
@@ -114,6 +114,7 @@ grammar { start =   iso-standard                                                
   abstract = element  abstract  { text  } 
   partof = element  partof  {   BibliographicItem  } 
   iso-standard = element  iso-standard  {   title + ,   status  ,   creator  ,   language  ,   script  ,   type  ,   id  ,   version ? ,   copyright  ,   sections  } 
+  draft = element  draft  { text  } 
   owner-affiliation = element  affiliation  {  "ISO"  } 
   stage = element  stage  { (  "00"  |  "10"  |  "20"  |  "30"  |  "40"  |  "50"  |  "60"  |  "90"  |  "95"  )  } 
   substage = element  substage  { (  "00"  |  "20"  |  "60"  |  "90"  |  "92"  |  "93"  |  "98"  |  "99"  )  } 
@@ -131,6 +132,7 @@ grammar { start =   iso-standard                                                
 }
 
   
+ 
  
  
  

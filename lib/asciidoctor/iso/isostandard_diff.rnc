@@ -24,11 +24,15 @@ language =
 script =
   element script { "latn" }
 
+# draft into isodoc? To replace version/version?
 version =
   element version {
     edition?,
-    revision-date?
+    revision-date?,
+    draft?
   }
+
+draft = element draft {text}
 
 copyright = 
   element copyright {

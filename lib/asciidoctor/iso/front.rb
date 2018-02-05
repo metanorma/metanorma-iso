@@ -23,6 +23,7 @@ module Asciidoctor
         xml.version do |v|
           v.edition node.attr("edition") if node.attr("edition")
           v.revision_date node.attr("revdate") if node.attr("revdate")
+          v.draft node.attr("draft") if node.attr("draft")
         end
       end
 

@@ -329,6 +329,8 @@ metadata about the document. These include:
 
 `:revdate:`:: The date the document was last updated
 
+`:draft:`:: The document draft (used in addition to document stage, for multiple iterations: expected format _X.Y_)
+
 `:copyright-year:`:: The year which will be claimed as when the copyright for
 the document was issued
 

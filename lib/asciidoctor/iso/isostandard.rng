@@ -90,6 +90,9 @@
       <optional>
         <ref name="revision-date"/>
       </optional>
+      <optional>
+        <ref name="draft"/>
+      </optional>
     </element>
   </define>
   <define name="edition">
@@ -1338,6 +1341,11 @@
       </optional>
       <ref name="copyright"/>
       <ref name="sections"/>
+    </element>
+  </define>
+  <define name="draft">
+    <element name="draft">
+      <text/>
     </element>
   </define>
   <define name="owner-affiliation">
