@@ -7,6 +7,7 @@ module Asciidoctor
       end
 
       def table(node)
+        @table_fn_number = "a"
         noko do |xml|
           xml.table **attr_code(table_attrs(node)) do |xml_table|
             %i(head body foot).reject do |tblsec|

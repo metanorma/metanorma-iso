@@ -5,6 +5,7 @@ require "json"
 require "pathname"
 require "open-uri"
 require "pp"
+require_relative "./cleanup_block.rb"
 
 module Asciidoctor
   module ISO
@@ -46,19 +47,6 @@ module Asciidoctor
           else
             warn "#{x["id"]}: mismatch of callouts and annotations"
           end
-        end
-      end
-
-      def para_cleanup(xmldoc)
-        xmldoc.xpath("//p[not(@id)]").each do |x|
-          x["id"] = Utils::anchor_or_uuid
-        end
-        xmldoc.xpath("//note[not(@id)][not(ancestor::bibitem)]"\
-                     "[not(ancestor::table)]").each do |x|
-          x["id"] = Utils::anchor_or_uuid
-        end
-        xmldoc.xpath("//note[@id][ancestor::table]").each do |x|
-          x.delete"id"
         end
       end
 
