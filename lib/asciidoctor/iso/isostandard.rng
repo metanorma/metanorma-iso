@@ -606,6 +606,11 @@
   </define>
   <define name="table-note">
     <element name="note">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <ref name="paragraph"/>
     </element>
   </define>

@@ -28,6 +28,7 @@ module Asciidoctor
         callout_cleanup(xmldoc)
         origin_cleanup(xmldoc)
         element_name_cleanup(xmldoc)
+        footnote_renumber(xmldoc)
         xmldoc
       end
 
@@ -161,90 +162,6 @@ module Asciidoctor
             s.remove
           end
         end
-      end
-
-      def header_rows_cleanup(xmldoc)
-        q = "//table[@headerrows]"
-        xmldoc.xpath(q).each do |s|
-          thead = s.at("./thead")
-          [1..s["headerrows"].to_i].each do
-            row = s.at("./tbody/tr")
-            row.parent = thead
-          end
-          s.delete("headerrows")
-        end
-      end
-
-      def table_cleanup(xmldoc)
-        dl_table_cleanup(xmldoc)
-        notes_table_cleanup(xmldoc)
-        header_rows_cleanup(xmldoc)
-      end
-
-      def notes_table_cleanup(xmldoc)
-        # move notes into table
-        nomatches = false
-        until nomatches
-          q = "//table/following-sibling::*[1][self::note]"
-          nomatches = true
-          xmldoc.xpath(q).each do |n|
-            n.previous_element << n.remove
-            nomatches = false
-          end
-        end
-      end
-
-      def formula_cleanup(x)
-        # include where definition list inside stem block
-        q = "//formula/following-sibling::*[1]"\
-          "[self::p and text() = 'where']"
-        x.xpath(q).each do |s|
-          if !s.next_element.nil? && s.next_element.name == "dl"
-            s.previous_element << s.next_element.remove
-            s.remove
-          end
-        end
-      end
-
-      # include footnotes inside figure
-      def figure_footnote_cleanup(xmldoc)
-        nomatches = false
-        until nomatches
-          q = "//figure/following-sibling::*[1][self::p and *[1][self::fn]]"
-          nomatches = true
-          xmldoc.xpath(q).each do |s|
-            s.previous_element << s.first_element_child.remove
-            s.remove
-            nomatches = false
-          end
-        end
-      end
-
-      def figure_dl_cleanup(xmldoc)
-        # include key definition list inside figure
-        q = "//figure/following-sibling::*"\
-          "[self::p and normalize-space() = 'Key']"
-        xmldoc.xpath(q).each do |s|
-          if !s.next_element.nil? && s.next_element.name == "dl"
-            s.previous_element << s.next_element.remove
-            s.remove
-          end
-        end
-      end
-
-      def subfigure_cleanup(xmldoc)
-        # examples containing only figures become subfigures of figures
-        nodes = xmldoc.xpath("//example/figure")
-        while !nodes.empty?
-          nodes[0].parent.name = "figure"
-          nodes = xmldoc.xpath("//example/figure")
-        end
-      end
-
-      def figure_cleanup(xmldoc)
-        figure_footnote_cleanup(xmldoc)
-        figure_dl_cleanup(xmldoc)
-        subfigure_cleanup(xmldoc)
       end
 
       def ref_cleanup(xmldoc)

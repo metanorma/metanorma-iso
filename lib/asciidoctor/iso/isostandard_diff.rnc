@@ -264,6 +264,12 @@ th =
     )
 }
 
+table-note = element note {
+    attribute id { xsd:ID }?,
+ paragraph
+}
+
+
 Clause-Section =
     attribute id { xsd:ID }?,
     attribute inline-header { xsd:boolean }?,
