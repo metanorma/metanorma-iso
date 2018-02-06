@@ -124,10 +124,11 @@ Markdown and DocBook, which combines the relative ease of use of the former
 (using relatively lightweight markup), and the rigour and expressively of the
 latter (it has a well-defined syntax, and was in fact initially developed as a
 DocBook document authoring tool). Asciidoctor has built-in capability to output
-Text, DocBook and HTML; so it can be used to preview the file as it is being
-authored.
+Text and HTML; so it can be used to preview the file as it is being
+authored. However the gem natively outputs HTML and Word output, so there should
+not be much need for this.
 
-Note that in order to generate HTML preview output close to what is intended
+In order to generate HTML preview output close to what is intended
 in the ISO standard, the Asciidoc
 document includes a fair amount of formatting instructions (e.g. disabling
 section numbering where appropriate, the titling of Appendixes as Annexes), as
@@ -135,6 +136,16 @@ well as ISO boilerplate text, and predefined section headers (sections are
 recognised by fixed titles such as `Normative References`). Authoring ISO
 standards in this fashion assumes that users will be populating an Asciidoc
 template, and not removing needed formatting instructions.
+
+Asciidoctor has some formatting constraints because of its own document model,
+that users need to be aware. For example, Asciidoc has a strict division between
+inline and block elements, which disallows certain kinds of nesting; so a list
+cannot be embedded within a paragraph, it can only constitute its own paragraph
+(though lists themselves can be nested within each other). Asciidoctor also disallows
+multiple paragraphs in footnotes, 
+http://discuss.asciidoctor.org/footnotes-with-paragraph-breaks-td4130.html[by design].
+(The document model does not impose this constraint, so you could edit the generated
+XML to break up paragraphs within a footnote.)
 
 [[model_additions]]
 === Asciidoctor model additions
