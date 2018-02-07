@@ -113,7 +113,7 @@ module Asciidoctor
         figure_footnote_cleanup(xmldoc)
         figure_dl_cleanup(xmldoc)
         subfigure_cleanup(xmldoc)
-      end 
+      end
 
       def table_footnote_renumber(xmldoc)
         xmldoc.xpath("//table | //figure").each do |t|

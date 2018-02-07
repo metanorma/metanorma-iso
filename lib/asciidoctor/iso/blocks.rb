@@ -11,7 +11,6 @@ module Asciidoctor
       def stem(node)
         # NOTE: html escaping is performed by Nokogiri
         stem_content = node.lines.join("\n")
-
         noko do |xml|
           xml.formula **id_attr(node) do |s|
             s.stem stem_content, **{ type: "AsciiMath" }

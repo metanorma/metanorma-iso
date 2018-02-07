@@ -7,12 +7,12 @@ module Asciidoctor
           style(item, item.text)
           if item.blocks?
             xml_li.p **id_attr(item) do |t|
-              t << item.text 
+              t << item.text
             end
             xml_li << item.content
           else
             xml_li.p **id_attr(item) do |p|
-              p << item.text 
+              p << item.text
             end
           end
         end
@@ -31,8 +31,9 @@ module Asciidoctor
       end
 
       def iso_publisher(t)
-        t.publisher **{ role: "publisher" } do |p|
-          p.affiliation do |aff|
+        t.contributor do |c|
+          c.role **{ type: "publisher" } 
+          c.organization do |aff|
             aff.name "ISO"
           end
         end
@@ -41,9 +42,9 @@ module Asciidoctor
       def isorefmatches(xml, matched)
         ref_attributes = { id: matched[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.name { |i| i << ref_normalise(matched[:text]) }
-          t.publishDate matched[:year] if matched[:year]
+          t.title { |i| i << ref_normalise(matched[:text]) }
           t.docidentifier matched[:code]
+          t.date matched[:year], { type: "published" } if matched[:year]
           iso_publisher(t)
         end
       end
@@ -51,20 +52,20 @@ module Asciidoctor
       def isorefmatches2(xml, matched)
         ref_attributes = { id: matched[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.name { |i| i << ref_normalise(matched[:text]) }
-          t.publishDate "--"
+          t.title { |i| i << ref_normalise(matched[:text]) }
           t.docidentifier matched[:code]
+          t.date "--", { type: "published" }
           iso_publisher(t)
-          t.note { |p| p << "ISO DATE: #{matched[:fn]}" }
+          t.note **{ format: "plain" } { |p| p << "ISO DATE: #{matched[:fn]}" }
         end
       end
 
       def isorefmatches3(xml, matched)
         ref_attributes = { id: matched[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.name { |i| i << ref_normalise(matched[:text]) }
-          t.publishDate matched[:year] if matched[:year]
+          t.title { |i| i << ref_normalise(matched[:text]) }
           t.docidentifier "#{matched[:code]}:All Parts"
+          t.date matched[:year], { type: "published" } if matched[:year]
           iso_publisher(t)
         end
       end
@@ -74,7 +75,7 @@ module Asciidoctor
         if m.nil? then Utils::warning(node, "no anchor on reference", item)
         else
           xml.bibitem **attr_code(id: m[:anchor]) do |t|
-            t.formatted { |i| i << ref_normalise_no_format(m[:text]) }
+            t.formattedref { |i| i << ref_normalise_no_format(m[:text]) }
             code = m[:code]
             code = "[#{code}]" if /^\d+$?/.match? code
             t.docidentifier code
@@ -122,9 +123,8 @@ module Asciidoctor
         elsif !matched3.nil? then isorefmatches3(xml, matched3)
         end
         if matched3.nil? && matched2.nil? && matched.nil? && normative
-          Utils::warning(node, 
-                         "non-ISO/IEC reference not expected as normative",
-                         item)
+          w = "non-ISO/IEC reference not expected as normative"
+          Utils::warning(node, w, item)
         end
       end
 

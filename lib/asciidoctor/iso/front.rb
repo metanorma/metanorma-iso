@@ -10,7 +10,7 @@ module Asciidoctor
   module ISO
     module Front
       def metadata_id(node, xml)
-        xml.id do |i|
+        xml.docidentifier do |i|
           i.project_number node.attr("docnumber"),
             **attr_code(part: node.attr("partnumber"))
           if node.attr("tc-docnumber")
@@ -27,19 +27,30 @@ module Asciidoctor
         end
       end
 
+      def author_component(compname, node, out)
+        out.send compname.gsub(/-/, "_"), node.attr(compname),
+          **attr_code(number: node.attr("#{compname}-number"))
+      end
+
       def metadata_author(node, xml)
-        xml.creator **{ role: "author" } do |a|
-          a.technical_committee node.attr("technical-committee"),
-            **attr_code(number: node.attr("technical-committee-number"))
-          if node.attr("subcommittee")
-            a.subcommittee node.attr("subcommittee"),
-              **attr_code(number: node.attr("subcommittee-number"))
+        xml.contributor do |c|
+          c.role **{ type: "author" }
+          c.organization do |a|
+            a.name "ISO"
+            author_component("technical-committee", node, a)
+            author_component("subcommittee", node, a)
+            author_component("workgroup", node, a)
+            node.attr("secretariat") && a.secretariat(node.attr("secretariat"))
           end
-          if node.attr("workgroup")
-            a.workgroup node.attr("workgroup"),
-              **attr_code(number: node.attr("workgroup-number"))
+        end
+      end
+
+      def metadata_publisher(node, xml)
+        xml.contributor do |c|
+          c.role **{ type: "publisher" }
+          c.organization do |a|
+            a.name "ISO"
           end
-          a.secretariat node.attr("secretariat") if node.attr("secretariat")
         end
       end
 
@@ -47,8 +58,10 @@ module Asciidoctor
         from = node.attr("copyright-year") || Date.today.year
         xml.copyright do |c|
           c.from from
-          c.owner do |o|
-            o.affiliation "ISO"
+          c.owner do |owner|
+            owner.organization do |o|
+              o.name "ISO"
+            end
           end
         end
       end
@@ -61,25 +74,30 @@ module Asciidoctor
       end
 
       def metadata(node, xml)
-        metadata_status(node, xml)
-        metadata_author(node, xml)
-        xml.language node.attr("language")
-        xml.script "latn"
-        xml.type node.attr("doctype")
+        title node, xml
         metadata_id(node, xml)
-        metadata_version(node, xml)
+        metadata_author(node, xml)
+        metadata_publisher(node, xml)
+        xml.language node.attr("language")
+        xml.script "Latn"
+        metadata_status(node, xml)
         metadata_copyright(node, xml)
       end
 
       def title(node, xml)
         ["en", "fr"].each do |lang|
-          xml.title **{ language: lang } do |t|
-            if node.attr("title-intro-#{lang}")
-              t.title_intro { |t1| t1 << node.attr("title-intro-#{lang}") }
+          xml.title do |t|
+            at = { language: lang, format: "plain" }
+            node.attr("title-intro-#{lang}") and
+              t.title_intro **attr_code(at) do |t|
+              t << node.attr("title-intro-#{lang}")
             end
-            t.title_main { |t1| t1 << node.attr("title-main-#{lang}") }
-            if node.attr("title-part-#{lang}")
-              t.title_part node.attr("title-part-#{lang}")
+            t.title_main **attr_code(at) do |t1|
+              t1 << node.attr("title-main-#{lang}")
+            end
+            node.attr("title-part-#{lang}") and
+              t.title_part **attr_code(at) do |t1|
+              t1 << node.attr("title-part-#{lang}")
             end
           end
         end

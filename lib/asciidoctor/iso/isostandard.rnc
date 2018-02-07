@@ -1,18 +1,12 @@
 default namespace  = "http://riboseinc.com/isoxml"
-grammar { start =   iso-standard                                                                                                                                  standard-document = element  standard-document  {   title + ,   status  ,   creator * ,   language  ,   script  ,   type ? ,   id * ,   version ? ,   copyright  ,   sections + } 
-  title = element  title  { attribute  language  { text  }  ,   title-intro ? ,   title-main  ,   title-part ? } 
-  status = element  status  {   stage  ,   substage ? } 
+grammar { start =   iso-standard                                                                                                                                          standard-document = element  standard-document  {   bibdata  ,   version ? ,   sections + } 
+  bibdata = element  bibdata  {   BibliographicItem  } 
+  status = element  status  {   FormattedString  | (   stage  ,   substage ? )  } 
   language = element  language  { (  "en"  |  "fr"  )  } 
-  script = element  script  {  "latn"  } 
-  type = element  type  { (  "international-standard"  |  "technical-specification"  |  "technical-report"  |  "publicly-available-specification"  |  "international-workshop-agreement"  |  "guide"  )  } 
-  id = element  id  {   documentnumber  ,   tc-documentnumber ? } 
+  script = element  script  {  "Latn"  } 
   version = element  version  {   edition ? ,   revision-date ? ,   draft ? } 
   edition = element  edition  {   xsd:int  } 
   revision-date = element  revision-date  {   xsd:date  } 
-  copyright = element  copyright  {   from  ,   owner  } 
-  from = element  from  {   xsd:gYear  } 
-  to = element  to  {   xsd:gYear  } 
-  owner = element  owner  {   owner-affiliation  } 
   sections = element  sections  {   content  ,   content ? ,   clause  ,   references  ,   terms  ,   clause + ,   annex * ,   references ? } 
   section-title = element  title  { text  } 
   content = element  content  {   Content-Section  } 
@@ -40,7 +34,7 @@ grammar { start =   iso-standard                                                
   formula = element  formula  { attribute  id  {   xsd:ID  }  ,   stem  ,   dl ? } 
   quote = element  quote  { attribute  id  {   xsd:ID  }  , attribute  alignment  {   Alignments  } ? ,   quote-source ? ,   quote-author ? ,   paragraph-with-footnote + } 
   quote-source = element  source  {   CitationType  } 
-  quote-author = element  author  {   CreatorInfo  } 
+  quote-author = element  author  {   ContributorInfo  } 
   sourcecode = element  sourcecode  { attribute  id  {   xsd:ID  }  ,   tname ? , ( text  |   callout  ) + ,   annotation * } 
   table = element  table  { attribute  id  {   xsd:ID  }  ,   tname ? ,   thead ? ,   tbody  ,   tfoot ? ,   table-note * ,   dl ? } 
   tname = element  name  { text  } 
@@ -79,18 +73,24 @@ grammar { start =   iso-standard                                                
   dl = element  dl  { attribute  id  {   xsd:ID  }  , (   dt  ,   dd  ) + } 
   dt = element  dt  {   TextElement  } 
   dd = element  dd  {   BasicBlock  } 
-  creator = element  creator  { attribute  role  { text  }  ,   technical-committee  ,   subcommittee ? ,   workgroup ? ,   secretariat ? } 
-  CreatorInfo = attribute  role  { text  }  ,   fullname ? ,   affiliation ? ,   person-identifier *  publisher = element  publisher  {   CreatorInfo  } 
-  role = element  role  { attribute  type  { (  "author"  |  "edition"  |  "publisher"  |  "custom"  )  } ? , attribute  name  { text  }  , text  } 
-  fullname = element  fullname  {   prefix * ,   forename * ,   initial * ,   surname  ,   addition * } 
-  prefix = element  prefix  { text  } 
-  initial = element  initial  { text  } 
-  addition = element  addition  { text  } 
-  surname = element  surname  { text  } 
-  forename = element  forename  { text  } 
-  affiliation = element  affiliation  {   Organization  } 
-  Organization =   orgname  ,   uri ? ,   address ? ,   org-identifier *  orgname = element  name  { text  } 
+  LocalizedString = attribute  language  { text  } ? , attribute  script  { text  } ? , text   FormattedString = attribute  format  { (  "plain"  |  "html"  |  "docbook"  |  "tei"  |  "asciidoc"  |  "markdown"  )  }  ,   LocalizedStringOrXsAny   LocalizedStringOrXsAny = attribute  language  { text  } ? , attribute  script  { text  } ? , ( text  |   Any  ) +  contributor = element  contributor  {   role * ,   ContributorInfo  } 
+  role = element  role  { attribute  type  { (  "author"  |  "edition"  |  "publisher"  | text  )  } ? ,   roledescription * } 
+  ContributorInfo = (   person  |   organization  )   roledescription = element  description  {   FormattedString  } 
+  person = element  person  {   fullname ? ,   affiliation * ,   person-identifier * ,   contact * ,   uri ? } 
+  fullname = element  name  {   prefix * ,   forename * ,   initial * ,   surname  ,   addition * } 
+  prefix = element  prefix  {   LocalizedString  } 
+  initial = element  initial  {   LocalizedString  } 
+  addition = element  addition  {   LocalizedString  } 
+  surname = element  surname  {   LocalizedString  } 
+  forename = element  forename  {   LocalizedString  } 
+  affiliation = element  affiliation  {   affiliationname ? ,   affiliationdescription * ,   organization  } 
+  affiliationname = element  name  {   LocalizedString  } 
+  affiliationdescription = element  description  {   FormattedString  } 
+  organization = element  organization  {   orgname  ,   uri ? ,   org-identifier * ,   contact * ,   technical-committee ? ,   subcommittee ? ,   workgroup ? ,   secretariat ? } 
+  orgname = element  name  {   LocalizedString  } 
   uri = element  uri  {   xsd:anyURI  } 
+  contact = (   address  |   phone  |   email  |   uri  )   phone = element  phone  { text  } 
+  email = element  email  { text  } 
   address = element  address  {   street + ,   city  ,   state ? ,   country  ,   postcode ? } 
   street = element  street  { text  } 
   city = element  city  { text  } 
@@ -101,21 +101,25 @@ grammar { start =   iso-standard                                                
   org-identifier = element  identifier  { attribute  type  { (  "orcid"  |  "uri"  )  }  , text  } 
   citation = element  citation  {   CitationType  } 
   CitationType = attribute  bibitemid  {   xsd:IDREF  }  ,   locality * ,   date ?  date = element  date  { (   xsd:gYear  |   xsd:date  )  } 
-  locality = element  locality  { attribute  type  { (  "section"  |  "clause"  |  "part"  |  "paragraph"  |  "chapter"  |  "page"  |  "whole"  )  }  , text  } 
-  bibitem = element  bibitem  {   BibliographicItem  } 
-  BibliographicItem = attribute  id  {   xsd:ID  }  , attribute  type  {  "article"  |  "book"  |  "booklet"  |  "conference"  |  "manual"  |  "proceedings"  |  "presentation"  |  "thesis"  |  "techreport"  |  "standard"  |  "unpublished"  } ? , (   bname  |   formatted  )  ,   source ? ,   publishdate ? ,   docidentifier * ,   accesseddate ? ,   creator * ,   publisher * ,   edition ? ,   biblionote * ,   partof * ,   creationdate ? ,   language * ,   script * ,   abstract ?  bname = element  name  { text  } 
-  formatted = element  formatted  {   TextElement + } 
+  locality = element  locality  { attribute  type  { (  "section"  |  "clause"  |  "part"  |  "paragraph"  |  "chapter"  |  "page"  |  "whole"  )  }  ,   localityreference * } 
+  localityreference = element  reference  { text  } 
+  bibitem = element  bibitem  { attribute  id  {   xsd:ID  }  ,   BibliographicItem  } 
+  BibliographicItem = attribute  type  {  "article"  |  "book"  |  "booklet"  |  "conference"  |  "manual"  |  "proceedings"  |  "presentation"  |  "thesis"  |  "techreport"  |  "standard"  |  "unpublished"  } ? , (   btitle + |   formattedref  )  ,   source ? ,   docidentifier * ,   bdate * ,   contributor * ,   edition ? ,   biblionote * ,   partof * ,   language * ,   script * ,   abstract ? ,   status ? ,   copyright ?  btitle = element  title  { text  | (   title-intro ? ,   title-main  ,   title-part ? )  } 
+  formattedref = element  formattedref  {   TextElement + } 
   source = element  source  {   xsd:anyURI  } 
-  publishdate = element  publishdate  { text  } 
-  docidentifier = element  docidentifier  { text  } 
-  accesseddate = element  accesseddate  { text  } 
-  creationdate = element  creationdate  { text  } 
-  biblionote = element  note  { text  } 
-  abstract = element  abstract  { text  } 
+  bdate = element  date  { attribute  type  { (  "published"  |  "accessed"  |  "created"  |  "activated"  |  "obsoleted"  )  }  , (   xsd:gYear  |   xsd:date  )  } 
+  docidentifier = element  docidentifier  { ( text  |   documentnumber  |   tc-documentnumber  )  } 
+  biblionote = element  note  {   FormattedString  } 
+  abstract = element  abstract  {   FormattedString  } 
   partof = element  partof  {   BibliographicItem  } 
-  iso-standard = element  iso-standard  {   title + ,   status  ,   creator  ,   language  ,   script  ,   type  ,   id  ,   version ? ,   copyright  ,   sections  } 
+  copyright = element  copyright  {   from  ,   to ? ,   owner  } 
+  from = element  from  {   xsd:gYear  } 
+  to = element  to  {   xsd:gYear  } 
+  owner = element  owner  {   ContributorInfo  } 
+  Anycontents = mixed { ( attribute *   { text  }  |   Any  ) * } 
+  Any = element *   {   Anycontents  } 
+  iso-standard = element  iso-standard  {   bibdata  ,   version ? ,   sections + } 
   draft = element  draft  { text  } 
-  owner-affiliation = element  affiliation  {  "ISO"  } 
   stage = element  stage  { (  "00"  |  "10"  |  "20"  |  "30"  |  "40"  |  "50"  |  "60"  |  "90"  |  "95"  )  } 
   substage = element  substage  { (  "00"  |  "20"  |  "60"  |  "90"  |  "92"  |  "93"  |  "98"  |  "99"  )  } 
   documentnumber = element  project-number  { attribute  part  {   xsd:int  } ? ,   xsd:int  } 
@@ -132,11 +136,6 @@ grammar { start =   iso-standard                                                
 }
 
   
- 
- 
- 
- 
- 
  
  
  

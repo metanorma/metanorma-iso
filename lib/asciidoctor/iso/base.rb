@@ -75,8 +75,10 @@ module Asciidoctor
       end
 
       def front(node, xml)
-        title node, xml
-        metadata node, xml
+        xml.bibdata **attr_code(type: node.attr("doctype")) do |b|
+          metadata node, b
+        end
+        metadata_version(node, xml)
       end
 
       def middle(node, xml)
@@ -89,11 +91,11 @@ module Asciidoctor
         attr = { bibitemid: seen_xref.children[0]["target"],
                  format: seen_xref.children[0]["format"] }
         xml_t.origin seen_xref.children[0].content, **attr_code(attr)
-        xml_t.isosection m[:section].gsub(/ /, "")  if m[:section]
-        if m[:text]
-          xml_t.modification do |mod| 
+        m[:section] && xml_t.isosection do |s|
+          s.reference m[:section].gsub(/ /, "")
+        end
+        m[:text] && xml_t.modification do |mod| 
             mod.p { |p| p << m[:text]  }
-          end
         end
       end
 

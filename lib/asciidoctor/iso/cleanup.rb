@@ -1,7 +1,5 @@
 require "date"
 require "nokogiri"
-require "htmlentities"
-require "json"
 require "pathname"
 require "open-uri"
 require "pp"
@@ -176,9 +174,7 @@ module Asciidoctor
       def review_note_cleanup(xmldoc)
         xmldoc.xpath("//review").each do |n|
           prev = n.previous_element
-          if !prev.nil? && prev.name == "p"
-            n.parent = prev
-          end
+          if !prev.nil? && prev.name == "p" then n.parent = prev end
         end
       end
 
@@ -186,9 +182,7 @@ module Asciidoctor
         q = "//references[title = 'Normative References']"
         r = xmldoc.at(q)
         r.elements.each do |n|
-          unless ["title", "bibitem"].include? n.name
-            n.remove
-          end
+          n.remove unless ["title", "bibitem"].include? n.name
         end
       end
 
@@ -200,15 +194,14 @@ module Asciidoctor
 
       def reference_names(xmldoc)
         xmldoc.xpath("//bibitem").each do |ref|
-          isopub = ref.at(("./publisher/affiliation[name = 'ISO']"))
-          docid = ref.at(("./docidentifier"))
-          date = ref.at(("./publisherdate"))
+          isopub = ref.at("./contributor[role/@type = 'publisher']/organization[name = 'ISO']")
+          docid = ref.at("./docidentifier")
+          date = ref.at("./publisherdate")
           reference = format_ref(docid.text, isopub)
           reference += ": #{date.text}" if date && isopub
           @anchors[ref["id"]] = { xref: reference }
         end
       end
-
     end
   end
 end

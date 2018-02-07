@@ -1,5 +1,5 @@
 require "asciidoctor/iso/utils"
-require_relative './validate_style.rb'
+require_relative "./validate_style.rb"
 require "nokogiri"
 require "jing"
 require "pp"
@@ -7,10 +7,9 @@ require "pp"
 module Asciidoctor
   module ISO
     module Validate
-
       def title_intro_validate(root)
-        title_intro_en = root.at("//title[@language='en']/title-intro")
-        title_intro_fr = root.at("//title[@language='fr']/title-intro")
+        title_intro_en = root.at("//title-intro[@language='en']")
+        title_intro_fr = root.at("//title-intro[@language='fr']")
         if title_intro_en.nil? && !title_intro_fr.nil?
           warn "No English Title Intro!"
         end
@@ -20,8 +19,8 @@ module Asciidoctor
       end
 
       def title_part_validate(root)
-        title_part_en = root.at("//title[@language='en']/title-part")
-        title_part_fr = root.at("//title[@language='fr']/title-part")
+        title_part_en = root.at("//title-part[@language='en']")
+        title_part_fr = root.at("//title-part[@language='fr']")
         if title_part_en.nil? && !title_part_fr.nil?
           warn "No English Title Part!"
         end
@@ -33,11 +32,11 @@ module Asciidoctor
       def title_names_type_validate(root)
         doctypes = /International\sStandard | Technical\sSpecification |
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
-        title_main_en = root.at("//title[@language='en']/title-main")
+        title_main_en = root.at("//title-main[@language='en']")
         if doctypes.match? title_main_en.text
           warn "Main Title may name document type"
         end
-        title_intro_en = root.at("//title[@language='en']/title-intro")
+        title_intro_en = root.at("//title-intro[@language='en']")
         if !title_intro_en.nil? && doctypes.match?(title_intro_en.text)
           warn "Part Title may name document type"
         end
@@ -54,12 +53,8 @@ module Asciidoctor
         root.xpath(q).each do |c|
           next unless c.xpath("../subsection").size == 1
           title = c.at("./title")
-          location = if c["id"].nil? && title.nil?
-                       c.text[0..60] + "..."
-                     else
-                       c["id"]
-                     end
-          location += ":#{title.text}" unless title.nil?
+          location = c["id"] || c.text[0..60] + "..."
+          location += ":#{title.text}" if c["id"] && !title.nil?
           warn "ISO style: #{location}: subsection is only child"
         end
       end
@@ -77,7 +72,7 @@ module Asciidoctor
       end
 
       def symbols_validate(root)
-        f = root.at("//clause[title = 'Symbols and Abbreviations']") 
+        f = root.at("//clause[title = 'Symbols and Abbreviations']")
         return if f.nil?
         f.elements do |e|
           unless e.name == "dl"
@@ -116,12 +111,12 @@ module Asciidoctor
           msg: "Scope must be followed by Normative References",
           val: [{ tag: "references", title: "Normative References" }]
         },
-        { 
+        {
           msg: "Normative References must be followed by "\
           "Terms and Definitions",
           val: [
             { tag: "terms", title: "Terms and Definitions" },
-            { tag: "terms", 
+            { tag: "terms",
               title: "Terms, Definitions, Symbols and Abbreviations" }
           ]
         },
@@ -201,7 +196,8 @@ module Asciidoctor
 
       def validate(doc)
         content_validate(doc)
-        schema_validate(doc, File.join(File.dirname(__FILE__), "isostandard.rng"))
+        schema_validate(doc, File.join(File.dirname(__FILE__),
+                                       "isostandard.rng"))
       end
     end
   end

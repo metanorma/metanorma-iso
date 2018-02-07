@@ -2,9 +2,9 @@ module Asciidoctor
   module ISO
     module InlineAnchor
 
-        def is_refid?(x)
-          @refids.include? x
-        end
+      def is_refid?(x)
+        @refids.include? x
+      end
 
       def inline_anchor(node)
         case node.type

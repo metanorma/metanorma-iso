@@ -6,23 +6,15 @@ start = iso-standard
 
 iso-standard = 
   element iso-standard {
-    title+,
-    status,
-    creator,
-    language,
-    script,
-    type,
-    id,
-    version?,
-    copyright,
-    sections
+    #title+, status, creator, language, script, type, id, version?, copyright, sections
+    bibdata, version?, sections+
   }
 
 language =
   element language { ( "en" | "fr" ) }
 
 script =
-  element script { "latn" }
+  element script { "Latn" }
 
 # draft into isodoc? To replace version/version?
 version =
@@ -34,44 +26,47 @@ version =
 
 draft = element draft {text}
 
-copyright = 
-  element copyright {
-    from, owner
+# TODO to docidentifier
+#id =
+  #element id {
+    #documentnumber,
+    #tc-documentnumber?
+  #}
+
+# add type to docidentifier in isodoc?
+docidentifier =
+  element docidentifier {
+    ( text | documentnumber | tc-documentnumber )
 }
 
-owner = 
-  element owner {
-    owner-affiliation  
+# TODO to orgname
+#creator =
+  #element creator { 
+    #attribute role { text },
+    #technical-committee,
+    #subcommittee?,
+    #workgroup?,
+    #secretariat?
+  #}
+
+organization = 
+  element organization {
+    orgname, uri?, org-identifier*, contact*,
+    technical-committee?, subcommittee?, workgroup?, secretariat?  
 }
 
-owner-affiliation = element affiliation { "ISO" }
-
-id =
-  element id {
-    documentnumber,
-    tc-documentnumber?
-  }
-
-creator =
-  element creator { 
-    attribute role { text },
-    technical-committee,
-    subcommittee?,
-    workgroup?,
-    secretariat?
-  }
-
-type =
-  element type {
-     ( "international-standard" | "technical-specification" | 
-       "technical-report" | "publicly-available-specification" | 
-        "international-workshop-agreement" | "guide" )
-  }
+# Do not constrain in XML: add to validation
+# type =
+  # element type {
+     # ( "international-standard" | "technical-specification" | 
+       # "technical-report" | "publicly-available-specification" | 
+        # "international-workshop-agreement" | "guide" )
+  # }
 
 status =
   element status {
-     stage,
-     substage?
+    FormattedString |
+     ( stage, substage? )
   }
 
 stage = 
@@ -116,10 +111,10 @@ workgroup =
 secretariat =
   element secretariat { text }
 
-title = 
+btitle = 
   element title { 
-    attribute language { text }, 
-    title-intro?, title-main, title-part? 
+     text | 
+    ( title-intro?, title-main, title-part? )
 }
 
 title-intro =
@@ -278,17 +273,6 @@ Clause-Section =
       BasicBlock+ |
        clause-subsection+
     )
-
-
-BibliographicItem =
-     attribute id { xsd:ID },
-     attribute type { "article" | "book" | "booklet" | "conference" | "manual" |
-                      "proceedings" | "presentation" | "thesis" | "techreport" |
-                      "standard" | "unpublished" }?,
-    (bname | formatted), source?, publishdate?, docidentifier*, accesseddate?, creator*,
-    publisher*, edition?,
-    biblionote*, partof*, creationdate?, language*, script*, abstract?
-
 
 # }
 

@@ -11,6 +11,11 @@
   and from mandatory to optional; optional elements may
   be omitted; freely positioned alternatives may be replaced
   with strict ordering
+  
+  DO NOT introduce a namespace here. We do not want a distinct namespace
+  for these elements, and a distinct namespace for any grammar inheriting
+  these elements; we just want one namespace for any child grammars
+  of this.
 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
@@ -33,14 +38,6 @@
       <ref name="BibliographicItem"/>
     </element>
   </define>
-  <!--
-    TODO to bibdata/title
-    title =
-    element title {
-    attribute language { text },
-    text
-    }
-  -->
   <define name="status">
     <element name="status">
       <ref name="FormattedString"/>
@@ -57,14 +54,6 @@
       <text/>
     </element>
   </define>
-  <!--
-    TODO to bibdata/type
-    type = element type { text }
-  -->
-  <!--
-    TODO to bibdata/docidentifier
-    id = element id { text }
-  -->
   <define name="version">
     <a:documentation>ISO-15924: Latn</a:documentation>
     <element name="version">
@@ -94,13 +83,6 @@
       <text/>
     </element>
   </define>
-  <!--
-    TODO to bibdata/copyright
-    copyright =
-    element copyright {
-    from, to?, owner
-    }
-  -->
   <define name="sections">
     <element name="sections">
       <oneOrMore>
@@ -210,7 +192,7 @@
         <ref name="section-title"/>
       </optional>
       <zeroOrMore>
-        <ref name="bibItem"/>
+        <ref name="bibitem"/>
       </zeroOrMore>
     </element>
   </define>
@@ -951,6 +933,7 @@
   </define>
   <!--
     Unlike UML, change type to format: type is overloaded
+    Would be need if plain were default value and could omit the attribute
     Added LocalizedStringOrXsAny
   -->
   <define name="FormattedString">
@@ -981,11 +964,6 @@
       </choice>
     </oneOrMore>
   </define>
-  <!--
-    TODO to contributor
-    creator =
-    element creator { CreatorInfo }
-  -->
   <define name="contributor">
     <element name="contributor">
       <zeroOrMore>
@@ -994,18 +972,6 @@
       <ref name="ContributorInfo"/>
     </element>
   </define>
-  <!--
-    TODO to ContributorInfo
-    CreatorInfo =
-    attribute role { text },
-    fullname?, affiliation?, person-identifier*
-  -->
-  <!--
-    TODO to contributor
-    publisher = 
-    element publisher { CreatorInfo }
-    a publisher has a subset of the roles of a creator
-  -->
   <define name="role">
     <element name="role">
       <optional>
@@ -1378,17 +1344,12 @@
       </choice>
     </element>
   </define>
-  <!-- publishdate = element publishdate { ( xsd:gYear | xsd:date ) } -->
   <!-- add type to docidentifier in isodoc? -->
   <define name="docidentifier">
     <element name="docidentifier">
       <text/>
     </element>
   </define>
-  <!--
-    accesseddate = element accesseddate { ( xsd:gYear | xsd:date ) }
-    creationdate = element creationdate { ( xsd:gYear | xsd:date ) }
-  -->
   <define name="biblionote">
     <element name="note">
       <ref name="FormattedString"/>
@@ -1431,20 +1392,16 @@
   <define name="Anycontents">
     <mixed>
       <zeroOrMore>
-        <!-- https://github.com/relaxng/jing-trang/issues/211 -->
-        <choice>
-          <attribute>
-            <anyName>
-              <except>
-                <name ns="">id</name>
-              </except>
-            </anyName>
-          </attribute>
-          <attribute name="id">
-            <data type="ID"/>
-          </attribute>
-          <ref name="Any"/>
-        </choice>
+        <!--
+          https://github.com/relaxng/jing-trang/issues/211
+          https://lists.oasis-open.org/archives/office/200808/msg00024.html
+          https://lists.oasis-open.org/archives/office/200808/msg00099.html
+          For this to work, we will actually strip any attributes in the Anycontents before
+          passing it for validation. Horrible I know, but there are no good alternatives
+          that also allow us to do grammar inheritance
+          (attribute * { text } | Any)*
+        -->
+        <ref name="Any"/>
       </zeroOrMore>
     </mixed>
   </define>
