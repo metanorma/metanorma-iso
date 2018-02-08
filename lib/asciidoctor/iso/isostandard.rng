@@ -198,22 +198,11 @@
     </define>
     <define name="sections">
       <element name="sections">
-        <ref name="content"/>
-        <optional>
-          <ref name="content"/>
-        </optional>
         <ref name="clause"/>
-        <ref name="references"/>
         <ref name="terms"/>
         <oneOrMore>
           <ref name="clause"/>
         </oneOrMore>
-        <zeroOrMore>
-          <ref name="annex"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="references"/>
-        </optional>
       </element>
     </define>
     <define name="references">
@@ -534,16 +523,37 @@
     </define>
   </include>
   <!-- end overrides -->
+  <!--
+    We display the Normative References between scope and terms; but to keep the
+    grammar simple, we keep the references together
+  -->
   <define name="iso-standard">
     <element name="iso-standard">
-      <!-- title+, status, creator, language, script, type, id, version?, copyright, sections -->
       <ref name="bibdata"/>
       <optional>
         <ref name="version"/>
       </optional>
+      <ref name="foreword"/>
+      <ref name="introduction"/>
       <oneOrMore>
         <ref name="sections"/>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="annex"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="references"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="foreword">
+    <element name="foreword">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="introduction">
+    <element name="introduction">
+      <ref name="Content-Section"/>
     </element>
   </define>
   <define name="draft">

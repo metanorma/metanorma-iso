@@ -31,6 +31,12 @@
       <oneOrMore>
         <ref name="sections"/>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="annex"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="references"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="bibdata">
@@ -90,8 +96,6 @@
           <ref name="content"/>
           <ref name="clause"/>
           <ref name="terms"/>
-          <ref name="annex"/>
-          <ref name="references"/>
         </choice>
       </oneOrMore>
     </element>

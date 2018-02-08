@@ -152,6 +152,16 @@ module Asciidoctor
         other_footnote_renumber(xmldoc)
       end
 
+      def sections_cleanup(x)
+        s = x.at("//sections")
+        foreword = x.at("//foreword")
+        s.previous = foreword.remove
+        introduction = x.at("//introduction")
+        s.previous = introduction.remove if introduction
+        x.xpath("//sections/references").reverse_each { |r| s.next = r.remove }
+        x.xpath("//sections/annex").reverse_each { |r| s.next = r.remove }
+        end
+      end
+
     end
   end
-end

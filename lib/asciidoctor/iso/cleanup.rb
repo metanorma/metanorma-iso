@@ -13,6 +13,7 @@ module Asciidoctor
       end
 
       def cleanup(xmldoc)
+        sections_cleanup(xmldoc)
         termdef_cleanup(xmldoc)
         isotitle_cleanup(xmldoc)
         table_cleanup(xmldoc)
@@ -52,7 +53,6 @@ module Asciidoctor
       def xref_cleanup(xmldoc)
         reference_names(xmldoc)
         xmldoc.xpath("//xref").each do |x|
-          #if InlineAnchor::is_refid? x["target"]
           if is_refid? x["target"]
             x.name = "eref"
             x["bibitemid"] = x["target"]
@@ -146,18 +146,6 @@ module Asciidoctor
         xmldoc.xpath("//isotitle").each do |a|
           if a.elements.size == 1 && a.elements[0].name == "em"
             a.children = a.elements[0].children
-          end
-        end
-      end
-
-      def dl_table_cleanup(xmldoc)
-        # move Key dl after table footer
-        q = "//table/following-sibling::*[1]"\
-          "[self::p and normalize-space() = 'Key']"
-        xmldoc.xpath(q).each do |s|
-          if !s.next_element.nil? && s.next_element.name == "dl"
-            s.previous_element << s.next_element.remove
-            s.remove
           end
         end
       end
