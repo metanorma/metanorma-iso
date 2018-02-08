@@ -139,6 +139,9 @@
       <optional>
         <ref name="copyright"/>
       </optional>
+      <optional>
+        <ref name="isoworkgroup"/>
+      </optional>
     </define>
     <define name="bdate">
       <element name="date">
@@ -327,6 +330,9 @@
           <ref name="BasicBlock"/>
         </zeroOrMore>
         <zeroOrMore>
+          <ref name="note"/>
+        </zeroOrMore>
+        <zeroOrMore>
           <ref name="clause-hanging-paragraph-with-footnote"/>
         </zeroOrMore>
       </element>
@@ -391,6 +397,9 @@
         <oneOrMore>
           <ref name="paragraph-with-footnote"/>
         </oneOrMore>
+        <zeroOrMore>
+          <ref name="note"/>
+        </zeroOrMore>
       </element>
     </define>
     <define name="xref">
@@ -438,7 +447,6 @@
             <choice>
               <ref name="TextElement"/>
               <ref name="fn"/>
-              <ref name="review"/>
             </choice>
           </zeroOrMore>
           <oneOrMore>
@@ -469,7 +477,6 @@
             <choice>
               <ref name="TextElement"/>
               <ref name="fn"/>
-              <ref name="review"/>
             </choice>
           </zeroOrMore>
           <oneOrMore>
@@ -503,9 +510,14 @@
         <ref name="section-title"/>
       </optional>
       <choice>
-        <oneOrMore>
-          <ref name="BasicBlock"/>
-        </oneOrMore>
+        <group>
+          <oneOrMore>
+            <ref name="BasicBlock"/>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="note"/>
+          </zeroOrMore>
+        </group>
         <oneOrMore>
           <ref name="clause-subsection"/>
         </oneOrMore>
@@ -544,6 +556,21 @@
       <oneOrMore>
         <ref name="references"/>
       </oneOrMore>
+    </element>
+  </define>
+  <!-- Renamed from workgroup; would in fact prefer committee -->
+  <define name="isoworkgroup">
+    <element name="isoworkgroup">
+      <ref name="technical-committee"/>
+      <optional>
+        <ref name="subcommittee"/>
+      </optional>
+      <optional>
+        <ref name="workgroup"/>
+      </optional>
+      <optional>
+        <ref name="secretariat"/>
+      </optional>
     </element>
   </define>
   <define name="foreword">
@@ -673,6 +700,9 @@
       <zeroOrMore>
         <!-- allow hanging paragraphs in annexes: they introduce lists -->
         <ref name="BasicBlock"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="clause-hanging-paragraph-with-footnote"/>

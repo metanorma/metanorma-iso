@@ -27,7 +27,7 @@ module Asciidoctor
         end
       end
 
-      def author_component(compname, node, out)
+      def committee_component(compname, node, out)
         out.send compname.gsub(/-/, "_"), node.attr(compname),
           **attr_code(number: node.attr("#{compname}-number"))
       end
@@ -37,10 +37,6 @@ module Asciidoctor
           c.role **{ type: "author" }
           c.organization do |a|
             a.name "ISO"
-            author_component("technical-committee", node, a)
-            author_component("subcommittee", node, a)
-            author_component("workgroup", node, a)
-            node.attr("secretariat") && a.secretariat(node.attr("secretariat"))
           end
         end
       end
@@ -73,6 +69,15 @@ module Asciidoctor
         end
       end
 
+      def metadata_committee(node, xml)
+        xml.isoworkgroup do |a|
+          committee_component("technical-committee", node, a)
+          committee_component("subcommittee", node, a)
+          committee_component("workgroup", node, a)
+          node.attr("secretariat") && a.secretariat(node.attr("secretariat"))
+        end
+      end
+
       def metadata(node, xml)
         title node, xml
         metadata_id(node, xml)
@@ -82,6 +87,7 @@ module Asciidoctor
         xml.script "Latn"
         metadata_status(node, xml)
         metadata_copyright(node, xml)
+        metadata_committee(node, xml)
       end
 
       def title(node, xml)

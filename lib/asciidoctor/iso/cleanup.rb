@@ -20,7 +20,7 @@ module Asciidoctor
         formula_cleanup(xmldoc)
         figure_cleanup(xmldoc)
         ref_cleanup(xmldoc)
-        review_note_cleanup(xmldoc)
+        note_cleanup(xmldoc)
         normref_cleanup(xmldoc)
         xref_cleanup(xmldoc)
         para_cleanup(xmldoc)
@@ -77,9 +77,7 @@ module Asciidoctor
       end
 
       def termdef_warn(text, re, term, msg)
-        if re.match? text
-          warn "ISO style: #{term}: #{msg}"
-        end
+        re.match? text and warn "ISO style: #{term}: #{msg}"
       end
 
       def termdef_style(xmldoc)
@@ -118,9 +116,7 @@ module Asciidoctor
           t = Nokogiri::XML::Element.new("definition", xmldoc)
           first_child.replace(t)
           t << first_child.remove
-          d.xpath("./p | ./figure | ./formula").each do |n|
-            t << n.remove
-          end
+          d.xpath("./p | ./figure | ./formula").each { |n| t << n.remove }
         end
       end
 
@@ -159,10 +155,18 @@ module Asciidoctor
         xmldoc
       end
 
-      def review_note_cleanup(xmldoc)
-        xmldoc.xpath("//review").each do |n|
-          prev = n.previous_element
-          if !prev.nil? && prev.name == "p" then n.parent = prev end
+      ELEMS_ALLOW_NOTES = 
+        %w[p formula quote sourcecode example admonition ul ol dl figure]
+
+      # if a note is at the end of a section, it is left alone
+      # if a note is followed by a non-note block, 
+      # it is moved inside its preceding block
+      def note_cleanup(xmldoc)
+        q = "//note[following-sibling::*[not(local-name() = 'note')]]"
+        xmldoc.xpath(q).each do |n|
+          next unless n.ancestors("table").empty?
+          prev = n.previous_element or next
+          n.parent = prev if ELEMS_ALLOW_NOTES.include? prev.name
         end
       end
 
@@ -182,7 +186,8 @@ module Asciidoctor
 
       def reference_names(xmldoc)
         xmldoc.xpath("//bibitem").each do |ref|
-          isopub = ref.at("./contributor[role/@type = 'publisher']/organization[name = 'ISO']")
+          isopub = ref.at("./contributor[role/@type = 'publisher']/"\
+                          "organization[name = 'ISO']")
           docid = ref.at("./docidentifier")
           date = ref.at("./publisherdate")
           reference = format_ref(docid.text, isopub)

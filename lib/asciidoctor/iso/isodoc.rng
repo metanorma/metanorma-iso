@@ -25,6 +25,9 @@
     <element name="standard-document">
       <!-- title+, status, creator*, language, script, type?, id*, version?, copyright, -->
       <ref name="bibdata"/>
+      <zeroOrMore>
+        <ref name="docrelation"/>
+      </zeroOrMore>
       <optional>
         <ref name="version"/>
       </optional>
@@ -42,6 +45,19 @@
   <define name="bibdata">
     <element name="bibdata">
       <ref name="BibliographicItem"/>
+    </element>
+  </define>
+  <define name="docrelation">
+    <element name="docrelation">
+      <attribute name="type">
+        <choice>
+          <value>obsoletes</value>
+          <value>updates</value>
+          <value>complements</value>
+        </choice>
+      </attribute>
+      <!-- using instead of title: CitationType -->
+      <ref name="eref"/>
     </element>
   </define>
   <define name="status">
@@ -125,9 +141,14 @@
       <ref name="section-title"/>
     </optional>
     <choice>
-      <oneOrMore>
-        <ref name="BasicBlock"/>
-      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="BasicBlock"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="note"/>
+        </zeroOrMore>
+      </group>
       <oneOrMore>
         <ref name="content-subsection"/>
       </oneOrMore>
@@ -148,9 +169,14 @@
       <ref name="section-title"/>
     </optional>
     <choice>
-      <oneOrMore>
-        <ref name="BasicBlock"/>
-      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="BasicBlock"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="note"/>
+        </zeroOrMore>
+      </group>
       <oneOrMore>
         <ref name="clause-subsection"/>
       </oneOrMore>
@@ -178,7 +204,14 @@
         <ref name="section-title"/>
       </optional>
       <choice>
-        <ref name="BasicBlock"/>
+        <group>
+          <oneOrMore>
+            <ref name="BasicBlock"/>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="note"/>
+          </zeroOrMore>
+        </group>
         <oneOrMore>
           <ref name="clause-subsection"/>
         </oneOrMore>
@@ -306,6 +339,7 @@
       </optional>
     </element>
   </define>
+  <!-- should be eref -->
   <define name="origin">
     <element name="origin">
       <ref name="CitationType"/>
@@ -320,7 +354,6 @@
     <choice>
       <ref name="paragraph-with-footnote"/>
       <ref name="table"/>
-      <ref name="note"/>
       <ref name="formula"/>
       <ref name="admonition"/>
       <ref name="ol"/>
@@ -330,6 +363,7 @@
       <ref name="quote"/>
       <ref name="sourcecode"/>
       <ref name="example"/>
+      <ref name="review"/>
     </choice>
   </define>
   <define name="paragraph">
@@ -358,7 +392,7 @@
       <ref name="TextElement"/>
     </zeroOrMore>
     <zeroOrMore>
-      <ref name="review"/>
+      <ref name="note"/>
     </zeroOrMore>
   </define>
   <define name="paragraph-with-footnote">
@@ -378,7 +412,7 @@
         </choice>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="review"/>
+        <ref name="note"/>
       </zeroOrMore>
     </element>
   </define>
@@ -425,6 +459,9 @@
       <optional>
         <ref name="dl"/>
       </optional>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="quote">
@@ -446,6 +483,9 @@
       <oneOrMore>
         <ref name="paragraph-with-footnote"/>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="quote-source">
@@ -474,6 +514,9 @@
       </oneOrMore>
       <zeroOrMore>
         <ref name="annotation"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
       </zeroOrMore>
     </element>
   </define>
@@ -556,10 +599,7 @@
       </optional>
       <choice>
         <zeroOrMore>
-          <choice>
-            <ref name="TextElement"/>
-            <ref name="review"/>
-          </choice>
+          <ref name="TextElement"/>
         </zeroOrMore>
         <oneOrMore>
           <ref name="paragraph-with-footnote"/>
@@ -586,10 +626,7 @@
       </optional>
       <choice>
         <zeroOrMore>
-          <choice>
-            <ref name="TextElement"/>
-            <ref name="review"/>
-          </choice>
+          <ref name="TextElement"/>
         </zeroOrMore>
         <oneOrMore>
           <ref name="paragraph-with-footnote"/>
@@ -611,9 +648,11 @@
           <ref name="quote"/>
           <ref name="sourcecode"/>
           <ref name="paragraph-with-footnote"/>
-          <ref name="review"/>
         </choice>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="admonition">
@@ -632,6 +671,9 @@
       </attribute>
       <zeroOrMore>
         <ref name="paragraph-with-footnote"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
       </zeroOrMore>
     </element>
   </define>
