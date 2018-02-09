@@ -169,16 +169,36 @@ This paragraph is aligned center
 This paragraph is justified, which is the default
 --
 
-==== Dates on reviewer notes
+==== Reviewer notes
 
-Reviewer notes are encoded as sidebars. A date attribute (in ISO 8601 format)
-and a reviewer attribute (naming the reviewer) 
-are mandatory for reviewer notes; supplying the time as well as the date
-is optional.
+Reviewer notes are encoded as sidebars. The following attributes on reviewer
+notes are mandatory:
+
+* reviewer attribute (naming the reviewer) 
+* the starting target anchor of the note (as a `from` attribute)
+
+The following attributes are optional:
+
+* date attribute, optionally including the time (as xs:date or xs:datetime)
+* the ending target anchor of the note (as a `to` attribute)
+
+The span of text covered by the reviewer note is from the start of the
+text encompassed by the `from` element, to the end of the text encompassed
+by the `to` element. If only the `from` element supplied, the reviewer note
+covers the `from` element. The `from` and `to` elements can be bookmarks,
+which cover no space.
+
+TODO: Create bookmarks
 
 [source,asciidoctor]
 --
-[reviewer="Nick Nicholas",date=20180125T0121]
+[[clause_address_profile_definition]]
+=== Address Profile Definition (AddressProfileDescription)
+
+[[para1]]
+This is a clause address profile definition
+
+[reviewer="Nick Nicholas",date=20180125T0121,from=clause_address_profile_definition,to=para1]
 ****
 I do not agree with this statement.
 ****

@@ -4,6 +4,7 @@ require "uri"
 module Asciidoctor
   module ISO
     module Blocks
+
       def id_attr(node = nil)
         { id: Utils::anchor_or_uuid(node) }
       end
@@ -26,6 +27,8 @@ module Asciidoctor
           reviewer: node.attr("reviewer") || node.attr("source") || "(Unknown)",
           id: Utils::anchor_or_uuid(node),
           date: date.gsub(/[:-]/, ""),
+          from: node.attr("from"),
+          to: node.attr("to") || node.attr("from"),
         }
       end
 
@@ -34,7 +37,7 @@ module Asciidoctor
         content = Utils::flatten_rawtext(node.content).join("\n")
         noko do |xml| 
           xml.review **attr_code(sidebar_attrs(node)) do |r|
-            r << content
+            wrap_in_para(node, r)
           end
         end
       end
@@ -42,10 +45,7 @@ module Asciidoctor
       def termnote(n)
         noko do |xml|
           xml.termnote **id_attr(n) do |ex|
-            if n.blocks? then ex << n.content
-            else 
-              ex.p {|p| p << n.content }
-            end
+            wrap_in_para(n, ex)
             style(n, Utils::flatten_rawtext(n.content).join("\n"))
           end
         end.join("\n")
@@ -54,10 +54,7 @@ module Asciidoctor
       def note(n)
         noko do |xml|
           xml.note **id_attr(n) do |c|
-            if n.blocks? then c << n.content
-            else
-              c.p { |p| p << n.content }
-            end
+            wrap_in_para(n, c)
             text = Utils::flatten_rawtext(n.content).join("\n")
             note_style(n, text)
           end
@@ -78,10 +75,7 @@ module Asciidoctor
         return note(node) if node.attr("name") == "note"
         noko do |xml|
           xml.admonition **admonition_attrs(node) do |a|
-            if node.blocks? then a << node.content
-            else
-              a.p { |p| p << node.content }
-            end
+            wrap_in_para(node, a)
           end
         end.join("\n")
       end
@@ -90,10 +84,7 @@ module Asciidoctor
         noko do |xml|
           xml.termexample **id_attr(node) do |ex|
             c = node.content
-            if node.blocks? then ex << c 
-            else 
-              ex.p {|p| p << c }
-            end
+            wrap_in_para(node, ex)
             text = Utils::flatten_rawtext(c).join("\n")
             termexample_style(node, text)
           end
@@ -106,8 +97,6 @@ module Asciidoctor
           xml.example **id_attr(node) do |ex|
             content = node.content
             ex << content
-            text = Utils::flatten_rawtext(content).join("\n")
-            termexample_style(node, text)
           end
         end.join("\n")
       end
@@ -166,10 +155,7 @@ module Asciidoctor
         noko do |xml|
           xml.quote **attr_code(quote_attrs(node)) do |q|
             quote_attribution(node, out)
-            if node.blocks? then q << node.content
-            else
-              q.p { |p| p << node.content }
-            end
+            wrap_in_para(node, q)
           end
         end
       end
@@ -178,8 +164,8 @@ module Asciidoctor
         # NOTE: html escaping is performed by Nokogiri
         noko do |xml|
           if node.parent.context != :example
-            xml.figure do |xml_figure|
-              xml_figure.sourcecode **id_attr(node) do |s| 
+            xml.example **id_attr(node) do |e|
+              e.sourcecode **id_attr(node) do |s| 
                 s << node.content 
               end
             end

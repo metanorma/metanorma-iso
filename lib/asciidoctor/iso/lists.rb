@@ -39,33 +39,33 @@ module Asciidoctor
         end
       end
 
-      def isorefmatches(xml, matched)
-        ref_attributes = { id: matched[:anchor], type: "standard" }
+      def isorefmatches(xml, m)
+        ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title { |i| i << ref_normalise(matched[:text]) }
-          t.docidentifier matched[:code]
-          t.date matched[:year], { type: "published" } if matched[:year]
+          t.title **{ format: "plain" } { |i| i << ref_normalise(m[:text]) }
+          t.docidentifier m[:code]
+          t.date m[:year], { type: "published" } if m[:year]
           iso_publisher(t)
         end
       end
 
-      def isorefmatches2(xml, matched)
-        ref_attributes = { id: matched[:anchor], type: "standard" }
+      def isorefmatches2(xml, m)
+        ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title { |i| i << ref_normalise(matched[:text]) }
-          t.docidentifier matched[:code]
+          t.title **{ format: "plain" } { |i| i << ref_normalise(m[:text]) }
+          t.docidentifier m[:code]
           t.date "--", { type: "published" }
           iso_publisher(t)
-          t.note **{ format: "plain" } { |p| p << "ISO DATE: #{matched[:fn]}" }
+          t.note **{ format: "plain" } { |p| p << "ISO DATE: #{m[:fn]}" }
         end
       end
 
-      def isorefmatches3(xml, matched)
-        ref_attributes = { id: matched[:anchor], type: "standard" }
+      def isorefmatches3(xml, m)
+        ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title { |i| i << ref_normalise(matched[:text]) }
-          t.docidentifier "#{matched[:code]}:All Parts"
-          t.date matched[:year], { type: "published" } if matched[:year]
+          t.title **{ format: "plain" } { |i| i << ref_normalise(m[:text]) }
+          t.docidentifier "#{m[:code]}:All Parts"
+          t.date m[:year], { type: "published" } if m[:year]
           iso_publisher(t)
         end
       end
@@ -75,7 +75,9 @@ module Asciidoctor
         if m.nil? then Utils::warning(node, "no anchor on reference", item)
         else
           xml.bibitem **attr_code(id: m[:anchor]) do |t|
-            t.formattedref { |i| i << ref_normalise_no_format(m[:text]) }
+            t.formattedref  **{ format: "html" } do |i| 
+              i << ref_normalise_no_format(m[:text]) 
+            end
             code = m[:code]
             code = "[#{code}]" if /^\d+$?/.match? code
             t.docidentifier code

@@ -74,29 +74,9 @@
     <define name="BibliographicItem">
       <optional>
         <attribute name="type">
-          <choice>
-            <value>article</value>
-            <value>book</value>
-            <value>booklet</value>
-            <value>conference</value>
-            <value>manual</value>
-            <value>proceedings</value>
-            <value>presentation</value>
-            <value>thesis</value>
-            <value>techreport</value>
-            <value>standard</value>
-            <value>unpublished</value>
-            <!-- added -->
-            <value>international-standard</value>
-            <value>technical-specification</value>
-            <value>technical-report</value>
-            <value>publicly-available-specification</value>
-            <value>international-workshop-agreement</value>
-            <value>guide</value>
-          </choice>
+          <ref name="BibItemType"/>
         </attribute>
       </optional>
-      <!-- remainder is identical -->
       <choice>
         <oneOrMore>
           <ref name="btitle"/>
@@ -186,7 +166,7 @@
     <define name="btitle">
       <element name="title">
         <choice>
-          <text/>
+          <ref name="FormattedString"/>
           <group>
             <optional>
               <ref name="title-intro"/>
@@ -523,16 +503,6 @@
         </oneOrMore>
       </choice>
     </define>
-    <define name="Any">
-      <element>
-        <anyName>
-          <except>
-            <nsName/>
-          </except>
-        </anyName>
-        <ref name="Anycontents"/>
-      </element>
-    </define>
   </include>
   <!-- end overrides -->
   <!--
@@ -557,6 +527,16 @@
         <ref name="references"/>
       </oneOrMore>
     </element>
+  </define>
+  <define name="BibItemType" combine="choice">
+    <choice>
+      <value>international-standard</value>
+      <value>technical-specification</value>
+      <value>technical-report</value>
+      <value>publicly-available-specification</value>
+      <value>international-workshop-agreement</value>
+      <value>guide</value>
+    </choice>
   </define>
   <!-- Renamed from workgroup; would in fact prefer committee -->
   <define name="isoworkgroup">

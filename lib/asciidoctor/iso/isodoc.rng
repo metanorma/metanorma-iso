@@ -23,7 +23,6 @@
   </start>
   <define name="standard-document">
     <element name="standard-document">
-      <!-- title+, status, creator*, language, script, type?, id*, version?, copyright, -->
       <ref name="bibdata"/>
       <zeroOrMore>
         <ref name="docrelation"/>
@@ -431,20 +430,20 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
-      <optional>
-        <attribute name="reviewer"/>
-      </optional>
+      <attribute name="reviewer"/>
       <optional>
         <attribute name="date">
           <data type="date"/>
         </attribute>
       </optional>
       <attribute name="from">
-        <data type="ID"/>
+        <data type="IDREF"/>
       </attribute>
-      <attribute name="to">
-        <data type="ID"/>
-      </attribute>
+      <optional>
+        <attribute name="to">
+          <data type="IDREF"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="paragraph"/>
       </oneOrMore>
@@ -843,7 +842,7 @@
     @reference replaces ReferenceElement/text
     so <fn reference="2"><p>This is a footnote</p></fn>
     corresponds to 
-    <xref type="footnote" target="fn2">2</xref> <p id="fn2">This is a footnote</p>
+    <eref type="footnote" target="fn2">2</xref> <p id="fn2">This is a footnote</p>
   -->
   <define name="callout">
     <element name="callout">
@@ -916,6 +915,9 @@
       <oneOrMore>
         <ref name="li"/>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="li">
@@ -942,6 +944,9 @@
       <oneOrMore>
         <ref name="li"/>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="dl">
@@ -953,6 +958,9 @@
         <ref name="dt"/>
         <ref name="dd"/>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="dt">
@@ -1006,7 +1014,7 @@
     <oneOrMore>
       <choice>
         <text/>
-        <ref name="Any"/>
+        <ref name="AnyElement"/>
       </choice>
     </oneOrMore>
   </define>
@@ -1291,26 +1299,29 @@
       <ref name="BibliographicItem"/>
     </element>
   </define>
+  <define name="BibItemType" combine="choice">
+    <choice>
+      <value>article</value>
+      <value>book</value>
+      <value>booklet</value>
+      <value>conference</value>
+      <value>manual</value>
+      <value>proceedings</value>
+      <value>presentation</value>
+      <value>thesis</value>
+      <value>techreport</value>
+      <value>standard</value>
+      <value>unpublished</value>
+    </choice>
+  </define>
   <!--
-    unlike UML, bname is optional, mutually exclusive with formattedRef
+    unlike UML, btitle is optional, mutually exclusive with formattedRef
     unlike UML, copyright is optional (it is mandatory in bibdata)
   -->
   <define name="BibliographicItem">
     <optional>
       <attribute name="type">
-        <choice>
-          <value>article</value>
-          <value>book</value>
-          <value>booklet</value>
-          <value>conference</value>
-          <value>manual</value>
-          <value>proceedings</value>
-          <value>presentation</value>
-          <value>thesis</value>
-          <value>techreport</value>
-          <value>standard</value>
-          <value>unpublished</value>
-        </choice>
+        <ref name="BibItemType"/>
       </attribute>
     </optional>
     <choice>
@@ -1363,9 +1374,7 @@
   </define>
   <define name="formattedref">
     <element name="formattedref">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="FormattedString"/>
     </element>
   </define>
   <define name="source">
@@ -1435,26 +1444,25 @@
       <ref name="ContributorInfo"/>
     </element>
   </define>
-  <define name="Anycontents">
-    <mixed>
-      <zeroOrMore>
-        <!--
-          https://github.com/relaxng/jing-trang/issues/211
-          https://lists.oasis-open.org/archives/office/200808/msg00024.html
-          https://lists.oasis-open.org/archives/office/200808/msg00099.html
-          For this to work, we will actually strip any attributes in the Anycontents before
-          passing it for validation. Horrible I know, but there are no good alternatives
-          that also allow us to do grammar inheritance
-          (attribute * { text } | Any)*
-        -->
-        <ref name="Any"/>
-      </zeroOrMore>
-    </mixed>
-  </define>
-  <define name="Any">
+  <!--
+    Anycontents = mixed {
+    https://github.com/relaxng/jing-trang/issues/211
+    https://lists.oasis-open.org/archives/office/200808/msg00024.html
+    https://lists.oasis-open.org/archives/office/200808/msg00099.html
+    For this to work, we will actually strip any attributes in the Anycontents before
+    passing it for validation. Horrible I know, but there are no good alternatives
+    that also allow us to do grammar inheritance
+    (attribute * { text } | Any)*
+           Any*
+    }
+  -->
+  <define name="AnyElement">
     <element>
       <anyName/>
-      <ref name="Anycontents"/>
+      <choice>
+        <text/>
+        <ref name="AnyElement"/>
+      </choice>
     </element>
   </define>
 </grammar>

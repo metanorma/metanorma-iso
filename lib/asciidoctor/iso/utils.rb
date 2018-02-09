@@ -97,6 +97,15 @@ module Asciidoctor
         end.to_h
       end
 
+      # if the contents of node are blocks, output them to out;
+      # else, wrap them in <p>
+      def wrap_in_para(node, out)
+        if node.blocks? then out << node.content
+        else
+          out.p { |p| p << node.content }
+        end
+      end
+
     end
   end
 end

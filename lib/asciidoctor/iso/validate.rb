@@ -198,10 +198,25 @@ module Asciidoctor
         end
       end
 
+      # RelaxNG cannot cope well with wildcard attributes. So we strip
+      # any attributes from FormattedString instances (which can contain
+      # xs:any markup, and are signalled with @format) before validation.
+      def formattedstr_strip(doc)
+        doc.xpath("//*[@format]").each do |n|
+          n.elements.each do |e|
+            e.traverse do |e1|
+              next unless e1.element?
+              e1.each { |k, v| e.delete(k) }
+            end
+          end
+        end
+        doc
+      end
+
       def validate(doc)
         content_validate(doc)
-        schema_validate(doc, File.join(File.dirname(__FILE__),
-                                       "isostandard.rng"))
+        schema_validate(formattedstr_strip(doc.dup), 
+                        File.join(File.dirname(__FILE__), "isostandard.rng"))
       end
     end
   end

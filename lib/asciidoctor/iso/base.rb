@@ -49,7 +49,6 @@ module Asciidoctor
       def document(node)
         init
         ret1 = makexml(node)
-        validate(ret1)
         ret = ret1.to_xml(indent: 2)
         filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
           gsub(%r{^.*/}, '')
@@ -67,6 +66,7 @@ module Asciidoctor
         result = textcleanup(result.flatten * "\n")
         ret1 = cleanup(Nokogiri::XML(result))
         ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
+        validate(ret1)
         ret1
       end
 
