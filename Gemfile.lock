@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 1b65fde5d80501506554276174cda5d438f122f5
+  revision: 03037e33040e68ea0d7dd48654efa98abefeb745
   specs:
-    html2doc (0.0.1)
+    html2doc (0.5.0)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 45ea6e5fd3e3f1416c294a2e460f69fee268e0d2
+  revision: d5d55d8a88c36d32a34619741daf2b5bc5d16ebf
   specs:
-    isodoc (0.0.1)
+    isodoc (0.4.0)
       asciimath
       html2doc
       htmlentities (~> 4.3.4)
@@ -55,7 +55,7 @@ GEM
     docile (1.1.5)
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
-    ffi (1.9.18)
+    ffi (1.9.21)
     formatador (0.2.5)
     guard (2.14.2)
       formatador (>= 0.2.4)
