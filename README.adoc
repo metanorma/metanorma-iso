@@ -171,16 +171,17 @@ This paragraph is justified, which is the default
 
 ==== Reviewer notes
 
-Reviewer notes are encoded as sidebars. The following attributes on reviewer
-notes are mandatory:
+Reviewer notes are encoded as sidebars, and can be separated at a distance from the
+text they are annotating; the text they are annotating is indicated through anchors. 
+The following attributes on reviewer notes are mandatory:
 
-* reviewer attribute (naming the reviewer) 
-* the starting target anchor of the note (as a `from` attribute)
+* `reviewer` attribute (naming the reviewer) 
+* the starting target anchor of the note (`from` attribute)
 
 The following attributes are optional:
 
-* date attribute, optionally including the time (as xs:date or xs:datetime)
-* the ending target anchor of the note (as a `to` attribute)
+* `date` attribute, optionally including the time (as xs:date or xs:datetime)
+* the ending target anchor of the note (`to` attribute)
 
 The span of text covered by the reviewer note is from the start of the
 text encompassed by the `from` element, to the end of the text encompassed
