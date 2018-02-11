@@ -379,17 +379,9 @@ p.Quote, li.Quote, div.Quote
 	mso-ansi-language:EN-GB;}
 p.Admonition, li.Admonition, div.Admonition
 	{mso-style-priority:99;
-	margin-top:0cm;
-	margin-right:57.6pt;
-	margin-bottom:0cm;
-	margin-left:57.6pt;
-	margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
 	border:none;
-	mso-border-alt:solid #4472C4 .25pt;
-	mso-border-themecolor:accent1;
 	padding:0cm;
-	mso-padding-alt:10.0pt 10.0pt 10.0pt 10.0pt;
 	font-size:12.0pt;
 	font-family:"Calibri",sans-serif;
 	mso-ascii-font-family:Calibri;
@@ -400,10 +392,8 @@ p.Admonition, li.Admonition, div.Admonition
 	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:"Cambria";
 	mso-bidi-theme-font:minor-bidi;
-	color:#4472C4;
-	mso-themecolor:accent1;
-	mso-ansi-language:EN-AU;
-	font-style:italic;}
+        font-weight:bold;
+	mso-ansi-language:EN-AU;}
 p.Code, li.Code, div.Code
 	{mso-style-name:Code;
 	mso-style-priority:16;

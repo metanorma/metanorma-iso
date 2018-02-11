@@ -991,16 +991,18 @@
     Added LocalizedStringOrXsAny
   -->
   <define name="FormattedString">
-    <attribute name="format">
-      <choice>
-        <value>plain</value>
-        <value>html</value>
-        <value>docbook</value>
-        <value>tei</value>
-        <value>asciidoc</value>
-        <value>markdown</value>
-      </choice>
-    </attribute>
+    <optional>
+      <attribute name="format">
+        <choice>
+          <value>plain</value>
+          <value>html</value>
+          <value>docbook</value>
+          <value>tei</value>
+          <value>asciidoc</value>
+          <value>markdown</value>
+        </choice>
+      </attribute>
+    </optional>
     <ref name="LocalizedStringOrXsAny"/>
   </define>
   <define name="LocalizedStringOrXsAny">
@@ -1115,7 +1117,6 @@
       <ref name="LocalizedString"/>
     </element>
   </define>
-  <!-- Unlike UML, affiliationname is optional -->
   <define name="affiliation">
     <element name="affiliation">
       <optional>
@@ -1399,9 +1400,11 @@
       </choice>
     </element>
   </define>
-  <!-- add type to docidentifier in isodoc? -->
   <define name="docidentifier">
     <element name="docidentifier">
+      <optional>
+        <attribute name="type"/>
+      </optional>
       <text/>
     </element>
   </define>
