@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 03037e33040e68ea0d7dd48654efa98abefeb745
+  revision: 7641581efa62612ab56315bcf3a101ce209d58f9
   specs:
     html2doc (0.5.0)
       asciimath
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: d5d55d8a88c36d32a34619741daf2b5bc5d16ebf
+  revision: a75f2ebd1a53209e02059ee8f19171afca87ab2d
   specs:
     isodoc (0.4.0)
       asciimath
@@ -32,14 +32,11 @@ PATH
   specs:
     asciidoctor-iso (0.6.0)
       asciidoctor (~> 1.5.6)
-      asciimath
       html2doc
       htmlentities (~> 4.3.4)
-      image_size
-      mime-types
+      isodoc
       nokogiri (= 1.8.1)
       ruby-jing
-      ruby-xslt
       thread_safe
       uuidtools
 
