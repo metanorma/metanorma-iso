@@ -28,16 +28,13 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   spec.add_dependency "asciidoctor", "~> 1.5.6"
-  spec.add_dependency "asciimath"
   spec.add_dependency "htmlentities", "~> 4.3.4"
-  spec.add_dependency "image_size"
-  spec.add_dependency "mime-types"
   spec.add_dependency "nokogiri", "= 1.8.1"
   spec.add_dependency "ruby-jing"
-  spec.add_dependency "ruby-xslt"
   spec.add_dependency "thread_safe"
   spec.add_dependency "uuidtools"
   spec.add_dependency "html2doc"
+  spec.add_dependency "isodoc"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "byebug", "~> 9.1"
