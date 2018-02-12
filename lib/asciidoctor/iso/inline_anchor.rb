@@ -8,6 +8,8 @@ module Asciidoctor
 
       def inline_anchor(node)
         case node.type
+        when :ref
+          inline_anchor_ref node
         when :xref
           inline_anchor_xref node
         when :link
@@ -17,6 +19,12 @@ module Asciidoctor
         else
           warning(node, "unknown anchor type", node.type.inspect)
         end
+      end
+
+      def inline_anchor_ref(node)
+        noko do |xml|
+          xml.bookmark nil, **attr_code(id: node.id)
+        end.join
       end
 
       def inline_anchor_xref(node)

@@ -153,21 +153,6 @@ module Asciidoctor
         end.join("\n")
       end
 
-      def open(node)
-        # open block is a container of multiple blocks,
-        # treated as a single block.
-        # We append each contained block to its parent
-        result = []
-        if node.blocks?
-          node.blocks.each do |b|
-            result << send(b.context, b)
-          end
-        else
-          result = paragraph(node)
-        end
-        result
-      end
-
       def inline_break(node)
         noko do |xml|
           xml << node.text
