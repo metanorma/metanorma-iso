@@ -1,6 +1,6 @@
 module Asciidoctor
   module ISO
-    module InlineAnchor
+    module Inline
 
       def is_refid?(x)
         @refids.include? x
@@ -28,15 +28,13 @@ module Asciidoctor
       end
 
       def inline_anchor_xref(node)
-        f = "inline"
-        c = node.text
         matched = /^fn(:  (?<text>.*))?$/.match node.text
-        unless matched.nil?
-          f = "footnote"
-          c = matched[:text]
-        end
+        f = matched.nil? ? "inline" : "footnote"
+        c = matched.nil? ? node.text : matched[:text]
         t = node.target.gsub(/^#/, "").gsub(%r{(.)(\.xml)?#.*$}, "\\1")
-          noko { |xml| xml.xref c, **attr_code(target: t, type: f) }.join
+          noko do |xml| 
+          xml.xref c, **attr_code(target: t, type: f) 
+        end.join
       end
 
       def inline_anchor_link(node)
@@ -62,6 +60,64 @@ module Asciidoctor
           xml.callout node.text
         end.join
       end
+
+      def inline_footnote(node)
+        noko do |xml|
+          @fn_number += 1
+          xml.fn **{reference: @fn_number} do |fn|
+            # TODO multi-paragraph footnotes
+            fn.p { |p| p << node.text }
+            footnote_style(node, node.text)
+          end
+        end.join("\n")
+      end
+
+      def inline_break(node)
+        noko do |xml|
+          xml << node.text
+          xml.br
+        end.join("\n")
+      end
+
+      def page_break(node)
+        noko do |xml|
+          xml << node.text
+          xml.pagebreak
+        end.join("\n")
+      end
+
+      def thematic_break(node)
+        noko do |xml|
+          xml << node.text
+          xml.hr
+        end.join("\n")
+      end
+
+      def inline_quoted(node)
+        noko do |xml|
+          case node.type
+          when :emphasis then xml.em node.text
+          when :strong then xml.strong node.text
+          when :monospaced then xml.tt node.text
+          when :double then xml << "\"#{node.text}\""
+          when :single then xml << "'#{node.text}'"
+          when :superscript then xml.sup node.text
+          when :subscript then xml.sub node.text
+          when :asciimath then xml.stem node.text, **{ type: "AsciiMath" }
+          else
+            case node.role
+            when "alt" then xml.admitted { |a| a << node.text }
+            when "deprecated" then xml.deprecates { |a| a << node.text }
+            when "domain" then xml.domain { |a| a << node.text }
+            when "strike" then xml.strike node.text
+            when "smallcap" then xml.smallcap node.text
+            else
+              xml << node.text
+            end
+          end
+        end.join
+      end
+
     end
   end
 end

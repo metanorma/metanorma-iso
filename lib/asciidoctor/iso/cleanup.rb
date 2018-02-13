@@ -50,14 +50,18 @@ module Asciidoctor
         end
       end
 
+      def xref_to_eref(x)
+        x.name = "eref"
+        x["bibitemid"] = x["target"]
+        x["citeas"] = @anchors[x["target"]][:xref]
+        x.delete("target")
+      end
+
       def xref_cleanup(xmldoc)
         reference_names(xmldoc)
         xmldoc.xpath("//xref").each do |x|
           if is_refid? x["target"]
-            x.name = "eref"
-            x["bibitemid"] = x["target"]
-            x["citeas"] = @anchors[x["target"]][:xref]
-            x.delete("target")
+            xref_to_eref(x)
           else
             x.delete("type")
           end

@@ -3,7 +3,7 @@ require "asciidoctor/iso/version"
 require "asciidoctor/iso/base"
 require "asciidoctor/iso/front"
 require "asciidoctor/iso/lists"
-require "asciidoctor/iso/inline_anchor"
+require "asciidoctor/iso/inline"
 require "asciidoctor/iso/blocks"
 require "asciidoctor/iso/section"
 require "asciidoctor/iso/table"
@@ -22,7 +22,7 @@ module Asciidoctor
       include ::Asciidoctor::ISO::Base
       include ::Asciidoctor::ISO::Front
       include ::Asciidoctor::ISO::Lists
-      include ::Asciidoctor::ISO::InlineAnchor
+      include ::Asciidoctor::ISO::Inline
       include ::Asciidoctor::ISO::Blocks
       include ::Asciidoctor::ISO::Section
       include ::Asciidoctor::ISO::Table

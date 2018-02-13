@@ -5,8 +5,7 @@ require "pp"
 module Asciidoctor
   module ISO
     module Validate
-
-      REQUIREMENT_RE_STR = <<~REGEXP
+      REQUIREMENT_RE_STR = <<~REGEXP.freeze
         \\b
          ( shall | (is|are)_to |
            (is|are)_required_(not_)?to |
@@ -32,7 +31,7 @@ module Asciidoctor
         nil
       end
 
-      RECOMMENDATION_RE_STR = <<~REGEXP
+      RECOMMENDATION_RE_STR = <<~REGEXP.freeze
         \\b
             should |
             ought_(not_)?to |
@@ -50,7 +49,7 @@ module Asciidoctor
         nil
       end
 
-      PERMISSION_RE_STR = <<~REGEXP
+      PERMISSION_RE_STR = <<~REGEXP.freeze
         \\b
              may |
             (is|are)_(permitted | allowed | permissible ) |
@@ -69,7 +68,7 @@ module Asciidoctor
         nil
       end
 
-      POSSIBILITY_RE_STR = <<~REGEXP
+      POSSIBILITY_RE_STR = <<~REGEXP.freeze
         \\b
            can | cannot | be_able_to |
            there_is_a_possibility_of |
@@ -149,7 +148,7 @@ module Asciidoctor
       def style_two_regex_not_prev(n, text, re, re_prev, warning)
         return if text.nil?
         words = text.split(/\W+/).each_index do |i|
-          next if i == 0
+          next if i.zero?
           m = re.match text[i]
           m_prev = re_prev.match text[i - 1]
           if !m.nil? && m_prev.nil?

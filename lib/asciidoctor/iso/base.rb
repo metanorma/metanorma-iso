@@ -99,7 +99,7 @@ module Asciidoctor
         end
       end
 
-      TERM_REFERENCE_RE_STR = <<~REGEXP
+      TERM_REFERENCE_RE_STR = <<~REGEXP.freeze
              ^(?<xref><xref[^>]+>)
                (,\s(?<section>[^, ]+))?
                (,\s(?<text>.*))?
@@ -130,74 +130,6 @@ module Asciidoctor
         end.join("\n")
       end
 
-      def paragraph(node)
-        return termsource(node) if node.role == "source"
-        attrs = { align: node.attr("align"), 
-                  id: Utils::anchor_or_uuid(node) }
-        noko do |xml|
-          xml.p **attr_code(attrs) do |xml_t|
-            xml_t << node.content
-            style(node, Utils::flatten_rawtext(node).join(" "))
-          end
-        end.join("\n")
-      end
-
-      def inline_footnote(node)
-        noko do |xml|
-          @fn_number += 1
-          xml.fn **{reference: @fn_number} do |fn|
-            # TODO multi-paragraph footnotes
-            fn.p { |p| p << node.text }
-            footnote_style(node, node.text)
-          end
-        end.join("\n")
-      end
-
-      def inline_break(node)
-        noko do |xml|
-          xml << node.text
-          xml.br
-        end.join("\n")
-      end
-
-      def page_break(node)
-        noko do |xml|
-          xml << node.text
-          xml.pagebreak
-        end.join("\n")
-      end
-
-      def thematic_break(node)
-        noko do |xml|
-          xml << node.text
-          xml.hr
-        end.join("\n")
-      end
-
-      def inline_quoted(node)
-        noko do |xml|
-          case node.type
-          when :emphasis then xml.em node.text
-          when :strong then xml.strong node.text
-          when :monospaced then xml.tt node.text
-          when :double then xml << "\"#{node.text}\""
-          when :single then xml << "'#{node.text}'"
-          when :superscript then xml.sup node.text
-          when :subscript then xml.sub node.text
-          when :asciimath then xml.stem node.text, **{ type: "AsciiMath" }
-          else
-            case node.role
-            when "alt" then xml.admitted { |a| a << node.text }
-            when "deprecated" then xml.deprecates { |a| a << node.text }
-            when "domain" then xml.domain { |a| a << node.text }
-            when "strike" then xml.strike node.text
-            when "smallcap" then xml.smallcap node.text
-            else
-              xml << node.text
-            end
-          end
-        end.join
-      end
     end
   end
 end

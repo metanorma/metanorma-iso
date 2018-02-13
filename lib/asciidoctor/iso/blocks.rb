@@ -147,11 +147,20 @@ module Asciidoctor
         end
       end
 
+      def paragraph(node)
+        return termsource(node) if node.role == "source"
+        attrs = { align: node.attr("align"),
+                  id: Utils::anchor_or_uuid(node) }
+        noko do |xml|
+          xml.p **attr_code(attrs) do |xml_t|
+            xml_t << node.content
+            style(node, Utils::flatten_rawtext(node).join(" "))
+          end
+        end.join("\n")
+      end
+
       def quote_attrs(node)
-        { 
-          id: Utils::anchor_or_uuid(node), 
-          align: node.attr("align"),
-        }
+        { id: Utils::anchor_or_uuid(node), align: node.attr("align") }
       end
 
       def quote_attribution(node, out)
