@@ -95,7 +95,7 @@ module Asciidoctor
           s.reference m[:section].gsub(/ /, "")
         end
         m[:text] && xml_t.modification do |mod| 
-            mod.p { |p| p << m[:text]  }
+          mod.p { |p| p << m[:text].sub(/^\s+/, "")  }
         end
       end
 
@@ -107,7 +107,7 @@ module Asciidoctor
       REGEXP
       TERM_REFERENCE_RE =
         Regexp.new(TERM_REFERENCE_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
-                   Regexp::IGNORECASE)
+                   Regexp::IGNORECASE | Regexp::MULTILINE)
 
 
       def extract_termsource_refs(text)
