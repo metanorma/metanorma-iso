@@ -403,14 +403,24 @@ in the deafting stage
 `:technical-committee-number:`:: The number of the relevant ISO technical
 committee
 
+`:technical-committee-type:``:: The type of the relevant technical committee. Defaults
+to `TC` if not supplied. Values: `TC1, `PC`, `JTC`, `JPC`.
+
 `:technical-committee:`:: The name of the relevant ISO technical committee
 (mandatory)
 
 `:subcommittee-number:`:: The number of the relevant ISO subcommittee
 
+`:subcommittee-type:``:: The type of the relevant ISO subcommittee. Defaults to
+`SC` if not supplied. Values: `SC`, `JSC`.
+
 `:subcommittee:`:: The name of the relevant ISO subcommittee
 
 `:workgroup-number:`:: The number of the relevant ISO workgroup
+
+`:workgroup-type:`:: The type of the relevant ISO workgroup. Defaults to `WG` if
+not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`, 
+`SG`, `MA` (maintenance agency), `CORG`, `JCG`, `CAG`
 
 `:workgroup:`:: The name of the relevant ISO workgroup
 

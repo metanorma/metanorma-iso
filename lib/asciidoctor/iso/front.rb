@@ -29,7 +29,8 @@ module Asciidoctor
 
       def committee_component(compname, node, out)
         out.send compname.gsub(/-/, "_"), node.attr(compname),
-          **attr_code(number: node.attr("#{compname}-number"))
+          **attr_code(number: node.attr("#{compname}-number"),
+                      type: node.attr("#{compname}-type"))
       end
 
       def metadata_author(node, xml)

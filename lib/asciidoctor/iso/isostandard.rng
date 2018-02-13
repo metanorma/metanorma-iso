@@ -614,33 +614,31 @@
   </define>
   <define name="technical-committee">
     <element name="technical-committee">
-      <optional>
-        <attribute name="number">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <text/>
+      <ref name="IsoWorkgroup"/>
     </element>
   </define>
   <define name="subcommittee">
     <element name="subcommittee">
-      <optional>
-        <attribute name="number">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <text/>
+      <ref name="IsoWorkgroup"/>
     </element>
   </define>
   <define name="workgroup">
     <element name="workgroup">
-      <optional>
-        <attribute name="number">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <text/>
+      <ref name="IsoWorkgroup"/>
     </element>
+  </define>
+  <define name="IsoWorkgroup">
+    <optional>
+      <attribute name="number">
+        <data type="int"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="type">
+        <data type="int"/>
+      </attribute>
+    </optional>
+    <text/>
   </define>
   <define name="secretariat">
     <element name="secretariat">

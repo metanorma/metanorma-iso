@@ -175,8 +175,22 @@ module Asciidoctor
         end
       end
 
+      def isosubgroup_validate(root)
+        root.xpath("//technical-committee/@type").each do |t|
+          unless %w{TC, PC, JTC, JPC}.include? t.text
+            warn "ISO: invalid technical committee type #{t}"
+          end
+        end
+        root.xpath("//subcommittee/@type").each do |t|
+          unless %w{SC, JSC}.include? t.text
+            warn "ISO: invalid subcommittee type #{t}"
+          end
+        end
+      end
+
       def content_validate(doc)
         title_validate(doc.root)
+        isosubgroup_validate(doc.root)
         foreword_validate(doc.root)
         normref_validate(doc.root)
         symbols_validate(doc.root)
