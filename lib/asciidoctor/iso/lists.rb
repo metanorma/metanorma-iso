@@ -99,15 +99,15 @@ module Asciidoctor
       end
 
       ISO_REF = %r{^<ref\sid="(?<anchor>[^"]+)">
-      \[ISO\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
+      \[(ISO|IEC)[^0-9]*\s(?<code>[0-9-]+)(:(?<year>[0-9]+))?\]</ref>,?\s
       (?<text>.*)$}xm
 
       ISO_REF_NO_YEAR = %r{^<ref\sid="(?<anchor>[^"]+)">
-      \[ISO\s(?<code>[0-9-]+):--\]</ref>,?\s?
+      \[(ISO|IEC)[^0-9]*\s(?<code>[0-9-]+):--\]</ref>,?\s?
       <fn[^>]*>\s*<p>(?<fn>[^\]]+)</p>\s*</fn>,?\s?(?<text>.*)$}xm
 
       ISO_REF_ALL_PARTS = %r{^<ref\sid="(?<anchor>[^"]+)">
-      \[ISO\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
+      \[(ISO|IEC)[^0-9]*\s(?<code>[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
       (?<text>.*)(</p>)?$}xm
 
       NON_ISO_REF = %r{^<ref\sid="(?<anchor>[^"]+)">

@@ -53,10 +53,6 @@ module Asciidoctor
           val: [{ tag: "clause", title: "Scope" }],
         },
         # we skip normative references, it goes to end of list
-        #{
-          #msg: "Scope must be followed by Normative References",
-          #val: [{ tag: "references", title: "Normative References" }]
-        #},
         {
           msg: "Normative References must be followed by "\
           "Terms and Definitions",
@@ -79,7 +75,6 @@ module Asciidoctor
         if n == { tag: "introduction", title: "Introduction" }
           names = seqcheck(names, SEQ[2][:msg], SEQ[2][:val]) or return
         end
-        # names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val]) or return
         names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val]) or return
         n = names.shift
         if n == { tag: "clause", title: "Symbols and Abbreviations" }
@@ -109,7 +104,8 @@ module Asciidoctor
           n = names.shift or return
         end
         n == { tag: "references", title: "Normative References" } or
-          warn "ISO style: Document must include (references) Normative References"
+          warn "ISO style: Document must include (references) "\
+          "Normative References"
         n = names.shift
         n == { tag: "references", title: "Bibliography" } or
           warn "ISO style: Final section must be (references) Bibliography"
