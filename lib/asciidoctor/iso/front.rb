@@ -43,10 +43,13 @@ module Asciidoctor
       end
 
       def metadata_publisher(node, xml)
-        xml.contributor do |c|
-          c.role **{ type: "publisher" }
-          c.organization do |a|
-            a.name "ISO"
+        publishers = node.attr("publisher") || "ISO"
+        publishers.split(/,[ ]?/).each do |p|
+          xml.contributor do |c|
+            c.role **{ type: "publisher" }
+            c.organization do |a|
+              a.name p
+            end
           end
         end
       end
