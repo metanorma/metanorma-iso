@@ -667,3 +667,11 @@ div.rule {
   text-decoration:none;
   text-underline:none;
 }
+
+a.TableFootnoteRef
+        {mso-style-priority:99;
+        vertical-align:super;}
+
+aside {
+          font-size:10.0pt;
+}
