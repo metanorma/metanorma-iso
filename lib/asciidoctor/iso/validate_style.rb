@@ -1,6 +1,5 @@
 require "asciidoctor/iso/utils"
 require "nokogiri"
-require "jing"
 require "pp"
 
 module Asciidoctor
