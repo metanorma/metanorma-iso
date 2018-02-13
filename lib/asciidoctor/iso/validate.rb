@@ -140,6 +140,10 @@ module Asciidoctor
         if n == { tag: "clause", title: "Symbols and Abbreviations" }
           n = names.shift or return
         end
+        unless n
+          warn "ISO style: Document must contain at least one clause"
+          return
+        end
         n[:tag] == "clause" or
           warn "ISO style: Document must contain at least one clause"
         n == { tag: "clause", title: "Scope" } and

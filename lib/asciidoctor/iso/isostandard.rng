@@ -516,7 +516,9 @@
         <ref name="version"/>
       </optional>
       <ref name="foreword"/>
-      <ref name="introduction"/>
+      <optional>
+        <ref name="introduction"/>
+      </optional>
       <oneOrMore>
         <ref name="sections"/>
       </oneOrMore>
