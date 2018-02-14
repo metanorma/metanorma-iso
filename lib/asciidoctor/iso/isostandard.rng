@@ -636,9 +636,7 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="type">
-        <data type="int"/>
-      </attribute>
+      <attribute name="type"/>
     </optional>
     <text/>
   </define>

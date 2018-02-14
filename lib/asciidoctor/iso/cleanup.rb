@@ -50,11 +50,33 @@ module Asciidoctor
         end
       end
 
+      LOCALITY_REGEX_STR = <<~REGEXP
+        ^((?<locality>section|clause|part|paragraph|chapter|page)\\s+
+               (?<ref>\\S+?)|(?<locality>whole))[,:]?\\s*
+         (?<text>.*)$
+      REGEXP
+      LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
+                               Regexp::IGNORECASE|Regexp::MULTILINE)
+
+      def extract_localities(x)
+        text = x.children.first.remove.text
+        m = LOCALITY_RE.match text
+        while !m.nil?
+          ref = m[:ref] ? "<reference>#{m[:ref]}</reference>" : ""
+          locality = m[:locality].downcase
+          x.add_child("<locality type='#{locality}'>#{ref}</locality>")
+          text = m[:text]
+          m = LOCALITY_RE.match text
+        end
+        x.add_child(text)
+      end
+
       def xref_to_eref(x)
         x.name = "eref"
         x["bibitemid"] = x["target"]
         x["citeas"] = @anchors[x["target"]][:xref]
         x.delete("target")
+        extract_localities(x) unless x.children.empty?
       end
 
       def xref_cleanup(xmldoc)
@@ -183,7 +205,7 @@ module Asciidoctor
       end
 
       def format_ref(ref, isopub)
-        return "ISO #{ref}" if isopub
+        return ref if isopub
         return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref) 
         ref
       end
