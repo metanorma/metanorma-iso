@@ -189,19 +189,22 @@ by the `to` element. If only the `from` element supplied, the reviewer note
 covers the `from` element. The `from` and `to` elements can be bookmarks,
 which cover no space.
 
-TODO: Create bookmarks
-
 [source,asciidoctor]
 --
 [[clause_address_profile_definition]]
 === Address Profile Definition (AddressProfileDescription)
 
 [[para1]]
-This is a clause address profile definition
+This is a clause address [[A]]profile[[B]] definition
 
 [reviewer="Nick Nicholas",date=20180125T0121,from=clause_address_profile_definition,to=para1]
 ****
 I do not agree with this statement.
+****
+
+[reviewer="Nick Nicholas",date=20180125T0121,from=A,to=B]
+****
+Profile?!
 ****
 --
 
