@@ -30,6 +30,10 @@ https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template].
 
 This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
 
+This README provides an overview of the functionality of the gem; see also
+https://github.com/riboseinc/asciidoctor-iso/wiki/Guidance-for-authoring[Guidance for authoring]
+ISO standards using the gem.
+
 == Usage
 
 [source,console]
@@ -55,6 +59,7 @@ https://github.com/riboseinc/isodoc[IsoDoc] gem generates temporary files:
 `{filename}.htm` contains the Microsoft Word-specific HTML for inclusion in that file,
 and the `{filename}_files` folder contains any images and headers for the Word
 document.
+
 
 === Content Warnings
 
