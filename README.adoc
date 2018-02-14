@@ -249,6 +249,23 @@ attribute `inline-header`:
 consisting of a conical sample divider
 --
 
+==== Bibliographic details
+
+Citations can include details of where in the document the citation is located; these
+are entered by suffixing the type of locality, followed by the reference. Multiple
+instances of locality and reference can be provided, delimited by comma or colon. For
+example:
+
+[source,asciidoctor]
+--
+<<ISO712,section 5, page 8-10>>         # renders as: ISO 712, Section 5, Page 8-10
+<<ISO712,section 5, page 8-10: 5:8-10>> # renders as ISO 712, 5:8-10
+<<ISO712,whole>>                        # renders as: ISO 712, Whole of text
+--
+
+The references cannot contain spaces. Any text following the sequence of localities
+will be displayed instead of the localities.
+
 === Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users
