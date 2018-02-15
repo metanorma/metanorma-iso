@@ -171,7 +171,7 @@ module Asciidoctor
           return
         end
         xml_dl.dd do |xml_dd|
-          style(dd, dd.text)
+          style(dd, dd.text) if dd.text?
           xml_dd.p { |t| t << dd.text } if dd.text?
           xml_dd << dd.content if dd.blocks?
         end
