@@ -1,3 +1,5 @@
+require 'asciidoctor/extensions'
+
 module Asciidoctor
   module ISO
     module Inline
@@ -65,7 +67,6 @@ module Asciidoctor
         noko do |xml|
           @fn_number += 1
           xml.fn **{reference: @fn_number} do |fn|
-            # TODO multi-paragraph footnotes
             fn.p { |p| p << node.text }
             footnote_style(node, node.text)
           end
@@ -93,6 +94,8 @@ module Asciidoctor
         end.join("\n")
       end
 
+
+
       def inline_quoted(node)
         noko do |xml|
           case node.type
@@ -106,9 +109,11 @@ module Asciidoctor
           when :asciimath then xml.stem node.text, **{ type: "AsciiMath" }
           else
             case node.role
+              # the following three are legacy, they are now handled by macros
             when "alt" then xml.admitted { |a| a << node.text }
             when "deprecated" then xml.deprecates { |a| a << node.text }
             when "domain" then xml.domain { |a| a << node.text }
+
             when "strike" then xml.strike node.text
             when "smallcap" then xml.smallcap node.text
             else

@@ -121,8 +121,8 @@ ISO and IEC maintain terminological databases for use in standardization at the 
 :sectnums!:
 [[paddy]]
 === paddy 
-[alt]#paddy rice#
-[alt]#rough rice#
+alt:[paddy rice]
+alt:[rough rice]
 
 rice retaining its husk after threshing 
 
@@ -131,7 +131,7 @@ rice retaining its husk after threshing
 
 [[husked_rice]]
 === husked rice 
-[deprecated]#cargo rice#
+deprecated:[cargo rice]
 
 _paddy_ (<<paddy>>) from which the husk only has been removed 
 
@@ -139,7 +139,7 @@ _paddy_ (<<paddy>>) from which the husk only has been removed
 <<ISO7301>>, 3.2, The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
 
 === milled rice 
-[alt]#white rice#
+alt:[white rice]
 
 _husked rice_ (<<husked_rice>>) from which almost all of the bran and embryo have been removed by milling 
 
@@ -156,8 +156,8 @@ variety of rice whose kernels have a white and opaque appearance
 NOTE: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking. 
 
 === extraneous matter 
-[alt]#EM#
-[domain]#rice#
+alt:[EM]
+domain:[rice]
 
 organic and inorganic components other than whole or broken kernels 
 
@@ -166,7 +166,7 @@ Foreign seeds, husks, bran, sand, dust.
 
 [[HDK]]
 === HDK 
-[alt]#heat-damaged kernel#
+alt:[heat-damaged kernel]
 
 kernel, whole or broken, which has changed its normal colour as a result of heating 
 
@@ -176,7 +176,7 @@ NOTE: This category includes whole or broken kernels that are yellow due to alte
 kernel, whole or broken, showing obvious deterioration due to moisture, pests, disease or other causes, but excluding _HDK_ (<<HDK>>)
 
 === immature kernel 
-[alt]#unripe kernel#
+alt:[unripe kernel]
 
 kernel, whole or broken, which is unripe and/or underdeveloped 
 

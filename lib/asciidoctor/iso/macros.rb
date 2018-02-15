@@ -8,7 +8,7 @@ module Asciidoctor
       using_format :short
 
       def process parent, target, attrs
-        %{<alt>#{Asciidoctor::Inline.new(parent, :quoted, attrs['text']).convert}</alt>}
+        %{<admitted>#{Asciidoctor::Inline.new(parent, :quoted, attrs['text']).convert}</admitted>}
       end
     end
 
@@ -16,10 +16,22 @@ module Asciidoctor
       use_dsl
       named :deprecated
       parse_content_as :text
-      def process parent, target, attributes
-        %{<deprecated>#{attrs["text"]}</deprecated>}
+      using_format :short
+
+      def process parent, target, attrs
+        %{<deprecates>#{attrs["text"]}</deprecates>}
       end
     end
 
+    class DomainTermInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
+      use_dsl
+      named :domain
+      parse_content_as :text
+      using_format :short
+
+      def process parent, target, attrs
+        %{<domain>#{attrs["text"]}</domain>}
+      end
+    end
   end
 end

@@ -155,6 +155,27 @@ XML to break up paragraphs within a footnote.)
 [[model_additions]]
 === Asciidoctor model additions
 
+=== Term markup
+
+To ensure the structure of Terms and Definitions is captured accurately, the following
+macros are defined, and must be used to mark up their respective content:
+
+`alt:[TERM]`:: for alternative terms
+`deprecated:[TERM]`:: for deprecated terms
+`domain:[TERM]`:: for term domains
+
+The macro contents can contain their own markup.
+
+[source,asciidoctor]
+--
+=== paddy 
+alt:[_paddy_ rice]
+deprecated:[#[smallcap]#cargo# rice]
+domain:[rice]
+
+_paddy_ (<<paddy>>) from which the husk only has been removed
+--
+
 ==== Paragraph alignment
 
 Alignment is defined as an attribute for paragraphs:

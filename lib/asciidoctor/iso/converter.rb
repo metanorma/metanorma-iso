@@ -10,6 +10,7 @@ require "asciidoctor/iso/table"
 require "asciidoctor/iso/validate"
 require "asciidoctor/iso/utils"
 require "asciidoctor/iso/cleanup"
+require_relative "./macros.rb"
 
 module Asciidoctor
   module ISO
@@ -50,6 +51,8 @@ module Asciidoctor
       alias_method :inline_kbd, :skip
       alias_method :inline_menu, :skip
       alias_method :inline_image, :skip
+
+
     end
   end
 end
