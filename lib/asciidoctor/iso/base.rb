@@ -10,6 +10,11 @@ require "isodoc"
 module Asciidoctor
   module ISO
     module Base
+      Asciidoctor::Extensions.register do
+        inline_macro Asciidoctor::ISO::AltTermInlineMacro
+        inline_macro Asciidoctor::ISO::DeprecatedTermInlineMacro
+        inline_macro Asciidoctor::ISO::DomainTermInlineMacro
+      end
 
       def content(node)
         node.content
