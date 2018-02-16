@@ -1,13 +1,13 @@
-<p class="coverpage_docnumber">AGENCY DOCNUMBER:DOCYEAR(E) DRAFTINFO</p>
+<p class="coverpage_docnumber">{{ agency }} {{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</p>
 
-<p class="coverpage_techcommittee">AGENCY&nbsp;TCNUM/SCNUM/WGNUM</p>
+<p class="coverpage_techcommittee">{{ agency }}&nbsp;{{ editorialgroup | join: "/" }}</p>
 
 <p class="coverpage_techcommittee"><a
-name="CVP_Secretariat_Loca">Secretariat</a>: SECRETARIAT</p>
+name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
 
-<p class="doctitle"><b>DOCTITLE</b><br/>DOCSUBTITLE</p>
+<p class="doctitle"><b>{{ doctitle }}</b><br/>{{ docsubtitle }}</p>
 
-<div class="coverpage_docstage"><p>WD/CD/DIS/FDIS stage</p></div>
+<div class="coverpage_docstage"><p>{{ stageabbr }} stage</p></div>
 
 <div class="coverpage_warning">
 

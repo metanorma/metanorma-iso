@@ -1,18 +1,18 @@
 <p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
-normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>AGENCY&nbsp;DOCNUMBER:DOCYEAR(E) DRAFTINFO</span></b><b
+normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ agency }}&nbsp;{{ docnumber }}:{{ docnumber }}(E) {{ draftinfo }}</span></b><b
 style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'><o:p></o:p></span></b></p>
 
 <p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB"
-style='mso-no-proof:yes'>AGENCY&nbsp;</span><span lang="EN-GB"><span
-style='mso-no-proof:yes'>TCNUM</span>/<span style='mso-no-proof:yes'>SCNUM</span>/WGNUM</span></p>
+style='mso-no-proof:yes'>{{ agency }}&nbsp;</span><span lang="EN-GB"><span
+style='mso-no-proof:yes'>{{ editorialgroup | join: "/" }}</span></p>
 
 <p class="MsoNormal" align="right" style='margin-bottom:100.0pt;text-align:right'><a
 name="CVP_Secretariat_Loca"><span lang="EN-GB">Secretariat</span></a><span
-lang="EN-GB">: <span style='mso-no-proof:yes'>SECRETARIAT</span></span></p>
+lang="EN-GB">: <span style='mso-no-proof:yes'>{{ secretariat }}</span></span></p>
 
 <p class="MsoNormal" align="left" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt'><b
-style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:16.0pt'>DOCTITLE
-</span></b><br/><span lang="EN-GB" style='font-size:16.0pt'>DOCSUBTITLE</span></p>
+style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:16.0pt'>{{ doctitle }}
+</span></b><br/><span lang="EN-GB" style='font-size:16.0pt'>{{ docsubtitle }}</span></p>
 
 <p class="MsoNormal" style='margin-top:100.0pt'><span lang="EN-GB"><o:p>&nbsp;</o:p></span></p>
 
@@ -22,7 +22,7 @@ margin-left:4.25pt;margin-right:4.25pt'>
 
 <p class="MsoNormal" align="center" style='text-align:center;border:none;
 mso-border-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
-lang="EN-GB" style='font-size:40.0pt'>WD/CD/DIS/FDIS stage<o:p></o:p></span></p>
+lang="EN-GB" style='font-size:40.0pt'>{{ stageabbr }} stage<o:p></o:p></span></p>
 
 </div>
 
