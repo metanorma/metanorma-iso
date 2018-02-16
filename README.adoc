@@ -308,7 +308,10 @@ sections referenced:
 --
 [quote, ISO, "ISO7301,section 1"]
 _____
-This International Standard gives the minimum specifications for rice (_Oryza sativa_ L.) which is subject to international trade. It is applicable to the following types: husked rice and milled rice, parboiled or not, intended for direct human consumption. It is neither applicable to other products derived from rice, nor to waxy rice (glutinous rice).
+This International Standard gives the minimum specifications for rice (_Oryza sativa_ L.) 
+which is subject to international trade. It is applicable to the following types: husked rice 
+and milled rice, parboiled or not, intended for direct human consumption. It is neither 
+applicable to other products derived from rice, nor to waxy rice (glutinous rice).
 _____
 --
 
