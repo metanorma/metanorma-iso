@@ -498,6 +498,19 @@ not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`,
 The attribute `:draft:`, if present, includes review notes in the XML output;
 these are otherwise suppressed.
 
+The document proper can reference the values of document attributes, which is convenient
+for reusability. For example,
+the Rice Model document references the editorial groups that have contributed to the 
+document as
+
+[source,asciidoc]
+--
+This document was prepared by Technical Committee ISO/TC {technical-committee-number}, _{technical-committee}_, Subcommittee SC {subcommittee-number}, _{subcommittee}_.
+--
+
+If the corresponding document attributes are not populated in the header, then the references
+themselves will not be populated.
+
 
 == Data Models
 
