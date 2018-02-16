@@ -123,6 +123,54 @@
         <ref name="isoworkgroup"/>
       </optional>
     </define>
+    <define name="BibData">
+      <optional>
+        <attribute name="type">
+          <ref name="BibItemType"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="btitle"/>
+      </oneOrMore>
+      <optional>
+        <ref name="formattedref"/>
+      </optional>
+      <optional>
+        <ref name="source"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="docidentifier"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="bdate"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="contributor"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="edition"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="biblionote"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="partof"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="language"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="script"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="abstract"/>
+      </optional>
+      <optional>
+        <ref name="status"/>
+      </optional>
+      <ref name="copyright"/>
+      <ref name="isoworkgroup"/>
+    </define>
     <define name="bdate">
       <element name="date">
         <attribute name="type">
