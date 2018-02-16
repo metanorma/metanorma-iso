@@ -165,20 +165,17 @@ module Asciidoctor
 
       def quote_attribution(node, out)
         if node.attr("attribution")
-          out.fullname do |f|
-            f.surname { |s| s << node.attr("attribution") }
-            # TODO: will break up into name components
-          end
+          out.author { |a| a << node.attr("attribution") }
         end
         if node.attr("citetitle")
-          # TODO: eref
+          out.source nil, **attr_code(target: node.attr("citetitle"), type: "inline")
         end
       end
 
       def quote(node)
         noko do |xml|
           xml.quote **attr_code(quote_attrs(node)) do |q|
-            quote_attribution(node, out)
+            quote_attribution(node, q)
             wrap_in_para(node, q)
           end
         end

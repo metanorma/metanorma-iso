@@ -4,6 +4,7 @@ require "pathname"
 require "open-uri"
 require "pp"
 require_relative "./cleanup_block.rb"
+require_relative "./cleanup_ref.rb"
 
 module Asciidoctor
   module ISO
@@ -22,6 +23,7 @@ module Asciidoctor
         ref_cleanup(xmldoc)
         note_cleanup(xmldoc)
         normref_cleanup(xmldoc)
+        reference_names(xmldoc)
         xref_cleanup(xmldoc)
         para_cleanup(xmldoc)
         callout_cleanup(xmldoc)
@@ -57,50 +59,6 @@ module Asciidoctor
       REGEXP
       LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
                                Regexp::IGNORECASE|Regexp::MULTILINE)
-
-      def extract_localities(x)
-        text = x.children.first.remove.text
-        m = LOCALITY_RE.match text
-        while !m.nil?
-          ref = m[:ref] ? "<reference>#{m[:ref]}</reference>" : ""
-          locality = m[:locality].downcase
-          x.add_child("<locality type='#{locality}'>#{ref}</locality>")
-          text = m[:text]
-          m = LOCALITY_RE.match text
-        end
-        x.add_child(text)
-      end
-
-      def xref_to_eref(x)
-        x.name = "eref"
-        x["bibitemid"] = x["target"]
-        x["citeas"] = @anchors[x["target"]][:xref]
-        x.delete("target")
-        extract_localities(x) unless x.children.empty?
-      end
-
-      def xref_cleanup(xmldoc)
-        reference_names(xmldoc)
-        xmldoc.xpath("//xref").each do |x|
-          if is_refid? x["target"]
-            xref_to_eref(x)
-          else
-            x.delete("type")
-          end
-        end
-      end
-
-      def origin_cleanup(xmldoc)
-        xmldoc.xpath("//origin").each do |x|
-          x["citeas"] = @anchors[x["bibitemid"]][:xref]
-          n = x.next_element
-          if !n.nil? && n.name == "isosection"
-            n.name = "locality"
-            n["type"] = "section"
-            n.parent = x
-          end
-        end
-      end
 
       def termdef_warn(text, re, term, msg)
         re.match? text and warn "ISO style: #{term}: #{msg}"
@@ -163,24 +121,6 @@ module Asciidoctor
         termdef_style(xmldoc)
       end
 
-      def isotitle_cleanup(xmldoc)
-        # Remove italicised ISO titles
-        xmldoc.xpath("//isotitle").each do |a|
-          if a.elements.size == 1 && a.elements[0].name == "em"
-            a.children = a.elements[0].children
-          end
-        end
-      end
-
-      def ref_cleanup(xmldoc)
-        # move ref before p
-        xmldoc.xpath("//p/ref").each do |r|
-          parent = r.parent
-          parent.previous = r.remove
-        end
-        xmldoc
-      end
-
       ELEMS_ALLOW_NOTES = 
         %w[p formula quote sourcecode example admonition ul ol dl figure]
 
@@ -196,31 +136,6 @@ module Asciidoctor
         end
       end
 
-      def normref_cleanup(xmldoc)
-        q = "//references[title = 'Normative References']"
-        r = xmldoc.at(q)
-        r.elements.each do |n|
-          n.remove unless ["title", "bibitem"].include? n.name
-        end
-      end
-
-      def format_ref(ref, isopub)
-        return ref if isopub
-        return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref) 
-        ref
-      end
-
-      def reference_names(xmldoc)
-        xmldoc.xpath("//bibitem").each do |ref|
-          isopub = ref.at("./contributor[role/@type = 'publisher']/"\
-                          "organization[name = 'ISO']")
-          docid = ref.at("./docidentifier")
-          date = ref.at("./publisherdate")
-          reference = format_ref(docid.text, isopub)
-          reference += ": #{date.text}" if date && isopub
-          @anchors[ref["id"]] = { xref: reference }
-        end
-      end
     end
   end
 end

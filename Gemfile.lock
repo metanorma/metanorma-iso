@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 7641581efa62612ab56315bcf3a101ce209d58f9
+  revision: 85a13420c68a344f11ac2a2aa3fa5af6257ba8d2
   specs:
     html2doc (0.5.0)
       asciimath
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: a75f2ebd1a53209e02059ee8f19171afca87ab2d
+  revision: 6895da7e2abdf6b35e7505cef2c701816f4e6b0a
   specs:
     isodoc (0.4.0)
       asciimath
