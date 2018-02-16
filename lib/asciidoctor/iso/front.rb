@@ -97,7 +97,7 @@ module Asciidoctor
       def title(node, xml)
         ["en", "fr"].each do |lang|
           xml.title do |t|
-            at = { language: lang, format: "plain" }
+            at = { language: lang, format: "text/plain" }
             node.attr("title-intro-#{lang}") and
               t.title_intro **attr_code(at) do |t1|
               t1 << node.attr("title-intro-#{lang}")

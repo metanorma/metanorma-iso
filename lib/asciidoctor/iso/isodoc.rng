@@ -991,14 +991,17 @@
   -->
   <define name="FormattedString">
     <optional>
+      <!-- attribute format { ( "plain" | "html" | "docbook" | "tei" | "asciidoc" | "markdown" ) }?, -->
       <attribute name="format">
         <choice>
-          <value>plain</value>
-          <value>html</value>
-          <value>docbook</value>
-          <value>tei</value>
-          <value>asciidoc</value>
-          <value>markdown</value>
+          <value>text/plain</value>
+          <value>text/html</value>
+          <value>application/docbook+xml</value>
+          <value>application/tei+xml</value>
+          <value>text/x-asciidoc</value>
+          <value>text/markdown</value>
+          <value>application/x-isodoc+xml</value>
+          <text/>
         </choice>
       </attribute>
     </optional>

@@ -42,7 +42,7 @@ module Asciidoctor
       def isorefmatches(xml, m)
         ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title **{ format: "plain" } { |i| i << ref_normalise(m[:text]) }
+          t.title **{ format: "text/plain" } { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
           t.date m[:year], { type: "published" } if m[:year]
           iso_publisher(t)
@@ -52,18 +52,18 @@ module Asciidoctor
       def isorefmatches2(xml, m)
         ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title **{ format: "plain" } { |i| i << ref_normalise(m[:text]) }
+          t.title **{ format: "text/plain" } { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
           t.date "--", { type: "published" }
           iso_publisher(t)
-          t.note **{ format: "plain" } { |p| p << "ISO DATE: #{m[:fn]}" }
+          t.note **{ format: "text/plain" } { |p| p << "ISO DATE: #{m[:fn]}" }
         end
       end
 
       def isorefmatches3(xml, m)
         ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title **{ format: "plain" } { |i| i << ref_normalise(m[:text]) }
+          t.title **{ format: "text/plain" } { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
           t.date m[:year], { type: "published" } if m[:year]
           iso_publisher(t)
@@ -75,7 +75,7 @@ module Asciidoctor
         if m.nil? then Utils::warning(node, "no anchor on reference", item)
         else
           xml.bibitem **attr_code(id: m[:anchor]) do |t|
-            t.formattedref  **{ format: "html" } do |i| 
+            t.formattedref  **{ format: "application/x-isodoc+xml" } do |i| 
               i << ref_normalise_no_format(m[:text]) 
             end
             code = m[:code]
