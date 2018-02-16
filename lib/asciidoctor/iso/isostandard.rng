@@ -120,7 +120,7 @@
         <ref name="copyright"/>
       </optional>
       <optional>
-        <ref name="isoworkgroup"/>
+        <ref name="editorialgroup"/>
       </optional>
     </define>
     <define name="BibData">
@@ -169,7 +169,7 @@
         <ref name="status"/>
       </optional>
       <ref name="copyright"/>
-      <ref name="isoworkgroup"/>
+      <ref name="editorialgroup"/>
     </define>
     <define name="bdate">
       <element name="date">
@@ -582,9 +582,8 @@
       <value>guide</value>
     </choice>
   </define>
-  <!-- Renamed from workgroup; would in fact prefer committee -->
-  <define name="isoworkgroup">
-    <element name="isoworkgroup">
+  <define name="editorialgroup">
+    <element name="editorialgroup">
       <ref name="technical-committee"/>
       <optional>
         <ref name="subcommittee"/>

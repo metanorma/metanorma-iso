@@ -74,7 +74,7 @@ module Asciidoctor
       end
 
       def metadata_committee(node, xml)
-        xml.isoworkgroup do |a|
+        xml.editorialgroup do |a|
           committee_component("technical-committee", node, a)
           committee_component("subcommittee", node, a)
           committee_component("workgroup", node, a)
