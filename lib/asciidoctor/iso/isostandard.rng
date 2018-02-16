@@ -273,12 +273,6 @@
         </oneOrMore>
       </element>
     </define>
-    <define name="origin">
-      <element name="origin">
-        <attribute name="citeas"/>
-        <ref name="CitationType"/>
-      </element>
-    </define>
     <define name="annex">
       <element name="annex">
         <optional>

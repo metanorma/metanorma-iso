@@ -55,7 +55,6 @@
           <value>complements</value>
         </choice>
       </attribute>
-      <!-- using instead of title: CitationType -->
       <ref name="eref"/>
     </element>
   </define>
@@ -338,10 +337,9 @@
       </optional>
     </element>
   </define>
-  <!-- should be eref -->
   <define name="origin">
     <element name="origin">
-      <ref name="CitationType"/>
+      <ref name="erefType"/>
     </element>
   </define>
   <define name="modification">
@@ -473,9 +471,7 @@
           <ref name="Alignments"/>
         </attribute>
       </optional>
-      <optional>
-        <ref name="quote-source"/>
-      </optional>
+      <ref name="quote-source"/>
       <optional>
         <ref name="quote-author"/>
       </optional>
@@ -489,12 +485,12 @@
   </define>
   <define name="quote-source">
     <element name="source">
-      <ref name="CitationType"/>
+      <ref name="erefType"/>
     </element>
   </define>
   <define name="quote-author">
     <element name="author">
-      <ref name="ContributorInfo"/>
+      <text/>
     </element>
   </define>
   <define name="sourcecode">
@@ -794,18 +790,21 @@
   </define>
   <define name="eref">
     <element name="eref">
-      <optional>
-        <attribute name="normative">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <attribute name="citeas"/>
-      <attribute name="type">
-        <ref name="ReferenceFormat"/>
-      </attribute>
-      <ref name="CitationType"/>
-      <text/>
+      <ref name="erefType"/>
     </element>
+  </define>
+  <define name="erefType">
+    <optional>
+      <attribute name="normative">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <attribute name="citeas"/>
+    <attribute name="type">
+      <ref name="ReferenceFormat"/>
+    </attribute>
+    <ref name="CitationType"/>
+    <text/>
   </define>
   <define name="hyperlink">
     <element name="link">

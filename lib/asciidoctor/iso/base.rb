@@ -94,7 +94,8 @@ module Asciidoctor
 
       def add_term_source(xml_t, seen_xref, m)
         attr = { bibitemid: seen_xref.children[0]["target"],
-                 format: seen_xref.children[0]["format"] }
+                 format: seen_xref.children[0]["format"],
+                 type: "inline" }
         xml_t.origin seen_xref.children[0].content, **attr_code(attr)
         m[:section] && xml_t.isosection do |s|
           s.reference m[:section].gsub(/ /, "")
