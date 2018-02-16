@@ -87,21 +87,6 @@ p.Note, div.Note, li.Note
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
 	/* may need to be revised */
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	mso-style-unhide:no;
-	mso-style-parent:"";
-	mso-ansi-language:EN;
-	color:black;
-	text-decoration:none;
-	text-underline:none;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-noshow:yes;
-	mso-style-priority:99;
-	mso-themecolor:followedhyperlink;
-	color:black;
-	text-decoration:none;
-	text-underline:none;}
 p.ANNEX, li.ANNEX, div.ANNEX
 	{mso-style-name:ANNEX;
 	mso-style-priority:10;

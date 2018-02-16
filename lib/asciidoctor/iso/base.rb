@@ -34,7 +34,7 @@ module Asciidoctor
       def doc_converter
         IsoDoc::Convert.new(
           htmlstylesheet: html_doc_path("htmlstyle.css"),
-          wordstylesheet: nil,
+          wordstylesheet:  html_doc_path("wordstyle.css"),
           standardstylesheet: html_doc_path("isodoc.css"),
           header: html_doc_path("header.html"),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),

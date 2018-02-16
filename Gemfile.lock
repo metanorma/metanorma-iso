@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 85a13420c68a344f11ac2a2aa3fa5af6257ba8d2
+  revision: 8a131b82eeecd0c27e4bde873f2ba16d425754d6
   specs:
-    html2doc (0.5.0)
+    html2doc (0.6.0)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: e6b3071e89bbc9e82c4ac6ed2649ea6b360bc785
+  revision: 0818963410de3aeb880f263678c47dcadcfe9b50
   specs:
     isodoc (0.4.0)
       asciimath
