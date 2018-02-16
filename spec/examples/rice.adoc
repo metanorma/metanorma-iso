@@ -16,6 +16,7 @@
 :doctype: international-standard
 :docstage: 30
 :docsubstage: 92
+:draft: 
 :technical-committee-number: 34
 :technical-committee: Food products
 :subcommittee-number: 4
@@ -32,6 +33,7 @@
 :table-caption: Table
 :example-caption: Figure
 
+[[foreword]]
 .Foreword 
 ISO (the International Organization for Standardization) 
 is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.
@@ -54,6 +56,13 @@ The main changes compared to the previous edition are:
 * deletion of 4.3. 
 
 A list of all parts in the ISO {docnumber} series can be found on the ISO website. 
+
+[reviewer=ISO,date=20170101,from=foreword,to=foreword]
+****
+A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.
+
+For further information on the Foreword, see *ISO/IEC Directives, Part 2, 2016, Clause 12.*
+****
 
 :sectnums!:
 == Introduction 

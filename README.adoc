@@ -199,6 +199,8 @@ This paragraph is justified, which is the default
 
 Reviewer notes are encoded as sidebars, and can be separated at a distance from the
 text they are annotating; the text they are annotating is indicated through anchors. 
+Reviewer notes are only rendered if the document has a `:draft:` attribute.
+
 The following attributes on reviewer notes are mandatory:
 
 * `reviewer` attribute (naming the reviewer) 
