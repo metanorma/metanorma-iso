@@ -365,7 +365,7 @@ p.zzSTDTitle1, li.zzSTDTitle1, div.zzSTDTitle1
 p.Quote, li.Quote, div.Quote
 	{mso-style-priority:99;
 	margin-top:0cm;
-	margin-right:36.0cm;
+	margin-right:36.0pt;
 	margin-bottom:0cm;
 	margin-left:36.0pt;
 	text-align:justify;
@@ -377,6 +377,8 @@ p.Quote, li.Quote, div.Quote
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
+p.QuoteAttribution
+        {text-align:right;}
 p.Admonition, li.Admonition, div.Admonition
 	{mso-style-priority:99;
 	mso-pagination:widow-orphan;

@@ -297,6 +297,21 @@ example:
 The references cannot contain spaces. Any text following the sequence of localities
 will be displayed instead of the localities.
 
+==== Block Quotes
+
+As in normal Asciidoctor, block quotes are preceded with an author and a citation;
+but the citation is expected to be in the same format as all other citations, 
+a cross-reference optionally followed by text, which may include the bibliographic
+sections referenced:
+
+[source,asciidoctor]
+--
+[quote, ISO, "ISO7301,section 1"]
+_____
+This International Standard gives the minimum specifications for rice (_Oryza sativa_ L.) which is subject to international trade. It is applicable to the following types: husked rice and milled rice, parboiled or not, intended for direct human consumption. It is neither applicable to other products derived from rice, nor to waxy rice (glutinous rice).
+_____
+--
+
 === Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users

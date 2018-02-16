@@ -25,6 +25,7 @@ module Asciidoctor
         normref_cleanup(xmldoc)
         reference_names(xmldoc)
         xref_cleanup(xmldoc)
+        quotesource_cleanup(xmldoc)
         para_cleanup(xmldoc)
         callout_cleanup(xmldoc)
         origin_cleanup(xmldoc)

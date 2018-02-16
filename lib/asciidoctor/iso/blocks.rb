@@ -164,11 +164,13 @@ module Asciidoctor
       end
 
       def quote_attribution(node, out)
+        if node.attr("citetitle")
+          m = /^(?<cite>[^,]+)(,(?<text>.*$))?$/.match node.attr("citetitle")
+          out.source m[:text], 
+            **attr_code(target: m[:cite], type: "inline")
+        end
         if node.attr("attribution")
           out.author { |a| a << node.attr("attribution") }
-        end
-        if node.attr("citetitle")
-          out.source nil, **attr_code(target: node.attr("citetitle"), type: "inline")
         end
       end
 

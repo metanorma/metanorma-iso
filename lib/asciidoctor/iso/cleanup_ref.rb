@@ -2,7 +2,7 @@ module Asciidoctor
   module ISO
     module Cleanup
 
-            def extract_localities(x)
+      def extract_localities(x)
         text = x.children.first.remove.text
         m = LOCALITY_RE.match text
         while !m.nil?
@@ -17,7 +17,8 @@ module Asciidoctor
 
       def xref_to_eref(x)
         x["bibitemid"] = x["target"]
-        x["citeas"] = @anchors[x["target"]][:xref]
+        x["citeas"] = @anchors&.dig(x["target"], :xref) or
+          warn "ISO: #{x["target"]} is not a real reference!"
         x.delete("target")
         extract_localities(x) unless x.children.empty?
       end
@@ -51,7 +52,7 @@ module Asciidoctor
         end
       end
 
-            def isotitle_cleanup(xmldoc)
+      def isotitle_cleanup(xmldoc)
         # Remove italicised ISO titles
         xmldoc.xpath("//isotitle").each do |a|
           if a.elements.size == 1 && a.elements[0].name == "em"
@@ -69,7 +70,7 @@ module Asciidoctor
         xmldoc
       end
 
-            def normref_cleanup(xmldoc)
+      def normref_cleanup(xmldoc)
         q = "//references[title = 'Normative References']"
         r = xmldoc.at(q)
         r.elements.each do |n|
