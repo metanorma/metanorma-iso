@@ -14,13 +14,14 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 0818963410de3aeb880f263678c47dcadcfe9b50
+  revision: 58b473aa7c8ceea81ebf3d54a5bca2d116af094b
   specs:
-    isodoc (0.4.0)
+    isodoc (0.4.5)
       asciimath
       html2doc
       htmlentities (~> 4.3.4)
       image_size
+      liquid
       mime-types
       nokogiri (= 1.8.1)
       ruby-xslt
@@ -71,6 +72,7 @@ GEM
     htmlentities (4.3.4)
     image_size (1.5.0)
     json (2.1.0)
+    liquid (4.0.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
