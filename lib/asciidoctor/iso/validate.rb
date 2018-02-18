@@ -1,5 +1,6 @@
 require "asciidoctor/iso/utils"
 require_relative "./validate_style.rb"
+require_relative "./validate_requirements.rb"
 require_relative "./validate_section.rb"
 require "nokogiri"
 require "jing"
@@ -83,12 +84,9 @@ module Asciidoctor
       def content_validate(doc)
         title_validate(doc.root)
         isosubgroup_validate(doc.root)
-        foreword_validate(doc.root)
-        normref_validate(doc.root)
-        symbols_validate(doc.root)
+        section_validate(doc)
         iso8601_validate(doc.root)
         onlychild_clause_validate(doc.root)
-        sections_sequence_validate(doc.root)
       end
 
       def schema_validate(doc, filename)

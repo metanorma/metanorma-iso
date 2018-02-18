@@ -24,7 +24,8 @@ module Asciidoctor
               (!n.respond_to?(:level) || n.level.positive?) &&
               (!n.respond_to?(:context) || n.context != :section)
             n = n.parent
-            return "Section: #{n.title}" if !n.nil? && n.context == :section
+            return "Section: #{n.title}" if !n.nil? && 
+              n.respond_to?(:context) && n.context == :section
           end
           "??"
         end

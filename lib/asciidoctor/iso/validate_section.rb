@@ -4,6 +4,13 @@ require "pp"
 module Asciidoctor
   module ISO
     module Validate
+      def section_validate(doc)
+        foreword_validate(doc.root)
+        normref_validate(doc.root)
+        symbols_validate(doc.root)
+        sections_sequence_validate(doc.root)
+      end
+
       def foreword_validate(root)
         f = root.at("//foreword") || return
         s = f.at("./subsection")

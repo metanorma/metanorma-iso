@@ -13,13 +13,22 @@ module Asciidoctor
             %i(head body foot).reject do |tblsec|
               node.rows[tblsec].empty?
             end
-            xml_table.name node.title if node.title?
+            # xml_table.name node.title if node.title?
+            table_name(node, xml_table)
             table_head_body_and_foot node, xml_table
           end
         end
       end
 
       private
+
+      def table_name(node, xml_table)
+        if node.title?
+          xml_table.name node.title
+        else
+          style_warning(node, "Table should have title", nil)
+        end
+      end
 
       def table_cell1(cell, thd)
         if cell.style == :asciidoc
