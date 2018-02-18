@@ -140,10 +140,18 @@ module Asciidoctor
           width: node.attr("width") }
       end
 
+      def figure_title(node, f)
+        if node.title.nil?
+          style_warning(node, "Figure should have title", nil)
+        else
+          f.name { |name| name << node.title }
+        end
+      end
+
       def image(node)
         noko do |xml|
           xml.figure **id_attr(node) do |f|
-            f.name { |name| name << node.title } unless node.title.nil?
+            figure_title(node, f)
             f.image **attr_code(image_attributes(node))
           end
         end
