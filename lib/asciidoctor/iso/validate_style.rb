@@ -82,9 +82,7 @@ module Asciidoctor
                    Regexp::IGNORECASE)
 
       def posssibility(text)
-        text.split(/\.\s+/).each do |t|
-          return t if POSSIBILITY_RE.match? t
-        end
+        text.split(/\.\s+/).each { |t| return t if POSSIBILITY_RE.match? t }
         nil
       end
 
@@ -138,16 +136,15 @@ module Asciidoctor
         warn w
       end
 
-      # style check with a single regex
-      def style_single_regex(n, text, re, warning)
-        m = re.match(text) and style_warning(n, warning, m[:num])
+      def style_regex(re, warning, n, text)
+        (m = re.match(text)) && style_warning(n, warning, m[:num])
       end
 
       # style check with a regex on a token
       # and a negative match on its preceding token
       def style_two_regex_not_prev(n, text, re, re_prev, warning)
         return if text.nil?
-        words = text.split(/\W+/).each_index do |i|
+        text.split(/\W+/).each_index do |i|
           next if i.zero?
           m = re.match text[i]
           m_prev = re_prev.match text[i - 1]
@@ -157,16 +154,44 @@ module Asciidoctor
         end
       end
 
-      def style(n, text)
-        style_single_regex(n, text, /\b(?<num>[0-9]+\.[0-9]+)\b/,
-                           "possible decimal point")
-        style_two_regex_not_prev(n, text, /^(?<num>[0-9]{4,})$/,
-                                 %r{(\bISO|\bIEC|\bIEEE|/)$},
+      # leaving out as problematic: N J K C S T H h d B o E
+      SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|"\
+        "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|"\
+        "bit|kB|MB|Hart|nat|Sh|var)".freeze
+
+      def style(n, t)
+        style_two_regex_not_prev(n, t, /^(?<num>[0-9]{4,})$/,
+                                 %r{(\bISO|\bIEC|\bIEEE/)$},
                                  "number not broken up in threes")
-        style_single_regex(n, text, /\b(?<num>[0-9.,]+%)/,
-                           "no space before percent sign")
-        style_single_regex(n, text, /\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
-                           "unbracketed tolerance before percent sign")
+        style_regex(/\b(?<num>[0-9]+\.[0-9]+)/,
+                    "possible decimal point", n, t)
+        style_regex(/\b(?<num>[0-9.,]+%)/,
+                    "no space before percent sign", n, t)
+        style_regex(/\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
+                    "unbracketed tolerance before percent sign", n, t)
+        style_regex(/(^|\s)(?<=e\.g\.|i\.e\.)
+                    (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
+                      "no dots in abbreviations", n, t)
+        style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,
+                    "space between number and degrees/minutes/seconds", n, t)
+        style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/,
+                    "no space between number and SI unit", n, t)
+        style_regex(/\b(?<num>ppm)\b/i,
+                    "language-specific abbreviation", n, t)
+        style_regex(/\b(?<num>billion[s]?)\b/i,
+                    "ambiguous number", n, t)
+        style_non_std_units(n, t)
+      end
+
+      NONSTD_UNITS = {
+        "sec": "s", "mins": "min", "hrs": "h", "hr": "h", "cc": "cm^3",
+        "lit": "l", "amp": "A", "amps": "A", "rpm": "r/min" }.freeze
+
+      def style_non_std_units(n, t)
+        NONSTD_UNITS.each do |k, v|
+          style_regex(/\b(?<num>[0-9][0-9,]*\s+#{k})\b/,
+                      "non-standard unit (should be #{v})", n, t)
+        end
       end
     end
   end

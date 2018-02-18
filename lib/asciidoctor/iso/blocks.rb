@@ -112,6 +112,8 @@ module Asciidoctor
           xml.example **id_attr(node) do |ex|
             content = node.content
             ex << content
+            text = Utils::flatten_rawtext(content).join("\n")
+            termexample_style(node, text)
           end
         end.join("\n")
       end

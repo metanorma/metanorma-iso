@@ -110,8 +110,8 @@ module Asciidoctor
       def term_def_parse(attrs, xml, node, title)
         @term_def = true
         xml.terms **attr_code(attrs) do |xml_section|
-          if title == "terms, definitions, symbols and abbreviations"
-            title = "Terms, Definitions, Symbols and Abbreviations"
+          if title == "terms, definitions, symbols and abbreviated terms"
+            title = "Terms, Definitions, Symbols and Abbreviated Terms"
           else
             title = "Terms and Definitions"
           end

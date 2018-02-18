@@ -5,20 +5,19 @@ module Asciidoctor
   module ISO
     module Validate
       def foreword_validate(root)
-        f = root.at("//foreword")
+        f = root.at("//foreword") || return
         s = f.at("./subsection")
         warn "ISO style: foreword contains subsections" unless s.nil?
       end
 
       def normref_validate(root)
-        f = root.at("//references[title = 'Normative References']")
+        f = root.at("//references[title = 'Normative References']") || return
         f.at("./references") and
           warn "ISO style: normative references contains subsections"
       end
 
       def symbols_validate(root)
-        f = root.at("//clause[title = 'Symbols and Abbreviations']")
-        return if f.nil?
+        f = root.at("//clause[title = 'Symbols and Abbreviations']") || return
         f.elements do |e|
           unless e.name == "dl"
             warn "ISO style: Symbols and Abbreviations can only contain "\

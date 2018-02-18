@@ -155,7 +155,7 @@ module Asciidoctor
       def sections_cleanup(x)
         s = x.at("//sections")
         foreword = x.at("//foreword")
-        s.previous = foreword.remove
+        s.previous = foreword.remove if foreword
         introduction = x.at("//introduction")
         s.previous = introduction.remove if introduction
         x.xpath("//sections/references").reverse_each { |r| s.next = r.remove }
