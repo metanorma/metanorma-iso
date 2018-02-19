@@ -421,7 +421,7 @@ metadata about the document. These include:
 
 `:tc-docnumber:`:: The document number assigned by the Technical committee
 
-`:partnumber:`:: The ISO document part number
+`:partnumber:`:: The ISO document part number. (This can be "part-subpart" if this is an IEC document.)
 
 `:edition:`:: The document edition
 

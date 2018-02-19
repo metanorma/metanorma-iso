@@ -23,12 +23,14 @@ module Asciidoctor
       def title_part_validate(root)
         title_part_en = root.at("//title-part[@language='en']")
         title_part_fr = root.at("//title-part[@language='fr']")
-        if title_part_en.nil? && !title_part_fr.nil?
-          warn "No English Title Part!"
-        end
-        if !title_part_en.nil? && title_part_fr.nil?
-          warn "No French Title Part!"
-        end
+        (title_part_en.nil? && !title_part_fr.nil?) &&
+          warn("No English Title Part!")
+        (!title_part_en.nil? && title_part_fr.nil?) &&
+          warn("No French Title Part!")
+        subpart = root.at("//bibdata/docidentifier/project-number[@subpart]")
+        iec = root.at("//bibdata/contributor[xmlns:role/@type = 'publisher']/"\
+                      "organization[name = 'IEC']")
+        warn("Subpart defined on non-IEC document!") if subpart && !iec
       end
 
       def title_names_type_validate(root)

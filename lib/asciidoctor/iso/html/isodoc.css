@@ -239,6 +239,24 @@ p.AltTerms, li.AltTerms, div.AltTerms
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
 	mso-bidi-font-weight:normal;}
+p.DeprecatedTerms, li.DeprecatedTerms, div.DeprecatedTerms
+	{mso-style-name:"DeprecatedTerm\(s\)";
+	mso-style-priority:8;
+	mso-style-unhide:no;
+	mso-style-next:Definition;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-hyphenate:none;
+	tab-stops:20.15pt;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Cambria";
+	mso-ansi-language:EN-GB;
+	mso-bidi-font-weight:normal;}
 p.TermNum, li.TermNum, div.TermNum
 	{mso-style-name:TermNum;
 	mso-style-priority:7;

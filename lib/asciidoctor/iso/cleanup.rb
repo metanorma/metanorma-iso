@@ -48,21 +48,21 @@ module Asciidoctor
               annotations[i]["id"] = c["id"]
             end
           else
-            warn "#{x["id"]}: mismatch of callouts and annotations"
+            warn "#{x['id']}: mismatch of callouts and annotations"
           end
         end
       end
 
-      LOCALITY_REGEX_STR = <<~REGEXP
+      LOCALITY_REGEX_STR = <<~REGEXP.freeze
         ^((?<locality>section|clause|part|paragraph|chapter|page)\\s+
                (?<ref>\\S+?)|(?<locality>whole))[,:]?\\s*
          (?<text>.*)$
       REGEXP
       LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
-                               Regexp::IGNORECASE|Regexp::MULTILINE)
+                               Regexp::IGNORECASE | Regexp::MULTILINE)
 
       def termdef_warn(text, re, term, msg)
-        re.match? text and warn "ISO style: #{term}: #{msg}"
+        re.match?(text) && warn("ISO style: #{term}: #{msg}")
       end
 
       def termdef_style(xmldoc)
@@ -123,7 +123,7 @@ module Asciidoctor
       end
 
       ELEMS_ALLOW_NOTES =
-        %w[p formula quote sourcecode example admonition ul ol dl figure]
+        %w[p formula quote sourcecode example admonition ul ol dl figure].freeze
 
       # if a note is at the end of a section, it is left alone
       # if a note is followed by a non-note block,
@@ -136,7 +136,6 @@ module Asciidoctor
           n.parent = prev if ELEMS_ALLOW_NOTES.include? prev.name
         end
       end
-
     end
   end
 end

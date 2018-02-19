@@ -647,6 +647,11 @@
           <data type="int"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="subpart">
+          <data type="int"/>
+        </attribute>
+      </optional>
       <data type="int"/>
     </element>
   </define>
