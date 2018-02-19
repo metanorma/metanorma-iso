@@ -70,10 +70,12 @@ module Asciidoctor
         },
       ]
 
+      SECTIONS_XPATH = 
+        " //foreword | //introduction | //sections/terms | "\
+        "//sections/clause | ./references | ./annex".freeze
+
       def sections_sequence_validate(root)
-        f = root.xpath(" //foreword | //introduction | //sections/terms | "\
-                       "//sections/clause | ./references | "\
-                       "./annex")
+        f = root.xpath(SECTIONS_XPATH)
         names = f.map { |s| { tag: s.name, title: s.at("./title").text } }
         names = seqcheck(names, SEQ[0][:msg], SEQ[0][:val]) or return
         n = names[0]
