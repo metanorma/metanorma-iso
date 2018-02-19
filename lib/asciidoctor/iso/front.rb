@@ -10,7 +10,7 @@ module Asciidoctor
   module ISO
     module Front
       def metadata_id(node, xml)
-        part, subpart = node.attr("partnumber").split(/-/)
+        part, subpart = node&.attr("partnumber")&.split(/-/)
         xml.docidentifier do |i|
           i.project_number node.attr("docnumber"),
             **attr_code(part: part, subpart: subpart)
