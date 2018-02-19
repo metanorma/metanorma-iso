@@ -67,7 +67,7 @@ module Asciidoctor
 
       def termdef_style(xmldoc)
         xmldoc.xpath("//term").each do |t|
-          para = t.at("./p") or return
+          para = t.at("./p") || return
           term = t.at("preferred").text
           termdef_warn(para.text, /^(the|a)\b/i, term,
                        "term definition starts with article")
@@ -97,7 +97,7 @@ module Asciidoctor
 
       def termdefinition_cleanup(xmldoc)
         xmldoc.xpath("//term").each do |d|
-          first_child = d.at("./p | ./figure | ./formula") or return
+          first_child = d.at("./p | ./figure | ./formula") || return
           t = Nokogiri::XML::Element.new("definition", xmldoc)
           first_child.replace(t)
           t << first_child.remove
@@ -122,17 +122,17 @@ module Asciidoctor
         termdef_style(xmldoc)
       end
 
-      ELEMS_ALLOW_NOTES = 
+      ELEMS_ALLOW_NOTES =
         %w[p formula quote sourcecode example admonition ul ol dl figure]
 
       # if a note is at the end of a section, it is left alone
-      # if a note is followed by a non-note block, 
+      # if a note is followed by a non-note block,
       # it is moved inside its preceding block
       def note_cleanup(xmldoc)
         q = "//note[following-sibling::*[not(local-name() = 'note')]]"
         xmldoc.xpath(q).each do |n|
           next unless n.ancestors("table").empty?
-          prev = n.previous_element or next
+          prev = n.previous_element || next
           n.parent = prev if ELEMS_ALLOW_NOTES.include? prev.name
         end
       end
