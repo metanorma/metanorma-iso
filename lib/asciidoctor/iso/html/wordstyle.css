@@ -438,16 +438,12 @@ a:link, span.MsoHyperlink
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-language:EN;
-	color:blue;
-	text-decoration:underline;
-	text-underline:single;}
+	color:black;}
 a:visited, span.MsoHyperlinkFollowed
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
 	mso-themecolor:followedhyperlink;
-	color:#954F72;
-	text-decoration:underline;
-	text-underline:single;}
+	color:black;}
 span.MsoPlaceholderText
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
