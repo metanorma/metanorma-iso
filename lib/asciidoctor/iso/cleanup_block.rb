@@ -125,14 +125,15 @@ module Asciidoctor
               outnum = i
               seen[fn.text] = outnum
             end
-            fn["reference"] = (outnum - 1 + 'a'.ord).chr
+            fn["reference"] = (outnum - 1 + "a".ord).chr
             fn["table"] = true
           end
         end
       end
 
       def other_footnote_renumber(xmldoc)
-        seen, i = {}, 0
+        seen = {}
+        i = 0
         xmldoc.xpath("//fn | //bibitem/note").each do |fn|
           unless fn["table"]
             if seen[fn.text] then outnum = seen[fn.text]

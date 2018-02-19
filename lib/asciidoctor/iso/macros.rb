@@ -1,4 +1,4 @@
-require 'asciidoctor/extensions'
+require "asciidoctor/extensions"
 module Asciidoctor
   module ISO
     class AltTermInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
@@ -7,19 +7,22 @@ module Asciidoctor
       parse_content_as :text
       using_format :short
 
-      def process parent, target, attrs
-        %{<admitted>#{Asciidoctor::Inline.new(parent, :quoted, attrs['text']).convert}</admitted>}
+      def process(parent, _target, attrs)
+        out = Asciidoctor::Inline.new(parent, :quoted, attrs["text"]).convert
+        %{<admitted>#{out}</admitted>}
       end
     end
 
-    class DeprecatedTermInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
+    class DeprecatedTermInlineMacro <
+      Asciidoctor::Extensions::InlineMacroProcessor
       use_dsl
       named :deprecated
       parse_content_as :text
       using_format :short
 
-      def process parent, target, attrs
-        %{<deprecates>#{attrs["text"]}</deprecates>}
+      def process(parent, _target, attrs)
+        out = Asciidoctor::Inline.new(parent, :quoted, attrs["text"]).convert
+        %{<deprecates>#{out}</deprecates>}
       end
     end
 
@@ -29,8 +32,9 @@ module Asciidoctor
       parse_content_as :text
       using_format :short
 
-      def process parent, target, attrs
-        %{<domain>#{attrs["text"]}</domain>}
+      def process(parent, _target, attrs)
+        out = Asciidoctor::Inline.new(parent, :quoted, attrs["text"]).convert
+        %{<domain>#{out}</domain>}
       end
     end
   end

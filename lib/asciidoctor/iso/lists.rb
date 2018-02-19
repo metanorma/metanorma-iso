@@ -6,14 +6,10 @@ module Asciidoctor
         xml_ul.li do |xml_li|
           style(item, item.text)
           if item.blocks?
-            xml_li.p **id_attr(item) do |t|
-              t << item.text
-            end
+            xml_li.p(**id_attr(item)) { |t| t << item.text }
             xml_li << item.content
           else
-            xml_li.p **id_attr(item) do |p|
-              p << item.text
-            end
+            xml_li.p(**id_attr(item)) { |p| p << item.text }
           end
         end
       end
@@ -32,19 +28,23 @@ module Asciidoctor
 
       def iso_publisher(t)
         t.contributor do |c|
-          c.role **{ type: "publisher" } 
+          c.role **{ type: "publisher" }
           c.organization do |aff|
             aff.name "ISO"
           end
         end
       end
 
+      def plaintxt
+        { format: "text/plain" }
+      end
+
       def isorefmatches(xml, m)
         ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title **{ format: "text/plain" } { |i| i << ref_normalise(m[:text]) }
+          t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
-          t.date m[:year], { type: "published" } if m[:year]
+          t.date(m[:year], type: "published") if m[:year]
           iso_publisher(t)
         end
       end
@@ -52,20 +52,20 @@ module Asciidoctor
       def isorefmatches2(xml, m)
         ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title **{ format: "text/plain" } { |i| i << ref_normalise(m[:text]) }
+          t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
-          t.date "--", { type: "published" }
+          t.date "--", type: "published"
           iso_publisher(t)
-          t.note **{ format: "text/plain" } { |p| p << "ISO DATE: #{m[:fn]}" }
+          t.note(**plaintxt) { |p| p << "ISO DATE: #{m[:fn]}" }
         end
       end
 
       def isorefmatches3(xml, m)
         ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
-          t.title **{ format: "text/plain" } { |i| i << ref_normalise(m[:text]) }
+          t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
-          t.date m[:year], { type: "published" } if m[:year]
+          t.date(m[:year], type: "published") if m[:year]
           iso_publisher(t)
         end
       end
@@ -75,12 +75,11 @@ module Asciidoctor
         if m.nil? then Utils::warning(node, "no anchor on reference", item)
         else
           xml.bibitem **attr_code(id: m[:anchor]) do |t|
-            t.formattedref  **{ format: "application/x-isodoc+xml" } do |i| 
-              i << ref_normalise_no_format(m[:text]) 
+            t.formattedref **{ format: "application/x-isodoc+xml" } do |i|
+              i << ref_normalise_no_format(m[:text])
             end
             code = m[:code]
-            code = "[#{code}]" if /^\d+$?/.match? code
-            t.docidentifier code
+            t.docidentifier(/^\d+$/.match?(code) ? "[#{code}]" : code)
           end
         end
       end
@@ -143,7 +142,7 @@ module Asciidoctor
         return "roman" if style == "lowerroman"
         return "roman_upper" if style == "upperroman"
         return "alphabet_upper" if style == "upperalpha"
-        return style
+        style
       end
 
       def olist(node)
@@ -191,7 +190,7 @@ module Asciidoctor
       def colist(node)
         noko do |xml|
           node.items.each_with_index do |item, i|
-            xml_ul.annotation **attr_code(id: i + 1) do |xml_li|
+            xml.annotation **attr_code(id: i + 1) do |xml_li|
               style(item, item.text)
               xml_li.p { |p| p << item.text }
             end

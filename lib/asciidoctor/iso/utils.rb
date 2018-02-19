@@ -24,7 +24,7 @@ module Asciidoctor
               (!n.respond_to?(:level) || n.level.positive?) &&
               (!n.respond_to?(:context) || n.context != :section)
             n = n.parent
-            return "Section: #{n.title}" if !n.nil? && 
+            return "Section: #{n.title}" if !n.nil? &&
               n.respond_to?(:context) && n.context == :section
           end
           "??"
@@ -72,7 +72,7 @@ module Asciidoctor
         nil
       end
 
-      NOKOHEAD = <<~HERE
+      NOKOHEAD = <<~HERE.freeze
           <!DOCTYPE html SYSTEM
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
           <html xmlns="http://www.w3.org/1999/xhtml">
@@ -106,7 +106,6 @@ module Asciidoctor
           out.p { |p| p << node.content }
         end
       end
-
     end
   end
 end

@@ -1,7 +1,6 @@
 module Asciidoctor
   module ISO
     module Cleanup
-
       def extract_localities(x)
         text = x.children.first.remove.text
         m = LOCALITY_RE.match text
@@ -17,8 +16,8 @@ module Asciidoctor
 
       def xref_to_eref(x)
         x["bibitemid"] = x["target"]
-        x["citeas"] = @anchors&.dig(x["target"], :xref) or
-          warn "ISO: #{x["target"]} is not a real reference!"
+        x["citeas"] = @anchors&.dig(x["target"], :xref) ||
+          warn("ISO: #{x['target']} is not a real reference!")
         x.delete("target")
         extract_localities(x) unless x.children.empty?
       end

@@ -4,7 +4,6 @@ require "uri"
 module Asciidoctor
   module ISO
     module Blocks
-
       def id_attr(node = nil)
         { id: Utils::anchor_or_uuid(node) }
       end
@@ -38,7 +37,7 @@ module Asciidoctor
       def sidebar_attrs(node)
         date = node.attr("date") || DateTime.now.iso8601.gsub(/\+.*$/, "")
         date += "T0000" unless /T/.match? date
-        { 
+        {
           reviewer: node.attr("reviewer") || node.attr("source") || "(Unknown)",
           id: Utils::anchor_or_uuid(node),
           date: date.gsub(/[:-]/, ""),
@@ -49,8 +48,7 @@ module Asciidoctor
 
       def sidebar(node)
         return unless is_draft
-        content = Utils::flatten_rawtext(node.content).join("\n")
-        noko do |xml| 
+        noko do |xml|
           xml.review **attr_code(sidebar_attrs(node)) do |r|
             wrap_in_para(node, r)
           end
@@ -78,8 +76,7 @@ module Asciidoctor
 
       def admonition_attrs(node)
         name = node.attr("name")
-        type = node.attr("type") and
-          ["danger", "safety precautions"].each do |t|
+        type = node.attr("type") && ["danger", "safety precautions"].each do |t|
           name = t if type.casecmp(t).zero?
         end
         { id: Utils::anchor_or_uuid(node), type: name }
@@ -133,7 +130,7 @@ module Asciidoctor
       def image_attributes(node)
         uri = node.image_uri node.attr("target")
         types = MIME::Types.type_for(uri)
-        { src: uri, 
+        { src: uri,
           id: Utils::anchor_or_uuid,
           imagetype: types.first.sub_type.upcase,
           height: node.attr("height"),
@@ -176,7 +173,7 @@ module Asciidoctor
       def quote_attribution(node, out)
         if node.attr("citetitle")
           m = /^(?<cite>[^,]+)(,(?<text>.*$))?$/.match node.attr("citetitle")
-          out.source m[:text], 
+          out.source m[:text],
             **attr_code(target: m[:cite], type: "inline")
         end
         if node.attr("attribution")
@@ -198,14 +195,10 @@ module Asciidoctor
         noko do |xml|
           if node.parent.context != :example
             xml.example **id_attr(node) do |e|
-              e.sourcecode **id_attr(node) do |s| 
-                s << node.content 
-              end
+              e.sourcecode(**id_attr(node)) { |s| s << node.content }
             end
           else
-            xml.sourcecode **id_attr(node) do |s|
-              s << node.content 
-            end
+            xml.sourcecode(**id_attr(node)) { |s| s << node.content }
           end
         end
       end

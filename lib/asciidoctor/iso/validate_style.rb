@@ -88,7 +88,8 @@ module Asciidoctor
 
       NONSTD_UNITS = {
         "sec": "s", "mins": "min", "hrs": "h", "hr": "h", "cc": "cm^3",
-        "lit": "l", "amp": "A", "amps": "A", "rpm": "r/min" }.freeze
+        "lit": "l", "amp": "A", "amps": "A", "rpm": "r/min"
+      }.freeze
 
       def style_non_std_units(n, t)
         NONSTD_UNITS.each do |k, v|
