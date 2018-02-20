@@ -417,7 +417,7 @@
         <choice>
           <ref name="image"/>
           <oneOrMore>
-            <ref name="figure"/>
+            <ref name="subfigure"/>
           </oneOrMore>
         </choice>
         <zeroOrMore>
@@ -789,6 +789,17 @@
       <zeroOrMore>
         <ref name="clause-hanging-paragraph-with-footnote"/>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="subfigure">
+    <element name="figure">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <ref name="image"/>
     </element>
   </define>
 </grammar>
