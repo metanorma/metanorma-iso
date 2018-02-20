@@ -471,7 +471,9 @@
           <ref name="Alignments"/>
         </attribute>
       </optional>
-      <ref name="quote-source"/>
+      <optional>
+        <ref name="quote-source"/>
+      </optional>
       <optional>
         <ref name="quote-author"/>
       </optional>
