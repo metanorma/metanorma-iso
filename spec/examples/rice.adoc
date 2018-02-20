@@ -389,7 +389,7 @@ If bags are used, they shall comply with the requirements of <<ISO8531-1>>, Clau
 The packages shall be marked or labelled as required by the country of destination. 
 
 [[AnnexA]]
-[appendix,subtype=normative]
+[appendix,obligation=normative]
 == Determination of defects
 
 // "normative" follows title
@@ -476,7 +476,7 @@ stem:[m_S]:: is the mass, in grams, of the test sample.
 Report the results as specified in <<clause7>>. 
 
 [[AnnexB]]
-[appendix]
+[appendix,obligation=informative]
 == Determination of the waxy rice content of parboiled rice
 
 === Principle 
@@ -589,7 +589,7 @@ stem:[m_2]:: is the mass, expressed in grams, of the non-waxy rice portion.
 Report the results as specified in <<clause7>>, giving the results calculated using Formula (<<formulaB-1>>). 
 
 [[AnnexC]]
-[appendix,subtype=informative]
+[appendix,obligation=informative]
 == Gelatinization
 
 <<figureC-1>> gives an example of a typical gelatinization curve. <<figureC-2>> shows the three stages of gelatinization. 
@@ -624,7 +624,7 @@ image::rice_images/rice_image3_3.png[]
 ====
 
 [[AnnexD]]
-[appendix]
+[appendix,obligation=informative]
 == Results of interlaboratory test for husked rice yields
 
 An interlaboratory test <<ref15>> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <<ISO5725-1>> and <<ISO5725-2>>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <<tableD-1>>. 
@@ -647,7 +647,7 @@ An interlaboratory test <<ref15>> was carried out by the ENR [Rice Research Cent
 | Reproducibility limit, stem:[R] (= 2,83 stem:[s_R]) | 2,89 | 0,57 | 2,26 | 6,06 
 |===
 
-[appendix,subtype=informative]
+[appendix,obligation=informative]
 == Extraneous information
 
 _This appendix is not in the original Rice model document, and is inserted to illustrate elements absent from 

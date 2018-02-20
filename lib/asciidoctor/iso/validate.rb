@@ -111,18 +111,13 @@ module Asciidoctor
         end
       end
 
-      def normative_target(target)
-        return target.at("./ancestor::*[@obligation = 'normative']") ||
-          target.at("./ancestor::references[title = 'Normative References']")
-      end
-
       def see_xrefs_validate(root)
         root.xpath("//xref").each do |t|
           # does not deal with preceding text marked up
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
           target = root.at("//*[@id = '#{t['target']}']")
-          if normative_target(target)
+          if target.at("./ancestor::*[@obligation = 'normative']")
             warn "ISO: 'see #{t.to_s}' is pointing to a normative section"
           end
         end
@@ -130,11 +125,10 @@ module Asciidoctor
 
       def see_erefs_validate(root)
         root.xpath("//eref").each do |t|
-          # does not deal with preceding text marked up
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
           target = root.at("//*[@id = '#{t['bibitemid']}']")
-          if normative_target(target)
+          if target.at("./ancestor::references[title = 'Normative References']")
             warn "ISO: 'see #{t.to_s}' is pointing to a normative reference"
           end
         end
