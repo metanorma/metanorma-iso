@@ -54,14 +54,6 @@ module Asciidoctor
         end
       end
 
-      LOCALITY_REGEX_STR = <<~REGEXP.freeze
-        ^((?<locality>section|clause|part|paragraph|chapter|page)\\s+
-               (?<ref>\\S+?)|(?<locality>whole))[,:]?\\s*
-         (?<text>.*)$
-      REGEXP
-      LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
-                               Regexp::IGNORECASE | Regexp::MULTILINE)
-
       def termdef_warn(text, re, term, msg)
         re.match?(text) && warn("ISO style: #{term}: #{msg}")
       end

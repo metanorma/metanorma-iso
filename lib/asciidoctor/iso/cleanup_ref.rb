@@ -1,6 +1,15 @@
 module Asciidoctor
   module ISO
     module Cleanup
+      # currently references cannot contain commas!
+      LOCALITY_REGEX_STR = <<~REGEXP.freeze
+        ^((?<locality>section|clause|part|paragraph|chapter|page)\\s+
+               (?<ref>[^ \\t\\n,:]+)|(?<locality>whole))[,:]?\\s*
+         (?<text>.*)$
+      REGEXP
+      LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
+                               Regexp::IGNORECASE | Regexp::MULTILINE)
+
       def extract_localities(x)
         text = x.children.first.remove.text
         m = LOCALITY_RE.match text
@@ -42,12 +51,7 @@ module Asciidoctor
       def origin_cleanup(xmldoc)
         xmldoc.xpath("//origin").each do |x|
           x["citeas"] = @anchors[x["bibitemid"]][:xref]
-          n = x.next_element
-          if !n.nil? && n.name == "isosection"
-            n.name = "locality"
-            n["type"] = "section"
-            n.parent = x
-          end
+          extract_localities(x) unless x.children.empty?
         end
       end
 

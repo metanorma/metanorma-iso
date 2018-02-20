@@ -136,7 +136,7 @@ alt:[rough rice]
 rice retaining its husk after threshing 
 
 [.source]
-<<ISO7301>>, 3.1
+<<ISO7301,section 3.1>>
 
 [[husked_rice]]
 === husked rice 
@@ -145,7 +145,7 @@ deprecated:[cargo rice]
 _paddy_ (<<paddy>>) from which the husk only has been removed 
 
 [.source]
-<<ISO7301>>, 3.2, The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
+<<ISO7301,section 3.2>>, The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
 
 === milled rice 
 alt:[white rice]

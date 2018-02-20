@@ -23,7 +23,7 @@ module Asciidoctor
       def skip(node, name = nil)
         name = name || node.node_name
         w = "converter missing for #{name} node in ISO backend"
-        warning(node, w, nil)
+        Utils::warning(node, w, nil)
         nil
       end
 
@@ -97,16 +97,13 @@ module Asciidoctor
                  format: seen_xref.children[0]["format"],
                  type: "inline" }
         xml_t.origin seen_xref.children[0].content, **attr_code(attr)
-        m[:section] && xml_t.isosection do |s|
-          s.reference m[:section].gsub(/ /, "")
-        end
         m[:text] && xml_t.modification do |mod| 
           mod.p { |p| p << m[:text].sub(/^\s+/, "")  }
         end
       end
 
       TERM_REFERENCE_RE_STR = <<~REGEXP.freeze
-             ^(?<xref><xref[^>]+>)
+             ^(?<xref><xref[^>]+>([^<]*</xref>)?)
                (,\s(?<section>[^, ]+))?
                (,\s(?<text>.*))?
              $
@@ -116,16 +113,16 @@ module Asciidoctor
                    Regexp::IGNORECASE | Regexp::MULTILINE)
 
 
-      def extract_termsource_refs(text)
+      def extract_termsource_refs(text, node)
         matched = TERM_REFERENCE_RE.match text
         if matched.nil?
-          warning(node, "term reference not in expected format", text)
+          Utils::warning(node, "term reference not in expected format", text)
         end
         matched
       end
 
       def termsource(node)
-        matched = extract_termsource_refs(node.content) or return
+        matched = extract_termsource_refs(node.content, node) or return
         noko do |xml|
           attrs = { status: matched[:text] ? "identical" : "modified" }
           xml.termsource **attrs do |xml_t|
