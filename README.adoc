@@ -155,6 +155,19 @@ XML to break up paragraphs within a footnote.)
 [[model_additions]]
 === Asciidoctor model additions
 
+=== Obligation
+The obligation of sections (whether they are normative or informative) is indicated
+with the attribute "obligation". For most sections, this is fixed; for annexes and clauses, the
+default value of the obligation is "normative", and users need to set the obligation
+to "informative" as a section attribute.
+
+[source,asciidoctor]
+--
+[[AnnexA]]
+[appendix,obligation=informative]
+== Determination of defects
+--
+
 === Term markup
 
 To ensure the structure of Terms and Definitions is captured accurately, the following

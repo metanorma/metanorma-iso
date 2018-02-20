@@ -71,9 +71,9 @@ module Asciidoctor
 
       def annex_parse(attrs, xml, node)
         attrs["inline-header".to_sym] = true if node.option? "inline-header"
-        attrs[:subtype] = "informative"
-        if node.attributes.has_key?("subtype")
-          attrs[:subtype] = node.attr("subtype")
+        attrs[:obligation] = "informative"
+        if node.attributes.has_key?("obligation")
+          attrs[:obligation] = node.attr("obligation")
         end
         xml.annex **attr_code(attrs) do |xml_section|
           xml_section.title { |name| name << node.title }

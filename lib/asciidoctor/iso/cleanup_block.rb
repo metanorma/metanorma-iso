@@ -162,6 +162,22 @@ module Asciidoctor
         x.xpath("//sections/references").reverse_each { |r| s.next = r.remove }
         x.xpath("//sections/annex").reverse_each { |r| s.next = r.remove }
       end
+
+      def obligations_cleanup(x)
+        (s = x.at("//foreword")) && s["obligation"] = "informative"
+        (s = x.at("//introduction")) && s["obligation"] = "informative"
+        (s = x.at("//clause[title = 'Scope']")) && s["obligation"] = "normative"
+        (s = x.at("//clause[title = 'Symbols and Abbreviated Terms']")) &&
+          s["obligation"] = "normative"
+        x.xpath("//references").each { |r| r["obligation"] = "informative" }
+        x.xpath("//terms").each { |r| r["obligation"] = "normative" }
+        x.xpath("//annex | //clause").each do |s|
+          s["obligation"] = "normative" unless s["obligation"]
+        end
+        x.xpath("//subsection").each do |s|
+          s["obligation"] = s.at("./ancestor::*/@obligation").text
+        end
+      end
     end
   end
 end

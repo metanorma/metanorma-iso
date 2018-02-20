@@ -15,6 +15,7 @@ module Asciidoctor
 
       def cleanup(xmldoc)
         sections_cleanup(xmldoc)
+        obligations_cleanup(xmldoc)
         termdef_cleanup(xmldoc)
         isotitle_cleanup(xmldoc)
         table_cleanup(xmldoc)

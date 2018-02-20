@@ -243,6 +243,12 @@
             <data type="ID"/>
           </attribute>
         </optional>
+        <attribute name="obligation">
+          <choice>
+            <value>normative</value>
+            <value>informative</value>
+          </choice>
+        </attribute>
         <optional>
           <ref name="section-title"/>
         </optional>
@@ -261,6 +267,12 @@
             <data type="ID"/>
           </attribute>
         </optional>
+        <attribute name="obligation">
+          <choice>
+            <value>normative</value>
+            <value>informative</value>
+          </choice>
+        </attribute>
         <optional>
           <ref name="section-title"/>
         </optional>
@@ -321,6 +333,35 @@
         </oneOrMore>
       </element>
     </define>
+    <define name="Content-Section">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <attribute name="obligation">
+        <choice>
+          <value>normative</value>
+          <value>informative</value>
+        </choice>
+      </attribute>
+      <optional>
+        <ref name="section-title"/>
+      </optional>
+      <choice>
+        <group>
+          <oneOrMore>
+            <ref name="BasicBlock"/>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="note"/>
+          </zeroOrMore>
+        </group>
+        <oneOrMore>
+          <ref name="content-subsection"/>
+        </oneOrMore>
+      </choice>
+    </define>
     <define name="annex">
       <element name="annex">
         <optional>
@@ -333,14 +374,12 @@
             <data type="boolean"/>
           </attribute>
         </optional>
-        <optional>
-          <attribute name="subtype">
-            <choice>
-              <value>normative</value>
-              <value>informative</value>
-            </choice>
-          </attribute>
-        </optional>
+        <attribute name="obligation">
+          <choice>
+            <value>normative</value>
+            <value>informative</value>
+          </choice>
+        </attribute>
         <optional>
           <ref name="section-title"/>
         </optional>
@@ -528,6 +567,12 @@
           <data type="boolean"/>
         </attribute>
       </optional>
+      <attribute name="obligation">
+        <choice>
+          <value>normative</value>
+          <value>informative</value>
+        </choice>
+      </attribute>
       <optional>
         <ref name="section-title"/>
       </optional>
@@ -718,6 +763,12 @@
           <data type="boolean"/>
         </attribute>
       </optional>
+      <attribute name="obligation">
+        <choice>
+          <value>normative</value>
+          <value>informative</value>
+        </choice>
+      </attribute>
       <optional>
         <ref name="section-title"/>
       </optional>
