@@ -2,8 +2,10 @@ module Asciidoctor
   module ISO
     module Cleanup
       # currently references cannot contain commas!
+      # extending localities to cover ISO referencing
       LOCALITY_REGEX_STR = <<~REGEXP.freeze
-        ^((?<locality>section|clause|part|paragraph|chapter|page)\\s+
+        ^((?<locality>section|clause|part|paragraph|chapter|page|
+                      table|annex|figure|example|note|formula)\\s+
                (?<ref>[^ \\t\\n,:]+)|(?<locality>whole))[,:]?\\s*
          (?<text>.*)$
       REGEXP
@@ -50,7 +52,8 @@ module Asciidoctor
 
       def origin_cleanup(xmldoc)
         xmldoc.xpath("//origin").each do |x|
-          x["citeas"] = @anchors[x["bibitemid"]][:xref]
+          x["citeas"] = @anchors&.dig(x["bibitemid"], :xref) ||
+            warn("ISO: #{x['bibitemid']} is not a real reference!")
           extract_localities(x) unless x.children.empty?
         end
       end

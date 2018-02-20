@@ -153,7 +153,7 @@ alt:[white rice]
 _husked rice_ (<<husked_rice>>) from which almost all of the bran and embryo have been removed by milling 
 
 [.source]
-<<ISO730,section 3.3>>
+<<ISO7301,section 3.3>>
 
 === parboiled rice 
 
@@ -194,7 +194,7 @@ amount of husked rice obtained from paddy
 
 // all terms and defs references are dated
 [.source]
-<<ISO6646>>, 3.1
+<<ISO6646,section 3.1>>
 
 === nitrogen content 
 quantity of nitrogen determined after application of the procedure described 
@@ -202,7 +202,7 @@ quantity of nitrogen determined after application of the procedure described
 NOTE: It is expressed as a mass fraction of dry product, as a percentage. 
 
 [.source]
-<<ISO20483>>, 3.1
+<<ISO20483,section 3.1>>
 
 === crude protein content 
 quantity of crude protein obtained from the nitrogen content as determined by applying the specified method, calculated by multiplying this content by an appropriate factor depending on the type of cereal or pulse 
@@ -210,7 +210,7 @@ quantity of crude protein obtained from the nitrogen content as determined by ap
 NOTE: It is expressed as a mass fraction of dry product, as a percentage. 
 
 [.source]
-<<ISO20483>>, 3.2
+<<ISO20483,section 3.1>>
 
 [[gelatinization]]
 === gelatinization 
@@ -219,14 +219,14 @@ hydration process conferring the jelly-like state typical of the coagulated coll
 NOTE: See <<figureC-1>>. 
 
 [.source]
-<<ISO14864>>, 3.1
+<<ISO14864,section 3.1>>
 
 [[gel_state]]
 === gel state 
 condition reached as a consequence of _gelatinization_ (<<gelatinization>>), when the kernel is fully transparent and absolutely free from whitish and opaque granules after being pressed between two glass sheets 
 
 [.source]
-<<ISO14864>>, 3.2
+<<ISO14864,section 3.1>>
 
 === gelatinization time 
 stem:[t_90]
@@ -234,7 +234,7 @@ stem:[t_90]
 time necessary for 90 % of the kernels to pass from their natural state to the _gel state_ (<<gel_state>>) 
 
 [.source]
-<<ISO14864>>, 3.3
+<<ISO14864,section 3.1>>
 
 :sectnums:
 == Specifications 
@@ -290,7 +290,7 @@ stem:[w_max]
 5+a| Live insects shall not be present. Dead insects shall be included in extraneous matter.
 |===
 
-NOTE: This table is based on <<ISO7301>>, Table 1.
+NOTE: This table is based on <<ISO7301,table 1>>.
 
 NOTE: Some commercial contracts require information in addition to that provided in this table.
 
@@ -299,7 +299,7 @@ NOTE: Only full red husked (cargo) rice is considered in this table.
 
 [[clause5]]
 == Sampling 
-Sampling shall be carried out in accordance with <<ISO24333>>, Clause 5. 
+Sampling shall be carried out in accordance with <<ISO24333,clause 5>>
 
 == Test methods 
 
@@ -313,9 +313,10 @@ Determine the mass fraction of waxy rice. <<AnnexB>> gives an example of a suita
 
 === Nitrogen content and crude protein content 
 
-Determine the nitrogen content and crude protein content in accordance with either <<ISO16634>>, Clause 9, or <<ISO20483>>. For details on the determination of protein content using the Kjeldahl method, see Reference <<ref12>> in the Bibliography. For details concerning the use of the Dumas method, see References <<ref10>> and <<ref16>>. 
+Determine the nitrogen content and crude protein content in accordance with either <<ISO16634,clause 9>>, or <<ISO20483>>. For details on the determination of protein content using the Kjeldahl method, see Reference <<ref12>> in the Bibliography. For details concerning the use of the Dumas method, see References <<ref10>> and <<ref16>>. 
 
-Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in <<ISO20483>>, Annex C and Table C.1, that is adapted to the type of cereals or pulses <<ref13,fn>><<ref14,fn>> and to their use.
+// can't join two bibliographic localities with "and" currently
+Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in <<ISO20483,annex C>> and Table C.1, that is adapted to the type of cereals or pulses <<ref13,fn>><<ref14,fn>> and to their use.
 
 === Gelatinization time 
 
@@ -382,7 +383,7 @@ For each test method, the test report shall specify the following:
 
 The packaging shall not transmit any odour or flavour to the product and shall not contain substances which may damage the product or constitute a health risk. 
 
-If bags are used, they shall comply with the requirements of <<ISO8531-1>>, Clause 9, or <<ISO8351-2>>, as appropriate. 
+If bags are used, they shall comply with the requirements of <<ISO8351-1,clause 9>>, or <<ISO8351-2>>, as appropriate. 
 
 == Marking 
 
@@ -392,7 +393,6 @@ The packages shall be marked or labelled as required by the country of destinati
 [appendix,obligation=normative]
 == Determination of defects
 
-// "normative" follows title
 === Principle 
 
 Extraneous matter, broken kernels, damaged kernels and other kinds of rice are separated manually according to the following types: husked rice, milled rice, husked parboiled rice and milled parboiled rice. Each type is then weighed. 
@@ -457,7 +457,7 @@ Weigh, to the nearest 0,01 g, the fractions so obtained.
 
 === Calculation 
 
-Express the mass fraction of each defect using Formula (<<formulaA-1>>): 
+Express the mass fraction of each defect using <<formulaA-1>>: 
 
 [[formulaA-1,A.1]]
 [stem]
@@ -570,9 +570,8 @@ Weigh the waxy rice portion (stem:[m_1]) and the non-waxy rice portion (stem:[m_
 
 === Calculation 
 
-Calculate the mass fraction, expressed as a percentage, of the waxy rice, stem:[w_(wax)], using Formula (<<formulaB-1>>): 
+Calculate the mass fraction, expressed as a percentage, of the waxy rice, stem:[w_(wax)], using <<formulaB-1>>: 
 
-// Indexing formulas
 [[formulaB-1,B.1]]
 [stem]
 ++++
@@ -586,7 +585,7 @@ stem:[m_2]:: is the mass, expressed in grams, of the non-waxy rice portion.
 
 === Test report 
 
-Report the results as specified in <<clause7>>, giving the results calculated using Formula (<<formulaB-1>>). 
+Report the results as specified in <<clause7>>, giving the results calculated using <<formulaB-1>>. 
 
 [[AnnexC]]
 [appendix,obligation=informative]
@@ -596,7 +595,6 @@ Report the results as specified in <<clause7>>, giving the results calculated us
 
 [[figureC-1]]
 .Typical gelatinization curve
-// Footnote macro cannot contain stem macro!
 image::rice_images/rice_image2.png[] 
 footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
 
