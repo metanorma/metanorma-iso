@@ -104,7 +104,6 @@ module Asciidoctor
 
       TERM_REFERENCE_RE_STR = <<~REGEXP.freeze
              ^(?<xref><xref[^>]+>([^<]*</xref>)?)
-               (,\s(?<section>[^, ]+))?
                (,\s(?<text>.*))?
              $
       REGEXP

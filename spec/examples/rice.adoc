@@ -153,7 +153,7 @@ alt:[white rice]
 _husked rice_ (<<husked_rice>>) from which almost all of the bran and embryo have been removed by milling 
 
 [.source]
-<<ISO7301>>, 3.3
+<<ISO730,section 3.3>>
 
 === parboiled rice 
 
