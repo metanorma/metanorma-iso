@@ -112,16 +112,28 @@ module Asciidoctor
       end
 
       def normative_target(target)
-        return target.at("./ancestor::*[@normstatus = 'normative']") ||
+        return target.at("./ancestor::*[@obligation = 'normative']") ||
           target.at("./ancestor::references[title = 'Normative References']")
       end
 
       def see_xrefs_validate(root)
         root.xpath("//xref").each do |t|
           # does not deal with preceding text marked up
-          preceding_text = t.at("./preceding-sibling::text()[last()]")
-          next unless !preceding_text.nil? && /\bsee\s*$/mi.match?(preceding_text)
+          preceding = t.at("./preceding-sibling::text()[last()]")
+          next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
           target = root.at("//*[@id = '#{t['target']}']")
+          if normative_target(target)
+            warn "ISO: 'see #{t.to_s}' is pointing to a normative section"
+          end
+        end
+      end
+
+      def see_erefs_validate(root)
+        root.xpath("//eref").each do |t|
+          # does not deal with preceding text marked up
+          preceding = t.at("./preceding-sibling::text()[last()]")
+          next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
+          target = root.at("//*[@id = '#{t['bibitemid']}']")
           if normative_target(target)
             warn "ISO: 'see #{t.to_s}' is pointing to a normative reference"
           end
@@ -135,6 +147,7 @@ module Asciidoctor
         iso8601_validate(doc.root)
         onlychild_clause_validate(doc.root)
         see_xrefs_validate(doc.root)
+        see_erefs_validate(doc.root)
       end
 
       def schema_validate(doc, filename)
