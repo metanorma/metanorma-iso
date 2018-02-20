@@ -189,6 +189,20 @@ domain:[rice]
 _paddy_ (<<paddy>>) from which the husk only has been removed
 --
 
+=== Terms and Definitions markup
+
+If the Terms and Definitions of a standard are partly or fully sourced from
+another standard, that standard is cited in a `source` attribute to the section,
+which is set to the reference anchor of the standard (given under the Normative
+Referencecs)..
+The boilerplate of the Terms and Definitions section is adjusted accordingly.
+
+[source,asciidoctor]
+--
+[source=ISO712]
+== Terms and Definitions
+--
+
 ==== Paragraph alignment
 
 Alignment is defined as an attribute for paragraphs:
