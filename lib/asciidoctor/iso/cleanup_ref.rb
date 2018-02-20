@@ -45,7 +45,7 @@ module Asciidoctor
       end
 
       def quotesource_cleanup(xmldoc)
-        xmldoc.xpath("//quote/source").each do |x|
+        xmldoc.xpath("//quote/source | //terms/source").each do |x|
           xref_to_eref(x)
         end
       end

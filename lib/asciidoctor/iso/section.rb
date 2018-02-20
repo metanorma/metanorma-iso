@@ -104,15 +104,21 @@ module Asciidoctor
         end
       end
 
+      def term_def_title(title)
+          if title == "terms, definitions, symbols and abbreviated terms"
+            "Terms, Definitions, Symbols and Abbreviated Terms"
+          else
+            "Terms and Definitions"
+          end
+      end
+
       def term_def_parse(attrs, xml, node, title)
         @term_def = true
-        xml.terms **attr_code(attrs) do |xml_section|
-          title = "Terms and Definitions"
-          if title == "terms, definitions, symbols and abbreviated terms"
-            title = "Terms, Definitions, Symbols and Abbreviated Terms"
-          end
-          xml_section.title { |t| t << title }
-          xml_section << node.content
+        xml.terms **attr_code(attrs) do |section|
+          section.title { |t| t << term_def_title(title) }
+          (s = node.attr("source")) &&
+            section.source(nil, **attr_code(target: s, type: "inline"))
+          section << node.content
         end
         @term_def = false
       end

@@ -311,12 +311,8 @@
         <optional>
           <ref name="section-title"/>
         </optional>
-        <zeroOrMore>
-          <!-- boilerplate -->
-          <ref name="paragraph-with-footnote"/>
-        </zeroOrMore>
         <optional>
-          <ref name="ul"/>
+          <ref name="termdocsource"/>
         </optional>
         <choice>
           <oneOrMore>
@@ -800,6 +796,11 @@
         <ref name="tname"/>
       </optional>
       <ref name="image"/>
+    </element>
+  </define>
+  <define name="termdocsource">
+    <element name="source">
+      <ref name="erefType"/>
     </element>
   </define>
 </grammar>

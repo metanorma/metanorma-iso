@@ -116,8 +116,9 @@ module Asciidoctor
           # does not deal with preceding text marked up
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
-          target = root.at("//*[@id = '#{t['target']}']")
-          if target.at("./ancestor::*[@obligation = 'normative']")
+          (target = root.at("//*[@id = '#{t['target']}']")) ||
+            warn("ISO: #{t['target']} is not a real reference!")
+          if target&.at("./ancestor::*[@obligation = 'normative']")
             warn "ISO: 'see #{t.to_s}' is pointing to a normative section"
           end
         end

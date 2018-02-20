@@ -66,13 +66,13 @@ module Asciidoctor
         style_two_regex_not_prev(n, t, /^(?<num>[0-9]{4,})$/,
                                  %r{(\bISO|\bIEC|\bIEEE/)$},
                                  "number not broken up in threes")
-        style_regex(/\b(?<num>[0-9]+\.[0-9]+)/,
+        style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
                     "possible decimal point", n, t)
         style_regex(/\b(?<num>[0-9.,]+%)/,
                     "no space before percent sign", n, t)
         style_regex(/\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
                     "unbracketed tolerance before percent sign", n, t)
-        style_regex(/(^|\s)(?<=e\.g\.|i\.e\.)
+        style_regex(/(^|\s)(?!e\.g\.|i\.e\.)
                     (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
                       "no dots in abbreviations", n, t)
         style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,

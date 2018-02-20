@@ -107,11 +107,18 @@ module Asciidoctor
         end
       end
 
+      def termdef_boilerplate_cleanup(xmldoc)
+        xmldoc.xpath("//terms/p | //terms/ul").each do |a|
+          a.remove
+        end
+      end
+
       def termdef_cleanup(xmldoc)
         termdef_unnest_cleanup(xmldoc)
         termdef_stem_cleanup(xmldoc)
         termdomain_cleanup(xmldoc)
         termdefinition_cleanup(xmldoc)
+        termdef_boilerplate_cleanup(xmldoc)
         termdef_style(xmldoc)
       end
 

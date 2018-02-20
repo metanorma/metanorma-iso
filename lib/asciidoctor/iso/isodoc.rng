@@ -1283,6 +1283,11 @@
           <value>chapter</value>
           <value>page</value>
           <value>whole</value>
+          <value>table</value>
+          <value>annex</value>
+          <value>figure</value>
+          <value>note</value>
+          <value>example</value>
         </choice>
       </attribute>
       <zeroOrMore>
