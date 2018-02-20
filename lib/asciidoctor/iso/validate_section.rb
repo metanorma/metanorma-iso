@@ -24,8 +24,10 @@ module Asciidoctor
       end
 
       def symbols_validate(root)
-        f = root.at("//clause[title = 'Symbols and Abbreviations']") || return
-        f.elements do |e|
+        f = root.xpath("//symbols-abbrevs") || return
+        (f.size == 1) || warn("ISO style: only one Symbols and Abbreviations"\
+          "section in the standard")
+        f.first.elements do |e|
           unless e.name == "dl"
             warn "ISO style: Symbols and Abbreviations can only contain "\
               "a definition list"

@@ -231,6 +231,9 @@
       <element name="sections">
         <ref name="clause"/>
         <ref name="terms"/>
+        <optional>
+          <ref name="symbols-abbrevs"/>
+        </optional>
         <oneOrMore>
           <ref name="clause"/>
         </oneOrMore>
@@ -318,9 +321,14 @@
           <oneOrMore>
             <ref name="term"/>
           </oneOrMore>
-          <optional>
-            <ref name="terms"/>
-          </optional>
+          <group>
+            <zeroOrMore>
+              <ref name="terms"/>
+            </zeroOrMore>
+            <optional>
+              <ref name="symbols-abbrevs"/>
+            </optional>
+          </group>
         </choice>
       </element>
     </define>
@@ -698,6 +706,11 @@
           <data type="int"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="subpart">
+          <data type="int"/>
+        </attribute>
+      </optional>
       <data type="int"/>
     </element>
   </define>
@@ -801,6 +814,24 @@
   <define name="termdocsource">
     <element name="source">
       <ref name="erefType"/>
+    </element>
+  </define>
+  <define name="symbols-abbrevs">
+    <element name="symbols-abbrevs">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="obligation">
+          <choice>
+            <value>normative</value>
+            <value>informative</value>
+          </choice>
+        </attribute>
+      </optional>
+      <ref name="dl"/>
     </element>
   </define>
 </grammar>
