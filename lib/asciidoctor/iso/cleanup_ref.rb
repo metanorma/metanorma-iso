@@ -20,7 +20,7 @@ module Asciidoctor
           ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
           refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
           locality = m[:locality].downcase
-          x.add_child("<locality type='#{locality}'>#{ref}#{to}</locality>")
+          x.add_child("<locality type='#{locality}'>#{ref}#{refto}</locality>")
           text = m[:text]
           m = LOCALITY_RE.match text
         end
