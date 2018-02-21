@@ -314,9 +314,9 @@
         <optional>
           <ref name="section-title"/>
         </optional>
-        <optional>
+        <zeroOrMore>
           <ref name="termdocsource"/>
-        </optional>
+        </zeroOrMore>
         <choice>
           <oneOrMore>
             <ref name="term"/>
