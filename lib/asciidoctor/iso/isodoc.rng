@@ -117,8 +117,22 @@
           <ref name="content"/>
           <ref name="clause"/>
           <ref name="terms"/>
+          <ref name="symbols-abbrevs"/>
         </choice>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="symbols-abbrevs">
+    <element name="symbols-abbrevs">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section-title"/>
+      </optional>
+      <ref name="dl"/>
     </element>
   </define>
   <define name="section-title">
