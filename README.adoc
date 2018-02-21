@@ -203,6 +203,15 @@ The boilerplate of the Terms and Definitions section is adjusted accordingly.
 == Terms and Definitions
 --
 
+Multiple sources are allowed, and need to be quoted and comma-delimited:
+
+[source,asciidoctor]
+--
+[source="ISO712,ISO24333"]
+== Terms and Definitions
+--
+
+
 ==== Paragraph alignment
 
 Alignment is defined as an attribute for paragraphs:
