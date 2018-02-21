@@ -171,11 +171,11 @@ module Asciidoctor
           s["obligation"] = "normative"
         x.xpath("//references").each { |r| r["obligation"] = "informative" }
         x.xpath("//terms").each { |r| r["obligation"] = "normative" }
-        x.xpath("//annex | //clause").each do |s|
-          s["obligation"] = "normative" unless s["obligation"]
+        x.xpath("//annex | //clause").each do |r|
+          r["obligation"] = "normative" unless r["obligation"]
         end
-        x.xpath("//subsection").each do |s|
-          s["obligation"] = s.at("./ancestor::*/@obligation").text
+        x.xpath("//subsection").each do |r|
+          r["obligation"] = r.at("./ancestor::*/@obligation").text
         end
       end
     end

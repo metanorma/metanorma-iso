@@ -24,7 +24,7 @@ module Asciidoctor
       end
 
       def symbols_validate(root)
-        f = root.xpath("//symbols-abbrevs") || return
+        (f = root.xpath("//symbols-abbrevs") && !f.nil?) || return
         (f.size == 1) || warn("ISO style: only one Symbols and Abbreviations"\
           "section in the standard")
         f.first.elements do |e|
