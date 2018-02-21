@@ -119,6 +119,9 @@
       <optional>
         <ref name="copyright"/>
       </optional>
+      <zeroOrMore>
+        <ref name="docrelation"/>
+      </zeroOrMore>
       <optional>
         <ref name="editorialgroup"/>
       </optional>
@@ -169,6 +172,9 @@
         <ref name="status"/>
       </optional>
       <ref name="copyright"/>
+      <zeroOrMore>
+        <ref name="docrelation"/>
+      </zeroOrMore>
       <ref name="editorialgroup"/>
     </define>
     <define name="bdate">

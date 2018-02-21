@@ -6,7 +6,8 @@ module Asciidoctor
       LOCALITY_REGEX_STR = <<~REGEXP.freeze
         ^((?<locality>section|clause|part|paragraph|chapter|page|
                       table|annex|figure|example|note|formula)\\s+
-               (?<ref>[^ \\t\\n,:]+)|(?<locality>whole))[,:]?\\s*
+               (?<ref>[^ \\t\\n,:-]+)(-(?<to>[^ \\t\\n,:-]+))?|
+          (?<locality>whole))[,:]?\\s*
          (?<text>.*)$
       REGEXP
       LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
@@ -16,9 +17,10 @@ module Asciidoctor
         text = x.children.first.remove.text
         m = LOCALITY_RE.match text
         while !m.nil?
-          ref = m[:ref] ? "<reference>#{m[:ref]}</reference>" : ""
+          ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
+          refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
           locality = m[:locality].downcase
-          x.add_child("<locality type='#{locality}'>#{ref}</locality>")
+          x.add_child("<locality type='#{locality}'>#{ref}#{to}</locality>")
           text = m[:text]
           m = LOCALITY_RE.match text
         end
