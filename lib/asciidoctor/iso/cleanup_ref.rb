@@ -46,9 +46,10 @@ module Asciidoctor
         end
       end
 
-      # allows us to deal with doc relation localities, temporarily stashed to "bpart"
+      # allows us to deal with doc relation localities,
+      # temporarily stashed to "bpart"
       def bpart_cleanup(xmldoc)
-        xmldoc.xpath("//relation/bibitem/bpart").each do |x|
+        xmldoc.xpath("//relation/bpart").each do |x|
           extract_localities(x)
           x.replace(x.children)
         end

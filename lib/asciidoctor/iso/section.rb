@@ -112,8 +112,8 @@ module Asciidoctor
 
       def term_def_title(toplevel, node)
         return node.title unless toplevel
-        sub = node.find_by(context: :section) do 
-          |s| s.title.downcase == "symbols and abbreviated terms"
+        sub = node.find_by(context: :section) do |s|
+          s.title.downcase == "symbols and abbreviated terms"
         end
         return "Terms and Definitions" if sub.empty?
         "Terms, Definitions, Symbols and Abbreviated Terms"
