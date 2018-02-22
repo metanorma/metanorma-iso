@@ -59,10 +59,12 @@
           <value>nonequivalent</value>
         </choice>
       </attribute>
-      <optional>
-        <ref name="uri"/>
-      </optional>
-      <ref name="bibitem_no_id"/>
+      <element name="bibitem">
+        <ref name="BibliographicItem"/>
+      </element>
+      <zeroOrMore>
+        <ref name="locality"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="status">

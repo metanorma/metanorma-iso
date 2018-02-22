@@ -46,6 +46,14 @@ module Asciidoctor
         end
       end
 
+      # allows us to deal with doc relation localities, temporarily stashed to "bpart"
+      def bpart_cleanup(xmldoc)
+        xmldoc.xpath("//relation/bibitem/bpart").each do |x|
+          extract_localities(x)
+          x.replace(x.children)
+        end
+      end
+
       def quotesource_cleanup(xmldoc)
         xmldoc.xpath("//quote/source | //terms/source").each do |x|
           xref_to_eref(x)
@@ -75,7 +83,6 @@ module Asciidoctor
           parent = r.parent
           parent.previous = r.remove
         end
-        xmldoc
       end
 
       def normref_cleanup(xmldoc)

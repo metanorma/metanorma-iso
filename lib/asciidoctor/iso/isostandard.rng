@@ -302,6 +302,24 @@
         </zeroOrMore>
       </element>
     </define>
+    <define name="symbols-abbrevs">
+      <element name="symbols-abbrevs">
+        <optional>
+          <attribute name="id">
+            <data type="ID"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="obligation">
+            <choice>
+              <value>normative</value>
+              <value>informative</value>
+            </choice>
+          </attribute>
+        </optional>
+        <ref name="dl"/>
+      </element>
+    </define>
     <define name="terms">
       <element name="terms">
         <optional>
@@ -820,24 +838,6 @@
   <define name="termdocsource">
     <element name="source">
       <ref name="erefType"/>
-    </element>
-  </define>
-  <define name="symbols-abbrevs">
-    <element name="symbols-abbrevs">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="obligation">
-          <choice>
-            <value>normative</value>
-            <value>informative</value>
-          </choice>
-        </attribute>
-      </optional>
-      <ref name="dl"/>
     </element>
   </define>
 </grammar>
