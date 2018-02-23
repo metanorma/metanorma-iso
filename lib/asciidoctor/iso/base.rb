@@ -58,7 +58,7 @@ module Asciidoctor
         filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
           gsub(%r{^.*/}, '')
         File.open("#{filename}", "w") { |f| f.write(ret) }
-        doc_converter.convert filename
+        doc_converter.convert filename unless node.attr("nodoc")
         ret
       end
 
