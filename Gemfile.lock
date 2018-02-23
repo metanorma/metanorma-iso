@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: b4cfee8b7e88070ea07ff7a56c30f4561c33c7d3
+  revision: e1b30cb237fe8d4b9e8f9d7ec9c8f013d86f1982
   specs:
-    html2doc (0.6.0)
+    html2doc (0.6.2)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 5b290e6165ae0a690761c50d37b2901820e48731
+  revision: f4e437422feb2316f3519f1c987e1ac12a8085f5
   specs:
     isodoc (0.4.5)
       asciimath
@@ -53,7 +53,7 @@ GEM
     docile (1.1.5)
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
-    ffi (1.9.21)
+    ffi (1.9.22)
     formatador (0.2.5)
     guard (2.14.2)
       formatador (>= 0.2.4)
@@ -91,7 +91,7 @@ GEM
       shellany (~> 0.0)
     optout (0.0.2)
     parallel (1.12.1)
-    parser (2.5.0.0)
+    parser (2.5.0.2)
       ast (~> 2.4.0)
     powerpack (0.1.1)
     pry (0.11.3)

@@ -15,14 +15,12 @@ module Asciidoctor
 
       def extract_localities(x)
         text = x.children.first.remove.text
-        m = LOCALITY_RE.match text
-        while !m.nil?
+        while(m = LOCALITY_RE.match text)
           ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
           refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
           locality = m[:locality].downcase
           x.add_child("<locality type='#{locality}'>#{ref}#{refto}</locality>")
           text = m[:text]
-          m = LOCALITY_RE.match text
         end
         x.add_child(text)
       end
@@ -37,7 +35,7 @@ module Asciidoctor
 
       def xref_cleanup(xmldoc)
         xmldoc.xpath("//xref").each do |x|
-          if is_refid? x["target"]
+          if refid? x["target"]
             x.name = "eref"
             xref_to_eref(x)
           else

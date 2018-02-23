@@ -1,10 +1,9 @@
-require 'asciidoctor/extensions'
+require "asciidoctor/extensions"
 
 module Asciidoctor
   module ISO
     module Inline
-
-      def is_refid?(x)
+      def refid?(x)
         @refids.include? x
       end
 
@@ -32,8 +31,8 @@ module Asciidoctor
         f = matched.nil? ? "inline" : "footnote"
         c = matched.nil? ? node.text : matched[:text]
         t = node.target.gsub(/^#/, "").gsub(%r{(.)(\.xml)?#.*$}, "\\1")
-        noko do |xml| 
-          xml.xref c, **attr_code(target: t, type: f) 
+        noko do |xml|
+          xml.xref c, **attr_code(target: t, type: f)
         end.join
       end
 
@@ -64,7 +63,7 @@ module Asciidoctor
       def inline_footnote(node)
         noko do |xml|
           @fn_number += 1
-          xml.fn **{reference: @fn_number} do |fn|
+          xml.fn **{ reference: @fn_number } do |fn|
             fn.p { |p| p << node.text }
             footnote_style(node, node.text)
           end
@@ -78,19 +77,17 @@ module Asciidoctor
         end.join("\n")
       end
 
-      def page_break(node)
+      def page_break(_node)
         noko do |xml|
           xml.pagebreak
         end.join("\n")
       end
 
-      def thematic_break(node)
+      def thematic_break(_node)
         noko do |xml|
           xml.hr
         end.join("\n")
       end
-
-
 
       def inline_quoted(node)
         noko do |xml|
@@ -118,7 +115,6 @@ module Asciidoctor
           end
         end.join
       end
-
     end
   end
 end

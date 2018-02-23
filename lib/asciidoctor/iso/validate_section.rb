@@ -19,8 +19,8 @@ module Asciidoctor
 
       def normref_validate(root)
         f = root.at("//references[title = 'Normative References']") || return
-        f.at("./references") and
-          warn "ISO style: normative references contains subsections"
+        f.at("./references") &&
+          warn("ISO style: normative references contains subsections")
       end
 
       def symbols_validate(root)
@@ -67,28 +67,28 @@ module Asciidoctor
           val: [
             { tag: "terms", title: "Terms and Definitions" },
             { tag: "terms",
-              title: "Terms, Definitions, Symbols and Abbreviations" }
-          ]
+              title: "Terms, Definitions, Symbols and Abbreviations" },
+          ],
         },
-      ]
+      ].freeze
 
-      SECTIONS_XPATH = 
+      SECTIONS_XPATH =
         " //foreword | //introduction | //sections/terms | "\
         "//sections/clause | ./references | ./annex".freeze
 
       def sections_sequence_validate(root)
         f = root.xpath(SECTIONS_XPATH)
         names = f.map { |s| { tag: s.name, title: s.at("./title").text } }
-        names = seqcheck(names, SEQ[0][:msg], SEQ[0][:val]) or return
+        names = seqcheck(names, SEQ[0][:msg], SEQ[0][:val]) || return
         n = names[0]
-        names = seqcheck(names, SEQ[1][:msg], SEQ[1][:val]) or return
+        names = seqcheck(names, SEQ[1][:msg], SEQ[1][:val]) || return
         if n == { tag: "introduction", title: "Introduction" }
-          names = seqcheck(names, SEQ[2][:msg], SEQ[2][:val]) or return
+          names = seqcheck(names, SEQ[2][:msg], SEQ[2][:val]) || return
         end
-        names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val]) or return
+        names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val]) || return
         n = names.shift
         if n == { tag: "clause", title: "Symbols and Abbreviations" }
-          n = names.shift or return
+          n = names.shift || return
         end
         unless n
           warn "ISO style: Document must contain at least one clause"
@@ -96,31 +96,31 @@ module Asciidoctor
         end
         n[:tag] == "clause" ||
           warn("ISO style: Document must contain at least one clause")
-        n == { tag: "clause", title: "Scope" } and
-          warn "ISO style: Scope must occur before Terms and Definitions"
-        n = names.shift or return
+        n == { tag: "clause", title: "Scope" } &&
+          warn("ISO style: Scope must occur before Terms and Definitions")
+        n = names.shift || return
         while n[:tag] == "clause"
-          n[:title] == "Scope" and
-            warn "ISO style: Scope must occur before Terms and Definitions"
-          n[:title] == "Symbols and Abbreviations" and
-            warn "ISO style: Symbols and Abbreviations must occur "\
-            "right after Terms and Definitions"
-          n = names.shift or return
+          n[:title] == "Scope" &&
+            warn("ISO style: Scope must occur before Terms and Definitions")
+          n[:title] == "Symbols and Abbreviations" &&
+            warn("ISO style: Symbols and Abbreviations must occur "\
+            "right after Terms and Definitions")
+          n = names.shift || return
         end
         unless n[:tag] == "annex" || n[:tag] == "references"
           warn "ISO style: Only annexes and references can follow clauses"
         end
         while n[:tag] == "annex"
-          n = names.shift or return
+          n = names.shift || return
         end
-        n == { tag: "references", title: "Normative References" } or
-          warn "ISO style: Document must include (references) "\
-          "Normative References"
+        n == { tag: "references", title: "Normative References" } ||
+          warn("ISO style: Document must include (references) "\
+          "Normative References")
         n = names.shift
-        n == { tag: "references", title: "Bibliography" } or
-          warn "ISO style: Final section must be (references) Bibliography"
-        names.empty? or
-          warn "ISO style: There are sections after the final Bibliography"
+        n == { tag: "references", title: "Bibliography" } ||
+          warn("ISO style: Final section must be (references) Bibliography")
+        names.empty? ||
+          warn("ISO style: There are sections after the final Bibliography")
       end
     end
   end
