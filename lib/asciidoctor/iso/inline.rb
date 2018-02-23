@@ -30,11 +30,11 @@ module Asciidoctor
       end
 
       def inline_anchor_xref(node)
-        matched = /^fn(:  (?<text>.*))?$/.match node.text
+        matched = /^fn(:\s*(?<text>.*))?$/.match node.text
         f = matched.nil? ? "inline" : "footnote"
         c = matched.nil? ? node.text : matched[:text]
         t = node.target.gsub(/^#/, "").gsub(%r{(.)(\.xml)?#.*$}, "\\1")
-          noko do |xml| 
+        noko do |xml| 
           xml.xref c, **attr_code(target: t, type: f) 
         end.join
       end
@@ -82,14 +82,12 @@ module Asciidoctor
 
       def page_break(node)
         noko do |xml|
-          xml << node.text
           xml.pagebreak
         end.join("\n")
       end
 
       def thematic_break(node)
         noko do |xml|
-          xml << node.text
           xml.hr
         end.join("\n")
       end
