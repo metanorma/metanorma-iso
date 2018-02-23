@@ -34,7 +34,7 @@ module Asciidoctor
                       type: node.attr("#{compname}-type"))
       end
 
-      def metadata_author(node, xml)
+      def metadata_author(_node, xml)
         xml.contributor do |c|
           c.role **{ type: "author" }
           c.organization do |a|
@@ -69,8 +69,8 @@ module Asciidoctor
 
       def metadata_status(node, xml)
         xml.status do |s|
-          s.stage ( node.attr("docstage") || "60" )
-          s.substage ( node.attr("docsubstage") || "60" )
+          s.stage (node.attr("docstage") || "60")
+          s.substage (node.attr("docsubstage") || "60")
         end
       end
 
@@ -95,21 +95,33 @@ module Asciidoctor
         metadata_committee(node, xml)
       end
 
+      def title_intro(node, t, lang, at)
+        node.attr("title-intro-#{lang}") &&
+          t.title_intro(**attr_code(at)) do |t1|
+          t1 << node.attr("title-intro-#{lang}")
+        end
+      end
+
+      def title_main(node, t, lang, at)
+        t.title_main **attr_code(at) do |t1|
+          t1 << node.attr("title-main-#{lang}")
+        end
+      end
+
+      def title_part(node, t, lang, at)
+        node.attr("title-part-#{lang}") &&
+          t.title_part(**attr_code(at)) do |t1|
+          t1 << node.attr("title-part-#{lang}")
+        end
+      end
+
       def title(node, xml)
         ["en", "fr"].each do |lang|
           xml.title do |t|
             at = { language: lang, format: "text/plain" }
-            node.attr("title-intro-#{lang}") and
-              t.title_intro **attr_code(at) do |t1|
-              t1 << node.attr("title-intro-#{lang}")
-            end
-            t.title_main **attr_code(at) do |t1|
-              t1 << node.attr("title-main-#{lang}")
-            end
-            node.attr("title-part-#{lang}") and
-              t.title_part **attr_code(at) do |t1|
-              t1 << node.attr("title-part-#{lang}")
-            end
+            title_intro(node, t, lang, at)
+            title_main(node, t, lang, at)
+            title_part(node, t, lang, at)
           end
         end
       end
