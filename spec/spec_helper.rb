@@ -4,7 +4,10 @@ SimpleCov.start do
 end
 
 require "bundler/setup"
+require "asciidoctor"
 require "asciidoctor-iso"
+require "rspec/matchers"
+require "equivalent-xml"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
