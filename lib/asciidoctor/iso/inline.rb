@@ -18,8 +18,6 @@ module Asciidoctor
           inline_anchor_link node
         when :bibref
           inline_anchor_bibref node
-        else
-          Utils::warning(node, "unknown anchor type", node.type.inspect)
         end
       end
 
