@@ -20,3 +20,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+def strip_guid(x)
+  x.gsub(%r{ id="_[^"]+"}, ' id="_"')
+end
