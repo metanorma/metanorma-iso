@@ -56,8 +56,8 @@ module Asciidoctor
         ret1 = makexml(node)
         ret = ret1.to_xml(indent: 2)
         filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
-          gsub(%r{^.*/}, '')
-        File.open("#{filename}", "w") { |f| f.write(ret) }
+          gsub(%r{^.*/}, "")
+        File.open(filename, "w") { |f| f.write(ret) }
         doc_converter.convert filename unless node.attr("nodoc")
         ret
       end
@@ -75,7 +75,7 @@ module Asciidoctor
         ret1
       end
 
-      def is_draft
+      def draft?
         @draft
       end
 
@@ -97,20 +97,19 @@ module Asciidoctor
                  format: seen_xref.children[0]["format"],
                  type: "inline" }
         xml_t.origin seen_xref.children[0].content, **attr_code(attr)
-        m[:text] && xml_t.modification do |mod| 
-          mod.p { |p| p << m[:text].sub(/^\s+/, "")  }
+        m[:text] && xml_t.modification do |mod|
+          mod.p { |p| p << m[:text].sub(/^\s+/, "") }
         end
       end
 
       TERM_REFERENCE_RE_STR = <<~REGEXP.freeze
-             ^(?<xref><xref[^>]+>([^<]*</xref>)?)
+        ^(?<xref><xref[^>]+>([^<]*</xref>)?)
                (,\s(?<text>.*))?
-             $
+        $
       REGEXP
       TERM_REFERENCE_RE =
         Regexp.new(TERM_REFERENCE_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE | Regexp::MULTILINE)
-
 
       def extract_termsource_refs(text, node)
         matched = TERM_REFERENCE_RE.match text
@@ -121,7 +120,7 @@ module Asciidoctor
       end
 
       def termsource(node)
-        matched = extract_termsource_refs(node.content, node) or return
+        matched = extract_termsource_refs(node.content, node) || return
         noko do |xml|
           attrs = { status: matched[:text] ? "identical" : "modified" }
           xml.termsource **attrs do |xml_t|
@@ -131,7 +130,6 @@ module Asciidoctor
           end
         end.join("\n")
       end
-
     end
   end
 end

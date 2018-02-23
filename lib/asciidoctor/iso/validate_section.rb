@@ -94,8 +94,8 @@ module Asciidoctor
           warn "ISO style: Document must contain at least one clause"
           return
         end
-        n[:tag] == "clause" or
-          warn "ISO style: Document must contain at least one clause"
+        n[:tag] == "clause" ||
+          warn("ISO style: Document must contain at least one clause")
         n == { tag: "clause", title: "Scope" } and
           warn "ISO style: Scope must occur before Terms and Definitions"
         n = names.shift or return
@@ -107,7 +107,7 @@ module Asciidoctor
             "right after Terms and Definitions"
           n = names.shift or return
         end
-        unless n[:tag] == "annex" or n[:tag] == "references"
+        unless n[:tag] == "annex" || n[:tag] == "references"
           warn "ISO style: Only annexes and references can follow clauses"
         end
         while n[:tag] == "annex"

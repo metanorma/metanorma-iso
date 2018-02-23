@@ -47,7 +47,7 @@ module Asciidoctor
       end
 
       def sidebar(node)
-        return unless is_draft
+        return unless draft?
         noko do |xml|
           xml.review **attr_code(sidebar_attrs(node)) do |r|
             wrap_in_para(node, r)

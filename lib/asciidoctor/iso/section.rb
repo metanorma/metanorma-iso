@@ -32,7 +32,7 @@ module Asciidoctor
           when "patent notice" then patent_notice_parse(xml, node)
           when "scope" then scope_parse(a, xml, node)
           when "normative references" then norm_ref_parse(a, xml, node)
-          when "terms and definitions", 
+          when "terms and definitions",
             "terms, definitions, symbols and abbreviated terms"
             @term_def = true
             term_def_parse(a, xml, node, true)
@@ -103,7 +103,7 @@ module Asciidoctor
 
       def term_def_subclause_parse(attrs, xml, node)
         # subclause contains subclauses
-        sub = node.find_by(context: :section) {|s| s.level == node.level + 1 } 
+        sub = node.find_by(context: :section) { |s| s.level == node.level + 1 }
         sub.empty? || (return term_def_parse(attrs, xml, node, false))
         (node.title.downcase == "symbols and abbreviated terms") &&
           (return symbols_parse(attrs, xml, node))

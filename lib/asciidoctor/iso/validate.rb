@@ -50,7 +50,7 @@ module Asciidoctor
         root.xpath(SECTIONS_XPATH).each do |s|
           title = s.at("./title").text
           s.xpath("./subsection | ./terms").each do |ss|
-            subtitle = ss.at("./title") 
+            subtitle = ss.at("./title")
             !subtitle&.text&.empty? ||
               warn("#{title}: each first-level subclause must have a title")
           end
@@ -119,7 +119,7 @@ module Asciidoctor
           (target = root.at("//*[@id = '#{t['target']}']")) ||
             warn("ISO: #{t['target']} is not a real reference!")
           if target&.at("./ancestor::*[@obligation = 'normative']")
-            warn "ISO: 'see #{t.to_s}' is pointing to a normative section"
+            warn "ISO: 'see #{t}' is pointing to a normative section"
           end
         end
       end
@@ -130,7 +130,7 @@ module Asciidoctor
           next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
           target = root.at("//*[@id = '#{t['bibitemid']}']")
           if target.at("./ancestor::references[title = 'Normative References']")
-            warn "ISO: 'see #{t.to_s}' is pointing to a normative reference"
+            warn "ISO: 'see #{t}' is pointing to a normative reference"
           end
         end
       end
@@ -166,7 +166,7 @@ module Asciidoctor
           n.elements.each do |e|
             e.traverse do |e1|
               next unless e1.element?
-              e1.each { |k, v| e.delete(k) }
+              e1.each_key { |k| e.delete(k) }
             end
           end
         end
@@ -175,7 +175,7 @@ module Asciidoctor
 
       def validate(doc)
         content_validate(doc)
-        schema_validate(formattedstr_strip(doc.dup), 
+        schema_validate(formattedstr_strip(doc.dup),
                         File.join(File.dirname(__FILE__), "isostandard.rng"))
       end
     end
