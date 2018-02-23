@@ -4,14 +4,9 @@ require "uri"
 module Asciidoctor
   module ISO
     module Section
-      @scope = false
       @biblio = false
       @term_def = false
       @norm_ref = false
-
-      def in_scope
-        @scope
-      end
 
       def in_biblio
         @biblio
@@ -57,8 +52,19 @@ module Asciidoctor
         end.join("\n")
       end
 
+      def set_obligation(attrs, node)
+        if node.attributes.has_key?("obligation")
+          attrs[:obligation] = node.attr("obligation")
+        elsif node.parent.attributes.has_key?("obligation")
+          attrs[:obligation] = node.parent.attr("obligation")
+        else
+          attrs[:obligation] = "normative"
+        end
+      end
+
       def clause_parse(attrs, xml, node)
         attrs["inline-header".to_sym] = true if node.option? "inline-header"
+        set_obligation(attrs, node)
         w = "Scope contains subsections: should be succint"
         style_warning(node, w, nil) if @scope
         # Not testing max depth of sections: Asciidoctor already limits
@@ -72,10 +78,7 @@ module Asciidoctor
 
       def annex_parse(attrs, xml, node)
         attrs["inline-header".to_sym] = true if node.option? "inline-header"
-        attrs[:obligation] = "informative"
-        if node.attributes.has_key?("obligation")
-          attrs[:obligation] = node.attr("obligation")
-        end
+        set_obligation(attrs, node)
         xml.annex **attr_code(attrs) do |xml_section|
           xml_section.title { |name| name << node.title }
           xml_section << node.content
