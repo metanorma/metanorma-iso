@@ -39,12 +39,12 @@ module Asciidoctor
         { format: "text/plain" }
       end
 
-      def ref_attributes
+      def ref_attributes(m)
         { id: m[:anchor], type: "standard" }
       end
 
       def isorefmatches(xml, m)
-        xml.bibitem **attr_code(ref_attributes) do |t|
+        xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
           t.date(m[:year], type: "published") if m[:year]
@@ -53,7 +53,7 @@ module Asciidoctor
       end
 
       def isorefmatches2(xml, m)
-        xml.bibitem **attr_code(ref_attributes) do |t|
+        xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
           t.date "--", type: "published"
@@ -63,7 +63,7 @@ module Asciidoctor
       end
 
       def isorefmatches3(xml, m)
-        xml.bibitem **attr_code(ref_attributes) do |t|
+        xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
           t.date(m[:year], type: "published") if m[:year]
