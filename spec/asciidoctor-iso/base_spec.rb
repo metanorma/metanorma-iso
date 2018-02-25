@@ -6,9 +6,9 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "generates output for the Rice document" do
-    system "rm -f rice.doc"
-    Asciidoctor.convert(File.read("spec/examples/rice.adoc"), backend: :iso, header_footer: true)
-    expect(File.exist?("rice.doc")).to be true
+    system "cd spec/examples; rm -f rice.doc; rm -f rice.html; asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
+    expect(File.exist?("spec/examples/rice.doc")).to be true
+    expect(File.exist?("spec/examples/rice.html")).to be true
   end
 
   it "processes a blank document" do
