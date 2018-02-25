@@ -15,11 +15,11 @@ module Asciidoctor
 
       def extract_localities(x)
         text = x.children.first.remove.text
-        while(m = LOCALITY_RE.match text)
+        while (m = LOCALITY_RE.match text)
           ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
           refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
-          locality = m[:locality].downcase
-          x.add_child("<locality type='#{locality}'>#{ref}#{refto}</locality>")
+          x.add_child("<locality type='#{m[:locality].downcase}'>"\
+                      "#{ref}#{refto}</locality>")
           text = m[:text]
         end
         x.add_child(text)

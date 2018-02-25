@@ -40,15 +40,19 @@ module Asciidoctor
         xmldoc.traverse { |n| n.name = n.name.gsub(/_/, "-") }
       end
 
+      def align_callouts_to_annotations(callouts, annotations)
+        callouts.each_with_index do |c, i|
+          c["target"] = UUIDTools::UUID.random_create
+          annotations[i]["id"] = c["target"]
+        end
+      end
+
       def callout_cleanup(xmldoc)
         xmldoc.xpath("//sourcecode").each do |x|
           callouts = x.elements.select { |e| e.name == "callout" }
           annotations = x.elements.select { |e| e.name == "annotation" }
           if callouts.size == annotations.size
-            callouts.each_with_index do |c, i|
-              c["target"] = UUIDTools::UUID.random_create
-              annotations[i]["id"] = c["id"]
-            end
+            align_callouts_to_annotations(callouts, annotations)
           else
             warn "#{x['id']}: mismatch of callouts and annotations"
           end

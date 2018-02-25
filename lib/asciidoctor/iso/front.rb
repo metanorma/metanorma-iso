@@ -96,8 +96,8 @@ module Asciidoctor
       end
 
       def title_intro(node, t, lang, at)
-        node.attr("title-intro-#{lang}") &&
-          t.title_intro(**attr_code(at)) do |t1|
+        return unless node.attr("title-intro-#{lang}")
+        t.title_intro(**attr_code(at)) do |t1|
           t1 << node.attr("title-intro-#{lang}")
         end
       end
@@ -109,8 +109,8 @@ module Asciidoctor
       end
 
       def title_part(node, t, lang, at)
-        node.attr("title-part-#{lang}") &&
-          t.title_part(**attr_code(at)) do |t1|
+        return unless node.attr("title-part-#{lang}")
+        t.title_part(**attr_code(at)) do |t1|
           t1 << node.attr("title-part-#{lang}")
         end
       end
