@@ -335,7 +335,7 @@ RSpec.describe Asciidoctor::ISO do
          </editorialgroup>
        </bibdata><version/>
        <sections>
-         <clause id="reference" obligation="normative">
+         <clause id="reference" inline-header="false" obligation="normative">
          <title>Section</title>
          <p id="_">Inline Reference to <xref target="reference"/>
        Footnoted Reference to <xref target="reference"/>
