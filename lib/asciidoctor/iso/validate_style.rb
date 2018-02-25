@@ -57,32 +57,48 @@ module Asciidoctor
         end
       end
 
-      # leaving out as problematic: N J K C S T H h d B o E
-      SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|"\
-        "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|"\
-        "bit|kB|MB|Hart|nat|Sh|var)".freeze
-
       def style(n, t)
+        style_number(n, t)
+        style_percent(n, t)
+        style_abbrev(n, t)
+        style_units(n, t)
+      end
+
+      def style_number(n, t)
         style_two_regex_not_prev(n, t, /^(?<num>[0-9]{4,})$/,
                                  %r{(\bISO|\bIEC|\bIEEE/)$},
                                  "number not broken up in threes")
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
                     "possible decimal point", n, t)
+        style_regex(/\b(?<num>billion[s]?)\b/i,
+                    "ambiguous number", n, t)
+      end
+
+      def style_percent(n, t)
         style_regex(/\b(?<num>[0-9.,]+%)/,
                     "no space before percent sign", n, t)
         style_regex(/\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
                     "unbracketed tolerance before percent sign", n, t)
+      end
+
+      def style_abbrev(n, t)
         style_regex(/(^|\s)(?!e\.g\.|i\.e\.)
                     (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
                       "no dots in abbreviations", n, t)
+        style_regex(/\b(?<num>ppm)\b/i,
+                    "language-specific abbreviation", n, t)
+      end
+
+      # leaving out as problematic: N J K C S T H h d B o E
+      SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|"\
+        "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|"\
+        "bit|kB|MB|Hart|nat|Sh|var)".freeze
+
+      def style_units(n, t)
         style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,
                     "space between number and degrees/minutes/seconds", n, t)
         style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/,
                     "no space between number and SI unit", n, t)
-        style_regex(/\b(?<num>ppm)\b/i,
-                    "language-specific abbreviation", n, t)
-        style_regex(/\b(?<num>billion[s]?)\b/i,
-                    "ambiguous number", n, t)
         style_non_std_units(n, t)
       end
 

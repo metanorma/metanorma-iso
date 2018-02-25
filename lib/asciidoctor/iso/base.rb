@@ -44,15 +44,16 @@ module Asciidoctor
         )
       end
 
-      def init
+      def init(node)
         @fn_number = 0
         @draft = false
         @refids = Set.new
         @anchors = {}
+        @draft = node.attributes.has_key?("draft")
       end
 
       def document(node)
-        init
+        init(node)
         ret1 = makexml(node)
         ret = ret1.to_xml(indent: 2)
         filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
@@ -64,7 +65,6 @@ module Asciidoctor
 
       def makexml(node)
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
-        @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
@@ -92,11 +92,15 @@ module Asciidoctor
         end
       end
 
+      def term_source_attr(seen_xref)
+        { bibitemid: seen_xref.children[0]["target"],
+          format: seen_xref.children[0]["format"],
+          type: "inline" }
+      end
+
       def add_term_source(xml_t, seen_xref, m)
-        attr = { bibitemid: seen_xref.children[0]["target"],
-                 format: seen_xref.children[0]["format"],
-                 type: "inline" }
-        xml_t.origin seen_xref.children[0].content, **attr_code(attr)
+        xml_t.origin seen_xref.children[0].content,
+          **attr_code(term_source_attr(seen_xref))
         m[:text] && xml_t.modification do |mod|
           mod.p { |p| p << m[:text].sub(/^\s+/, "") }
         end

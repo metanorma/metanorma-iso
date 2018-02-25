@@ -78,15 +78,11 @@ module Asciidoctor
       end
 
       def page_break(_node)
-        noko do |xml|
-          xml.pagebreak
-        end.join("\n")
+        noko { |xml| xml.pagebreak }.join("\n")
       end
 
       def thematic_break(_node)
-        noko do |xml|
-          xml.hr
-        end.join("\n")
+        noko { |xml| xml.hr }.join("\n")
       end
 
       def inline_quoted(node)

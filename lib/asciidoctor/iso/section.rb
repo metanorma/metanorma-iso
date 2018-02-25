@@ -53,22 +53,23 @@ module Asciidoctor
       end
 
       def set_obligation(attrs, node)
-        if node.attributes.has_key?("obligation")
-          attrs[:obligation] = node.attr("obligation")
-        elsif node.parent.attributes.has_key?("obligation")
-          attrs[:obligation] = node.parent.attr("obligation")
-        else
-          attrs[:obligation] = "normative"
-        end
+        attrs[:obligation] = if node.attributes.has_key?("obligation")
+                               node.attr("obligation")
+                             elsif node.parent.attributes.has_key?("obligation")
+                               node.parent.attr("obligation")
+                             else
+                               "normative"
+                             end
       end
 
+      SCOPE_WARN = "Scope contains subsections: should be succint".freeze
+
+      # Not testing max depth of sections: Asciidoctor already limits
+      # it to 5 levels of nesting
       def clause_parse(attrs, xml, node)
-        attrs["inline-header".to_sym] = true if node.option? "inline-header"
+        attrs["inline-header".to_sym] = node.option? "inline-header"
         set_obligation(attrs, node)
-        w = "Scope contains subsections: should be succint"
-        style_warning(node, w, nil) if @scope
-        # Not testing max depth of sections: Asciidoctor already limits
-        # it to 5 levels of nesting
+        style_warning(node, SCOPE_WARN, nil) if @scope
         sect = node.level == 1 ? "clause" : "subsection"
         xml.send sect, **attr_code(attrs) do |xml_section|
           xml_section.title { |n| n << node.title } unless node.title.nil?
@@ -77,7 +78,7 @@ module Asciidoctor
       end
 
       def annex_parse(attrs, xml, node)
-        attrs["inline-header".to_sym] = true if node.option? "inline-header"
+        attrs["inline-header".to_sym] = node.option? "inline-header"
         set_obligation(attrs, node)
         xml.annex **attr_code(attrs) do |xml_section|
           xml_section.title { |name| name << node.title }
@@ -105,7 +106,7 @@ module Asciidoctor
         # subclause contains subclauses
         sub = node.find_by(context: :section) { |s| s.level == node.level + 1 }
         sub.empty? || (return term_def_parse(attrs, xml, node, false))
-        (node.title.downcase == "symbols and abbreviated terms") &&
+        node.title.casecmp("symbols and abbreviated terms", 0) &&
           (return symbols_parse(attrs, xml, node))
         xml.term **attr_code(attrs) do |xml_section|
           xml_section.preferred { |name| name << node.title }
@@ -116,7 +117,7 @@ module Asciidoctor
       def term_def_title(toplevel, node)
         return node.title unless toplevel
         sub = node.find_by(context: :section) do |s|
-          s.title.downcase == "symbols and abbreviated terms"
+          s.title.casecmp("symbols and abbreviated terms", 0)
         end
         return "Terms and Definitions" if sub.empty?
         "Terms, Definitions, Symbols and Abbreviated Terms"
@@ -125,8 +126,7 @@ module Asciidoctor
       def term_def_parse(attrs, xml, node, toplevel)
         xml.terms **attr_code(attrs) do |section|
           section.title { |t| t << term_def_title(toplevel, node) }
-          (s = node.attr("source")) &&
-            s.split(/,/).each do |s1|
+          (s = node.attr("source")) && s.split(/,/).each do |s1|
             section.source(nil, **attr_code(target: s1, type: "inline"))
           end
           section << node.content

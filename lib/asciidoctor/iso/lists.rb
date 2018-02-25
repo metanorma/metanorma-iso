@@ -39,8 +39,11 @@ module Asciidoctor
         { format: "text/plain" }
       end
 
+      def ref_attributes
+        { id: m[:anchor], type: "standard" }
+      end
+
       def isorefmatches(xml, m)
-        ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
@@ -50,7 +53,6 @@ module Asciidoctor
       end
 
       def isorefmatches2(xml, m)
-        ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
@@ -61,7 +63,6 @@ module Asciidoctor
       end
 
       def isorefmatches3(xml, m)
-        ref_attributes = { id: m[:anchor], type: "standard" }
         xml.bibitem **attr_code(ref_attributes) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
@@ -71,16 +72,14 @@ module Asciidoctor
       end
 
       def refitem(xml, item, node)
-        m = NON_ISO_REF.match item
-        if m.nil? then Utils::warning(node, "no anchor on reference", item)
-        else
-          xml.bibitem **attr_code(id: m[:anchor]) do |t|
-            t.formattedref **{ format: "application/x-isodoc+xml" } do |i|
-              i << ref_normalise_no_format(m[:text])
-            end
-            code = m[:code]
-            t.docidentifier(/^\d+$/.match?(code) ? "[#{code}]" : code)
+        m = NON_ISO_REF.match(item) ||
+          (Utils::warning(node, "no anchor on reference", item) && return)
+        xml.bibitem **attr_code(id: m[:anchor]) do |t|
+          t.formattedref **{ format: "application/x-isodoc+xml" } do |i|
+            i << ref_normalise_no_format(m[:text])
           end
+          code = m[:code]
+          t.docidentifier(/^\d+$/.match?(code) ? "[#{code}]" : code)
         end
       end
 
@@ -113,10 +112,17 @@ module Asciidoctor
       \[(?<code>[^\]]+)\]</ref>,?\s
       (?<text>.*)$}xm
 
-      def reference1(node, item, xml, normative)
+      NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
+
+      def reference1_matches(item)
         matched = ISO_REF.match item
         matched2 = ISO_REF_NO_YEAR.match item
         matched3 = ISO_REF_ALL_PARTS.match item
+        [matched, matched2, matched3]
+      end
+
+      def reference1(node, item, xml, normative)
+        matched, matched2, matched3 = reference1_matches(item)
         if matched3.nil? && matched2.nil? && matched.nil?
           refitem(xml, item, node)
         elsif !matched.nil? then isorefmatches(xml, matched)
@@ -124,8 +130,7 @@ module Asciidoctor
         elsif !matched3.nil? then isorefmatches3(xml, matched3)
         end
         if matched3.nil? && matched2.nil? && matched.nil? && normative
-          w = "non-ISO/IEC reference not expected as normative"
-          Utils::warning(node, w, item)
+          Utils::warning(node, NORM_ISO_WARN, item)
         end
       end
 

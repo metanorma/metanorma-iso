@@ -13,7 +13,6 @@ module Asciidoctor
             %i(head body foot).reject do |tblsec|
               node.rows[tblsec].empty?
             end
-            # xml_table.name node.title if node.title?
             table_name(node, xml_table)
             table_head_body_and_foot node, xml_table
           end

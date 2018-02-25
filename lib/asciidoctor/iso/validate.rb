@@ -27,6 +27,9 @@ module Asciidoctor
           warn("No English Title Part!")
         (!title_part_en.nil? && title_part_fr.nil?) &&
           warn("No French Title Part!")
+      end
+
+      def title_subpart_validate(root)
         subpart = root.at("//bibdata/docidentifier/project-number[@subpart]")
         iec = root.at("//bibdata/contributor[xmlns:role/@type = 'publisher']/"\
                       "organization[name = 'IEC']")
@@ -64,25 +67,24 @@ module Asciidoctor
           sublabel = s&.at("./title")&.text || s["id"]
           title_all_siblings(s.xpath("./subsection | ./terms"), sublabel)
           subtitle = s.at("./title")
-          notitle = true if !subtitle || subtitle.text.empty?
-          withtitle = true if !subtitle&.text&.empty?
+          notitle = notitle || (!subtitle || subtitle.text.empty?)
+          withtitle = withtitle || !subtitle&.text&.empty?
         end
-        if notitle && withtitle
+        notitle && withtitle &&
           warn("#{label}: all subclauses must have a title, or none")
-        end
       end
 
       def title_validate(root)
         title_intro_validate(root)
         title_part_validate(root)
+        title_subpart_validate(root)
         title_names_type_validate(root)
         title_first_level_validate(root)
         title_all_siblings(root.xpath(SECTIONS_XPATH), "(top level)")
       end
 
       def onlychild_clause_validate(root)
-        q = "//subsection"
-        root.xpath(q).each do |c|
+        root.xpath("//subsection").each do |c|
           next unless c.xpath("../subsection").size == 1
           title = c.at("./title")
           location = c["id"] || c.text[0..60] + "..."
@@ -93,8 +95,8 @@ module Asciidoctor
 
       def iso8601_validate(root)
         root.xpath("//review/@date | //revision-date").each do |d|
-          /^\d{8}(T\d{4,6})?$/.match? d.text or
-            warn "ISO style: #{d.text} is not an ISO 8601 date"
+          /^\d{8}(T\d{4,6})?$/.match?(d.text) ||
+            warn("ISO style: #{d.text} is not an ISO 8601 date")
         end
       end
 

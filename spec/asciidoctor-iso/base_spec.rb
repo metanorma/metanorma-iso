@@ -5,6 +5,12 @@ RSpec.describe Asciidoctor::ISO do
     expect(Asciidoctor::ISO::VERSION).not_to be nil
   end
 
+  it "generates output for the Rice document" do
+    system "rm -f rice.doc"
+    Asciidoctor.convert(File.read("spec/examples/rice.adoc"), backend: :iso, header_footer: true)
+    expect(File.exist?("rice.doc")).to be true
+  end
+
   it "processes a blank document" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
