@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: e1b30cb237fe8d4b9e8f9d7ec9c8f013d86f1982
+  revision: 481fe9f316b011f2985cf87e1ced42bbd05a8480
   specs:
     html2doc (0.6.2)
       asciimath
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: f4e437422feb2316f3519f1c987e1ac12a8085f5
+  revision: d207b31378364fae1edb6cef87809396a339607c
   specs:
     isodoc (0.4.5)
       asciimath
@@ -53,7 +53,7 @@ GEM
     docile (1.1.5)
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
-    ffi (1.9.22)
+    ffi (1.9.23)
     formatador (0.2.5)
     guard (2.14.2)
       formatador (>= 0.2.4)
