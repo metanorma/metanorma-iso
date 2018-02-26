@@ -20,48 +20,8 @@ RSpec.describe Asciidoctor::ISO do
       List F:: List G
 
     INPUT
-    expect(strip_guid(output)).to be_equivalent_to <<~'OUTPUT'
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+    expect(strip_guid(output)).to be_equivalent_to <<~"OUTPUT"
+            #{BLANK_HDR}
        <sections>
          <ul id="_">
          <li>
@@ -146,48 +106,8 @@ RSpec.describe Asciidoctor::ISO do
       Note 3.
 
     INPUT
-    expect(strip_guid(output)).to be_equivalent_to <<~'OUTPUT'
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+    expect(strip_guid(output)).to be_equivalent_to <<~"OUTPUT"
+            #{BLANK_HDR}
        <sections><ul id="id">
          <li>
            <p id="_">First</p>

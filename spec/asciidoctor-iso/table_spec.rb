@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes basic tables" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -15,47 +15,7 @@ RSpec.describe Asciidoctor::ISO do
       h|1 |2 |3
       |===
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections>
          <table id="_">
          <name>Table Name</name>
@@ -80,7 +40,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes complex tables" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -114,47 +74,7 @@ RSpec.describe Asciidoctor::ISO do
       5+a| Live insects shall not be present. Dead insects shall be included in extraneous matter.
       |===
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections>
          <table id="_">
          <name>Maximum permissible mass fraction of defects</name>

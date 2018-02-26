@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes sections" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -51,47 +51,7 @@ RSpec.describe Asciidoctor::ISO do
 
       === Bibliography Subsection
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <introduction id="_" obligation="informative"><title>Introduction</title><subsection id="_" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </subsection>
@@ -140,7 +100,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes section obligations" do
-     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -157,47 +117,7 @@ RSpec.describe Asciidoctor::ISO do
       [appendix,obligation=informative]
       == Annex
      INPUT
-            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+             #{BLANK_HDR}
        <sections><clause id="_" inline-header="false" obligation="informative">
          <title>Clause 1</title>
          <subsection id="_" inline-header="false" obligation="informative">
@@ -215,7 +135,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "processes inline headers" do
-     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -232,47 +152,7 @@ RSpec.describe Asciidoctor::ISO do
       [%inline-header]
       === Clause Aa
      INPUT
-            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+             #{BLANK_HDR}
        <sections><clause id="_" inline-header="false" obligation="normative">
          <title>Clause 1</title>
          <subsection id="_" inline-header="true" obligation="normative">
@@ -290,7 +170,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
   it "processes blank headers" do
-     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -301,47 +181,7 @@ RSpec.describe Asciidoctor::ISO do
       === {blank}
 
      INPUT
-            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+             #{BLANK_HDR}
        <sections>
          <clause id="_" inline-header="false" obligation="normative">
          <title>Clause 1</title>
@@ -354,7 +194,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "processes term document sources" do
-     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -364,47 +204,7 @@ RSpec.describe Asciidoctor::ISO do
       == Terms and Definitions
 
      INPUT
-            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+             #{BLANK_HDR}
        <sections>
          <terms id="_" obligation="normative">
          <title>Terms and Definitions</title>

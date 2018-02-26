@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes inline_quoted formatting" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -22,47 +22,7 @@ RSpec.describe Asciidoctor::ISO do
       [strike]#strike#
       [smallcap]#smallcap#
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections>
          <em>emphasis</em>
        <strong>strong</strong>
@@ -83,7 +43,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes breaks" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -96,47 +56,7 @@ RSpec.describe Asciidoctor::ISO do
 
       <<<
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections><p id="_">Line break<br/>
        line break</p>
        <hr/>
@@ -146,7 +66,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes links" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -156,47 +76,7 @@ RSpec.describe Asciidoctor::ISO do
       http://example.com[]
       http://example.com[Link]
     INPUT
-          <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections>
          <p id="_">mailto:fred@example.com
        <link target="http://example.com"/>
@@ -207,7 +87,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "processes bookmarks" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -215,47 +95,7 @@ RSpec.describe Asciidoctor::ISO do
 
       Text [[bookmark]] Text
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections>
          <p id="_">Text <bookmark id="bookmark"/> Text</p>
        </sections>
@@ -264,7 +104,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
     it "processes crossreferences" do
-      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -278,48 +118,8 @@ RSpec.describe Asciidoctor::ISO do
       Inline Reference with Text to <<reference,text>>
       Footnoted Reference with Text to <<reference,fn: text>>
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
-       <sections>
+       #{BLANK_HDR}
+        <sections>
          <clause id="reference" inline-header="false" obligation="normative">
          <title>Section</title>
          <p id="_">Inline Reference to <xref target="reference"/>
@@ -333,7 +133,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
     it "processes bibliographic anchors" do
-      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -346,47 +146,7 @@ RSpec.describe Asciidoctor::ISO do
       * [[[ISO713]]] Reference
 
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections>
 
        </sections><references id="_" obligation="informative">
@@ -405,7 +165,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes footnotes" do
-      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -413,47 +173,7 @@ RSpec.describe Asciidoctor::ISO do
 
       Hello!footnote:[Footnote text]
     INPUT
-           <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
-         <title>
-         </title>
-         <title>
-         </title>
-         <docidentifier>
-           <project-number/>
-         </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>ISO</name>
-           </organization>
-         </contributor>
-         <script>Latn</script>
-         <status>
-           <stage>60</stage>
-           <substage>60</substage>
-         </status>
-         <copyright>
-           <from>2018</from>
-           <owner>
-             <organization>
-               <name>ISO</name>
-             </organization>
-           </owner>
-         </copyright>
-         <editorialgroup>
-           <technical-committee/>
-           <subcommittee/>
-           <workgroup/>
-         </editorialgroup>
-       </bibdata>
+            #{BLANK_HDR}
        <sections>
          <p id="_">Hello!<fn reference="1">
          <p id="_">Footnote text</p>
