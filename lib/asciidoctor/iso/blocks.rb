@@ -8,23 +8,19 @@ module Asciidoctor
         { id: Utils::anchor_or_uuid(node) }
       end
 
+      # open block is a container of multiple blocks,
+      # treated as a single block.
+      # We append each contained block to its parent
       def open(node)
-        # open block is a container of multiple blocks,
-        # treated as a single block.
-        # We append each contained block to its parent
         result = []
-        if node.blocks?
-          node.blocks.each do |b|
-            result << send(b.context, b)
-          end
-        else
-          result = paragraph(node)
+        node.blocks.each do |b|
+          result << send(b.context, b)
         end
         result
       end
 
+      # NOTE: html escaping is performed by Nokogiri
       def stem(node)
-        # NOTE: html escaping is performed by Nokogiri
         stem_content = node.lines.join("\n")
         noko do |xml|
           xml.formula **id_attr(node) do |s|

@@ -31,7 +31,7 @@ module Asciidoctor
 
       def title_subpart_validate(root)
         subpart = root.at("//bibdata/docidentifier/project-number[@subpart]")
-        iec = root.at("//bibdata/contributor[xmlns:role/@type = 'publisher']/"\
+        iec = root.at("//bibdata/contributor[role/@type = 'publisher']/"\
                       "organization[name = 'IEC']")
         warn("Subpart defined on non-IEC document!") if subpart && !iec
       end
