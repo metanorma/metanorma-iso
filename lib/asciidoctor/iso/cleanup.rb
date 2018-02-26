@@ -33,7 +33,19 @@ module Asciidoctor
         origin_cleanup(xmldoc)
         element_name_cleanup(xmldoc)
         footnote_renumber(xmldoc)
+        empty_element_cleanup(xmldoc)
         xmldoc
+      end
+
+      TEXT_ELEMS = %w{status language script version author name callout phone
+      email street city state country postcode identifier referenceFrom
+      referenceTo docidentifier prefix initial addition surname forename title
+      draft secretariat title-main title-intro title-part}
+
+      def empty_element_cleanup(xmldoc)
+        xmldoc.xpath("//" + TEXT_ELEMS.join(" | //")).each do |x|
+          x.remove if x.children.empty?
+        end
       end
 
       def element_name_cleanup(xmldoc)
