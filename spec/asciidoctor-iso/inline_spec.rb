@@ -26,10 +26,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -46,7 +44,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -65,7 +62,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
          <em>emphasis</em>
        <strong>strong</strong>
@@ -103,10 +100,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -123,7 +118,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -142,7 +136,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections><p id="_">Line break<br/>
        line break</p>
        <hr/>
@@ -166,10 +160,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -186,7 +178,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -205,7 +196,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
          <p id="_">mailto:fred@example.com
        <link target="http://example.com"/>
@@ -228,10 +219,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -248,7 +237,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -267,7 +255,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
          <p id="_">Text <bookmark id="bookmark"/> Text</p>
        </sections>
@@ -294,10 +282,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -314,7 +300,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -333,7 +318,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
          <clause id="reference" inline-header="false" obligation="normative">
          <title>Section</title>
@@ -365,10 +350,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -385,7 +368,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -404,7 +386,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
 
        </sections><references id="_" obligation="informative">
@@ -435,10 +417,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -455,7 +435,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -474,7 +453,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
          <p id="_">Hello!<fn reference="1">
          <p id="_">Footnote text</p>

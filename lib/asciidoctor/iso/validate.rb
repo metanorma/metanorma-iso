@@ -40,7 +40,7 @@ module Asciidoctor
         doctypes = /International\sStandard | Technical\sSpecification |
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
         title_main_en = root.at("//title-main[@language='en']")
-        if doctypes.match? title_main_en.text
+        if !title_main_en.nil? && doctypes.match?(title_main_en.text)
           warn "Main Title may name document type"
         end
         title_intro_en = root.at("//title-intro[@language='en']")

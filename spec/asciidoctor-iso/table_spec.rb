@@ -19,10 +19,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -39,7 +37,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -58,7 +55,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
          <table id="_">
          <name>Table Name</name>
@@ -121,10 +118,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
-           <title-main language="en" format="text/plain"/>
          </title>
          <title>
-           <title-main language="fr" format="text/plain"/>
          </title>
          <docidentifier>
            <project-number/>
@@ -141,7 +136,6 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <language/>
          <script>Latn</script>
          <status>
            <stage>60</stage>
@@ -160,7 +154,7 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
-       </bibdata><version/>
+       </bibdata>
        <sections>
          <table id="_">
          <name>Maximum permissible mass fraction of defects</name>
