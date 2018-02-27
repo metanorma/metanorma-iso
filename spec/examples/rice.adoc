@@ -664,6 +664,9 @@ _____
 [source,ruby]
 --
 puts "Hello, world."
+%w{a b c}.each do |x|
+  puts x
+end
 --
 ====
 

@@ -275,5 +275,146 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
   end
 
+    it "processes preambles" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      This is a preamble
+
+      == Section 1
+      INPUT
+       #{BLANK_HDR}
+             <foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="_">This is a preamble</p>
+       </foreword><sections>
+       <clause id="_" inline-header="false" obligation="normative">
+         <title>Section 1</title>
+       </clause></sections>
+       </iso-standard>
+      OUTPUT
+    end
+
+    it "processes images" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      .Split-it-right sample divider
+      image::spec/examples/rice_images/rice_image1.png[]
+ 
+      INPUT
+       #{BLANK_HDR}
+              <sections>
+         <figure id="_">
+         <name>Split-it-right sample divider</name>
+                  <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG"/>
+       </figure>
+       </sections>
+       </iso-standard>
+      OUTPUT
+    end
+
+   it "accepts width and height attributes on images" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      [height=4,width=3]
+      image::spec/examples/rice_images/rice_image1.png[]
+
+      INPUT
+       #{BLANK_HDR}
+              <sections>
+         <figure id="_">
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="4" width="3"/>
+       </figure>
+       </sections>
+       </iso-standard>
+      OUTPUT
+    end
+
+   it "accepts alignment attribute on paragraphs" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      [align=right]
+      This para is right-aligned.
+      INPUT
+       #{BLANK_HDR}
+      <sections>
+         <p align="right" id="_">This para is right-aligned.</p>
+       </sections>
+      </iso-standard>
+      OUTPUT
+    end
+
+    it "processes blockquotes" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      [quote, ISO, "ISO7301,section 1"]
+      ____
+      Block quotation
+      ____
+      INPUT
+       #{BLANK_HDR}
+       <sections>
+         <quote id="_">
+         <source type="inline" bibitemid="ISO7301" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></source>
+         <author>ISO</author>
+         <p id="_">Block quotation</p>
+       </quote>
+       </sections>
+       </iso-standard>
+      OUTPUT
+    end
+
+    it "processes source code" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      [source,ruby]
+      --
+      puts "Hello, world."
+      %w{a b c}.each do |x|
+        puts x
+      end
+      --
+      INPUT
+       #{BLANK_HDR}
+       <sections>
+         <sourcecode id="_">puts "Hello, world."
+       %w{a b c}.each do |x|
+         puts x
+       end</sourcecode>
+       </sections>
+       </iso-standard>
+      OUTPUT
+    end
+
+
 
 end
