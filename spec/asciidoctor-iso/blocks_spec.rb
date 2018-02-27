@@ -201,7 +201,7 @@ RSpec.describe Asciidoctor::ISO do
       INPUT
       #{BLANK_HDR}
       <sections>
-         <admonition id="_" type="caution"><p id="_">While werewolves are hardy community members, keep in mind the following dietary concerns:</p>
+         <admonition id="_" type="safety precautions"><p id="_">While werewolves are hardy community members, keep in mind the following dietary concerns:</p>
        <ol id="_" type="arabic">
          <li>
            <p id="_">They are allergic to cinnamon.</p>
@@ -216,6 +216,62 @@ RSpec.describe Asciidoctor::ISO do
        </sections>
        </iso-standard>
 
+      OUTPUT
+  end
+
+  it "processes term examples" do
+          expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      == Terms and Definitions
+
+      === Term1
+
+      [example]
+      This is an example
+      INPUT
+              #{BLANK_HDR}
+              <sections>
+         <terms id="_" obligation="normative">
+         <title>Terms and Definitions</title>
+         <term id="_">
+         <preferred>Term1</preferred>
+         <termexample id="_">
+         <p id="_">This is an example</p>
+       </termexample>
+       </term>
+       </terms>
+       </sections>
+       </iso-standard>
+
+      OUTPUT
+  end
+
+    it "processes examples" do
+          expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      [example]
+      ====
+      This is an example
+
+      Amen
+      ====
+      INPUT
+              #{BLANK_HDR}
+       <sections>
+         <example id="_"><p id="_">This is an example</p>
+       <p id="_">Amen</p></example>
+       </sections>
+       </iso-standard>
       OUTPUT
   end
 
