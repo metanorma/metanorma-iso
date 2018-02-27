@@ -415,6 +415,38 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
     end
 
+    it "processes callouts" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      [source,ruby]
+      --
+      puts "Hello, world." <1>
+      %w{a b c}.each do |x|
+        puts x <2>
+      end
+      --
+      <1> This is one callout
+      <2> This is another callout
+      INPUT
+       #{BLANK_HDR}
+      <sections><sourcecode id="_">puts "Hello, world." <callout>1</callout>
+       %w{a b c}.each do |x|
+         puts x <callout>2</callout>
+       end</sourcecode>
+       <annotation id="1">
+         <p id="_">This is one callout</p>
+       </annotation><annotation id="2">
+         <p id="_">This is another callout</p>
+       </annotation></sections>
+       </iso-standard>
+      OUTPUT
+    end
+
 
 
 end

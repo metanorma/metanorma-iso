@@ -25,6 +25,22 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+  it "converts a blank document" do
+    system "rm -f test.doc"
+    expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+    INPUT
+    #{BLANK_HDR}
+<sections/>
+</iso-standard>
+    OUTPUT
+    expect(File.exist?("test.doc")).to be true
+  end
+
+
   it "processes default metadata" do
     expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
