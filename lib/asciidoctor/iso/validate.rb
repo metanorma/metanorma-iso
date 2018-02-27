@@ -137,12 +137,28 @@ module Asciidoctor
         end
       end
 
+      def termdef_warn(text, re, term, msg)
+        re.match?(text) && warn("ISO style: #{term}: #{msg}")
+      end
+
+      def termdef_style(xmldoc)
+        xmldoc.xpath("//term").each do |t|
+          para = t.at("./p") || return
+          term = t.at("preferred").text
+          termdef_warn(para.text, /^(the|a)\b/i, term,
+                       "term definition starts with article")
+          termdef_warn(para.text, /\.$/i, term,
+                       "term definition ends with period")
+        end
+      end
+
       def content_validate(doc)
         title_validate(doc.root)
         isosubgroup_validate(doc.root)
         section_validate(doc)
         iso8601_validate(doc.root)
         onlychild_clause_validate(doc.root)
+        termdef_style(doc.root)
         see_xrefs_validate(doc.root)
         see_erefs_validate(doc.root)
       end

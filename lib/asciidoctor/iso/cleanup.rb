@@ -84,23 +84,8 @@ module Asciidoctor
         align_callouts_to_annotations(xmldoc)
       end
 
-      def termdef_warn(text, re, term, msg)
-        re.match?(text) && warn("ISO style: #{term}: #{msg}")
-      end
-
-      def termdef_style(xmldoc)
-        xmldoc.xpath("//term").each do |t|
-          para = t.at("./p") || return
-          term = t.at("preferred").text
-          termdef_warn(para.text, /^(the|a)\b/i, term,
-                       "term definition starts with article")
-          termdef_warn(para.text, /\.$/i, term,
-                       "term definition ends with period")
-        end
-      end
-
       def termdef_stem_cleanup(xmldoc)
-        xmldoc.xpath("//termdef/p/stem").each do |a|
+        xmldoc.xpath("//term/p/stem").each do |a|
           if a.parent.elements.size == 1
             # para containing just a stem expression
             t = Nokogiri::XML::Element.new("admitted", xmldoc)
@@ -149,7 +134,6 @@ module Asciidoctor
         termdomain_cleanup(xmldoc)
         termdefinition_cleanup(xmldoc)
         termdef_boilerplate_cleanup(xmldoc)
-        termdef_style(xmldoc)
       end
 
       ELEMS_ALLOW_NOTES =
