@@ -1,2 +1,4 @@
 rfc2629*.* linguist-vendored
 mathml2omml*.* linguist-vendored
+*.html linguist-vendored
+*.css linguist-vendored

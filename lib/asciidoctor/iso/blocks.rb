@@ -189,13 +189,8 @@ module Asciidoctor
       def listing(node)
         # NOTE: html escaping is performed by Nokogiri
         noko do |xml|
-          if node.parent.context != :example
-            xml.example **id_attr(node) do |e|
-              e.sourcecode(**id_attr(node)) { |s| s << node.content }
-            end
-          else
             xml.sourcecode(**id_attr(node)) { |s| s << node.content }
-          end
+            # xml.sourcecode(**id_attr(node)) { |s| s << node.lines.join("\n") }
         end
       end
     end
