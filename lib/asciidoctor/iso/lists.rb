@@ -26,11 +26,11 @@ module Asciidoctor
         end.join("\n")
       end
 
-      def iso_publisher(t)
+      def iso_publisher(t, code)
         t.contributor do |c|
           c.role **{ type: "publisher" }
           c.organization do |aff|
-            aff.name "ISO"
+            aff.name code.gsub(%r{[/ \t].*$}, "")
           end
         end
       end
@@ -48,7 +48,7 @@ module Asciidoctor
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
           t.date(m[:year], type: "published") if m[:year]
-          iso_publisher(t)
+          iso_publisher(t, m[:code])
         end
       end
 
@@ -57,7 +57,7 @@ module Asciidoctor
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
           t.date "--", type: "published"
-          iso_publisher(t)
+          iso_publisher(t, m[:code])
           t.note(**plaintxt) { |p| p << "ISO DATE: #{m[:fn]}" }
         end
       end
@@ -67,7 +67,7 @@ module Asciidoctor
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
           t.date(m[:year], type: "published") if m[:year]
-          iso_publisher(t)
+          iso_publisher(t, m[:code])
         end
       end
 
@@ -105,8 +105,9 @@ module Asciidoctor
       <fn[^>]*>\s*<p>(?<fn>[^\]]+)</p>\s*</fn>,?\s?(?<text>.*)$}xm
 
       ISO_REF_ALL_PARTS = %r{^<ref\sid="(?<anchor>[^"]+)">
-      \[(?<code>(ISO|IEC)[^0-9]*\s[0-9]+)\s\(all\sparts\)\]</ref>(<p>)?,?\s?
-      (?<text>.*)(</p>)?$}xm
+      \[(?<code>(ISO|IEC)[^0-9]*\s[0-9]+)(:(?<year>[0-9]+))?\s
+      \(all\sparts\)\]</ref>,?\s
+      (?<text>.*)$}xm
 
       NON_ISO_REF = %r{^<ref\sid="(?<anchor>[^"]+)">
       \[(?<code>[^\]]+)\]</ref>,?\s
@@ -115,6 +116,7 @@ module Asciidoctor
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
 
       def reference1_matches(item)
+        puts item
         matched = ISO_REF.match item
         matched2 = ISO_REF_NO_YEAR.match item
         matched3 = ISO_REF_ALL_PARTS.match item
