@@ -52,23 +52,36 @@ module Asciidoctor
         xmldoc.traverse { |n| n.name = n.name.gsub(/_/, "-") }
       end
 
-      def align_callouts_to_annotations(callouts, annotations)
+      def link_callouts_to_annotations(callouts, annotations)
         callouts.each_with_index do |c, i|
-          c["target"] = UUIDTools::UUID.random_create
+          c["target"] = "_" + UUIDTools::UUID.random_create
           annotations[i]["id"] = c["target"]
         end
       end
 
-      def callout_cleanup(xmldoc)
+      def align_callouts_to_annotations(xmldoc)
         xmldoc.xpath("//sourcecode").each do |x|
           callouts = x.elements.select { |e| e.name == "callout" }
           annotations = x.elements.select { |e| e.name == "annotation" }
           if callouts.size == annotations.size
-            align_callouts_to_annotations(callouts, annotations)
+            link_callouts_to_annotations(callouts, annotations)
           else
             warn "#{x['id']}: mismatch of callouts and annotations"
           end
         end
+      end
+
+      def merge_annotations_into_sourcecode(xmldoc)
+        xmldoc.xpath("//sourcecode").each do |x|
+          while x&.next_element&.name == "annotation"
+            x.next_element.parent = x
+          end
+        end
+      end
+
+      def callout_cleanup(xmldoc)
+        merge_annotations_into_sourcecode(xmldoc)
+        align_callouts_to_annotations(xmldoc)
       end
 
       def termdef_warn(text, re, term, msg)

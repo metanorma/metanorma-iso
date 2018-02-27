@@ -22,7 +22,7 @@ RSpec.configure do |config|
 end
 
 def strip_guid(x)
-  x.gsub(%r{ id="_[^"]+"}, ' id="_"')
+  x.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
 end
 
 BLANK_HDR = <<~"HDR"

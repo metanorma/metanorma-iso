@@ -116,7 +116,6 @@ module Asciidoctor
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
 
       def reference1_matches(item)
-        puts item
         matched = ISO_REF.match item
         matched2 = ISO_REF_NO_YEAR.match item
         matched3 = ISO_REF_ALL_PARTS.match item

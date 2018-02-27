@@ -434,15 +434,15 @@ RSpec.describe Asciidoctor::ISO do
       <2> This is another callout
       INPUT
        #{BLANK_HDR}
-      <sections><sourcecode id="_">puts "Hello, world." <callout>1</callout>
+              <sections><sourcecode id="_">puts "Hello, world." <callout target="_">1</callout>
        %w{a b c}.each do |x|
-         puts x <callout>2</callout>
-       end</sourcecode>
-       <annotation id="1">
+         puts x <callout target="_">2</callout>
+       end<annotation id="_">
          <p id="_">This is one callout</p>
-       </annotation><annotation id="2">
+       </annotation><annotation id="_">
          <p id="_">This is another callout</p>
-       </annotation></sections>
+       </annotation></sourcecode>
+       </sections>
        </iso-standard>
       OUTPUT
     end
