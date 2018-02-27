@@ -447,6 +447,70 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
     end
 
+  it "processes unmodified term sources" do
+          expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      == Terms and Definitions
+
+      === Term1
+
+      [.source]
+      <<ISO2191,section 1>>
+      INPUT
+              #{BLANK_HDR}
+       <sections>
+         <terms id="_" obligation="normative">
+         <title>Terms and Definitions</title>
+         <term id="_">
+         <preferred>Term1</preferred>
+         <termsource status="identical">
+         <origin bibitemid="ISO2191" type="inline" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></origin>
+       </termsource>
+       </term>
+       </terms>
+       </sections>
+       </iso-standard>
+      OUTPUT
+  end
+
+  it "processes modified term sources" do
+          expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      == Terms and Definitions
+
+      === Term1
+
+      [.source]
+      <<ISO2191,section 1>>, with adjustments
+      INPUT
+              #{BLANK_HDR}
+            <sections>
+         <terms id="_" obligation="normative">
+         <title>Terms and Definitions</title>
+         <term id="_">
+         <preferred>Term1</preferred>
+         <termsource status="modified">
+         <origin bibitemid="ISO2191" type="inline" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></origin>
+         <modification>
+           <p id="_">with adjustments</p>
+         </modification>
+       </termsource>
+       </term>
+       </terms>
+       </sections>
+       </iso-standard>
+          OUTPUT
+  end
 
 
 end
