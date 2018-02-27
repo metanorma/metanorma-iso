@@ -72,7 +72,7 @@ module Asciidoctor
 
       def admonition_attrs(node)
         name = node.attr("name")
-        type = node.attr("type") && ["danger", "safety precautions"].each do |t|
+        (type = node.attr("type")) && ["danger", "safety precautions"].each do |t|
           name = t if type.casecmp(t).zero?
         end
         { id: Utils::anchor_or_uuid(node), type: name }
