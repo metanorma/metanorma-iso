@@ -7,6 +7,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       alt:[term1]
       deprecated:[term1]

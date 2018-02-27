@@ -7,6 +7,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       _emphasis_
       *strong*
@@ -48,6 +49,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       Line break +
       line break
@@ -71,6 +73,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       mailto:fred@example.com
       http://example.com[]
@@ -92,6 +95,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       Text [[bookmark]] Text
     INPUT
@@ -109,6 +113,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [[reference]]
       == Section
@@ -138,6 +143,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [bibliography]
       == Normative References
@@ -170,6 +176,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       Hello!footnote:[Footnote text]
     INPUT

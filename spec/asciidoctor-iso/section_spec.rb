@@ -7,6 +7,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       .Foreword
 
@@ -105,6 +106,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [obligation=informative]
       == Clause 1
@@ -140,6 +142,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       == Clause 1
 
@@ -175,6 +178,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       == Clause 1
 
@@ -199,6 +203,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [source="iso1234,iso5678"]
       == Terms and Definitions

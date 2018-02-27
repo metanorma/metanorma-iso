@@ -7,6 +7,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       * List 1
       * List 2
@@ -66,6 +67,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [[id]]
       * First

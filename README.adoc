@@ -453,9 +453,11 @@ render them.
 The gem relies on Asciidoctor document attributes to provide necessary
 metadata about the document. These include:
 
-`:nodoc`:: Do not generate Word and HTML output, only generate XML output.
+`:nodoc:`:: Do not generate Word and HTML output, only generate XML output.
 Can be used as a command-line option (like all other document attributes):
 `asciidoctor -a nodoc -b iso -r "asciidoctor-iso" a.adoc`
+
+`:novalid:`:: Suppress validation.
 
 `:docnumber:`:: The ISO document number (mandatory)
 

@@ -71,7 +71,7 @@ module Asciidoctor
         result = textcleanup(result.flatten * "\n")
         ret1 = cleanup(Nokogiri::XML(result))
         ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
-        validate(ret1)
+        validate(ret1) unless node.attr("novalid")
         ret1
       end
 

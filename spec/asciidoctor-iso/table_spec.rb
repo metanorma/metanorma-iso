@@ -7,6 +7,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       .Table Name
       |===
@@ -45,6 +46,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [cols="<,^,^,^,^",options="header,footer",headerrows=2]
       .Maximum permissible mass fraction of defects

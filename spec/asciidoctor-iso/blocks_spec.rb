@@ -7,6 +7,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       --
       x
@@ -30,6 +31,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [stem]
       ++++
@@ -54,6 +56,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
 
       [[foreword]]
       .Foreword
@@ -79,6 +82,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
       :draft: 1.2
 
       [[foreword]]
@@ -103,6 +107,58 @@ RSpec.describe Asciidoctor::ISO do
 
       OUTPUT
   end
+
+  it "processes term notes" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      == Terms and Definitions
+
+      === Term1
+
+      NOTE: This is a note
+      INPUT
+              #{BLANK_HDR}
+       <sections>
+         <terms id="_" obligation="normative">
+         <title>Terms and Definitions</title>
+         <term id="_">
+         <preferred>Term1</preferred>
+         <termnote id="_">
+         <p id="_">This is a note</p>
+       </termnote>
+       </term>
+       </terms>
+       </sections>
+       </iso-standard>
+      OUTPUT
+  end
+
+    it "processes notes" do
+      expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      NOTE: This is a note
+      INPUT
+              #{BLANK_HDR}
+       <sections>
+         <note id="_">
+         <p id="_">This is a note</p>
+       </note>
+       </sections>
+       </iso-standard>
+
+      OUTPUT
+  end
+
 
 
 end

@@ -17,6 +17,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
     INPUT
     #{BLANK_HDR}
 <sections/>
@@ -30,6 +31,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
       :docnumber: 1000
       :partnumber: 1
       :edition: 2
@@ -121,6 +123,7 @@ RSpec.describe Asciidoctor::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :novalid:
       :docnumber: 1000
       :partnumber: 1-1
       :tc-docnumber: 2000
