@@ -617,4 +617,4 @@ model document of an international standard. This repository includes:
 * the link:spec/examples/rice.doc[Word .doc rendering of the Rice document].
 * the link:spec/examples/rice.html[HTML rendering of the Rice document].
 
-
+See also `spec/asciidoctor-iso` for individual features.
