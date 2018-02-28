@@ -2,13 +2,8 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "removes empty text elements" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       == {blank}
     INPUT
        #{BLANK_HDR}
@@ -22,13 +17,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes stem-only terms as admitted" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
       === stem:[t_90]
@@ -50,16 +40,11 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "moves term domains out of the term definition paragraph" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
-      === stem:[t_90]
+      === Tempus
 
       domain:[relativity] Time
     INPUT
@@ -68,9 +53,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative">
          <title>Terms and Definitions</title>
          <term id="_">
-         <preferred>
-           <stem type="AsciiMath">t_90</stem>
-         </preferred>
+         <preferred>Tempus</preferred>
          <domain>relativity</domain><definition><p id="_"> Time</p></definition>
        </term>
        </terms>
@@ -80,7 +63,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "permits multiple blocks in term definition paragraph" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -114,21 +97,15 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "strips any initial boilerplate from terms and definitions" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :stem:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
       I am boilerplate
 
       * So am I
 
-      === stem:[t_90]
+      === Time
 
       This paragraph is extraneous
     INPUT
@@ -137,9 +114,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative"><title>Terms and Definitions</title>
      
        <term id="_">
-         <preferred>
-           <stem type="AsciiMath">t_90</stem>
-         </preferred>
+       <preferred>Time</preferred>
          <definition><p id="_">This paragraph is extraneous</p></definition>
        </term></terms>
        </sections>
@@ -148,14 +123,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "moves notes inside preceding blocks, if they are not at clause end" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :stem:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       [source,ruby]
       [1...x].each do |y|
         puts y
@@ -178,14 +147,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "does not move notes inside preceding blocks, if they are at clause end" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :stem:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       [source,ruby]
       [1...x].each do |y|
         puts y
@@ -205,14 +168,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "converts xrefs to references into erefs" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :stem:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       <<iso216>>
  
       [bibliography]     
@@ -245,14 +202,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "extracts localities from erefs" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :stem:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       <<iso216,whole,clause 3,example 9-11:the reference>>
 
       [bibliography]
@@ -285,14 +236,8 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "strips type from xrefs" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :stem:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       <<iso216>>
  
       == Clause
@@ -318,13 +263,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes localities in term sources" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
       === Term1
@@ -349,14 +289,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "removes extraneous material from Normative References" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :stem:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Normative References
 
@@ -378,6 +312,343 @@ RSpec.describe Asciidoctor::ISO do
            </organization>
          </contributor>
        </bibitem></references>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "inserts IDs into paragraphs" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      Paragraph
+    INPUT
+       #{BLANK_HDR}
+       <sections>
+         <p id="_">Paragraph</p>
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "inserts IDs into notes" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [example]
+      ====
+      NOTE: This note has no ID
+      ====
+    INPUT
+       #{BLANK_HDR}
+       <sections>
+         <example id="_">
+         <note id="_">
+         <p id="_">This note has no ID</p>
+       </note>
+       </example>
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "moves table key inside table" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      |===
+      |a |b |c
+      |===
+      
+      Key
+
+      a:: b
+    INPUT
+       #{BLANK_HDR}
+       <sections><table id="_">
+         <tbody>
+           <tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr>
+         </tbody>
+       <dl id="_">
+         <dt>a</dt>
+         <dd>
+           <p id="_">b</p>
+         </dd>
+       </dl></table>
+     
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "processes headerrows attribute for table without header rows" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [headerrows=3]
+      |===
+      |a |b |c
+      |a |b |c
+      |a |b |c
+      |a |b |c
+      |===
+    INPUT
+       #{BLANK_HDR}
+       <sections>
+             <table id="_"><thead><tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr><tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr><tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr></thead>
+         <tbody>
+           <tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr>
+         </tbody>
+       </table>
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "processes headerrows attribute for table with header rows" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [headerrows=3]
+      |===
+      |a |b |c
+
+      |a |b |c
+      |a |b |c
+      |a |b |c
+      |===
+    INPUT
+       #{BLANK_HDR}
+       <sections>
+         <table id="_">
+         <thead>
+           <tr>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
+           </tr>
+         <tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr><tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr></thead>
+         <tbody>
+
+
+           <tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr>
+         </tbody>
+       </table>
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "moves table notes inside table" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      |===
+      |a |b |c
+      |===
+      
+      NOTE: Note 1
+
+      NOTE: Note 2
+    INPUT
+       #{BLANK_HDR}
+              <sections><table id="_">
+         <tbody>
+           <tr>
+             <td align="left">a</td>
+             <td align="left">b</td>
+             <td align="left">c</td>
+           </tr>
+         </tbody>
+       <note id="_">
+         <p id="_">Note 1</p>
+       </note><note id="_">
+         <p id="_">Note 2</p>
+       </note></table>
+     
+       </sections>
+    OUTPUT
+  end
+
+  it "moves formula key inside formula" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [stem]
+      ++++
+      Formula
+      ++++
+
+      where
+
+      a:: b
+    INPUT
+       #{BLANK_HDR}
+       <sections><formula id="_">
+         <stem type="AsciiMath">Formula</stem>
+       <dl id="_">
+         <dt>a</dt>
+         <dd>
+           <p id="_">b</p>
+         </dd>
+       </dl></formula>
+     
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "moves footnotes inside figures" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      image::spec/examples/rice_images/rice_image1.png[]
+
+      footnote:[This is a footnote to a figure]
+
+      footnote:[This is another footnote to a figure]
+    INPUT
+       #{BLANK_HDR}
+       <sections><figure id="_">
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG"/>
+       <fn reference="a">
+         <p id="_">This is a footnote to a figure</p>
+       </fn><fn reference="b">
+         <p id="_">This is another footnote to a figure</p>
+       </fn></figure>
+     
+       </sections>
+
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "moves figure key inside figure" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      image::spec/examples/rice_images/rice_image1.png[]
+
+      Key
+
+      a:: b
+    INPUT
+       #{BLANK_HDR}
+       <sections><figure id="_">
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG"/>
+       <dl id="_">
+         <dt>a</dt>
+         <dd>
+           <p id="_">b</p>
+         </dd>
+       </dl></figure>
+     
+       </sections>
+
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "processes subfigures" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [[figureC-2]]
+      .Stages of gelatinization
+      ====
+      .Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)
+      image::spec/examples/rice_images/rice_image3_1.png[]
+      
+      .Intermediate stages: Some fully gelatinized kernels are visible
+      image::spec/examples/rice_images/rice_image3_2.png[]
+      
+      .Final stages: All kernels are fully gelatinized
+      image::spec/examples/rice_images/rice_image3_3.png[]
+      ====
+    INPUT
+       #{BLANK_HDR}
+              <sections>
+         <figure id="figureC-2"><figure id="_">
+         <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
+         <image src="spec/examples/rice_images/rice_image3_1.png" id="_" imagetype="PNG"/>
+       </figure>
+       <figure id="_">
+         <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
+         <image src="spec/examples/rice_images/rice_image3_2.png" id="_" imagetype="PNG"/>
+       </figure>
+       <figure id="_">
+         <name>Final stages: All kernels are fully gelatinized</name>
+         <image src="spec/examples/rice_images/rice_image3_3.png" id="_" imagetype="PNG"/>
+       </figure></figure>
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "numbers bibliographic notes and footnotes sequentially" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      footnote:[Footnote]
+
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 123:--]]] footnote:[The standard is in press] _Standard_
+
+      == Clause
+      footnote:[Footnote2]
+    INPUT
+       #{BLANK_HDR}
+       <foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="_"><fn reference="1">
+         <p id="_">Footnote</p>
+       </fn>
+       </p>
+       </foreword><sections>
+     
+       <clause id="_" inline-header="false" obligation="normative">
+         <title>Clause</title>
+         <p id="_"><fn reference="3">
+         <p id="_">Footnote2</p>
+       </fn>
+       </p>
+       </clause></sections><references id="_" obligation="informative">
+         <title>Normative References</title>
+         <bibitem id="iso123" type="standard">
+         <title format="text/plain">Standard</title>
+         <docidentifier>ISO 123</docidentifier>
+         <date type="published">--</date>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>ISO</name>
+           </organization>
+         </contributor>
+         <note format="text/plain" reference="2">ISO DATE: The standard is in press</note>
+       </bibitem>
+       </references>
        </iso-standard>
     OUTPUT
   end

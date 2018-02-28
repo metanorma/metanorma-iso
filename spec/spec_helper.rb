@@ -25,6 +25,15 @@ def strip_guid(x)
   x.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
 end
 
+ASCIIDOC_BLANK_HDR = <<~"HDR"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+HDR
+
 BLANK_HDR = <<~"HDR"
     <?xml version="1.0" encoding="UTF-8"?>
 <iso-standard xmlns="http://riboseinc.com/isoxml">

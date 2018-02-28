@@ -2,13 +2,8 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes basic tables" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       .Table Name
       |===
       |A |B |C
@@ -41,13 +36,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes complex tables" do
-    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       [cols="<,^,^,^,^",options="header,footer",headerrows=2]
       .Maximum permissible mass fraction of defects
       |===
@@ -240,12 +230,8 @@ RSpec.describe Asciidoctor::ISO do
 end
 
 RSpec.describe "warns when missing a title" do
-    specify { expect { Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true) }.to output(/Table should have title/).to_stderr }
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-
+    specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Table should have title/).to_stderr }
+      #{ASCIIDOC_BLANK_HDR}
       |===
       |A |B |C
 

@@ -2,13 +2,8 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes the Asciidoctor::ISO macros" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
       alt:[term1]
       deprecated:[term1]
       domain:[term1]

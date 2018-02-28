@@ -2,13 +2,8 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes simple lists" do
-    output = Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    output = Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      #{ASCIIDOC_BLANK_HDR}
       * List 1
       * List 2
       * List 3
@@ -62,13 +57,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "processes complex lists" do
-    output = Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-
+    output = Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      #{ASCIIDOC_BLANK_HDR}
       [[id]]
       * First
       * Second

@@ -32,10 +32,10 @@ module Asciidoctor
       end
 
       def header_rows_cleanup(xmldoc)
-        q = "//table[@headerrows]"
-        xmldoc.xpath(q).each do |s|
-          thead = s.at("./thead")
-          [1..s["headerrows"].to_i].each do
+        xmldoc.xpath("//table[@headerrows]").each do |s|
+          thead = s.at("./thead") ||
+            thead = s.children.first.add_previous_sibling("<thead/>").first
+          (thead.xpath("./tr").size...s["headerrows"].to_i).each do
             row = s.at("./tbody/tr")
             row.parent = thead
           end
@@ -131,53 +131,79 @@ module Asciidoctor
         end
       end
 
-      def other_footnote_renumber(xmldoc)
-        seen = {}
-        i = 0
-        xmldoc.xpath("//fn | //bibitem/note").each do |fn|
-          unless fn["table"]
-            if seen[fn.text] then outnum = seen[fn.text]
-            else
-              i += 1
-              outnum = i
-              seen[fn.text] = outnum
-            end
-            fn["reference"] = outnum.to_s
+      def other_footnote_renumber1(fn, i, seen, outnum)
+        unless fn["table"]
+          if seen[fn.text] then outnum = seen[fn.text]
+          else
+            i += 1
+            outnum = i
+            seen[fn.text] = outnum
           end
-          fn.delete("table")
+          fn["reference"] = outnum.to_s
         end
+        [i, seen, outnum]
       end
 
-      def footnote_renumber(xmldoc)
-        table_footnote_renumber(xmldoc)
-        other_footnote_renumber(xmldoc)
-      end
+     PRE_NORMREF_FOOTNOTES = "//foreword//fn | //introduction//fn |"\
+       "//clause[title = 'Scope']//fn" .freeze
 
-      def sections_cleanup(x)
-        s = x.at("//sections")
-        foreword = x.at("//foreword")
-        s.previous = foreword.remove if foreword
-        introduction = x.at("//introduction")
-        s.previous = introduction.remove if introduction
-        x.xpath("//sections/references").reverse_each { |r| s.next = r.remove }
-        x.xpath("//sections/annex").reverse_each { |r| s.next = r.remove }
-      end
+     NORMREF_FOOTNOTES = 
+       "//references[title = 'Normative References']//fn |"\
+       "//references[title = 'Normative References']//bibitem/note".freeze
 
-      def obligations_cleanup(x)
-        (s = x.at("//foreword")) && s["obligation"] = "informative"
-        (s = x.at("//introduction")) && s["obligation"] = "informative"
-        (s = x.at("//clause[title = 'Scope']")) && s["obligation"] = "normative"
-        (s = x.at("//clause[title = 'Symbols and Abbreviated Terms']")) &&
-          s["obligation"] = "normative"
-        x.xpath("//references").each { |r| r["obligation"] = "informative" }
-        x.xpath("//terms").each { |r| r["obligation"] = "normative" }
-        x.xpath("//annex | //clause").each do |r|
-          r["obligation"] = "normative" unless r["obligation"]
-        end
-        x.xpath("//subsection").each do |r|
-          r["obligation"] = r.at("./ancestor::*/@obligation").text
-        end
-      end
+     POST_NORMREF_FOOTNOTES = 
+       "//clause[not(title = 'Scope')]//fn | "\
+       "//references[title = 'Bibliography']//fn | "\
+       "//references[title = 'Bibliography']//bibitem/note".freeze
+
+     def other_footnote_renumber(xmldoc)
+       seen = {}
+       i = 0
+       outnum = 0
+       xmldoc.xpath(PRE_NORMREF_FOOTNOTES).each do |fn|
+         i, seen, outnum = other_footnote_renumber1(fn, i, seen, outnum)
+       end
+       xmldoc.xpath(NORMREF_FOOTNOTES).each do |fn|
+         i, seen, outnum = other_footnote_renumber1(fn, i, seen, outnum)
+       end
+       xmldoc.xpath(POST_NORMREF_FOOTNOTES).each do |fn|
+         i, seen, outnum = other_footnote_renumber1(fn, i, seen, outnum)
+       end
+     end
+
+     def footnote_renumber(xmldoc)
+       table_footnote_renumber(xmldoc)
+       other_footnote_renumber(xmldoc)
+       xmldoc.xpath("//fn").each do |fn|
+         fn.delete("table")
+       end
+     end
+
+     def sections_cleanup(x)
+       s = x.at("//sections")
+       foreword = x.at("//foreword")
+       s.previous = foreword.remove if foreword
+       introduction = x.at("//introduction")
+       s.previous = introduction.remove if introduction
+       x.xpath("//sections/references").reverse_each { |r| s.next = r.remove }
+       x.xpath("//sections/annex").reverse_each { |r| s.next = r.remove }
+     end
+
+     def obligations_cleanup(x)
+       (s = x.at("//foreword")) && s["obligation"] = "informative"
+       (s = x.at("//introduction")) && s["obligation"] = "informative"
+       (s = x.at("//clause[title = 'Scope']")) && s["obligation"] = "normative"
+       (s = x.at("//clause[title = 'Symbols and Abbreviated Terms']")) &&
+         s["obligation"] = "normative"
+       x.xpath("//references").each { |r| r["obligation"] = "informative" }
+       x.xpath("//terms").each { |r| r["obligation"] = "normative" }
+       x.xpath("//annex | //clause").each do |r|
+         r["obligation"] = "normative" unless r["obligation"]
+       end
+       x.xpath("//subsection").each do |r|
+         r["obligation"] = r.at("./ancestor::*/@obligation").text
+       end
+     end
     end
   end
 end

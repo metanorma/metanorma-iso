@@ -12,12 +12,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes a blank document" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    #{ASCIIDOC_BLANK_HDR}
     INPUT
     #{BLANK_HDR}
 <sections/>
@@ -27,7 +23,7 @@ RSpec.describe Asciidoctor::ISO do
 
   it "converts a blank document" do
     system "rm -f test.doc"
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -42,7 +38,7 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "processes default metadata" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :docfile: test.adoc
@@ -134,7 +130,7 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "processes complex metadata" do
-    expect(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :docfile: test.adoc
