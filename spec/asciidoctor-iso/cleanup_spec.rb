@@ -653,6 +653,31 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+  it "defaults section obligations" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+
+      == Clause
+      Text
+
+      [appendix]
+      == Clause
+
+      Text
+    INPUT
+       #{BLANK_HDR}
+       <sections><clause id="_" inline-header="false" obligation="normative">
+         <title>Clause</title>
+         <p id="_">Text</p>
+       </clause>
+       </sections><annex id="_" inline-header="false" obligation="normative">
+         <title>Clause</title>
+         <p id="_">Text</p>
+       </annex>
+       </iso-standard>
+    OUTPUT
+  end
+
 
 
 
