@@ -106,7 +106,7 @@ module Asciidoctor
         # subclause contains subclauses
         sub = node.find_by(context: :section) { |s| s.level == node.level + 1 }
         sub.empty? || (return term_def_parse(attrs, xml, node, false))
-        (node.title.casecmp("symbols and abbreviated terms") == 0) &&
+        node.title.casecmp("symbols and abbreviated terms").zero? &&
           (return symbols_parse(attrs, xml, node))
         xml.term **attr_code(attrs) do |xml_section|
           xml_section.preferred { |name| name << node.title }
@@ -117,7 +117,7 @@ module Asciidoctor
       def term_def_title(toplevel, node)
         return node.title unless toplevel
         sub = node.find_by(context: :section) do |s|
-          s.title.casecmp("symbols and abbreviated terms") == 0
+          s.title.casecmp("symbols and abbreviated terms").zero?
         end
         return "Terms and Definitions" if sub.empty?
         "Terms, Definitions, Symbols and Abbreviated Terms"

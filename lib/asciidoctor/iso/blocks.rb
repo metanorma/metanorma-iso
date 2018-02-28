@@ -72,8 +72,10 @@ module Asciidoctor
 
       def admonition_attrs(node)
         name = node.attr("name")
-        (type = node.attr("type")) && ["danger", "safety precautions"].each do |t|
-          name = t if type.casecmp(t).zero?
+        if type = node.attr("type")
+          ["danger", "safety precautions"].each do |t|
+            name = t if type.casecmp(t).zero?
+          end
         end
         { id: Utils::anchor_or_uuid(node), type: name }
       end
@@ -189,8 +191,8 @@ module Asciidoctor
       def listing(node)
         # NOTE: html escaping is performed by Nokogiri
         noko do |xml|
-            xml.sourcecode(**id_attr(node)) { |s| s << node.content }
-            # xml.sourcecode(**id_attr(node)) { |s| s << node.lines.join("\n") }
+          xml.sourcecode(**id_attr(node)) { |s| s << node.content }
+          # xml.sourcecode(**id_attr(node)) { |s| s << node.lines.join("\n") }
         end
       end
     end
