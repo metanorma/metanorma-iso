@@ -67,15 +67,6 @@ module Asciidoctor
         end
       end
 
-      def isotitle_cleanup(xmldoc)
-        # Remove italicised ISO titles
-        xmldoc.xpath("//isotitle").each do |a|
-          if a.elements.size == 1 && a.elements[0].name == "em"
-            a.children = a.elements[0].children
-          end
-        end
-      end
-
       def ref_cleanup(xmldoc)
         # move ref before p
         xmldoc.xpath("//p/ref").each do |r|
@@ -101,9 +92,9 @@ module Asciidoctor
       def reference_names(xmldoc)
         xmldoc.xpath("//bibitem").each do |ref|
           isopub = ref.at("./contributor[role/@type = 'publisher']/"\
-                          "organization[name = 'ISO']")
+                          "organization[name = 'ISO' or name = 'IEC']")
           docid = ref.at("./docidentifier")
-          date = ref.at("./publisherdate")
+          date = ref.at("./date[@type = 'published']")
           reference = format_ref(docid.text, isopub)
           reference += ": #{date.text}" if date && isopub
           @anchors[ref["id"]] = { xref: reference }

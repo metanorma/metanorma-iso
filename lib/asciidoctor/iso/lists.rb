@@ -71,6 +71,7 @@ module Asciidoctor
         end
       end
 
+      # TODO: alternative where only title is available
       def refitem(xml, item, node)
         m = NON_ISO_REF.match(item) ||
           (Utils::warning(node, "no anchor on reference", item) && return)

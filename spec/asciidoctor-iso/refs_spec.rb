@@ -166,7 +166,7 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
-  it "processes non-ISO reference" do
+  it "processes non-ISO reference in Normative References" do
     expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
@@ -189,6 +189,35 @@ RSpec.describe Asciidoctor::ISO do
            <em>Standard</em>
          </formattedref>
          <docidentifier>XYZ 123:1066 (all parts)</docidentifier>
+       </bibitem>
+       </references>
+       </iso-standard>
+    OUTPUT
+  end
+
+  it "processes non-ISO reference in Bibliography" do
+    expect(strip_guid(Asciidoctor.convert(<<~'INPUT', backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+
+      [bibliography]
+      == Bibliography
+
+      * [[[iso123,1]]] _Standard_
+    INPUT
+       #{BLANK_HDR}
+              <sections>
+         
+       </sections><references id="_" obligation="informative">
+         <title>Bibliography</title>
+         <bibitem id="iso123">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard</em>
+         </formattedref>
+         <docidentifier>[1]</docidentifier>
        </bibitem>
        </references>
        </iso-standard>
