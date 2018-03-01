@@ -81,7 +81,7 @@ module Asciidoctor
         Regexp.new(POSSIBILITY_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
-      def posssibility(text)
+      def possibility(text)
         text.split(/\.\s+/).each { |t| return t if POSSIBILITY_RE.match? t }
         nil
       end

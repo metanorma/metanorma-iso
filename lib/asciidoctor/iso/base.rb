@@ -50,6 +50,7 @@ module Asciidoctor
         @refids = Set.new
         @anchors = {}
         @draft = node.attributes.has_key?("draft")
+        @novalid = node.attr("novalid")
       end
 
       def document(node)
@@ -71,7 +72,7 @@ module Asciidoctor
         result = textcleanup(result.flatten * "\n")
         ret1 = cleanup(Nokogiri::XML(result))
         ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
-        validate(ret1) unless node.attr("novalid")
+        validate(ret1) unless @novalid
         ret1
       end
 

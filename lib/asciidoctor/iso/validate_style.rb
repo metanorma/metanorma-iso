@@ -6,34 +6,41 @@ module Asciidoctor
   module ISO
     module Validate
       def foreword_style(node, text)
+        return if @novalid
         style_no_guidance(node, text, "Foreword")
       end
 
       def scope_style(node, text)
+        return if @novalid
         style_no_guidance(node, text, "Scope")
       end
 
       def introduction_style(node, text)
+        return if @novalid
         r = requirement(text)
         style_warning(node, "Introduction may contain requirement", r) if r
       end
 
       def termexample_style(node, text)
+        return if @novalid
         style_no_guidance(node, text, "Term Example")
         style(node, text)
       end
 
       def note_style(node, text)
+        return if @novalid
         style_no_guidance(node, text, "Note")
         style(node, text)
       end
 
       def footnote_style(node, text)
+        return if @novalid
         style_no_guidance(node, text, "Footnote")
         style(node, text)
       end
 
       def style_warning(node, msg, text)
+        return if @novalid
         w = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
         w += ": #{text}" if text
         warn w
@@ -47,10 +54,10 @@ module Asciidoctor
       # and a negative match on its preceding token
       def style_two_regex_not_prev(n, text, re, re_prev, warning)
         return if text.nil?
-        text.split(/\W+/).each_index do |i|
-          next if i.zero?
-          m = re.match text[i]
-          m_prev = re_prev.match text[i - 1]
+        arr = text.split(/\W+/)
+        arr.each_index do |i|
+          m = re.match arr[i]
+          m_prev = i.zero? ? nil : re_prev.match(arr[i - 1])
           if !m.nil? && m_prev.nil?
             style_warning(n, warning, m[:num])
           end
@@ -58,6 +65,7 @@ module Asciidoctor
       end
 
       def style(n, t)
+        return if @novalid
         style_number(n, t)
         style_percent(n, t)
         style_abbrev(n, t)
@@ -65,7 +73,7 @@ module Asciidoctor
       end
 
       def style_number(n, t)
-        style_two_regex_not_prev(n, t, /^(?<num>[0-9]{4,})$/,
+        style_two_regex_not_prev(n, t, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
                                  %r{(\bISO|\bIEC|\bIEEE/)$},
                                  "number not broken up in threes")
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,

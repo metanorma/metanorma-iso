@@ -31,6 +31,7 @@ module Asciidoctor
         end
 
         def warning(node, msg, text)
+          return if @novalid
           warntext = "asciidoctor: WARNING"\
             "(#{current_location(node)}): #{msg}"
           warntext += ": #{text}" if text

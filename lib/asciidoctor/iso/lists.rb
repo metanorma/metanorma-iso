@@ -73,14 +73,15 @@ module Asciidoctor
 
       # TODO: alternative where only title is available
       def refitem(xml, item, node)
-        m = NON_ISO_REF.match(item) ||
-          (Utils::warning(node, "no anchor on reference", item) && return)
+        unless m = NON_ISO_REF.match(item)
+          Utils::warning(node, "no anchor on reference", item)
+          return
+        end
         xml.bibitem **attr_code(id: m[:anchor]) do |t|
           t.formattedref **{ format: "application/x-isodoc+xml" } do |i|
             i << ref_normalise_no_format(m[:text])
           end
-          code = m[:code]
-          t.docidentifier(/^\d+$/.match?(code) ? "[#{code}]" : code)
+          t.docidentifier(/^\d+$/.match?(m[:code]) ? "[#{m[:code]}]" : m[:code])
         end
       end
 
