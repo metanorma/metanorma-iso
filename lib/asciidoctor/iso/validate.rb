@@ -20,6 +20,17 @@ module Asciidoctor
         end
       end
 
+      def title_main_validate(root)
+        title_main_en = root.at("//title-main[@language='en']")
+        title_main_fr = root.at("//title-main[@language='fr']")
+        if title_main_en.nil? && !title_main_fr.nil?
+          warn "No English Title!"
+        end
+        if !title_main_en.nil? && title_main_fr.nil?
+          warn "No French Title!"
+        end
+      end
+
       def title_part_validate(root)
         title_part_en = root.at("//title-part[@language='en']")
         title_part_fr = root.at("//title-part[@language='fr']")
@@ -45,16 +56,16 @@ module Asciidoctor
         end
         title_intro_en = root.at("//title-intro[@language='en']")
         if !title_intro_en.nil? && doctypes.match?(title_intro_en.text)
-          warn "Part Title may name document type"
+          warn "Title Intro may name document type"
         end
       end
 
       def title_first_level_validate(root)
         root.xpath(SECTIONS_XPATH).each do |s|
-          title = s.at("./title").text
+          title = s&.at("./title")&.text || s.name
           s.xpath("./subsection | ./terms").each do |ss|
             subtitle = ss.at("./title")
-            !subtitle&.text&.empty? ||
+            !subtitle.nil? && !subtitle&.text&.empty? ||
               warn("#{title}: each first-level subclause must have a title")
           end
         end
@@ -76,6 +87,7 @@ module Asciidoctor
 
       def title_validate(root)
         title_intro_validate(root)
+        title_main_validate(root)
         title_part_validate(root)
         title_subpart_validate(root)
         title_names_type_validate(root)
@@ -90,13 +102,6 @@ module Asciidoctor
           location = c["id"] || c.text[0..60] + "..."
           location += ":#{title.text}" if c["id"] && !title.nil?
           warn "ISO style: #{location}: subsection is only child"
-        end
-      end
-
-      def iso8601_validate(root)
-        root.xpath("//review/@date | //revision-date").each do |d|
-          /^\d{8}(T\d{4,6})?$/.match?(d.text) ||
-            warn("ISO style: #{d.text} is not an ISO 8601 date")
         end
       end
 
@@ -118,10 +123,9 @@ module Asciidoctor
           # does not deal with preceding text marked up
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
-          (target = root.at("//*[@id = '#{t['target']}']")) ||
-            warn("ISO: #{t['target']} is not a real reference!")
-          if target&.at("./ancestor::*[@obligation = 'normative']")
-            warn "ISO: 'see #{t}' is pointing to a normative section"
+          (target = root.at("//*[@id = '#{t['target']}']")) || next
+          if target&.at("./ancestor-or-self::*[@obligation = 'normative']")
+            warn "ISO: 'see #{t['target']}' is pointing to a normative section"
           end
         end
       end
@@ -131,7 +135,8 @@ module Asciidoctor
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
           target = root.at("//*[@id = '#{t['bibitemid']}']")
-          if target.at("./ancestor::references[title = 'Normative References']")
+          if target.at("./ancestor::references"\
+              "[title = 'Normative References']")
             warn "ISO: 'see #{t}' is pointing to a normative reference"
           end
         end
@@ -143,8 +148,8 @@ module Asciidoctor
 
       def termdef_style(xmldoc)
         xmldoc.xpath("//term").each do |t|
-          para = t.at("./p") || return
-          term = t.at("preferred").text
+          para = t.at("./definition") || return
+          term = t.at("./preferred").text
           termdef_warn(para.text, /^(the|a)\b/i, term,
                        "term definition starts with article")
           termdef_warn(para.text, /\.$/i, term,
@@ -156,7 +161,6 @@ module Asciidoctor
         title_validate(doc.root)
         isosubgroup_validate(doc.root)
         section_validate(doc)
-        iso8601_validate(doc.root)
         onlychild_clause_validate(doc.root)
         termdef_style(doc.root)
         see_xrefs_validate(doc.root)
