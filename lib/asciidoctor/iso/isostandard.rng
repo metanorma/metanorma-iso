@@ -470,11 +470,13 @@
     </define>
     <define name="dd">
       <element name="dd">
-        <!--
-          ( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )*
-          exclude figures?
-        -->
-        <ref name="BasicBlock"/>
+        <zeroOrMore>
+          <!--
+            ( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )*
+            exclude figures?
+          -->
+          <ref name="BasicBlock"/>
+        </zeroOrMore>
       </element>
     </define>
     <define name="admonition">
