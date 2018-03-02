@@ -153,7 +153,18 @@ http://discuss.asciidoctor.org/footnotes-with-paragraph-breaks-td4130.html[by de
 XML to break up paragraphs within a footnote.)
 
 [[model_additions]]
-=== Asciidoctor model additions
+== Asciidoctor model additions
+
+=== Section titles
+ISO has special section types: "Scope", "Normative References", "Terms and Definitions", "Symbols and Abbreviated Terms", "Bibliography". By default, these are identified in Asciidoc by using those titles. The gem allows you to override the title by using a `heading` attribute on the node, so that the actual title in your Asciidoc can be something different; that is useful, for example, if you are translating the document into different languages. So:
+
+[source,asciidoctor]
+--
+[heading=scope]
+== 范围
+--
+
+Note that both the XML population, and the isodoc gem will overwrite any supplied title. If you are translating ISO documents into other languages, you will still need access to versions of the asciidoctor-iso and isodoc gems in those languages.
 
 === Obligation
 The obligation of sections (whether they are normative or informative) is indicated

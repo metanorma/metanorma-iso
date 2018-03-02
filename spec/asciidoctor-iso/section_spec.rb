@@ -95,6 +95,108 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+  it "processes sections with title attributes" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      .Foreword
+
+      [heading=introduction]
+      == Εισαγωγή
+
+      === Introduction Subsection
+
+      === Patent Notice
+
+      [heading=scope]
+      == Σκοπός
+
+      Text
+
+      [heading=normative references]
+      == Κανονιστικές Παραπομπές
+
+      [heading=terms and definitions]
+      == Όροι και Ορισμοί
+
+      === Term1
+
+      [heading="terms, definitions, symbols and abbreviated terms"]
+      == Όροι, Ορισμοί, Σύμβολα και Συντομογραφίες
+
+      === Normal Terms
+
+      ==== Term2
+
+      [heading=symbols and abbreviated terms]
+      === Σύμβολα και Συντομογραφίες
+
+      [heading=symbols and abbreviated terms]
+      == Σύμβολα και Συντομογραφίες
+
+      == Clause 4
+
+      === Introduction
+
+      === Clause 4.2
+
+      [appendix]
+      == Annex
+
+      === Annex A.1
+
+      [heading=bibliography]
+      == Βιβλιογραφία
+
+      === Bibliography Subsection
+    INPUT
+            #{BLANK_HDR}
+       <introduction id="_" obligation="informative"><title>Introduction</title><subsection id="_" inline-header="false" obligation="informative">
+         <title>Introduction Subsection</title>
+       </subsection>
+       </introduction><sections>
+       <clause id="_" obligation="normative">
+         <title>Scope</title>
+         <p id="_">Text</p>
+       </clause>
+     
+       <terms id="_" obligation="normative">
+         <title>Terms and Definitions</title>
+         <term id="_">
+         <preferred>Term1</preferred>
+       </term>
+       </terms>
+       <terms id="_" obligation="normative"><title>Terms and Definitions</title><terms id="_" obligation="normative">
+         <title>Normal Terms</title>
+         <term id="_">
+         <preferred>Term2</preferred>
+       </term>
+       </terms>
+       <symbols-abbrevs id="_"/></terms>
+       <symbols-abbrevs id="_"/>
+       <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><subsection id="_" inline-header="false" obligation="normative">
+         <title>Introduction</title>
+       </subsection>
+       <subsection id="_" inline-header="false" obligation="normative">
+         <title>Clause 4.2</title>
+       </subsection></clause>
+     
+       </sections><annex id="_" inline-header="false" obligation="normative">
+         <title>Annex</title>
+         <subsection id="_" inline-header="false" obligation="normative">
+         <title>Annex A.1</title>
+       </subsection>
+       </annex><references id="_" obligation="informative">
+         <title>Normative References</title>
+       </references><references id="_" obligation="informative">
+         <title>Bibliography</title>
+         <references id="_" obligation="informative">
+         <title>Bibliography Subsection</title>
+       </references>
+       </references>
+       </iso-standard>
+    OUTPUT
+  end
+
   it "processes section obligations" do
      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}

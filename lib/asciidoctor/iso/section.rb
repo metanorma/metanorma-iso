@@ -20,10 +20,14 @@ module Asciidoctor
         @norm_ref
       end
 
+      def sectiontype(node)
+        node&.attr("heading")&.downcase || node.title.downcase
+      end
+
       def section(node)
         a = { id: Utils::anchor_or_uuid(node) }
         noko do |xml|
-          case node.title.downcase
+          case sectiontype(node)
           when "introduction" then
             if node.level == 1 then introduction_parse(a, xml, node)
             else
