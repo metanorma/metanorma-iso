@@ -44,7 +44,6 @@ module Asciidoctor
       # alias_method :pass, :content
       alias_method :embedded, :content
       alias_method :verse, :quote
-      alias_method :literal, :content
       alias_method :audio, :skip
       alias_method :video, :skip
       alias_method :inline_button, :skip

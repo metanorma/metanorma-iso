@@ -19,6 +19,10 @@ module Asciidoctor
         result
       end
 
+      def literal(node)
+        open(node)
+      end
+
       # NOTE: html escaping is performed by Nokogiri
       def stem(node)
         stem_content = node.lines.join("\n")
