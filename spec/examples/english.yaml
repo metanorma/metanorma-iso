@@ -10,8 +10,8 @@ term_def_boilerplate: |
       </p> </li> </ul>
 scope: Scope
 symbols: Symbols and Abbreviated Terms
-introduction: Intro
-foreword: Foreword
+introduction: Introduction
+foreword: Frontispiece
 termsdefs: Terms and Definitions
 termsdefsymbols: Terms, Definitions, Symbols and Abbreviated Terms
 normref: Normative References

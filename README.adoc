@@ -98,13 +98,17 @@ The document model ("IsoDoc") used in document generation
 intends to introduce rigour into the ISO
 standards authoring process; the existing 
 https://www.iso.org/iso-templates.html[Microsoft Word template from ISO]
-do not support such rigour down to the element level.
+do not support such rigour down to the element level. It also introduces
+flexibility by decoupling the document structure from its presentation.
 
 The ISO International Standard format is prescribed in
 http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"],
 to a level amenable to an explicit document model. A formal document
 model would allow checking for consistency in format and content, and expedite
-authoring and quality control of ISO standards. Authoring standards through a more abstract formal model also permit enhanced functionality such as cross reference link checking and auto numbering of sections, figures, tables and formulas.
+authoring and quality control of ISO standards. Authoring standards through a 
+more abstract formal model also permit enhanced functionality such as 
+cross-reference link checking and auto-numbering of sections, figures, tables and formulas.
+Outputting a document in different languages also becomes straightforward.
 
 The document model for ISO Standards specifically is derived from a more general
 https://github.com/riboseinc/isodoc-models[StandardDocument model]. Other
@@ -112,10 +116,7 @@ ISO-like standards can also be derived from this more general model;
 CSD (https://github.com/riboseinc/csd, https://github.com/riboseinc/asciidoctor-csd)
 is one such instance.
 
-The document model for ISO Standards is still under development, but it already contains
-all the markup needed to render the
-https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
-model document of an international standard, and all the structures described
+The document model for ISO Standards contains all the structures described
 in ISO/IEC DIR 2. It is expressed as a
 link:lib/asciidoctor/iso/isostandard.rnc[Relax NG Compact schema]; actual
 validation occurs against its link:lib/asciidoctor/iso/isostandard.rng[full Relax
@@ -502,6 +503,13 @@ Can be used as a command-line option (like all other document attributes):
 `asciidoctor -a nodoc -b iso -r "asciidoctor-iso" a.adoc`
 
 `:novalid:`:: Suppress validation.
+
+`:i18nyaml:`:: Name of YAML file of internationalisation text, to use instead
+of the built-in English, French or Chinese text used to label parts of the document
+(e.g. "Table", "Foreword", boilerplate text for Normative References, etc.)
+Use if you wish to output an ISO standard in a language other than those three.
+A sample YAML file for English, with "Foreword" replaced with "Frontispiece",
+is available at link:spec/examples/english.yaml[].
 
 `:docnumber:`:: The ISO document number (mandatory)
 
