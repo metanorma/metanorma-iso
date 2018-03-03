@@ -103,7 +103,7 @@ module Asciidoctor
           return
         end
         n[:tag] == "clause" ||
-          warn("ISO style: Document must contain at least one clause")
+          warn("ISO style: Document must contain clause after Terms and Definitions")
         n == { tag: "clause", title: "Scope" } &&
           warn("ISO style: Scope must occur before Terms and Definitions")
         n = names.shift || return

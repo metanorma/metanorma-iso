@@ -197,6 +197,7 @@ module Asciidoctor
           s["obligation"] = "normative"
         x.xpath("//references").each { |r| r["obligation"] = "informative" }
         x.xpath("//terms").each { |r| r["obligation"] = "normative" }
+        x.xpath("//symbols-abbrevs").each { |r| r["obligation"] = "normative" }
         x.xpath("//annex | //clause").each do |r|
           r["obligation"] = "normative" unless r["obligation"]
         end

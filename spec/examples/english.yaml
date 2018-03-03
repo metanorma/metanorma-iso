@@ -1,0 +1,69 @@
+term_def_boilerplate: |
+      <p>ISO and IEC maintain terminological databases for use in
+      standardization at the following addresses:</p>
+
+      <ul>
+      <li> <p>ISO Online browsing platform: available at
+        <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
+      <li> <p>IEC Electropedia: available at
+        <a href="http://www.electropedia.org">http://www.electropedia.org</a>
+      </p> </li> </ul>
+scope: Scope
+symbols: Symbols and Abbreviated Terms
+introduction: Intro
+foreword: Foreword
+termsdefs: Terms and Definitions
+termsdefsymbols: Terms, Definitions, Symbols and Abbreviated Terms
+normref: Normative References
+bibliography: Bibliography
+clause: Clause
+annex: Annex
+no_terms_boilerplate: <p>No terms and definitions are listed in this document.</p>
+internal_terms_boilerplate: |
+  <p>For the purposes of this document, the following terms and definitions apply.</p>
+norm_with_refs_pref:
+  The following documents are referred to in the text in such a way
+      that some or all of their content constitutes requirements of this
+      document. For dated references, only the edition cited applies.
+      For undated references, the latest edition of the referenced
+      document (including any amendments) applies.
+norm_empty_pref:
+  There are no normative references in this document.
+external_terms_boilerplate: |
+  <p>For the purposes of this document, the terms and definitions given in % apply.</p>
+internal_external_terms_boilerplate: |
+          <p>For the purposes of this document, the terms and definitions 
+            given in % and the following apply.</p>
+note: NOTE
+note_xref: Note
+termnote: Note % to entry
+figure: Figure
+formula: Formula
+table: Table
+key: Key
+example: EXAMPLE
+example_xref: Example
+where: where
+wholeoftext: Whole of text
+draft: draft
+inform_annex: informative
+norm_annex: normative
+modified: modified
+deprecated: DEPRECATED
+source: SOURCE
+and: and
+all_parts: All Parts
+locality: {
+       section: Section,
+       clause: Clause,
+       part: Part,
+       paragraph: Paragraph,
+       chapter: Chapter,
+       page: Page,
+       table: Table,
+       annex: Annex,
+       figure: Figure,
+       example: Example,
+       note: Note,
+       formula: Formula
+}

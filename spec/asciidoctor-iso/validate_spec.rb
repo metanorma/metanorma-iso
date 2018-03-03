@@ -353,7 +353,7 @@ RSpec.describe "Warning if normative references not followed by terms and defini
 end
 
 RSpec.describe "Warning if there are no clauses in the document" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Document must contain at least one clause}).to_stderr }
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Document must contain clause after Terms and Definitions}).to_stderr }
   #{VALIDATING_BLANK_HDR}
 
   .Foreword 
