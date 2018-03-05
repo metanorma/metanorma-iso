@@ -137,7 +137,7 @@ alt:[rough rice]
 rice retaining its husk after threshing 
 
 [.source]
-<<ISO7301,section 3.1>>
+<<ISO7301,clause 3.1>>
 
 [[husked_rice]]
 === husked rice 
@@ -146,7 +146,7 @@ deprecated:[cargo rice]
 _paddy_ (<<paddy>>) from which the husk only has been removed 
 
 [.source]
-<<ISO7301,section 3.2>>, The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
+<<ISO7301,clause 3.2>>, The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
 
 === milled rice 
 alt:[white rice]
@@ -154,7 +154,7 @@ alt:[white rice]
 _husked rice_ (<<husked_rice>>) from which almost all of the bran and embryo have been removed by milling 
 
 [.source]
-<<ISO7301,section 3.3>>
+<<ISO7301,clause 3.3>>
 
 === parboiled rice 
 
@@ -195,7 +195,7 @@ amount of husked rice obtained from paddy
 
 // all terms and defs references are dated
 [.source]
-<<ISO6646,section 3.1>>
+<<ISO6646,clause 3.1>>
 
 === nitrogen content 
 quantity of nitrogen determined after application of the procedure described 
@@ -203,7 +203,7 @@ quantity of nitrogen determined after application of the procedure described
 NOTE: It is expressed as a mass fraction of dry product, as a percentage. 
 
 [.source]
-<<ISO20483,section 3.1>>
+<<ISO20483,clause 3.1>>
 
 === crude protein content 
 quantity of crude protein obtained from the nitrogen content as determined by applying the specified method, calculated by multiplying this content by an appropriate factor depending on the type of cereal or pulse 
@@ -211,7 +211,7 @@ quantity of crude protein obtained from the nitrogen content as determined by ap
 NOTE: It is expressed as a mass fraction of dry product, as a percentage. 
 
 [.source]
-<<ISO20483,section 3.1>>
+<<ISO20483,clause 3.1>>
 
 [[gelatinization]]
 === gelatinization 
@@ -220,14 +220,14 @@ hydration process conferring the jelly-like state typical of the coagulated coll
 NOTE: See <<figureC-1>>. 
 
 [.source]
-<<ISO14864,section 3.1>>
+<<ISO14864,clause 3.1>>
 
 [[gel_state]]
 === gel state 
 condition reached as a consequence of _gelatinization_ (<<gelatinization>>), when the kernel is fully transparent and absolutely free from whitish and opaque granules after being pressed between two glass sheets 
 
 [.source]
-<<ISO14864,section 3.1>>
+<<ISO14864,clause 3.1>>
 
 === gelatinization time 
 stem:[t_90]
@@ -235,7 +235,7 @@ stem:[t_90]
 time necessary for 90 % of the kernels to pass from their natural state to the _gel state_ (<<gel_state>>) 
 
 [.source]
-<<ISO14864,section 3.1>>
+<<ISO14864,clause 3.1>>
 
 :sectnums:
 == Specifications 
@@ -629,7 +629,7 @@ image::rice_images/rice_image3_3.png[]
 An interlaboratory test <<ref15>> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <<ISO5725-1>> and <<ISO5725-2>>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <<tableD-1>>. 
 
 [[tableD-1]]
-[cols="<,^,^,^,^"]
+[cols="<,^,^,^,^",headerrows=2]
 .Repeatability and reproducibility of husked rice yield 
 
 |===
@@ -652,7 +652,7 @@ An interlaboratory test <<ref15>> was carried out by the ENR [Rice Research Cent
 _This appendix is not in the original Rice model document, and is inserted to illustrate elements absent from 
 that document: block quotes, source code, and examples._
 
-[quote, ISO, "ISO7301,section 1"]
+[quote, ISO, "ISO7301,clause 1"]
 _____
 This International Standard gives the minimum specifications for rice (_Oryza sativa_ L.) which is subject to international trade. It is applicable to the following types: husked rice and milled rice, parboiled or not, intended for direct human consumption. It is neither applicable to other products derived from rice, nor to waxy rice (glutinous rice).
 _____
