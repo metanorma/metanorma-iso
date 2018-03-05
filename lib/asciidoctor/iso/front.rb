@@ -89,7 +89,7 @@ module Asciidoctor
         metadata_author(node, xml)
         metadata_publisher(node, xml)
         xml.language node.attr("language")
-        xml.script "Latn"
+        xml.script (node.attr("script") || "Latn")
         metadata_status(node, xml)
         metadata_copyright(node, xml)
         metadata_committee(node, xml)
