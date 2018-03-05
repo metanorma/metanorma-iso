@@ -31,10 +31,19 @@ module Asciidoctor
         end
       end
 
+      def insert_thead(s)
+        thead = s.at("./thead")
+        return thead unless thead.nil?
+        if tname = s.at("./name")
+          thead = tname.add_previous_sibling("<thead/>").first
+          return thead
+        end
+        s.children.first.add_previous_sibling("<thead/>").first
+      end
+
       def header_rows_cleanup(xmldoc)
         xmldoc.xpath("//table[@headerrows]").each do |s|
-          thead = s.at("./thead") ||
-            thead = s.children.first.add_previous_sibling("<thead/>").first
+          thead = insert_thead(s)
           (thead.xpath("./tr").size...s["headerrows"].to_i).each do
             row = s.at("./tbody/tr")
             row.parent = thead

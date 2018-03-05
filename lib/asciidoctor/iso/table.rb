@@ -10,10 +10,10 @@ module Asciidoctor
         @table_fn_number = "a"
         noko do |xml|
           xml.table **attr_code(table_attrs(node)) do |xml_table|
+            table_name(node, xml_table)
             %i(head body foot).reject do |tblsec|
               node.rows[tblsec].empty?
             end
-            table_name(node, xml_table)
             table_head_body_and_foot node, xml_table
           end
         end

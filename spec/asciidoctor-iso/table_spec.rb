@@ -35,6 +35,82 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+  it "inserts header rows in a table with a name and no header" do
+        expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [headerrows=2]
+      .Table Name
+      |===
+      |A |B |C
+      h|1 |2 |3
+      h|1 |2 |3
+      |===
+    INPUT
+    #{BLANK_HDR}
+           <sections>
+         <table id="_">
+         <name>Table Name</name>
+         <thead><tr>
+             <td align="left">A</td>
+             <td align="left">B</td>
+             <td align="left">C</td>
+           </tr><tr>
+             <th align="left">1</th>
+             <td align="left">2</td>
+             <td align="left">3</td>
+           </tr></thead>
+         <tbody>
+
+
+           <tr>
+             <th align="left">1</th>
+             <td align="left">2</td>
+             <td align="left">3</td>
+           </tr>
+         </tbody>
+       </table>
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
+
+  it "inserts header rows in a table without a name and no header" do
+        expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [headerrows=2]
+      |===
+      |A |B |C
+      h|1 |2 |3
+      h|1 |2 |3
+      |===
+    INPUT
+    #{BLANK_HDR}
+           <sections>
+         <table id="_"><thead><tr>
+             <td align="left">A</td>
+             <td align="left">B</td>
+             <td align="left">C</td>
+           </tr><tr>
+             <th align="left">1</th>
+             <td align="left">2</td>
+             <td align="left">3</td>
+           </tr></thead>
+         <tbody>
+
+
+           <tr>
+             <th align="left">1</th>
+             <td align="left">2</td>
+             <td align="left">3</td>
+           </tr>
+         </tbody>
+       </table>
+       </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
   it "processes complex tables" do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}

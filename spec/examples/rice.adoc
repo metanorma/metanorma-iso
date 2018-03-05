@@ -631,7 +631,6 @@ An interlaboratory test <<ref15>> was carried out by the ENR [Rice Research Cent
 [[tableD-1]]
 [cols="<,^,^,^,^",headerrows=2]
 .Repeatability and reproducibility of husked rice yield 
-
 |===
 .2+| Description 4+| Rice sample 
 | Arborio | Drago footnote:[Parboiled rice.] | Balilla | Thaibonnet 
