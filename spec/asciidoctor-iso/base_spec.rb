@@ -139,6 +139,8 @@ RSpec.describe Asciidoctor::ISO do
       :docnumber: 1000
       :partnumber: 1-1
       :tc-docnumber: 2000
+      :language: el
+      :script: Grek
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -163,7 +165,8 @@ RSpec.describe Asciidoctor::ISO do
              <name>ISO</name>
            </organization>
          </contributor>
-         <script>Latn</script>
+         <language>el</language>
+         <script>Grek</script>
          <status>
            <stage>60</stage>
            <substage>60</substage>

@@ -586,6 +586,9 @@ not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`,
 
 `:language:` :: The language of the document (`en` or `fr`)  (mandatory)
 
+`:script:` :: The script of the document (defaults to `Latn`). Must be supplied as
+`Hans` for Simplified Chinese.
+
 `:publisher:`:: The standards agency publishing the standard; can be multiple
 (comma-delimited). Defaults to `ISO`.
 
