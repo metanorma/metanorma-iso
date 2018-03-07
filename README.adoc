@@ -224,7 +224,7 @@ Multiple sources are allowed, and need to be quoted and comma-delimited:
 --
 
 
-==== Paragraph alignment
+=== Paragraph alignment
 
 Alignment is defined as an attribute for paragraphs:
 
@@ -243,7 +243,7 @@ This paragraph is aligned center
 This paragraph is justified, which is the default
 --
 
-==== Reviewer notes
+=== Reviewer notes
 
 Reviewer notes are encoded as sidebars, and can be separated at a distance from the
 text they are annotating; the text they are annotating is indicated through anchors. 
@@ -284,7 +284,7 @@ Profile?!
 ****
 --
 
-==== Strikethrough and Small Caps
+=== Strikethrough and Small Caps
 
 The following formatting macros are used for strikethrough and small caps text:
 
@@ -294,7 +294,7 @@ The following formatting macros are used for strikethrough and small caps text:
 [smallcap]#small caps text#
 --
 
-==== Count of table header and footer rows
+=== Count of table header and footer rows
 
 In Asciidoc, a table can have at most one header row or footer row. In ISO,
 a nominal single header row is routinely broken up into multiple rows in order
@@ -314,7 +314,7 @@ stem:[w_max]
 |===
 --
 
-==== Inline clause numbers
+=== Inline clause numbers
 
 For some clauses (notably test methods), the clause heading appears inline with the clause, instead of being separated on a different line. This is indicated in Asciidoc by the option
 attribute `inline-header`:
@@ -328,7 +328,7 @@ attribute `inline-header`:
 consisting of a conical sample divider
 --
 
-==== Bibliographic details
+=== Bibliographic details
 
 Citations can include details of where in the document the citation is located; these
 are entered by suffixing the type of locality, followed by the reference. Multiple
@@ -345,7 +345,7 @@ example:
 The references cannot contain spaces. Any text following the sequence of localities
 will be displayed instead of the localities.
 
-==== Additional warning types
+=== Additional warning types
 
 Asciidoctor natively supports the ISO admonitions "Caution", "Warning", and "Important"
 through its admonition syntax:
@@ -378,7 +378,7 @@ multiple-block warning
 ====
 --
 
-==== Block Quotes
+=== Block Quotes
 
 As in normal Asciidoctor, block quotes are preceded with an author and a citation;
 but the citation is expected to be in the same format as all other citations, 
