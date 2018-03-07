@@ -667,8 +667,8 @@ puts "Hello, world."
 %w{a b c}.each do |x| <1>
   puts x
 end
-<1> This is an annotation
 --
+<1> This is an annotation
 ====
 
 
