@@ -35,7 +35,7 @@ module Asciidoctor
         thead = s.at("./thead")
         return thead unless thead.nil?
         if tname = s.at("./name")
-          thead = tname.add_previous_sibling("<thead/>").first
+          thead = tname.add_next_sibling("<thead/>").first
           return thead
         end
         s.children.first.add_previous_sibling("<thead/>").first
