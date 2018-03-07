@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 9ae93a7a7643da10b8dee5ff2e72fe7a81034130
+  revision: 3eb26a6807a55abc4b2e35570601618568f12e07
   specs:
     html2doc (0.6.2)
       asciimath
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 02b8fd305013a350170fce969c216ac2edd175e8
+  revision: 53907c39ae5af8a19422301a20012fe9c0eda402
   specs:
     isodoc (0.5.0)
       asciimath
@@ -91,7 +91,7 @@ GEM
       shellany (~> 0.0)
     optout (0.0.2)
     parallel (1.12.1)
-    parser (2.5.0.2)
+    parser (2.5.0.3)
       ast (~> 2.4.0)
     powerpack (0.1.1)
     pry (0.11.3)

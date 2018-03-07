@@ -42,6 +42,8 @@ module Asciidoctor
           htmlintropage: html_doc_path("html_iso_intro.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),
           i18nyaml: node.attr("i18nyaml"),
+          ulstyle: "l3",
+          olstyle: "l2",
         )
       end
 
