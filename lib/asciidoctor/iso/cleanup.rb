@@ -33,6 +33,7 @@ module Asciidoctor
         element_name_cleanup(xmldoc)
         footnote_renumber(xmldoc)
         empty_element_cleanup(xmldoc)
+        bookmark_cleanup(xmldoc)
         xmldoc
       end
 
@@ -148,6 +149,15 @@ module Asciidoctor
           next unless n.ancestors("table").empty?
           prev = n.previous_element || next
           n.parent = prev if ELEMS_ALLOW_NOTES.include? prev.name
+        end
+      end
+
+      def bookmark_cleanup(xmldoc)
+        xmldoc.xpath("//li[descendant::bookmark]").each do |x|
+          if x&.elements[0]&.name == "p" &&
+              x&.elements[0]&.elements[0]&.name == "bookmark"
+            x["id"] = (x.elements[0].elements[0].remove)["id"]
+          end
         end
       end
     end

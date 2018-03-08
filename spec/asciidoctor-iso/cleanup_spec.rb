@@ -240,21 +240,22 @@ RSpec.describe Asciidoctor::ISO do
       #{ASCIIDOC_BLANK_HDR}
       <<iso216>>
  
+      [bibliography]
       == Clause
-      * [[iso216,ISO 216]], _Reference_
+      * [[[iso216,ISO 216]]], _Reference_
     INPUT
        #{BLANK_HDR}
-              <foreword obligation="informative">
+       <foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">
-         <xref target="iso216"/>
+         <eref type="inline" bibitemid="iso216" citeas=""/>
        </p>
        </foreword><sections>
        <clause id="_" inline-header="false" obligation="normative">
          <title>Clause</title>
          <ul id="_">
          <li>
-           <p id="_"><bookmark id="iso216"/>, <em>Reference</em></p>
+           <ref id="iso216">[ISO 216]</ref><p id="_">, <em>Reference</em></p>
          </li>
        </ul>
        </clause></sections>

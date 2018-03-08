@@ -1370,9 +1370,9 @@
       </oneOrMore>
       <ref name="formattedref"/>
     </choice>
-    <optional>
+    <zeroOrMore>
       <ref name="source"/>
-    </optional>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="docidentifier"/>
     </zeroOrMore>
@@ -1422,9 +1422,9 @@
     <optional>
       <ref name="formattedref"/>
     </optional>
-    <optional>
+    <zeroOrMore>
       <ref name="source"/>
-    </optional>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="docidentifier"/>
     </zeroOrMore>
@@ -1472,6 +1472,9 @@
   </define>
   <define name="source">
     <element name="source">
+      <optional>
+        <attribute name="type"/>
+      </optional>
       <data type="anyURI"/>
     </element>
   </define>

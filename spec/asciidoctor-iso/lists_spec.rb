@@ -163,4 +163,24 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
        OUTPUT
     end
+
+    it "anchors lists and list items" do
+     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [[id1]]
+      * [[id2]]List item
+
+     INPUT
+             #{BLANK_HDR}
+       <sections>
+       <ul id="id1">
+         <li id="id2">
+           <p id="_">List item</p>
+         </li>
+       </ul>
+       </sections>
+       </iso-standard>
+     OUTPUT
+    end
+
 end
