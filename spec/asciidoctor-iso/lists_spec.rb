@@ -168,14 +168,17 @@ RSpec.describe Asciidoctor::ISO do
      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [[id1]]
-      * [[id2]]List item
+      * [[id2]] List item
+      * Hello [[id3]] List item
 
      INPUT
              #{BLANK_HDR}
-       <sections>
-       <ul id="id1">
+              <ul id="id1">
          <li id="id2">
            <p id="_">List item</p>
+         </li>
+         <li>
+           <p id="_">Hello <bookmark id="id3"/> List item</p>
          </li>
        </ul>
        </sections>

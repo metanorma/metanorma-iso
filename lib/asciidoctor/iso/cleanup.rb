@@ -152,11 +152,34 @@ module Asciidoctor
         end
       end
 
+      def empty_text_before_first_element(x)
+        x.children.each do |c|
+          if c.text?
+            return false if /\S/.match?(c.text)
+          end
+          return true if c.element?
+        end
+        true
+      end
+
+      def strip_initial_space(x)
+        if x.children[0].text?
+          if !/\S/.match?(x.children[0].text)
+            x.children[0].remove
+          else
+            x.children[0].content =  x.children[0].text.gsub(/^ /, "")
+          end
+        end
+      end
+
       def bookmark_cleanup(xmldoc)
         xmldoc.xpath("//li[descendant::bookmark]").each do |x|
           if x&.elements[0]&.name == "p" &&
               x&.elements[0]&.elements[0]&.name == "bookmark"
-            x["id"] = (x.elements[0].elements[0].remove)["id"]
+            if empty_text_before_first_element(x.elements[0])
+              x["id"] = (x.elements[0].elements[0].remove)["id"]
+              strip_initial_space(x.elements[0])
+            end
           end
         end
       end
