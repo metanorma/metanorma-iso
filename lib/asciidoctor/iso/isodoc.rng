@@ -746,6 +746,11 @@
       <ref name="bookmark"/>
     </choice>
   </define>
+  <define name="source">
+    <element name="source">
+      <data type="anyURI"/>
+    </element>
+  </define>
   <define name="em">
     <element name="em">
       <text/>
@@ -1470,13 +1475,16 @@
       <ref name="FormattedString"/>
     </element>
   </define>
-  <define name="source">
-    <element name="source">
-      <optional>
-        <attribute name="type"/>
-      </optional>
-      <data type="anyURI"/>
+  <define name="link">
+    <element name="link">
+      <ref name="TypedUri"/>
     </element>
+  </define>
+  <define name="TypedUri">
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <data type="anyURI"/>
   </define>
   <define name="bdate">
     <element name="date">

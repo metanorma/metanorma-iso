@@ -173,6 +173,7 @@ RSpec.describe Asciidoctor::ISO do
 
      INPUT
              #{BLANK_HDR}
+             <sections>
               <ul id="id1">
          <li id="id2">
            <p id="_">List item</p>

@@ -125,6 +125,9 @@
       <optional>
         <ref name="editorialgroup"/>
       </optional>
+      <optional>
+        <ref name="ics"/>
+      </optional>
     </define>
     <define name="BibData">
       <optional>
@@ -176,6 +179,9 @@
         <ref name="docrelation"/>
       </zeroOrMore>
       <ref name="editorialgroup"/>
+      <optional>
+        <ref name="ics"/>
+      </optional>
     </define>
     <define name="bdate">
       <element name="date">
@@ -840,6 +846,11 @@
   <define name="termdocsource">
     <element name="source">
       <ref name="erefType"/>
+    </element>
+  </define>
+  <define name="ics">
+    <element name="ics">
+      <text/>
     </element>
   </define>
 </grammar>

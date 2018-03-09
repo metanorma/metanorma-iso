@@ -31,12 +31,12 @@ GIT
 PATH
   remote: .
   specs:
-    asciidoctor-iso (0.6.1)
+    asciidoctor-iso (0.7.0)
       asciidoctor (~> 1.5.6)
       html2doc
       htmlentities (~> 4.3.4)
       isodoc
-      nokogiri (= 1.8.1)
+      nokogiri
       ruby-jing
       thread_safe
       uuidtools

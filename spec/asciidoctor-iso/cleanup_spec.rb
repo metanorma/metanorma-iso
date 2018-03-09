@@ -122,25 +122,27 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
-  it "moves notes inside preceding blocks, if they are not at clause end" do
+  it "moves notes inside preceding blocks, if they are not at clause end, and the blocks are not delimited" do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
-      [source,ruby]
-      [1...x].each do |y|
-        puts y
-      end
+      [stem]
+      ++++
+      r = 1 % 
+      r = 1 % 
+      ++++
 
-      NOTE: That loop does not do much
+      NOTE: That formula does not do much
 
       Indeed.
     INPUT
        #{BLANK_HDR}
-       <sections><sourcecode id="_">[1...x].each do |y|
-         puts y
-       end<note id="_">
-         <p id="_">That loop does not do much</p>
-       </note></sourcecode>
-     
+    <sections><formula id="_">
+  <stem type="AsciiMath">r = 1 %
+r = 1 %</stem>
+<note id="_">
+  <p id="_">That formula does not do much</p>
+</note></formula>
+
        <p id="_">Indeed.</p></sections>
        </iso-standard>
     OUTPUT
