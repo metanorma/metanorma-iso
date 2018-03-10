@@ -1,29 +1,30 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 3eb26a6807a55abc4b2e35570601618568f12e07
+  revision: 9782088aac279f45a4420e977922ea141bc46a24
   specs:
-    html2doc (0.6.2)
+    html2doc (0.6.7)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
       mime-types
-      nokogiri (~> 1.8.1)
+      nokogiri
       ruby-xslt
       thread_safe
       uuidtools
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 4fe5f001024f5c1c659c68b6c61a6e54bcc8e444
+  revision: 0936731beeba424bf84b48fcca638613e1dfa3b7
   specs:
-    isodoc (0.5.0)
+    isodoc (0.5.5)
       asciimath
       html2doc
       htmlentities (~> 4.3.4)
       image_size
       liquid
       mime-types
-      nokogiri (= 1.8.1)
+      nokogiri
+      roman-numerals
       ruby-xslt
       thread_safe
       uuidtools
@@ -84,7 +85,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.3.0)
     nenv (0.3.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -102,6 +103,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    roman-numerals (0.3.0)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
