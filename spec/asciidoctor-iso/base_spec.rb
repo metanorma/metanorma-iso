@@ -89,13 +89,15 @@ RSpec.describe Asciidoctor::ISO do
          <contributor>
            <role type="author"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
          <language>en</language>
@@ -108,7 +110,8 @@ RSpec.describe Asciidoctor::ISO do
            <from>2001</from>
            <owner>
              <organization>
-               <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
              </organization>
            </owner>
          </copyright>
@@ -141,13 +144,16 @@ RSpec.describe Asciidoctor::ISO do
       :tc-docnumber: 2000
       :language: el
       :script: Grek
+      :publisher: IEC,IETF
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="article">
          <title>
+
          </title>
          <title>
+
          </title>
          <docidentifier>
            <project-number part="1" subpart="1">1000</project-number>
@@ -156,13 +162,25 @@ RSpec.describe Asciidoctor::ISO do
          <contributor>
            <role type="author"/>
            <organization>
-             <name>ISO</name>
+             <name>IEC</name>
+           </organization>
+         </contributor>
+         <contributor>
+           <role type="author"/>
+           <organization>
+             <name>IETF</name>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>IEC</name>
+           </organization>
+         </contributor>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>IETF</name>
            </organization>
          </contributor>
          <language>el</language>
@@ -175,7 +193,15 @@ RSpec.describe Asciidoctor::ISO do
            <from>2018</from>
            <owner>
              <organization>
-               <name>ISO</name>
+               <name>IEC</name>
+             </organization>
+           </owner>
+         </copyright>
+         <copyright>
+           <from>2018</from>
+           <owner>
+             <organization>
+               <name>IETF</name>
              </organization>
            </owner>
          </copyright>

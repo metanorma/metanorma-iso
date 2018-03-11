@@ -34,11 +34,22 @@ module Asciidoctor
                       type: node.attr("#{compname}-type"))
       end
 
-      def metadata_author(_node, xml)
-        xml.contributor do |c|
-          c.role **{ type: "author" }
-          c.organization do |a|
-            a.name "ISO"
+      def organization(org, orgname)
+        if ["ISO",
+            "International Organization for Standardization"].include? orgname
+          org.name "International Organization for Standardization"
+          org.abbreviation "ISO"
+        else
+          org.name orgname
+        end
+      end
+
+      def metadata_author(node, xml)
+        publishers = node.attr("publisher") || "ISO"
+        publishers.split(/,[ ]?/).each do |p|
+          xml.contributor do |c|
+            c.role **{ type: "author" }
+            c.organization { |a| organization(a, p) }
           end
         end
       end
@@ -48,20 +59,18 @@ module Asciidoctor
         publishers.split(/,[ ]?/).each do |p|
           xml.contributor do |c|
             c.role **{ type: "publisher" }
-            c.organization do |a|
-              a.name p
-            end
+            c.organization { |a| organization(a, p) }
           end
         end
       end
 
       def metadata_copyright(node, xml)
-        from = node.attr("copyright-year") || Date.today.year
-        xml.copyright do |c|
-          c.from from
-          c.owner do |owner|
-            owner.organization do |o|
-              o.name "ISO"
+        publishers = node.attr("publisher") || "ISO"
+        publishers.split(/,[ ]?/).each do |p|
+          xml.copyright do |c|
+            c.from (node.attr("copyright-year") || Date.today.year)
+            c.owner do |owner|
+              owner.organization { |o| organization(o, p) }
             end
           end
         end

@@ -56,13 +56,15 @@ BLANK_HDR = <<~"HDR"
   <contributor>
     <role type="author"/>
     <organization>
-      <name>ISO</name>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>ISO</name>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
     </organization>
   </contributor>
   <script>Latn</script>
@@ -74,7 +76,8 @@ BLANK_HDR = <<~"HDR"
     <from>#{Time.new.year}</from>
     <owner>
       <organization>
-        <name>ISO</name>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
       </organization>
     </owner>
   </copyright>

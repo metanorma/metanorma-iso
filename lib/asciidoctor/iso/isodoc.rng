@@ -1174,6 +1174,9 @@
     <element name="organization">
       <ref name="orgname"/>
       <optional>
+        <ref name="abbreviation"/>
+      </optional>
+      <optional>
         <ref name="uri"/>
       </optional>
       <zeroOrMore>
@@ -1186,6 +1189,11 @@
   </define>
   <define name="orgname">
     <element name="name">
+      <ref name="LocalizedString"/>
+    </element>
+  </define>
+  <define name="abbreviation">
+    <element name="abbreviation">
       <ref name="LocalizedString"/>
     </element>
   </define>
