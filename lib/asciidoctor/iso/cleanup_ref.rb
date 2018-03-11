@@ -89,14 +89,27 @@ module Asciidoctor
         ref
       end
 
+      ISO_PUBLISHER_XPATH =
+        "./contributor[role/@type = 'publisher']/"\
+        "organization[abbreviation = 'ISO' or abbreviation = 'IEC' or "\
+        "name = 'International Organization for Standardization' or "\
+        "name = 'International Electrotechnical Commission']".freeze
+
+      def date_range(date)
+        from = date.at("./from")
+        to = date.at("./to")
+        ret = from.text
+        ret += "&ndash;#{to.text}" if to
+        ret
+      end
+
       def reference_names(xmldoc)
         xmldoc.xpath("//bibitem").each do |ref|
-          isopub = ref.at("./contributor[role/@type = 'publisher']/"\
-                          "organization[name = 'ISO' or name = 'IEC']")
+          isopub = ref.at(ISO_PUBLISHER_XPATH)
           docid = ref.at("./docidentifier")
           date = ref.at("./date[@type = 'published']")
           reference = format_ref(docid.text, isopub)
-          reference += ": #{date.text}" if date && isopub
+          reference += ": #{date_range(date)}" if date && isopub
           @anchors[ref["id"]] = { xref: reference }
         end
       end

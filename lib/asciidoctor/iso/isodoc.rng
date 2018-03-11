@@ -1505,6 +1505,22 @@
           <value>obsoleted</value>
         </choice>
       </attribute>
+      <ref name="bfrom"/>
+      <optional>
+        <ref name="bto"/>
+      </optional>
+    </element>
+  </define>
+  <define name="bfrom">
+    <element name="from">
+      <choice>
+        <data type="gYear"/>
+        <data type="date"/>
+      </choice>
+    </element>
+  </define>
+  <define name="bto">
+    <element name="to">
       <choice>
         <data type="gYear"/>
         <data type="date"/>

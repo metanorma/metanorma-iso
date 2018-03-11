@@ -190,11 +190,14 @@ r = 1 %</stem>
          <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
          <docidentifier>ISO 216</docidentifier>
-         <date type="published">2001</date>
+         <date type="published">
+           <from>2001</from>
+         </date>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
        </bibitem>
@@ -227,7 +230,8 @@ r = 1 %</stem>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
        </bibitem>
@@ -311,7 +315,8 @@ r = 1 %</stem>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
        </bibitem></references>
@@ -642,11 +647,12 @@ r = 1 %</stem>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123</docidentifier>
-         <date type="published">--</date>
+         <date type="published"><from>--</from></date>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
          <note format="text/plain" reference="2">ISO DATE: The standard is in press</note>

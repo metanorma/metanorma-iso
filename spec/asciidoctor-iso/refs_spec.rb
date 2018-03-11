@@ -19,7 +19,8 @@ RSpec.describe Asciidoctor::ISO do
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
        </bibitem>
@@ -55,26 +56,52 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
-  it "processes dated ISO reference" do
+  it "processes dated ISO reference and joint ISO/IEC references" do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Normative References
 
-      * [[[iso123,ISO 123:1066]]] _Standard_
+      * [[[iso123,ISO/IEC 123:1066]]] _Standard_
+      * [[[iso124,ISO 124:1066-1067]]] _Standard_
     INPUT
        #{BLANK_HDR}
               <sections>
-              </sections><references id="_" obligation="informative">
+         
+       </sections><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123</docidentifier>
-         <date type="published">1066</date>
+         <docidentifier>ISO/IEC 123</docidentifier>
+         <date type="published">
+           <from>1066</from>
+         </date>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+               <name>International Organization for Standardization</name>
+    <abbreviation>ISO</abbreviation>
+  </organization>
+</contributor>
+<contributor>
+  <role type="publisher"/>
+  <organization>
+    <name>IEC</name>
+           </organization>
+         </contributor>
+       </bibitem>
+         <bibitem id="iso124" type="standard">
+         <title format="text/plain">Standard</title>
+         <docidentifier>ISO 124</docidentifier>
+         <date type="published">
+           <from>1066</from>
+           <to>1067</to>
+         </date>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
        </bibitem>
@@ -98,11 +125,14 @@ RSpec.describe Asciidoctor::ISO do
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123</docidentifier>
-         <date type="published">--</date>
+         <date type="published">
+           <from>--</from>
+         </date>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
          <note format="text/plain" reference="1">ISO DATE: The standard is in press</note>
@@ -128,11 +158,14 @@ RSpec.describe Asciidoctor::ISO do
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:All Parts</docidentifier>
-         <date type="published">1066</date>
+         <date type="published">
+           <from>1066</from>
+         </date>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>ISO</name>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
        </bibitem>
