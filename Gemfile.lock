@@ -32,7 +32,7 @@ GIT
 PATH
   remote: .
   specs:
-    asciidoctor-iso (0.7.0)
+    asciidoctor-iso (0.7.1)
       asciidoctor (~> 1.5.6)
       html2doc
       htmlentities (~> 4.3.4)
