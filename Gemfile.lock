@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: b5db3572f9312f9d54ace3359d22236494584357
+  revision: 230ee94514aff77dad054c0e2a16c2dd2c3d1999
   specs:
     isodoc (0.5.5)
       asciimath
@@ -92,7 +92,7 @@ GEM
       shellany (~> 0.0)
     optout (0.0.2)
     parallel (1.12.1)
-    parser (2.5.0.3)
+    parser (2.5.0.4)
       ast (~> 2.4.0)
     powerpack (0.1.1)
     pry (0.11.3)
@@ -117,9 +117,9 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.52.1)
+    rubocop (0.53.0)
       parallel (~> 1.10)
-      parser (< 3.0, >= 2.4.0.2)
+      parser (>= 2.5)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
