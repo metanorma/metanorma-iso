@@ -1,4 +1,5 @@
 require "asciidoctor/extensions"
+require "HTMLEntities"
 
 module Asciidoctor
   module ISO
@@ -85,6 +86,18 @@ module Asciidoctor
         noko { |xml| xml.hr }.join("\n")
       end
 
+      def stem_parse(text, xml)
+        if /&lt;([^:>&]+:)?math(\s+[^>&]+)?&gt; |
+          <([^:>&]+:)?math(\s+[^>&]+)?>/x.match? text 
+          math = HTMLEntities.new.encode(text, :basic, :hexadecimal).
+            gsub(/&amp;gt;/, ">").gsub(/\&amp;lt;/, "<").gsub(/&amp;amp;/, "&").
+            gsub(/&gt;/, ">").gsub(/&lt;/, "<").gsub(/&amp;/, "&")
+          xml.stem math, **{ type: "MathML" }
+        else
+          xml.stem text, **{ type: "AsciiMath" }
+        end
+      end
+
       def inline_quoted(node)
         noko do |xml|
           case node.type
@@ -95,7 +108,7 @@ module Asciidoctor
           when :single then xml << "'#{node.text}'"
           when :superscript then xml.sup node.text
           when :subscript then xml.sub node.text
-          when :asciimath then xml.stem node.text, **{ type: "AsciiMath" }
+          when :asciimath then stem_parse(node.text, xml)
           else
             case node.role
               # the following three are legacy, they are now handled by macros

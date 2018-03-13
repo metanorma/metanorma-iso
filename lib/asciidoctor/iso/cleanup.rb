@@ -33,6 +33,7 @@ module Asciidoctor
         element_name_cleanup(xmldoc)
         footnote_renumber(xmldoc)
         empty_element_cleanup(xmldoc)
+        mathml_cleanup(xmldoc)
         bookmark_cleanup(xmldoc)
         xmldoc
       end
@@ -183,6 +184,16 @@ module Asciidoctor
               strip_initial_space(x.elements[0])
             end
           end
+        end
+      end
+
+      def mathml_cleanup(xmldoc)
+        xmldoc.xpath("//stem[@type = 'MathML']").each do |x|
+          math = x.text.gsub(/&lt;/, "<").gsub(/&gt;/, ">").gsub(/&quot;/, '"').
+            gsub(/&amp;/, "&").gsub(/<[^:\/]+:/, "<").gsub(/<\/[^:]+:/, "</").
+            gsub(/ xmlns[^>]+/, "").
+            gsub(/<math>/, '<math xmlns="http://www.w3.org/1998/Math/MathML">')
+          x.children = math
         end
       end
     end

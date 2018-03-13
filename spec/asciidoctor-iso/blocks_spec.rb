@@ -28,12 +28,22 @@ RSpec.describe Asciidoctor::ISO do
       r = 1 % 
       r = 1 % 
       ++++
+
+      [stem]
+      ++++
+      <mml:math><mml:msub xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">F</mml:mi> </mml:mrow> </mml:mrow> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">&#x0391;</mml:mi> </mml:mrow> </mml:mrow> </mml:msub> </mml:math>
+      ++++
     INPUT
             #{BLANK_HDR}
        <sections>
          <formula id="_">
          <stem type="AsciiMath">r = 1 %
        r = 1 %</stem>
+       </formula>
+
+       <formula id="_">
+         <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub> <mrow> <mrow> <mi mathvariant="bold-italic">F</mi> </mrow> </mrow> <mrow> <mrow> <mi mathvariant="bold-italic">Α</mi> </mrow> </mrow> </msub> </math></stem>
+       </stem>
        </formula>
        </sections>
        </iso-standard>

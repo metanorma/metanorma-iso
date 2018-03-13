@@ -28,7 +28,8 @@ module Asciidoctor
         stem_content = node.lines.join("\n")
         noko do |xml|
           xml.formula **id_attr(node) do |s|
-            s.stem stem_content, **{ type: "AsciiMath" }
+            # s.stem stem_content, **{ type: "AsciiMath" }
+            stem_parse(stem_content, s)
             style(node, stem_content)
           end
         end
