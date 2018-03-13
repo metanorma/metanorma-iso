@@ -24,8 +24,6 @@ module Asciidoctor
       def table_name(node, xml_table)
         if node.title?
           xml_table.name node.title
-        else
-          #style_warning(node, "Table should have title", nil)
         end
       end
 
@@ -34,7 +32,6 @@ module Asciidoctor
           thd << cell.content
         else
           thd << cell.text
-          style(cell, cell.text)
         end
       end
 

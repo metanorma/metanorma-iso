@@ -8,15 +8,15 @@ module Asciidoctor
       @term_def = false
       @norm_ref = false
 
-      def in_biblio
+      def in_biblio?
         @biblio
       end
 
-      def in_terms
+      def in_terms?
         @term_def
       end
 
-      def in_norm_ref
+      def in_norm_ref?
         @norm_ref
       end
 
@@ -66,14 +66,11 @@ module Asciidoctor
                              end
       end
 
-      #SCOPE_WARN = "Scope contains subsections: should be succint".freeze
-
       # Not testing max depth of sections: Asciidoctor already limits
       # it to 5 levels of nesting
       def clause_parse(attrs, xml, node)
         attrs["inline-header".to_sym] = node.option? "inline-header"
         set_obligation(attrs, node)
-        #style_warning(node, SCOPE_WARN, nil) if @scope
         sect = node.level == 1 ? "clause" : "subsection"
         xml.send sect, **attr_code(attrs) do |xml_section|
           xml_section.title { |n| n << node.title } unless node.title.nil?
@@ -106,8 +103,8 @@ module Asciidoctor
         end
       end
 
+      # subclause contains subclauses
       def term_def_subclause_parse(attrs, xml, node)
-        # subclause contains subclauses
         sub = node.find_by(context: :section) { |s| s.level == node.level + 1 }
         sub.empty? || (return term_def_parse(attrs, xml, node, false))
         node.title.casecmp("symbols and abbreviated terms").zero? &&
@@ -151,9 +148,6 @@ module Asciidoctor
           xml_section.title = "Introduction"
           content = node.content
           xml_section << content
-          #introduction_style(node,
-                             #Utils::flatten_rawtext(content).
-                             #join("\n"))
         end
       end
 
@@ -165,15 +159,11 @@ module Asciidoctor
       end
 
       def scope_parse(attrs, xml, node)
-        @scope = true
         xml.clause **attr_code(attrs) do |xml_section|
           xml_section.title { |t| t << "Scope" }
           content = node.content
           xml_section << content
-          #c = Utils::flatten_rawtext(content).join("\n")
-          #scope_style(node, c)
         end
-        @scope = false
       end
     end
   end

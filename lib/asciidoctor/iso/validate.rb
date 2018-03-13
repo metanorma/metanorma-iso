@@ -75,8 +75,8 @@ module Asciidoctor
         notitle = false
         withtitle = false
         xpath.each do |s|
-          sublabel = s&.at("./title")&.text || s["id"]
-          title_all_siblings(s.xpath("./subsection | ./terms"), sublabel)
+          title_all_siblings(s.xpath("./subsection | ./terms"),
+                             s&.at("./title")&.text || s["id"])
           subtitle = s.at("./title")
           notitle = notitle || (!subtitle || subtitle.text.empty?)
           withtitle = withtitle || !subtitle&.text&.empty?

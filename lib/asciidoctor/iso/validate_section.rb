@@ -9,6 +9,8 @@ module Asciidoctor
         symbols_validate(doc.root)
         sections_sequence_validate(doc.root)
         section_style(doc.root)
+        sourcecode_style(doc.root)
+        asset_style(doc.root)
       end
 
       def foreword_validate(root)
@@ -52,7 +54,7 @@ module Asciidoctor
 
       # spec of permissible section sequence
       # we skip normative references, it goes to end of list
-      SEQ = 
+      SEQ =
         [
           {
             msg: "Initial section must be (content) Foreword",
@@ -72,9 +74,9 @@ module Asciidoctor
             "Terms and Definitions",
             val: [
               { tag: "terms", title: "Terms and Definitions" },
-              { 
+              {
                 tag: "terms",
-                title: "Terms, Definitions, Symbols and Abbreviated Terms"
+                title: "Terms, Definitions, Symbols and Abbreviated Terms",
               },
             ],
           },
@@ -104,7 +106,8 @@ module Asciidoctor
           return
         end
         n[:tag] == "clause" ||
-          warn("ISO style: Document must contain clause after Terms and Definitions")
+          warn("ISO style: Document must contain clause after "\
+               "Terms and Definitions")
         n == { tag: "clause", title: "Scope" } &&
           warn("ISO style: Scope must occur before Terms and Definitions")
         n = names.shift || return
@@ -137,30 +140,15 @@ module Asciidoctor
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
       SCOPE_WARN = "Scope contains subsections: should be succint".freeze
 
-
       def section_style(root)
-        foreword_style(root.at("//foreword"), extract_text(root.at("//foreword")))
-        introduction_style(root.at("//introduction"), extract_text(root.at("//introduction")))
-        scope_style(root.at("//clause[title = 'Scope']"), extract_text(root.at("//clause[title = 'Scope']")))
-        root.xpath("//example | //termexample").each do |e|
-          termexample_style(e, extract_text(e))
-        end
-        root.xpath("//note").each do |e|
-          note_style(e, extract_text(e))
-        end
-        root.xpath("//fn").each do |e|
-          footnote_style(e, extract_text(e))
-        end
-        root.xpath("//termsource | //formula | //termnote | //p | //li[not(p)] | "\
-                   "//dt | //dd[not(p)] | //td[not(p)] | //th[not(p)]").each do |e|
-          style(e, extract_text(e))
-        end
-        root.xpath("//figure[image][not(title)]").each do |node|
-          style_warning(node, "Figure should have title", nil)
-        end
-        root.xpath("//table[not(title)]").each do |node|
-          style_warning(node, "Table should have title", nil)
-        end
+        foreword_style(root.at("//foreword"))
+        introduction_style(root.at("//introduction"))
+        scope_style(root.at("//clause[title = 'Scope']"))
+        scope = root.at("//clause[title = 'Scope']/subsection")
+        scope.nil? || style_warning(scope, SCOPE_WARN, nil)
+      end
+
+      def sourcecode_style(root)
         root.xpath("//sourcecode").each do |x|
           callouts = x.elements.select { |e| e.name == "callout" }
           annotations = x.elements.select { |e| e.name == "annotation" }
@@ -168,13 +156,39 @@ module Asciidoctor
             warn "#{x['id']}: mismatch of callouts and annotations"
           end
         end
-        root.xpath("//references[title = 'Normative References']/bibitem").each do |b|
+      end
+
+      ASSETS_TO_STYLE =
+        "//termsource | //formula | //termnote | //p | //li[not(p)] | "\
+        "//dt | //dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
+
+      NORM_BIBITEMS =
+        "//references[title = 'Normative References']/bibitem".freeze
+
+      def asset_title_style(root)
+        root.xpath("//figure[image][not(title)]").each do |node|
+          style_warning(node, "Figure should have title", nil)
+        end
+        root.xpath("//table[not(title)]").each do |node|
+          style_warning(node, "Table should have title", nil)
+        end
+      end
+
+      def norm_bibitem_style(root)
+        root.xpath(NORM_BIBITEMS).each do |b|
           if b.at(Cleanup::ISO_PUBLISHER_XPATH).nil?
             Utils::warning(b, NORM_ISO_WARN, b.text)
           end
         end
-        scope = root.at("//clause[title = 'Scope']/subsection")
-        scope.nil? || style_warning(scope, SCOPE_WARN, nil)
+      end
+
+      def asset_style(root)
+        root.xpath("//example | //termexample").each { |e| example_style(e) }
+        root.xpath("//note").each { |e| note_style(e) }
+        root.xpath("//fn").each { |e| footnote_style(e) }
+        root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
+        asset_title_style(root)
+        norm_bibitem_style(root)
       end
     end
   end

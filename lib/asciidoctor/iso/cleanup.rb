@@ -67,8 +67,6 @@ module Asciidoctor
           annotations = x.elements.select { |e| e.name == "annotation" }
           if callouts.size == annotations.size
             link_callouts_to_annotations(callouts, annotations)
-          else
-            #warn "#{x['id']}: mismatch of callouts and annotations"
           end
         end
       end
@@ -125,9 +123,7 @@ module Asciidoctor
       end
 
       def termdef_boilerplate_cleanup(xmldoc)
-        xmldoc.xpath("//terms/p | //terms/ul").each do |a|
-          a.remove
-        end
+        xmldoc.xpath("//terms/p | //terms/ul").each(&:remove)
       end
 
       def termdef_cleanup(xmldoc)
@@ -139,7 +135,7 @@ module Asciidoctor
       end
 
       ELEMS_ALLOW_NOTES =
-        # %w[p formula quote sourcecode example admonition ul ol dl figure].freeze
+        # %w[p formula quote sourcecode example admonition ul ol dl figure]
         %w[p formula ul ol dl figure].freeze
 
       # if a note is at the end of a section, it is left alone
@@ -170,17 +166,17 @@ module Asciidoctor
           if !/\S/.match?(x.children[0].text)
             x.children[0].remove
           else
-            x.children[0].content =  x.children[0].text.gsub(/^ /, "")
+            x.children[0].content = x.children[0].text.gsub(/^ /, "")
           end
         end
       end
 
       def bookmark_cleanup(xmldoc)
         xmldoc.xpath("//li[descendant::bookmark]").each do |x|
-          if x&.elements[0]&.name == "p" &&
-              x&.elements[0]&.elements[0]&.name == "bookmark"
+          if x&.elements&.first&.name == "p" &&
+              x&.elements&.first&.elements&.first&.name == "bookmark"
             if empty_text_before_first_element(x.elements[0])
-              x["id"] = (x.elements[0].elements[0].remove)["id"]
+              x["id"] = x.elements[0].elements[0].remove["id"]
               strip_initial_space(x.elements[0])
             end
           end

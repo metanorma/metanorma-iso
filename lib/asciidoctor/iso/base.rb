@@ -67,12 +67,16 @@ module Asciidoctor
         ret
       end
 
-      def makexml(node)
+      def makexml1(node)
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
-        result = textcleanup(result.flatten * "\n")
+        textcleanup(result.flatten * "\n")
+      end
+
+      def makexml(node)
+        result = makexml1(node)
         ret1 = cleanup(Nokogiri::XML(result))
         ret1.root.add_namespace(nil, "http://riboseinc.com/isoxml")
         validate(ret1) unless @novalid
@@ -134,7 +138,6 @@ module Asciidoctor
           xml.termsource **attrs do |xml_t|
             seen_xref = Nokogiri::XML.fragment(matched[:xref])
             add_term_source(xml_t, seen_xref, matched)
-            #style(node, matched[:text])
           end
         end.join("\n")
       end

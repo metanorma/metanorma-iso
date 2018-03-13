@@ -66,7 +66,6 @@ module Asciidoctor
           @fn_number += 1
           xml.fn **{ reference: @fn_number } do |fn|
             fn.p { |p| p << node.text }
-            #footnote_style(node, node.text)
           end
         end.join("\n")
       end
@@ -88,7 +87,7 @@ module Asciidoctor
 
       def stem_parse(text, xml)
         if /&lt;([^:>&]+:)?math(\s+[^>&]+)?&gt; |
-          <([^:>&]+:)?math(\s+[^>&]+)?>/x.match? text 
+          <([^:>&]+:)?math(\s+[^>&]+)?>/x.match? text
           math = HTMLEntities.new.encode(text, :basic, :hexadecimal).
             gsub(/&amp;gt;/, ">").gsub(/\&amp;lt;/, "<").gsub(/&amp;amp;/, "&").
             gsub(/&gt;/, ">").gsub(/&lt;/, "<").gsub(/&amp;/, "&")

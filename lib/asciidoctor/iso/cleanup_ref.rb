@@ -67,8 +67,8 @@ module Asciidoctor
         end
       end
 
+      # move ref before p
       def ref_cleanup(xmldoc)
-        # move ref before p
         xmldoc.xpath("//p/ref").each do |r|
           parent = r.parent
           parent.previous = r.remove

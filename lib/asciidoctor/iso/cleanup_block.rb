@@ -19,8 +19,8 @@ module Asciidoctor
         end
       end
 
+      # move Key dl after table footer
       def dl_table_cleanup(xmldoc)
-        # move Key dl after table footer
         q = "//table/following-sibling::*[1]"\
           "[self::p and normalize-space() = 'Key']"
         xmldoc.xpath(q).each do |s|
@@ -58,8 +58,8 @@ module Asciidoctor
         header_rows_cleanup(xmldoc)
       end
 
+      # move notes into table
       def notes_table_cleanup(xmldoc)
-        # move notes into table
         nomatches = false
         until nomatches
           q = "//table/following-sibling::*[1][self::note]"
@@ -71,8 +71,8 @@ module Asciidoctor
         end
       end
 
+      # include where definition list inside stem block
       def formula_cleanup(x)
-        # include where definition list inside stem block
         q = "//formula/following-sibling::*[1]"\
           "[self::p and text() = 'where']"
         x.xpath(q).each do |s|
@@ -97,8 +97,8 @@ module Asciidoctor
         end
       end
 
+      # include key definition list inside figure
       def figure_dl_cleanup(xmldoc)
-        # include key definition list inside figure
         q = "//figure/following-sibling::*"\
           "[self::p and normalize-space() = 'Key']"
         xmldoc.xpath(q).each do |s|
@@ -109,8 +109,8 @@ module Asciidoctor
         end
       end
 
+      # examples containing only figures become subfigures of figures
       def subfigure_cleanup(xmldoc)
-        # examples containing only figures become subfigures of figures
         nodes = xmldoc.xpath("//example/figure")
         while !nodes.empty?
           nodes[0].parent.name = "figure"
@@ -124,23 +124,29 @@ module Asciidoctor
         subfigure_cleanup(xmldoc)
       end
 
+      def table_footnote_renumber1(fn, i, seen)
+        if seen[fn.text] then outnum = seen[fn.text]
+        else
+          i += 1
+          outnum = i
+          seen[fn.text] = outnum
+        end
+        fn["reference"] = (outnum - 1 + "a".ord).chr
+        fn["table"] = true
+        [i, seen]
+      end
+
       def table_footnote_renumber(xmldoc)
         xmldoc.xpath("//table | //figure").each do |t|
-          seen, i = {}, 0
+          seen = {}
+          i = 0
           t.xpath(".//fn").each do |fn|
-            if seen[fn.text] then outnum = seen[fn.text]
-            else
-              i += 1
-              outnum = i
-              seen[fn.text] = outnum
-            end
-            fn["reference"] = (outnum - 1 + "a".ord).chr
-            fn["table"] = true
+            i, seen = table_footnote_renumber1(fn, i, seen)
           end
         end
       end
 
-      def other_footnote_renumber1(fn, i, seen, outnum)
+      def other_footnote_renumber1(fn, i, seen)
         unless fn["table"]
           if seen[fn.text] then outnum = seen[fn.text]
           else
@@ -150,7 +156,7 @@ module Asciidoctor
           end
           fn["reference"] = outnum.to_s
         end
-        [i, seen, outnum]
+        [i, seen]
       end
 
       PRE_NORMREF_FOOTNOTES = "//foreword//fn | //introduction//fn |"\
@@ -168,15 +174,14 @@ module Asciidoctor
       def other_footnote_renumber(xmldoc)
         seen = {}
         i = 0
-        outnum = 0
         xmldoc.xpath(PRE_NORMREF_FOOTNOTES).each do |fn|
-          i, seen, outnum = other_footnote_renumber1(fn, i, seen, outnum)
+          i, seen = other_footnote_renumber1(fn, i, seen)
         end
         xmldoc.xpath(NORMREF_FOOTNOTES).each do |fn|
-          i, seen, outnum = other_footnote_renumber1(fn, i, seen, outnum)
+          i, seen = other_footnote_renumber1(fn, i, seen)
         end
         xmldoc.xpath(POST_NORMREF_FOOTNOTES).each do |fn|
-          i, seen, outnum = other_footnote_renumber1(fn, i, seen, outnum)
+          i, seen = other_footnote_renumber1(fn, i, seen)
         end
       end
 
@@ -199,14 +204,26 @@ module Asciidoctor
       end
 
       def obligations_cleanup(x)
+        obligations_cleanup_info(x)
+        obligations_cleanup_norm(x)
+        obligations_cleanup_inherit(x)
+      end
+
+      def obligations_cleanup_info(x)
         (s = x.at("//foreword")) && s["obligation"] = "informative"
         (s = x.at("//introduction")) && s["obligation"] = "informative"
+        x.xpath("//references").each { |r| r["obligation"] = "informative" }
+      end
+
+      def obligations_cleanup_norm(x)
         (s = x.at("//clause[title = 'Scope']")) && s["obligation"] = "normative"
         (s = x.at("//clause[title = 'Symbols and Abbreviated Terms']")) &&
           s["obligation"] = "normative"
-        x.xpath("//references").each { |r| r["obligation"] = "informative" }
         x.xpath("//terms").each { |r| r["obligation"] = "normative" }
         x.xpath("//symbols-abbrevs").each { |r| r["obligation"] = "normative" }
+      end
+
+      def obligations_cleanup_inherit(x)
         x.xpath("//annex | //clause").each do |r|
           r["obligation"] = "normative" unless r["obligation"]
         end

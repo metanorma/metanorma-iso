@@ -41,7 +41,6 @@ module Asciidoctor
         outfilesuffix ".xml"
       end
 
-      # alias_method :pass, :content
       alias_method :embedded, :content
       alias_method :verse, :quote
       alias_method :audio, :skip

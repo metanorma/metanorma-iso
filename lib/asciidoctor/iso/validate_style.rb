@@ -8,44 +8,44 @@ module Asciidoctor
       def extract_text(node)
         return "" if node.nil?
         node1 = node.dup
-        node1.xpath("//link | //locality").each { |x| x.remove }
+        node1.xpath("//link | //locality").each(&:remove)
         ret = ""
         node1.traverse { |x| ret += x.text if x.text? }
         ret
       end
 
-      def foreword_style(node, text)
+      def foreword_style(node)
         return if @novalid
-        style_no_guidance(node, text, "Foreword")
+        style_no_guidance(node, extract_text(node), "Foreword")
       end
 
-      def scope_style(node, text)
+      def scope_style(node)
         return if @novalid
-        style_no_guidance(node, text, "Scope")
+        style_no_guidance(node, extract_text(node), "Scope")
       end
 
-      def introduction_style(node, text)
+      def introduction_style(node)
         return if @novalid
-        r = requirement(text)
+        r = requirement(extract_text(node))
         style_warning(node, "Introduction may contain requirement", r) if r
       end
 
-      def termexample_style(node, text)
+      def example_style(node)
         return if @novalid
-        style_no_guidance(node, text, "Term Example")
-        style(node, text)
+        style_no_guidance(node, extract_text(node), "Term Example")
+        style(node, extract_text(node))
       end
 
-      def note_style(node, text)
+      def note_style(node)
         return if @novalid
-        style_no_guidance(node, text, "Note")
-        style(node, text)
+        style_no_guidance(node, extract_text(node), "Note")
+        style(node, extract_text(node))
       end
 
-      def footnote_style(node, text)
+      def footnote_style(node)
         return if @novalid
-        style_no_guidance(node, text, "Footnote")
-        style(node, text)
+        style_no_guidance(node, extract_text(node), "Footnote")
+        style(node, extract_text(node))
       end
 
       def style_warning(node, msg, text)
