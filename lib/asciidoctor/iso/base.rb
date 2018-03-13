@@ -134,7 +134,7 @@ module Asciidoctor
           xml.termsource **attrs do |xml_t|
             seen_xref = Nokogiri::XML.fragment(matched[:xref])
             add_term_source(xml_t, seen_xref, matched)
-            style(node, matched[:text])
+            #style(node, matched[:text])
           end
         end.join("\n")
       end

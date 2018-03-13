@@ -5,6 +5,15 @@ require "pp"
 module Asciidoctor
   module ISO
     module Validate
+      def extract_text(node)
+        return "" if node.nil?
+        node1 = node.dup
+        node1.xpath("//link | //locality").each { |x| x.remove }
+        ret = ""
+        node1.traverse { |x| ret += x.text if x.text? }
+        ret
+      end
+
       def foreword_style(node, text)
         return if @novalid
         style_no_guidance(node, text, "Foreword")

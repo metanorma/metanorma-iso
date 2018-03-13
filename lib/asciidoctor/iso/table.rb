@@ -25,7 +25,7 @@ module Asciidoctor
         if node.title?
           xml_table.name node.title
         else
-          style_warning(node, "Table should have title", nil)
+          #style_warning(node, "Table should have title", nil)
         end
       end
 

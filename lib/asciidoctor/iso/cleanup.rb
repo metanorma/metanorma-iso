@@ -68,7 +68,7 @@ module Asciidoctor
           if callouts.size == annotations.size
             link_callouts_to_annotations(callouts, annotations)
           else
-            warn "#{x['id']}: mismatch of callouts and annotations"
+            #warn "#{x['id']}: mismatch of callouts and annotations"
           end
         end
       end

@@ -19,6 +19,8 @@ module Asciidoctor
         def current_location(n)
           return "Line #{n.lineno}" if n.respond_to?(:lineno) &&
             !n.lineno.nil? && !n.lineno.empty?
+          return "Line #{n.line}" if n.respond_to?(:line) &&
+            !n.line.nil? 
           return "ID #{n.id}" if n.respond_to?(:id) && !n.id.nil?
           while !n.nil? &&
               (!n.respond_to?(:level) || n.level.positive?) &&

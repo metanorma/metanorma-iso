@@ -133,6 +133,7 @@ RSpec.describe "Non-ISO reference in Normative References" do
   specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-ISO/IEC reference not expected as normative}).to_stderr }
   #{VALIDATING_BLANK_HDR}
 
+  [bibliography]
   == Normative References
   * [[[XYZ,IESO 121]]] _Standard_
   INPUT

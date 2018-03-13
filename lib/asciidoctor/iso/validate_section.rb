@@ -8,6 +8,7 @@ module Asciidoctor
         normref_validate(doc.root)
         symbols_validate(doc.root)
         sections_sequence_validate(doc.root)
+        section_style(doc.root)
       end
 
       def foreword_validate(root)
@@ -131,6 +132,49 @@ module Asciidoctor
           warn("ISO style: Final section must be (references) Bibliography")
         names.empty? ||
           warn("ISO style: There are sections after the final Bibliography")
+      end
+
+      NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
+      SCOPE_WARN = "Scope contains subsections: should be succint".freeze
+
+
+      def section_style(root)
+        foreword_style(root.at("//foreword"), extract_text(root.at("//foreword")))
+        introduction_style(root.at("//introduction"), extract_text(root.at("//introduction")))
+        scope_style(root.at("//clause[title = 'Scope']"), extract_text(root.at("//clause[title = 'Scope']")))
+        root.xpath("//example | //termexample").each do |e|
+          termexample_style(e, extract_text(e))
+        end
+        root.xpath("//note").each do |e|
+          note_style(e, extract_text(e))
+        end
+        root.xpath("//fn").each do |e|
+          footnote_style(e, extract_text(e))
+        end
+        root.xpath("//termsource | //formula | //termnote | //p | //li[not(p)] | "\
+                   "//dt | //dd[not(p)] | //td[not(p)] | //th[not(p)]").each do |e|
+          style(e, extract_text(e))
+        end
+        root.xpath("//figure[image][not(title)]").each do |node|
+          style_warning(node, "Figure should have title", nil)
+        end
+        root.xpath("//table[not(title)]").each do |node|
+          style_warning(node, "Table should have title", nil)
+        end
+        root.xpath("//sourcecode").each do |x|
+          callouts = x.elements.select { |e| e.name == "callout" }
+          annotations = x.elements.select { |e| e.name == "annotation" }
+          if callouts.size != annotations.size
+            warn "#{x['id']}: mismatch of callouts and annotations"
+          end
+        end
+        root.xpath("//references[title = 'Normative References']/bibitem").each do |b|
+          if b.at(Cleanup::ISO_PUBLISHER_XPATH).nil?
+            Utils::warning(b, NORM_ISO_WARN, b.text)
+          end
+        end
+        scope = root.at("//clause[title = 'Scope']/subsection")
+        scope.nil? || style_warning(scope, SCOPE_WARN, nil)
       end
     end
   end

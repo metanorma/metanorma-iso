@@ -66,14 +66,14 @@ module Asciidoctor
                              end
       end
 
-      SCOPE_WARN = "Scope contains subsections: should be succint".freeze
+      #SCOPE_WARN = "Scope contains subsections: should be succint".freeze
 
       # Not testing max depth of sections: Asciidoctor already limits
       # it to 5 levels of nesting
       def clause_parse(attrs, xml, node)
         attrs["inline-header".to_sym] = node.option? "inline-header"
         set_obligation(attrs, node)
-        style_warning(node, SCOPE_WARN, nil) if @scope
+        #style_warning(node, SCOPE_WARN, nil) if @scope
         sect = node.level == 1 ? "clause" : "subsection"
         xml.send sect, **attr_code(attrs) do |xml_section|
           xml_section.title { |n| n << node.title } unless node.title.nil?
@@ -151,9 +151,9 @@ module Asciidoctor
           xml_section.title = "Introduction"
           content = node.content
           xml_section << content
-          introduction_style(node,
-                             Utils::flatten_rawtext(content).
-                             join("\n"))
+          #introduction_style(node,
+                             #Utils::flatten_rawtext(content).
+                             #join("\n"))
         end
       end
 
@@ -170,8 +170,8 @@ module Asciidoctor
           xml_section.title { |t| t << "Scope" }
           content = node.content
           xml_section << content
-          c = Utils::flatten_rawtext(content).join("\n")
-          scope_style(node, c)
+          #c = Utils::flatten_rawtext(content).join("\n")
+          #scope_style(node, c)
         end
         @scope = false
       end

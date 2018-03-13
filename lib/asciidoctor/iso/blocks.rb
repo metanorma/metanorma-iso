@@ -30,7 +30,7 @@ module Asciidoctor
           xml.formula **id_attr(node) do |s|
             # s.stem stem_content, **{ type: "AsciiMath" }
             stem_parse(stem_content, s)
-            style(node, stem_content)
+            #style(node, stem_content)
           end
         end
       end
@@ -60,7 +60,7 @@ module Asciidoctor
         noko do |xml|
           xml.termnote **id_attr(n) do |ex|
             wrap_in_para(n, ex)
-            style(n, Utils::flatten_rawtext(n.content).join("\n"))
+            #style(n, Utils::flatten_rawtext(n.content).join("\n"))
           end
         end.join("\n")
       end
@@ -69,8 +69,8 @@ module Asciidoctor
         noko do |xml|
           xml.note **id_attr(n) do |c|
             wrap_in_para(n, c)
-            text = Utils::flatten_rawtext(n.content).join("\n")
-            note_style(n, text)
+            #text = Utils::flatten_rawtext(n.content).join("\n")
+            #note_style(n, text)
           end
         end.join("\n")
       end
@@ -100,8 +100,8 @@ module Asciidoctor
           xml.termexample **id_attr(node) do |ex|
             c = node.content
             wrap_in_para(node, ex)
-            text = Utils::flatten_rawtext(c).join("\n")
-            termexample_style(node, text)
+            #text = Utils::flatten_rawtext(c).join("\n")
+            #termexample_style(node, text)
           end
         end.join("\n")
       end
@@ -112,8 +112,8 @@ module Asciidoctor
           xml.example **id_attr(node) do |ex|
             content = node.content
             ex << content
-            text = Utils::flatten_rawtext(content).join("\n")
-            termexample_style(node, text)
+            #text = Utils::flatten_rawtext(content).join("\n")
+            #termexample_style(node, text)
           end
         end.join("\n")
       end
@@ -124,8 +124,8 @@ module Asciidoctor
             xml_abstract.title { |t| t << "Foreword" }
             content = node.content
             xml_abstract << content
-            text = Utils::flatten_rawtext(content).join("\n")
-            foreword_style(node, text)
+            #text = Utils::flatten_rawtext(content).join("\n")
+            #foreword_style(node, text)
           end
         end.join("\n")
       end
@@ -142,7 +142,7 @@ module Asciidoctor
 
       def figure_title(node, f)
         if node.title.nil?
-          style_warning(node, "Figure should have title", nil)
+          #style_warning(node, "Figure should have title", nil)
         else
           f.name { |name| name << node.title }
         end
@@ -164,7 +164,7 @@ module Asciidoctor
         noko do |xml|
           xml.p **attr_code(attrs) do |xml_t|
             xml_t << node.content
-            style(node, Utils::flatten_rawtext(node).join(" "))
+            #style(node, Utils::flatten_rawtext(node).join(" "))
           end
         end.join("\n")
       end

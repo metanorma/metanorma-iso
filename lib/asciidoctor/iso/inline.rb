@@ -66,7 +66,7 @@ module Asciidoctor
           @fn_number += 1
           xml.fn **{ reference: @fn_number } do |fn|
             fn.p { |p| p << node.text }
-            footnote_style(node, node.text)
+            #footnote_style(node, node.text)
           end
         end.join("\n")
       end
