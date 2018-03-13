@@ -49,6 +49,9 @@
       <element name="organization">
         <ref name="orgname"/>
         <optional>
+          <ref name="abbreviation"/>
+        </optional>
+        <optional>
           <ref name="uri"/>
         </optional>
         <zeroOrMore>
@@ -183,17 +186,8 @@
         <ref name="ics"/>
       </optional>
     </define>
-    <define name="bdate">
-      <element name="date">
-        <attribute name="type">
-          <choice>
-            <value>published</value>
-            <value>accessed</value>
-            <value>created</value>
-            <value>activated</value>
-            <value>obsoleted</value>
-          </choice>
-        </attribute>
+    <define name="bfrom">
+      <element name="from">
         <choice>
           <data type="gYear"/>
           <data type="date"/>
