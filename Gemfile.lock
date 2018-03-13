@@ -119,7 +119,7 @@ GEM
     rspec-support (3.7.1)
     rubocop (0.52.1)
       parallel (~> 1.10)
-      parser (>= 2.5)
+      parser (< 3.0, >= 2.4.0.2)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
