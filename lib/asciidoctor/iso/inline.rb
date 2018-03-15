@@ -1,5 +1,5 @@
 require "asciidoctor/extensions"
-require "HTMLEntities"
+require "htmlentities"
 
 module Asciidoctor
   module ISO
