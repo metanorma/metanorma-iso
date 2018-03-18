@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "nokogiri"
   spec.add_dependency "ruby-jing"
   spec.add_dependency "thread_safe"
+  spec.add_dependency "sass"
   spec.add_dependency "uuidtools"
   spec.add_dependency "html2doc"
   spec.add_dependency "isodoc"

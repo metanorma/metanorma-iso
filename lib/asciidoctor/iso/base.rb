@@ -5,6 +5,7 @@ require "json"
 require "pathname"
 require "open-uri"
 require "pp"
+require "sass"
 require "isodoc"
 
 module Asciidoctor
@@ -31,10 +32,17 @@ module Asciidoctor
         File.join(File.dirname(__FILE__), File.join("html", file))
       end
 
+      def generate_css(filename)
+        engine = Sass::Engine.new(File.read(filename, encoding: "UTF-8"), syntax: :scss)
+        outname = File.basename(filename, ".*") + ".css"
+        File.open(outname, "w") { |f| f.write(engine.render) }
+        outname
+      end
+
       def html_converter(node)
         IsoDoc::Convert.new(
-          htmlstylesheet: html_doc_path("htmlstyle.css"),
-          standardstylesheet: html_doc_path("isodoc.css"),
+          htmlstylesheet: generate_css(html_doc_path("htmlstyle.css")),
+          standardstylesheet: generate_css(html_doc_path("isodoc.css")),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),
           i18nyaml: node.attr("i18nyaml"),
@@ -43,8 +51,8 @@ module Asciidoctor
 
       def doc_converter(node)
         IsoDoc::WordConvert.new(
-          wordstylesheet:  html_doc_path("wordstyle.css"),
-          standardstylesheet: html_doc_path("isodoc.css"),
+          wordstylesheet:  generate_css(html_doc_path("wordstyle.css")),
+          standardstylesheet: generate_css(html_doc_path("isodoc.css")),
           header: html_doc_path("header.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),

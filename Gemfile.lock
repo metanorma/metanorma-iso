@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 687eb607fbf0b6aac79225acf996caa505357b09
+  revision: e84b3385acf7d6eb025d80756080a1610efc43da
   specs:
     isodoc (0.5.7)
       asciimath
@@ -32,13 +32,14 @@ GIT
 PATH
   remote: .
   specs:
-    asciidoctor-iso (0.7.1)
+    asciidoctor-iso (0.7.2)
       asciidoctor (~> 1.5.6)
       html2doc
       htmlentities (~> 4.3.4)
       isodoc
       nokogiri
       ruby-jing
+      sass
       thread_safe
       uuidtools
 
@@ -129,6 +130,11 @@ GEM
     ruby-progressbar (1.9.0)
     ruby-xslt (0.9.10)
     ruby_dep (1.5.0)
+    sass (3.5.5)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     shellany (0.0.1)
     simplecov (0.16.1)
       docile (~> 1.1)

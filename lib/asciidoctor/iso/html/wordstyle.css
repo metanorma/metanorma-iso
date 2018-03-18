@@ -788,11 +788,9 @@ p.Tablebody, li.Tablebody, div.Tablebody
 	margin:72.0pt 90.0pt 72.0pt 90.0pt;
 	mso-header-margin:35.4pt;
 	mso-footer-margin:35.4pt;
-	<!-- if header present -->
-	mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh1;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h1;
-	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef1;
-	<!-- end if header present -->
+	mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eha;
+	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") ha;
+	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") efa;
 	mso-paper-source:0;}
 div.WordSection1
 	{page:WordSection1;}
@@ -804,7 +802,7 @@ div.WordSection1
 	{mso-level-number-format:alpha-upper;
 	mso-level-style-link:ANNEX;
 	mso-level-suffix:none;
-	mso-level-text:Annex\00A0%1;
+	mso-level-text:"Annex\00A0%1";
 	mso-level-tab-stop:none;
 	mso-level-number-position:left;
 	margin-left:0cm;
@@ -896,7 +894,7 @@ div.WordSection1
 	mso-list-template-ids:-1756330000;}
 @list l1:level1
 	{mso-level-style-link:"Heading 1";
-	mso-level-text:%1;
+	mso-level-text:"%1";
 	mso-level-tab-stop:21.6pt;
 	mso-level-number-position:left;
 	margin-left:21.6pt;
