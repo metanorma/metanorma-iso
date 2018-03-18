@@ -39,6 +39,10 @@ module Asciidoctor
             "International Organization for Standardization"].include? orgname
           org.name "International Organization for Standardization"
           org.abbreviation "ISO"
+        elsif ["IEC", 
+                 "International Electrotechnical Commission"].include? orgname
+          org.name "International Electrotechnical Commission"
+          org.abbreviation "IEC"
         else
           org.name orgname
         end

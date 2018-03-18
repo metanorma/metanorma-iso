@@ -162,7 +162,8 @@ RSpec.describe Asciidoctor::ISO do
          <contributor>
            <role type="author"/>
            <organization>
-             <name>IEC</name>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
            </organization>
          </contributor>
          <contributor>
@@ -174,7 +175,8 @@ RSpec.describe Asciidoctor::ISO do
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>IEC</name>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
            </organization>
          </contributor>
          <contributor>
@@ -193,7 +195,8 @@ RSpec.describe Asciidoctor::ISO do
            <from>2018</from>
            <owner>
              <organization>
-               <name>IEC</name>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
              </organization>
            </owner>
          </copyright>

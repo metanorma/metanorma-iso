@@ -47,7 +47,8 @@ RSpec.describe Asciidoctor::ISO do
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>IEC</name>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
            </organization>
          </contributor>
        </bibitem>
@@ -86,7 +87,8 @@ RSpec.describe Asciidoctor::ISO do
 <contributor>
   <role type="publisher"/>
   <organization>
-    <name>IEC</name>
+  <name>International Electrotechnical Commission</name>
+<abbreviation>IEC</abbreviation>
            </organization>
          </contributor>
        </bibitem>
