@@ -36,7 +36,6 @@ RSpec.describe Asciidoctor::ISO do
     expect(File.exist?("test.doc")).to be true
   end
 
-
   it "processes default metadata" do
     expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
@@ -218,5 +217,54 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
     OUTPUT
   end
+
+  it "uses default fonts" do
+    system "rm -f test.html"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+    INPUT
+    html = File.read("test.html")
+    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: "Cambria", serif;]m)
+    expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Cambria", serif;]m)
+  end
+
+  it "uses Chinese fonts" do
+    system "rm -f test.html"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+      :script: Hans
+    INPUT
+    html = File.read("test.html")
+    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: "SimSun", serif;]m)
+    expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "SimHei", sans-serif;]m)
+  end
+
+  it "uses specified fonts" do
+    system "rm -f test.html"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+      :script: Hans
+      :body-font: Zapf Chancery
+      :header-font: Comic Sans
+      :monospace-font: Andale Mono
+    INPUT
+    html = File.read("test.html")
+    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
+    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: Zapf Chancery;]m)
+    expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: Comic Sans;]m)
+  end
+
+
 
 end

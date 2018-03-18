@@ -592,6 +592,15 @@ not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`,
 `:publisher:`:: The standards agency publishing the standard; can be multiple
 (comma-delimited). Defaults to `ISO`.
 
+`:body-font:`:: Font for body text; will be inserted into CSS. Defaults to
+Cambria for Latin script, SimSun for Simplified Chinese.
+
+`:header-font:`:: Font for headers; will be inserted into CSS. Defaults to
+Cambria for Latin script, SimHei for Simplified Chinese.
+
+`:monospace-font`:: Font for monospace; will be inserted into CSS. Defaults to
+Courier New.
+
 The attribute `:draft:`, if present, includes review notes in the XML output;
 these are otherwise suppressed.
 

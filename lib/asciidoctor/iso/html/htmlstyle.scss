@@ -11,7 +11,7 @@ p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
         mso-pagination:widow-orphan;
         tab-stops:20.15pt;
         font-size:12.0pt;
-        font-family:"Cambria",serif;
+        font-family:$bodyfont;
         mso-fareast-font-family:Calibri;
         mso-bidi-font-family:"Times New Roman";
         mso-ansi-language:EN-GB;
@@ -37,7 +37,7 @@ p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
         mso-pagination:widow-orphan;
         tab-stops:20.15pt;
         font-size:10.0pt;
-        font-family:"Cambria",serif;
+        font-family:$headerfont;
         mso-fareast-font-family:Calibri;
         mso-bidi-font-family:"Times New Roman";
         mso-ansi-language:EN-GB;

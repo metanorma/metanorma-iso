@@ -33,7 +33,8 @@ module Asciidoctor
       end
 
       def generate_css(filename)
-        engine = Sass::Engine.new(File.read(filename, encoding: "UTF-8"), syntax: :scss)
+        stylesheet = File.read(filename, encoding: "UTF-8")
+        engine = Sass::Engine.new(@fontheader + stylesheet, syntax: :scss)
         outname = File.basename(filename, ".*") + ".css"
         File.open(outname, "w") { |f| f.write(engine.render) }
         outname
@@ -41,8 +42,8 @@ module Asciidoctor
 
       def html_converter(node)
         IsoDoc::Convert.new(
-          htmlstylesheet: generate_css(html_doc_path("htmlstyle.css")),
-          standardstylesheet: generate_css(html_doc_path("isodoc.css")),
+          htmlstylesheet: generate_css(html_doc_path("htmlstyle.scss")),
+          standardstylesheet: generate_css(html_doc_path("isodoc.scss")),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),
           i18nyaml: node.attr("i18nyaml"),
@@ -51,8 +52,8 @@ module Asciidoctor
 
       def doc_converter(node)
         IsoDoc::WordConvert.new(
-          wordstylesheet:  generate_css(html_doc_path("wordstyle.css")),
-          standardstylesheet: generate_css(html_doc_path("isodoc.css")),
+          wordstylesheet:  generate_css(html_doc_path("wordstyle.scss")),
+          standardstylesheet: generate_css(html_doc_path("isodoc.scss")),
           header: html_doc_path("header.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),
@@ -69,6 +70,18 @@ module Asciidoctor
         @anchors = {}
         @draft = node.attributes.has_key?("draft")
         @novalid = node.attr("novalid")
+        @fontheader = default_fonts(node)
+      end
+
+      def default_fonts(node)
+        b = node.attr("body-font") ||
+          (node.attr("script") == "Hans" ? '"SimSun",serif' :
+           '"Cambria",serif')
+        h = node.attr("header-font") ||
+          (node.attr("script") == "Hans" ? '"SimHei",sans-serif' :
+           '"Cambria",serif')
+        m = node.attr("monospace-font") || '"Courier New",monospace'
+        "$bodyfont: #{b};\n$headerfont: #{h};\n$monospacefont: #{m};\n"
       end
 
       def document(node)

@@ -11,7 +11,7 @@ p.Sourcecode, li.Sourcecode, div.Sourcecode, pre.Sourcecode
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
 	font-size:9.0pt;
-	font-family:"Courier New",monospace;
+	font-family:$monospacefont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Courier New";
 	mso-ansi-language:EN-GB;}
@@ -28,7 +28,7 @@ p.Biblio, li.Biblio, div.Biblio
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -46,7 +46,7 @@ p.FigureTitle
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -64,7 +64,7 @@ p.TableTitle
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -82,7 +82,7 @@ p.Note, div.Note, li.Note
 	tab-stops:20.15pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -108,7 +108,7 @@ p.ANNEX, li.ANNEX, div.ANNEX
 	tab-stops:20.15pt;
 	font-size:14.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$headerfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -130,7 +130,7 @@ p.BiblioTitle, li.BiblioTitle, div.BiblioTitle
 	tab-stops:20.15pt;
 	font-size:14.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$headerfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -149,7 +149,7 @@ p.Definition, li.Definition, div.Definition
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -171,7 +171,7 @@ p.ForewordTitle, li.ForewordTitle, div.ForewordTitle
 	tab-stops:20.15pt;
 	font-size:14.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$headerfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -196,7 +196,7 @@ p.IntroTitle, li.IntroTitle, div.IntroTitle
 	font-size:14.0pt;
 	mso-bidi-font-size:11.0pt;
 	page-break-before:always;
-	font-family:"Cambria",serif;
+	font-family:$headerfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -215,7 +215,7 @@ p.Terms, li.Terms, div.Terms
 	mso-hyphenate:none;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -234,7 +234,7 @@ p.AltTerms, li.AltTerms, div.AltTerms
 	mso-hyphenate:none;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -252,7 +252,7 @@ p.DeprecatedTerms, li.DeprecatedTerms, div.DeprecatedTerms
 	mso-hyphenate:none;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -269,7 +269,7 @@ p.TermNum, li.TermNum, div.TermNum
 	page-break-after:avoid;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -293,7 +293,7 @@ p.zzContents, li.zzContents, div.zzContents
 	tab-stops:20.15pt;
 	font-size:14.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -317,7 +317,7 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	padding:0cm;
 	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -337,7 +337,7 @@ p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
 	tab-stops:20.15pt;
 	font-size:16.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$headerfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -359,7 +359,7 @@ p.zzSTDTitle1, li.zzSTDTitle1, div.zzSTDTitle1
 	tab-stops:20.15pt;
 	font-size:16.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$headerfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;
@@ -376,7 +376,7 @@ p.Quote, li.Quote, div.Quote
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
-	font-family:"Cambria",sans-serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -388,7 +388,7 @@ p.Admonition, li.Admonition, div.Admonition
 	border:none;
 	padding:0cm;
 	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Calibri;
 	mso-ascii-theme-font:minor-latin;
 	mso-fareast-font-family:"Cambria";
@@ -411,7 +411,7 @@ p.Code, li.Code, div.Code
 	tab-stops:20.15pt;
 	font-size:9.0pt;
 	mso-bidi-font-size:11.0pt;
-	font-family:"Courier New",serif;
+	font-family:$monospacefont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -427,7 +427,7 @@ p.Formula, li.Formula, div.Formula
 	mso-pagination:widow-orphan;
 	tab-stops:right 487.45pt;
 	font-size:11.0pt;
-	font-family:"Cambria",serif;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"Cambria";
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
@@ -454,7 +454,7 @@ table.dl
         tab-stops:27.0pt 35.0pt;
         font-size:12.0pt;
         mso-bidi-font-size:11.0pt;
-        font-family:"Cambria",serif;
+        font-family:$headerfont;
         font-weight:bold;
         mso-fareast-font-family:"MS Mincho";
         mso-ansi-language:EN-GB;
@@ -521,7 +521,7 @@ table.MsoISOTable
 	mso-border-insideh:.75pt solid windowtext;
 	mso-border-insidev:.75pt solid windowtext;
 	font-size:10.0pt;
-	font-family:"Cambria",serif;}
+	font-family:$bodyfont;}
 table.MsoISOTable tr
     {page-break-inside:avoid;}
 table.MsoISOTable th
@@ -547,7 +547,7 @@ table.MsoTableGrid
 	mso-para-margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
-	font-family:"Cambria",serif;}
+	font-family:$bodyfont;}
 td { page-break-inside:avoid; }
 tr { page-break-after:avoid; }
 span.stem
