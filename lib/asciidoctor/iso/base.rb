@@ -32,8 +32,9 @@ module Asciidoctor
         File.join(File.dirname(__FILE__), File.join("html", file))
       end
 
-      def generate_css(filename)
+      def generate_css(filename, stripwordcss)
         stylesheet = File.read(filename, encoding: "UTF-8")
+        stylesheet = stylesheet.gsub(/(\s|\{)mso-[^:]+:[^;]+;/m, "\\1") if stripwordcss
         engine = Sass::Engine.new(@fontheader + stylesheet, syntax: :scss)
         outname = File.basename(filename, ".*") + ".css"
         File.open(outname, "w") { |f| f.write(engine.render) }
@@ -42,8 +43,8 @@ module Asciidoctor
 
       def html_converter(node)
         IsoDoc::Convert.new(
-          htmlstylesheet: generate_css(html_doc_path("htmlstyle.scss")),
-          standardstylesheet: generate_css(html_doc_path("isodoc.scss")),
+          htmlstylesheet: generate_css(html_doc_path("htmlstyle.scss"), true),
+          standardstylesheet: generate_css(html_doc_path("isodoc.scss"), true),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),
           i18nyaml: node.attr("i18nyaml"),
@@ -52,8 +53,8 @@ module Asciidoctor
 
       def doc_converter(node)
         IsoDoc::WordConvert.new(
-          wordstylesheet:  generate_css(html_doc_path("wordstyle.scss")),
-          standardstylesheet: generate_css(html_doc_path("isodoc.scss")),
+          wordstylesheet:  generate_css(html_doc_path("wordstyle.scss"), false),
+          standardstylesheet: generate_css(html_doc_path("isodoc.scss"), false),
           header: html_doc_path("header.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),

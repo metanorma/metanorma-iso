@@ -265,6 +265,20 @@ RSpec.describe Asciidoctor::ISO do
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: Comic Sans;]m)
   end
 
+  it "strips MS-specific CSS" do
+    system "rm -f test.html"
+    system "rm -f test.doc"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+    INPUT
+    word = File.read("test.doc", encoding: "utf-8")
+    html = File.read("test.html", encoding: "utf-8")
+    expect(word).to match(%r[mso-style-name: "Intro Title";]m)
+    expect(html).not_to match(%r[mso-style-name: "Intro Title";]m)
+  end
 
 
 end
