@@ -84,7 +84,7 @@ p.Note, div.Note, li.Note
 	mso-bidi-font-size:11.0pt;
 	font-family:$bodyfont;
 	mso-fareast-font-family:$bodyfont;
-	mso-bidi-font-family:$bodyfont";
+	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
 	/* may need to be revised */
 p.ANNEX, li.ANNEX, div.ANNEX
@@ -461,43 +461,6 @@ table.dl
         mso-fareast-language:JA;
         mso-bidi-font-weight:normal;}
 
-@page WordSection1
-	{size:595.3pt 841.9pt;
-	margin:39.7pt 53.85pt 1.0cm 53.85pt;
-	mso-header-margin:35.45pt;
-	mso-footer-margin:14.2pt;
-	mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh1;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h1;
-	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef1;
-	mso-paper-source:0;}
-div.WordSection1
-	{page:WordSection1;}
-@page WordSection2
-	{size:595.3pt 841.9pt;
-	margin:39.7pt 53.85pt 1.0cm 53.85pt;
-	mso-header-margin:35.45pt;
-	mso-footer-margin:14.2pt;
-	mso-page-numbers:roman-lower;
-	mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2;
-	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef2;
-	mso-footer:url("file:///C:/Doc/FILENAME_files/header.html") f2;
-	mso-paper-source:0;}
-div.WordSection2
-	{page:WordSection2;}
-@page WordSection3
-	{size:595.3pt 841.9pt;
-	margin:39.7pt 53.85pt 1.0cm 53.85pt;
-	mso-header-margin:35.45pt;
-	mso-footer-margin:14.2pt;
-	mso-page-numbers:1;
-	mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2;
-	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef3;
-	mso-footer:url("file:///C:/Doc/FILENAME_files/header.html") f3;
-	mso-paper-source:0;}
-div.WordSection3
-	{page:WordSection3;}
 ol
 	{margin-bottom:0cm;}
 ul
@@ -553,8 +516,7 @@ tr { page-break-after:avoid; }
 span.stem
     {font-family:"Cambria Math",serif;
     mso-ascii-font-family:"Cambria Math";
-    font-style:
-    italic;}
+    font-style:italic;}
 div.formula
     {tab-stops:right 487.45pt;}
 body 

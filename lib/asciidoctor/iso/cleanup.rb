@@ -4,6 +4,7 @@ require "pathname"
 require "open-uri"
 require "pp"
 require_relative "./cleanup_block.rb"
+require_relative "./cleanup_footnotes.rb"
 require_relative "./cleanup_ref.rb"
 
 module Asciidoctor
