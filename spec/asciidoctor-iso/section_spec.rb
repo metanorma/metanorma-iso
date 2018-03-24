@@ -85,12 +85,12 @@ RSpec.describe Asciidoctor::ISO do
        </subsection>
        </annex><references id="_" obligation="informative">
          <title>Normative References</title>
-       </references><references id="_" obligation="informative">
+       </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
          <references id="_" obligation="informative">
          <title>Bibliography Subsection</title>
        </references>
-       </references>
+       </clause>
        </iso-standard>
     OUTPUT
   end
@@ -187,12 +187,12 @@ RSpec.describe Asciidoctor::ISO do
        </subsection>
        </annex><references id="_" obligation="informative">
          <title>Normative References</title>
-       </references><references id="_" obligation="informative">
+       </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
          <references id="_" obligation="informative">
          <title>Bibliography Subsection</title>
        </references>
-       </references>
+       </clause>
        </iso-standard>
     OUTPUT
   end

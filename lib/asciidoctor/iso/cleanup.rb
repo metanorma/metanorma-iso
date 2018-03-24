@@ -24,6 +24,7 @@ module Asciidoctor
         ref_cleanup(xmldoc)
         note_cleanup(xmldoc)
         normref_cleanup(xmldoc)
+        biblio_cleanup(xmldoc)
         reference_names(xmldoc)
         xref_cleanup(xmldoc)
         bpart_cleanup(xmldoc)
@@ -140,6 +141,12 @@ module Asciidoctor
         termdefinition_cleanup(xmldoc)
         termdef_boilerplate_cleanup(xmldoc)
         termdef_subsection_cleanup(xmldoc)
+      end
+
+      def biblio_cleanup(xmldoc)
+        xmldoc.xpath("//references[references]").each do |t|
+          t.name = "clause"
+        end
       end
 
       ELEMS_ALLOW_NOTES =
