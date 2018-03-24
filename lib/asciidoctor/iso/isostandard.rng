@@ -844,7 +844,7 @@
     </element>
   </define>
   <define name="termdocsource">
-    <element name="source">
+    <element name="termdocsource">
       <ref name="erefType"/>
     </element>
   </define>
