@@ -128,9 +128,9 @@
       <optional>
         <ref name="editorialgroup"/>
       </optional>
-      <optional>
+      <zeroOrMore>
         <ref name="ics"/>
-      </optional>
+      </zeroOrMore>
     </define>
     <define name="BibData">
       <optional>
@@ -182,9 +182,9 @@
         <ref name="docrelation"/>
       </zeroOrMore>
       <ref name="editorialgroup"/>
-      <optional>
+      <zeroOrMore>
         <ref name="ics"/>
-      </optional>
+      </zeroOrMore>
     </define>
     <define name="bfrom">
       <element name="from">
