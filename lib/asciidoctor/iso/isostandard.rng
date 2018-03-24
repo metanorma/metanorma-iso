@@ -377,9 +377,6 @@
         <optional>
           <ref name="section-title"/>
         </optional>
-        <zeroOrMore>
-          <ref name="termdocsource"/>
-        </zeroOrMore>
         <choice>
           <oneOrMore>
             <ref name="term"/>
@@ -645,6 +642,9 @@
       <optional>
         <ref name="version"/>
       </optional>
+      <zeroOrMore>
+        <ref name="termdocsource"/>
+      </zeroOrMore>
       <ref name="foreword"/>
       <optional>
         <ref name="introduction"/>

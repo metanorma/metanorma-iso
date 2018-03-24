@@ -282,19 +282,25 @@ RSpec.describe Asciidoctor::ISO do
     it "processes term document sources" do
      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
+
+      Foreword
+
       [source="iso1234,iso5678"]
       == Terms and Definitions
 
      INPUT
              #{BLANK_HDR}
-       <sections>
-         <terms id="_" obligation="normative">
+             <termsource target="iso1234" type="inline"/><termsource target="iso5678" type="inline"/><foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="_">Foreword</p>
+       </foreword><sections>
+       <terms id="_" obligation="normative">
          <title>Terms and Definitions</title>
-         <source type="inline" bibitemid="iso1234" citeas=""/>
-         <source type="inline" bibitemid="iso5678" citeas=""/>
-       </terms>
-       </sections>
+
+
+       </terms></sections>
        </iso-standard>
+
      OUTPUT
     end
 
