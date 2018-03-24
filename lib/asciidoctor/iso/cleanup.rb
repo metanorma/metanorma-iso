@@ -127,12 +127,19 @@ module Asciidoctor
         xmldoc.xpath("//terms/p | //terms/ul").each(&:remove)
       end
 
+      def termdef_subsection_cleanup(xmldoc)
+        xmldoc.xpath("//terms[terms]").each do |t|
+          t.name = "clause"
+        end
+      end
+
       def termdef_cleanup(xmldoc)
         termdef_unnest_cleanup(xmldoc)
         termdef_stem_cleanup(xmldoc)
         termdomain_cleanup(xmldoc)
         termdefinition_cleanup(xmldoc)
         termdef_boilerplate_cleanup(xmldoc)
+        termdef_subsection_cleanup(xmldoc)
       end
 
       ELEMS_ALLOW_NOTES =
