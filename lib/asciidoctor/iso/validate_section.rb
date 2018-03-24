@@ -84,8 +84,8 @@ module Asciidoctor
 
       SECTIONS_XPATH =
         " //foreword | //introduction | //sections/terms | "\
-        "//symbols-abbrevs | "\
-        "//sections/clause | ./references | ./annex".freeze
+        "//symbols-abbrevs | //sections/clause | ./references | ./annex "\
+        "//clause[descendant::references][not(parent::clause)]".freeze
 
       def sections_sequence_validate(root)
         f = root.xpath(SECTIONS_XPATH)
