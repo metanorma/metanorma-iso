@@ -128,7 +128,7 @@ module Asciidoctor
         xml.terms **attr_code(attrs) do |section|
           section.title { |t| t << term_def_title(toplevel, node) }
           (s = node.attr("source")) && s.split(/,/).each do |s1|
-            section.termsource(nil, **attr_code(target: s1, type: "inline"))
+            section.termdocsource(nil, **attr_code(target: s1, type: "inline"))
           end
           section << node.content
         end
