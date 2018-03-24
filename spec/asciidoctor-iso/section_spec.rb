@@ -69,8 +69,8 @@ RSpec.describe Asciidoctor::ISO do
          <preferred>Term2</preferred>
        </term>
        </terms>
-       <symbols-abbrevs id="_"/></clause>
-       <symbols-abbrevs id="_"/>
+       <definitions id="_"/></clause>
+       <definitions id="_"/>
        <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><subsection id="_" inline-header="false" obligation="normative">
          <title>Introduction</title>
        </subsection>
@@ -171,8 +171,8 @@ RSpec.describe Asciidoctor::ISO do
          <preferred>Term2</preferred>
        </term>
        </clause>
-       <symbols-abbrevs id="_"/></terms>
-       <symbols-abbrevs id="_"/>
+       <definitions id="_"/></terms>
+       <definitions id="_"/>
        <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><subsection id="_" inline-header="false" obligation="normative">
          <title>Introduction</title>
        </subsection>

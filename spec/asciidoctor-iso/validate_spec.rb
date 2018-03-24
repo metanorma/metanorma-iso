@@ -452,6 +452,7 @@ RSpec.describe "Warning if no normative references" do
   [appendix]
   == Appendix B
 
+  [appendix]
   == Appendix C
 
   INPUT

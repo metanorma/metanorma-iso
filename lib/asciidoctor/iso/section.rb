@@ -98,7 +98,7 @@ module Asciidoctor
       end
 
       def symbols_parse(attrs, xml, node)
-        xml.symbols_abbrevs **attr_code(attrs) do |xml_section|
+        xml.definitions **attr_code(attrs) do |xml_section|
           xml_section << node.content
         end
       end

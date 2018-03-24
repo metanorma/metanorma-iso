@@ -32,7 +32,7 @@ module Asciidoctor
         "only contain a definition list".freeze
 
       def symbols_validate(root)
-        f = root.xpath("//symbols-abbrevs")
+        f = root.xpath("//definitions")
         f.empty? && return
         (f.size == 1) || warn(ONE_SYMBOLS_WARNING)
         f.first.elements.each do |e|
@@ -74,8 +74,13 @@ module Asciidoctor
             "Terms and Definitions",
             val: [
               { tag: "terms", title: "Terms and Definitions" },
+              { tag: "clause", title: "Terms and Definitions" },
               {
                 tag: "terms",
+                title: "Terms, Definitions, Symbols and Abbreviated Terms",
+              },
+              {
+                tag: "clause",
                 title: "Terms, Definitions, Symbols and Abbreviated Terms",
               },
             ],
@@ -83,8 +88,8 @@ module Asciidoctor
       ].freeze
 
       SECTIONS_XPATH =
-        " //foreword | //introduction | //sections/terms | "\
-        "//symbols-abbrevs | //sections/clause | ./references | ./annex "\
+        "//foreword | //introduction | //sections/terms | .//annex | "\
+        "//definitions | //sections/clause | //references[not(parent::clause)] | "\
         "//clause[descendant::references][not(parent::clause)]".freeze
 
       def sections_sequence_validate(root)
@@ -98,7 +103,7 @@ module Asciidoctor
         end
         names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val]) || return
         n = names.shift
-        if n == { tag: "symbols-abbrevs", title: nil }
+        if n == { tag: "definitions", title: nil }
           n = names.shift || return
         end
         unless n

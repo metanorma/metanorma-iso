@@ -241,7 +241,7 @@
           <ref name="terms"/>
         </choice>
         <optional>
-          <ref name="symbols-abbrevs"/>
+          <ref name="definitions"/>
         </optional>
         <oneOrMore>
           <ref name="clause"/>
@@ -341,8 +341,8 @@
         </zeroOrMore>
       </element>
     </define>
-    <define name="symbols-abbrevs">
-      <element name="symbols-abbrevs">
+    <define name="definitions">
+      <element name="definitions">
         <optional>
           <attribute name="id">
             <data type="ID"/>
@@ -389,7 +389,7 @@
               <ref name="terms"/>
             </zeroOrMore>
             <optional>
-              <ref name="symbols-abbrevs"/>
+              <ref name="definitions"/>
             </optional>
           </group>
         </choice>
@@ -883,7 +883,7 @@
         <zeroOrMore>
           <choice>
             <ref name="terms"/>
-            <ref name="symbols-abbrevs"/>
+            <ref name="definitions"/>
           </choice>
         </zeroOrMore>
       </choice>

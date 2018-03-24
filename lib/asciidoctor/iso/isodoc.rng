@@ -108,13 +108,13 @@
           <ref name="content"/>
           <ref name="clause"/>
           <ref name="terms"/>
-          <ref name="symbols-abbrevs"/>
+          <ref name="definitions"/>
         </choice>
       </oneOrMore>
     </element>
   </define>
-  <define name="symbols-abbrevs">
-    <element name="symbols-abbrevs">
+  <define name="definitions">
+    <element name="definitions">
       <optional>
         <attribute name="id">
           <data type="ID"/>
