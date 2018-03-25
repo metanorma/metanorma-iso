@@ -77,8 +77,8 @@ module Asciidoctor
         xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
-          m.has_key?(:year) and t.date **{ type: "published" } do |d|
-            set_date_range(d, m[:year])
+          if m.named_captures.has_key?(:year)
+            t.date **{ type: "published" } { |d| set_date_range(d, m[:year]) }
           end
           iso_publisher(t, m[:code])
         end
