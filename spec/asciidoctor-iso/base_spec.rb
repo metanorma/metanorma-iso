@@ -68,6 +68,7 @@ RSpec.describe Asciidoctor::ISO do
       :title-intro-fr: Introduction Française
       :title-main-fr: Titre Principal
       :title-part-fr: Part du Titre
+      :library-ics: 1,2,3
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -120,6 +121,9 @@ RSpec.describe Asciidoctor::ISO do
            <workgroup number="3" type="C">WG</workgroup>
            <secretariat>SECRETARIAT</secretariat>
          </editorialgroup>
+         <ics>1</ics>
+         <ics>2</ics>
+         <ics>3</ics>
        </bibdata><version>
          <edition>2</edition>
          <revision-date>2000-01-01</revision-date>

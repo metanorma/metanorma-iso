@@ -17,20 +17,6 @@
         <value>Latn</value>
       </element>
     </define>
-    <!-- draft into isodoc? To replace version/version? -->
-    <define name="version">
-      <element name="version">
-        <optional>
-          <ref name="edition"/>
-        </optional>
-        <optional>
-          <ref name="revision-date"/>
-        </optional>
-        <optional>
-          <ref name="draft"/>
-        </optional>
-      </element>
-    </define>
     <!-- add type to docidentifier in isodoc? -->
     <define name="docidentifier">
       <element name="docidentifier">
@@ -212,6 +198,9 @@
             <ref name="stage"/>
             <optional>
               <ref name="substage"/>
+            </optional>
+            <optional>
+              <ref name="iteration"/>
             </optional>
           </group>
         </choice>
@@ -697,11 +686,6 @@
       <ref name="Content-Section"/>
     </element>
   </define>
-  <define name="draft">
-    <element name="draft">
-      <text/>
-    </element>
-  </define>
   <define name="stage">
     <element name="stage">
       <choice>
@@ -729,6 +713,11 @@
         <value>98</value>
         <value>99</value>
       </choice>
+    </element>
+  </define>
+  <define name="iteration">
+    <element name="iteration">
+      <data type="int"/>
     </element>
   </define>
   <define name="documentnumber">

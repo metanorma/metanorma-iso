@@ -82,7 +82,7 @@
         <ref name="revision-date"/>
       </optional>
       <zeroOrMore>
-        <ref name="version"/>
+        <ref name="draft"/>
       </zeroOrMore>
     </element>
   </define>
@@ -96,8 +96,8 @@
       <data type="date"/>
     </element>
   </define>
-  <define name="version">
-    <element name="version">
+  <define name="draft">
+    <element name="draft">
       <text/>
     </element>
   </define>
