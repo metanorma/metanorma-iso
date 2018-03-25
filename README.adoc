@@ -526,6 +526,8 @@ is available at link:spec/examples/english.yaml[].
 `:copyright-year:`:: The year which will be claimed as when the copyright for
 the document was issued
 
+`:library-ics:` :: The ICS (International Categorization for Standards) number for the standard. There may be more than one ICS for a document; if so, they should be comma-delimited. (The ics identifier is added to the document metadata, but is not output to the current document templates.)
+
 `:title-intro-en:`:: The introductory component of the English title of the
 document
 

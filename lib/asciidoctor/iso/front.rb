@@ -96,6 +96,11 @@ module Asciidoctor
         end
       end
 
+      def metadata_ics(node, xml)
+        ics = node.attr("library-ics")
+        ics && ics.split(/,\s*/).each { |i| xml.ics i }
+      end
+
       def metadata(node, xml)
         title node, xml
         metadata_id(node, xml)
@@ -106,6 +111,7 @@ module Asciidoctor
         metadata_status(node, xml)
         metadata_copyright(node, xml)
         metadata_committee(node, xml)
+        metadata_ics(node, xml)
       end
 
       def title_intro(node, t, lang, at)
