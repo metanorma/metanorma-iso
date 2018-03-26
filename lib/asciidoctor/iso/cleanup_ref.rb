@@ -5,9 +5,10 @@ module Asciidoctor
       # extending localities to cover ISO referencing
       LOCALITY_REGEX_STR = <<~REGEXP.freeze
         ^((?<locality>section|clause|part|paragraph|chapter|page|
-                      table|annex|figure|example|note|formula)\\s+
+                      table|annex|figure|example|note|formula|
+                      locality:[^ \\t\\n\\r:,]+)\\s+
                (?<ref>[^ \\t\\n,:-]+)(-(?<to>[^ \\t\\n,:-]+))?|
-          (?<locality>whole))[,:]?\\s*
+          (?<locality>whole|locality:[^ \\t\\n\\r:,]+))[,:]?\\s*
          (?<text>.*)$
       REGEXP
       LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
@@ -18,8 +19,8 @@ module Asciidoctor
         while (m = LOCALITY_RE.match text)
           ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
           refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
-          x.add_child("<locality type='#{m[:locality].downcase}'>"\
-                      "#{ref}#{refto}</locality>")
+          loc = m[:locality].downcase
+          x.add_child("<locality type='#{loc}'>#{ref}#{refto}</locality>")
           text = m[:text]
         end
         x.add_child(text)

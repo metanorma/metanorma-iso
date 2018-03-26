@@ -345,6 +345,15 @@ example:
 The references cannot contain spaces. Any text following the sequence of localities
 will be displayed instead of the localities.
 
+A custom locality can be entered by prefixing it with `locality:`:
+
+[source,asciidoctor]
+--
+<<ISO712,locality:frontispiece 5, page 8-10>>         # renders as: ISO 712, Frontispiece 5, Page 8-10
+--
+
+Custom localities may not contain commas, colons, or space.
+
 === Additional warning types
 
 Asciidoctor natively supports the ISO admonitions "Caution", "Warning", and "Important"

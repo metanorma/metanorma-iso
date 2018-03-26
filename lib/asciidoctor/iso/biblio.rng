@@ -360,6 +360,10 @@
           <value>figure</value>
           <value>note</value>
           <value>example</value>
+          <group>
+            <value>locality:</value>
+            <text/>
+          </group>
         </choice>
       </attribute>
       <ref name="referenceFrom"/>

@@ -209,7 +209,7 @@ r = 1 %</stem>
   it "extracts localities from erefs" do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
-      <<iso216,whole,clause 3,example 9-11:the reference>>
+      <<iso216,whole,clause 3,example 9-11,locality:prelude 33,locality:entirety:the reference>>
 
       [bibliography]
       == Normative References
@@ -219,7 +219,7 @@ r = 1 %</stem>
        <foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">
-         <eref type="inline" bibitemid="iso216" citeas="ISO 216"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality>the reference</eref>
+         <eref type="inline" bibitemid="iso216" citeas="ISO 216"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>the reference</eref>
        </p>
        </foreword><sections>
        </sections><references id="_" obligation="informative">
