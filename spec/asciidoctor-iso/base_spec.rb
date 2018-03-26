@@ -61,6 +61,7 @@ RSpec.describe Asciidoctor::ISO do
       :copyright-year: 2001
       :docstage: 10
       :docsubstage: 20
+      :iteration: 3
       :language: en
       :title-intro-en: Introduction
       :title-main-en: Main Title
@@ -105,6 +106,7 @@ RSpec.describe Asciidoctor::ISO do
          <status>
            <stage>10</stage>
            <substage>20</substage>
+           <iteration>3</iteration>
          </status>
          <copyright>
            <from>2001</from>

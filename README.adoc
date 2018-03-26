@@ -559,6 +559,9 @@ https://www.iso.org/stage-codes.html[International harmonized stage codes])
 `:docsubstage:`:: The substage code for the document status (see
 https://www.iso.org/stage-codes.html[International harmonized stage codes])
 
+`:iteration:`:: The iteration of a stage, in case there have been multiple drafts
+(e.g. `2` on a `CD`: this is the second iteration through the `CD` stage).
+
 `:secretariat:`:: The national body acting as the secretariat for the document
 in the deafting stage
 
