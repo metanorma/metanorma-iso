@@ -352,7 +352,8 @@ A custom locality can be entered by prefixing it with `locality:`:
 <<ISO712,locality:frontispiece 5, page 8-10>>         # renders as: ISO 712, Frontispiece 5, Page 8-10
 --
 
-Custom localities may not contain commas, colons, or space.
+Custom localities may not contain commas, colons, or space. Localities with the `locality:`
+prefix are recognised in internationalisation configuration files.
 
 === Additional warning types
 
