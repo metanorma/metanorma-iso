@@ -137,7 +137,7 @@
     </element>
   </define>
   <define name="content-subsection">
-    <element name="subsection">
+    <element name="subclause">
       <ref name="Content-Section"/>
     </element>
   </define>
@@ -193,7 +193,7 @@
     </choice>
   </define>
   <define name="clause-subsection">
-    <element name="subsection">
+    <element name="subclause">
       <ref name="Clause-Section"/>
     </element>
   </define>

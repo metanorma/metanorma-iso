@@ -48,9 +48,9 @@ RSpec.describe Asciidoctor::ISO do
       === Bibliography Subsection
     INPUT
             #{BLANK_HDR}
-       <introduction id="_" obligation="informative"><title>Introduction</title><subsection id="_" inline-header="false" obligation="informative">
+       <introduction id="_" obligation="informative"><title>Introduction</title><subclause id="_" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
-       </subsection>
+       </subclause>
        </introduction><sections>
        <clause id="_" obligation="normative">
          <title>Scope</title>
@@ -71,18 +71,18 @@ RSpec.describe Asciidoctor::ISO do
        </terms>
        <definitions id="_"/></clause>
        <definitions id="_"/>
-       <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><subsection id="_" inline-header="false" obligation="normative">
+       <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><subclause id="_" inline-header="false" obligation="normative">
          <title>Introduction</title>
-       </subsection>
-       <subsection id="_" inline-header="false" obligation="normative">
+       </subclause>
+       <subclause id="_" inline-header="false" obligation="normative">
          <title>Clause 4.2</title>
-       </subsection></clause>
+       </subclause></clause>
 
        </sections><annex id="_" inline-header="false" obligation="normative">
          <title>Annex</title>
-         <subsection id="_" inline-header="false" obligation="normative">
+         <subclause id="_" inline-header="false" obligation="normative">
          <title>Annex A.1</title>
-       </subsection>
+       </subclause>
        </annex><references id="_" obligation="informative">
          <title>Normative References</title>
        </references><clause id="_" obligation="informative">
@@ -150,9 +150,9 @@ RSpec.describe Asciidoctor::ISO do
       === Bibliography Subsection
     INPUT
             #{BLANK_HDR}
-       <introduction id="_" obligation="informative"><title>Introduction</title><subsection id="_" inline-header="false" obligation="informative">
+       <introduction id="_" obligation="informative"><title>Introduction</title><subclause id="_" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
-       </subsection>
+       </subclause>
        </introduction><sections>
        <clause id="_" obligation="normative">
          <title>Scope</title>
@@ -173,18 +173,18 @@ RSpec.describe Asciidoctor::ISO do
        </clause>
        <definitions id="_"/></terms>
        <definitions id="_"/>
-       <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><subsection id="_" inline-header="false" obligation="normative">
+       <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><subclause id="_" inline-header="false" obligation="normative">
          <title>Introduction</title>
-       </subsection>
-       <subsection id="_" inline-header="false" obligation="normative">
+       </subclause>
+       <subclause id="_" inline-header="false" obligation="normative">
          <title>Clause 4.2</title>
-       </subsection></clause>
+       </subclause></clause>
      
        </sections><annex id="_" inline-header="false" obligation="normative">
          <title>Annex</title>
-         <subsection id="_" inline-header="false" obligation="normative">
+         <subclause id="_" inline-header="false" obligation="normative">
          <title>Annex A.1</title>
-       </subsection>
+       </subclause>
        </annex><references id="_" obligation="informative">
          <title>Normative References</title>
        </references><clause id="_" obligation="informative">
@@ -214,9 +214,9 @@ RSpec.describe Asciidoctor::ISO do
              #{BLANK_HDR}
        <sections><clause id="_" inline-header="false" obligation="informative">
          <title>Clause 1</title>
-         <subsection id="_" inline-header="false" obligation="informative">
+         <subclause id="_" inline-header="false" obligation="informative">
          <title>Clause 1a</title>
-       </subsection>
+       </subclause>
        </clause>
        <clause id="_" inline-header="false" obligation="normative">
          <title>Clause 2</title>
@@ -245,15 +245,15 @@ RSpec.describe Asciidoctor::ISO do
              #{BLANK_HDR}
        <sections><clause id="_" inline-header="false" obligation="normative">
          <title>Clause 1</title>
-         <subsection id="_" inline-header="true" obligation="normative">
+         <subclause id="_" inline-header="true" obligation="normative">
          <title>Clause 1a</title>
-       </subsection>
+       </subclause>
        </clause>
        </sections><annex id="_" inline-header="false" obligation="normative">
          <title>Annex A</title>
-         <subsection id="_" inline-header="true" obligation="normative">
+         <subclause id="_" inline-header="true" obligation="normative">
          <title>Clause Aa</title>
-       </subsection>
+       </subclause>
        </annex>
        </iso-standard>
      OUTPUT
@@ -271,8 +271,8 @@ RSpec.describe Asciidoctor::ISO do
        <sections>
          <clause id="_" inline-header="false" obligation="normative">
          <title>Clause 1</title>
-         <subsection id="_" inline-header="false" obligation="normative">
-       </subsection>
+         <subclause id="_" inline-header="false" obligation="normative">
+       </subclause>
        </clause>
        </sections>
        </iso-standard>

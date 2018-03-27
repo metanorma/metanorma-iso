@@ -139,13 +139,13 @@ RSpec.describe "Non-ISO reference in Normative References" do
   INPUT
 end
 
-RSpec.describe "Scope contains subsections" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope contains subsections: should be succint}).to_stderr }
+RSpec.describe "Scope contains subclauses" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope contains subclauses: should be succint}).to_stderr }
   #{VALIDATING_BLANK_HDR}
 
   == Scope
   
-  === Scope subsection
+  === Scope subclause
   INPUT
 end
 
@@ -269,7 +269,7 @@ RSpec.describe "Style warning if mins used" do
 end
 
 # can't test: our asciidoc template won't allow this to be generated
-# RSpec.describe "Style warning if foreword contains subsections" do
+# RSpec.describe "Style warning if foreword contains subclauses" do
   # specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-standard unit}).to_stderr }
   #  #{VALIDATING_BLANK_HDR}
 # 
@@ -277,8 +277,8 @@ end
 # end
 
 # can't test: we strip out any such content from Normative references preemptively
-#RSpec.describe "Style warning if Normative References contains subsections" do
-  #specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{normative references contains subsections}).to_stderr }
+#RSpec.describe "Style warning if Normative References contains subclauses" do
+  #specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{normative references contains subclauses}).to_stderr }
   ##{VALIDATING_BLANK_HDR}
 #
   #[bibliography]
@@ -652,8 +652,8 @@ RSpec.describe "All subclauses must have a title, or none" do
   INPUT
 end
 
-RSpec.describe "Warning if subsection is only child of its parent, or none" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{subsection is only child}).to_stderr }
+RSpec.describe "Warning if subclause is only child of its parent, or none" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{subclause is only child}).to_stderr }
   #{VALIDATING_BLANK_HDR}
   == Clause
 

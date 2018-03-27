@@ -15,14 +15,14 @@ module Asciidoctor
 
       def foreword_validate(root)
         f = root.at("//foreword") || return
-        s = f.at("./subsection")
-        warn "ISO style: foreword contains subsections" unless s.nil?
+        s = f.at("./subclause")
+        warn "ISO style: foreword contains subclauses" unless s.nil?
       end
 
       def normref_validate(root)
         f = root.at("//references[title = 'Normative References']") || return
         f.at("./references") &&
-          warn("ISO style: normative references contains subsections")
+          warn("ISO style: normative references contains subclauses")
       end
 
       ONE_SYMBOLS_WARNING = "ISO style: only one Symbols and Abbreviated "\
@@ -143,13 +143,13 @@ module Asciidoctor
       end
 
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
-      SCOPE_WARN = "Scope contains subsections: should be succint".freeze
+      SCOPE_WARN = "Scope contains subclauses: should be succint".freeze
 
       def section_style(root)
         foreword_style(root.at("//foreword"))
         introduction_style(root.at("//introduction"))
         scope_style(root.at("//clause[title = 'Scope']"))
-        scope = root.at("//clause[title = 'Scope']/subsection")
+        scope = root.at("//clause[title = 'Scope']/subclause")
         scope.nil? || style_warning(scope, SCOPE_WARN, nil)
       end
 

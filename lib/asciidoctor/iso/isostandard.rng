@@ -787,7 +787,7 @@
     </element>
   </define>
   <define name="clause-hanging-paragraph-with-footnote">
-    <element name="subsection">
+    <element name="subclause">
       <optional>
         <attribute name="id">
           <data type="ID"/>

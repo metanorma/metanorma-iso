@@ -346,31 +346,20 @@
   </define>
   <define name="locality">
     <element name="locality">
+      <!-- attribute type { ( "section" | "clause" | "part" | "paragraph" | "chapter" | "page" | "whole" | "table" | "annex" | "figure" | "note" | "example" | ("locality:", text) ) }, -->
       <attribute name="type">
-        <choice>
-          <value>section</value>
-          <value>clause</value>
-          <value>part</value>
-          <value>paragraph</value>
-          <value>chapter</value>
-          <value>page</value>
-          <value>whole</value>
-          <value>table</value>
-          <value>annex</value>
-          <value>figure</value>
-          <value>note</value>
-          <value>example</value>
-          <group>
-            <value>locality:</value>
-            <text/>
-          </group>
-        </choice>
+        <ref name="LocalityType"/>
       </attribute>
       <ref name="referenceFrom"/>
       <optional>
         <ref name="referenceTo"/>
       </optional>
     </element>
+  </define>
+  <define name="LocalityType">
+    <data type="string">
+      <param name="pattern">section|clause|part|paragraph|chapter|page|whole|table|annex|figure|note|example|locality:[a-zA-Z0-9_]+</param>
+    </data>
   </define>
   <define name="referenceFrom">
     <element name="referenceFrom">
