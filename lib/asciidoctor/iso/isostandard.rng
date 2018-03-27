@@ -457,6 +457,9 @@
         <zeroOrMore>
           <ref name="clause-hanging-paragraph-with-footnote"/>
         </zeroOrMore>
+        <zeroOrMore>
+          <ref name="annex-appendix"/>
+        </zeroOrMore>
       </element>
     </define>
     <define name="figure">
@@ -909,6 +912,11 @@
           <ref name="references"/>
         </zeroOrMore>
       </choice>
+    </element>
+  </define>
+  <define name="annex-appendix">
+    <element name="appendix">
+      <ref name="Clause-Section"/>
     </element>
   </define>
 </grammar>

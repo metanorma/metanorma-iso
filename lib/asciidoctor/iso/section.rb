@@ -49,6 +49,8 @@ module Asciidoctor
             elsif @biblio then bibliography_parse(a, xml, node)
             elsif node.attr("style") == "appendix" && node.level == 1
               annex_parse(a, xml, node)
+            elsif node.option? "appendix"
+              appendix_parse(a, xml, node)
             else
               clause_parse(a, xml, node)
             end
@@ -82,6 +84,15 @@ module Asciidoctor
         attrs["inline-header".to_sym] = node.option? "inline-header"
         set_obligation(attrs, node)
         xml.annex **attr_code(attrs) do |xml_section|
+          xml_section.title { |name| name << node.title }
+          xml_section << node.content
+        end
+      end
+
+      def appendix_parse(attrs, xml, node)
+        attrs["inline-header".to_sym] = node.option? "inline-header"
+        set_obligation(attrs, node)
+        xml.appendix **attr_code(attrs) do |xml_section|
           xml_section.title { |name| name << node.title }
           xml_section << node.content
         end

@@ -553,6 +553,30 @@
       <ref name="ContributorInfo"/>
     </element>
   </define>
+  <define name="docrelation">
+    <element name="relation">
+      <attribute name="type">
+        <choice>
+          <value>parent</value>
+          <value>child</value>
+          <value>obsoletes</value>
+          <value>updatedBy</value>
+          <value>complements</value>
+          <value>derivedFrom</value>
+          <value>adoptedFrom</value>
+          <value>equivalent</value>
+          <value>identical</value>
+          <value>nonequivalent</value>
+        </choice>
+      </attribute>
+      <element name="bibitem">
+        <ref name="BibliographicItem"/>
+      </element>
+      <zeroOrMore>
+        <ref name="locality"/>
+      </zeroOrMore>
+    </element>
+  </define>
   <!--
     Anycontents = mixed {
     https://github.com/relaxng/jing-trang/issues/211

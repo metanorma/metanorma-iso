@@ -43,6 +43,9 @@ RSpec.describe Asciidoctor::ISO do
 
       === Annex A.1
 
+      [%appendix]
+      === Appendix 1
+
       == Bibliography
 
       === Bibliography Subsection
@@ -83,7 +86,9 @@ RSpec.describe Asciidoctor::ISO do
          <subclause id="_" inline-header="false" obligation="normative">
          <title>Annex A.1</title>
        </subclause>
-       </annex><references id="_" obligation="informative">
+       <appendix id="_" inline-header="false" obligation="normative">
+          <title>Appendix 1</title>
+       </appendix></annex><references id="_" obligation="informative">
          <title>Normative References</title>
        </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
@@ -144,6 +149,9 @@ RSpec.describe Asciidoctor::ISO do
 
       === Annex A.1
 
+      [%appendix]
+      === Appendx 1
+
       [heading=bibliography]
       == Βιβλιογραφία
 
@@ -185,7 +193,9 @@ RSpec.describe Asciidoctor::ISO do
          <subclause id="_" inline-header="false" obligation="normative">
          <title>Annex A.1</title>
        </subclause>
-       </annex><references id="_" obligation="informative">
+       <appendix id="_" inline-header="false" obligation="normative">
+         <title>Appendx 1</title>
+       </appendix></annex><references id="_" obligation="informative">
          <title>Normative References</title>
        </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
