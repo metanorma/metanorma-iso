@@ -6,6 +6,8 @@ RSpec.describe Asciidoctor::ISO do
       #{ASCIIDOC_BLANK_HDR}
       .Foreword
 
+      Text
+
       == Introduction
 
       === Introduction Subsection
@@ -51,10 +53,13 @@ RSpec.describe Asciidoctor::ISO do
       === Bibliography Subsection
     INPUT
             #{BLANK_HDR}
-       <introduction id="_" obligation="informative"><title>Introduction</title><subclause id="_" inline-header="false" obligation="informative">
+       <preface><foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="_">Text</p>
+       </foreword><introduction id="_" obligation="informative"><title>Introduction</title><subclause id="_" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </subclause>
-       </introduction><sections>
+       </introduction></preface><sections>
        <clause id="_" obligation="normative">
          <title>Scope</title>
          <p id="_">Text</p>
@@ -88,7 +93,7 @@ RSpec.describe Asciidoctor::ISO do
        </subclause>
        <appendix id="_" inline-header="false" obligation="normative">
           <title>Appendix 1</title>
-       </appendix></annex><references id="_" obligation="informative">
+       </appendix></annex><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
        </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
@@ -96,6 +101,7 @@ RSpec.describe Asciidoctor::ISO do
          <title>Bibliography Subsection</title>
        </references>
        </clause>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -104,6 +110,8 @@ RSpec.describe Asciidoctor::ISO do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       .Foreword
+
+      Text
 
       [heading=introduction]
       == Εισαγωγή
@@ -158,10 +166,17 @@ RSpec.describe Asciidoctor::ISO do
       === Bibliography Subsection
     INPUT
             #{BLANK_HDR}
+       <preface>     
+       <foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="_">Text</p>
+       </foreword>
        <introduction id="_" obligation="informative"><title>Introduction</title><subclause id="_" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </subclause>
-       </introduction><sections>
+       </introduction>
+       </preface>
+       <sections>
        <clause id="_" obligation="normative">
          <title>Scope</title>
          <p id="_">Text</p>
@@ -195,7 +210,7 @@ RSpec.describe Asciidoctor::ISO do
        </subclause>
        <appendix id="_" inline-header="false" obligation="normative">
          <title>Appendx 1</title>
-       </appendix></annex><references id="_" obligation="informative">
+       </appendix></annex><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
        </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
@@ -203,6 +218,7 @@ RSpec.describe Asciidoctor::ISO do
          <title>Bibliography Subsection</title>
        </references>
        </clause>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -300,10 +316,11 @@ RSpec.describe Asciidoctor::ISO do
 
      INPUT
              #{BLANK_HDR}
-             <termdocsource target="iso1234" type="inline"/><termdocsource target="iso5678" type="inline"/><foreword obligation="informative">
+             <termdocsource target="iso1234" type="inline"/><termdocsource target="iso5678" type="inline"/>
+        <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">Foreword</p>
-       </foreword><sections>
+       </foreword></preface><sections>
        <terms id="_" obligation="normative">
          <title>Terms and Definitions</title>
 

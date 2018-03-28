@@ -11,7 +11,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
               <sections>
-       </sections><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
@@ -25,6 +25,7 @@ RSpec.describe Asciidoctor::ISO do
          </contributor>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -39,7 +40,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
               <sections>
-       </sections><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
@@ -53,6 +54,7 @@ RSpec.describe Asciidoctor::ISO do
          </contributor>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -69,7 +71,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          
-       </sections><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
@@ -108,6 +110,7 @@ RSpec.describe Asciidoctor::ISO do
          </contributor>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -122,7 +125,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
        <sections>
-              </sections><references id="_" obligation="informative">
+              </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
@@ -140,6 +143,7 @@ RSpec.describe Asciidoctor::ISO do
          <note format="text/plain" reference="1">ISO DATE: The standard is in press</note>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -155,7 +159,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          
-       </sections><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
@@ -172,6 +176,7 @@ RSpec.describe Asciidoctor::ISO do
          </contributor>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -187,7 +192,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          
-       </sections><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123">
          <formattedref format="application/x-isodoc+xml">
@@ -196,6 +201,7 @@ RSpec.describe Asciidoctor::ISO do
          <docidentifier>XYZ 123:1066 (all parts)</docidentifier>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -211,7 +217,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          
-       </sections><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Bibliography</title>
          <bibitem id="iso123">
          <formattedref format="application/x-isodoc+xml">
@@ -220,6 +226,7 @@ RSpec.describe Asciidoctor::ISO do
          <docidentifier>[1]</docidentifier>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end

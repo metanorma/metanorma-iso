@@ -110,13 +110,27 @@ module Asciidoctor
         subfigure_cleanup(xmldoc)
       end
 
+      def make_preface(x, s)
+        if x.at("//foreword | //introduction")
+          preface = s.add_previous_sibling("<preface/>").first
+          foreword = x.at("//foreword")
+          preface.add_child foreword.remove if foreword
+          introduction = x.at("//introduction")
+          preface.add_child introduction.remove if introduction
+        end
+      end
+
+      def make_bibliography(x, s)
+        if x.at("//sections/references")
+          biblio = s.add_next_sibling("<bibliography/>").first
+          x.xpath("//sections/references").each { |r| biblio.add_child r.remove }
+        end
+      end
+
       def sections_cleanup(x)
         s = x.at("//sections")
-        foreword = x.at("//foreword")
-        s.previous = foreword.remove if foreword
-        introduction = x.at("//introduction")
-        s.previous = introduction.remove if introduction
-        x.xpath("//sections/references").reverse_each { |r| s.next = r.remove }
+        make_preface(x, s)
+        make_bibliography(x, s)
         x.xpath("//sections/annex").reverse_each { |r| s.next = r.remove }
       end
 

@@ -237,6 +237,32 @@
         </oneOrMore>
       </element>
     </define>
+    <define name="Basic-Section">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="obligation">
+          <choice>
+            <value>normative</value>
+            <value>informative</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section-title"/>
+      </optional>
+      <group>
+        <oneOrMore>
+          <ref name="BasicBlock"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="note"/>
+        </zeroOrMore>
+      </group>
+    </define>
     <define name="Content-Section">
       <optional>
         <attribute name="id">
@@ -637,16 +663,26 @@
       <zeroOrMore>
         <ref name="termdocsource"/>
       </zeroOrMore>
-      <ref name="foreword"/>
-      <optional>
-        <ref name="introduction"/>
-      </optional>
+      <ref name="preface"/>
       <oneOrMore>
         <ref name="sections"/>
       </oneOrMore>
       <zeroOrMore>
         <ref name="annex"/>
       </zeroOrMore>
+      <ref name="bibliography"/>
+    </element>
+  </define>
+  <define name="preface">
+    <element name="preface">
+      <ref name="foreword"/>
+      <optional>
+        <ref name="introduction"/>
+      </optional>
+    </element>
+  </define>
+  <define name="bibliography">
+    <element name="bibliography">
       <oneOrMore>
         <choice>
           <ref name="references"/>
@@ -681,7 +717,7 @@
   </define>
   <define name="foreword">
     <element name="foreword">
-      <ref name="Content-Section"/>
+      <ref name="Basic-Section"/>
     </element>
   </define>
   <define name="introduction">
@@ -790,7 +826,7 @@
     </element>
   </define>
   <define name="clause-hanging-paragraph-with-footnote">
-    <element name="subclause">
+    <element name="clause">
       <optional>
         <attribute name="id">
           <data type="ID"/>

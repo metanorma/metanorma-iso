@@ -248,10 +248,10 @@ RSpec.describe Asciidoctor::ISO do
       == Section 1
       INPUT
        #{BLANK_HDR}
-             <foreword obligation="informative">
+             <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">This is a preamble</p>
-       </foreword><sections>
+       </foreword></preface><sections>
        <clause id="_" inline-header="false" obligation="normative">
          <title>Section 1</title>
        </clause></sections>

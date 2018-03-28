@@ -179,13 +179,13 @@ r = 1 %</stem>
       * [[[iso216,ISO 216:2001]]], _Reference_
     INPUT
        #{BLANK_HDR}
-              <foreword obligation="informative">
+              <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">
          <eref type="inline" bibitemid="iso216" citeas="ISO 216: 2001"/>
        </p>
-       </foreword><sections>
-       </sections><references id="_" obligation="informative">
+       </foreword></preface><sections>
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
@@ -202,6 +202,7 @@ r = 1 %</stem>
          </contributor>
        </bibitem>
        </references>
+       </bibliography
        </iso-standard>
     OUTPUT
   end
@@ -216,13 +217,14 @@ r = 1 %</stem>
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
        #{BLANK_HDR}
+       <preface>
        <foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">
          <eref type="inline" bibitemid="iso216" citeas="ISO 216"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>the reference</eref>
        </p>
-       </foreword><sections>
-       </sections><references id="_" obligation="informative">
+       </foreword></preface><sections>
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
@@ -236,6 +238,7 @@ r = 1 %</stem>
          </contributor>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -251,12 +254,13 @@ r = 1 %</stem>
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
        #{BLANK_HDR}
+       <preface>
        <foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">
          <eref type="inline" bibitemid="iso216" citeas=""/>
        </p>
-       </foreword><sections>
+       </foreword></preface><sections>
        <clause id="_" inline-header="false" obligation="normative">
          <title>Clause</title>
          <ul id="_">
@@ -308,7 +312,7 @@ r = 1 %</stem>
        #{BLANK_HDR}
               <sections>
          
-       </sections><references id="_" obligation="informative"><title>Normative References</title>
+       </sections><bibliography><references id="_" obligation="informative"><title>Normative References</title>
        <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
          <docidentifier>ISO 216</docidentifier>
@@ -320,6 +324,7 @@ r = 1 %</stem>
            </organization>
          </contributor>
        </bibitem></references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
@@ -628,13 +633,13 @@ r = 1 %</stem>
       footnote:[Footnote2]
     INPUT
        #{BLANK_HDR}
-       <foreword obligation="informative">
+       <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_"><fn reference="1">
          <p id="_">Footnote</p>
        </fn>
        </p>
-       </foreword><sections>
+       </foreword></preface><sections>
      
        <clause id="_" inline-header="false" obligation="normative">
          <title>Clause</title>
@@ -642,7 +647,7 @@ r = 1 %</stem>
          <p id="_">Footnote2</p>
        </fn>
        </p>
-       </clause></sections><references id="_" obligation="informative">
+       </clause></sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
@@ -658,6 +663,7 @@ r = 1 %</stem>
          <note format="text/plain" reference="2">ISO DATE: The standard is in press</note>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end

@@ -15,9 +15,9 @@ module Asciidoctor
       end
 
       def cleanup(xmldoc)
+        termdef_cleanup(xmldoc)
         sections_cleanup(xmldoc)
         obligations_cleanup(xmldoc)
-        termdef_cleanup(xmldoc)
         table_cleanup(xmldoc)
         formula_cleanup(xmldoc)
         figure_cleanup(xmldoc)
@@ -135,7 +135,7 @@ module Asciidoctor
       end
 
       def termdocsource_cleanup(xmldoc)
-        f = xmldoc.at("//foreword")
+        f = xmldoc.at("//preface | //sections")
         xmldoc.xpath("//terms/termdocsource").each do |s|
           f.previous = s.remove
         end

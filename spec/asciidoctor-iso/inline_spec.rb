@@ -127,7 +127,7 @@ RSpec.describe Asciidoctor::ISO do
             #{BLANK_HDR}
        <sections>
 
-       </sections><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="ISO712">
          <formattedref format="application/x-isodoc+xml">Reference</formattedref>
@@ -138,6 +138,7 @@ RSpec.describe Asciidoctor::ISO do
          <docidentifier>ISO713</docidentifier>
        </bibitem>
        </references>
+       </bibliography>
        </iso-standard>
     OUTPUT
   end
