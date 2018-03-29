@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 3b42789ece0ac0bb3de2c208062aca0feca4f797
+  revision: f17b474ca00abbc04f5e42f0a429d0530addd2d6
   specs:
     html2doc (0.6.9)
       asciimath
@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: e84b3385acf7d6eb025d80756080a1610efc43da
+  revision: a8dbf492ee7f8a1dfbb6f8092b444c919913a689
   specs:
-    isodoc (0.5.7)
+    isodoc (0.5.8)
       asciimath
       html2doc
       htmlentities (~> 4.3.4)
@@ -93,14 +93,14 @@ GEM
       shellany (~> 0.0)
     optout (0.0.2)
     parallel (1.12.1)
-    parser (2.5.0.4)
+    parser (2.5.0.5)
       ast (~> 2.4.0)
     powerpack (0.1.1)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     rainbow (3.0.0)
-    rake (12.3.0)
+    rake (12.3.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -118,7 +118,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.53.0)
+    rubocop (0.54.0)
       parallel (~> 1.10)
       parser (>= 2.5)
       powerpack (~> 0.1)
