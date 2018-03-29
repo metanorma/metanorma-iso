@@ -158,7 +158,7 @@ module Asciidoctor
         x.xpath("//annex | //clause").each do |r|
           r["obligation"] = "normative" unless r["obligation"]
         end
-        x.xpath("//subclause").each do |r|
+        x.xpath(Utils::SUBCLAUSE_XPATH).each do |r|
           r["obligation"] = r.at("./ancestor::*/@obligation").text
         end
       end

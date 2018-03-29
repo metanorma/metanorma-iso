@@ -113,6 +113,9 @@ module Asciidoctor
           out.p { |p| p << node.content }
         end
       end
+
+      SUBCLAUSE_XPATH = "//clause[ancestor::clause or ancestor::annex or "\
+        "ancestor::introduction]".freeze
     end
   end
 end

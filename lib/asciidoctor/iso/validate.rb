@@ -64,7 +64,7 @@ module Asciidoctor
       def title_first_level_validate(root)
         root.xpath(SECTIONS_XPATH).each do |s|
           title = s&.at("./title")&.text || s.name
-          s.xpath("./subclause | ./terms").each do |ss|
+          s.xpath("./clause | ./terms | ./references").each do |ss|
             subtitle = ss.at("./title")
             !subtitle.nil? && !subtitle&.text&.empty? ||
               warn("#{title}: each first-level subclause must have a title")
@@ -76,7 +76,7 @@ module Asciidoctor
     notitle = false
     withtitle = false
     xpath.each do |s|
-      title_all_siblings(s.xpath("./subclause | ./terms"),
+      title_all_siblings(s.xpath("./clause | ./terms | ./references"),
                          s&.at("./title")&.text || s["id"])
       subtitle = s.at("./title")
       notitle = notitle || (!subtitle || subtitle.text.empty?)
@@ -97,8 +97,8 @@ module Asciidoctor
   end
 
   def onlychild_clause_validate(root)
-    root.xpath("//subclause").each do |c|
-      next unless c.xpath("../subclause").size == 1
+    root.xpath(Utils::SUBCLAUSE_XPATH).each do |c|
+      next unless c.xpath("../clause").size == 1
       title = c.at("./title")
       location = c["id"] || c.text[0..60] + "..."
       location += ":#{title.text}" if c["id"] && !title.nil?

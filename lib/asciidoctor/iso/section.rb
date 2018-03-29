@@ -73,7 +73,7 @@ module Asciidoctor
       def clause_parse(attrs, xml, node)
         attrs["inline-header".to_sym] = node.option? "inline-header"
         set_obligation(attrs, node)
-        sect = node.level == 1 ? "clause" : "subclause"
+        sect = node.level == 1 ? "clause" : "clause"
         xml.send sect, **attr_code(attrs) do |xml_section|
           xml_section.title { |n| n << node.title } unless node.title.nil?
           xml_section << node.content

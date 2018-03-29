@@ -15,13 +15,13 @@ module Asciidoctor
 
       def foreword_validate(root)
         f = root.at("//foreword") || return
-        s = f.at("./subclause")
+        s = f.at("./clause")
         warn "ISO style: foreword contains subclauses" unless s.nil?
       end
 
       def normref_validate(root)
         f = root.at("//references[title = 'Normative References']") || return
-        f.at("./references") &&
+        f.at("./references | ./clause") &&
           warn("ISO style: normative references contains subclauses")
       end
 
@@ -149,7 +149,7 @@ module Asciidoctor
         foreword_style(root.at("//foreword"))
         introduction_style(root.at("//introduction"))
         scope_style(root.at("//clause[title = 'Scope']"))
-        scope = root.at("//clause[title = 'Scope']/subclause")
+        scope = root.at("//clause[title = 'Scope']/clause")
         scope.nil? || style_warning(scope, SCOPE_WARN, nil)
       end
 
