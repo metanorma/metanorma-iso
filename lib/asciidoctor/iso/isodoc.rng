@@ -435,7 +435,7 @@
       <attribute name="reviewer"/>
       <optional>
         <attribute name="date">
-          <data type="date"/>
+          <data type="dateTime"/>
         </attribute>
       </optional>
       <attribute name="from">

@@ -80,7 +80,7 @@ module Asciidoctor
                          s&.at("./title")&.text || s["id"])
       subtitle = s.at("./title")
       notitle = notitle || (!subtitle || subtitle.text.empty?)
-      withtitle = withtitle || !subtitle&.text&.empty?
+      withtitle = withtitle || (subtitle && !subtitle.text.empty?)
     end
     notitle && withtitle &&
       warn("#{label}: all subclauses must have a title, or none")

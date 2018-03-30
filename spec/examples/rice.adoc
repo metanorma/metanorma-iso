@@ -58,7 +58,7 @@ The main changes compared to the previous edition are:
 
 A list of all parts in the ISO {docnumber} series can be found on the ISO website. 
 
-[reviewer=ISO,date=20170101,from=foreword,to=foreword]
+[reviewer=ISO,date=2017-01-01,from=foreword,to=foreword]
 ****
 A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.
 
