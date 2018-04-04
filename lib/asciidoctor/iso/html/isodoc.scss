@@ -47,6 +47,7 @@ p.FigureTitle
 	tab-stops:20.15pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
+        font-weight:bold;
 	mso-fareast-font-family:$bodyfont;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
@@ -64,6 +65,7 @@ p.TableTitle
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
 	font-size:11.0pt;
+	font-weight:bold;
 	font-family:$bodyfont;
 	mso-fareast-font-family:$bodyfont;
 	mso-bidi-font-family:$bodyfont;
@@ -663,3 +665,4 @@ div.example {
   margin-left:70.9pt;
   text-indent:-70.9pt;
 }
+
