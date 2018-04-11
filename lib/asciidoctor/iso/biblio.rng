@@ -20,7 +20,7 @@
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <define name="status">
     <element name="status">
-      <ref name="FormattedString"/>
+      <ref name="LocalizedString"/>
     </element>
   </define>
   <define name="language">
@@ -431,9 +431,6 @@
       <ref name="biblionote"/>
     </zeroOrMore>
     <zeroOrMore>
-      <ref name="partof"/>
-    </zeroOrMore>
-    <zeroOrMore>
       <ref name="language"/>
     </zeroOrMore>
     <zeroOrMore>
@@ -480,8 +477,11 @@
           <value>published</value>
           <value>accessed</value>
           <value>created</value>
-          <value>activated</value>
+          <value>implemented</value>
           <value>obsoleted</value>
+          <value>confirmed</value>
+          <value>updated</value>
+          <value>issued</value>
         </choice>
       </attribute>
       <ref name="bfrom"/>
@@ -522,11 +522,6 @@
   <define name="abstract">
     <element name="abstract">
       <ref name="FormattedString"/>
-    </element>
-  </define>
-  <define name="partof">
-    <element name="partof">
-      <ref name="BibliographicItem"/>
     </element>
   </define>
   <define name="copyright">
