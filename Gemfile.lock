@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 8a18fdb03534ab313a0ba4fffbe5e2131da6fa36
+  revision: 998fefd7825f7aecea37bd8788d5c38e06f5295e
   specs:
-    html2doc (0.6.9)
+    html2doc (0.7.0)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 9124355cd5ae69743a81341753bbce03a57e8760
+  revision: 09d54e09e0d0fe7222b956d9d9717c4fcf12aeb1
   specs:
     isodoc (0.5.8)
       asciimath
@@ -93,7 +93,7 @@ GEM
       shellany (~> 0.0)
     optout (0.0.2)
     parallel (1.12.1)
-    parser (2.5.0.5)
+    parser (2.5.1.0)
       ast (~> 2.4.0)
     powerpack (0.1.1)
     pry (0.11.3)
