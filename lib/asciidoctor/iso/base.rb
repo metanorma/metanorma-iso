@@ -38,6 +38,7 @@ module Asciidoctor
         engine = Sass::Engine.new(@fontheader + stylesheet, syntax: :scss)
         outname = File.basename(filename, ".*") + ".css"
         File.open(outname, "w") { |f| f.write(engine.render) }
+        @files_to_delete << outname
         outname
       end
 
@@ -72,6 +73,7 @@ module Asciidoctor
         @draft = node.attributes.has_key?("draft")
         @novalid = node.attr("novalid")
         @fontheader = default_fonts(node)
+        @files_to_delete = []
       end
 
       def default_fonts(node)
@@ -94,6 +96,7 @@ module Asciidoctor
         File.open(filename, "w") { |f| f.write(ret) }
         html_converter(node).convert filename unless node.attr("nodoc")
         doc_converter(node).convert filename unless node.attr("nodoc")
+        @files_to_delete.each { |f| system "rm #{f}" }
         ret
       end
 

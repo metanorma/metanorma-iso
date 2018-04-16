@@ -555,6 +555,7 @@
           <value>parent</value>
           <value>child</value>
           <value>obsoletes</value>
+          <value>updates</value>
           <value>updatedBy</value>
           <value>complements</value>
           <value>derivedFrom</value>

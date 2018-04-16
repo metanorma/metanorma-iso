@@ -19,6 +19,7 @@ RSpec.describe Asciidoctor::ISO do
 <sections/>
 </iso-standard>
     OUTPUT
+    expect(File.exist?("spec/examples/rice.doc")).to be true
   end
 
   it "converts a blank document" do
@@ -34,6 +35,7 @@ RSpec.describe Asciidoctor::ISO do
 </iso-standard>
     OUTPUT
     expect(File.exist?("test.doc")).to be true
+    expect(File.exist?("htmlstyle.css")).to be false
   end
 
   it "processes default metadata" do
