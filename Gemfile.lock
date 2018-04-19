@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: a627e146278c60a969d308cf7990c74654dd0fed
+  revision: 6a1577902a0a978382f5a5d51965136498ea6e05
   specs:
     html2doc (0.7.0)
       asciimath
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 8c54205625dce7442be04b822fb1b0f1e782a8a9
+  revision: 4cf156ec1710387f160c93978d6da1e402bf0ef3
   specs:
     isodoc (0.5.8)
       asciimath
@@ -118,7 +118,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.54.0)
+    rubocop (0.55.0)
       parallel (~> 1.10)
       parser (>= 2.5)
       powerpack (~> 0.1)
