@@ -1,4 +1,6 @@
 require "pp"
+require "isobib"
+
 module Asciidoctor
   module ISO
     module Lists
@@ -132,6 +134,8 @@ module Asciidoctor
       \[(?<code>[^\]]+)\]</ref>,?\s
       (?<text>.*)$}xm
 
+      # @param item [String]
+      # @return [Array<MatchData>]
       def reference1_matches(item)
         matched = ISO_REF.match item
         matched2 = ISO_REF_NO_YEAR.match item
@@ -139,13 +143,26 @@ module Asciidoctor
         [matched, matched2, matched3]
       end
 
+      # @param node [Asciidoctor::List]
+      # @param item [String]
+      # @param xml [Nokogiri::XML::Builder]
       def reference1(node, item, xml)
         matched, matched2, matched3 = reference1_matches(item)
         if matched3.nil? && matched2.nil? && matched.nil?
           refitem(xml, item, node)
+        elsif fetch_ref(matched3 || matched2 || matched, xml)
         elsif !matched.nil? then isorefmatches(xml, matched)
         elsif !matched2.nil? then isorefmatches2(xml, matched2)
         elsif !matched3.nil? then isorefmatches3(xml, matched3)
+        end
+      end
+
+      def fetch_ref(matched, xml)
+        result = Isobib::IsoBibliography.search(matched[:code])
+        hit = result&.first&.first
+        coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
+        if hit && hit.hit["title"]&.match(coderegex)&.to_s == matched[:code]
+          hit.to_xml xml
         end
       end
 
