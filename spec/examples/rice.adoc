@@ -657,6 +657,9 @@ This International Standard gives the minimum specifications for rice (_Oryza sa
 _____
 
 
+[%appendix]
+=== Appendix 1
+
 [[samplecode]]
 .Sample Code
 ====

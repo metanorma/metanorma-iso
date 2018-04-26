@@ -413,7 +413,7 @@
       <ref name="formattedref"/>
     </choice>
     <zeroOrMore>
-      <ref name="source"/>
+      <ref name="bsource"/>
     </zeroOrMore>
     <zeroOrMore>
       <ref name="docidentifier"/>
@@ -452,6 +452,11 @@
   <define name="btitle">
     <element name="title">
       <ref name="FormattedString"/>
+    </element>
+  </define>
+  <define name="bsource">
+    <element name="source">
+      <ref name="TypedUri"/>
     </element>
   </define>
   <define name="formattedref">
