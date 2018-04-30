@@ -654,13 +654,8 @@ used for validation from the generic IsoDoc grammar
 
 The gem has been tested to date against the
 https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
-model document of an international standard. This repository includes:
-
-* the link:spec/examples/rice.adoc[AsciiISO version of the Rice document].
-* the link:spec/examples/rice.preview.html[AsciiISO rendering of the Rice document as an HTML preview] 
-(native Asciidoc rendering)
-* the link:spec/examples/rice.xml[ISO XML rendering of the Rice document].
-* the link:spec/examples/rice.doc[Word .doc rendering of the Rice document].
-* the link:spec/examples/rice.html[HTML rendering of the Rice document].
+model document of an international standard. Sample representation of the Rice document
+in Asciidoctor, and output formats, are included in the https://github.com/riboseinc/isodoc-rice
+repository.
 
 See also `link:spec/asciidoctor-iso[]` for individual features.
