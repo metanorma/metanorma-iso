@@ -19,7 +19,7 @@ module Asciidoctor
         while (m = LOCALITY_RE.match text)
           ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
           refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
-          loc = m[:locality].downcase || m[:locality2].downcase
+          loc = m[:locality]&.downcase || m[:locality2]&.downcase
           x.add_child("<locality type='#{loc}'>#{ref}#{refto}</locality>")
           text = m[:text]
         end
@@ -65,7 +65,6 @@ module Asciidoctor
           x["citeas"] = @anchors&.dig(x["bibitemid"], :xref) ||
             warn("ISO: #{x['bibitemid']} is not a real reference!")
           extract_localities(x) unless x.children.empty?
-          warn x
         end
       end
 

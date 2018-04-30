@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 2fd164b0e3352a22f6b403ba7e05d781a04e190b
+  revision: 3822f0ddf57bc26e3b6ba070e1b104497c7e3186
   specs:
     isodoc (0.5.8)
       asciimath
@@ -144,7 +144,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     timecop (0.9.1)
-    unicode-display_width (1.3.0)
+    unicode-display_width (1.3.2)
     uuidtools (2.1.5)
 
 PLATFORMS
