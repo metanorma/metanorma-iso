@@ -8,7 +8,7 @@ module Asciidoctor
                       table|annex|figure|example|note|formula|
                       locality:[^ \\t\\n\\r:,]+)\\s+
                (?<ref>[^ \\t\\n,:-]+)(-(?<to>[^ \\t\\n,:-]+))?|
-          (?<locality>whole|locality:[^ \\t\\n\\r:,]+))[,:]?\\s*
+          (?<locality2>whole|locality:[^ \\t\\n\\r:,]+))[,:]?\\s*
          (?<text>.*)$
       REGEXP
       LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
@@ -19,7 +19,7 @@ module Asciidoctor
         while (m = LOCALITY_RE.match text)
           ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
           refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
-          loc = m[:locality].downcase
+          loc = m[:locality].downcase || m[:locality2].downcase
           x.add_child("<locality type='#{loc}'>#{ref}#{refto}</locality>")
           text = m[:text]
         end
@@ -65,6 +65,7 @@ module Asciidoctor
           x["citeas"] = @anchors&.dig(x["bibitemid"], :xref) ||
             warn("ISO: #{x['bibitemid']} is not a real reference!")
           extract_localities(x) unless x.children.empty?
+          warn x
         end
       end
 

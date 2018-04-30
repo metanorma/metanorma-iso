@@ -7,7 +7,7 @@ module Asciidoctor
     module Validate
       def extract_text(node)
         return "" if node.nil?
-        node1 = node.dup
+        node1 = Nokogiri::XML.fragment(node.to_s)
         node1.xpath("//link | //locality").each(&:remove)
         ret = ""
         node1.traverse { |x| ret += x.text if x.text? }
