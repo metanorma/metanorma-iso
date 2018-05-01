@@ -115,23 +115,30 @@ module Asciidoctor
         metadata_ics(node, xml)
       end
 
+      def asciidoc_sub(x)
+        return nil if x.nil?
+        d = Asciidoctor::Document.new(x.lines.entries, {header_footer: false})
+        b = d.parse.blocks.first
+        b.apply_subs(b.source)
+      end
+
       def title_intro(node, t, lang, at)
         return unless node.attr("title-intro-#{lang}")
         t.title_intro(**attr_code(at)) do |t1|
-          t1 << node.attr("title-intro-#{lang}")
+          t1 << asciidoc_sub(node.attr("title-intro-#{lang}"))
         end
       end
 
       def title_main(node, t, lang, at)
         t.title_main **attr_code(at) do |t1|
-          t1 << node.attr("title-main-#{lang}")
+          t1 << asciidoc_sub(node.attr("title-main-#{lang}"))
         end
       end
 
       def title_part(node, t, lang, at)
         return unless node.attr("title-part-#{lang}")
         t.title_part(**attr_code(at)) do |t1|
-          t1 << node.attr("title-part-#{lang}")
+          t1 << asciidoc_sub(node.attr("title-part-#{lang}"))
         end
       end
 

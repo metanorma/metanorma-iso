@@ -65,7 +65,7 @@ RSpec.describe Asciidoctor::ISO do
       :iteration: 3
       :language: en
       :title-intro-en: Introduction
-      :title-main-en: Main Title
+      :title-main-en: Main Title -- Title
       :title-part-en: Title Part
       :title-intro-fr: Introduction Française
       :title-main-fr: Titre Principal
@@ -77,7 +77,7 @@ RSpec.describe Asciidoctor::ISO do
        <bibdata type="article">
          <title>
            <title-intro language="en" format="text/plain">Introduction</title-intro>
-           <title-main language="en" format="text/plain">Main Title</title-main>
+           <title-main language="en" format="text/plain">Main Title — Title</title-main>
            <title-part language="en" format="text/plain">Title Part</title-part>
          </title>
          <title>

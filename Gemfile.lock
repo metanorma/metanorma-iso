@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 3822f0ddf57bc26e3b6ba070e1b104497c7e3186
+  revision: 951d28f6904f506208af360b2b0e42f7dc0d5d18
   specs:
     isodoc (0.5.8)
       asciimath
