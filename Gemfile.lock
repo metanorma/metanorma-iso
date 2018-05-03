@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: 6a1577902a0a978382f5a5d51965136498ea6e05
+  revision: 06a521ffd8fad90149699ae768040d25bba50cee
   specs:
     html2doc (0.7.0)
       asciimath
@@ -46,7 +46,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    asciidoctor (1.5.6.2)
+    asciidoctor (1.5.7)
     asciimath (1.0.4)
     ast (2.4.0)
     byebug (9.1.0)
@@ -72,7 +72,7 @@ GEM
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
     htmlentities (4.3.4)
-    image_size (1.5.0)
+    image_size (2.0.0)
     json (2.1.0)
     liquid (4.0.0)
     listen (3.1.5)
