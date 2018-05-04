@@ -28,7 +28,7 @@ module Asciidoctor
 
       def xref_to_eref(x)
         x["bibitemid"] = x["target"]
-        x["citeas"] = @anchors&.dig(x["target"], :xref) ||
+        x["citeas"] = @anchors&.dig(x["target"].upcase, :xref) ||
           warn("ISO: #{x['target']} is not a real reference!")
         x.delete("target")
         extract_localities(x) unless x.children.empty?

@@ -2,6 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes simple ISO reference" do
+    stub_fetch_ref
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
@@ -9,24 +10,58 @@ RSpec.describe Asciidoctor::ISO do
 
       * [[[iso123,ISO 123]]] _Standard_
     INPUT
-       #{BLANK_HDR}
-              <sections>
-       </sections><bibliography><references id="_" obligation="informative">
-         <title>Normative References</title>
-         <bibitem id="iso123" type="standard">
-         <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem>
-       </references>
-       </bibliography>
-       </iso-standard>
+      #{BLANK_HDR}
+      <sections>
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem type="international-standard" id="ISO123">
+        <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling -- </title>
+        <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Échantillonnage -- </title>
+        <source type="src">https://www.iso.org/standard/23281.html</source>
+        <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
+        <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
+        <docidentifier>ISO 123</docidentifier>
+        <date type="published">
+          <from>2001</from>
+        </date>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+            <uri>www.iso.org</uri>
+          </organization>
+        </contributor>
+        <edition>3</edition>
+        <language>en</language>
+        <language>fr</language>
+        <script>Latn</script>
+        <status>Published</status>
+        <copyright>
+          <from>2001</from>
+          <owner>
+            <organization>
+              <name>ISO</name>
+              <abbreviation/>
+            </organization>
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <formattedref>ISO 123:1985</formattedref>
+            <docidentifier>ISO 123:1985</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <bibitem>
+            <formattedref>ISO 123:2001</formattedref>
+            <docidentifier>ISO 123:2001</docidentifier>
+          </bibitem>
+        </relation>
+      </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
     OUTPUT
   end
 
@@ -60,62 +95,119 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes dated ISO reference and joint ISO/IEC references" do
+    stub_fetch_ref
+
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Normative References
 
-      * [[[iso123,ISO/IEC 123:1066]]] _Standard_
+      * [[[iso123,ISO/IEC 12382:1066]]] _Standard_
       * [[[iso124,ISO 124:1066-1067]]] _Standard_
     INPUT
-       #{BLANK_HDR}
-              <sections>
-         
-       </sections><bibliography><references id="_" obligation="informative">
-         <title>Normative References</title>
-         <bibitem id="iso123" type="standard">
-         <title format="text/plain">Standard</title>
-         <docidentifier>ISO/IEC 123</docidentifier>
-         <date type="published">
-           <on>1066</on>
-         </date>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-               <name>International Organization for Standardization</name>
-    <abbreviation>ISO</abbreviation>
-  </organization>
-</contributor>
-<contributor>
-  <role type="publisher"/>
-  <organization>
-  <name>International Electrotechnical Commission</name>
-<abbreviation>IEC</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem>
-         <bibitem id="iso124" type="standard">
-         <title format="text/plain">Standard</title>
-         <docidentifier>ISO 124</docidentifier>
-         <date type="published">
-           <from>1066</from>
-           <to>1067</to>
-         </date>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem>
-       </references>
-       </bibliography>
-       </iso-standard>
+      #{BLANK_HDR}
+      <sections>
+
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem type="technicalReport" id="ISO/IEC12382">
+          <title format="text/plain" language="en" script="Latn">Permuted index of the vocabulary of information technology --  -- </title>
+          <title format="text/plain" language="fr" script="Latn">Index permuté du vocabulaire des technologies de l'information --  -- </title>
+          <source type="src">https://www.iso.org/standard/21071.html</source>
+          <source type="obp">https://www.iso.org/obp/ui/#!iso:std:21071:en</source>
+          <source type="rss">https://www.iso.org/contents/data/standard/02/10/21071.detail.rss</source>
+          <docidentifier>ISO/IEC 12382</docidentifier>
+          <date type="published">
+            <from>1992</from>
+          </date>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+              <uri>www.iso.org</uri>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Electrotechnical Commission</name>
+              <abbreviation>IEC</abbreviation>
+              <uri>www.iec.ch</uri>
+            </organization>
+          </contributor>
+          <edition>2</edition>
+          <language>en</language>
+          <language>fr</language>
+          <script>Latn</script>
+          <abstract format="plain" language="en" script="Latn">Contains a permuted index of all terms included in the parts 1 - 28 of ISO 2382. If any of these parts has been revised, the present TR refers to the revision.</abstract>
+          <status>Published</status>
+          <copyright>
+            <from>1992</from>
+            <owner>
+              <organization>
+                <name>ISO/IEC</name>
+                <abbreviation></abbreviation>
+              </organization>
+            </owner>
+          </copyright>
+          <relation type="updates">
+            <bibitem>
+              <formattedref>ISO/IEC TR 12382:1992</formattedref>
+              <docidentifier>ISO/IEC TR 12382:1992</docidentifier>
+            </bibitem>
+          </relation>
+        </bibitem>
+        <bibitem type="international-standard" id="ISO124">
+          <title format="text/plain" language="en" script="Latn">Latex, rubber -- Determination of total solids content -- </title>
+          <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Détermination des matières solides totales -- </title>
+          <source type="src">https://www.iso.org/standard/61884.html</source>
+          <source type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</source>
+          <source type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</source>
+          <docidentifier>ISO 124</docidentifier>
+          <date type="published">
+            <from>2014</from>
+          </date>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+              <uri>www.iso.org</uri>
+            </organization>
+          </contributor>
+          <edition>7</edition>
+          <language>en</language>
+          <language>fr</language>
+          <script>Latn</script>
+          <abstract format="plain" language="en" script="Latn">ISO 124:2014 specifies methods for the determination of the total solids content of natural rubber field and concentrated latices and synthetic rubber latex. These methods are not necessarily suitable for latex from natural sources other than the Hevea brasiliensis, for vulcanized latex, for compounded latex, or for artificial dispersions of rubber.</abstract>
+          <abstract format="plain" language="fr" script="Latn">L'ISO 124:2014 spécifie des méthodes pour la détermination des matières solides totales dans le latex de plantation, le latex de concentré de caoutchouc naturel et le latex de caoutchouc synthétique. Ces méthodes ne conviennent pas nécessairement au latex d'origine naturelle autre que celui de l'Hevea brasiliensis, au latex vulcanisé, aux mélanges de latex, ou aux dispersions artificielles de caoutchouc.</abstract>
+          <status>Published</status>
+          <copyright>
+            <from>2014</from>
+            <owner>
+              <organization>
+                <name>ISO</name>
+                <abbreviation/>
+              </organization>
+            </owner>
+          </copyright>
+          <relation type="obsoletes">
+            <bibitem>
+              <formattedref>ISO 124:2011</formattedref>
+              <docidentifier>ISO 124:2011</docidentifier>
+            </bibitem>
+          </relation>
+        </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
     OUTPUT
   end
 
   it "processes draft ISO reference" do
+    stub_fetch_ref no_year: true, note: "The standard is in press"
+
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
@@ -127,8 +219,12 @@ RSpec.describe Asciidoctor::ISO do
        <sections>
               </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
-         <bibitem id="iso123" type="standard">
-         <title format="text/plain">Standard</title>
+         <bibitem type="international-standard" id="ISO123">
+         <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling -- </title>
+         <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Échantillonnage -- </title>
+         <source type="src">https://www.iso.org/standard/23281.html</source>
+         <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
+         <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
          <docidentifier>ISO 123</docidentifier>
          <date type="published">
            <on>--</on>
@@ -138,8 +234,35 @@ RSpec.describe Asciidoctor::ISO do
            <organization>
              <name>International Organization for Standardization</name>
              <abbreviation>ISO</abbreviation>
+             <uri>www.iso.org</uri>
            </organization>
          </contributor>
+         <edition>3</edition>
+         <language>en</language>
+         <language>fr</language>
+         <script>Latn</script>
+         <status>Published</status>
+         <copyright>
+           <from>2001</from>
+           <owner>
+             <organization>
+               <name>ISO</name>
+               <abbreviation/>
+             </organization>
+           </owner>
+         </copyright>
+         <relation type="obsoletes">
+           <bibitem>
+             <formattedref>ISO 123:1985</formattedref>
+             <docidentifier>ISO 123:1985</docidentifier>
+           </bibitem>
+         </relation>
+         <relation type="updates">
+           <bibitem>
+             <formattedref>ISO 123:2001</formattedref>
+             <docidentifier>ISO 123:2001</docidentifier>
+           </bibitem>
+         </relation>
          <note format="text/plain" reference="1">ISO DATE: The standard is in press</note>
        </bibitem>
        </references>
@@ -149,6 +272,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes all-parts ISO reference" do
+    stub_fetch_ref(all_parts: true)
+
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
@@ -156,9 +281,10 @@ RSpec.describe Asciidoctor::ISO do
 
       * [[[iso123,ISO 123:1066 (all parts)]]] _Standard_
     INPUT
+<<<<<<< HEAD
        #{BLANK_HDR}
               <sections>
-         
+
        </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
@@ -178,6 +304,60 @@ RSpec.describe Asciidoctor::ISO do
        </references>
        </bibliography>
        </iso-standard>
+=======
+      #{BLANK_HDR}
+      <sections>
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem type="international-standard" id="ISO123">
+        <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling -- </title>
+        <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Échantillonnage -- </title>
+        <source type="src">https://www.iso.org/standard/23281.html</source>
+        <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
+        <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
+        <docidentifier>ISO 123:All Parts</docidentifier>
+        <date type="published">
+          <from>2001</from>
+        </date>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+            <uri>www.iso.org</uri>
+          </organization>
+        </contributor>
+        <edition>3</edition>
+        <language>en</language>
+        <language>fr</language>
+        <script>Latn</script>
+        <status>Published</status>
+        <copyright>
+          <from>2001</from>
+          <owner>
+            <organization>
+              <name>ISO</name>
+              <abbreviation/>
+            </organization>
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <formattedref>ISO 123:1985</formattedref>
+            <docidentifier>ISO 123:1985</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <bibitem>
+            <formattedref>ISO 123:2001</formattedref>
+            <docidentifier>ISO 123:2001</docidentifier>
+          </bibitem>
+        </relation>
+      </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
+>>>>>>> 5fb3abb... test fetching isobib refs
     OUTPUT
   end
 
@@ -191,7 +371,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
               <sections>
-         
+
        </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem id="iso123">
@@ -216,7 +396,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
               <sections>
-         
+
        </sections><bibliography><references id="_" obligation="informative">
          <title>Bibliography</title>
          <bibitem id="iso123">
@@ -230,7 +410,4 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
     OUTPUT
   end
-
-
-
 end

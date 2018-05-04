@@ -9,7 +9,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          <clause id="_" inline-header="false" obligation="normative">
-         
+
        </clause>
        </sections>
        </iso-standard>
@@ -112,7 +112,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          <terms id="_" obligation="normative"><title>Terms and Definitions</title>
-     
+
        <term id="_">
        <preferred>Time</preferred>
          <definition><p id="_">This paragraph is extraneous</p></definition>
@@ -127,8 +127,8 @@ RSpec.describe Asciidoctor::ISO do
       #{ASCIIDOC_BLANK_HDR}
       [stem]
       ++++
-      r = 1 % 
-      r = 1 % 
+      r = 1 %
+      r = 1 %
       ++++
 
       NOTE: That formula does not do much
@@ -170,44 +170,79 @@ r = 1 %</stem>
   end
 
   it "converts xrefs to references into erefs" do
+    stub_fetch_ref
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       <<iso216>>
- 
-      [bibliography]     
+
+      [bibliography]
       == Normative References
       * [[[iso216,ISO 216:2001]]], _Reference_
     INPUT
-       #{BLANK_HDR}
-              <preface><foreword obligation="informative">
-         <title>Foreword</title>
-         <p id="_">
-         <eref type="inline" bibitemid="iso216" citeas="ISO 216: 2001"/>
-       </p>
-       </foreword></preface><sections>
-       </sections><bibliography><references id="_" obligation="informative">
-         <title>Normative References</title>
-         <bibitem id="iso216" type="standard">
-         <title format="text/plain">Reference</title>
-         <docidentifier>ISO 216</docidentifier>
-         <date type="published">
-           <on>2001</on>
-         </date>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem>
-       </references>
-       </bibliography
-       </iso-standard>
+      #{BLANK_HDR}
+        <preface><foreword obligation="informative">
+        <title>Foreword</title>
+        <p id="_">
+        <eref type="inline" bibitemid="iso216" citeas="ISO 216: 2007"/>
+      </p>
+      </foreword></preface><sections>
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem type="international-standard" id="ISO216">
+        <title format="text/plain" language="en" script="Latn">Writing paper and certain classes of printed matter -- Trimmed sizes -- A and B series, and indication of machine direction</title>
+        <title format="text/plain" language="fr" script="Latn">Papiers à écrire et certaines catégories d'imprimés -- Formats finis -- Séries A et B, et indication du sens machine</title>
+        <source type="src">https://www.iso.org/standard/36631.html</source>
+        <source type="obp">https://www.iso.org/obp/ui/#!iso:std:36631:en</source>
+        <source type="rss">https://www.iso.org/contents/data/standard/03/66/36631.detail.rss</source>
+        <docidentifier>ISO 216</docidentifier>
+        <date type="published">
+          <from>2007</from>
+        </date>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+            <uri>www.iso.org</uri>
+          </organization>
+        </contributor>
+        <edition>2</edition>
+        <language>en</language>
+        <language>fr</language>
+        <script>Latn</script>
+        <abstract format="plain" language="en" script="Latn">ISO 216:2007 specifies the trimmed sizes of writing paper and certain classes of printed matter.It applies to trimmed sizes of paper for administrative, commercial and technical use, and also to certain classes of printed matter, such as forms, catalogues, etc.It does not necessarily apply to newspapers, published books, posters or other special items which may be the subject of separate International Standards.ISO 216:2007 also specifies the method for the indication of the machine direction for trimmed sheets.</abstract>
+        <abstract format="plain" language="fr" script="Latn">L'ISO 216:2007 spécifie les formats finis des papiers à écrire et de certaines catégories d'imprimés.Elle s'applique aux formats finis de papier pour usages administratif, commercial et technique ainsi qu'à certaines catégories d'imprimés, tels que formulaires, catalogues, etc.Elle ne s'applique pas nécessairement au papier journal, à l'édition, aux affiches publicitaires ou aux usages particuliers qui pourront faire l'objet d'autres Normes internationales.L'ISO 216:2007 spécifie également la méthode permettant d'indiquer le sens machine des formats finis.</abstract>
+        <status>Published</status>
+        <copyright>
+          <from>2007</from>
+          <owner>
+            <organization>
+              <name>ISO</name>
+              <abbreviation/>
+            </organization>
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <formattedref>ISO 216:1975</formattedref>
+            <docidentifier>ISO 216:1975</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <bibitem>
+            <formattedref>ISO 216:2007</formattedref>
+            <docidentifier>ISO 216:2007</docidentifier>
+          </bibitem>
+        </relation>
+      </bibitem>
+      </references>
+      </bibliography
+      </iso-standard>
     OUTPUT
   end
 
   it "extracts localities from erefs" do
+    stub_fetch_ref
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       <<iso216,whole,clause 3,example 9-11,locality:prelude 33,locality:entirety:the reference>>
@@ -216,30 +251,65 @@ r = 1 %</stem>
       == Normative References
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
-       #{BLANK_HDR}
-       <preface>
-       <foreword obligation="informative">
-         <title>Foreword</title>
-         <p id="_">
-         <eref type="inline" bibitemid="iso216" citeas="ISO 216"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>the reference</eref>
-       </p>
-       </foreword></preface><sections>
-       </sections><bibliography><references id="_" obligation="informative">
-         <title>Normative References</title>
-         <bibitem id="iso216" type="standard">
-         <title format="text/plain">Reference</title>
-         <docidentifier>ISO 216</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem>
-       </references>
-       </bibliography>
-       </iso-standard>
+      #{BLANK_HDR}
+      <preface><foreword obligation="informative">
+        <title>Foreword</title>
+        <p id="_">
+        <eref type="inline" bibitemid="iso216" citeas="ISO 216: 2007"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>the reference</eref>
+        </p>
+      </foreword></preface><sections>
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem type="international-standard" id="ISO216">
+        <title format="text/plain" language="en" script="Latn">Writing paper and certain classes of printed matter -- Trimmed sizes -- A and B series, and indication of machine direction</title>
+        <title format="text/plain" language="fr" script="Latn">Papiers à écrire et certaines catégories d'imprimés -- Formats finis -- Séries A et B, et indication du sens machine</title>
+        <source type="src">https://www.iso.org/standard/36631.html</source>
+        <source type="obp">https://www.iso.org/obp/ui/#!iso:std:36631:en</source>
+        <source type="rss">https://www.iso.org/contents/data/standard/03/66/36631.detail.rss</source>
+        <docidentifier>ISO 216</docidentifier>
+        <date type="published">
+          <from>2007</from>
+        </date>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+            <uri>www.iso.org</uri>
+          </organization>
+        </contributor>
+        <edition>2</edition>
+        <language>en</language>
+        <language>fr</language>
+        <script>Latn</script>
+        <abstract format="plain" language="en" script="Latn">ISO 216:2007 specifies the trimmed sizes of writing paper and certain classes of printed matter.It applies to trimmed sizes of paper for administrative, commercial and technical use, and also to certain classes of printed matter, such as forms, catalogues, etc.It does not necessarily apply to newspapers, published books, posters or other special items which may be the subject of separate International Standards.ISO 216:2007 also specifies the method for the indication of the machine direction for trimmed sheets.</abstract>
+        <abstract format="plain" language="fr" script="Latn">L'ISO 216:2007 spécifie les formats finis des papiers à écrire et de certaines catégories d'imprimés.Elle s'applique aux formats finis de papier pour usages administratif, commercial et technique ainsi qu'à certaines catégories d'imprimés, tels que formulaires, catalogues, etc.Elle ne s'applique pas nécessairement au papier journal, à l'édition, aux affiches publicitaires ou aux usages particuliers qui pourront faire l'objet d'autres Normes internationales.L'ISO 216:2007 spécifie également la méthode permettant d'indiquer le sens machine des formats finis.</abstract>
+        <status>Published</status>
+        <copyright>
+          <from>2007</from>
+          <owner>
+            <organization>
+              <name>ISO</name>
+              <abbreviation/>
+            </organization>
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <formattedref>ISO 216:1975</formattedref>
+            <docidentifier>ISO 216:1975</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <bibitem>
+            <formattedref>ISO 216:2007</formattedref>
+            <docidentifier>ISO 216:2007</docidentifier>
+          </bibitem>
+        </relation>
+      </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
     OUTPUT
   end
 
@@ -248,7 +318,7 @@ r = 1 %</stem>
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       <<iso216>>
- 
+
       [bibliography]
       == Clause
       * [[[iso216,ISO 216]]], _Reference_
@@ -300,6 +370,7 @@ r = 1 %</stem>
   end
 
   it "removes extraneous material from Normative References" do
+    stub_fetch_ref
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
@@ -309,23 +380,58 @@ r = 1 %</stem>
 
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
-       #{BLANK_HDR}
-              <sections>
-         
-       </sections><bibliography><references id="_" obligation="informative"><title>Normative References</title>
-       <bibitem id="iso216" type="standard">
-         <title format="text/plain">Reference</title>
-         <docidentifier>ISO 216</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem></references>
-       </bibliography>
-       </iso-standard>
+      #{BLANK_HDR}
+      <sections></sections>
+      <bibliography><references id="_" obligation="informative"><title>Normative References</title>
+      <bibitem type="international-standard" id="ISO216">
+        <title format="text/plain" language="en" script="Latn">Writing paper and certain classes of printed matter -- Trimmed sizes -- A and B series, and indication of machine direction</title>
+        <title format="text/plain" language="fr" script="Latn">Papiers à écrire et certaines catégories d'imprimés -- Formats finis -- Séries A et B, et indication du sens machine</title>
+        <source type="src">https://www.iso.org/standard/36631.html</source>
+        <source type="obp">https://www.iso.org/obp/ui/#!iso:std:36631:en</source>
+        <source type="rss">https://www.iso.org/contents/data/standard/03/66/36631.detail.rss</source>
+        <docidentifier>ISO 216</docidentifier>
+        <date type="published">
+          <from>2007</from>
+        </date>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+            <uri>www.iso.org</uri>
+          </organization>
+        </contributor>
+        <edition>2</edition>
+        <language>en</language>
+        <language>fr</language>
+        <script>Latn</script>
+        <abstract format="plain" language="en" script="Latn">ISO 216:2007 specifies the trimmed sizes of writing paper and certain classes of printed matter.It applies to trimmed sizes of paper for administrative, commercial and technical use, and also to certain classes of printed matter, such as forms, catalogues, etc.It does not necessarily apply to newspapers, published books, posters or other special items which may be the subject of separate International Standards.ISO 216:2007 also specifies the method for the indication of the machine direction for trimmed sheets.</abstract>
+        <abstract format="plain" language="fr" script="Latn">L'ISO 216:2007 spécifie les formats finis des papiers à écrire et de certaines catégories d'imprimés.Elle s'applique aux formats finis de papier pour usages administratif, commercial et technique ainsi qu'à certaines catégories d'imprimés, tels que formulaires, catalogues, etc.Elle ne s'applique pas nécessairement au papier journal, à l'édition, aux affiches publicitaires ou aux usages particuliers qui pourront faire l'objet d'autres Normes internationales.L'ISO 216:2007 spécifie également la méthode permettant d'indiquer le sens machine des formats finis.</abstract>
+        <status>Published</status>
+        <copyright>
+          <from>2007</from>
+          <owner>
+            <organization>
+              <name>ISO</name>
+              <abbreviation/>
+            </organization>
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <formattedref>ISO 216:1975</formattedref>
+            <docidentifier>ISO 216:1975</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <bibitem>
+            <formattedref>ISO 216:2007</formattedref>
+            <docidentifier>ISO 216:2007</docidentifier>
+          </bibitem>
+        </relation>
+      </bibitem></references>
+      </bibliography>
+      </iso-standard>
     OUTPUT
   end
 
@@ -368,7 +474,7 @@ r = 1 %</stem>
       |===
       |a |b |c
       |===
-      
+
       Key
 
       a:: b
@@ -388,7 +494,7 @@ r = 1 %</stem>
            <p id="_">b</p>
          </dd>
        </dl></table>
-     
+
        </sections>
        </iso-standard>
     OUTPUT
@@ -484,7 +590,7 @@ r = 1 %</stem>
       |===
       |a |b |c
       |===
-      
+
       NOTE: Note 1
 
       NOTE: Note 2
@@ -503,7 +609,7 @@ r = 1 %</stem>
        </note><note id="_">
          <p id="_">Note 2</p>
        </note></table>
-     
+
        </sections>
     OUTPUT
   end
@@ -529,7 +635,7 @@ r = 1 %</stem>
            <p id="_">b</p>
          </dd>
        </dl></formula>
-     
+
        </sections>
        </iso-standard>
     OUTPUT
@@ -552,7 +658,7 @@ r = 1 %</stem>
        </fn><fn reference="b">
          <p id="_">This is another footnote to a figure</p>
        </fn></figure>
-     
+
        </sections>
 
        </iso-standard>
@@ -577,7 +683,7 @@ r = 1 %</stem>
            <p id="_">b</p>
          </dd>
        </dl></figure>
-     
+
        </sections>
 
        </iso-standard>
@@ -592,10 +698,10 @@ r = 1 %</stem>
       ====
       .Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)
       image::spec/examples/rice_images/rice_image3_1.png[]
-      
+
       .Intermediate stages: Some fully gelatinized kernels are visible
       image::spec/examples/rice_images/rice_image3_2.png[]
-      
+
       .Final stages: All kernels are fully gelatinized
       image::spec/examples/rice_images/rice_image3_3.png[]
       ====
@@ -620,6 +726,8 @@ r = 1 %</stem>
   end
 
   it "numbers bibliographic notes and footnotes sequentially" do
+    stub_fetch_ref(no_year: true, note: "The standard is in press")
+
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       footnote:[Footnote]
@@ -632,39 +740,70 @@ r = 1 %</stem>
       == Clause
       footnote:[Footnote2]
     INPUT
-       #{BLANK_HDR}
-       <preface><foreword obligation="informative">
-         <title>Foreword</title>
-         <p id="_"><fn reference="1">
-         <p id="_">Footnote</p>
-       </fn>
-       </p>
-       </foreword></preface><sections>
-     
-       <clause id="_" inline-header="false" obligation="normative">
-         <title>Clause</title>
-         <p id="_"><fn reference="3">
-         <p id="_">Footnote2</p>
-       </fn>
-       </p>
-       </clause></sections><bibliography><references id="_" obligation="informative">
-         <title>Normative References</title>
-         <bibitem id="iso123" type="standard">
-         <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123</docidentifier>
-         <date type="published"><on>--</on></date>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-         <note format="text/plain" reference="2">ISO DATE: The standard is in press</note>
-       </bibitem>
-       </references>
-       </bibliography>
-       </iso-standard>
+      #{BLANK_HDR}
+      <preface><foreword obligation="informative">
+        <title>Foreword</title>
+        <p id="_"><fn reference="1">
+        <p id="_">Footnote</p>
+      </fn>
+      </p>
+      </foreword></preface><sections>
+
+      <clause id="_" inline-header="false" obligation="normative">
+        <title>Clause</title>
+        <p id="_"><fn reference="3">
+        <p id="_">Footnote2</p>
+      </fn>
+      </p>
+      </clause></sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem type="international-standard" id="ISO123">
+        <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling -- </title>
+        <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Échantillonnage -- </title>
+        <source type="src">https://www.iso.org/standard/23281.html</source>
+        <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
+        <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
+        <docidentifier>ISO 123</docidentifier>
+        <date type="published"><from>--</from></date>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+            <uri>www.iso.org</uri>
+          </organization>
+        </contributor>
+        <edition>3</edition>
+        <language>en</language>
+        <language>fr</language>
+        <script>Latn</script>
+        <status>Published</status>
+        <copyright>
+          <from>2001</from>
+          <owner>
+            <organization>
+              <name>ISO</name>
+              <abbreviation/>
+            </organization>
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <formattedref>ISO 123:1985</formattedref>
+            <docidentifier>ISO 123:1985</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <bibitem>
+            <formattedref>ISO 123:2001</formattedref>
+            <docidentifier>ISO 123:2001</docidentifier>
+          </bibitem>
+        </relation>
+        <note format="text/plain" reference="2">ISO DATE: The standard is in press</note>
+      </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
     OUTPUT
   end
 
@@ -692,10 +831,4 @@ r = 1 %</stem>
        </iso-standard>
     OUTPUT
   end
-
-
-
-
-
-
 end
