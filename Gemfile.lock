@@ -79,7 +79,7 @@ GEM
     htmlentities (4.3.4)
     httpclient (2.8.3)
     image_size (2.0.0)
-    isobib (0.1.0)
+    isobib (0.1.1)
       algoliasearch
       isoics
       nokogiri
