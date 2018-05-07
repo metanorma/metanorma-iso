@@ -867,7 +867,7 @@
   </define>
   <define name="termdocsource">
     <element name="termdocsource">
-      <ref name="erefType"/>
+      <ref name="CitationType"/>
     </element>
   </define>
   <define name="ics">

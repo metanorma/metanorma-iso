@@ -316,7 +316,7 @@ RSpec.describe Asciidoctor::ISO do
 
      INPUT
              #{BLANK_HDR}
-             <termdocsource target="iso1234" type="inline"/><termdocsource target="iso5678" type="inline"/>
+             <termdocsource bibitemid="iso1234" type="inline"/><termdocsource bibitemid="iso5678" type="inline"/>
         <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">Foreword</p>

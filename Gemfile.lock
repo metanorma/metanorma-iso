@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 951d28f6904f506208af360b2b0e42f7dc0d5d18
+  revision: ee2b6e99ceb6deffbd88d344e6cc5f56cca35b46
   specs:
-    isodoc (0.5.8)
+    isodoc (0.5.9)
       asciimath
       html2doc
       htmlentities (~> 4.3.4)
@@ -32,7 +32,7 @@ GIT
 PATH
   remote: .
   specs:
-    asciidoctor-iso (0.7.3)
+    asciidoctor-iso (0.7.4)
       asciidoctor (~> 1.5.6)
       html2doc
       htmlentities (~> 4.3.4)
