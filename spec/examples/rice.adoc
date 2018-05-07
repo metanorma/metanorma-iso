@@ -32,7 +32,6 @@
 :section-refsig: Clause
 :table-caption: Table
 :example-caption: Figure
-:i18nyaml: english.yaml
 
 [[foreword]]
 .Foreword 
