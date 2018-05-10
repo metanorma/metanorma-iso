@@ -48,8 +48,8 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    algoliasearch (1.19.1)
-      httpclient (~> 2.8.3)
+    algoliasearch (1.20.0)
+      httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
     asciidoctor (1.5.7.1)
     asciimath (1.0.4)
@@ -79,10 +79,12 @@ GEM
     htmlentities (4.3.4)
     httpclient (2.8.3)
     image_size (2.0.0)
-    isobib (0.1.1)
-      algoliasearch
+    iso-bib-item (0.1.0)
       isoics
       nokogiri
+    isobib (0.1.2)
+      algoliasearch
+      iso-bib-item
     isoics (0.1.5)
     json (2.1.0)
     liquid (4.0.0)
