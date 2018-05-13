@@ -6,9 +6,10 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "generates output for the Rice document" do
-    system "cd spec/examples; rm -f rice.doc; rm -f rice.html; asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
+    system "cd spec/examples; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
     expect(File.exist?("spec/examples/rice.doc")).to be true
     expect(File.exist?("spec/examples/rice.html")).to be true
+    expect(File.exist?("spec/examples/rice_alt.html")).to be true
   end
 
   it "processes a blank document" do
@@ -237,6 +238,20 @@ RSpec.describe Asciidoctor::ISO do
     expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
     expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: "Cambria", serif;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Cambria", serif;]m)
+  end
+
+  it "uses default fonts for alt doc" do
+    system "rm -f test_alt.html"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+    INPUT
+    html = File.read("test_alt.html")
+    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: "Space Mono", monospace;]m)
+    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: "Lato", sans-serif;]m)
+    expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Lato", sans-serif;]m)
   end
 
   it "uses Chinese fonts" do

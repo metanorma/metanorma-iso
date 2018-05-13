@@ -32,10 +32,10 @@ module Asciidoctor
         File.join(File.dirname(__FILE__), File.join("html", file))
       end
 
-      def generate_css(filename, stripwordcss)
+      def generate_css(filename, stripwordcss, fontheader)
         stylesheet = File.read(filename, encoding: "UTF-8")
-        stylesheet = stylesheet.gsub(/(\s|\{)mso-[^:]+:[^;]+;/m, "\\1") if stripwordcss
-        engine = Sass::Engine.new(@fontheader + stylesheet, syntax: :scss)
+        stylesheet.gsub!(/(\s|\{)mso-[^:]+:[^;]+;/m, "\\1") if stripwordcss
+        engine = Sass::Engine.new(fontheader + stylesheet, syntax: :scss)
         outname = File.basename(filename, ".*") + ".css"
         File.open(outname, "w") { |f| f.write(engine.render) }
         @files_to_delete << outname
@@ -43,19 +43,35 @@ module Asciidoctor
       end
 
       def html_converter(node)
+        css = generate_css(html_doc_path("style-iso.scss"), true, @fontheader)
         IsoDoc::Convert.new(
-          htmlstylesheet: generate_css(html_doc_path("htmlstyle.scss"), true),
-          standardstylesheet: generate_css(html_doc_path("isodoc.scss"), true),
+          htmlstylesheet: css,
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),
           i18nyaml: node.attr("i18nyaml"),
+          scripts: html_doc_path("scripts.html"),
+        )
+      end
+
+      def html_converter_alt(node)
+        fontheader = @fontheader.gsub(/"Cambria",serif/, '"Lato",sans-serif').
+          gsub(/"Courier New",monospace/, '"Space Mono", monospace')
+        css = generate_css(html_doc_path("style-human.scss"), true, fontheader)
+        IsoDoc::Convert.new(
+          htmlstylesheet: css,
+          htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
+          htmlintropage: html_doc_path("html_iso_intro.html"),
+          i18nyaml: node.attr("i18nyaml"),
+          scripts: html_doc_path("scripts.html"),
         )
       end
 
       def doc_converter(node)
         IsoDoc::WordConvert.new(
-          wordstylesheet:  generate_css(html_doc_path("wordstyle.scss"), false),
-          standardstylesheet: generate_css(html_doc_path("isodoc.scss"), false),
+          wordstylesheet:  generate_css(html_doc_path("wordstyle.scss"),
+                                        false, @fontheader),
+          standardstylesheet: generate_css(html_doc_path("isodoc.scss"),
+                                           false, @fontheader),
           header: html_doc_path("header.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),
@@ -89,13 +105,15 @@ module Asciidoctor
 
       def document(node)
         init(node)
-        ret1 = makexml(node)
-        ret = ret1.to_xml(indent: 2)
-        filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
-          gsub(%r{^.*/}, "")
+        ret = makexml(node).to_xml(indent: 2)
+        filename = node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "")
         File.open(filename, "w") { |f| f.write(ret) }
-        html_converter(node).convert filename unless node.attr("nodoc")
-        doc_converter(node).convert filename unless node.attr("nodoc")
+        unless node.attr("nodoc")
+          html_converter_alt(node).convert(filename + ".xml")
+          system "mv #{filename}.html #{filename}_alt.html"
+          html_converter(node).convert(filename + ".xml")
+          doc_converter(node).convert(filename + ".xml")
+        end
         @files_to_delete.each { |f| system "rm #{f}" }
         ret
       end
