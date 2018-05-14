@@ -1,3 +1,4 @@
+    <div id='toggle'> <span>•</span> </div>
 <p class="coverpage_docnumber">{{ agency }} {{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</p>
 
 <p class="coverpage_techcommittee">{{ agency }}&nbsp;{{ editorialgroup | join: "/" }}</p>
@@ -5,7 +6,9 @@
 <p class="coverpage_techcommittee"><a
 name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
 
-<p class="doctitle"><b>{{ doctitle }}</b><br/>{{ docsubtitle }}</p>
+<div class="doctitle-en"><span class="subtitle">{{ doctitle }}</span></div>
+
+<div class="doctitle-fr"><span class="subtitle">{{ docsubtitle }}</span></div>
 
 <div class="coverpage_docstage"><p>{{ stageabbr }} stage</p></div>
 
@@ -25,7 +28,5 @@ relevant patent rights of which they are aware and to provide supporting
 documentation.</p>
 
 </div>
-
-<p class=MsoNormal><span lang=EN-GB><o:p>&nbsp;</o:p></span></p>
 
 
