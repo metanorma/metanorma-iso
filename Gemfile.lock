@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: ee2b6e99ceb6deffbd88d344e6cc5f56cca35b46
+  revision: 929ca39851e4c58274f226c0046287fd13fe1f5c
   specs:
     isodoc (0.5.9)
       asciimath
@@ -46,7 +46,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    asciidoctor (1.5.7)
+    asciidoctor (1.5.7.1)
     asciimath (1.0.4)
     ast (2.4.0)
     byebug (9.1.0)
