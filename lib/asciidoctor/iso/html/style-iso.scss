@@ -20,7 +20,10 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	vertical-align: baseline;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
 }
 
 html, body, div, span, applet, object, iframe,
