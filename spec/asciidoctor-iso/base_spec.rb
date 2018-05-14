@@ -234,9 +234,9 @@ RSpec.describe Asciidoctor::ISO do
       :docfile: test.adoc
       :novalid:
     INPUT
-    html = File.read("test.html")
-    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
-    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: "Cambria", serif;]m)
+    html = File.read("test.html", encoding: "utf-8")
+    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "Cambria", serif;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Cambria", serif;]m)
   end
 
@@ -248,9 +248,9 @@ RSpec.describe Asciidoctor::ISO do
       :docfile: test.adoc
       :novalid:
     INPUT
-    html = File.read("test_alt.html")
-    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: "Space Mono", monospace;]m)
-    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: "Lato", sans-serif;]m)
+    html = File.read("test_alt.html", encoding: "utf-8")
+    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: "Space Mono", monospace;]m)
+    expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "Lato", sans-serif;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Lato", sans-serif;]m)
   end
 
@@ -263,9 +263,9 @@ RSpec.describe Asciidoctor::ISO do
       :novalid:
       :script: Hans
     INPUT
-    html = File.read("test.html")
-    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
-    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: "SimSun", serif;]m)
+    html = File.read("test.html", encoding: "utf-8")
+    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "SimSun", serif;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "SimHei", sans-serif;]m)
   end
 
@@ -281,9 +281,9 @@ RSpec.describe Asciidoctor::ISO do
       :header-font: Comic Sans
       :monospace-font: Andale Mono
     INPUT
-    html = File.read("test.html")
-    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
-    expect(html).to match(%r[p\.Biblio[^{]+\{[^{]+font-family: Zapf Chancery;]m)
+    html = File.read("test.html", encoding: "utf-8")
+    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
+    expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: Zapf Chancery;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: Comic Sans;]m)
   end
 
