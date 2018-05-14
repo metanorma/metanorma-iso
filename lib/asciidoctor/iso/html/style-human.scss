@@ -63,6 +63,19 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $headerfont;
 }
 
+dl {
+  width: 100%;
+  overflow: hidden;
+}
+dt {
+  float: left;
+  width: 30%;
+}
+dd {
+  float: left;
+  width: 70%;
+}
+
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -685,12 +698,12 @@ sup a {
     box-shadow: 0px 0px 5px #888;
   }
   
-  ol.footnotes-list {
+  ol.footnotes-list, aside.footnote {
       margin-left: 1em;
       
   }
   
-  ol.footnotes-list li {
+  ol.footnotes-list li, aside.footnote {
       font-size: 0.9em;
       vertical-align: top;
       list-style:decimal;
@@ -701,7 +714,7 @@ sup a {
       margin-top: 2em;
   }
   
-  ol.footnotes-list p {
+  ol.footnotes-list p, aside.footnote {
       display: inline;
   }
   
@@ -749,6 +762,18 @@ span.keyword {
 font-weight: 600;
 }
 
+
+.Admonition, .admonition {
+    background-color: #ffb3b3;
+    /* color: #47430c;*/
+    padding: 0.5em;
+    margin: 1.5em 0 1.5em 0;
+    text-align: left;
+}
+
+.Admonition p, .admonition p {
+    margin: 0;
+}
 
 
 
