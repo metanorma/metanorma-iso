@@ -256,7 +256,7 @@ h2 p {
   }
 
   li p {
-      display: inline-block;
+      /* display: inline-block; */
       margin-bottom: 0.6em;
       line-height: 1.2;
   }
@@ -271,6 +271,10 @@ p.AltTerms {
     margin-bottom: 0;
     font-style: italic;
     margin-left: 2em;
+}
+
+p.Terms {
+    font-weight: bold;
 }
 
 /* Navigation*/
@@ -553,7 +557,7 @@ ul, ol {margin-left: 2em;}
       
 #toc-list ul {margin-bottom: 0.25em;}
   
-#toc-list li {list-style-type: none;}
+#toc-list ol li {list-style-type: none;}
 
 /*
 3.4 Rules
@@ -579,8 +583,11 @@ margin-left: 2em;
 3.6 Source Code + figures
 */
 
-.figure, .Sourcecode {
+.Sourcecode {
 font-family: $monospacefont;
+}
+
+.figure, .Sourcecode {
 background-color: #f7f7f7;
 line-height: 1.6em;
 padding: 1.5em;
@@ -588,7 +595,7 @@ margin: 2em 0 1em 0;
 overflow: auto;
 }
 
-.figure-title {
+.figure-title, .FigureTitle {
 font-weight: 700;
 font-size: 1em;
 text-align: center;
@@ -729,7 +736,7 @@ ol li p:before {
 3.11 Blockquotes
 */
 
-.blockquote {
+.blockquote, .Quote {
 background-color: #f7f7f7;
 font-style: italic;
 width: 80%;

@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 929ca39851e4c58274f226c0046287fd13fe1f5c
+  revision: 8ead19006a52a7c668119018fd0f5731d56370bd
   specs:
     isodoc (0.5.9)
       asciimath
@@ -118,7 +118,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.55.0)
+    rubocop (0.56.0)
       parallel (~> 1.10)
       parser (>= 2.5)
       powerpack (~> 0.1)
