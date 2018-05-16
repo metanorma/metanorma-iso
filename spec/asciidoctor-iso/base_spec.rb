@@ -6,7 +6,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "generates output for the Rice document" do
-    system "cd spec/examples; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
+    system "cd spec/examples; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html; asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
     expect(File.exist?("spec/examples/rice.doc")).to be true
     expect(File.exist?("spec/examples/rice.html")).to be true
     expect(File.exist?("spec/examples/rice_alt.html")).to be true
@@ -224,6 +224,18 @@ RSpec.describe Asciidoctor::ISO do
        <sections/>
        </iso-standard>
     OUTPUT
+  end
+
+  it "reads scripts into blank HTML document" do
+    system "rm -f test.html"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+    INPUT
+    html = File.read("test.html", encoding: "utf-8")
+    expect(html).to match(%r{<script>})
   end
 
   it "uses default fonts" do

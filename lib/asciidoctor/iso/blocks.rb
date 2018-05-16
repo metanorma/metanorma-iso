@@ -20,7 +20,7 @@ module Asciidoctor
       end
 
       def literal(node)
-        open(node)
+        paragraph(node)
       end
 
       # NOTE: html escaping is performed by Nokogiri

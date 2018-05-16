@@ -142,14 +142,30 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
 
       OUTPUT
-  end
+    end
 
-  it "processes simple admonitions with Asciidoc names" do
+    it "does nothing in particular with literals" do
       expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
-        #{ASCIIDOC_BLANK_HDR}
-        CAUTION: Only use paddy or parboiled rice for the determination of husked rice yield.
+      #{ASCIIDOC_BLANK_HDR}
+      ....
+      LITERAL
+      ....
       INPUT
-              #{BLANK_HDR}
+      #{BLANK_HDR}
+       <sections>
+         <p id="_">LITERAL</p>
+       </sections>
+       </iso-standard>
+
+      OUTPUT
+    end
+
+    it "processes simple admonitions with Asciidoc names" do
+      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      CAUTION: Only use paddy or parboiled rice for the determination of husked rice yield.
+      INPUT
+      #{BLANK_HDR}
        <sections>
          <admonition id="_" type="caution">
          <p id="_">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
@@ -158,11 +174,11 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
 
       OUTPUT
-  end
+    end
 
 
-  it "processes complex admonitions with non-Asciidoc names" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    it "processes complex admonitions with non-Asciidoc names" do
+      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [CAUTION,type=Safety Precautions]
       .Safety Precautions
@@ -192,10 +208,10 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
 
       OUTPUT
-  end
+    end
 
-  it "processes term examples" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    it "processes term examples" do
+      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -204,7 +220,7 @@ RSpec.describe Asciidoctor::ISO do
       [example]
       This is an example
       INPUT
-              #{BLANK_HDR}
+      #{BLANK_HDR}
               <sections>
          <terms id="_" obligation="normative">
          <title>Terms and Definitions</title>
@@ -219,7 +235,7 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
 
       OUTPUT
-  end
+    end
 
     it "processes examples" do
       expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
@@ -231,14 +247,14 @@ RSpec.describe Asciidoctor::ISO do
       Amen
       ====
       INPUT
-              #{BLANK_HDR}
+      #{BLANK_HDR}
        <sections>
          <example id="_"><p id="_">This is an example</p>
        <p id="_">Amen</p></example>
        </sections>
        </iso-standard>
       OUTPUT
-  end
+    end
 
     it "processes preambles" do
       expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
@@ -247,7 +263,7 @@ RSpec.describe Asciidoctor::ISO do
 
       == Section 1
       INPUT
-       #{BLANK_HDR}
+      #{BLANK_HDR}
              <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">This is a preamble</p>
@@ -264,9 +280,9 @@ RSpec.describe Asciidoctor::ISO do
       #{ASCIIDOC_BLANK_HDR}
       .Split-it-right sample divider
       image::spec/examples/rice_images/rice_image1.png[]
- 
+
       INPUT
-       #{BLANK_HDR}
+      #{BLANK_HDR}
               <sections>
          <figure id="_">
          <name>Split-it-right sample divider</name>
@@ -277,14 +293,14 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
     end
 
-   it "accepts width and height attributes on images" do
+    it "accepts width and height attributes on images" do
       expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [height=4,width=3]
       image::spec/examples/rice_images/rice_image1.png[]
 
       INPUT
-       #{BLANK_HDR}
+      #{BLANK_HDR}
               <sections>
          <figure id="_">
          <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="4" width="3"/>
@@ -294,13 +310,13 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
     end
 
-   it "accepts alignment attribute on paragraphs" do
+    it "accepts alignment attribute on paragraphs" do
       expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       [align=right]
       This para is right-aligned.
       INPUT
-       #{BLANK_HDR}
+      #{BLANK_HDR}
       <sections>
          <p align="right" id="_">This para is right-aligned.</p>
        </sections>
@@ -316,7 +332,7 @@ RSpec.describe Asciidoctor::ISO do
       Block quotation
       ____
       INPUT
-       #{BLANK_HDR}
+      #{BLANK_HDR}
        <sections>
          <quote id="_">
          <source type="inline" bibitemid="ISO7301" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></source>
@@ -339,7 +355,7 @@ RSpec.describe Asciidoctor::ISO do
       end
       --
       INPUT
-       #{BLANK_HDR}
+      #{BLANK_HDR}
        <sections>
          <sourcecode id="_">puts "Hello, world."
        %w{a b c}.each do |x|
@@ -363,7 +379,7 @@ RSpec.describe Asciidoctor::ISO do
       <1> This is one callout
       <2> This is another callout
       INPUT
-       #{BLANK_HDR}
+      #{BLANK_HDR}
               <sections><sourcecode id="_">puts "Hello, world." <callout target="_">1</callout>
        %w{a b c}.each do |x|
          puts x <callout target="_">2</callout>
@@ -377,8 +393,8 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
     end
 
-  it "processes unmodified term sources" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    it "processes unmodified term sources" do
+      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -387,7 +403,7 @@ RSpec.describe Asciidoctor::ISO do
       [.source]
       <<ISO2191,section 1>>
       INPUT
-              #{BLANK_HDR}
+      #{BLANK_HDR}
        <sections>
          <terms id="_" obligation="normative">
          <title>Terms and Definitions</title>
@@ -401,10 +417,10 @@ RSpec.describe Asciidoctor::ISO do
        </sections>
        </iso-standard>
       OUTPUT
-  end
+    end
 
-  it "processes modified term sources" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    it "processes modified term sources" do
+      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -413,7 +429,7 @@ RSpec.describe Asciidoctor::ISO do
       [.source]
       <<ISO2191,section 1>>, with adjustments
       INPUT
-              #{BLANK_HDR}
+      #{BLANK_HDR}
             <sections>
          <terms id="_" obligation="normative">
          <title>Terms and Definitions</title>
@@ -429,8 +445,8 @@ RSpec.describe Asciidoctor::ISO do
        </terms>
        </sections>
        </iso-standard>
-          OUTPUT
-  end
+      OUTPUT
+    end
 
 
 end
