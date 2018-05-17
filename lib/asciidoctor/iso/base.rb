@@ -138,8 +138,12 @@ module Asciidoctor
         @draft
       end
 
+      def doctype(node)
+        node.attr("doctype")
+      end
+
       def front(node, xml)
-        xml.bibdata **attr_code(type: node.attr("doctype")) do |b|
+        xml.bibdata **attr_code(type: doctype(node)) do |b|
           metadata node, b
         end
         metadata_version(node, xml)
