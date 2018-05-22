@@ -42,46 +42,6 @@ module Asciidoctor
         outname
       end
 
-=begin
-      def html_converter(node)
-        css = generate_css(html_doc_path("style-iso.scss"), true, @fontheader)
-        IsoDoc::Convert.new(
-          htmlstylesheet: css,
-          htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
-          htmlintropage: html_doc_path("html_iso_intro.html"),
-          i18nyaml: node.attr("i18nyaml"),
-          scripts: html_doc_path("scripts.html"),
-        )
-      end
-
-      def html_converter_alt(node)
-        fontheader = @fontheader.gsub(/"Cambria",serif/, '"Lato",sans-serif').
-          gsub(/"Courier New",monospace/, '"Space Mono", monospace')
-        css = generate_css(html_doc_path("style-human.scss"), true, fontheader)
-        IsoDoc::Convert.new(
-          htmlstylesheet: css,
-          htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
-          htmlintropage: html_doc_path("html_iso_intro.html"),
-          i18nyaml: node.attr("i18nyaml"),
-          scripts: html_doc_path("scripts.html"),
-        )
-      end
-
-      def doc_converter(node)
-        IsoDoc::WordConvert.new(
-          wordstylesheet:  generate_css(html_doc_path("wordstyle.scss"),
-                                        false, @fontheader),
-          standardstylesheet: generate_css(html_doc_path("isodoc.scss"),
-                                           false, @fontheader),
-          header: html_doc_path("header.html"),
-          wordcoverpage: html_doc_path("word_iso_titlepage.html"),
-          wordintropage: html_doc_path("word_iso_intro.html"),
-          i18nyaml: node.attr("i18nyaml"),
-          ulstyle: "l3",
-          olstyle: "l2",
-        )
-      end
-=end
       def html_converter(node)
         IsoDoc::Iso::Convert.new(
           script: node.attr("script"),
@@ -138,9 +98,9 @@ module Asciidoctor
       def document(node)
         init(node)
         ret = makexml(node).to_xml(indent: 2)
-        filename = node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "")
-        File.open(filename + ".xml", "w") { |f| f.write(ret) }
-        unless node.attr("nodoc")
+        unless node.attr("nodoc") || !node.attr("docfile")
+          filename = node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "")
+          File.open(filename + ".xml", "w") { |f| f.write(ret) }
           html_converter_alt(node).convert(filename + ".xml")
           system "mv #{filename}.html #{filename}_alt.html"
           html_converter(node).convert(filename + ".xml")
