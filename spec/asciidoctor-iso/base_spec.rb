@@ -6,7 +6,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "generates output for the Rice document" do
-    system "cd spec/examples; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html; asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
+    system "cd spec/examples; rm -f rice.xml; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html; asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
+    expect(File.exist?("spec/examples/rice.xml")).to be true
     expect(File.exist?("spec/examples/rice.doc")).to be true
     expect(File.exist?("spec/examples/rice.html")).to be true
     expect(File.exist?("spec/examples/rice_alt.html")).to be true

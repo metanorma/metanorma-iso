@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc.git
-  revision: 8ead19006a52a7c668119018fd0f5731d56370bd
+  revision: 7b0e46efb4f1c4ea8cabd35f1e3d6a2f25be410c
   specs:
     isodoc (0.5.9)
       asciimath
@@ -26,6 +26,7 @@ GIT
       nokogiri
       roman-numerals
       ruby-xslt
+      sass
       thread_safe
       uuidtools
 

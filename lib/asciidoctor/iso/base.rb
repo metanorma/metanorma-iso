@@ -42,6 +42,7 @@ module Asciidoctor
         outname
       end
 
+=begin
       def html_converter(node)
         css = generate_css(html_doc_path("style-iso.scss"), true, @fontheader)
         IsoDoc::Convert.new(
@@ -78,6 +79,37 @@ module Asciidoctor
           i18nyaml: node.attr("i18nyaml"),
           ulstyle: "l3",
           olstyle: "l2",
+        )
+      end
+=end
+      def html_converter(node)
+        IsoDoc::Iso::Convert.new(
+          script: node.attr("script"),
+          bodyfont: node.attr("body-font"),
+          headerfont: node.attr("header-font"),
+          monospacefont: node.attr("monospace-font"),
+          i18nyaml: node.attr("i18nyaml"),
+        )
+      end
+
+      def html_converter_alt(node)
+        IsoDoc::Iso::Convert.new(
+          script: node.attr("script"),
+          bodyfont: node.attr("body-font"),
+          headerfont: node.attr("header-font"),
+          monospacefont: node.attr("monospace-font"),
+          i18nyaml: node.attr("i18nyaml"),
+          alt: true,
+        )
+      end
+
+      def doc_converter(node)
+        IsoDoc::Iso::WordConvert.new(
+          script: node.attr("script"),
+          bodyfont: node.attr("body-font"),
+          headerfont: node.attr("header-font"),
+          monospacefont: node.attr("monospace-font"),
+          i18nyaml: node.attr("i18nyaml"),
         )
       end
 
