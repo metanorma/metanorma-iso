@@ -46,8 +46,12 @@ module Asciidoctor
       def set_date_range(date, text)
         matched = /^(?<from>[0-9]+)(-+(?<to>[0-9]+))?$/.match text
         return unless matched[:from]
-        date.from matched[:from]
-        date.to matched[:to] if matched[:to]
+        if matched[:to]
+          date.from matched[:from]
+          date.to matched[:to]
+        else
+          date.on matched[:from]
+        end
       end
 
       def isorefmatches(xml, m)
@@ -66,7 +70,7 @@ module Asciidoctor
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
           t.date **{ type: "published" } do |d|
-            d.from "--"
+            d.on "--"
           end
           iso_publisher(t, m[:code])
           t.note(**plaintxt) { |p| p << "ISO DATE: #{m[:fn]}" }

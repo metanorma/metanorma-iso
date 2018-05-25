@@ -99,8 +99,10 @@ module Asciidoctor
       def date_range(date)
         from = date.at("./from")
         to = date.at("./to")
-        ret = from.text
-        ret += "&ndash;#{to.text}" if to
+        on = date.at("./on")
+        return on.text if on
+        ret = "#{from.text}&ndash;"
+        ret += to.text if to
         ret
       end
 

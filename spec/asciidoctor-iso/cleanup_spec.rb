@@ -191,7 +191,7 @@ r = 1 %</stem>
          <title format="text/plain">Reference</title>
          <docidentifier>ISO 216</docidentifier>
          <date type="published">
-           <from>2001</from>
+           <on>2001</on>
          </date>
          <contributor>
            <role type="publisher"/>
@@ -652,7 +652,7 @@ r = 1 %</stem>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123</docidentifier>
-         <date type="published"><from>--</from></date>
+         <date type="published"><on>--</on></date>
          <contributor>
            <role type="publisher"/>
            <organization>

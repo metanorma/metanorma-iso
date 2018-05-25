@@ -166,7 +166,7 @@
         <ref name="ics"/>
       </zeroOrMore>
     </define>
-    <define name="bfrom">
+    <define name="date_on">
       <element name="from">
         <choice>
           <data type="gYear"/>

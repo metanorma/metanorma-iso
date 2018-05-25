@@ -77,7 +77,7 @@ RSpec.describe Asciidoctor::ISO do
          <title format="text/plain">Standard</title>
          <docidentifier>ISO/IEC 123</docidentifier>
          <date type="published">
-           <from>1066</from>
+           <on>1066</on>
          </date>
          <contributor>
            <role type="publisher"/>
@@ -131,7 +131,7 @@ RSpec.describe Asciidoctor::ISO do
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123</docidentifier>
          <date type="published">
-           <from>--</from>
+           <on>--</on>
          </date>
          <contributor>
            <role type="publisher"/>
@@ -165,7 +165,7 @@ RSpec.describe Asciidoctor::ISO do
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:All Parts</docidentifier>
          <date type="published">
-           <from>1066</from>
+           <on>1066</on>
          </date>
          <contributor>
            <role type="publisher"/>
