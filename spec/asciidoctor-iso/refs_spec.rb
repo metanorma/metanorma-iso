@@ -281,30 +281,6 @@ RSpec.describe Asciidoctor::ISO do
 
       * [[[iso123,ISO 123:1066 (all parts)]]] _Standard_
     INPUT
-<<<<<<< HEAD
-       #{BLANK_HDR}
-              <sections>
-
-       </sections><bibliography><references id="_" obligation="informative">
-         <title>Normative References</title>
-         <bibitem id="iso123" type="standard">
-         <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123:All Parts</docidentifier>
-         <date type="published">
-           <on>1066</on>
-         </date>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem>
-       </references>
-       </bibliography>
-       </iso-standard>
-=======
       #{BLANK_HDR}
       <sections>
       </sections><bibliography><references id="_" obligation="informative">
@@ -357,7 +333,6 @@ RSpec.describe Asciidoctor::ISO do
       </references>
       </bibliography>
       </iso-standard>
->>>>>>> 5fb3abb... test fetching isobib refs
     OUTPUT
   end
 

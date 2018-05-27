@@ -196,7 +196,7 @@ r = 1 %</stem>
         <source type="rss">https://www.iso.org/contents/data/standard/03/66/36631.detail.rss</source>
         <docidentifier>ISO 216</docidentifier>
         <date type="published">
-          <from>2007</from>
+          <on>2007</on>
         </date>
         <contributor>
           <role type="publisher"/>
@@ -268,7 +268,7 @@ r = 1 %</stem>
         <source type="rss">https://www.iso.org/contents/data/standard/03/66/36631.detail.rss</source>
         <docidentifier>ISO 216</docidentifier>
         <date type="published">
-          <from>2007</from>
+          <on>2007</on>
         </date>
         <contributor>
           <role type="publisher"/>
@@ -391,7 +391,7 @@ r = 1 %</stem>
         <source type="rss">https://www.iso.org/contents/data/standard/03/66/36631.detail.rss</source>
         <docidentifier>ISO 216</docidentifier>
         <date type="published">
-          <from>2007</from>
+          <on>2007</on>
         </date>
         <contributor>
           <role type="publisher"/>
@@ -764,7 +764,7 @@ r = 1 %</stem>
         <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
         <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
         <docidentifier>ISO 123</docidentifier>
-        <date type="published"><from>--</from></date>
+        <date type="published"><on>--</on></date>
         <contributor>
           <role type="publisher"/>
           <organization>
