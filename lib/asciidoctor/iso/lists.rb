@@ -103,6 +103,9 @@ module Asciidoctor
         if hit && hit.hit["title"]&.match(coderegex)&.to_s == code
           hit.to_xml xml, opts
         end
+      rescue Algolia::AlgoliaProtocolError
+        # Render reference without an Internet connection.
+        nil
       end
 
       # TODO: alternative where only title is available

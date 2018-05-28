@@ -385,4 +385,82 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
     OUTPUT
   end
+
+  it "process ISO reference without an Internet connection" do
+    expect(Isobib::IsoBibliography).to receive(:search).with("ISO 123") do
+      raise Algolia::AlgoliaProtocolError.new "getaddrinfo", "nodename nor servname provided, or not known (JCL49WV5AR-dsn.algolia.net:443)"
+    end.at_least :once
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 123]]] _Standard_
+    INPUT
+      <?xml version="1.0" encoding="UTF-8"?>
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata type="article">
+        <title>
+
+        </title>
+        <title>
+
+        </title>
+        <docidentifier>
+          <project-number/>
+        </docidentifier>
+        <contributor>
+          <role type="author"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+
+        <script>Latn</script>
+        <status>
+          <stage>60</stage>
+          <substage>60</substage>
+        </status>
+        <copyright>
+          <from>2018</from>
+          <owner>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </owner>
+        </copyright>
+        <editorialgroup>
+          <technical-committee/>
+          <subcommittee/>
+          <workgroup/>
+        </editorialgroup>
+      </bibdata>
+      <sections>
+
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem id="iso123" type="standard">
+        <title format="text/plain">Standard</title>
+        <docidentifier>ISO 123</docidentifier>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+      </bibitem>
+      </references></bibliography>
+      </iso-standard>
+    OUTPUT
+  end
 end
