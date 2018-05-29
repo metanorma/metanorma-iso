@@ -489,14 +489,30 @@
           <value>issued</value>
         </choice>
       </attribute>
+      <!-- ( ( bfrom, bto? ) | date_on ) -->
       <choice>
         <group>
-          <ref name="bfrom"/>
+          <element name="from">
+            <choice>
+              <data type="gYear"/>
+              <data type="date"/>
+            </choice>
+          </element>
           <optional>
-            <ref name="bto"/>
+            <element name="to">
+              <choice>
+                <data type="gYear"/>
+                <data type="date"/>
+              </choice>
+            </element>
           </optional>
         </group>
-        <ref name="date_on"/>
+        <element name="on">
+          <choice>
+            <data type="gYear"/>
+            <data type="date"/>
+          </choice>
+        </element>
       </choice>
     </element>
   </define>
