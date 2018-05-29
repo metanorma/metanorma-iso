@@ -4,28 +4,6 @@ require "isobib"
 module Asciidoctor
   module ISO
     module Lists
-      def li(xml_ul, item)
-        xml_ul.li do |xml_li|
-          if item.blocks?
-            xml_li.p(**id_attr(item)) { |t| t << item.text }
-            xml_li << item.content
-          else
-            xml_li.p(**id_attr(item)) { |p| p << item.text }
-          end
-        end
-      end
-
-      def ulist(node)
-        return reference(node) if in_norm_ref? || in_biblio?
-        noko do |xml|
-          xml.ul **id_attr(node) do |xml_ul|
-            node.items.each do |item|
-              li(xml_ul, item)
-            end
-          end
-        end.join("\n")
-      end
-
       def iso_publisher(t, code)
         code.sub(/ .*$/, "").split(/\//).each do |abbrev|
           t.contributor do |c|
@@ -56,9 +34,14 @@ module Asciidoctor
         end
       end
 
+      def use_my_anchor(ref, id)
+        ref["id"] = id
+        ref
+      end
+
       def isorefmatches(xml, m)
         ref = fetch_ref xml, m[:code]
-        return ref if ref
+        return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
@@ -71,7 +54,7 @@ module Asciidoctor
 
       def isorefmatches2(xml, m)
         ref = fetch_ref xml, m[:code], no_year: true, note: m[:fn]
-        return ref if ref
+        return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
@@ -85,7 +68,7 @@ module Asciidoctor
 
       def isorefmatches3(xml, m)
         ref = fetch_ref xml, m[:code], all_parts: true
-        return ref if ref
+        return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem(**attr_code(ref_attributes(m))) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
@@ -97,6 +80,7 @@ module Asciidoctor
       end
 
       def fetch_ref(xml, code, **opts)
+        warn "fetching #{code}..."
         result = Isobib::IsoBibliography.search(code)
         hit = result&.first&.first
         coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
@@ -179,64 +163,6 @@ module Asciidoctor
         noko do |xml|
           node.items.each do |item|
             reference1(node, item.text, xml)
-          end
-        end.join("\n")
-      end
-
-      def olist_style(style)
-        return "alphabet" if style == "loweralpha"
-        return "roman" if style == "lowerroman"
-        return "roman_upper" if style == "upperroman"
-        return "alphabet_upper" if style == "upperalpha"
-        style
-      end
-
-      def olist(node)
-        noko do |xml|
-          xml.ol **attr_code(id: Utils::anchor_or_uuid(node),
-                             type: olist_style(node.style)) do |xml_ol|
-            node.items.each { |item| li(xml_ol, item) }
-          end
-        end.join("\n")
-      end
-
-      def dt(terms, xml_dl)
-        terms.each_with_index do |dt, idx|
-          xml_dl.dt { |xml_dt| xml_dt << dt.text }
-          if idx < terms.size - 1
-            xml_dl.dd
-          end
-        end
-      end
-
-      def dd(dd, xml_dl)
-        if dd.nil?
-          xml_dl.dd
-          return
-        end
-        xml_dl.dd do |xml_dd|
-          xml_dd.p { |t| t << dd.text } if dd.text?
-          xml_dd << dd.content if dd.blocks?
-        end
-      end
-
-      def dlist(node)
-        noko do |xml|
-          xml.dl **id_attr(node) do |xml_dl|
-            node.items.each do |terms, dd|
-              dt(terms, xml_dl)
-              dd(dd, xml_dl)
-            end
-          end
-        end.join("\n")
-      end
-
-      def colist(node)
-        noko do |xml|
-          node.items.each_with_index do |item, i|
-            xml.annotation **attr_code(id: i + 1) do |xml_li|
-              xml_li.p { |p| p << item.text }
-            end
           end
         end.join("\n")
       end
