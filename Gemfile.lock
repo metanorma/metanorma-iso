@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/riboseinc/html2doc.git
-  revision: f1f555dbd57dd2e478dced1b622b37e1978a7d83
+  revision: 6c69bb488b9adc2654276986c657b05bfa82f34d
   specs:
-    html2doc (0.7.0)
+    html2doc (0.7.1)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
@@ -157,7 +157,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     timecop (0.9.1)
-    unicode-display_width (1.3.2)
+    unicode-display_width (1.3.3)
     uuidtools (2.1.5)
 
 PLATFORMS
