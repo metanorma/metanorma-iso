@@ -1,0 +1,48 @@
+<bibitem type="technicalReport" id="ISO/IEC12382">
+  <title format="text/plain" language="en" script="Latn">Permuted index of the vocabulary of information technology --  -- </title>
+  <title format="text/plain" language="fr" script="Latn">Index permuté du vocabulaire des technologies de l'information --  -- </title>
+  <source type="src">https://www.iso.org/standard/21071.html</source>
+  <source type="obp">https://www.iso.org/obp/ui/#!iso:std:21071:en</source>
+  <source type="rss">https://www.iso.org/contents/data/standard/02/10/21071.detail.rss</source>
+  <docidentifier>ISO/IEC 12382</docidentifier>
+  <date type="published">
+    <from>1992</from>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Electrotechnical Commission</name>
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <edition>2</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract format="plain" language="en" script="Latn">Contains a permuted index of all terms included in the parts 1 - 28 of ISO 2382. If any of these parts has been revised, the present TR refers to the revision.</abstract>
+  <status>Published</status>
+  <copyright>
+    <from>1992</from>
+    <owner>
+      <organization>
+        <name>ISO/IEC</name>
+        <abbreviation></abbreviation>
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="updates">
+    <bibitem>
+      <formattedref>ISO/IEC TR 12382:1992</formattedref>
+      <docidentifier>ISO/IEC TR 12382:1992</docidentifier>
+    </bibitem>
+  </relation>
+</bibitem>

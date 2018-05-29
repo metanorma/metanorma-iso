@@ -1,1 +1,11 @@
 .DS_Store
+.byebug_history
+.rspec_status
+coverage/
+spec/examples/.byebug_history
+spec/examples/.tmp.xml
+spec/examples/_images/
+spec/examples/rice.doc
+spec/examples/rice.html
+spec/examples/rice.xml
+spec/examples/rice_files/

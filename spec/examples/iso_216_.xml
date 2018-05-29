@@ -1,0 +1,47 @@
+<bibitem type="international-standard" id="ISO216">
+  <title format="text/plain" language="en" script="Latn">Writing paper and certain classes of printed matter -- Trimmed sizes -- A and B series, and indication of machine direction</title>
+  <title format="text/plain" language="fr" script="Latn">Papiers à écrire et certaines catégories d'imprimés -- Formats finis -- Séries A et B, et indication du sens machine</title>
+  <source type="src">https://www.iso.org/standard/36631.html</source>
+  <source type="obp">https://www.iso.org/obp/ui/#!iso:std:36631:en</source>
+  <source type="rss">https://www.iso.org/contents/data/standard/03/66/36631.detail.rss</source>
+  <docidentifier>ISO 216</docidentifier>
+  <date type="published">
+    <on>2007</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <edition>2</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract format="plain" language="en" script="Latn">ISO 216:2007 specifies the trimmed sizes of writing paper and certain classes of printed matter.It applies to trimmed sizes of paper for administrative, commercial and technical use, and also to certain classes of printed matter, such as forms, catalogues, etc.It does not necessarily apply to newspapers, published books, posters or other special items which may be the subject of separate International Standards.ISO 216:2007 also specifies the method for the indication of the machine direction for trimmed sheets.</abstract>
+  <abstract format="plain" language="fr" script="Latn">L'ISO 216:2007 spécifie les formats finis des papiers à écrire et de certaines catégories d'imprimés.Elle s'applique aux formats finis de papier pour usages administratif, commercial et technique ainsi qu'à certaines catégories d'imprimés, tels que formulaires, catalogues, etc.Elle ne s'applique pas nécessairement au papier journal, à l'édition, aux affiches publicitaires ou aux usages particuliers qui pourront faire l'objet d'autres Normes internationales.L'ISO 216:2007 spécifie également la méthode permettant d'indiquer le sens machine des formats finis.</abstract>
+  <status>Published</status>
+  <copyright>
+    <from>2007</from>
+    <owner>
+      <organization>
+        <name>ISO</name>
+        <abbreviation></abbreviation>
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 216:1975</formattedref>
+      <docidentifier>ISO 216:1975</docidentifier>
+    </bibitem>
+  </relation>
+  <relation type="updates">
+    <bibitem>
+      <formattedref>ISO 216:2007</formattedref>
+      <docidentifier>ISO 216:2007</docidentifier>
+    </bibitem>
+  </relation>
+</bibitem>

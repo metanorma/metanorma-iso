@@ -1,4 +1,6 @@
 require "pp"
+require "isobib"
+
 module Asciidoctor
   module ISO
     module Lists
@@ -55,6 +57,8 @@ module Asciidoctor
       end
 
       def isorefmatches(xml, m)
+        ref = fetch_ref xml, m[:code]
+        return ref if ref
         xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
@@ -66,6 +70,8 @@ module Asciidoctor
       end
 
       def isorefmatches2(xml, m)
+        ref = fetch_ref xml, m[:code], no_year: true, note: m[:fn]
+        return ref if ref
         xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier m[:code]
@@ -78,14 +84,28 @@ module Asciidoctor
       end
 
       def isorefmatches3(xml, m)
-        xml.bibitem **attr_code(ref_attributes(m)) do |t|
+        ref = fetch_ref xml, m[:code], all_parts: true
+        return ref if ref
+        xml.bibitem(**attr_code(ref_attributes(m))) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}:All Parts"
           if m.named_captures.has_key?("year")
-            t.date **{ type: "published" } { |d| set_date_range(d, m[:year]) }
+            t.date(**{ type: "published" }) { |d| set_date_range(d, m[:year]) }
           end
           iso_publisher(t, m[:code])
         end
+      end
+
+      def fetch_ref(xml, code, **opts)
+        result = Isobib::IsoBibliography.search(code)
+        hit = result&.first&.first
+        coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
+        if hit && hit.hit["title"]&.match(coderegex)&.to_s == code
+          hit.to_xml xml, opts
+        end
+      rescue Algolia::AlgoliaProtocolError
+        # Render reference without an Internet connection.
+        nil
       end
 
       # TODO: alternative where only title is available
@@ -132,6 +152,8 @@ module Asciidoctor
       \[(?<code>[^\]]+)\]</ref>,?\s
       (?<text>.*)$}xm
 
+      # @param item [String]
+      # @return [Array<MatchData>]
       def reference1_matches(item)
         matched = ISO_REF.match item
         matched2 = ISO_REF_NO_YEAR.match item
@@ -139,10 +161,14 @@ module Asciidoctor
         [matched, matched2, matched3]
       end
 
+      # @param node [Asciidoctor::List]
+      # @param item [String]
+      # @param xml [Nokogiri::XML::Builder]
       def reference1(node, item, xml)
         matched, matched2, matched3 = reference1_matches(item)
         if matched3.nil? && matched2.nil? && matched.nil?
           refitem(xml, item, node)
+        # elsif fetch_ref(matched3 || matched2 || matched, xml)
         elsif !matched.nil? then isorefmatches(xml, matched)
         elsif !matched2.nil? then isorefmatches2(xml, matched2)
         elsif !matched3.nil? then isorefmatches3(xml, matched3)

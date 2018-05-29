@@ -43,7 +43,7 @@ VALIDATING_BLANK_HDR = <<~"HDR"
 HDR
 
 BLANK_HDR = <<~"HDR"
-    <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <iso-standard xmlns="http://riboseinc.com/isoxml">
 <bibdata type="article">
   <title>
@@ -76,8 +76,8 @@ BLANK_HDR = <<~"HDR"
     <from>#{Time.new.year}</from>
     <owner>
       <organization>
-      <name>International Organization for Standardization</name>
-      <abbreviation>ISO</abbreviation>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
       </organization>
     </owner>
   </copyright>
@@ -88,3 +88,51 @@ BLANK_HDR = <<~"HDR"
   </editorialgroup>
 </bibdata>
 HDR
+
+def stub_fetch_ref(**opts)
+  xml = ""
+
+  hit = double("hit")
+  expect(hit).to receive(:"[]").with("title") do
+    Nokogiri::XML(xml).at("//docidentifier").content
+  end.at_least(:once)
+
+  hit_instance = double("hit_instance")
+  expect(hit_instance).to receive(:hit).and_return(hit).at_least(:once)
+  expect(hit_instance).to receive(:to_xml) do |builder, opt|
+    expect(builder).to be_instance_of Nokogiri::XML::Builder
+    expect(opt).to eq opts
+    builder << xml
+  end.at_least :once
+
+  hit_page = double("hit_page")
+  expect(hit_page).to receive(:first).and_return(hit_instance).at_least :once
+
+  hit_pages = double("hit_pages")
+  expect(hit_pages).to receive(:first).and_return(hit_page).at_least :once
+
+  expect(Isobib::IsoBibliography).to receive(:search).
+    and_wrap_original do |search, *args|
+    code = args[0]
+    expect(code).to be_instance_of String
+    xml = get_xml(search, code, opts)
+    hit_pages
+  end.at_least :once
+end
+
+private
+
+def get_xml(search, code, opts)
+  c = code.gsub(%r{[\/\s:-]}, "_").sub(%r{_+$}, "").downcase
+  o = opts.keys.join "_"
+  file = "spec/examples/#{[c, o].join '_'}.xml"
+  if File.exist? file
+    File.read file
+  else
+    result = search.call(code)
+    hit = result&.first&.first
+    xml = hit.to_xml nil, opts
+    File.write file, xml
+    xml
+  end
+end
