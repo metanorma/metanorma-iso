@@ -166,12 +166,45 @@
         <ref name="ics"/>
       </zeroOrMore>
     </define>
-    <define name="date_on">
-      <element name="from">
+    <define name="bdate">
+      <element name="date">
+        <attribute name="type">
+          <choice>
+            <value>published</value>
+            <value>accessed</value>
+            <value>created</value>
+            <value>implemented</value>
+            <value>obsoleted</value>
+            <value>confirmed</value>
+            <value>updated</value>
+            <value>issued</value>
+          </choice>
+        </attribute>
+        <!-- ( ( bfrom, bto? ) | date_on ) -->
         <choice>
-          <data type="gYear"/>
-          <data type="date"/>
-          <value>--</value>
+          <group>
+            <element name="from">
+              <choice>
+                <data type="gYear"/>
+                <data type="date"/>
+              </choice>
+            </element>
+            <optional>
+              <element name="to">
+                <choice>
+                  <data type="gYear"/>
+                  <data type="date"/>
+                </choice>
+              </element>
+            </optional>
+          </group>
+          <element name="on">
+            <choice>
+              <data type="gYear"/>
+              <data type="date"/>
+              <value>--</value>
+            </choice>
+          </element>
         </choice>
       </element>
     </define>
