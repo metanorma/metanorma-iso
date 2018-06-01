@@ -82,6 +82,7 @@ module Asciidoctor
         @novalid = node.attr("novalid")
         @fontheader = default_fonts(node)
         @files_to_delete = []
+        @bibliodb = open_cache_biblio(node)
       end
 
       def default_fonts(node)
@@ -115,6 +116,7 @@ module Asciidoctor
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
+        save_cache_biblio(@bibliodb)
         textcleanup(result.flatten * "\n")
       end
 

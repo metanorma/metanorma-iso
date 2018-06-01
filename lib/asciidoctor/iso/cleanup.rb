@@ -36,6 +36,7 @@ module Asciidoctor
         footnote_renumber(xmldoc)
         empty_element_cleanup(xmldoc)
         mathml_cleanup(xmldoc)
+        script_cleanup(xmldoc)
         bookmark_cleanup(xmldoc)
         xmldoc
       end
@@ -45,6 +46,15 @@ module Asciidoctor
            email street city state country postcode identifier referenceFrom
            referenceTo docidentifier prefix initial addition surname forename
            title draft secretariat title-main title-intro title-part}.freeze
+
+      # it seems Nokogiri::XML is treating the content of <script> as cdata, 
+      # because of its use in HTML. Bad nokogiri. Undoing that, since we use
+      # script as a normal tag
+      def script_cleanup(xmldoc)
+        xmldoc.xpath("//script").each do |x|
+          x.content = x.to_str
+        end
+      end
 
       def empty_element_cleanup(xmldoc)
         xmldoc.xpath("//" + TEXT_ELEMS.join(" | //")).each do |x|

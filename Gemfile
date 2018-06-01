@@ -5,4 +5,8 @@ gem "html2doc",
       git: "https://github.com/riboseinc/html2doc.git"
 gem "isodoc",
       git: "https://github.com/riboseinc/isodoc.git"
+gem "isobib",
+      git: "https://github.com/riboseinc/isobib.git"
+gem "iso-bib-item",
+      git: "https://github.com/riboseinc/iso-bib-item.git"
 gemspec

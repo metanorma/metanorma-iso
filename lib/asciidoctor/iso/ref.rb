@@ -35,12 +35,12 @@ module Asciidoctor
       end
 
       def use_my_anchor(ref, id)
-        ref["id"] = id
+        ref.parent["id"] = id
         ref
       end
 
       def isorefmatches(xml, m)
-        ref = fetch_ref xml, m[:code]
+        ref = fetch_ref xml, m[:code], m[:year]
         return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
@@ -53,7 +53,7 @@ module Asciidoctor
       end
 
       def isorefmatches2(xml, m)
-        ref = fetch_ref xml, m[:code], no_year: true, note: m[:fn]
+        ref = fetch_ref xml, m[:code], nil, no_year: true, note: m[:fn]
         return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem **attr_code(ref_attributes(m)) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
@@ -67,7 +67,7 @@ module Asciidoctor
       end
 
       def isorefmatches3(xml, m)
-        ref = fetch_ref xml, m[:code], all_parts: true
+        ref = fetch_ref xml, m[:code], m[:year], all_parts: true
         return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem(**attr_code(ref_attributes(m))) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
@@ -79,17 +79,51 @@ module Asciidoctor
         end
       end
 
-      def fetch_ref(xml, code, **opts)
-        warn "fetching #{code}..."
+      def fetch_year_check(hit, code, year, opts)
+        ret =nil
+        if year.nil? || year.to_i == hit.hit["year"]
+            ret = hit.to_xml opts
+            @bibliodb[code] = ret
+          else
+            warn "WARNING: cited year #{year} does not match year "\
+            "#{hit.hit['year']} found on the ISO website for #{code}"
+          end
+        ret
+      end
+
+      def first_year_match_hit(result, code, year)
+        return result&.first&.first if year.nil?
+        return nil unless result.first && result.first.is_a?(Array)
+        coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
+        result.first.each do |x|
+          return x if x.hit["title"]&.match(coderegex)&.to_s == code &&
+            year.to_i == x.hit["year"]
+        end
+        return result&.first&.first
+      end
+
+      def fetch_ref1(code, year, opts)
+        return @bibliodb[code] if @bibliodb[code]
         result = Isobib::IsoBibliography.search(code)
-        hit = result&.first&.first
+        ret = nil
+        hit = first_year_match_hit(result, code, year)
         coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
         if hit && hit.hit["title"]&.match(coderegex)&.to_s == code
-          hit.to_xml xml, opts
+          ret = fetch_year_check(hit, code, year, opts)
+        else
+          warn "WARNING: no match found on the ISO website for #{code}"
         end
+        ret
+      end
+
+      def fetch_ref(xml, code, year, **opts)
+        warn "fetching #{code}..."
+        hit = fetch_ref1(code, year, opts)
+        return nil if hit.nil?
+        xml.parent.add_child(hit)
+        xml
       rescue Algolia::AlgoliaProtocolError
-        # Render reference without an Internet connection.
-        nil
+        nil # Render reference without an Internet connection.
       end
 
       # TODO: alternative where only title is available
@@ -152,7 +186,7 @@ module Asciidoctor
         matched, matched2, matched3 = reference1_matches(item)
         if matched3.nil? && matched2.nil? && matched.nil?
           refitem(xml, item, node)
-        # elsif fetch_ref(matched3 || matched2 || matched, xml)
+          # elsif fetch_ref(matched3 || matched2 || matched, xml)
         elsif !matched.nil? then isorefmatches(xml, matched)
         elsif !matched2.nil? then isorefmatches2(xml, matched2)
         elsif !matched3.nil? then isorefmatches3(xml, matched3)
@@ -165,6 +199,29 @@ module Asciidoctor
             reference1(node, item.text, xml)
           end
         end.join("\n")
+      end
+
+      def bibliocache_name()
+        "#{Dir.home}/.asciidoc-iso-biblio-cache.json"
+      end
+
+      def open_cache_biblio(node)
+        filename = bibliocache_name()
+        system("rm -f #{filename}") if node.attr("flush-caches") == "true"
+        biblio = {}
+        if Pathname.new(filename).file?
+          File.open(filename, "r") do |f|
+            biblio = JSON.parse(f.read)
+          end
+        end
+        biblio
+      end
+
+      def save_cache_biblio(biblio)
+        filename = bibliocache_name()
+        File.open(filename, "w") do |b|
+          b << biblio.to_json
+        end
       end
     end
   end

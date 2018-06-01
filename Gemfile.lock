@@ -13,6 +13,22 @@ GIT
       uuidtools
 
 GIT
+  remote: https://github.com/riboseinc/iso-bib-item.git
+  revision: 2fa52155cca85c18bacc1997c3c693f32761061f
+  specs:
+    iso-bib-item (0.1.1)
+      isoics
+      nokogiri
+
+GIT
+  remote: https://github.com/riboseinc/isobib.git
+  revision: 2e85f6665f5d8397a404f39b3418695b46d733ad
+  specs:
+    isobib (0.1.3)
+      algoliasearch
+      iso-bib-item
+
+GIT
   remote: https://github.com/riboseinc/isodoc.git
   revision: 4a8029c3d15210df5bfa9fd80130760868a806dd
   specs:
@@ -48,7 +64,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    algoliasearch (1.21.0)
+    algoliasearch (1.22.0)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
     asciidoctor (1.5.7.1)
@@ -79,12 +95,6 @@ GEM
     htmlentities (4.3.4)
     httpclient (2.8.3)
     image_size (2.0.0)
-    iso-bib-item (0.1.1)
-      isoics
-      nokogiri
-    isobib (0.1.3)
-      algoliasearch
-      iso-bib-item
     isoics (0.1.5)
     json (2.1.0)
     liquid (4.0.0)
@@ -171,6 +181,8 @@ DEPENDENCIES
   guard (~> 2.14)
   guard-rspec (~> 4.7)
   html2doc!
+  iso-bib-item!
+  isobib!
   isodoc!
   rake (~> 12.0)
   rspec (~> 3.6)

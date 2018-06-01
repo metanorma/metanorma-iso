@@ -501,7 +501,20 @@ small caps or strike through, though these can be marked up as CSS classes
 through custom macros in Asciidoctor: a custom CSS stylesheet will be needed to
 render them.
 
+== Bibliography integration
 
+Bibliographic entries for ISO standards are expected to use the standard document
+identifier as the item label; e.g.
+
+[source,asciidoctor]
+--
+* [[[ref1,ISO 712]]], _Cereals and cereal products -- Determination of moisture content -- Reference method_
+--
+
+By default, the `isobib` gem is used to look up the reference details for 
+any item label prefixed with `ISO` on the ISO web site. The full bibliographic details 
+of the item are screenscraped from the ISO site and inserted into the XML file 
+(although only the title of the reference is used in rendering).
 
 == Document Attributes
 
