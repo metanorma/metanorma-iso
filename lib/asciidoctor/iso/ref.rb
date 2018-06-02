@@ -83,7 +83,7 @@ module Asciidoctor
         ret =nil
         if year.nil? || year.to_i == hit.hit["year"]
           ret = hit.to_xml opts
-          @bibliodb[code] = ret
+          @bibliodb[code] = ret if @bibliodb
         else
           warn "WARNING: cited year #{year} does not match year "\
             "#{hit.hit['year']} found on the ISO website for #{code}"
@@ -223,6 +223,7 @@ module Asciidoctor
         "#{Dir.home}/.asciidoc-iso-biblio-cache.json"
       end
 
+      # if returns nil, then biblio caching is disabled
       def open_cache_biblio(node)
         filename = bibliocache_name()
         system("rm -f #{filename}") if node.attr("flush-caches") == "true"
@@ -236,6 +237,7 @@ module Asciidoctor
       end
 
       def save_cache_biblio(biblio)
+        return if biblio.nil?
         filename = bibliocache_name()
         File.open(filename, "w") do |b|
           b << biblio.to_json
