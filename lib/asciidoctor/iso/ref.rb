@@ -91,15 +91,24 @@ module Asciidoctor
         ret
       end
 
+      def first_with_title(result)
+        result.first.each do |x|
+          next unless x.hit["title"]
+          return x
+        end
+        return nil
+      end
+
       def first_year_match_hit(result, code, year)
-        return result&.first&.first if year.nil?
+        return first_with_title(result) if year.nil?
         return nil unless result.first && result.first.is_a?(Array)
         coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
         result.first.each do |x|
+          next unless x.hit["title"]
           return x if x.hit["title"]&.match(coderegex)&.to_s == code &&
             year.to_i == x.hit["year"]
         end
-        return result&.first&.first
+        return first_with_title(result)
       end
 
       def fetch_ref1(code, year, opts)
