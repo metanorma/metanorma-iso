@@ -32,6 +32,7 @@
 :section-refsig: Clause
 :table-caption: Table
 :example-caption: Figure
+:local-cache:
 
 [[foreword]]
 .Foreword 

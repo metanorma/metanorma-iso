@@ -516,6 +516,18 @@ any item label prefixed with `ISO` on the ISO web site. The full bibliographic d
 of the item are screenscraped from the ISO site and inserted into the XML file 
 (although only the title of the reference is used in rendering).
 
+[[cache]]
+The results of all `isobib` searches done to date, across all documents,
+are cached in the global cache file `~/.relaton-bib.json`, 
+so they do not need to be re-fetched each time a document is processed. 
+(The web query takes a few seconds per reference.)
+
+The results of all `isobib` searches done to date for the current document
+(`filename.adoc`) are stored in the same directory as the current document,
+in the file `filename`.relaton.json. The local cache overrides entries in
+the global cache, and can be manually edited. The local cache is only used
+if the `:local-cache:` document attribute is set.
+
 == Document Attributes
 
 The gem relies on Asciidoctor document attributes to provide necessary
@@ -526,6 +538,12 @@ Can be used as a command-line option (like all other document attributes):
 `asciidoctor -a nodoc -b iso -r "asciidoctor-iso" a.adoc`
 
 `:novalid:`:: Suppress validation.
+
+`:flush-caches:`:: If set, delete and reinitialise the <<cache,cache>> of `isobib` searches
+for ISO references from the ISO web site.
+
+`:local-cache:`:: Use the local isobib search cache to override the global isobib search
+cache.
 
 `:i18nyaml:`:: Name of YAML file of internationalisation text, to use instead
 of the built-in English, French or Chinese text used to label parts of the document

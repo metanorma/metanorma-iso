@@ -84,6 +84,7 @@ module Asciidoctor
         if year.nil? || year.to_i == hit.hit["year"]
           ret = hit.to_xml opts
           @bibliodb[code] = ret if @bibliodb
+          @local_bibliodb[code] = ret if @local_bibliodb
         else
           warn "WARNING: cited year #{year} does not match year "\
             "#{hit.hit['year']} found on the ISO website for #{code}"
@@ -120,9 +121,7 @@ module Asciidoctor
         end
       end
 
-      def fetch_ref1(code, year, opts)
-        return nil if @bibliodb.nil? # signals we will not be using isobib
-        return @bibliodb[code] if @bibliodb[code]
+      def fetch_ref2(code, year, opts)
         result = Isobib::IsoBibliography.search(code)
         ret = nil
         hit = first_year_match_hit(result, code, year)
@@ -133,6 +132,15 @@ module Asciidoctor
           fetch_ref_err(code)
         end
         ret
+      end
+
+      def fetch_ref1(code, year, opts)
+        return nil if @bibliodb.nil? # signals we will not be using isobib
+        @bibliodb[code] = fetch_ref2(code, year, opts) unless @bibliodb[code]
+        @local_bibliodb[code] = @bibliodb[code] if !@local_bibliodb.nil? &&
+          !@local_bibliodb[code]
+        return @local_bibliodb[code] unless @local_bibliodb.nil?
+        @bibliodb[code]
       end
 
       def fetch_ref(xml, code, year, **opts)
@@ -220,13 +228,14 @@ module Asciidoctor
         end.join("\n")
       end
 
-      def bibliocache_name()
-        "#{Dir.home}/.asciidoc-iso-biblio-cache.json"
+      def bibliocache_name(global)
+        global ?  "#{Dir.home}/.relaton-bib.json" :
+          "#{@filename}.relaton.json"
       end
 
       # if returns nil, then biblio caching is disabled, and so is use of isobib
-      def open_cache_biblio(node)
-        filename = bibliocache_name()
+      def open_cache_biblio(node, global)
+        filename = bibliocache_name(global)
         system("rm -f #{filename}") if node.attr("flush-caches") == "true"
         biblio = {}
         if Pathname.new(filename).file?
@@ -237,9 +246,9 @@ module Asciidoctor
         biblio
       end
 
-      def save_cache_biblio(biblio)
+      def save_cache_biblio(biblio, global)
         return if biblio.nil?
-        filename = bibliocache_name()
+        filename = bibliocache_name(global)
         File.open(filename, "w") do |b|
           b << biblio.to_json
         end

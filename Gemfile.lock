@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    asciidoctor-iso (0.7.8)
+    asciidoctor-iso (0.7.9)
       asciidoctor (~> 1.5.7)
       html2doc
       isobib (~> 0.1.4)

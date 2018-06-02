@@ -82,7 +82,10 @@ module Asciidoctor
         @novalid = node.attr("novalid")
         @fontheader = default_fonts(node)
         @files_to_delete = []
-        @bibliodb = open_cache_biblio(node)
+        @filename = node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "")
+        @bibliodb = open_cache_biblio(node, true)
+        @local_bibliodb = node.attr("local-cache") ?
+          open_cache_biblio(node, false) : nil
       end
 
       def default_fonts(node)
@@ -100,12 +103,11 @@ module Asciidoctor
         init(node)
         ret = makexml(node).to_xml(indent: 2)
         unless node.attr("nodoc") || !node.attr("docfile")
-          filename = node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "")
-          File.open(filename + ".xml", "w") { |f| f.write(ret) }
-          html_converter_alt(node).convert(filename + ".xml")
-          system "mv #{filename}.html #{filename}_alt.html"
-          html_converter(node).convert(filename + ".xml")
-          doc_converter(node).convert(filename + ".xml")
+          File.open(@filename + ".xml", "w") { |f| f.write(ret) }
+          html_converter_alt(node).convert(@filename + ".xml")
+          system "mv #{@filename}.html #{@filename}_alt.html"
+          html_converter(node).convert(@filename + ".xml")
+          doc_converter(node).convert(@filename + ".xml")
         end
         @files_to_delete.each { |f| system "rm #{f}" }
         ret
@@ -116,7 +118,8 @@ module Asciidoctor
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
-        save_cache_biblio(@bibliodb)
+        save_cache_biblio(@bibliodb, true)
+        save_cache_biblio(@local_bibliodb, false)
         textcleanup(result.flatten * "\n")
       end
 
