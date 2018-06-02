@@ -121,6 +121,7 @@ module Asciidoctor
       end
 
       def fetch_ref1(code, year, opts)
+        return nil if @bibliodb.nil? # signals we will not be using isobib
         return @bibliodb[code] if @bibliodb[code]
         result = Isobib::IsoBibliography.search(code)
         ret = nil
@@ -223,7 +224,7 @@ module Asciidoctor
         "#{Dir.home}/.asciidoc-iso-biblio-cache.json"
       end
 
-      # if returns nil, then biblio caching is disabled
+      # if returns nil, then biblio caching is disabled, and so is use of isobib
       def open_cache_biblio(node)
         filename = bibliocache_name()
         system("rm -f #{filename}") if node.attr("flush-caches") == "true"
