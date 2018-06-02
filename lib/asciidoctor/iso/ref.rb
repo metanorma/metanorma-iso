@@ -35,7 +35,7 @@ module Asciidoctor
       end
 
       def use_my_anchor(ref, id)
-        ref.parent["id"] = id
+        ref.parent.children.last["id"] = id
         ref
       end
 
@@ -82,12 +82,12 @@ module Asciidoctor
       def fetch_year_check(hit, code, year, opts)
         ret =nil
         if year.nil? || year.to_i == hit.hit["year"]
-            ret = hit.to_xml opts
-            @bibliodb[code] = ret
-          else
-            warn "WARNING: cited year #{year} does not match year "\
+          ret = hit.to_xml opts
+          @bibliodb[code] = ret
+        else
+          warn "WARNING: cited year #{year} does not match year "\
             "#{hit.hit['year']} found on the ISO website for #{code}"
-          end
+        end
         ret
       end
 
