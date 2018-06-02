@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sass"
   spec.add_dependency "uuidtools"
   spec.add_dependency "html2doc"
-  spec.add_dependency "isodoc"
+  spec.add_dependency "isodoc", "~> 0.7.8"
   spec.add_dependency "isobib"
 
   spec.add_development_dependency "bundler", "~> 1.15"
