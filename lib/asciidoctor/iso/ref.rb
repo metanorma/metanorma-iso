@@ -105,10 +105,19 @@ module Asciidoctor
         coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
         result.first.each do |x|
           next unless x.hit["title"]
-          return x if x.hit["title"]&.match(coderegex)&.to_s == code &&
+          return x if x.hit["title"].match(coderegex).to_s == code &&
             year.to_i == x.hit["year"]
         end
         return first_with_title(result)
+      end
+
+      def fetch_ref_err(code)
+        warn "WARNING: no match found on the ISO website for #{code}."
+        if /\d-\d/.match? code
+          warn "The provided document part may not exist, or the document may no longer be published in parts."
+        else
+          warn "If you wanted to cite all document parts for the reference, use #{code}:All Parts"
+        end
       end
 
       def fetch_ref1(code, year, opts)
@@ -120,7 +129,7 @@ module Asciidoctor
         if hit && hit.hit["title"]&.match(coderegex)&.to_s == code
           ret = fetch_year_check(hit, code, year, opts)
         else
-          warn "WARNING: no match found on the ISO website for #{code}"
+          fetch_ref_err(code)
         end
         ret
       end
