@@ -41,6 +41,16 @@ ISOBIB_BLANK_HDR = <<~"HDR"
       :docfile: test.adoc
       :nodoc:
       :novalid:
+      :no-isobib-cache:
+
+HDR
+
+CACHED_ISOBIB_BLANK_HDR = <<~"HDR"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
 
 HDR
 

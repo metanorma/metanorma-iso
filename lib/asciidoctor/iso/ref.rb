@@ -113,11 +113,12 @@ module Asciidoctor
       end
 
       def fetch_ref_err(code)
-        warn "WARNING: no match found on the ISO website for #{code}."
+        warn "WARNING: no match found on the ISO website for #{code}. The code must be exactly like it is on the website."
         if /\d-\d/.match? code
           warn "The provided document part may not exist, or the document may no longer be published in parts."
         else
-          warn "If you wanted to cite all document parts for the reference, use #{code}:All Parts"
+          warn "If you wanted to cite all document parts for the reference, use #{code}:All Parts. "\
+            "If the document is not a standard, use its document type abbreviation (TS, TR, PAS, Guide)."
         end
       end
 
@@ -237,6 +238,7 @@ module Asciidoctor
       def open_cache_biblio(node, global)
         # return nil # disabling for now
         return nil if node.attr("no-isobib")
+        return {} if @no_isobib_cache
         filename = bibliocache_name(global)
         system("rm -f #{filename}") if node.attr("flush-caches") == "true"
         biblio = {}
@@ -249,7 +251,7 @@ module Asciidoctor
       end
 
       def save_cache_biblio(biblio, global)
-        return if biblio.nil?
+        return if biblio.nil? || @no_isobib_cache
         filename = bibliocache_name(global)
         File.open(filename, "w") do |b|
           b << biblio.to_json

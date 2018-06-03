@@ -84,6 +84,7 @@ module Asciidoctor
         @files_to_delete = []
         @filename = node.attr("docfile") ? 
           node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "") : ""
+        @no_isobib_cache = node.attr("no-isobib-cache")
         @bibliodb = open_cache_biblio(node, true)
         @local_bibliodb = node.attr("local-cache") ?
           open_cache_biblio(node, false) : nil

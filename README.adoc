@@ -530,6 +530,8 @@ if the `:local-cache:` document attribute is set.
 
 If the document attribute `:no-isobib:` is set, the reference details for
 items are not looked up via `isobib`, and the `isobib` caches are not used.
+If the document attribute `:no-isobib-cache:` is set, the reference details for
+items are still looked up via `isobib`, but the `isobib` caches are not used.
 
 == Document Attributes
 
@@ -547,6 +549,9 @@ for ISO references from the ISO web site.
 
 `:no-isobib:`:: If set, do not use the `isobib` gem functionality to look up
 ISO references online, nor the <<cache,cache>> of `isobib` searches.
+
+`:no-isobib-cache:`:: If set, use the `isobib` gem functionality to look up
+ISO references online, but do not use the <<cache,cache>> of `isobib` searches.
 
 `:local-cache:`:: Use the local isobib search cache to override the global isobib search
 cache.
