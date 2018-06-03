@@ -528,6 +528,9 @@ in the file `filename`.relaton.json. The local cache overrides entries in
 the global cache, and can be manually edited. The local cache is only used
 if the `:local-cache:` document attribute is set.
 
+If the document attribute `:no-isobib:` is set, the reference details for
+items are not looked up via `isobib`, and the `isobib` caches are not used.
+
 == Document Attributes
 
 The gem relies on Asciidoctor document attributes to provide necessary
@@ -541,6 +544,9 @@ Can be used as a command-line option (like all other document attributes):
 
 `:flush-caches:`:: If set, delete and reinitialise the <<cache,cache>> of `isobib` searches
 for ISO references from the ISO web site.
+
+`:no-isobib:`:: If set, do not use the `isobib` gem functionality to look up
+ISO references online, nor the <<cache,cache>> of `isobib` searches.
 
 `:local-cache:`:: Use the local isobib search cache to override the global isobib search
 cache.

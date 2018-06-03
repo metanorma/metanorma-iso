@@ -1,10 +1,74 @@
 require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
-  it "processes simple ISO reference" do
+    it "processes simple ISO reference" do
     stub_fetch_ref
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 123]]] _Standard_
+    INPUT
+      #{BLANK_HDR}
+      <sections>
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem type="international-standard" id="ISO123">
+        <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling -- </title>
+        <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- ?~Ichantillonnage -- </title>
+        <source type="src">https://www.iso.org/standard/23281.html</source>
+        <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
+        <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
+        <docidentifier>ISO 123</docidentifier>
+        <date type="published">
+          <from>2001</from>
+        </date>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+            <uri>www.iso.org</uri>
+          </organization>
+        </contributor>
+        <edition>3</edition>
+        <language>en</language>
+        <language>fr</language>
+        <script>Latn</script>
+        <status>Published</status>
+        <copyright>
+          <from>2001</from>
+          <owner>
+            <organization>
+              <name>ISO</name>
+              <abbreviation/>
+            </organization>
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <formattedref>ISO 123:1985</formattedref>
+            <docidentifier>ISO 123:1985</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <bibitem>
+            <formattedref>ISO 123:2001</formattedref>
+            <docidentifier>ISO 123:2001</docidentifier>
+          </bibitem>
+        </relation>
+      </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
+    OUTPUT
+  end
+
+  it "fetches simple ISO reference" do
+    stub_fetch_ref
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ISOBIB_BLANK_HDR}
       [bibliography]
       == Normative References
 

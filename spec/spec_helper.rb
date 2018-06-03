@@ -31,6 +31,16 @@ ASCIIDOC_BLANK_HDR = <<~"HDR"
       :docfile: test.adoc
       :nodoc:
       :novalid:
+      :no-isobib:
+
+HDR
+
+ISOBIB_BLANK_HDR = <<~"HDR"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
 
 HDR
 
@@ -39,6 +49,7 @@ VALIDATING_BLANK_HDR = <<~"HDR"
       Author
       :docfile: test.adoc
       :nodoc:
+      :no-isobib:
 
 HDR
 
