@@ -235,6 +235,7 @@ module Asciidoctor
 
       # if returns nil, then biblio caching is disabled, and so is use of isobib
       def open_cache_biblio(node, global)
+        return nil # disabling for now
         filename = bibliocache_name(global)
         system("rm -f #{filename}") if node.attr("flush-caches") == "true"
         biblio = {}
