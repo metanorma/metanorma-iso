@@ -28,20 +28,6 @@ module Asciidoctor
         nil
       end
 
-      def html_doc_path(file)
-        File.join(File.dirname(__FILE__), File.join("html", file))
-      end
-
-      def generate_css(filename, stripwordcss, fontheader)
-        stylesheet = File.read(filename, encoding: "UTF-8")
-        stylesheet.gsub!(/(\s|\{)mso-[^:]+:[^;]+;/m, "\\1") if stripwordcss
-        engine = Sass::Engine.new(fontheader + stylesheet, syntax: :scss)
-        outname = File.basename(filename, ".*") + ".css"
-        File.open(outname, "w") { |f| f.write(engine.render) }
-        @files_to_delete << outname
-        outname
-      end
-
       def html_converter(node)
         IsoDoc::Iso::Convert.new(
           script: node.attr("script"),

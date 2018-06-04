@@ -1,5 +1,35 @@
 require "spec_helper"
 
+RSpec.describe "warns when year resource fetched through isobib does not match specified year" do
+    specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/cited year 1066 does not match year/).to_stderr }
+      #{ISOBIB_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 123:1066]]] _Standard_
+      INPUT
+  end
+
+RSpec.describe "warns when resource with part number not found on ISO website" do
+    specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/The provided document part may not exist, or the document may no longer be published in parts/).to_stderr }
+      #{ISOBIB_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 00000-001]]] _Standard_
+      INPUT
+  end
+
+RSpec.describe "warns when resource without part number not found on ISO website" do
+    specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/If you wanted to cite all document parts for the reference/).to_stderr }
+      #{ISOBIB_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 00000]]] _Standard_
+      INPUT
+  end
+
 RSpec.describe "warns when missing a title" do
   specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Table should have title/).to_stderr }
   #{VALIDATING_BLANK_HDR}

@@ -45,12 +45,32 @@ ISOBIB_BLANK_HDR = <<~"HDR"
 
 HDR
 
+FLUSH_CACHE_ISOBIB_BLANK_HDR = <<~"HDR"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :flush-caches:
+
+HDR
+
 CACHED_ISOBIB_BLANK_HDR = <<~"HDR"
       = Document title
       Author
       :docfile: test.adoc
       :nodoc:
       :novalid:
+
+HDR
+
+LOCAL_CACHED_ISOBIB_BLANK_HDR = <<~"HDR"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :local-cache:
 
 HDR
 

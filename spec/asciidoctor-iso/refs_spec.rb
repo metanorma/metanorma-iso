@@ -30,6 +30,40 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+  it "processes simple ISO reference with date range" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 123:1066-1067]]] _Standard_
+    INPUT
+      #{BLANK_HDR}
+      <sections>
+      </sections><bibliography><references id="_" obligation="informative">
+        <title>Normative References</title>
+        <bibitem id="iso123" type="standard">
+          <title format="text/plain">Standard</title>
+  <docidentifier>ISO 123</docidentifier>
+  <date type="published">
+    <from>1066</from>
+    <to>1067</to>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+       </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
+    OUTPUT
+  end
+
+
   it "fetches simple ISO reference" do
     #stub_fetch_ref
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
@@ -94,6 +128,20 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+    it "fetches simple ISO reference" do
+    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
+    system "rm -f test.relation.json"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+      #{CACHED_ISOBIB_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,ISO 123]]] _Standard_
+    INPUT
+    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    end
+
+
   it "processes simple IEC reference" do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
@@ -140,8 +188,8 @@ RSpec.describe Asciidoctor::ISO do
       </sections><bibliography><references id="_" obligation="informative">
         <title>Normative References</title>
         <bibitem type="international-standard" id="iso123">
-         <title format="text/plain" language="en" script="Latn">Permuted index of the vocabulary of information technology -- [ -- ]</title>
-         <title format="text/plain" language="fr" script="Latn">Index permuté du vocabulaire des technologies de l'information -- [ -- ]</title>
+         <title format="text/plain" language="en" script="Latn">Permuted index of the vocabulary of information technology</title>
+         <title format="text/plain" language="fr" script="Latn">Index permuté du vocabulaire des technologies de l'information</title>
          <source type="src">https://www.iso.org/standard/21071.html</source>
          <source type="obp">https://www.iso.org/obp/ui/#!iso:std:21071:en</source>
          <source type="rss">https://www.iso.org/contents/data/standard/02/10/21071.detail.rss</source>

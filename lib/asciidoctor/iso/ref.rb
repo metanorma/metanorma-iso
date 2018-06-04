@@ -240,7 +240,7 @@ module Asciidoctor
         return nil if node.attr("no-isobib")
         return {} if @no_isobib_cache
         filename = bibliocache_name(global)
-        system("rm -f #{filename}") if node.attr("flush-caches") == "true"
+        system("rm -f #{filename}") if node.attr("flush-caches")
         biblio = {}
         if Pathname.new(filename).file?
           File.open(filename, "r") do |f|
