@@ -105,7 +105,7 @@ module Asciidoctor
           xml_section.title { |t| t << title }
           xml_section << node.content
         end
-        @biblio = true
+        @biblio = false
       end
 
       def symbols_parse(attrs, xml, node)
