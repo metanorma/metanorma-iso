@@ -47,6 +47,8 @@ module Asciidoctor
           else
             if @term_def then term_def_subclause_parse(a, xml, node)
             elsif @biblio then bibliography_parse(a, xml, node)
+            elsif node.attr("style") == "bibliography" && node.level == 1
+              bibliography_parse(a, xml, node)
             elsif node.attr("style") == "appendix" && node.level == 1
               annex_parse(a, xml, node)
             elsif node.option? "appendix"

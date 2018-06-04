@@ -58,7 +58,7 @@ GEM
       iso-bib-item (~> 0.1.2)
     isodoc (0.7.0)
       asciimath
-      html2doc
+      html2doc (>= 0.7.1)
       htmlentities (~> 4.3.4)
       image_size
       liquid
