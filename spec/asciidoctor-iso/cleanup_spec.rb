@@ -257,17 +257,23 @@ r = 1 %</stem>
        <foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">
-         <eref type="inline" bibitemid="iso216" citeas=""/>
+         <eref type="inline" bibitemid="iso216" citeas="ISO 216"/>
        </p>
        </foreword></preface><sections>
-       <clause id="_" inline-header="false" obligation="normative">
-         <title>Clause</title>
-         <ul id="_">
-         <li>
-           <ref id="iso216">[ISO 216]</ref><p id="_">, <em>Reference</em></p>
-         </li>
-       </ul>
-       </clause></sections>
+       </sections><bibliography><references id="_" obligation="informative">
+  <title>Bibliography</title>
+  <bibitem id="iso216" type="standard">
+  <title format="text/plain">Reference</title>
+  <docidentifier>ISO 216</docidentifier>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+</bibitem>
+</references></bibliography>
        </iso-standard>
     OUTPUT
   end

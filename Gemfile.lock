@@ -50,7 +50,7 @@ GEM
     htmlentities (4.3.4)
     httpclient (2.8.3)
     image_size (2.0.0)
-    iso-bib-item (0.1.3)
+    iso-bib-item (0.1.4)
       isoics (~> 0.1.6)
       nokogiri
     isobib (0.1.4)
@@ -70,6 +70,7 @@ GEM
       thread_safe
       uuidtools
     isoics (0.1.6)
+    jaro_winkler (1.5.1)
     json (2.1.0)
     liquid (4.0.0)
     listen (3.1.5)
@@ -115,7 +116,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.56.0)
+    rubocop (0.57.1)
+      jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5)
       powerpack (~> 0.1)
@@ -141,7 +143,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     timecop (0.9.1)
-    unicode-display_width (1.3.3)
+    unicode-display_width (1.4.0)
     uuidtools (2.1.5)
 
 PLATFORMS
