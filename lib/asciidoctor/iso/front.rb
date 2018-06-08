@@ -99,7 +99,11 @@ module Asciidoctor
 
       def metadata_ics(node, xml)
         ics = node.attr("library-ics")
-        ics && ics.split(/,\s*/).each { |i| xml.ics i }
+        ics && ics.split(/,\s*/).each do |i|
+          xml.ics do |ics|
+            ics.code i
+          end
+        end
       end
 
       def metadata(node, xml)

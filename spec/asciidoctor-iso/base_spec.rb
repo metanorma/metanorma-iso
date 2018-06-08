@@ -126,9 +126,15 @@ RSpec.describe Asciidoctor::ISO do
            <workgroup number="3" type="C">WG</workgroup>
            <secretariat>SECRETARIAT</secretariat>
          </editorialgroup>
-         <ics>1</ics>
-         <ics>2</ics>
-         <ics>3</ics>
+         <ics>
+  <code>1</code>
+</ics>
+<ics>
+  <code>2</code>
+</ics>
+<ics>
+  <code>3</code>
+</ics>
        </bibdata><version>
          <edition>2</edition>
          <revision-date>2000-01-01</revision-date>

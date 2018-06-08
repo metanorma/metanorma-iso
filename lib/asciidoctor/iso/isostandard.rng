@@ -905,7 +905,12 @@
   </define>
   <define name="ics">
     <element name="ics">
-      <text/>
+      <element name="code">
+        <text/>
+      </element>
+      <element name="text">
+        <text/>
+      </element>
     </element>
   </define>
   <define name="term-clause">
