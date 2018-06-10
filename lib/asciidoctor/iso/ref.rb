@@ -79,73 +79,86 @@ module Asciidoctor
         end
       end
 
-      def fetch_year_check(hit, code, year, opts)
-        ret =nil
-        if year.nil? || year.to_i == hit.hit["year"]
-          ret = hit.to_xml opts
-          @bibliodb[code] = ret if @bibliodb
-          @local_bibliodb[code] = ret if @local_bibliodb
-        else
-          warn "WARNING: cited year #{year} does not match year "\
-            "#{hit.hit['year']} found on the ISO website for #{code}"
-        end
-        ret
-      end
-
-      def first_with_title(result)
-        result.first.each do |x|
-          next unless x.hit["title"]
-          return x
-        end
-        return nil
-      end
-
-      def first_year_match_hit(result, code, year)
-        return first_with_title(result) if year.nil?
-        return nil unless result.first && result.first.is_a?(Array)
-        coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
-        result.first.each do |x|
-          next unless x.hit["title"]
-          return x if x.hit["title"].match(coderegex).to_s == code &&
-            year.to_i == x.hit["year"]
-        end
-        return first_with_title(result)
-      end
-
-      def fetch_ref_err(code)
-        warn "WARNING: no match found on the ISO website for #{code}. The code must be exactly like it is on the website."
+# --- ISOBIB
+      def fetch_ref_err(code, year, missed_years)
+        id = year ? "#{code}:#{year}" : code
+        warn "WARNING: no match found on the ISO website for #{id}. "\
+          "The code must be exactly like it is on the website."
+        warn "(There was no match for #{year}, though there were matches "\
+          "found for #{missed_years.join(', ')}.)" unless missed_years.empty?
         if /\d-\d/.match? code
-          warn "The provided document part may not exist, or the document may no longer be published in parts."
+          warn "The provided document part may not exist, or the document "\
+            "may no longer be published in parts."
         else
-          warn "If you wanted to cite all document parts for the reference, use #{code}:All Parts. "\
-            "If the document is not a standard, use its document type abbreviation (TS, TR, PAS, Guide)."
+          warn "If you wanted to cite all document parts for the reference, "\
+            "use \"#{code} (all parts)\".\nIf the document is not a standard, "\
+            "use its document type abbreviation (TS, TR, PAS, Guide)."
         end
+        nil
       end
 
-      def fetch_ref2(code, year, opts)
+      def fetch_pages(s, n)
+        workers = WorkersPool.new n
+        workers.worker(&:fetch)
+        s.each { |hit| workers << hit }
+        workers.end
+        workers.result
+      end
+
+      @docidrx = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
+      @corrigrx = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+:[0-9]+/}
+
+      def isobib_search_filter(code)
+        warn "fetching #{code}..."
         result = Isobib::IsoBibliography.search(code)
-        ret = nil
-        hit = first_year_match_hit(result, code, year)
-        coderegex = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
-        if hit && hit.hit["title"]&.match(coderegex)&.to_s == code
-          ret = fetch_year_check(hit, code, year, opts)
-        else
-          fetch_ref_err(code)
+        result.first.select do |i| 
+          i.hit["title"].match(@docidrx).to_s == code &&
+            !@corrigrx.match?(i.hit["title"])
+        end 
+      end
+
+      # Sort through the results from Isobib, fetching them three at a time,
+      # and return the first result that matches the code,
+      # matches the year (if provided), and which # has a title (amendments do not).
+      # Only expects the first page of results to be populated.
+      # Does not match corrigenda etc (e.g. ISO 3166-1:2006/Cor 1:2007)
+      # Returns nil if no match
+      def isobib_get(code, year, opts)
+        result = isobib_search_filter(code) or return nil
+        missed_years = []
+        c.each_slice(3) do |s| # ISO website only allows 3 connections
+          fetch_pages(s, 3).each_with_index do |r, i|
+            return r.to_xml if !year
+            r.dates.select { |d| d.type == "published" }.each do |d|
+              #next unless d.type == "published"
+              return r.to_xml if year.to_i == d.on.year
+              missed_years << d.on.year
+            end
+          end
         end
+        fetch_ref_err(code, year, missed_years)
+      end
+
+      # --- ISOBIB
+
+      def iso_id(code, year, all_parts)
+        ret = code
+        ret += ":#{year}" if year
+        ret += " (all parts)" if all_parts
         ret
       end
 
       def fetch_ref1(code, year, opts)
+        id = iso_id(code, year, opts[:all_parts])
         return nil if @bibliodb.nil? # signals we will not be using isobib
-        @bibliodb[code] = fetch_ref2(code, year, opts) unless @bibliodb[code]
-        @local_bibliodb[code] = @bibliodb[code] if !@local_bibliodb.nil? &&
-          !@local_bibliodb[code]
-        return @local_bibliodb[code] unless @local_bibliodb.nil?
-        @bibliodb[code]
+        @bibliodb[id] = isobib_get(code, year, opts) unless @bibliodb[code]
+        @local_bibliodb[id] = @bibliodb[id] if !@local_bibliodb.nil? &&
+          !@local_bibliodb[id]
+        return @local_bibliodb[id] unless @local_bibliodb.nil?
+        @bibliodb[id]
       end
 
       def fetch_ref(xml, code, year, **opts)
-        warn "fetching #{code}..."
         hit = fetch_ref1(code, year, opts)
         return nil if hit.nil?
         xml.parent.add_child(hit)
