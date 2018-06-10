@@ -105,15 +105,15 @@ module Asciidoctor
         workers.result
       end
 
-      @docidrx = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
-      @corrigrx = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+:[0-9]+/}
-
       def isobib_search_filter(code)
+      docidrx = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+}
+      corrigrx = %r{^(ISO|IEC)[^0-9]*\s[0-9-]+:[0-9]+/}
         warn "fetching #{code}..."
         result = Isobib::IsoBibliography.search(code)
         result.first.select do |i| 
-          i.hit["title"].match(@docidrx).to_s == code &&
-            !@corrigrx.match?(i.hit["title"])
+          i.hit["title"] &&
+          i.hit["title"].match(docidrx).to_s == code &&
+            !corrigrx.match?(i.hit["title"])
         end 
       end
 
@@ -126,11 +126,10 @@ module Asciidoctor
       def isobib_get(code, year, opts)
         result = isobib_search_filter(code) or return nil
         missed_years = []
-        c.each_slice(3) do |s| # ISO website only allows 3 connections
+        result.each_slice(3) do |s| # ISO website only allows 3 connections
           fetch_pages(s, 3).each_with_index do |r, i|
             return r.to_xml if !year
             r.dates.select { |d| d.type == "published" }.each do |d|
-              #next unless d.type == "published"
               return r.to_xml if year.to_i == d.on.year
               missed_years << d.on.year
             end
@@ -151,7 +150,7 @@ module Asciidoctor
       def fetch_ref1(code, year, opts)
         id = iso_id(code, year, opts[:all_parts])
         return nil if @bibliodb.nil? # signals we will not be using isobib
-        @bibliodb[id] = isobib_get(code, year, opts) unless @bibliodb[code]
+        @bibliodb[id] = isobib_get(code, year, opts) unless @bibliodb[id]
         @local_bibliodb[id] = @bibliodb[id] if !@local_bibliodb.nil? &&
           !@local_bibliodb[id]
         return @local_bibliodb[id] unless @local_bibliodb.nil?
