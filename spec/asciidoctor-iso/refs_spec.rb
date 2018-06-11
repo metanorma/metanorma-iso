@@ -121,7 +121,10 @@ RSpec.describe Asciidoctor::ISO do
             <docidentifier>ISO 123:2001</docidentifier>
           </bibitem>
         </relation>
-         <ics>Latex and raw rubber</ics>
+        <ics>
+          <code>83.040.10</code>
+          <text>Latex and raw rubber</text>
+        </ics>
       </bibitem>
       </references>
       </bibliography>
@@ -235,8 +238,14 @@ RSpec.describe Asciidoctor::ISO do
              <docidentifier>ISO/IEC TR 12382:1992</docidentifier>
            </bibitem>
          </relation>
-         <ics>Information technology (IT) in general</ics>
-        <ics>Information technology (Vocabularies)</ics>
+        <ics>
+          <code>35.020</code>
+          <text>Information technology (IT) in general</text>
+        </ics>
+        <ics>
+          <code>01.040.35</code>
+          <text>Information technology (Vocabularies)</text>
+        </ics>
        </bibitem>
          <bibitem type="international-standard" id="iso124">
          <title format="text/plain" language="en" script="Latn">Latex, rubber -- Determination of total solids content</title>
@@ -278,8 +287,11 @@ RSpec.describe Asciidoctor::ISO do
              <docidentifier>ISO 124:2011</docidentifier>
            </bibitem>
          </relation>
-         <ics>Latex and raw rubber</ics>
-       </bibitem>
+        <ics>
+          <code>83.040.10</code>
+          <text>Latex and raw rubber</text>
+        </ics>
+      </bibitem>
       </references>
       </bibliography>
       </iso-standard>

@@ -50,15 +50,15 @@ GEM
     htmlentities (4.3.4)
     httpclient (2.8.3)
     image_size (2.0.0)
-    iso-bib-item (0.1.4)
+    iso-bib-item (0.1.5)
       isoics (~> 0.1.6)
       nokogiri
-    isobib (0.1.4)
+    isobib (0.1.5)
       algoliasearch
       iso-bib-item (~> 0.1.2)
     isodoc (0.7.0)
       asciimath
-      html2doc (>= 0.7.1)
+      html2doc
       htmlentities (~> 4.3.4)
       image_size
       liquid
