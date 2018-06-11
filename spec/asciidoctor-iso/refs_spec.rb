@@ -183,7 +183,7 @@ RSpec.describe Asciidoctor::ISO do
       [bibliography]
       == Normative References
 
-      * [[[iso123,ISO/IEC TR 12382:2013]]] _Standard_
+      * [[[iso123,ISO/IEC TR 12382:1992]]] _Standard_
       * [[[iso124,ISO 124:2014]]] _Standard_
     INPUT
       #{BLANK_HDR}
@@ -349,7 +349,7 @@ RSpec.describe Asciidoctor::ISO do
         <title>Normative References</title>
         <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123:All Parts</docidentifier>
+         <docidentifier>ISO 123</docidentifier>
          <date type="published">
            <on>1066</on>
          </date>
@@ -360,6 +360,7 @@ RSpec.describe Asciidoctor::ISO do
              <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
+         <allParts>true</allParts>
        </bibitem>
       </references>
       </bibliography>

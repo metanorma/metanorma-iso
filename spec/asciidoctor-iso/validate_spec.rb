@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe "warns when year resource fetched through isobib does not match specified year" do
-    specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/cited year 1066 does not match year/).to_stderr }
+    specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/There was no match for 1066/).to_stderr }
       #{ISOBIB_BLANK_HDR}
       [bibliography]
       == Normative References
