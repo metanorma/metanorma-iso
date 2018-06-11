@@ -114,6 +114,9 @@
       <zeroOrMore>
         <ref name="ics"/>
       </zeroOrMore>
+      <optional>
+        <ref name="allParts"/>
+      </optional>
     </define>
     <define name="BibData">
       <optional>
@@ -165,6 +168,9 @@
       <zeroOrMore>
         <ref name="ics"/>
       </zeroOrMore>
+      <optional>
+        <ref name="allParts"/>
+      </optional>
     </define>
     <define name="bdate">
       <element name="date">
@@ -850,6 +856,11 @@
   <define name="title-part">
     <element name="title-part">
       <ref name="FormattedString"/>
+    </element>
+  </define>
+  <define name="allParts">
+    <element name="allParts">
+      <data type="boolean"/>
     </element>
   </define>
   <define name="clause-hanging-paragraph-with-footnote">

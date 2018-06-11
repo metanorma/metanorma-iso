@@ -71,11 +71,12 @@ module Asciidoctor
         return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem(**attr_code(ref_attributes(m))) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
-          t.docidentifier "#{m[:code]}:All Parts"
+          t.docidentifier "#{m[:code]}"
           if m.named_captures.has_key?("year")
             t.date(**{ type: "published" }) { |d| set_date_range(d, m[:year]) }
           end
           iso_publisher(t, m[:code])
+          t.allParts "true"
         end
       end
 
@@ -123,19 +124,27 @@ module Asciidoctor
       # Only expects the first page of results to be populated.
       # Does not match corrigenda etc (e.g. ISO 3166-1:2006/Cor 1:2007)
       # Returns nil if no match
-      def isobib_get(code, year, opts)
+      def isobib_get1(code, year, opts)
         result = isobib_search_filter(code) or return nil
         missed_years = []
         result.each_slice(3) do |s| # ISO website only allows 3 connections
           fetch_pages(s, 3).each_with_index do |r, i|
-            return r.to_xml if !year
+            return r if !year
             r.dates.select { |d| d.type == "published" }.each do |d|
-              return r.to_xml if year.to_i == d.on.year
+              return r if year.to_i == d.on.year
               missed_years << d.on.year
             end
           end
         end
         fetch_ref_err(code, year, missed_years)
+      end
+
+      def isobib_get(code, year, opts)
+        code += "-1" if opts[:all_parts]
+        ret = isobib_get1(code, year, opts)
+        return nil if ret.nil?
+        ret.to_all_parts if opts[:all_parts]
+        ret.to_xml
       end
 
       # --- ISOBIB
