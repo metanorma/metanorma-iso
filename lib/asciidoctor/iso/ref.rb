@@ -100,10 +100,10 @@ module Asciidoctor
 
       def fetch_pages(s, n)
         workers = WorkersPool.new n
-        workers.worker(&:fetch)
-        s.each { |hit| workers << hit }
+        workers.worker { |w| { i: w[:i], hit: w[:hit].fetch } }
+        s.each_with_index { |hit, i| workers << { i: i, hit: hit } }
         workers.end
-        workers.result
+        workers.result.sort { |x, y| x[:i] <=> y[:i] }.map { |x| x[:hit] }
       end
 
       def isobib_search_filter(code)
