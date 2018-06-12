@@ -37,7 +37,11 @@ module Asciidoctor
           when "scope" then scope_parse(a, xml, node)
           when "normative references" then norm_ref_parse(a, xml, node)
           when "terms and definitions",
-            "terms, definitions, symbols and abbreviated terms"
+            "terms, definitions, symbols and abbreviated terms",
+            "terms, definitions, symbols and abbreviations",
+            "terms, definitions and symbols",
+            "terms, definitions and abbreviations",
+            "terms, definitions and abbreviated terms"
             @term_def = true
             term_def_parse(a, xml, node, true)
             @term_def = false
