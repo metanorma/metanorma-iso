@@ -25,14 +25,19 @@ International Standards.
 as end deliverable ISO standard drafts.
 ** Microsoft Word output (`.doc`), following the style conventions of the 
 https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template]. 
-** PDF (forthcoming)
-** HTML (in development)
+** HTML. For ISO, two HTML files are generated: the `.html` file follows ISO
+conventions in rendering, which looks very similar to the Word output, while
+the `-alt.html` file has richer styling.
+** PDF. Not supported for the ISO gem, but available for other other specification,
+generated from the HTML file.
 
 This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
 
 This README provides an overview of the functionality of the gem; see also
 https://github.com/riboseinc/asciidoctor-iso/wiki/Guidance-for-authoring[Guidance for authoring]
-ISO standards using the gem.
+ISO standards using the gem. The 
+https://github.com/riboseinc/asciidoctor-iso/wiki/Quickstart-Guide[Quickstart guide]
+gives a summary overview.
 
 == Usage
 

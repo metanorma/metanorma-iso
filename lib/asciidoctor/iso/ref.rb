@@ -118,25 +118,69 @@ module Asciidoctor
         end 
       end
 
+      def iev
+        Nokogiri::XML.fragment(<<~"END")
+          <bibitem type="international-standard" id="IEV">
+  <title format="text/plain" language="en" script="Latn">Electropedia: 
+  The World's Online Electrotechnical Vocabulary</title>
+  <source type="src">http://www.electropedia.org</source>
+  <docidentifier>IEV</docidentifier>
+  <date type="published"> <on>#{Date.today.year}</on> </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Electrotechnical Commission</name>
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <language>en</language> <language>fr</language>
+  <script>Latn</script>
+  <copyright>
+    <from>#{Date.today.year}</from>
+    <owner>
+      <organization>
+      <name>International Electrotechnical Commission</name>
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="updates">
+    <bibitem>
+      <formattedref>IEC 60050</formattedref>
+    </bibitem>
+  </relation>
+</bibitem>
+        END
+      end
+
       # Sort through the results from Isobib, fetching them three at a time,
       # and return the first result that matches the code,
       # matches the year (if provided), and which # has a title (amendments do not).
       # Only expects the first page of results to be populated.
       # Does not match corrigenda etc (e.g. ISO 3166-1:2006/Cor 1:2007)
-      # Returns nil if no match
-      def isobib_get1(code, year, opts)
-        result = isobib_search_filter(code) or return nil
+      # If no match, returns any years which caused mismatch, for error reporting
+      def isobib_results_filter(result, year)
         missed_years = []
         result.each_slice(3) do |s| # ISO website only allows 3 connections
           fetch_pages(s, 3).each_with_index do |r, i|
-            return r if !year
+            return { ret: r } if !year
             r.dates.select { |d| d.type == "published" }.each do |d|
-              return r if year.to_i == d.on.year
+              return { ret: r } if year.to_i == d.on.year
               missed_years << d.on.year
             end
           end
         end
-        fetch_ref_err(code, year, missed_years)
+        { years: missed_years }
+      end
+
+      def isobib_get1(code, year, opts)
+        return iev if code.casecmp? "IEV"
+        result = isobib_search_filter(code) or return nil
+        ret = isobib_results_filter(result, year)
+        return ret[:ret] if ret[:ret]
+        fetch_ref_err(code, year, ret[:years])
       end
 
       def isobib_get(code, year, opts)
@@ -203,7 +247,8 @@ module Asciidoctor
       end
 
       ISO_REF = %r{^<ref\sid="(?<anchor>[^"]+)">
-      \[(?<code>(ISO|IEC)[^0-9]*\s[0-9-]+)(:(?<year>[0-9][0-9-]+))?\]</ref>,?\s
+      \[(?<code>(ISO|IEC)[^0-9]*\s[0-9-]+|IEV)
+      (:(?<year>[0-9][0-9-]+))?\]</ref>,?\s
       (?<text>.*)$}xm
 
       ISO_REF_NO_YEAR = %r{^<ref\sid="(?<anchor>[^"]+)">
