@@ -37,8 +37,20 @@ module Asciidoctor
         empty_element_cleanup(xmldoc)
         mathml_cleanup(xmldoc)
         script_cleanup(xmldoc)
+        docidentifier_cleanup(xmldoc)
         bookmark_cleanup(xmldoc)
         xmldoc
+      end
+
+      def docidentifier_cleanup(xmldoc)
+        id = xmldoc.at("//bibdata/docidentifier/project-number")
+        prefix = []
+        xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
+                     "/organization").each do |x|
+          x1 = x.at("abbreviation")&.text || x.at("name")&.text
+          x1 == "ISO" and prefix.unshift("ISO") or prefix << x1
+        end
+        id.content = prefix.join("/") + " " + id.text
       end
 
       TEXT_ELEMS =
