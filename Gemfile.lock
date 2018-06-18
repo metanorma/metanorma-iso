@@ -3,8 +3,8 @@ PATH
   specs:
     asciidoctor-iso (0.8.2)
       asciidoctor (~> 1.5.7)
-      isobib (~> 0.1.4)
-      isodoc (>= 0.7.0)
+      isobib (~> 0.1.6)
+      isodoc (>= 0.7.1)
       ruby-jing
 
 GEM
