@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ruby-jing"
   spec.add_dependency "isodoc", ">= 0.7.1"
   spec.add_dependency "isobib", "~> 0.1.6"
+  spec.add_dependency "iso-bib-item", "~> 0.1.6"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "byebug", "~> 9.1"
