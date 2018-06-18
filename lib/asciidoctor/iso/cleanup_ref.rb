@@ -6,7 +6,7 @@ module Asciidoctor
       LOCALITY_REGEX_STR = <<~REGEXP.freeze
         ^((?<locality>section|clause|part|paragraph|chapter|page|
                       table|annex|figure|example|note|formula|
-                      locality:[^ \\t\\n\\r:,]+)\\s+
+                      locality:[^ \\t\\n\\r:,]+)(\\s+|=)
                (?<ref>[^ \\t\\n,:-]+)(-(?<to>[^ \\t\\n,:-]+))?|
           (?<locality2>whole|locality:[^ \\t\\n\\r:,]+))[,:]?\\s*
          (?<text>.*)$

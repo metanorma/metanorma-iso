@@ -210,7 +210,7 @@ r = 1 %</stem>
   it "extracts localities from erefs" do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
-      <<iso216,whole,clause 3,example 9-11,locality:prelude 33,locality:entirety:the reference>>
+      <<iso216,whole,clause=3,example=9-11,locality:prelude=33,locality:entirety:the reference>>
 
       [bibliography]
       == Normative References
@@ -286,7 +286,7 @@ r = 1 %</stem>
       === Term1
 
       [.source]
-      <<ISO2191,section 1>>
+      <<ISO2191,section=1>>
       INPUT
               #{BLANK_HDR}
        <sections>

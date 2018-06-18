@@ -187,6 +187,7 @@ module Asciidoctor
         code += "-1" if opts[:all_parts]
         ret = isobib_get1(code, year, opts)
         return nil if ret.nil?
+        ret.to_most_recent_reference if !year
         ret.to_all_parts if opts[:all_parts]
         ret.to_xml
       end

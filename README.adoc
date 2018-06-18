@@ -336,14 +336,18 @@ consisting of a conical sample divider
 === Bibliographic details
 
 Citations can include details of where in the document the citation is located; these
-are entered by suffixing the type of locality, followed by the reference. Multiple
-instances of locality and reference can be provided, delimited by comma or colon. For
+are entered by suffixing the type of locality, then an equals sign, then the reference. 
+The word "whole" on its own is also treated as a locality. Multiple
+instances of locality and reference can be provided, delimited by comma or colon. Any trailing
+text after the sequence of locality=reference (or locality, space, reference) are treated
+as substitute text, as would occur normally in an Asciidoctor crossreference. For
 example:
 
 [source,asciidoctor]
 --
-<<ISO712,section 5, page 8-10>>         # renders as: ISO 712, Section 5, Page 8-10
-<<ISO712,section 5, page 8-10: 5:8-10>> # renders as ISO 712, 5:8-10
+<<ISO712,the foregoing reference>>     # renders as: the foregoing reference
+<<ISO712,section=5, page 8-10>>         # renders as: ISO 712, Section 5, Page 8-10
+<<ISO712,section=5, page=8-10: 5:8-10>> # renders as ISO 712, 5:8-10 ("5:8-10" treated as replacement text for all the foregoing)
 <<ISO712,whole>>                        # renders as: ISO 712, Whole of text
 --
 
@@ -354,7 +358,7 @@ A custom locality can be entered by prefixing it with `locality:`:
 
 [source,asciidoctor]
 --
-<<ISO712,locality:frontispiece 5, page 8-10>>         # renders as: ISO 712, Frontispiece 5, Page 8-10
+<<ISO712,locality:frontispiece=5, page=8-10>>         # renders as: ISO 712, Frontispiece 5, Page 8-10
 --
 
 Custom localities may not contain commas, colons, or space. Localities with the `locality:`

@@ -84,9 +84,6 @@ RSpec.describe Asciidoctor::ISO do
         <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
         <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
         <docidentifier>ISO 123</docidentifier>
-        <date type="published">
-          <on>2001</on>
-        </date>
         <contributor>
           <role type="publisher"/>
           <organization>
@@ -125,6 +122,57 @@ RSpec.describe Asciidoctor::ISO do
           <code>83.040.10</code>
           <text>Latex and raw rubber</text>
         </ics>
+        <relation type="instance">
+  <bibitem type="international-standard" id="ISO123">
+    <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>
+        <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Échantillonnage</title>
+    <source type="src">https://www.iso.org/standard/23281.html</source>
+    <source type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>
+    <source type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>
+    <docidentifier>ISO 123</docidentifier>
+    <date type="published">
+      <on>2001</on>
+    </date>
+    <contributor>
+      <role type="publisher"/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+        <uri>www.iso.org</uri>
+      </organization>
+    </contributor>
+    <edition>3</edition>
+    <language>en</language>
+    <language>fr</language>
+    <script>Latn</script>
+    <status>Published</status>
+    <copyright>
+      <from>2001</from>
+      <owner>
+        <organization>
+          <name>ISO</name>
+          <abbreviation/>
+        </organization>
+      </owner>
+    </copyright>
+    <relation type="obsoletes">
+      <bibitem>
+        <formattedref>ISO 123:1985</formattedref>
+        <docidentifier>ISO 123:1985</docidentifier>
+      </bibitem>
+    </relation>
+    <relation type="updates">
+      <bibitem>
+        <formattedref>ISO 123:2001</formattedref>
+        <docidentifier>ISO 123:2001</docidentifier>
+      </bibitem>
+    </relation>
+    <ics>
+      <code>83.040.10</code>
+      <text>Latex and raw rubber</text>
+    </ics>
+  </bibitem>
+</relation>
       </bibitem>
       </references>
       </bibliography>

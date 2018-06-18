@@ -401,7 +401,7 @@ RSpec.describe Asciidoctor::ISO do
       === Term1
 
       [.source]
-      <<ISO2191,section 1>>
+      <<ISO2191,section=1>>
       INPUT
       #{BLANK_HDR}
        <sections>
@@ -427,7 +427,7 @@ RSpec.describe Asciidoctor::ISO do
       === Term1
 
       [.source]
-      <<ISO2191,section 1>>, with adjustments
+      <<ISO2191,section=1>>, with adjustments
       INPUT
       #{BLANK_HDR}
             <sections>
