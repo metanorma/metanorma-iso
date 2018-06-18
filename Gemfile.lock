@@ -3,6 +3,7 @@ PATH
   specs:
     asciidoctor-iso (0.8.2)
       asciidoctor (~> 1.5.7)
+      iso-bib-item (~> 0.1.6)
       isobib (~> 0.1.6)
       isodoc (>= 0.7.1)
       ruby-jing
@@ -51,7 +52,7 @@ GEM
     htmlentities (4.3.4)
     httpclient (2.8.3)
     image_size (2.0.0)
-    iso-bib-item (0.1.5)
+    iso-bib-item (0.1.6)
       duplicate
       isoics (~> 0.1.6)
       nokogiri
