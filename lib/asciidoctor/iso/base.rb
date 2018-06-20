@@ -29,7 +29,7 @@ module Asciidoctor
       end
 
       def html_converter(node)
-        IsoDoc::Iso::Convert.new(
+        IsoDoc::Iso::HtmlConvert.new(
           script: node.attr("script"),
           bodyfont: node.attr("body-font"),
           headerfont: node.attr("header-font"),
@@ -39,7 +39,7 @@ module Asciidoctor
       end
 
       def html_converter_alt(node)
-        IsoDoc::Iso::Convert.new(
+        IsoDoc::Iso::HtmlConvert.new(
           script: node.attr("script"),
           bodyfont: node.attr("body-font"),
           headerfont: node.attr("header-font"),

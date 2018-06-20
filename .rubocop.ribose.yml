@@ -4,6 +4,7 @@ AllCops:
   - "**/Gemfile"
   - "**/*.gemfile"
   - "**/Rakefile"
+  - "**/*.rb"
   Exclude:
   - "vendor/**/*"
   - "db/**/*"

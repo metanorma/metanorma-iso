@@ -11,7 +11,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    algoliasearch (1.22.0)
+    algoliasearch (1.23.2)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
     asciidoctor (1.5.7.1)
@@ -59,7 +59,7 @@ GEM
     isobib (0.1.6)
       algoliasearch
       iso-bib-item (~> 0.1.2)
-    isodoc (0.7.1)
+    isodoc (0.8)
       asciimath
       html2doc (>= 0.7.1)
       htmlentities (~> 4.3.4)
