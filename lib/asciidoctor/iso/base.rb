@@ -68,7 +68,7 @@ module Asciidoctor
         @novalid = node.attr("novalid")
         @fontheader = default_fonts(node)
         @files_to_delete = []
-        @filename = node.attr("docfile") ? 
+        @filename = node.attr("docfile") ?
           node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "") : ""
         @no_isobib_cache = node.attr("no-isobib-cache")
         @bibliodb = open_cache_biblio(node, true)

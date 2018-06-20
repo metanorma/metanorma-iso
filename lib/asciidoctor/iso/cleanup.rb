@@ -44,12 +44,15 @@ module Asciidoctor
 
       def docidentifier_cleanup(xmldoc)
         id = xmldoc.at("//bibdata/docidentifier/project-number")
+        return unless id
+
         prefix = []
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
                      "/organization").each do |x|
           x1 = x.at("abbreviation")&.text || x.at("name")&.text
           x1 == "ISO" and prefix.unshift("ISO") or prefix << x1
         end
+
         id.content = prefix.join("/") + " " + id.text
       end
 
@@ -59,7 +62,7 @@ module Asciidoctor
            referenceTo docidentifier prefix initial addition surname forename
            title draft secretariat title-main title-intro title-part}.freeze
 
-      # it seems Nokogiri::XML is treating the content of <script> as cdata, 
+      # it seems Nokogiri::XML is treating the content of <script> as cdata,
       # because of its use in HTML. Bad nokogiri. Undoing that, since we use
       # script as a normal tag
       def script_cleanup(xmldoc)
