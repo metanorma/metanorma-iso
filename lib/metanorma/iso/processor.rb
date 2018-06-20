@@ -23,7 +23,6 @@ module Metanorma
       end
 
       def output(isodoc_node, outname, format, options={})
-        puts "isodoc_node #{isodoc_node}"
         case format
         when :html
           IsoDoc::Iso::HtmlConvert.new(options).convert(outname, isodoc_node)
