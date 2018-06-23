@@ -8,6 +8,8 @@ require "asciidoctor"
 require "asciidoctor-iso"
 require "rspec/matchers"
 require "equivalent-xml"
+require "metanorma"
+require "metanorma/iso"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
