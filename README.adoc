@@ -41,29 +41,51 @@ gives a summary overview.
 
 == Usage
 
+The preferred way to invoke this gem is via the `metanorma` script:
+
 [source,console]
 ----
-$ asciidoctor a.adoc  # HTML output of Asciidoc file
-$ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  # ISO XML output, 
+$ metanorma --type iso a.adoc                   # output HTML and DOC
+$ metanorma --type csd --extensions html a.adoc # output just HTML
+$ metanorma --type csd --extensions doc a.adoc  # output just DOC
+$ metanorma --type csd --extensions xml a.adoc  # output CSD XML
 ----
 
-The initial step is optional, and can be used as a preview of what the gem
-will do; it generates a `{filename}.html` file.
-
-When invoked within Asciidoctor, the gem translates the document into 
-ISO XML format, and then validates its
-output against the ISO XML document model; errors are reported to console
-against the XML, and are intended for users to check that they have provided
-all necessary components of the document.
-
-The gem then converts the XML to Micosoft Word (`{filename}.doc`), HTML (`{filename}.html`), 
-and PDF (forthcoming).
-
-In the process of generating the Microsoft Word document, the associated
-https://github.com/riboseinc/isodoc[IsoDoc] gem generates temporary files:
-`{filename}.htm` contains the Microsoft Word-specific HTML for inclusion in that file,
-and the `{filename}_files` folder contains any images and headers for the Word
+The gem translates the document into ISO XML format, and then
+validates its output against the ISO XML document model; errors are
+reported to console against the XML, and are intended for users to
+check that they have provided all necessary components of the
 document.
+
+The gem then converts the XML into HTML and DOC.
+
+The gem can also be invoked directly within asciidoctor, though this is deprecated:
+
+[source,console]
+----
+$ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  
+----
+
+If you do not invoke the `iso` backend explicitly, the AsciiISO source will be
+treated as generic Asciidoc markup, and will output an HTML preview that 
+ignores the ISO-specific modifications to the markup:
+
+[source,console]
+----
+$ asciidoctor a.adoc  
+----
+
+=== Installation
+
+If you are using a Mac, the https://github.com/riboseinc/metanorma-macos-setup
+repository has instructions on setting up your machine to run Metanorma
+scripts such as this one. You need only run the following in a Terminal console:
+
+[source,console]
+----
+$ bash <(curl -s https://raw.githubusercontent.com/riboseinc/metanorma-macos-setup/master/metanorma-setup)
+$ gem install asciidoctor-iso
+----
 
 
 === Content Warnings
