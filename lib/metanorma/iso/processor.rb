@@ -18,6 +18,10 @@ module Metanorma
         }
       end
 
+      def version
+        "Asciidoctor::ISO #{Asciidoctor::ISO::VERSION}/IsoDoc #{IsoDoc::VERSION}"
+      end
+
       def input_to_isodoc(file)
         Metanorma::Input::Asciidoc.new.process(file, @asciidoctor_backend)
       end
