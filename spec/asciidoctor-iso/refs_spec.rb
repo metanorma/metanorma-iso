@@ -123,7 +123,7 @@ RSpec.describe Asciidoctor::ISO do
           <text>Latex and raw rubber</text>
         </ics>
         <relation type="instance">
-  <bibitem type="international-standard" id="ISO123">
+  <bibitem type="international-standard">
     <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>
         <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Échantillonnage</title>
     <source type="src">https://www.iso.org/standard/23281.html</source>
