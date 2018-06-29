@@ -213,7 +213,7 @@ end
     private
 
     def mock_isobib_get_123
-      expect(Isobib::IsoBibliography).to receive(:isobib_get).with("ISO 123", "2001", {}) do
+      expect(Isobib::IsoBibliography).to receive(:get).with("ISO 123", "2001", {}) do
         <<~"OUTPUT"
         <bibitem type=\"international-standard\" id=\"ISO123\">\n  <title format=\"text/plain\" language=\"en\" script=\"Latn\">Rubber latex -- Sampling</title>\n  <title format=\"text/plain\" language=\"fr\" script=\"Latn\">Latex de caoutchouc -- ?chantillonnage</title>\n  <source type=\"src\">https://www.iso.org/standard/23281.html</source>\n  <source type=\"obp\">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>\n  <source type=\"rss\">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>\n  <docidentifier>ISO 123</docidentifier>\n  <date type=\"published\">\n    <on>2001</on>\n  </date>\n  <contributor>\n    <role type=\"publisher\"/>\n    <organization>\n      <name>International Organization for Standardization</name>\n      <abbreviation>ISO</abbreviation>\n      <uri>www.iso.org</uri>\n    </organization>\n  </contributor>\n  <edition>3</edition>\n  <language>en</language>\n  <language>fr</language>\n  <script>Latn</script>\n  <status>Published</status>\n  <copyright>\n    <from>2001</from>\n    <owner>\n      <organization>\n        <name>ISO</name>\n        <abbreviation></abbreviation>\n      </organization>\n    </owner>\n  </copyright>\n  <relation type=\"obsoletes\">\n    <bibitem>\n      <formattedref>ISO 123:1985</formattedref>\n      <docidentifier>ISO 123:1985</docidentifier>\n    </bibitem>\n  </relation>\n  <relation type=\"updates\">\n    <bibitem>\n      <formattedref>ISO 123:2001</formattedref>\n      <docidentifier>ISO 123:2001</docidentifier>\n    </bibitem>\n  </relation>\n</bibitem>
         OUTPUT
@@ -221,7 +221,7 @@ end
     end
 
         def mock_isobib_get_123_undated
-      expect(Isobib::IsoBibliography).to receive(:isobib_get).with("ISO 123", nil, {}) do
+      expect(Isobib::IsoBibliography).to receive(:get).with("ISO 123", nil, {}) do
         <<~"OUTPUT"
         <bibitem type=\"international-standard\" id=\"ISO123\">\n  <title format=\"text/plain\" language=\"en\" script=\"Latn\">Rubber latex -- Sampling</title>\n  <title format=\"text/plain\" language=\"fr\" script=\"Latn\">Latex de caoutchouc -- ?chantillonnage</title>\n  <source type=\"src\">https://www.iso.org/standard/23281.html</source>\n  <source type=\"obp\">https://www.iso.org/obp/ui/#!iso:std:23281:en</source>\n  <source type=\"rss\">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</source>\n  <docidentifier>ISO 123</docidentifier>\n  <date type=\"published\">\n    <on>2001</on>\n  </date>\n  <contributor>\n    <role type=\"publisher\"/>\n    <organization>\n      <name>International Organization for Standardization</name>\n      <abbreviation>ISO</abbreviation>\n      <uri>www.iso.org</uri>\n    </organization>\n  </contributor>\n  <edition>3</edition>\n  <language>en</language>\n  <language>fr</language>\n  <script>Latn</script>\n  <status>Published</status>\n  <copyright>\n    <from>2001</from>\n    <owner>\n      <organization>\n        <name>ISO</name>\n        <abbreviation></abbreviation>\n      </organization>\n    </owner>\n  </copyright>\n  <relation type=\"obsoletes\">\n    <bibitem>\n      <formattedref>ISO 123:1985</formattedref>\n      <docidentifier>ISO 123:1985</docidentifier>\n    </bibitem>\n  </relation>\n  <relation type=\"updates\">\n    <bibitem>\n      <formattedref>ISO 123:2001</formattedref>\n      <docidentifier>ISO 123:2001</docidentifier>\n    </bibitem>\n  </relation>\n</bibitem>
         OUTPUT
@@ -229,7 +229,7 @@ end
     end
 
         def mock_isobib_get_124
-      expect(Isobib::IsoBibliography).to receive(:isobib_get).with("ISO 124", "2014", {}) do
+      expect(Isobib::IsoBibliography).to receive(:get).with("ISO 124", "2014", {}) do
         <<~"OUTPUT"
         <bibitem type=\\"international-standard\\" id=\\"ISO124\\">\\n  <title format=\\"text/plain\\" language=\\"en\\" script=\\"Latn\\">Latex, rubber -- Determination of total solids content</title>\\n  <title format=\\"text/plain\\" language=\\"fr\\" script=\\"Latn\\">Latex de caoutchouc -- Détermination des matt
 ières solides totales</title>\\n  <source type=\\"src\\">https://www.iso.org/standard/61884.html</source>\\n  <source type=\\"obp\\">https://www.iso.org/oo

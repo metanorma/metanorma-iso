@@ -90,7 +90,7 @@ module Asciidoctor
       # => , because the hash is imported from JSON
       def new_bibcache_entry(code, year, opts)
         { "fetched" => Date.today, 
-          "bib" => Isobib::IsoBibliography.isobib_get(code, year, opts) }
+          "bib" => Isobib::IsoBibliography.get(code, year, opts) }
       end
 
       # if cached reference is undated, expire it after 60 days
