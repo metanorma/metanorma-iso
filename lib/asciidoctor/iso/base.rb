@@ -71,8 +71,8 @@ module Asciidoctor
         @filename = node.attr("docfile") ?
           node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "") : ""
         @no_isobib_cache = node.attr("no-isobib-cache")
-        @bibliodb = open_cache_biblio(node, true)
-        @local_bibliodb = node.attr("local-cache") ?
+        @bibdb = open_cache_biblio(node, true)
+        @local_bibdb = node.attr("local-cache") ?
           open_cache_biblio(node, false) : nil
       end
 
@@ -106,8 +106,8 @@ module Asciidoctor
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
-        save_cache_biblio(@bibliodb, true)
-        save_cache_biblio(@local_bibliodb, false)
+        save_cache_biblio(@bibdb, true)
+        save_cache_biblio(@local_bibdb, false)
         textcleanup(result.flatten * "\n")
       end
 

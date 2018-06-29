@@ -87,18 +87,32 @@ module Asciidoctor
         ret
       end
 
-      def fetch_ref1(code, year, opts)
+      # => , because the hash is imported from JSON
+      def new_bibcache_entry(code, year, opts)
+        {
+          "fetched" => Date.today, 
+          "bib" => Isobib::IsoBibliography.isobib_get(code, year, opts)
+        }
+      end
+
+      def is_bibcache_entry?(x)
+        return x && x.is_a?(Hash) && x&.has_key?("bib") && x&.has_key?("fetched")
+      end
+
+      def check_bibliocache(code, year, opts)
+        #require "byebug"; byebug
         id = iso_id(code, year, opts[:all_parts])
-        return nil if @bibliodb.nil? # signals we will not be using isobib
-        @bibliodb[id] = Isobib::IsoBibliography.isobib_get(code, year, opts) unless @bibliodb[id]
-        @local_bibliodb[id] = @bibliodb[id] if !@local_bibliodb.nil? &&
-          !@local_bibliodb[id]
-        return @local_bibliodb[id] unless @local_bibliodb.nil?
-        @bibliodb[id]
+        return nil if @bibdb.nil? # signals we will not be using isobib
+        @bibdb[id] = nil unless is_bibcache_entry?(@bibdb[id])
+        @bibdb[id] ||= new_bibcache_entry(code, year, opts)
+        @local_bibdb[id] = @bibdb[id] if !@local_bibdb.nil? &&
+          !is_bibcache_entry?(@local_bibdb[id])
+        return @local_bibdb[id]["bib"] unless @local_bibdb.nil?
+        @bibdb[id]["bib"]
       end
 
       def fetch_ref(xml, code, year, **opts)
-        hit = fetch_ref1(code, year, opts)
+        hit = check_bibliocache(code, year, opts)
         return nil if hit.nil?
         xml.parent.add_child(hit)
         xml

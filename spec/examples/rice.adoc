@@ -14,7 +14,7 @@
 :title-main-fr: Spécification et méthodes d'essai
 :title-part-fr: Riz
 :doctype: international-standard
-:docstage: 30
+:docstage: 60
 :docsubstage: 92
 :draft: 
 :technical-committee-number: 34
