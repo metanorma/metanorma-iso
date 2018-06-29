@@ -89,24 +89,23 @@ module Asciidoctor
 
       # => , because the hash is imported from JSON
       def new_bibcache_entry(code, year, opts)
-        {
-          "fetched" => Date.today, 
-          "bib" => Isobib::IsoBibliography.isobib_get(code, year, opts)
-        }
+        { "fetched" => Date.today, 
+          "bib" => Isobib::IsoBibliography.isobib_get(code, year, opts) }
       end
 
-      def is_bibcache_entry?(x)
-        return x && x.is_a?(Hash) && x&.has_key?("bib") && x&.has_key?("fetched")
+      # if cached reference is undated, expire it after 60 days
+      def is_valid_bibcache_entry?(x, year)
+        x && x.is_a?(Hash) && x&.has_key?("bib") && x&.has_key?("fetched") &&
+          (year || Date.today - Date.iso8601(x["fetched"]) < 60)
       end
 
       def check_bibliocache(code, year, opts)
-        #require "byebug"; byebug
         id = iso_id(code, year, opts[:all_parts])
         return nil if @bibdb.nil? # signals we will not be using isobib
-        @bibdb[id] = nil unless is_bibcache_entry?(@bibdb[id])
+        @bibdb[id] = nil unless is_valid_bibcache_entry?(@bibdb[id], year)
         @bibdb[id] ||= new_bibcache_entry(code, year, opts)
         @local_bibdb[id] = @bibdb[id] if !@local_bibdb.nil? &&
-          !is_bibcache_entry?(@local_bibdb[id])
+          !is_valid_bibcache_entry?(@local_bibdb[id], year)
         return @local_bibdb[id]["bib"] unless @local_bibdb.nil?
         @bibdb[id]["bib"]
       end
