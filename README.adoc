@@ -564,6 +564,10 @@ items are not looked up via `isobib`, and the `isobib` caches are not used.
 If the document attribute `:no-isobib-cache:` is set, the reference details for
 items are still looked up via `isobib`, but the `isobib` caches are not used.
 
+Any entry in the cache that corresponds to an undated ISO reference fetches its details
+from the latest available entry on the ISO web site. If the entry is more than 60
+days old, it is refetched.
+
 == Document Attributes
 
 The gem relies on Asciidoctor document attributes to provide necessary
