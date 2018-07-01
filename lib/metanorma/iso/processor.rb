@@ -11,11 +11,11 @@ module Metanorma
       end
 
       def output_formats
-        {
+        super.merge(
           html: "html",
           html_alt: "alt.html",
           doc: "doc"
-        }
+        )
       end
 
       def version
@@ -34,6 +34,8 @@ module Metanorma
           IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true)).convert(outname, isodoc_node)
         when :doc
           IsoDoc::Iso::WordConvert.new(options).convert(outname, isodoc_node)
+        else
+          super
         end
       end
 
