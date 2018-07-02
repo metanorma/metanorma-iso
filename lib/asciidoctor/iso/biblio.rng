@@ -37,7 +37,7 @@
   <define name="edition">
     <a:documentation>ISO-15924: Latn</a:documentation>
     <element name="edition">
-      <data type="int"/>
+      <text/>
     </element>
   </define>
   <define name="LocalizedString">
@@ -102,9 +102,12 @@
         <attribute name="type">
           <choice>
             <value>author</value>
-            <value>edition</value>
+            <value>performer</value>
             <value>publisher</value>
-            <text/>
+            <value>editor</value>
+            <value>adapter</value>
+            <value>translator</value>
+            <value>distributor</value>
           </choice>
         </attribute>
       </optional>
@@ -145,18 +148,26 @@
   </define>
   <define name="fullname">
     <element name="name">
+      <choice>
+        <group>
+          <zeroOrMore>
+            <ref name="prefix"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="forename"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="initial"/>
+          </zeroOrMore>
+          <ref name="surname"/>
+          <zeroOrMore>
+            <ref name="addition"/>
+          </zeroOrMore>
+        </group>
+        <ref name="completeName"/>
+      </choice>
       <zeroOrMore>
-        <ref name="prefix"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="forename"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="initial"/>
-      </zeroOrMore>
-      <ref name="surname"/>
-      <zeroOrMore>
-        <ref name="addition"/>
+        <ref name="bnote"/>
       </zeroOrMore>
     </element>
   </define>
@@ -185,6 +196,11 @@
       <ref name="LocalizedString"/>
     </element>
   </define>
+  <define name="completename">
+    <element name="completename">
+      <ref name="LocalizedString"/>
+    </element>
+  </define>
   <define name="affiliation">
     <element name="affiliation">
       <optional>
@@ -210,6 +226,9 @@
     <element name="organization">
       <ref name="orgname"/>
       <optional>
+        <ref name="subdivision"/>
+      </optional>
+      <optional>
         <ref name="abbreviation"/>
       </optional>
       <optional>
@@ -225,6 +244,11 @@
   </define>
   <define name="orgname">
     <element name="name">
+      <ref name="LocalizedString"/>
+    </element>
+  </define>
+  <define name="subdivision">
+    <element name="subdivision">
       <ref name="LocalizedString"/>
     </element>
   </define>
@@ -346,7 +370,6 @@
   </define>
   <define name="locality">
     <element name="locality">
-      <!-- attribute type { ( "section" | "clause" | "part" | "paragraph" | "chapter" | "page" | "whole" | "table" | "annex" | "figure" | "note" | "example" | ("locality:", text) ) }, -->
       <attribute name="type">
         <ref name="LocalityType"/>
       </attribute>
@@ -358,7 +381,7 @@
   </define>
   <define name="LocalityType">
     <data type="string">
-      <param name="pattern">section|clause|part|paragraph|chapter|page|whole|table|annex|figure|note|example|locality:[a-zA-Z0-9_]+</param>
+      <param name="pattern">section|clause|part|paragraph|chapter|page|whole|table|annex|figure|note|example|volume|issue|locality:[a-zA-Z0-9_]+</param>
     </data>
   </define>
   <define name="referenceFrom">
@@ -398,6 +421,18 @@
       <value>techreport</value>
       <value>standard</value>
       <value>unpublished</value>
+      <value>map</value>
+      <value>electronic resource</value>
+      <value>audiovisual</value>
+      <value>film</value>
+      <value>video</value>
+      <value>broadcast</value>
+      <value>graphic work</value>
+      <value>music</value>
+      <value>patent</value>
+      <value>inbook</value>
+      <value>incollection</value>
+      <value>inproceedings</value>
     </choice>
   </define>
   <define name="BibliographicItem">
@@ -442,20 +477,41 @@
     <optional>
       <ref name="status"/>
     </optional>
-    <zeroOrMore>
+    <optional>
       <ref name="copyright"/>
-    </zeroOrMore>
+    </optional>
     <zeroOrMore>
       <ref name="docrelation"/>
     </zeroOrMore>
+    <zeroOrMore>
+      <ref name="series"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="medium"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="bplace"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="extent"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="accesslocation"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="bclassification"/>
+    </optional>
+    <optional>
+      <ref name="validity"/>
+    </optional>
   </define>
   <define name="btitle">
     <element name="title">
-      <ref name="FormattedString"/>
+      <ref name="TypedTitleString"/>
     </element>
   </define>
   <define name="bsource">
-    <element name="source">
+    <element name="link">
       <ref name="TypedUri"/>
     </element>
   </define>
@@ -469,11 +525,67 @@
       <ref name="TypedUri"/>
     </element>
   </define>
+  <define name="validity">
+    <element name="validity">
+      <optional>
+        <ref name="validityBegins"/>
+      </optional>
+      <optional>
+        <ref name="validityEnds"/>
+      </optional>
+      <optional>
+        <ref name="validityRevision"/>
+      </optional>
+    </element>
+  </define>
+  <define name="validityBegins">
+    <element name="validityBegins">
+      <ref name="Iso8601DateTime"/>
+    </element>
+  </define>
+  <define name="validityEnds">
+    <element name="validityEnds">
+      <ref name="Iso8601DateTime"/>
+    </element>
+  </define>
+  <define name="validityRevision">
+    <element name="revision">
+      <ref name="Iso8601DateTime"/>
+    </element>
+  </define>
+  <define name="TypedTitleString">
+    <optional>
+      <attribute name="type">
+        <ref name="TitleType"/>
+      </attribute>
+    </optional>
+    <ref name="FormattedString"/>
+  </define>
+  <define name="TitleType">
+    <choice>
+      <value>alternative</value>
+      <value>original</value>
+      <value>unofficial</value>
+      <value>subtitle</value>
+      <value>main</value>
+    </choice>
+  </define>
   <define name="TypedUri">
     <optional>
       <attribute name="type"/>
     </optional>
     <data type="anyURI"/>
+  </define>
+  <define name="DateType">
+    <optional>
+      <attribute name="text"/>
+    </optional>
+    <optional>
+      <choice>
+        <data type="gYear"/>
+        <data type="date"/>
+      </choice>
+    </optional>
   </define>
   <define name="bdate">
     <element name="date">
@@ -487,9 +599,10 @@
           <value>confirmed</value>
           <value>updated</value>
           <value>issued</value>
+          <value>transmitted</value>
+          <value>copied</value>
         </choice>
       </attribute>
-      <!-- ( ( bfrom, bto? ) | date_on ) -->
       <choice>
         <group>
           <element name="from">
@@ -516,35 +629,126 @@
       </choice>
     </element>
   </define>
-  <define name="bfrom">
-    <element name="from">
-      <choice>
-        <data type="gYear"/>
-        <data type="date"/>
-      </choice>
-    </element>
-  </define>
-  <define name="bto">
-    <element name="to">
-      <choice>
-        <data type="gYear"/>
-        <data type="date"/>
-      </choice>
-    </element>
-  </define>
-  <define name="date_on">
-    <element name="on">
-      <choice>
-        <data type="gYear"/>
-        <data type="date"/>
-      </choice>
-    </element>
-  </define>
   <define name="docidentifier">
     <element name="docidentifier">
       <optional>
         <attribute name="type"/>
       </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="bclassification">
+    <element name="classification">
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="bplace">
+    <element name="place">
+      <text/>
+    </element>
+  </define>
+  <define name="medium">
+    <element name="medium">
+      <optional>
+        <ref name="form"/>
+      </optional>
+      <optional>
+        <ref name="size"/>
+      </optional>
+      <optional>
+        <ref name="scale"/>
+      </optional>
+    </element>
+  </define>
+  <define name="form">
+    <element name="form">
+      <text/>
+    </element>
+  </define>
+  <define name="size">
+    <element name="size">
+      <text/>
+    </element>
+  </define>
+  <define name="scale">
+    <element name="scale">
+      <text/>
+    </element>
+  </define>
+  <define name="accesslocation">
+    <element name="accesslocation">
+      <text/>
+    </element>
+  </define>
+  <define name="extent">
+    <element name="extent">
+      <ref name="BibItemLocality"/>
+    </element>
+  </define>
+  <define name="series">
+    <element name="series">
+      <optional>
+        <attribute name="type">
+          <choice>
+            <value>main</value>
+            <value>alt</value>
+          </choice>
+        </attribute>
+      </optional>
+      <choice>
+        <ref name="btitle"/>
+        <ref name="formattedref"/>
+      </choice>
+      <ref name="bplace"/>
+      <ref name="seriesorganization"/>
+      <optional>
+        <ref name="abbreviation"/>
+      </optional>
+      <optional>
+        <ref name="seriesfrom"/>
+      </optional>
+      <optional>
+        <ref name="seriesto"/>
+      </optional>
+      <optional>
+        <ref name="seriesnumber"/>
+      </optional>
+      <optional>
+        <ref name="seriespartnumber"/>
+      </optional>
+    </element>
+  </define>
+  <define name="seriesorganization">
+    <element name="organization">
+      <text/>
+    </element>
+  </define>
+  <define name="seriesfrom">
+    <element name="from">
+      <choice>
+        <data type="dateTime"/>
+        <data type="gYear"/>
+      </choice>
+    </element>
+  </define>
+  <define name="seriesto">
+    <element name="to">
+      <choice>
+        <data type="dateTime"/>
+        <data type="gYear"/>
+      </choice>
+    </element>
+  </define>
+  <define name="seriesnumber">
+    <element name="number">
+      <text/>
+    </element>
+  </define>
+  <define name="seriespartnumber">
+    <element name="partnumber">
       <text/>
     </element>
   </define>
@@ -586,17 +790,18 @@
     <element name="relation">
       <attribute name="type">
         <choice>
-          <value>parent</value>
-          <value>child</value>
           <value>obsoletes</value>
           <value>updates</value>
           <value>updatedBy</value>
           <value>complements</value>
           <value>derivedFrom</value>
+          <value>translatedFrom</value>
           <value>adoptedFrom</value>
           <value>equivalent</value>
           <value>identical</value>
           <value>nonequivalent</value>
+          <value>includedIn</value>
+          <value>includes</value>
         </choice>
       </attribute>
       <element name="bibitem">

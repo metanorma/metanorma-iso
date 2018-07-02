@@ -998,7 +998,7 @@
       <ref name="formattedref"/>
     </optional>
     <zeroOrMore>
-      <ref name="source"/>
+      <ref name="bsource"/>
     </zeroOrMore>
     <zeroOrMore>
       <ref name="docidentifier"/>

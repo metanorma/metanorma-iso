@@ -264,11 +264,11 @@ EOS
 
     input = <<~EOS
 #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
-  [bibliography]
-  == Normative References
+[bibliography]
+== Normative References
 
-  * [[[iso123,ISO 123:2001]]] _Standard_
-  * [[[iso124,ISO 124]]] _Standard_
+* [[[iso123,ISO 123:2001]]] _Standard_
+* [[[iso124,ISO 124]]] _Standard_
 EOS
 
     output = <<~EOS
