@@ -488,7 +488,7 @@ RSpec.describe "Warning if no normative references" do
   INPUT
 end
 
-RSpec.describe "Warning if final section is not Bibliography" do
+RSpec.describe "Warning if final section is not named Bibliography" do
   specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{There are sections after the final Bibliography}).to_stderr }
   #{VALIDATING_BLANK_HDR}
 
@@ -515,6 +515,33 @@ RSpec.describe "Warning if final section is not Bibliography" do
 
   [bibliography]
   == Appendix C
+
+  INPUT
+end
+
+RSpec.describe "Warning if final section is not styled Bibliography" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Section not marked up as \[bibliography\]!}).to_stderr }
+  #{VALIDATING_BLANK_HDR}
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  [bibliography]
+  == Normative References
+
+  == Terms and Definitions
+
+  == Clause
+
+  [appendix]
+  == Appendix A
+
+  [appendix]
+  == Appendix B
+
+  == Bibliography
 
   INPUT
 end
