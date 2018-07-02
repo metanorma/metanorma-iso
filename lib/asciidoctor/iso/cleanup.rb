@@ -161,7 +161,8 @@ module Asciidoctor
 
       def termdocsource_cleanup(xmldoc)
         f = xmldoc.at("//preface | //sections")
-        xmldoc.xpath("//terms/termdocsource").each do |s|
+        xmldoc.xpath("//terms/termdocsource | "\
+                     "//clause/termdocsource").each do |s|
           f.previous = s.remove
         end
       end
