@@ -167,7 +167,7 @@
         <ref name="completeName"/>
       </choice>
       <zeroOrMore>
-        <ref name="bnote"/>
+        <ref name="biblionote"/>
       </zeroOrMore>
     </element>
   </define>
@@ -196,7 +196,7 @@
       <ref name="LocalizedString"/>
     </element>
   </define>
-  <define name="completename">
+  <define name="completeName">
     <element name="completename">
       <ref name="LocalizedString"/>
     </element>
@@ -370,14 +370,17 @@
   </define>
   <define name="locality">
     <element name="locality">
-      <attribute name="type">
-        <ref name="LocalityType"/>
-      </attribute>
-      <ref name="referenceFrom"/>
-      <optional>
-        <ref name="referenceTo"/>
-      </optional>
+      <ref name="BibItemLocality"/>
     </element>
+  </define>
+  <define name="BibItemLocality">
+    <attribute name="type">
+      <ref name="LocalityType"/>
+    </attribute>
+    <ref name="referenceFrom"/>
+    <optional>
+      <ref name="referenceTo"/>
+    </optional>
   </define>
   <define name="LocalityType">
     <data type="string">
@@ -540,17 +543,17 @@
   </define>
   <define name="validityBegins">
     <element name="validityBegins">
-      <ref name="Iso8601DateTime"/>
+      <data type="dateTime"/>
     </element>
   </define>
   <define name="validityEnds">
     <element name="validityEnds">
-      <ref name="Iso8601DateTime"/>
+      <data type="dateTime"/>
     </element>
   </define>
   <define name="validityRevision">
     <element name="revision">
-      <ref name="Iso8601DateTime"/>
+      <data type="dateTime"/>
     </element>
   </define>
   <define name="TypedTitleString">
