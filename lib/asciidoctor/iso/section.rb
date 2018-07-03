@@ -139,8 +139,8 @@ module Asciidoctor
         sub = node.find_by(context: :section) do |s|
           s.title.casecmp("symbols and abbreviated terms").zero?
         end
-        return "Terms and Definitions" if sub.empty?
-        "Terms, Definitions, Symbols and Abbreviated Terms"
+        return "Terms and definitions" if sub.empty?
+        "Terms, definitions, symbols and abbreviated terms"
       end
 
       def term_def_parse(attrs, xml, node, toplevel)

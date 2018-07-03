@@ -73,15 +73,15 @@ module Asciidoctor
             msg: "Normative References must be followed by "\
             "Terms and Definitions",
             val: [
-              { tag: "terms", title: "Terms and Definitions" },
-              { tag: "clause", title: "Terms and Definitions" },
+              { tag: "terms", title: "Terms and definitions" },
+              { tag: "clause", title: "Terms and definitions" },
               {
                 tag: "terms",
-                title: "Terms, Definitions, Symbols and Abbreviated Terms",
+                title: "Terms, definitions, symbols and abbreviated terms",
               },
               {
                 tag: "clause",
-                title: "Terms, Definitions, Symbols and Abbreviated Terms",
+                title: "Terms, definitions, symbols and abbreviated terms",
               },
             ],
           },
