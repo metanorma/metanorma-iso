@@ -115,7 +115,7 @@ RSpec.describe Asciidoctor::ISO do
               #{BLANK_HDR}
        <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Term1</preferred>
          <termnote id="_">
@@ -223,7 +223,7 @@ RSpec.describe Asciidoctor::ISO do
       #{BLANK_HDR}
               <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Term1</preferred>
          <termexample id="_">
@@ -406,7 +406,7 @@ RSpec.describe Asciidoctor::ISO do
       #{BLANK_HDR}
        <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Term1</preferred>
          <termsource status="identical">
@@ -432,7 +432,7 @@ RSpec.describe Asciidoctor::ISO do
       #{BLANK_HDR}
             <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Term1</preferred>
          <termsource status="modified">

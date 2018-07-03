@@ -66,12 +66,12 @@ RSpec.describe Asciidoctor::ISO do
        </clause>
 
        <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Term1</preferred>
        </term>
        </terms>
-       <clause id="_" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title><terms id="_" obligation="normative">
+       <clause id="_" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="_" obligation="normative">
          <title>Normal Terms</title>
          <term id="_">
          <preferred>Term2</preferred>
@@ -183,12 +183,12 @@ RSpec.describe Asciidoctor::ISO do
        </clause>
      
        <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Term1</preferred>
        </term>
        </terms>
-       <clause id="_" obligation="normative"><title>Terms and Definitions</title><terms id="_" obligation="normative">
+       <clause id="_" obligation="normative"><title>Terms and definitions</title><terms id="_" obligation="normative">
          <title>Normal Terms</title>
          <term id="_">
          <preferred>Term2</preferred>
@@ -322,7 +322,7 @@ RSpec.describe Asciidoctor::ISO do
          <p id="_">Foreword</p>
        </foreword></preface><sections>
        <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
 
 
        </terms></sections>

@@ -30,7 +30,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_"><preferred><stem type="AsciiMath">t_90</stem></preferred><admitted><stem type="AsciiMath">t_91</stem></admitted>
        <definition><p id="_">Time</p></definition></term>
        </terms>
@@ -51,7 +51,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Tempus</preferred>
          <domain>relativity</domain><definition><p id="_"> Time</p></definition>
@@ -85,7 +85,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_"><preferred><stem type="AsciiMath">t_90</stem></preferred><definition><formula id="_">
          <stem type="AsciiMath">t_A</stem>
        </formula><p id="_">This paragraph is extraneous</p></definition>
@@ -111,7 +111,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
               <sections>
-         <terms id="_" obligation="normative"><title>Terms and Definitions</title>
+         <terms id="_" obligation="normative"><title>Terms and definitions</title>
 
        <term id="_">
        <preferred>Time</preferred>
@@ -291,7 +291,7 @@ r = 1 %</stem>
               #{BLANK_HDR}
        <sections>
          <terms id="_" obligation="normative">
-         <title>Terms and Definitions</title>
+         <title>Terms and definitions</title>
          <term id="_">
          <preferred>Term1</preferred>
          <termsource status="identical">
