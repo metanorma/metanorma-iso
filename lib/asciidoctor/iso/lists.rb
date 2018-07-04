@@ -17,6 +17,14 @@ module Asciidoctor
 
       def ulist(node)
         return reference(node) if in_norm_ref? || in_biblio?
+=begin
+         if in_norm_ref? || in_biblio?
+           require "byebug"; byebug
+r = reference(node)
+@xxxxxx = true
+return r
+         end
+=end
         noko do |xml|
           xml.ul **id_attr(node) do |xml_ul|
             node.items.each do |item|

@@ -514,18 +514,13 @@
     </element>
   </define>
   <define name="bsource">
-    <element name="link">
+    <element name="uri">
       <ref name="TypedUri"/>
     </element>
   </define>
   <define name="formattedref">
     <element name="formattedref">
       <ref name="FormattedString"/>
-    </element>
-  </define>
-  <define name="link">
-    <element name="link">
-      <ref name="TypedUri"/>
     </element>
   </define>
   <define name="validity">

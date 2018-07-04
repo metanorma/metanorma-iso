@@ -804,7 +804,7 @@
           <data type="int"/>
         </attribute>
       </optional>
-      <data type="int"/>
+      <text/>
     </element>
   </define>
   <define name="tc-documentnumber">
