@@ -35,7 +35,7 @@ module Asciidoctor
       end
 
       def use_my_anchor(ref, id)
-        ref.parent.children.last["id"] = id
+        ref.parent.elements.last["id"] = id
         ref
       end
 

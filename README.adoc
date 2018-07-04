@@ -118,6 +118,9 @@ levels of subsections.)
 
 * Title intro or title part appears in only one of French or English.
 
+In addition, the gem checks all terms cited from the IEV Electropedia against
+the online IEV Electropedia entry, and issues a warning if the term is different.
+
 == Approach
 === Document model
 

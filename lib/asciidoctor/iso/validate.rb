@@ -5,6 +5,7 @@ require_relative "./validate_section.rb"
 require "nokogiri"
 require "jing"
 require "pp"
+require "iev"
 
 module Asciidoctor
   module ISO
@@ -158,12 +159,26 @@ module Asciidoctor
     end
   end
 
+  SOURCELOCALITY = ".//locality[@type = 'clause']/referenceFrom".freeze
+
+  def iev_validate(xmldoc)
+    xmldoc.xpath("//term").each do |t|
+      /^IEV($|\s|:)/.match? t&.at(".//origin/@citeas")&.text or next
+      pref = t.xpath("./preferred").inject([]) { |m, x| m << x&.text&.downcase }
+      locality = t.xpath(SOURCELOCALITY)&.text or next
+      iev = Iev.get(locality, xmldoc&.at("//language")&.text || "en") or next
+      pref.include?(iev.downcase) or
+        warn %(Term "#{pref[0]}" does not match IEV #{locality} "#{iev}")
+    end
+  end
+
   def content_validate(doc)
     title_validate(doc.root)
     isosubgroup_validate(doc.root)
     section_validate(doc)
     onlychild_clause_validate(doc.root)
     termdef_style(doc.root)
+    iev_validate(doc.root)
     see_xrefs_validate(doc.root)
     see_erefs_validate(doc.root)
   end
@@ -201,6 +216,6 @@ module Asciidoctor
     schema_validate(formattedstr_strip(doc.dup),
                     File.join(File.dirname(__FILE__), "isostandard.rng"))
   end
-end
+    end
   end
 end

@@ -77,7 +77,7 @@ RSpec.describe Asciidoctor::ISO do
       <sections>
              </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
-         <bibitem type="international-standard" id="ISO123">
+         <bibitem type="international-standard" id="iso123">
          <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>
          <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- ?chantillonnage</title>
          <source type="src">https://www.iso.org/standard/23281.html</source>

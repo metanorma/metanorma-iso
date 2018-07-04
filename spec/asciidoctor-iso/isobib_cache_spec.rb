@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Asciidoctor::ISO do
 
   ISO_123_SHORT = <<~EOS
-<bibitem type="international-standard" id="ISO123">
+<bibitem type="international-standard" id="iso123">
   <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>
   <docidentifier>ISO 123</docidentifier>
 </bibitem>
@@ -17,7 +17,7 @@ EOS
 EOS
 
   ISO_124_SHORT_ALT = <<~EOS
-<bibitem type="international-standard" id="ISO124">
+<bibitem type="international-standard" id="iso124">
   <title format="text/plain" language="en" script="Latn">Latex, rubber -- Replacement</title>
   <docidentifier>ISO 124</docidentifier>
 </bibitem>
@@ -36,7 +36,6 @@ EOS
 <bibitem type="international-standard" id="ISO124">  <title format="text/plain" language="en" script="Latn">Latex, rubber -- Determination of total solids content</title>  <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Détermination des matières solides totales</title>  <source type="src">https://www.iso.org/standard/61884.html</source>  <source type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</source>  <source type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</source>  <docidentifier>ISO 124</docidentifier>  <date type="published">    <on>2014</on>  </date>  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>  <edition>7</edition>  <language>en</language>  <language>fr</language>  <script>Latn</script>  <abstract format="plain" language="en" script="Latn">ISO 124:2014 specifies methods for the determination of the total solids content of natural rubber field and concentrated latices and synthetic rubber latex. These methods are not necessarily suitable for latex from natural sources other than the Hevea brasiliensis, for vulcanized latex, for compounded latex, or for artificial dispersions of rubber.</abstract>  <abstract format="plain" language="fr" script="Latn">L'ISO 124:2014 spécifie des méthodes pour la détermination des matières solides totales dans le latex de plantation, le latex de concentré de caoutchouc naturel et le latex de caoutchouc synthétique. Ces méthodes ne conviennent pas nécessairement au latex d'origine naturelle autre que celui de l'Hevea brasiliensis, au latex vulcanisé, aux mélanges de latex, ou aux dispersions artificielles de caoutchouc.</abstract>  <status>Published</status>  <copyright>    <from>2014</from>    <owner>      <organization>        <name>ISO</name>        <abbreviation></abbreviation>      </organization>    </owner>  </copyright>  <relation type="obsoletes">    <bibitem>      <formattedref>ISO 124:2011</formattedref>      <docidentifier>ISO 124:2011</docidentifier>    </bibitem>  </relation></bibitem>
 EOS
 
-
   it "does not activate biblio caches if isobib disabled" do
     system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
     system "rm -f test.relaton.json"
@@ -53,7 +52,6 @@ EOS
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
   end
-
 
   it "does not activate biblio caches if isobib caching disabled" do
     system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"

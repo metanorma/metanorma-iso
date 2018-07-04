@@ -1,24 +1,28 @@
 module Asciidoctor
   module ISO
     module Cleanup
-      # currently references cannot contain commas!
       # extending localities to cover ISO referencing
       LOCALITY_REGEX_STR = <<~REGEXP.freeze
         ^((?<locality>section|clause|part|paragraph|chapter|page|
                       table|annex|figure|example|note|formula|
                       locality:[^ \\t\\n\\r:,]+)(\\s+|=)
-               (?<ref>[^ \\t\\n,:-]+)(-(?<to>[^ \\t\\n,:-]+))?|
+               (?<ref>[^"][^ \\t\\n,:-]*|"[^"]+")
+                 (-(?<to>[^"][^ \\t\\n,:-]*|"[^"]"))?|
           (?<locality2>whole|locality:[^ \\t\\n\\r:,]+))[,:]?\\s*
          (?<text>.*)$
       REGEXP
       LOCALITY_RE = Regexp.new(LOCALITY_REGEX_STR.gsub(/\s/, ""),
                                Regexp::IGNORECASE | Regexp::MULTILINE)
 
+      def tq(x)
+        x.sub(/^"/, "").sub(/"$/, "")
+      end
+
       def extract_localities(x)
         text = x.children.first.remove.text
         while (m = LOCALITY_RE.match text)
-          ref = m[:ref] ? "<referenceFrom>#{m[:ref]}</referenceFrom>" : ""
-          refto = m[:to] ? "<referenceTo>#{m[:to]}</referenceTo>" : ""
+          ref = m[:ref] ? "<referenceFrom>#{tq m[:ref]}</referenceFrom>" : ""
+          refto = m[:to] ? "<referenceTo>#{tq m[:to]}</referenceTo>" : ""
           loc = m[:locality]&.downcase || m[:locality2]&.downcase
           x.add_child("<locality type='#{loc}'>#{ref}#{refto}</locality>")
           text = m[:text]

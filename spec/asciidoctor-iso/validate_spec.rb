@@ -778,3 +778,58 @@ RSpec.describe "validates document against ISO XML schema" do
   INPUT
 end
 
+
+RSpec.describe "Warning if terms mismatches IEV" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Term "automation" does not match IEV 103-01-02 "functional"}).to_stderr }
+  #{VALIDATING_BLANK_HDR}
+  
+  [bibliography]
+  == Normative References
+  * [[[iev,IEV]]], _iev_
+
+  == Terms and definitions
+  === Automation
+
+  [.source]
+  <<iev,clause="103-01-02">>
+  INPUT
+end
+
+RSpec.describe "No warning if English term matches IEV" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr }
+  #{VALIDATING_BLANK_HDR}
+
+  [bibliography]
+  == Normative References
+  * [[[iev,IEV]]], _iev_
+
+  == Terms and definitions
+  === Functional
+
+  [.source]
+  <<iev,clause="103-01-02">>
+  INPUT
+end
+
+RSpec.describe "No warning if French term matches IEV" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr }
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :language: fr
+
+  [bibliography]
+  == Normative References
+  * [[[iev,IEV]]], _iev_
+
+  == Terms and definitions
+  === Fonctionnelle, f
+
+  [.source]
+  <<iev,clause="103-01-02">>
+  INPUT
+end
+
+

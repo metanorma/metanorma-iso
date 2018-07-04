@@ -3,6 +3,7 @@ PATH
   specs:
     asciidoctor-iso (0.9.3)
       asciidoctor (~> 1.5.7)
+      iev (~> 0.1.0)
       iso-bib-item (~> 0.1.6)
       isobib (~> 0.1.8)
       isodoc (>= 0.8)
@@ -82,7 +83,7 @@ GEM
       nokogiri (>= 1.4.3)
     ffi (1.9.25)
     formatador (0.2.5)
-    gbbib (0.1.2)
+    gbbib (0.1.3)
       cnccs
       iso-bib-item
     guard (2.14.2)
@@ -110,9 +111,11 @@ GEM
       uuidtools
     htmlentities (4.3.4)
     httpclient (2.8.3)
+    iev (0.1.0)
+      nokogiri
     image_size (2.0.0)
     iso-bib-item (0.1.10)
-      duplicate
+      duplicate (~> 1.1.1)
       isoics (~> 0.1.6)
       nokogiri
     isobib (0.1.9)
