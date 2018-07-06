@@ -1,0 +1,178 @@
+= Gem Customisation Guide
+
+In this guide, we give advice on how to adopt the Metanorma approach to document generation for your documents. We provide enough guidance for you to do full customisation, but we prefix each section with a Tip for quick-and-dirty implementation.
+
+== How can I adopt the StanDoc specification for my own publications?
+
+TIP: Copy the RSD schema from https://github.com/riboseinc/metanorma-iso/blob/master/grammars/rsd.rng. You may need to adapt some of the enums in the model, or in the ISO Standards model that it inherits; but in the first instance, you can just ignore the differences—and ignore the validation feedback that the toolset gives.
+
+The Standoc specification is expressed in http://www.relaxng.org[RelaxNG schema for XML], and is intended to be customisable for different types of publication. The customisation of Standoc relies on inheritance, with the following schemas embedded hierarchically:
+
+* https://github.com/riboseinc/bib-models[Relaton]: bibliography
+* https://github.com/riboseinc/basicdoc-models[BasicDoc]: block-level and inline formatting
+* https://github.com/riboseinc/metanorma-standoc[StanDoc]: organisation of sections for a generic standards document
+* Models specific to standards
+
+Because of the richness of the ISO standards model, most Standoc standards to date (including the sample gem https://github.com/riboseinc/asciidoctor-metanorma_sample) inherit from the ISO Standards model, which itself inherits from Standoc.
+
+Specialisation of a model consists of:
+
+* Adding classes to a base model.
+* Changing attributes of a base model class. This is not restricted to adding attributes, as is the case in typical entity subclassing; it can also include removing attributes from a class, changing their obligation and cardinality, and changing their type, including changing enumerations. Attributes can be overruled at any level; for example, standards-specific models routinely enhance the bibliographic model at the base of the hierarchy.
+* For reasons of clarity, renaming classes and attributes is avoided in specialisation.
+
+To adapt the schema for your publication set,
+
+* Get familiar with the Standoc set of models, and identify any elements that you would want to represent differently for your documents (different types, different enums), or enhance for your documents (additional element attributes, additional elements)
+* Create a grammar inheriting from StanDoc or from a specific standard, which expresses what is distinctive about your grammar.
+** We recommend starting your modelling in UML, as an effective communication tool; compare the UML models for Standoc standards at https://github.com/riboseinc/metanorma-iso
+** The tool suite expects to validate against a set of schemas expressed in RelaxNG. We have been authoring grammars in RelaxNG Compact, as a more human-readable format, then compiling those grammars to RelaxNG using https://github.com/relaxng/jing-trang[jing-trang]. You can choose to use a different schema language, but you will need to customise the tool chain to validate against that form of schema instead.
+** In order to make schema inheritance easier, we have avoided using namespaces for the individual schemas; a namespace is added to the standards-specific schema at the very end of the inheritance chain.
+
+== How can I adapt the StanDoc toolchain for my own publications?
+
+[TIP]
+====
+* Clone the asciidoctor-metanorma_sample gem: https://github.com/riboseinc/asciidoctor-metanorma_sample.
+* Change the namespace for RSD documents (`RSD_NAMESPACE = "https://open.ribose.com/standards/rsd"`) to a namespace specific to your organisation's document standard.
+* Change any references to `sample` or `Sample` in the gem to your organisation's document standard.
+* Change the styling of the document outputs (`.../lib/isodoc/XXX/html`).
+====
+
+The tool chains currently available proceed in two steps: map an input markup language (currently Asciidoctor only) into Standoc XML, and map Standoc XML into various output formats (currently Word doc, HTML, PDF via HTML). Running the metanorma tool involves a third step, of exposing the capabilities available in the first two in a consistent format. These two steps are represented as three separate modules, which are included in the same gem; for the Sample gem, they are `Asciidoctor::Sample`, `Isodoc::Sample`, and `Metanorma::Sample`. (In the case of Asciidoctor-ISO, almost all the content of `Isodoc::ISO` is in the isodoc gem, so the base classes of the two steps are in separate gems.) 
+
+Your adaptation of the toolchain will need to instantiate these three modules. The connection between the two first steps is taken care of in the toolchain, and metanorma explicitly invokes the two steps, feeding the XML output of the first step as input into the second. The asciidoctor-metanorma_sample gem outputs both Word and HTML; you can choose to output only Word (as is done in asciidoctor-m3d), or only HTML (as is done in asciidoctor-csand), and you can choose to generate PDF from HTML as well (as is done in asciidoctor-csd).
+
+The modules involve classes which rely on inheritance from other classes; the current gems all use `Asciidoctor::ISO::Converter`, `Isodoc::{Metadata, HtmlConvert, WordConvert}`, and `Metanorma::Processor` as their base classes. This allows the standards-specific classes to be quite succinct, as most of their behaviour is inherited from other classes; but it also means that you need to be familiar with the underlying gems, in order to do most customisation.
+
+In the case of `Asciidoctor::X` classes, the changes you will need to make involve the intermediate XML representation of your document; e.g. adding different enums, or adding new elements. The adaptations in `Asciidoctor::Sample::Converter` are limited, and most projects can take them across as is: 
+
+* The boilerplate representation of the document's author, publisher and copyright holder names Ribose instead of ISO as the responsible organisation.
+* The editorial committees are represented as a single element, as opposed to ISO's name plus number.
+* The document title is monolingual, not bilingual.
+* The document status is a single element, as opposed to ISO's two-part code.
+* The document identifier is a single element.
+* Title validation and style validation is disabled.
+* The root element of the document is changed from `iso-standard` to `rsd-standard`.
+* The document type attribute is restricted to a prescribed set of options.
+* A `literal` element and a `keyword` element is added to the ISO instance of Standoc.
+* The inline headers of ISO are ignored.
+
+The customisations needed for Metanorma::Sample::Processor are minor:
+
+* `initialize` names the token by which Asciidoctor registers the standard
+* `output_formats` names the available output formats (including XML, which is inherited from the parent class)
+* `version` gives the current version string for the gem
+* `input_to_isodoc` is the call which converts Asciidoctor input into IsoDoc XML
+* `output` is the call which converts IsoDoc XML into various nominated output formats
+
+The customisations needed for Isodoc::Sample are more extensive. Three base classes are involved: 
+
+* `Isodoc::Metadata` processes the metadata about the document stored in `//bibdata`. This information typically ends up in the document title page, as opposed to the document body. For that reason, metadata is extracted into a hash, which is passed to document output (title page, Word header) via the https://shopify.github.io/liquid/[Liquid template language].
+* `Isodoc::HtmlConvert` converts Standoc XML to HTML.
+* `Isodoc::WordConvert` converts Standoc XML to Word HTML; the https://github.com/riboseinc/html2doc[html2doc] gem then converts this to a .doc document.
+
+The `Isodoc::HtmlConvert` and `Isodoc::WordConvert` overlap substantially, as both use variants of HTML; in fact the files `samplehtmlrender.rb` and `samplewordrender.rb` are deliberately identical, apart from the class their code belongs to. However there is no reason not to make substantially different rendering choices in the HTML and Word branches of the code.
+
+= How can I style the resulting HTML output?
+
+[TIP]
+====
+* Clone the asciidoctor-metanorma_sample gem: https://github.com/riboseinc/asciidoctor-metanorma_sample.
+* Edit the `html_sample_titlepage.html` and `html_sample_intro.html` pages to match your organisation's branding.
+** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
+* Edit the `default_fonts()` method in your `IsoDoc::...::HtmlConvert` class, to match your desired fonts.
+* Edit the `htmlstyle.scss` stylesheet to match your organisation's branding. The classes already in place there are used to style existing blocks of text; refer to the sample documents included in the gem (`spec/examples`) for their use.
+====
+
+Styling of output is intended to be configurable. HTML stylesheets are in https://sass-lang.com/guide[SCSS], with their fonts populated through the `default_fonts()` method in the `IsoDoc::...::HtmlConvert` class. Frontispiece content is templated, populated from metadata parsed in the `IsoDoc::...::Metadata` class, via https://shopify.github.io/liquid/[Liquid templates]. That means you can change the styling of output documents readily, so long as you are aware of the functionality of the stylesheet.
+
+* Styling information is stored in the `.../lib/isodoc/html` folder of the gem, and applies to both Word and HTML content. For HTML content, the relevant files are `html_..._titlepage.html` (title page HTML template), `html_..._intro.html` (introductory HTML template, typically restricted to Table of Contents), `scripts.html` (Javascript scripts), and `htmlstyle.scss` (the HTML stylesheet).
+* The styling files to be loaded in are set in the `initialize()` method of `IsoDoc::...::HtmlConvert`. Additional files (e.g. logos) can be loaded there; for them to be access during document generation, they need to be copied to the working directory. (They can be removed subsequently by adding them to the `@files_to_delete` array. All image files are copied into an `_html` subdirectory.)
+* The HTML templates are populated through Liquid Templates: variables in `{{` correspond to the hash keys for metadata extracted in `IsoDoc::...::Metadata`, and its superclass `IsoDoc::Metadata` in the isodoc gem.
+* The SCSS stylesheets treat fonts as variables. Those variables are set in `default_fonts()`, which generates variable assignments for SCSS. Stylesheets normally recognise three fonts: `$bodyfont` for body text, `$headerfont` for headers and captions (which may be the same font as `$bodyfont`), and `$monospacefont` for monospace text. Note that `default_fonts()` takes the document script as a parameter, and permits different font choices for different document scripts. (The existing gems refer to `Latn`, Latin script, and `Hans`, Simplified Chinese script.)
+* Javascript scripts are populated in `scripts.html`; the scripts already in place in any gem you modify are in live use, and you should work out what they do before removing them. The AnchorJS script, for example, is used to generate navigable anchors in the document.
+* Additional scripts and fonts may be loaded in the document head through the `html_head()` method of  `IsoDoc::...::HtmlConvert`. The existing gems use the document head to load Jquery, the Table of Contents generation script, Google Fonts, and Font Awesome.
+* An HTML document is populated as follows:
+** HTML Head wrapper (in `IsoDoc::HtmlConvert`)
+*** `html_head()` content
+*** `@htmlstylesheet` CSS stylesheet (generated from SCSS through the `generate_css()` method of `Isodoc::HtmlConvert`).
+** HTML Body
+*** `@htmlcoverpage` HTML template (optional, corresponds to `html_..._titlepage.html`)
+*** `@htmlintropage` HTML template (optional, corresponds to `html_..._intro.html`)
+*** Document proper (converted from Standoc XML)
+*** `@scripts` Javascript Scripts (optional, corresponds to `scripts.html`)
+* The classes in the SCSS stylesheet correspond to static HTML content in the HTML templates, and dynamic HTML content in the `IsoDoc::...::HtmlConvert` class, and its superclasses `IsoDoc::HtmlConvert` and `IsoDoc::Common` in the isodoc gem.
+
+= How can I style the resulting Word output?
+
+[TIP]
+====
+* There is no quick way of doing this.
+* Everything you can do in Word, you can do in Word HTML. Save Word documents as Word HTML to see how.
+* Clone the asciidoctor-metanorma_sample gem: https://github.com/riboseinc/asciidoctor-metanorma_sample.
+* Edit the `word_sample_titlepage.html` and `word_sample_intro.html` pages to match your organisation's branding. With lots of iterations of saving Word documents as HTML, for trial and error.
+** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
+* Edit the `default_fonts()` method in your `IsoDoc::...::WordConvert` class, to match your desired fonts.
+* Edit the `wordstyle.scss` and `sample.scss` stylesheets to match your organisation's branding. With lots of iterations of saving Word documents as HTML, for trial and error.
+====
+
+Word output in the document toolset is generated through Word HTML, the variant of HTML that you get when you save a Word document as HTML. (That is why documents are saved in `.doc`, not `.docx`.) This has the advantage over https://en.wikipedia.org/wiki/Office_Open_XML[OOXML], the native markup of DOCX, of using a well-known markup language, with a low barrier to entry: if you want to work out how to do something in Word HTML, do it in Word, save the document as HTML, and open up the HTML in a text editor. (For more on the choice of using Word HTML, see https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F.)
+
+However Word HTML is not quite the HTML you are used to: it is a restricted, syntactically idiosyncratic variant of HTML 4, with a non-standard and weakened form of CSS. Doing any styling in Word HTML involves lots of trial and error, and paying close attention to how Word HTML does things in its CSS. We have documented a few of the clearer gotchas in https://github.com/riboseinc/html2doc/blob/master/README.adoc.
+
+It's still better than learning OOXML.
+
+The process for generating Word output is fairly similar to that for generating HTML, since both processes are generating a form of HTML; as we already noted, the two processes share a substantial amount of code. The main differences are in the handling of page-media features that CSS has lagged in (footnotes, pagination, headers and footers), and in the styling of lists, for which Word HTML uses custom (and undocumented) CSS classes prefixed with `@`, specifying inter alia the numbering for nine levels of nesting of the same list.
+
+* Styling information is stored in the `.../lib/isodoc/html` folder of the gem, and applies to both Word and HTML content. For Word content, the relevant files are `word_..._titlepage.html` (title page HTML template), `word_..._intro.html` (introductory HTML template, typically restricted to Table of Contents),  `wordstyle.scss` and `{name_of_standard}.scss` (the Word stylesheets), and `header.html` (document headers, footers, and endnote/footnote separators, referenced from the stylesheets).
+* The styling files to be loaded in are set in the `initialize()` method of `IsoDoc::...::WordConvert`. As with HTML generation, additional files (e.g. logos) can be loaded there. The `initialize()` method also sets the `@` styles in the stylesheet to be used for unordered and ordered lists; a single such style is intended to capture the behaviour of all levels of indentation. 
+* As with HTML output, the HTML templates are populated through Liquid Templates: variables in `{{` correspond to the hash keys for metadata extracted in `IsoDoc::...::Metadata`, and its superclass `IsoDoc::Metadata` in the isodoc gem.
+* As with HTML, the SCSS stylesheets treat fonts as variables, and are set in the `default_fonts()` method of `IsoDoc::...::WordConvert`.
+* Document headers and footers are set in the `header.html` file. This is also an HTML template, which is populated with metadata attributes through Liquid Template. The structure of `header.html` is determined by Word, and elements of `header.html` need to be crossreferenced from the Word stylesheet. To inspect Word `header.html` files, save a Word document as HTML, and look inside the `{document_name}.fld` folder generated alongside the HTML output.
+* A Word HTML document is populated as follows:
+** HTML Head wrapper (in `IsoDoc::WordConvert`)
+*** `@wordstylesheet` CSS stylesheet (generated from SCSS through the `generate_css()` method of `Isodoc::WordConvert`); corresponds to `wordstyle.scss`.
+*** `@standstylesheet` CSS stylesheet (generated from SCSS through the `generate_css()` method of `Isodoc::WordConvert`); intended to override any generic CSS in `@wordstylesheet`. Optional, corresponds to `{name_of_standard}.scss`.
+** HTML Body
+*** `@wordcoverpage` HTML template (optional, corresponds to `word_..._titlepage.html`). Included in `<div class=WordSection1>`.
+*** `@htmlintropage` HTML template (optional, corresponds to `word_..._intro.html`). Included in `<div class=WordSection2>`. In the existing gems, WordSection2 is paginated with roman numerals. 
+*** Document proper (converted from Standoc XML). Included in `<div class=WordSection2>` (prefatory material) and `<div class=WordSection3>` (main document). In the existing gems, WordSection3 is paginated with roman numerals.
+* The classes in the SCSS stylesheet correspond to static HTML content in the HTML templates, and dynamic HTML content in the `IsoDoc::...::WordConvert` class, and its superclasses `IsoDoc::WordConvert` and `IsoDoc::Common` in the isodoc gem.
+
+= How can I localize the resulting output?
+
+[TIP]
+====
+* Copy the `lib/isodoc/i18n-en.yaml` file from the isodoc gem to your gem.
+* Edit the right-hand text in the file.
+* Give the file location as the `i18nyaml` document attribute in any files you wish to use your localisation.
+====
+
+Every piece of text generated by the toolset instead of the author is looked up in an internationalisation file; that means that if the language setting for the document changes, and there is an internationalisation file for that language, all output is localised to that language. Of the existing gems, asciidoctor-gb is localised in this way for English and Chinese, and asciidoctor-iso is localised for English, French and Chinese. 
+
+The localisation files are http://yaml.org[YAML] files stores in `lib/isodoc/`, named `i18n-{languagecode}.yaml`. (In the case of Chinese, the script code is added to the filename: `i18n-zh-Hans.yaml`.) Most localised text are direct mappings from English metalanguage to the target language (including English itself); there are also instances of hashes in the YAML files. Most localisation text consists of one- or two-word labels, such as "Figure" or "Annex"; some boilerplate text is also included in the localisation text, such as the ISO text describing the use of external sources in Terms and Definitions.
+
+Localisation is mostly used for translation purposes, but they can also be used to customise the rendering of particular labels in English. For example, the default English label for a first-level supplementary section is "Annex", reflecting ISO practice; but in the asciidoctor-csd gem, this label is overruled in code to be "Appendix" instead.
+
+The YAML files are read into the `IsoDoc` classes through the `i18n_init()` method of `IsoDoc::...::HtmlConvert` and `Isodoc::...::WordConvert`. The localisation equivalents for the nominated language are read from the corresponding YAML file into the `@labels` hash. The base Isodoc instance of `i18n_init()` also assigns an instance variable for each label (e.g. `@annex_lbl` for English "Annex"). These instance variables are used to generate all automated text in the Isodoc classes.
+
+All current gems inherit their localisation files from the base isodoc gem. The local `i18n_init()` instance can overwrite individual labels in code (asciidoctor-csd), or they can read in a local additional YAML file for the same language (asciidoctor-gb). If you are implementing a completely new language, you will need to replace the base `i18n_init()` method rather than inheriting from it, to ensure that the local YAML files are read in.
+
+The foregoing describes how to incorporate localisation into your gem on a permanent basis; but the toolset also allows you to nominate a YAML localisation file just for the current document. In Asciidoc, the YAML file is nominated as the i18nyaml document attribute; for IsoDoc, it is passed in as the `i18nyaml` hash attribute to the initialisation method. You will still need to access the base IsoDoc YAML instances, to make sure that all necessary labels are given in your YAML document.
+
+= I can translate my specifications into IsoDoc XML myself (i.e. I don't like AsciiDoc, or I already have my own toolchain). Can I only use IsoDoc XML to produce pretty output?
+
+[TIP]
+====
+* Generate correct IsoDoc XML (make sure it validates!)
+* Create just the `IsoDoc::...::HtmlConvert` and/or `IsoDoc::...::WordConvert` classes to convert the IsoDoc XML into target formats.
+* Initialise the IsoDoc class passing the necessary information about fonts and scripts; the existing gems all illustrate this kind of initialisation.
+* Create the target format using the method `.convert(filename, xml)`.
+====
+
+The Asciidoctor-to-XML and XML-to-Output classes are separate, so you can invoke just the latter without the former. Of course, you will need to make sure that the IsoDoc XML you are passing to the generators is valid.
+
+The `IsoDoc::...::HtmlConvert` and/or `IsoDoc::...::WordConvert` are initialised in the existing gems with a hash giving the fonts to be used in the document (to be injected in the document SCSS stylesheets), the script of the document (to be used to pick the right font, in case of default font settings), and the `i18nyaml` YAML file for localisation. All existing gems have defaults set for these values on the Asciidoctor side invoking the class, so all parameters are optional.
+
+Once you have the classes set up, all you need to do is invoke the conversion of XML to the target format, with the method `.convert(filename, xml)`, where XML is the IsoDoc XML.
