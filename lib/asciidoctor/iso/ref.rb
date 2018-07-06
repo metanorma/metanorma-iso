@@ -67,14 +67,14 @@ module Asciidoctor
       end
 
       def isorefmatches3(xml, m)
-        ref = fetch_ref xml, m[:code], m[:year], all_parts: true
+        hasyr =  m.named_captures.has_key?("year")
+        ref = fetch_ref xml, m[:code], hasyr ? m[:year] : nil, all_parts: true
         return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem(**attr_code(ref_attributes(m))) do |t|
           t.title(**plaintxt) { |i| i << ref_normalise(m[:text]) }
           t.docidentifier "#{m[:code]}"
-          if m.named_captures.has_key?("year")
+          hasyr and
             t.date(**{ type: "published" }) { |d| set_date_range(d, m[:year]) }
-          end
           iso_publisher(t, m[:code])
           t.allParts "true"
         end
