@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   DESCRIPTION
 
   spec.homepage      = "https://github.com/riboseinc/asciidoctor-iso"
-  spec.license       = "MIT"
+  spec.license       = "BSD-2-Clause"
 
   spec.bindir        = "bin"
   spec.require_paths = ["lib"]
@@ -30,9 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "asciidoctor", "~> 1.5.7"
   spec.add_dependency "ruby-jing"
   spec.add_dependency "isodoc", ">= 0.8"
-  spec.add_dependency "isobib", "~> 0.1.8"
-  spec.add_dependency "iso-bib-item", "~> 0.1.6"
   spec.add_dependency "iev", "~> 0.1.0"
+  spec.add_dependency "relaton", "~> 0.0.1"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "byebug", "~> 9.1"

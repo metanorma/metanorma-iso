@@ -7,6 +7,7 @@ require "open-uri"
 require "pp"
 require "sass"
 require "isodoc"
+require "relaton"
 
 module Asciidoctor
   module ISO
@@ -71,9 +72,21 @@ module Asciidoctor
         @filename = node.attr("docfile") ?
           node.attr("docfile").gsub(/\.adoc$/, "").gsub(%r{^.*/}, "") : ""
         @no_isobib_cache = node.attr("no-isobib-cache")
-        @bibdb = open_cache_biblio(node, true)
-        @local_bibdb = node.attr("local-cache") ?
-          open_cache_biblio(node, false) : nil
+        @no_isobib = node.attr("no-isobib")
+        @bibdb = nil
+        init_bib_caches(node)
+      end
+
+      def init_bib_caches(node)
+        unless (@no_isobib_cache || @no_isobib)
+          globalname = bibliocache_name(true)
+          localname = bibliocache_name(false) if node.attr("local-cache")
+          if node.attr("flush-caches")
+            system("rm -f #{globalname}") unless globalname.nil?
+            system("rm -f #{localname}") unless localname.nil?
+          end
+        end        
+        @bibdb = Relaton::Db.new(globalname, localname) unless @no_isobib
       end
 
       def default_fonts(node)
@@ -106,8 +119,7 @@ module Asciidoctor
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
-        save_cache_biblio(@bibdb, true)
-        save_cache_biblio(@local_bibdb, false)
+        @bibdb.save() if @bibdb
         textcleanup(result.flatten * "\n")
       end
 

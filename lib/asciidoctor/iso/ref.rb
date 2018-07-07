@@ -1,5 +1,4 @@
 require "pp"
-require "isobib"
 
 module Asciidoctor
   module ISO
@@ -80,38 +79,8 @@ module Asciidoctor
         end
       end
 
-      def iso_id(code, year, all_parts)
-        ret = code
-        ret += ":#{year}" if year
-        ret += " (all parts)" if all_parts
-        ret
-      end
-
-      # => , because the hash is imported from JSON
-      def new_bibcache_entry(code, year, opts)
-        { "fetched" => Date.today, 
-          "bib" => Isobib::IsoBibliography.get(code, year, opts) }
-      end
-
-      # if cached reference is undated, expire it after 60 days
-      def is_valid_bibcache_entry?(x, year)
-        x && x.is_a?(Hash) && x&.has_key?("bib") && x&.has_key?("fetched") &&
-          (year || Date.today - Date.iso8601(x["fetched"]) < 60)
-      end
-
-      def check_bibliocache(code, year, opts)
-        id = iso_id(code, year, opts[:all_parts])
-        return nil if @bibdb.nil? # signals we will not be using isobib
-        @bibdb[id] = nil unless is_valid_bibcache_entry?(@bibdb[id], year)
-        @bibdb[id] ||= new_bibcache_entry(code, year, opts)
-        @local_bibdb[id] = @bibdb[id] if !@local_bibdb.nil? &&
-          !is_valid_bibcache_entry?(@local_bibdb[id], year)
-        return @local_bibdb[id]["bib"] unless @local_bibdb.nil?
-        @bibdb[id]["bib"]
-      end
-
       def fetch_ref(xml, code, year, **opts)
-        hit = check_bibliocache(code, year, opts)
+        hit = @bibdb&.fetch(code, year, opts) 
         return nil if hit.nil?
         xml.parent.add_child(hit)
         xml
@@ -198,30 +167,6 @@ module Asciidoctor
       def bibliocache_name(global)
         global ?  "#{Dir.home}/.relaton-bib.json" :
           "#{@filename}.relaton.json"
-      end
-
-      # if returns nil, then biblio caching is disabled, and so is use of isobib
-      def open_cache_biblio(node, global)
-        # return nil # disabling for now
-        return nil if node.attr("no-isobib")
-        return {} if @no_isobib_cache
-        filename = bibliocache_name(global)
-        system("rm -f #{filename}") if node.attr("flush-caches")
-        biblio = {}
-        if Pathname.new(filename).file?
-          File.open(filename, "r") do |f|
-            biblio = JSON.parse(f.read)
-          end
-        end
-        biblio
-      end
-
-      def save_cache_biblio(biblio, global)
-        return if biblio.nil? || @no_isobib_cache
-        filename = bibliocache_name(global)
-        File.open(filename, "w") do |b|
-          b << biblio.to_json
-        end
       end
     end
   end

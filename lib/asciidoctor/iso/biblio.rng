@@ -800,6 +800,8 @@
           <value>nonequivalent</value>
           <value>includedIn</value>
           <value>includes</value>
+          <value>instance</value>
+          <value>partOf</value>
         </choice>
       </attribute>
       <element name="bibitem">
