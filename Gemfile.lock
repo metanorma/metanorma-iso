@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/riboseinc/relaton.git
-  revision: 19dac2282a606c97f2f25d3a6117fd3b84c344dd
+  revision: 728514498b9edec146da249d1e0218262d82acb5
   specs:
-    relaton (0.0.1)
+    relaton (0.0.2)
       asciidoctor (~> 1.5.7)
       gbbib (~> 0.1.0)
       iev (~> 0.1.0)
@@ -40,7 +40,7 @@ GEM
       ruby-xslt
       thread_safe
       uuidtools
-    asciidoctor-csd (0.4.1)
+    asciidoctor-csd (0.4.2)
       asciidoctor-iso (>= 0.9.0)
       isodoc (>= 0.8.0)
     asciidoctor-gb (0.3.2)
@@ -67,7 +67,7 @@ GEM
       nokogiri
       ruby-jing
       thread_safe
-    asciidoctor-rsd (0.3.1)
+    asciidoctor-rsd (0.3.2)
       asciidoctor (~> 1.5.7)
       asciidoctor-iso (>= 0.8.0)
       asciimath
@@ -111,7 +111,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    html2doc (0.8.0)
+    html2doc (0.8.1)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
@@ -134,7 +134,7 @@ GEM
       iso-bib-item (~> 0.1.10)
     isodoc (0.8.1)
       asciimath
-      html2doc (>= 0.7.1)
+      html2doc (~> 0.8.1)
       htmlentities (~> 4.3.4)
       image_size
       liquid
@@ -203,10 +203,10 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.57.2)
+    rubocop (0.58.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.5)
+      parser (>= 2.5, != 2.5.1.1)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
