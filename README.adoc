@@ -440,6 +440,18 @@ applicable to other products derived from rice, nor to waxy rice (glutinous rice
 _____
 --
 
+=== Image size
+
+The value `auto` is accepted for image width and height attributes. It is only passed on
+to HTML output; if the output is to Word, both the width and height attributes are stripped
+from the image.
+
+[source,asciidoctor]
+--
+[height=90,width=auto]
+image::logo.jpg
+--
+
 === Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users

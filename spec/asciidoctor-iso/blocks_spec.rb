@@ -310,6 +310,23 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
     end
 
+    it "accepts auto for width and height attributes on images" do
+      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+      [height=4,width=auto]
+      image::spec/examples/rice_images/rice_image1.png[]
+
+      INPUT
+      #{BLANK_HDR}
+              <sections>
+         <figure id="_">
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="4" width="auto"/>
+       </figure>
+       </sections>
+       </iso-standard>
+      OUTPUT
+    end
+
     it "accepts alignment attribute on paragraphs" do
       expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}

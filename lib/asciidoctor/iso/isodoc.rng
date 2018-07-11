@@ -888,12 +888,18 @@
       </attribute>
       <optional>
         <attribute name="width">
-          <data type="int"/>
+          <choice>
+            <data type="int"/>
+            <value>auto</value>
+          </choice>
         </attribute>
       </optional>
       <optional>
         <attribute name="height">
-          <data type="int"/>
+          <choice>
+            <data type="int"/>
+            <value>auto</value>
+          </choice>
         </attribute>
       </optional>
     </element>
