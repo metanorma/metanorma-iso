@@ -129,13 +129,11 @@ GEM
     isobib (0.1.9)
       algoliasearch
       iso-bib-item (~> 0.1.10)
-    isodoc (0.8.1)
+    isodoc (0.8.2)
       asciimath
       html2doc (~> 0.8.1)
       htmlentities (~> 4.3.4)
-      image_size
       liquid
-      mime-types
       nokogiri
       roman-numerals
       ruby-xslt

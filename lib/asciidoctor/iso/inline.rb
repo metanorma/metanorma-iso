@@ -33,7 +33,9 @@ module Asciidoctor
         c = matched.nil? ? node.text : matched[:text]
         t = node.target.gsub(/^#/, "").gsub(%r{(.)(\.xml)?#.*$}, "\\1")
         noko do |xml|
-          xml.xref c, **attr_code(target: t, type: f)
+          xml.xref **attr_code(target: t, type: f) do |x|
+            x << c
+          end
         end.join
       end
 
@@ -42,7 +44,9 @@ module Asciidoctor
         contents = nil if node.target.gsub(%r{^mailto:}, "") == node.text
         attributes = { "target": node.target }
         noko do |xml|
-          xml.link contents, **attr_code(attributes)
+          xml.link **attr_code(attributes) do |l|
+            l << contents
+          end
         end.join
       end
 
@@ -51,7 +55,9 @@ module Asciidoctor
         eref_attributes = { id: node.target }
         @refids << node.target
         noko do |xml|
-          xml.ref eref_contents, **attr_code(eref_attributes)
+          xml.ref **attr_code(eref_attributes) do |r|
+            r << eref_contents
+          end
         end.join
       end
 
