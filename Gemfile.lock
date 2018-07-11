@@ -129,7 +129,7 @@ GEM
     isobib (0.1.9)
       algoliasearch
       iso-bib-item (~> 0.1.10)
-    isodoc (0.8.2)
+    isodoc (0.8.3)
       asciimath
       html2doc (~> 0.8.1)
       htmlentities (~> 4.3.4)
