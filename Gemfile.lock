@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/riboseinc/relaton.git
-  revision: 91deed2e6946fc8a30d611aa5eba4a56a553e259
+  revision: ce33a2874530a8f7bf438e26624d05a47526d346
   specs:
     relaton (0.0.2)
       gbbib (~> 0.1.0)
@@ -126,7 +126,7 @@ GEM
       isoics (~> 0.1.6)
       nokogiri (~> 1.8.4)
       ruby_deep_clone (~> 0.8.0)
-    isobib (0.1.9)
+    isobib (0.1.10)
       algoliasearch
       iso-bib-item (~> 0.1.10)
     isodoc (0.8.3)
