@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/riboseinc/relaton.git
-  revision: ce33a2874530a8f7bf438e26624d05a47526d346
+  revision: 946f9b66cd8a93d6c43ed02c1aca45a811b8f40d
   specs:
     relaton (0.0.2)
       gbbib (~> 0.1.0)
@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    asciidoctor-iso (0.9.5)
+    asciidoctor-iso (0.9.6)
       asciidoctor (~> 1.5.7)
       iev (~> 0.1.0)
       isodoc (>= 0.8)

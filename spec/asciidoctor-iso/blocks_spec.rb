@@ -286,7 +286,7 @@ RSpec.describe Asciidoctor::ISO do
               <sections>
          <figure id="_">
          <name>Split-it-right sample divider</name>
-                  <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG"/>
+                  <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="auto" width="auto"/>
        </figure>
        </sections>
        </iso-standard>
