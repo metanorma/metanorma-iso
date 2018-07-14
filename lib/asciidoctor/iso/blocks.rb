@@ -124,8 +124,8 @@ module Asciidoctor
         { src: uri,
           id: Utils::anchor_or_uuid,
           imagetype: types.first.sub_type.upcase,
-          height: node.attr("height"),
-          width: node.attr("width") }
+          height: node.attr("height") || "auto",
+          width: node.attr("width") || "auto" }
       end
 
       def figure_title(node, f)
