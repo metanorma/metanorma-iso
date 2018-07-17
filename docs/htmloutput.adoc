@@ -1,4 +1,4 @@
-i= HTML and Word HTML Output
+= HTML and Word HTML Output
 
 In order to create CSS stylesheets for the HTML and Word HTML output of the Metanorma tool, it is necessary to understand the structure of the HTML it generates.
 
