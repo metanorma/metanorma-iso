@@ -91,7 +91,7 @@ $ gem install asciidoctor-iso
 === Content Warnings
 
 The gem also realises several format
-checks as prescribed in ISO/IEC DIR 2, and warns the user about them in the
+checks as prescribed in ISO/IEC DIR 2: 2018, and warns the user about them in the
 console:
 
 * Numbers with what looks like dots instead of commas for decimal points.
