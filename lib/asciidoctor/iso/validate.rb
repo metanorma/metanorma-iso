@@ -144,6 +144,15 @@ module Asciidoctor
     end
   end
 
+  def locality_erefs_validate(root)
+    root.xpath("//eref[locality]").each do |t|
+      unless /:[ ]?\d+{4}$/.match? t["citeas"]
+        warn "ISO: undated reference #{t['citeas']} should not contain "\
+          "specific elements"
+      end
+    end
+  end
+
   def termdef_warn(text, re, term, msg)
     re.match?(text) && warn("ISO style: #{term}: #{msg}")
   end
@@ -181,6 +190,7 @@ module Asciidoctor
     iev_validate(doc.root)
     see_xrefs_validate(doc.root)
     see_erefs_validate(doc.root)
+    locality_erefs_validate(doc.root)
   end
 
   def schema_validate(doc, filename)

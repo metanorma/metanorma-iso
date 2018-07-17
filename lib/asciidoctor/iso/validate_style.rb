@@ -30,6 +30,12 @@ module Asciidoctor
         style_warning(node, "Introduction may contain requirement", r) if r
       end
 
+      def definition_style(node)
+        return if @novalid
+        r = requirement(extract_text(node))
+        style_warning(node, "Definition may contain requirement", r) if r
+      end
+
       def example_style(node)
         return if @novalid
         style_no_guidance(node, extract_text(node), "Term Example")

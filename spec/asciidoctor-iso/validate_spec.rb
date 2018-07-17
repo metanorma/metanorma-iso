@@ -50,6 +50,19 @@ RSpec.describe "warn that scope may contain recommendation" do
   INPUT
 end
 
+RSpec.describe "warn that definition may contain requirement" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Definition may contain requirement/).to_stderr }
+  #{VALIDATING_BLANK_HDR}
+
+  == Terms and Definitions
+
+  === Term1
+
+  It is required that there is a definition.
+
+  INPUT
+end
+
 RSpec.describe "warn that term example may contain recommendation" do
   specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Term Example may contain recommendation/).to_stderr }
   #{VALIDATING_BLANK_HDR}
@@ -117,6 +130,19 @@ RSpec.describe "term source is not a real reference" do
 
   [.source]
   <<iso123>>
+  INPUT
+end
+
+RSpec.describe "undated reference has locality" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/undated reference ISO 123 should not contain specific elements/).to_stderr }
+  #{VALIDATING_BLANK_HDR}
+  
+  == Scope
+  <<iso123,clause=1>>
+
+  [bibliography]
+  == Normative References
+  * [[[iso123,ISO 123]]] _Standard_
   INPUT
 end
 

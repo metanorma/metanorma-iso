@@ -116,7 +116,7 @@ module Asciidoctor
           docid = ref.at("./docidentifier")
           date = ref.at("./date[@type = 'published']")
           reference = format_ref(docid.text, isopub)
-          reference += ": #{date_range(date)}" if date && isopub
+          reference += ":#{date_range(date)}" if date && isopub
           @anchors[ref["id"]] = { xref: reference }
         end
       end

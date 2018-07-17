@@ -9,14 +9,13 @@ module Asciidoctor
         \\b
          ( shall | (is|are)_to |
            (is|are)_required_(not_)?to |
+           (is|are)_required_that |
            has_to |
            only\\b[^.,]+\\b(is|are)_permitted |
            it_is_necessary |
-           (needs|need)_to |
            (is|are)_not_(allowed | permitted |
                          acceptable | permissible) |
            (is|are)_not_to_be |
-           (need|needs)_not |
            do_not )
         \\b
       REGEXP

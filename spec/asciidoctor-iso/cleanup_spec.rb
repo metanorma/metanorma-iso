@@ -182,7 +182,7 @@ r = 1 %</stem>
         <preface><foreword obligation="informative">
         <title>Foreword</title>
         <p id="_">
-        <eref type="inline" bibitemid="iso216" citeas="ISO 216: 2001"/>
+        <eref type="inline" bibitemid="iso216" citeas="ISO 216:2001"/>
       </p>
       </foreword></preface><sections>
       </sections><bibliography><references id="_" obligation="informative">
