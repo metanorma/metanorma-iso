@@ -1,0 +1,115 @@
+i= HTML and Word HTML Output
+
+In order to create CSS stylesheets for the HTML and Word HTML output of the Metanorma tool, it is necessary to understand the structure of the HTML it generates.
+
+== HTML
+
+=== Top-Level Structure
+
+The `head` of the HTML document contains a single stylesheet (the `:htmlstylesheet` parameter of `HtmlConvert.new()`), and some brief script calls that are embedded in the Ruby code (initialising jQuery, including webfonts).
+
+The `body` of the HTML document is divided into the following parts:
+
+* A title section (`<div class="title-section">`), comprising identifying information about the document, such as appears in a title page in print. 
+** The section is populated with an HTML template (the `:htmlcoverpage` parameter of `HtmlConvert.new()`). The information in this section is sourced from document metadata, rather than document content proper; the gem uses http://liquidmarkup.org[Liquid Template] to populate the HTML template. Different fields usually have distinct class names for CSS styling; these can vary by gem. 
+** For example, ISO documents have `coverpage_docnumber` (for the document ID), `coverpage_techcommittee` (for the technical committee responsible for the document), `doctitle-en` (for the English-language title of the document), `doctitle-fr` (for the French title), `title, subtitle, part` (for the three components of the document title), and `coverpage_docstage` (for the stage of publication of the document).
+* A prefatory section (`<div class="prefatory-section">`), comprising boilerplate information which also does not come from document content proper. This is typically restricted to a copyright statement (`<div class="copyright">`), contact details, and a table of contents `<div id="toc">`. 
+** The section is also populated with a Liquid HTML template (the `:htmlintropage` parameter of `HtmlConvert.new()`). 
+** The table of contents in the HTML template is a placeholder; it is populated by a table of contents script included among the scripts loaded into the HTML body.
+* The main section of the document (`<main class="main-section">`), which is populated with the document content.
+* Optionally, a colophon (`<div class="colophon">`), which is populated with boilerplate information and/or document metadata. (Currently colophons in Metanorma gems appear only in Word output.)
+* Scripts. These are populated from a static file (the `:scripts` parameter of `HtmlConvert.new()`). These are expected to include https://www.mathjax.org[MathJax], a Table of Contents generator, and a script for handling footnotes.
+
+=== Body markup
+
+Within the body of the document, different blocks and inline spans of the Metanorma document model (https://github.com/riboseinc/metanorma-model-standoc[Standoc XML], https://github.com/riboseinc/basicdoc-models[BasicDoc XML]) are represented by different CSS classes, as follows:
+
+==== Sections
+
+Symbols and abbreviated terms:: `<div class="Symbols">` (contents are a definition list)
+Appendix title:: `<h1 class="Annex">`
+Appendix, Bibliography, Introduction:: `<div class="Section3">`
+Introduction title:: `<h1 class="IntroTitle">`
+Foreword title:: `<h1 class="ForewordTitle">`
+Deprecated term:: `<p class="DeprecatedTerms">`
+Alternative term:: `<p class="AltTerms">`
+Primary term:: `<p class="Terms">`
+Term header:: `<p class="TermNum">`
+Document title (in body):: `<p class="zzSTDTitle1">`
+
+==== Blocks
+
+Note:: `<div class="Note">`
+Note label:: `<span class="note_label">`
+Figure:: `<div class="figure">`
+Figure title:: `<span class="FigureTitle">`
+Example:: `<table class="example">` or `<div class="example">`
+Example label:: `<span class="example_label">`
+Sourcecode:: `<p class="Sourcecode">`
+Admonition:: `<div class="Admonition">`
+Formula:: `<div class="formula">`
+Blockquote:: `<div class="Quote">`
+Blockquote attribution:: `<p class="QuoteAttribution">`
+Footnote:: `<aside class="footnote">`
+Ordered list:: `<ol>`
+Unordered list:: `<ul>`
+Definition list:: `<dl>`
+Normative reference:: `<p class="NormRef">`
+Informative reference:: `<p class="Biblio">`
+Table:: `<table>`
+Table title:: `<p class="TableTitle">`
+Table head:: `<thead>`
+Table body:: `<tbody>`
+Table foot:: `<tfoot>`
+
+==== Inline
+
+Hyperlink:: `<a>`
+Cross-Reference:: `<a>`
+Stem expression:: `<span class="stem">`
+Small caps:: `<span style="font-variant:small-caps;">`
+Emphasis:: `<i>`
+Strong:: `<b>`
+Superscript:: `<sup>`
+Subscript:: `<sub>`
+Monospace:: `<tt>`
+Strikethrough:: `<s>`
+Line Break:: `<br>`
+Horizontal Rule:: `<hr>`
+Page Break:: `<br>` (realised as page break in Word HTML)
+
+
+== Word HTML
+
+=== Word HTML and Word HTML CSS
+
+The Word HTML documented here is what is used by the gems to generate DOC output. For more on why Word HTML is used, instead of OOXML or HTML 5 embedded into DOCX, see https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F
+
+Word HTML, and the Word HTML version of CSS, are restricted compared to the HTML and CSS you are likely familiar with. Word HTML is a subset of HTML 4; Word HTML CSS has a weakened set of selectors, and a range of Microsoft-specific extensions (prefixed with `@` or `mso-`). The weakened set of selectors means you cannot assume that classes are inherited by their children; normal CSS would apply formatting on a `div` class to its child paragraphs, but Word HTML would expect you to repeat that class definition for `p`.
+
+Some of the necessary caveats are listed in https://github.com/riboseinc/html2doc/blob/master/README.adoc. The styling of lists in particular is quite different to normal CSS, and requires a Word-specific selector to define list styles (the `:ulstyle ` and `:olstyle ` parameter of `WordConvert.new()`).
+
+Word HTML and CSS is not well-documented (even though there is a 1500 page manual from Microsoft); fortunately saving Word documents to HTML will reveal the Word HTML and Word HTML CSS that can be used to generate the same formatting. The stylesheets need to follow the conventions of Word HTML, and should be formulated by saving Word documents as HTML, and extracting their CSS stylesheets. Note that the CSS is prefixed with a set of font definitions; these too should be obtained by saving Word documents as HTML.
+
+=== Top-Level Structure
+
+The headers and footers of a Word document are defined in Word HTML in a separate file, `header.html` (the `:header` parameter of `WordConvert.new()`), which is included in the file manifest for the document. The header.html file is cross-referenced to the Word HTML CSS file, and contains a separate `div` for each header and footer type; refer to the instances in the gems for illustration.
+
+The `head` of the Word HTML document contains two stylesheets (the `:wordstylesheet` and `:standardsheet` parameter of `WordConvert.new()`). The `:wordstylesheet` is intended as generic Word markup, while `:standardsheet` is intended to contain styling specific to the standard. No scripts are supported in Word HTML. 
+
+The other elements of the Word HTML head are populated by the https://github.com/riboseinc/html2doc[html2doc gem]: a reference to a manifest of included files (specifically images and the header file), and settings to open the document in Print View at 100% magnification.
+
+The `body` of the Word HTML document is divided into the following parts:
+
+* A title section (`<div class="WordSection1">`), comprising identifying information about the document, such as appears in a title page in print. 
+** The section is populated with an HTML template (the `:wordcoverpage` parameter of `WordConvert.new()`). As with HTML, the information in this section is sourced from document metadata, rather than document content proper; and the gem uses http://liquidmarkup.org[Liquid Template] to populate the HTML template. 
+* A prefatory section (`<div class="WordSection2">`), comprising boilerplate information which does not come from document content proper (such as a Table of Contents shell), as well as prefatory material from the document content. The prefatory section is set in the CSS stylesheet to have Roman numerals for its pagination.
+** Because of the requirement for Roman numerals, prefatory material from the document is sent to this section, whereas all document content in the HTML document is sent to the main section.
+* The main section of the document (`<div class="WordSection3">`), which is populated with the remaining document content. The main section is set in the CSS stylesheet to have Arabic numerals for its pagination.
+* Optionally, a colophon (`<div class="colophon">`), which is populated with boilerplate information and/or document metadata. 
+
+=== Body markup
+
+With the exception of the top-level document sections, discussed above, the Word HTML generated by the gem use the same CSS classes as the HTML proper. As already noted, the quirks of Word HTML CSS mean that classes need to be repeated on descendant elements that are not required in normal CSS.
+
+The handling of footnotes and comments in Word HTML uses idiosyncratic Word HTML markup, including custom CSS, and is generated separately their the HTML counterparts in the gems.
