@@ -82,7 +82,7 @@ module Asciidoctor
       def fetch_ref(xml, code, year, **opts)
         hit = @bibdb&.fetch(code, year, opts) 
         return nil if hit.nil?
-        xml.parent.add_child(hit)
+        xml.parent.add_child(hit.to_xml)
         xml
       rescue Algolia::AlgoliaProtocolError
         nil # Render reference without an Internet connection.

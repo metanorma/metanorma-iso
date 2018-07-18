@@ -1,11 +1,14 @@
 require "spec_helper"
+require "isobib"
 
 RSpec.describe Asciidoctor::ISO do
 
   ISO_123_SHORT = <<~EOS
-<bibitem type="international-standard" id="iso123">
+<bibitem type="international-standard" id="ISO123">
   <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>
   <docidentifier>ISO 123</docidentifier>
+  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>
+  <status>Published</status>
 </bibitem>
 EOS
 
@@ -13,27 +16,31 @@ EOS
 <bibitem type="international-standard" id="ISO124">
   <title format="text/plain" language="en" script="Latn">Latex, rubber -- Determination of total solids content</title>
   <docidentifier>ISO 124</docidentifier>
+  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>
+  <status>Published</status>
 </bibitem>
 EOS
 
   ISO_124_SHORT_ALT = <<~EOS
-<bibitem type="international-standard" id="iso124">
+<bibitem type="international-standard" id="ISO124">
   <title format="text/plain" language="en" script="Latn">Latex, rubber -- Replacement</title>
   <docidentifier>ISO 124</docidentifier>
+  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>
+  <status>Published</status>
 </bibitem>
 EOS
 
   ISOBIB_123_DATED = <<~EOS
-<bibitem type="international-standard" id="ISO123">  <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>  <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- ?chantillonnage</title>  <uri type="src">https://www.iso.org/standard/23281.html</uri>  <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>  <uri type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>  <docidentifier>ISO 123</docidentifier>  <date type="published">    <on>2001</on>  </date>  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>  <edition>3</edition>  <language>en</language>  <language>fr</language>  <script>Latn</script>  <status>Published</status>  <copyright>    <from>2001</from>    <owner>      <organization>        <name>ISO</name>        <abbreviation></abbreviation>      </organization>    </owner>  </copyright>  <relation type="obsoletes">    <bibitem>      <formattedref>ISO 123:1985</formattedref>      <docidentifier>ISO 123:1985</docidentifier>    </bibitem>  </relation>  <relation type="updates">    <bibitem>      <formattedref>ISO 123:2001</formattedref>      <docidentifier>ISO 123:2001</docidentifier>    </bibitem>  </relation></bibitem>
+<bibitem type="international-standard" id="ISO123">  <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>  <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- ?chantillonnage</title>  <uri type="src">https://www.iso.org/standard/23281.html</uri>  <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>  <uri type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>  <docidentifier>ISO 123</docidentifier>  <date type="published">    <on>2001</on>  </date>  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>  <edition>3</edition>  <language>en</language>  <language>fr</language>  <script>Latn</script>  <status>Published</status>  <copyright>    <from>2001</from>    <owner>      <organization>        <name>ISO</name>        </organization>    </owner>  </copyright>  <relation type="obsoletes">    <bibitem>      <formattedref>ISO 123:1985</formattedref>      </bibitem>  </relation>  <relation type="updates">    <bibitem>      <formattedref>ISO 123:2001</formattedref>      </bibitem>  </relation></bibitem>
 EOS
 
   ISOBIB_123_UNDATED = <<~EOS
-<bibitem type="international-standard" id="ISO123">  <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>  <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- ?chantillonnage</title>  <uri type="src">https://www.iso.org/standard/23281.html</uri>  <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>  <uri type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>  <docidentifier>ISO 123</docidentifier>  <date type="published">    <on>2001</on>  </date>  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>  <edition>3</edition>  <language>en</language>  <language>fr</language>  <script>Latn</script>  <status>Published</status>  <copyright>    <from>2001</from>    <owner>      <organization>        <name>ISO</name>        <abbreviation></abbreviation>      </organization>    </owner>  </copyright>  <relation type="obsoletes">    <bibitem>      <formattedref>ISO 123:1985</formattedref>      <docidentifier>ISO 123:1985</docidentifier>    </bibitem>  </relation>  <relation type="updates">    <bibitem>      <formattedref>ISO 123:2001</formattedref>      <docidentifier>ISO 123:2001</docidentifier>    </bibitem>  </relation></bibitem>
+<bibitem type="international-standard" id="ISO123">  <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>  <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- ?chantillonnage</title>  <uri type="src">https://www.iso.org/standard/23281.html</uri>  <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>  <uri type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>  <docidentifier>ISO 123</docidentifier>  <date type="published">    <on>2001</on>  </date>  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>  <edition>3</edition>  <language>en</language>  <language>fr</language>  <script>Latn</script>  <status>Published</status>  <copyright>    <from>2001</from>    <owner>      <organization>        <name>ISO</name>        </organization>    </owner>  </copyright>  <relation type="obsoletes">    <bibitem>      <formattedref>ISO 123:1985</formattedref>      </bibitem>  </relation>  <relation type="updates">    <bibitem>      <formattedref>ISO 123:2001</formattedref>      </bibitem>  </relation></bibitem>
 EOS
 
 
   ISOBIB_124_DATED = <<~EOS
-<bibitem type="international-standard" id="ISO124">  <title format="text/plain" language="en" script="Latn">Latex, rubber -- Determination of total solids content</title>  <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Détermination des matières solides totales</title>  <uri type="src">https://www.iso.org/standard/61884.html</uri>  <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>  <uri type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>  <docidentifier>ISO 124</docidentifier>  <date type="published">    <on>2014</on>  </date>  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>  <edition>7</edition>  <language>en</language>  <language>fr</language>  <script>Latn</script>  <abstract format="plain" language="en" script="Latn">ISO 124:2014 specifies methods for the determination of the total solids content of natural rubber field and concentrated latices and synthetic rubber latex. These methods are not necessarily suitable for latex from natural sources other than the Hevea brasiliensis, for vulcanized latex, for compounded latex, or for artificial dispersions of rubber.</abstract>  <abstract format="plain" language="fr" script="Latn">L'ISO 124:2014 spécifie des méthodes pour la détermination des matières solides totales dans le latex de plantation, le latex de concentré de caoutchouc naturel et le latex de caoutchouc synthétique. Ces méthodes ne conviennent pas nécessairement au latex d'origine naturelle autre que celui de l'Hevea brasiliensis, au latex vulcanisé, aux mélanges de latex, ou aux dispersions artificielles de caoutchouc.</abstract>  <status>Published</status>  <copyright>    <from>2014</from>    <owner>      <organization>        <name>ISO</name>        <abbreviation></abbreviation>      </organization>    </owner>  </copyright>  <relation type="obsoletes">    <bibitem>      <formattedref>ISO 124:2011</formattedref>      <docidentifier>ISO 124:2011</docidentifier>    </bibitem>  </relation></bibitem>
+<bibitem type="international-standard" id="ISO124">  <title format="text/plain" language="en" script="Latn">Latex, rubber -- Determination of total solids content</title>  <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Détermination des matières solides totales</title>  <uri type="src">https://www.iso.org/standard/61884.html</uri>  <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>  <uri type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>  <docidentifier>ISO 124</docidentifier>  <date type="published">    <on>2014</on>  </date>  <contributor>    <role type="publisher"/>    <organization>      <name>International Organization for Standardization</name>      <abbreviation>ISO</abbreviation>      <uri>www.iso.org</uri>    </organization>  </contributor>  <edition>7</edition>  <language>en</language>  <language>fr</language>  <script>Latn</script>  <abstract format="plain" language="en" script="Latn">ISO 124:2014 specifies methods for the determination of the total solids content of natural rubber field and concentrated latices and synthetic rubber latex. These methods are not necessarily suitable for latex from natural sources other than the Hevea brasiliensis, for vulcanized latex, for compounded latex, or for artificial dispersions of rubber.</abstract>  <abstract format="plain" language="fr" script="Latn">L'ISO 124:2014 spécifie des méthodes pour la détermination des matières solides totales dans le latex de plantation, le latex de concentré de caoutchouc naturel et le latex de caoutchouc synthétique. Ces méthodes ne conviennent pas nécessairement au latex d'origine naturelle autre que celui de l'Hevea brasiliensis, au latex vulcanisé, aux mélanges de latex, ou aux dispersions artificielles de caoutchouc.</abstract>  <status>Published</status>  <copyright>    <from>2014</from>    <owner>      <organization>        <name>ISO</name>        </organization>    </owner>  </copyright>  <relation type="obsoletes">    <bibitem>      <formattedref>ISO 124:2011</formattedref>      </bibitem>  </relation></bibitem>
 EOS
 
   it "does not activate biblio caches if isobib disabled" do
@@ -88,9 +95,10 @@ EOS
     INPUT
     expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be true
 
-    json = JSON.parse(File.read("#{Dir.home}/.relaton-bib.json", encoding: "utf-8"))
-    expect(json["ISO 123:2001"]["fetched"]).to eq(Date.today.to_s)
-    expect(json["ISO 123:2001"]["bib"]).to be_equivalent_to(ISOBIB_123_DATED)
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    entry = db.load_entry("ISO 123:2001")
+    expect(entry["fetched"].to_s).to eq(Date.today.to_s)
+    expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_123_DATED)
 
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
@@ -111,8 +119,9 @@ EOS
     expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be true
     expect(File.exist?("test.relaton.json")).to be false
 
-    json = JSON.parse(File.read("#{Dir.home}/.relaton-bib.json", encoding: "utf-8"))
-    expect(json).to have_key("ISO 123:2001")
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    entry = db.load_entry("ISO 123:2001")
+    expect(entry).to_not be nil
 
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
@@ -132,11 +141,13 @@ EOS
     expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be true
     expect(File.exist?("test.relaton.json")).to be true
 
-    json = JSON.parse(File.read("#{Dir.home}/.relaton-bib.json", encoding: "utf-8"))
-    expect(json).to have_key("ISO 123:2001")
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    entry = db.load_entry("ISO 123:2001")
+    expect(entry).to_not be nil
 
-    json = JSON.parse(File.read("test.relaton.json", encoding: "utf-8"))
-    expect(json).to have_key("ISO 123:2001")
+    db = Relaton::Db.new "test.relaton.json", nil
+    entry = db.load_entry("ISO 123:2001")
+    expect(entry).to_not be nil
 
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
@@ -145,15 +156,13 @@ EOS
 
   it "fetches uncached references" do
     system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
-
-    File.open("#{Dir.home}/.relaton-bib.json", "w") do |f|
-      f.write({
-        "ISO 123:2001": {
-          "fetched": Date.today.to_s,
-          "bib": ISO_123_SHORT
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    db.save_entry("ISO 123:2001",
+        {
+          "fetched" => Date.today.to_s,
+          "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
-      }.to_json)
-    end
+      )
 
     mock_isobib_get_124
 
@@ -166,11 +175,12 @@ EOS
       * [[[iso124,ISO 124:2014]]] _Standard_
     INPUT
 
-    json = JSON.parse(File.read("#{Dir.home}/.relaton-bib.json", encoding: "utf-8"))
-    expect(json["ISO 123:2001"]["fetched"]).to eq(Date.today.to_s)
-    expect(json["ISO 124:2014"]["fetched"]).to eq(Date.today.to_s)
-    expect(json["ISO 123:2001"]["bib"]).to be_equivalent_to(ISO_123_SHORT)
-    expect(json["ISO 124:2014"]["bib"]).to be_equivalent_to(ISOBIB_124_DATED)
+    entry = db.load_entry("ISO 123:2001")
+    expect(entry["fetched"].to_s).to eq(Date.today.to_s)
+    expect(entry["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
+    entry = db.load_entry("ISO 124:2014")
+    expect(entry["fetched"].to_s).to eq(Date.today.to_s)
+    expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_124_DATED)
 
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
@@ -179,14 +189,13 @@ EOS
   it "expires stale undated references" do
     system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
 
-    File.open("#{Dir.home}/.relaton-bib.json", "w") do |f|
-      f.write({
-        "ISO 123": {
-          "fetched": (Date.today - 90).to_s,
-          "bib": ISO_123_SHORT
+        db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+        db.save_entry("ISO 123",
+        {
+          "fetched" => (Date.today - 90).to_s,
+          "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
-      }.to_json)
-    end
+      )
 
     mock_isobib_get_123_undated
 
@@ -198,9 +207,9 @@ EOS
       * [[[iso123,ISO 123]]] _Standard_
     INPUT
 
-    json = JSON.parse(File.read("#{Dir.home}/.relaton-bib.json", encoding: "utf-8"))
-    expect(json["ISO 123"]["fetched"]).to eq(Date.today.to_s)
-    expect(json["ISO 123"]["bib"]).to be_equivalent_to(ISOBIB_123_UNDATED)
+        entry = db.load_entry("ISO 123")
+            expect(entry["fetched"].to_s).to eq(Date.today.to_s)
+    expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_123_UNDATED)
 
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
@@ -209,14 +218,13 @@ EOS
   it "does not expire stale dated references" do
     system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
 
-    File.open("#{Dir.home}/.relaton-bib.json", "w") do |f|
-      f.write({
-        "ISO 123:2001": {
-          "fetched": (Date.today - 90).to_s,
-          "bib": ISO_123_SHORT
+            db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+            db.save_entry("ISO 123:2001",
+        {
+          "fetched" => (Date.today - 90).to_s,
+          "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
-      }.to_json)
-    end
+      )
 
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{CACHED_ISOBIB_BLANK_HDR}
@@ -226,9 +234,9 @@ EOS
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
 
-    json = JSON.parse(File.read("#{Dir.home}/.relaton-bib.json", encoding: "utf-8"))
-    expect(json["ISO 123:2001"]["fetched"]).to eq((Date.today - 90).to_s)
-    expect(json["ISO 123:2001"]["bib"]).to be_equivalent_to(ISO_123_SHORT)
+            entry = db.load_entry("ISO 123:2001")
+            expect(entry["fetched"].to_s).to eq((Date.today - 90).to_s)
+    expect(entry["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
 
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
@@ -238,35 +246,35 @@ EOS
     system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
     system "rm test.relaton.json"
 
-    File.open("#{Dir.home}/.relaton-bib.json", "w") do |f|
-      f.write({
-        "ISO 123:2001": {
-          "fetched": Date.today.to_s,
-          "bib": ISO_123_SHORT
-        },
-        "ISO 124": {
-          "fetched": Date.today.to_s,
-          "bib": ISO_124_SHORT
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    db.save_entry("ISO 123:2001",
+        {
+          "fetched" => Date.today.to_s,
+          "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
-      }.to_json)
-    end
+      )
+    db.save_entry("ISO 124",
+        {
+          "fetched" => Date.today.to_s,
+          "bib" => IsoBibItem.from_xml(ISO_124_SHORT)
+        }
+      )
 
-    File.open("test.relaton.json", "w") do |f|
-      f.write({
-        "ISO 124": {
-          "fetched": Date.today.to_s,
-          "bib": ISO_124_SHORT_ALT
+    localdb = Relaton::Db.new "test.relaton.json", nil
+    localdb.save_entry("ISO 124",
+        {
+          "fetched" => Date.today.to_s,
+          "bib" => IsoBibItem.from_xml(ISO_124_SHORT_ALT)
         }
-      }.to_json)
-    end
+      )
 
     input = <<~EOS
 #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
 [bibliography]
 == Normative References
 
-* [[[iso123,ISO 123:2001]]] _Standard_
-* [[[iso124,ISO 124]]] _Standard_
+* [[[ISO123,ISO 123:2001]]] _Standard_
+* [[[ISO124,ISO 124]]] _Standard_
 EOS
 
     output = <<~EOS
@@ -284,19 +292,10 @@ EOS
 
     expect(strip_guid(Asciidoctor.convert(input, backend: :iso, header_footer: true))).to be_equivalent_to(output)
 
-    json = JSON.parse(File.read("#{Dir.home}/.relaton-bib.json", encoding: "utf-8"))
-
-    expect(json["ISO 123:2001"]["fetched"]).to eq(Date.today.to_s)
-    expect(json["ISO 124"]["fetched"]).to eq(Date.today.to_s)
-    expect(json["ISO 123:2001"]["bib"]).to be_equivalent_to(ISO_123_SHORT)
-    expect(json["ISO 124"]["bib"]).to be_equivalent_to(ISO_124_SHORT)
-
-    json_local = JSON.parse(File.read("test.relaton.json", encoding: "utf-8"))
-
-    expect(json_local["ISO 123:2001"]["fetched"]).to eq(Date.today.to_s)
-    expect(json_local["ISO 124"]["fetched"]).to eq(Date.today.to_s)
-    expect(json_local["ISO 123:2001"]["bib"]).to be_equivalent_to(ISO_123_SHORT)
-    expect(json_local["ISO 124"]["bib"]).to be_equivalent_to(ISO_124_SHORT_ALT)
+    expect(db.load_entry("ISO 123:2001")["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
+    expect(db.load_entry("ISO 124")["bib"].to_xml).to be_equivalent_to(ISO_124_SHORT)
+    expect(localdb.load_entry("ISO 123:2001")["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
+    expect(localdb.load_entry("ISO 124")["bib"].to_xml).to be_equivalent_to(ISO_124_SHORT_ALT)
 
     system "rm ~/.relaton-bib.json"
     system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
@@ -305,15 +304,15 @@ EOS
 private
 
   def mock_isobib_get_123
-    expect(Isobib::IsoBibliography).to receive(:get).with("ISO 123", "2001", {}).and_return(ISOBIB_123_DATED)
+    expect(Isobib::IsoBibliography).to receive(:get).with("ISO 123", "2001", {}).and_return(IsoBibItem.from_xml(ISOBIB_123_DATED))
   end
 
   def mock_isobib_get_123_undated
-    expect(Isobib::IsoBibliography).to receive(:get).with("ISO 123", nil, {}).and_return(ISOBIB_123_UNDATED)
+    expect(Isobib::IsoBibliography).to receive(:get).with("ISO 123", nil, {}).and_return(IsoBibItem.from_xml(ISOBIB_123_UNDATED))
   end
 
   def mock_isobib_get_124
-    expect(Isobib::IsoBibliography).to receive(:get).with("ISO 124", "2014", {}).and_return(ISOBIB_124_DATED)
+    expect(Isobib::IsoBibliography).to receive(:get).with("ISO 124", "2014", {}).and_return(IsoBibItem.from_xml(ISOBIB_124_DATED))
   end
 
 end

@@ -1,11 +1,12 @@
 GIT
   remote: git://github.com/riboseinc/relaton.git
-  revision: 946f9b66cd8a93d6c43ed02c1aca45a811b8f40d
+  revision: 3daaf6fa4cd85eb4e1ea8141e520b4350a944975
   specs:
-    relaton (0.0.2)
+    relaton (0.1.0)
+      algoliasearch
       gbbib (~> 0.1.0)
       iev (~> 0.1.0)
-      isobib (~> 0.1.9)
+      isobib (~> 0.2.0)
       rfcbib (~> 0.1.0)
 
 PATH
@@ -15,7 +16,7 @@ PATH
       asciidoctor (~> 1.5.7)
       iev (~> 0.1.0)
       isodoc (>= 0.8)
-      relaton (~> 0.0.1)
+      relaton (~> 0.1.0)
       ruby-jing
 
 GEM
@@ -36,9 +37,9 @@ GEM
       nokogiri (>= 1.4.3)
     ffi (1.9.25)
     formatador (0.2.5)
-    gbbib (0.1.5)
-      cnccs (~> 0.1.1)
-      iso-bib-item (~> 0.1.10)
+    gbbib (0.1.4)
+      cnccs
+      iso-bib-item
     guard (2.14.2)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -67,13 +68,13 @@ GEM
     iev (0.1.0)
       nokogiri
     image_size (2.0.0)
-    iso-bib-item (0.1.11)
+    iso-bib-item (0.2.0)
       isoics (~> 0.1.6)
       nokogiri (~> 1.8.4)
       ruby_deep_clone (~> 0.8.0)
-    isobib (0.1.10)
+    isobib (0.2.0)
       algoliasearch
-      iso-bib-item (~> 0.1.10)
+      iso-bib-item (~> 0.2.0)
     isodoc (0.8.4)
       asciimath
       html2doc (~> 0.8.1)
@@ -120,7 +121,7 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rfcbib (0.1.1)
-      iso-bib-item (~> 0.1.10)
+      iso-bib-item (~> 0.2.0)
     roman-numerals (0.3.0)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
@@ -176,6 +177,7 @@ DEPENDENCIES
   equivalent-xml (~> 0.6)
   guard (~> 2.14)
   guard-rspec (~> 4.7)
+  isobib (~> 0.2.0)
   metanorma (~> 0.2.6)
   rake (~> 12.0)
   relaton!

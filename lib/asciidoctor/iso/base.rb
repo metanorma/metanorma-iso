@@ -119,7 +119,6 @@ module Asciidoctor
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</iso-standard>"
-        @bibdb.save() if @bibdb
         textcleanup(result.flatten * "\n")
       end
 
