@@ -44,8 +44,8 @@ EOS
 EOS
 
   it "does not activate biblio caches if isobib disabled" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
-    system "rm -f test.relaton.json"
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "rm -f test.relaton.pstore"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
@@ -53,16 +53,16 @@ EOS
 
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
-    expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be false
-    expect(File.exist?("test.relaton.json")).to be false
+    expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be false
+    expect(File.exist?("test.relaton.pstore")).to be false
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
   it "does not activate biblio caches if isobib caching disabled" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
-    system "rm -f test.relaton.json"
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "rm -f test.relaton.pstore"
     mock_isobib_get_123
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{ISOBIB_BLANK_HDR}
@@ -71,17 +71,17 @@ EOS
 
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
-    expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be false
-    expect(File.exist?("test.relaton.json")).to be false
+    expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be false
+    expect(File.exist?("test.relaton.pstore")).to be false
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
   it "flushes biblio caches" do
-    system "cp ~/.relaton-bib.json ~/.relaton-bib.json1"
+    system "cp ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
 
-    File.open("#{Dir.home}/.relaton-bib.json", "w") do |f|
+    File.open("#{Dir.home}/.relaton-bib.pstore", "w") do |f|
       f.write "XXX"
     end
 
@@ -93,21 +93,21 @@ EOS
 
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
-    expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be true
+    expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be true
 
-    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
     entry = db.load_entry("ISO 123:2001")
     expect(entry["fetched"].to_s).to eq(Date.today.to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_123_DATED)
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
 
   it "activates global cache" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
-    system "rm -f test.relaton.json"
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "rm -f test.relaton.pstore"
     mock_isobib_get_123
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{CACHED_ISOBIB_BLANK_HDR}
@@ -116,20 +116,20 @@ EOS
 
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
-    expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be true
-    expect(File.exist?("test.relaton.json")).to be false
+    expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be true
+    expect(File.exist?("test.relaton.pstore")).to be false
 
-    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
     entry = db.load_entry("ISO 123:2001")
     expect(entry).to_not be nil
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
   it "activates local cache" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
-    system "rm -f test.relaton.json"
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "rm -f test.relaton.pstore"
     mock_isobib_get_123
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
@@ -138,25 +138,25 @@ EOS
 
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
-    expect(File.exist?("#{Dir.home}/.relaton-bib.json")).to be true
-    expect(File.exist?("test.relaton.json")).to be true
+    expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be true
+    expect(File.exist?("test.relaton.pstore")).to be true
 
-    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
     entry = db.load_entry("ISO 123:2001")
     expect(entry).to_not be nil
 
-    db = Relaton::Db.new "test.relaton.json", nil
+    db = Relaton::Db.new "test.relaton.pstore", nil
     entry = db.load_entry("ISO 123:2001")
     expect(entry).to_not be nil
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
 
   it "fetches uncached references" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
-    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
     db.save_entry("ISO 123:2001",
         {
           "fetched" => Date.today.to_s,
@@ -182,17 +182,17 @@ EOS
     expect(entry["fetched"].to_s).to eq(Date.today.to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_124_DATED)
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
   it "expires stale undated references" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
 
-        db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+        db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
         db.save_entry("ISO 123",
         {
-          "fetched" => (Date.today - 90).to_s,
+          "fetched" => (Date.today - 90),
           "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
       )
@@ -211,17 +211,17 @@ EOS
             expect(entry["fetched"].to_s).to eq(Date.today.to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_123_UNDATED)
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
   it "does not expire stale dated references" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
 
-            db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+            db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
             db.save_entry("ISO 123:2001",
         {
-          "fetched" => (Date.today - 90).to_s,
+          "fetched" => (Date.today - 90),
           "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
       )
@@ -238,32 +238,32 @@ EOS
             expect(entry["fetched"].to_s).to eq((Date.today - 90).to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
   it "prioritises local over global cache values" do
-    system "mv ~/.relaton-bib.json ~/.relaton-bib.json1"
-    system "rm test.relaton.json"
+    system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "rm test.relaton.pstore"
 
-    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.json", nil
+    db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
     db.save_entry("ISO 123:2001",
         {
-          "fetched" => Date.today.to_s,
+          "fetched" => Date.today,
           "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
       )
     db.save_entry("ISO 124",
         {
-          "fetched" => Date.today.to_s,
+          "fetched" => Date.today,
           "bib" => IsoBibItem.from_xml(ISO_124_SHORT)
         }
       )
 
-    localdb = Relaton::Db.new "test.relaton.json", nil
+    localdb = Relaton::Db.new "test.relaton.pstore", nil
     localdb.save_entry("ISO 124",
         {
-          "fetched" => Date.today.to_s,
+          "fetched" => Date.today,
           "bib" => IsoBibItem.from_xml(ISO_124_SHORT_ALT)
         }
       )
@@ -297,8 +297,8 @@ EOS
     expect(localdb.load_entry("ISO 123:2001")["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
     expect(localdb.load_entry("ISO 124")["bib"].to_xml).to be_equivalent_to(ISO_124_SHORT_ALT)
 
-    system "rm ~/.relaton-bib.json"
-    system "mv ~/.relaton-bib.json1 ~/.relaton-bib.json"
+    system "rm ~/.relaton-bib.pstore"
+    system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
   end
 
 private
