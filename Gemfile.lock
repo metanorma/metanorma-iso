@@ -1,22 +1,11 @@
-GIT
-  remote: git://github.com/riboseinc/relaton.git
-  revision: 3daaf6fa4cd85eb4e1ea8141e520b4350a944975
-  specs:
-    relaton (0.1.0)
-      algoliasearch
-      gbbib (~> 0.1.0)
-      iev (~> 0.1.0)
-      isobib (~> 0.2.0)
-      rfcbib (~> 0.1.0)
-
 PATH
   remote: .
   specs:
-    asciidoctor-iso (0.9.6)
+    asciidoctor-iso (0.9.7)
       asciidoctor (~> 1.5.7)
       iev (~> 0.1.0)
       isodoc (>= 0.8)
-      relaton (~> 0.1.0)
+      relaton (~> 0.1.1)
       ruby-jing
 
 GEM
@@ -37,9 +26,9 @@ GEM
       nokogiri (>= 1.4.3)
     ffi (1.9.25)
     formatador (0.2.5)
-    gbbib (0.1.4)
-      cnccs
-      iso-bib-item
+    gbbib (0.2.0)
+      cnccs (~> 0.1.1)
+      iso-bib-item (~> 0.2)
     guard (2.14.2)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -68,7 +57,7 @@ GEM
     iev (0.1.0)
       nokogiri
     image_size (2.0.0)
-    iso-bib-item (0.2.0)
+    iso-bib-item (0.2.1)
       isoics (~> 0.1.6)
       nokogiri (~> 1.8.4)
       ruby_deep_clone (~> 0.8.0)
@@ -120,7 +109,13 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    rfcbib (0.1.1)
+    relaton (0.1.1)
+      algoliasearch
+      gbbib (~> 0.2.0)
+      iev (~> 0.1.0)
+      isobib (~> 0.2.0)
+      rfcbib (~> 0.2.0)
+    rfcbib (0.2.0)
       iso-bib-item (~> 0.2.0)
     roman-numerals (0.3.0)
     rspec (3.7.0)
@@ -150,7 +145,7 @@ GEM
     ruby-xslt (0.9.10)
     ruby_deep_clone (0.8.0)
     ruby_dep (1.5.0)
-    sass (3.5.6)
+    sass (3.5.7)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -180,7 +175,6 @@ DEPENDENCIES
   isobib (~> 0.2.0)
   metanorma (~> 0.2.6)
   rake (~> 12.0)
-  relaton!
   rspec (~> 3.6)
   rubocop (~> 0.50)
   simplecov (~> 0.15)
