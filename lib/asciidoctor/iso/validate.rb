@@ -194,7 +194,7 @@ module Asciidoctor
   end
 
   def schema_validate(doc, filename)
-    File.open(".tmp.xml", "w") { |f| f.write(doc.to_xml) }
+    File.open(".tmp.xml", "w:UTF-8") { |f| f.write(doc.to_xml) }
     begin
       errors = Jing.new(filename).validate(".tmp.xml")
     rescue Jing::Error => e

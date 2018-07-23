@@ -99,8 +99,10 @@ module Asciidoctor
 
       # TODO: alternative where only title is available
       def refitem(xml, item, node)
-        m = NON_ISO_REF.match(item)
-        m.nil? && Utils::warning(node, "no anchor on reference", item) && return
+        unless m = NON_ISO_REF.match(item)
+          Utils::warning(node, "no anchor on reference", item) 
+          return
+        end
         unless m[:code] && /^\d+$/.match?(m[:code])
           ref = fetch_ref xml, m[:code], 
             m.named_captures.has_key?("year") ? m[:year] : nil, {}

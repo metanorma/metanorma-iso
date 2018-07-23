@@ -104,7 +104,7 @@ module Asciidoctor
         init(node)
         ret = makexml(node).to_xml(indent: 2)
         unless node.attr("nodoc") || !node.attr("docfile")
-          File.open(@filename + ".xml", "w") { |f| f.write(ret) }
+          File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
           html_converter_alt(node).convert(@filename + ".xml")
           system "mv #{@filename}.html #{@filename}_alt.html"
           html_converter(node).convert(@filename + ".xml")
