@@ -88,18 +88,25 @@ module Asciidoctor
         nil # Render reference without an Internet connection.
       end
 
-      # TODO: alternative where only title is available
-      def refitem(xml, item, node)
-        unless m = NON_ISO_REF.match(item)
-          Utils::warning(node, "no anchor on reference", item)
-          return
-        end
-        xml.bibitem **attr_code(id: m[:anchor]) do |t|
+      def refitem_render(xml, m)
+                xml.bibitem **attr_code(id: m[:anchor]) do |t|
           t.formattedref **{ format: "application/x-isodoc+xml" } do |i|
             i << ref_normalise_no_format(m[:text])
           end
           t.docidentifier(/^\d+$/.match?(m[:code]) ? "[#{m[:code]}]" : m[:code])
         end
+      end
+
+      # TODO: alternative where only title is available
+      def refitem(xml, item, node)
+        m = NON_ISO_REF.match(item)
+        m.nil? && Utils::warning(node, "no anchor on reference", item) && return
+        unless /^\d+$/.match? m[:code]
+          ref = fetch_ref xml, m[:code], 
+            m.named_captures.has_key?("year") ? m[:year] : nil, {}
+          return use_my_anchor(ref, m[:anchor]) if ref
+        end
+        refitem_render(xml, m)
       end
 
       def ref_normalise(ref)
@@ -130,7 +137,7 @@ module Asciidoctor
       (?<text>.*)$}xm
 
       NON_ISO_REF = %r{^<ref\sid="(?<anchor>[^"]+)">
-      \[(?<code>[^\]]+)\]</ref>,?\s
+      \[(?<code>[^\]]+?)([:-](?<year>(19|20)[0-9][0-9]))?\]</ref>,?\s
       (?<text>.*)$}xm
 
       # @param item [String]
