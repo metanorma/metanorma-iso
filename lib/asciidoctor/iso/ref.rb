@@ -101,7 +101,7 @@ module Asciidoctor
       def refitem(xml, item, node)
         m = NON_ISO_REF.match(item)
         m.nil? && Utils::warning(node, "no anchor on reference", item) && return
-        unless /^\d+$/.match? m[:code]
+        unless m[:code] && /^\d+$/.match?(m[:code])
           ref = fetch_ref xml, m[:code], 
             m.named_captures.has_key?("year") ? m[:year] : nil, {}
           return use_my_anchor(ref, m[:anchor]) if ref
