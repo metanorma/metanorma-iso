@@ -345,6 +345,34 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+  it "processes RFC reference in Normative References" do
+    mock_rfcbib_get_rfc8341
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ISOBIB_BLANK_HDR}
+      [bibliography]
+      == Normative References
+
+      * [[[iso123,IETF RFC 8341]]] _Standard_
+    INPUT
+       #{BLANK_HDR}
+              <sections>
+
+       </sections><bibliography><references id="_" obligation="informative">
+         <title>Normative References</title>
+               <bibitem type="" id="iso123">
+  <title format="text/plain" language="en" script="Latn">Network Configuration Access Control Model</title>
+  <docidentifier>8341</docidentifier>
+  <date type="published">
+    <on>2018</on>
+  </date>
+  <status>published</status>
+</bibitem>
+       </references>
+       </bibliography>
+       </iso-standard>
+    OUTPUT
+  end
+
   it "processes non-ISO reference in Normative References" do
     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
@@ -593,6 +621,21 @@ RSpec.describe Asciidoctor::ISO do
           <text>Information technology (Vocabularies)</text>
         </ics>
        </bibitem>
+OUTPUT
+    end
+end
+
+       def mock_rfcbib_get_rfc8341
+      expect(RfcBib::RfcBibliography).to receive(:get).with("RFC 8341", nil, {}) do
+      IsoBibItem.from_xml(<<~"OUTPUT")
+      <bibitem id="RFC8341">
+  <title format="text/plain" language="en" script="Latn">Network Configuration Access Control Model</title>
+  <docidentifier>8341</docidentifier>
+  <date type="published">
+    <on>2018</on>
+  </date>
+  <status>published</status>
+</bibitem>
 OUTPUT
     end
 end

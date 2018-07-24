@@ -89,7 +89,7 @@ module Asciidoctor
       end
 
       def refitem_render(xml, m)
-                xml.bibitem **attr_code(id: m[:anchor]) do |t|
+        xml.bibitem **attr_code(id: m[:anchor]) do |t|
           t.formattedref **{ format: "application/x-isodoc+xml" } do |i|
             i << ref_normalise_no_format(m[:text])
           end
