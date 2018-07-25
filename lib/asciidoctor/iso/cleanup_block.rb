@@ -123,15 +123,41 @@ module Asciidoctor
       def make_bibliography(x, s)
         if x.at("//sections/references")
           biblio = s.add_next_sibling("<bibliography/>").first
-          x.xpath("//sections/references").each { |r| biblio.add_child r.remove }
+          x.xpath("//sections/references").each do |r|
+            biblio.add_child r.remove
+          end
         end
       end
 
-      def sections_cleanup(x)
+      def sections_order_cleanup(x)
         s = x.at("//sections")
         make_preface(x, s)
         make_bibliography(x, s)
         x.xpath("//sections/annex").reverse_each { |r| s.next = r.remove }
+      end
+
+      def maxlevel(x)
+        max = 5
+        x.xpath("//clause[@level]").each do |c|
+          max = c["level"].to_i if max < c["level"].to_i
+        end
+        max
+      end
+
+      def sections_level_cleanup(x)
+        m = maxlevel(x)
+        return if m < 6
+        m.downto(6).each do |l|
+          x.xpath("//clause[@level = '#{l}']").each do |c|
+            c.delete("level")
+            c.previous_element << c.remove
+          end
+        end
+      end
+
+      def sections_cleanup(x)
+        sections_order_cleanup(x)
+        sections_level_cleanup(x)
       end
 
       def obligations_cleanup(x)

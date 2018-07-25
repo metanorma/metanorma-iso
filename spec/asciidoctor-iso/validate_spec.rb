@@ -828,4 +828,62 @@ RSpec.describe "No warning if French term matches IEV" do
   INPUT
 end
 
+RSpec.describe "Warn if more than 7 levels of subclause" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{exceeds the maximum clause depth of 7}).to_stderr }
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :language: fr
+
+  == Clause
+
+  === Clause
+
+  ==== Clause
+
+  ===== Clause
+
+  ====== Clause
+
+  [level=6]
+  ====== Clause
+
+  [level=7]
+  ====== Clause
+
+  [level=8]
+  ====== Clause
+
+  INPUT
+end
+
+RSpec.describe "Do not warn if not more than 7 levels of subclause" do
+  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{exceeds the maximum clause depth of 7}).to_stderr }
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :language: fr
+
+  == Clause
+
+  === Clause
+
+  ==== Clause
+
+  ===== Clause
+
+  ====== Clause
+
+  [level=6]
+  ====== Clause
+
+  [level=7]
+  ====== Clause
+
+  INPUT
+end
 

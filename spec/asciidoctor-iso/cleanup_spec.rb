@@ -699,4 +699,67 @@ r = 1 %</stem>
        </iso-standard>
     OUTPUT
   end
+
+  it "extends clause levels past 5" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    #{ASCIIDOC_BLANK_HDR}
+
+    == Clause1
+
+    === Clause2
+
+    ==== Clause3
+
+    ===== Clause4
+
+    ====== Clause 5
+
+    [level=6]
+    ====== Clause 6
+
+    [level=7]
+    ====== Clause 7A
+
+    [level=7]
+    ====== Clause 7B
+
+    [level=6]
+    ====== Clause 6B
+
+    ====== Clause 5B
+
+    INPUT
+    #{BLANK_HDR}
+    <sections>
+  <clause id="_" inline-header="false" obligation="normative">
+  <title>Clause1</title>
+  <clause id="_" inline-header="false" obligation="normative">
+  <title>Clause2</title>
+  <clause id="_" inline-header="false" obligation="normative">
+  <title>Clause3</title>
+  <clause id="_" inline-header="false" obligation="normative"><title>Clause4</title><clause id="_" inline-header="false" obligation="normative">
+  <title>Clause 5</title>
+<clause id="_" inline-header="false" obligation="normative">
+  <title>Clause 6</title>
+<clause id="_" inline-header="false" obligation="normative">
+  <title>Clause 7A</title>
+</clause><clause id="_" inline-header="false" obligation="normative">
+  <title>Clause 7B</title>
+</clause></clause><clause id="_" inline-header="false" obligation="normative">
+  <title>Clause 6B</title>
+</clause></clause>
+
+
+
+
+<clause id="_" inline-header="false" obligation="normative">
+  <title>Clause 5B</title>
+</clause></clause>
+</clause>
+</clause>
+</clause>
+</sections>
+</iso-standard>
+    OUTPUT
+  end
 end

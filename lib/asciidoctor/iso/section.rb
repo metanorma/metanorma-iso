@@ -74,13 +74,11 @@ module Asciidoctor
                              end
       end
 
-      # Not testing max depth of sections: Asciidoctor already limits
-      # it to 5 levels of nesting
       def clause_parse(attrs, xml, node)
         attrs["inline-header".to_sym] = node.option? "inline-header"
+        attrs[:level] = node.attr("level")
         set_obligation(attrs, node)
-        sect = node.level == 1 ? "clause" : "clause"
-        xml.send sect, **attr_code(attrs) do |xml_section|
+        xml.send "clause", **attr_code(attrs) do |xml_section|
           xml_section.title { |n| n << node.title } unless node.title.nil?
           xml_section << node.content
         end

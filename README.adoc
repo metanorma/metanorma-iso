@@ -452,6 +452,69 @@ from the image.
 image::logo.jpg
 --
 
+=== Sections embedded more than 5 levels
+
+Asciidoctor permits only 5 levels of section embedding (not counting the document title).
+Standards do contain more levels of embedding; ISO/IEC DIR 2 only considers it a problem
+if there are more than 7 levels of embedding. To realise higher levels of embedding,
+prefix a 5-level section title with the attribute `level=`:
+
+[source,asciidoctor]
+--
+====== Clause 5
+
+[level=6]
+===== Clause 6
+
+[level=7]
+====== Clause 7A
+
+[level=7]
+====== Clause 7B
+
+[level=6]
+====== Clause 6B
+
+====== Clause 5B
+--
+
+This generates the following ISO XML:
+
+[source,xml]
+--
+<clause id="_" inline-header="false" obligation="normative">
+	<title>
+		Clause 5 
+	</title>
+	<clause id="_" inline-header="false" obligation="normative">
+		<title>
+			Clause 6 
+		</title>
+		<clause id="_" inline-header="false" obligation="normative">
+			<title>
+				Clause 7A 
+			</title>
+		</clause>
+		<clause id="_" inline-header="false" obligation="normative">
+			<title>
+				Clause 7B 
+			</title>
+		</clause>
+	</clause>
+	<clause id="_" inline-header="false" obligation="normative">
+		<title>
+			Clause 6B 
+		</title>
+	</clause>
+</clause>
+<clause id="_" inline-header="false" obligation="normative">
+	<title>
+		Clause 5B 
+	</title>
+</clause>
+--
+
+
 === Features not visible in HTML preview
 
 The gem uses built-in Asciidoc formatting as much as possible, so that users

@@ -9,6 +9,7 @@ module Asciidoctor
         symbols_validate(doc.root)
         sections_sequence_validate(doc.root)
         section_style(doc.root)
+        subclause_validate(doc.root)
         sourcecode_style(doc.root)
         asset_style(doc.root)
       end
@@ -195,6 +196,12 @@ module Asciidoctor
         root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
         asset_title_style(root)
         norm_bibitem_style(root)
+      end
+
+      def subclause_validate(root)
+        root.xpath("//clause/clause/clause/clause/clause/clause/clause/clause").each do |c|
+          style_warning(c, "Exceeds the maximum clause depth of 7", nil)
+        end
       end
     end
   end
