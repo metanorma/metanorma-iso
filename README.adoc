@@ -623,17 +623,20 @@ identifier as the item label; e.g.
 By default, the `isobib` gem is used to look up the reference details for 
 any item label prefixed with `ISO` on the ISO web site. The full bibliographic details 
 of the item are screenscraped from the ISO site and inserted into the XML file 
-(although only the title of the reference is used in rendering).
+(although only the title of the reference is used in rendering). The
+http://www.electropedia.org[Electropedia] termbank is queried in validation, to confirm
+that the cited entries in Terms and Definitions are the same as what is cited online;
+those queries are routed through the `iev` gem
 
 [[cache]]
 The results of all `isobib` searches done to date, across all documents,
-are cached in the global cache file `~/.relaton-bib.json`, 
+are cached in the global cache file `~/.relaton-bib.pstore`, 
 so they do not need to be re-fetched each time a document is processed. 
 (The web query takes a few seconds per reference.)
 
 The results of all `isobib` searches done to date for the current document
 (`filename.adoc`) are stored in the same directory as the current document,
-in the file `filename`.relaton.json. The local cache overrides entries in
+in the file `{filename}.relaton.pstore`. The local cache overrides entries in
 the global cache, and can be manually edited. The local cache is only used
 if the `:local-cache:` document attribute is set.
 
@@ -645,6 +648,11 @@ items are still looked up via `isobib`, but the `isobib` caches are not used.
 Any entry in the cache that corresponds to an undated ISO reference fetches its details
 from the latest available entry on the ISO web site. If the entry is more than 60
 days old, it is refetched.
+
+The results of all `iev` searches done to date across all documents are cached
+in the global cache fule `~/iev.pstore`, and the results of all `iev` searches 
+done to date for the current document are stored in the same directory as the
+current document, in the file `(filename).iev.pstore`.
 
 == Document Attributes
 
@@ -660,14 +668,14 @@ Can be used as a command-line option (like all other document attributes):
 `:flush-caches:`:: If set, delete and reinitialise the <<cache,cache>> of `isobib` searches
 for ISO references from the ISO web site.
 
-`:no-isobib:`:: If set, do not use the `isobib` gem functionality to look up
-ISO references online, nor the <<cache,cache>> of `isobib` searches.
+`:no-isobib:`:: If set, do not use the `isobib` or `iev` gem functionality to look up
+ISO and IEV references online, nor the <<cache,cache>> of `isobib` and `iev` searches.
 
-`:no-isobib-cache:`:: If set, use the `isobib` gem functionality to look up
-ISO references online, but do not use the <<cache,cache>> of `isobib` searches.
+`:no-isobib-cache:`:: If set, use the `isobib` and `iev` gem functionality to look up
+ISO and IEV references online, but do not use the <<cache,cache>> of `isobib` and `iev` searches.
 
-`:local-cache:`:: Use the local isobib search cache to override the global isobib search
-cache.
+`:local-cache:`:: Use the local isobib and iev search caches to override the global isobib and iev search
+caches.
 
 `:i18nyaml:`:: Name of YAML file of internationalisation text, to use instead
 of the built-in English, French or Chinese text used to label parts of the document
