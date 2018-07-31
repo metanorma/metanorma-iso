@@ -1,7 +1,8 @@
 require "spec_helper"
 
-RSpec.describe "warns when missing a title" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Table should have title/).to_stderr }
+RSpec.describe Asciidoctor::ISO do
+it "warns when missing a title" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Table should have title/).to_stderr
   #{VALIDATING_BLANK_HDR}
   |===
   |A |B |C
@@ -12,8 +13,8 @@ RSpec.describe "warns when missing a title" do
 end
 
 
-RSpec.describe "warn that introduction may contain requirement" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Introduction may contain requirement/).to_stderr }
+it "warns that introduction may contain requirement" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Introduction may contain requirement/).to_stderr
   #{VALIDATING_BLANK_HDR}
   == Introduction
 
@@ -21,8 +22,8 @@ RSpec.describe "warn that introduction may contain requirement" do
   INPUT
 end
 
-RSpec.describe "warn that foreword may contain recommendation" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Foreword may contain recommendation/).to_stderr }
+it "warns that foreword may contain recommendation" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Foreword may contain recommendation/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   It is not recommended that widgets should be larger than 15 cm.
@@ -31,8 +32,8 @@ RSpec.describe "warn that foreword may contain recommendation" do
   INPUT
 end
 
-RSpec.describe "warn that foreword may contain permission" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Foreword may contain permission/).to_stderr }
+it "warns that foreword may contain permission" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Foreword may contain permission/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   No widget is required to be larger than 15 cm.
@@ -41,8 +42,8 @@ RSpec.describe "warn that foreword may contain permission" do
   INPUT
 end
 
-RSpec.describe "warn that scope may contain recommendation" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Scope may contain recommendation/).to_stderr }
+it "warns that scope may contain recommendation" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Scope may contain recommendation/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -50,8 +51,8 @@ RSpec.describe "warn that scope may contain recommendation" do
   INPUT
 end
 
-RSpec.describe "warn that definition may contain requirement" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Definition may contain requirement/).to_stderr }
+it "warns that definition may contain requirement" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Definition may contain requirement/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Terms and Definitions
@@ -63,8 +64,8 @@ RSpec.describe "warn that definition may contain requirement" do
   INPUT
 end
 
-RSpec.describe "warn that term example may contain recommendation" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Term Example may contain recommendation/).to_stderr }
+it "warns that term example may contain recommendation" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Term Example may contain recommendation/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Terms and Definitions
@@ -76,24 +77,24 @@ RSpec.describe "warn that term example may contain recommendation" do
   INPUT
 end
 
-RSpec.describe "warn that note may contain recommendation" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Note may contain recommendation/).to_stderr }
+it "warns that note may contain recommendation" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Note may contain recommendation/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   NOTE: It is not recommended that widgets should be larger than 15 cm.
   INPUT
 end
 
-RSpec.describe "warn that footnote may contain recommendation" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Footnote may contain recommendation/).to_stderr }
+it "warns that footnote may contain recommendation" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Footnote may contain recommendation/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   footnote:[It is not recommended that widgets should be larger than 15 cm.]
   INPUT
 end
 
-RSpec.describe "warn that term source is not in expected format" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/term reference not in expected format/).to_stderr }
+it "warns that term source is not in expected format" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/term reference not in expected format/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   [.source]
@@ -101,16 +102,16 @@ RSpec.describe "warn that term source is not in expected format" do
   INPUT
 end
 
-RSpec.describe "warn that figure does not have title" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Figure should have title/).to_stderr }
+it "warns that figure does not have title" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Figure should have title/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   image::spec/examples/rice_images/rice_image1.png[]
   INPUT
 end
 
-RSpec.describe "warn that callouts do not match annotations" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/mismatch of callouts and annotations/).to_stderr }
+it "warns that callouts do not match annotations" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/mismatch of callouts and annotations/).to_stderr
       #{VALIDATING_BLANK_HDR}
       [source,ruby]
       --
@@ -124,8 +125,8 @@ RSpec.describe "warn that callouts do not match annotations" do
       INPUT
 end
 
-RSpec.describe "term source is not a real reference" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/iso123 is not a real reference/).to_stderr }
+it "warns that term source is not a real reference" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/iso123 is not a real reference/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   [.source]
@@ -133,8 +134,8 @@ RSpec.describe "term source is not a real reference" do
   INPUT
 end
 
-RSpec.describe "undated reference has locality" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/undated reference ISO 123 should not contain specific elements/).to_stderr }
+it "warns that ndated reference has locality" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/undated reference ISO 123 should not contain specific elements/).to_stderr
   #{VALIDATING_BLANK_HDR}
   
   == Scope
@@ -146,8 +147,8 @@ RSpec.describe "undated reference has locality" do
   INPUT
 end
 
-RSpec.describe "Non-reference in bibliography" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/no anchor on reference/).to_stderr }
+it "warns of Non-reference in bibliography" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/no anchor on reference/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Normative References
@@ -155,8 +156,8 @@ RSpec.describe "Non-reference in bibliography" do
   INPUT
 end
 
-RSpec.describe "Non-ISO reference in Normative References" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-ISO/IEC reference not expected as normative}).to_stderr }
+it "warns of Non-ISO reference in Normative References" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-ISO/IEC reference not expected as normative}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   [bibliography]
@@ -165,8 +166,8 @@ RSpec.describe "Non-ISO reference in Normative References" do
   INPUT
 end
 
-RSpec.describe "Scope contains subclauses" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope contains subclauses: should be succint}).to_stderr }
+it "warns that Scope contains subclauses" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope contains subclauses: should be succint}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -176,8 +177,8 @@ RSpec.describe "Scope contains subclauses" do
 end
 
 
-RSpec.describe "Table should have title" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Table should have title}).to_stderr }
+it "warns that Table should have title" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Table should have title}).to_stderr
   #{VALIDATING_BLANK_HDR}     
 
   |===
@@ -186,8 +187,8 @@ RSpec.describe "Table should have title" do
   INPUT
 end
 
-RSpec.describe "Style warning if number not broken up in threes" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{number not broken up in threes}).to_stderr }
+it "gives Style warning if number not broken up in threes" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{number not broken up in threes}).to_stderr
   #{VALIDATING_BLANK_HDR}     
 
   == Clause
@@ -195,8 +196,8 @@ RSpec.describe "Style warning if number not broken up in threes" do
   INPUT
 end
 
-RSpec.describe "No style warning if number not broken up in threes is ISO reference" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to_not output(%r{number not broken up in threes}).to_stderr }
+it "gives No style warning if number not broken up in threes is ISO reference" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to_not output(%r{number not broken up in threes}).to_stderr
   #{VALIDATING_BLANK_HDR}     
 
   == Clause
@@ -204,8 +205,8 @@ RSpec.describe "No style warning if number not broken up in threes is ISO refere
   INPUT
 end
 
-RSpec.describe "Style warning if decimal point" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{possible decimal point}).to_stderr }
+it "Style warning if decimal point" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{possible decimal point}).to_stderr
   #{VALIDATING_BLANK_HDR}     
 
   == Clause
@@ -213,8 +214,8 @@ RSpec.describe "Style warning if decimal point" do
   INPUT
 end
 
-RSpec.describe "Style warning if billion used" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{ambiguous number}).to_stderr }
+it "Style warning if billion used" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{ambiguous number}).to_stderr
   #{VALIDATING_BLANK_HDR}     
 
   == Clause
@@ -222,8 +223,8 @@ RSpec.describe "Style warning if billion used" do
   INPUT
 end
 
-RSpec.describe "Style warning if no space before percent sign" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{no space before percent sign}).to_stderr }
+it "Style warning if no space before percent sign" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{no space before percent sign}).to_stderr
   #{VALIDATING_BLANK_HDR}     
 
   == Clause
@@ -231,8 +232,8 @@ RSpec.describe "Style warning if no space before percent sign" do
   INPUT
 end
 
-RSpec.describe "Style warning if unbracketed tolerance before percent sign" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{unbracketed tolerance before percent sign}).to_stderr }
+it "Style warning if unbracketed tolerance before percent sign" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{unbracketed tolerance before percent sign}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -240,8 +241,8 @@ RSpec.describe "Style warning if unbracketed tolerance before percent sign" do
   INPUT
 end
 
-RSpec.describe "Style warning if dots in abbreviation" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{no dots in abbreviation}).to_stderr }
+it "Style warning if dots in abbreviation" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{no dots in abbreviation}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -249,8 +250,8 @@ RSpec.describe "Style warning if dots in abbreviation" do
   INPUT
 end
 
-RSpec.describe "No Style warning if dots in abbreviation are e.g." do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to_not output(%r{no dots in abbreviation}).to_stderr }
+it "No Style warning if dots in abbreviation are e.g." do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to_not output(%r{no dots in abbreviation}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -258,8 +259,8 @@ RSpec.describe "No Style warning if dots in abbreviation are e.g." do
   INPUT
 end
 
-RSpec.describe "Style warning if ppm used" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{language-specific abbreviation}).to_stderr }
+it "Style warning if ppm used" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{language-specific abbreviation}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -267,8 +268,8 @@ RSpec.describe "Style warning if ppm used" do
   INPUT
 end
 
-RSpec.describe "Style warning if space between number and degree" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{space between number and degrees/minutes/seconds}).to_stderr }
+it "Style warning if space between number and degree" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{space between number and degrees/minutes/seconds}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -276,8 +277,8 @@ RSpec.describe "Style warning if space between number and degree" do
   INPUT
 end
 
-RSpec.describe "Style warning if no space between number and SI unit" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{no space between number and SI unit}).to_stderr }
+it "Style warning if no space between number and SI unit" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{no space between number and SI unit}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -285,8 +286,8 @@ RSpec.describe "Style warning if no space between number and SI unit" do
   INPUT
 end
 
-RSpec.describe "Style warning if mins used" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-standard unit}).to_stderr }
+it "Style warning if mins used" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-standard unit}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -295,16 +296,16 @@ RSpec.describe "Style warning if mins used" do
 end
 
 # can't test: our asciidoc template won't allow this to be generated
-# RSpec.describe "Style warning if foreword contains subclauses" do
-  # specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-standard unit}).to_stderr }
+# it "Style warning if foreword contains subclauses" do
+  # expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-standard unit}).to_stderr
   #  #{VALIDATING_BLANK_HDR}
 # 
   # INPUT
 # end
 
 # can't test: we strip out any such content from Normative references preemptively
-#RSpec.describe "Style warning if Normative References contains subclauses" do
-  #specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{normative references contains subclauses}).to_stderr }
+#it "Style warning if Normative References contains subclauses" do
+  #expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{normative references contains subclauses}).to_stderr
   ##{VALIDATING_BLANK_HDR}
 #
   #[bibliography]
@@ -314,8 +315,8 @@ end
   #INPUT
 #end
 
-RSpec.describe "Style warning if two Symbols and Abbreviated Terms sections" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{only one Symbols and Abbreviated Terms section in the standard}).to_stderr }
+it "Style warning if two Symbols and Abbreviated Terms sections" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{only one Symbols and Abbreviated Terms section in the standard}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Terms and Abbreviations
@@ -326,8 +327,8 @@ RSpec.describe "Style warning if two Symbols and Abbreviated Terms sections" do
   INPUT
 end
 
-RSpec.describe "Style warning if Symbols and Abbreviated Terms contains extraneous matter" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Symbols and Abbreviated Terms can only contain a definition list}).to_stderr }
+it "Style warning if Symbols and Abbreviated Terms contains extraneous matter" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Symbols and Abbreviated Terms can only contain a definition list}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Symbols and Abbreviated Terms
@@ -336,8 +337,8 @@ RSpec.describe "Style warning if Symbols and Abbreviated Terms contains extraneo
   INPUT
 end
 
-RSpec.describe "Warning if do not start with scope or introduction" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Prefatory material must be followed by \(clause\) Scope}).to_stderr }
+it "Warning if do not start with scope or introduction" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Prefatory material must be followed by \(clause\) Scope}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Symbols and Abbreviated Terms
@@ -346,8 +347,8 @@ RSpec.describe "Warning if do not start with scope or introduction" do
   INPUT
 end
 
-RSpec.describe "Warning if introduction not followed by scope" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Prefatory material must be followed by \(clause\) Scope}).to_stderr }
+it "Warning if introduction not followed by scope" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Prefatory material must be followed by \(clause\) Scope}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword 
@@ -361,8 +362,8 @@ RSpec.describe "Warning if introduction not followed by scope" do
   INPUT
 end
 
-RSpec.describe "Warning if normative references not followed by terms and definitions" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Normative References must be followed by Terms and Definitions}).to_stderr }
+it "Warning if normative references not followed by terms and definitions" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Normative References must be followed by Terms and Definitions}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword 
@@ -379,8 +380,8 @@ RSpec.describe "Warning if normative references not followed by terms and defini
   INPUT
 end
 
-RSpec.describe "Warning if there are no clauses in the document" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Document must contain clause after Terms and Definitions}).to_stderr }
+it "Warning if there are no clauses in the document" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Document must contain clause after Terms and Definitions}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword 
@@ -398,8 +399,8 @@ RSpec.describe "Warning if there are no clauses in the document" do
   INPUT
 end
 
-RSpec.describe "Warning if scope occurs after Terms and Definitions" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope must occur before Terms and Definitions}).to_stderr }
+it "Warning if scope occurs after Terms and Definitions" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope must occur before Terms and Definitions}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -417,8 +418,8 @@ RSpec.describe "Warning if scope occurs after Terms and Definitions" do
   INPUT
 end
 
-RSpec.describe "Warning if scope occurs after Terms and Definitions" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope must occur before Terms and Definitions}).to_stderr }
+it "Warning if scope occurs after Terms and Definitions" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope must occur before Terms and Definitions}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -438,8 +439,8 @@ RSpec.describe "Warning if scope occurs after Terms and Definitions" do
   INPUT
 end
 
-RSpec.describe "Warning if Symbols and Abbreviated Terms does not occur immediately after Terms and Definitions" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Only annexes and references can follow clauses}).to_stderr }
+it "Warning if Symbols and Abbreviated Terms does not occur immediately after Terms and Definitions" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Only annexes and references can follow clauses}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -459,8 +460,8 @@ RSpec.describe "Warning if Symbols and Abbreviated Terms does not occur immediat
   INPUT
 end
 
-RSpec.describe "Warning if no normative references" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Document must include \(references\) Normative References}).to_stderr }
+it "Warning if no normative references" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Document must include \(references\) Normative References}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -484,8 +485,8 @@ RSpec.describe "Warning if no normative references" do
   INPUT
 end
 
-RSpec.describe "Warning if final section is not named Bibliography" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{There are sections after the final Bibliography}).to_stderr }
+it "Warning if final section is not named Bibliography" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{There are sections after the final Bibliography}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -515,8 +516,8 @@ RSpec.describe "Warning if final section is not named Bibliography" do
   INPUT
 end
 
-RSpec.describe "Warning if final section is not styled Bibliography" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Section not marked up as \[bibliography\]!}).to_stderr }
+it "Warning if final section is not styled Bibliography" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Section not marked up as \[bibliography\]!}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -542,121 +543,131 @@ RSpec.describe "Warning if final section is not styled Bibliography" do
   INPUT
 end
 
-RSpec.describe "Warning if English title intro and no French title intro" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No French Title Intro!}).to_stderr }
+it "Warning if English title intro and no French title intro" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No French Title Intro!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-intro-en: Title
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if French title intro and no English title intro" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No English Title Intro!}).to_stderr }
+it "Warning if French title intro and no English title intro" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No English Title Intro!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-intro-fr: Title
+  :no-isobib:
 
   INPUT
 end
 
 
-RSpec.describe "Warning if English title and no French intro" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No French Title!}).to_stderr }
+it "Warning if English title and no French intro" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No French Title!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-main-en: Title
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if French title and no English title" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No English Title!}).to_stderr }
+it "Warning if French title and no English title" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No English Title!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-main-fr: Title
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if English title part and no French title part" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No French Title Part!}).to_stderr }
+it "Warning if English title part and no French title part" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No French Title Part!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-part-en: Title
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if French title part and no English title part" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No English Title Part!}).to_stderr }
+it "Warning if French title part and no English title part" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{No English Title Part!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-part-fr: Title
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if non-IEC document with subpart" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Subpart defined on non-IEC document!}).to_stderr }
+it "Warning if non-IEC document with subpart" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Subpart defined on non-IEC document!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :partnumber: 1-1
   :publisher: ISO
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "No warning if joint IEC/non-IEC document with subpart" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{Subpart defined on non-IEC document!}).to_stderr }
+it "No warning if joint IEC/non-IEC document with subpart" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{Subpart defined on non-IEC document!}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :partnumber: 1-1
   :publisher: ISO,IEC
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if main title contains document type" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Main Title may name document type}).to_stderr }
+it "Warning if main title contains document type" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Main Title may name document type}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-main-en: A Technical Specification on Widgets
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if intro title contains document type" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Title Intro may name document type}).to_stderr }
+it "Warning if intro title contains document type" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Title Intro may name document type}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :title-intro-en: A Technical Specification on Widgets
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Each first-level subclause must have a title" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{each first-level subclause must have a title}).to_stderr }
+it "Each first-level subclause must have a title" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{each first-level subclause must have a title}).to_stderr
   #{VALIDATING_BLANK_HDR}
   == Clause
 
@@ -664,8 +675,8 @@ RSpec.describe "Each first-level subclause must have a title" do
   INPUT
 end
 
-RSpec.describe "All subclauses must have a title, or none" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{all subclauses must have a title, or none}).to_stderr }
+it "All subclauses must have a title, or none" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{all subclauses must have a title, or none}).to_stderr
   #{VALIDATING_BLANK_HDR}
   == Clause
 
@@ -677,8 +688,8 @@ RSpec.describe "All subclauses must have a title, or none" do
   INPUT
 end
 
-RSpec.describe "Warning if subclause is only child of its parent, or none" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{subclause is only child}).to_stderr }
+it "Warning if subclause is only child of its parent, or none" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{subclause is only child}).to_stderr
   #{VALIDATING_BLANK_HDR}
   == Clause
 
@@ -687,41 +698,44 @@ RSpec.describe "Warning if subclause is only child of its parent, or none" do
   INPUT
 end
 
-RSpec.describe "Warning if invalid technical committee type" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{invalid technical committee type}).to_stderr }
+it "Warning if invalid technical committee type" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{invalid technical committee type}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :technical-committee-type: X
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if invalid subcommittee type" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{invalid subcommittee type}).to_stderr }
+it "Warning if invalid subcommittee type" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{invalid subcommittee type}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :subcommittee-type: X
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if invalid subcommittee type" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{invalid subcommittee type}).to_stderr }
+it "Warning if invalid subcommittee type" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{invalid subcommittee type}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
   :subcommittee-type: X
+  :no-isobib:
 
   INPUT
 end
 
-RSpec.describe "Warning if 'see' crossreference points to normative section" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{'see terms' is pointing to a normative section}).to_stderr }
+it "Warning if 'see' crossreference points to normative section" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{'see terms' is pointing to a normative section}).to_stderr
   #{VALIDATING_BLANK_HDR}
   [[terms]]
   == Terms and Definitions
@@ -731,8 +745,8 @@ RSpec.describe "Warning if 'see' crossreference points to normative section" do
   INPUT
 end
 
-RSpec.describe "Warning if 'see' reference points to normative reference" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{is pointing to a normative reference}).to_stderr }
+it "Warning if 'see' reference points to normative reference" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{is pointing to a normative reference}).to_stderr
   #{VALIDATING_BLANK_HDR}
   [bibliography]
   == Normative References
@@ -743,8 +757,8 @@ RSpec.describe "Warning if 'see' reference points to normative reference" do
   INPUT
 end
 
-RSpec.describe "Warning if term definition starts with article" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{term definition starts with article}).to_stderr } 
+it "Warning if term definition starts with article" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{term definition starts with article}).to_stderr 
   #{VALIDATING_BLANK_HDR}
   == Terms and Definitions
   
@@ -754,8 +768,8 @@ RSpec.describe "Warning if term definition starts with article" do
   INPUT
 end
 
-RSpec.describe "Warning if term definition ends with period" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{term definition ends with period}).to_stderr }
+it "Warning if term definition ends with period" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{term definition ends with period}).to_stderr
   #{VALIDATING_BLANK_HDR}
   == Terms and Definitions
   
@@ -765,8 +779,8 @@ RSpec.describe "Warning if term definition ends with period" do
   INPUT
 end
 
-RSpec.describe "validates document against ISO XML schema" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{value of attribute "align" is invalid; must be equal to}).to_stderr }
+it "validates document against ISO XML schema" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{value of attribute "align" is invalid; must be equal to}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   [align=mid-air]
@@ -775,9 +789,14 @@ RSpec.describe "validates document against ISO XML schema" do
 end
 
 
-RSpec.describe "Warning if terms mismatches IEV" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Term "automation" does not match IEV 103-01-02 "functional"}).to_stderr }
-  #{VALIDATING_BLANK_HDR}
+it "Warning if terms mismatches IEV" do
+  system "mv ~/.iev.pstore ~/.iev.pstore1"
+  system "rm test.iev.pstore"
+  mock_open_uri('103-01-02')
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Term "automation" does not match IEV 103-01-02 "functional"}).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
   
   [bibliography]
   == Normative References
@@ -789,11 +808,17 @@ RSpec.describe "Warning if terms mismatches IEV" do
   [.source]
   <<iev,clause="103-01-02">>
   INPUT
+  system "mv ~/.iev.pstore1 ~/.iev.pstore"
 end
 
-RSpec.describe "No warning if English term matches IEV" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr }
-  #{VALIDATING_BLANK_HDR}
+it "No warning if English term matches IEV" do
+  system "mv ~/.iev.pstore ~/.iev.pstore1"
+  system "rm test.iev.pstore"
+  mock_open_uri('103-01-02')
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
 
   [bibliography]
   == Normative References
@@ -805,15 +830,18 @@ RSpec.describe "No warning if English term matches IEV" do
   [.source]
   <<iev,clause="103-01-02">>
   INPUT
+  system "mv ~/.iev.pstore1 ~/.iev.pstore"
 end
 
-RSpec.describe "No warning if French term matches IEV" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr }
+it "No warning if French term matches IEV" do
+  system "mv ~/.iev.pstore ~/.iev.pstore1"
+  system "rm test.iev.pstore"
+  mock_open_uri('103-01-02')
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
   :nodoc:
-  :no-isobib:
   :language: fr
 
   [bibliography]
@@ -826,10 +854,11 @@ RSpec.describe "No warning if French term matches IEV" do
   [.source]
   <<iev,clause="103-01-02">>
   INPUT
+  system "mv ~/.iev.pstore1 ~/.iev.pstore"
 end
 
-RSpec.describe "Warn if more than 7 levels of subclause" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{exceeds the maximum clause depth of 7}).to_stderr }
+it "Warn if more than 7 levels of subclause" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Exceeds the maximum clause depth of 7}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
@@ -859,8 +888,8 @@ RSpec.describe "Warn if more than 7 levels of subclause" do
   INPUT
 end
 
-RSpec.describe "Do not warn if not more than 7 levels of subclause" do
-  specify { expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{exceeds the maximum clause depth of 7}).to_stderr }
+it "Do not warn if not more than 7 levels of subclause" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{exceeds the maximum clause depth of 7}).to_stderr
   = Document title
   Author
   :docfile: test.adoc
@@ -886,4 +915,4 @@ RSpec.describe "Do not warn if not more than 7 levels of subclause" do
 
   INPUT
 end
-
+end

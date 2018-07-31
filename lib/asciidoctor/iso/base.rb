@@ -75,6 +75,7 @@ module Asciidoctor
         @no_isobib = node.attr("no-isobib")
         @bibdb = nil
         init_bib_caches(node)
+        init_iev_caches(node)
       end
 
       def init_bib_caches(node)
@@ -87,6 +88,18 @@ module Asciidoctor
           end
         end        
         @bibdb = Relaton::Db.new(globalname, localname) unless @no_isobib
+      end
+
+      def init_iev_caches(node)
+        unless (@no_isobib_cache || @no_isobib)
+          globalname = ievcache_name(true)
+          localname = ievcache_name(false) if node.attr("local-cache")
+          if node.attr("flush-caches")
+            system("rm -f #{globalname}") unless globalname.nil?
+            system("rm -f #{localname}") unless localname.nil?
+          end
+        end
+        @iev = Iev::Db.new(globalname, localname) unless @no_isobib
       end
 
       def default_fonts(node)

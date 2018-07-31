@@ -45,7 +45,9 @@ EOS
 
   it "does not activate biblio caches if isobib disabled" do
     system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "mv ~/.iev.pstore ~/.iev.pstore1"
     system "rm -f test.relaton.pstore"
+    system "rm -f test.iev.pstore"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
@@ -54,15 +56,21 @@ EOS
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
     expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be false
+    expect(File.exist?("#{Dir.home}/.iev.pstore")).to be false
     expect(File.exist?("test.relaton.pstore")).to be false
+    expect(File.exist?("test.iev.pstore")).to be false
 
     system "rm ~/.relaton-bib.pstore"
+    system "rm ~/.iev.pstore"
     system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
+    system "mv ~/.iev.pstore1 ~/.iev.pstore"
   end
 
   it "does not activate biblio caches if isobib caching disabled" do
     system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "mv ~/.iev.pstore ~/.iev.pstore1"
     system "rm -f test.relaton.pstore"
+    system "rm -f test.iev.pstore"
     mock_isobib_get_123
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{ISOBIB_BLANK_HDR}
@@ -72,18 +80,22 @@ EOS
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
     expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be false
+    expect(File.exist?("#{Dir.home}/.iev.pstore")).to be false
     expect(File.exist?("test.relaton.pstore")).to be false
+    expect(File.exist?("test.iev.pstore")).to be false
 
     system "rm ~/.relaton-bib.pstore"
+    system "rm ~/.iev.pstore"
     system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
+    system "mv ~/.iev.pstore1 ~/.iev.pstore"
   end
 
   it "flushes biblio caches" do
     system "cp ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
+    system "cp ~/.iev.pstore ~/.iev.pstore1"
 
-    File.open("#{Dir.home}/.relaton-bib.pstore", "w") do |f|
-      f.write "XXX"
-    end
+    File.open("#{Dir.home}/.relaton-bib.pstore", "w") { |f| f.write "XXX" }
+    system "rm ~/.iev.pstore"
 
     mock_isobib_get_123
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
@@ -94,6 +106,7 @@ EOS
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
     expect(File.exist?("#{Dir.home}/.relaton-bib.pstore")).to be true
+    expect(File.exist?("#{Dir.home}/.iev.pstore")).to be true
 
     db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
     entry = db.load_entry("ISO 123:2001")
@@ -101,9 +114,10 @@ EOS
     expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_123_DATED)
 
     system "rm ~/.relaton-bib.pstore"
+    system "rm ~/.iev.pstore"
     system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"
+    system "mv ~/.iev.pstore1 ~/.iev.pstore"
   end
-
 
   it "activates global cache" do
     system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"

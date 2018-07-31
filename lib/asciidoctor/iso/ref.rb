@@ -177,6 +177,11 @@ module Asciidoctor
         global ?  "#{Dir.home}/.relaton-bib.pstore" :
           "#{@filename}.relaton.pstore"
       end
+
+      def ievcache_name(global)
+        global ?  "#{Dir.home}/.iev.pstore" :
+          "#{@filename}.iev.pstore"
+      end
     end
   end
 end

@@ -175,7 +175,7 @@ module Asciidoctor
       /^IEV($|\s|:)/.match? t&.at(".//origin/@citeas")&.text or next
       pref = t.xpath("./preferred").inject([]) { |m, x| m << x&.text&.downcase }
       locality = t.xpath(SOURCELOCALITY)&.text or next
-      iev = Iev.get(locality, xmldoc&.at("//language")&.text || "en") or next
+      iev = @iev.fetch(locality, xmldoc&.at("//language")&.text || "en") or next
       pref.include?(iev.downcase) or
         warn %(Term "#{pref[0]}" does not match IEV #{locality} "#{iev}")
     end
