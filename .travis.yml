@@ -8,6 +8,14 @@ rvm:
 before_install:
   - gem install bundler -v 1.16.1
   - unset _JAVA_OPTIONS
+install:
+    - wget "http://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=&ts=1424308684&use_mirror=jaist" -O plantuml.jar
+    - sudo mkdir -p /opt/plantuml
+    - sudo cp plantuml.jar /opt/plantuml
+    - echo "#! /bin/sh" > plantuml
+    - echo 'exec java -jar /opt/plantuml/plantuml.jar "$@"' >> plantuml
+    - sudo install -m 755 -D plantuml /usr/bin/plantuml
+    - plantuml -version
 matrix:
   allow_failures:
     - rvm: ruby-head

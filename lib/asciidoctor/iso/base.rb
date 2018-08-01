@@ -16,6 +16,7 @@ module Asciidoctor
         inline_macro Asciidoctor::ISO::AltTermInlineMacro
         inline_macro Asciidoctor::ISO::DeprecatedTermInlineMacro
         inline_macro Asciidoctor::ISO::DomainTermInlineMacro
+        block Asciidoctor::ISO::PlantUMLBlockMacro
       end
 
       def content(node)

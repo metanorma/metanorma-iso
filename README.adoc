@@ -514,6 +514,38 @@ This generates the following ISO XML:
 </clause>
 --
 
+=== PlantUML
+
+The http://plantuml.com[PlantUML] diagramming tool is integrated with Asciidoctor
+in this gem, as a literal block with the style attribute `plantuml`:
+
+[source,asciidoctor]
+--
+[plantuml]
+....
+@startuml
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+@enduml
+....
+--
+
+The integration runs PlantUML for each such block, generating a PNG image.
+The images are stored in the `plantuml` directory, and linked into the output
+document in place of the PlantUML.
+
+PlantUML needs to be installed by users separately, and accesssible from the
+command line:
+
+* `brew install plantuml` on MacOS.
+* For Linux, link the PlantUML jar file into a command line executable; see
+`.travis.yml` for an example.
+
+If PlantUML is not installed locally, the source PlantUML is incorporated into
+the output document as sourcecode. 
 
 === Features not visible in HTML preview
 
