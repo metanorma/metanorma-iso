@@ -1,7 +1,7 @@
 require "isodoc"
 
 module IsoDoc
-  module Csd
+  module Iso
     class  Metadata < IsoDoc::Metadata
       def initialize(lang, script, labels)
         super

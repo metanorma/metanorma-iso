@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "processes section names" do
-    expect(IsoDoc::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <preface>
       <foreword obligation="informative">
@@ -157,7 +157,7 @@ OUTPUT
   end
 
   it "processes section names (Word)" do
-    expect(IsoDoc::WordConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body /m, "<body ")).to be_equivalent_to <<~"OUTPUT"
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <preface>
       <foreword obligation="informative">
@@ -224,10 +224,6 @@ OUTPUT
        </bibliography>
        </iso-standard>
     INPUT
-          <html xmlns:epub="http://www.idpf.org/2007/ops">
-         <head>
-           <title>test</title>
-                     </head>
            <body lang="EN-US" link="blue" vlink="#954F72">
              <div class="WordSection1">
                <p>&#160;</p>
@@ -320,13 +316,15 @@ OUTPUT
                  </div>
                </div>
              </div>
+             <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+             <div class="colophon"/>
            </body>
        </html>
 OUTPUT
   end
 
   it "processes simple terms & definitions" do
-        expect(IsoDoc::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+        expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
                <iso-standard xmlns="http://riboseinc.com/isoxml">
        <sections>
        <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
@@ -360,7 +358,7 @@ OUTPUT
   end
 
   it "processes terms & definitions with external source" do
-        expect(IsoDoc::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+        expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
                <iso-standard xmlns="http://riboseinc.com/isoxml">
          <termdocsource type="inline" bibitemid="ISO712"/>
        <sections>
@@ -413,7 +411,7 @@ OUTPUT
   end
 
   it "processes empty terms & definitions with external source" do
-        expect(IsoDoc::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+        expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
                <iso-standard xmlns="http://riboseinc.com/isoxml">
          <termdocsource type="inline" bibitemid="ISO712"/>
          <termdocsource type="inline" bibitemid="ISO712"/>
@@ -462,9 +460,8 @@ OUTPUT
     OUTPUT
   end
 
-
   it "processes empty terms & definitions" do
-        expect(IsoDoc::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+        expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
                <iso-standard xmlns="http://riboseinc.com/isoxml">
        <sections>
        <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
@@ -492,7 +489,7 @@ OUTPUT
   end
 
     it "processes inline section headers" do
-    expect(IsoDoc::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <sections>
        <clause id="M" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
