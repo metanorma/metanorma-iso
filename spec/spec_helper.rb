@@ -132,6 +132,41 @@ BLANK_HDR = <<~"HDR"
 </bibdata>
 HDR
 
+HTML_HDR = <<~END
+        <html xmlns:epub="http://www.idpf.org/2007/ops">
+          <head>
+            <title>test</title>
+          </head>
+          <body lang="EN-US" link="blue" vlink="#954F72">
+            <div class="title-section">
+              <p>&#160;</p>
+            </div>
+            <br/>
+            <div class="prefatory-section">
+              <p>&#160;</p>
+            </div>
+            <br/>
+            <div class="main-section">
+END
+
+WORD_HDR = <<~END
+       <html xmlns:epub="http://www.idpf.org/2007/ops">
+         <head>
+           <title>test</title>
+         </head>
+         <body lang="EN-US" link="blue" vlink="#954F72">
+           <div class="WordSection1">
+             <p>&#160;</p>
+           </div>
+           <br clear="all" class="section"/>
+           <div class="WordSection2">
+             <p>&#160;</p>
+           </div>
+           <br clear="all" class="section"/>
+           <div class="WordSection3">
+END
+
+
 def stub_fetch_ref(**opts)
   xml = ""
 
