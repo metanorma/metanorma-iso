@@ -114,6 +114,16 @@ module IsoDoc
           @anchors[c["id"]][:container] = clause["id"]
         end
       end
+
+      def section_names1(clause, num, level)
+        @anchors[clause["id"]] =
+          { label: num, level: level, xref: num }
+        # subclauses are not prefixed with "Clause"
+        clause.xpath(ns("./clause | ./terms | ./term | ./definitions")).
+          each_with_index do |c, i|
+          section_names1(c, "#{num}.#{i + 1}", level + 1)
+        end
+      end
     end
   end
 end
