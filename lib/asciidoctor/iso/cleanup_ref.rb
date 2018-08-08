@@ -90,7 +90,7 @@ module Asciidoctor
 
       def format_ref(ref, isopub)
         return ref if isopub
-        return "[#{ref}]" if /^\d+$/.match?(ref) && !/^\[.*\]$/.match?(ref)
+        return "[#{ref}]" if /^\d+$/.match(ref) && !/^\[.*\]$/.match(ref)
         ref
       end
 

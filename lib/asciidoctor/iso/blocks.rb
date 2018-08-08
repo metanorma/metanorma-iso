@@ -35,7 +35,7 @@ module Asciidoctor
 
       def sidebar_attrs(node)
         date = node.attr("date") || Date.today.iso8601.gsub(/\+.*$/, "")
-        date += "T00:00:00Z" unless /T/.match? date
+        date += "T00:00:00Z" unless /T/.match date
         {
           reviewer: node.attr("reviewer") || node.attr("source") || "(Unknown)",
           id: Utils::anchor_or_uuid(node),

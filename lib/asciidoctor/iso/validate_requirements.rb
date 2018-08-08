@@ -25,7 +25,7 @@ module Asciidoctor
 
       def requirement(text)
         text.split(/\.\s+/).each do |t|
-          return t if REQUIREMENT_RE.match? t
+          return t if REQUIREMENT_RE.match t
         end
         nil
       end
@@ -43,7 +43,7 @@ module Asciidoctor
 
       def recommendation(text)
         text.split(/\.\s+/).each do |t|
-          return t if RECOMMENDATION_RE.match? t
+          return t if RECOMMENDATION_RE.match t
         end
         nil
       end
@@ -62,7 +62,7 @@ module Asciidoctor
 
       def permission(text)
         text.split(/\.\s+/).each do |t|
-          return t if PERMISSION_RE.match? t
+          return t if PERMISSION_RE.match t
         end
         nil
       end
@@ -81,13 +81,13 @@ module Asciidoctor
                    Regexp::IGNORECASE)
 
       def possibility(text)
-        text.split(/\.\s+/).each { |t| return t if POSSIBILITY_RE.match? t }
+        text.split(/\.\s+/).each { |t| return t if POSSIBILITY_RE.match t }
         nil
       end
 
       def external_constraint(text)
         text.split(/\.\s+/).each do |t|
-          return t if /\b(must)\b/xi.match? t
+          return t if /\b(must)\b/xi.match t
         end
         nil
       end

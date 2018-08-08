@@ -203,7 +203,7 @@ module Asciidoctor
       def empty_text_before_first_element(x)
         x.children.each do |c|
           if c.text?
-            return false if /\S/.match?(c.text)
+            return false if /\S/.match(c.text)
           end
           return true if c.element?
         end
@@ -212,7 +212,7 @@ module Asciidoctor
 
       def strip_initial_space(x)
         if x.children[0].text?
-          if !/\S/.match?(x.children[0].text)
+          if !/\S/.match(x.children[0].text)
             x.children[0].remove
           else
             x.children[0].content = x.children[0].text.gsub(/^ /, "")

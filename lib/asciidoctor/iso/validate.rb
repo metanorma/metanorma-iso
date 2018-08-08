@@ -53,11 +53,11 @@ module Asciidoctor
         doctypes = /International\sStandard | Technical\sSpecification |
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
         title_main_en = root.at("//title-main[@language='en']")
-        if !title_main_en.nil? && doctypes.match?(title_main_en.text)
+        if !title_main_en.nil? && doctypes.match(title_main_en.text)
           warn "Main Title may name document type"
         end
         title_intro_en = root.at("//title-intro[@language='en']")
-        if !title_intro_en.nil? && doctypes.match?(title_intro_en.text)
+        if !title_intro_en.nil? && doctypes.match(title_intro_en.text)
           warn "Title Intro may name document type"
         end
       end
@@ -124,7 +124,7 @@ module Asciidoctor
     root.xpath("//xref").each do |t|
       # does not deal with preceding text marked up
       preceding = t.at("./preceding-sibling::text()[last()]")
-      next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
+      next unless !preceding.nil? && /\bsee\s*$/mi.match(preceding)
       (target = root.at("//*[@id = '#{t['target']}']")) || next
       if target&.at("./ancestor-or-self::*[@obligation = 'normative']")
         warn "ISO: 'see #{t['target']}' is pointing to a normative section"
@@ -135,7 +135,7 @@ module Asciidoctor
   def see_erefs_validate(root)
     root.xpath("//eref").each do |t|
       preceding = t.at("./preceding-sibling::text()[last()]")
-      next unless !preceding.nil? && /\bsee\s*$/mi.match?(preceding)
+      next unless !preceding.nil? && /\bsee\s*$/mi.match(preceding)
       target = root.at("//*[@id = '#{t['bibitemid']}']")
       if target.at("./ancestor::references"\
           "[title = 'Normative References']")
@@ -146,7 +146,7 @@ module Asciidoctor
 
   def locality_erefs_validate(root)
     root.xpath("//eref[locality]").each do |t|
-      unless /:[ ]?\d+{4}$/.match? t["citeas"]
+      unless /:[ ]?\d+{4}$/.match t["citeas"]
         warn "ISO: undated reference #{t['citeas']} should not contain "\
           "specific elements"
       end
@@ -154,7 +154,7 @@ module Asciidoctor
   end
 
   def termdef_warn(text, re, term, msg)
-    re.match?(text) && warn("ISO style: #{term}: #{msg}")
+    re.match(text) && warn("ISO style: #{term}: #{msg}")
   end
 
   def termdef_style(xmldoc)
@@ -172,7 +172,7 @@ module Asciidoctor
 
   def iev_validate(xmldoc)
     xmldoc.xpath("//term").each do |t|
-      /^IEV($|\s|:)/.match? t&.at(".//origin/@citeas")&.text or next
+      /^IEV($|\s|:)/.match(t&.at(".//origin/@citeas")&.text) or next
       pref = t.xpath("./preferred").inject([]) { |m, x| m << x&.text&.downcase }
       locality = t.xpath(SOURCELOCALITY)&.text or next
       iev = @iev.fetch(locality, xmldoc&.at("//language")&.text || "en") or next

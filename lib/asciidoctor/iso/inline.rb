@@ -93,7 +93,7 @@ module Asciidoctor
 
       def stem_parse(text, xml)
         if /&lt;([^:>&]+:)?math(\s+[^>&]+)?&gt; |
-          <([^:>&]+:)?math(\s+[^>&]+)?>/x.match? text
+          <([^:>&]+:)?math(\s+[^>&]+)?>/x.match text
           math = HTMLEntities.new.encode(text, :basic, :hexadecimal).
             gsub(/&amp;gt;/, ">").gsub(/\&amp;lt;/, "<").gsub(/&amp;amp;/, "&").
             gsub(/&gt;/, ">").gsub(/&lt;/, "<").gsub(/&amp;/, "&")

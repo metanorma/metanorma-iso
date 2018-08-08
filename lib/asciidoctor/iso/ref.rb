@@ -93,7 +93,7 @@ module Asciidoctor
           t.formattedref **{ format: "application/x-isodoc+xml" } do |i|
             i << ref_normalise_no_format(m[:text])
           end
-          t.docidentifier(/^\d+$/.match?(m[:code]) ? "[#{m[:code]}]" : m[:code])
+          t.docidentifier(/^\d+$/.match(m[:code]) ? "[#{m[:code]}]" : m[:code])
         end
       end
 
@@ -103,7 +103,7 @@ module Asciidoctor
           Utils::warning(node, "no anchor on reference", item) 
           return
         end
-        unless m[:code] && /^\d+$/.match?(m[:code])
+        unless m[:code] && /^\d+$/.match(m[:code])
           ref = fetch_ref xml, m[:code], 
             m.named_captures.has_key?("year") ? m[:year] : nil, {}
           return use_my_anchor(ref, m[:anchor]) if ref
