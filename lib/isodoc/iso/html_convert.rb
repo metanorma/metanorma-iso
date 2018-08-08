@@ -55,7 +55,7 @@ module IsoDoc
 
       def introduction(isoxml, out)
         f = isoxml.at(ns("//introduction")) || return
-        num = f.at(ns(".//clause")) ? "0." : nil
+        num = f.at(ns(".//clause")) ? "0" : nil
         title_attr = { class: "IntroTitle" }
         page_break(out)
         out.div **{ class: "Section3", id: f["id"] } do |div|
