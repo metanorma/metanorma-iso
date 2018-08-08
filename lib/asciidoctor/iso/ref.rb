@@ -66,7 +66,7 @@ module Asciidoctor
       end
 
       def isorefmatches3(xml, m)
-        hasyr =  m.named_captures.has_key?("year")
+        hasyr =  m.names.include?("year")
         ref = fetch_ref xml, m[:code], hasyr ? m[:year] : nil, all_parts: true
         return use_my_anchor(ref, m[:anchor]) if ref
         xml.bibitem(**attr_code(ref_attributes(m))) do |t|
@@ -105,7 +105,7 @@ module Asciidoctor
         end
         unless m[:code] && /^\d+$/.match(m[:code])
           ref = fetch_ref xml, m[:code], 
-            m.named_captures.has_key?("year") ? m[:year] : nil, {}
+            m.names.include?("year") ? m[:year] : nil, {}
           return use_my_anchor(ref, m[:anchor]) if ref
         end
         refitem_render(xml, m)
