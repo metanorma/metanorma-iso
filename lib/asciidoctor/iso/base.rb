@@ -1,13 +1,10 @@
 require "date"
 require "nokogiri"
-require "htmlentities"
 require "json"
 require "pathname"
 require "open-uri"
 require "pp"
-require "sass"
 require "isodoc"
-require "relaton"
 
 module Asciidoctor
   module ISO
@@ -55,6 +52,14 @@ module Asciidoctor
         end
         @files_to_delete.each { |f| system "rm #{f}" }
         ret
+      end
+
+      def makexml1(node)
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
+        result << noko { |ixml| front node, ixml }
+        result << noko { |ixml| middle node, ixml }
+        result << "</iso-standard>"
+        textcleanup(result.flatten * "\n")
       end
     end
   end

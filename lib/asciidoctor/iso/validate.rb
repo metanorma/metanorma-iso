@@ -1,4 +1,4 @@
-require "asciidoctor/iso/utils"
+require "metanorma-standoc"
 require_relative "./validate_style.rb"
 require_relative "./validate_requirements.rb"
 require_relative "./validate_section.rb"
@@ -9,7 +9,7 @@ require "iev"
 
 module Asciidoctor
   module ISO
-    class Converter1
+    class Converter < Standoc::Converter
       def title_intro_validate(root)
         title_intro_en = root.at("//title-intro[@language='en']")
         title_intro_fr = root.at("//title-intro[@language='fr']")
@@ -98,7 +98,7 @@ module Asciidoctor
   end
 
   def onlychild_clause_validate(root)
-    root.xpath(Utils::SUBCLAUSE_XPATH).each do |c|
+    root.xpath(Standoc::Utils::SUBCLAUSE_XPATH).each do |c|
       next unless c.xpath("../clause").size == 1
       title = c.at("./title")
       location = c["id"] || c.text[0..60] + "..."
@@ -168,57 +168,16 @@ module Asciidoctor
     end
   end
 
-  SOURCELOCALITY = ".//locality[@type = 'clause']/referenceFrom".freeze
-
-  def iev_validate(xmldoc)
-    xmldoc.xpath("//term").each do |t|
-      /^IEV($|\s|:)/.match(t&.at(".//origin/@citeas")&.text) or next
-      pref = t.xpath("./preferred").inject([]) { |m, x| m << x&.text&.downcase }
-      locality = t.xpath(SOURCELOCALITY)&.text or next
-      iev = @iev.fetch(locality, xmldoc&.at("//language")&.text || "en") or next
-      pref.include?(iev.downcase) or
-        warn %(Term "#{pref[0]}" does not match IEV #{locality} "#{iev}")
-    end
-  end
-
   def content_validate(doc)
+    super
     title_validate(doc.root)
     isosubgroup_validate(doc.root)
-    section_validate(doc)
     onlychild_clause_validate(doc.root)
     termdef_style(doc.root)
     iev_validate(doc.root)
     see_xrefs_validate(doc.root)
     see_erefs_validate(doc.root)
     locality_erefs_validate(doc.root)
-  end
-
-  def schema_validate(doc, filename)
-    File.open(".tmp.xml", "w:UTF-8") { |f| f.write(doc.to_xml) }
-    begin
-      errors = Jing.new(filename).validate(".tmp.xml")
-    rescue Jing::Error => e
-      abort "what what what #{e}"
-    end
-    warn "Valid!" if errors.none?
-    errors.each do |error|
-      warn "#{error[:message]} @ #{error[:line]}:#{error[:column]}"
-    end
-  end
-
-  # RelaxNG cannot cope well with wildcard attributes. So we strip
-  # any attributes from FormattedString instances (which can contain
-  # xs:any markup, and are signalled with @format) before validation.
-  def formattedstr_strip(doc)
-    doc.xpath("//*[@format]").each do |n|
-      n.elements.each do |e|
-        e.traverse do |e1|
-          next unless e1.element?
-          e1.each { |k, _v| e.delete(k) }
-        end
-      end
-    end
-    doc
   end
 
   def validate(doc)

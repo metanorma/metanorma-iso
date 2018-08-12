@@ -1,17 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
-it "warns when missing a title" do
-  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Table should have title/).to_stderr
-  #{VALIDATING_BLANK_HDR}
-  |===
-  |A |B |C
-
-  h|1 |2 |3
-  |===
-  INPUT
-end
-
 
 it "warns that introduction may contain requirement" do
   expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Introduction may contain requirement/).to_stderr
@@ -134,7 +123,7 @@ it "warns that term source is not a real reference" do
   INPUT
 end
 
-it "warns that ndated reference has locality" do
+it "warns that undated reference has locality" do
   expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/undated reference ISO 123 should not contain specific elements/).to_stderr
   #{VALIDATING_BLANK_HDR}
   

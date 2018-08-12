@@ -18,7 +18,21 @@
   of this.
 -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <include href="biblio.rng"/>
+  <include href="biblio.rng">
+    <define name="status">
+      <element name="status">
+        <choice>
+          <value>proposal</value>
+          <value>working_draft</value>
+          <value>committee_draft</value>
+          <value>draft_standard</value>
+          <value>final_draft</value>
+          <value>published</value>
+          <value>withdrawn</value>
+        </choice>
+      </element>
+    </define>
+  </include>
   <start>
     <ref name="standard-document"/>
   </start>
@@ -43,19 +57,6 @@
   <define name="bibdata">
     <element name="bibdata">
       <ref name="BibData"/>
-    </element>
-  </define>
-  <define name="status">
-    <element name="status">
-      <choice>
-        <value>proposal</value>
-        <value>working_draft</value>
-        <value>committee_draft</value>
-        <value>draft_standard</value>
-        <value>final_draft</value>
-        <value>published</value>
-        <value>withdrawn</value>
-      </choice>
     </element>
   </define>
   <define name="version">

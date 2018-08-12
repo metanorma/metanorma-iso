@@ -1,10 +1,10 @@
-require "asciidoctor/iso/utils"
+require "metanorma-standoc"
 require "nokogiri"
 require "pp"
 
 module Asciidoctor
   module ISO
-    class Converter1
+    class Converter < Standoc::Converter
       def extract_text(node)
         return "" if node.nil?
         node1 = Nokogiri::XML.fragment(node.to_s)

@@ -3,10 +3,8 @@ require "metanorma-standoc"
 require "asciidoctor/iso/version"
 require "asciidoctor/iso/base"
 require "asciidoctor/iso/front"
-#require "asciidoctor/iso/ref"
-#require "asciidoctor/iso/section"
-#require "asciidoctor/iso/validate"
-#require "asciidoctor/iso/utils"
+require "asciidoctor/iso/section"
+require "asciidoctor/iso/validate"
 require "asciidoctor/iso/cleanup"
 
 module Asciidoctor

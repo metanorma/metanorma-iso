@@ -2,7 +2,7 @@ require "nokogiri"
 
 module Asciidoctor
   module ISO
-    class Converter1
+    class Converter < Standoc::Converter
       def section_validate(doc)
         foreword_validate(doc.root)
         normref_validate(doc.root)
@@ -10,8 +10,7 @@ module Asciidoctor
         sections_sequence_validate(doc.root)
         section_style(doc.root)
         subclause_validate(doc.root)
-        sourcecode_style(doc.root)
-        asset_style(doc.root)
+        super
       end
 
       def foreword_validate(root)
@@ -145,7 +144,7 @@ module Asciidoctor
 
       def style_warning(node, msg, text)
         return if @novalid
-        w = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
+        w = "ISO style: WARNING (#{Standoc::Utils::current_location(node)}): #{msg}"
         w += ": #{text}" if text
         warn w
       end
@@ -189,8 +188,8 @@ module Asciidoctor
 
       def norm_bibitem_style(root)
         root.xpath(NORM_BIBITEMS).each do |b|
-          if b.at(Cleanup::ISO_PUBLISHER_XPATH).nil?
-            Utils::warning(b, NORM_ISO_WARN, b.text)
+          if b.at(Standoc::Converter::ISO_PUBLISHER_XPATH).nil?
+            Standoc::Utils::warning(b, NORM_ISO_WARN, b.text)
           end
         end
       end
@@ -201,8 +200,8 @@ module Asciidoctor
         root.xpath("//note").each { |e| note_style(e) }
         root.xpath("//fn").each { |e| footnote_style(e) }
         root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
-        asset_title_style(root)
         norm_bibitem_style(root)
+        super
       end
 
       def subclause_validate(root)

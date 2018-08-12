@@ -460,7 +460,7 @@ RSpec.describe Asciidoctor::ISO do
             <abbreviation>ISO</abbreviation>
           </organization>
         </contributor>
-
+        <language>en</language>
         <script>Latn</script>
         <status>
           <stage>60</stage>

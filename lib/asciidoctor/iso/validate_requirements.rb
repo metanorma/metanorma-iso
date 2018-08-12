@@ -1,10 +1,10 @@
-require "asciidoctor/iso/utils"
+require "metanorma-standoc"
 require "nokogiri"
 require "pp"
 
 module Asciidoctor
   module ISO
-    class Converter1
+    class Converter < Standoc::Converter
       REQUIREMENT_RE_STR = <<~REGEXP.freeze
         \\b
          ( shall | (is|are)_to |
