@@ -2,7 +2,7 @@ require "nokogiri"
 
 module Asciidoctor
   module ISO
-    module Validate
+    class Converter1
       def section_validate(doc)
         foreword_validate(doc.root)
         normref_validate(doc.root)
@@ -141,6 +141,13 @@ module Asciidoctor
           warn("ISO style: Final section must be (references) Bibliography")
         names.empty? ||
           warn("ISO style: There are sections after the final Bibliography")
+      end
+
+      def style_warning(node, msg, text)
+        return if @novalid
+        w = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
+        w += ": #{text}" if text
+        warn w
       end
 
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze

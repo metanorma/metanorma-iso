@@ -9,7 +9,7 @@ require "iev"
 
 module Asciidoctor
   module ISO
-    module Validate
+    class Converter1
       def title_intro_validate(root)
         title_intro_en = root.at("//title-intro[@language='en']")
         title_intro_fr = root.at("//title-intro[@language='fr']")

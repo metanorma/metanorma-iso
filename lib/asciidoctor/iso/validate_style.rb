@@ -4,7 +4,7 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module Validate
+    class Converter1
       def extract_text(node)
         return "" if node.nil?
         node1 = Nokogiri::XML.fragment(node.to_s)
@@ -52,13 +52,6 @@ module Asciidoctor
         return if @novalid
         style_no_guidance(node, extract_text(node), "Footnote")
         style(node, extract_text(node))
-      end
-
-      def style_warning(node, msg, text)
-        return if @novalid
-        w = "ISO style: WARNING (#{Utils::current_location(node)}): #{msg}"
-        w += ": #{text}" if text
-        warn w
       end
 
       def style_regex(re, warning, n, text)

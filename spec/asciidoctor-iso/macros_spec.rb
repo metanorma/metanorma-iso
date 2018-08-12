@@ -104,7 +104,7 @@ Alice &lt;-- Bob: another authentication Response
   private
 
   def mock_plantuml_disabled
-    expect(Asciidoctor::ISO::PlantUMLBlockMacroBackend).to receive(:plantuml_installed?) do
+    expect(Asciidoctor::Standoc::PlantUMLBlockMacroBackend).to receive(:plantuml_installed?) do
       false
     end
   end

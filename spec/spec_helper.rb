@@ -110,6 +110,7 @@ BLANK_HDR = <<~"HDR"
       <abbreviation>ISO</abbreviation>
     </organization>
   </contributor>
+  <language>en</language>
   <script>Latn</script>
   <status>
     <stage>60</stage>

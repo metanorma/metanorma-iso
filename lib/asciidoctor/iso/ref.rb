@@ -2,7 +2,7 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module Lists
+    class Converter1
       def iso_publisher(t, code)
         code.sub(/ .*$/, "").split(/\//).each do |abbrev|
           t.contributor do |c|

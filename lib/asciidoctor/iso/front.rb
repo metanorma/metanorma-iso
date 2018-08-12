@@ -8,7 +8,7 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module Front
+    class Converter < Standoc::Converter
       def metadata_id(node, xml)
         part, subpart = node&.attr("partnumber")&.split(/-/)
         xml.docidentifier do |i|
@@ -18,20 +18,6 @@ module Asciidoctor
             i.tc_document_number node.attr("tc-docnumber")
           end
         end
-      end
-
-      def metadata_version(node, xml)
-        xml.version do |v|
-          v.edition node.attr("edition") if node.attr("edition")
-          v.revision_date node.attr("revdate") if node.attr("revdate")
-          v.draft node.attr("draft") if node.attr("draft")
-        end
-      end
-
-      def committee_component(compname, node, out)
-        out.send compname.gsub(/-/, "_"), node.attr(compname),
-          **attr_code(number: node.attr("#{compname}-number"),
-                      type: node.attr("#{compname}-type"))
       end
 
       def organization(org, orgname)
@@ -97,33 +83,17 @@ module Asciidoctor
         end
       end
 
-      def metadata_ics(node, xml)
-        ics = node.attr("library-ics")
-        ics && ics.split(/,\s*/).each do |i|
-          xml.ics do |ics|
-            ics.code i
-          end
-        end
-      end
-
       def metadata(node, xml)
         title node, xml
         metadata_id(node, xml)
         metadata_author(node, xml)
         metadata_publisher(node, xml)
-        xml.language node.attr("language")
+        xml.language (node.attr("language") || "en")
         xml.script (node.attr("script") || "Latn")
         metadata_status(node, xml)
         metadata_copyright(node, xml)
         metadata_committee(node, xml)
         metadata_ics(node, xml)
-      end
-
-      def asciidoc_sub(x)
-        return nil if x.nil?
-        d = Asciidoctor::Document.new(x.lines.entries, {header_footer: false})
-        b = d.parse.blocks.first
-        b.apply_subs(b.source)
       end
 
       def title_intro(node, t, lang, at)

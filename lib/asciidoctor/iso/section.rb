@@ -3,7 +3,7 @@ require "uri"
 
 module Asciidoctor
   module ISO
-    module Section
+    class Converter1
       @biblio = false
       @term_def = false
       @norm_ref = false

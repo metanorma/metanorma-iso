@@ -681,6 +681,14 @@
         <ref name="paragraph"/>
       </element>
     </define>
+    <define name="preface">
+      <element name="preface">
+        <ref name="foreword"/>
+        <optional>
+          <ref name="introduction"/>
+        </optional>
+      </element>
+    </define>
   </include>
   <!-- end overrides -->
   <!--
@@ -704,14 +712,6 @@
         <ref name="annex"/>
       </zeroOrMore>
       <ref name="bibliography"/>
-    </element>
-  </define>
-  <define name="preface">
-    <element name="preface">
-      <ref name="foreword"/>
-      <optional>
-        <ref name="introduction"/>
-      </optional>
     </element>
   </define>
   <define name="bibliography">

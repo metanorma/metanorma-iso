@@ -4,7 +4,7 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module Validate
+    class Converter1
       REQUIREMENT_RE_STR = <<~REGEXP.freeze
         \\b
          ( shall | (is|are)_to |

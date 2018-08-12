@@ -9,8 +9,8 @@ require "pp"
 
 module Asciidoctor
   module ISO
-    module Utils
-      class << self
+    class Converter1
+      #class << self
         def anchor_or_uuid(node = nil)
           uuid = UUIDTools::UUID.random_create
           node.nil? || node.id.nil? || node.id.empty? ? "_" + uuid : node.id
@@ -124,4 +124,4 @@ f = fragment.to_xml(encoding: "US-ASCII")
         "ancestor::introduction]".freeze
     end
   end
-end
+#end
