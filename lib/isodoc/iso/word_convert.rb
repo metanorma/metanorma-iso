@@ -4,28 +4,33 @@ require_relative "metadata"
 module IsoDoc
   module Iso
     class WordConvert < IsoDoc::WordConvert
-
-      def default_fonts(options)
-        b = options[:bodyfont] ||
-          (options[:script] == "Hans" ? '"SimSun",serif' :
-           '"Cambria",serif')
-        h = options[:headerfont] ||
-          (options[:script] == "Hans" ? '"SimHei",sans-serif' :
-           '"Cambria",serif')
-        m = options[:monospacefont] || '"Courier New",monospace'
-        "$bodyfont: #{b};\n$headerfont: #{h};\n$monospacefont: #{m};\n"
-      end
-
       def initialize(options)
-        super
         @libdir = File.dirname(__FILE__)
-        @wordstylesheet = generate_css(html_doc_path("wordstyle.scss"), false, default_fonts(options))
-        @standardstylesheet = generate_css(html_doc_path("isodoc.scss"), false, default_fonts(options))
-        @header = html_doc_path("header.html")
-        @wordcoverpage = html_doc_path("word_iso_titlepage.html")
-        @wordintropage = html_doc_path("word_iso_intro.html")
+        super
         @ulstyle = "l3"
         @olstyle = "l2"
+      end
+
+      def default_fonts(options)
+        {
+          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : '"Cambria",serif'),
+          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' : '"Cambria",serif'),
+          monospacefont: '"Courier New",monospace',
+        }
+      end
+
+      def default_file_locations(options)
+        {
+          htmlstylesheet: options[:alt] ? html_doc_path("style-human.scss") : html_doc_path("style-iso.scss"),
+          htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
+          htmlintropage: html_doc_path("html_iso_intro.html"),
+          scripts: html_doc_path("scripts.html"),
+          wordstylesheet: html_doc_path("wordstyle.scss"),
+          standardstylesheet: html_doc_path("isodoc.scss"),
+          header: html_doc_path("header.html"),
+          wordcoverpage: html_doc_path("word_iso_titlepage.html"),
+          wordintropage: html_doc_path("word_iso_intro.html"),
+        }
       end
 
       def metadata_init(lang, script, labels)

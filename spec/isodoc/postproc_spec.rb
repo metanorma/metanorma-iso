@@ -199,13 +199,9 @@ RSpec.describe IsoDoc do
         </iso-standard>
 
     INPUT
-    word = File.read("test.doc").sub(/^.*<p class="zzContents"/m, '<p class="zzContents"').
+    word = File.read("test.doc").sub(/^.*An empty word intro page\./m, '').
       sub(%r{<br clear="all" class="section"/>\s*<div class="WordSection3">.*$}m, "")
     expect(word.gsub(/_Toc\d\d+/, "_Toc")).to be_equivalent_to <<~'OUTPUT'
-           <p class="zzContents" style="margin-top:0cm">
-  <span lang="EN-GB" xml:lang="EN-GB">Contents</span>
-</p>
-
        <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes">&#xA0;</span>TOC
          \o "1-2" \h \z \u <span style="mso-element:field-separator"></span></span>
        <span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
