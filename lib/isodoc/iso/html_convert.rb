@@ -27,16 +27,13 @@ module IsoDoc
         "$bodyfont: #{b};\n$headerfont: #{h};\n$monospacefont: #{m};\n"
       end
 
-      def html_doc_path(file)
-        File.join(File.dirname(__FILE__), File.join("html", file))
-      end
-
       def metadata_init(lang, script, labels)
         @meta = Metadata.new(lang, script, labels)
       end
 
       def initialize(options)
         super
+        @libdir = File.dirname(__FILE__)
         if options[:alt]
           css = generate_css(html_doc_path("style-human.scss"), true, alt_fonts(options))
         else
