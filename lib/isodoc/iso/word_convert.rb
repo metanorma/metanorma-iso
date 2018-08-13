@@ -7,8 +7,6 @@ module IsoDoc
       def initialize(options)
         @libdir = File.dirname(__FILE__)
         super
-        @ulstyle = "l3"
-        @olstyle = "l2"
       end
 
       def default_fonts(options)
@@ -30,6 +28,8 @@ module IsoDoc
           header: html_doc_path("header.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),
+          ulstyle: "l3", 
+          olstyle: "l2",
         }
       end
 

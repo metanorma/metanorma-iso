@@ -794,7 +794,7 @@ not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`,
 
 `:workgroup:`:: The name of the relevant ISO workgroup
 
-`:language:` :: The language of the document (`en` or `fr`)  (mandatory)
+`:language:` :: The language of the document (`en` or `fr`). Defaults to `en`.
 
 `:script:` :: The script of the document (defaults to `Latn`). Must be supplied as
 `Hans` for Simplified Chinese.
@@ -810,6 +810,32 @@ Cambria for Latin script, SimHei for Simplified Chinese.
 
 `:monospace-font`:: Font for monospace; will be inserted into CSS. Defaults to
 Courier New.
+
+`:htmlstylesheet`:: SCSS stylesheet to use for HTML output. Defaults to built in stylesheet,
+which adheres with ISO formatting requirements. Recommend against overriding this.
+
+`:htmlcoverpage`:: HTML template for cover page. Defaults to built in template. Recommend against overriding this.
+
+`:htmlintropage`:: HTML template for introductory section. Defaults to built in template. Recommend against overriding this.
+
+`:scripts`:: Javascript scripts for HTML output. Defaults to built in scripts. Recommend against overriding this.
+
+`:wordstylesheet`:: Primary SCSS stylesheet to use for Word output. Defaults to built in stylesheet,
+which adheres with ISO formatting requirements. Recommend against overriding this.
+
+`:standardstylesheet`:: Secondary SCSS stylesheet use for Word output. Defaults to built in stylesheet,
+which adheres with ISO formatting requirements. Recommend against overriding this.
+
+`:header`:: Header and footer file for Word output. Defaults to built in template. Recommend against overriding this.
+
+`:wordcoverpage`:: Word template for cover page. Defaults to built in template. Recommend against overriding this.
+
+`:wordintropage`:: Word template for introductory section. Defaults to built in template. Recommend against overriding this.
+
+`:ulstyle`:: Word CSS selector for unordered lists in supplied stylesheets. Defaults to value for built in stylesheet. Recommend against overriding this.
+
+`:olstyle`:: Word CSS selector for ordered lists in supplied stylesheets. Defaults to value for built in stylesheet. Recommend against overriding this.
+
 
 The attribute `:draft:`, if present, includes review notes in the XML output;
 these are otherwise suppressed.
