@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.homepage      = "https://github.com/riboseinc/asciidoctor-iso"
   spec.license       = "BSD-2-Clause"
+  spec.post_install_message = "The asciidoctor-iso gem has been deprecated and has been replaced by metanorma-iso"
 
   spec.bindir        = "bin"
   spec.require_paths = ["lib"]

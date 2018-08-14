@@ -1,5 +1,5 @@
 module Asciidoctor
   module ISO
-    VERSION = "0.10.3".freeze
+    VERSION = "1.0.0".freeze
   end
 end

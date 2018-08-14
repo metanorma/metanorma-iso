@@ -13,7 +13,7 @@ The Standoc specification is expressed in http://www.relaxng.org[RelaxNG schema 
 * https://github.com/riboseinc/metanorma-standoc[StanDoc]: organisation of sections for a generic standards document
 * Models specific to standards
 
-Because of the richness of the ISO standards model, most Standoc standards to date (including the sample gem https://github.com/riboseinc/asciidoctor-metanorma_sample) inherit from the ISO Standards model, which itself inherits from Standoc.
+Because of the richness of the ISO standards model, most Standoc standards to date (including the sample gem https://github.com/riboseinc/metanorma-sample) inherit from the ISO Standards model, which itself inherits from Standoc.
 
 Specialisation of a model consists of:
 
@@ -37,7 +37,7 @@ The easiest way to adopt StanDoc is to use the metanorma-acme gem: https://githu
 
 If you wish to create a custom gem, in order to customise behaviour further:
 
-* Clone the asciidoctor-metanorma_sample gem: https://github.com/riboseinc/asciidoctor-metanorma_sample.
+* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
 * Change the namespace for RSD documents (`RSD_NAMESPACE = "https://open.ribose.com/standards/rsd"`) to a namespace specific to your organisation's document standard.
 * Change any references to `sample` or `Sample` in the gem to your organisation's document standard.
 * Change the styling of the document outputs (`.../lib/isodoc/XXX/html`).
@@ -45,7 +45,7 @@ If you wish to create a custom gem, in order to customise behaviour further:
 
 The tool chains currently available proceed in two steps: map an input markup language (currently Asciidoctor only) into Standoc XML, and map Standoc XML into various output formats (currently Word doc, HTML, PDF via HTML). Running the metanorma tool involves a third step, of exposing the capabilities available in the first two in a consistent format. These two steps are represented as three separate modules, which are included in the same gem; for the Sample gem, they are `Asciidoctor::Sample`, `Isodoc::Sample`, and `Metanorma::Sample`. (In the case of Asciidoctor-ISO, almost all the content of `Isodoc::ISO` is in the isodoc gem, so the base classes of the two steps are in separate gems.) 
 
-Your adaptation of the toolchain will need to instantiate these three modules. The connection between the two first steps is taken care of in the toolchain, and metanorma explicitly invokes the two steps, feeding the XML output of the first step as input into the second. The asciidoctor-metanorma_sample gem outputs both Word and HTML; you can choose to output only Word (as is done in asciidoctor-m3d), or only HTML (as is done in asciidoctor-csand), and you can choose to generate PDF from HTML as well (as is done in asciidoctor-csd).
+Your adaptation of the toolchain will need to instantiate these three modules. The connection between the two first steps is taken care of in the toolchain, and metanorma explicitly invokes the two steps, feeding the XML output of the first step as input into the second. The metanorma-sample gem outputs both Word and HTML; you can choose to output only Word (as is done in metanorma-m3d), or only HTML (as is done in metanorma-csand), and you can choose to generate PDF from HTML as well (as is done in metanorma-csd).
 
 The modules involve classes which rely on inheritance from other classes; the current gems all use `Asciidoctor::ISO::Converter`, `Isodoc::{Metadata, HtmlConvert, WordConvert}`, and `Metanorma::Processor` as their base classes. This allows the standards-specific classes to be quite succinct, as most of their behaviour is inherited from other classes; but it also means that you need to be familiar with the underlying gems, in order to do most customisation.
 
@@ -82,7 +82,7 @@ The `Isodoc::HtmlConvert` and `Isodoc::WordConvert` overlap substantially, as bo
 
 [TIP]
 ====
-* Clone the asciidoctor-metanorma_sample gem: https://github.com/riboseinc/asciidoctor-metanorma_sample.
+* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
 * Edit the `html_sample_titlepage.html` and `html_sample_intro.html` pages to match your organisation's branding.
 ** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
 * Edit the `default_fonts()` method in your `IsoDoc::...::HtmlConvert` class, to match your desired fonts.
@@ -116,7 +116,7 @@ Styling of output is intended to be configurable. HTML stylesheets are expressed
 ====
 * There is no quick way of doing this.
 * Everything you can do in Word, you can do in Word HTML. Save Word documents as Word HTML to see how.
-* Clone the asciidoctor-metanorma_sample gem: https://github.com/riboseinc/asciidoctor-metanorma_sample.
+* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
 * Edit the `word_sample_titlepage.html` and `word_sample_intro.html` pages to match your organisation's branding. With lots of iterations of saving Word documents as HTML, for trial and error.
 ** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
 * Edit the `default_fonts()` method in your `IsoDoc::...::WordConvert` class, to match your desired fonts.
@@ -157,15 +157,15 @@ The process for generating Word output is fairly similar to that for generating 
 * Give the file location as the `i18nyaml` document attribute in any files you wish to use your localisation.
 ====
 
-Every piece of text generated by the toolset instead of the author is looked up in an internationalisation file; that means that if the language setting for the document changes, and there is an internationalisation file for that language, all output is localised to that language. Of the existing gems, asciidoctor-gb is localised in this way for English and Chinese, and asciidoctor-iso is localised for English, French and Chinese. 
+Every piece of text generated by the toolset instead of the author is looked up in an internationalisation file; that means that if the language setting for the document changes, and there is an internationalisation file for that language, all output is localised to that language. Of the existing gems, metanorma-gb is localised in this way for English and Chinese, and metanorma-iso is localised for English, French and Chinese. 
 
 The localisation files are http://yaml.org[YAML] files stores in `lib/isodoc/`, named `i18n-{languagecode}.yaml`. (In the case of Chinese, the script code is added to the filename: `i18n-zh-Hans.yaml`.) Most localised text are direct mappings from English metalanguage to the target language (including English itself); there are also instances of hashes in the YAML files. Most localisation text consists of one- or two-word labels, such as "Figure" or "Annex"; some boilerplate text is also included in the localisation text, such as the ISO text describing the use of external sources in Terms and Definitions.
 
-Localisation is mostly used for translation purposes, but they can also be used to customise the rendering of particular labels in English. For example, the default English label for a first-level supplementary section is "Annex", reflecting ISO practice; but in the asciidoctor-csd gem, this label is overruled in code to be "Appendix" instead.
+Localisation is mostly used for translation purposes, but they can also be used to customise the rendering of particular labels in English. For example, the default English label for a first-level supplementary section is "Annex", reflecting ISO practice; but in the metanorma-csd gem, this label is overruled in code to be "Appendix" instead.
 
 The YAML files are read into the `IsoDoc` classes through the `i18n_init()` method of `IsoDoc::...::HtmlConvert` and `Isodoc::...::WordConvert`. The localisation equivalents for the nominated language are read from the corresponding YAML file into the `@labels` hash. The base Isodoc instance of `i18n_init()` also assigns an instance variable for each label (e.g. `@annex_lbl` for English "Annex"). These instance variables are used to generate all automated text in the Isodoc classes.
 
-All current gems inherit their localisation files from the base isodoc gem. The local `i18n_init()` instance can overwrite individual labels in code (asciidoctor-csd), or they can read in a local additional YAML file for the same language (asciidoctor-gb). If you are implementing a completely new language, you will need to replace the base `i18n_init()` method rather than inheriting from it, to ensure that the local YAML files are read in.
+All current gems inherit their localisation files from the base isodoc gem. The local `i18n_init()` instance can overwrite individual labels in code (metanorma-csd), or they can read in a local additional YAML file for the same language (metanorma-gb). If you are implementing a completely new language, you will need to replace the base `i18n_init()` method rather than inheriting from it, to ensure that the local YAML files are read in.
 
 The foregoing describes how to incorporate localisation into your gem on a permanent basis; but the toolset also allows you to nominate a YAML localisation file just for the current document. In Asciidoc, the YAML file is nominated as the i18nyaml document attribute; for IsoDoc, it is passed in as the `i18nyaml` hash attribute to the initialisation method. You will still need to access the base IsoDoc YAML instances, to make sure that all necessary labels are given in your YAML document.
 

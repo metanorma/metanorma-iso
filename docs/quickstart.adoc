@@ -33,15 +33,15 @@ You can install the Asciidoctor-ISO gem, and all its dependencies, through the R
 
 [source,console]
 --
-gem install asciidoctor-iso
+gem install metanorma-iso
 --
 
 If you want the latest version of the gem (which is still heavily under development), you can install it from Github:
 
 [source,console]
 --
-git clone https://github.com/riboseinc/asciidoctor-iso.git
-cd asciidoctor-iso
+git clone https://github.com/riboseinc/metanorma-iso.git
+cd metanorma-iso
 gem build *.gemspec
 gem install *.gem
 --
@@ -61,7 +61,7 @@ To compile the document, execute the `asciidoctor` script, flagging it to use th
 
 [source,console]
 --
-asciidoctor --trace -b iso -r 'asciidoctor-iso' new_standard.adoc
+asciidoctor --trace -b iso -r 'metanorma-iso' new_standard.adoc
 --
 
 NOTE: This command syntax will be changed soon.
@@ -72,7 +72,7 @@ Even if there are no errors in the Asciidoctor syntax, the document may still ra
 
 === Template
 
-To author Asciidoctor documents, you need to be familiar with the Asciidoctor syntax, as well as the Asciidoctor-ISO extensions to the syntax and conventions. The https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] documents Asciidoctor itself; the https://github.com/riboseinc/asciidoctor-iso/wiki/Guidance-for-authoring[Guidance for Authoring in Asciidoctor-ISO] and the https://github.com/riboseinc/asciidoctor-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] are the complete documentation for the ISO-specific extensions. But the simplest way to get started is to take a ready-made Asciidoctor-ISO document, and edit it, observing how it approaches various formatting tasks.
+To author Asciidoctor documents, you need to be familiar with the Asciidoctor syntax, as well as the Asciidoctor-ISO extensions to the syntax and conventions. The https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] documents Asciidoctor itself; the https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for Authoring in Asciidoctor-ISO] and the https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] are the complete documentation for the ISO-specific extensions. But the simplest way to get started is to take a ready-made Asciidoctor-ISO document, and edit it, observing how it approaches various formatting tasks.
 
 The https://www.iso.org/publication/PUB100407.html["Rice document"] is the ISO's model document of an international standard. An Asciidoctor-ISO version of the document is available at https://github.com/riboseinc/isodoc-rice/ . We suggest downloading the site, and editing it.
 
@@ -86,7 +86,7 @@ Syntax includes the following; the links are to the Asciidoctor User Manual. All
 
 === https://asciidoctor.org/docs/user-manual/#doc-header[Document header]
 
-Attributes of the document, which typically appear in the coverpage (if at all), rather than in the document proper. The permitted attributes for Asciidoctor-ISO, and their expected values, are documented in the https://github.com/riboseinc/asciidoctor-iso#document-attributes[Asciidoctor-ISO Readme]. Note that the author line expected in Asciidoctor is not used; the title line is likewise ignored, in favour of attributes describing the three-part bilingual title.
+Attributes of the document, which typically appear in the coverpage (if at all), rather than in the document proper. The permitted attributes for Asciidoctor-ISO, and their expected values, are documented in the https://github.com/riboseinc/metanorma-iso#document-attributes[Asciidoctor-ISO Readme]. Note that the author line expected in Asciidoctor is not used; the title line is likewise ignored, in favour of attributes describing the three-part bilingual title.
 
 [source,asciidoctor]
 --
@@ -282,7 +282,7 @@ Determine the mass fraction of moisture in accordance with the method specified 
 
 == Asciidoctor-ISO specific syntax
 
-Full details of Asciidoctor-ISO–specific markup and conventions is given in the https://github.com/riboseinc/asciidoctor-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] and the https://github.com/riboseinc/asciidoctor-iso/wiki/Guidance-for-authoring[Guidance for authoring].
+Full details of Asciidoctor-ISO–specific markup and conventions is given in the https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] and the https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring].
 
 https://asciidoctor.org/docs/user-manual/#section-styles[Section styles] are used to indicate specific types of section: `[bibliography]` for Normative References and Bibliography, `[appendix]` for Annexes, and `[%appendix]` for Appendixes (annexes of annexes). These styles must be provided for the sections to be processed correctly: bibliographic references will not be recognised as such, for example, without the `[bibliography]` style applied:
 

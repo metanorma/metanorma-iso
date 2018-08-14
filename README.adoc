@@ -1,8 +1,8 @@
 = AsciiISO: Asciidoctor processor for ISO standards
 
-image:https://img.shields.io/gem/v/asciidoctor-iso.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-iso"]
-image:https://img.shields.io/travis/riboseinc/asciidoctor-iso/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-iso"]
-image:https://codeclimate.com/github/riboseinc/asciidoctor-iso/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-iso"]
+image:https://img.shields.io/gem/v/metanorma-iso.svg["Gem Version", link="https://rubygems.org/gems/metanorma-iso"]
+image:https://img.shields.io/travis/riboseinc/metanorma-iso/master.svg["Build Status", link="https://travis-ci.org/riboseinc/metanorma-iso"]
+image:https://codeclimate.com/github/riboseinc/metanorma-iso/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/metanorma-iso"]
 
 WARNING: This gem is still under development.
 
@@ -34,9 +34,9 @@ generated from the HTML file.
 This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
 
 This README provides an overview of the functionality of the gem; see also
-https://github.com/riboseinc/asciidoctor-iso/wiki/Guidance-for-authoring[Guidance for authoring]
+https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring]
 ISO standards using the gem. The 
-https://github.com/riboseinc/asciidoctor-iso/wiki/Quickstart-Guide[Quickstart guide]
+https://github.com/riboseinc/metanorma-iso/wiki/Quickstart-Guide[Quickstart guide]
 gives a summary overview.
 
 == Usage
@@ -63,7 +63,7 @@ The gem can also be invoked directly within asciidoctor, though this is deprecat
 
 [source,console]
 ----
-$ asciidoctor -b iso -r 'asciidoctor-iso' a.adoc  
+$ asciidoctor -b iso -r 'metanorma-iso' a.adoc  
 ----
 
 If you do not invoke the `iso` backend explicitly, the AsciiISO source will be
@@ -84,7 +84,7 @@ scripts such as this one. You need only run the following in a Terminal console:
 [source,console]
 ----
 $ bash <(curl -s https://raw.githubusercontent.com/riboseinc/metanorma-macos-setup/master/metanorma-setup)
-$ gem install asciidoctor-iso
+$ gem install metanorma-iso
 ----
 
 
@@ -143,13 +143,13 @@ Outputting a document in different languages also becomes straightforward.
 The document model for ISO Standards specifically is derived from a more general
 https://github.com/riboseinc/isodoc-models[StandardDocument model]. Other
 ISO-like standards can also be derived from this more general model;
-CSD (https://github.com/riboseinc/csd, https://github.com/riboseinc/asciidoctor-csd)
+CSD (https://github.com/riboseinc/csd, https://github.com/riboseinc/metanorma-csd)
 is one such instance.
 
 The document model for ISO Standards contains all the structures described
 in ISO/IEC DIR 2. It is expressed as a
-link:lib/asciidoctor/iso/isostandard.rnc[Relax NG Compact schema]; actual
-validation occurs against its link:lib/asciidoctor/iso/isostandard.rng[full Relax
+link:lib/metanorma/iso/isostandard.rnc[Relax NG Compact schema]; actual
+validation occurs against its link:lib/metanorma/iso/isostandard.rng[full Relax
 NG counterpart]. 
 
 === Asciidoctor
@@ -195,7 +195,7 @@ ISO has special section types: "Scope", "Normative References", "Terms and Defin
 == 范围
 --
 
-Note that both the XML population, and the isodoc gem will overwrite any supplied title. If you are translating ISO documents into other languages, you will still need access to versions of the asciidoctor-iso and isodoc gems in those languages.
+Note that both the XML population, and the isodoc gem will overwrite any supplied title. If you are translating ISO documents into other languages, you will still need access to versions of the metanorma-iso and isodoc gems in those languages.
 
 === Obligation
 The obligation of sections (whether they are normative or informative) is indicated
@@ -693,7 +693,7 @@ metadata about the document. These include:
 
 `:nodoc:`:: Do not generate Word and HTML output, only generate XML output.
 Can be used as a command-line option (like all other document attributes):
-`asciidoctor -a nodoc -b iso -r "asciidoctor-iso" a.adoc`
+`asciidoctor -a nodoc -b iso -r "metanorma-iso" a.adoc`
 
 `:novalid:`:: Suppress validation.
 
@@ -879,4 +879,4 @@ model document of an international standard. Sample representation of the Rice d
 in Asciidoctor, and output formats, are included in the https://github.com/riboseinc/isodoc-rice
 repository.
 
-See also `link:spec/asciidoctor-iso[]` for individual features.
+See also `link:spec/metanorma-iso[]` for individual features.
