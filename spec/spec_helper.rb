@@ -5,7 +5,7 @@ end
 
 require "bundler/setup"
 require "asciidoctor"
-require "asciidoctor-iso"
+require "metanorma-iso"
 require "rspec/matchers"
 require "equivalent-xml"
 require "metanorma"
