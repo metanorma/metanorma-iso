@@ -5,15 +5,13 @@ RSpec.describe Asciidoctor::ISO do
     expect(Asciidoctor::ISO::VERSION).not_to be nil
   end
 
-=begin
   it "generates output for the Rice document" do
-    system "cd spec/examples; rm -f rice.xml; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html; asciidoctor --trace -b iso -r 'asciidoctor-iso' rice.adoc; cd ../.."
+    system "cd spec/examples; rm -f rice.xml; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html; asciidoctor --trace -b iso -r 'metanorma-iso' rice.adoc; cd ../.."
     expect(File.exist?("spec/examples/rice.xml")).to be true
     expect(File.exist?("spec/examples/rice.doc")).to be true
     expect(File.exist?("spec/examples/rice.html")).to be true
     expect(File.exist?("spec/examples/rice_alt.html")).to be true
   end
-=end
 
   it "processes a blank document" do
     expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
