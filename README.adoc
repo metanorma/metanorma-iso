@@ -6,6 +6,8 @@ image:https://codeclimate.com/github/riboseinc/metanorma-iso/badges/gpa.svg["Cod
 
 WARNING: This gem is still under development.
 
+_Formerly known as_ `asciidoctor-iso`.
+
 == Functionality
 
 This gem processes http://asciidoctor.org/[Asciidoctor] documents following
