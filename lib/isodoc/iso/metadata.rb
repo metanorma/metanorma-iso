@@ -38,12 +38,12 @@ module IsoDoc
       end
 
       def docid(isoxml, _out)
-        dn = docnumber(isoxml)
+        dn = docnumber(isoxml) # e.g. ISO 8601, ISO/IEC DIR 2
         docstatus = get[:stage]
         if docstatus
           abbr = get[:stageabbr]
           docstatus = get[:stage]
-          (docstatus.to_i < 60) && dn = abbr + " " + dn
+          (docstatus.to_i < 60) && dn = dn.sub(/ /, " #{abbr} ")
         end
         set(:docnumber, dn)
       end

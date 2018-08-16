@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "processes IsoXML terms" do
-    expect(IsoDoc::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <sections>
     <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
@@ -81,13 +81,13 @@ RSpec.describe IsoDoc do
        </td></tr></table>
 
        <p>[TERMREF]
-         <a href="#ISO7301">ISO 7301:2011, Clause 3.1</a>
+         <a href="#ISO7301">ISO 7301:2011, 3.1</a>
            [MODIFICATION]The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
        [/TERMREF]</p><p class="TermNum" id="paddy">1.2</p><p class="Terms" style="text-align:left;">paddy</p><p class="AltTerms" style="text-align:left;">paddy rice</p>
        <p class="AltTerms" style="text-align:left;">rough rice</p>
        <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE 1</td><td valign="top" class="example">
+       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE</td><td valign="top" class="example">
          <ul>
          <li>A</li>
          </ul>
@@ -95,7 +95,7 @@ RSpec.describe IsoDoc do
        <div class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div>
        <div class="Note"><p>Note 2 to entry: <ul><li>A</li></ul><p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></p></div>
        <p>[TERMREF]
-         <a href="#ISO7301">ISO 7301:2011, Clause 3.1</a>
+         <a href="#ISO7301">ISO 7301:2011, 3.1</a>
        [/TERMREF]</p></div>
              </div>
            </body>
@@ -105,7 +105,7 @@ OUTPUT
   end
   
   it "processes IsoXML terms (Word)" do
-    expect(IsoDoc::WordConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(%r{^.*<p class="zzSTDTitle1"/>}m, "")).to be_equivalent_to <<~"OUTPUT"
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <sections>
     <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
@@ -155,8 +155,6 @@ OUTPUT
 </sections>
 </iso-standard>
     INPUT
-    #{WORD_HDR}
-             <p class="zzSTDTitle1"/>
              <div id="_terms_and_definitions"><h1>1.<span style="mso-tab-count:1">&#160; </span>Terms and definitions</h1><p>For the purposes of this document,
            the following terms and definitions apply.</p>
        <p>ISO and IEC maintain terminological databases for use in
@@ -184,13 +182,13 @@ OUTPUT
        </td></tr></table>
 
        <p>[TERMREF]
-         <a href="#ISO7301">ISO 7301:2011, Clause 3.1</a>
+         <a href="#ISO7301">ISO 7301:2011, 3.1</a>
            [MODIFICATION]The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
        [/TERMREF]</p><p class="TermNum" id="paddy">1.2</p><p class="Terms" style="text-align:left;">paddy</p><p class="AltTerms" style="text-align:left;">paddy rice</p>
        <p class="AltTerms" style="text-align:left;">rough rice</p>
        <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE 1</td><td valign="top" class="example">
+       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE</td><td valign="top" class="example">
          <ul>
          <li>A</li>
          </ul>
@@ -198,7 +196,7 @@ OUTPUT
        <div class="Note"><p class="Note">Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div>
        <div class="Note"><p class="Note">Note 2 to entry: <ul><li>A</li></ul><p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></p></div>
        <p>[TERMREF]
-         <a href="#ISO7301">ISO 7301:2011, Clause 3.1</a>
+         <a href="#ISO7301">ISO 7301:2011, 3.1</a>
        [/TERMREF]</p></div>
            </div>
          </body>

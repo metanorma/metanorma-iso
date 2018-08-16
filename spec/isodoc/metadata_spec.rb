@@ -21,7 +21,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     <title-part language="fr" format="text/plain">Riz</title-part>
   </title>
   <docidentifier>
-    <project-number part="1">17301</project-number>
+    <project-number part="1">ISO 17301</project-number>
     <tc-document-number>17301</tc-document-number>
   </docidentifier>
   <date type="published"><on>2011</on></date>
@@ -69,7 +69,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
 </version>
 </iso-standard>
 INPUT
-       {:accesseddate=>"2012", :activateddate=>"2013", :agency=>"ISO", :confirmeddate=>"XXX", :createddate=>"2010&ndash;2011", :docnumber=>"PreCD3 17301-1", :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&nbsp;&mdash; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&nbsp;&mdash; Partie&nbsp;1: Riz", :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses", :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai", :docsubtitlepart=>"Partie&nbsp;1: Riz", :doctitle=>"Cereals and pulses&nbsp;&mdash; Specifications and test methods&nbsp;&mdash; Part&nbsp;1: Rice", :doctitleintro=>"Cereals and pulses", :doctitlemain=>"Specifications and test methods", :doctitlepart=>"Part&nbsp;1: Rice", :doctype=>"International Standard", :docyear=>"2016", :draft=>"0.4", :draftinfo=>" (draft 0.4, 2016-05-01)", :editorialgroup=>["TC 34", "SC 4", "WG 3"], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"2014", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"2011", :revdate=>"2016-05-01", :sc=>"SC 4", :secretariat=>"GB", :stage=>"30", :stage_int=>30, :stageabbr=>"PreCD3", :tc=>"TC 34", :updateddate=>"XXX", :wg=>"WG 3"}
+       {:accesseddate=>"2012", :activateddate=>"2013", :agency=>"ISO", :confirmeddate=>"XXX", :createddate=>"2010&ndash;2011", :docnumber=>"ISO PreCD3 17301-1", :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&nbsp;&mdash; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&nbsp;&mdash; Partie&nbsp;1: Riz", :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses", :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai", :docsubtitlepart=>"Partie&nbsp;1: Riz", :doctitle=>"Cereals and pulses&nbsp;&mdash; Specifications and test methods&nbsp;&mdash; Part&nbsp;1: Rice", :doctitleintro=>"Cereals and pulses", :doctitlemain=>"Specifications and test methods", :doctitlepart=>"Part&nbsp;1: Rice", :doctype=>"International Standard", :docyear=>"2016", :draft=>"0.4", :draftinfo=>" (draft 0.4, 2016-05-01)", :editorialgroup=>["TC 34", "SC 4", "WG 3"], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"2014", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"2011", :revdate=>"2016-05-01", :sc=>"SC 4", :secretariat=>"GB", :stage=>"30", :stage_int=>30, :stageabbr=>"PreCD3", :tc=>"TC 34", :updateddate=>"XXX", :wg=>"WG 3"}
 OUTPUT
   end
 
@@ -92,7 +92,7 @@ OUTPUT
     <title-part language="fr" format="text/plain">Riz</title-part>
   </title>
   <docidentifier>
-    <project-number part="1" subpart="3">17301</project-number>
+    <project-number part="1" subpart="3">ISO/IEC 17301</project-number>
     <tc-document-number>17301</tc-document-number>
   </docidentifier>
   <contributor>
@@ -145,7 +145,7 @@ OUTPUT
 </version>
 </iso-standard>
 INPUT
-{:accesseddate=>"XXX", :agency=>"ISO/IEC", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"CD 17301-1-3", :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&nbsp;&mdash; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&nbsp;&mdash; Partie&nbsp;1&ndash;3: Riz", :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses", :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai", :docsubtitlepart=>"Partie&nbsp;1&ndash;3: Riz", :doctitle=>"Cereals and pulses&nbsp;&mdash; Specifications and test methods&nbsp;&mdash; Part&nbsp;1&ndash;3: Rice", :doctitleintro=>"Cereals and pulses", :doctitlemain=>"Specifications and test methods", :doctitlepart=>"Part&nbsp;1&ndash;3: Rice", :doctype=>"International Standard", :docyear=>"2016", :draft=>"12", :draftinfo=>" (draft 12, 2016-05-01)", :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"], :ics=>"1.2.3, 1.2.3", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>"IEC 8121", :obsoletes_part=>"3.1", :publisheddate=>"XXX", :revdate=>"2016-05-01", :sc=>"DEF 4", :secretariat=>"XXXX", :stage=>"30", :stage_int=>30, :stageabbr=>"CD", :tc=>"ABC 34", :updateddate=>"XXX", :wg=>"GHI 3"}
+{:accesseddate=>"XXX", :agency=>"ISO/IEC", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"ISO/IEC CD 17301-1-3", :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&nbsp;&mdash; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&nbsp;&mdash; Partie&nbsp;1&ndash;3: Riz", :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses", :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai", :docsubtitlepart=>"Partie&nbsp;1&ndash;3: Riz", :doctitle=>"Cereals and pulses&nbsp;&mdash; Specifications and test methods&nbsp;&mdash; Part&nbsp;1&ndash;3: Rice", :doctitleintro=>"Cereals and pulses", :doctitlemain=>"Specifications and test methods", :doctitlepart=>"Part&nbsp;1&ndash;3: Rice", :doctype=>"International Standard", :docyear=>"2016", :draft=>"12", :draftinfo=>" (draft 12, 2016-05-01)", :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"], :ics=>"1.2.3, 1.2.3", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>"IEC 8121", :obsoletes_part=>"3.1", :publisheddate=>"XXX", :revdate=>"2016-05-01", :sc=>"DEF 4", :secretariat=>"XXXX", :stage=>"30", :stage_int=>30, :stageabbr=>"CD", :tc=>"ABC 34", :updateddate=>"XXX", :wg=>"GHI 3"}
 OUTPUT
   end
 

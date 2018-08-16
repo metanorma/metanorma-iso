@@ -136,6 +136,26 @@ module IsoDoc
           annex_names1(c, "#{num}.#{i + 1}", level + 1)
         end
       end
+
+      def eref_localities1_zh(target, type, from, to)
+        subsection = from&.text&.match(/\./)
+        ret = ", 第#{from.text}" if from
+        ret += "&ndash;#{to}" if to
+        loc = (@locality[type] || type.sub(/^locality:/, "").capitalize )
+        ret += " #{loc}" unless subsection && type == "clause" || target.match(/^IEV$/)
+        ret
+      end
+
+      def eref_localities1(target, type, from, to, lang = "en")
+        subsection = from&.text&.match(/\./)
+        return l10n(eref_localities1_zh(target, type, from, to)) if lang == "zh"
+        ret = ","
+        loc = @locality[type] || type.sub(/^locality:/, "").capitalize
+        ret += " #{loc}" unless subsection && type == "clause" || target.match(/^IEV$/)
+        ret += " #{from.text}" if from
+        ret += "&ndash;#{to.text}" if to
+        l10n(ret)
+      end
     end
   end
 end
