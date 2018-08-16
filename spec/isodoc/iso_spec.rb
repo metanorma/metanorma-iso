@@ -101,7 +101,6 @@ RSpec.describe IsoDoc::Iso do
   The World's Online Electrotechnical Vocabulary</title>
   <source type="src">http://www.electropedia.org</source>
   <docidentifier>IEV</docidentifier>
-  <date type="published"> <on>2018</on> </date>
   <contributor>
     <role type="publisher"/>
     <organization>
@@ -113,7 +112,6 @@ RSpec.describe IsoDoc::Iso do
   <language>en</language> <language>fr</language>
   <script>Latn</script>
   <copyright>
-    <from>2018</from>
     <owner>
       <organization>
       <name>International Electrotechnical Commission</name>
@@ -148,7 +146,7 @@ RSpec.describe IsoDoc::Iso do
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
-         <a href="#IEV">IEV:2018</a>
+         <a href="#IEV">IEV</a>
          <a href="#ISO20483">ISO 20483:2013&#8211;2014</a>
          </p>
              </div>

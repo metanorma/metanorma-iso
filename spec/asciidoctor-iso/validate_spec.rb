@@ -136,6 +136,32 @@ it "warns that undated reference has locality" do
   INPUT
 end
 
+it "do not warn that undated IEV reference has locality" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(/undated reference IEV should not contain specific elements/).to_stderr
+  #{VALIDATING_BLANK_HDR}
+
+  == Scope
+  <<iev,clause=1>>
+
+  [bibliography]
+  == Normative References
+  * [[[iev,IEV]]] _Standard_
+  INPUT
+end
+
+it "do not warn that in print has locality" do
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(/undated reference ISO 123 should not contain specific elements/).to_stderr
+  #{VALIDATING_BLANK_HDR}
+
+  == Scope
+  <<iev,clause=1>>
+
+  [bibliography]
+  == Normative References
+  * [[[iev,ISO 123:--]]] _Standard_
+  INPUT
+end
+
 it "warns of Non-reference in bibliography" do
   expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/no anchor on reference/).to_stderr
   #{VALIDATING_BLANK_HDR}
