@@ -548,10 +548,17 @@
     </define>
     <define name="li">
       <element name="li">
-        <oneOrMore>
-          <!-- ( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )+ -->
-          <ref name="BasicBlock"/>
-        </oneOrMore>
+        <group>
+          <optional>
+            <!-- ( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | quote | sourcecode | review | example )+ -->
+            <attribute name="id">
+              <data type="ID"/>
+            </attribute>
+          </optional>
+          <oneOrMore>
+            <ref name="BasicBlock"/>
+          </oneOrMore>
+        </group>
         <!-- exclude figures? -->
       </element>
     </define>

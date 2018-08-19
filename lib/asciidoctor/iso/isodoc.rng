@@ -956,6 +956,11 @@
   </define>
   <define name="li">
     <element name="li">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="paragraph-with-footnote"/>
       </oneOrMore>
@@ -999,7 +1004,9 @@
   </define>
   <define name="dt">
     <element name="dt">
-      <ref name="TextElement"/>
+      <zeroOrMore>
+        <ref name="TextElement"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="dd">

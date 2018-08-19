@@ -75,8 +75,6 @@ Rice is a permanent host to a considerable microflora; most of these microorgani
 Storage losses have been estimated as being an average of 5 %, and as much as 30 %, especially in countries with climates favourable to the rapid development of agents of deterioration and where storage techniques are poorly developed, such as developing countries in the damp tropics. The magnitude of these figures highlights the need to promote throughout the world a rapid improvement in techniques of conservation. 
 
 
-=== Patent Notice
-
 The International Organization for Standardization (ISO) draws attention to the fact that it is claimed that compliance with this document may involve the use of a patent concerning sample dividers given in <<AnnexA>> and shown in <<figureA-1>>. 
 
 ISO takes no position concerning the evidence, validity and scope of this patent right. 

@@ -12,8 +12,6 @@ RSpec.describe Asciidoctor::ISO do
 
       === Introduction Subsection
 
-      === Patent Notice
-
       == Scope
 
       Text
@@ -39,6 +37,8 @@ RSpec.describe Asciidoctor::ISO do
       === Introduction
 
       === Clause 4.2
+
+      == Terms and Definitions
 
       [appendix]
       == Annex
@@ -85,6 +85,10 @@ RSpec.describe Asciidoctor::ISO do
        <clause id="_" inline-header="false" obligation="normative">
          <title>Clause 4.2</title>
        </clause></clause>
+       <clause id="_" inline-header="false" obligation="normative">
+          <title>Terms and Definitions</title>
+       </clause>
+
 
        </sections><annex id="_" inline-header="false" obligation="normative">
          <title>Annex</title>
@@ -117,8 +121,6 @@ RSpec.describe Asciidoctor::ISO do
       == Εισαγωγή
 
       === Introduction Subsection
-
-      === Patent Notice
 
       [heading=scope]
       == Σκοπός
