@@ -435,3 +435,26 @@ It includes:
 --
 
 * https://asciidoctor.org/docs/user-manual/#using-attributes-set-assign-and-reference[Attribute references] can be used as template variables in a document: if your document contains the text `{foo}`, you can assign the value to be populated in `{foo}` by setting it as a document attribute in the Asciidoctor header: `:foo: this is the text to replace "foo"`. In the Rice Model document example, document attributes are used to provide the Subcommittee and Technical Committee names, which are populated as template entries in the document foreword.
+
+* List items can contain other blocks in Asciidoctor, through concatenating blocks; e.g.
++
+[source.asciidoc]
+--
+* List
++
+|===
+| Contains | A table
+
+|===
+--
++
+However, downstream renderers may not be able to cope with embedding blocks within list items. In particular, Word will force a carriage return between a list item, and a list or table contained in the item. So output like the following, with the list number flush with the embedded block, is not possible in Word (though it is in HTML):
+
+....
+a)  1. Text
+b)  |-------|------ |
+    | table | table |
+    |---------------|
+c)  Definition Term   Definition
+    Definition Term   Definition
+....
