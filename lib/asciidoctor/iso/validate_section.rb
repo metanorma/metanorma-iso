@@ -181,7 +181,7 @@ module Asciidoctor
         root.xpath("//figure[image][not(title)]").each do |node|
           style_warning(node, "Figure should have title", nil)
         end
-        root.xpath("//table[not(title)]").each do |node|
+        root.xpath("//table[not(name)]").each do |node|
           style_warning(node, "Table should have title", nil)
         end
       end
