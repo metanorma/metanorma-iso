@@ -8,11 +8,7 @@ module Asciidoctor
         a = { id: Standoc::Utils::anchor_or_uuid(node) }
         noko do |xml|
           case sectiontype(node)
-          when "introduction" then
-            if node.level == 1 then introduction_parse(a, xml, node)
-            else
-              clause_parse(a, xml, node)
-            end
+          when "introduction" then introduction_parse(a, xml, node)
           when "patent notice" then patent_notice_parse(xml, node)
           when "scope" then scope_parse(a, xml, node)
           when "normative references" then norm_ref_parse(a, xml, node)
