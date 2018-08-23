@@ -205,6 +205,7 @@ RSpec.describe IsoDoc do
     <eref type="inline" bibitemid="ISO712"><locality type="table"><referenceFrom>1</referenceFrom></locality></eref>
     <eref type="inline" bibitemid="ISO712"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality></eref>
     <eref type="inline" bibitemid="ISO712"><locality type="clause"><referenceFrom>1</referenceFrom></locality><locality type="table"><referenceFrom>1</referenceFrom></locality></eref>
+    <eref type="inline" bibitemid="ISO712"><locality type="clause"><referenceFrom>1</referenceFrom></locality><locality type="list"><referenceFrom>a</referenceFrom></locality></eref>
     <eref type="inline" bibitemid="ISO712"><locality type="clause"><referenceFrom>1</referenceFrom></locality></eref>
     <eref type="inline" bibitemid="ISO712"><locality type="clause"><referenceFrom>1.5</referenceFrom></locality></eref>
     <eref type="inline" bibitemid="ISO712"><locality type="table"><referenceFrom>1</referenceFrom></locality>A</eref>
@@ -239,6 +240,7 @@ RSpec.describe IsoDoc do
            <a href="#ISO712">ISO 712, Table 1</a>
            <a href="#ISO712">ISO 712, Table 1&#8211;1</a>
            <a href="#ISO712">ISO 712, Clause 1, Table 1</a>
+           <a href="#ISO712">ISO 712, Clause 1, a)</a>
            <a href="#ISO712">ISO 712, Clause 1</a>
            <a href="#ISO712">ISO 712, 1.5</a>
            <a href="#ISO712">A</a>
