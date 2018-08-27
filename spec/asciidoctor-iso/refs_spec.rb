@@ -337,7 +337,7 @@ RSpec.describe Asciidoctor::ISO do
              <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
-         <allParts>true</allParts>
+         <allparts>true</allparts>
        </bibitem>
       </references>
       </bibliography>

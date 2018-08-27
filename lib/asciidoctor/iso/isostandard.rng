@@ -20,6 +20,9 @@
     <!-- add type to docidentifier in isodoc? -->
     <define name="docidentifier">
       <element name="docidentifier">
+        <optional>
+          <attribute name="type"/>
+        </optional>
         <choice>
           <text/>
           <group>
@@ -108,6 +111,27 @@
       <zeroOrMore>
         <ref name="docrelation"/>
       </zeroOrMore>
+      <zeroOrMore>
+        <ref name="series"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="medium"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="bplace"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="extent"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="accesslocation"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="bclassification"/>
+      </optional>
+      <optional>
+        <ref name="validity"/>
+      </optional>
       <optional>
         <ref name="editorialgroup"/>
       </optional>
@@ -164,6 +188,27 @@
       <zeroOrMore>
         <ref name="docrelation"/>
       </zeroOrMore>
+      <zeroOrMore>
+        <ref name="series"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="medium"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="bplace"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="extent"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="accesslocation"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="bclassification"/>
+      </optional>
+      <optional>
+        <ref name="validity"/>
+      </optional>
       <ref name="editorialgroup"/>
       <zeroOrMore>
         <ref name="ics"/>
@@ -866,7 +911,7 @@
     </element>
   </define>
   <define name="allParts">
-    <element name="allParts">
+    <element name="allparts">
       <data type="boolean"/>
     </element>
   </define>
@@ -954,17 +999,13 @@
       <optional>
         <ref name="section-title"/>
       </optional>
-      <choice>
-        <oneOrMore>
+      <zeroOrMore>
+        <choice>
           <ref name="term-clause"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <choice>
-            <ref name="terms"/>
-            <ref name="definitions"/>
-          </choice>
-        </zeroOrMore>
-      </choice>
+          <ref name="terms"/>
+          <ref name="definitions"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="reference-clause">

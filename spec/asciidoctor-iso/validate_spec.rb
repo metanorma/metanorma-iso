@@ -930,4 +930,16 @@ it "Do not warn if not more than 7 levels of subclause" do
 
   INPUT
 end
+
+it "Warn if term citation in Terms & Definitions not preceded with italicised term" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{term citation not preceded with italicised term}).to_stderr
+  #{VALIDATING_BLANK_HDR}
+  == Terms and Definitions
+
+  [[term]]
+  === Term
+
+  The definition of a term (<<term>>) is a part of the specialized vocabulary of a particular field
+  INPUT
+end
 end

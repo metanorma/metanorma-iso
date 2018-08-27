@@ -384,7 +384,7 @@
   </define>
   <define name="LocalityType">
     <data type="string">
-      <param name="pattern">section|clause|part|paragraph|chapter|page|whole|table|annex|figure|note|example|volume|issue|locality:[a-zA-Z0-9_]+</param>
+      <param name="pattern">section|clause|part|paragraph|chapter|page|whole|table|annex|figure|note|list|example|volume|issue|locality:[a-zA-Z0-9_]+</param>
     </data>
   </define>
   <define name="referenceFrom">
@@ -700,8 +700,12 @@
         <ref name="btitle"/>
         <ref name="formattedref"/>
       </choice>
-      <ref name="bplace"/>
-      <ref name="seriesorganization"/>
+      <optional>
+        <ref name="bplace"/>
+      </optional>
+      <optional>
+        <ref name="seriesorganization"/>
+      </optional>
       <optional>
         <ref name="abbreviation"/>
       </optional>
