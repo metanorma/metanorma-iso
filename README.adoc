@@ -840,6 +840,7 @@ which adheres with ISO formatting requirements. Recommend against overriding thi
 `:htmlintropage`:: HTML template for introductory section. Defaults to built in template. Recommend against overriding this.
 
 `:scripts`:: Javascript scripts for HTML output. Defaults to built in scripts. Recommend against overriding this.
+`:scripts-pdf`:: Javascript scripts for HTML > PDF output. Defaults to built in scripts. Recommend against overriding this.
 
 `:wordstylesheet`:: Primary SCSS stylesheet to use for Word output. Defaults to built in stylesheet,
 which adheres with ISO formatting requirements. Recommend against overriding this.
