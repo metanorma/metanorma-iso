@@ -323,6 +323,8 @@ and Note 1 to entry is not included here
 
 Term banks such as the http://www.electropedia.org[IEV] must be treated like any other document, with terms treated as clauses; e.g. `<<IEV,clause "103-01-01">>`. The IEV must be explictly referenced with that label; when the XML is generated, it will be replaced by the official references to `IEC 60050-nnn:2001` standards documents.
 
+Exceptionally, an introductory section can be treated as a subclause instead of a term, by prefixing it with the style attribute `[.nonterm]`.
+
 === References (Normative, Informative)
 
 All bibliographic entries must be given as unordered lists. Normative references are expected to include only ISO and related standards; informative references may include any source.

@@ -241,6 +241,20 @@ stem:[t_A]
 Time to launch.
 --
 
+As defined above, all terminal subclauses of a term section are treated as term definitions. Exceptionally, an introductory section can be treated as a subclause instead of a term, by prefixing it with the style attribute `[.nonterm]`:
+
+[source,asciidoctor]
+--
+== Terms and definitions
+
+[.nonterm]
+=== Introduction
+The following terms have non-normative effect, and should be ignored by the ametrical.
+
+=== Anapaest
+
+metrical foot consisting of a short, a long, and a short
+--
 
 === Symbols and Abbreviations
 

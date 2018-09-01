@@ -454,6 +454,25 @@ from the image.
 image::logo.jpg
 --
 
+=== Subclauses in Terms & Definitions sections
+
+Normally any terminal subclause in a Terms & Definitions section is treated as a term
+definition. Exceptionally, an introductory section can be tagged to be treated as a clause,
+instead of a term, by prefixing it with the style attribute `[.nonterm]`.
+
+[source,asciidoctor]
+--
+== Terms and definitions
+
+[.nonterm]
+=== Introduction
+The following terms have non-normative effect, and should be ignored by the ametrical.
+
+=== Anapaest
+
+metrical foot consisting of a short, a long, and a short
+--
+
 === Sections embedded more than 5 levels
 
 Asciidoctor permits only 5 levels of section embedding (not counting the document title).
