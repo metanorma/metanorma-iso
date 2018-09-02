@@ -6,11 +6,13 @@ RSpec.describe IsoDoc do
     system "rm -f test.html"
     IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", filename: "test"}).convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
         <title>
             <title-intro language="en" format="text/plain">Cereals and pulses</title-intro>
     <title-main language="en" format="text/plain">Specifications and test methods</title-main>
     <title-part language="en" format="text/plain">Rice</title-part>
   </title>
+  </bibdata>
     <preface><foreword>
     <note>
   <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
@@ -30,11 +32,13 @@ RSpec.describe IsoDoc do
     system "rm -f test.html"
     IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
         <title>
             <title-intro language="en" format="text/plain">Cereals and pulses</title-intro>
     <title-main language="en" format="text/plain">Specifications and test methods</title-main>
     <title-part language="en" format="text/plain">Rice</title-part>
   </title>
+  </bibdata>
     <preface><foreword>
     <note>
   <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
