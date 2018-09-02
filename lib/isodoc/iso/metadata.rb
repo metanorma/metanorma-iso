@@ -27,11 +27,11 @@ module IsoDoc
       end
 
       def docstatus(isoxml, _out)
-        docstatus = isoxml.at(ns("//status/stage"))
+        docstatus = isoxml.at(ns("//bibdata/status/stage"))
         if docstatus
           set(:stage, docstatus.text)
           set(:stage_int, docstatus.text.to_i)
-          abbr = stage_abbrev(docstatus.text, isoxml.at(ns("//status/iteration")),
+          abbr = stage_abbrev(docstatus.text, isoxml.at(ns("//bibdata/status/iteration")),
                               isoxml.at(ns("//version/draft")))
           set(:stageabbr, abbr)
         end
@@ -77,11 +77,11 @@ module IsoDoc
       end
 
       def title(isoxml, _out)
-        intro = isoxml.at(ns("//title-intro[@language='en']"))
-        main = isoxml.at(ns("//title-main[@language='en']"))
-        part = isoxml.at(ns("//title-part[@language='en']"))
-        partnumber = isoxml.at(ns("//project-number/@part"))
-        subpartnumber = isoxml.at(ns("//project-number/@subpart"))
+        intro = isoxml.at(ns("//bibdata//title-intro[@language='en']"))
+        main = isoxml.at(ns("//bibdata//title-main[@language='en']"))
+        part = isoxml.at(ns("//bibdata//title-part[@language='en']"))
+        partnumber = isoxml.at(ns("//bibdata//project-number/@part"))
+        subpartnumber = isoxml.at(ns("//bibdata//project-number/@subpart"))
 
         set(:doctitlemain, @c.encode(main ? main.text : "", :hexadecimal))
         main = compose_title(main, intro, part, partnumber, subpartnumber, "en")
@@ -91,11 +91,11 @@ module IsoDoc
       end
 
       def subtitle(isoxml, _out)
-        intro = isoxml.at(ns("//title-intro[@language='fr']"))
-        main = isoxml.at(ns("//title-main[@language='fr']"))
-        part = isoxml.at(ns("//title-part[@language='fr']"))
-        partnumber = isoxml.at(ns("//project-number/@part"))
-        subpartnumber = isoxml.at(ns("//project-number/@subpart"))
+        intro = isoxml.at(ns("//bibdata//title-intro[@language='fr']"))
+        main = isoxml.at(ns("//bibdata//title-main[@language='fr']"))
+        part = isoxml.at(ns("//bibdata//title-part[@language='fr']"))
+        partnumber = isoxml.at(ns("//bibdata//project-number/@part"))
+        subpartnumber = isoxml.at(ns("//bibdata//project-number/@subpart"))
         set(:docsubtitlemain, @c.encode(main ? main.text : "", :hexadecimal))
         main = compose_title(main, intro, part, partnumber, subpartnumber, "fr")
         set(:docsubtitle, main)
