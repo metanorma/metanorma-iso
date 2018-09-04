@@ -45,7 +45,7 @@ RSpec.describe Asciidoctor::ISO do
         <title>Normative References</title>
         <bibitem id="iso123" type="standard">
           <title format="text/plain">Standard</title>
-  <docidentifier>ISO 123</docidentifier>
+  <docidentifier>ISO 123:1066-1067</docidentifier>
   <date type="published">
     <from>1066</from>
     <to>1067</to>
@@ -84,7 +84,7 @@ RSpec.describe Asciidoctor::ISO do
          <uri type="src">https://www.iso.org/standard/23281.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
-         <docidentifier>ISO 123</docidentifier>
+         <docidentifier type="ISO">ISO 123:2001</docidentifier>
          <date type="published">
            <on>2001</on>
          </date>
@@ -177,7 +177,7 @@ RSpec.describe Asciidoctor::ISO do
          <uri type="src">https://www.iso.org/standard/21071.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:21071:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/02/10/21071.detail.rss</uri>
-         <docidentifier>ISO/IEC 12382</docidentifier>
+         <docidentifier type="ISO">ISO/IEC 12382:1992</docidentifier>
          <date type="published">
            <on>1992</on>
          </date>
@@ -232,7 +232,7 @@ RSpec.describe Asciidoctor::ISO do
          <uri type="src">https://www.iso.org/standard/61884.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
-         <docidentifier>ISO 124</docidentifier>
+         <docidentifier type="ISO">ISO 124:2014</docidentifier>
          <date type="published">
            <on>2014</on>
          </date>
@@ -291,7 +291,7 @@ RSpec.describe Asciidoctor::ISO do
          <title>Normative References</title>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123</docidentifier>
+         <docidentifier>ISO 123:--</docidentifier>
          <date type="published">
            <on>--</on>
          </date>
@@ -326,7 +326,7 @@ RSpec.describe Asciidoctor::ISO do
         <title>Normative References</title>
         <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123</docidentifier>
+         <docidentifier>ISO 123:1066 (all parts)</docidentifier>
          <date type="published">
            <on>1066</on>
          </date>
@@ -352,7 +352,7 @@ RSpec.describe Asciidoctor::ISO do
       [bibliography]
       == Normative References
 
-      * [[[iso123,IETF RFC 8341]]] _Standard_
+      * [[[iso123,IETF(RFC 8341)]]] _Standard_
     INPUT
        #{BLANK_HDR}
               <sections>
@@ -361,7 +361,7 @@ RSpec.describe Asciidoctor::ISO do
          <title>Normative References</title>
                <bibitem type="" id="iso123">
   <title format="text/plain" language="en" script="Latn">Network Configuration Access Control Model</title>
-  <docidentifier>8341</docidentifier>
+  <docidentifier type="IETF">RFC 8341</docidentifier>
   <date type="published">
     <on>2018</on>
   </date>
@@ -508,7 +508,7 @@ RSpec.describe Asciidoctor::ISO do
     def mock_isobib_get_123
       expect(Isobib::IsoBibliography).to receive(:get).with("ISO 123", nil, {}) do
         IsoBibItem.from_xml(<<~"OUTPUT")
-        <bibitem type=\"international-standard\" id=\"ISO123\">\n  <title format=\"text/plain\" language=\"en\" script=\"Latn\">Rubber latex -- Sampling</title>\n  <title format=\"text/plain\" language=\"fr\" script=\"Latn\">Latex de caoutchouc -- ?chantillonnage</title>\n  <uri type=\"src\">https://www.iso.org/standard/23281.html</uri>\n  <uri type=\"obp\">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>\n  <uri type=\"rss\">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>\n  <docidentifier>ISO 123</docidentifier>\n  <date type=\"published\">\n    <on>2001</on>\n  </date>\n  <contributor>\n    <role type=\"publisher\"/>\n    <organization>\n      <name>International Organization for Standardization</name>\n      <abbreviation>ISO</abbreviation>\n      <uri>www.iso.org</uri>\n    </organization>\n  </contributor>\n  <edition>3</edition>\n  <language>en</language>\n  <language>fr</language>\n  <script>Latn</script>\n  <status>Published</status>\n  <copyright>\n    <from>2001</from>\n    <owner>\n      <organization>\n        <name>ISO</name>\n        <abbreviation></abbreviation>\n      </organization>\n    </owner>\n  </copyright>\n  <relation type=\"obsoletes\">\n    <bibitem>\n      <formattedref>ISO 123:1985</formattedref>\n      </bibitem>\n  </relation>\n  <relation type=\"updates\">\n    <bibitem>\n      <formattedref>ISO 123:2001</formattedref>\n      </bibitem>\n  </relation>\n</bibitem>
+        <bibitem type=\"international-standard\" id=\"ISO123\">\n  <title format=\"text/plain\" language=\"en\" script=\"Latn\">Rubber latex -- Sampling</title>\n  <title format=\"text/plain\" language=\"fr\" script=\"Latn\">Latex de caoutchouc -- ?chantillonnage</title>\n  <uri type=\"src\">https://www.iso.org/standard/23281.html</uri>\n  <uri type=\"obp\">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>\n  <uri type=\"rss\">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>\n  <docidentifier type="ISO">ISO 123:2001</docidentifier>\n  <date type=\"published\">\n    <on>2001</on>\n  </date>\n  <contributor>\n    <role type=\"publisher\"/>\n    <organization>\n      <name>International Organization for Standardization</name>\n      <abbreviation>ISO</abbreviation>\n      <uri>www.iso.org</uri>\n    </organization>\n  </contributor>\n  <edition>3</edition>\n  <language>en</language>\n  <language>fr</language>\n  <script>Latn</script>\n  <status>Published</status>\n  <copyright>\n    <from>2001</from>\n    <owner>\n      <organization>\n        <name>ISO</name>\n        <abbreviation></abbreviation>\n      </organization>\n    </owner>\n  </copyright>\n  <relation type=\"obsoletes\">\n    <bibitem>\n      <formattedref>ISO 123:1985</formattedref>\n      </bibitem>\n  </relation>\n  <relation type=\"updates\">\n    <bibitem>\n      <formattedref>ISO 123:2001</formattedref>\n      </bibitem>\n  </relation>\n</bibitem>
         OUTPUT
       end
     end
@@ -522,7 +522,7 @@ RSpec.describe Asciidoctor::ISO do
          <uri type="src">https://www.iso.org/standard/61884.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
-         <docidentifier>ISO 124</docidentifier>
+         <docidentifier type="ISO">ISO 124:2014</docidentifier>
          <date type="published">
            <on>2014</on>
          </date>
@@ -572,7 +572,7 @@ RSpec.describe Asciidoctor::ISO do
          <uri type="src">https://www.iso.org/standard/21071.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:21071:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/02/10/21071.detail.rss</uri>
-         <docidentifier>ISO/IEC 12382</docidentifier>
+         <docidentifier type="ISO">ISO/IEC 12382:1992</docidentifier>
          <date type="published">
            <on>1992</on>
          </date>
@@ -630,7 +630,7 @@ end
       IsoBibItem.from_xml(<<~"OUTPUT")
       <bibitem id="RFC8341">
   <title format="text/plain" language="en" script="Latn">Network Configuration Access Control Model</title>
-  <docidentifier>8341</docidentifier>
+  <docidentifier type="IETF">RFC 8341</docidentifier>
   <date type="published">
     <on>2018</on>
   </date>

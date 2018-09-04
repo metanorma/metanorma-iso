@@ -147,14 +147,14 @@ RSpec.describe IsoDoc::Iso do
                <h1 class="ForewordTitle">Foreword</h1>
                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
          <a href="#IEV">IEV</a>
-         <a href="#ISO20483">ISO 20483:2013&#8211;2014</a>
+         <a href="#ISO20483">ISO 20483</a>
          </p>
              </div>
              <p class="zzSTDTitle1"/>
              <div>
                <h1>1.&#160; Normative references</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-               <p id="ISO20483" class="NormRef">ISO 20483:2013&#8211;2014, <i> Cereals and pulses</i></p>
+               <p id="ISO20483" class="NormRef">ISO 20483, <i> Cereals and pulses</i></p>
              </div>
            </div>
          </body>

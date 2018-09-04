@@ -109,7 +109,7 @@ EOS
     expect(File.exist?("#{Dir.home}/.iev.pstore")).to be true
 
     db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
-    entry = db.load_entry("ISO 123:2001")
+    entry = db.load_entry("ISO(ISO 123:2001)")
     expect(entry["fetched"].to_s).to eq(Date.today.to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_123_DATED)
 
@@ -134,7 +134,7 @@ EOS
     expect(File.exist?("test.relaton.pstore")).to be false
 
     db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
-    entry = db.load_entry("ISO 123:2001")
+    entry = db.load_entry("ISO(ISO 123:2001)")
     expect(entry).to_not be nil
 
     system "rm ~/.relaton-bib.pstore"
@@ -156,11 +156,11 @@ EOS
     expect(File.exist?("test.relaton.pstore")).to be true
 
     db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
-    entry = db.load_entry("ISO 123:2001")
+    entry = db.load_entry("ISO(ISO 123:2001)")
     expect(entry).to_not be nil
 
     db = Relaton::Db.new "test.relaton.pstore", nil
-    entry = db.load_entry("ISO 123:2001")
+    entry = db.load_entry("ISO(ISO 123:2001)")
     expect(entry).to_not be nil
 
     system "rm ~/.relaton-bib.pstore"
@@ -171,7 +171,7 @@ EOS
   it "fetches uncached references" do
     system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
     db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
-    db.save_entry("ISO 123:2001",
+    db.save_entry("ISO(ISO 123:2001)",
         {
           "fetched" => Date.today.to_s,
           "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
@@ -189,10 +189,10 @@ EOS
       * [[[iso124,ISO 124:2014]]] _Standard_
     INPUT
 
-    entry = db.load_entry("ISO 123:2001")
+    entry = db.load_entry("ISO(ISO 123:2001)")
     expect(entry["fetched"].to_s).to eq(Date.today.to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
-    entry = db.load_entry("ISO 124:2014")
+    entry = db.load_entry("ISO(ISO 124:2014)")
     expect(entry["fetched"].to_s).to eq(Date.today.to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_124_DATED)
 
@@ -221,7 +221,7 @@ EOS
       * [[[iso123,ISO 123]]] _Standard_
     INPUT
 
-        entry = db.load_entry("ISO 123")
+        entry = db.load_entry("ISO(ISO 123)")
             expect(entry["fetched"].to_s).to eq(Date.today.to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISOBIB_123_UNDATED)
 
@@ -233,7 +233,7 @@ EOS
     system "mv ~/.relaton-bib.pstore ~/.relaton-bib.pstore1"
 
             db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
-            db.save_entry("ISO 123:2001",
+            db.save_entry("ISO(ISO 123:2001)",
         {
           "fetched" => (Date.today - 90),
           "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
@@ -248,7 +248,7 @@ EOS
       * [[[iso123,ISO 123:2001]]] _Standard_
     INPUT
 
-            entry = db.load_entry("ISO 123:2001")
+            entry = db.load_entry("ISO(ISO 123:2001)")
             expect(entry["fetched"].to_s).to eq((Date.today - 90).to_s)
     expect(entry["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
 
@@ -261,13 +261,13 @@ EOS
     system "rm test.relaton.pstore"
 
     db = Relaton::Db.new "#{Dir.home}/.relaton-bib.pstore", nil
-    db.save_entry("ISO 123:2001",
+    db.save_entry("ISO(ISO 123:2001)",
         {
           "fetched" => Date.today,
           "bib" => IsoBibItem.from_xml(ISO_123_SHORT)
         }
       )
-    db.save_entry("ISO 124",
+    db.save_entry("ISO(ISO 124)",
         {
           "fetched" => Date.today,
           "bib" => IsoBibItem.from_xml(ISO_124_SHORT)
@@ -275,7 +275,7 @@ EOS
       )
 
     localdb = Relaton::Db.new "test.relaton.pstore", nil
-    localdb.save_entry("ISO 124",
+    localdb.save_entry("ISO(ISO 124)",
         {
           "fetched" => Date.today,
           "bib" => IsoBibItem.from_xml(ISO_124_SHORT_ALT)
@@ -306,10 +306,10 @@ EOS
 
     expect(strip_guid(Asciidoctor.convert(input, backend: :iso, header_footer: true))).to be_equivalent_to(output)
 
-    expect(db.load_entry("ISO 123:2001")["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
-    expect(db.load_entry("ISO 124")["bib"].to_xml).to be_equivalent_to(ISO_124_SHORT)
-    expect(localdb.load_entry("ISO 123:2001")["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
-    expect(localdb.load_entry("ISO 124")["bib"].to_xml).to be_equivalent_to(ISO_124_SHORT_ALT)
+    expect(db.load_entry("ISO(ISO 123:2001)")["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
+    expect(db.load_entry("ISO(ISO 124)")["bib"].to_xml).to be_equivalent_to(ISO_124_SHORT)
+    expect(localdb.load_entry("ISO(ISO 123:2001)")["bib"].to_xml).to be_equivalent_to(ISO_123_SHORT)
+    expect(localdb.load_entry("ISO(ISO 124)")["bib"].to_xml).to be_equivalent_to(ISO_124_SHORT_ALT)
 
     system "rm ~/.relaton-bib.pstore"
     system "mv ~/.relaton-bib.pstore1 ~/.relaton-bib.pstore"

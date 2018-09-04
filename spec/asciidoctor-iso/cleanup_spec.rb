@@ -189,7 +189,7 @@ r = 1 %</stem>
         <title>Normative References</title>
         <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
-         <docidentifier>ISO 216</docidentifier>
+         <docidentifier>ISO 216:2001</docidentifier>
          <date type="published">
            <on>2001</on>
          </date>
@@ -656,7 +656,7 @@ r = 1 %</stem>
         <title>Normative References</title>
         <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123</docidentifier>
+         <docidentifier>ISO 123:--</docidentifier>
          <date type="published">
            <on>--</on>
          </date>
