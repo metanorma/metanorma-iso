@@ -78,6 +78,9 @@ Line Break:: `<br>`
 Horizontal Rule:: `<hr>`
 Page Break:: `<br>` (realised as page break in Word HTML)
 
+==== Images
+
+All images for an HTML document `{filename}.html` are moved to the folder `{filename}_images`, and renamed with GUIDs. This is to ensure that all images are available in the one location, making it easier to package the HTML output and upload it elsewhere.
 
 == Word HTML
 
