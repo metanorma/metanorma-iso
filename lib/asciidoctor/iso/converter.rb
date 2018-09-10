@@ -1,6 +1,6 @@
 require "asciidoctor"
 require "metanorma-standoc"
-require "asciidoctor/iso/version"
+require "metanorma/iso/version"
 require "asciidoctor/iso/base"
 require "asciidoctor/iso/front"
 require "asciidoctor/iso/section"

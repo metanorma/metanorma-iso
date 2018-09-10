@@ -2,11 +2,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "asciidoctor/iso/version"
+require "metanorma/iso/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "metanorma-iso"
-  spec.version       = Asciidoctor::ISO::VERSION
+  spec.version       = Metanorma::ISO::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
@@ -48,4 +48,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "timecop", "~> 0.9"
   spec.add_development_dependency "metanorma", "~> 0.2.6"
   spec.add_development_dependency "isobib", "~> 0.3.0"
+  spec.add_development_dependency "ietfbib", "~> 0.4.0"
 end

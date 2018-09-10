@@ -19,8 +19,7 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "registers version against metanorma" do
-    expect(processor.version.to_s).to match(%r{^Asciidoctor::ISO })
-    expect(processor.version.to_s).to match(%r{/IsoDoc })
+    expect(processor.version.to_s).to match(%r{^Metanorma::ISO })
   end
 
   it "generates IsoDoc XML from a blank document" do
