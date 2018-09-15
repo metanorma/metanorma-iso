@@ -251,7 +251,7 @@ h2 p {
     list-style: none;
   }
   
-  ul li p:before {
+  ul > li > p:before {
     content: "—";
     display: inline-block;
     width: 1em;
@@ -731,7 +731,7 @@ ol.footnotes-list p, aside.footnote p {
     display: inline;
 }
 
-ol li p:before {
+ol > li > p:before {
     content: "";
     display: none;
 }

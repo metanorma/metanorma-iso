@@ -409,7 +409,7 @@ ul li {
     list-style: none;
   }
   
-  ul li p:before {
+  ul > li > p:before {
     content: "—";
     display: inline-block;
     width: 1em;
@@ -747,7 +747,7 @@ sup a {
       display: inline;
   }
   
-  ol li p:before {
+  ol > li > p:before {
       content: "";
       display: none;
   }
