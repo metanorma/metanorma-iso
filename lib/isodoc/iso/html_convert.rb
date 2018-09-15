@@ -116,7 +116,8 @@ module IsoDoc
 
       def eref_localities1_zh(target, type, from, to)
         subsection = from&.text&.match(/\./)
-        ret = ", 第#{from.text}" if from
+        ret = type == "list" ? "" : ","
+        ret += " 第#{from.text}" if from
         ret += "&ndash;#{to}" if to
         loc = (@locality[type] || type.sub(/^locality:/, "").capitalize )
         ret += " #{loc}" unless subsection && type == "clause" || type == "list" || target.match(/^IEV$/)
@@ -127,7 +128,7 @@ module IsoDoc
       def eref_localities1(target, type, from, to, lang = "en")
         subsection = from&.text&.match(/\./)
         return l10n(eref_localities1_zh(target, type, from, to)) if lang == "zh"
-        ret = ","
+        ret = type == "list" ? "" : ","
         loc = @locality[type] || type.sub(/^locality:/, "").capitalize
         ret += " #{loc}" unless subsection && type == "clause" || type == "list" || target.match(/^IEV$/)
         ret += " #{from.text}" if from

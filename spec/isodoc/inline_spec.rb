@@ -240,7 +240,7 @@ RSpec.describe IsoDoc do
            <a href="#ISO712">ISO 712, Table 1</a>
            <a href="#ISO712">ISO 712, Table 1&#8211;1</a>
            <a href="#ISO712">ISO 712, Clause 1, Table 1</a>
-           <a href="#ISO712">ISO 712, Clause 1, a)</a>
+           <a href="#ISO712">ISO 712, Clause 1 a)</a>
            <a href="#ISO712">ISO 712, Clause 1</a>
            <a href="#ISO712">ISO 712, 1.5</a>
            <a href="#ISO712">A</a>
