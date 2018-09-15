@@ -1196,12 +1196,12 @@ RSpec.describe IsoDoc do
                <div>
                  <h1 class="ForewordTitle">Foreword</h1>
                  <p>
-           <a href="#N">Clause 1, a)</a>
-           <a href="#note1">3.1, List  1 a)</a>
-           <a href="#note2">3.1, List  2 a)</a>
-           <a href="#AN">A.1, a)</a>
-           <a href="#Anote1">A.2, List  1 a)</a>
-           <a href="#Anote2">A.2, List  2 a)</a>
+           <a href="#N">Clause 1 a)</a>
+           <a href="#note1">3.1 List  1 a)</a>
+           <a href="#note2">3.1 List  2 a)</a>
+           <a href="#AN">A.1 a)</a>
+           <a href="#Anote1">A.2 List  1 a)</a>
+           <a href="#Anote2">A.2 List  2 a)</a>
            </p>
                </div>
                <p class="zzSTDTitle1"/>
@@ -1299,12 +1299,12 @@ RSpec.describe IsoDoc do
                 <div>
                   <h1 class="ForewordTitle">Foreword</h1>
                   <p>
-        <a href="#N">Clause 1, a)</a>
-        <a href="#note1">Clause 1, a.1)</a>
-        <a href="#note2">Clause 1, a.1.i)</a>
-        <a href="#AN">Clause 1, a.1.i.A)</a>
-        <a href="#Anote1">Clause 1, a.1.i.A.I)</a>
-        <a href="#Anote2">Clause 1, a.1.i.A.I.a)</a>
+        <a href="#N">Clause 1 a)</a>
+        <a href="#note1">Clause 1 a.1)</a>
+        <a href="#note2">Clause 1 a.1.i)</a>
+        <a href="#AN">Clause 1 a.1.i.A)</a>
+        <a href="#Anote1">Clause 1 a.1.i.A.I)</a>
+        <a href="#Anote2">Clause 1 a.1.i.A.I.a)</a>
         </p>
                 </div>
                 <p class="zzSTDTitle1"/>

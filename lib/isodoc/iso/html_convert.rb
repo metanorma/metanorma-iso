@@ -91,7 +91,7 @@ module IsoDoc
 
       def appendix_names(clause, num)
         clause.xpath(ns("./appendix")).each_with_index do |c, i|
-          @anchors[c["id"]] = anchor_struct(i + 1, nil, @appendix_lbl)
+          @anchors[c["id"]] = anchor_struct(i + 1, nil, @appendix_lbl, "clause")
           @anchors[c["id"]][:level] = 2
           @anchors[c["id"]][:container] = clause["id"]
         end
@@ -135,6 +135,11 @@ module IsoDoc
         ret += "&ndash;#{to.text}" if to
         ret += ")" if type == "list"
         l10n(ret)
+      end
+
+      def prefix_container(container, linkend, target)
+        delim = get_anchors[target][:type] == "listitem" ? " " : ", "
+        l10n(get_anchors[container][:xref] + delim + linkend)
       end
     end
   end
