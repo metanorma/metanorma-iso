@@ -488,7 +488,7 @@ RSpec.describe Asciidoctor::ISO do
         <title>Normative References</title>
         <bibitem id="iso123" type="standard">
         <title format="text/plain">Standard</title>
-        <docidentifier>ISO 123</docidentifier>
+        <docidentifier type="ISO">ISO 123</docidentifier>
         <contributor>
           <role type="publisher"/>
           <organization>
