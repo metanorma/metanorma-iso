@@ -1,4 +1,4 @@
-= AsciiISO: Asciidoctor processor for ISO standards
+= Metanorma-ISO: Metanorma processor for ISO standards
 
 image:https://img.shields.io/gem/v/metanorma-iso.svg["Gem Version", link="https://rubygems.org/gems/metanorma-iso"]
 image:https://img.shields.io/travis/riboseinc/metanorma-iso/master.svg["Build Status", link="https://travis-ci.org/riboseinc/metanorma-iso"]
@@ -10,19 +10,12 @@ _Formerly known as_ `asciidoctor-iso`.
 
 == Functionality
 
-This gem processes http://asciidoctor.org/[Asciidoctor] documents following
-a template for generating ISO International Standards. The following
-outputs are generated.
+This gem processes Metanorma documents following a template for generating ISO
+International Standards. The following outputs are generated.
 
-* (Optional) An HTML preview generated directly from the Asciidoctor document,
-using native Asciidocot formatting. 
-** http://asciimath.org[AsciiMathML] is to be used for mathematical formatting.
-The gem uses the https://github.com/asciidoctor/asciimath[Ruby AsciiMath parser],
-which is syntactically stricter than the common MathJax processor;
-if you do not get expected results, try bracketting terms your in AsciiMathML
-expressions.
-* an XML representation of the document, intended as a document model for ISO
+* The XML representation of the document, intended as a document model for ISO
 International Standards. 
+
 * The XML representation is processed in turn to generate the following outputs
 as end deliverable ISO standard drafts.
 ** Microsoft Word output (`.doc`), following the style conventions of the 
@@ -30,16 +23,25 @@ https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template].
 ** HTML. For ISO, two HTML files are generated: the `.html` file follows ISO
 conventions in rendering, which looks very similar to the Word output, while
 the `-alt.html` file has richer styling.
-** PDF. Not supported for the ISO gem, but available for other other specification,
+** PDF. Not supported for the ISO gem, but available for other specifications,
 generated from the HTML file.
 
-This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".
+The following input formats are supported:
+
+* http://asciidoctor.org/[Asciidoctor]
+(This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".)
 
 This README provides an overview of the functionality of the gem; see also
 https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring]
 ISO standards using the gem. The 
 https://github.com/riboseinc/metanorma-iso/wiki/Quickstart-Guide[Quickstart guide]
 gives a summary overview.
+
+NOTE: http://asciimath.org[AsciiMathML] is used for mathematical formatting.
+The gem uses the https://github.com/asciidoctor/asciimath[Ruby AsciiMath parser],
+which is syntactically stricter than the common MathJax processor;
+if you do not get expected results, try bracketting terms your in AsciiMathML
+expressions.
 
 == Usage
 
@@ -61,6 +63,7 @@ document.
 
 The gem then converts the XML into HTML and DOC.
 
+////
 The gem can also be invoked directly within asciidoctor, though this is deprecated:
 
 [source,console]
@@ -76,6 +79,7 @@ ignores the ISO-specific modifications to the markup:
 ----
 $ asciidoctor a.adoc  
 ----
+////
 
 === Installation
 
@@ -93,7 +97,7 @@ $ gem install metanorma-iso
 === Content Warnings
 
 The gem also realises several format
-checks as prescribed in ISO/IEC DIR 2: 2018, and warns the user about them in the
+checks as prescribed in ISO/IEC DIR 2:2018, and warns the user about them in the
 console:
 
 * Numbers with what looks like dots instead of commas for decimal points.
@@ -903,3 +907,4 @@ in Asciidoctor, and output formats, are included in the https://github.com/ribos
 repository.
 
 See also `link:spec/metanorma-iso[]` for individual features.
+
