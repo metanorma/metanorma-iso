@@ -695,7 +695,7 @@ end
 
 * [[[ISO2146,ISO 2146:1988]]], _ISO 2146_
 
-* [[[IEC61010-2,IEC 61010-2:1998]]], _Safety requirements for electric equipment for measurement, control, and laboratory use -- Part 2: Particular requirements for laboratory equipment for the heating of material_
+* [[[IEC61010-2,IEC 61010-2]]], _Safety requirements for electric equipment for measurement, control, and laboratory use -- Part 2: Particular requirements for laboratory equipment for the heating of material_
 
 * [[[ref10,10]]] [smallcap]#Standard No I.C.C 167#. _Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method_ (see http://www.icc.or.at)
 

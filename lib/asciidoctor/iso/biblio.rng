@@ -599,6 +599,7 @@
           <value>issued</value>
           <value>transmitted</value>
           <value>copied</value>
+          <value>unchanged</value>
         </choice>
       </attribute>
       <choice>

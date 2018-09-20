@@ -60,6 +60,15 @@ RSpec.describe Asciidoctor::ISO do
       :workgroup: WG
       :workgroup-number: 3
       :workgroup-type: C
+      :technical-committee_2: TC1
+      :technical-committee-number_2: 11
+      :technical-committee-type_2: A1
+      :subcommittee_2: SC1
+      :subcommittee-number_2: 21
+      :subcommittee-type_2: B1
+      :workgroup_2: WG1
+      :workgroup-number_2: 31
+      :workgroup-type_2: C1
       :secretariat: SECRETARIAT
       :copyright-year: 2001
       :docstage: 10
@@ -122,8 +131,11 @@ RSpec.describe Asciidoctor::ISO do
          </copyright>
          <editorialgroup>
            <technical-committee number="1" type="A">TC</technical-committee>
+           <technical-committee number="11" type="A1">TC1</technical-committee>
            <subcommittee number="2" type="B">SC</subcommittee>
+           <subcommittee number="21" type="B1">SC1</subcommittee>
            <workgroup number="3" type="C">WG</workgroup>
+           <workgroup number="31" type="C1">WG1</workgroup>
            <secretariat>SECRETARIAT</secretariat>
          </editorialgroup>
          <ics>

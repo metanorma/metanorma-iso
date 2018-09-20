@@ -792,7 +792,8 @@ https://www.iso.org/stage-codes.html[International harmonized stage codes])
 in the deafting stage
 
 `:technical-committee-number:`:: The number of the relevant ISO technical
-committee
+committee (also `:technical-committee-number_2:`, `:technical-committee-number_3:`...;
+the same applies for all technical-committee, subcommittee and workgroup attributes)
 
 `:technical-committee-type:``:: The type of the relevant technical committee. Defaults
 to `TC` if not supplied. Values: `TC1, `PC`, `JTC`, `JPC`.
