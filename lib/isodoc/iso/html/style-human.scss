@@ -409,13 +409,13 @@ ul li {
     list-style: none;
   }
 
-  ul > li > p:first-child:before {
-    content: "—";
-    display: inline-block;
-    width: 1em;
-    margin-left: -1.5em;
-    margin-right: 0.5em;
-  }
+ul > li > p:first-child:before {
+  content: "—";
+  display: inline-block;
+  width: 1em;
+  margin-left: -1.5em;
+  margin-right: 0.5em;
+}
 
   li p {
       /* display: inline-block; */
