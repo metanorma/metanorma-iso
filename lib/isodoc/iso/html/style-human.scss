@@ -408,8 +408,8 @@ p.Terms {
 ul li {
     list-style: none;
   }
-  
-  ul > li > p:before {
+
+  ul > li > p:first-child:before {
     content: "—";
     display: inline-block;
     width: 1em;
