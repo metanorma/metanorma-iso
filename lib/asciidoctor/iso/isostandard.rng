@@ -788,13 +788,15 @@
   </define>
   <define name="editorialgroup">
     <element name="editorialgroup">
-      <ref name="technical-committee"/>
-      <optional>
+      <oneOrMore>
+        <ref name="technical-committee"/>
+      </oneOrMore>
+      <zeroOrMore>
         <ref name="subcommittee"/>
-      </optional>
-      <optional>
+      </zeroOrMore>
+      <zeroOrMore>
         <ref name="workgroup"/>
-      </optional>
+      </zeroOrMore>
       <optional>
         <ref name="secretariat"/>
       </optional>
