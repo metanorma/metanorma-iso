@@ -33,6 +33,7 @@
 :table-caption: Table
 :example-caption: Figure
 :local-cache:
+:data-uri-image:
 
 [[foreword]]
 .Foreword 

@@ -216,10 +216,10 @@ end
 
 def mock_open_uri(code)
   expect(OpenURI).to receive(:open_uri).and_wrap_original do |m, *args|
-    expect(args[0]).to be_instance_of String
+    #expect(args[0]).to be_instance_of String
     file = "spec/examples/#{code.tr('-', '_')}.html"
     File.write file, m.call(*args).read unless File.exist? file
     File.read file
-  end
+  end.at_least :once
 end
 

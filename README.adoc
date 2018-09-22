@@ -863,6 +863,7 @@ which adheres with ISO formatting requirements. Recommend against overriding thi
 
 `:olstyle`:: Word CSS selector for ordered lists in supplied stylesheets. Defaults to value for built in stylesheet. Recommend against overriding this.
 
+`:data-uri-image`:: Encode all images in HTML output as inline data-URIs.
 
 The attribute `:draft:`, if present, includes review notes in the XML output;
 these are otherwise suppressed.

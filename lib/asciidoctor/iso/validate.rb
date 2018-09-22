@@ -146,9 +146,11 @@ module Asciidoctor
 
       def locality_erefs_validate(root)
         root.xpath("//eref[locality]").each do |t|
-          unless /^IEV$|:[ ]?(\d+{4}|--)$/.match t["citeas"]
-            warn "ISO: undated reference #{t['citeas']} should not contain "\
-              "specific elements"
+          if /^(ISO|IEC)/.match t["citeas"]
+            unless /^:[ ]?(\d+{4}|--)$/.match t["citeas"]
+              warn "ISO: undated reference #{t['citeas']} should not contain "\
+                "specific elements"
+            end
           end
         end
       end
