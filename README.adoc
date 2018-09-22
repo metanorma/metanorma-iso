@@ -695,7 +695,7 @@ The results of all `isobib` searches done to date for the current document
 (`filename.adoc`) are stored in the same directory as the current document,
 in the file `{filename}.relaton.pstore`. The local cache overrides entries in
 the global cache, and can be manually edited. The local cache is only used
-if the `:local-cache:` document attribute is set.
+if the `:local-cache:` or `:local-cache-only:` document attribute is set.
 
 If the document attribute `:no-isobib:` is set, the reference details for
 items are not looked up via `isobib`, and the `isobib` caches are not used.
@@ -732,6 +732,9 @@ ISO and IEV references online, nor the <<cache,cache>> of `isobib` and `iev` sea
 ISO and IEV references online, but do not use the <<cache,cache>> of `isobib` and `iev` searches.
 
 `:local-cache:`:: Use the local isobib and iev search caches to override the global isobib and iev search
+caches.
+
+`:local-cache-only:`:: Use the local isobib and iev search caches to the exclusion of the global isobib and iev search
 caches.
 
 `:i18nyaml:`:: Name of YAML file of internationalisation text, to use instead
