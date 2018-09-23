@@ -5,6 +5,7 @@ require "pathname"
 require "open-uri"
 require "pp"
 require "isodoc"
+require "fileutils"
 
 module Asciidoctor
   module ISO
@@ -28,11 +29,11 @@ module Asciidoctor
         unless node.attr("nodoc") || !node.attr("docfile")
           File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
           html_converter_alt(node).convert(@filename + ".xml")
-          system "mv #{@filename}.html #{@filename}_alt.html"
+          FileUtils.mv "#{@filename}.html", "#{@filename}_alt.html"
           html_converter(node).convert(@filename + ".xml")
           doc_converter(node).convert(@filename + ".xml")
         end
-        @files_to_delete.each { |f| system "rm #{f}" }
+        @files_to_delete.each { |f| FileUtils.rm f }
         ret
       end
 
