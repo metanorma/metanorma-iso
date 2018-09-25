@@ -10,6 +10,7 @@ require "rspec/matchers"
 require "equivalent-xml"
 require "metanorma"
 require "metanorma/iso"
+require "iev"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -215,8 +216,8 @@ def get_xml(search, code, opts)
 end
 
 def mock_open_uri(code)
-  expect(OpenURI).to receive(:open_uri).and_wrap_original do |m, *args|
-    #expect(args[0]).to be_instance_of String
+  #expect(OpenURI).to receive(:open_uri).and_wrap_original do |m, *args|
+  expect(Iev).to receive(:get).with(code, "en") do |m, *args|
     file = "spec/examples/#{code.tr('-', '_')}.html"
     File.write file, m.call(*args).read unless File.exist? file
     File.read file

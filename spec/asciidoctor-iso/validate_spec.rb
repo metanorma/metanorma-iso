@@ -1,4 +1,5 @@
 require "spec_helper"
+require "fileutils"
 
 RSpec.describe Asciidoctor::ISO do
 
@@ -814,75 +815,6 @@ it "validates document against ISO XML schema" do
   [align=mid-air]
   Para
   INPUT
-end
-
-
-it "Warning if terms mismatches IEV" do
-  system "mv ~/.iev.pstore ~/.iev.pstore1"
-  system "rm test.iev.pstore"
-  mock_open_uri('103-01-02')
-  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Term "automation" does not match IEV 103-01-02 "functional"}).to_stderr
-  = Document title
-  Author
-  :docfile: test.adoc
-  
-  [bibliography]
-  == Normative References
-  * [[[iev,IEV]]], _iev_
-
-  == Terms and definitions
-  === Automation
-
-  [.source]
-  <<iev,clause="103-01-02">>
-  INPUT
-  system "mv ~/.iev.pstore1 ~/.iev.pstore"
-end
-
-it "No warning if English term matches IEV" do
-  system "mv ~/.iev.pstore ~/.iev.pstore1"
-  system "rm test.iev.pstore"
-  mock_open_uri('103-01-02')
-  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr
-  = Document title
-  Author
-  :docfile: test.adoc
-
-  [bibliography]
-  == Normative References
-  * [[[iev,IEV]]], _iev_
-
-  == Terms and definitions
-  === Functional
-
-  [.source]
-  <<iev,clause="103-01-02">>
-  INPUT
-  system "mv ~/.iev.pstore1 ~/.iev.pstore"
-end
-
-it "No warning if French term matches IEV" do
-  system "mv ~/.iev.pstore ~/.iev.pstore1"
-  system "rm test.iev.pstore"
-  mock_open_uri('103-01-02')
-  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.not_to output(%r{does not match IEV 103-01-02}).to_stderr
-  = Document title
-  Author
-  :docfile: test.adoc
-  :nodoc:
-  :language: fr
-
-  [bibliography]
-  == Normative References
-  * [[[iev,IEV]]], _iev_
-
-  == Terms and definitions
-  === Fonctionnelle, f
-
-  [.source]
-  <<iev,clause="103-01-02">>
-  INPUT
-  system "mv ~/.iev.pstore1 ~/.iev.pstore"
 end
 
 it "Warn if more than 7 levels of subclause" do

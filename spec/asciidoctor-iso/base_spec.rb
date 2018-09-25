@@ -1,4 +1,5 @@
 require "spec_helper"
+require "fileutils"
 
 RSpec.describe Asciidoctor::ISO do
   it "has a version number" do
@@ -6,7 +7,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "generates output for the Rice document" do
-    system "cd spec/examples; rm -f rice.xml; rm -f rice.doc; rm -f rice.html; rm -f rice_alt.html; asciidoctor --trace -b iso -r 'metanorma-iso' rice.adoc; cd ../.."
+    FileUtils.rm_f %w(spec/examples/rice.xml spec/examples/rice.doc spec/examples/rice.html spec/examples/rice_alt.html)
+    system "cd spec/examples; asciidoctor --trace -b iso -r 'metanorma-iso' rice.adoc; cd ../.."
     expect(File.exist?("spec/examples/rice.xml")).to be true
     expect(File.exist?("spec/examples/rice.doc")).to be true
     expect(File.exist?("spec/examples/rice.html")).to be true
@@ -24,7 +26,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "converts a blank document" do
-    system "rm -f test.doc"
+    FileUtils.rm_f "test.doc"
     expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
@@ -269,7 +271,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "reads scripts into blank HTML document" do
-    system "rm -f test.html"
+    FileUtils.rm_f "test.html"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
@@ -281,7 +283,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "uses default fonts" do
-    system "rm -f test.html"
+    FileUtils.rm_f "test.html"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
@@ -295,7 +297,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "uses default fonts for alt doc" do
-    system "rm -f test_alt.html"
+    FileUtils.rm_f "test_alt.html"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
@@ -309,7 +311,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "uses Chinese fonts" do
-    system "rm -f test.html"
+    FileUtils.rm_f "test.html"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
@@ -324,7 +326,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "uses specified fonts" do
-    system "rm -f test.html"
+    FileUtils.rm_f "test.html"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
@@ -342,8 +344,8 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "strips MS-specific CSS" do
-    system "rm -f test.html"
-    system "rm -f test.doc"
+    FileUtils.rm_f "test.html"
+    FileUtils.rm_f "test.doc"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author

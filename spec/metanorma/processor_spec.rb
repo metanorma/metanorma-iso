@@ -1,5 +1,6 @@
 require "spec_helper"
 require "metanorma"
+require "fileutils"
 
 #RSpec.describe Asciidoctor::Gb do
 RSpec.describe Metanorma::Iso::Processor do
@@ -33,7 +34,7 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "generates HTML from IsoDoc XML" do
-    system "rm -f test.xml"
+    FileUtils.rm_f "test.xml"
     processor.output(<<~"INPUT", "test.html", :html)
                <iso-standard xmlns="http://riboseinc.com/isoxml">
        <sections>

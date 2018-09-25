@@ -1,7 +1,8 @@
 require "spec_helper"
+require "fileutils"
 
 RSpec.describe IsoDoc::Iso do
-  system "rm -f test.html"
+  FileUtils.rm_f "test.html"
   it "processes isodoc as ISO: HTML output" do
     IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", false)
     <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -19,7 +20,7 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "processes isodoc as ISO: alt HTML output" do
-  system "rm -f test.html"
+  FileUtils.rm_f "test.html"
     IsoDoc::Iso::HtmlConvert.new({alt: true}).convert("test", <<~"INPUT", false)
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <preface><foreword>
@@ -36,7 +37,7 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "processes isodoc as ISO: Chinese HTML output" do
-  system "rm -f test.html"
+  FileUtils.rm_f "test.html"
     IsoDoc::Iso::HtmlConvert.new({script: "Hans"}).convert("test", <<~"INPUT", false)
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <preface><foreword>
@@ -53,7 +54,7 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "processes isodoc as ISO: user nominated fonts" do
-  system "rm -f test.html"
+  FileUtils.rm_f "test.html"
     IsoDoc::Iso::HtmlConvert.new({bodyfont: "Zapf Chancery", headerfont: "Comic Sans", monospacefont: "Andale Mono"}).convert("test", <<~"INPUT", false)
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <preface><foreword>
@@ -70,7 +71,7 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "processes isodoc as ISO: Word output" do
-  system "rm -f test.doc"
+  FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", false)
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <preface><foreword>
