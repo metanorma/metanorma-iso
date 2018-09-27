@@ -3,11 +3,19 @@ sections:
 - name: Introduction
   items:
     - quickstart
-- name: Using Metanorma ISO
+- name: Using Metanorma-ISO
   items:
     - guidance
     - htmloutput
     - customisation
+- name: Adopting Metanorma
+  items:
+    - adopting-spec
+    - adopting-toolchain
+    - styling-output-html
+    - styling-output-msword
+    - localizing-output
+    - replacing-asciidoc
 ---
 
 = Navigation
