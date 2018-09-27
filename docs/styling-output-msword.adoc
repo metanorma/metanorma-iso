@@ -1,4 +1,4 @@
-== How can I style the resulting Word output?
+= How can I style the resulting Microsoft Word output?
 
 [TIP]
 ====

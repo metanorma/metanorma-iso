@@ -1,4 +1,4 @@
-== I can translate my specifications into IsoDoc XML myself (i.e. I don't like AsciiDoc, or I already have my own toolchain). Can I only use IsoDoc XML to produce pretty output?
+= I can translate my specifications into IsoDoc XML myself (i.e. I don't like AsciiDoc, or I already have my own toolchain). Can I only use IsoDoc XML to produce pretty output?
 
 [TIP]
 ====

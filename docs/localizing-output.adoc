@@ -1,4 +1,4 @@
-== How can I localize the resulting output?
+= How can I localize the resulting output?
 
 [TIP]
 ====

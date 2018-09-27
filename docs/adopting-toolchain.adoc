@@ -1,4 +1,4 @@
-== How can I adapt the StanDoc toolchain for my own publications?
+= How can I adapt the StanDoc toolchain for my own publications?
 
 [TIP]
 ====
