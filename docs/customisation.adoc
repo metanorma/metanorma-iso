@@ -1,12 +1,7 @@
-= Gem Customisation Guide
+= Customising Metanorma
 
-In this guide, we give advice on how to adopt the Metanorma approach to document generation for your documents.
-We provide enough guidance for you to do full customisation,
-but we prefix each section with a Tip for quick-and-dirty implementation.
+Refer to Metanorma adoption FAQ for advice on how to adopt the Metanorma approach
+to document generation for your documents.
 
-* link:adopting-spec.adoc
-* link:adopting-toolchain.adoc
-* link:styling-output-html.adoc
-* link:styling-output-msword.adoc
-* link:localizing-output.adoc
-* link:replacing-asciidoc.adoc
+You will usually find there a detailed customisation guidance prefixed with a short summary
+for a quick-and-dirty implementation.

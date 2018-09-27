@@ -8,7 +8,7 @@ sections:
     - guidance
     - htmloutput
     - customisation
-- name: Adopting Metanorma
+- name: "Adopting Metanorma: FAQ"
   items:
     - adopting-spec
     - adopting-toolchain
