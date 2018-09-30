@@ -18,7 +18,7 @@ Install Metanorma-ISO gem and its dependencies:
 
 [source,console]
 --
-gem install metanorma-cli
+gem install metanorma-iso
 --
 
 If you want the latest version (note: may not be stable due to active development),
@@ -26,8 +26,8 @@ you can install it from Github:
 
 [source,console]
 --
-git clone https://github.com/riboseinc/metanorma-cli.git
-cd metanorma-cli
+git clone https://github.com/riboseinc/metanorma-iso.git
+cd metanorma-iso
 gem build *.gemspec
 gem install *.gem
 bundle update
@@ -56,11 +56,11 @@ cd new_standard
 vi new_standard.adoc
 --
 
-To compile the document, execute the `asciidoctor` script, flagging it to use a specific standards class with the `-t` flag (refer to <<stupported-standards>> for the abbreviations used); e.g.
+To compile the document, execute the `asciidoctor` script, flagging it to use the ISO variant:
 
 [source,console]
 --
-metanorma -t iso new_standard.adoc
+asciidoctor --trace -b iso -r 'metanorma-iso' new_standard.adoc
 --
 
 This will generate two files from the `new_standard.adoc` document (provided it is well-formed):

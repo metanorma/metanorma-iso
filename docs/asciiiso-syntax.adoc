@@ -4,6 +4,8 @@ AsciiISO is syntax based on AsciiDoc, with some extensions specific to authoring
 
 == ISO specific syntax
 
+TIP: Full details of Asciidoctor-ISO–specific markup and conventions is given in the https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] and the https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring].
+
 https://asciidoctor.org/docs/user-manual/#section-styles[Section styles] are used to indicate specific types of section: `[bibliography]` for Normative References and Bibliography, `[appendix]` for Annexes, and `[%appendix]` for Appendixes (annexes of annexes). These styles must be provided for the sections to be processed correctly: bibliographic references will not be recognised as such, for example, without the `[bibliography]` style applied:
 
 [source,asciidoctor]
