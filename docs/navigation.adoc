@@ -8,6 +8,7 @@ sections:
     - guidance
     - htmloutput
     - customisation
+    - asciiiso-syntax
 - name: "Adopting Metanorma: FAQ"
   items:
     - adopting-spec
