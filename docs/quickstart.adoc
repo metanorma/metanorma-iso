@@ -31,8 +31,6 @@ gem install *.gem
 
 [TIP]
 ====
-= Ruby? Gems?
-
 The Asciidoctor-ISO tool is a https://en.wikipedia.org/wiki/RubyGems[Ruby gem], and works on the command line. The https://en.wikipedia.org/wiki/Ruby_programming_language[Ruby programming language] can be installed on Windows (e.g. https://rubyinstaller.org), but is typically run on a Unix command line—including Linux and MacOS. The following instructions are for the Unix console.
 
 Asciidoctor-ISO in turn builds on the https://asciidoctor.org[Asciidoctor gem], which interprets the Asciidoctor markup language in Ruby. Installing the Asciidoctor-ISO gem will install the Asciidoctor gem, if it is not already installed.
