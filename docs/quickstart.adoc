@@ -111,7 +111,7 @@ as well as <em>the syntax extensions and conventions</em> that are specific to M
 == Migrating existing documents from Microsoft Word:
 
 . Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor]
-  gem to help you convert a Word document into AsciiISO.
+gem to help you convert a Word document into AsciiISO.
 +
 You will likely have to manually clean up some syntax
 (especially if your Word document contains an index, stray anchors, and equations):
