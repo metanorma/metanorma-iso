@@ -112,9 +112,9 @@ as well as <em>the syntax extensions and conventions</em> that are specific to M
 
 . Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor]
   gem to help you convert a Word document into AsciiISO.
-
-  You will likely have to manually clean up some syntax
-  (especially if your Word document contains an index, stray anchors, and equations):
-  don’t rely on the automatic conversion to be 100% correct.
++
+You will likely have to manually clean up some syntax
+(especially if your Word document contains an index, stray anchors, and equations):
+don’t rely on the automatic conversion to be 100% correct.
 
 . Move the content back to the cloned isodoc-rice.
