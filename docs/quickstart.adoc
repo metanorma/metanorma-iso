@@ -98,8 +98,8 @@ The `iso-rice-en.adoc` document consists of a document header, and it references
 
 == Learning the AsciiDoc-based syntax
 
-To author AsciiDoc documents, you need to be familiar with the <em>core AsciiDoc syntax</em>,
-as well as <em>the syntax extensions and conventions</em> that are specific to Metanorma-ISO.
+To author AsciiDoc documents, you need to be familiar with the _core AsciiDoc syntax_,
+as well as _the syntax extensions and conventions_ that are specific to Metanorma-ISO.
 
 - Check out link:asciiiso-syntax[our AsciiISO syntax reference],
   and link:guidance.adoc[Guidance for Authoring in Asciidoctor-ISO].
