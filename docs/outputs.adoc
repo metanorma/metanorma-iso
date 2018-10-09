@@ -1,0 +1,44 @@
+= Outputs
+
+The metanorma toolset currently outputs documents in four formats.
+
+== Metanorma XML
+
+The Metanorma XML output is the intermediate format which marks up the semantic content of the standards document, and is 
+used to drive the other formats. The Metanorma XML file is also the file which is used for validation of the standards 
+document: line numbers in the validation output refer to this file.
+
+== HTML
+
+The HTML output is in HTML 5. It has optional Data-URI encoding of local images; if images in the output are are not Data-URI encoded, 
+they are moved to a folder called `{filename}_images`, and renamed with GUID names, to prevent collisions. Audio and video files are
+not supported. All HTML output has a sidebar with a Javascript-generated Table of Contents, which is two section levels deep.
+
+== PDF
+
+PDF output, for those standards gems that support it, is generated from the HTML output via Google Puppeteer (which runs in Node.js). 
+The PDF output generation takes advantage of the print mode in the HTML CSS stylesheet, so much of the browser-like styling of the HTML
+is rendered as a more print-like document. Because it is generated from HTML, the PDF output does not support page numbers in its
+Table of Contents. Nor does it support advanced paragraph formatting, such as Keep With Next or Widow/Orphan control.
+
+== Word
+
+The Word output is in DOC format rather than DOCX (i.e. the pre-2007 version of Word), and it is generated using the Microsoft Office
+flavour of HTML
+
+
+is called a “Multipart HTML Word Document”, it’s a special kind of Word Doc that is supported.
+
+
+
+If one needs Word output, one needs a real install of Microsoft Word. I think is fair enough -- if you don't have Word, how do you verify that the output is proper?
+The output we provide here is "real" Word, not OpenOffice XML ("fake Word") understood by Pages or LibreOffice. We've discussed why we are using Doc (= MHT) rather than DOCX here: https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F
+Support for Pages/LibreOffice ought to be a separate enhancement.
+Our Word output format only works with MS Word.
+
+To open in LibreOffice, you will need to:
+
+Open with MS Word
+Save it once by changing the Extension to “.doc” (when it asks you to overwrite, say Yes)
+“Save As” as a “.docx” file if you wish to.
+Then it becomes a pure Word DOCX file that can be opened with any other program.
