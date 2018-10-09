@@ -664,6 +664,11 @@ p.example, li.example, div.example, td.example
 	mso-pagination:none;
 	font-size:10.0pt;
 	font-family:$bodyfont;}
+
+td.example p.MsoListParagraph {
+  font-size: 10.0pt;
+}
+
 span.note_label, span.example_label, td.example_label, td.note_label
 {
 font-size: 10.0pt;
