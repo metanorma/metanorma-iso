@@ -23,22 +23,20 @@ Table of Contents. Nor does it support advanced paragraph formatting, such as Ke
 
 == Word
 
-The Word output is in DOC format rather than DOCX (i.e. the pre-2007 version of Word), and it is generated using the Microsoft Office
-flavour of HTML
+The Word output is output as a DOC format rather than DOCX (i.e. the pre-2007 version of Word), and it is generated using the 
+Microsoft Office flavour of HTML 4, as a Multipart HTML Word Document (MHT). (This is a MIME-encoded counterpart to the HTML obtained
+when you save a Word document as HTML.)
 
+Using DOC HTML makes it much easier to generate documents with
+the advanced formatting requirements of Metanorma (including complex tables, formulas, footnotes, headers and footers, 
+nested list numbering and crossreferences) than generating either native DOCX (in OOXML), or the DOCX flavour of MHT. For more
+on the choice to use DOC, see https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F
 
-is called a “Multipart HTML Word Document”, it’s a special kind of Word Doc that is supported.
+The constraint on using DOC, however, imposes some constraints. 
 
-
-
-If one needs Word output, one needs a real install of Microsoft Word. I think is fair enough -- if you don't have Word, how do you verify that the output is proper?
-The output we provide here is "real" Word, not OpenOffice XML ("fake Word") understood by Pages or LibreOffice. We've discussed why we are using Doc (= MHT) rather than DOCX here: https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F
-Support for Pages/LibreOffice ought to be a separate enhancement.
-Our Word output format only works with MS Word.
-
-To open in LibreOffice, you will need to:
-
-Open with MS Word
-Save it once by changing the Extension to “.doc” (when it asks you to overwrite, say Yes)
-“Save As” as a “.docx” file if you wish to.
-Then it becomes a pure Word DOCX file that can be opened with any other program.
+* SVG images are not supported. (Word internally converts them into PNG files to render them in Word HTML.)
+* DOC files are a legacy format of Word.
+* DOC files cannot be processed by Pages or LibreOffice: they can only be processed by Microsoft Word. To open the Word output in LibreOffice in particular, you will need to convert the DOC file as a DOCX file, taking the following steps.
+** Open with MS Word
+** Save it once by changing the Extension to `.doc`. (When it asks you to overwrite, say Yes.)
+* "Save As" as a `.docx` file.
