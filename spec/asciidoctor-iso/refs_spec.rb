@@ -80,8 +80,8 @@ RSpec.describe Asciidoctor::ISO do
              </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
          <bibitem type="international-standard" id="iso123">
-         <title format="text/plain" language="en" script="Latn">Rubber latex -- Sampling</title>
-         <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- ?chantillonnage</title>
+         <title format="text/plain" language="en" script="Latn">Rubber latex — Sampling</title>
+         <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc — ?chantillonnage</title>
          <uri type="src">https://www.iso.org/standard/23281.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
@@ -174,7 +174,7 @@ RSpec.describe Asciidoctor::ISO do
         <title>Normative References</title>
         <bibitem type="international-standard" id="iso123">
          <title format="text/plain" language="en" script="Latn">Permuted index of the vocabulary of information technology</title>
-         <title format="text/plain" language="fr" script="Latn">Index permuté du vocabulaire des technologies de l'information</title>
+         <title format="text/plain" language="fr" script="Latn">Index permuté du vocabulaire des technologies de l’information</title>
          <uri type="src">https://www.iso.org/standard/21071.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:21071:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/02/10/21071.detail.rss</uri>
@@ -228,8 +228,8 @@ RSpec.describe Asciidoctor::ISO do
         </ics>
        </bibitem>
          <bibitem type="international-standard" id="iso124">
-         <title format="text/plain" language="en" script="Latn">Latex, rubber -- Determination of total solids content</title>
-         <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc -- Détermination des matières solides totales</title>
+         <title format="text/plain" language="en" script="Latn">Latex, rubber — Determination of total solids content</title>
+         <title format="text/plain" language="fr" script="Latn">Latex de caoutchouc — Détermination des matières solides totales</title>
          <uri type="src">https://www.iso.org/standard/61884.html</uri>
          <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
          <uri type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
