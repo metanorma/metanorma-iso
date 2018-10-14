@@ -6,6 +6,7 @@ sections:
 - name: Using Metanorma-ISO
   items:
     - guidance
+    - outputs
     - htmloutput
     - customisation
     - asciiiso-syntax
