@@ -478,6 +478,8 @@ table.MsoISOTable
 	mso-yfti-tbllook:480;
 	mso-border-insideh:.75pt solid windowtext;
 	mso-border-insidev:.75pt solid windowtext;
+        mso-table-anchor-vertical:paragraph;
+        mso-table-bspace:12.0pt;
 	font-size:10.0pt;
 	font-family:$bodyfont;}
 table.MsoISOTable tr
@@ -504,6 +506,8 @@ table.MsoTableGrid
 	mso-para-margin:0cm;
 	mso-para-margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
+        mso-table-anchor-vertical:paragraph;
+        mso-table-bspace:12.0pt;
 	font-size:10.0pt;
 	font-family:$bodyfont;}
 td { page-break-inside:avoid; }
