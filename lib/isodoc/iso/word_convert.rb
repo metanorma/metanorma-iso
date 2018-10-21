@@ -53,6 +53,8 @@ module IsoDoc
       end
 
       def colophon(body, docxml)
+        stage =  @meta.get[:stage_int]
+        return if !stage.nil? && stage < 60
         body.br **{ clear: "all", style: "page-break-before:left;mso-break-type:section-break" }
         body.div **{ class: "colophon" } do |div|
         end

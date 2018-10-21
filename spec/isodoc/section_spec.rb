@@ -519,4 +519,65 @@ OUTPUT
 OUTPUT
     end
 
+   it "adds colophon to published standard (Word)" do
+    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body /m, "<body ")).to be_equivalent_to <<~"OUTPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+        <status>
+          <stage>60</stage>
+        </status>
+      </bibdata>
+      <sections>
+      </sections>
+      </iso-standard>
+      INPUT
+          <body lang="EN-US" link="blue" vlink="#954F72">
+            <div class="WordSection1">
+              <p>&#160;</p>
+            </div>
+            <br clear="all" class="section"/>
+            <div class="WordSection2">
+              <p>&#160;</p>
+            </div>
+            <br clear="all" class="section"/>
+            <div class="WordSection3">
+              <p class="zzSTDTitle1"/>
+            </div>
+            <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+            <div class="colophon"/>
+          </body>
+        </html>
+      OUTPUT
+   end
+
+      it "does not add colophon to draft standard (Word)" do
+    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body /m, "<body ")).to be_equivalent_to <<~"OUTPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+        <status>
+          <stage>30</stage>
+        </status>
+      </bibdata>
+      <sections>
+      </sections>
+      </iso-standard>
+      INPUT
+          <body lang="EN-US" link="blue" vlink="#954F72">
+            <div class="WordSection1">
+              <p>&#160;</p>
+            </div>
+            <br clear="all" class="section"/>
+            <div class="WordSection2">
+              <p>&#160;</p>
+            </div>
+            <br clear="all" class="section"/>
+            <div class="WordSection3">
+              <p class="zzSTDTitle1"/>
+            </div>
+          </body>
+        </html>
+      OUTPUT
+   end
+
+
 end

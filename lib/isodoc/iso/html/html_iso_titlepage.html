@@ -1,7 +1,19 @@
     <div id='toggle'> <span>•</span> </div>
-<p class="coverpage_docnumber">{{ agency }} {{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</p>
+    {% if tc_docnumber %}
+<p class="coverpage_docnumber">{{ tc_docnumber }}</p>
+    {% else %}
+<p class="coverpage_docnumber">{{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</p>
+    {% endif %}
 
-<p class="coverpage_techcommittee">{{ agency }}&nbsp;{{ editorialgroup | join: "/" }}</p>
+{% if revdate %}
+<p class="coverpage_docnumber">Date: {{ revdate }}</p>
+{% endif %}
+
+{% if tc_docnumber %}
+<p class="coverpage_docnumber">{{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</p>
+{% endif %}
+
+<p class="coverpage_techcommittee">{{ agency }}/{{ editorialgroup | join: "/" }}</p>
 
 <p class="coverpage_techcommittee"><a
 name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
