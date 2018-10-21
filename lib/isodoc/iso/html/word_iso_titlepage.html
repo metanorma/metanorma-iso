@@ -1,9 +1,23 @@
+{% if tc_docnumber %}
+<p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
+normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ tc_docnumber }}</span></b><b
+style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'><o:p></o:p></span></b></p>
+{% else %}
 <p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
 normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</span></b><b
 style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'><o:p></o:p></span></b></p>
+{% endif %}
+
+{% if revdate %}
+<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>Date: {{ revdate }}</span></p>
+{% endif %}
+
+{% if tc_docnumber %}
+<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>{{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</span></p>
+{% endif %}
 
 <p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB"
-style='mso-no-proof:yes'>{{ agency }}&nbsp;{{ editorialgroup | join: "/" }}</span></p>
+style='mso-no-proof:yes'>{{ agency }}/{{ editorialgroup | join: "/" }}</span></p>
 
 <p class="MsoNormal" align="right" style='margin-bottom:100.0pt;text-align:right'><span lang="EN-GB">Secretariat: <span style='mso-no-proof:yes'>{{ secretariat }}</span></span></p>
 

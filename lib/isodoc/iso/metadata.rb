@@ -35,6 +35,8 @@ module IsoDoc
                               isoxml.at(ns("//version/draft")))
           set(:stageabbr, abbr)
         end
+        revdate = isoxml.at(ns("//version/revision-date"))
+        set(:revdate, revdate&.text)
       end
 
       def docid(isoxml, _out)
@@ -43,9 +45,11 @@ module IsoDoc
         if docstatus
           abbr = get[:stageabbr]
           docstatus = get[:stage]
-          (docstatus.to_i < 60) && dn = dn.sub(/ /, " #{abbr} ")
+          (docstatus.to_i < 60) && dn = dn.sub(/ /, "/#{abbr} ")
         end
         set(:docnumber, dn)
+        tcdn = isoxml.at(ns("//bibdata/docidentifier/tc-document-number"))
+        set(:tc_docnumber, tcdn&.text)
       end
 
       # we don't leave this to i18n.rb, because we have both English and
