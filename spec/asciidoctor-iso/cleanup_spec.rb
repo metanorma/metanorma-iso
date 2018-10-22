@@ -70,6 +70,7 @@ RSpec.describe Asciidoctor::ISO do
       :nodoc:
       :novalid:
       :stem:
+      :no-isobib:
 
       == Terms and Definitions
 

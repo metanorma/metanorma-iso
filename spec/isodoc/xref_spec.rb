@@ -434,9 +434,9 @@ RSpec.describe IsoDoc do
                <p class="zzSTDTitle1"/>
                <div id="scope">
                  <h1>1.&#160; Scope</h1>
-                 <table id="N" class="example">
+                 <table id="N" class="example" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
                    <tr>
-                     <td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE</td>
+                     <td valign="top" class="example_label" style="width:82.8pt;padding:0pt;margin-left:0pt">EXAMPLE</td>
                      <td valign="top" class="example">
          <p>Hello</p>
        </td>
@@ -460,10 +460,10 @@ RSpec.describe IsoDoc do
                <div id="widgets">
                  <h1>3.&#160; Widgets</h1>
                  <div id="widgets1"><h2>3.1. </h2>
-               <table id="note1" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE  1</td><td valign="top" class="example">
+               <table id="note1" class="example" cellspacing="0" cellpadding="0" style="border-collapse:collapse"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0pt;margin-left:0pt">EXAMPLE  1</td><td valign="top" class="example">
          <p>Hello</p>
        </td></tr></table>
-               <table id="note2" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE  2</td><td valign="top" class="example">
+               <table id="note2" class="example" cellspacing="0" cellpadding="0" style="border-collapse:collapse"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0pt;margin-left:0pt">EXAMPLE  2</td><td valign="top" class="example">
          <p>Hello</p>
        </td></tr></table>
        <p>    <a href="#note1">Example  1</a> <a href="#note2">Example  2</a> </p>
@@ -472,15 +472,15 @@ RSpec.describe IsoDoc do
                <br/>
                <div id="annex1" class="Section3">
                  <div id="annex1a"><h2>A.1. </h2>
-               <table id="AN" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE</td><td valign="top" class="example">
+               <table id="AN" class="example" cellspacing="0" cellpadding="0" style="border-collapse:collapse"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0pt;margin-left:0pt">EXAMPLE</td><td valign="top" class="example">
          <p>Hello</p>
        </td></tr></table>
            </div>
                  <div id="annex1b"><h2>A.2. </h2>
-               <table id="Anote1" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE  1</td><td valign="top" class="example">
+               <table id="Anote1" class="example" cellspacing="0" cellpadding="0" style="border-collapse:collapse"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0pt;margin-left:0pt">EXAMPLE  1</td><td valign="top" class="example">
          <p>Hello</p>
        </td></tr></table>
-               <table id="Anote2" class="example"><tr><td valign="top" class="example_label" style="width:82.8pt;">EXAMPLE  2</td><td valign="top" class="example">
+               <table id="Anote2" class="example" cellspacing="0" cellpadding="0" style="border-collapse:collapse"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0pt;margin-left:0pt">EXAMPLE  2</td><td valign="top" class="example">
          <p>Hello</p>
        </td></tr></table>
            </div>
