@@ -79,6 +79,7 @@ RSpec.describe Asciidoctor::ISO do
       :nodoc:
       :novalid:
       :draft: 1.2
+      :no-isobib:
 
       [[foreword]]
       .Foreword
