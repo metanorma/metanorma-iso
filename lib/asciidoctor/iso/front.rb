@@ -83,19 +83,6 @@ module Asciidoctor
         end
       end
 
-      def metadata(node, xml)
-        title node, xml
-        metadata_id(node, xml)
-        metadata_author(node, xml)
-        metadata_publisher(node, xml)
-        xml.language (node.attr("language") || "en")
-        xml.script (node.attr("script") || "Latn")
-        metadata_status(node, xml)
-        metadata_copyright(node, xml)
-        metadata_committee(node, xml)
-        metadata_ics(node, xml)
-      end
-
       def title_intro(node, t, lang, at)
         return unless node.attr("title-intro-#{lang}")
         t.title_intro(**attr_code(at)) do |t1|
