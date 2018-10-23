@@ -487,6 +487,13 @@ not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`,
 `:publisher:`:: The standards agency publishing the standard; can be multiple
 (comma-delimited). Defaults to `ISO`.
 
+`:uri:`:: The URI to which this standard is published.
+`:xml-uri:`:: The URI to which the (Metanorma) XML representation of this standard is published.
+`:html-uri:`:: The URI to which the HTML representation of this standard is published.
+`:pdf-uri:`:: The URI to which the PDF representation of this standard is published.
+`:doc-uri:`:: The URI to which the DOC representation of this standard is published.
+`:relaton-uri:`:: The URI to which the Relaton XML representation of this standard is published.
+
 `:body-font:`:: Font for body text; will be inserted into CSS. Defaults to
 Cambria for Latin script, SimSun for Simplified Chinese.
 
