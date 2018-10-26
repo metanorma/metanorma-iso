@@ -414,6 +414,20 @@
       <ref name="BibliographicItem"/>
     </element>
   </define>
+  <define name="relaton_collection">
+    <element name="relaton-collection">
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <ref name="btitle"/>
+      <zeroOrMore>
+        <ref name="contributor"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="docrelation"/>
+      </zeroOrMore>
+    </element>
+  </define>
   <define name="BibItemType" combine="choice">
     <choice>
       <value>article</value>
@@ -531,7 +545,10 @@
   </define>
   <define name="fetched">
     <element name="fetched">
-      <data type="dateTime"/>
+      <choice>
+        <data type="dateTime"/>
+        <data type="date"/>
+      </choice>
     </element>
   </define>
   <define name="validity">
@@ -549,17 +566,26 @@
   </define>
   <define name="validityBegins">
     <element name="validityBegins">
-      <data type="dateTime"/>
+      <choice>
+        <data type="dateTime"/>
+        <data type="date"/>
+      </choice>
     </element>
   </define>
   <define name="validityEnds">
     <element name="validityEnds">
-      <data type="dateTime"/>
+      <choice>
+        <data type="dateTime"/>
+        <data type="date"/>
+      </choice>
     </element>
   </define>
   <define name="validityRevision">
     <element name="revision">
-      <data type="dateTime"/>
+      <choice>
+        <data type="dateTime"/>
+        <data type="date"/>
+      </choice>
     </element>
   </define>
   <define name="TypedTitleString">
@@ -744,6 +770,7 @@
     <element name="from">
       <choice>
         <data type="dateTime"/>
+        <data type="date"/>
         <data type="gYear"/>
       </choice>
     </element>
@@ -752,6 +779,7 @@
     <element name="to">
       <choice>
         <data type="dateTime"/>
+        <data type="date"/>
         <data type="gYear"/>
       </choice>
     </element>

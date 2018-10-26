@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "generates IsoDoc XML from a blank document" do
-    expect(processor.input_to_isodoc(<<~"INPUT")).to be_equivalent_to <<~"OUTPUT"
+    expect(processor.input_to_isodoc(<<~"INPUT", nil)).to be_equivalent_to <<~"OUTPUT"
     #{ASCIIDOC_BLANK_HDR}
     INPUT
     #{BLANK_HDR}
