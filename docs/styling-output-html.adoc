@@ -26,6 +26,7 @@ That means you can change the styling of output documents readily, so long as yo
 * The classes in the SCSS stylesheet correspond to static HTML content in the HTML templates, and dynamic HTML content in the `IsoDoc::...::HtmlConvert` class, and its superclasses `IsoDoc::HtmlConvert` and `IsoDoc::Common` in the isodoc gem.
 
 An HTML document is populated as follows:
+
 * HTML Head wrapper (in `IsoDoc::HtmlConvert`)
 ** `html_head()` content
 ** `@htmlstylesheet` CSS stylesheet (expected to be in SCSS, generated from SCSS in the `generate_css()` method of `Isodoc::HtmlConvert`).
