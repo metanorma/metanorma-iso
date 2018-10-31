@@ -10,7 +10,11 @@
 * Edit the `htmlstyle.scss` stylesheet to match your organisation's branding. The classes already in place there are used to style existing blocks of text; refer to the sample documents included in the gem (`spec/examples`) for their use.
 ====
 
-Styling of output is intended to be configurable. HTML stylesheets are expressed in https://sass-lang.com/guide[SCSS], with their fonts populated through the `default_fonts()` method in the `IsoDoc::...::HtmlConvert` class. Frontispiece content is templated, populated from metadata parsed in the `IsoDoc::...::Metadata` class, via https://shopify.github.io/liquid/[Liquid templates]. The default stylesheets and HTML templates themselves are nominated in the `default_file_locations()` method in the `IsoDoc::...::HtmlConvert` class. That means you can change the styling of output documents readily, so long as you are aware of the functionality of the stylesheet.
+Styling of output is intended to be configurable.
+HTML stylesheets are expressed in https://sass-lang.com/guide[SCSS], with their fonts populated through the `default_fonts()` method in the `IsoDoc::...::HtmlConvert` class.
+Frontispiece content is templated, populated from the metadata parsed in the `IsoDoc::...::Metadata` class, via https://shopify.github.io/liquid/[Liquid templates].
+The default stylesheets and HTML templates themselves are nominated in the `default_file_locations()` method in the `IsoDoc::...::HtmlConvert` class.
+That means you can change the styling of output documents readily, so long as you are aware of the functionality of the stylesheet.
 
 * Styling information is stored in the `.../lib/isodoc/html` folder of the gem, and applies to both Word and HTML content. For HTML content, the relevant files are `html_..._titlepage.html` (title page HTML template), `html_..._intro.html` (introductory HTML template, typically restricted to Table of Contents), `scripts.html` (Javascript scripts), and `htmlstyle.scss` (the HTML stylesheet).
 * The styling files to be loaded in are set in the `default_file_locations()` method of `IsoDoc::...::HtmlConvert`. The files can be overridden through document variables in the Asciidoc document.
