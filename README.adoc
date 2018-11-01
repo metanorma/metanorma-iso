@@ -531,6 +531,36 @@ which adheres with ISO formatting requirements. Recommend against overriding thi
 
 `:data-uri-image`:: Encode all images in HTML output as inline data-URIs.
 
+`:issued-date:`::
+The date on which the standard was issued (authorised for publication by the issuing authority).
+
+`:published-date:`::
+The date on which the standard was published (distributed by the publisher).
+
+`:implemented-date:`::
+The date on which the standard became active.
+
+`:created-date:`::
+The date on which the first version of the standard was created.
+
+`:updated-date:`::
+The date on which the current version of the standard was updated.
+
+`:obsoleted-date:`::
+The date on which the standard was obsoleted/revoked.
+
+`:confirmed-date:`::
+The date on which the standard was reviewed and approved by the issuing authority.
+
+`:unchanged-date:`::
+The date on which the standard was last renewed without any changes in content.
+
+`:circulated-date:`::
+The date on which the unpublished standard was last circulated officially as a preprint. For standards, this is associated with the latest transition to a formally defined preparation stage, such as Working Draft or Committee Draft.
+
+`:date:`::
+An arbitrary date in the production of the standard. Content of the attribute should be a token, giving the type of date, then space, then the date itself. Multiple dates can be added as `:date_2:`, `date_3`, etc.
+
 The attribute `:draft:`, if present, includes review notes in the XML output;
 these are otherwise suppressed.
 
