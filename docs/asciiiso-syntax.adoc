@@ -18,7 +18,7 @@ The sections that have a fixed position according to ISO/IEC DIR 2 (Introduction
 
 === Terms and Definitions
 
-Terms and Definitions sections follow a strict grammar in their Asciidoctor-ISO markup, as ISO/IEC DIR 2 prescribes their structure so strictly. The following illustrates the complete structure of a term entry; the Rice document splits up these features among several terms.
+Terms and Definitions sections follow a strict grammar in their Metanorma-ISO markup, as ISO/IEC DIR 2 prescribes their structure so strictly. The following illustrates the complete structure of a term entry; the Rice document splits up these features among several terms.
 
 [source,asciidoctor]
 --
@@ -62,7 +62,7 @@ Grade 3 quality as specified in <<ISO3696>>.
 * [[[ISO16634,ISO 16634:--]]] footnote:[Under preparation. (Stage at the time of publication ISO/DIS 16634)], _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_
 --
 
-Non-ISO references under normative references are still cited by document identifier. Under informative references, non-ISO documents are both displayed and cited with reference numbers in brackets. In Asciidoctor-ISO, the cross-reference is a normal anchor identifier; the bracket numbering for informative references is automatic.
+Non-ISO references under normative references are still cited by document identifier. Under informative references, non-ISO documents are both displayed and cited with reference numbers in brackets. In Metanorma-ISO, the cross-reference is a normal anchor identifier; the bracket numbering for informative references is automatic.
 
 [source,asciidoctor]
 --
@@ -99,11 +99,11 @@ The numbering of annexes and appendices is automatic: do not insert "Annex A" or
 
 The Rice document illustrates almost the full range of formatting available via Asciidoctor; Annex E (which is not in the original) illustrates features not demonstrated in the original document.
 
-Syntax includes the following; the links are to the Asciidoctor User Manual. All examples are taken from the Asciidoctor-ISO Rice document.
+Syntax includes the following; the links are to the Asciidoctor User Manual. All examples are taken from the Metanorma-ISO Rice document.
 
 === https://asciidoctor.org/docs/user-manual/#doc-header[Document header]
 
-Attributes of the document, which typically appear in the coverpage (if at all), rather than in the document proper. The permitted attributes for Asciidoctor-ISO, and their expected values, are documented in the https://github.com/riboseinc/metanorma-iso#document-attributes[Asciidoctor-ISO Readme]. Note that the author line expected in Asciidoctor is not used; the title line is likewise ignored, in favour of attributes describing the three-part bilingual title.
+Attributes of the document, which typically appear in the coverpage (if at all), rather than in the document proper. The permitted attributes for Metanorma-ISO, and their expected values, are documented in the https://github.com/riboseinc/metanorma-iso#document-attributes[Metanorma-ISO Readme]. Note that the author line expected in Asciidoctor is not used; the title line is likewise ignored, in favour of attributes describing the three-part bilingual title.
 
 [source,asciidoctor]
 --
@@ -199,7 +199,7 @@ stem:[m_S]:: is the mass, in grams, of the test sample.
 
 Note that the key to a figure must be preceded by the paragraph `*Key*`, and the key to a formula must be preceded by the paragraph `where`.
 
-* https://asciidoctor.org/docs/user-manual/#tables[Tables]. Asciidoctor supports a rich range of table formatting (which the Asciidoctor-ISO gem extends further).
+* https://asciidoctor.org/docs/user-manual/#tables[Tables]. Asciidoctor supports a rich range of table formatting (which the Metanorma-ISO gem extends further).
 
 [source,asciidoctor]
 --

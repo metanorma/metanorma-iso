@@ -17,7 +17,7 @@ The Chinese (Simplified) template also localises punctuation and spacing, mappin
 
 == Validation
 
-All AsciiISO documents that are processed by the Asciidoctor-ISO gem are validated against a formal schema for the document structure, as well as style rules around content. The gem will generate a sequence of warnings; you should pay attention to them. 
+All AsciiISO documents that are processed by the Metanorma-ISO gem are validated against a formal schema for the document structure, as well as style rules around content. The gem will generate a sequence of warnings; you should pay attention to them. 
 
 The content warnings come first, and are prefixed with `ISO Style`. They try to impose rules on content taken from http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2], including restrictions on where requirements may be stated, usage of decimal points, hanging clauses, and subclauses that are the only child of their parent clause. While the error detection is not infallible, they should be reviewed at least once. Where possible, the gem will give the ID or section heading associated with the error. For example:
 
