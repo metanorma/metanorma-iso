@@ -1,11 +1,14 @@
 = Quickstart Guide
 
-This is a guide on how to get started using Metanorma-ISO and AsciiISO markup to create ISO standards documents compliant with http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"], in Microsoft Word and HTML formats.
+TIP: This guide has been authored for ISO standards, but most of it applies to all Metanorma standards. We indicate where guidance differs for different standards classes. See link:https://www.metanorma.com/software/Metanorma_processor/[List of Metanorma processors].
 
-AsciiISO is the purposed-design syntax for creating ISO documents based on the AsciiDoc syntax.
+This is a guide on how to get started using Metanorma to create documents aligned with different standards classes (such as ISO, GB, CSD, etc), in Microsoft Word and HTML formats. This guide is written to apply generically across the standards classes that can be expressed in Metanorma; guidance specific to a particular standards class is given as TIPs.
 
-AsciiISO is currently used as input to the Metanorma-ISO renderer, which produces the corresponding https://github.com/riboseinc/isodoc-models[ISOXML schema] (in `.xml`), which in turn uses the https://github.com/riboseinc/isodoc[isodoc] gem to convert ISOXML into the final output formats, HTML (`.html`) and Word Document (`.doc`).
-
+Metanorma takes text in the _Asciidoctor markup language_ as input (consult the https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] on the basics of this markup language).
+Metanorma makes some adjustments to the text format for its requirements;
+these adjustments (which we refer to as _Metanorma Asciidoctor_, or AsciiISO) are documented in relevant sections of this documentation.
+Metanorma uses Asciidoctor to generate _Metanorma XML_, as an intermediate, semantic representation of standards content.
+Metanorma XML in turn is processed by the https://github.com/riboseinc/isodoc[isodoc] gem to generate output in Microsoft Word (`.doc`) and HTML (`.html`).
 
 
 [[installation]]
@@ -15,7 +18,7 @@ Install Metanorma-ISO gem and its dependencies:
 
 [source,console]
 --
-gem install metanorma-iso
+gem install metanorma-cli
 --
 
 If you want the latest version (note: may not be stable due to active development),
@@ -23,10 +26,11 @@ you can install it from Github:
 
 [source,console]
 --
-git clone https://github.com/riboseinc/metanorma-iso.git
-cd metanorma-iso
+git clone https://github.com/riboseinc/metanorma-cli.git
+cd metanorma-cli
 gem build *.gemspec
 gem install *.gem
+bundle update
 --
 
 [TIP]
@@ -52,14 +56,12 @@ cd new_standard
 vi new_standard.adoc
 --
 
-To compile the document, execute the `asciidoctor` script, flagging it to use the ISO variant:
+To compile the document, execute the `asciidoctor` script, flagging it to use a specific standards class with the `-t` flag (refer to <<stupported-standards>> for the abbreviations used); e.g.
 
 [source,console]
 --
-asciidoctor --trace -b iso -r 'metanorma-iso' new_standard.adoc
+metanorma -t iso new_standard.adoc
 --
-
-NOTE: This command syntax may change in future.
 
 This will generate two files from the `new_standard.adoc` document (provided it is well-formed):
 
@@ -118,3 +120,19 @@ You will likely have to manually clean up some syntax
 don’t rely on the automatic conversion to be 100% correct.
 
 . Move the content back to the cloned isodoc-rice.
+
+
+[[other-supported-standards]]
+== Other supported standards 
+
+As of this writing, Metanorma supports the following standards classes:
+
+* https://github.com/riboseinc/metanorma-iso[ISO and IEC] (`iso`)
+* https://github.com/riboseinc/metanorma-gb[Chinese National standards] (`gb`)
+* https://github.com/riboseinc/metanorma-csd[Calconnect] (`csd`)
+* https://github.com/riboseinc/metanorma-csand[Cloud Security Alliance] (`csand`)
+* https://github.com/riboseinc/metanorma-m3d[Messaging, Malware and Mobile Anti-Abuse Working Group (M^3^AAWG)] (`m3d`)
+* https://github.com/riboseinc/metanorma-rsd[Ribose] (`rsd`)
+* https://github.com/riboseinc/metanorma-acme[Acme (shell for user-customised standards)] (`acme`)
+* https://github.com/riboseinc/metanorma-mpfd[Mandatory Provident Fund Schemes Authority, Hong Kong (MPFA)] (`mpfd`)
+* https://github.com/riboseinc/metanorma-unece[United Nations Economic Commission for Europe] (`unece`)

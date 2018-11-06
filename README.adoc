@@ -8,40 +8,29 @@ WARNING: This gem is still under development.
 
 _Formerly known as_ `asciidoctor-iso`.
 
-== Functionality
+== Functionality and Approach
+
+For the conceptual underpinnings of this gem, and the other gems in the Metanorma suite, see the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
+
+== Outputs
 
 This gem processes Metanorma documents following a template for generating ISO
 International Standards. The following outputs are generated.
 
 * The XML representation of the document, intended as a document model for ISO
 International Standards. 
-
-* The XML representation is processed in turn to generate the following outputs
-as end deliverable ISO standard drafts.
-** Microsoft Word output (`.doc`), following the style conventions of the 
+* Microsoft Word output (`.doc`), following the style conventions of the 
 https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template]. 
-** HTML. For ISO, two HTML files are generated: the `.html` file follows ISO
+* HTML. For ISO, two HTML files are generated: the `.html` file follows ISO
 conventions in rendering, which looks very similar to the Word output, while
 the `-alt.html` file has richer styling.
-** PDF. Not supported for the ISO gem, but available for other specifications,
+* PDF. Not supported for the ISO gem, but available for other specifications,
 generated from the HTML file.
 
 The following input formats are supported:
 
 * http://asciidoctor.org/[Asciidoctor]
 (This AsciiDoc syntax for writing ISO standards is hereby named "AsciiISO".)
-
-This README provides an overview of the functionality of the gem; see also
-https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring]
-ISO standards using the gem. The 
-https://github.com/riboseinc/metanorma-iso/wiki/Quickstart-Guide[Quickstart guide]
-gives a summary overview.
-
-NOTE: http://asciimath.org[AsciiMathML] is used for mathematical formatting.
-The gem uses the https://github.com/asciidoctor/asciimath[Ruby AsciiMath parser],
-which is syntactically stricter than the common MathJax processor;
-if you do not get expected results, try bracketting terms your in AsciiMathML
-expressions.
 
 == Usage
 
@@ -63,24 +52,6 @@ document.
 
 The gem then converts the XML into HTML and DOC.
 
-////
-The gem can also be invoked directly within asciidoctor, though this is deprecated:
-
-[source,console]
-----
-$ asciidoctor -b iso -r 'metanorma-iso' a.adoc  
-----
-
-If you do not invoke the `iso` backend explicitly, the AsciiISO source will be
-treated as generic Asciidoc markup, and will output an HTML preview that 
-ignores the ISO-specific modifications to the markup:
-
-[source,console]
-----
-$ asciidoctor a.adoc  
-----
-////
-
 === Installation
 
 If you are using a Mac, the https://github.com/riboseinc/metanorma-macos-setup
@@ -91,8 +62,11 @@ scripts such as this one. You need only run the following in a Terminal console:
 ----
 $ bash <(curl -s https://raw.githubusercontent.com/riboseinc/metanorma-macos-setup/master/metanorma-setup)
 $ gem install metanorma-iso
+$ gem install metanorma-cli 
 ----
 
+The metanorma-cli gem is the command-line interface for the Metanorma tool suite
+(incorporating the `metanorma` executable seen above).
 
 === Content Warnings
 
@@ -127,67 +101,12 @@ levels of subsections.)
 In addition, the gem checks all terms cited from the IEV Electropedia against
 the online IEV Electropedia entry, and issues a warning if the term is different.
 
-== Approach
-=== Document model
-
-The document model ("IsoDoc") used in document generation
-intends to introduce rigour into the ISO
-standards authoring process; the existing 
-https://www.iso.org/iso-templates.html[Microsoft Word template from ISO]
-do not support such rigour down to the element level. It also introduces
-flexibility by decoupling the document structure from its presentation.
-
-The ISO International Standard format is prescribed in
-http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"],
-to a level amenable to an explicit document model. A formal document
-model would allow checking for consistency in format and content, and expedite
-authoring and quality control of ISO standards. Authoring standards through a 
-more abstract formal model also permit enhanced functionality such as 
-cross-reference link checking and auto-numbering of sections, figures, tables and formulas.
-Outputting a document in different languages also becomes straightforward.
-
-The document model for ISO Standards specifically is derived from a more general
-https://github.com/riboseinc/isodoc-models[StandardDocument model]. Other
-ISO-like standards can also be derived from this more general model;
-CSD (https://github.com/riboseinc/csd, https://github.com/riboseinc/metanorma-csd)
-is one such instance.
-
 The document model for ISO Standards contains all the structures described
-in ISO/IEC DIR 2. It is expressed as a
+in http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"]. 
+It is expressed as a
 link:lib/metanorma/iso/isostandard.rnc[Relax NG Compact schema]; actual
 validation occurs against its link:lib/metanorma/iso/isostandard.rng[full Relax
 NG counterpart]. 
-
-=== Asciidoctor
-
-Asciidoctor has been selected as the authoring tool to generate the document
-model representation of ISO standards. It is a document formatting tool like
-Markdown and DocBook, which combines the relative ease of use of the former
-(using relatively lightweight markup), and the rigour and expressively of the
-latter (it has a well-defined syntax, and was in fact initially developed as a
-DocBook document authoring tool). Asciidoctor has built-in capability to output
-Text and HTML; so it can be used to preview the file as it is being
-authored. However the gem natively outputs HTML and Word output, so there should
-not be much need for this.
-
-In order to generate HTML preview output close to what is intended
-in the ISO standard, the Asciidoc
-document includes a fair amount of formatting instructions (e.g. disabling
-section numbering where appropriate, the titling of Appendixes as Annexes), as
-well as ISO boilerplate text, and predefined section headers (sections are
-recognised by fixed titles such as `Normative References`). Authoring ISO
-standards in this fashion assumes that users will be populating an Asciidoc
-template, and not removing needed formatting instructions.
-
-Asciidoctor has some formatting constraints because of its own document model,
-that users need to be aware. For example, Asciidoc has a strict division between
-inline and block elements, which disallows certain kinds of nesting; so a list
-cannot be embedded within a paragraph, it can only constitute its own paragraph
-(though lists themselves can be nested within each other). Asciidoctor also disallows
-multiple paragraphs in footnotes, 
-http://discuss.asciidoctor.org/footnotes-with-paragraph-breaks-td4130.html[by design].
-(The document model does not impose this constraint, so you could edit the generated
-XML to break up paragraphs within a footnote.)
 
 [[model_additions]]
 == Asciidoctor model additions
@@ -227,198 +146,29 @@ multiple-block warning
 ====
 --
 
+=== Bibliography
 
-== Features not visible in HTML preview
+ISO treats dated and undated references as separate (an undated reference is taken to
+refer to the latest published edition of that reference.) if reference is to be made to
+both an undated and a dated version of an ISO reference, these need to be explicitly listed as
+separate references.
 
-The gem uses built-in Asciidoc formatting as much as possible, so that users
-can retain the ability to preview documents; for _Terms and Definitions_
-clauses, which have a good deal of explicit structure, macros have been
-introduced for semantic markup (admitted terms, deprecated terms, etc). 
+For automated bibliography integration, see the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
 
-The default HTML output of an Asciidoc-formatted ISO document is quite close to the
-intended final output, with the following exceptions, and with the additional
-exceptions listed <<model_additions,above>> as markup introduced for ISO markup. 
-Note that the final
-outputs of the conversion (Microsoft Word, PDF, HTML) do not have these exceptions,
-and comply with the ISO Standard specifications.
-
-* _Terms and Definitions_: each term is marked up as an unnumbered subclause,
-the semantic markup of alternate and other terms is not rendered visually.
-
-* _Formulas_: Asciidoctor has no provision for the automated numbering of
-isolated block formulas ("stem"), and does not display the number assigned a
-block formula in its default HTML processor—although it does provide automated
-numbering of examples. Formula numbering is provided in the final outputs
-of the conversion.
-
-* _Missing elements_: The document model does not yet include Asciidoc elements
-that do not appear to be relevant to ISO Standards; these will be ignored in
-generating ISO XML. Those elements include:
-** sidebars (`aside`) (as distinct from warnings),
-** ASCII art/preformatted text (`literal`) (as distinct from sourcecode listings),
-** page breaks (`thematic break`).
-
-* _Markup_: Some connecting text which is used to convey markup structure is
-left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting
-macros).
-
-* _Tables_: Table footnotes are treated like all other footnotes: they are
-rendered at the bottom of the document, rather than the bottom of the table,
-and they are not numbered separately.
-
-* _Cross-references_: Footnoted cross-references are indicated with the reference
-text `fn` in isolation, or `fn:` as a prefix to the reference text. The default
-HTML processor leaves these as is: if no reference text is given, only `fn`
-will be displayed (though it will still hyperlink to the right reference).
-
-* _References_: The convention for references is that ISO documents are cited
-without brackets by ISO number, and optionally year, whether they are normative
-or in the bibliography (e.g. `ISO 20483:2013`); while all other references are
-cited by bracketed number in the bibliography (e.g. `[1]`). The default HTML
-processor treats all references the same, and will bracket them (e.g. `[ISO
-20483:2013]`). For the same reason, ISO references listed in the bibliography
-will be listed under an ISO reference, rather than a bracketed number.
-
-* _References_: References are rendered cited throughout, since they are
-automated. For that reason, if reference is to be made to both an undated and a
-dated version of an ISO reference, these need to be explicitly listed as
-separate references. (This is not done in the Rice model document, which lists
-ISO 6646, but under _Terms and Definitions_ cites the dated ISO 6646:2011.
-
-* _References_: ISO references that are undated but published have their date
-indicated under the ISO standards format in an explanatory footnote. Because of
-constraints introduced by Asciidoctor, that explanation is instead given in
-square brackets in Asciidoc format.
-
-* _Annexes_: Subheadings cannot preserve subsection numbering, while also
-appearing inline with their text (e.g. Rice document, Annex B.2): they appear
-as headings in separate lines.
-
-* _Annexes_: Cross-references to Annex subclauses are automatically prefixed
-with `Clause` rather than `Annex` or nothing.
-
-* _Metadata_: Document metadata such as document numbers, technical committees
-and title wording are not rendered in the default HTML output.
-
-* _Patent Notice_: Patent notices are treated and rendered as a subsection of
-the introduction, with an explicit subheading.
-
-* _Numbering_: The numbering of figures and tables is sequential in the default
-HTML processor: it does not include the Clause or Annex number. This,
-_Figure 1_, not _Figure A.1_.
-
-* _Notes_: There is no automatic note numbering by the default HTML processor.
-
-* _Review Notes_: The reviewer on the review note is not displayed.
-
-* _Keys_: Keys to formulas and figures are expected to be marked up as
-definition lists consistently, rather than as inline prose.
-
-* _Figures_: Simple figures are marked up as images, figures containing
-subfigures as examples. Numbering by the default HTML processor may be
-inconsistent. Subfigures are automatically numbered as independent figures.
-
-* _Markup_: The default HTML processor does not support CSS extensions such as
-small caps or strike through, though these can be marked up as CSS classes
-through custom macros in Asciidoctor: a custom CSS stylesheet will be needed to
-render them.
-
-== Bibliography integration
-
-Bibliographic entries for ISO standards are expected to use the standard document
-identifier as the item label; e.g.
-
-[source,asciidoctor]
---
-* [[[ref1,ISO 712]]], _Cereals and cereal products -- Determination of moisture content -- Reference method_
---
-
-By default, the `isobib` gem is used to look up the reference details for 
-any item label prefixed with `ISO` on the ISO web site. The full bibliographic details 
-of the item are screenscraped from the ISO site and inserted into the XML file 
-(although only the title of the reference is used in rendering). The
-http://www.electropedia.org[Electropedia] termbank is queried in validation, to confirm
-that the cited entries in Terms and Definitions are the same as what is cited online;
-those queries are routed through the `iev` gem
-
-[[cache]]
-The results of all `isobib` searches done to date, across all documents,
-are cached in the global cache file `~/.relaton-bib.pstore`, 
-so they do not need to be re-fetched each time a document is processed. 
-(The web query takes a few seconds per reference.)
-
-The results of all `isobib` searches done to date for the current document
-(`filename.adoc`) are stored in the same directory as the current document,
-in the file `{filename}.relaton.pstore`. The local cache overrides entries in
-the global cache, and can be manually edited. The local cache is only used
-if the `:local-cache:` or `:local-cache-only:` document attribute is set.
-
-If the document attribute `:no-isobib:` is set, the reference details for
-items are not looked up via `isobib`, and the `isobib` caches are not used.
-If the document attribute `:no-isobib-cache:` is set, the reference details for
-items are still looked up via `isobib`, but the `isobib` caches are not used.
-
-Any entry in the cache that corresponds to an undated ISO reference fetches its details
-from the latest available entry on the ISO web site. If the entry is more than 60
-days old, it is refetched.
-
-The results of all `iev` searches done to date across all documents are cached
-in the global cache fule `~/iev.pstore`, and the results of all `iev` searches 
-done to date for the current document are stored in the same directory as the
-current document, in the file `(filename).iev.pstore`.
 
 == Document Attributes
 
-The gem relies on Asciidoctor document attributes to provide necessary
-metadata about the document. These include:
-
-`:nodoc:`:: Do not generate Word and HTML output, only generate XML output.
-Can be used as a command-line option (like all other document attributes):
-`asciidoctor -a nodoc -b iso -r "metanorma-iso" a.adoc`
-
-`:novalid:`:: Suppress validation.
-
-`:flush-caches:`:: If set, delete and reinitialise the <<cache,cache>> of `isobib` searches
-for ISO references from the ISO web site.
-
-`:no-isobib:`:: If set, do not use the `isobib` or `iev` gem functionality to look up
-ISO and IEV references online, nor the <<cache,cache>> of `isobib` and `iev` searches.
-
-`:no-isobib-cache:`:: If set, use the `isobib` and `iev` gem functionality to look up
-ISO and IEV references online, but do not use the <<cache,cache>> of `isobib` and `iev` searches.
-
-`:local-cache:`:: Use the local isobib and iev search caches to override the global isobib and iev search
-caches.
-
-`:local-cache-only:`:: Use the local isobib and iev search caches to the exclusion of the global isobib and iev search
-caches.
-
-`:i18nyaml:`:: Name of YAML file of internationalisation text, to use instead
-of the built-in English, French or Chinese text used to label parts of the document
-(e.g. "Table", "Foreword", boilerplate text for Normative References, etc.)
-Use if you wish to output an ISO standard in a language other than those three.
-A sample YAML file for English, with "Foreword" replaced with "Frontispiece",
-is available at link:spec/examples/english.yaml[].
-
-`:docnumber:`:: The ISO document number (mandatory)
+The gem uses the document attributes defined for metanorma-standoc (see
+the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README]).
+The following document attributes are specific to ISO:
 
 `:tc-docnumber:`:: The document number assigned by the Technical committee
 
 `:partnumber:`:: The ISO document part number. (This can be "part-subpart" if this is an IEC document.)
 
-`:edition:`:: The document edition
-
-`:revdate:`:: The date the document was last updated
-
-`:draft:`:: The document draft (used in addition to document stage, for multiple iterations: expected format _X.Y_)
-
-`:copyright-year:`:: The year which will be claimed as when the copyright for
-the document was issued
-
-`:library-ics:` :: The ICS (International Categorization for Standards) number for the standard. There may be more than one ICS for a document; if so, they should be comma-delimited. (The ics identifier is added to the document metadata, but is not output to the current document templates.)
-
 `:title-intro-en:`:: The introductory component of the English title of the
-document
+document. This and the other `:title-*` document attributes are used instead
+of the metanorma-standoc `:title:` attribute.
 
 `:title-main-en:`:: The main component of the English title of the document
 (mandatory). (The first line of the AsciiDoc document, which contains the title
@@ -436,14 +186,16 @@ components such as annexes.)
 
 `:title-part-fr:`:: The French title of the document part
 
-`:doctype:`:: The document type (see
+`:doctype:`:: Has its possible values defined by 
 https://www.iso.org/deliverables-all.html[ISO deliverables: The different types of ISO publications]
-) (mandatory). The permitted types are:
+(mandatory). The permitted types are:
 `international-standard, technical-specification, technical-report,
 publicly-available-specification, international-workshop-agreement, guide`.
 
 `:docstage:`:: The stage code for the document status (see
-https://www.iso.org/stage-codes.html[International harmonized stage codes])
+https://www.iso.org/stage-codes.html[International harmonized stage codes]).
+This attribute and `:docsubstage:` replace the `:status:` attribute of
+metanorma-standoc.
 
 `:docsubstage:`:: The substage code for the document status (see
 https://www.iso.org/stage-codes.html[International harmonized stage codes])
@@ -478,122 +230,6 @@ not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`,
 `SG`, `MA` (maintenance agency), `CORG`, `JCG`, `CAG`
 
 `:workgroup:`:: The name of the relevant ISO workgroup
-
-`:language:` :: The language of the document (`en` or `fr`). Defaults to `en`.
-
-`:script:` :: The script of the document (defaults to `Latn`). Must be supplied as
-`Hans` for Simplified Chinese.
-
-`:publisher:`:: The standards agency publishing the standard; can be multiple
-(comma-delimited). Defaults to `ISO`.
-
-`:uri:`:: The URI to which this standard is published.
-`:xml-uri:`:: The URI to which the (Metanorma) XML representation of this standard is published.
-`:html-uri:`:: The URI to which the HTML representation of this standard is published.
-`:pdf-uri:`:: The URI to which the PDF representation of this standard is published.
-`:doc-uri:`:: The URI to which the DOC representation of this standard is published.
-`:relaton-uri:`:: The URI to which the Relaton XML representation of this standard is published.
-
-`:body-font:`:: Font for body text; will be inserted into CSS. Defaults to
-Cambria for Latin script, SimSun for Simplified Chinese.
-
-`:header-font:`:: Font for headers; will be inserted into CSS. Defaults to
-Cambria for Latin script, SimHei for Simplified Chinese.
-
-`:monospace-font`:: Font for monospace; will be inserted into CSS. Defaults to
-Courier New.
-
-`:htmlstylesheet`:: SCSS stylesheet to use for HTML output. Defaults to built in stylesheet,
-which adheres with ISO formatting requirements. Recommend against overriding this.
-
-`:htmlcoverpage`:: HTML template for cover page. Defaults to built in template. Recommend against overriding this.
-
-`:htmlintropage`:: HTML template for introductory section. Defaults to built in template. Recommend against overriding this.
-
-`:scripts`:: Javascript scripts for HTML output. Defaults to built in scripts. Recommend against overriding this.
-`:scripts-pdf`:: Javascript scripts for HTML > PDF output. Defaults to built in scripts. Recommend against overriding this.
-
-`:wordstylesheet`:: Primary SCSS stylesheet to use for Word output. Defaults to built in stylesheet,
-which adheres with ISO formatting requirements. Recommend against overriding this.
-
-`:standardstylesheet`:: Secondary SCSS stylesheet use for Word output. Defaults to built in stylesheet,
-which adheres with ISO formatting requirements. Recommend against overriding this.
-
-`:header`:: Header and footer file for Word output. Defaults to built in template. Recommend against overriding this.
-
-`:wordcoverpage`:: Word template for cover page. Defaults to built in template. Recommend against overriding this.
-
-`:wordintropage`:: Word template for introductory section. Defaults to built in template. Recommend against overriding this.
-
-`:ulstyle`:: Word CSS selector for unordered lists in supplied stylesheets. Defaults to value for built in stylesheet. Recommend against overriding this.
-
-`:olstyle`:: Word CSS selector for ordered lists in supplied stylesheets. Defaults to value for built in stylesheet. Recommend against overriding this.
-
-`:data-uri-image`:: Encode all images in HTML output as inline data-URIs.
-
-`:issued-date:`::
-The date on which the standard was issued (authorised for publication by the issuing authority).
-
-`:published-date:`::
-The date on which the standard was published (distributed by the publisher).
-
-`:implemented-date:`::
-The date on which the standard became active.
-
-`:created-date:`::
-The date on which the first version of the standard was created.
-
-`:updated-date:`::
-The date on which the current version of the standard was updated.
-
-`:obsoleted-date:`::
-The date on which the standard was obsoleted/revoked.
-
-`:confirmed-date:`::
-The date on which the standard was reviewed and approved by the issuing authority.
-
-`:unchanged-date:`::
-The date on which the standard was last renewed without any changes in content.
-
-`:circulated-date:`::
-The date on which the unpublished standard was last circulated officially as a preprint. For standards, this is associated with the latest transition to a formally defined preparation stage, such as Working Draft or Committee Draft.
-
-`:date:`::
-An arbitrary date in the production of the standard. Content of the attribute should be a token, giving the type of date, then space, then the date itself. Multiple dates can be added as `:date_2:`, `date_3`, etc.
-
-The attribute `:draft:`, if present, includes review notes in the XML output;
-these are otherwise suppressed.
-
-The document proper can reference the values of document attributes, which is convenient
-for reusability. For example,
-the Rice Model document references the editorial groups that have contributed to the 
-document as
-
-[source,asciidoc]
---
-This document was prepared by Technical Committee ISO/TC {technical-committee-number}, _{technical-committee}_, Subcommittee SC {subcommittee-number}, _{subcommittee}_.
---
-
-If the corresponding document attributes are not populated in the header, then the references
-themselves will not be populated.
-
-
-== Data Models
-
-The IsoDoc data model (IsoStandardDocument) is instantiated from the
-https://github.com/riboseinc/isodoc-models[StandardDocument model]. For details
-please visit that page.
-
-== Code Structure
-
-The gem invokes the following other gems as a division of labour.
-
-* This gem generates the IsoDoc XML proper
-* https://github.com/riboseinc/isodoc renders IsoDoc XML into HTML
-* https://github.com/riboseinc/html2doc converts HTML into Microsoft Word
-* https://github.com/riboseinc/isodoc-models derives the ISO Standard grammar
-used for validation from the generic IsoDoc grammar
-
 
 == Examples
 
