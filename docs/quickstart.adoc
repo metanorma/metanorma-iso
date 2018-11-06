@@ -1,54 +1,71 @@
-= Quickstart Guide for AsciiISO
+= Quickstart Guide for Metanorma
 
-This is a guide on how to get started using AsciiISO to create ISO standards documents compliant with http://www.iec.ch/members_experts/refdocs/iec/isoiecdir-2%7Bed7.0%7Den.pdf[ISO/IEC DIR 2 "Principles and rules for the structure and drafting of ISO and IEC documents"], in Microsoft Word and HTML formats.
+This is a guide on how to get started using Metanorma to create documents aligned with different standards classes (such as ISO, GB, CSD, etc), in Microsoft Word and HTML formats. This guide is written to apply generically across the standards classes that can be expressed in Metanorma; guidance specific to a particular standards class is given as TIPs. 
 
-AsciiISO is the purposed-design syntax for creating ISO documents based on the AsciiDoc syntax.
-
-AsciiISO is currently used as input to the Asciidoctor-ISO renderer, which produces the corresponding https://github.com/riboseinc/isodoc-models[ISOXML schema] (in `.xml`), which in turn uses the https://github.com/riboseinc/isodoc[isodoc] gem to convert ISOXML into the final output formats, HTML (`.html`) and Word Document (`.doc`).
-
+Metanorma takes text in the Asciidoctor markup language as input, and you should consult the https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] for how to use the markup language. Metanorma makes some adjustments to the text format for its requirements; these adjustments (which we refer to as Metanorma Asciidoctor) are documented here. Metanorma uses Asciidoctor to generate Metanorma XML (`.xml`), as an intermediate, semantic representation of standards content. Metanorma XML in turn is processed by the https://github.com/riboseinc/isodoc[isodoc] gem to generate output in Microsoft Word (`.doc`) and HTML (`.html`).
 
 == Even quicker summary
 
-In order to start a new ISO document, or migrate your document from Word:
+In order to start a new Metanorma document, or migrate your document from Word:
 
-. Install <<installation>>
+. Install <<installation>> (for your specific Metanorma standards class)
 . Clone the https://github.com/riboseinc/isodoc-rice/[AsciiISO Rice]
 
 To migrate:
 
-. Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor] gem to help you convert a Word document into AsciiISO. That said, the conversion will not be 100% clean and you will have to manually fix some syntax (especially if your Word document contains an index, stray anchors, and equations).
+. Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor] gem to help you convert a Word document into Asciidoctor. Be warned that the conversion will not be 100% clean, and you will have to manually fix some syntax (especially if your Word document contains an index, stray anchors, and equations).
 . Move the content back to the cloned isodoc-rice.
+. The isodoc-rice repository is set up for the ISO standards class; if you are not working with ISO, change its makefile to refer to the correct standards class (e.g. from `bundle exec metanorma -t iso -x doc,xml,html $^` to `bundle exec metanorma -t rsd -x doc,xml,html $^`
 
+[[supported-standards]]
+== Supported standards 
+
+As of this writing, Metanorma supports the following standards classes:
+
+* https://github.com/riboseinc/metanorma-iso[ISO and IEC] (`iso`)
+* https://github.com/riboseinc/metanorma-gb[Chinese National standards] (`gb`)
+* https://github.com/riboseinc/metanorma-csd[Calconnect] (`csd`)
+* https://github.com/riboseinc/metanorma-csand[Cloud Security Alliance] (`csand`)
+* https://github.com/riboseinc/metanorma-m3d[Messaging, Malware and Mobile Anti-Abuse Working Group (M^3^AAWG)] (`m3d`)
+* https://github.com/riboseinc/metanorma-rsd[Ribose] (`rsd`)
+* https://github.com/riboseinc/metanorma-acme[Acme (shell for user-customised standards)] (`acme`)
+* https://github.com/riboseinc/metanorma-mpfd[Mandatory Provident Fund Schemes Authority, Hong Kong (MPFA)] (`mpfd`)
+* https://github.com/riboseinc/metanorma-unece[United Nations Economic Commission for Europe] (`unece`)
 
 [[installation]]
 == Installation instructions
 
-The Asciidoctor-ISO tool is a https://en.wikipedia.org/wiki/RubyGems[Ruby gem], and works on the command line. The https://en.wikipedia.org/wiki/Ruby_programming_language[Ruby programming language] can be installed on Windows (e.g. https://rubyinstaller.org), but is typically run on a Unix command line—including Linux and MacOS. The following instructions are for the Unix console.
+The Metanorma tool is a suite of https://en.wikipedia.org/wiki/RubyGems[Ruby gems], and works on the command line. The https://en.wikipedia.org/wiki/Ruby_programming_language[Ruby programming language] can be installed on Windows (e.g. https://rubyinstaller.org), but is typically run on a Unix command line—including Linux and MacOS. The following instructions are for the Unix console.
 
-Asciidoctor-ISO in turn builds on the https://asciidoctor.org[Asciidoctor gem], which interprets the Asciidoctor markup language in Ruby. Installing the Asciidoctor-ISO gem will install the Asciidoctor gem, if it is not already installed.
+The starting poing of the Metanorma tool is the `metanorma-cli` gem (command line interface); it references various other gems that the tool is based on, including the converter from Asciidoctor to Metanorma XML (`metanorma-standoc`), the converters from Metanorma XML to HTML and Word (`isodoc`, `html2doc`), the variants of Metanorma for different standards classes (`metanorma-iso`, `metanorma-csd`, etc.), and tools for processing bibliographies (`relaton`, `isobib` etc.)
 
-Ruby comes with Linux and MacOS. Asciidoctor-ISO uses Ruby 2.4.0, and you may need to update your Ruby instance to use that version. Refer to https://www.ruby-lang.org/en/documentation/installation/
+The Metanorma tools processing Asciidoctor, in turn, build on the https://asciidoctor.org[Asciidoctor gem], which interprets the Asciidoctor markup language in Ruby. Installing the Metanorma gem will install the Asciidoctor gem, if it is not already installed.
 
-You can install the Asciidoctor-ISO gem, and all its dependencies, through the Ruby gem installer:
+Ruby comes with Linux and MacOS. Asciidoctor-ISO uses at minimum Ruby 2.3.0, and you may need to update your Ruby instance to use that version. Refer to https://www.ruby-lang.org/en/documentation/installation/
+
+You can install the metanorma-cli gem, and all its dependencies, through the Ruby gem installer:
 
 [source,console]
 --
-gem install metanorma-iso
+gem install metanorma-cli
 --
 
 If you want the latest version of the gem (which is still heavily under development), you can install it from Github:
 
 [source,console]
 --
-git clone https://github.com/riboseinc/metanorma-iso.git
-cd metanorma-iso
+git clone https://github.com/riboseinc/metanorma-cli.git
+cd metanorma-cli
 gem build *.gemspec
 gem install *.gem
+bundle update
 --
+
+The final `bundle update` step updates the dependent gems, and is necessary because those gems are even more heavily under development.
 
 == How to set up a new project
 
-At its simplest, all you need is a text document in Asciidoctor format, which you compile using the Asciidoctor-ISO gem. To keep document dependencies in order, you should keep your document in a distinct folder:
+At its simplest, all you need is a text document in Asciidoctor format, which you compile using the metanorma-cli gem. To keep document dependencies in order, you should keep your document in a distinct folder:
 
 [source,console]
 --
@@ -57,22 +74,26 @@ cd new_standard
 vi new_standard.adoc
 --
 
-To compile the document, execute the `asciidoctor` script, flagging it to use the ISO variant:
+To compile the document, execute the `asciidoctor` script, flagging it to use a specific standards class with the `-t` flag (refer to <<stupported-standards>> for the abbreviations used); e.g.
 
 [source,console]
 --
-asciidoctor --trace -b iso -r 'metanorma-iso' new_standard.adoc
+metanorma -t iso new_standard.adoc
 --
 
-NOTE: This command syntax will be changed soon.
+This will generate two files from the `new_standard.adoc` document (provided it is well-formed!): `new_standard.html` is a standalone HTML document, and `new_standard.doc` is a Word document (currently in the pre-2007 `.doc` format, but Microsoft Word will open it fine). Both these files are generated via an intermediate XML file, `new_standard.xml`, which represents the structure of the document as it is formally defined by the standards body, and captured in the https://github.com/riboseinc/isodoc-models[ISOXML schema].
 
-This will generate two files from the `new_standard.adoc` document (provided it is well-formed!): `new_standard.html` is a standalone HTML document, and `new_standard.doc` is a Word document (currently in the pre-2007 `.doc` format, but Microsoft Word will open it fine). Both these files are generated via an intermediate XML file, `new_standard.xml`, which represents the structure of the document following the rules of ISO/IEC DIR 2, as captured in the https://github.com/riboseinc/isodoc-models[ISOXML schema].
-
-Even if there are no errors in the Asciidoctor syntax, the document may still raise warnings to the console as it is being validated. The validation comes from ISO/IEC DIR 2, and consists of two parts: warnings about document content (e.g. requiring space before a percentage sign; requiring that the scope not contain text that looks like a recommendation); and warnings about document structure. The latter are generated by running the generated XML against the ISOXML schema, and report the line numbers of the XML document where issues are observed.
+Even if there are no errors in the Asciidoctor syntax, the document may still raise warnings to the console as it is being validated. The validation comes from the formal definition of the standard class (e.g. ISO/IEC DIR 2 in the case of ISO and IEC), and consists of two parts: warnings about document content (e.g., for ISO, requiring space before a percentage sign; requiring that the scope not contain text that looks like a recommendation); and warnings about document structure. The latter are generated by running the generated XML against the ISOXML schema, and report the line numbers of the XML document where issues are observed.
 
 === Template
 
-To author Asciidoctor documents, you need to be familiar with the Asciidoctor syntax, as well as the Asciidoctor-ISO extensions to the syntax and conventions. The https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] documents Asciidoctor itself; the https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for Authoring in Asciidoctor-ISO] and the https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] are the complete documentation for the ISO-specific extensions. But the simplest way to get started is to take a ready-made Asciidoctor-ISO document, and edit it, observing how it approaches various formatting tasks.
+To author Asciidoctor documents for Metanorma, you need to be familiar with the Asciidoctor syntax, as well as the Metanorma Asciidoctor extensions to the syntax and conventions, including extensions specific to the standards class: 
+
+* The https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] documents Asciidoctor itself.
+* https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for Authoring in Asciidoctor-ISO] details Metanorma Asciidoctor usage for ISO. Almost all of this document is applicable to all Metanorma stadnards classes, and any exceptions are given in that document.
+* The README for each Metanorma standards class gem (refer <<supported-standards>>) document any extensions specific to that class.
+
+That said, the simplest way to get started is to take a ready-made Metanorma Asciidoctor document, and edit it, observing how it approaches various formatting tasks.
 
 The https://www.iso.org/publication/PUB100407.html["Rice document"] is the ISO's model document of an international standard. An Asciidoctor-ISO version of the document is available at https://github.com/riboseinc/isodoc-rice/ . We suggest downloading the site, and editing it.
 
