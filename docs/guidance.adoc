@@ -64,7 +64,15 @@ The document header, unlike the document proper, cannot deal with HTML entities.
 
 == Document sections
 
-Sections are marked off in Asciidoc with titles prefixed by double equal signs, `==`. The gem depends on the titles given to identify the different kinds of sections in the document. As a result, you cannot choose to modify the titles of sections; the `Introduction`, `Scope`, `Normative References`, `Terms and Definitions`, `Symbols and Abbreviations`, and `Bibliography` need to be titled as such.
+Sections are marked off in Asciidoc with titles prefixed by double equal signs, `==`. The gem depends on the titles given to identify the different kinds of sections in the document. As a result, you cannot choose to modify the titles of sections; the `Introduction`, `Scope`, `Normative References`, `Terms and Definitions`, `Symbols and Abbreviations`, and `Bibliography` need to be titled as such. As an alternative (if the document deviates from that naming structure, or is in a language other than English), the section can be prefixed with a `heading=` attribute, giving the English canonical form of the section name.
+
+[source,asciidoc]
+--
+== Normative References
+
+[heading=terms and definitions]
+== Terms, definitions and abbreviations
+--
 
 The Foreword of an ISO standard is detected as any text between the document header and the first section header (the document preamble). The Rice document gives the `.Foreword` title to the preamble, but the gem will supply the "Foreword" title regardless of what title is present.
 

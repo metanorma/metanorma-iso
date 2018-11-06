@@ -155,7 +155,7 @@ separate references.
 
 For automated bibliography integration, see the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
 
-
+[[document-attributes]]
 == Document Attributes
 
 The gem uses the document attributes defined for metanorma-standoc (see

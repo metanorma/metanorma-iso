@@ -96,7 +96,9 @@ An Metanorma-ISO version of the document is available
 at https://github.com/riboseinc/isodoc-rice/.
 We suggest downloading the site, and editing it.
 
-The `iso-rice-en.adoc` document consists of a document header, and it references the separate `body/body-en.adoc` document for the document proper (`include::body/body-en.adoc[]`). You can just continue on with the document text after the document header—so long as you remember to leave a blank line between the two.
+The `iso-rice-en.adoc` document consists of a document header,
+and it references the separate `body/body-en.adoc` document for the document proper (`include::body/body-en.adoc[]`).
+You can just continue on with the document text after the document header—so long as you remember to leave a blank line between the two.
 
 == Learning the AsciiDoc-based syntax
 
@@ -120,19 +122,3 @@ You will likely have to manually clean up some syntax
 don’t rely on the automatic conversion to be 100% correct.
 
 . Move the content back to the cloned isodoc-rice.
-
-
-[[other-supported-standards]]
-== Other supported standards 
-
-As of this writing, Metanorma supports the following standards classes:
-
-* https://github.com/riboseinc/metanorma-iso[ISO and IEC] (`iso`)
-* https://github.com/riboseinc/metanorma-gb[Chinese National standards] (`gb`)
-* https://github.com/riboseinc/metanorma-csd[Calconnect] (`csd`)
-* https://github.com/riboseinc/metanorma-csand[Cloud Security Alliance] (`csand`)
-* https://github.com/riboseinc/metanorma-m3d[Messaging, Malware and Mobile Anti-Abuse Working Group (M^3^AAWG)] (`m3d`)
-* https://github.com/riboseinc/metanorma-rsd[Ribose] (`rsd`)
-* https://github.com/riboseinc/metanorma-acme[Acme (shell for user-customised standards)] (`acme`)
-* https://github.com/riboseinc/metanorma-mpfd[Mandatory Provident Fund Schemes Authority, Hong Kong (MPFA)] (`mpfd`)
-* https://github.com/riboseinc/metanorma-unece[United Nations Economic Commission for Europe] (`unece`)
