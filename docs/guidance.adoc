@@ -49,15 +49,15 @@ The tool also validates terms cited from the Internatinal Electrotechnical Vocab
 
 == Document header
 
-The core metadata about the standard comes from the Asciidoctor document header (the list of colon-delimited attributes at the start of the document). The https://github.com/riboseinc/metanorma-iso#document-attributes[README documents what those fields should be]. Use the Rice document as a template, and be careful about sticking to the guidelines on populating them.
+The core metadata about the standard comes from the Asciidoctor document header (the list of colon-delimited attributes at the start of the document). The https://github.com/riboseinc/metanorma-standoc#document-attributes[metanorma-standoc README] and the README of each standard-specific gem documents what those fields should be. Use the Rice document as a template, and be careful about sticking to the guidelines on populating them.
 
-The Rice document contains some additional fields that are not essential to ISO rendering, and help Asciidoctor preview the document with its native renderer, should you so choose. (For example, `:appendix-caption: Annex` ensures that the native Asciidoctor renderer calls appendices Annexes; but the Word and HTML output of the gem will do so regardless of how this value is populated.) You will need to leave the `:stem:` field in if you have any AsciiMath or MathML to include in the document; otherwise they will not be detected.
+You will need to use the `:stem:` document attribute in if you have any AsciiMath or MathML to include in the document; otherwise they will not be detected.
 
-The document header, unlike the document proper, cannot deal with HTML entities. If you need to enter accented characters for the French title, or dashes for compound titles, you will need to enter them directly as Unicode (even if your console text editor doesn't like it): `:title-main-fr: Spécification et méthodes d'essai`, not `:title-main-fr: Sp\&eacute;cification et m\&eacute;thodes d'essai`; `:title-part-en:Information Technology—Security`, not `:title-part-en:Information Technology\&mdash;Security`.
+The document header, unlike the document proper, cannot deal with HTML entities. If you need to enter non-Ascii characters for a title, or dashes for compound titles, you will need to enter them directly as Unicode (even if your console text editor doesn't like it): e.g. `:title-main-fr: Spécification et méthodes d'essai`, not `:title-main-fr: Sp\&eacute;cification et m\&eacute;thodes d'essai`; `:title-part-en:Information Technology—Security`, not `:title-part-en:Information Technology\&mdash;Security`.
 
 == Document sections
 
-Sections are marked off in Asciidoc with titles prefixed by double equal signs, `==`. The gem depends on the titles given to identify the different kinds of sections in the document. As a result, you cannot choose to modify the titles of sections; the `Introduction`, `Scope`, `Normative References`, `Terms and Definitions`, `Symbols and Abbreviations`, and `Bibliography` need to be titled as such. As an alternative (if the document deviates from that naming structure, or is in a language other than English), the section can be prefixed with a `heading=` attribute, giving the English canonical form of the section name.
+Sections are marked off in Asciidoc with titles prefixed by double equal signs, `==`. The gem depends on the titles given to identify the different kinds of sections in the document. As a result, you cannot choose to modify the titles of sections; the `Abstract`, `Introduction`, `Scope`, `Normative References`, `Terms and Definitions`, `Symbols and Abbreviations`, and `Bibliography` need to be titled as such. As an alternative (if the document deviates from that naming structure, or is in a language other than English), the section can be prefixed with a `heading=` attribute, giving the English canonical form of the section name.
 
 [source,asciidoc]
 --
@@ -67,9 +67,7 @@ Sections are marked off in Asciidoc with titles prefixed by double equal signs, 
 == Terms, definitions and abbreviations
 --
 
-The Foreword of an ISO standard is detected as any text between the document header and the first section header (the document preamble). The Rice document gives the `.Foreword` title to the preamble, but the gem will supply the "Foreword" title regardless of what title is present.
-
-In the Rice document, Asciidoctor section numbering is disabled for the Foreword and Introduction, and reenabled for the Scope. Again, the gem will number those sections correctly whatever the markup.
+The Foreword of a standard is detected as any text between the document header and the first section header (the "document preamble" in Asciidoctor). The Rice document gives the `.Foreword` title to the preamble, but the gem will supply the "Foreword" title regardless of what title is present.
 
 
 === Bibliographies
@@ -78,11 +76,11 @@ The Normative References and the Bibliography must be preceded by the style attr
 
 All bibliographic entries must be given as unordered lists. 
 
-Currently the gem only supports formatted citations, which are given as such in the Asciidoc source. In the future, we expect to integrate the documents with http://www.bibtex.org[BibTex] databases, through the https://github.com/riboseinc/asciidoctor-bibliography[asciidoctor-bibliography] gem.
+Currently the gem only supports formatted citations, which are given as such in the Asciidoc source. In the future, we expect to integrate the documents with rendering of Relaton-model bibliographies.
 
-==== ISO References
+==== References to standards
 
-For ISO and related standards, the entry must be preceded by a bibliographic anchor, in triple brackets: this consists of an internal identifier (used in citations), followed by the ISO identifier for the reference as its label. For example:
+For references to standards with a document identifier, the entry must be preceded by a bibliographic anchor, in triple brackets: this consists of an arbitrary internal identifier (used in citations), followed by the canonical document identifier for the reference as its label. All references under Normative References are expected to have such an identifier. For example:
 
 [source,asciidoc]
 --
@@ -91,8 +89,10 @@ For ISO and related standards, the entry must be preceded by a bibliographic anc
 --
 
 [subs="quotes"]
-ISO 6646 is cited from elsewhere in the document through crossreferences to the `ricepotentialmilling` identifier; e.g. `<< ricepotentialmilling>>` (which will be rendered as `ISO 6646`), `<<``ricepotentialmilling, section 5``>>` (which will be rendered as `ISO 6646, Section 5`), `<<``ricepotentialmilling,section 5: the foregoing discussion``>>` (which will be tagged in the XML representation as Section 5 of ISO 6646, but will be displayed as `the foregoing discussion`.)
+ISO 6646 in this example would be cited from elsewhere in the document through crossreferences to the `ricepotentialmilling` identifier; e.g. `<< ricepotentialmilling>>` (which will be rendered as `ISO 6646`), `<<``ricepotentialmilling, section 5``>>` (which will be rendered as `ISO 6646, Section 5`), `<<``ricepotentialmilling,section 5: the foregoing discussion``>>` (which will be tagged in the XML representation as Section 5 of ISO 6646, but will be displayed as `the foregoing discussion`.)
 
+TIP
+----
 If an ISO reference is in preparation, ISO/IEC DIR 2 dictates that details of the reference status be given as a footnote. In Asciidoc, this is done by giving the date as a double dash, and following the bibliographic anchor with a footnote macro:
 
 [source,asciidoc]
@@ -106,9 +106,9 @@ If an ISO reference includes all parts of the standard, that is indicated by app
 --
 * [[[ISO16634,ISO 16634 (all parts)]]] _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_
 --
+----
 
-
-In informative references, ISO references are still given with the same format of bibliographic anchor, and they are cited by ISO document code -- although they are displayed with an incrementing reference number in brackets instead. So
+In informative references, references to standards documents are still given with the same format of bibliographic anchor, and they are cited by their document identifier -- although they are displayed with an incrementing reference number in brackets, for consistency with any bibliographic entries that are not standards documents. (This convention is taken from ISO.) So
 
 [source,asciidoc]
 --
@@ -116,6 +116,8 @@ In informative references, ISO references are still given with the same format o
 == Bibliography 
 
 * [[[ISO3696,ISO 3696]]], _Water for analytical laboratory use -- Specification and test methods_
+...
+* [[[ref11,11]]] Nitrogen-ammonia-protein modified Kjeldahl method -- Titanium oxide and copper sulfate catalyst. _Official Methods and Recommended Practices of the AOCS_ (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL
 --
 
 is displayed as:
@@ -125,36 +127,21 @@ ____
 *Bibliography*
 
 [1] ISO 3696, _Water for analytical laboratory use -- Specification and test methods_
+...
+[11] Nitrogen-ammonia-protein modified Kjeldahl method -- Titanium oxide and copper sulfate catalyst. _Official Methods and Recommended Practices of the AOCS_ (ed. Firestone, D.E.), AOCS Official Method Ba Ai 4-91, 1997, AOCS Press, Champaign, IL
 ____
 
-==== ISO Reference Fetching
+The bracketed reference numbers are expected to be correct and in order: they are not overriden in rendering.
 
-If any bibliographic entry has a label prefixed with `ISO`, e.g. `[[` `[ricepotentialmilling,ISO 6646]` `]]`, the gem accesses the ISO website (via the `isobib` stem), and screenscrapes the details of that item. The screenscraped data overrides any content about the item provided in the document, since the ISO website is treated as the bibliographic source of truth on ISO documents.
+==== Relaton Reference Fetching
 
-==== Non-ISO References
-
-In normative references, non-ISO documents must still be given a document code (or title) in their bibliographic anchor:
-
-[source,asciidoc]
---
-* [[[RFC4291,IETC RFC 4193]]] _Unique Local IPc6 Unicast Addresses_, October 2005. http://www.ietf.org/rfc/rfc4291.txt
-* [[IANAMediaTypes,IANA Media Types Assignment]]], March 2017. http://www.iana.org/assignments/media-types/media-types.xthml
---
-
-In informative references, non-ISO documents are both displayed and cited with reference numbers in brackets. Those numbers are given in the reference anchor instead of the ISO document code. ISO references appear before non-ISO references; the reference number is expected to be correct in context:
-
-[source,asciidoc]
---
-* [[[IEC61010-2,IEC 61010-2:1998]]], _Safety requirements for electric equipment for measurement, control, and laboratory use -- Part 2: Particular requirements for laboratory equipment for the heating of material_
-
-* [[[ref10,10]]] [smallcap]#Standard No I.C.C 167#. _Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method_ (see http://www.icc.or.at)
---
+The https://github.com/riboseinc/relaton[`relaton`] can fetch bibliographic entries for any standards known to have online bibliographic databases (ISO, IEC, IETF, GB). Any bibliographic entry recognised through its document identifier prefix will by default have its bibliographic entry fetched by that gem. The fetched data overrides any content about the item provided in the document, since the online bibliography is treated as the source of truth for that standards document.
 
 ==== Cross-References
 
 Normally in Asciidoctor, any text in a cross-reference that follows a comma constitutes custom text for the cross-reference. So a cross-reference `<<ISO7301,the foregoing reference>>` will be rendered as "the foregoing reference", and hyperlinked to the ISO7301 reference.
 
-In AsciiISO cross-references, bibliographic localities (e.g. page numbers, clause numbers) can be added directly after the comma, as part of the cross-reference text: this overrides the normal Asciidoctor treatment of custom text. Bibliographic localities are expressed as a sequence of lowercase locality type, then an equal sign, then the locality value or range of values. The locality can appear in quotations, if it contains special characters (like dashes or commas).
+In Metanorma Asciidoctor cross-references, bibliographic localities (e.g. page numbers, clause numbers) can be added directly after the comma, as part of the cross-reference text: this overrides the normal Asciidoctor treatment of custom text. Bibliographic localities are expressed as a sequence of lowercase locality type, then an equal sign, then the locality value or range of values. The locality can appear in quotations, if it contains special characters (like dashes or commas).
 
 [source,asciidoctor]
 --
@@ -167,18 +154,20 @@ Sampling shall be carried out in accordance with <<xxx,section="5-3-1,bis">>
 
 Any text after the bibliographic localities is still treated as custom cross-reference text; e.g. `<<ISO7301,clause=5,table=1,the foregoing reference>>`. 
 
-Custom cross-references should not be used in ISO standards, either for an external reference, or for a section of the current document: ISO/IEC DIR 2 requires any cross-references to be transparent in text. For example, a cross-reference to the anchor `[[tabular]]` on clause 5 should be given as just `<<tabular>>`, without any custom text: it will be automatically rendered as `Clause 5` by the gem.
+TIP: Custom cross-references should not be used in ISO standards, either for an external reference, or for a section of the current document: ISO/IEC DIR 2 requires any cross-references to be transparent in text. For example, a cross-reference to the anchor `[[tabular]]` on clause 5 should be given as just `<<tabular>>`, without any custom text: it will be automatically rendered as `Clause 5` by the gem.
 
-ISO clause references in particular will suppress the word "Clause" before a subclause reference, following ISO/IEC DIR 2: `<``<ISO24333,clause=5>``>` will be rendered as _ISO 24333, Clause 5_, but `<``<ISO7301,clause=3.1>``>` will be rendered as _ISO 7301, 3.1_.
+TIP: ISO clause references in particular will suppress the word "Clause" before a subclause reference, following ISO/IEC DIR 2: `<``<ISO24333,clause=5>``>` will be rendered as _ISO 24333, Clause 5_, but `<``<ISO7301,clause=3.1>``>` will be rendered as _ISO 7301, 3.1_.
 
 
 === Terms and Definitions
 
+// TODO: This paragraph will be removed when https://github.com/riboseinc/metanorma-iso/issues/222 is implemented
+
 The title of a top-level Terms and Definitions clause is populated automatically, overriding the title provided by the user: if it contains a Symbols and Abbreviated Terms subclause, it is titled _Terms, definitions, symbols and abbreviated terms_, otherwise it is titled _Terms and definitions_. A Terms and Definitions clause will be recognised if either title is given, regardless of case. Symbols and Abbreviated Terms subclauses are also automatically titled; other subclauses of Terms and Definitions clauses are not.
 
-If the Terms and Definitions are partly or fully sourced from another standard, that document is named as a `[source=REFERENCE]` attribute to the section. (The attribute needs to be applied to the top-level clause, if there are subclauses.) If there are no terms and definitions defined in this standard, no terms should be included in the section body (it should be blank). The boilerplate at the start of the section is adjusted to reflect both possibilities; any paragraphs or lists in the Asciidoctor input (which can replicate the expected boilerplate) is stripped in the intermediate XML format.
+If the Terms and Definitions are partly or fully sourced from another standard, that document is named as a `[source=REFERENCE]` attribute to the section. (The attribute needs to be applied to the top-level clause, if there are subclauses.) If there are no terms and definitions defined in this standards document, no terms should be included in the section body (it should be blank). The boilerplate at the start of the section is adjusted to reflect both possibilities; any paragraphs or lists in the Asciidoctor input (which can replicate the expected boilerplate) is stripped in the intermediate XML format.
 
-Terms and Definitions sections follow a strict grammar, which is reflected in their Asciidoc markup:
+Terms and Definitions sections follow a strict grammar, which is reflected in their Asciidoctor markup:
 
 * The term is given as a subheading at the appropriate level (three equal signs, unless there are subsections in the Terms and Definition section). The term may be crossreferenced from other terms, in which case it should have an anchor.
 * The term is optionally followed by alternative/admitted terms, which must be marked up in an `+alt:[...]+` macro; deprecated terms, which must be marked up in a `+deprecated:[...]+` macro; and a term domain, which must be marked up in a `+domain:[...]+` macro.
@@ -211,7 +200,7 @@ NOTE: The starch of waxy rice consists almost entirely of amylopectin. The kerne
 and Note 1 to entry is not included here
 --
 
-The requirement that the source of a term be given in a citation also applies when the source is a term bank, such as http://www.electropedia.org[IEV]. Formally, IEV references should be cited as `IEC 60050-nnn:20xx`, where `n` is the top-level clause, and `20xx` is the year when that particular specification was published; e.g. `IEC 60050-113:2011, 113-01-07`. For convenience, this gem requires all Electropedia references to be to a single reference, named `IEV` in the normative references. In rendering the Asciidoctor into ISO XML, this reference will be replaced by the various required IEC 60050-nnn:20xx references. (That means that you should not insert your own instances of Electropedia references with id `IEC 60050-nnn`: they will be duplicated by the automatically generated references.)
+The requirement that the source of a term be given in a citation also applies when the source is a term bank, such as the http://www.electropedia.org[International Electrotechnical Vocabulary (IEV)]. Formally, IEV references should be cited as `IEC 60050-nnn:20xx`, where `n` is the top-level clause, and `20xx` is the year when that particular specification was published; e.g. `IEC 60050-113:2011, 113-01-07`. For convenience, this gem requires all IEV references to be to a single reference, named `IEV` in the normative references. In rendering the Asciidoctor into Metanorma XML, this reference will be replaced by the various required IEC 60050-nnn:20xx references. (That means that you should not insert your own instances of IEC 60050 references for IEV citations: they will be duplicated by the automatically generated references.)
 
 [source,asciidoc]
 --
@@ -227,7 +216,7 @@ The requirement that the source of a term be given in a citation also applies wh
 
 Note that, for IEV entries to be validated, the IEV reference must be given as a Clause, and in quotes (otherwise the locality syntax would be interpreted as a range); so `<<ievtermbank,clause="103-01-02">>` for IEV 103-01-02.
 
-Asciidoc does not permit macros to be nested inside other macros; so the following markup, introducing a stem expression as an admitted term, is illegal. (The use of stem expressions as preferred terms is not a problem, because the macro appears as a header.)
+Asciidoctor does not permit macros to be nested inside other macros; so the following markup, introducing a stem expression as an admitted term, is illegal. (The use of stem expressions as preferred terms is not a problem, because the macro appears as a header.)
 
 [source,asciidoc]
 --
@@ -265,7 +254,7 @@ metrical foot consisting of a short, a long, and a short
 
 === Symbols and Abbreviations
 
-Symbols and Abbreviations sections are expected to be simple definition lists (http://asciidoctor.org/docs/user-manual/#labeled-list["labelled lists"] in Asciidoc nomenclature). The gem takes care of sorting the symbols in the order prescribed by ISO/IEC DIR 2, provided the symbols are in AsciiMath; sorting MathML entries is not currently supported.
+Symbols and Abbreviations sections are expected to be simple definition lists (http://asciidoctor.org/docs/user-manual/#labeled-list["labelled lists"] in Asciidoctor nomenclature). The gem takes care of sorting the symbol entries in the order prescribed by ISO/IEC DIR 2, provided the symbols are in AsciiMath; sorting MathML entries is not currently supported.
 
 === Clauses
 
@@ -288,6 +277,7 @@ ____
 *4.2.1.*  The mass fraction of moisture, determined in accordance with...
 ____
 
+TIP: This notation should not be used to implement paragraph numbering, as required for UNECE: the UNECE gem automatically treats each paragraph as a distinct clause, and automatically numbers it.
 
 Inline subclause headings (e.g. for test methods) are indicated by preceding the heading with the `[%inline-header]` option attribute. So in the Rice Model document,
 
@@ -306,13 +296,15 @@ ____
 ____
 
 
-Normative clauses are indicated with the attribute `[obligation=informative]`; they are normative by default.
+Informative clauses are indicated with the attribute `[obligation=informative]`; clauses are normative by default.
 
 === Annexes
 
-All annexes must be preceded by the style attribute `[appendix]`, in order to be recognised correctly. For ISO standards, annexes are treated as normative by default; if they are informative, they must additionally be tagged with an obligation of "informative" (so `[appendix, obligation= informative]`).
+All annexes must be preceded by the style attribute `[appendix]`, in order to be recognised correctly. Like all clauses, annexes are normative by default, an informative annex is indicated with `[appendix,obligation=informative]`.
 
-Appendixes to annexes can occur, although they are not mentioned in ISO/IEC DIR 2; ISO/IEC DIR 1 features them. They are marked up as immediate subsections of annexes, and must be tagged with an option attribute of "appendix":
+TIP
+----
+In ISO, Appendixes to annexes can occur, although they are not mentioned in ISO/IEC DIR 2; ISO/IEC DIR 1 features them. They are marked up as immediate subsections of annexes, and must be tagged with an option attribute of "appendix":
 
 [source,asciidoc]
 --
@@ -324,6 +316,7 @@ Text
 === Appendix 1
 Text
 --
+---
 
 The numbering of annexes and appendices is automatic: do not insert "Annex A" or "Appendix 1" as part of the title. Annex and Appendix titles can be left blank, as with Clauses.
 
@@ -331,7 +324,7 @@ The numbering of annexes and appendices is automatic: do not insert "Annex A" or
 
 === Mathematical formatting
 
-Mathematical formatting is done using the `[stem]` macro. Asciidoc supports http://asciimath.org[AsciiMath] and LaTeX natively (AsciiMath by default); as of this writing the gem only supports AsciiMath. AsciiMath is converted to Microsoft Word's OOML via MathML, using the https://github.com/asciidoctor/asciimath[AsciiMath] Ruby gem; the syntax of the Ruby gem may be at odds with the usual MathJax processor of AsciiMath. (We have found that the Ruby gem insists on numerators being bracketed.)
+Mathematical formatting is done using the `[stem]` macro. Asciidoctor supports http://asciimath.org[AsciiMath] and LaTeX natively (AsciiMath by default); as of this writing Metanorma only supports AsciiMath. AsciiMath is converted to Microsoft Word's OOXML via MathML, using the https://github.com/asciidoctor/asciimath[AsciiMath] Ruby gem; the syntax of the Ruby gem may be at odds with the usual MathJax processor of AsciiMath. (We have found that the Ruby gem insists on numerators being bracketed.)
 
 === Formulae
 
@@ -373,7 +366,7 @@ P:: point of the curve corresponding to a cooking time of stem:[t_90]
 NOTE: These results are based on a study carried out on three different types of kernel.
 --
 
-Subfigures are entered by including images in an Asciidoc example:
+Subfigures (which appear in ISO) are entered by including images in an Asciidoc example:
 
 [source,asciidoc]
 --
@@ -394,17 +387,19 @@ image::rice_images/rice_image3_3.png[]
 
 === Tables
 
-Asciidoc tables are quite powerful for a non-XML markup language, but we have had to add the option of multiple header rows (attribute `headerrows=n`), to deal with the complexity of ISO tables with labels, variables, and units lining up in the header.
+While Asciidoctor tables are quite powerful for a non-XML markup language, they still have not dealt with the full range of complexity required in Metanorma. Metanorma adds the option of multiple header rows (attribute `headerrows=n`), to deal with the complexity of ISO tables requiring labels, variables, and units to lining up in the header.
 
 Asciidoc allows table cells to have footnotes (which the gem renders inside the table), and notes following the table (which the gem moves inside the table footer.) Table 1 in the Rice document illustrates a large range of table formatting options.
 
 === Lists
 
-Unordered lists in Word are rendered with em-dashes instead of bullets, as preferred by ISO. Ordered lists in Word are rendered with their labels bracketed. (_a)_, _1)_, etc.) Ordered lists in both HTML and Word have their labels pre-configured, to align with ISO/IEC DIR 2: _a), b), c)_ for the first level, then _1), 2), 3)_ for the second level, then _i), ii), iii)_, then _A), B), C)_, then _I), II), III)_. The `type` attribute for ordered lists in Asciidoc, which allows the user to specify the label of an ordered list, is ignored.
+Ordered lists in both HTML and Word have their labels pre-configured, to align with ISO/IEC DIR 2: _a), b), c)_ for the first level, then _1), 2), 3)_ for the second level, then _i), ii), iii)_, then _A), B), C)_, then _I), II), III)_. The `type` attribute for ordered lists in Asciidoctor, which allows the user to specify the label of an ordered list, is ignored.
+
+TIP: The stylesheets for ISO render unordered lists with em-dashes instead of bullets, as preferred by ISO. Ordered lists in Word are rendered with their labels bracketed. (_a)_, _1)_, etc.) 
 
 === Footnotes
 
-Asciidoc supports only single-paragraph footnotes through its footnote macro (which can only contain a single line of text); this reflects a stylistic bias against digressive text by the Asciidoc creator, and will not change. At best, it can be worked around by introducing line breaks into the macro (see https://github.com/asciidoctor/asciidoctor.org/issues/599, http://discuss.asciidoctor.org/footnotes-with-paragraph-breaks-td4130.html).
+Asciidoctor supports only single-paragraph footnotes through its footnote macro (which can only contain a single line of text); this reflects a stylistic bias against digressive text by the Asciidoc creator, and will not change. It can be worked around by introducing line breaks into the macro (see https://github.com/asciidoctor/asciidoctor.org/issues/599, http://discuss.asciidoctor.org/footnotes-with-paragraph-breaks-td4130.html).
 
 === Notes
 
@@ -412,15 +407,15 @@ Notes that are not at the end of a clause are folded into the preceding block, i
 
 === Reviewer Notes
 
-We have introduced a mechanism in the gem to annotate arbitrary blocks of text, using Asciidoc sidebars and anchors for the beginning and end of the annotation; see https://github.com/riboseinc/metanorma-iso#reviewer-notes[discussion in the README].
+We have introduced a mechanism in the gem to annotate arbitrary blocks of text, using Asciidoctor sidebars and anchors for the beginning and end of the annotation; see https://github.com/riboseinc/metanorma-standoc#reviewer-notes[discussion in the metanorma-standoc README].
 
 == Cross-references
 
-The gem follows the guidance given in ISO/IEC DIR 2 rigorously. In particular, if a formula, example, figure, list, list item or table is cross-referenced outside its (sub)clause, the clause containing the item is always given in the cross-reference, unless the item is being referenced in the same clause. In the case of notes, the containing clause is extended to containing example, figure or table.
+The guidance given in ISO/IEC DIR 2 for internal cross-references guarantees unambiguous referencing, and it is followed rigorously by Metanorma. In particular, if a formula, example, figure, list, list item or table is cross-referenced outside its (sub)clause, the clause containing the item is always given in the cross-reference, unless the item is being referenced in the same clause. In the case of notes, the containing clause is extended to containing example, figure or table.
 
-So for example, in the Rice model document, formula B-.1 is defined in Annex B.6, and is referenced in B.6 and B.7. In the PDF Rice model document, both instances are cited as "Formula (B.1)"; but the gem follows ISO/IEC DIR 2 in citing the former as "Formula (B.1)", but the latter as "B.6, Formula (B.1)".
+So for example, in the Rice model document, formula B.1 is defined in Annex B.6, and is referenced in B.6 and B.7. In the Rice model document published by ISO, both instances are cited as "Formula (B.1)"; but the gem follows ISO/IEC DIR 2 in citing the former as "Formula (B.1)", but the latter as "B.6, Formula (B.1)". (Metanorma in general is "more royalist than the king" in applying formatting rules and validation—which is what you would want of a computer-based tool.) 
 
-The label of the item cross-referenced, the use of brackets, and the containing reference are all taken care of by the gem; the document author needs only give the item identifier in the Asciidoc (e.g. `<<``formulaB-1``>>` generates either "Formula (B.1)" or "B.6, Formula (B.1)", depending on where in the document it occurs.)
+The label of the item cross-referenced, the use of brackets, and the containing reference are all taken care of by the gem; the document author needs only give the item identifier in the Asciidocto source (e.g. `<<``formulaB-1``>>` generates either "Formula (B.1)" or "B.6, Formula (B.1)", depending on where in the document it occurs.)
 
 List items can be cross-referenced by inserting a bookmark at the very start of the list item:
 
@@ -433,7 +428,7 @@ List items can be cross-referenced by inserting a bookmark at the very start of 
 
 == Asciidoctor Tips
 
-As we have noted, the http://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] should be your companion when authoring any Asciidoc documents, including Asciidoc documents under Metanorma. There are some more specialised aspects of Asciidoctor markup, which you might need to dig deeper to find in the manual; we list some of them here.
+As noted, the http://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] should be your companion when authoring any Asciidoc documents, including Asciidoc documents under Metanorma. There are some more specialised aspects of Asciidoctor markup, which you might need to dig deeper to find in the manual; we list some of them here.
 
 * A note or admonition can be made to span multiple paragraphs (including lists and tables), by making it a https://asciidoctor.org/docs/user-manual/#delimited-blocks[delimited block]:
 
