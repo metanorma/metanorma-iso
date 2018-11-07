@@ -35,21 +35,11 @@ bundle update
 
 [TIP]
 ====
-<<<<<<< HEAD
 The Metanorma-ISO tool is a https://en.wikipedia.org/wiki/RubyGems[Ruby gem], and works on the command line. The https://en.wikipedia.org/wiki/Ruby_programming_language[Ruby programming language] can be installed on Windows (e.g. https://rubyinstaller.org), but is typically run on a Unix command line—including Linux and MacOS. The following instructions are for the Unix console.
-=======
-= Ruby? Gems?
-
-The Asciidoctor-ISO tool is a https://en.wikipedia.org/wiki/RubyGems[Ruby gem], and works on the command line. The https://en.wikipedia.org/wiki/Ruby_programming_language[Ruby programming language] can be installed on Windows (e.g. https://rubyinstaller.org), but is typically run on a Unix command line—including Linux and MacOS. The following instructions are for the Unix console.
->>>>>>> docs(quickstart): Restructured sections
 
 Metanorma-ISO in turn builds on the https://asciidoctor.org[Asciidoctor gem], which interprets the Asciidoctor markup language in Ruby. Installing the Metanorma-ISO gem will install the Asciidoctor gem, if it is not already installed.
 
-<<<<<<< HEAD
 Ruby comes with Linux and MacOS. Metanorma-ISO uses Ruby 2.4.0, and you may need to update your Ruby instance to use that version. Refer to https://www.ruby-lang.org/en/documentation/installation/
-=======
-Ruby comes with Linux and MacOS. Asciidoctor-ISO uses Ruby 2.4.0, and you may need to update your Ruby instance to use that version. Refer to https://www.ruby-lang.org/en/documentation/installation/
->>>>>>> docs(quickstart): Restructured sections
 ====
 
 == Setting up a new project
@@ -97,11 +87,7 @@ The validation comes from ISO/IEC DIR 2, and consists of two parts:
 
 == Starting with an example project
 
-<<<<<<< HEAD
 Perhaps the simplest way to get started is to take an existing Metanorma-ISO document
-=======
-Perhaps the simplest way to get started is to take an existing Asciidoctor-ISO document
->>>>>>> docs(quickstart): Restructured sections
 and edit it, observing how it approaches various formatting tasks.
 
 The https://www.iso.org/publication/PUB100407.html["Rice document"]
@@ -116,7 +102,6 @@ You can just continue on with the document text after the document header—so l
 
 == Learning the AsciiDoc-based syntax
 
-<<<<<<< HEAD
 To author AsciiDoc documents, you need to be familiar with the _core AsciiDoc syntax_,
 as well as _the syntax extensions and conventions_ that are specific to Metanorma-ISO.
 
@@ -135,9 +120,6 @@ gem to help you convert a Word document into AsciiISO.
 You will likely have to manually clean up some syntax
 (especially if your Word document contains an index, stray anchors, and equations):
 don’t rely on the automatic conversion to be 100% correct.
-=======
-To author AsciiDoc documents, you need to be familiar with the <em>core AsciiDoc syntax</em>,
-as well as <em>the syntax extensions and conventions</em> that are specific to Metanorma-ISO.
 
 - Check out link:asciiiso-syntax[our AsciiISO syntax reference],
   and link:guidance.adoc[Guidance for Authoring in Asciidoctor-ISO].
@@ -154,6 +136,4 @@ as well as <em>the syntax extensions and conventions</em> that are specific to M
   You will likely have to manually clean up some syntax
   (especially if your Word document contains an index, stray anchors, and equations):
   don’t rely on the automatic conversion to be 100% correct.
->>>>>>> docs(quickstart): Restructured sections
-
 . Move the content back to the cloned isodoc-rice.
