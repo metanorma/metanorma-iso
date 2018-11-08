@@ -6,96 +6,7 @@ AsciiISO is syntax based on AsciiDoc, with some extensions specific to authoring
 
 TIP: Full details of Asciidoctor-ISO–specific markup and conventions is given in the https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] and the https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring].
 
-https://asciidoctor.org/docs/user-manual/#section-styles[Section styles] are used to indicate specific types of section: `[bibliography]` for Normative References and Bibliography, `[appendix]` for Annexes, and `[%appendix]` for Appendixes (annexes of annexes). These styles must be provided for the sections to be processed correctly: bibliographic references will not be recognised as such, for example, without the `[bibliography]` style applied:
-
-[source,asciidoctor]
---
-[bibliography]
-== Bibliography
-
-* [[[ISO3696,ISO 3696]]], _Water for analytical laboratory use -- Specification and test methods_
---
-
 The sections that have a fixed position according to ISO/IEC DIR 2 (Introduction, Scope, Normative References, Terms and Definitions, Symbols and Abbreviations, Bibliography) need to be titled as such, as first-level headings.
-
-=== Terms and Definitions
-
-Terms and Definitions sections follow a strict grammar in their Metanorma-ISO markup, as ISO/IEC DIR 2 prescribes their structure so strictly. The following illustrates the complete structure of a term entry; the Rice document splits up these features among several terms.
-
-[source,asciidoctor]
---
-[[paddy]]
-=== paddy
-alt:[paddy rice]
-alt:[rough rice]
-deprecated:[cargo rice]
-domain:[rice]
-
-rice retaining its husk after threshing
-
-[example]
-Foreign seeds, husks, bran, sand, dust.
-
-NOTE: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.
-
-[.source]
-<<ISO7301,section 3.2>>, The term "cargo rice" is shown as deprecated,
-and Note 1 to entry is not included here
---
-
-Term banks such as the http://www.electropedia.org[IEV] must be treated like any other document, with terms treated as clauses; e.g. `<<IEV,clause "103-01-01">>`. The IEV must be explictly referenced with that label; when the XML is generated, it will be replaced by the official references to `IEC 60050-nnn:2001` standards documents.
-
-Exceptionally, an introductory section can be treated as a subclause instead of a term, by prefixing it with the style attribute `[.nonterm]`.
-
-=== References (Normative, Informative)
-
-All bibliographic entries must be given as unordered lists. Normative references are expected to include only ISO and related standards; informative references may include any source.
-
-For ISO and related standards, the reference is given as a bibliographic anchor (in triple brackets), consisting of an internal identifier followed by the ISO identifier. The internal identifier can be used in cross-references (citations). The date may be added to the ISO identifier, as required by ISO/IEC DIR 2; standards under preparation have their date given as `--`, and should be accompanied by a footnote detailing the status of the standard.
-
-[source,asciidoctor]
---
-Grade 3 quality as specified in <<ISO3696>>.
-
-...
-
-* [[[ISO3696,ISO 3696]]], _Water for analytical laboratory use -- Specification and test methods_
-* [[[ISO7301,ISO 7301:2011]]], _Rice -- Specification_
-* [[[ISO16634,ISO 16634:--]]] footnote:[Under preparation. (Stage at the time of publication ISO/DIS 16634)], _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_
---
-
-Non-ISO references under normative references are still cited by document identifier. Under informative references, non-ISO documents are both displayed and cited with reference numbers in brackets. In Metanorma-ISO, the cross-reference is a normal anchor identifier; the bracket numbering for informative references is automatic.
-
-[source,asciidoctor]
---
-For details concerning the use of the Dumas method, see References <<ref10>> and <<ref16>>.
-
-...
-
-* [[[ref10,10]]] [smallcap]#Standard No I.C.C 167#. _Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method_ (see http://www.icc.or.at)
-
-* [[[ref16,16]]] [smallcap]#Tkachuk R.# Nitrogen-to-protein conversion factors for cereals and oilseed meals. _Cereal Chem._ 1969, *46* (4) pp 419-423
---
-
-In cross-references, bibliographic localities (e.g. page numbers, clause numbers) can be added directly after the comma, as part of the cross-reference text. Bibliographic localities are expressed as a sequence of lowercase locality type, then an equal sign, then by the locality number or range:
-
-[source,asciidoctor]
---
-<<ISO7301,clause=3.1>>
-
-NOTE: This table is based on <<ISO7301,table=1>>.
-
-Sampling shall be carried out in accordance with <<ISO24333,clause=5>>
---
-
-ISO clause references in particular will suppress the word "Clause" before a subclause reference, following ISO/IEC DIR 2: `<``<ISO24333,clause=5>``>` will be rendered as _ISO 24333, Clause 5_, but `<``<ISO7301,clause=3.1>``>` will be rendered as _ISO 7301, 3.1_.
-
-
-=== Annexes
-
-For ISO standards, annexes are treated as normative by default; if they are informative, they must additionally be tagged with an obligation of "informative" (so `[appendix, obligation=informative]`).
-
-The numbering of annexes and appendices is automatic: do not insert "Annex A" or "Appendix 1" as part of the title.
 
 == AsciiDoc syntax supported
 
@@ -314,3 +225,81 @@ https://asciidoctor.org/docs/user-manual/#section-styles[Section styles] are use
 
 Sections whose position is set by the standard (e.g., for ISO, Introduction, Scope, Normative References, Terms and Definitions, Symbols and Abbreviations, Bibliography) need to be titled as such, as first-level headings.
 
+=== Terms and Definitions
+
+Terms and Definitions sections follow a strict grammar in their Metanorma-ISO markup, as ISO/IEC DIR 2 prescribes their structure so strictly. The following illustrates the complete structure of a term entry; the Rice document splits up these features among several terms.
+
+[source,asciidoctor]
+--
+[[paddy]]
+=== paddy
+alt:[paddy rice]
+alt:[rough rice]
+deprecated:[cargo rice]
+domain:[rice]
+
+rice retaining its husk after threshing
+
+[example]
+Foreign seeds, husks, bran, sand, dust.
+
+NOTE: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.
+
+[.source]
+<<ISO7301,section 3.2>>, The term "cargo rice" is shown as deprecated,
+and Note 1 to entry is not included here
+--
+
+Term banks such as the http://www.electropedia.org[IEV] must be treated like any other document, with terms treated as clauses; e.g. `<<IEV,clause "103-01-01">>`. The IEV must be explictly referenced with that label; when the XML is generated, it will be replaced by the official references to `IEC 60050-nnn:2001` standards documents.
+
+Exceptionally, an introductory section can be treated as a subclause instead of a term, by prefixing it with the style attribute `[.nonterm]`.
+
+=== References (Normative, Informative)
+
+All bibliographic entries must be given as unordered lists. Normative references are expected to include only ISO and related standards; informative references may include any source.
+
+For ISO and related standards, the reference is given as a bibliographic anchor (in triple brackets), consisting of an internal identifier followed by the ISO identifier. The internal identifier can be used in cross-references (citations). The date may be added to the ISO identifier, as required by ISO/IEC DIR 2; standards under preparation have their date given as `--`, and should be accompanied by a footnote detailing the status of the standard.
+
+[source,asciidoctor]
+--
+Grade 3 quality as specified in <<ISO3696>>.
+
+...
+
+* [[[ISO3696,ISO 3696]]], _Water for analytical laboratory use -- Specification and test methods_
+* [[[ISO7301,ISO 7301:2011]]], _Rice -- Specification_
+* [[[ISO16634,ISO 16634:--]]] footnote:[Under preparation. (Stage at the time of publication ISO/DIS 16634)], _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_
+--
+
+Non-ISO references under normative references are still cited by document identifier. Under informative references, non-ISO documents are both displayed and cited with reference numbers in brackets. In Metanorma-ISO, the cross-reference is a normal anchor identifier; the bracket numbering for informative references is automatic.
+
+[source,asciidoctor]
+--
+For details concerning the use of the Dumas method, see References <<ref10>> and <<ref16>>.
+
+...
+
+* [[[ref10,10]]] [smallcap]#Standard No I.C.C 167#. _Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method_ (see http://www.icc.or.at)
+
+* [[[ref16,16]]] [smallcap]#Tkachuk R.# Nitrogen-to-protein conversion factors for cereals and oilseed meals. _Cereal Chem._ 1969, *46* (4) pp 419-423
+--
+
+In cross-references, bibliographic localities (e.g. page numbers, clause numbers) can be added directly after the comma, as part of the cross-reference text. Bibliographic localities are expressed as a sequence of lowercase locality type, then an equal sign, then by the locality number or range:
+
+[source,asciidoctor]
+--
+<<ISO7301,clause=3.1>>
+
+NOTE: This table is based on <<ISO7301,table=1>>.
+
+Sampling shall be carried out in accordance with <<ISO24333,clause=5>>
+--
+
+ISO clause references in particular will suppress the word "Clause" before a subclause reference, following ISO/IEC DIR 2: `<``<ISO24333,clause=5>``>` will be rendered as _ISO 24333, Clause 5_, but `<``<ISO7301,clause=3.1>``>` will be rendered as _ISO 7301, 3.1_.
+
+
+=== Annexes
+
+For ISO standards, annexes are treated as normative by default; if they are informative, they must additionally be tagged with an obligation of "informative" (so `[appendix, obligation=informative]`).
+
+The numbering of annexes and appendices is automatic: do not insert "Annex A" or "Appendix 1" as part of the title.
