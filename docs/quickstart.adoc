@@ -1,8 +1,14 @@
-= Quickstart Guide for Metanorma
+= Quickstart Guide
 
-This is a guide on how to get started using Metanorma to create documents aligned with different standards classes (such as ISO, GB, CSD, etc), in Microsoft Word and HTML formats. This guide is written to apply generically across the standards classes that can be expressed in Metanorma; guidance specific to a particular standards class is given as TIPs. 
+TIP: This guide has been authored for ISO standards, but most of it applies to all Metanorma standards. We indicate where guidance differs for different standards classes. See link:https://www.metanorma.com/software/Metanorma_processor/[List of Metanorma processors].
 
-Metanorma takes text in the Asciidoctor markup language as input, and you should consult the https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] for how to use the markup language. Metanorma makes some adjustments to the text format for its requirements; these adjustments (which we refer to as Metanorma Asciidoctor) are documented here. Metanorma uses Asciidoctor to generate Metanorma XML (`.xml`), as an intermediate, semantic representation of standards content. Metanorma XML in turn is processed by the https://github.com/riboseinc/isodoc[isodoc] gem to generate output in Microsoft Word (`.doc`) and HTML (`.html`).
+This is a guide on how to get started using Metanorma to create documents aligned with different standards classes (such as ISO, GB, CSD, etc), in Microsoft Word and HTML formats. This guide is written to apply generically across the standards classes that can be expressed in Metanorma; guidance specific to a particular standards class is given as TIPs.
+
+Metanorma takes text in the _Asciidoctor markup language_ as input (consult the https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] on the basics of this markup language).
+Metanorma makes some adjustments to the text format for its requirements;
+these adjustments (which we refer to as _Metanorma Asciidoctor_, or AsciiISO) are documented in relevant sections of this documentation.
+Metanorma uses Asciidoctor to generate _Metanorma XML_, as an intermediate, semantic representation of standards content.
+Metanorma XML in turn is processed by the https://github.com/riboseinc/isodoc[isodoc] gem to generate output in Microsoft Word (`.doc`) and HTML (`.html`).
 
 == Even quicker summary
 
@@ -20,6 +26,7 @@ To migrate:
 [[supported-standards]]
 == Supported standards 
 
+
 As of this writing, Metanorma supports the following standards classes:
 
 * https://github.com/riboseinc/metanorma-iso[ISO and IEC] (`iso`)
@@ -32,25 +39,20 @@ As of this writing, Metanorma supports the following standards classes:
 * https://github.com/riboseinc/metanorma-mpfd[Mandatory Provident Fund Schemes Authority, Hong Kong (MPFA)] (`mpfd`)
 * https://github.com/riboseinc/metanorma-unece[United Nations Economic Commission for Europe] (`unece`)
 
-[[installation]]
-== Installation instructions
+== Installing on Linux and macOS
 
-The Metanorma tool is a suite of https://en.wikipedia.org/wiki/RubyGems[Ruby gems], and works on the command line. The https://en.wikipedia.org/wiki/Ruby_programming_language[Ruby programming language] can be installed on Windows (e.g. https://rubyinstaller.org), but is typically run on a Unix command line—including Linux and MacOS. The following instructions are for the Unix console.
-
-The starting poing of the Metanorma tool is the `metanorma-cli` gem (command line interface); it references various other gems that the tool is based on, including the converter from Asciidoctor to Metanorma XML (`metanorma-standoc`), the converters from Metanorma XML to HTML and Word (`isodoc`, `html2doc`), the variants of Metanorma for different standards classes (`metanorma-iso`, `metanorma-csd`, etc.), and tools for processing bibliographies (`relaton`, `isobib` etc.)
-
-The Metanorma tools processing Asciidoctor, in turn, build on the https://asciidoctor.org[Asciidoctor gem], which interprets the Asciidoctor markup language in Ruby. Installing the Metanorma gem will install the Asciidoctor gem, if it is not already installed.
-
-Ruby comes with Linux and MacOS. Asciidoctor-ISO uses at minimum Ruby 2.3.0, and you may need to update your Ruby instance to use that version. Refer to https://www.ruby-lang.org/en/documentation/installation/
+Install Metanorma-ISO gem and its dependencies:
 
 You can install the metanorma-cli gem, and all its dependencies, through the Ruby gem installer:
+
 
 [source,console]
 --
 gem install metanorma-cli
 --
 
-If you want the latest version of the gem (which is still heavily under development), you can install it from Github:
+If you want the latest version (note: may not be stable due to active development),
+you can install it from Github:
 
 [source,console]
 --
@@ -63,9 +65,27 @@ bundle update
 
 The final `bundle update` step updates the dependent gems, and is necessary because those gems are even more heavily under development.
 
-== How to set up a new project
+[TIP]
+====
+The Metanorma tool is a suite of https://en.wikipedia.org/wiki/RubyGems[Ruby gems], and works on the command line. The https://en.wikipedia.org/wiki/Ruby_programming_language[Ruby programming language] can be installed on Windows (e.g. https://rubyinstaller.org), but is typically run on a Unix command line—including Linux and MacOS. The following instructions are for the Unix console.
 
-At its simplest, all you need is a text document in Asciidoctor format, which you compile using the metanorma-cli gem. To keep document dependencies in order, you should keep your document in a distinct folder:
+The starting poing of the Metanorma tool is the `metanorma-cli` gem (command line interface); it references various other gems that the tool is based on, including the converter from Asciidoctor to Metanorma XML (`metanorma-standoc`), the converters from Metanorma XML to HTML and Word (`isodoc`, `html2doc`), the variants of Metanorma for different standards classes (`metanorma-iso`, `metanorma-csd`, etc.), and tools for processing bibliographies (`relaton`, `isobib` etc.)
+
+The Metanorma tools processing Asciidoctor, in turn, build on the https://asciidoctor.org[Asciidoctor gem], which interprets the Asciidoctor markup language in Ruby. Installing the Metanorma gem will install the Asciidoctor gem, if it is not already installed.
+
+Ruby comes with Linux and MacOS. Asciidoctor-ISO uses at minimum Ruby 2.3.0, and you may need to update your Ruby instance to use that version. Refer to https://www.ruby-lang.org/en/documentation/installation/
+====
+
+
+
+
+== Setting up a new project
+
+At its simplest, all you need is a text document in Asciidoctor-like AsciiISO format,
+which you compile using the Metanorma-ISO gem.
+
+To keep document dependencies in order, place your document in a distinct folder:
+
 
 [source,console]
 --
@@ -81,332 +101,79 @@ To compile the document, execute the `asciidoctor` script, flagging it to use a 
 metanorma -t iso new_standard.adoc
 --
 
-This will generate two files from the `new_standard.adoc` document (provided it is well-formed!): `new_standard.html` is a standalone HTML document, and `new_standard.doc` is a Word document (currently in the pre-2007 `.doc` format, but Microsoft Word will open it fine). Both these files are generated via an intermediate XML file, `new_standard.xml`, which represents the structure of the document as it is formally defined by the standards body, and captured in the https://github.com/riboseinc/metanorma-model-iso[Metanorma XML schema].
+This will generate two files from the `new_standard.adoc` document (provided it is well-formed):
+
+* `new_standard.html`, a standalone HTML document,
+* `new_standard.doc`, a Word document
+  (currently in the pre-2007 `.doc` format, but Microsoft Word will open it fine).
+
+Both these files are generated via an intermediate XML file, `new_standard.xml`, which represents the structure of the document as it is formally defined by the standards body, and captured in the https://github.com/riboseinc/metanorma-model-iso[Metanorma XML schema].
 
 Even if there are no errors in the Asciidoctor syntax, the document may still raise warnings to the console as it is being validated. The validation comes from the formal definition of the standard class (e.g. ISO/IEC DIR 2 in the case of ISO and IEC), and consists of two parts: warnings about document content (e.g., for ISO, requiring space before a percentage sign; requiring that the scope not contain text that looks like a recommendation); and warnings about document structure. The latter are generated by running the generated XML against the ISOXML schema, and report the line numbers of the XML document where issues are observed.
 
-=== Template
 
-To author Asciidoctor documents for Metanorma, you need to be familiar with Asciidoctor syntax, as well as the Metanorma Asciidoctor extensions to the syntax and conventions, including extensions specific to the standards class: 
 
-* The https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] documents Asciidoctor itself.
-* https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for Authoring in Asciidoctor-ISO] details Metanorma Asciidoctor usage for ISO. Almost all of this document is applicable to all Metanorma stadnards classes, and any exceptions are given in that document.
-* The README for each Metanorma standards class gem (refer <<supported-standards>>) document any extensions specific to that class.
+Even if there are no errors in the syntax, the document may still raise warnings
+to the console as it is being validated.
+The validation comes from ISO/IEC DIR 2, and consists of two parts:
 
-That said, the simplest way to get started is to take a ready-made Metanorma Asciidoctor document, and edit it, observing how it approaches various formatting tasks.
+* Warnings about document content
+  (e.g., requiring space before a percentage sign,
+  or requiring that the scope not contain text that looks like a recommendation).
+* Warnings about document structure
+  (found from running the generated XML against the ISOXML schema,
+  they report the line numbers of the XML document where issues are observed).
 
-The https://www.iso.org/publication/PUB100407.html["Rice document"] is the ISO's model document of an international standard. An Asciidoctor-ISO version of the document is available at https://github.com/riboseinc/isodoc-rice/ . We suggest downloading the site, and editing it. Asciidoctor extensions specific to different standards classes are few in number, and mostly involve the attributes in the document header. There is also an instance of a standard document included in the `spec/examples` directory of each standard-specific gem.
+== Starting with an example project
 
-NOTE: The `iso-rice-en.adoc` document in https://github.com/riboseinc/isodoc-rice/ consists of a document header, and it references the separate `body/body-en.adoc` document for the document proper (`include::body/body-en.adoc[]`). You can just continue on with the document text after the document header—so long as you remember to leave a blank line between the two.
+Perhaps the simplest way to get started is to take an existing Metanorma-ISO document
+and edit it, observing how it approaches various formatting tasks.
 
-== AsciiDoc syntax supported
+The https://www.iso.org/publication/PUB100407.html["Rice document"]
+is the ISO's model document of an international standard.
+An Metanorma-ISO version of the document is available
+at https://github.com/riboseinc/isodoc-rice/.
+We suggest downloading the site, and editing it.
 
-The Rice document illustrates almost the full range of formatting available via Asciidoctor; Annex E (which is not in the original) illustrates features not demonstrated in the original document.
+The `iso-rice-en.adoc` document consists of a document header,
+and it references the separate `body/body-en.adoc` document for the document proper (`include::body/body-en.adoc[]`).
+You can just continue on with the document text after the document header—so long as you remember to leave a blank line between the two.
 
-Syntax includes the following; the links are to the Asciidoctor User Manual. All examples are taken from the Metanorma Asciidoctor Rice document.
+== Learning the AsciiDoc-based syntax
 
-=== https://asciidoctor.org/docs/user-manual/#doc-header[Document header]
+To author AsciiDoc documents, you need to be familiar with the _core AsciiDoc syntax_,
+as well as _the syntax extensions and conventions_ that are specific to Metanorma-ISO.
 
-Attributes of the document, which typically appear in the coverpage (if at all), rather than in the document proper. The permitted attributes for all Metanorma documents, and their expected values, are documented in the https://github.com/riboseinc/metanorma-standoc#document-attributes[metanorma-standoc Readme]; each standards-specific gem adds documentation of its own specific attributes (e.g. https://github.com/riboseinc/metanorma-iso#document-attributes). 
+- Check out link:asciiiso-syntax[our AsciiISO syntax reference],
+  and link:guidance.adoc[Guidance for Authoring in Metanorma-ISO].
 
-Note that the initial title line and author line expected in Asciidoctor are ignored in favour of specific document attributes, although they still need to be supplied for the document to be valid.
+- See also https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual]
+  documenting Asciidoctor itself
+  and https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Metanorma-ISO README].
 
-[source,asciidoctor]
---
-= Rice model
-Author
-:docnumber: 17301
-:revdate: 2010-01-02
-:title:  Cereals and pulses -- Specifications and test methods -- Rice
-:language: en
-:status: published
+== Migrating existing documents from Microsoft Word
 
-...
---
+. Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor]
+gem to help you convert a Word document into AsciiISO.
++
+You will likely have to manually clean up some syntax
+(especially if your Word document contains an index, stray anchors, and equations):
+don’t rely on the automatic conversion to be 100% correct.
 
-=== Inline formatting
+- Check out link:asciiiso-syntax[our AsciiISO syntax reference],
+  and link:guidance.adoc[Guidance for Authoring in Asciidoctor-ISO].
 
-* https://asciidoctor.org/docs/user-manual/#text-formatting[Formatting marks]: bold, italic, monospace, subscript, superscript
+- See also https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual]
+  documenting Asciidoctor itself
+  and https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Metanorma-ISO README].
 
-[source,asciidoctor]
---
-This document specifies minimum requirements and test methods for rice (_Oryza sativa L._).
---
+== Migrating existing documents from Microsoft Word:
 
-* https://asciidoctor.org/docs/user-manual/#anchordef[Anchors] (for internal cross-references): these can be defined for any section or subsection, and any block (e.g. images, lists, examples, formulas, and so forth). The numbering of all blocks and clauses is automated, and does not need to be provided in the text.
-* https://asciidoctor.org/docs/user-manual/#internal-cross-references[Internal Cross-references] reference anchors within the document. By default, the text for these is also automatically generated, including naming the container of a block where required (e.g. `B.6, Formula (B.1)` for a formula in an annex). However, cross-references can supply their own text as an override, following a comma (e.g. `<``<AnnexB,the following annex>``>`).
+. Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor]
+  gem to help you convert a Word document into AsciiISO.
 
-[source,asciidoctor]
---
-The International Organization for Standardization (ISO) draws attention to the fact that it is claimed that compliance with this document may involve the use of a patent concerning sample dividers given in <<AnnexA>> and shown in <<figureA-1>>.
-
-...
-[[figureA-1]]
-.Split-it-right sample divider
-image::images/rice_image1.png[]
---
-
-* https://asciidoctor.org/docs/user-manual/#url[URLs]
-
-[source,asciidoctor]
---
-http://www.iso.org/obp[OBP]
---
-
-* https://asciidoctor.org/docs/user-manual/#activating-stem-support[STEM support] (mathematical expressions), as both inline and block formatting. (Numbered formulae are expressed as stem blocks.) Asciidoctor natively uses http://asciimath.org[AsciiMath] for its mathematical expressions; the `:stem:` document attribute must be present for AsciiMath to be recognised. The gem will ensure that any AsciiMath is rendered in the HTML output, and converted to Microsoft Office's OOXML (via MathML) in the Word output. Asciidoctor also supports LaTeX, but the gem does not cater for converting LaTeX to a Word-compatible output.
-
-[source,asciidoctor]
---
-[[formulaA-1,A.1]]
-[stem]
-++++
-w = (m_D) / (m_s)
-++++
-
-where
-
-stem:[w]:: is the mass fraction of grains with a particular defect in the test sample;
---
-
-* https://asciidoctor.org/docs/user-manual/#user-footnotes[Footnotes]. Note that footnotes are treated as inline formatting, so they cannot straightforwardly span more than a single paragraph in Asciidoctor. Footnotes within figures and tables are rendered within their blocks.
-
-[source,asciidoctor]
---
-containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols.footnote:[Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.]
---
-
-=== Blocks
-
-Blocks are groupings of paragraphs and text into larger units, commonly https://asciidoctor.org/docs/user-manual/#delimited-blocks[delimited], and optionally including a https://asciidoctor.org/docs/user-manual/#title[title] and https://asciidoctor.org/docs/user-manual/#metadata-2[metadata].
-
-TIP: For UNECE, paragraph numbering is generated automatically by the gem, which treats each paragraph as a leaf-node section. Paragraph numbers must not be entered in the Asciidoctor source.
-
-* https://asciidoctor.org/docs/user-manual/#unordered-lists[Unordered lists]
-
-[source,asciidoctor]
---
-The main changes compared to the previous edition are:
-
-* updated normative references;
-* deletion of 4.3.
---
-
-* https://asciidoctor.org/docs/user-manual/#ordered-lists[Ordered lists]. The gem automatically creates labels for the nested levels of ordered lists (in the sequence lowercase letter–Arabic numeral–lowercase Roman numeral–upppercase letter–uppercase Roman numeral), and ignores any https://asciidoctor.org/docs/user-manual/#numbering-styles[numbering styles] indicated by the user.
-
-[source,asciidoctor]
---
-. the sampling method used;
-. the test method used;
-. the test result(s) obtained or, if the repeatability has been checked, the final quoted result obtained;
---
-
-* https://asciidoctor.org/docs/user-manual/#labeled-list[Definition lists]. These are used for all keys of figures and formulae, and as the content of Symbols and Abbreviations clauses and subclauses:
-
-[source,asciidoctor]
---
-stem:[w]:: is the mass fraction of grains with a particular defect in the test sample;
-stem:[m_D]:: is the mass, in grams, of grains with that defect;
-stem:[m_S]:: is the mass, in grams, of the test sample.
---
-
-Note that the key to a figure must be preceded by the paragraph `*Key*`, and the key to a formula must be preceded by the paragraph `where`.
-
-* https://asciidoctor.org/docs/user-manual/#tables[Tables]. Asciidoctor supports a rich range of table formatting:
-
-[source,asciidoctor]
---
-[[tableD-1]]
-[cols="<,^,^,^,^",headerrows=2]
-.Repeatability and reproducibility of husked rice yield
-|===
-.2+| Description 4+| Rice sample
-| Arborio | Drago footnote:[Parboiled rice.] | Balilla | Thaibonnet
-
-| Number of laboratories retained after eliminating outliers | 13 | 11 | 13 | 13
-| Mean value, g/100 g | 81,2 | 82,0 | 81,8 | 77,7
-|===
---
-
-* https://asciidoctor.org/docs/user-manual/#images[Images], which are mapped to Metanorma figures, with accompanying titles:
-
-[source,asciidoctor]
---
-[[figureC-1]]
-.Typical gelatinization curve
-image::images/rice_image2.png[]
-footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
---
-
-* https://asciidoctor.org/docs/user-manual/#admonition[Admonitions], which express Notes, Warnings, Cautions, etc.
-
-[source,asciidoctor]
---
-CAUTION: Only use paddy or parboiled rice for the determination of husked rice yield.
---
-
-TIP: For UNECE, admonitions are used to render boxes. Admonitions can have titles.
-
-* https://asciidoctor.org/docs/user-manual/#prose-excerpts-quotes-and-verses[Block quotes]
-
-[source,asciidoctor]
---
-[quote, ISO, "ISO7301,clause 1"]
-_____
-This International Standard gives the minimum specifications for rice (_Oryza sativa_ L.) which is subject to international trade. It is applicable to the following types: husked rice and milled rice, parboiled or not, intended for direct human consumption. It is neither applicable to other products derived from rice, nor to waxy rice (glutinous rice).
-_____
---
-
-* https://asciidoctor.org/docs/user-manual/#example[Examples]
-
-* https://asciidoctor.org/docs/user-manual/#listing-blocks[Listing blocks] (source code), including https://asciidoctor.org/docs/user-manual/#callouts[source code callouts]
-
-[source,asciidoctor]
-----
-.Sample Code
-====
-
-[source,ruby]
---
-puts "Hello, world."
-%w{a b c}.each do |x| <1>
-  puts x
-end
---
-<1> This is an annotation
-====
-----
-
-* https://asciidoctor.org/docs/user-manual/#comments[Comments] (which are *not* rendered in the output)
-
-[source,ruby]
---
-// all terms and defs references are dated
---
-
-=== Sections
-
-* The Asciidoctor https://asciidoctor.org/docs/user-manual/#doc-preamble[Document preamble] is treated as the document Foreword: it is the text appearing between the document header and the first section header. (Note that the foreword is here given a https://asciidoctor.org/docs/user-manual/#title[block title], but that will be provided automatically anyway.)
-
-[source,asciidoctor]
---
-[[foreword]]
-.Foreword
-ISO (the International Organization for Standardization)
---
-
-* The Asciidoctor https://asciidoctor.org/docs/user-manual/#sections[Sections] correspond to Metanorma clauses, starting with the Introduction (if present). Each section and subsection is delimited with a header; the number of equal signs before the header indicate the level of nesting of the section, starting with two equal signs. No numbering should be given for any header: numbering is done automatically by the gem.
-
-[source,asciidoctor]
---
-== Sampling
-Sampling shall be carried out in accordance with <<ISO24333,clause 5>>
-
-== Test methods
-
-=== Moisture content
-
-Determine the mass fraction of moisture in accordance with the method specified in <<ISO712>>.
-...
-
---
-
-
-== Metanorma-specific syntax
-
-Full details of Metanorma-specific markup and conventions is given in the https://github.com/riboseinc/metanorma-standoc/blob/master/README.adoc[Asciidoctor-Standoc Readme] and the https://github.com/riboseinc/metanorma-iso/docs/master/blob/guidance.adoc[Guidance for authoring]. Customisations specific to a standard are given in the Readme for the gem for that standard.
-
-https://asciidoctor.org/docs/user-manual/#section-styles[Section styles] are used to indicate specific types of section: `[bibliography]` for Normative References and Bibliography, `[appendix]` for Annexes, and `[%appendix]` for Appendixes (annexes of annexes). These styles must be provided for the sections to be processed correctly: bibliographic references will not be recognised as such, for example, without the `[bibliography]` style applied:
-
-[source,asciidoctor]
---
-[bibliography]
-== Bibliography
-
-* [[[ISO3696,ISO 3696]]], _Water for analytical laboratory use -- Specification and test methods_
---
-
-Sections whose position is set by the standard (e.g., for ISO, Introduction, Scope, Normative References, Terms and Definitions, Symbols and Abbreviations, Bibliography) need to be titled as such, as first-level headings.
-
-=== Terms and Definitions
-
-Terms and Definitions sections follow a strict grammar in their Metanorma markup, drawing from ISO/IEC DIR 2. The following illustrates the complete structure of a term entry; the Rice document splits up these features among several terms.
-
-[source,asciidoctor]
---
-[[paddy]]
-=== paddy
-alt:[paddy rice]
-alt:[rough rice]
-deprecated:[cargo rice]
-domain:[rice]
-
-rice retaining its husk after threshing
-
-[example]
-Foreign seeds, husks, bran, sand, dust.
-
-NOTE: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.
-
-[.source]
-<<ISO7301,section 3.2>>, The term "cargo rice" is shown as deprecated,
-and Note 1 to entry is not included here
---
-
-Citations of term banks such as the http://www.electropedia.org[IEV] must be treated like citations of any other document, with terms treated as clauses; e.g. `<<IEV,clause "103-01-01">>`. The IEV must be explictly referenced with that label; when the XML is generated, it will be replaced by the official references to `IEC 60050-nnn:2001` standards documents.
-
-Exceptionally, an introductory section can be treated as a subclause instead of a term, by prefixing it with the style attribute `[.nonterm]`.
-
-=== References (Normative, Informative)
-
-All bibliographic entries must be given as unordered lists. Normative references are expected to include only ISO and related standards; informative references may include any source.
-
-References for standards documents are given as a bibliographic anchor (in triple brackets), consisting of an arbitrary internal identifier followed by the canonical standards document identifier. The internal identifier can be used in cross-references (citations). The canonical identifier may be used to download the reference from an online bibliography where available, via the https://github.com/riboseinc/relaton[relaton] gem.
-
-TIP: For ISO, the date of publication may be added to the ISO identifier, as required by ISO/IEC DIR 2; standards under preparation have their date given as `--`, and should be accompanied by a footnote detailing the status of the standard.
-
-[source,asciidoctor]
---
-Grade 3 quality as specified in <<ISO3696>>.
-
-...
-
-* [[[ISO3696,ISO 3696]]], _Water for analytical laboratory use -- Specification and test methods_
-* [[[ISO7301,ISO 7301:2011]]], _Rice -- Specification_
-* [[[ISO16634,ISO 16634:--]]] footnote:[Under preparation. (Stage at the time of publication ISO/DIS 16634)], _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_
---
-
-Under informative references, non-ISO documents are cited and displayed with reference numbers in brackets. In Metanorma Asciidoctor, the cross-reference is given as a normal anchor identifier; the bracket numbering for informative references is automatic.
-
-[source,asciidoctor]
---
-For details concerning the use of the Dumas method, see References <<ref10>> and <<ref16>>.
-
-...
-
-* [[[ref10,10]]] [smallcap]#Standard No I.C.C 167#. _Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method_ (see http://www.icc.or.at)
-
-* [[[ref16,16]]] [smallcap]#Tkachuk R.# Nitrogen-to-protein conversion factors for cereals and oilseed meals. _Cereal Chem._ 1969, *46* (4) pp 419-423
---
-
-In cross-references, bibliographic localities (e.g. page numbers, clause numbers) can be added directly after the comma, as part of the cross-reference text. Bibliographic localities are expressed as a sequence of lowercase locality type, then an equal sign, then by the locality number or range:
-
-[source,asciidoctor]
---
-<<ISO7301,clause=3.1>>
-
-NOTE: This table is based on <<ISO7301,table=1>>.
-
-Sampling shall be carried out in accordance with <<ISO24333,clause=5>>
---
-
-TIP: In ISO, clause references suppress the word "Clause" before a subclause reference, following ISO/IEC DIR 2: `<``<ISO24333,clause=5>``>` will be rendered as _ISO 24333, Clause 5_, but `<``<ISO7301,clause=3.1>``>` will be rendered as _ISO 7301, 3.1_.
-
-
-=== Annexes
-
-The numbering of annexes and appendices is automatic: do not insert "Annex A" or "Appendix 1" as part of the title.
-
-TIP: For ISO standards, annexes are treated as normative by default; if they are informative, they must additionally be tagged with an obligation of "informative" (so `[appendix, obligation=informative]`).
-
-
+  You will likely have to manually clean up some syntax
+  (especially if your Word document contains an index, stray anchors, and equations):
+  don’t rely on the automatic conversion to be 100% correct.
+. Move the content back to the cloned isodoc-rice.
 

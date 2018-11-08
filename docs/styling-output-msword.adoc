@@ -1,0 +1,38 @@
+= How can I style the resulting Microsoft Word output?
+
+[TIP]
+====
+* There is no quick way of doing this.
+* Everything you can do in Word, you can do in Word HTML. Save Word documents as Word HTML to see how.
+* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
+* Edit the `word_sample_titlepage.html` and `word_sample_intro.html` pages to match your organisation's branding. With lots of iterations of saving Word documents as HTML, for trial and error.
+** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
+* Edit the `default_fonts()` method in your `IsoDoc::...::WordConvert` class, to match your desired fonts.
+* Edit the `default_file_locations()` method in your `IsoDoc::...::WordConvert` class, to match your desired stylesheets and file templates.
+* Edit the `wordstyle.scss` and `sample.scss` stylesheets to match your organisation's branding. With lots of iterations of saving Word documents as HTML, for trial and error.
+====
+
+Word output in the document toolset is generated through Word HTML, the variant of HTML that you get when you save a Word document as HTML. (That is why documents are saved in `.doc`, not `.docx`.) This has the advantage over https://en.wikipedia.org/wiki/Office_Open_XML[OOXML], the native markup of DOCX, of using a well-known markup language, with a low barrier to entry: if you want to work out how to do something in Word HTML, do it in Word, save the document as HTML, and open up the HTML in a text editor. (For more on the choice of using Word HTML, see https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F.)
+
+However Word HTML is not quite the HTML you are used to: it is a restricted, syntactically idiosyncratic variant of HTML 4, with a non-standard and weakened form of CSS. Doing any styling in Word HTML involves lots of trial and error, and paying close attention to how Word HTML does things in its CSS. We have documented a few of the clearer gotchas in https://github.com/riboseinc/html2doc/blob/master/README.adoc.
+
+It's still better than learning OOXML.
+
+The process for generating Word output is fairly similar to that for generating HTML, since both processes are generating a form of HTML; as we already noted, the two processes share a substantial amount of code. The main differences are in the handling of page-media features that CSS has lagged in (footnotes, pagination, headers and footers), and in the styling of lists, for which Word HTML uses custom (and undocumented) CSS classes prefixed with `@`, specifying inter alia the numbering for nine levels of nesting of the same list.
+
+* Styling information is stored in the `.../lib/isodoc/html` folder of the gem, and applies to both Word and HTML content. For Word content, the relevant files are `word_..._titlepage.html` (title page HTML template), `word_..._intro.html` (introductory HTML template, typically restricted to Table of Contents),  `wordstyle.scss` and `{name_of_standard}.scss` (the Word stylesheets), and `header.html` (document headers, footers, and endnote/footnote separators, referenced from the stylesheets).
+* The styling files to be loaded in are set in the `default_file_locations()` method of `IsoDoc::...::WordConvert`. 
+* As with HTML generation, additional files (e.g. logos) can be loaded in the `initialize()` method of `IsoDoc::...::WordConvert`. The `initialize()` method also sets the `@` styles in the stylesheet to be used for unordered and ordered lists; a single such style is intended to capture the behaviour of all levels of indentation. 
+* As with HTML output, the HTML templates are populated through Liquid Templates: variables in `{{` correspond to the hash keys for metadata extracted in `IsoDoc::...::Metadata`, and its superclass `IsoDoc::Metadata` in the isodoc gem.
+* As with HTML, the SCSS stylesheets treat fonts as variables, and are set in the `default_fonts()` method of `IsoDoc::...::WordConvert`.
+* Document headers and footers are set in the `header.html` file. This is also an HTML template, which is populated with metadata attributes through Liquid Template. The structure of `header.html` is determined by Word, and elements of `header.html` need to be crossreferenced from the Word stylesheet. To inspect Word `header.html` files, save a Word document as HTML, and look inside the `{document_name}.fld` folder generated alongside the HTML output.
+* The classes in the SCSS stylesheet correspond to static HTML content in the HTML templates, and dynamic HTML content in the `IsoDoc::...::WordConvert` class, and its superclasses `IsoDoc::WordConvert` and `IsoDoc::Common` in the isodoc gem.
+
+A Word HTML document is populated as follows:
+* HTML Head wrapper (in `IsoDoc::WordConvert`)
+** `@wordstylesheet` CSS stylesheet (generated from SCSS through the `generate_css()` method of `Isodoc::WordConvert`); corresponds to `wordstyle.scss`.
+** `@standstylesheet` CSS stylesheet (generated from SCSS through the `generate_css()` method of `Isodoc::WordConvert`); intended to override any generic CSS in `@wordstylesheet`. Optional, corresponds to `{name_of_standard}.scss`.
+* HTML Body
+** `@wordcoverpage` HTML template (optional, corresponds to `word_..._titlepage.html`). Included in `<div class=WordSection1>`.
+** `@htmlintropage` HTML template (optional, corresponds to `word_..._intro.html`). Included in `<div class=WordSection2>`. In the existing gems, WordSection2 is paginated with roman numerals. 
+** Document proper (converted from Standoc XML). Included in `<div class=WordSection2>` (prefatory material) and `<div class=WordSection3>` (main document). In the existing gems, WordSection3 is paginated with roman numerals.

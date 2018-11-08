@@ -1,0 +1,72 @@
+= How can I adopt the StanDoc specification for my own publications?
+
+TIP: Copy the RSD schema from https://github.com/riboseinc/metanorma-iso/blob/master/grammars/rsd.rng. You may need to adapt some of the enums in the model, or in the ISO Standards model that it inherits; but in the first instance, you can just ignore the differences—and ignore the validation feedback that the toolset gives.
+
+The Standoc specification is expressed in http://www.relaxng.org[RelaxNG schema for XML], and is intended to be customisable for different types of publication. The customisation of Standoc relies on inheritance, with the following schemas embedded hierarchically:
+
+* https://github.com/riboseinc/bib-models[Relaton]: bibliography
+* https://github.com/riboseinc/basicdoc-models[BasicDoc]: block-level and inline formatting
+* https://github.com/riboseinc/metanorma-standoc[StanDoc]: organisation of sections for a generic standards document
+* Models specific to standards
+
+Specialisation of a model consists of:
+
+* Adding classes to a base model.
+* Changing attributes of a base model class. This is not restricted to adding attributes, as is the case in typical entity subclassing; it can also include removing attributes from a class, changing their obligation and cardinality, and changing their type, including changing enumerations. Attributes can be overruled at any level; for example, standards-specific models routinely enhance the bibliographic model at the base of the hierarchy.
+* For reasons of clarity, renaming classes and attributes is avoided in specialisation.
+
+To adapt the schema for your publication set,
+
+* Get familiar with the Standoc set of models, and identify any elements that you would want to represent differently for your documents (different types, different enums), or enhance for your documents (additional element attributes, additional elements)
+* Create a grammar inheriting from StanDoc or from a specific standard, which expresses what is distinctive about your grammar.
+** We recommend starting your modelling in UML, as an effective communication tool; compare the UML models for Standoc standards at https://github.com/riboseinc/metanorma-model-iso
+** The tool suite expects to validate against a set of schemas expressed in RelaxNG. We have been authoring grammars in RelaxNG Compact, as a more human-readable format, then compiling those grammars to RelaxNG using https://github.com/relaxng/jing-trang[jing-trang]. You can choose to use a different schema language, but you will need to customise the tool chain to validate against that form of schema instead.
+** In order to make schema inheritance easier, we have avoided using namespaces for the individual schemas; a namespace is added to the standards-specific schema at the very end of the inheritance chain.
+
+=== Schema customisation
+
+For example, the `rsd.rnc` schema, expressed in RelaxNG Compact, is specific to Ribose Standard documents: it inherits from the ISO Standards model, modifying 10 elements, and adding five. As an example of modifying elements, RSD permits preformatted text (Ascii art) in figures, which ISO does not:
+
+.ISO
+[source,asciidoctor]
+----
+figure =
+  element figure { 
+    attribute id { xsd:ID },
+    tname?, 
+    ( image | subfigure+ ),
+    fn*, dl?, note*
+  }
+----
+
+.RSD
+[source,asciidoctor]
+----
+figure =
+  element figure { 
+    attribute id { xsd:ID },
+    tname?, 
+    ( image | pre | subfigure+ ),
+    fn*, dl?, note*
+  }
+----
+
+The preformatted text tag `pre` is an addition to the RSD specification, which is why it lies outside the `include "isostandard.rnc {}"` container:
+
+.RSD
+[source,asciidoctor]
+----
+pre = element pre { text }
+----
+
+As another instance of customisation, the `BibItemType` enumeration of permissible bibliographical item types is extended in RSD to include the document types specific to RSD:
+
+.RSD
+[source,asciidoctor]
+----
+BibItemType |=
+"policy-and-procedures" | "best-practices" | "supporting-document" | "report" | "legal" | "directives" | "proposal" |
+        "standard"
+----
+
+

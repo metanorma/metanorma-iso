@@ -1,0 +1,37 @@
+= How can I style the resulting HTML output?
+
+[TIP]
+====
+* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
+* Edit the `html_sample_titlepage.html` and `html_sample_intro.html` pages to match your organisation's branding.
+** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
+* Edit the `default_fonts()` method in your `IsoDoc::...::HtmlConvert` class, to match your desired fonts.
+* Edit the `default_file_locations()` method in your `IsoDoc::...::HtmlConvert` class, to match your desired stylesheets and HTML templates.
+* Edit the `htmlstyle.scss` stylesheet to match your organisation's branding. The classes already in place there are used to style existing blocks of text; refer to the sample documents included in the gem (`spec/examples`) for their use.
+====
+
+Styling of output is intended to be configurable.
+HTML stylesheets are expressed in https://sass-lang.com/guide[SCSS], with their fonts populated through the `default_fonts()` method in the `IsoDoc::...::HtmlConvert` class.
+Frontispiece content is templated, populated from the metadata parsed in the `IsoDoc::...::Metadata` class, via https://shopify.github.io/liquid/[Liquid templates].
+The default stylesheets and HTML templates themselves are nominated in the `default_file_locations()` method in the `IsoDoc::...::HtmlConvert` class.
+That means you can change the styling of output documents readily, so long as you are aware of the functionality of the stylesheet.
+
+* Styling information is stored in the `.../lib/isodoc/html` folder of the gem, and applies to both Word and HTML content. For HTML content, the relevant files are `html_..._titlepage.html` (title page HTML template), `html_..._intro.html` (introductory HTML template, typically restricted to Table of Contents), `scripts.html` (Javascript scripts), and `htmlstyle.scss` (the HTML stylesheet).
+* The styling files to be loaded in are set in the `default_file_locations()` method of `IsoDoc::...::HtmlConvert`. The files can be overridden through document variables in the Asciidoc document.
+* Additional files (e.g. logos) can be loaded in the `initialize()` method of `IsoDoc::...::HtmlConvert`; for them to be access during document generation, they need to be copied to the working directory. (They can be removed subsequently by adding them to the `@files_to_delete` array. All image files are copied into an `_html` subdirectory.)
+* The HTML templates are populated through Liquid Templates: variables in `{{` correspond to the hash keys for metadata extracted in `IsoDoc::...::Metadata`, and its superclass `IsoDoc::Metadata` in the isodoc gem.
+* The SCSS stylesheets treat fonts as variables. Those variables are set in `default_fonts()`, which generates variable assignments for SCSS. Stylesheets normally recognise three fonts: `$bodyfont` for body text, `$headerfont` for headers and captions (which may be the same font as `$bodyfont`), and `$monospacefont` for monospace text. Note that `default_fonts()` takes the options passed to initialise `HtmlConvert` as a paremeter; the document language and script can be used to make different font choices for different document scripts. (The existing gems refer to `Latn`, Latin script, and `Hans`, Simplified Chinese script.)
+* Javascript scripts are populated in `scripts.html`; the scripts already in place in any gem you modify are in live use, and you should work out what they do before removing them. The AnchorJS script, for example, is used to generate navigable anchors in the document.
+* Additional scripts and fonts may be loaded in the document head through the `html_head()` method of  `IsoDoc::...::HtmlConvert`. The existing gems use the document head to load Jquery, the Table of Contents generation script, Google Fonts, and Font Awesome.
+* The classes in the SCSS stylesheet correspond to static HTML content in the HTML templates, and dynamic HTML content in the `IsoDoc::...::HtmlConvert` class, and its superclasses `IsoDoc::HtmlConvert` and `IsoDoc::Common` in the isodoc gem.
+
+An HTML document is populated as follows:
+
+* HTML Head wrapper (in `IsoDoc::HtmlConvert`)
+** `html_head()` content
+** `@htmlstylesheet` CSS stylesheet (expected to be in SCSS, generated from SCSS in the `generate_css()` method of `Isodoc::HtmlConvert`).
+* HTML Body
+** `@htmlcoverpage` HTML template (optional, corresponds to `html_..._titlepage.html`)
+** `@htmlintropage` HTML template (optional, corresponds to `html_..._intro.html`)
+** Document proper (converted from Standoc XML)
+** `@scripts` Javascript Scripts (optional, corresponds to `scripts.html`)

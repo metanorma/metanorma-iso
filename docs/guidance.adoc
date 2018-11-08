@@ -1,10 +1,17 @@
 = Guidance for Authoring
 
+TIP: This guide has been authored for ISO standards, but most of it applies to all Metanorma standards. We indicate where guidance differs for different standards classes.
+
 The Asciidoctor approach to authoring ISO standards (and other related standards under Metanorma) is not https://en.wikipedia.org/wiki/WYSIWYG[WYSIWYG]: you are dealing with a text editor and a console rather than a Word document, and you are authoring something that looks more like HTML than the final product. On the other hand, editing documents with a markup system like Asciidoctor makes it much easier to automate key validation and formatting processes, such as checking for missing document components, autonumbering, and generating output in multiple formats.
 
-The documents you will be authoring will be in the http://asciidoctor.org[Asciidoctor] formatting language, so you need to be familiar with that language's markup conventions: the http://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] will be your companion (supplemented by the Metanorma Asciidoctor extensions specific to each standards class. However we have tried to make things easier for you by preparing an https://github.com/riboseinc/metanorma-iso/blob/master/spec/examples/rice.adoc[AsciiDoc version] of the ISO Standard exemplar, the https://www.iso.org/publication/PUB100407.html["Rice document"]. If you use this document as a template for your own ISO standard document, you will find most of the formatting you need illustrated there.
+The documents you will be authoring will be in the http://asciidoctor.org[Asciidoc] formatting language, so you need to be familiar with that language's markup conventions.
 
-This guide has been authored for ISO standards, but most of it applies to all Metanorma standards. We indicate where guidance differs for different standards classes.
+* http://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] will be your companion.
+* https://www.metanorma.com/software/metanorma-iso/docs/asciiiso-syntax/[AsciiISO syntax] provides a quick reference for both standard Asciidoctor markup and custom ISO-related features.
+* See also https://github.com/riboseinc/metanorma-iso#asciidoctor-model-additions[Additions to markup made for ISO standards] in README Metanorma-ISO.
+
+We have tried to make things easier for you by preparing an https://github.com/riboseinc/metanorma-iso/blob/master/spec/examples/rice.adoc[AsciiDoc version] of the ISO Standard exemplar, the https://www.iso.org/publication/PUB100407.html["Rice document"].
+If you use this document as a template for your own ISO standard document, you will find most of the formatting you need illustrated there.
 
 == Output in different languages
 
