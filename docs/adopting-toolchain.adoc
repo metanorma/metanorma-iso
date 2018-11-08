@@ -231,8 +231,8 @@ Examples from Asciidoctor::Sample in metanorma-sample. In the following snippets
 
 [source,ruby]
 --
-      def input_to_isodoc(file)
-        Metanorma::Input::Asciidoc.new.process(file, @asciidoctor_backend)
+      def input_to_isodoc(file, filename)
+        Metanorma::Input::Asciidoc.new.process(file, filename, @asciidoctor_backend)
       end
 --
 
@@ -255,37 +255,6 @@ Examples from Asciidoctor::Sample in metanorma-sample. In the following snippets
 --
 
 === Isodoc::Standoc customisation in metanorma-sample
-
-* Setting the document title (`:doctitle`) in metadata, as a single element in ISO XML; ignore any document subtitle. 
-
-[source,ruby]
---
-      def title(isoxml, _out)
-        main = isoxml&.at(ns("//title[@language='en']"))&.text
-        set(:doctitle, main)
-      end
-
-      def subtitle(_isoxml, _out)
-        nil
-      end
---
-
-* Add to version metadata a metadata element for the revision date (already stored as `:revdate`), expressed as month+year (`:revdate_monthyear`)/
-
-[source,ruby]
---
-      def version(isoxml, _out)
-        super
-        revdate = get[:revdate]
-        set(:revdate_monthyear, monthyr(revdate))
-      end
-
-      def monthyr(isodate)
-        m = /(?<yr>\d\d\d\d)-(?<mo>\d\d)/.match isodate
-        return isodate unless m && m[:yr] && m[:mo]
-        return "#{MONTHS[m[:mo].to_sym]} #{m[:yr]}"
-      end
---
 
 * Initialise the HTML Converter: 
 ** Set `@libdir`, the current directory of the HTML converter, and the basis of the `html_doc_path()` method for accessing HTML assets (the `html` subdirectory of the current directory).
