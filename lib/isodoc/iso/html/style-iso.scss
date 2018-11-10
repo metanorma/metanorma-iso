@@ -252,7 +252,7 @@ h2 p {
   }
   
 ul > li > p:first-child:before {
-  content: "—";
+  content: "\2014";
   display: inline-block;
   width: 1em;
   margin-left: -1.5em;

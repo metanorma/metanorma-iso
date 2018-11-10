@@ -637,6 +637,8 @@
           <value>transmitted</value>
           <value>copied</value>
           <value>unchanged</value>
+          <value>circulated</value>
+          <text/>
         </choice>
       </attribute>
       <choice>
