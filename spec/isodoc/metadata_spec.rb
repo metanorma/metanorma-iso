@@ -20,10 +20,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
     <title-main language="fr" format="text/plain">Spécification et méthodes d'essai</title-main>
     <title-part language="fr" format="text/plain">Riz</title-part>
   </title>
-  <docidentifier>
-    <project-number part="1">ISO 17301</project-number>
-    <tc-document-number>17301</tc-document-number>
+  <docidentifier type="iso">ISO/PreCD3 17301-1</docidentifier>
+  <docidentifier type="iso-structured">
+    <project-number part="1">ISO/PreCD3 17301</project-number>
   </docidentifier>
+  <docidentifier type="iso-tc">17301</docidentifier>
   <date type="published"><on>2011</on></date>
   <date type="accessed"><on>2012</on></date>
   <date type="created"><from>2010</from><to>2011</to></date>
@@ -91,10 +92,11 @@ OUTPUT
     <title-main language="fr" format="text/plain">Spécification et méthodes d'essai</title-main>
     <title-part language="fr" format="text/plain">Riz</title-part>
   </title>
-  <docidentifier>
-    <project-number part="1" subpart="3">ISO/IEC 17301</project-number>
-    <tc-document-number>17301</tc-document-number>
+  <docidentifier type="iso">ISO/IEC/CD 17301-1-3</docidentifier>
+    <docidentifier type="iso-structured">
+    <project-number part="1" subpart="3">ISO/IEC/CD 17301</project-number>
   </docidentifier>
+  <docidentifier type="iso-tc">17301</docidentifier>
   <contributor>
     <role type="author"/>
     <organization>

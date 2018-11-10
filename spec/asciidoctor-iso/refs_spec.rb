@@ -447,9 +447,6 @@ RSpec.describe Asciidoctor::ISO do
         <title>
 
         </title>
-        <docidentifier>
-          <project-number>ISO </project-number>
-        </docidentifier>
         <contributor>
           <role type="author"/>
           <organization>

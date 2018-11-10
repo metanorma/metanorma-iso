@@ -2,7 +2,7 @@
     {% if tc_docnumber %}
 <p class="coverpage_docnumber">{{ tc_docnumber }}</p>
     {% else %}
-<p class="coverpage_docnumber">{{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</p>
+<p class="coverpage_docnumber">{{ docnumber }}(E) {{ draftinfo }}</p>
     {% endif %}
 
 {% if revdate %}
@@ -10,7 +10,7 @@
 {% endif %}
 
 {% if tc_docnumber %}
-<p class="coverpage_docnumber">{{ docnumber }}:{{ docyear }}(E) {{ draftinfo }}</p>
+<p class="coverpage_docnumber">{{ docnumber }}(E) {{ draftinfo }}</p>
 {% endif %}
 
 <p class="coverpage_techcommittee">{{ agency }}/{{ editorialgroup | join: "/" }}</p>

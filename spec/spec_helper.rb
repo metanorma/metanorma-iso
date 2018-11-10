@@ -94,9 +94,6 @@ BLANK_HDR = <<~"HDR"
   </title>
   <title>
   </title>
-  <docidentifier>
-    <project-number>ISO </project-number>
-  </docidentifier>
   <contributor>
     <role type="author"/>
     <organization>

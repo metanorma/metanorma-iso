@@ -20,9 +20,10 @@ module IsoDoc
       }.freeze
 
       def stage_abbrev(stage, iter, draft)
+        return "" unless stage
         stage = STAGE_ABBRS[stage.to_sym] || "??"
-        stage += iter.text if iter
-        stage = "Pre" + stage if draft&.text =~ /^0\./
+        stage += iter if iter
+        stage = "Pre" + stage if draft =~ /^0\./
         stage
       end
 
@@ -31,8 +32,8 @@ module IsoDoc
         if docstatus
           set(:stage, docstatus.text)
           set(:stage_int, docstatus.text.to_i)
-          abbr = stage_abbrev(docstatus.text, isoxml.at(ns("//bibdata/status/iteration")),
-                              isoxml.at(ns("//version/draft")))
+          abbr = stage_abbrev(docstatus.text, isoxml&.at(ns("//bibdata/status/iteration"))&.text,
+                              isoxml&.at(ns("//version/draft"))&.text)
           set(:stageabbr, abbr)
         end
         revdate = isoxml.at(ns("//version/revision-date"))
@@ -40,15 +41,9 @@ module IsoDoc
       end
 
       def docid(isoxml, _out)
-        dn = docnumber(isoxml) # e.g. ISO 8601, ISO/IEC DIR 2
-        docstatus = get[:stage]
-        if docstatus
-          abbr = get[:stageabbr]
-          docstatus = get[:stage]
-          (docstatus.to_i < 60) && dn = dn.sub(/ /, "/#{abbr} ")
-        end
-        set(:docnumber, dn)
-        tcdn = isoxml.at(ns("//bibdata/docidentifier/tc-document-number"))
+        dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso']"))
+        set(:docnumber, dn&.text)
+        tcdn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso-tc']"))
         set(:tc_docnumber, tcdn&.text)
       end
 

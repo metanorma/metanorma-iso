@@ -34,6 +34,30 @@ module Asciidoctor
           i, seen = other_footnote_renumber1(fn, i, seen)
         end
       end
+
+      def id_prefix(prefix, id)
+        prefix.join("/") + ( id.text.match(%{^/}) ? "" :  " " ) + id.text
+      end
+
+      def get_id_prefix(xmldoc)
+        prefix = []
+        xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
+                     "/organization").each do |x|
+          x1 = x.at("abbreviation")&.text || x.at("name")&.text
+          x1 == "ISO" and prefix.unshift("ISO") or prefix << x1
+        end
+        prefix
+      end
+
+      # ISO as a prefix goes first
+      def docidentifier_cleanup(xmldoc)
+        prefix = get_id_prefix(xmldoc)
+        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso']") or return
+        id.content = id_prefix(prefix, id)
+        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso-structured']/"\
+                       "project-number") or return
+        id.content = id_prefix(prefix, id)
+      end
     end
   end
 end

@@ -1034,6 +1034,9 @@
     <zeroOrMore>
       <ref name="docidentifier"/>
     </zeroOrMore>
+    <optional>
+      <ref name="docnumber"/>
+    </optional>
     <zeroOrMore>
       <ref name="bdate"/>
     </zeroOrMore>

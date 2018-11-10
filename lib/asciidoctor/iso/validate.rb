@@ -42,7 +42,8 @@ module Asciidoctor
       end
 
       def title_subpart_validate(root)
-        subpart = root.at("//bibdata/docidentifier/project-number[@subpart]")
+        docid = root.at("//bibdata/docidentifier[@type = 'iso']")
+        subpart = /-\d+-\d+/.match docid
         iec = root.at("//bibdata/contributor[role/@type = 'publisher']/"\
                       "organization[abbreviation = 'IEC' or "\
                       "name = 'International Electrotechnical Commission']")

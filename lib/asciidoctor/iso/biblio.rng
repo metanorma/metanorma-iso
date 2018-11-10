@@ -476,6 +476,9 @@
     <zeroOrMore>
       <ref name="docidentifier"/>
     </zeroOrMore>
+    <optional>
+      <ref name="docnumber"/>
+    </optional>
     <zeroOrMore>
       <ref name="bdate"/>
     </zeroOrMore>
@@ -672,6 +675,11 @@
       <optional>
         <attribute name="type"/>
       </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="docnumber">
+    <element name="docnumber">
       <text/>
     </element>
   </define>

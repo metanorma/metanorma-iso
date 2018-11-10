@@ -45,7 +45,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes default metadata" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -56,7 +56,7 @@ RSpec.describe Asciidoctor::ISO do
       :partnumber: 1
       :edition: 2
       :revdate: 2000-01-01
-      :draft: 3.4
+      :draft: 0.3.4
       :technical-committee: TC
       :technical-committee-number: 1
       :technical-committee-type: A
@@ -76,7 +76,6 @@ RSpec.describe Asciidoctor::ISO do
       :workgroup-number_2: 31
       :workgroup-type_2: C1
       :secretariat: SECRETARIAT
-      :copyright-year: 2001
       :docstage: 10
       :docsubstage: 20
       :iteration: 3
@@ -102,9 +101,11 @@ RSpec.describe Asciidoctor::ISO do
            <title-main language="fr" format="text/plain">Titre Principal</title-main>
            <title-part language="fr" format="text/plain">Part du Titre</title-part>
          </title>
-         <docidentifier>
-           <project-number part="1">ISO 1000</project-number>
-         </docidentifier>
+         <docidentifier type="iso">ISO/PreNWIP3 1000-1</docidentifier>
+<docidentifier type="iso-structured">
+  <project-number part="1">ISO 1000</project-number>
+</docidentifier>
+<docnumber>1000</docnumber>
          <contributor>
            <role type="author"/>
            <organization>
@@ -127,7 +128,7 @@ RSpec.describe Asciidoctor::ISO do
            <iteration>3</iteration>
          </status>
          <copyright>
-           <from>2001</from>
+           <from>#{Date.today.year}</from>
            <owner>
              <organization>
              <name>International Organization for Standardization</name>
@@ -156,7 +157,7 @@ RSpec.describe Asciidoctor::ISO do
        </bibdata><version>
          <edition>2</edition>
          <revision-date>2000-01-01</revision-date>
-         <draft>3.4</draft>
+         <draft>0.3.4</draft>
        </version>
        <sections/>
        </iso-standard>
@@ -178,6 +179,7 @@ RSpec.describe Asciidoctor::ISO do
       :language: el
       :script: Grek
       :publisher: IEC,IETF,ISO
+      :copyright-year: 2001
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -188,10 +190,12 @@ RSpec.describe Asciidoctor::ISO do
          <title>
 
          </title>
-         <docidentifier>
+         <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
+         <docidentifier type="iso-structured">
            <project-number part="1" subpart="1">ISO/IEC/IETF 1000</project-number>
-           <tc-document-number>2000</tc-document-number>
          </docidentifier>
+         <docidentifier type="iso-tc">2000</docidentifier>
+         <docnumber>1000</docnumber>
          <contributor>
            <role type="author"/>
            <organization>
@@ -239,7 +243,7 @@ RSpec.describe Asciidoctor::ISO do
            <substage>60</substage>
          </status>
          <copyright>
-           <from>2018</from>
+           <from>2001</from>
            <owner>
              <organization>
                <name>International Electrotechnical Commission</name>
@@ -248,7 +252,7 @@ RSpec.describe Asciidoctor::ISO do
            </owner>
          </copyright>
          <copyright>
-           <from>2018</from>
+           <from>2001</from>
            <owner>
              <organization>
                <name>IETF</name>
@@ -256,7 +260,7 @@ RSpec.describe Asciidoctor::ISO do
            </owner>
          </copyright>
          <copyright>
-           <from>2018</from>
+           <from>2001</from>
            <owner>
              <organization>
                <name>International Organization for Standardization</name>

@@ -10,14 +10,41 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       def metadata_id(node, xml)
+        iso_id(node, xml)
+        node.attr("tc-docnumber") and
+          xml.docidentifier(node.attr("tc-docnumber"),
+                            **attr_code(type: "iso-tc"))
+        xml.docnumber node&.attr("docnumber")
+      end
+
+      def iso_id(node, xml)
+        return unless node.attr("docnumber")
         part, subpart = node&.attr("partnumber")&.split(/-/)
-        xml.docidentifier do |i|
+        dn = add_id_parts(node.attr("docnumber"), part, subpart)
+        dn = id_stage_prefix(dn, node)
+        xml.docidentifier dn, **attr_code(type: "iso")
+        xml.docidentifier **attr_code(type: "iso-structured") do |i|
           i.project_number node.attr("docnumber"),
             **attr_code(part: part, subpart: subpart)
-          if node.attr("tc-docnumber")
-            i.tc_document_number node.attr("tc-docnumber")
-          end
         end
+      end
+
+      def add_id_parts(dn, part, subpart)
+        dn += "-#{part}" if part
+        dn += "-#{subpart}" if subpart
+        dn
+      end
+
+      def id_stage_prefix(dn, node)
+        if node.attr("docstage") && node.attr("docstage").to_i < 60
+          abbr = IsoDoc::Iso::Metadata.new("en", "Latn", {}).
+            stage_abbrev(node.attr("docstage"), node.attr("iteration"), 
+                         node.attr("draft"))
+          dn = "/#{abbr} #{dn}" # prefixes added in cleanup
+        else
+          dn += ":#{node.attr("copyright-year")}" if node.attr("copyright-year")
+        end
+        dn
       end
 
       def organization(org, orgname)
@@ -26,7 +53,7 @@ module Asciidoctor
           org.name "International Organization for Standardization"
           org.abbreviation "ISO"
         elsif ["IEC",
-                 "International Electrotechnical Commission"].include? orgname
+               "International Electrotechnical Commission"].include? orgname
           org.name "International Electrotechnical Commission"
           org.abbreviation "IEC"
         else
