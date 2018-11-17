@@ -391,7 +391,7 @@ OUTPUT
                  <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products?~@~I?~@~T?~@~IDetermination of moisture content?~@~I?~@~T?~@~IReference method</i></p>
                </div>
                <div id="H"><h1>2.&#160; Terms and definitions</h1><p>For the purposes of this document, the terms and definitions
-         given in ISO 712 and the following apply.</p>
+         given in <a href="#ISO712">ISO 712</a> and the following apply.</p>
        <p>ISO and IEC maintain terminological databases for use in
        standardization at the following addresses:</p>
 
@@ -443,7 +443,7 @@ OUTPUT
                  <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products?~@~I?~@~T?~@~IDetermination of moisture content?~@~I?~@~T?~@~IReference method</i></p>
                </div>
                <div id="H"><h1>2.&#160; Terms and definitions</h1><p>For the purposes of this document,
-         the terms and definitions given in ISO 712, ISO 712 and ISO 712 apply.</p>
+         the terms and definitions given in <a href="#ISO712">ISO 712</a>, <a href="#ISO712">ISO 712</a> and <a href="#ISO712">ISO 712</a> apply.</p>
        <p>ISO and IEC maintain terminological databases for use in
        standardization at the following addresses:</p>
 
