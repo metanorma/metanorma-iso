@@ -225,6 +225,8 @@ https://asciidoctor.org/docs/user-manual/#section-styles[Section styles] are use
 
 Sections whose position is set by the standard (e.g., for ISO, Introduction, Scope, Normative References, Terms and Definitions, Symbols and Abbreviations, Bibliography; this also applies to Abstracts) need to be titled as such, as first-level headings.
 
+TIP: Abstracts are not rendered in ISO and GB standards, but they are still incorporated into the document metadata (`bibdata`) at the start of the Metanorma XML generated.
+
 === Terms and Definitions
 
 Terms and Definitions sections follow a strict grammar in their Metanorma-ISO markup, as ISO/IEC DIR 2 prescribes their structure so strictly. The following illustrates the complete structure of a term entry; the Rice document splits up these features among several terms.
