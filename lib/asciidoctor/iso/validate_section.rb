@@ -160,31 +160,12 @@ module Asciidoctor
         scope.nil? || style_warning(scope, SCOPE_WARN, nil)
       end
 
-      def sourcecode_style(root)
-        root.xpath("//sourcecode").each do |x|
-          callouts = x.elements.select { |e| e.name == "callout" }
-          annotations = x.elements.select { |e| e.name == "annotation" }
-          if callouts.size != annotations.size
-            warn "#{x['id']}: mismatch of callouts and annotations"
-          end
-        end
-      end
-
       ASSETS_TO_STYLE =
         "//termsource | //formula | //termnote | //p | //li[not(p)] | "\
         "//dt | //dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
 
       NORM_BIBITEMS =
         "//references[title = 'Normative References']/bibitem".freeze
-
-      def asset_title_style(root)
-        root.xpath("//figure[image][not(name)]").each do |node|
-          style_warning(node, "Figure should have title", nil)
-        end
-        root.xpath("//table[not(name)]").each do |node|
-          style_warning(node, "Table should have title", nil)
-        end
-      end
 
       def norm_bibitem_style(root)
         root.xpath(NORM_BIBITEMS).each do |b|
