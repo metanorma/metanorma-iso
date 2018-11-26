@@ -22,9 +22,13 @@ name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
 
 <div class="doctitle-fr"><span class="title">{{ docsubtitleintro }}</span> <span class="subtitle">{{ docsubtitlemain }}</span> <span class="part">{{ docsubtitlepart }}</span></div>
 
-<div class="coverpage_docstage"><p>{{ stageabbr }} stage</p></div>
+<div class="coverpage_docstage">
+  {% if unpublished %}
+  <p>{{ stageabbr }} stage</p>
+  {% endif %}
+</div>
 
-{% if stage and stage_int < 60 %}
+{% if unpublished %}
 <div class="coverpage_warning">
 
 <p>Warning for WDs

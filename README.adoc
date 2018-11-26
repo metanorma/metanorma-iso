@@ -160,6 +160,7 @@ For automated bibliography integration, see the https://github.com/riboseinc/met
 
 The gem uses the document attributes defined for metanorma-standoc (see
 the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README]).
+
 The following document attributes are specific to ISO:
 
 `:tc-docnumber:`:: The document number assigned by the Technical committee

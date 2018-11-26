@@ -744,6 +744,9 @@
     </define>
     <define name="preface">
       <element name="preface">
+        <optional>
+          <ref name="preface_abstract"/>
+        </optional>
         <ref name="foreword"/>
         <optional>
           <ref name="introduction"/>
@@ -809,6 +812,11 @@
       <optional>
         <ref name="secretariat"/>
       </optional>
+    </element>
+  </define>
+  <define name="preface_abstract">
+    <element name="abstract">
+      <ref name="Basic-Section"/>
     </element>
   </define>
   <define name="foreword">
