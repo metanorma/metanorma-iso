@@ -169,11 +169,11 @@ The following document attributes are specific to ISO:
 
 `:title-intro-en:`:: The introductory component of the English title of the
 document. This and the other `:title-*` document attributes are used instead
-of the metanorma-standoc `:title:` attribute.
+of the metanorma-standoc `:title:` attribute and the default Asciidoctor title
+(the first line of the document header, prefixed with `=`.).
 
 `:title-main-en:`:: The main component of the English title of the document
-(mandatory). (The first line of the AsciiDoc document, which contains the title
-introduced with `=`, is ignored)
+(mandatory). 
 
 `:title-part-en:`:: The English title of the document part
 
