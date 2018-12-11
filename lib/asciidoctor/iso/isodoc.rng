@@ -384,6 +384,7 @@
       <ref name="sourcecode"/>
       <ref name="example"/>
       <ref name="review"/>
+      <ref name="pre"/>
     </choice>
   </define>
   <define name="paragraph">
@@ -535,6 +536,20 @@
       <zeroOrMore>
         <ref name="annotation"/>
       </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="pre">
+    <element name="pre">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <text/>
       <zeroOrMore>
         <ref name="note"/>
       </zeroOrMore>
@@ -710,6 +725,7 @@
       </optional>
       <choice>
         <ref name="image"/>
+        <ref name="pre"/>
         <zeroOrMore>
           <ref name="figure"/>
         </zeroOrMore>
@@ -735,6 +751,7 @@
       <ref name="sub"/>
       <ref name="sup"/>
       <ref name="tt"/>
+      <ref name="keyword"/>
       <ref name="strike"/>
       <ref name="smallcap"/>
       <ref name="xref"/>
@@ -762,6 +779,11 @@
   </define>
   <define name="tt">
     <element name="tt">
+      <text/>
+    </element>
+  </define>
+  <define name="keyword">
+    <element name="keyword">
       <text/>
     </element>
   </define>
