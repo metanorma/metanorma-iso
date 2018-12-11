@@ -106,6 +106,11 @@ RSpec.describe Asciidoctor::ISO do
   <project-number part="1">ISO 1000</project-number>
 </docidentifier>
 <docnumber>1000</docnumber>
+         <edition>2</edition>
+<version>
+         <revision-date>2000-01-01</revision-date>
+         <draft>0.3.4</draft>
+       </version>
          <contributor>
            <role type="author"/>
            <organization>
@@ -154,11 +159,7 @@ RSpec.describe Asciidoctor::ISO do
 <ics>
   <code>3</code>
 </ics>
-       </bibdata><version>
-         <edition>2</edition>
-         <revision-date>2000-01-01</revision-date>
-         <draft>0.3.4</draft>
-       </version>
+       </bibdata>
        <sections/>
        </iso-standard>
     OUTPUT

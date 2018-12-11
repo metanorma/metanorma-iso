@@ -72,7 +72,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
   it "processes review blocks if document is in draft mode" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).sub(/^.+<sections>/m, "")).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -92,11 +92,7 @@ RSpec.describe Asciidoctor::ISO do
       For further information on the Foreword, see *ISO/IEC Directives, Part 2, 2016, Clause 12.*
       ****
       INPUT
-              #{BLANK_HDR}
-       <version>
-         <draft>1.2</draft>
-       </version>
-       <sections><p id="foreword">Foreword</p>
+       <p id="foreword">Foreword</p>
        <review reviewer="ISO" id="_" date="20170101T00:00:00Z" from="foreword" to="foreword"><p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
        <p id="_">For further information on the Foreword, see <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p></review></sections>
        </iso-standard>

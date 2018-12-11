@@ -24,8 +24,8 @@ RSpec.describe Asciidoctor::ISO do
          <em>emphasis</em>
        <strong>strong</strong>
        <tt>monospace</tt>
-       "double quote"
-       'single quote'
+       “double quote”
+       ‘single quote’
        super<sup>script</sup>
        sub<sub>script</sub>
        <stem type="AsciiMath">a_90</stem>
