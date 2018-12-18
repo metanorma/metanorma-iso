@@ -78,6 +78,10 @@ code, pre, tt, kbd, samp {
   font-family: $monospacefont;
 }
 
+code *, pre *, tt *, kbd *, samp * {
+  font-family: $monospacefont !important;
+}
+
 h1, h2, h3, h4, h5, h6, .h2Annex {
   font-family: $headerfont;
 }

@@ -77,6 +77,10 @@ code, pre, tt, kbd, samp {
   font-family: $monospacefont;
 }
 
+code *, pre *, tt *, kbd *, samp * {
+  font-family: $monospacefont !important;
+}
+
 dl {
   display: grid;
   grid-template-columns: max-content auto;
