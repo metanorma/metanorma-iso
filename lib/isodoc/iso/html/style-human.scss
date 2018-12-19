@@ -76,10 +76,12 @@ time, mark, audio, video {
 
 code, pre, tt, kbd, samp {
   font-family: $monospacefont;
+  font-variant-ligatures: none;
 }
 
 code *, pre *, tt *, kbd *, samp * {
   font-family: $monospacefont !important;
+  font-variant-ligatures: none;
 }
 
 h1, h2, h3, h4, h5, h6, .h2Annex {
@@ -616,6 +618,7 @@ margin-left: 2em;
 
 .Sourcecode {
 font-family: $monospacefont;
+font-variant-ligatures: none;
 }
 
 .figure, .Sourcecode {
