@@ -659,7 +659,7 @@ r = 1 %</stem>
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:—</docidentifier>
          <date type="published">
-           <on>—</on>
+           <on>--</on>
          </date>
          <contributor>
            <role type="publisher"/>
