@@ -1,23 +1,23 @@
 ---
-sections:
-- name: Introduction
+items:
+- title: Introduction
   items:
-    - quickstart
-- name: Using Metanorma-ISO
+    - { title: Quickstart, path: quickstart/ }
+- title: Using Metanorma-ISO
   items:
-    - guidance
-    - outputs
-    - htmloutput
-    - customisation
-    - asciiiso-syntax
-- name: "Adopting Metanorma: FAQ"
+    - { title: Authoring guidance, path: guidance/ }
+    - { title: Output formats, path: outputs/ }
+    - { title: HTML output, path: htmloutput/ }
+    - { title: Customisation, path: customisation/ }
+    - { title: AsciiISO syntax, path: asciiiso-syntax/ }
+- title: "Adopting Metanorma: FAQ"
   items:
-    - adopting-spec
-    - adopting-toolchain
-    - styling-output-html
-    - styling-output-msword
-    - localizing-output
-    - replacing-asciidoc
+    - { title: How to adopt StanDoc in your own specs, path: adopting-spec/ }
+    - { title: How to use StanDoc toolchain for your specs, path: adopting-toolchain/ }
+    - { title: How to style HTML output, path: styling-output-html/ }
+    - { title: How to style MS Word output, path: styling-output-msword/ }
+    - { title: How to localize the output, path: localizing-output/ }
+    - { title: How to bypass AsciiDoc, path: replacing-asciidoc/ }
 ---
 
 = Navigation
