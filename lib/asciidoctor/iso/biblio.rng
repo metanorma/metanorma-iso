@@ -488,6 +488,9 @@
     <optional>
       <ref name="edition"/>
     </optional>
+    <optional>
+      <ref name="version"/>
+    </optional>
     <zeroOrMore>
       <ref name="biblionote"/>
     </zeroOrMore>
@@ -864,6 +867,34 @@
       <zeroOrMore>
         <ref name="locality"/>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="version">
+    <element name="version">
+      <optional>
+        <ref name="vedition"/>
+      </optional>
+      <optional>
+        <ref name="revision-date"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="draft"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="vedition">
+    <element name="edition">
+      <data type="int"/>
+    </element>
+  </define>
+  <define name="revision-date">
+    <element name="revision-date">
+      <data type="date"/>
+    </element>
+  </define>
+  <define name="draft">
+    <element name="draft">
+      <text/>
     </element>
   </define>
   <!--
