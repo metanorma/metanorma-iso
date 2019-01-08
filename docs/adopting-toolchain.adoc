@@ -20,9 +20,9 @@ The modules involve classes which rely on inheritance from other classes; the cu
 
 In the case of `Asciidoctor::X` classes, the changes you will need to make involve the intermediate XML representation of your document, which is built up through Nokogiri Builder; e.g. adding different enums, or adding new elements. The adaptations in `Asciidoctor::Sample::Converter` are limited, and most projects can take them across as is. 
 
-The customisations needed for Metanorma::Sample::Processor are minor, and involve invoking methods specific to the gem for document generation.
+The customisations needed for `Metanorma::Sample::Processor` are minor, and involve invoking methods specific to the gem for document generation.
 
-The customisations needed for Isodoc::Sample are more extensive. Three base classes are involved: 
+The customisations needed for `Isodoc::Sample` are more extensive. Three base classes are involved: 
 
 * `Isodoc::Metadata` processes the metadata about the document stored in `//bibdata`. This information typically ends up in the document title page, as opposed to the document body. For that reason, metadata is extracted into a hash, which is passed to document output (title page, Word header) via the https://shopify.github.io/liquid/[Liquid template language].
 * `Isodoc::HtmlConvert` converts Standoc XML to HTML.
@@ -32,7 +32,7 @@ The `Isodoc::HtmlConvert` and `Isodoc::WordConvert` overlap substantially, as bo
 
 === Asciidoctor::Standoc customisation in metanorma-sample
 
-Examples from Asciidoctor::Sample in metanorma-sample. In the following snippets, the parameter `node` represents the current node of the Asciidoctor document, and `xml` represents the Nokogiri Builder node of the XML output.
+Examples from `Asciidoctor::Sample` in metanorma-sample. In the following snippets, the parameter `node` represents the current node of the Asciidoctor document, and `xml` represents the Nokogiri Builder node of the XML output.
 
 * The boilerplate representation of the document's author, publisher and copyright holder names Acme instead of ISO as the responsible organisation.
 
