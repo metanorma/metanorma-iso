@@ -309,8 +309,8 @@ Informative clauses are indicated with the attribute `[obligation=informative]`;
 
 All annexes must be preceded by the style attribute `[appendix]`, in order to be recognised correctly. Like all clauses, annexes are normative by default, an informative annex is indicated with `[appendix,obligation=informative]`.
 
-TIP
-----
+[TIP]
+====
 In ISO, Appendixes to annexes can occur, although they are not mentioned in ISO/IEC DIR 2; ISO/IEC DIR 1 features them. They are marked up as immediate subsections of annexes, and must be tagged with an option attribute of "appendix":
 
 [source,asciidoc]
@@ -323,7 +323,7 @@ Text
 === Appendix 1
 Text
 --
----
+====
 
 The numbering of annexes and appendices is automatic: do not insert "Annex A" or "Appendix 1" as part of the title. Annex and Appendix titles can be left blank, as with Clauses.
 
