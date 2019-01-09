@@ -468,7 +468,7 @@ RSpec.describe Asciidoctor::ISO do
           <substage>60</substage>
         </status>
         <copyright>
-          <from>2018</from>
+          <from>2019</from>
           <owner>
             <organization>
               <name>International Organization for Standardization</name>
