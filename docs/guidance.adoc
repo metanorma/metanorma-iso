@@ -98,8 +98,8 @@ For references to standards with a document identifier, the entry must be preced
 [subs="quotes"]
 ISO 6646 in this example would be cited from elsewhere in the document through crossreferences to the `ricepotentialmilling` identifier; e.g. `<< ricepotentialmilling>>` (which will be rendered as `ISO 6646`), `<<``ricepotentialmilling, section 5``>>` (which will be rendered as `ISO 6646, Section 5`), `<<``ricepotentialmilling,section 5: the foregoing discussion``>>` (which will be tagged in the XML representation as Section 5 of ISO 6646, but will be displayed as `the foregoing discussion`.)
 
-TIP
-----
+[TIP]
+====
 If an ISO reference is in preparation, ISO/IEC DIR 2 dictates that details of the reference status be given as a footnote. In Asciidoc, this is done by giving the date as a double dash, and following the bibliographic anchor with a footnote macro:
 
 [source,asciidoc]
@@ -113,7 +113,7 @@ If an ISO reference includes all parts of the standard, that is indicated by app
 --
 * [[[ISO16634,ISO 16634 (all parts)]]] _Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs -- Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content_
 --
-----
+====
 
 In informative references, references to standards documents are still given with the same format of bibliographic anchor, and they are cited by their document identifier -- although they are displayed with an incrementing reference number in brackets, for consistency with any bibliographic entries that are not standards documents. (This convention is taken from ISO.) So
 
