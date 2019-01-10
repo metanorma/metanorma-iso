@@ -1,6 +1,6 @@
 = How can I adopt the StanDoc specification for my own publications?
 
-TIP: Copy the RSD schema from https://github.com/riboseinc/metanorma-iso/blob/master/grammars/rsd.rng. You may need to adapt some of the enums in the model, or in the ISO Standards model that it inherits; but in the first instance, you can just ignore the differences—and ignore the validation feedback that the toolset gives.
+TIP: Copy the RSD schema from https://github.com/riboseinc/metanorma-model-iso/blob/master/grammars/rsd.rng. You may need to adapt some of the enums in the model, or in the ISO Standards model that it inherits; but in the first instance, you can just ignore the differences—and ignore the validation feedback that the toolset gives.
 
 The Standoc specification is expressed in http://www.relaxng.org[RelaxNG schema for XML], and is intended to be customisable for different types of publication. The customisation of Standoc relies on inheritance, with the following schemas embedded hierarchically:
 
