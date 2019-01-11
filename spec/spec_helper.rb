@@ -155,11 +155,11 @@ WORD_HDR = <<~END
            <div class="WordSection1">
              <p>&#160;</p>
            </div>
-           <br clear="all" class="section"/>
+           <p><br clear="all" class="section"/></p>
            <div class="WordSection2">
              <p>&#160;</p>
            </div>
-           <br clear="all" class="section"/>
+           <p><br clear="all" class="section"/></p>
            <div class="WordSection3">
 END
 

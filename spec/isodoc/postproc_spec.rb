@@ -112,7 +112,7 @@ RSpec.describe IsoDoc do
     expect(word).to be_equivalent_to <<~"OUTPUT"
            <div class="WordSection3">
                <p class="zzSTDTitle1"></p>
-               <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+               <p class="MsoNormal"><br clear="all" style="mso-special-character:line-break;page-break-before:always"/></p>
                <div class="Section3"><a name="P" id="P"></a>
                  <h1 class="Annex"><b>Annex A</b><br/>(normative)<br/><br/><b>Annex</b></h1>
                  <div><a name="Q" id="Q"></a>

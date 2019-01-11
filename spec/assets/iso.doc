@@ -1,7 +1,7 @@
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----=_NextPart_663c07aa.dca1.4150"
+Content-Type: multipart/related; boundary="----=_NextPart_46e31af2.9c48.4ec0"
 
-------=_NextPart_663c07aa.dca1.4150
+------=_NextPart_46e31af2.9c48.4ec0
 Content-Location: file:///C:/Doc/iso.htm
 Content-Type: text/html; charset="utf-8"
 
@@ -533,8 +533,6 @@ table.MsoISOTable {
   mso-yfti-tbllook: 480;
   mso-border-insideh: .75pt solid windowtext;
   mso-border-insidev: .75pt solid windowtext;
-  mso-table-anchor-vertical: paragraph;
-  mso-table-bspace: 12.0pt;
   font-size: 10.0pt;
   font-family: "Cambria", serif; }
 
@@ -565,8 +563,6 @@ table.MsoTableGrid {
   mso-para-margin: 0cm;
   mso-para-margin-bottom: .0001pt;
   mso-pagination: widow-orphan;
-  mso-table-anchor-vertical: paragraph;
-  mso-table-bspace: 12.0pt;
   font-size: 10.0pt;
   font-family: "Cambria", serif; }
 
@@ -724,9 +720,6 @@ p.example, li.example, div.example, td.example {
   font-size: 10.0pt;
   font-family: "Cambria", serif; }
 
-table.example {
-  margin-bottom: 12pt; }
-
 td.example p.MsoListParagraph {
   font-size: 10.0pt; }
 
@@ -798,7 +791,9 @@ span.note_label, span.example_label, td.example_label, td.note_label {
 
       <p class="MsoNormal">&#xA0;</p>
     </div>
-    <br clear="all" class="section"/>
+    <p class="MsoNormal">
+      <br clear="all" class="section"/>
+    </p>
     <div class="WordSection2"><div style="mso-element:para-border-div;border:solid windowtext 1.0pt;&#10;border-bottom:none;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:&#10;solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;&#10;margin-left:5.1pt;margin-right:5.1pt">
 
 <p class="zzCopyright" align="left" style="margin-top:2.0pt;margin-right:0cm;&#10;margin-bottom:12.0pt;margin-left:0cm;text-align:left;page-break-before:always;&#10;mso-layout-grid-align:none;text-autospace:none;border:none;mso-border-top-alt:&#10;solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-right-alt:&#10;solid windowtext .5pt;padding:0cm;mso-padding-alt:1.0pt 4.0pt 0cm 4.0pt"><span lang="EN-GB" style="color:windowtext" xml:lang="EN-GB">&#xA9;  , Published in Switzerland.<p class="MsoNormal"></p></span></p>
@@ -834,11 +829,11 @@ Switzerland<p class="MsoNormal"></p></span></p>
 <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes">&#xA0;</span>TOC
   \o "1-2" \h \z \u <span style="mso-element:field-separator"></span></span>
 <span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-<a href="#_Toc712454932">Foreword<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
+<a href="#_Toc221259265">Foreword<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
 <span style="mso-tab-count:1 dotted">. </span>
 </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
 <span style="mso-element:field-begin"></span></span>
-<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc712454932 \h </span>
+<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc221259265 \h </span>
   <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span>
   <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a></span></span></p>
 
@@ -852,7 +847,9 @@ Switzerland<p class="MsoNormal"></p></span></p>
 </p>
 
 
-      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      <p class="MsoNormal">
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
       <div>
         <h1 class="ForewordTitle">Foreword</h1>
         <div id="" class="Note">
@@ -861,7 +858,9 @@ Switzerland<p class="MsoNormal"></p></span></p>
       </div>
       <p class="MsoNormal">&#xA0;</p>
     </div>
-    <br clear="all" class="section"/>
+    <p class="MsoNormal">
+      <br clear="all" class="section"/>
+    </p>
     <div class="WordSection3">
       <p class="zzSTDTitle1"></p>
     </div>
@@ -871,7 +870,7 @@ Switzerland<p class="MsoNormal"></p></span></p>
 </html>
 
 
-------=_NextPart_663c07aa.dca1.4150
+------=_NextPart_46e31af2.9c48.4ec0
 Content-Location: file:///C:/Doc/iso_files/filelist.xml
 Content-Transfer-Encoding: base64
 Content-Type: application/xml
@@ -881,7 +880,7 @@ ICAgICAgIDxvOk1haW5GaWxlIEhSZWY9Ii4uL3NwZWMvYXNzZXRzL2lzby5odG0iLz4gIDxvOkZp
 bGUgSFJlZj0iZmlsZWxpc3QueG1sIi8+CiAgPG86RmlsZSBIUmVmPSJoZWFkZXIuaHRtbCIvPgo8
 L3htbD4K
 
-------=_NextPart_663c07aa.dca1.4150
+------=_NextPart_46e31af2.9c48.4ec0
 Content-Location: file:///C:/Doc/iso_files/header.html
 Content-Transfer-Encoding: base64
 Content-Type: text/html charset="utf-8"
@@ -1074,4 +1073,4 @@ cD4NCg0KPHAgY2xhc3M9TXNvRm9vdGVyPjxzcGFuIGxhbmc9RU4tQVUgc3R5bGU9J2ZvbnQtc2l6
 ZToxMC4wcHQ7Jz7CqQ0KJm5ic3A7Jm5ic3A74oCTIEFsbCByaWdodHMgcmVzZXJ2ZWQ8bzpwPjwv
 bzpwPjwvc3Bhbj48L3A+DQoNCjwvZGl2Pg0KDQoNCg0KPC9ib2R5Pg0KDQo8L2h0bWw+DQo=
 
-------=_NextPart_663c07aa.dca1.4150--
+------=_NextPart_46e31af2.9c48.4ec0--
