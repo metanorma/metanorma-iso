@@ -1,7 +1,7 @@
 = Metanorma-ISO: Metanorma processor for ISO standards
 
 image:https://img.shields.io/gem/v/metanorma-iso.svg["Gem Version", link="https://rubygems.org/gems/metanorma-iso"]
-image:https://img.shields.io/travis/riboseinc/metanorma-iso/master.svg["Build Status", link="https://travis-ci.org/riboseinc/metanorma-iso"]
+image:https://img.shields.io/travis/riboseinc/metanorma-iso/master.svg["Build Status", link="https://travis-ci.com/riboseinc/metanorma-iso"]
 image:https://codeclimate.com/github/riboseinc/metanorma-iso/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/metanorma-iso"]
 
 WARNING: This gem is still under development.

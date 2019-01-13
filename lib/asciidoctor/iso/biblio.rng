@@ -286,18 +286,23 @@
   </define>
   <define name="address">
     <element name="address">
-      <oneOrMore>
+      <choice>
         <!-- iso191606 TODO -->
-        <ref name="street"/>
-      </oneOrMore>
-      <ref name="city"/>
-      <optional>
-        <ref name="state"/>
-      </optional>
-      <ref name="country"/>
-      <optional>
-        <ref name="postcode"/>
-      </optional>
+        <group>
+          <oneOrMore>
+            <ref name="street"/>
+          </oneOrMore>
+          <ref name="city"/>
+          <optional>
+            <ref name="state"/>
+          </optional>
+          <ref name="country"/>
+          <optional>
+            <ref name="postcode"/>
+          </optional>
+        </group>
+        <ref name="formattedAddress"/>
+      </choice>
     </element>
   </define>
   <define name="street">
@@ -322,6 +327,11 @@
   </define>
   <define name="postcode">
     <element name="postcode">
+      <text/>
+    </element>
+  </define>
+  <define name="formattedAddress">
+    <element name="formattedAddress">
       <text/>
     </element>
   </define>
