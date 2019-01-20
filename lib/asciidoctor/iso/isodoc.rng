@@ -911,6 +911,9 @@
           </choice>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
     </element>
   </define>
   <define name="stem">

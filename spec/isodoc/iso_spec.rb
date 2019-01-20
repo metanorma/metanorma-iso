@@ -100,7 +100,7 @@ RSpec.describe IsoDoc::Iso do
           <bibitem type="international-standard" id="IEV">
   <title format="text/plain" language="en" script="Latn">Electropedia: 
   The World's Online Electrotechnical Vocabulary</title>
-  <source type="src">http://www.electropedia.org</source>
+  <uri type="src">http://www.electropedia.org</uri>
   <docidentifier>IEV</docidentifier>
   <contributor>
     <role type="publisher"/>
@@ -163,5 +163,172 @@ RSpec.describe IsoDoc::Iso do
 
     OUTPUT
 end
+
+  it "processes examples" do
+    expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <preface><foreword>
+    <example id="samplecode">
+  <p>Hello</p>
+</example>
+    </foreword></preface>
+    </iso-standard>
+    INPUT
+        #{HTML_HDR}
+               <br/>
+               <div>
+                 <h1 class="ForewordTitle">Foreword</h1>
+                 <div id="samplecode" class="example">
+                     <p class="example-title">EXAMPLE</p>
+         <p>Hello</p>
+                 </div>
+               </div>
+               <p class="zzSTDTitle1"/>
+             </div>
+           </body>
+       </html>
+    OUTPUT
+  end
+
+
+  it "processes sequences of examples" do
+    expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <preface><foreword>
+    <example id="samplecode">
+  <p>Hello</p>
+</example>
+    <example id="samplecode2">
+  <p>Hello</p>
+</example>
+    </foreword></preface>
+    </iso-standard>
+    INPUT
+        #{HTML_HDR}
+               <br/>
+               <div>
+                 <h1 class="ForewordTitle">Foreword</h1>
+                 <div id="samplecode" class="example">
+                     <p class="example-title">EXAMPLE  1</p>
+         <p>Hello</p>
+                 </div>
+                 <div id="samplecode2" class="example">
+                     <p class="example-title">EXAMPLE  2</p>
+                 <p>Hello</p>
+                 </div>
+               </div>
+               <p class="zzSTDTitle1"/>
+             </div>
+           </body>
+       </html>
+    OUTPUT
+  end
+
+    it "processes examples (Word)" do
+    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body/m, "<body")).to be_equivalent_to <<~"OUTPUT"
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <preface><foreword>
+    <example id="samplecode">
+  <p>Hello</p>
+</example>
+    </foreword></preface>
+    </iso-standard>
+    INPUT
+           <body lang="EN-US" link="blue" vlink="#954F72">
+           <div class="WordSection1">
+             <p>&#160;</p>
+           </div>
+           <p>
+             <br clear="all" class="section"/>
+           </p>
+           <div class="WordSection2">
+             <p>
+               <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+             </p>
+             <div>
+               <h1 class="ForewordTitle">Foreword</h1>
+               <table id="samplecode" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
+                 <tr>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE</td>
+                   <td valign="top" class="example">
+         <p>Hello</p>
+       </td>
+                 </tr>
+               </table>
+             </div>
+             <p>&#160;</p>
+           </div>
+           <p>
+             <br clear="all" class="section"/>
+           </p>
+           <div class="WordSection3">
+             <p class="zzSTDTitle1"/>
+           </div>
+           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+           <div class="colophon"/>
+         </body>
+       </html>
+    OUTPUT
+  end
+
+
+  it "processes sequences of examples (Word)" do
+    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body/m, "<body")).to be_equivalent_to <<~"OUTPUT"
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <preface><foreword>
+    <example id="samplecode">
+  <p>Hello</p>
+</example>
+    <example id="samplecode2">
+  <p>Hello</p>
+</example>
+    </foreword></preface>
+    </iso-standard>
+    INPUT
+           <body lang="EN-US" link="blue" vlink="#954F72">
+           <div class="WordSection1">
+             <p>&#160;</p>
+           </div>
+           <p>
+             <br clear="all" class="section"/>
+           </p>
+           <div class="WordSection2">
+             <p>
+               <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+             </p>
+             <div>
+               <h1 class="ForewordTitle">Foreword</h1>
+               <table id="samplecode" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
+                 <tr>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE  1</td>
+                   <td valign="top" class="example">
+         <p>Hello</p>
+       </td>
+                 </tr>
+               </table>
+               <table id="samplecode2" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
+                 <tr>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE  2</td>
+                   <td valign="top" class="example">
+         <p>Hello</p>
+       </td>
+                 </tr>
+               </table>
+             </div>
+             <p>&#160;</p>
+           </div>
+           <p>
+             <br clear="all" class="section"/>
+           </p>
+           <div class="WordSection3">
+             <p class="zzSTDTitle1"/>
+           </div>
+           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+           <div class="colophon"/>
+         </body>
+       </html>
+    OUTPUT
+  end
+
 
 end

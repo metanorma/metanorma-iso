@@ -673,6 +673,7 @@ text-align: center;
     padding: 0.5em;
     margin: 2em 0 1em 0;
     text-align: left;
+    padding-left: 2em;
 }
     
 .example p {
@@ -682,8 +683,8 @@ text-align: center;
 .example .example-title {
 font-weight: 700;
 text-transform: uppercase;
-text-align: center;
 margin-top:0;
+margin-left:-1.5em;
 }
 
 /*

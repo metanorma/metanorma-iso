@@ -167,6 +167,10 @@ module IsoDoc
         delim = get_anchors[target][:type] == "listitem" ? " " : ", "
         l10n(get_anchors[container][:xref] + delim + linkend)
       end
+
+      def example_parse(node, out)
+        example_table_parse(node, out)
+      end
     end
   end
 end

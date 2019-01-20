@@ -416,4 +416,51 @@ RSpec.describe IsoDoc do
     expect(html).to match(%r{<h2 class="TermNum" id="paddy">1\.2</h2>})
   end
 
+    it "inserts default paragraph between two tables for Word" do
+    FileUtils.rm_f "test.doc"
+    FileUtils.rm_f "test.html"
+    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <annex id="P" inline-header="false" obligation="normative">
+    <example id="_63112cbc-cde0-435f-9553-e0b8c4f5851c">
+  <p id="_158d4efa-b1c9-4aec-b325-756de8e4c968">'1M', '01M', and '0001M' all describe the calendar month January.</p>
+</example>
+<example id="_63112cbc-cde0-435f-9553-e0b8c4f5851d">
+  <p id="_158d4efa-b1c9-4aec-b325-756de8e4c969">'2M', '02M', and '0002M' all describe the calendar month February.</p>
+</example>
+    </annex>
+    </iso-standard>
+    INPUT
+    word = File.read("test.doc").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
+      sub(%r{<div style="mso-element:footnote-list"/>.*$}m, "")
+    expect(word).to be_equivalent_to <<~"OUTPUT"
+    <div class="WordSection3">
+             <p class="zzSTDTitle1"></p>
+             <p class="MsoNormal"><br clear="all" style="mso-special-character:line-break;page-break-before:always"/></p>
+             <div class="Section3"><a name="P" id="P"></a>
+               <table class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><a name="_63112cbc-cde0-435f-9553-e0b8c4f5851c" id="_63112cbc-cde0-435f-9553-e0b8c4f5851c"></a>
+                 <tr>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE  1</td>
+                   <td valign="top" class="example">
+         <p class="example"><a name="_158d4efa-b1c9-4aec-b325-756de8e4c968" id="_158d4efa-b1c9-4aec-b325-756de8e4c968"></a>'1M', '01M', and '0001M' all describe the calendar month January.</p>
+       </td>
+                 </tr>
+               </table><p style="margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0.0pt;margin-bottom:.0001pt;line-height:1.0pt;mso-line-height-rule:exactly" class="MsoNormal"><span lang="EN-GB" style="display:none;mso-hide:all" xml:lang="EN-GB">&#xA0;</span></p>
+               <table class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><a name="_63112cbc-cde0-435f-9553-e0b8c4f5851d" id="_63112cbc-cde0-435f-9553-e0b8c4f5851d"></a>
+                 <tr>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE  2</td>
+                   <td valign="top" class="example">
+         <p class="example"><a name="_158d4efa-b1c9-4aec-b325-756de8e4c969" id="_158d4efa-b1c9-4aec-b325-756de8e4c969"></a>'2M', '02M', and '0002M' all describe the calendar month February.</p>
+       </td>
+                 </tr>
+               </table>
+             </div>
+           </div>
+           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+<div class="colophon"></div>
+    OUTPUT
+  end
+
+
+
 end

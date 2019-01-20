@@ -678,7 +678,7 @@ end
 [bibliography]
 == Bibliography 
 
-* [[[ISO3696,ISO 3696]]], _Water for analytical laboratory use -- Specification and test methods_
+* [[[ISO3696,ISO 3696]]] _Water for analytical laboratory use -- Specification and test methods_
 
 * [[[ISO5725-1,ISO 5725-1]]], _Accuracy (trueness and precision) of measurement methods and results -- Part 1: General principles and definitions_
 
