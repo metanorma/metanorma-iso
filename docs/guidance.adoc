@@ -404,7 +404,9 @@ Ordered lists in both HTML and Word have their labels pre-configured, to align w
 
 TIP: The stylesheets for ISO render unordered lists with em-dashes instead of bullets, as preferred by ISO. Ordered lists in Word are rendered with their labels bracketed. (_a)_, _1)_, etc.) 
 
-TIP: Asciidoctor and HTML support multiple paragraphs within a single list item (through https://asciidoctor.org/docs/user-manual/#list-continuation[list continuation]); in HTML output, all the paragraphs within a list item will be aligned. In Word, each list entry must be a single paragraph; if the Asciidoctor contains more than one paragraph for a list item, the subsequent paragraphs will not be preceded by a bullet in Word, but they will also not be indented under the first paragraph of the list item.
+TIP: Asciidoctor and HTML support multiple paragraphs within a single list item (through https://asciidoctor.org/docs/user-manual/#list-continuation[list continuation]); in HTML output, all the paragraphs within a list item will be aligned. The software attempts to do so with Word output as well, by using custom list continuation styles (`ListContLevel1` etc.); but you should check the output, and may need to manually intervene.
+
+In Word, each list entry must be a single paragraph; if the Asciidoctor contains more than one paragraph for a list item, the subsequent paragraphs will not be preceded by a bullet in Word, but they will also not be indented under the first paragraph of the list item.
 
 === Footnotes
 
