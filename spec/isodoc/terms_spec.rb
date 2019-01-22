@@ -169,13 +169,13 @@ OUTPUT
        <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
 
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">&lt;rice&gt; rice retaining its husk after threshing</p>
-       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f892" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE 1</td><td valign="top" class="example">
+       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f892" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE 1</td><td valign="top" class="example">
          <p id="_65c9a509-9a89-4b54-a890-274126aeb55c">Foreign seeds, husks, bran, sand, dust.</p>
          <ul>
          <li>A</li>
          </ul>
        </td></tr></table>
-       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f894" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE 2</td><td valign="top" class="example">
+       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f894" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE 2</td><td valign="top" class="example">
          <ul>
          <li>A</li>
          </ul>
@@ -188,7 +188,7 @@ OUTPUT
        <p class="AltTerms" style="text-align:left;">rough rice</p>
        <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE</td><td valign="top" class="example">
+       <table id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;"><tr><td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE</td><td valign="top" class="example">
          <ul>
          <li>A</li>
          </ul>

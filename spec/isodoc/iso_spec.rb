@@ -249,7 +249,7 @@ end
                <h1 class="ForewordTitle">Foreword</h1>
                <table id="samplecode" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
                  <tr>
-                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE</td>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE</td>
                    <td valign="top" class="example">
          <p>Hello</p>
        </td>
@@ -300,7 +300,7 @@ end
                <h1 class="ForewordTitle">Foreword</h1>
                <table id="samplecode" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
                  <tr>
-                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE  1</td>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE  1</td>
                    <td valign="top" class="example">
          <p>Hello</p>
        </td>
@@ -308,7 +308,7 @@ end
                </table>
                <table id="samplecode2" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
                  <tr>
-                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 1em;margin-left:0pt">EXAMPLE  2</td>
+                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE  2</td>
                    <td valign="top" class="example">
          <p>Hello</p>
        </td>
