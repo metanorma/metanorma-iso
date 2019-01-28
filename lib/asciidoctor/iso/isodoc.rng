@@ -494,6 +494,9 @@
         <data type="ID"/>
       </attribute>
       <optional>
+        <attribute name="lang"/>
+      </optional>
+      <optional>
         <ref name="tname"/>
       </optional>
       <oneOrMore>
