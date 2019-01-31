@@ -88,7 +88,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
        <sections>
-         <sourcecode id="_">@startuml
+         <sourcecode lang="plantuml" id="_">@startuml
 Alice -&gt; Bob: Authentication Request
 Bob --&gt; Alice: Authentication Response
 

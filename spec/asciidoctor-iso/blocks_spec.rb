@@ -372,7 +372,7 @@ RSpec.describe Asciidoctor::ISO do
       INPUT
       #{BLANK_HDR}
        <sections>
-         <sourcecode id="_">puts "Hello, world."
+         <sourcecode lang="ruby" id="_">puts "Hello, world."
        %w{a b c}.each do |x|
          puts x
        end</sourcecode>
@@ -395,7 +395,7 @@ RSpec.describe Asciidoctor::ISO do
       <2> This is another callout
       INPUT
       #{BLANK_HDR}
-              <sections><sourcecode id="_">puts "Hello, world." <callout target="_">1</callout>
+              <sections><sourcecode lang="ruby" id="_">puts "Hello, world." <callout target="_">1</callout>
        %w{a b c}.each do |x|
          puts x <callout target="_">2</callout>
        end<annotation id="_">

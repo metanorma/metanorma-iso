@@ -31,7 +31,7 @@ RSpec.describe Asciidoctor::ISO do
               <sections>
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
-         <term id="_"><preferred><stem type="AsciiMath">t_90</stem></preferred><admitted><stem type="AsciiMath">t_91</stem></admitted>
+         <term id="_"><preferred><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>t</mi><mn>90</mn></msub></math></stem></preferred><admitted><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>t</mi><mn>91</mn></msub></math></stem></admitted>
        <definition><p id="_">Time</p></definition></term>
        </terms>
        </sections>
@@ -87,8 +87,8 @@ RSpec.describe Asciidoctor::ISO do
               <sections>
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
-         <term id="_"><preferred><stem type="AsciiMath">t_90</stem></preferred><definition><formula id="_">
-         <stem type="AsciiMath">t_A</stem>
+         <term id="_"><preferred><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>t</mi><mn>90</mn></msub></math></stem></preferred><definition><formula id="_">
+         <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>t</mi><mi>A</mi></msub></math></stem>
        </formula><p id="_">This paragraph is extraneous</p></definition>
        </term>
        </terms>
@@ -160,7 +160,7 @@ r = 1 %</stem>
       NOTE: That loop does not do much
     INPUT
        #{BLANK_HDR}
-              <sections><sourcecode id="_">[1...x].each do |y|
+              <sections><sourcecode lang="ruby" id="_">[1...x].each do |y|
          puts y
        end</sourcecode>
        <note id="_">
@@ -528,7 +528,7 @@ r = 1 %</stem>
     INPUT
        #{BLANK_HDR}
        <sections><formula id="_">
-         <stem type="AsciiMath">Formula</stem>
+          <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi><mtext>or</mtext><mi>μ</mi><mi>l</mi><mi>a</mi></math></stem>
        <dl id="_">
          <dt>a</dt>
          <dd>

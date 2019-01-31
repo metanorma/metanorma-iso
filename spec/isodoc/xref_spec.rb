@@ -568,7 +568,7 @@ RSpec.describe IsoDoc do
                <p class="zzSTDTitle1"/>
                <div id="scope">
                  <h1>1.&#160; Scope</h1>
-                 <div id="N" class="formula"><span class="stem">(#(r = 1 %)#)</span>&#160; (1)</div>
+                 <div id="N" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (1)</p></div>
                  <p>
                    <a href="#N">Formula (1)</a>
                  </p>
@@ -587,19 +587,19 @@ RSpec.describe IsoDoc do
                <div id="widgets">
                  <h1>3.&#160; Widgets</h1>
                  <div id="widgets1"><h2>3.1. </h2>
-           <div id="note1" class="formula"><span class="stem">(#(r = 1 %)#)</span>&#160; (2)</div>
-           <div id="note2" class="formula"><span class="stem">(#(r = 1 %)#)</span>&#160; (3)</div>
+           <div id="note1" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (2)</p></div>
+           <div id="note2" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (3)</p></div>
          <p>    <a href="#note1">Formula (2)</a> <a href="#note2">Formula (3)</a> </p>
            </div>
                </div>
                <br/>
                <div id="annex1" class="Section3">
                  <div id="annex1a"><h2>A.1. </h2>
-           <div id="AN" class="formula"><span class="stem">(#(r = 1 %)#)</span>&#160; (A.1)</div>
+           <div id="AN" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.1)</p></div>
            </div>
                  <div id="annex1b"><h2>A.2. </h2>
-           <div id="Anote1" class="formula"><span class="stem">(#(r = 1 %)#)</span>&#160; (A.2)</div>
-           <div id="Anote2" class="formula"><span class="stem">(#(r = 1 %)#)</span>&#160; (A.3)</div>
+           <div id="Anote1" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.2)</p></div>
+           <div id="Anote2" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.3)</p></div>
            </div>
                </div>
              </div>
