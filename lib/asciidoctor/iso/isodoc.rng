@@ -927,7 +927,12 @@
           <value>AsciiMath</value>
         </choice>
       </attribute>
-      <text/>
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="AnyElement"/>
+        </choice>
+      </oneOrMore>
     </element>
   </define>
   <define name="annotation">

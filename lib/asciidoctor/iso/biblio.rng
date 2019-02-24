@@ -18,6 +18,21 @@
   of this.
 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    https://www.myintervals.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
+    iso8601date = xsd:string { pattern = "([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?" }
+    Somewhat dumbed down for XSD regex:
+  -->
+  <define name="ISO8601DateTime">
+    <data type="string">
+      <param name="pattern">([\+\-]?\d{4})((-?)((0[1-9]|1[0-2])((-?)([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24:?00)([\.,]\d+)?)?((:?)[0-5]\d([.,]\d+)?)?([zZ]|([\+\-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?</param>
+    </data>
+  </define>
+  <define name="ISO8601Date">
+    <data type="string">
+      <param name="pattern">([\+\-]?\d{4})((-?)((0[1-9]|1[0-2])((-?)([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6]))))?</param>
+    </data>
+  </define>
   <define name="status">
     <element name="status">
       <ref name="LocalizedString"/>
@@ -375,10 +390,7 @@
   </define>
   <define name="date">
     <element name="date">
-      <choice>
-        <data type="gYear"/>
-        <data type="date"/>
-      </choice>
+      <ref name="ISO8601Date"/>
     </element>
   </define>
   <define name="locality">
@@ -561,10 +573,7 @@
   </define>
   <define name="fetched">
     <element name="fetched">
-      <choice>
-        <data type="dateTime"/>
-        <data type="date"/>
-      </choice>
+      <ref name="ISO8601DateTime"/>
     </element>
   </define>
   <define name="validity">
@@ -582,26 +591,17 @@
   </define>
   <define name="validityBegins">
     <element name="validityBegins">
-      <choice>
-        <data type="dateTime"/>
-        <data type="date"/>
-      </choice>
+      <ref name="ISO8601DateTime"/>
     </element>
   </define>
   <define name="validityEnds">
     <element name="validityEnds">
-      <choice>
-        <data type="dateTime"/>
-        <data type="date"/>
-      </choice>
+      <ref name="ISO8601DateTime"/>
     </element>
   </define>
   <define name="validityRevision">
     <element name="revision">
-      <choice>
-        <data type="dateTime"/>
-        <data type="date"/>
-      </choice>
+      <ref name="ISO8601DateTime"/>
     </element>
   </define>
   <define name="TypedTitleString">
@@ -632,10 +632,7 @@
       <attribute name="text"/>
     </optional>
     <optional>
-      <choice>
-        <data type="gYear"/>
-        <data type="date"/>
-      </choice>
+      <ref name="ISO8601Date"/>
     </optional>
   </define>
   <define name="bdate">
@@ -660,25 +657,16 @@
       <choice>
         <group>
           <element name="from">
-            <choice>
-              <data type="gYear"/>
-              <data type="date"/>
-            </choice>
+            <ref name="ISO8601Date"/>
           </element>
           <optional>
             <element name="to">
-              <choice>
-                <data type="gYear"/>
-                <data type="date"/>
-              </choice>
+              <ref name="ISO8601Date"/>
             </element>
           </optional>
         </group>
         <element name="on">
-          <choice>
-            <data type="gYear"/>
-            <data type="date"/>
-          </choice>
+          <ref name="ISO8601Date"/>
         </element>
       </choice>
     </element>
@@ -791,20 +779,12 @@
   </define>
   <define name="seriesfrom">
     <element name="from">
-      <choice>
-        <data type="dateTime"/>
-        <data type="date"/>
-        <data type="gYear"/>
-      </choice>
+      <ref name="ISO8601Date"/>
     </element>
   </define>
   <define name="seriesto">
     <element name="to">
-      <choice>
-        <data type="dateTime"/>
-        <data type="date"/>
-        <data type="gYear"/>
-      </choice>
+      <ref name="ISO8601Date"/>
     </element>
   </define>
   <define name="seriesnumber">
@@ -899,7 +879,7 @@
   </define>
   <define name="revision-date">
     <element name="revision-date">
-      <data type="date"/>
+      <ref name="ISO8601Date"/>
     </element>
   </define>
   <define name="draft">
@@ -922,10 +902,12 @@
   <define name="AnyElement">
     <element>
       <anyName/>
-      <choice>
-        <text/>
-        <ref name="AnyElement"/>
-      </choice>
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="AnyElement"/>
+        </choice>
+      </oneOrMore>
     </element>
   </define>
 </grammar>

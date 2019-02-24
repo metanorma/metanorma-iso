@@ -250,24 +250,17 @@
         <choice>
           <group>
             <element name="from">
-              <choice>
-                <data type="gYear"/>
-                <data type="date"/>
-              </choice>
+              <ref name="ISO8601Date"/>
             </element>
             <optional>
               <element name="to">
-                <choice>
-                  <data type="gYear"/>
-                  <data type="date"/>
-                </choice>
+                <ref name="ISO8601Date"/>
               </element>
             </optional>
           </group>
           <element name="on">
             <choice>
-              <data type="gYear"/>
-              <data type="date"/>
+              <ref name="ISO8601Date"/>
               <value>--</value>
             </choice>
           </element>
