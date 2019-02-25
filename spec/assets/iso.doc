@@ -1,7 +1,7 @@
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----=_NextPart_6bb606bb.f022.46c5"
+Content-Type: multipart/related; boundary="----=_NextPart_7e1dcbc5.8918.449e"
 
-------=_NextPart_6bb606bb.f022.46c5
+------=_NextPart_7e1dcbc5.8918.449e
 Content-Location: file:///C:/Doc/iso.htm
 Content-Type: text/html; charset="utf-8"
 
@@ -82,6 +82,46 @@ p.NormRef, li.NormRef, div.NormRef {
   mso-ansi-language: EN-GB; }
 
 p.FigureTitle {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6.0pt;
+  margin-left: 0cm;
+  text-align: center;
+  line-height: 12.0pt;
+  page-break-before: avoid;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: 11.0pt;
+  font-family: "Cambria", serif;
+  font-weight: bold;
+  mso-fareast-font-family: "Cambria", serif;
+  mso-bidi-font-family: "Cambria", serif;
+  mso-ansi-language: EN-GB; }
+
+p.AdmonitionTitle {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6.0pt;
+  margin-left: 0cm;
+  text-align: center;
+  line-height: 12.0pt;
+  page-break-after: avoid;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: 11.0pt;
+  font-family: "Cambria", serif;
+  font-weight: bold;
+  mso-fareast-font-family: "Cambria", serif;
+  mso-bidi-font-family: "Cambria", serif;
+  mso-ansi-language: EN-GB; }
+
+p.SourceTitle {
   mso-style-unhide: no;
   mso-style-qformat: yes;
   mso-style-parent: "";
@@ -829,11 +869,11 @@ Switzerland<p class="MsoNormal"></p></span></p>
 <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes">&#xA0;</span>TOC
   \o "1-2" \h \z \u <span style="mso-element:field-separator"></span></span>
 <span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-<a href="#_Toc980760563">Foreword<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
+<a href="#_Toc107930272">Foreword<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
 <span style="mso-tab-count:1 dotted">. </span>
 </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
 <span style="mso-element:field-begin"></span></span>
-<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc980760563 \h </span>
+<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc107930272 \h </span>
   <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span>
   <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a></span></span></p>
 
@@ -870,7 +910,7 @@ Switzerland<p class="MsoNormal"></p></span></p>
 </html>
 
 
-------=_NextPart_6bb606bb.f022.46c5
+------=_NextPart_7e1dcbc5.8918.449e
 Content-Location: file:///C:/Doc/iso_files/filelist.xml
 Content-Transfer-Encoding: base64
 Content-Type: application/xml
@@ -880,7 +920,7 @@ ICAgICAgIDxvOk1haW5GaWxlIEhSZWY9Ii4uL3NwZWMvYXNzZXRzL2lzby5odG0iLz4gIDxvOkZp
 bGUgSFJlZj0iZmlsZWxpc3QueG1sIi8+CiAgPG86RmlsZSBIUmVmPSJoZWFkZXIuaHRtbCIvPgo8
 L3htbD4K
 
-------=_NextPart_6bb606bb.f022.46c5
+------=_NextPart_7e1dcbc5.8918.449e
 Content-Location: file:///C:/Doc/iso_files/header.html
 Content-Transfer-Encoding: base64
 Content-Type: text/html charset="utf-8"
@@ -1073,4 +1113,4 @@ cD4NCg0KPHAgY2xhc3M9TXNvRm9vdGVyPjxzcGFuIGxhbmc9RU4tQVUgc3R5bGU9J2ZvbnQtc2l6
 ZToxMC4wcHQ7Jz7CqQ0KJm5ic3A7Jm5ic3A74oCTIEFsbCByaWdodHMgcmVzZXJ2ZWQ8bzpwPjwv
 bzpwPjwvc3Bhbj48L3A+DQoNCjwvZGl2Pg0KDQoNCg0KPC9ib2R5Pg0KDQo8L2h0bWw+DQo=
 
-------=_NextPart_6bb606bb.f022.46c5--
+------=_NextPart_7e1dcbc5.8918.449e--

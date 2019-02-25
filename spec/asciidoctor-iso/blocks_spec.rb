@@ -190,7 +190,7 @@ RSpec.describe Asciidoctor::ISO do
       INPUT
       #{BLANK_HDR}
       <sections>
-         <admonition id="_" type="safety precautions"><p id="_">While werewolves are hardy community members, keep in mind the following dietary concerns:</p>
+         <admonition id="_" type="safety precautions"><name>Safety Precautions</name><p id="_">While werewolves are hardy community members, keep in mind the following dietary concerns:</p>
        <ol id="_" type="arabic">
          <li>
            <p id="_">They are allergic to cinnamon.</p>
