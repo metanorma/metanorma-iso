@@ -139,7 +139,7 @@ module IsoDoc
         end
       end
 
-            def eref_localities1_zh(target, type, from, to)
+      def eref_localities1_zh(target, type, from, to)
         subsection = from&.text&.match(/\./)
         ret = type == "list" ? "" : ","
         ret += " 第#{from.text}" if from
@@ -168,9 +168,37 @@ module IsoDoc
         l10n(get_anchors[container][:xref] + delim + linkend)
       end
 
-      def example_parse(node, out)
-        example_table_parse(node, out)
+      def example_p_parse(node, div)
+        div.p do |p|
+          p.span **{ class: "example_label" } do |s|
+            s << example_label(node)
+          end
+          insert_tab(p, 1)
+          node.first_element_child.children.each { |n| parse(n, p) }
+        end
+        node.element_children[1..-1].each { |n| parse(n, div) }
       end
+
+      def example_parse1(node, div)
+        div.p do |p|
+          p.span **{ class: "example_label" } do |s|
+            s << example_label(node)
+          end
+          insert_tab(p, 1)
+        end
+        node.children.each { |n| parse(n, div) }
+      end
+
+      def example_parse(node, out)
+        out.div **{ id: node["id"], class: "example" } do |div|
+          if node.first_element_child.name == "p"
+            example_p_parse(node, div)
+          else
+            example_parse1(node, div)
+          end
+        end
+      end
+
     end
   end
 end

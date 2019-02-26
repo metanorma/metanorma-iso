@@ -175,17 +175,16 @@ end
     </iso-standard>
     INPUT
         #{HTML_HDR}
-               <br/>
-               <div>
-                 <h1 class="ForewordTitle">Foreword</h1>
-                 <div id="samplecode" class="example">
-                     <p class="example-title">EXAMPLE</p>
-         <p>Hello</p>
-                 </div>
+                     <br/>
+             <div>
+               <h1 class="ForewordTitle">Foreword</h1>
+               <div id="samplecode" class="example">
+                 <p><span class="example_label">EXAMPLE</span>&#160; Hello</p>
                </div>
-               <p class="zzSTDTitle1"/>
              </div>
-           </body>
+             <p class="zzSTDTitle1"/>
+           </div>
+         </body>
        </html>
     OUTPUT
   end
@@ -205,21 +204,19 @@ end
     </iso-standard>
     INPUT
         #{HTML_HDR}
-               <br/>
-               <div>
-                 <h1 class="ForewordTitle">Foreword</h1>
-                 <div id="samplecode" class="example">
-                     <p class="example-title">EXAMPLE  1</p>
-         <p>Hello</p>
-                 </div>
-                 <div id="samplecode2" class="example">
-                     <p class="example-title">EXAMPLE  2</p>
-                 <p>Hello</p>
-                 </div>
+             <br/>
+             <div>
+               <h1 class="ForewordTitle">Foreword</h1>
+               <div id="samplecode" class="example">
+                 <p><span class="example_label">EXAMPLE  1</span>&#160; Hello</p>
                </div>
-               <p class="zzSTDTitle1"/>
+               <div id="samplecode2" class="example">
+                 <p><span class="example_label">EXAMPLE  2</span>&#160; Hello</p>
+               </div>
              </div>
-           </body>
+             <p class="zzSTDTitle1"/>
+           </div>
+         </body>
        </html>
     OUTPUT
   end
@@ -247,14 +244,9 @@ end
              </p>
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
-               <table id="samplecode" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
-                 <tr>
-                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE</td>
-                   <td valign="top" class="example">
-         <p>Hello</p>
-       </td>
-                 </tr>
-               </table>
+               <div id="samplecode" class="example">
+                 <p><span class="example_label">EXAMPLE</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
+               </div>
              </div>
              <p>&#160;</p>
            </div>
@@ -298,22 +290,12 @@ end
              </p>
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
-               <table id="samplecode" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
-                 <tr>
-                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE  1</td>
-                   <td valign="top" class="example">
-         <p>Hello</p>
-       </td>
-                 </tr>
-               </table>
-               <table id="samplecode2" class="example" cellspacing="0" cellpadding="0" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-bspace:14.2pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-collapse:collapse;">
-                 <tr>
-                   <td valign="top" class="example_label" style="width:82.8pt;padding:0 0 0 0;margin-left:0pt">EXAMPLE  2</td>
-                   <td valign="top" class="example">
-         <p>Hello</p>
-       </td>
-                 </tr>
-               </table>
+               <div id="samplecode" class="example">
+                 <p><span class="example_label">EXAMPLE  1</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
+               </div>
+               <div id="samplecode2" class="example">
+                 <p><span class="example_label">EXAMPLE  2</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
+               </div>
              </div>
              <p>&#160;</p>
            </div>

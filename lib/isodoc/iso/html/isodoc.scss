@@ -692,14 +692,18 @@ div.example {
 }
 */
 
+
+/*
 div.example {
   margin-left:70.9pt;
   text-indent:-70.9pt;
 }
+*/
 p.example, li.example, div.example, td.example
 	{	margin:0in;
-	margin-bottom:.0001pt;
+	margin-bottom:12.0pt;
 	mso-pagination:none;
+        tab-stops:70.9pt;
 	font-size:10.0pt;
 	font-family:$bodyfont;}
 

@@ -419,70 +419,60 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
         #{HTML_HDR}
-    <br/>
-               <div>
-                 <h1 class="ForewordTitle">Foreword</h1>
-                 <p>
-           <a href="#N">Clause 1, Example</a>
-           <a href="#note1">3.1, Example  1</a>
-           <a href="#note2">3.1, Example  2</a>
-           <a href="#AN">A.1, Example</a>
-           <a href="#Anote1">A.2, Example  1</a>
-           <a href="#Anote2">A.2, Example  2</a>
-           </p>
-               </div>
-               <p class="zzSTDTitle1"/>
-               <div id="scope">
-                 <h1>1.&#160; Scope</h1>
-                 <div id="N" class="example"><p class="example-title">EXAMPLE</p>
-         <p>Hello</p>
-                 </div>
-                 <p>
-                   <a href="#N">Example</a>
-                 </p>
-               </div>
-               <div id="terms"><h1>2.&#160; Terms and definitions</h1><p>No terms and definitions are listed in this document.</p>
-       <p>ISO and IEC maintain terminological databases for use in
-       standardization at the following addresses:</p>
+      <br/>
+      <div>
+        <h1 class="ForewordTitle">Foreword</h1>
+        <p>
+    <a href="#N">Clause 1, Example</a>
+    <a href="#note1">3.1, Example  1</a>
+    <a href="#note2">3.1, Example  2</a>
+    <a href="#AN">A.1, Example</a>
+    <a href="#Anote1">A.2, Example  1</a>
+    <a href="#Anote2">A.2, Example  2</a>
+    </p>
+      </div>
+      <p class="zzSTDTitle1"/>
+      <div id="scope">
+        <h1>1.&#160; Scope</h1>
+        <div id="N" class="example">
+          <p><span class="example_label">EXAMPLE</span>&#160; Hello</p>
+        </div>
+        <p>
+          <a href="#N">Example</a>
+        </p>
+      </div>
+      <div id="terms"><h1>2.&#160; Terms and definitions</h1><p>No terms and definitions are listed in this document.</p>
+<p>ISO and IEC maintain terminological databases for use in
+standardization at the following addresses:</p>
+<ul>
+<li> <p>ISO Online browsing platform: available at
+  <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
+<li> <p>IEC Electropedia: available at
+  <a href="http://www.electropedia.org">http://www.electropedia.org</a>
+</p> </li> </ul>
+</div>
+      <div id="widgets">
+        <h1>3.&#160; Widgets</h1>
+        <div id="widgets1"><h2>3.1. </h2>
+        <div id="note1" class="example"><p><span class="example_label">EXAMPLE  1</span>&#160; Hello</p></div>
+        <div id="note2" class="example"><p><span class="example_label">EXAMPLE  2</span>&#160; Hello</p></div>
+<p>    <a href="#note1">Example  1</a> <a href="#note2">Example  2</a> </p>
+    </div>
+      </div>
+      <br/>
+      <div id="annex1" class="Section3">
+        <div id="annex1a"><h2>A.1. </h2>
+        <div id="AN" class="example"><p><span class="example_label">EXAMPLE</span>&#160; Hello</p></div>
+    </div>
+        <div id="annex1b"><h2>A.2. </h2>
+        <div id="Anote1" class="example"><p><span class="example_label">EXAMPLE  1</span>&#160; Hello</p></div>
+        <div id="Anote2" class="example"><p><span class="example_label">EXAMPLE  2</span>&#160; Hello</p></div>
+    </div>
+      </div>
+    </div>
+  </body>
+</html>
 
-       <ul>
-       <li> <p>ISO Online browsing platform: available at
-         <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
-       <li> <p>IEC Electropedia: available at
-         <a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> </li> </ul>
-       </div>
-               <div id="widgets">
-                 <h1>3.&#160; Widgets</h1>
-                 <div id="widgets1"><h2>3.1. </h2>
-               <div id="note1" class="example"><p class="example-title">EXAMPLE  1</p>
-         <p>Hello</p>
-       </div>
-               <div id="note2" class="example"><p class="example-title">EXAMPLE  2</p>
-         <p>Hello</p>
-       </div>
-       <p>    <a href="#note1">Example  1</a> <a href="#note2">Example  2</a> </p>
-           </div>
-               </div>
-               <br/>
-               <div id="annex1" class="Section3">
-                 <div id="annex1a"><h2>A.1. </h2>
-               <div id="AN" class="example"><p class="example-title">EXAMPLE</p>
-         <p>Hello</p>
-       </div>
-           </div>
-                 <div id="annex1b"><h2>A.2. </h2>
-               <div id="Anote1" class="example"><p class="example-title">EXAMPLE  1</p>
-         <p>Hello</p>
-       </div>
-               <div id="Anote2" class="example"><p class="example-title">EXAMPLE  2</p>
-         <p>Hello</p>
-       </div>
-           </div>
-               </div>
-             </div>
-           </body>
-       </html>
     OUTPUT
   end
 
