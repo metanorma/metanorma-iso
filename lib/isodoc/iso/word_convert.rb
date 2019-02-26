@@ -199,6 +199,20 @@ module IsoDoc
         end
       end
 
+      def termexamples_before_termnotes(node)
+        return unless node.at(ns("./termnote")) && node.at(ns("./termexample"))
+        return unless insert = node.at(ns("./definition"))
+        insert = insertall_after_here(node, insert, "termexample")
+        insert = insertall_after_here(node, insert, "termnote")
+      end
+
+      def term_parse(node, out)
+        termexamples_before_termnotes(node)
+        out.p **{ class: "Terms", style:"text-align:left;" } do |p|
+          node.children.each { |c| parse(c, p) }
+        end
+      end
+
     end
   end
 end

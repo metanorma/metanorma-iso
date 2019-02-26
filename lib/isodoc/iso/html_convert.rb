@@ -143,7 +143,7 @@ module IsoDoc
         l10n(get_anchors[container][:xref] + delim + linkend)
       end
 
-            def example_p_parse(node, div)
+      def example_p_parse(node, div)
         div.p do |p|
           p.span **{ class: "example_label" } do |s|
             s << example_label(node)
@@ -171,6 +171,29 @@ module IsoDoc
           else
             example_parse1(node, div)
           end
+        end
+      end
+
+      def insertall_after_here(node, insert, name)
+        node.children.each do |n|
+          next unless n.name == name
+          insert.next = n.remove
+          insert = n
+        end
+        insert
+      end
+
+      def termexamples_before_termnotes(node)
+        return unless node.at(ns("./termnote")) && node.at(ns("./termexample"))
+        return unless insert = node.at(ns("./definition"))
+        insert = insertall_after_here(node, insert, "termexample")
+        insert = insertall_after_here(node, insert, "termnote")
+      end
+
+      def term_parse(node, out)
+        termexamples_before_termnotes(node)
+        out.p **{ class: "Terms", style:"text-align:left;" } do |p|
+          node.children.each { |c| parse(c, p) }
         end
       end
 

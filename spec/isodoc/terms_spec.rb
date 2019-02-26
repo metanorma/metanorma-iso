@@ -33,11 +33,6 @@ RSpec.describe IsoDoc do
 <admitted>rough rice</admitted>
 <deprecates>cargo rice</deprecates>
 <definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></definition>
-<termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f893">
-  <ul>
-  <li>A</li>
-  </ul>
-</termexample>
 <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74e">
   <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
 </termnote>
@@ -45,6 +40,11 @@ RSpec.describe IsoDoc do
 <ul><li>A</li></ul>
   <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
 </termnote>
+<termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f893">
+  <ul>
+  <li>A</li>
+  </ul>
+</termexample>
 <termsource status="identical">
   <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></origin>
 </termsource></term>
@@ -132,11 +132,6 @@ OUTPUT
 <admitted>rough rice</admitted>
 <deprecates>cargo rice</deprecates>
 <definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></definition>
-<termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f893">
-  <ul>
-  <li>A</li>
-  </ul>
-</termexample>
 <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74e">
   <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
 </termnote>
@@ -144,6 +139,11 @@ OUTPUT
 <ul><li>A</li></ul>
   <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
 </termnote>
+<termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f893">
+  <ul>
+  <li>A</li>
+  </ul>
+</termexample>
 <termsource status="identical">
   <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></origin>
 </termsource></term>
