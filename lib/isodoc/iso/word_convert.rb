@@ -145,7 +145,8 @@ module IsoDoc
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{to}" if to
         loc = (@locality[type] || type.sub(/^locality:/, "").capitalize )
-        ret += " #{loc}" unless subsection && type == "clause" || type == "list" || target.match(/^IEV$|^IEC 60050-/)
+        ret += " #{loc}" unless subsection && type == "clause" ||
+          type == "list" || target.match(/^IEV$|^IEC 60050-/)
         ret += ")" if type == "list"
         ret
       end
@@ -156,7 +157,8 @@ module IsoDoc
         return l10n(eref_localities1_zh(target, type, from, to)) if lang == "zh"
         ret = type == "list" ? "" : ","
         loc = @locality[type] || type.sub(/^locality:/, "").capitalize
-        ret += " #{loc}" unless subsection && type == "clause" || type == "list" || target.match(/^IEV$|^IEC 60050-/)
+        ret += " #{loc}" unless subsection && type == "clause" ||
+          type == "list" || target.match(/^IEV$|^IEC 60050-/)
         ret += " #{from.text}" if from
         ret += "&ndash;#{to.text}" if to
         ret += ")" if type == "list"
@@ -215,6 +217,15 @@ module IsoDoc
 
       def clausedelim
         ""
+      end
+
+      def figure_cleanup(docxml)
+        super
+        docxml.xpath("//div[@class = 'figure']//table[@class = 'dl']").each do |t|
+          t["class"] = "figdl"
+          d = t.add_previous_sibling("<div class='figdl'/>")
+          t.parent = d.first
+        end
       end
     end
   end

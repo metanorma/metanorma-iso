@@ -454,6 +454,45 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
+    it "processes figure keys (Word)" do
+          FileUtils.rm_f "test.doc"
+    FileUtils.rm_f "test.html"
+    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <annex id="P" inline-header="false" obligation="normative">
+    <figure id="samplecode">
+  <p>Hello</p>
+  <p>Key</p>
+  <dl>
+  <dt><p>A</p></dt>
+  <dd><p>B</p></dd>
+  </dl>
+</figure>
+    </annex>
+    </iso-standard>
+    INPUT
+    word = File.read("test.doc").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
+      sub(%r{<div style="mso-element:footnote-list"/>.*$}m, "")
+    expect(word).to be_equivalent_to <<~"OUTPUT"
+       <div class="WordSection3">
+             <p class="zzSTDTitle1"></p>
+             <p class="MsoNormal">
+               <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+             </p>
+             <div class="Section3"><a name="P" id="P"></a>
+               <div class="figure"><a name="samplecode" id="samplecode"></a>
+         <p class="MsoNormal">Hello</p>
+         <p class="MsoNormal">Key</p>
+         <p class="MsoNormal"><b>Key</b></p><div class="figdl"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
+       </div>
+             </div>
+           </div>
+           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+           <div class="colophon"></div>
+
+    OUTPUT
+  end
+
 
 
 end
