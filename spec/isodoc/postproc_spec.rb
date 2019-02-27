@@ -116,10 +116,10 @@ RSpec.describe IsoDoc do
                <div class="Section3"><a name="P" id="P"></a>
                  <h1 class="Annex"><b>Annex A</b><br/>(normative)<br/><br/><b>Annex</b></h1>
                  <div><a name="Q" id="Q"></a>
-            <p class="h2Annex">A.1. Annex A.1</p>
+            <p class="h2Annex">A.1 Annex A.1</p>
        </div>
               <div><a name="Q2" id="Q2"></a>
-                <p class="h2Annex">Appendix 1. An Appendix</p>
+                <p class="h2Annex">Appendix 1 An Appendix</p>
                 </div>
                </div>
              </div>
@@ -155,7 +155,7 @@ RSpec.describe IsoDoc do
     expect(word).to be_equivalent_to <<~"OUTPUT"
            <div class="WordSection3">
                <p class="zzSTDTitle1"></p>
-               <div><a name="_terms_and_definitions" id="_terms_and_definitions"></a><h1>1.<span style="mso-tab-count:1">&#xA0; </span>Terms and definitions</h1><p class="MsoNormal">For the purposes of this document,
+               <div><a name="_terms_and_definitions" id="_terms_and_definitions"></a><h1>1<span style="mso-tab-count:1">&#xA0; </span>Terms and definitions</h1><p class="MsoNormal">For the purposes of this document,
            the following terms and definitions apply.</p>
        <p class="MsoNormal">ISO and IEC maintain terminological databases for use in
        standardization at the following addresses:</p>
@@ -219,7 +219,7 @@ RSpec.describe IsoDoc do
        <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes">&#xA0;</span>TOC
          \o "1-2" \h \z \u <span style="mso-element:field-separator"></span></span>
        <span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-       <a href="#_Toc">1. Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
+       <a href="#_Toc">1 Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
        <span style="mso-tab-count:1 dotted">. </span>
        </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
        <span style="mso-element:field-begin"></span></span>
@@ -230,7 +230,7 @@ RSpec.describe IsoDoc do
        <p class="MsoToc2">
          <span class="MsoHyperlink">
            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-       <a href="#_Toc">1.1. Introduction to this<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
+       <a href="#_Toc">1.1 Introduction to this<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
        <span style="mso-tab-count:1 dotted">. </span>
        </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
        <span style="mso-element:field-begin"></span></span>
@@ -243,7 +243,7 @@ RSpec.describe IsoDoc do
        <p class="MsoToc2">
          <span class="MsoHyperlink">
            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-       <a href="#_Toc">1.2. Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
+       <a href="#_Toc">1.2 Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
        <span style="mso-tab-count:1 dotted">. </span>
        </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">
        <span style="mso-element:field-begin"></span></span>
@@ -296,16 +296,16 @@ RSpec.describe IsoDoc do
            <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
              <p class="zzSTDTitle1"></p>
              <div>
-               <h1>1.&#xA0; Clause 4</h1>
+               <h1>1&#xA0; Clause 4</h1>
                <a rel="footnote" href="#fn:3" epub:type="footnote" id="fnref:1">
                  <sup>1</sup>
                </a>
                <div id="N">
 
-                <h2>1.1. Introduction to this<a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2</sup></a></h2>
+                <h2>1.1 Introduction to this<a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2</sup></a></h2>
               </div>
                <div id="O">
-                <h2>1.2. Clause 4.2</h2>
+                <h2>1.2 Clause 4.2</h2>
                 <p>A<a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2</sup></a></p>
               </div>
              </div>

@@ -197,6 +197,9 @@ module IsoDoc
         end
       end
 
+      def clausedelim
+        ""
+      end
     end
   end
 end

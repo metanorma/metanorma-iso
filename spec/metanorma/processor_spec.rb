@@ -49,7 +49,7 @@ RSpec.describe Metanorma::Iso::Processor do
     expect(File.read("test.html", encoding: "utf-8").gsub(%r{^.*<main}m, "<main").gsub(%r{</main>.*}m, "</main>")).to be_equivalent_to <<~"OUTPUT"
            <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
              <p class="zzSTDTitle1"></p>
-             <div id="H"><h1>1.&#xA0; Terms and definitions</h1><p>For the purposes of this document,
+             <div id="H"><h1>1&#xA0; Terms and definitions</h1><p>For the purposes of this document,
            the following terms and definitions apply.</p>
        <p>ISO and IEC maintain terminological databases for use in
        standardization at the following addresses:</p>
