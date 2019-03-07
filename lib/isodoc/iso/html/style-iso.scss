@@ -157,7 +157,7 @@ main {
 .doctitle-en {
     padding-left: 3em;
     margin-left: -3em;
-    padding-top: 2em;
+    /*padding-top: 2em;*/
     padding-bottom: 2em;
     
 }
@@ -165,7 +165,6 @@ main {
 .doctitle-en span {
     font-size: 2em;
     line-height: 1.5em;
-    display: block;
 }
 
 
@@ -173,13 +172,22 @@ main {
     font-size: 1.5em;
     line-height: 1.2em;
     font-style: italic;
-    display: block;
 }
 
+/*
 span.title {
     text-transform: uppercase;
     font-size: 1em;
     font-weight: 800;
+}
+*/
+
+span.title, span.subtitle, span.part {
+    font-weight: 800;
+}
+
+span.partlabel {
+  display: block;
 }
 
 .coverpage_docstage {

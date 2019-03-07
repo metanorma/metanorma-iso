@@ -66,6 +66,11 @@ module IsoDoc
         suffix
       end
 
+      def part_prefix(partnum, subpartnum, lang)
+        partnum = "#{partnum}&ndash;#{subpartnum}" if partnum && subpartnum
+        "#{part_label(lang)}&nbsp;#{partnum}"
+      end
+
       def compose_title(main, intro, part, partnum, subpartnum, lang)
         main = main.nil? ? "" : @c.encode(main.text, :hexadecimal)
         intro &&
@@ -88,7 +93,8 @@ module IsoDoc
         main = compose_title(main, intro, part, partnumber, subpartnumber, "en")
         set(:doctitle, main)
         set(:doctitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
-        set(:doctitlepart, part_title(part, partnumber, subpartnumber, "en"))
+        set(:doctitlepartlabel, part_prefix(partnumber, subpartnumber, "en"))
+        set(:doctitlepart, @c.encode(part.text, :hexadecimal)) if part
       end
 
       def subtitle(isoxml, _out)
@@ -101,7 +107,8 @@ module IsoDoc
         main = compose_title(main, intro, part, partnumber, subpartnumber, "fr")
         set(:docsubtitle, main)
         set(:docsubtitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
-        set(:docsubtitlepart, part_title(part, partnumber, subpartnumber, "fr"))
+        set(:docsubtitlepartlabel, part_prefix(partnumber, subpartnumber, "fr"))
+        set(:docsubtitlepart, @c.encode(part.text, :hexadecimal)) if part
       end
     end
   end
