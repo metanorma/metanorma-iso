@@ -2,7 +2,7 @@
 
 [TIP]
 ====
-* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
+* Clone the metanorma-sample gem: https://github.com/metanorma/metanorma-sample.
 * Edit the `html_sample_titlepage.html` and `html_sample_intro.html` pages to match your organisation's branding.
 ** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
 * Edit the `default_fonts()` method in your `IsoDoc::...::HtmlConvert` class, to match your desired fonts.

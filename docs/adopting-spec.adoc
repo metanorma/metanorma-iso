@@ -4,8 +4,8 @@ TIP: Copy the RSD schema from https://github.com/metanorma/metanorma-model-iso/b
 
 The Standoc specification is expressed in http://www.relaxng.org[RelaxNG schema for XML], and is intended to be customisable for different types of publication. The customisation of Standoc relies on inheritance, with the following schemas embedded hierarchically:
 
-* https://github.com/riboseinc/relaton-models[Relaton]: bibliography
-* https://github.com/riboseinc/basicdoc-models[BasicDoc]: block-level and inline formatting
+* https://github.com/metanorma/relaton-models[Relaton]: bibliography
+* https://github.com/metanorma/basicdoc-models[BasicDoc]: block-level and inline formatting
 * https://github.com/metanorma/metanorma-standoc[StanDoc]: organisation of sections for a generic standards document
 * Models specific to standards
 

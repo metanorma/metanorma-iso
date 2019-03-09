@@ -4,7 +4,7 @@
 ====
 * There is no quick way of doing this.
 * Everything you can do in Word, you can do in Word HTML. Save Word documents as Word HTML to see how.
-* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
+* Clone the metanorma-sample gem: https://github.com/metanorma/metanorma-sample.
 * Edit the `word_sample_titlepage.html` and `word_sample_intro.html` pages to match your organisation's branding. With lots of iterations of saving Word documents as HTML, for trial and error.
 ** Leave the Liquid Template instructions alone (`{{`, `{%`) unless you know what you're doing with them: they are how the pages are populated with metadata.
 * Edit the `default_fonts()` method in your `IsoDoc::...::WordConvert` class, to match your desired fonts.

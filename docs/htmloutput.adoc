@@ -22,7 +22,7 @@ The `body` of the HTML document is divided into the following parts:
 
 === Body markup
 
-Within the body of the document, different blocks and inline spans of the Metanorma document model (https://github.com/metanorma/metanorma-model-standoc[Standoc XML], https://github.com/riboseinc/basicdoc-models[BasicDoc XML]) are represented by different CSS classes, as follows:
+Within the body of the document, different blocks and inline spans of the Metanorma document model (https://github.com/metanorma/metanorma-model-standoc[Standoc XML], https://github.com/metanorma/basicdoc-models[BasicDoc XML]) are represented by different CSS classes, as follows:
 
 ==== Sections
 

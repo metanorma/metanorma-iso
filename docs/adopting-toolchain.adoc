@@ -6,7 +6,7 @@ The easiest way to adopt StanDoc is to use the metanorma-acme gem: https://githu
 
 If you wish to create a custom gem, in order to customise behaviour further:
 
-* Clone the metanorma-sample gem: https://github.com/riboseinc/metanorma-sample.
+* Clone the metanorma-sample gem: https://github.com/metanorma/metanorma-sample.
 * Change the namespace for RSD documents (`RSD_NAMESPACE = "https://open.ribose.com/standards/rsd"`) to a namespace specific to your organisation's document standard.
 * Change any references to `sample` or `Sample` in the gem to your organisation's document standard.
 * Change the styling of the document outputs (`.../lib/isodoc/XXX/html`).

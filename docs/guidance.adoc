@@ -142,7 +142,7 @@ The bracketed reference numbers are expected to be correct and in order: they ar
 
 ==== Relaton Reference Fetching
 
-The https://github.com/riboseinc/relaton[`relaton`] can fetch bibliographic entries for any standards known to have online bibliographic databases (ISO, IEC, IETF, GB). Any bibliographic entry recognised through its document identifier prefix will by default have its bibliographic entry fetched by that gem. The fetched data overrides any content about the item provided in the document, since the online bibliography is treated as the source of truth for that standards document.
+The https://github.com/metanorma/relaton[`relaton`] can fetch bibliographic entries for any standards known to have online bibliographic databases (ISO, IEC, IETF, GB). Any bibliographic entry recognised through its document identifier prefix will by default have its bibliographic entry fetched by that gem. The fetched data overrides any content about the item provided in the document, since the online bibliography is treated as the source of truth for that standards document.
 
 ==== Cross-References
 

@@ -37,7 +37,7 @@ As of this writing, Metanorma supports the following standards classes:
 * https://github.com/metanorma/metanorma-rsd[Ribose] (`rsd`)
 * https://github.com/metanorma/metanorma-acme[Acme (shell for user-customised standards)] (`acme`)
 * https://github.com/metanorma/metanorma-mpfd[Mandatory Provident Fund Schemes Authority, Hong Kong (MPFA)] (`mpfd`)
-* https://github.com/riboseinc/metanorma-unece[United Nations Economic Commission for Europe] (`unece`)
+* https://github.com/metanorma/metanorma-unece[United Nations Economic Commission for Europe] (`unece`)
 
 == Installing on Linux and macOS
 
