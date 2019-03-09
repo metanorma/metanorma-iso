@@ -2,7 +2,7 @@
 
 [TIP]
 ====
-The easiest way to adopt StanDoc is to use the metanorma-acme gem: https://github.com/riboseinc/metanorma-acme, supplying your own stylesheets and HTML files for styling.
+The easiest way to adopt StanDoc is to use the metanorma-acme gem: https://github.com/metanorma/metanorma-acme, supplying your own stylesheets and HTML files for styling.
 
 If you wish to create a custom gem, in order to customise behaviour further:
 
@@ -26,7 +26,7 @@ The customisations needed for `Isodoc::Sample` are more extensive. Three base cl
 
 * `Isodoc::Metadata` processes the metadata about the document stored in `//bibdata`. This information typically ends up in the document title page, as opposed to the document body. For that reason, metadata is extracted into a hash, which is passed to document output (title page, Word header) via the https://shopify.github.io/liquid/[Liquid template language].
 * `Isodoc::HtmlConvert` converts Standoc XML to HTML.
-* `Isodoc::WordConvert` converts Standoc XML to Word HTML; the https://github.com/riboseinc/html2doc[html2doc] gem then converts this to a .doc document.
+* `Isodoc::WordConvert` converts Standoc XML to Word HTML; the https://github.com/metanorma/html2doc[html2doc] gem then converts this to a .doc document.
 
 The `Isodoc::HtmlConvert` and `Isodoc::WordConvert` overlap substantially, as both use variants of HTML. However there is no reason not to make substantially different rendering choices in the HTML and Word branches of the code.
 

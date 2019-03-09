@@ -1,12 +1,12 @@
 = How can I adopt the StanDoc specification for my own publications?
 
-TIP: Copy the RSD schema from https://github.com/riboseinc/metanorma-model-iso/blob/master/grammars/rsd.rng. You may need to adapt some of the enums in the model, or in the ISO Standards model that it inherits; but in the first instance, you can just ignore the differences—and ignore the validation feedback that the toolset gives.
+TIP: Copy the RSD schema from https://github.com/metanorma/metanorma-model-iso/blob/master/grammars/rsd.rng. You may need to adapt some of the enums in the model, or in the ISO Standards model that it inherits; but in the first instance, you can just ignore the differences—and ignore the validation feedback that the toolset gives.
 
 The Standoc specification is expressed in http://www.relaxng.org[RelaxNG schema for XML], and is intended to be customisable for different types of publication. The customisation of Standoc relies on inheritance, with the following schemas embedded hierarchically:
 
-* https://github.com/riboseinc/bib-models[Relaton]: bibliography
+* https://github.com/riboseinc/relaton-models[Relaton]: bibliography
 * https://github.com/riboseinc/basicdoc-models[BasicDoc]: block-level and inline formatting
-* https://github.com/riboseinc/metanorma-standoc[StanDoc]: organisation of sections for a generic standards document
+* https://github.com/metanorma/metanorma-standoc[StanDoc]: organisation of sections for a generic standards document
 * Models specific to standards
 
 Specialisation of a model consists of:
@@ -19,7 +19,7 @@ To adapt the schema for your publication set,
 
 * Get familiar with the Standoc set of models, and identify any elements that you would want to represent differently for your documents (different types, different enums), or enhance for your documents (additional element attributes, additional elements)
 * Create a grammar inheriting from StanDoc or from a specific standard, which expresses what is distinctive about your grammar.
-** We recommend starting your modelling in UML, as an effective communication tool; compare the UML models for Standoc standards at https://github.com/riboseinc/metanorma-model-iso
+** We recommend starting your modelling in UML, as an effective communication tool; compare the UML models for Standoc standards at https://github.com/metanorma/metanorma-model-iso
 ** The tool suite expects to validate against a set of schemas expressed in RelaxNG. We have been authoring grammars in RelaxNG Compact, as a more human-readable format, then compiling those grammars to RelaxNG using https://github.com/relaxng/jing-trang[jing-trang]. You can choose to use a different schema language, but you will need to customise the tool chain to validate against that form of schema instead.
 ** In order to make schema inheritance easier, we have avoided using namespaces for the individual schemas; a namespace is added to the standards-specific schema at the very end of the inheritance chain.
 

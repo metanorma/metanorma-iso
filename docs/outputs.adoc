@@ -30,7 +30,7 @@ when you save a Word document as HTML.)
 Using DOC HTML makes it much easier to generate documents with
 the advanced formatting requirements of Metanorma (including complex tables, formulas, footnotes, headers and footers, 
 nested list numbering and crossreferences) than generating either native DOCX (in OOXML), or the DOCX flavour of MHT. For more
-on the choice to use DOC, see https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F
+on the choice to use DOC, see https://github.com/metanorma/html2doc/wiki/Why-not-docx%3F
 
 The constraint on using DOC, however, imposes some constraints. 
 

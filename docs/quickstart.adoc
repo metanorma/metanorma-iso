@@ -8,18 +8,18 @@ Metanorma takes text in the _Asciidoctor markup language_ as input (consult the 
 Metanorma makes some adjustments to the text format for its requirements;
 these adjustments (which we refer to as _Metanorma Asciidoctor_, or AsciiISO) are documented in relevant sections of this documentation.
 Metanorma uses Asciidoctor to generate _Metanorma XML_, as an intermediate, semantic representation of standards content.
-Metanorma XML in turn is processed by the https://github.com/riboseinc/isodoc[isodoc] gem to generate output in Microsoft Word (`.doc`) and HTML (`.html`).
+Metanorma XML in turn is processed by the https://github.com/metanorma/isodoc[isodoc] gem to generate output in Microsoft Word (`.doc`) and HTML (`.html`).
 
 == Even quicker summary
 
 In order to start a new Metanorma document, or migrate your document from Word:
 
 . Install <<installation>> (for your specific Metanorma standards class)
-. Clone the https://github.com/riboseinc/isodoc-rice/[AsciiISO Rice]
+. Clone the https://github.com/metanorma/isodoc-rice/[AsciiISO Rice]
 
 To migrate:
 
-. Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor] gem to help you convert a Word document into Asciidoctor. Be warned that the conversion will not be 100% clean, and you will have to manually fix some syntax (especially if your Word document contains an index, stray anchors, and equations).
+. Use our https://github.com/metanorma/reverse_asciidoctor[reverse_asciidoctor] gem to help you convert a Word document into Asciidoctor. Be warned that the conversion will not be 100% clean, and you will have to manually fix some syntax (especially if your Word document contains an index, stray anchors, and equations).
 . Move the content back to the cloned isodoc-rice.
 . The isodoc-rice repository is set up for the ISO standards class; if you are not working with ISO, change its makefile to refer to the correct standards class (e.g. from `bundle exec metanorma -t iso -x doc,xml,html $^` to `bundle exec metanorma -t rsd -x doc,xml,html $^`
 
@@ -29,14 +29,14 @@ To migrate:
 
 As of this writing, Metanorma supports the following standards classes:
 
-* https://github.com/riboseinc/metanorma-iso[ISO and IEC] (`iso`)
-* https://github.com/riboseinc/metanorma-gb[Chinese National standards] (`gb`)
-* https://github.com/riboseinc/metanorma-csd[Calconnect] (`csd`)
-* https://github.com/riboseinc/metanorma-csand[Cloud Security Alliance] (`csand`)
-* https://github.com/riboseinc/metanorma-m3d[Messaging, Malware and Mobile Anti-Abuse Working Group (M^3^AAWG)] (`m3d`)
-* https://github.com/riboseinc/metanorma-rsd[Ribose] (`rsd`)
-* https://github.com/riboseinc/metanorma-acme[Acme (shell for user-customised standards)] (`acme`)
-* https://github.com/riboseinc/metanorma-mpfd[Mandatory Provident Fund Schemes Authority, Hong Kong (MPFA)] (`mpfd`)
+* https://github.com/metanorma/metanorma-iso[ISO and IEC] (`iso`)
+* https://github.com/metanorma/metanorma-gb[Chinese National standards] (`gb`)
+* https://github.com/metanorma/metanorma-csd[Calconnect] (`csd`)
+* https://github.com/metanorma/metanorma-csand[Cloud Security Alliance] (`csand`)
+* https://github.com/metanorma/metanorma-m3d[Messaging, Malware and Mobile Anti-Abuse Working Group (M^3^AAWG)] (`m3d`)
+* https://github.com/metanorma/metanorma-rsd[Ribose] (`rsd`)
+* https://github.com/metanorma/metanorma-acme[Acme (shell for user-customised standards)] (`acme`)
+* https://github.com/metanorma/metanorma-mpfd[Mandatory Provident Fund Schemes Authority, Hong Kong (MPFA)] (`mpfd`)
 * https://github.com/riboseinc/metanorma-unece[United Nations Economic Commission for Europe] (`unece`)
 
 == Installing on Linux and macOS
@@ -56,7 +56,7 @@ you can install it from Github:
 
 [source,console]
 --
-git clone https://github.com/riboseinc/metanorma-cli.git
+git clone https://github.com/metanorma/metanorma-cli.git
 cd metanorma-cli
 gem build *.gemspec
 gem install *.gem
@@ -107,7 +107,7 @@ This will generate two files from the `new_standard.adoc` document (provided it 
 * `new_standard.doc`, a Word document
   (currently in the pre-2007 `.doc` format, but Microsoft Word will open it fine).
 
-Both these files are generated via an intermediate XML file, `new_standard.xml`, which represents the structure of the document as it is formally defined by the standards body, and captured in the https://github.com/riboseinc/metanorma-model-iso[Metanorma XML schema].
+Both these files are generated via an intermediate XML file, `new_standard.xml`, which represents the structure of the document as it is formally defined by the standards body, and captured in the https://github.com/metanorma/metanorma-model-iso[Metanorma XML schema].
 
 Even if there are no errors in the Asciidoctor syntax, the document may still raise warnings to the console as it is being validated. The validation comes from the formal definition of the standard class (e.g. ISO/IEC DIR 2 in the case of ISO and IEC), and consists of two parts: warnings about document content (e.g., for ISO, requiring space before a percentage sign; requiring that the scope not contain text that looks like a recommendation); and warnings about document structure. The latter are generated by running the generated XML against the ISOXML schema, and report the line numbers of the XML document where issues are observed.
 
@@ -132,7 +132,7 @@ and edit it, observing how it approaches various formatting tasks.
 The https://www.iso.org/publication/PUB100407.html["Rice document"]
 is the ISO's model document of an international standard.
 An Metanorma-ISO version of the document is available
-at https://github.com/riboseinc/isodoc-rice/.
+at https://github.com/metanorma/isodoc-rice/.
 We suggest downloading the site, and editing it.
 
 The `iso-rice-en.adoc` document consists of a document header,
@@ -149,11 +149,11 @@ as well as _the syntax extensions and conventions_ that are specific to Metanorm
 
 - See also https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual]
   documenting Asciidoctor itself
-  and https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Metanorma-ISO README].
+  and https://github.com/metanorma/metanorma-iso/blob/master/README.adoc[Metanorma-ISO README].
 
 == Migrating existing documents from Microsoft Word
 
-. Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor]
+. Use our https://github.com/metanorma/reverse_asciidoctor[reverse_asciidoctor]
 gem to help you convert a Word document into AsciiISO.
 +
 You will likely have to manually clean up some syntax
@@ -165,11 +165,11 @@ don’t rely on the automatic conversion to be 100% correct.
 
 - See also https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual]
   documenting Asciidoctor itself
-  and https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Metanorma-ISO README].
+  and https://github.com/metanorma/metanorma-iso/blob/master/README.adoc[Metanorma-ISO README].
 
 == Migrating existing documents from Microsoft Word:
 
-. Use our https://github.com/riboseinc/reverse_asciidoctor[reverse_asciidoctor]
+. Use our https://github.com/metanorma/reverse_asciidoctor[reverse_asciidoctor]
   gem to help you convert a Word document into AsciiISO.
 
   You will likely have to manually clean up some syntax

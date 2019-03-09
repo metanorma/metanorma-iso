@@ -22,7 +22,7 @@ The `body` of the HTML document is divided into the following parts:
 
 === Body markup
 
-Within the body of the document, different blocks and inline spans of the Metanorma document model (https://github.com/riboseinc/metanorma-model-standoc[Standoc XML], https://github.com/riboseinc/basicdoc-models[BasicDoc XML]) are represented by different CSS classes, as follows:
+Within the body of the document, different blocks and inline spans of the Metanorma document model (https://github.com/metanorma/metanorma-model-standoc[Standoc XML], https://github.com/riboseinc/basicdoc-models[BasicDoc XML]) are represented by different CSS classes, as follows:
 
 ==== Sections
 
@@ -86,11 +86,11 @@ All images for an HTML document `{filename}.html` are moved to the folder `{file
 
 === Word HTML and Word HTML CSS
 
-The Word HTML documented here is what is used by the gems to generate DOC output. For more on why Word HTML is used, instead of OOXML or HTML 5 embedded into DOCX, see https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F
+The Word HTML documented here is what is used by the gems to generate DOC output. For more on why Word HTML is used, instead of OOXML or HTML 5 embedded into DOCX, see https://github.com/metanorma/html2doc/wiki/Why-not-docx%3F
 
 Word HTML, and the Word HTML version of CSS, are restricted compared to the HTML and CSS you are likely familiar with. Word HTML is a subset of HTML 4; Word HTML CSS has a weakened set of selectors, and a range of Microsoft-specific extensions (prefixed with `@` or `mso-`). The weakened set of selectors means you cannot assume that classes are inherited by their children; normal CSS would apply formatting on a `div` class to its child paragraphs, but Word HTML would expect you to repeat that class definition for `p`.
 
-Some of the necessary caveats are listed in https://github.com/riboseinc/html2doc/blob/master/README.adoc. The styling of lists in particular is quite different to normal CSS, and requires a Word-specific selector to define list styles (the `:ulstyle ` and `:olstyle ` parameter of `WordConvert.new()`).
+Some of the necessary caveats are listed in https://github.com/metanorma/html2doc/blob/master/README.adoc. The styling of lists in particular is quite different to normal CSS, and requires a Word-specific selector to define list styles (the `:ulstyle ` and `:olstyle ` parameter of `WordConvert.new()`).
 
 Word HTML and CSS is not well-documented (even though there is a 1500 page manual from Microsoft); fortunately saving Word documents to HTML will reveal the Word HTML and Word HTML CSS that can be used to generate the same formatting. The stylesheets need to follow the conventions of Word HTML, and should be formulated by saving Word documents as HTML, and extracting their CSS stylesheets. Note that the CSS is prefixed with a set of font definitions; these too should be obtained by saving Word documents as HTML.
 
@@ -100,7 +100,7 @@ The headers and footers of a Word document are defined in Word HTML in a separat
 
 The `head` of the Word HTML document contains two stylesheets (the `:wordstylesheet` and `:standardsheet` parameter of `WordConvert.new()`). The `:wordstylesheet` is intended as generic Word markup, while `:standardsheet` is intended to contain styling specific to the standard. No scripts are supported in Word HTML. 
 
-The other elements of the Word HTML head are populated by the https://github.com/riboseinc/html2doc[html2doc gem]: a reference to a manifest of included files (specifically images and the header file), and settings to open the document in Print View at 100% magnification.
+The other elements of the Word HTML head are populated by the https://github.com/metanorma/html2doc[html2doc gem]: a reference to a manifest of included files (specifically images and the header file), and settings to open the document in Print View at 100% magnification.
 
 The `body` of the Word HTML document is divided into the following parts:
 

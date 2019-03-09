@@ -4,7 +4,7 @@ AsciiISO is syntax based on AsciiDoc, with some extensions specific to authoring
 
 == ISO specific syntax
 
-TIP: Full details of Asciidoctor-ISO–specific markup and conventions is given in the https://github.com/riboseinc/metanorma-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] and the https://github.com/riboseinc/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring].
+TIP: Full details of Asciidoctor-ISO–specific markup and conventions is given in the https://github.com/metanorma/metanorma-iso/blob/master/README.adoc[Asciidoctor-ISO Readme] and the https://github.com/metanorma/metanorma-iso/wiki/Guidance-for-authoring[Guidance for authoring].
 
 The sections that have a fixed position according to ISO/IEC DIR 2 (Introduction, Scope, Normative References, Terms and Definitions, Symbols and Abbreviations, Bibliography) need to be titled as such, as first-level headings.
 
@@ -16,7 +16,7 @@ Syntax includes the following; the links are to the Asciidoctor User Manual. All
 
 === https://asciidoctor.org/docs/user-manual/#doc-header[Document header]
 
-Attributes of the document, which typically appear in the coverpage (if at all), rather than in the document proper. The permitted attributes for all Metanorma documents, and their expected values, are documented in the https://github.com/riboseinc/metanorma-standoc#document-attributes[metanorma-standoc Readme]; each standards-specific gem adds documentation of its own specific attributes (e.g. https://github.com/riboseinc/metanorma-iso#document-attributes). 
+Attributes of the document, which typically appear in the coverpage (if at all), rather than in the document proper. The permitted attributes for all Metanorma documents, and their expected values, are documented in the https://github.com/metanorma/metanorma-standoc#document-attributes[metanorma-standoc Readme]; each standards-specific gem adds documentation of its own specific attributes (e.g. https://github.com/metanorma/metanorma-iso#document-attributes). 
 
 Note that the initial title line and author line expected in Asciidoctor are ignored in favour of specific document attributes, although they still need to be supplied for the document to be valid.
 

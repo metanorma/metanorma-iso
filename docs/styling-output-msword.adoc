@@ -12,9 +12,9 @@
 * Edit the `wordstyle.scss` and `sample.scss` stylesheets to match your organisation's branding. With lots of iterations of saving Word documents as HTML, for trial and error.
 ====
 
-Word output in the document toolset is generated through Word HTML, the variant of HTML that you get when you save a Word document as HTML. (That is why documents are saved in `.doc`, not `.docx`.) This has the advantage over https://en.wikipedia.org/wiki/Office_Open_XML[OOXML], the native markup of DOCX, of using a well-known markup language, with a low barrier to entry: if you want to work out how to do something in Word HTML, do it in Word, save the document as HTML, and open up the HTML in a text editor. (For more on the choice of using Word HTML, see https://github.com/riboseinc/html2doc/wiki/Why-not-docx%3F.)
+Word output in the document toolset is generated through Word HTML, the variant of HTML that you get when you save a Word document as HTML. (That is why documents are saved in `.doc`, not `.docx`.) This has the advantage over https://en.wikipedia.org/wiki/Office_Open_XML[OOXML], the native markup of DOCX, of using a well-known markup language, with a low barrier to entry: if you want to work out how to do something in Word HTML, do it in Word, save the document as HTML, and open up the HTML in a text editor. (For more on the choice of using Word HTML, see https://github.com/metanorma/html2doc/wiki/Why-not-docx%3F.)
 
-However Word HTML is not quite the HTML you are used to: it is a restricted, syntactically idiosyncratic variant of HTML 4, with a non-standard and weakened form of CSS. Doing any styling in Word HTML involves lots of trial and error, and paying close attention to how Word HTML does things in its CSS. We have documented a few of the clearer gotchas in https://github.com/riboseinc/html2doc/blob/master/README.adoc.
+However Word HTML is not quite the HTML you are used to: it is a restricted, syntactically idiosyncratic variant of HTML 4, with a non-standard and weakened form of CSS. Doing any styling in Word HTML involves lots of trial and error, and paying close attention to how Word HTML does things in its CSS. We have documented a few of the clearer gotchas in https://github.com/metanorma/html2doc/blob/master/README.adoc.
 
 It's still better than learning OOXML.
 
