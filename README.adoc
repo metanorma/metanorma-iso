@@ -10,7 +10,7 @@ _Formerly known as_ `asciidoctor-iso`.
 
 == Functionality and Approach
 
-For the conceptual underpinnings of this gem, and the other gems in the Metanorma suite, see the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
+For the conceptual underpinnings of this gem, and the other gems in the Metanorma suite, see the https://github.com/metanorma/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
 
 == Outputs
 
@@ -54,13 +54,13 @@ The gem then converts the XML into HTML and DOC.
 
 === Installation
 
-If you are using a Mac, the https://github.com/riboseinc/metanorma-macos-setup
+If you are using a Mac, the https://github.com/metanorma/metanorma-macos-setup
 repository has instructions on setting up your machine to run Metanorma
 scripts such as this one. You need only run the following in a Terminal console:
 
 [source,console]
 ----
-$ bash <(curl -s https://raw.githubusercontent.com/riboseinc/metanorma-macos-setup/master/metanorma-setup)
+$ bash <(curl -s https://raw.githubusercontent.com/metanorma/metanorma-macos-setup/master/metanorma-setup)
 $ gem install metanorma-iso
 $ gem install metanorma-cli 
 ----
@@ -111,7 +111,7 @@ NG counterpart].
 [[model_additions]]
 == Asciidoctor model additions
 
-Refer also to https://github.com/riboseinc/metanorma-standoc/blob/master/README.adoc; this section lists additions specific only to metanorma-iso
+Refer also to https://github.com/metanorma/metanorma-standoc/blob/master/README.adoc; this section lists additions specific only to metanorma-iso
 
 === Additional warning types
 
@@ -153,13 +153,13 @@ refer to the latest published edition of that reference.) if reference is to be 
 both an undated and a dated version of an ISO reference, these need to be explicitly listed as
 separate references.
 
-For automated bibliography integration, see the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
+For automated bibliography integration, see the https://github.com/metanorma/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
 
 [[document-attributes]]
 == Document Attributes
 
 The gem uses the document attributes defined for metanorma-standoc (see
-the https://github.com/riboseinc/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README]).
+the https://github.com/metanorma/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README]).
 
 The following document attributes are specific to ISO:
 
@@ -237,7 +237,7 @@ not supplied. Example values: `JWG`, `JAG`, `AG` (advisory group), `AHG`, `SWG`,
 The gem has been tested to date against the
 https://www.iso.org/publication/PUB100407.html["Rice document"], the ISO's
 model document of an international standard. Sample representation of the Rice document
-in Asciidoctor, and output formats, are included in the https://github.com/riboseinc/isodoc-rice
+in Asciidoctor, and output formats, are included in the https://github.com/metanorma/isodoc-rice
 repository.
 
 See also `link:spec/metanorma-iso[]` for individual features.

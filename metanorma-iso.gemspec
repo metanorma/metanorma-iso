@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
     Formerly known as asciidoctor-iso.
   DESCRIPTION
 
-  spec.homepage      = "https://github.com/riboseinc/metanorma-iso"
+  spec.homepage      = "https://github.com/metanorma/metanorma-iso"
   spec.license       = "BSD-2-Clause"
 
   spec.bindir        = "bin"
