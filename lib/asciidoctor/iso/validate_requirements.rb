@@ -23,7 +23,7 @@ module Asciidoctor
         Regexp.new(REQUIREMENT_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
-      def requirement(text)
+      def requirement_check(text)
         text.split(/\.\s+/).each do |t|
           return t if REQUIREMENT_RE.match t
         end
@@ -41,7 +41,7 @@ module Asciidoctor
         Regexp.new(RECOMMENDATION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
-      def recommendation(text)
+      def recommendation_check(text)
         text.split(/\.\s+/).each do |t|
           return t if RECOMMENDATION_RE.match t
         end
@@ -60,7 +60,7 @@ module Asciidoctor
         Regexp.new(PERMISSION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
-      def permission(text)
+      def permission_check(text)
         text.split(/\.\s+/).each do |t|
           return t if PERMISSION_RE.match t
         end
@@ -93,11 +93,11 @@ module Asciidoctor
       end
 
       def style_no_guidance(node, text, docpart)
-        r = requirement(text)
+        r = requirement_check(text)
         style_warning(node, "#{docpart} may contain requirement", r) if r
-        r = permission(text)
+        r = permission_check(text)
         style_warning(node, "#{docpart} may contain permission", r) if r
-        r = recommendation(text)
+        r = recommendation_check(text)
         style_warning(node, "#{docpart} may contain recommendation", r) if r
       end
     end

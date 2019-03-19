@@ -26,13 +26,13 @@ module Asciidoctor
 
       def introduction_style(node)
         return if @novalid
-        r = requirement(extract_text(node))
+        r = requirement_check(extract_text(node))
         style_warning(node, "Introduction may contain requirement", r) if r
       end
 
       def definition_style(node)
         return if @novalid
-        r = requirement(extract_text(node))
+        r = requirement_check(extract_text(node))
         style_warning(node, "Definition may contain requirement", r) if r
       end
 

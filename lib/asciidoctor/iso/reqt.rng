@@ -56,7 +56,7 @@
       </choice>
     </zeroOrMore>
     <optional>
-      <ref name="references"/>
+      <ref name="reqt_references"/>
     </optional>
     <zeroOrMore>
       <choice>
@@ -111,7 +111,7 @@
       <ref name="RequirementSubpart"/>
     </element>
   </define>
-  <define name="references">
+  <define name="reqt_references">
     <element name="references">
       <oneOrMore>
         <ref name="bibitem"/>

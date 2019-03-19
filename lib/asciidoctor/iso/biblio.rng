@@ -156,9 +156,9 @@
       <zeroOrMore>
         <ref name="contact"/>
       </zeroOrMore>
-      <optional>
+      <zeroOrMore>
         <ref name="uri"/>
-      </optional>
+      </zeroOrMore>
     </element>
   </define>
   <define name="fullname">
@@ -246,9 +246,9 @@
       <optional>
         <ref name="abbreviation"/>
       </optional>
-      <optional>
+      <zeroOrMore>
         <ref name="uri"/>
-      </optional>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="org-identifier"/>
       </zeroOrMore>
@@ -469,12 +469,13 @@
       <value>film</value>
       <value>video</value>
       <value>broadcast</value>
-      <value>graphic work</value>
+      <value>graphic_work</value>
       <value>music</value>
       <value>patent</value>
       <value>inbook</value>
       <value>incollection</value>
       <value>inproceedings</value>
+      <value>journal</value>
     </choice>
   </define>
   <define name="BibliographicItem">
@@ -739,38 +740,43 @@
     <element name="series">
       <optional>
         <attribute name="type">
-          <choice>
-            <value>main</value>
-            <value>alt</value>
-          </choice>
+          <ref name="SeriesType"/>
         </attribute>
       </optional>
       <choice>
-        <ref name="btitle"/>
         <ref name="formattedref"/>
+        <group>
+          <ref name="btitle"/>
+          <optional>
+            <ref name="bplace"/>
+          </optional>
+          <optional>
+            <ref name="seriesorganization"/>
+          </optional>
+          <optional>
+            <ref name="abbreviation"/>
+          </optional>
+          <optional>
+            <ref name="seriesfrom"/>
+          </optional>
+          <optional>
+            <ref name="seriesto"/>
+          </optional>
+          <optional>
+            <ref name="seriesnumber"/>
+          </optional>
+          <optional>
+            <ref name="seriespartnumber"/>
+          </optional>
+        </group>
       </choice>
-      <optional>
-        <ref name="bplace"/>
-      </optional>
-      <optional>
-        <ref name="seriesorganization"/>
-      </optional>
-      <optional>
-        <ref name="abbreviation"/>
-      </optional>
-      <optional>
-        <ref name="seriesfrom"/>
-      </optional>
-      <optional>
-        <ref name="seriesto"/>
-      </optional>
-      <optional>
-        <ref name="seriesnumber"/>
-      </optional>
-      <optional>
-        <ref name="seriespartnumber"/>
-      </optional>
     </element>
+  </define>
+  <define name="SeriesType">
+    <choice>
+      <value>main</value>
+      <value>alt</value>
+    </choice>
   </define>
   <define name="seriesorganization">
     <element name="organization">
@@ -849,6 +855,7 @@
           <value>includes</value>
           <value>instance</value>
           <value>partOf</value>
+          <value>hasDraft</value>
         </choice>
       </attribute>
       <element name="bibitem">
@@ -861,9 +868,6 @@
   </define>
   <define name="version">
     <element name="version">
-      <optional>
-        <ref name="vedition"/>
-      </optional>
       <optional>
         <ref name="revision-date"/>
       </optional>
