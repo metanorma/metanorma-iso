@@ -24,7 +24,7 @@ RSpec.describe IsoDoc do
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html")
     expect(html).to match(%r{<title>Cereals and pulses\&nbsp;\&mdash; Specifications and test methods\&nbsp;\&mdash; Rice</title>})
-    expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/2\.7\.1/MathJax\.js})
+    expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
 
@@ -50,7 +50,7 @@ RSpec.describe IsoDoc do
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html")
     expect(html).to match(%r{<title>Cereals and pulses\&nbsp;\&mdash; Specifications and test methods\&nbsp;\&mdash; Rice</title>})
-    expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/2\.7\.1/MathJax\.js})
+    expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
 
