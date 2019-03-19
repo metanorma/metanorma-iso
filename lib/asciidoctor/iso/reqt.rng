@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Presupposes isodoc.rnc, is included in it
+    include "isodoc.rnc" { }
+  -->
+  <define name="requirement">
+    <element name="requirement">
+      <ref name="RequirementType"/>
+    </element>
+  </define>
+  <define name="recommendation">
+    <element name="recommendation">
+      <ref name="RequirementType"/>
+    </element>
+  </define>
+  <define name="permission">
+    <element name="permission">
+      <ref name="RequirementType"/>
+    </element>
+  </define>
+  <define name="RequirementType">
+    <optional>
+      <attribute name="obligation">
+        <ref name="ObligationType"/>
+      </attribute>
+    </optional>
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="filename"/>
+    </optional>
+    <optional>
+      <ref name="reqtitle"/>
+    </optional>
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="subject"/>
+    </optional>
+    <optional>
+      <ref name="reqinherit"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="classification"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="measurementtarget"/>
+        <ref name="specification"/>
+        <ref name="verification"/>
+        <ref name="import"/>
+        <ref name="description"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <ref name="references"/>
+    </optional>
+    <zeroOrMore>
+      <choice>
+        <ref name="requirement"/>
+        <ref name="recommendation"/>
+        <ref name="permission"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="reqtitle">
+    <element name="title">
+      <ref name="FormattedString"/>
+    </element>
+  </define>
+  <define name="label">
+    <element name="label">
+      <text/>
+    </element>
+  </define>
+  <define name="subject">
+    <element name="subject">
+      <text/>
+    </element>
+  </define>
+  <define name="reqinherit">
+    <element name="subject">
+      <text/>
+    </element>
+  </define>
+  <define name="measurementtarget">
+    <element name="measurement-target">
+      <ref name="RequirementSubpart"/>
+    </element>
+  </define>
+  <define name="specification">
+    <element name="specification">
+      <ref name="RequirementSubpart"/>
+    </element>
+  </define>
+  <define name="verification">
+    <element name="verification">
+      <ref name="RequirementSubpart"/>
+    </element>
+  </define>
+  <define name="import">
+    <element name="import">
+      <ref name="RequirementSubpart"/>
+    </element>
+  </define>
+  <define name="description">
+    <element name="description">
+      <ref name="RequirementSubpart"/>
+    </element>
+  </define>
+  <define name="references">
+    <element name="references">
+      <oneOrMore>
+        <ref name="bibitem"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="RequirementSubpart">
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="exclude">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <oneOrMore>
+      <ref name="BasicBlock"/>
+    </oneOrMore>
+  </define>
+  <define name="ObligationType">
+    <choice>
+      <value>requirement</value>
+      <value>recommendation</value>
+      <value>permission</value>
+    </choice>
+  </define>
+  <define name="classification">
+    <element name="classification">
+      <ref name="classification_tag"/>
+      <ref name="classification_value"/>
+    </element>
+  </define>
+  <define name="classification_tag">
+    <element name="tag">
+      <text/>
+    </element>
+  </define>
+  <define name="classification_value">
+    <element name="value">
+      <text/>
+    </element>
+  </define>
+</grammar>
