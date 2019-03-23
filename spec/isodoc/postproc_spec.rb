@@ -325,6 +325,7 @@ RSpec.describe IsoDoc do
   it "moves images in HTML" do
     FileUtils.rm_f "test.html"
     FileUtils.rm_rf "_images"
+    FileUtils.rm_rf "test_htmlimages"
     IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface><foreword>
@@ -339,16 +340,16 @@ RSpec.describe IsoDoc do
     INPUT
     html = File.read("test.html").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
       sub(%r{</main>.*$}m, "</main>")
-    expect(`ls test_images`).to match(/\.png$/)
+    expect(`ls test_htmlimages`).to match(/\.png$/)
     expect(html.gsub(/\/[0-9a-f-]+\.png/, "/_.png")).to be_equivalent_to <<~"OUTPUT"
            <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
              <br />
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
                <div id="_" class="figure">
-               <img src="test_images/_.png" height="776" width="922" />
-<img src="test_images/_.png" height="800" width="53" />
-<img src="test_images/_.png" height="83" width="99" />
+               <img src="test_htmlimages/_.png" height="776" width="922" />
+<img src="test_htmlimages/_.png" height="800" width="53" />
+<img src="test_htmlimages/_.png" height="83" width="99" />
        <p class="FigureTitle" align="center">Figure 1&#xA0;&#x2014; Split-it-right sample divider</p></div>
              </div>
              <p class="zzSTDTitle1"></p>
