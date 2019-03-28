@@ -220,7 +220,7 @@ h1.Annex
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-.h2Annex
+.h2Annex, h2
         {mso-style-priority:2;
         mso-style-unhide:no;
         mso-style-qformat:yes;
@@ -247,32 +247,8 @@ h1.Annex
         mso-fareast-language:JA;
         mso-bidi-font-weight:normal;}
 h2
-	{mso-style-priority:2;
-	mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-parent:"Heading 1";
-	mso-style-link:"Heading 2 Char";
-	mso-style-next:Normal;
-	margin-top:3.0pt;
-	margin-right:0cm;
-	margin-bottom:12.0pt;
-	margin-left:0cm;
-	text-indent:0cm;
-	line-height:12.5pt;
-	mso-pagination:widow-orphan;
-	page-break-after:avoid;
-	mso-outline-level:2;
-	mso-list:l1 level2 lfo6;
-	mso-hyphenate:none;
-	tab-stops:27.0pt 35.0pt;
-	font-size:12.0pt;
-	mso-bidi-font-size:11.0pt;
-	font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
-	mso-ansi-language:EN-GB;
-	mso-fareast-language:JA;
-	mso-bidi-font-weight:normal;}
-h3
+	{ mso-list:l1 level2 lfo6;}
+.h3Annex, h3
 	{mso-style-priority:3;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -288,7 +264,6 @@ h3
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:3;
-	mso-list:l1 level3 lfo6;
 	mso-hyphenate:none;
 	tab-stops:list 36.0pt left 44.0pt;
 	font-size:11.0pt;
@@ -297,7 +272,8 @@ h3
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-h4
+h3      {mso-list:l1 level3 lfo6;}
+.h4Annex, h4
 	{mso-style-priority:4;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -313,7 +289,6 @@ h4
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:4;
-	mso-list:l1 level4 lfo6;
 	mso-hyphenate:none;
 	tab-stops:51.05pt 57.0pt 68.0pt;
 	font-size:11.0pt;
@@ -322,7 +297,8 @@ h4
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-h5
+h4      {mso-list:l1 level4 lfo6;}
+.h5Annex, h5
 	{mso-style-priority:5;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -338,7 +314,6 @@ h5
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:5;
-	mso-list:l1 level5 lfo6;
 	mso-hyphenate:none;
 	tab-stops:51.05pt list 54.0pt;
 	font-size:11.0pt;
@@ -347,6 +322,7 @@ h5
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
+h5      {mso-list:l1 level5 lfo6;}
 h6
 	{mso-style-priority:6;
 	mso-style-unhide:no;
@@ -363,7 +339,6 @@ h6
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:6;
-	mso-list:l1 level6 lfo6;
 	mso-hyphenate:none;
 	tab-stops:51.05pt list 72.0pt;
 	font-size:11.0pt;
@@ -372,6 +347,7 @@ h6
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
+h6      {mso-list:l1 level6 lfo6;}
 p.MsoToc1, li.MsoToc1, div.MsoToc1
 	{mso-style-priority:39;
 	mso-style-unhide:no;

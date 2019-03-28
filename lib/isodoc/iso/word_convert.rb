@@ -227,6 +227,22 @@ module IsoDoc
           t.parent = d.first
         end
       end
+
+      # force Annex h2 down to be p.h2Annex, so it is not picked up by ToC
+      def word_annex_cleanup1(docxml, i)
+        docxml.xpath("//h#{i}[ancestor::*[@class = 'Section3']]").each do |h2|
+          h2.name = "p"
+          h2["class"] = "h#{i}Annex"
+        end
+      end
+
+      def word_annex_cleanup(docxml)
+        word_annex_cleanup1(docxml, 2)
+        word_annex_cleanup1(docxml, 3)
+        word_annex_cleanup1(docxml, 4)
+        word_annex_cleanup1(docxml, 5)
+        word_annex_cleanup1(docxml, 6)
+      end
     end
   end
 end
