@@ -1,7 +1,8 @@
 <script>
     //TOC generation
       $('#toc').toc({
-          'selectors': 'h1,h2:not(.TermNum)', //elements to use as headings
+          //'selectors': 'h1,h2:not(.TermNum)', //elements to use as headings
+          'selectors': toclevel(),  //elements to use as headings
           'container': 'main', //element to find all selectors in
           'smoothScrolling': true, //enable or disable smooth scrolling on click
           'prefix': 'toc', //prefix for anchor tags and class names
