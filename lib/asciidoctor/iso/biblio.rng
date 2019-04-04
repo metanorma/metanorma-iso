@@ -837,26 +837,29 @@
       <ref name="ContributorInfo"/>
     </element>
   </define>
+  <define name="DocRelationType">
+    <choice>
+      <value>obsoletes</value>
+      <value>updates</value>
+      <value>updatedBy</value>
+      <value>complements</value>
+      <value>derivedFrom</value>
+      <value>translatedFrom</value>
+      <value>adoptedFrom</value>
+      <value>equivalent</value>
+      <value>identical</value>
+      <value>nonequivalent</value>
+      <value>includedIn</value>
+      <value>includes</value>
+      <value>instance</value>
+      <value>partOf</value>
+      <value>hasDraft</value>
+    </choice>
+  </define>
   <define name="docrelation">
     <element name="relation">
       <attribute name="type">
-        <choice>
-          <value>obsoletes</value>
-          <value>updates</value>
-          <value>updatedBy</value>
-          <value>complements</value>
-          <value>derivedFrom</value>
-          <value>translatedFrom</value>
-          <value>adoptedFrom</value>
-          <value>equivalent</value>
-          <value>identical</value>
-          <value>nonequivalent</value>
-          <value>includedIn</value>
-          <value>includes</value>
-          <value>instance</value>
-          <value>partOf</value>
-          <value>hasDraft</value>
-        </choice>
+        <ref name="DocRelationType"/>
       </attribute>
       <element name="bibitem">
         <ref name="BibliographicItem"/>
