@@ -1,15 +1,17 @@
-dist: trusty
-sudo: false
 language: ruby
+cache: bundler
+os:
+- linux
+- osx
 rvm:
-  - 2.5
-  - 2.4
-  - 2.3
-  - ruby-head
+- 2.5
+- 2.4
+- 2.3
+- ruby-head
 before_install:
-  - gem install bundler -v 2.0.1
-  - travis_retry sudo apt-get update
-  - sudo bash -c "curl -L https://raw.githubusercontent.com/metanorma/plantuml-install/master/ubuntu.sh | bash"
+- gem install bundler -v 2.0.1
+- bundle update
+- curl -L https://raw.githubusercontent.com/metanorma/metanorma-build-scripts/master/travis.sh | bash
 matrix:
   allow_failures:
     - rvm: ruby-head
