@@ -636,22 +636,27 @@
       <ref name="ISO8601Date"/>
     </optional>
   </define>
+  <define name="BibliographicDateType">
+    <choice>
+      <value>published</value>
+      <value>accessed</value>
+      <value>created</value>
+      <value>implemented</value>
+      <value>obsoleted</value>
+      <value>confirmed</value>
+      <value>updated</value>
+      <value>issued</value>
+      <value>transmitted</value>
+      <value>copied</value>
+      <value>unchanged</value>
+      <value>circulated</value>
+    </choice>
+  </define>
   <define name="bdate">
     <element name="date">
       <attribute name="type">
         <choice>
-          <value>published</value>
-          <value>accessed</value>
-          <value>created</value>
-          <value>implemented</value>
-          <value>obsoleted</value>
-          <value>confirmed</value>
-          <value>updated</value>
-          <value>issued</value>
-          <value>transmitted</value>
-          <value>copied</value>
-          <value>unchanged</value>
-          <value>circulated</value>
+          <ref name="BibliographicDateType"/>
           <text/>
         </choice>
       </attribute>

@@ -368,7 +368,7 @@ RSpec.describe Asciidoctor::ISO do
   <title format="plain" language="en" script="Latn">Network Configuration Access Control Model</title>
   <docidentifier type="IETF">RFC 8341</docidentifier>
   <date type="published">
-    <on>2018</on>
+    <on>2018-01</on>
   </date>
 </bibitem>
        </references>
