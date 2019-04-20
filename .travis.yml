@@ -11,7 +11,7 @@ rvm:
 before_install:
 - gem install bundler -v 2.0.1
 - bundle update
-- curl -L https://raw.githubusercontent.com/metanorma/metanorma-build-scripts/master/travis.sh | bash
+- curl -L https://raw.githubusercontent.com/metanorma/metanorma-build-scripts/master/travis-plantuml-install.sh | bash
 matrix:
   allow_failures:
     - rvm: ruby-head
