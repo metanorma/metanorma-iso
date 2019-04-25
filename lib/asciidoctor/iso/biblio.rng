@@ -810,6 +810,9 @@
   </define>
   <define name="biblionote">
     <element name="note">
+      <optional>
+        <attribute name="type"/>
+      </optional>
       <ref name="FormattedString"/>
     </element>
   </define>

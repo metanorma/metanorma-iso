@@ -4,14 +4,6 @@
     <start>
       <ref name="iso-standard"/>
     </start>
-    <define name="language">
-      <element name="language">
-        <choice>
-          <value>en</value>
-          <value>fr</value>
-        </choice>
-      </element>
-    </define>
     <define name="script">
       <element name="script">
         <value>Latn</value>
