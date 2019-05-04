@@ -41,6 +41,9 @@
     <element name="standard-document">
       <ref name="bibdata"/>
       <optional>
+        <ref name="boilerplate"/>
+      </optional>
+      <optional>
         <ref name="preface"/>
       </optional>
       <ref name="sections"/>
@@ -62,6 +65,42 @@
       <oneOrMore>
         <ref name="content"/>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="boilerplate">
+    <element name="boilerplate">
+      <optional>
+        <ref name="copyright-statement"/>
+      </optional>
+      <optional>
+        <ref name="license-statement"/>
+      </optional>
+      <optional>
+        <ref name="legal-statement"/>
+      </optional>
+      <optional>
+        <ref name="feedback-statement"/>
+      </optional>
+    </element>
+  </define>
+  <define name="copyright-statement">
+    <element name="copyright-statement">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="license-statement">
+    <element name="license-statement">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="legal-statement">
+    <element name="legal-statement">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="feedback-statement">
+    <element name="feedback-statement">
+      <ref name="Content-Section"/>
     </element>
   </define>
   <define name="sections">

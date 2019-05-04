@@ -756,6 +756,9 @@
       <zeroOrMore>
         <ref name="termdocsource"/>
       </zeroOrMore>
+      <optional>
+        <ref name="boilerplate"/>
+      </optional>
       <ref name="preface"/>
       <oneOrMore>
         <ref name="sections"/>
