@@ -485,7 +485,7 @@ RSpec.describe IsoDoc do
          <p class="MsoNormal">Hello</p>
          <p class="MsoNormal">Key</p>
          <p class="MsoNormal"><b>Key</b></p><div class="figdl"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
-       </div>
+         <p class="FigureTitle" align="center">Figure A.1</p></div>
              </div>
            </div>
            <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>

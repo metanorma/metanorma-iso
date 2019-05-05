@@ -573,6 +573,9 @@
         <data type="ID"/>
       </attribute>
       <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
         <ref name="tname"/>
       </optional>
       <optional>
@@ -907,6 +910,9 @@
       <attribute name="type">
         <ref name="ReferenceFormat"/>
       </attribute>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
       <text/>
     </element>
   </define>
