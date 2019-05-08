@@ -19,21 +19,7 @@
 -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
-  <include href="biblio.rng">
-    <define name="status">
-      <element name="status">
-        <choice>
-          <value>proposal</value>
-          <value>working_draft</value>
-          <value>committee_draft</value>
-          <value>draft_standard</value>
-          <value>final_draft</value>
-          <value>published</value>
-          <value>withdrawn</value>
-        </choice>
-      </element>
-    </define>
-  </include>
+  <include href="biblio.rng"/>
   <start>
     <ref name="standard-document"/>
   </start>

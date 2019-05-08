@@ -35,7 +35,28 @@
   </define>
   <define name="status">
     <element name="status">
-      <ref name="LocalizedString"/>
+      <ref name="stage"/>
+      <optional>
+        <ref name="substage"/>
+      </optional>
+      <optional>
+        <ref name="iteration"/>
+      </optional>
+    </element>
+  </define>
+  <define name="stage">
+    <element name="stage">
+      <text/>
+    </element>
+  </define>
+  <define name="substage">
+    <element name="substage">
+      <text/>
+    </element>
+  </define>
+  <define name="iteration">
+    <element name="iteration">
+      <text/>
     </element>
   </define>
   <define name="language">

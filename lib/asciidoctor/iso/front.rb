@@ -95,7 +95,7 @@ module Asciidoctor
 
       def metadata_status(node, xml)
         xml.status do |s|
-          s.stage (node.attr("docstage") || "60")
+          s.stage (node.attr("status") || node.attr("docstage") || "60")
           s.substage (node.attr("docsubstage") || "60")
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end

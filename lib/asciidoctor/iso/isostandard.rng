@@ -268,22 +268,6 @@
         <ref name="FormattedString"/>
       </element>
     </define>
-    <define name="status">
-      <element name="status">
-        <choice>
-          <ref name="FormattedString"/>
-          <group>
-            <ref name="stage"/>
-            <optional>
-              <ref name="substage"/>
-            </optional>
-            <optional>
-              <ref name="iteration"/>
-            </optional>
-          </group>
-        </choice>
-      </element>
-    </define>
     <define name="btitle">
       <element name="title">
         <choice>
@@ -818,40 +802,6 @@
   <define name="introduction">
     <element name="introduction">
       <ref name="Content-Section"/>
-    </element>
-  </define>
-  <define name="stage">
-    <element name="stage">
-      <choice>
-        <value>00</value>
-        <value>10</value>
-        <value>20</value>
-        <value>30</value>
-        <value>40</value>
-        <value>50</value>
-        <value>60</value>
-        <value>90</value>
-        <value>95</value>
-      </choice>
-    </element>
-  </define>
-  <define name="substage">
-    <element name="substage">
-      <choice>
-        <value>00</value>
-        <value>20</value>
-        <value>60</value>
-        <value>90</value>
-        <value>92</value>
-        <value>93</value>
-        <value>98</value>
-        <value>99</value>
-      </choice>
-    </element>
-  </define>
-  <define name="iteration">
-    <element name="iteration">
-      <data type="int"/>
     </element>
   </define>
   <define name="documentnumber">
