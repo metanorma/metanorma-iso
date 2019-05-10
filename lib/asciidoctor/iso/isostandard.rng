@@ -55,166 +55,9 @@
         </optional>
       </element>
     </define>
-    <define name="BibliographicItem">
+    <define name="BibDataExtensionType">
       <optional>
-        <attribute name="type">
-          <ref name="BibItemType"/>
-        </attribute>
-      </optional>
-      <optional>
-        <ref name="fetched"/>
-      </optional>
-      <choice>
-        <oneOrMore>
-          <ref name="btitle"/>
-        </oneOrMore>
-        <ref name="formattedref"/>
-      </choice>
-      <zeroOrMore>
-        <ref name="bsource"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="docidentifier"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="docnumber"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="bdate"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="contributor"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="edition"/>
-      </optional>
-      <optional>
-        <ref name="version"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="biblionote"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="language"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="script"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="abstract"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="status"/>
-      </optional>
-      <optional>
-        <ref name="copyright"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="docrelation"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="series"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="medium"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="bplace"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="extent"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="accesslocation"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="bclassification"/>
-      </optional>
-      <optional>
-        <ref name="validity"/>
-      </optional>
-      <optional>
-        <ref name="editorialgroup"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="ics"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="allParts"/>
-      </optional>
-    </define>
-    <define name="BibData">
-      <optional>
-        <attribute name="type">
-          <ref name="BibItemType"/>
-        </attribute>
-      </optional>
-      <oneOrMore>
-        <ref name="btitle"/>
-      </oneOrMore>
-      <optional>
-        <ref name="formattedref"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="bsource"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="docidentifier"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="docnumber"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="bdate"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="contributor"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="edition"/>
-      </optional>
-      <optional>
-        <ref name="version"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="biblionote"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="language"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="script"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="abstract"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="status"/>
-      </optional>
-      <ref name="copyright"/>
-      <zeroOrMore>
-        <ref name="docrelation"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="series"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="medium"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="bplace"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="extent"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="accesslocation"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="bclassification"/>
-      </optional>
-      <optional>
-        <ref name="validity"/>
+        <ref name="doctype"/>
       </optional>
       <ref name="editorialgroup"/>
       <zeroOrMore>
@@ -728,6 +571,16 @@
         </optional>
       </element>
     </define>
+    <define name="DocumentType">
+      <choice>
+        <value>international-standard</value>
+        <value>technical-specification</value>
+        <value>technical-report</value>
+        <value>publicly-available-specification</value>
+        <value>international-workshop-agreement</value>
+        <value>guide</value>
+      </choice>
+    </define>
   </include>
   <!-- end overrides -->
   <!--
@@ -762,16 +615,6 @@
         </choice>
       </oneOrMore>
     </element>
-  </define>
-  <define name="BibItemType" combine="choice">
-    <choice>
-      <value>international-standard</value>
-      <value>technical-specification</value>
-      <value>technical-report</value>
-      <value>publicly-available-specification</value>
-      <value>international-workshop-agreement</value>
-      <value>guide</value>
-    </choice>
   </define>
   <define name="editorialgroup">
     <element name="editorialgroup">

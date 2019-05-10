@@ -1080,57 +1080,28 @@
       </zeroOrMore>
     </element>
   </define>
+  <define name="ext">
+    <element name="ext">
+      <ref name="BibDataExtensionType"/>
+    </element>
+  </define>
+  <define name="BibDataExtensionType">
+    <optional>
+      <ref name="doctype"/>
+    </optional>
+  </define>
+  <define name="doctype">
+    <element name="doctype">
+      <ref name="DocumentType"/>
+    </element>
+  </define>
+  <define name="DocumentType">
+    <value>document</value>
+  </define>
   <define name="BibData">
+    <ref name="BibliographicItem"/>
     <optional>
-      <attribute name="type">
-        <ref name="BibItemType"/>
-      </attribute>
+      <ref name="ext"/>
     </optional>
-    <oneOrMore>
-      <ref name="btitle"/>
-    </oneOrMore>
-    <optional>
-      <ref name="formattedref"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="bsource"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="docidentifier"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="docnumber"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="bdate"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="contributor"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="edition"/>
-    </optional>
-    <optional>
-      <ref name="version"/>
-    </optional>
-    <zeroOrMore>
-      <ref name="biblionote"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="language"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="script"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="abstract"/>
-    </optional>
-    <optional>
-      <ref name="status"/>
-    </optional>
-    <ref name="copyright"/>
-    <zeroOrMore>
-      <ref name="docrelation"/>
-    </zeroOrMore>
   </define>
 </grammar>

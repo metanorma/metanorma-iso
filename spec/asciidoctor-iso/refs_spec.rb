@@ -475,12 +475,15 @@ RSpec.describe Asciidoctor::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </owner>
-        </copyright>
+        </copyrighA
+        <ext>
+        <doctype>article</doctype>t>
         <editorialgroup>
           <technical-committee/>
           <subcommittee/>
           <workgroup/>
         </editorialgroup>
+        </ext>
       </bibdata>
       <sections>
 

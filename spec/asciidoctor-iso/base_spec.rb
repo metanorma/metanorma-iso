@@ -90,7 +90,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
+       <bibdata type="standard">
          <title>
            <title-intro language="en" format="text/plain">Introduction</title-intro>
            <title-main language="en" format="text/plain">Main Title — Title</title-main>
@@ -141,6 +141,8 @@ RSpec.describe Asciidoctor::ISO do
              </organization>
            </owner>
          </copyright>
+         <ext>
+         <doctype>article</doctype>
          <editorialgroup>
            <technical-committee number="1" type="A">TC</technical-committee>
            <technical-committee number="11" type="A1">TC1</technical-committee>
@@ -159,6 +161,7 @@ RSpec.describe Asciidoctor::ISO do
 <ics>
   <code>3</code>
 </ics>
+       </ext>
        </bibdata>
        <sections/>
        </iso-standard>
@@ -184,7 +187,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <bibdata type="article">
+       <bibdata type="standard">
          <title>
 
          </title>
@@ -269,11 +272,14 @@ RSpec.describe Asciidoctor::ISO do
              </organization>
            </owner>
          </copyright>
+         <ext>
+         <doctype>article</doctype>
          <editorialgroup>
            <technical-committee/>
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
+         </ext>
        </bibdata>
        <sections/>
        </iso-standard>

@@ -5,6 +5,15 @@ module IsoDoc
     class  Metadata < IsoDoc::Metadata
       def initialize(lang, script, labels)
         super
+        @metadata = {
+        tc: "XXXX",
+        sc: "XXXX",
+        wg: "XXXX",
+        editorialgroup: [],
+        secretariat: "XXXX",
+        obsoletes: nil,
+        obsoletes_part: nil
+      }
       end
 
       STAGE_ABBRS = {
@@ -109,6 +118,57 @@ module IsoDoc
         set(:docsubtitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
         set(:docsubtitlepartlabel, part_prefix(partnumber, subpartnumber, "fr"))
         set(:docsubtitlepart, @c.encode(part.text, :hexadecimal)) if part
+      end
+
+      def author(xml, _out)
+        super
+        tc(xml)
+        sc(xml)
+        wg(xml)
+        secretariat(xml)
+      end
+
+      def tc(xml)
+        tc_num = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/@number"))
+        tc_type = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/@type"))&.
+          text || "TC"
+        if tc_num
+          tcid = "#{tc_type} #{tc_num.text}"
+          set(:tc,  tcid)
+          set(:editorialgroup, get[:editorialgroup] << tcid)
+        end
+      end
+
+      def sc(xml)
+        sc_num = xml.at(ns("//bibdata/ext/editorialgroup/subcommittee/@number"))
+        sc_type = xml.at(ns("//bibdata/ext/editorialgroup/subcommittee/@type"))&.text || "SC"
+        if sc_num
+          scid = "#{sc_type} #{sc_num.text}"
+          set(:sc, scid)
+          set(:editorialgroup, get[:editorialgroup] << scid)
+        end
+      end
+
+      def wg(xml)
+        wg_num = xml.at(ns("//bibdata/ext/editorialgroup/workgroup/@number"))
+        wg_type = xml.at(ns("//bibdata/ext/editorialgroup/workgroup/@type"))&.text || "WG"
+        if wg_num
+          wgid = "#{wg_type} #{wg_num.text}"
+          set(:wg, wgid)
+          set(:editorialgroup, get[:editorialgroup] << wgid)
+        end
+      end
+
+      def secretariat(xml)
+        sec = xml.at(ns("//bibdata/ext/editorialgroup/secretariat"))
+        set(:secretariat, sec.text) if sec
+      end
+
+      def doctype(isoxml, _out)
+        super
+        ics = []
+        isoxml.xpath(ns("//bibdata/ext/ics/code")).each { |i| ics << i.text }
+        set(:ics, ics.empty? ? "XXX" : ics.join(", "))
       end
     end
   end
