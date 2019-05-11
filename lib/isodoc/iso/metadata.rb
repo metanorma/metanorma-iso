@@ -92,9 +92,9 @@ module IsoDoc
       end
 
       def title(isoxml, _out)
-        intro = isoxml.at(ns("//bibdata//title-intro[@language='en']"))
-        main = isoxml.at(ns("//bibdata//title-main[@language='en']"))
-        part = isoxml.at(ns("//bibdata//title-part[@language='en']"))
+        intro = isoxml.at(ns("//bibdata//title[@type='title-intro' and @language='en']"))
+        main = isoxml.at(ns("//bibdata//title[@type='title-main' and @language='en']"))
+        part = isoxml.at(ns("//bibdata//title[@type='title-part' and @language='en']"))
         partnumber = isoxml.at(ns("//bibdata//project-number/@part"))
         subpartnumber = isoxml.at(ns("//bibdata//project-number/@subpart"))
 
@@ -107,9 +107,9 @@ module IsoDoc
       end
 
       def subtitle(isoxml, _out)
-        intro = isoxml.at(ns("//bibdata//title-intro[@language='fr']"))
-        main = isoxml.at(ns("//bibdata//title-main[@language='fr']"))
-        part = isoxml.at(ns("//bibdata//title-part[@language='fr']"))
+        intro = isoxml.at(ns("//bibdata//title[@type='title-intro' and @language='fr']"))
+        main = isoxml.at(ns("//bibdata//title[@type='title-main' and @language='fr']"))
+        part = isoxml.at(ns("//bibdata//title[@type='title-part' and @language='fr']"))
         partnumber = isoxml.at(ns("//bibdata//project-number/@part"))
         subpartnumber = isoxml.at(ns("//bibdata//project-number/@subpart"))
         set(:docsubtitlemain, @c.encode(main ? main.text : "", :hexadecimal))

@@ -440,13 +440,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
       <?xml version="1.0" encoding="UTF-8"?>
       <iso-standard xmlns="http://riboseinc.com/isoxml">
-      <bibdata type="article">
-        <title>
-
-        </title>
-        <title>
-
-        </title>
+      <bibdata type="standard">
         <contributor>
           <role type="author"/>
           <organization>
@@ -475,9 +469,9 @@ RSpec.describe Asciidoctor::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </owner>
-        </copyrighA
+        </copyright>
         <ext>
-        <doctype>article</doctype>t>
+        <doctype>article</doctype>
         <editorialgroup>
           <technical-committee/>
           <subcommittee/>

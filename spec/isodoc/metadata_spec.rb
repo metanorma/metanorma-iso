@@ -11,14 +11,14 @@ RSpec.describe IsoDoc::Iso::Metadata do
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata type="standard">
   <title>
-    <title-intro language="en" format="text/plain">Cereals and pulses</title-intro>
-    <title-main language="en" format="text/plain">Specifications and test methods</title-main>
-    <title-part language="en" format="text/plain">Rice</title-part>
+    <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
+    <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+    <title type="title-part" language="en" format="text/plain">Rice</title>
   </title>
   <title>
-    <title-intro language="fr" format="text/plain">Céréales et légumineuses</title-intro>
-    <title-main language="fr" format="text/plain">Spécification et méthodes d'essai</title-main>
-    <title-part language="fr" format="text/plain">Riz</title-part>
+    <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
+    <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
+    <title type="title-part" language="fr" format="text/plain">Riz</title>
   </title>
   <docidentifier type="iso">ISO/PreCD3 17301-1</docidentifier>
   <docidentifier type="iso-structured">
@@ -87,14 +87,14 @@ OUTPUT
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata type="standard">
   <title>
-    <title-intro language="en" format="text/plain">Cereals and pulses</title-intro>
-    <title-main language="en" format="text/plain">Specifications and test methods</title-main>
-    <title-part language="en" format="text/plain">Rice</title-part>
+    <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
+    <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+    <title type="title-part" language="en" format="text/plain">Rice</title>
   </title>
   <title>
-    <title-intro language="fr" format="text/plain">Céréales et légumineuses</title-intro>
-    <title-main language="fr" format="text/plain">Spécification et méthodes d'essai</title-main>
-    <title-part language="fr" format="text/plain">Riz</title-part>
+    <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
+    <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
+    <title type="title-part" language="fr" format="text/plain">Riz</title>
   </title>
   <docidentifier type="iso">ISO/IEC/CD 17301-1-3</docidentifier>
     <docidentifier type="iso-structured">

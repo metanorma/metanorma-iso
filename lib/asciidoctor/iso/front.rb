@@ -112,32 +112,42 @@ module Asciidoctor
 
       def title_intro(node, t, lang, at)
         return unless node.attr("title-intro-#{lang}")
-        t.title_intro(**attr_code(at)) do |t1|
+        t.title(**attr_code(at.merge(type: "title-intro"))) do |t1|
           t1 << asciidoc_sub(node.attr("title-intro-#{lang}"))
         end
       end
 
       def title_main(node, t, lang, at)
-        t.title_main **attr_code(at) do |t1|
+        t.title **attr_code(at.merge(type: "title-main")) do |t1|
           t1 << asciidoc_sub(node.attr("title-main-#{lang}"))
         end
       end
 
       def title_part(node, t, lang, at)
         return unless node.attr("title-part-#{lang}")
-        t.title_part(**attr_code(at)) do |t1|
+        t.title(**attr_code(at.merge(type: "title-part"))) do |t1|
           t1 << asciidoc_sub(node.attr("title-part-#{lang}"))
+        end
+      end
+
+      def title_full(node, t, lang, at)
+        title = node.attr("title-main-#{lang}")
+        intro = node.attr("title-intro-#{lang}")
+        part = node.attr("title-part-#{lang}")
+        title = "#{intro} -- #{title}" if intro
+        title = "#{title} -- #{part}" if part
+        t.title **attr_code(at.merge(type: "main")) do |t1|
+          t1 << asciidoc_sub(title)
         end
       end
 
       def title(node, xml)
         ["en", "fr"].each do |lang|
-          xml.title do |t|
             at = { language: lang, format: "text/plain" }
-            title_intro(node, t, lang, at)
-            title_main(node, t, lang, at)
-            title_part(node, t, lang, at)
-          end
+            title_full(node, xml, lang, at)
+            title_intro(node, xml, lang, at)
+            title_main(node, xml, lang, at)
+            title_part(node, xml, lang, at)
         end
       end
     end

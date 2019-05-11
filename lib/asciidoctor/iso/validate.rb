@@ -11,8 +11,8 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       def title_intro_validate(root)
-        title_intro_en = root.at("//title-intro[@language='en']")
-        title_intro_fr = root.at("//title-intro[@language='fr']")
+        title_intro_en = root.at("//title[@type='title-intro' and @language='en']")
+        title_intro_fr = root.at("//title[@type='title-intro' and @language='fr']")
         if title_intro_en.nil? && !title_intro_fr.nil?
           warn "No English Title Intro!"
         end
@@ -22,8 +22,8 @@ module Asciidoctor
       end
 
       def title_main_validate(root)
-        title_main_en = root.at("//title-main[@language='en']")
-        title_main_fr = root.at("//title-main[@language='fr']")
+        title_main_en = root.at("//title[@type='title-main' and @language='en']")
+        title_main_fr = root.at("//title[@type='title-main' and @language='fr']")
         if title_main_en.nil? && !title_main_fr.nil?
           warn "No English Title!"
         end
@@ -33,8 +33,8 @@ module Asciidoctor
       end
 
       def title_part_validate(root)
-        title_part_en = root.at("//title-part[@language='en']")
-        title_part_fr = root.at("//title-part[@language='fr']")
+        title_part_en = root.at("//title[@type='title-part' and @language='en']")
+        title_part_fr = root.at("//title[@type='title-part' and @language='fr']")
         (title_part_en.nil? && !title_part_fr.nil?) &&
           warn("No English Title Part!")
         (!title_part_en.nil? && title_part_fr.nil?) &&
@@ -53,11 +53,11 @@ module Asciidoctor
       def title_names_type_validate(root)
         doctypes = /International\sStandard | Technical\sSpecification |
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
-        title_main_en = root.at("//title-main[@language='en']")
+        title_main_en = root.at("//title[@type='title-main' and @language='en']")
         if !title_main_en.nil? && doctypes.match(title_main_en.text)
           warn "Main Title may name document type"
         end
-        title_intro_en = root.at("//title-intro[@language='en']")
+        title_intro_en = root.at("//title[@type='title-intro' and @language='en']")
         if !title_intro_en.nil? && doctypes.match(title_intro_en.text)
           warn "Title Intro may name document type"
         end

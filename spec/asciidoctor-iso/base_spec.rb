@@ -91,16 +91,14 @@ RSpec.describe Asciidoctor::ISO do
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="standard">
-         <title>
-           <title-intro language="en" format="text/plain">Introduction</title-intro>
-           <title-main language="en" format="text/plain">Main Title — Title</title-main>
-           <title-part language="en" format="text/plain">Title Part</title-part>
-         </title>
-         <title>
-           <title-intro language="fr" format="text/plain">Introduction Française</title-intro>
-           <title-main language="fr" format="text/plain">Titre Principal</title-main>
-           <title-part language="fr" format="text/plain">Part du Titre</title-part>
-         </title>
+   <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
+   <title language="en" format="text/plain" type="title-intro">Introduction</title>
+   <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+   <title language="en" format="text/plain" type="title-part">Title Part</title>
+   <title language="fr" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre</title>
+   <title language="fr" format="text/plain" type="title-intro">Introduction Française</title>
+   <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
+   <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
          <docidentifier type="iso">ISO/PreNWIP3 1000-1</docidentifier>
 <docidentifier type="iso-structured">
   <project-number part="1">ISO 1000</project-number>
@@ -188,12 +186,6 @@ RSpec.describe Asciidoctor::ISO do
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="standard">
-         <title>
-
-         </title>
-         <title>
-
-         </title>
          <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
          <docidentifier type="iso-structured">
            <project-number part="1" subpart="1">ISO/IEC/IETF 1000</project-number>
