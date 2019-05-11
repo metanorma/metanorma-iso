@@ -4,11 +4,6 @@
     <start>
       <ref name="iso-standard"/>
     </start>
-    <define name="script">
-      <element name="script">
-        <value>Latn</value>
-      </element>
-    </define>
     <!-- add type to docidentifier in isodoc? -->
     <define name="docidentifier">
       <element name="docidentifier">
@@ -71,17 +66,10 @@
       <element name="date">
         <attribute name="type">
           <choice>
-            <value>published</value>
-            <value>accessed</value>
-            <value>created</value>
-            <value>implemented</value>
-            <value>obsoleted</value>
-            <value>confirmed</value>
-            <value>updated</value>
-            <value>issued</value>
+            <ref name="BibliographicDateType"/>
+            <text/>
           </choice>
         </attribute>
-        <!-- ( ( bfrom, bto? ) | date_on ) -->
         <choice>
           <group>
             <element name="from">
@@ -106,25 +94,12 @@
       <element name="note">
         <optional>
           <!-- Biblio date notes can be footnoted -->
+          <attribute name="type"/>
+        </optional>
+        <optional>
           <attribute name="reference"/>
         </optional>
         <ref name="FormattedString"/>
-      </element>
-    </define>
-    <define name="btitle">
-      <element name="title">
-        <choice>
-          <ref name="FormattedString"/>
-          <group>
-            <optional>
-              <ref name="title-intro"/>
-            </optional>
-            <ref name="title-main"/>
-            <optional>
-              <ref name="title-part"/>
-            </optional>
-          </group>
-        </choice>
       </element>
     </define>
     <define name="sections">
@@ -696,21 +671,6 @@
   <define name="secretariat">
     <element name="secretariat">
       <text/>
-    </element>
-  </define>
-  <define name="title-intro">
-    <element name="title-intro">
-      <ref name="FormattedString"/>
-    </element>
-  </define>
-  <define name="title-main">
-    <element name="title-main">
-      <ref name="FormattedString"/>
-    </element>
-  </define>
-  <define name="title-part">
-    <element name="title-part">
-      <ref name="FormattedString"/>
     </element>
   </define>
   <define name="allParts">

@@ -100,9 +100,6 @@ RSpec.describe Asciidoctor::ISO do
    <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
    <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
          <docidentifier type="iso">ISO/PreNWIP3 1000-1</docidentifier>
-<docidentifier type="iso-structured">
-  <project-number part="1">ISO 1000</project-number>
-</docidentifier>
 <docnumber>1000</docnumber>
          <edition>2</edition>
 <version>
@@ -159,6 +156,9 @@ RSpec.describe Asciidoctor::ISO do
 <ics>
   <code>3</code>
 </ics>
+<structuredidentifier>
+  <project-number part="1">ISO 1000</project-number>
+</structuredidentifier>
        </ext>
        </bibdata>
        <sections/>
@@ -187,9 +187,6 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="standard">
          <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
-         <docidentifier type="iso-structured">
-           <project-number part="1" subpart="1">ISO/IEC/IETF 1000</project-number>
-         </docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
          <docnumber>1000</docnumber>
          <contributor>
@@ -271,6 +268,9 @@ RSpec.describe Asciidoctor::ISO do
            <subcommittee/>
            <workgroup/>
          </editorialgroup>
+         <structuredidentifier>
+           <project-number part="1" subpart="1">ISO/IEC/IETF 1000</project-number>
+         </structuredidentifier>
          </ext>
        </bibdata>
        <sections/>

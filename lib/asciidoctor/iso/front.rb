@@ -23,7 +23,17 @@ module Asciidoctor
         dn = add_id_parts(node.attr("docnumber"), part, subpart)
         dn = id_stage_prefix(dn, node)
         xml.docidentifier dn, **attr_code(type: "iso")
-        xml.docidentifier **attr_code(type: "iso-structured") do |i|
+      end
+
+      def metadata_ext(node, xml)
+        super
+        structured_id(node, xml)
+      end
+
+      def structured_id(node, xml)
+        return unless node.attr("docnumber")
+        part, subpart = node&.attr("partnumber")&.split(/-/)
+        xml.structuredidentifier do |i|
           i.project_number node.attr("docnumber"),
             **attr_code(part: part, subpart: subpart)
         end

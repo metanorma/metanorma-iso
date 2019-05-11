@@ -10,20 +10,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
   expect(Hash[c.info(Nokogiri::XML(<<~"INPUT"), nil).sort]).to be_equivalent_to <<~"OUTPUT"
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata type="standard">
-  <title>
     <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
     <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
     <title type="title-part" language="en" format="text/plain">Rice</title>
-  </title>
-  <title>
     <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
     <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
     <title type="title-part" language="fr" format="text/plain">Riz</title>
-  </title>
   <docidentifier type="iso">ISO/PreCD3 17301-1</docidentifier>
-  <docidentifier type="iso-structured">
-    <project-number part="1">ISO/PreCD3 17301</project-number>
-  </docidentifier>
   <docidentifier type="iso-tc">17301</docidentifier>
   <date type="published"><on>2011</on></date>
   <date type="accessed"><on>2012</on></date>
@@ -70,6 +63,9 @@ RSpec.describe IsoDoc::Iso::Metadata do
     <workgroup number="3">Rice Group</workgroup>
     <secretariat>GB</secretariat>
   </editorialgroup>
+  <structuredidentifier>
+    <project-number part="1">ISO/PreCD3 17301</project-number>
+  </structuredidentifier>
   </ext>
 </bibdata>
 </iso-standard>
@@ -97,9 +93,6 @@ OUTPUT
     <title type="title-part" language="fr" format="text/plain">Riz</title>
   </title>
   <docidentifier type="iso">ISO/IEC/CD 17301-1-3</docidentifier>
-    <docidentifier type="iso-structured">
-    <project-number part="1" subpart="3">ISO/IEC/CD 17301</project-number>
-  </docidentifier>
   <docidentifier type="iso-tc">17301</docidentifier>
   <contributor>
     <role type="author"/>
@@ -146,6 +139,9 @@ OUTPUT
   </editorialgroup>
   <ics><code>1.2.3</code></ics>
   <ics><code>1.2.3</code></ics>
+    <structuredidentifier>
+    <project-number part="1" subpart="3">ISO/IEC/CD 17301</project-number>
+  </strucuredidentifier>
   </ext>
 </bibdata>
 </iso-standard>

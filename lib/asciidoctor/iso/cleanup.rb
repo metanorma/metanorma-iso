@@ -54,8 +54,7 @@ module Asciidoctor
         prefix = get_id_prefix(xmldoc)
         id = xmldoc.at("//bibdata/docidentifier[@type = 'iso']") or return
         id.content = id_prefix(prefix, id)
-        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso-structured']/"\
-                       "project-number") or return
+        id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") or return
         id.content = id_prefix(prefix, id)
       end
     end
