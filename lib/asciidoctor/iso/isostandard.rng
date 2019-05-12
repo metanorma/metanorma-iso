@@ -4,23 +4,6 @@
     <start>
       <ref name="iso-standard"/>
     </start>
-    <!-- add type to docidentifier in isodoc? -->
-    <define name="docidentifier">
-      <element name="docidentifier">
-        <optional>
-          <attribute name="type"/>
-        </optional>
-        <choice>
-          <text/>
-          <group>
-            <ref name="documentnumber"/>
-            <optional>
-              <ref name="tc-documentnumber"/>
-            </optional>
-          </group>
-        </choice>
-      </element>
-    </define>
     <define name="organization">
       <element name="organization">
         <ref name="orgname"/>
@@ -58,6 +41,7 @@
       <zeroOrMore>
         <ref name="ics"/>
       </zeroOrMore>
+      <ref name="structuredidentifier"/>
       <optional>
         <ref name="allParts"/>
       </optional>
@@ -622,6 +606,19 @@
       <ref name="Content-Section"/>
     </element>
   </define>
+  <define name="structuredidentifier">
+    <element name="structuredidentifier">
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <group>
+        <ref name="documentnumber"/>
+        <optional>
+          <ref name="tc-documentnumber"/>
+        </optional>
+      </group>
+    </element>
+  </define>
   <define name="documentnumber">
     <element name="project-number">
       <optional>
@@ -671,11 +668,6 @@
   <define name="secretariat">
     <element name="secretariat">
       <text/>
-    </element>
-  </define>
-  <define name="allParts">
-    <element name="allparts">
-      <data type="boolean"/>
     </element>
   </define>
   <define name="clause-hanging-paragraph-with-footnote">
