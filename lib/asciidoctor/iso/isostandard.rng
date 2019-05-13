@@ -42,9 +42,6 @@
         <ref name="ics"/>
       </zeroOrMore>
       <ref name="structuredidentifier"/>
-      <optional>
-        <ref name="allParts"/>
-      </optional>
     </define>
     <define name="bdate">
       <element name="date">
