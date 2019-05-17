@@ -544,9 +544,9 @@
     <zeroOrMore>
       <ref name="script"/>
     </zeroOrMore>
-    <optional>
+    <zeroOrMore>
       <ref name="abstract"/>
-    </optional>
+    </zeroOrMore>
     <optional>
       <ref name="status"/>
     </optional>

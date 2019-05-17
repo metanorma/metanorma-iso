@@ -181,6 +181,46 @@ module Asciidoctor
         end
       end
 
+      def doctype_validate(xmldoc)
+        doctype = xmldoc&.at("//bibdata/ext/doctype")&.text
+        %w(international-standard technical-specification technical-report 
+        publicly-available-specification international-workshop-agreement 
+        guide).include? doctype or
+        warn "ISO Document Attributes: #{doctype} is not a recognised document type"
+      end
+
+      def script_validate(xmldoc)
+        script = xmldoc&.at("//bibdata/script")&.text
+        script == "Latn" or
+          warn "ISO Document Attributes: #{script} is not a recognised script"
+      end
+
+      def stage_validate(xmldoc)
+        stage = xmldoc&.at("//bibdata/status/stage")&.text
+        %w(00 10 20 30 40 50 60 90 95).include? stage or
+          warn "ISO Document Attributes: #{stage} is not a recognised stage"
+      end
+
+      def substage_validate(xmldoc)
+        substage = xmldoc&.at("//bibdata/status/substage")&.text or return
+        %w(00 20 60 90 92 93 98 99).include? substage or
+          warn "ISO Document Attributes: #{substage} is not a recognised substage"
+      end
+
+      def iteration_validate(xmldoc)
+        iteration = xmldoc&.at("//bibdata/status/iteration")&.text or return
+        /^\d+/.match(iteration) or
+          warn "ISO Document Attributes: #{iteration} is not a recognised iteration"
+      end
+
+      def bibdata_validate(doc)
+        doctype_validate(doc)
+        script_validate(doc)
+        stage_validate(doc)
+        substage_validate(doc)
+        iteration_validate(doc)
+      end
+
       def content_validate(doc)
         super
         title_validate(doc.root)
@@ -191,6 +231,7 @@ module Asciidoctor
         see_xrefs_validate(doc.root)
         see_erefs_validate(doc.root)
         locality_erefs_validate(doc.root)
+        bibdata_validate(doc.root)
       end
 
       def validate(doc)

@@ -3,6 +3,87 @@ require "fileutils"
 
 RSpec.describe Asciidoctor::ISO do
 
+it "Warns of illegal doctype" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/pizza is not a recognised document type/).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: pizza
+
+  text
+  INPUT
+end
+
+it "Warns of illegal script" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/pizza is not a recognised script/).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :script: pizza
+
+  text
+  INPUT
+end
+
+it "Warns of illegal stage" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/pizza is not a recognised stage/).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :status: pizza
+
+  text
+  INPUT
+end
+
+it "Warns of illegal substage" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/pizza is not a recognised substage/).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :status: 60
+  :docsubstage: pizza
+
+  text
+  INPUT
+end
+
+it "Warns of illegal iteration" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/pizza is not a recognised iteration/).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :status: 60
+  :iteration: pizza
+
+  text
+  INPUT
+end
+
+it "Warns of illegal script" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/pizza is not a recognised script/).to_stderr
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :script: pizza
+
+  text
+  INPUT
+end
+
+
 it "warns that introduction may contain requirement" do
   expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Introduction may contain requirement/).to_stderr
   #{VALIDATING_BLANK_HDR}
