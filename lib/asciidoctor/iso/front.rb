@@ -46,9 +46,11 @@ module Asciidoctor
       end
 
       def id_stage_prefix(dn, node)
-        if node.attr("docstage") && node.attr("docstage").to_i < 60
+        stage = get_stage(node)
+        substage = get_substage(node)
+        if stage && (stage.to_i < 60 || stage.to_i == 60 && substage.to_i < 60)
           abbr = IsoDoc::Iso::Metadata.new("en", "Latn", {}).
-            stage_abbrev(node.attr("docstage"), node.attr("iteration"), 
+            stage_abbrev(stage, substage, node.attr("iteration"), 
                          node.attr("draft"))
           dn = "/#{abbr} #{dn}" # prefixes added in cleanup
         else
@@ -103,10 +105,19 @@ module Asciidoctor
         end
       end
 
+      def get_stage(node)
+        stage = node.attr("status") || node.attr("docstage") || "60"
+      end
+
+      def get_substage(node)
+        stage = get_stage(node)
+        node.attr("docsubstage") || ( stage == "60" ? "60" : "00" )
+      end
+
       def metadata_status(node, xml)
         xml.status do |s|
-          s.stage (node.attr("status") || node.attr("docstage") || "60")
-          s.substage (node.attr("docsubstage") || "60")
+          s.stage get_stage(node)
+          s.substage get_substage(node)
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end
       end
@@ -153,11 +164,11 @@ module Asciidoctor
 
       def title(node, xml)
         ["en", "fr"].each do |lang|
-            at = { language: lang, format: "text/plain" }
-            title_full(node, xml, lang, at)
-            title_intro(node, xml, lang, at)
-            title_main(node, xml, lang, at)
-            title_part(node, xml, lang, at)
+          at = { language: lang, format: "text/plain" }
+          title_full(node, xml, lang, at)
+          title_intro(node, xml, lang, at)
+          title_main(node, xml, lang, at)
+          title_part(node, xml, lang, at)
         end
       end
     end

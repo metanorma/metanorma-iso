@@ -28,9 +28,10 @@ module IsoDoc
         "95": "(Withdrawal)",
       }.freeze
 
-      def stage_abbrev(stage, iter, draft)
+      def stage_abbrev(stage, substage, iter, draft)
         return "" unless stage
         stage = STAGE_ABBRS[stage.to_sym] || "??"
+        stage = "PRF" if stage == "IS" && substage == "00"
         stage += iter if iter
         stage = "Pre" + stage if draft =~ /^0\./
         stage
@@ -43,7 +44,9 @@ module IsoDoc
           set(:stage, docstatus.text)
           set(:stage_int, docstatus.text.to_i)
           set(:unpublished, docstatus.text.to_i > 0 && docstatus.text.to_i < 60)
-          abbr = stage_abbrev(docstatus.text, isoxml&.at(ns("//bibdata/status/iteration"))&.text,
+          abbr = stage_abbrev(docstatus.text,
+                              isoxml&.at(ns("//bibdata/status/substage"))&.text,
+                              isoxml&.at(ns("//bibdata/status/iteration"))&.text,
                               isoxml&.at(ns("//version/draft"))&.text)
           set(:stageabbr, abbr)
         end

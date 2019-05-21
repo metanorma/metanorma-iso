@@ -25,6 +25,11 @@
         <ref name="ObligationType"/>
       </attribute>
     </optional>
+    <optional>
+      <attribute name="unnumbered">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
     <attribute name="id">
       <data type="ID"/>
     </attribute>

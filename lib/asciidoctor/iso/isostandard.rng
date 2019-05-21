@@ -71,18 +71,6 @@
         </choice>
       </element>
     </define>
-    <define name="biblionote">
-      <element name="note">
-        <optional>
-          <!-- Biblio date notes can be footnoted -->
-          <attribute name="type"/>
-        </optional>
-        <optional>
-          <attribute name="reference"/>
-        </optional>
-        <ref name="FormattedString"/>
-      </element>
-    </define>
     <define name="sections">
       <element name="sections">
         <ref name="clause"/>

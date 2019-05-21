@@ -278,6 +278,194 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
+    it "defaults substage" do
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+      :docstage: 50
+    INPUT
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+<bibdata type="standard">
+  <docidentifier type="iso">ISO/FDIS 1000</docidentifier>
+  <docnumber>1000</docnumber>
+  <contributor>
+    <role type="author"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+
+  <language>en</language>
+  <script>Latn</script>
+  <status>
+    <stage>50</stage>
+    <substage>00</substage>
+  </status>
+  <copyright>
+    <from>#{Date.today.year}</from>
+    <owner>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </owner>
+  </copyright>
+  <ext>
+    <doctype>article</doctype>
+    <editorialgroup>
+      <technical-committee/>
+      <subcommittee/>
+      <workgroup/>
+    </editorialgroup>
+    <structuredidentifier>
+      <project-number>ISO 1000</project-number>
+    </structuredidentifier>
+  </ext>
+</bibdata>
+<sections/>
+</iso-standard>
+OUTPUT
+    end
+
+        it "defaults substage for stage 60" do
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+      :docstage: 60
+    INPUT
+<iso-standard xmlns="http://riboseinc.com/isoxml">
+<bibdata type="standard">
+  <docidentifier type="iso">ISO 1000</docidentifier>
+  <docnumber>1000</docnumber>
+  <contributor>
+    <role type="author"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+
+  <language>en</language>
+  <script>Latn</script>
+  <status>
+    <stage>60</stage>
+    <substage>60</substage>
+  </status>
+  <copyright>
+    <from>#{Date.today.year}</from>
+    <owner>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </owner>
+  </copyright>
+  <ext>
+    <doctype>article</doctype>
+    <editorialgroup>
+      <technical-committee/>
+      <subcommittee/>
+      <workgroup/>
+    </editorialgroup>
+    <structuredidentifier>
+      <project-number>ISO 1000</project-number>
+    </structuredidentifier>
+  </ext>
+</bibdata>
+<sections/>
+</iso-standard>
+OUTPUT
+    end
+
+  it "populates metadata for PRF" do
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+      :docstage: 60
+      :docsubstage: 00
+    INPUT
+<iso-standard xmlns="http://riboseinc.com/isoxml">
+<bibdata type="standard">
+  <docidentifier type="iso">ISO/PRF 1000</docidentifier>
+  <docnumber>1000</docnumber>
+  <contributor>
+    <role type="author"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+
+  <language>en</language>
+  <script>Latn</script>
+  <status>
+    <stage>60</stage>
+    <substage>00</substage>
+  </status>
+  <copyright>
+    <from>#{Date.today.year}</from>
+    <owner>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </owner>
+  </copyright>
+  <ext>
+    <doctype>article</doctype>
+    <editorialgroup>
+      <technical-committee/>
+      <subcommittee/>
+      <workgroup/>
+    </editorialgroup>
+    <structuredidentifier>
+      <project-number>ISO 1000</project-number>
+    </structuredidentifier>
+  </ext>
+</bibdata>
+<sections/>
+</iso-standard>
+OUTPUT
+    end
+
+
   it "reads scripts into blank HTML document" do
     FileUtils.rm_f "test.html"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)

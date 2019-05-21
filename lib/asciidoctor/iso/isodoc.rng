@@ -471,6 +471,11 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
       <ref name="stem"/>
       <optional>
         <ref name="dl"/>
@@ -520,6 +525,11 @@
         <data type="ID"/>
       </attribute>
       <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
         <attribute name="lang"/>
       </optional>
       <optional>
@@ -558,6 +568,11 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
       <optional>
         <attribute name="alt"/>
       </optional>
@@ -675,6 +690,11 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <choice>
           <ref name="formula"/>
@@ -718,6 +738,11 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
       <optional>
         <ref name="source"/>
       </optional>
