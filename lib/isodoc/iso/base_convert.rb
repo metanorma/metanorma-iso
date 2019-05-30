@@ -118,8 +118,8 @@ module IsoDoc
       end
 
       def prefix_container(container, linkend, target)
-        delim = get_anchors[target][:type] == "listitem" ? " " : ", "
-        l10n(get_anchors[container][:xref] + delim + linkend)
+        delim = anchor(target, :type) == "listitem" ? " " : ", "
+        l10n(anchor(container, :xref) + delim + linkend)
       end
 
       def example_p_parse(node, div)
