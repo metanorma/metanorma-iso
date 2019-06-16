@@ -1,3 +1,5 @@
+# Auto-generated !!! Do not edit it manually
+# use ci-master https://github.com/metanorma/metanorma-build-scripts
 language: ruby
 cache: bundler
 os:
@@ -6,12 +8,14 @@ os:
 rvm:
 - 2.5
 - 2.4
-- 2.3
 - ruby-head
 before_install:
+- nvm install 8
+- npm install -g puppeteer
+- npm install
 - gem install bundler -v 2.0.1
 - bundle update
-- curl -L https://raw.githubusercontent.com/metanorma/metanorma-build-scripts/master/travis-plantuml-install.sh | bash
 matrix:
   allow_failures:
     - rvm: ruby-head
+
