@@ -20,7 +20,7 @@ name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
 
 <div class="doctitle-en"><div><span class="title">{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &mdash; {% endif %}</span><span class="subtitle">{{ doctitlemain }}{% if doctitlemain and doctitlepart %} &mdash;{% endif %}</span>
   {% if doctitlepart %}
-</div><div>
+</div><div class="doctitle-part">
   {% if doctitlepartlabel %}<span class="partlabel">{{ doctitlepartlabel }}: </span>{% endif %}
   <span class="part">{{ doctitlepart }}</span>
   {% endif %}
