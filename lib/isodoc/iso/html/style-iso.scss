@@ -398,7 +398,7 @@ p.Terms {
     list-style: none;
 }
 
-#toc li {
+#toc li a {
     padding: 5px 10px;
 }
 
@@ -408,6 +408,7 @@ p.Terms {
 }
 
 #toc a:hover {
+    box-shadow: none;
     color: black;
 }
 
