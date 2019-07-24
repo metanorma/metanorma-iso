@@ -30,7 +30,7 @@ module IsoDoc
 
       def stage_abbrev(stage, substage, iter, draft)
         return "" unless stage
-        stage = STAGE_ABBRS[stage.to_sym] || "??"
+        stage = self.class::STAGE_ABBRS[stage.to_sym] || "??"
         stage = "PRF" if stage == "IS" && substage == "00"
         stage += iter if iter
         stage = "Pre" + stage if draft =~ /^0\./
