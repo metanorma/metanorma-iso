@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="biblio.rng"/>
+  <start>
+    <ref name="document"/>
+  </start>
+  <define name="document">
+    <element name="document">
+      <optional>
+        <attribute name="identifier"/>
+      </optional>
+      <ref name="bibdata"/>
+      <ref name="sections"/>
+      <zeroOrMore>
+        <ref name="references"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="bibdata">
+    <element name="bibdata">
+      <ref name="BibData"/>
+    </element>
+  </define>
+  <define name="sections">
+    <element name="sections">
+      <oneOrMore>
+        <ref name="section"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="section">
+    <element name="section">
+      <ref name="Basic-Section"/>
+      <zeroOrMore>
+        <ref name="section"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="Basic-Section">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <ref name="section-title"/>
+    </optional>
+    <optional>
+      <ref name="BasicBlock"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="note"/>
+    </zeroOrMore>
+  </define>
+  <define name="references">
+    <element name="references">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="section-title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="BasicBlock"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="bibitem"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="section-title">
+    <element name="title">
+      <zeroOrMore>
+        <ref name="TextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="BasicBlock">
+    <choice>
+      <ref name="paragraph-with-footnote"/>
+      <ref name="table"/>
+      <ref name="formula"/>
+      <ref name="admonition"/>
+      <ref name="ol"/>
+      <ref name="ul"/>
+      <ref name="dl"/>
+      <ref name="figure"/>
+      <ref name="quote"/>
+      <ref name="sourcecode"/>
+      <ref name="example"/>
+      <ref name="review"/>
+      <ref name="pre"/>
+    </choice>
+  </define>
+  <define name="paragraph">
+    <element name="p">
+      <ref name="ParagraphType"/>
+    </element>
+  </define>
+  <define name="Alignments">
+    <choice>
+      <value>left</value>
+      <value>right</value>
+      <value>center</value>
+      <value>justified</value>
+    </choice>
+  </define>
+  <define name="ParagraphType">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="align">
+        <ref name="Alignments"/>
+      </attribute>
+    </optional>
+    <zeroOrMore>
+      <ref name="TextElement"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="note"/>
+    </zeroOrMore>
+  </define>
+  <define name="paragraph-with-footnote">
+    <element name="p">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="align">
+          <ref name="Alignments"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="TextElement"/>
+          <ref name="fn"/>
+        </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="note">
+    <element name="note">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="paragraph"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="review">
+    <element name="review">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="reviewer"/>
+      <optional>
+        <attribute name="date">
+          <data type="dateTime"/>
+        </attribute>
+      </optional>
+      <attribute name="from">
+        <data type="IDREF"/>
+      </attribute>
+      <optional>
+        <attribute name="to">
+          <data type="IDREF"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="paragraph"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="formula">
+    <element name="formula">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <ref name="stem"/>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="quote">
+    <element name="quote">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="alignment">
+          <ref name="Alignments"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="quote-source"/>
+      </optional>
+      <optional>
+        <ref name="quote-author"/>
+      </optional>
+      <oneOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="quote-source">
+    <element name="source">
+      <ref name="erefType"/>
+    </element>
+  </define>
+  <define name="quote-author">
+    <element name="author">
+      <text/>
+    </element>
+  </define>
+  <define name="sourcecode">
+    <element name="sourcecode">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="lang"/>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="callout"/>
+        </choice>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="annotation"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="pre">
+    <element name="pre">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <text/>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="table">
+    <element name="table">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="uri">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <optional>
+        <ref name="thead"/>
+      </optional>
+      <ref name="tbody"/>
+      <optional>
+        <ref name="tfoot"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="table-note"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+    </element>
+  </define>
+  <define name="tname">
+    <element name="name">
+      <text/>
+    </element>
+  </define>
+  <define name="tclass">
+    <element name="name">
+      <text/>
+    </element>
+  </define>
+  <define name="thead">
+    <element name="thead">
+      <ref name="tr"/>
+    </element>
+  </define>
+  <define name="tfoot">
+    <element name="tfoot">
+      <ref name="tr"/>
+    </element>
+  </define>
+  <define name="tbody">
+    <element name="tbody">
+      <oneOrMore>
+        <ref name="tr"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="table-note">
+    <element name="note">
+      <ref name="paragraph"/>
+    </element>
+  </define>
+  <define name="tr">
+    <element name="tr">
+      <oneOrMore>
+        <choice>
+          <ref name="td"/>
+          <ref name="th"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="td">
+    <element name="td">
+      <optional>
+        <attribute name="colspan"/>
+      </optional>
+      <optional>
+        <attribute name="rowspan"/>
+      </optional>
+      <optional>
+        <attribute name="align">
+          <choice>
+            <value>left</value>
+            <value>right</value>
+            <value>center</value>
+          </choice>
+        </attribute>
+      </optional>
+      <choice>
+        <zeroOrMore>
+          <ref name="TextElement"/>
+        </zeroOrMore>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="th">
+    <element name="th">
+      <optional>
+        <attribute name="colspan"/>
+      </optional>
+      <optional>
+        <attribute name="rowspan"/>
+      </optional>
+      <optional>
+        <attribute name="align">
+          <choice>
+            <value>left</value>
+            <value>right</value>
+            <value>center</value>
+          </choice>
+        </attribute>
+      </optional>
+      <choice>
+        <zeroOrMore>
+          <ref name="TextElement"/>
+        </zeroOrMore>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="example">
+    <element name="example">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <ref name="formula"/>
+          <ref name="ul"/>
+          <ref name="ol"/>
+          <ref name="dl"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+          <ref name="paragraph-with-footnote"/>
+        </choice>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="admonition">
+    <element name="admonition">
+      <attribute name="type">
+        <ref name="AdmonitionType"/>
+      </attribute>
+      <optional>
+        <attribute name="class"/>
+      </optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="uri">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="AdmonitionType">
+    <choice>
+      <value>warning</value>
+      <value>note</value>
+      <value>tip</value>
+      <value>important</value>
+      <value>caution</value>
+      <value>statement</value>
+    </choice>
+  </define>
+  <define name="figure">
+    <element name="figure">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="source"/>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <optional>
+        <ref name="tclass"/>
+      </optional>
+      <choice>
+        <ref name="image"/>
+        <ref name="pre"/>
+        <zeroOrMore>
+          <ref name="figure"/>
+        </zeroOrMore>
+      </choice>
+      <zeroOrMore>
+        <ref name="fn"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="TextElement">
+    <choice>
+      <text/>
+      <ref name="em"/>
+      <ref name="eref"/>
+      <ref name="strong"/>
+      <ref name="stem"/>
+      <ref name="sub"/>
+      <ref name="sup"/>
+      <ref name="tt"/>
+      <ref name="underline"/>
+      <ref name="keyword"/>
+      <ref name="ruby"/>
+      <ref name="strike"/>
+      <ref name="smallcap"/>
+      <ref name="xref"/>
+      <ref name="br"/>
+      <ref name="hyperlink"/>
+      <ref name="hr"/>
+      <ref name="pagebreak"/>
+      <ref name="bookmark"/>
+      <ref name="image"/>
+    </choice>
+  </define>
+  <define name="PureTextElement">
+    <choice>
+      <text/>
+      <ref name="em"/>
+      <ref name="strong"/>
+      <ref name="sub"/>
+      <ref name="sup"/>
+      <ref name="tt"/>
+      <ref name="underline"/>
+      <ref name="strike"/>
+      <ref name="smallcap"/>
+      <ref name="br"/>
+    </choice>
+  </define>
+  <define name="source">
+    <element name="source">
+      <ref name="TypedUri"/>
+    </element>
+  </define>
+  <define name="em">
+    <element name="em">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="strong">
+    <element name="strong">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="tt">
+    <element name="tt">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="keyword">
+    <element name="keyword">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sub">
+    <element name="sub">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sup">
+    <element name="sup">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="strike">
+    <element name="strike">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="underline">
+    <element name="underline">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="smallcap">
+    <element name="smallcap">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="ruby">
+    <element name="ruby">
+      <zeroOrMore>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="rp"/>
+          <ref name="rt"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="rp">
+    <element name="rp">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="rt">
+    <element name="rt">
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="br">
+    <element name="br">
+      <empty/>
+    </element>
+  </define>
+  <define name="hr">
+    <element name="hr">
+      <empty/>
+    </element>
+  </define>
+  <define name="pagebreak">
+    <element name="pagebreak">
+      <empty/>
+    </element>
+  </define>
+  <!-- bare ID element, used for referencing arbitrary spans of text -->
+  <define name="bookmark">
+    <element name="bookmark">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <empty/>
+    </element>
+  </define>
+  <define name="ReferenceFormat">
+    <choice>
+      <value>external</value>
+      <value>inline</value>
+      <value>footnote</value>
+      <value>callout</value>
+    </choice>
+  </define>
+  <define name="eref">
+    <element name="eref">
+      <ref name="erefType"/>
+    </element>
+  </define>
+  <define name="erefType">
+    <optional>
+      <attribute name="normative">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <attribute name="citeas"/>
+    <attribute name="type">
+      <ref name="ReferenceFormat"/>
+    </attribute>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+    <ref name="CitationType"/>
+    <text/>
+  </define>
+  <define name="hyperlink">
+    <element name="link">
+      <attribute name="target">
+        <data type="anyURI"/>
+      </attribute>
+      <attribute name="type">
+        <ref name="ReferenceFormat"/>
+      </attribute>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="xref">
+    <element name="xref">
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+      <attribute name="type">
+        <ref name="ReferenceFormat"/>
+      </attribute>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="fn">
+    <element name="fn">
+      <attribute name="reference"/>
+      <oneOrMore>
+        <ref name="paragraph"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <!--
+    This is xref with fixed @type="footnote", and @target built in as paragraph+
+    @reference replaces ReferenceElement/text
+    so <fn reference="2"><p>This is a footnote</p></fn>
+    corresponds to 
+    <eref type="footnote" target="fn2">2</xref> <p id="fn2">This is a footnote</p>
+  -->
+  <define name="callout">
+    <element name="callout">
+      <attribute name="target">
+        <data type="IDREF"/>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <!--
+    This is xref with fixed @type="callout"; the target by convention is in an annotation in the same source code snippet
+    so <callout target="xyz">1</callout>
+    corresponds to <xref type="callout" target="xyz">1</xref>
+  -->
+  <define name="image">
+    <element name="image">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="src">
+        <data type="anyURI"/>
+      </attribute>
+      <attribute name="mimetype"/>
+      <optional>
+        <attribute name="filename"/>
+      </optional>
+      <optional>
+        <attribute name="width">
+          <choice>
+            <data type="int"/>
+            <value>auto</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="height">
+          <choice>
+            <data type="int"/>
+            <value>auto</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="longdesc">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+    </element>
+  </define>
+  <define name="video">
+    <element name="image">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="src">
+        <data type="anyURI"/>
+      </attribute>
+      <attribute name="mimetype"/>
+      <optional>
+        <attribute name="filename"/>
+      </optional>
+      <optional>
+        <attribute name="width">
+          <choice>
+            <data type="int"/>
+            <value>auto</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="height">
+          <choice>
+            <data type="int"/>
+            <value>auto</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="longdesc">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <ref name="altsource"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="audio">
+    <element name="image">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="src">
+        <data type="anyURI"/>
+      </attribute>
+      <attribute name="mimetype"/>
+      <optional>
+        <attribute name="filename"/>
+      </optional>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="longdesc">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <ref name="altsource"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="altsource">
+    <element name="altsource">
+      <attribute name="src">
+        <data type="anyURI"/>
+      </attribute>
+      <attribute name="mimetype"/>
+      <optional>
+        <attribute name="filename"/>
+      </optional>
+    </element>
+  </define>
+  <define name="stem">
+    <element name="stem">
+      <attribute name="type">
+        <choice>
+          <value>MathML</value>
+          <value>AsciiMath</value>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="AnyElement"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="annotation">
+    <element name="annotation">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <ref name="paragraph"/>
+    </element>
+  </define>
+  <define name="ul">
+    <element name="ul">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="li">
+    <element name="li">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="ol">
+    <element name="ol">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="type">
+        <choice>
+          <value>roman</value>
+          <value>alphabet</value>
+          <value>arabic</value>
+          <value>roman_upper</value>
+          <value>alphabet_upper</value>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="dl">
+    <element name="dl">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="dt"/>
+        <ref name="dd"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="dt">
+    <element name="dt">
+      <zeroOrMore>
+        <ref name="TextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="dd">
+    <element name="dd">
+      <zeroOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="ext">
+    <element name="ext">
+      <ref name="BibDataExtensionType"/>
+    </element>
+  </define>
+  <define name="BibDataExtensionType">
+    <ref name="doctype"/>
+  </define>
+  <define name="doctype">
+    <element name="doctype">
+      <ref name="DocumentType"/>
+    </element>
+  </define>
+  <define name="DocumentType">
+    <value>document</value>
+  </define>
+  <define name="BibData">
+    <ref name="BibliographicItem"/>
+    <optional>
+      <ref name="ext"/>
+    </optional>
+  </define>
+</grammar>
