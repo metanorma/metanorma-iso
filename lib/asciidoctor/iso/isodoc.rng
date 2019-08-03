@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <!-- include "biblio.rnc" { } -->
   <include href="basicdoc.rng">
@@ -63,10 +63,6 @@
       </zeroOrMore>
     </element>
   </define>
-  <!--
-    bibdata =
-    element bibdata { BibData }
-  -->
   <define name="preface">
     <element name="preface">
       <oneOrMore>
@@ -126,18 +122,18 @@
       <ref name="Content-Section"/>
     </element>
   </define>
-  <!--
-    sections =
-    element sections {
-    ( clause | terms | definitions )+
-    }
-  -->
   <define name="definitions">
     <element name="definitions">
       <optional>
         <attribute name="id">
           <data type="ID"/>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
       </optional>
       <optional>
         <ref name="section-title"/>
@@ -150,10 +146,6 @@
       </oneOrMore>
     </element>
   </define>
-  <!--
-    section-title =
-    element title { TextElement* }
-  -->
   <define name="content">
     <element name="clause">
       <ref name="Content-Section"/>
@@ -177,17 +169,17 @@
       <ref name="Content-Section"/>
     </element>
   </define>
-  <!--
-    Basic-Section =
-    attribute id { xsd:ID }?,
-    section-title?,
-    BasicBlock?, note*
-  -->
   <define name="Content-Section">
     <optional>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="language"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
     </optional>
     <optional>
       <ref name="section-title"/>
@@ -221,6 +213,12 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="language"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
       <ref name="section-title"/>
     </optional>
     <choice>
@@ -249,6 +247,12 @@
           <data type="ID"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
+      </optional>
       <attribute name="obligation">
         <choice>
           <value>normative</value>
@@ -273,21 +277,18 @@
       </choice>
     </element>
   </define>
-  <!--
-    references =
-    element references {
-    attribute id { xsd:ID }?,
-    section-title?,
-    BasicBlock*,
-    bibitem*
-    }
-  -->
   <define name="terms">
     <element name="terms">
       <optional>
         <attribute name="id">
           <data type="ID"/>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
       </optional>
       <zeroOrMore>
         <ref name="BasicBlock"/>
@@ -430,340 +431,7 @@
       <ref name="paragraph"/>
     </element>
   </define>
-  <!--
-    BasicBlock =  paragraph-with-footnote | table | formula | admonition | ol | ul | dl | figure |
-    quote | sourcecode | example | review | pre
-    
-    paragraph =
-    element p { ParagraphType }
-    
-    Alignments = ( "left" | "right" | "center" | "justified" )
-    
-    ParagraphType =
-    attribute id { xsd:ID },
-    attribute align { Alignments }?,
-    ( TextElement )*, note*
-    
-    paragraph-with-footnote =
-    element p {
-    attribute id { xsd:ID },
-    attribute align { Alignments }?,
-    ( TextElement | fn  )*, note*
-    }
-    
-    note =
-    element note {
-    attribute id { xsd:ID },
-    paragraph+
-    }
-    
-    
-    review =
-    element review {
-    attribute id { xsd:ID },
-    attribute reviewer { text },
-    attribute date { xsd:dateTime }?,
-    attribute from { xsd:IDREF },
-    attribute to { xsd:IDREF }?,
-    paragraph+
-    }
-    
-    formula =
-    element formula {
-    attribute id { xsd:ID },
-    attribute unnumbered { xsd:boolean }?,
-    stem, dl?, note*
-    }
-    
-    quote =
-    element quote {
-    attribute id { xsd:ID },
-    attribute alignment { Alignments }?,
-    quote-source?,
-    quote-author?,
-    paragraph-with-footnote+,
-    note*
-    }
-    
-    quote-source =
-    element source { erefType }
-    
-    quote-author =
-    element author { text }
-    
-    sourcecode =
-    element sourcecode {
-    attribute id { xsd:ID },
-    attribute unnumbered { xsd:boolean }?,
-    attribute lang { text }?,
-    tname?, ( text | callout )+, annotation*, note*
-    }
-    
-    pre =
-    element pre {
-    attribute id { xsd:ID },
-    tname?, text, note*
-    }
-    
-    table =
-    element table {
-    attribute id { xsd:ID },
-    attribute unnumbered { xsd:boolean }?,
-    attribute alt { text }?,
-    attribute uri { xsd:anyURI }?,
-    tname?, thead?, tbody, tfoot?, table-note*, dl?
-    }
-    
-    tname = element name { text }
-    thead = element thead { tr }
-    tfoot = element tfoot { tr }
-    tbody = element tbody { tr+ }
-    
-    table-note = element note { paragraph }
-    
-    tr =
-    element tr { ( td | th )+ }
-    
-    td =
-    element td {
-    attribute colspan { text }?,
-    attribute rowspan { text }?,
-    attribute align { "left" | "right" | "center" }?,
-    (
-    (TextElement )* |
-    paragraph-with-footnote+
-    )
-    }
-    
-    th =
-    element th {
-    attribute colspan { text }?,
-    attribute rowspan { text }?,
-    attribute align { "left" | "right" | "center" }?,
-    (
-    (TextElement )* |
-    paragraph-with-footnote+
-    )
-    }
-    
-    example =
-    element example {
-    attribute id { xsd:ID },
-    attribute unnumbered { xsd:boolean }?,
-    ( formula | ul | ol | dl | quote | sourcecode | paragraph-with-footnote )+,
-    note*
-    }
-    
-    admonition =
-    element admonition {
-    attribute type { AdmonitionType },
-    attribute class { text }?,
-    attribute id { xsd:ID },
-    attribute uri { xsd:anyURI }?,
-    tname?,
-    paragraph-with-footnote*,
-    note*
-    }
-    
-    AdmonitionType = 
-    "warning" | "note" | "tip" | "important" | "caution" | "statement"
-    
-    figure =
-    element figure {
-    attribute id { xsd:ID },
-    attribute unnumbered { xsd:boolean }?,
-    source?, tname?, tclass?, (image | pre | figure*), fn*, dl?, note*
-    }
-    
-    TextElement =
-    text | em | eref | strong | stem | sub | sup | tt | underline | keyword | ruby |
-    strike | smallcap | xref | br | hyperlink | hr | pagebreak | bookmark | image
-    
-    PureTextElement =
-    text | em | strong | sub | sup | tt | underline | strike | smallcap | br 
-    
-    source = element source { TypedUri }
-    
-    em = element em { PureTextElement* }
-    strong = element strong { PureTextElement* }
-    tt = element tt { PureTextElement* }
-    keyword = element keyword { PureTextElement* }
-    sub = element sub { PureTextElement* }
-    sup = element sup { PureTextElement* }
-    strike = element strike { PureTextElement* }
-    underline = element underline { PureTextElement* }
-    smallcap = element smallcap { PureTextElement* }
-    
-    ruby = element ruby { ( PureTextElement | rp | rt )* }
-    rp =   element rp { PureTextElement* }
-    rt =   element rt { PureTextElement* }
-    
-    
-    br = element br { empty }
-    hr = element hr { empty }
-    pagebreak = element pagebreak { empty }
-    
-  -->
-  <!--
-    image =
-    element image {
-    attribute id { xsd:ID },
-    attribute src { xsd:anyURI },
-    attribute mimetype { text },
-    attribute filename { text }?,
-    attribute width { xsd:int | "auto" }?,
-    attribute height { xsd:int | "auto" }?,
-    attribute alt { text }?,
-    attribute longdesc { xsd:anyURI }?
-    }
-    
-    video =
-    element image {
-    attribute id { xsd:ID },
-    attribute src { xsd:anyURI },
-    attribute mimetype { text },
-    attribute filename { text }?,
-    attribute width { xsd:int | "auto" }?,
-    attribute height { xsd:int | "auto" }?,
-    attribute alt { text }?,
-    attribute longdesc { xsd:anyURI }?,
-    altsource*
-    }
-    
-    audio =
-    element image {
-    attribute id { xsd:ID },
-    attribute src { xsd:anyURI },
-    attribute mimetype { text },
-    attribute filename { text }?,
-    attribute alt { text }?,
-    attribute longdesc { xsd:anyURI }?,
-    altsource*
-    }
-    
-    altsource =
-    element altsource {
-    attribute src { xsd:anyURI },
-    attribute mimetype { text },
-    attribute filename { text }?
-    }
-    
-    
-    stem =
-    element stem {
-    attribute type { "MathML" | "AsciiMath" },
-    ( text | AnyElement )+
-    }
-    
-    annotation =
-    element annotation {
-    attribute id { xsd:ID },
-    paragraph
-    }
-    
-    ul =
-    element ul {
-    attribute id { xsd:ID },
-    li+, note*
-    }
-    
-    li =
-    element li { 
-    attribute id { xsd:ID }?,
-    paragraph-with-footnote+ 
-    }
-    
-    ol =
-    element ol {
-    attribute id { xsd:ID },
-    attribute type { ( "roman" | "alphabet" | "arabic" | 
-    "roman_upper" | "alphabet_upper" ) },
-    li+, note*
-    }
-    
-    dl =
-    element dl {
-    attribute id { xsd:ID },
-    (dt, dd)+, note*
-    }
-    
-    dt =
-    element dt { TextElement* }
-    
-    dd =
-    element dd { paragraph-with-footnote* }
-    
-    ext = 
-    element ext { BibDataExtensionType }
-    
-    BibDataExtensionType = 
-    doctype,
-    structuredidentifier*
-    
-    doctype = element doctype { DocumentType }
-  -->
   <define name="structuredidentifier">
-    <a:documentation>bare ID element, used for referencing arbitrary spans of text</a:documentation>
-    <!--
-      bookmark =
-      element bookmark {
-      attribute id { xsd:ID },
-      empty
-      }
-      
-      ReferenceFormat = ( "external" | "inline" | "footnote" | "callout" )
-      
-      eref =
-      element eref { erefType }
-      
-      erefType = 
-      attribute normative { xsd:boolean }?,
-      attribute citeas { text },
-      attribute type { ReferenceFormat },
-      attribute alt { text }?,
-      CitationType,
-      text
-      
-      hyperlink =
-      element link {
-      attribute target { xsd:anyURI },
-      attribute type { ReferenceFormat },
-      attribute alt { text }?,
-      text
-      }
-      
-      xref =
-      element xref {
-      attribute target { xsd:IDREF },
-      attribute type { ReferenceFormat },
-      attribute alt { text }?,
-      text
-      }
-      
-      fn =
-      element fn {
-      attribute reference { text },
-      paragraph+
-      }
-    -->
-    <a:documentation>This is xref with fixed @type="footnote", and @target built in as paragraph+
-@reference replaces ReferenceElement/text
-so &lt;fn reference="2"&gt;&lt;p&gt;This is a footnote&lt;/p&gt;&lt;/fn&gt;
-corresponds to 
-&lt;eref type="footnote" target="fn2"&gt;2&lt;/xref&gt; &lt;p id="fn2"&gt;This is a footnote&lt;/p&gt;</a:documentation>
-    <!--
-      
-      callout =
-      element callout {
-      attribute target { xsd:IDREF },
-      text
-      }
-      
-    -->
-    <a:documentation>This is xref with fixed @type="callout"; the target by convention is in an annotation in the same source code snippet
-so &lt;callout target="xyz"&gt;1&lt;/callout&gt;
-corresponds to &lt;xref type="callout" target="xyz"&gt;1&lt;/xref&gt;
-</a:documentation>
     <element name="structuredidentifier">
       <optional>
         <attribute name="type"/>
@@ -818,11 +486,4 @@ corresponds to &lt;xref type="callout" target="xyz"&gt;1&lt;/xref&gt;
       </optional>
     </element>
   </define>
-  <!--
-    DocumentType = ( "document" )
-    
-    BibData =
-    BibliographicItem,
-    ext?
-  -->
 </grammar>

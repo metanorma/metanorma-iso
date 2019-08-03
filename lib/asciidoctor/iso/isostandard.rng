@@ -93,6 +93,12 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
+      </optional>
+      <optional>
         <attribute name="obligation">
           <choice>
             <value>normative</value>
@@ -117,6 +123,12 @@
         <attribute name="id">
           <data type="ID"/>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
       </optional>
       <optional>
         <attribute name="obligation">
@@ -148,6 +160,12 @@
         <attribute name="id">
           <data type="ID"/>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
       </optional>
       <optional>
         <attribute name="inline-header">
@@ -213,6 +231,12 @@
           </attribute>
         </optional>
         <optional>
+          <attribute name="language"/>
+        </optional>
+        <optional>
+          <attribute name="script"/>
+        </optional>
+        <optional>
           <attribute name="obligation">
             <choice>
               <value>normative</value>
@@ -229,6 +253,12 @@
           <attribute name="id">
             <data type="ID"/>
           </attribute>
+        </optional>
+        <optional>
+          <attribute name="language"/>
+        </optional>
+        <optional>
+          <attribute name="script"/>
         </optional>
         <optional>
           <attribute name="obligation">
@@ -302,6 +332,12 @@
           <attribute name="id">
             <data type="ID"/>
           </attribute>
+        </optional>
+        <optional>
+          <attribute name="language"/>
+        </optional>
+        <optional>
+          <attribute name="script"/>
         </optional>
         <optional>
           <attribute name="inline-header">
@@ -663,6 +699,12 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
+      </optional>
+      <optional>
         <attribute name="inline-header">
           <data type="boolean"/>
         </attribute>
@@ -724,6 +766,12 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
+      </optional>
+      <optional>
         <attribute name="inline-header">
           <data type="boolean"/>
         </attribute>
@@ -754,6 +802,12 @@
         <attribute name="id">
           <data type="ID"/>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
       </optional>
       <optional>
         <attribute name="inline-header">

@@ -5,7 +5,7 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       def section(node)
-        a = { id: Standoc::Utils::anchor_or_uuid(node) }
+        a = section_attributes(node)
         noko do |xml|
           case sectiontype(node)
           when "introduction" then introduction_parse(a, xml, node)

@@ -43,6 +43,12 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="language"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
       <ref name="section-title"/>
     </optional>
     <optional>
