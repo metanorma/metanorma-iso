@@ -30,7 +30,7 @@ RSpec.describe Asciidoctor::ISO do
              <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
-         <note format="text/plain" reference="1">ISO DATE: The standard is in press</note>
+         <note format="text/plain">ISO DATE: The standard is in press</note>
        </bibitem>
        </references>
        </bibliography>

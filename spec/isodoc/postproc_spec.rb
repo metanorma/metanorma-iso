@@ -331,9 +331,9 @@ RSpec.describe IsoDoc do
         <preface><foreword>
          <figure id="_">
          <name>Split-it-right sample divider</name>
-                  <image src="spec/assets/rice_image1.png" id="_" imagetype="PNG"/>
-                  <image src="spec/assets/rice_image1.png" id="_" width="20000" height="300000" imagetype="PNG"/>
-                  <image src="spec/assets/rice_image1.png" id="_" width="99" height="auto" imagetype="PNG"/>
+                  <image src="spec/assets/rice_image1.png" id="_" mimetype="image/png"/>
+                  <image src="spec/assets/rice_image1.png" id="_" width="20000" height="300000" mimetype="image/png"/>
+                  <image src="spec/assets/rice_image1.png" id="_" width="99" height="auto" mimetype="image/png"/>
        </figure>
        </foreword></preface>
         </iso-standard>

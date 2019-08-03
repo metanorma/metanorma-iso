@@ -525,6 +525,29 @@
         <value>guide</value>
       </choice>
     </define>
+    <define name="structuredidentifier">
+      <element name="structuredidentifier">
+        <optional>
+          <attribute name="type"/>
+        </optional>
+        <group>
+          <ref name="documentnumber"/>
+          <optional>
+            <ref name="tc-documentnumber"/>
+          </optional>
+        </group>
+      </element>
+    </define>
+    <define name="foreword">
+      <element name="foreword">
+        <ref name="Basic-Section"/>
+      </element>
+    </define>
+    <define name="introduction">
+      <element name="introduction">
+        <ref name="Content-Section"/>
+      </element>
+    </define>
   </include>
   <!-- end overrides -->
   <!--
@@ -579,29 +602,6 @@
   <define name="preface_abstract">
     <element name="abstract">
       <ref name="Basic-Section"/>
-    </element>
-  </define>
-  <define name="foreword">
-    <element name="foreword">
-      <ref name="Basic-Section"/>
-    </element>
-  </define>
-  <define name="introduction">
-    <element name="introduction">
-      <ref name="Content-Section"/>
-    </element>
-  </define>
-  <define name="structuredidentifier">
-    <element name="structuredidentifier">
-      <optional>
-        <attribute name="type"/>
-      </optional>
-      <group>
-        <ref name="documentnumber"/>
-        <optional>
-          <ref name="tc-documentnumber"/>
-        </optional>
-      </group>
     </element>
   </define>
   <define name="documentnumber">

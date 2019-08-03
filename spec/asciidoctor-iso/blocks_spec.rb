@@ -284,7 +284,7 @@ RSpec.describe Asciidoctor::ISO do
               <sections>
          <figure id="_">
          <name>Split-it-right sample divider</name>
-                  <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="auto" width="auto"/>
+                  <image src="spec/examples/rice_images/rice_image1.png" id="_" mimetype="image/png" height="auto" width="auto"/>
        </figure>
        </sections>
        </iso-standard>
@@ -301,7 +301,7 @@ RSpec.describe Asciidoctor::ISO do
       #{BLANK_HDR}
               <sections>
          <figure id="_">
-         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="4" width="3"/>
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" mimetype="image/png" height="4" width="3"/>
        </figure>
        </sections>
        </iso-standard>
@@ -318,7 +318,7 @@ RSpec.describe Asciidoctor::ISO do
       #{BLANK_HDR}
               <sections>
          <figure id="_">
-         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="4" width="auto"/>
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" mimetype="image/png" height="4" width="auto"/>
        </figure>
        </sections>
        </iso-standard>

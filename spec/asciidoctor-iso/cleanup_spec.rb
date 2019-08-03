@@ -552,7 +552,7 @@ r = 1 %</stem>
     INPUT
        #{BLANK_HDR}
        <sections><figure id="_">
-         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="auto" width="auto"/>
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" mimetype="image/png" height="auto" width="auto"/>
        <fn reference="a">
          <p id="_">This is a footnote to a figure</p>
        </fn><fn reference="b">
@@ -576,7 +576,7 @@ r = 1 %</stem>
     INPUT
        #{BLANK_HDR}
        <sections><figure id="_">
-         <image src="spec/examples/rice_images/rice_image1.png" id="_" imagetype="PNG" height="auto" width="auto"/>
+         <image src="spec/examples/rice_images/rice_image1.png" id="_" mimetype="image/png" height="auto" width="auto"/>
        <dl id="_">
          <dt>a</dt>
          <dd>
@@ -610,15 +610,15 @@ r = 1 %</stem>
               <sections>
          <figure id="figureC-2"><figure id="_">
          <name>Initial stages: No grains are fully gelatinized (ungelatinized starch granules are visible inside the kernels)</name>
-         <image src="spec/examples/rice_images/rice_image3_1.png" id="_" imagetype="PNG" height="auto" width="auto"/>
+         <image src="spec/examples/rice_images/rice_image3_1.png" id="_" mimetype="image/png" height="auto" width="auto"/>
        </figure>
        <figure id="_">
          <name>Intermediate stages: Some fully gelatinized kernels are visible</name>
-         <image src="spec/examples/rice_images/rice_image3_2.png" id="_" imagetype="PNG" height="auto" width="auto"/>
+         <image src="spec/examples/rice_images/rice_image3_2.png" id="_" mimetype="image/png" height="auto" width="auto"/>
        </figure>
        <figure id="_">
          <name>Final stages: All kernels are fully gelatinized</name>
-         <image src="spec/examples/rice_images/rice_image3_3.png" id="_" imagetype="PNG" height="auto" width="auto"/>
+         <image src="spec/examples/rice_images/rice_image3_3.png" id="_" mimetype="image/png" height="auto" width="auto"/>
        </figure></figure>
        </sections>
        </iso-standard>
@@ -649,7 +649,7 @@ r = 1 %</stem>
 
       <clause id="_" inline-header="false" obligation="normative">
         <title>Clause</title>
-        <p id="_"><fn reference="3">
+        <p id="_"><fn reference="2">
         <p id="_">Footnote2</p>
       </fn>
       </p>
@@ -668,7 +668,7 @@ r = 1 %</stem>
              <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
-         <note format="text/plain" reference="2">ISO DATE: The standard is in press</note>
+         <note format="text/plain">ISO DATE: The standard is in press</note>
        </bibitem>
       </references>
       </bibliography>
