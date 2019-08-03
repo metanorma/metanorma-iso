@@ -13,13 +13,11 @@ module Asciidoctor
         "//clause[title = 'Scope']//fn" .freeze
 
       NORMREF_FOOTNOTES =
-        "//references[title = 'Normative References']//fn |"\
-        "//references[title = 'Normative References']//bibitem/note".freeze
+        "//references[title = 'Normative References']//fn".freeze
 
       POST_NORMREF_FOOTNOTES =
         "//clause[not(title = 'Scope')]//fn | "\
-        "//references[title = 'Bibliography']//fn | "\
-        "//references[title = 'Bibliography']//bibitem/note".freeze
+        "//references[title = 'Bibliography']//fn".freeze
 
       def other_footnote_renumber(xmldoc)
         seen = {}
