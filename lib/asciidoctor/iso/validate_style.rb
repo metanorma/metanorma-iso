@@ -14,40 +14,48 @@ module Asciidoctor
         ret
       end
 
+      # ISO/IEC DIR 2, 12.2
       def foreword_style(node)
         return if @novalid
         style_no_guidance(node, extract_text(node), "Foreword")
       end
 
+      # ISO/IEC DIR 2, 14.2
       def scope_style(node)
         return if @novalid
         style_no_guidance(node, extract_text(node), "Scope")
       end
 
+      # ISO/IEC DIR 2, 13.2
       def introduction_style(node)
         return if @novalid
         r = requirement_check(extract_text(node))
         style_warning(node, "Introduction may contain requirement", r) if r
       end
 
+      # ISO/IEC DIR 2, 16.5.6
       def definition_style(node)
         return if @novalid
         r = requirement_check(extract_text(node))
         style_warning(node, "Definition may contain requirement", r) if r
       end
 
+      # ISO/IEC DIR 2, 16.5.7
+      # ISO/IEC DIR 2, 25.5
       def example_style(node)
         return if @novalid
-        style_no_guidance(node, extract_text(node), "Term Example")
+        style_no_guidance(node, extract_text(node), "Example")
         style(node, extract_text(node))
       end
 
+      # ISO/IEC DIR 2, 24.5
       def note_style(node)
         return if @novalid
         style_no_guidance(node, extract_text(node), "Note")
         style(node, extract_text(node))
       end
 
+      # ISO/IEC DIR 2, 26.5
       def footnote_style(node)
         return if @novalid
         style_no_guidance(node, extract_text(node), "Footnote")
@@ -80,6 +88,8 @@ module Asciidoctor
         style_units(n, t)
       end
 
+      # ISO/IEC DIR 2, 9.1
+      # ISO/IEC DIR 2, Table B.1
       def style_number(n, t)
         style_two_regex_not_prev(n, t, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
                                  %r{(\bISO|\bIEC|\bIEEE/)$},
@@ -90,6 +100,7 @@ module Asciidoctor
                     "ambiguous number", n, t)
       end
 
+      # ISO/IEC DIR 2, 9.2.1
       def style_percent(n, t)
         style_regex(/\b(?<num>[0-9.,]+%)/,
                     "no space before percent sign", n, t)
@@ -97,6 +108,8 @@ module Asciidoctor
                     "unbracketed tolerance before percent sign", n, t)
       end
 
+      # ISO/IEC DIR 2, 8.4
+      # ISO/IEC DIR 2, 9.3
       def style_abbrev(n, t)
         style_regex(/(^|\s)(?!e\.g\.|i\.e\.)
                     (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
@@ -110,6 +123,7 @@ module Asciidoctor
         "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|"\
         "bit|kB|MB|Hart|nat|Sh|var)".freeze
 
+      # ISO/IEC DIR 2, 9.3
       def style_units(n, t)
         style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,
                     "space between number and degrees/minutes/seconds", n, t)
@@ -123,6 +137,7 @@ module Asciidoctor
         "lit": "l", "amp": "A", "amps": "A", "rpm": "r/min"
       }.freeze
 
+      # ISO/IEC DIR 2, 9.3
       def style_non_std_units(n, t)
         NONSTD_UNITS.each do |k, v|
           style_regex(/\b(?<num>[0-9][0-9,]*\s+#{k})\b/,

@@ -87,7 +87,7 @@
     </element>
   </define>
   <define name="reqinherit">
-    <element name="subject">
+    <element name="inherit">
       <text/>
     </element>
   </define>

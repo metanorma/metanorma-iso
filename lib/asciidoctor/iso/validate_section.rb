@@ -13,12 +13,14 @@ module Asciidoctor
         super
       end
 
+      # ISO/IEC DIR 2, 12.4
       def foreword_validate(root)
         f = root.at("//foreword") || return
         s = f.at("./clause")
         warn "ISO style: foreword contains subclauses" unless s.nil?
       end
 
+      # ISO/IEC DIR 2, 15.4
       def normref_validate(root)
         f = root.at("//references[title = 'Normative References']") || return
         f.at("./references | ./clause") &&
@@ -150,13 +152,14 @@ module Asciidoctor
       end
 
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
-      SCOPE_WARN = "Scope contains subclauses: should be succint".freeze
+      SCOPE_WARN = "Scope contains subclauses: should be succinct".freeze
 
       def section_style(root)
         foreword_style(root.at("//foreword"))
         introduction_style(root.at("//introduction"))
         scope_style(root.at("//clause[title = 'Scope']"))
         scope = root.at("//clause[title = 'Scope']/clause")
+        # ISO/IEC DIR 2, 14.4
         scope.nil? || style_warning(scope, SCOPE_WARN, nil)
       end
 
@@ -167,6 +170,7 @@ module Asciidoctor
       NORM_BIBITEMS =
         "//references[title = 'Normative References']/bibitem".freeze
 
+      # ISO/IEC DIR 2, 10.2
       def norm_bibitem_style(root)
         root.xpath(NORM_BIBITEMS).each do |b|
           if b.at(Standoc::Converter::ISO_PUBLISHER_XPATH).nil?

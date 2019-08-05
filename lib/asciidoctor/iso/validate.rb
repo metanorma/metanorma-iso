@@ -41,6 +41,7 @@ module Asciidoctor
           warn("No French Title Part!")
       end
 
+      # ISO/IEC DIR 2, 11.4
       def title_subpart_validate(root)
         docid = root.at("//bibdata/docidentifier[@type = 'iso']")
         subpart = /-\d+-\d+/.match docid
@@ -50,6 +51,7 @@ module Asciidoctor
         warn("Subpart defined on non-IEC document!") if subpart && !iec
       end
 
+      # ISO/IEC DIR 2, 11.5.2
       def title_names_type_validate(root)
         doctypes = /International\sStandard | Technical\sSpecification |
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
@@ -63,6 +65,7 @@ module Asciidoctor
         end
       end
 
+      # ISO/IEC DIR 2, 22.2
       def title_first_level_validate(root)
         root.xpath(SECTIONS_XPATH).each do |s|
           title = s&.at("./title")&.text || s.name
@@ -74,6 +77,7 @@ module Asciidoctor
         end
       end
 
+      # ISO/IEC DIR 2, 22.2
       def title_all_siblings(xpath, label)
         notitle = false
         withtitle = false
@@ -98,6 +102,7 @@ module Asciidoctor
         title_all_siblings(root.xpath(SECTIONS_XPATH), "(top level)")
       end
 
+      # ISO/IEC DIR 2, 22.3.2
       def onlychild_clause_validate(root)
         root.xpath(Standoc::Utils::SUBCLAUSE_XPATH).each do |c|
           next unless c.xpath("../clause").size == 1
@@ -121,11 +126,12 @@ module Asciidoctor
         end
       end
 
+      # ISO/IEC DIR 2, 15.5.3
       def see_xrefs_validate(root)
         root.xpath("//xref").each do |t|
           # does not deal with preceding text marked up
           preceding = t.at("./preceding-sibling::text()[last()]")
-          next unless !preceding.nil? && /\bsee\s*$/mi.match(preceding)
+          next unless !preceding.nil? && /\b(see| refer to)\s*$/mi.match(preceding)
           (target = root.at("//*[@id = '#{t['target']}']")) || next
           if target&.at("./ancestor-or-self::*[@obligation = 'normative']")
             warn "ISO: 'see #{t['target']}' is pointing to a normative section"
@@ -133,10 +139,11 @@ module Asciidoctor
         end
       end
 
+      # ISO/IEC DIR 2, 15.5.3
       def see_erefs_validate(root)
         root.xpath("//eref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
-          next unless !preceding.nil? && /\bsee\s*$/mi.match(preceding)
+          next unless !preceding.nil? && /\b(see|refer to)\s*$/mi.match(preceding)
           unless target = root.at("//*[@id = '#{t['bibitemid']}']")
             warn "ISO: '#{t} is not pointing to a real reference"
             next
@@ -148,6 +155,7 @@ module Asciidoctor
         end
       end
 
+      # ISO/IEC DIR 2, 10.4
       def locality_erefs_validate(root)
         root.xpath("//eref[locality]").each do |t|
           if /^(ISO|IEC)/.match t["citeas"]
@@ -163,6 +171,7 @@ module Asciidoctor
         re.match(text) && warn("ISO style: #{term}: #{msg}")
       end
 
+      # ISO/IEC DIR 2, 16.5.6
       def termdef_style(xmldoc)
         xmldoc.xpath("//term").each do |t|
           para = t.at("./definition") || return
@@ -175,6 +184,7 @@ module Asciidoctor
         cited_term_style(xmldoc)
       end
 
+      # ISO/IEC DIR 2, 16.5.10
       def cited_term_style(xmldoc)
         xmldoc.xpath("//term//xref").each do |x|
           next unless xmldoc.at("//term[@id = '#{x['target']}']")
