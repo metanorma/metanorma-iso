@@ -1,7 +1,0 @@
-= Customising Metanorma
-
-Refer to Metanorma adoption FAQ for advice on how to adopt the Metanorma approach
-to document generation for your documents.
-
-You will usually find there a detailed customisation guidance prefixed with a short summary
-for a quick-and-dirty implementation.
