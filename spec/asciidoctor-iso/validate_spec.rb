@@ -136,7 +136,7 @@ it "warns that definition may contain requirement" do
 end
 
 it "warns that term example may contain recommendation" do
-  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Term Example may contain recommendation/).to_stderr
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(/Example may contain recommendation/).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Terms and Definitions
@@ -277,7 +277,7 @@ it "warns of Non-ISO reference in Normative References" do
 end
 
 it "warns that Scope contains subclauses" do
-  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope contains subclauses: should be succint}).to_stderr
+  expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Scope contains subclauses: should be succinct}).to_stderr
   #{VALIDATING_BLANK_HDR}
 
   == Scope

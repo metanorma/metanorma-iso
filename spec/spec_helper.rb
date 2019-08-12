@@ -133,7 +133,7 @@ HDR
 HTML_HDR = <<~END
         <html xmlns:epub="http://www.idpf.org/2007/ops">
           <head/>
-          <body lang="EN-US" link="blue" vlink="#954F72">
+          <body lang="en">
             <div class="title-section">
               <p>&#160;</p>
             </div>

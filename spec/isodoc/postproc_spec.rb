@@ -350,7 +350,7 @@ RSpec.describe IsoDoc do
                <img src="test_htmlimages/_.png" height="776" width="922" />
 <img src="test_htmlimages/_.png" height="800" width="53" />
 <img src="test_htmlimages/_.png" height="83" width="99" />
-       <p class="FigureTitle" align="center">Figure 1&#xA0;&#x2014; Split-it-right sample divider</p></div>
+       <p class="FigureTitle" style="text-align:center;">Figure 1&#xA0;&#x2014; Split-it-right sample divider</p></div>
              </div>
              <p class="zzSTDTitle1"></p>
            </main>
@@ -485,7 +485,7 @@ RSpec.describe IsoDoc do
          <p class="MsoNormal">Hello</p>
          <p class="MsoNormal">Key</p>
          <p class="MsoNormal"><b>Key</b></p><div class="figdl"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
-         <p class="FigureTitle" align="center">Figure A.1</p></div>
+         <p class="FigureTitle" style="text-align:center;">Figure A.1</p></div>
              </div>
            </div>
            <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
