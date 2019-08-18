@@ -763,4 +763,167 @@ r = 1 %</stem>
 </iso-standard>
     OUTPUT
   end
+
+  it "reorders references in bibliography, and renumbers citations accordingly" do
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    #{ASCIIDOC_BLANK_HDR}
+    
+    == Clause 1
+    <<ref1>>
+    <<ref2>>
+    <<ref3>>
+    <<ref4>>
+    <<ref5>>
+    <<ref6>>
+    <<ref7>>
+    <<ref8>>
+    <<ref9>>
+    <<ref10>>
+
+    [bibliography]
+    == Bibliography
+
+    [bibliography]
+    === Clause 1
+    * [[[ref3,IEC 123]]], _Standard IEC 123_
+    * [[[ref5,20]]], _Standard 10_
+    * [[[ref1,ISO 123]]], _Standard ISO 123_
+    * [[[ref4,GB 123]]], _Standard GB 123_
+    * [[[ref2,ISO/IEC 123]]], _Standard ISO/IEC 123_
+
+    [bibliography]
+    === {blank}
+    * [[[ref10,20]]], _Standard 10_
+    * [[[ref9,GB 123]]], _Standard GB 123_
+    * [[[ref8,IEC 123]]], _Standard IEC 123_
+    * [[[ref7,ISO 123]]], _Standard ISO 123_
+    * [[[ref6,ISO/IEC 123]]], _Standard ISO/IEC 123_
+    INPUT
+        #{BLANK_HDR}
+    <sections><clause id="_" inline-header="false" obligation="normative">
+         <title>Clause 1</title>
+         <p id="_"><eref type="inline" bibitemid="ref1" citeas="ISO 123"/>
+       <eref type="inline" bibitemid="ref2" citeas="ISO/IEC 123"/>
+       <eref type="inline" bibitemid="ref3" citeas="IEC 123"/>
+       <eref type="inline" bibitemid="ref4" citeas="GB 123"/>
+       <eref type="inline" bibitemid="ref5" citeas="[5]"/>
+       <eref type="inline" bibitemid="ref6" citeas="ISO/IEC 123"/>
+       <eref type="inline" bibitemid="ref7" citeas="ISO 123"/>
+       <eref type="inline" bibitemid="ref8" citeas="IEC 123"/>
+       <eref type="inline" bibitemid="ref9" citeas="GB 123"/>
+       <eref type="inline" bibitemid="ref10" citeas="[10]"/></p>
+       </clause>
+       </sections><bibliography><clause id="_" obligation="informative"><title>Bibliography</title><references id="_" obligation="informative">
+         <title>Clause 1</title><bibitem id="ref1" type="standard">
+         <title format="text/plain">Standard ISO 123</title>
+         <docidentifier>ISO 123</docidentifier>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
+           </organization>
+         </contributor>
+       </bibitem><bibitem id="ref2" type="standard">
+         <title format="text/plain">Standard ISO/IEC 123</title>
+         <docidentifier>ISO/IEC 123</docidentifier>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
+           </organization>
+         </contributor>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
+           </organization>
+         </contributor>
+       </bibitem><bibitem id="ref3" type="standard">
+         <title format="text/plain">Standard IEC 123</title>
+         <docidentifier>IEC 123</docidentifier>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
+           </organization>
+         </contributor>
+       </bibitem><bibitem id="ref4">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard GB 123</em>
+         </formattedref>
+         <docidentifier>GB 123</docidentifier>
+       </bibitem><bibitem id="ref5">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard 10</em>
+         </formattedref>
+         <docidentifier type="metanorma">[5]</docidentifier>
+       </bibitem>
+
+
+
+
+
+       </references>
+       <references id="_" obligation="informative">
+         <bibitem id="ref7" type="standard">
+         <title format="text/plain">Standard ISO 123</title>
+         <docidentifier>ISO 123</docidentifier>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
+           </organization>
+         </contributor>
+       </bibitem><bibitem id="ref6" type="standard">
+         <title format="text/plain">Standard ISO/IEC 123</title>
+         <docidentifier>ISO/IEC 123</docidentifier>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
+           </organization>
+         </contributor>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
+           </organization>
+         </contributor>
+       </bibitem><bibitem id="ref8" type="standard">
+         <title format="text/plain">Standard IEC 123</title>
+         <docidentifier>IEC 123</docidentifier>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Electrotechnical Commission</name>
+             <abbreviation>IEC</abbreviation>
+           </organization>
+         </contributor>
+       </bibitem><bibitem id="ref9">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard GB 123</em>
+         </formattedref>
+         <docidentifier>GB 123</docidentifier>
+       </bibitem><bibitem id="ref10">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard 10</em>
+         </formattedref>
+         <docidentifier type="metanorma">[10]</docidentifier>
+       </bibitem>
+
+
+
+
+
+       </references></clause></bibliography>
+       </iso-standard>
+    OUTPUT
+  end
 end

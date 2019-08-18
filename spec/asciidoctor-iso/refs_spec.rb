@@ -115,7 +115,7 @@ RSpec.describe Asciidoctor::ISO do
          <formattedref format="application/x-isodoc+xml">
            <em>Standard</em>
          </formattedref>
-         <docidentifier>[1]</docidentifier>
+         <docidentifier type="metanorma">[1]</docidentifier>
        </bibitem>
        </references>
        </bibliography>
