@@ -82,12 +82,13 @@ module Asciidoctor
       # TODO sort by authors
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
-        num = bib&.at("./docnumber")&.text ||
-          bib&.at("./docidentifier[not(@type = 'metanorma')]"\
-                  "[not(@type = 'DOI')]")&.text
+        num = bib&.at("./docnumber")&.text
+        id = bib&.at("./docidentifier[not(@type = 'metanorma')]"\
+                     "[not(@type = 'DOI')]")
+        type = id['type'] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
-        "#{pubclass} :: #{num} :: #{title}"
+        "#{pubclass} :: #{num} :: #{type} :: #{id&.text} :: #{title}"
       end
     end
   end
