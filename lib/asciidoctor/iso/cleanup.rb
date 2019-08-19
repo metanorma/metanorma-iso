@@ -52,7 +52,8 @@ module Asciidoctor
         prefix = get_id_prefix(xmldoc)
         id = xmldoc.at("//bibdata/docidentifier[@type = 'iso']") or return
         id.content = id_prefix(prefix, id)
-        id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") or return
+        id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") or
+          return
         id.content = id_prefix(prefix, id)
       end
 
@@ -60,11 +61,15 @@ module Asciidoctor
 
       def pub_class(bib)
         return 1 if bib.at("#{PUBLISHER}[abbreviation = 'ISO']")
-        return 1 if bib.at("#{PUBLISHER}[name = 'International Organization for Standardization']")
+        return 1 if bib.at("#{PUBLISHER}[name = 'International Organization "\
+                           "for Standardization']")
         return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
-        return 2 if bib.at("#{PUBLISHER}[name = 'International Electrotechnical Commission']")
-        return 3 if bib.at("./docidentifier[@type][not(@type = 'DOI')][not(@type = 'metanorma')]")
-        return 3 if bib.at("./docidentifier[not(@type)]") && !bib.at("./docidentifier[@type]")
+        return 2 if bib.at("#{PUBLISHER}[name = 'International "\
+                           "Electrotechnical Commission']")
+        return 3 if bib.at("./docidentifier[@type][not(@type = 'DOI')]"\
+                           "[not(@type = 'metanorma')]")
+        return 3 if bib.at("./docidentifier[not(@type)]") &&
+          !bib.at("./docidentifier[@type]")
         4
       end
 
@@ -77,8 +82,11 @@ module Asciidoctor
       # TODO sort by authors
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
-        num = bib&.at("./docnumber")&.text
-        title = bib&.at("./title")&.text
+        num = bib&.at("./docnumber")&.text ||
+          bib&.at("./docidentifier[not(@type = 'metanorma')]"\
+                  "[not(@type = 'DOI')]")&.text
+        title = bib&.at("./title[@type = 'main']")&.text ||
+          bib&.at("./title")&.text || bib&.at("./formattedref")&.text
         "#{pubclass} :: #{num} :: #{title}"
       end
     end
