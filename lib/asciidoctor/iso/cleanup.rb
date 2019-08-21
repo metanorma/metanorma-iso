@@ -88,7 +88,7 @@ module Asciidoctor
         type = id['type'] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
-        "#{pubclass} :: #{type} :: #{num % "09%d"} :: #{id&.text} :: #{title}"
+        "#{pubclass} :: #{type} :: #{num.nil? ? "" : num % "09%d"} :: #{id&.text} :: #{title}"
       end
     end
   end
