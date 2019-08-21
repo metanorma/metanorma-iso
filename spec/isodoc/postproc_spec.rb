@@ -310,12 +310,12 @@ RSpec.describe IsoDoc do
               </div>
              </div>
              <aside id="fn:3" class="footnote">
-         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:3" epub:type="footnote" id="fnref:1">
+         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:3" epub:type="footnote">
                  <sup>1</sup>
                </a>This is a footnote.</p>
        <a href="#fnref:1">&#x21A9;</a></aside>
              <aside id="fn:2" class="footnote">
-         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2</sup></a>Formerly denoted as 15 % (m/m).</p>
+         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2</sup></a>Formerly denoted as 15 % (m/m).</p>
        <a href="#fnref:2">&#x21A9;</a></aside>
 
            </main>
