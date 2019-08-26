@@ -177,7 +177,7 @@ RSpec.describe Asciidoctor::ISO do
       :no-isobib:
       :docnumber: 1000
       :partnumber: 1-1
-      :tc-docnumber: 2000
+      :tc-docnumber: 2000, 2003
       :language: el
       :script: Grek
       :publisher: IEC,IETF,ISO
@@ -188,6 +188,7 @@ RSpec.describe Asciidoctor::ISO do
        <bibdata type="standard">
          <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
+         <docidentifier type="iso-tc">2003</docidentifier>
          <docnumber>1000</docnumber>
          <contributor>
            <role type="author"/>

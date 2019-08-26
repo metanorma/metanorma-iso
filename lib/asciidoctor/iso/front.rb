@@ -11,9 +11,9 @@ module Asciidoctor
     class Converter < Standoc::Converter
       def metadata_id(node, xml)
         iso_id(node, xml)
-        node.attr("tc-docnumber") and
-          xml.docidentifier(node.attr("tc-docnumber"),
-                            **attr_code(type: "iso-tc"))
+        node&.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
+          xml.docidentifier(n, **attr_code(type: "iso-tc"))
+        end
         xml.docnumber node&.attr("docnumber")
       end
 

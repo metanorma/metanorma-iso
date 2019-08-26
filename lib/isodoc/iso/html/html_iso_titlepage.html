@@ -1,6 +1,8 @@
 <div id='toggle'> <span>•</span> </div>
-    {% if tc_docnumber %}
-<p class="coverpage_docnumber">{{ tc_docnumber }}</p>
+{% if tc_docnumber.size > 0 %}
+    {% for num in tc_docnumber %}
+<p class="coverpage_docnumber">{{ num }}</p>
+    {% endfor %}
     {% else %}
 <p class="coverpage_docnumber">{{ docnumber }}(E) {{ draftinfo }}</p>
     {% endif %}
@@ -9,7 +11,7 @@
 <p class="coverpage_docnumber">Date: {{ revdate }}</p>
 {% endif %}
 
-{% if tc_docnumber %}
+{% if tc_docnumber.size > 0 %}
 <p class="coverpage_docnumber">{{ docnumber }}(E) {{ draftinfo }}</p>
 {% endif %}
 

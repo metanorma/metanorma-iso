@@ -1,7 +1,9 @@
-{% if tc_docnumber %}
+{% if tc_docnumber.size > 0 %}
+{% for num in tc_docnumber %}
 <p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
-normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ tc_docnumber }}</span></b><b
+normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ num }}</span></b><b
 style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'><o:p></o:p></span></b></p>
+{% endfor %}
 {% else %}
 <p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
 normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ docnumber }}(E) {{ draftinfo }}</span></b><b
@@ -12,7 +14,7 @@ style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'>
 <p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>Date: {{ revdate }}</span></p>
 {% endif %}
 
-{% if tc_docnumber %}
+{% if tc_docnumber.size > 0 %}
 <p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>{{ docnumber }}(E) {{ draftinfo }}</span></p>
 {% endif %}
 
