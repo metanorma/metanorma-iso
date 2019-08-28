@@ -54,17 +54,7 @@ RSpec.describe IsoDoc do
     INPUT
     #{HTML_HDR}
              <p class="zzSTDTitle1"/>
-             <div id="_terms_and_definitions"><h1>1&#160; Terms and definitions</h1><p>For the purposes of this document,
-           the following terms and definitions apply.</p>
-       <p>ISO and IEC maintain terminological databases for use in
-       standardization at the following addresses:</p>
-
-       <ul>
-       <li> <p>ISO Online browsing platform: available at
-         <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
-       <li> <p>IEC Electropedia: available at
-         <a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> </li> </ul>
+             <div id="_terms_and_definitions"><h1>1&#160; Terms and definitions</h1>
        <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
 
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">&lt;rice&gt; rice retaining its husk after threshing</p>
@@ -151,17 +141,7 @@ OUTPUT
 </sections>
 </iso-standard>
     INPUT
-                 <div id="_terms_and_definitions"><h1>1<span style="mso-tab-count:1">&#160; </span>Terms and definitions</h1><p>For the purposes of this document,
-           the following terms and definitions apply.</p>
-       <p>ISO and IEC maintain terminological databases for use in
-       standardization at the following addresses:</p>
-
-       <ul>
-       <li> <p>ISO Online browsing platform: available at
-         <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
-       <li> <p>IEC Electropedia: available at
-         <a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> </li> </ul>
+                 <div id="_terms_and_definitions"><h1>1<span style="mso-tab-count:1">&#160; </span>Terms and definitions</h1>
        <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
 
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">&lt;rice&gt; rice retaining its husk after threshing</p>

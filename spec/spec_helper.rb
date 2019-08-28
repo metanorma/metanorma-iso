@@ -130,6 +130,20 @@ BLANK_HDR = <<~"HDR"
 </bibdata>
 HDR
 
+TERM_BOILERPLATE = <<~END
+  <p>For the purposes of this document,
+    the following terms and definitions apply.</p>
+<p>ISO and IEC maintain terminological databases for use in
+standardization at the following addresses:</p>
+
+<ul>
+<li> <p>ISO Online browsing platform: available at
+  <link target="http://www.iso.org/obp"/></p> </li>
+<li> <p>IEC Electropedia: available at
+<link target="http://www.electropedia.org"/>
+</p> </li> </ul>
+END
+
 HTML_HDR = <<~END
         <html xmlns:epub="http://www.idpf.org/2007/ops" lang="en">
           <head/>

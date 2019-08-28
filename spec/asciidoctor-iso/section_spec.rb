@@ -67,6 +67,17 @@ RSpec.describe Asciidoctor::ISO do
 
        <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
+         <p>For the purposes of this document, the following terms and definitions apply.</p>
+         <p>ISO and IEC maintain terminological databases for use in
+standardization at the following addresses:</p>
+
+<ul>
+<li> <p>ISO Online browsing platform: available at
+  <link target="http://www.iso.org/obp"/></p> </li>
+<li> <p>IEC Electropedia: available at
+<link target="http://www.electropedia.org"/>
+</p> </li> </ul>
+
          <term id="_">
          <preferred>Term1</preferred>
        </term>
@@ -186,6 +197,16 @@ RSpec.describe Asciidoctor::ISO do
      
        <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
+         <p>For the purposes of this document, the following terms and definitions apply.</p>
+         <p>ISO and IEC maintain terminological databases for use in
+standardization at the following addresses:</p>
+
+<ul>
+<li> <p>ISO Online browsing platform: available at
+  <link target="http://www.iso.org/obp"/></p> </li>
+<li> <p>IEC Electropedia: available at
+<link target="http://www.electropedia.org"/>
+</p> </li> </ul>
          <term id="_">
          <preferred>Term1</preferred>
        </term>
@@ -312,7 +333,80 @@ RSpec.describe Asciidoctor::ISO do
      OUTPUT
   end
 
-    it "processes term document sources" do
+ it "processes terms & definitions with external source" do
+     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+
+      Foreword
+
+      [source="iso1234,iso5678"]
+      == Terms and Definitions
+
+      === Term1
+
+     INPUT
+             #{BLANK_HDR}
+             <termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/>
+        <preface><foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="_">Foreword</p>
+       </foreword></preface><sections>
+       <terms id="_" obligation="normative">
+          <title>Terms and definitions</title><p>For the purposes of this document, the terms and definitions 
+  given in <eref bibitem="iso1234"/> and <eref bibitem="iso5678"/> and the following apply.</p>
+  <p>ISO and IEC maintain terminological databases for use in
+standardization at the following addresses:</p>
+
+<ul>
+<li> <p>ISO Online browsing platform: available at
+  <link target="http://www.iso.org/obp"/></p> </li>
+<li> <p>IEC Electropedia: available at
+<link target="http://www.electropedia.org"/>
+</p> </li> </ul>
+
+  <term id="_">
+  <preferred>Term1</preferred>
+</term>
+       </terms></sections>
+       </standard-document>
+
+     OUTPUT
+    end
+
+          it "processes empty terms & definitions" do
+     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+      #{ASCIIDOC_BLANK_HDR}
+
+      Foreword
+
+      == Terms and Definitions
+
+
+     INPUT
+             #{BLANK_HDR}
+        <preface><foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="_">Foreword</p>
+       </foreword></preface><sections>
+       <terms id="_" obligation="normative">
+          <title>Terms and definitions</title><p>No terms and definitions are listed in this document.</p>
+          <p>ISO and IEC maintain terminological databases for use in
+standardization at the following addresses:</p>
+
+<ul>
+<li> <p>ISO Online browsing platform: available at
+  <link target="http://www.iso.org/obp"/></p> </li>
+<li> <p>IEC Electropedia: available at
+<link target="http://www.electropedia.org"/>
+</p> </li> </ul>
+
+       </terms></sections>
+       </iso-document>
+
+     OUTPUT
+    end
+
+           it "processes empty terms & definitions with external source" do
      expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
 
@@ -330,10 +424,22 @@ RSpec.describe Asciidoctor::ISO do
        </foreword></preface><sections>
        <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
+         <p>For the purposes of this document,
+        the terms and definitions given in <eref bibitem="iso1234"/> and <eref bibitem="iso5678"/> apply.</p>
+        <p>ISO and IEC maintain terminological databases for use in
+standardization at the following addresses:</p>
+
+<ul>
+<li> <p>ISO Online browsing platform: available at
+  <link target="http://www.iso.org/obp"/></p> </li>
+<li> <p>IEC Electropedia: available at
+<link target="http://www.electropedia.org"/>
+</p> </li> </ul>
+
 
 
        </terms></sections>
-       </iso-standard>
+       </iso-document>
 
      OUTPUT
     end

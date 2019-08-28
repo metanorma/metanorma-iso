@@ -155,16 +155,7 @@ RSpec.describe IsoDoc do
     expect(word).to be_equivalent_to <<~"OUTPUT"
            <div class="WordSection3">
                <p class="zzSTDTitle1"></p>
-               <div><a name="_terms_and_definitions" id="_terms_and_definitions"></a><h1>1<span style="mso-tab-count:1">&#xA0; </span>Terms and definitions</h1><p class="MsoNormal">For the purposes of this document,
-           the following terms and definitions apply.</p>
-       <p class="MsoNormal">ISO and IEC maintain terminological databases for use in
-       standardization at the following addresses:</p>
-
-       <p style="mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpFirst"> ISO Online browsing platform: available at
-          <a href="http://www.iso.org/obp">http://www.iso.org/obp</a> </p>
-        <p style="mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpLast"> IEC Electropedia: available at
-         <a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> 
+               <div><a name="_terms_and_definitions" id="_terms_and_definitions"></a><h1>1<span style="mso-tab-count:1">&#xA0; </span>Terms and definitions</h1>
        <p class="TermNum"><a name="paddy1" id="paddy1"></a>1.1</p><p class="Terms" style="text-align:left;">paddy</p>
        <p class="MsoNormal"><a name="_eb29b35e-123e-4d1c-b50b-2714d41e747f" id="_eb29b35e-123e-4d1c-b50b-2714d41e747f"></a>rice retaining its husk after threshing</p>
        <p class="MsoNormal">[SOURCE: <a href="#ISO7301">ISO 7301:2011, 3.1</a>, modified &mdash; The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p></div>

@@ -2,7 +2,7 @@ term_def_boilerplate: |
       <p>ISO和IEC用于标准化的术语数据库地址如下：</p>
       <ul>
       <li> <p>ISO在线浏览平台:
-        位于<a href=http://www.iso.org/obp>http://www.iso.org/obp</a></p> </li>
+        位于<link target="http://www.iso.org/obp"/></p></li>
       <li> <p>IEC Electropedia:
-        位于<a href=http://www.electropedia.org>http://www.electropedia.org</a>
+        位于<link target="http://www.electropedia.org"/>
       </p> </li> </ul>

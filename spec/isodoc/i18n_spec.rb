@@ -95,17 +95,7 @@ RSpec.describe IsoDoc do
                <h1>2&#160; Normative references</h1>
                <p>There are no normative references in this document.</p>
              </div>
-             <div id="H"><h1>3&#160; Terms, definitions, symbols and abbreviated terms</h1><p>For the purposes of this document,
-           the following terms and definitions apply.</p>
-       <p>ISO and IEC maintain terminological databases for use in
-       standardization at the following addresses:</p>
-
-       <ul>
-       <li> <p>ISO Online browsing platform: available at
-         <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
-       <li> <p>IEC Electropedia: available at
-         <a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> </li> </ul>
+             <div id="H"><h1>3&#160; Terms, definitions, symbols and abbreviated terms</h1>
        <div id="I"><h2>3.1 Normal Terms</h2>
 
           <p class="TermNum" id="J">3.1.1</p>
@@ -252,17 +242,7 @@ RSpec.describe IsoDoc do
                <h1>2&#160; Normative references</h1>
                <p>There are no normative references in this document.</p>
              </div>
-             <div id="H"><h1>3&#160; Terms, definitions, symbols and abbreviated terms</h1><p>For the purposes of this document,
-           the following terms and definitions apply.</p>
-       <p>ISO and IEC maintain terminological databases for use in
-       standardization at the following addresses:</p>
-
-       <ul>
-       <li> <p>ISO Online browsing platform: available at
-         <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
-       <li> <p>IEC Electropedia: available at
-         <a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> </li> </ul>
+             <div id="H"><h1>3&#160; Terms, definitions, symbols and abbreviated terms</h1>
        <div id="I"><h2>3.1 Normal Terms</h2>
 
           <p class="TermNum" id="J">3.1.1</p>
@@ -409,16 +389,7 @@ RSpec.describe IsoDoc do
                <h1>2&#160; R&#233;f&#233;rences normatives</h1>
                <p>Le pr&#233;sent document ne contient aucune r&#233;f&#233;rence normative.</p>
              </div>
-             <div id="H"><h1>3&#160; Terms, d&#233;finitions, symboles et termes abr&#233;g&#233;s</h1><p>Pour les besoins du pr&#233;sent document, les termes et d&#233;finitions suivants s'appliquent.</p>
-       <p>L'ISO et l'IEC tiennent &#224; jour des bases de donn&#233;es terminologiques
-       destin&#233;es &#224; &#234;tre utilis&#233;es en normalisation, consultables aux adresses
-       suivantes:</p>
-       <ul>
-       <li> <p>ISO Online browsing platform: disponible &#224; l'adresse
-         <a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
-       <li> <p>IEC Electropedia: disponible &#224; l'adresse
-         <a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> </li> </ul>
+             <div id="H"><h1>3&#160; Terms, d&#233;finitions, symboles et termes abr&#233;g&#233;s</h1>
        <div id="I"><h2>3.1 Normal Terms</h2>
 
           <p class="TermNum" id="J">3.1.1</p>
@@ -579,14 +550,7 @@ RSpec.describe IsoDoc do
                <p>&#19979;&#21015;&#25991;&#20214;&#23545;&#20110;&#26412;&#25991;&#20214;&#30340;&#24212;&#29992;&#26159;&#24517;&#19981;&#21487;&#23569;&#30340;&#12290; &#20961;&#26159;&#27880;&#26085;&#26399;&#30340;&#24341;&#29992;&#25991;&#20214;&#65292;&#20165;&#27880;&#26085;&#26399;&#30340;&#29256;&#26412;&#36866;&#29992;&#20110;&#26412;&#25991;&#20214;&#12290; &#20961;&#26159;&#19981;&#27880;&#26085;&#26399;&#30340;&#24341;&#29992;&#25991;&#20214;&#65292;&#20854;&#26368;&#26032;&#29256;&#26412;&#65288;&#21253;&#25324;&#25152;&#26377;&#30340;&#20462;&#25913;&#21333;&#65289;&#36866;&#29992;&#20110;&#26412;&#25991;&#20214;&#12290;</p>
                <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products</i></p>
              </div>
-             <div id="H"><h1>3&#160; &#26415;&#35821;&#12289;&#23450;&#20041;&#12289;&#31526;&#21495;&#12289;&#20195;&#21495;&#21644;&#32553;&#30053;&#35821;</h1><p>&#19979;&#21015;&#26415;&#35821;&#21644;&#23450;&#20041;&#36866;&#29992;&#20110;&#26412;&#25991;&#20214;&#12290;</p>
-       <p>ISO&#21644;IEC&#29992;&#20110;&#26631;&#20934;&#21270;&#30340;&#26415;&#35821;&#25968;&#25454;&#24211;&#22320;&#22336;&#22914;&#19979;&#65306;</p>
-       <ul>
-       <li> <p>ISO&#22312;&#32447;&#27983;&#35272;&#24179;&#21488;:
-         &#20301;&#20110;<a href="http://www.iso.org/obp">http://www.iso.org/obp</a></p> </li>
-       <li> <p>IEC Electropedia:
-         &#20301;&#20110;<a href="http://www.electropedia.org">http://www.electropedia.org</a>
-       </p> </li> </ul>
+             <div id="H"><h1>3&#160; &#26415;&#35821;&#12289;&#23450;&#20041;&#12289;&#31526;&#21495;&#12289;&#20195;&#21495;&#21644;&#32553;&#30053;&#35821;</h1>
        <div id="I"><h2>3.1 Normal Terms</h2>
      
                 <p class="TermNum" id="J">3.1.1</p>

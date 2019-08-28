@@ -4,8 +4,8 @@ term_def_boilerplate: |
 
       <ul>
       <li> <p>ISO Online browsing platform: available at
-        <a href=http://www.iso.org/obp>http://www.iso.org/obp</a></p> </li>
+        <link target="http://www.iso.org/obp"/></p> </li>
       <li> <p>IEC Electropedia: available at
-        <a href=http://www.electropedia.org>http://www.electropedia.org</a>
+      <link target="http://www.electropedia.org"/>
       </p> </li> </ul>
 
