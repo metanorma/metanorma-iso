@@ -56,7 +56,7 @@ module Asciidoctor
         substage = get_substage(node)
         if stage && (stage.to_i < 60 || stage.to_i == 60 && substage.to_i < 60)
           abbr = id_stage_abbr(stage, substage, node)
-          dn = "/#{abbr} #{dn}" # prefixes added in cleanup
+          dn = "/#{abbr} #{dn}" unless abbr.nil? || abbr.ext? # prefixes added in cleanup
         else
           dn += ":#{node.attr("copyright-year")}" if node.attr("copyright-year")
         end
