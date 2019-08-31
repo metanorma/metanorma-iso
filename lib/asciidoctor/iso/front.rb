@@ -45,13 +45,17 @@ module Asciidoctor
         dn
       end
 
+      def id_stage_abbr(stage, substage, node)
+        IsoDoc::Iso::Metadata.new("en", "Latn", {}).
+          stage_abbrev(stage, substage, node.attr("iteration"),
+                       node.attr("draft"))
+      end
+
       def id_stage_prefix(dn, node)
         stage = get_stage(node)
         substage = get_substage(node)
         if stage && (stage.to_i < 60 || stage.to_i == 60 && substage.to_i < 60)
-          abbr = IsoDoc::Iso::Metadata.new("en", "Latn", {}).
-            stage_abbrev(stage, substage, node.attr("iteration"), 
-                         node.attr("draft"))
+          abbr = id_stage_abbr(stage, substage, node)
           dn = "/#{abbr} #{dn}" # prefixes added in cleanup
         else
           dn += ":#{node.attr("copyright-year")}" if node.attr("copyright-year")
