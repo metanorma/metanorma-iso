@@ -129,6 +129,7 @@ RSpec.describe Asciidoctor::ISO do
 
        </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
+         <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
          <bibitem id="ISO712">
          <formattedref format="application/x-isodoc+xml">Reference</formattedref>
          <docidentifier>x</docidentifier>

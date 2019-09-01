@@ -185,7 +185,6 @@ RSpec.describe IsoDoc do
                <p class="zzSTDTitle1"/>
                <div>
                  <h1>1&#160; Normative references</h1>
-                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                  <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products</i></p>
                </div>
              </div>
@@ -252,7 +251,6 @@ RSpec.describe IsoDoc do
                <p class="zzSTDTitle1"/>
                <div>
                  <h1>1&#160; Normative references</h1>
-                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                  <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products</i></p>
                </div>
              </div>

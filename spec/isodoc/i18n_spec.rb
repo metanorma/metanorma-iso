@@ -93,7 +93,6 @@ RSpec.describe IsoDoc do
              </div>
              <div>
                <h1>2&#160; Normative references</h1>
-               <p>There are no normative references in this document.</p>
              </div>
              <div id="H"><h1>3&#160; Terms, definitions, symbols and abbreviated terms</h1>
        <div id="I"><h2>3.1 Normal Terms</h2>
@@ -240,7 +239,6 @@ RSpec.describe IsoDoc do
              </div>
              <div>
                <h1>2&#160; Normative references</h1>
-               <p>There are no normative references in this document.</p>
              </div>
              <div id="H"><h1>3&#160; Terms, definitions, symbols and abbreviated terms</h1>
        <div id="I"><h2>3.1 Normal Terms</h2>
@@ -387,7 +385,6 @@ RSpec.describe IsoDoc do
              </div>
              <div>
                <h1>2&#160; R&#233;f&#233;rences normatives</h1>
-               <p>Le pr&#233;sent document ne contient aucune r&#233;f&#233;rence normative.</p>
              </div>
              <div id="H"><h1>3&#160; Terms, d&#233;finitions, symboles et termes abr&#233;g&#233;s</h1>
        <div id="I"><h2>3.1 Normal Terms</h2>
@@ -547,7 +544,6 @@ RSpec.describe IsoDoc do
              </div>
              <div>
                <h1>2&#160; &#35268;&#33539;&#24615;&#24341;&#29992;&#25991;&#20214;</h1>
-               <p>&#19979;&#21015;&#25991;&#20214;&#23545;&#20110;&#26412;&#25991;&#20214;&#30340;&#24212;&#29992;&#26159;&#24517;&#19981;&#21487;&#23569;&#30340;&#12290; &#20961;&#26159;&#27880;&#26085;&#26399;&#30340;&#24341;&#29992;&#25991;&#20214;&#65292;&#20165;&#27880;&#26085;&#26399;&#30340;&#29256;&#26412;&#36866;&#29992;&#20110;&#26412;&#25991;&#20214;&#12290; &#20961;&#26159;&#19981;&#27880;&#26085;&#26399;&#30340;&#24341;&#29992;&#25991;&#20214;&#65292;&#20854;&#26368;&#26032;&#29256;&#26412;&#65288;&#21253;&#25324;&#25152;&#26377;&#30340;&#20462;&#25913;&#21333;&#65289;&#36866;&#29992;&#20110;&#26412;&#25991;&#20214;&#12290;</p>
                <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products</i></p>
              </div>
              <div id="H"><h1>3&#160; &#26415;&#35821;&#12289;&#23450;&#20041;&#12289;&#31526;&#21495;&#12289;&#20195;&#21495;&#21644;&#32553;&#30053;&#35821;</h1>
