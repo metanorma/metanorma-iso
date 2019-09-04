@@ -94,7 +94,6 @@ module Asciidoctor
         type = id['type'] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
-        require "byebug"; byebug
         "#{pubclass} :: #{type} :: #{num.nil? ? abbrid : sprintf("09%d", num.to_i)} :: #{id&.text} :: #{title}"
       end
     end
