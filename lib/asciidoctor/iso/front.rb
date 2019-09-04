@@ -138,20 +138,20 @@ module Asciidoctor
       def title_intro(node, t, lang, at)
         return unless node.attr("title-intro-#{lang}")
         t.title(**attr_code(at.merge(type: "title-intro"))) do |t1|
-          t1 << asciidoc_sub(node.attr("title-intro-#{lang}"))
+          t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(node.attr("title-intro-#{lang}"))
         end
       end
 
       def title_main(node, t, lang, at)
         t.title **attr_code(at.merge(type: "title-main")) do |t1|
-          t1 << asciidoc_sub(node.attr("title-main-#{lang}"))
+          t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(node.attr("title-main-#{lang}"))
         end
       end
 
       def title_part(node, t, lang, at)
         return unless node.attr("title-part-#{lang}")
         t.title(**attr_code(at.merge(type: "title-part"))) do |t1|
-          t1 << asciidoc_sub(node.attr("title-part-#{lang}"))
+          t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(node.attr("title-part-#{lang}"))
         end
       end
 
@@ -162,7 +162,7 @@ module Asciidoctor
         title = "#{intro} -- #{title}" if intro
         title = "#{title} -- #{part}" if part
         t.title **attr_code(at.merge(type: "main")) do |t1|
-          t1 << asciidoc_sub(title)
+          t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(title)
         end
       end
 

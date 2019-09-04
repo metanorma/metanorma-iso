@@ -355,7 +355,7 @@ standardization at the following addresses:</p>
        </foreword></preface><sections>
        <terms id="_" obligation="normative">
           <title>Terms and definitions</title><p>For the purposes of this document, the terms and definitions 
-  given in <eref bibitem="iso1234"/> and <eref bibitem="iso5678"/> and the following apply.</p>
+  given in <eref bibitemid="iso1234"/> and <eref bibitemid="iso5678"/> and the following apply.</p>
   <p>ISO and IEC maintain terminological databases for use in
 standardization at the following addresses:</p>
 
@@ -427,7 +427,7 @@ standardization at the following addresses:</p>
        <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
          <p>For the purposes of this document,
-        the terms and definitions given in <eref bibitem="iso1234"/> and <eref bibitem="iso5678"/> apply.</p>
+        the terms and definitions given in <eref bibitemid="iso1234"/> and <eref bibitemid="iso5678"/> apply.</p>
         <p>ISO and IEC maintain terminological databases for use in
 standardization at the following addresses:</p>
 
