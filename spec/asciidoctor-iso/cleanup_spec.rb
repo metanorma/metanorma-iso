@@ -799,28 +799,32 @@ r = 1 %</stem>
     * [[[ref1,ISO 123]]], _Standard ISO 123_
     * [[[ref4,GB 123]]], _Standard GB 123_
     * [[[ref2,ISO/IEC 123]]], _Standard ISO/IEC 123_
+    * [[[ref6,(B)]]], _Standard 20_
+    * [[[ref7,(A)]]], _Standard 30_
 
     [bibliography]
     === {blank}
-    * [[[ref10,20]]], _Standard 10_
-    * [[[ref9,GB 123]]], _Standard GB 123_
-    * [[[ref8,IEC 123]]], _Standard IEC 123_
-    * [[[ref7,ISO 123]]], _Standard ISO 123_
-    * [[[ref6,ISO/IEC 123]]], _Standard ISO/IEC 123_
+    * [[[ref15,20]]], _Standard 10_
+    * [[[ref14,GB 123]]], _Standard GB 123_
+    * [[[ref13,IEC 123]]], _Standard IEC 123_
+    * [[[ref11,ISO 123]]], _Standard ISO 123_
+    * [[[ref10,ISO/IEC 123]]], _Standard ISO/IEC 123_
+    * [[[ref16,(B)]]], _Standard 20_
+    * [[[ref17,(A)]]], _Standard 30_
     INPUT
         #{BLANK_HDR}
-    <sections><clause id="_" inline-header="false" obligation="normative">
+        <sections><clause id="_" inline-header="false" obligation="normative">
          <title>Clause 1</title>
          <p id="_"><eref type="inline" bibitemid="ref1" citeas="ISO 123"/>
        <eref type="inline" bibitemid="ref2" citeas="ISO/IEC 123"/>
        <eref type="inline" bibitemid="ref3" citeas="IEC 123"/>
        <eref type="inline" bibitemid="ref4" citeas="GB 123"/>
-       <eref type="inline" bibitemid="ref5" citeas="[5]"/>
-       <eref type="inline" bibitemid="ref6" citeas="ISO/IEC 123"/>
-       <eref type="inline" bibitemid="ref7" citeas="ISO 123"/>
-       <eref type="inline" bibitemid="ref8" citeas="IEC 123"/>
-       <eref type="inline" bibitemid="ref9" citeas="GB 123"/>
-       <eref type="inline" bibitemid="ref10" citeas="[10]"/></p>
+       <eref type="inline" bibitemid="ref5" citeas="[4]"/>
+       <eref type="inline" bibitemid="ref6" citeas="[B]"/>
+       <eref type="inline" bibitemid="ref7" citeas="[A]"/>
+       <xref target="ref8"/>
+       <xref target="ref9"/>
+       <eref type="inline" bibitemid="ref10" citeas="ISO/IEC 123"/></p>
        </clause>
        </sections><bibliography><clause id="_" obligation="informative"><title>Bibliography</title><references id="_" obligation="informative">
          <title>Clause 1</title><bibitem id="ref1" type="standard">
@@ -860,17 +864,29 @@ r = 1 %</stem>
              <abbreviation>IEC</abbreviation>
            </organization>
          </contributor>
+       </bibitem><bibitem id="ref5">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard 10</em>
+         </formattedref>
+         <docidentifier type="metanorma">[4]</docidentifier>
        </bibitem><bibitem id="ref4">
          <formattedref format="application/x-isodoc+xml">
            <em>Standard GB 123</em>
          </formattedref>
          <docidentifier>GB 123</docidentifier>
-       </bibitem><bibitem id="ref5">
+       </bibitem><bibitem id="ref7">
          <formattedref format="application/x-isodoc+xml">
-           <em>Standard 10</em>
+           <em>Standard 30</em>
          </formattedref>
-         <docidentifier type="metanorma">[5]</docidentifier>
+         <docidentifier type="metanorma">[A]</docidentifier>
+       </bibitem><bibitem id="ref6">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard 20</em>
+         </formattedref>
+         <docidentifier type="metanorma">[B]</docidentifier>
        </bibitem>
+
+
 
 
 
@@ -878,7 +894,7 @@ r = 1 %</stem>
 
        </references>
        <references id="_" obligation="informative">
-         <bibitem id="ref7" type="standard">
+         <bibitem id="ref11" type="standard">
          <title format="text/plain">Standard ISO 123</title>
          <docidentifier>ISO 123</docidentifier>
          <contributor>
@@ -888,7 +904,7 @@ r = 1 %</stem>
              <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
-       </bibitem><bibitem id="ref6" type="standard">
+       </bibitem><bibitem id="ref10" type="standard">
          <title format="text/plain">Standard ISO/IEC 123</title>
          <docidentifier>ISO/IEC 123</docidentifier>
          <contributor>
@@ -905,7 +921,7 @@ r = 1 %</stem>
              <abbreviation>IEC</abbreviation>
            </organization>
          </contributor>
-       </bibitem><bibitem id="ref8" type="standard">
+       </bibitem><bibitem id="ref13" type="standard">
          <title format="text/plain">Standard IEC 123</title>
          <docidentifier>IEC 123</docidentifier>
          <contributor>
@@ -915,17 +931,29 @@ r = 1 %</stem>
              <abbreviation>IEC</abbreviation>
            </organization>
          </contributor>
-       </bibitem><bibitem id="ref9">
+       </bibitem><bibitem id="ref15">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard 10</em>
+         </formattedref>
+         <docidentifier type="metanorma">[11]</docidentifier>
+       </bibitem><bibitem id="ref14">
          <formattedref format="application/x-isodoc+xml">
            <em>Standard GB 123</em>
          </formattedref>
          <docidentifier>GB 123</docidentifier>
-       </bibitem><bibitem id="ref10">
+       </bibitem><bibitem id="ref17">
          <formattedref format="application/x-isodoc+xml">
-           <em>Standard 10</em>
+           <em>Standard 30</em>
          </formattedref>
-         <docidentifier type="metanorma">[10]</docidentifier>
+         <docidentifier type="metanorma">[A]</docidentifier>
+       </bibitem><bibitem id="ref16">
+         <formattedref format="application/x-isodoc+xml">
+           <em>Standard 20</em>
+         </formattedref>
+         <docidentifier type="metanorma">[B]</docidentifier>
        </bibitem>
+
+
 
 
 

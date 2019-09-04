@@ -66,10 +66,8 @@ module Asciidoctor
         return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
         return 2 if bib.at("#{PUBLISHER}[name = 'International "\
                            "Electrotechnical Commission']")
-        return 3 if bib.at("./docidentifier[@type][not(@type = 'DOI')]"\
-                           "[not(@type = 'metanorma')]")
-        return 3 if bib.at("./docidentifier[not(@type)]") &&
-          !bib.at("./docidentifier[@type]")
+        return 3 if bib.at("./docidentifier[@type][not(@type = 'DOI' or "\
+                           "@type = 'metanorma' or @type = 'ISSN' or @type = 'ISBN')]")
         4
       end
 
@@ -80,15 +78,23 @@ module Asciidoctor
       end
 
       # TODO sort by authors
+      # sort by: doc class (ISO, IEC, other standard (not DOI &c), other
+      # then standard class (docid class other than DOI &c)
+      # then docnumber if present, numeric sort
+      #      else alphanumeric metanorma id (abbreviation)
+      # then doc id (not DOI &c)
+      # then title
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
         num = bib&.at("./docnumber")&.text
-        id = bib&.at("./docidentifier[not(@type = 'metanorma')]"\
-                     "[not(@type = 'DOI')]")
+        id = bib&.at("./docidentifier[not(@type = 'DOI' or "\
+                           "@type = 'metanorma' or @type = 'ISSN' or @type = 'ISBN')]")
+        metaid = bib&.at("./docidentifier[@type = 'metanorma']")&.text
+        abbrid = metaid unless /^\[\d+\]$/.match(metaid)
         type = id['type'] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
-        "#{pubclass} :: #{type} :: #{num.nil? ? "" : num % "09%d"} :: #{id&.text} :: #{title}"
+        "#{pubclass} :: #{type} :: #{num.nil? ? abbrid : num % "09%d"} :: #{id&.text} :: #{title}"
       end
     end
   end
