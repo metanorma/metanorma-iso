@@ -22,7 +22,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
     expect(File.exist?("test.html")).to be true
-    html = File.read("test.html")
+    html = File.read("test.html", encoding: "UTF-8")
     expect(html).to match(%r{<title>Cereals and pulses\&nbsp;\&mdash; Specifications and test methods\&nbsp;\&mdash; Rice</title>})
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
@@ -48,7 +48,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
     expect(File.exist?("test.html")).to be true
-    html = File.read("test.html")
+    html = File.read("test.html", encoding: "UTF-8")
     expect(html).to match(%r{<title>Cereals and pulses\&nbsp;\&mdash; Specifications and test methods\&nbsp;\&mdash; Rice</title>})
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
@@ -67,7 +67,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
     expect(File.exist?("test.doc")).to be true
-    word = File.read("test.doc")
+    word = File.read("test.doc", encoding: "UTF-8")
     expect(word).to match(/<style>/)
   end
 
@@ -76,7 +76,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "spec/assets/iso.html"
     IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.html")).to be true
-    html = File.read("spec/assets/iso.html")
+    html = File.read("spec/assets/iso.html", encoding: "UTF-8")
     expect(html).to match(/<style>/)
     expect(html).to match(%r{https://use.fontawesome.com})
     expect(html).to match(%r{libs/jquery})
@@ -86,7 +86,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "spec/assets/iso.doc"
     IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.doc")).to be true
-    word = File.read("spec/assets/iso.doc")
+    word = File.read("spec/assets/iso.doc", encoding: "UTF-8")
     expect(word).to match(/<w:WordDocument>/)
     expect(word).to match(/<style>/)
   end
@@ -107,7 +107,7 @@ RSpec.describe IsoDoc do
     </annex>
     </iso-standard>
     INPUT
-    word = File.read("test.doc").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
+    word = File.read("test.doc", encoding: "UTF-8").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
       sub(%r{<div style="mso-element:footnote-list"/>.*$}m, "")
     expect(word).to be_equivalent_to <<~"OUTPUT"
            <div class="WordSection3">
@@ -150,7 +150,7 @@ RSpec.describe IsoDoc do
 </iso-standard>
 
     INPUT
-    word = File.read("test.doc").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
+    word = File.read("test.doc", encoding: "UTF-8").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
       sub(%r{<div style="mso-element:footnote-list"/>.*$}m, "")
     expect(word).to be_equivalent_to <<~"OUTPUT"
            <div class="WordSection3">
@@ -177,7 +177,7 @@ RSpec.describe IsoDoc do
 </iso-standard>
 
     INPUT
-    word = File.read("test.doc").sub(%r{^.*Content-Location: file:///C:/Doc/test_files/header.html}m, "Content-Location: file:///C:/Doc/test_files/header.html").
+    word = File.read("test.doc", encoding: "UTF-8").sub(%r{^.*Content-Location: file:///C:/Doc/test_files/header.html}m, "Content-Location: file:///C:/Doc/test_files/header.html").
       sub(/------=_NextPart.*$/m, "")
     #expect(word).to include(%{Content-Location: file:///C:/Doc/test_files/header.html\nContent-Transfer-Encoding: base64\nContent-Type: text/html charset="utf-8" })
     expect(word).to include(%{Content-Location: file:///C:/Doc/test_files/header.html})
@@ -204,7 +204,7 @@ RSpec.describe IsoDoc do
         </iso-standard>
 
     INPUT
-    word = File.read("test.doc").sub(/^.*An empty word intro page\./m, '').
+    word = File.read("test.doc", encoding: "UTF-8").sub(/^.*An empty word intro page\./m, '').
       sub(%r{<br clear="all" class="section"/>\s*<div class="WordSection3">.*$}m, "")
     expect(word.gsub(/_Toc\d\d+/, "_Toc")).to be_equivalent_to <<~'OUTPUT'
        <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes">&#xA0;</span>TOC
@@ -281,7 +281,7 @@ RSpec.describe IsoDoc do
         </sections>
         </iso-standard>
     INPUT
-    html = File.read("test.html").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
+    html = File.read("test.html", encoding: "UTF-8").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
       sub(%r{</main>.*$}m, "</main>")
     expect(html).to be_equivalent_to <<~"OUTPUT"
            <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -329,7 +329,7 @@ RSpec.describe IsoDoc do
        </foreword></preface>
         </iso-standard>
     INPUT
-    html = File.read("test.html").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
+    html = File.read("test.html", encoding: "UTF-8").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
       sub(%r{</main>.*$}m, "</main>")
     expect(`ls test_htmlimages`).to match(/\.png$/)
     expect(html.gsub(/\/[0-9a-f-]+\.png/, "/_.png")).to be_equivalent_to <<~"OUTPUT"
@@ -403,7 +403,7 @@ RSpec.describe IsoDoc do
 </iso-standard>
     INPUT
     expect(File.exist?("test.html")).to be true
-    html = File.read("test.html")
+    html = File.read("test.html", encoding: "UTF-8")
     expect(html).to match(%r{<h2 class="TermNum" id="paddy1">1\.1</h2>})
     expect(html).to match(%r{<h2 class="TermNum" id="paddy">1\.2</h2>})
   end
@@ -423,7 +423,7 @@ RSpec.describe IsoDoc do
     </annex>
     </iso-standard>
     INPUT
-    word = File.read("test.doc").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
+    word = File.read("test.doc", encoding: "UTF-8").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
       sub(%r{<div style="mso-element:footnote-list"/>.*$}m, "")
     expect(word).to be_equivalent_to <<~"OUTPUT"
          <div class="WordSection3">
@@ -463,7 +463,7 @@ RSpec.describe IsoDoc do
     </annex>
     </iso-standard>
     INPUT
-    word = File.read("test.doc").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
+    word = File.read("test.doc", encoding: "UTF-8").sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">').
       sub(%r{<div style="mso-element:footnote-list"/>.*$}m, "")
     expect(word).to be_equivalent_to <<~"OUTPUT"
        <div class="WordSection3">
