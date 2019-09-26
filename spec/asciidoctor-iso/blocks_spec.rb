@@ -37,8 +37,7 @@ RSpec.describe Asciidoctor::ISO do
             #{BLANK_HDR}
        <sections>
          <formula id="_">
-         <stem type="AsciiMath">r = 1 %
-       r = 1 %</stem>
+         <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>r</mi><mo>=</mo><mn>1</mn><mi>%</mi><mi>r</mi><mo>=</mo><mn>1</mn><mi>%</mi></math></stem>
        </formula>
 
        <formula id="_">
