@@ -309,6 +309,9 @@
         <attribute name="alt"/>
       </optional>
       <optional>
+        <attribute name="summary"/>
+      </optional>
+      <optional>
         <attribute name="uri">
           <data type="anyURI"/>
         </attribute>
@@ -517,6 +520,8 @@
       </optional>
       <choice>
         <ref name="image"/>
+        <ref name="video"/>
+        <ref name="audio"/>
         <ref name="pre"/>
         <zeroOrMore>
           <ref name="figure"/>
@@ -812,7 +817,7 @@
     </element>
   </define>
   <define name="video">
-    <element name="image">
+    <element name="video">
       <attribute name="id">
         <data type="ID"/>
       </attribute>
@@ -853,7 +858,7 @@
     </element>
   </define>
   <define name="audio">
-    <element name="image">
+    <element name="audio">
       <attribute name="id">
         <data type="ID"/>
       </attribute>
