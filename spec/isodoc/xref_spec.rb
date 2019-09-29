@@ -396,12 +396,12 @@ RSpec.describe IsoDoc do
       <div>
         <h1 class="ForewordTitle">Foreword</h1>
         <p>
-    <a href="#N">Clause 1, Example</a>
-    <a href="#note1">3.1, Example  1</a>
-    <a href="#note2">3.1, Example  2</a>
-    <a href="#AN">A.1, Example</a>
-    <a href="#Anote1">A.2, Example  1</a>
-    <a href="#Anote2">A.2, Example  2</a>
+    <a href="#N">Clause 1, EXAMPLE</a>
+    <a href="#note1">3.1, EXAMPLE  1</a>
+    <a href="#note2">3.1, EXAMPLE  2</a>
+    <a href="#AN">A.1, EXAMPLE</a>
+    <a href="#Anote1">A.2, EXAMPLE  1</a>
+    <a href="#Anote2">A.2, EXAMPLE  2</a>
     </p>
       </div>
       <p class="zzSTDTitle1"/>
@@ -411,7 +411,7 @@ RSpec.describe IsoDoc do
           <p><span class="example_label">EXAMPLE</span>&#160; Hello</p>
         </div>
         <p>
-          <a href="#N">Example</a>
+          <a href="#N">EXAMPLE</a>
         </p>
       </div>
       <div id="terms"><h1>2&#160; Terms and definitions</h1>
@@ -421,7 +421,7 @@ RSpec.describe IsoDoc do
         <div id="widgets1"><h2>3.1 </h2>
         <div id="note1" class="example"><p><span class="example_label">EXAMPLE  1</span>&#160; Hello</p></div>
         <div id="note2" class="example"><p><span class="example_label">EXAMPLE  2</span>&#160; Hello</p></div>
-<p>    <a href="#note1">Example  1</a> <a href="#note2">Example  2</a> </p>
+<p>    <a href="#note1">EXAMPLE  1</a> <a href="#note2">EXAMPLE  2</a> </p>
     </div>
       </div>
       <br/>
