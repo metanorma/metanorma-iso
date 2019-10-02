@@ -44,6 +44,27 @@
         </oneOrMore>
       </element>
     </define>
+    <define name="references">
+      <element name="references">
+        <optional>
+          <attribute name="id">
+            <data type="ID"/>
+          </attribute>
+        </optional>
+        <optional>
+          <ref name="section-title"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="BasicBlock"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="bibitem"/>
+          <zeroOrMore>
+            <ref name="note"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </element>
+    </define>
   </include>
   <define name="standard-document">
     <element name="standard-document">

@@ -443,6 +443,9 @@
       <optional>
         <attribute name="subsequence"/>
       </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
       <oneOrMore>
         <choice>
           <ref name="formula"/>
