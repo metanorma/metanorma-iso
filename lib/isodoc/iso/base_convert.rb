@@ -122,11 +122,21 @@ module IsoDoc
         l10n(anchor(container, :xref) + delim + linkend)
       end
 
+      def example_span_label(node, div, name)
+      n = get_anchors[node["id"]]
+      div.span **{ class: "example_label" } do |p|
+        lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @example_lbl :
+          l10n("#{@example_lbl} #{n[:label]}")
+        p << lbl
+        name and !lbl.nil? and p << "&nbsp;&mdash; "
+        name and name.children.each { |n| parse(n, div) }
+      end
+    end
+
       def example_p_parse(node, div)
+        name = node&.at(ns("./name"))&.remove
         div.p do |p|
-          p.span **{ class: "example_label" } do |s|
-            s << example_label(node)
-          end
+          example_span_label(node, p, name)
           insert_tab(p, 1)
           node.first_element_child.children.each { |n| parse(n, p) }
         end
@@ -135,17 +145,24 @@ module IsoDoc
 
       def example_parse1(node, div)
         div.p do |p|
-          p.span **{ class: "example_label" } do |s|
-            s << example_label(node)
-          end
+          example_span_label(node, p, node.at(ns("./name")))
           insert_tab(p, 1)
         end
-        node.children.each { |n| parse(n, div) }
+        node.children.each { |n| parse(n, div) unless n.name == "name" }
+      end
+
+      def node_begins_with_para(node)
+        node.elements.each do |e|
+          next if e.name == "name"
+          return true if e.name == "p"
+          return false
+        end
+        false
       end
 
       def example_parse(node, out)
         out.div **{ id: node["id"], class: "example" } do |div|
-          if node.first_element_child.name == "p"
+          if node_begins_with_para(node)
             example_p_parse(node, div)
           else
             example_parse1(node, div)
