@@ -80,7 +80,7 @@ module IsoDoc
         @anchors[clause["id"]] =
           { label: num, level: level, xref: num }
         # subclauses are not prefixed with "Clause"
-        clause.xpath(ns("./clause | ./terms | ./term | ./definitions")).
+        clause.xpath(ns("./clause | ./terms | ./term | ./definitions | ./references")).
           each_with_index do |c, i|
           section_names1(c, "#{num}.#{i + 1}", level + 1)
         end
@@ -88,7 +88,7 @@ module IsoDoc
 
       def annex_names1(clause, num, level)
         @anchors[clause["id"]] = { label: num, xref: num, level: level }
-        clause.xpath(ns("./clause")).each_with_index do |c, i|
+        clause.xpath(ns("./clause | ./references")).each_with_index do |c, i|
           annex_names1(c, "#{num}.#{i + 1}", level + 1)
         end
       end
