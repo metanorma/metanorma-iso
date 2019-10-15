@@ -813,6 +813,9 @@
         <attribute name="alt"/>
       </optional>
       <optional>
+        <attribute name="title"/>
+      </optional>
+      <optional>
         <attribute name="longdesc">
           <data type="anyURI"/>
         </attribute>
@@ -851,6 +854,9 @@
         <attribute name="alt"/>
       </optional>
       <optional>
+        <attribute name="title"/>
+      </optional>
+      <optional>
         <attribute name="longdesc">
           <data type="anyURI"/>
         </attribute>
@@ -874,6 +880,9 @@
       </optional>
       <optional>
         <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="title"/>
       </optional>
       <optional>
         <attribute name="longdesc">

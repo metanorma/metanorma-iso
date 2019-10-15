@@ -150,7 +150,7 @@ Normally in Asciidoctor, any text in a cross-reference that follows a comma cons
 
 In Metanorma Asciidoctor cross-references, bibliographic localities (e.g. page numbers, clause numbers) can be added directly after the comma, as part of the cross-reference text: this overrides the normal Asciidoctor treatment of custom text. Bibliographic localities are expressed as a sequence of lowercase locality type, then an equal sign, then the locality value or range of values. The locality can appear in quotations, if it contains special characters (like dashes or commas).
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 <<ISO7301,clause=3.1-3.4>>
 
@@ -246,7 +246,7 @@ Time to launch.
 
 As defined above, all terminal subclauses of a term section are treated as term definitions. Exceptionally, an introductory section can be treated as a subclause instead of a term, by prefixing it with the style attribute `[.nonterm]`:
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 == Terms and definitions
 

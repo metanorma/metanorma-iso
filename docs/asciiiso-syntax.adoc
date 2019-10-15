@@ -20,7 +20,7 @@ Attributes of the document, which typically appear in the coverpage (if at all),
 
 Note that the initial title line and author line expected in Asciidoctor are ignored in favour of specific document attributes, although they still need to be supplied for the document to be valid.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 = Rice model
 Author
@@ -37,7 +37,7 @@ Author
 
 * https://asciidoctor.org/docs/user-manual/#text-formatting[Formatting marks]: bold, italic, monospace, subscript, superscript
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 This document specifies minimum requirements and test methods for rice (_Oryza sativa L._).
 --
@@ -45,7 +45,7 @@ This document specifies minimum requirements and test methods for rice (_Oryza s
 * https://asciidoctor.org/docs/user-manual/#anchordef[Anchors] (for internal cross-references): these can be defined for any section or subsection, and any block (e.g. images, lists, examples, formulas, and so forth). The numbering of all blocks and clauses is automated, and does not need to be provided in the text.
 * https://asciidoctor.org/docs/user-manual/#internal-cross-references[Internal Cross-references] reference anchors within the document. By default, the text for these is also automatically generated, including naming the container of a block where required (e.g. `B.6, Formula (B.1)` for a formula in an annex). However, cross-references can supply their own text as an override, following a comma (e.g. `<``<AnnexB,the following annex>``>`).
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 The International Organization for Standardization (ISO) draws attention to the fact that it is claimed that compliance with this document may involve the use of a patent concerning sample dividers given in <<AnnexA>> and shown in <<figureA-1>>.
 
@@ -57,14 +57,14 @@ image::images/rice_image1.png[]
 
 * https://asciidoctor.org/docs/user-manual/#url[URLs]
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 http://www.iso.org/obp[OBP]
 --
 
 * https://asciidoctor.org/docs/user-manual/#activating-stem-support[STEM support] (mathematical expressions), as both inline and block formatting. (Numbered formulae are expressed as stem blocks.) Asciidoctor natively uses http://asciimath.org[AsciiMath] for its mathematical expressions; the `:stem:` document attribute must be present for AsciiMath to be recognised. The gem will ensure that any AsciiMath is rendered in the HTML output, and converted to Microsoft Office's OOXML (via MathML) in the Word output. Asciidoctor also supports LaTeX, but the gem does not cater for converting LaTeX to a Word-compatible output.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 [[formulaA-1,A.1]]
 [stem]
@@ -79,7 +79,7 @@ stem:[w]:: is the mass fraction of grains with a particular defect in the test s
 
 * https://asciidoctor.org/docs/user-manual/#user-footnotes[Footnotes]. Note that footnotes are treated as inline formatting, so they cannot straightforwardly span more than a single paragraph in Asciidoctor. Footnotes within figures and tables are rendered within their blocks.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols.footnote:[Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.]
 --
@@ -92,7 +92,7 @@ TIP: For UNECE, paragraph numbering is generated automatically by the gem, which
 
 * https://asciidoctor.org/docs/user-manual/#unordered-lists[Unordered lists]
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 The main changes compared to the previous edition are:
 
@@ -102,7 +102,7 @@ The main changes compared to the previous edition are:
 
 * https://asciidoctor.org/docs/user-manual/#ordered-lists[Ordered lists]. The gem automatically creates labels for the nested levels of ordered lists (in the sequence lowercase letter–Arabic numeral–lowercase Roman numeral–upppercase letter–uppercase Roman numeral), and ignores any https://asciidoctor.org/docs/user-manual/#numbering-styles[numbering styles] indicated by the user.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 . the sampling method used;
 . the test method used;
@@ -111,7 +111,7 @@ The main changes compared to the previous edition are:
 
 * https://asciidoctor.org/docs/user-manual/#labeled-list[Definition lists]. These are used for all keys of figures and formulae, and as the content of Symbols and Abbreviations clauses and subclauses:
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 stem:[w]:: is the mass fraction of grains with a particular defect in the test sample;
 stem:[m_D]:: is the mass, in grams, of grains with that defect;
@@ -122,7 +122,7 @@ Note that the key to a figure must be preceded by the paragraph `*Key*`, and the
 
 * https://asciidoctor.org/docs/user-manual/#tables[Tables]. Asciidoctor supports a rich range of table formatting:
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 [[tableD-1]]
 [cols="<,^,^,^,^",headerrows=2]
@@ -138,7 +138,7 @@ Note that the key to a figure must be preceded by the paragraph `*Key*`, and the
 
 * https://asciidoctor.org/docs/user-manual/#images[Images], which are mapped to Metanorma figures, with accompanying titles:
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 [[figureC-1]]
 .Typical gelatinization curve
@@ -148,7 +148,7 @@ footnote:[The time stem:[t_90] was estimated to be 18,2 min for this example.]
 
 * https://asciidoctor.org/docs/user-manual/#admonition[Admonitions], which express Notes, Warnings, Cautions, etc.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 CAUTION: Only use paddy or parboiled rice for the determination of husked rice yield.
 --
@@ -157,7 +157,7 @@ TIP: For UNECE, admonitions are used to render boxes. Admonitions can have title
 
 * https://asciidoctor.org/docs/user-manual/#prose-excerpts-quotes-and-verses[Block quotes]
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 [quote, ISO, "ISO7301,clause 1"]
 _____
@@ -169,7 +169,7 @@ _____
 
 * https://asciidoctor.org/docs/user-manual/#listing-blocks[Listing blocks] (source code), including https://asciidoctor.org/docs/user-manual/#callouts[source code callouts]
 
-[source,asciidoctor]
+[source,asciidoc]
 ----
 .Sample Code
 ====
@@ -196,7 +196,7 @@ end
 
 * The Asciidoctor https://asciidoctor.org/docs/user-manual/#doc-preamble[Document preamble] is treated as the document Foreword: it is the text appearing between the document header and the first section header. (Note that the foreword is here given a https://asciidoctor.org/docs/user-manual/#title[block title], but that will be provided automatically anyway.)
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 [[foreword]]
 .Foreword
@@ -205,7 +205,7 @@ ISO (the International Organization for Standardization)
 
 * The Asciidoctor https://asciidoctor.org/docs/user-manual/#sections[Sections] correspond to Metanorma clauses, starting with the Introduction (if present). Each section and subsection is delimited with a header; the number of equal signs before the header indicate the level of nesting of the section, starting with two equal signs. No numbering should be given for any header: numbering is done automatically by the gem.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 == Sampling
 Sampling shall be carried out in accordance with <<ISO24333,clause 5>>
@@ -215,7 +215,7 @@ Sampling shall be carried out in accordance with <<ISO24333,clause 5>>
 
 https://asciidoctor.org/docs/user-manual/#section-styles[Section styles] are used to indicate specific types of section: `[abstract]` for Abstracts, `[bibliography]` for Normative References and Bibliography, `[appendix]` for Annexes, and `[%appendix]` for Appendixes (annexes of annexes). These styles must be provided for the sections to be processed correctly: bibliographic references will not be recognised as such, for example, without the `[bibliography]` style applied:
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 [bibliography]
 == Bibliography
@@ -231,7 +231,7 @@ TIP: Abstracts are not rendered in ISO and GB standards, but they are still inco
 
 Terms and Definitions sections follow a strict grammar in their Metanorma-ISO markup, as ISO/IEC DIR 2 prescribes their structure so strictly. The following illustrates the complete structure of a term entry; the Rice document splits up these features among several terms.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 [[paddy]]
 === paddy
@@ -262,7 +262,7 @@ All bibliographic entries must be given as unordered lists. Normative references
 
 For ISO and related standards, the reference is given as a bibliographic anchor (in triple brackets), consisting of an internal identifier followed by the ISO identifier. The internal identifier can be used in cross-references (citations). The date may be added to the ISO identifier, as required by ISO/IEC DIR 2; standards under preparation have their date given as `--`, and should be accompanied by a footnote detailing the status of the standard.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 Grade 3 quality as specified in <<ISO3696>>.
 
@@ -275,7 +275,7 @@ Grade 3 quality as specified in <<ISO3696>>.
 
 Non-ISO references under normative references are still cited by document identifier. Under informative references, non-ISO documents are both displayed and cited with reference numbers in brackets. In Metanorma-ISO, the cross-reference is a normal anchor identifier; the bracket numbering for informative references is automatic.
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 For details concerning the use of the Dumas method, see References <<ref10>> and <<ref16>>.
 
@@ -288,7 +288,7 @@ For details concerning the use of the Dumas method, see References <<ref10>> and
 
 In cross-references, bibliographic localities (e.g. page numbers, clause numbers) can be added directly after the comma, as part of the cross-reference text. Bibliographic localities are expressed as a sequence of lowercase locality type, then an equal sign, then by the locality number or range:
 
-[source,asciidoctor]
+[source,asciidoc]
 --
 <<ISO7301,clause=3.1>>
 
