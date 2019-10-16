@@ -336,7 +336,9 @@
   </define>
   <define name="tname">
     <element name="name">
-      <text/>
+      <oneOrMore>
+        <ref name="PureTextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="tclass">

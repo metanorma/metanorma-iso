@@ -919,6 +919,7 @@
     <choice>
       <value>main</value>
       <value>alt</value>
+      <text/>
     </choice>
   </define>
   <define name="seriesorganization">
