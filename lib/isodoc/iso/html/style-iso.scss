@@ -732,7 +732,7 @@ font-size: 1.1em;
 3.10 Footnotes
 */
 
-a.footnote-number, a.TableFootnoteRef {
+a.footnote-number, a.TableFootnoteRef, span.TableFootnoteRef {
 vertical-align: super;
 font-size: 0.8em;
 }
