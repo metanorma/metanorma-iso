@@ -718,12 +718,16 @@ div.example {
 }
 */
 p.example, li.example, div.example, td.example
-	{	margin:0in;
-	margin-bottom:12.0pt;
+	{	
 	mso-pagination:none;
         tab-stops:70.9pt;
 	font-size:10.0pt;
 	font-family:$bodyfont;}
+
+div.example, td.example {
+   margin:0in;
+        margin-bottom:12.0pt;
+}
 
 td.example p.MsoListParagraph {
   font-size: 10.0pt;
