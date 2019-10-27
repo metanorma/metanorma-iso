@@ -475,7 +475,7 @@ RSpec.describe IsoDoc do
                <div class="figure"><a name="samplecode" id="samplecode"></a>
          <p class="MsoNormal">Hello</p>
          <p class="MsoNormal">Key</p>
-         <p class="MsoNormal"><b>Key</b></p><div class="figdl" style="text-align:center;page-break-after:avoid;"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
+         <p class="MsoNormal"><b>Key</b></p><div class="figdl" style="page-break-after:avoid;"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
          <p class="FigureTitle" style="text-align:center;">Figure A.1</p></div>
              </div>
            </div>
