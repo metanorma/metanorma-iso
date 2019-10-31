@@ -620,7 +620,7 @@ font-family: $monospacefont;
 font-variant-ligatures: none;
 }
 
-.figure, .Sourcecode {
+.figure, .Sourcecode, .pseudocode {
 background-color: #f7f7f7;
 line-height: 1.6em;
 padding: 1.5em;
@@ -685,7 +685,7 @@ margin-top:0;
 }
 
 
-.example .Sourcecode {
+.example .Sourcecode, .example .pseudocode {
       background: none;
 }
 

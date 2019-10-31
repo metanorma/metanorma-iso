@@ -341,11 +341,6 @@
       </oneOrMore>
     </element>
   </define>
-  <define name="tclass">
-    <element name="name">
-      <text/>
-    </element>
-  </define>
   <define name="thead">
     <element name="thead">
       <ref name="tr"/>
@@ -515,19 +510,22 @@
         <attribute name="subsequence"/>
       </optional>
       <optional>
+        <attribute name="class"/>
+      </optional>
+      <optional>
         <ref name="source"/>
       </optional>
       <optional>
         <ref name="tname"/>
-      </optional>
-      <optional>
-        <ref name="tclass"/>
       </optional>
       <choice>
         <ref name="image"/>
         <ref name="video"/>
         <ref name="audio"/>
         <ref name="pre"/>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </oneOrMore>
         <zeroOrMore>
           <ref name="figure"/>
         </zeroOrMore>
