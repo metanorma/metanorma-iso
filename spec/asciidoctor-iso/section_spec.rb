@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes sections" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       .Foreword
 
@@ -123,7 +123,7 @@ standardization at the following addresses:</p>
   end
 
   it "processes sections with title attributes" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       .Foreword
 
@@ -212,49 +212,59 @@ standardization at the following addresses:</p>
          <preferred>Term1</preferred>
        </term>
        </terms>
-       <clause id="_" obligation="normative"><title>Terms and definitions</title><terms id="_" obligation="normative">
-         <title>Normal Terms</title>
-         <term id="_">
-         <preferred>Term2</preferred>
-       </term>
-       </clause>
-       <definitions id="_">
-       <title>Σύμβολα και Συντομογραφίες</title>
-       </definitions>
-        </terms>
-       <definitions id="_">
-       <title>Σύμβολα και Συντομογραφίες</title>
-       </definitions>
-       <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="_" inline-header="false" obligation="normative">
-         <title>Introduction</title>
-       </clause>
-       <clause id="_" inline-header="false" obligation="normative">
-         <title>Clause 4.2</title>
-       </clause></clause>
-     
-       </sections><annex id="_" inline-header="false" obligation="normative">
-         <title>Annex</title>
-         <clause id="_" inline-header="false" obligation="normative">
-         <title>Annex A.1</title>
-       </clause>
-       <appendix id="_" inline-header="false" obligation="normative">
-         <title>Appendx 1</title>
-       </appendix></annex><bibliography><references id="_" obligation="informative">
-         <title>Normative References</title>
-         <p>There are no normative references in this document.</p>
-       </references><clause id="_" obligation="informative">
-         <title>Bibliography</title>
-         <references id="_" obligation="informative">
-         <title>Bibliography Subsection</title>
-       </references>
-       </clause>
-       </bibliography>
+        <clause id='_' obligation='normative'>
+             <title>Terms and definitions</title>
+             <terms id='_' obligation='normative'>
+               <title>Normal Terms</title>
+               <term id='_'>
+                 <preferred>Term2</preferred>
+               </term>
+             </terms>
+             <definitions id='_'>
+               <title>Σύμβολα και Συντομογραφίες</title>
+             </definitions>
+           </clause>
+           <definitions id='_'>
+             <title>Σύμβολα και Συντομογραφίες</title>
+           </definitions>
+           <clause id='_' inline-header='false' obligation='normative'>
+             <title>Clause 4</title>
+             <clause id='_' inline-header='false' obligation='normative'>
+               <title>Introduction</title>
+             </clause>
+             <clause id='_' inline-header='false' obligation='normative'>
+               <title>Clause 4.2</title>
+             </clause>
+           </clause>
+         </sections>
+         <annex id='_' inline-header='false' obligation='normative'>
+           <title>Annex</title>
+           <clause id='_' inline-header='false' obligation='normative'>
+             <title>Annex A.1</title>
+           </clause>
+           <appendix id='_' inline-header='false' obligation='normative'>
+             <title>Appendx 1</title>
+           </appendix>
+         </annex>
+         <bibliography>
+           <references id='_' obligation='informative'>
+             <title>Normative References</title>
+             <p>There are no normative references in this document.</p>
+           </references>
+           <clause id='_' obligation='informative'>
+             <title>Bibliography</title>
+             <references id='_' obligation='informative'>
+               <title>Bibliography Subsection</title>
+             </references>
+           </clause>
+         </bibliography>
        </iso-standard>
+
     OUTPUT
   end
 
   it "processes section obligations" do
-     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [obligation=informative]
       == Clause 1
@@ -285,7 +295,7 @@ standardization at the following addresses:</p>
   end
 
     it "processes inline headers" do
-     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       == Clause 1
 
@@ -316,7 +326,7 @@ standardization at the following addresses:</p>
     end
 
   it "processes blank headers" do
-     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       == Clause 1
 
@@ -336,7 +346,7 @@ standardization at the following addresses:</p>
   end
 
  it "processes terms & definitions with external source" do
-     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
 
       Foreword
@@ -370,13 +380,13 @@ standardization at the following addresses:</p>
   <preferred>Term1</preferred>
 </term>
        </terms></sections>
-       </standard-document>
+       </iso-standard>
 
      OUTPUT
     end
 
           it "processes empty terms & definitions" do
-     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
 
       Foreword
@@ -403,13 +413,13 @@ standardization at the following addresses:</p>
 </p> </li> </ul>
 
        </terms></sections>
-       </iso-document>
+       </iso-standard>
 
      OUTPUT
     end
 
            it "processes empty terms & definitions with external source" do
-     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
 
       Foreword
@@ -441,7 +451,7 @@ standardization at the following addresses:</p>
 
 
        </terms></sections>
-       </iso-document>
+       </iso-standard>
 
      OUTPUT
     end

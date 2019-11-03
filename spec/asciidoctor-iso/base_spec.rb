@@ -11,14 +11,14 @@ RSpec.describe Asciidoctor::ISO do
     #FileUtils.cd "spec/examples"
     #Asciidoctor.convert_file "rice.adoc", {:attributes=>{"backend"=>"iso"}, :safe=>0, :header_footer=>true, :requires=>["metanorma-iso"], :failure_level=>4, :mkdirs=>true, :to_file=>nil}
     #FileUtils.cd "../.."
-    #expect(File.exist?("spec/examples/rice.xml")).to be true
-    #expect(File.exist?("spec/examples/rice.doc")).to be true
-    #expect(File.exist?("spec/examples/rice.html")).to be true
-    #expect(File.exist?("spec/examples/rice_alt.html")).to be true
+    #expect(File.exist?("spec/examples/rice.xml"))).to be true
+    #expect(File.exist?("spec/examples/rice.doc"))).to be true
+    #expect(File.exist?("spec/examples/rice.html"))).to be true
+    #expect(File.exist?("spec/examples/rice_alt.html"))).to be true
   #end
 
   it "processes a blank document" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     #{ASCIIDOC_BLANK_HDR}
     INPUT
     #{BLANK_HDR}
@@ -29,7 +29,7 @@ RSpec.describe Asciidoctor::ISO do
 
   it "converts a blank document" do
     FileUtils.rm_f "test.doc"
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -45,7 +45,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes default metadata" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -168,7 +168,7 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "processes complex metadata" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :docfile: test.adoc
@@ -280,7 +280,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "defaults substage" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -342,7 +342,7 @@ OUTPUT
     end
 
         it "defaults substage for stage 60" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -404,7 +404,7 @@ OUTPUT
     end
 
   it "populates metadata for PRF" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc

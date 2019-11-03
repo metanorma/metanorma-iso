@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "processes IsoXML terms" do
-    expect(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <sections>
     <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
@@ -91,7 +91,7 @@ OUTPUT
   end
   
   it "processes IsoXML terms (Word)" do
-    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(%r{^.*<p class="zzSTDTitle1"/>}m, "")).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(%r{^.*<p class="zzSTDTitle1"/>}m, "").sub(%r{</div>\s*<br.*$}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <sections>
     <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
@@ -171,11 +171,6 @@ OUTPUT
        <p>[TERMREF]
          <a href="#ISO7301">ISO 7301:2011, 3.1</a>
        [/TERMREF]</p></div>
-           </div>
-           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-           <div class="colophon"/>
-         </body>
-       </html>
 
 OUTPUT
   end

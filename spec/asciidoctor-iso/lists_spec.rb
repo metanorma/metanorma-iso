@@ -16,7 +16,7 @@ RSpec.describe Asciidoctor::ISO do
       List F:: List G
 
     INPUT
-    expect(strip_guid(output)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(<<~"OUTPUT")
             #{BLANK_HDR}
        <sections>
          <ul id="_">
@@ -98,7 +98,7 @@ RSpec.describe Asciidoctor::ISO do
       Note 3.
 
     INPUT
-    expect(strip_guid(output)).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(<<~"OUTPUT")
             #{BLANK_HDR}
        <sections><ul id="id">
          <li>
@@ -165,7 +165,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
     it "anchors lists and list items" do
-     expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [[id1]]
       * [[id2]] List item
