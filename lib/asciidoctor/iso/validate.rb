@@ -245,6 +245,19 @@ module Asciidoctor
         see_erefs_validate(doc.root)
         locality_erefs_validate(doc.root)
         bibdata_validate(doc.root)
+        bibitem_validate(doc.root)
+      end
+
+      def bibitem_validate(xmldoc)
+        xmldoc.xpath("//bibitem[date/on = '--']").each do |b|
+          found = false
+          b.xpath("./note").each do |n|
+            found = true if /^ISO DATE:/.match n.text
+          end
+          found or
+            warn "Reference #{b&.at("./@id")&.text} does not have an "\
+          "associated footnote indicating unpublished status"
+        end
       end
 
       def validate(doc)
