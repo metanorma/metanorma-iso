@@ -970,4 +970,16 @@ it "Warn if term citation in Terms & Definitions not preceded with italicised te
   The definition of a term (<<term>>) is a part of the specialized vocabulary of a particular field
   INPUT
 end
+
+it "Warn if an undated reference has no associated footnote" do
+    expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{Reference ISO8 does not have an associated footnote indicating unpublished status}).to_stderr
+  #{VALIDATING_BLANK_HDR}
+  
+  [bibliography]
+  == Bibliography
+  * [[[ISO8,ISO 8:--]]], _Title_
+  INPUT
+end
+
+
 end
