@@ -36,8 +36,7 @@ style='mso-no-proof:yes'>{{ agency }}/{{ editorialgroup | join: "/" }}</span></p
 <p class="MsoNormal" align="left" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;font-size:16.0pt'>
 <span class="title">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &mdash; {% endif %}</span><span class="subtitle">{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &mdash;{% endif %}</span>
   {% if docsubtitlepart %}
-</p><p class="MsoNormal" align="left" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;font-size:16.0pt'>
-<br/>
+</p><p class="MsoNormal" align="left" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>
 {% if docsubtitlepartlabel %}<span class="partlabel">{{ docsubtitlepartlabel }}: </span><br/>{% endif %}
 <span class="part">{{ docsubtitlepart }}</span>
 {% endif %}
