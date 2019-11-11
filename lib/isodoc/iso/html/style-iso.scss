@@ -300,6 +300,11 @@ p.Terms {
     margin-top: 0em;
 }
 
+/* already added to isodoc/base */
+strong, b {
+    font-weight: bold;
+}
+
 /* Navigation*/
 
 @media screen and (min-width: 768px) {
