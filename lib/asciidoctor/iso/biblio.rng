@@ -33,6 +33,9 @@
       <param name="pattern">([\+\-]?\d{4})((-?)((0[1-9]|1[0-2])((-?)([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6]))))?</param>
     </data>
   </define>
+  <start>
+    <ref name="relaton_collection"/>
+  </start>
   <define name="status">
     <element name="status">
       <ref name="stage"/>
