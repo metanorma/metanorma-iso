@@ -58,6 +58,8 @@ module Asciidoctor
       end
 
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
+      OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or "\
+        "@type = 'ISBN'".freeze
 
       def pub_class(bib)
         return 1 if bib.at("#{PUBLISHER}[abbreviation = 'ISO']")
@@ -66,8 +68,7 @@ module Asciidoctor
         return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
         return 2 if bib.at("#{PUBLISHER}[name = 'International "\
                            "Electrotechnical Commission']")
-        return 3 if bib.at("./docidentifier[@type][not(@type = 'DOI' or "\
-                           "@type = 'metanorma' or @type = 'ISSN' or @type = 'ISBN')]")
+        return 3 if bib.at("./docidentifier[@type][not(#{OTHERIDS})]")
         4
       end
 
@@ -87,14 +88,40 @@ module Asciidoctor
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
         num = bib&.at("./docnumber")&.text
-        id = bib&.at("./docidentifier[not(@type = 'DOI' or "\
-                           "@type = 'metanorma' or @type = 'ISSN' or @type = 'ISBN')]")
+        id = bib&.at("./docidentifier[not(#{OTHERIDS})]")
         metaid = bib&.at("./docidentifier[@type = 'metanorma']")&.text
         abbrid = metaid unless /^\[\d+\]$/.match(metaid)
         type = id['type'] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
-        "#{pubclass} :: #{type} :: #{num.nil? ? abbrid : sprintf("%09d", num.to_i)} :: #{id&.text} :: #{title}"
+        "#{pubclass} :: #{type} :: "\
+          "#{num.nil? ? abbrid : sprintf("%09d", num.to_i)} :: "\
+          "#{id&.text} :: #{title}"
+      end
+
+      def boilerplate_cleanup(xmldoc)
+        super
+        initial_boilerplace(xmldoc)
+      end
+
+      def initial_boilerplace(x)
+        return if x.at("//boilerplate")
+        preface = x.at("//preface") || x.at("//sections") || x.at("//annex") ||
+          x.at("//references") || return
+        preface.previous = boilerplate(x)
+      end
+
+      def boilerplate(x_orig)
+        x = x_orig.dup
+        # TODO variable
+        x.root.add_namespace(nil, "http://riboseinc.com/isoxml")
+        x = Nokogiri::XML(x.to_xml)
+        conv = IsoDoc::Iso::HtmlConvert.new({})
+        conv.metadata_init("en", "Latn", {})
+        conv.info(x, nil)
+        file = @boilerplateauthority ? "#{@localdir}/#{@boilerplateauthority}" :
+          File.join(File.dirname(__FILE__), "iso_intro.xml")
+          conv.populate_template((File.read(file, encoding: "UTF-8")), nil)
       end
     end
   end

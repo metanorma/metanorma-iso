@@ -95,6 +95,13 @@ VALIDATING_BLANK_HDR = <<~"HDR"
 
 HDR
 
+BOILERPLATE =
+  HTMLEntities.new.decode(
+  File.read(File.join(File.dirname(__FILE__), "..", "lib", "asciidoctor", "iso", "iso_intro.xml"), encoding: "utf-8").
+  gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s).
+  gsub(/\{% if unpublished %\}.*\{% endif %\}/m, ""))
+
+
 BLANK_HDR = <<~"HDR"
 <?xml version="1.0" encoding="UTF-8"?>
 <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -137,6 +144,7 @@ BLANK_HDR = <<~"HDR"
   </editorialgroup>
   </ext>
 </bibdata>
+#{BOILERPLATE}
 HDR
 
 TERM_BOILERPLATE = <<~END

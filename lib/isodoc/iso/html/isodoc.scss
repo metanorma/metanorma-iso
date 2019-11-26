@@ -379,15 +379,12 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	mso-style-unhide:no;
 	mso-style-next:Normal;
 	margin-top:0cm;
-	margin-right:14.2pt;
 	margin-bottom:12.0pt;
-	margin-left:14.2pt;
 	text-align:justify;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt 25.7pt 481.15pt;
 	border:none;
-	mso-border-alt:solid blue .5pt;
 	padding:0cm;
 	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
 	font-size:11.0pt;
@@ -395,6 +392,57 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	mso-fareast-font-family:$bodyfont;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
+p.zzCopyright1
+        {mso-style-name:zzCopyright;
+        mso-style-noshow:yes;
+        mso-style-unhide:no;
+        mso-style-next:Normal;
+        margin-top:0cm;
+        margin-bottom:12.0pt;
+        text-align:justify;
+        line-height:12.0pt;
+        mso-pagination:widow-orphan;
+        tab-stops:20.15pt 25.7pt 481.15pt;
+        border:none;
+        padding:0cm;
+        mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
+        font-size:10.0pt;
+        font-family:$bodyfont;
+        mso-fareast-font-family:$bodyfont;
+        mso-bidi-font-family:$bodyfont;
+        mso-ansi-language:EN-GB;}
+p.zzAddress {
+  margin:0cm;
+  margin-bottom:.0001pt;
+  margin-left:20.15pt;
+mso-layout-grid-align:none;
+text-autospace:none;
+padding:0cm;
+mso-padding-alt:0cm 4.0pt 0cm 4.0pt;
+font-size:10.0pt;
+font-family:$bodyfont;
+}
+p.zzWarning {
+  border:none;
+  mso-border-alt:solid windowtext .5pt;
+padding:0cm;
+mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
+font-size:10.0pt;
+mso-bidi-font-weight:bold;
+font-family:$bodyfont;
+}
+p.zzWarningHdr {
+  margin-bottom:6.0pt;
+  border:none;
+  mso-border-alt:solid windowtext .5pt;
+padding:0cm;
+mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
+font-size:10.0pt;
+mso-bidi-font-weight:bold;
+font-family:$bodyfont;
+text-align:center;
+font-weight:bold;
+}
 p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
 	{mso-style-name:zzSTDTitle;
 	mso-style-noshow:yes;

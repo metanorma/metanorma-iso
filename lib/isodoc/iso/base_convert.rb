@@ -58,6 +58,14 @@ module IsoDoc
       def error_parse(node, out)
         case node.name
         when "appendix" then clause_parse(node, out)
+        when "copyright-statement"
+          out.div **{class: "copyright"} do |div|
+            node.children.each { |n| parse(n, div) }
+          end
+        when "license-statement"
+          out.div **{class: "license"} do |div|
+            node.children.each { |n| parse(n, out) }
+          end
         else
           super
         end
@@ -125,15 +133,15 @@ module IsoDoc
       end
 
       def example_span_label(node, div, name)
-      n = get_anchors[node["id"]]
-      div.span **{ class: "example_label" } do |p|
-        lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @example_lbl :
-          l10n("#{@example_lbl} #{n[:label]}")
-        p << lbl
-        name and !lbl.nil? and p << "&nbsp;&mdash; "
-        name and name.children.each { |n| parse(n, div) }
+        n = get_anchors[node["id"]]
+        div.span **{ class: "example_label" } do |p|
+          lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @example_lbl :
+            l10n("#{@example_lbl} #{n[:label]}")
+          p << lbl
+          name and !lbl.nil? and p << "&nbsp;&mdash; "
+          name and name.children.each { |n| parse(n, div) }
+        end
       end
-    end
 
       def example_p_parse(node, div)
         name = node&.at(ns("./name"))&.remove
@@ -188,6 +196,21 @@ module IsoDoc
 
       def clausedelim
         ""
+      end
+
+      def boilerplate(node, out)
+        boilerplate = node.at(ns("//boilerplate")) or return
+        out.div **{class: "authority"} do |s|
+          boilerplate.children.each do |n|
+            if n.name == "title"
+              s.h1 do |h|
+                n.children.each { |nn| parse(nn, h) }
+              end
+            else
+              parse(n, s)
+            end
+          end
+        end
       end
     end
   end

@@ -1,5 +1,6 @@
 <boilerplate>
   <copyright-statement>
+    <clause>
     <p id="authority1">
     &copy; {{ agency }} {{ docyear }}, Published in Switzerland
   </p>
@@ -13,8 +14,8 @@ without prior written permission. Permission can be requested from either ISO
 at the address below or ISO's member body in the country of the requester.
   </p>
 
-  <p id="authority3">ISO copyright office</p>
-  <p id="authority4" align="left">
+  <p id="authority3" align="left">
+    ISO copyright office<br/>
     Ch. de Blandonnet 8 &#x2022; CP 401<br/>
     CH-1214 Vernier, Geneva, Switzerland<br/>
     Tel.&nbsp;&nbsp;+ 41 22 749 01 11<br/>
@@ -22,14 +23,13 @@ at the address below or ISO's member body in the country of the requester.
     copyright@iso.org<br/>
     www.iso.org
   </p>
-</div>
-
+</clause>
   </copyright-statement>
 
   {% if unpublished %}
   <license-statement>
-
-<p>Warning for WDs and CDs</p>
+    <clause>
+<title>Warning for WDs and CDs</title>
 
 <p>This
 document is not an ISO International Standard. It is distributed for review and
@@ -40,7 +40,7 @@ an International Standard.</p>
 of this draft are invited to submit, with their comments, notification of any
 relevant patent rights of which they are aware and to provide supporting
 documentation.</p>
-
+</clause>
   </license-statement>
 {% endif %}
 </boilerplate>
