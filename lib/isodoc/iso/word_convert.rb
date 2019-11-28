@@ -12,15 +12,18 @@ module IsoDoc
 
       def default_fonts(options)
         {
-          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : '"Cambria",serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' : '"Cambria",serif'),
+          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' :
+                     '"Cambria",serif'),
+          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
+                       '"Cambria",serif'),
           monospacefont: '"Courier New",monospace',
         }
       end
 
       def default_file_locations(options)
         {
-          htmlstylesheet: options[:alt] ? html_doc_path("style-human.scss") : html_doc_path("style-iso.scss"),
+          htmlstylesheet: (options[:alt] ? html_doc_path("style-human.scss") :
+                           html_doc_path("style-iso.scss")),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),
           scripts: html_doc_path("scripts.html"),
@@ -44,17 +47,29 @@ module IsoDoc
         end
       end
 
+      def make_body2(body, docxml)
+        body.div **{ class: "WordSection2" } do |div2|
+          boilerplate docxml, div2
+          abstract docxml, div2
+          foreword docxml, div2
+          introduction docxml, div2
+          div2.p { |p| p << "&nbsp;" } # placeholder
+        end
+        section_break(body)
+      end
+
       def colophon(body, docxml)
         stage =  @meta.get[:stage_int]
         return if !stage.nil? && stage < 60
-        body.br **{ clear: "all", style: "page-break-before:left;mso-break-type:section-break" }
+        body.br **{ clear: "all", style: "page-break-before:left;"\
+                    "mso-break-type:section-break" }
         body.div **{ class: "colophon" } do |div|
         end
       end
 
-      def figure_cleanup(docxml)
+      def figure_cleanup(xml)
         super
-        docxml.xpath("//div[@class = 'figure']//table[@class = 'dl']").each do |t|
+        xml.xpath("//div[@class = 'figure']//table[@class = 'dl']").each do |t|
           t["class"] = "figdl"
           d = t.add_previous_sibling("<div class='figdl'/>")
           t.parent = d.first
@@ -75,6 +90,41 @@ module IsoDoc
         word_annex_cleanup1(docxml, 4)
         word_annex_cleanup1(docxml, 5)
         word_annex_cleanup1(docxml, 6)
+      end
+
+      def authority_hdr_cleanup(docxml)
+        docxml&.xpath("//div[@class = 'license']").each do |d|
+          d.xpath(".//h1").each do |p|
+            p.name = "p"
+            p["class"] = "zzWarningHdr"
+          end
+        end
+        docxml&.xpath("//div[@class = 'copyright']").each do |d|
+          d.xpath(".//h1").each do |p|
+            p.name = "p"
+            p["class"] = "zzCopyrightHdr"
+          end
+        end
+      end
+
+      def authority_cleanup(docxml)
+        insert = docxml.at("//div[@id = 'license']")
+        auth = docxml&.at("//div[@class = 'license']")&.remove
+        auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzWarning" }
+        auth and insert.children = auth
+        insert = docxml.at("//div[@id = 'copyright']")
+        auth = docxml&.at("//div[@class = 'copyright']")&.remove
+        auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzCopyright" }
+        auth&.xpath(".//p[@id = 'authority2']")&.each { |p| p["class"] = "zzCopyright1" }
+        auth&.xpath(".//p[@id = 'authority3']")&.each { |p| p["class"] = "zzAddress" }
+        auth and insert.children = auth
+      end
+
+      def word_cleanup(docxml)
+        authority_hdr_cleanup(docxml)
+        super
+        authority_cleanup(docxml)
+        docxml
       end
 
       include BaseConvert

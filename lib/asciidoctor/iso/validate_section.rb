@@ -164,8 +164,8 @@ module Asciidoctor
       end
 
       ASSETS_TO_STYLE =
-        "//termsource | //formula | //termnote | //p | //li[not(p)] | "\
-        "//dt | //dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
+        "//termsource | //formula | //termnote | //p[not(ancestor::boilerplate)] | "\
+        "//li[not(p)] | //dt | //dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
 
       NORM_BIBITEMS =
         "//references[title = 'Normative References']/bibitem".freeze

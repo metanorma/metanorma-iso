@@ -184,7 +184,7 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-               <clause inline-header="false" obligation="normative"><title>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
+               <clause id="A" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
 
          <title>Introduction<bookmark id="Q"/> to this<fn reference="1">
   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
@@ -203,7 +203,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8").sub(/^.*An empty word intro page\./m, '').
       sub(%r{</div>.*$}m, "</div>")
 
-    expect(("<div>" + word.gsub(/_Toc\d\d+/, "_Toc") )).to be_equivalent_to xmlpp(<<~'OUTPUT')
+    expect(xmlpp("<div>" + word.gsub(/_Toc\d\d+/, "_Toc") )).to be_equivalent_to xmlpp(<<~'OUTPUT')
            <div>
        <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes">&#xA0;</span>TOC
          \o "1-2" \h \z \u <span style="mso-element:field-separator"></span></span>
@@ -262,7 +262,7 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-               <clause inline-header="false" obligation="normative"><title>Clause 4</title><fn reference="3">
+               <clause id="A" inline-header="false" obligation="normative"><title>Clause 4</title><fn reference="3">
   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
 </fn><clause id="N" inline-header="false" obligation="normative">
 
@@ -284,7 +284,7 @@ RSpec.describe IsoDoc do
     expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
            <main xmlns:epub="epub" class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
              <p class="zzSTDTitle1"></p>
-             <div>
+             <div id="A">
                <h1>1&#xA0; Clause 4</h1>
                <a rel="footnote" href="#fn:3" epub:type="footnote" id="fnref:1">
                  <sup>1</sup>
@@ -478,6 +478,105 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
+      it "processes boilerplate" do
+     FileUtils.rm_f "test.doc"
+    FileUtils.rm_f "test.html"
+    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata type="standard">
+        <status><stage>30</stage></status>
+        </bibdata>
+    <boilerplate>
+  <copyright-statement>
+    <clause>
+    <p id="authority1">
+    © ISO 2019, Published in Switzerland
+  </p>
 
+  <p id="authority2">
+I am the Walrus.
+  </p>
+
+  <p id="authority3" align="left">
+    ISO copyright office<br/>
+    Ch. de Blandonnet 8 ?~@? CP 401<br/>
+    CH-1214 Vernier, Geneva, Switzerland<br/>
+    Tel. + 41 22 749 01 11<br/>
+    Fax + 41 22 749 09 47<br/>
+    copyright@iso.org<br/>
+    www.iso.org
+  </p>
+</clause>
+  </copyright-statement>
+
+
+  <license-statement>
+    <clause>
+<title>Warning for Stuff</title>
+
+<p>This
+document is not an ISO International Standard. It is distributed for review and
+comment. It is subject to change without notice and may not be referred to as
+an International Standard.</p>
+
+<p>Recipients
+of this draft are invited to submit, with their comments, notification of any
+relevant patent rights of which they are aware and to provide supporting
+documentation.</p>
+</clause>
+  </license-statement>
+
+</boilerplate>
+</iso-standard>
+    INPUT
+    word = File.read("test.html", encoding: "UTF-8")
+    expect(xmlpp(word)).to include "<h1 class='IntroTitle'>Warning for Stuff</h1>"
+    expect(xmlpp(word)).to include "I am the Walrus."
+end
+
+  it "processes boilerplate (Word)" do
+     FileUtils.rm_f "test.doc"
+    FileUtils.rm_f "test.html"
+    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata type="standard">
+        <status><stage>30</stage></status>
+        </bibdata>
+    <boilerplate>
+  <copyright-statement>
+    <clause>
+    <p id="authority1">Published in Elbonia</p>
+
+  <p id="authority2">No soup for you</p>
+
+  <p id="authority3" align="left">Elbonia 5000</p>
+</clause>
+  </copyright-statement>
+
+
+  <license-statement>
+    <clause>
+<title>Warning for Stuff</title>
+
+<p>I am the Walrus</p>
+</clause>
+  </license-statement>
+
+</boilerplate>
+</iso-standard>
+    INPUT
+    word = File.read("test.doc", encoding: "UTF-8")
+    expect(xmlpp(word.sub(%r{^.*<p class="zzCopyright">}m, '<p class="zzCopyright">').sub(%r{</p>.*$}m, '</p>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+           <p class="zzCopyright"><a name="authority1" id="authority1"></a>Published in Elbonia</p>
+           OUTPUT
+    expect(xmlpp(word.sub(%r{^.*<p class="zzCopyright1">}m, '<p class="zzCopyright1">').sub(%r{</p>.*$}m, '</p>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+           <p class="zzCopyright1"><a name="authority2" id="authority2"></a>No soup for you</p>
+           OUTPUT
+    expect(xmlpp(word.sub(%r{^.*<p align="left" style="text-align:left" class="zzAddress">}m, '<p align="left" style="text-align:left" class="zzAddress">').sub(%r{</p>.*$}m, '</p>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+           <p align="left" style="text-align:left" class="zzAddress"><a name="authority3" id="authority3"></a>Elbonia 5000</p>
+           OUTPUT
+    expect(word).to include '<p class="zzWarning">I am the Walrus</p>'
+    expect(word).to include '<p class="zzWarning">I am the Walrus</p>'
+end
 
 end
