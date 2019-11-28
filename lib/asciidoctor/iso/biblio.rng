@@ -34,7 +34,7 @@
     </data>
   </define>
   <start>
-    <ref name="relaton_collection"/>
+    <ref name="bibitem"/>
   </start>
   <define name="status">
     <element name="status">
