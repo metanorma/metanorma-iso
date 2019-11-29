@@ -101,10 +101,10 @@ module Asciidoctor
 
       def boilerplate_cleanup(xmldoc)
         super
-        initial_boilerplace(xmldoc)
+        initial_boilerplate(xmldoc)
       end
 
-      def initial_boilerplace(x)
+      def initial_boilerplate(x)
         return if x.at("//boilerplate")
         preface = x.at("//preface") || x.at("//sections") || x.at("//annex") ||
           x.at("//references") || return
