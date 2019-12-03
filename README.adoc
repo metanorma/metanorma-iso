@@ -73,3 +73,8 @@ The metanorma-cli gem is the command-line interface for the Metanorma tool suite
 
 See https://www.metanorma.com/author/iso/[The ISO flavor of Metanorma].
 
+== Examples
+
+* Example documents are avalable at the https://github.com/metanorma/mn-samples-iso[mn-samples-iso] repository.
+* Document templates are available at the https://github.com/metanorma/mn-templates-iso[mn-templates-iso] repository.
+
