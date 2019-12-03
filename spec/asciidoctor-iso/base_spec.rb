@@ -100,12 +100,8 @@ RSpec.describe Asciidoctor::ISO do
    <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
    <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
          <docidentifier type="iso">ISO/PreNWIP3 1000-1</docidentifier>
+         <docidentifier type='iso-with-lang'>ISO/PreNWIP3 1000-1 (E)</docidentifier>
 <docnumber>1000</docnumber>
-         <edition>2</edition>
-<version>
-         <revision-date>2000-01-01</revision-date>
-         <draft>0.3.4</draft>
-       </version>
          <contributor>
            <role type="author"/>
            <organization>
@@ -120,6 +116,11 @@ RSpec.describe Asciidoctor::ISO do
              <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
+         <edition>2</edition>
+<version>
+         <revision-date>2000-01-01</revision-date>
+         <draft>0.3.4</draft>
+       </version>
          <language>en</language>
          <script>Latn</script>
          <status>
@@ -187,6 +188,7 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="http://riboseinc.com/isoxml">
        <bibdata type="standard">
          <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
+         <docidentifier type='iso-with-lang'>ISO/IEC/IETF 1000-1-1:2001 (X)</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
          <docidentifier type="iso-tc">2003</docidentifier>
          <docnumber>1000</docnumber>
@@ -289,10 +291,12 @@ RSpec.describe Asciidoctor::ISO do
       :no-isobib:
       :docnumber: 1000
       :docstage: 50
+      :language: fr
     INPUT
     <iso-standard xmlns="http://riboseinc.com/isoxml">
 <bibdata type="standard">
   <docidentifier type="iso">ISO/FDIS 1000</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO/FDIS 1000 (F)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -309,7 +313,7 @@ RSpec.describe Asciidoctor::ISO do
     </organization>
   </contributor>
 
-  <language>en</language>
+  <language>fr</language>
   <script>Latn</script>
   <status>
     <stage>50</stage>
@@ -355,6 +359,7 @@ OUTPUT
 <iso-standard xmlns="http://riboseinc.com/isoxml">
 <bibdata type="standard">
   <docidentifier type="iso">ISO 1000</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO 1000 (E)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -418,6 +423,7 @@ OUTPUT
 <iso-standard xmlns="http://riboseinc.com/isoxml">
 <bibdata type="standard">
   <docidentifier type="iso">ISO/PRF 1000</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO/PRF 1000 (E)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>

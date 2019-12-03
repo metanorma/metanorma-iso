@@ -23,6 +23,18 @@ module Asciidoctor
         dn = add_id_parts(node.attr("docnumber"), part, subpart)
         dn = id_stage_prefix(dn, node)
         xml.docidentifier dn, **attr_code(type: "iso")
+        xml.docidentifier id_langsuffix(dn, node), **attr_code(type: "iso-with-lang")
+      end
+
+      def id_langsuffix(dn, node)
+        lang = node.attr("language") || "en"
+        suffix = case lang
+                 when "en" then "(E)"
+                 when "fr" then "(F)"
+                 else
+                   "(X)"
+                 end
+        "#{dn} #{suffix}"
       end
 
       def metadata_ext(node, xml)

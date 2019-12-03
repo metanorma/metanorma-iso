@@ -52,9 +52,10 @@ module Asciidoctor
         prefix = get_id_prefix(xmldoc)
         id = xmldoc.at("//bibdata/docidentifier[@type = 'iso']") or return
         id.content = id_prefix(prefix, id)
-        id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") or
-          return
-        id.content = id_prefix(prefix, id)
+        id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") and
+          id.content = id_prefix(prefix, id)
+        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso-with-lang']") and
+          id.content = id_prefix(prefix, id)
       end
 
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
