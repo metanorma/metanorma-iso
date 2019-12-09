@@ -14,10 +14,10 @@ module IsoDoc
         {
           bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' :
                      options[:alt] ? '"Lato",sans-serif' : '"Cambria",serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
-                       options[:alt] ? '"Lato",sans-serif' : '"Cambria",serif'),
-          monospacefont: (options[:alt] ?  '"Space Mono",monospace' :
-                          '"Courier New",monospace'),
+        headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
+                     options[:alt] ? '"Lato",sans-serif' : '"Cambria",serif'),
+        monospacefont: (options[:alt] ?  '"Space Mono",monospace' :
+                        '"Courier New",monospace'),
         }
       end
 

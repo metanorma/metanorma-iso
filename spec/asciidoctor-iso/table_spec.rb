@@ -130,14 +130,14 @@ RSpec.describe Asciidoctor::ISO do
       | Husked rice, parboiled | 1,0 | 1,0 | Not applicable | 1,0
       | Milled rice, parboiled | 1,0 | 1,0 | 1,0 | Not applicable
       | Chips | 0,1 | 0,1 | 0,1 | 0,1
-      | HDK | 2,0 footnoteref:[defectsmass,The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.] | 2,0 | 2,0 footnoteref:[defectsmass] | 2,0
+      | HDK | 2,0 footnote:defectsmass[The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.] | 2,0 | 2,0 footnote:defectsmass[] | 2,0
       | Damaged kernels | 4,0 | 3,0 | 4,0 | 3,0
       | Immature and/or malformed kernels | 8,0 | 2,0 | 8,0 | 2,0
-      | Chalky kernels | 5,0 footnoteref:[defectsmass] | 5,0 | Not applicable | Not applicable
-      | Red kernels and red-streaked kernels | 12,0 | 12,0 | 12,0 footnoteref:[defectsmass] | 12,0
-      | Partly gelatinized kernels | Not applicable | Not applicable | 11,0 footnoteref:[defectsmass] | 11,0
+      | Chalky kernels | 5,0 footnote:defectsmass[] | 5,0 | Not applicable | Not applicable
+      | Red kernels and red-streaked kernels | 12,0 | 12,0 | 12,0 footnote:defectsmass[] | 12,0
+      | Partly gelatinized kernels | Not applicable | Not applicable | 11,0 footnote:defectsmass[] | 11,0
       | Pecks | Not applicable | Not applicable | 4,0 | 2,0
-      | Waxy rice | 1,0 footnoteref:[defectsmass] | 1,0 | 1,0 footnoteref:[defectsmass] | 1,0
+      | Waxy rice | 1,0 footnote:defectsmass[] | 1,0 | 1,0 footnote:defectsmass[] | 1,0
       
       5+a| Live insects shall not be present. Dead insects shall be included in extraneous matter.
       |===
