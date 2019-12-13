@@ -278,10 +278,12 @@
   </define>
   <define name="organization">
     <element name="organization">
-      <ref name="orgname"/>
-      <optional>
+      <oneOrMore>
+        <ref name="orgname"/>
+      </oneOrMore>
+      <zeroOrMore>
         <ref name="subdivision"/>
-      </optional>
+      </zeroOrMore>
       <optional>
         <ref name="abbreviation"/>
       </optional>
@@ -357,6 +359,9 @@
   </define>
   <define name="phone">
     <element name="phone">
+      <optional>
+        <attribute name="type"/>
+      </optional>
       <text/>
     </element>
   </define>
@@ -1024,6 +1029,8 @@
       <value>correctedBy</value>
       <value>revises</value>
       <value>revisedBy</value>
+      <value>describes</value>
+      <value>describedBy</value>
     </choice>
   </define>
   <define name="docrelation">

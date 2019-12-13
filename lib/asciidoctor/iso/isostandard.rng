@@ -6,7 +6,9 @@
     </start>
     <define name="organization">
       <element name="organization">
-        <ref name="orgname"/>
+        <oneOrMore>
+          <ref name="orgname"/>
+        </oneOrMore>
         <optional>
           <ref name="abbreviation"/>
         </optional>
