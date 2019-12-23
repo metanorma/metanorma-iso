@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "isodoc", "~> 1.0.0"
   spec.add_dependency "metanorma-standoc", "~> 1.3.0"
 
-  spec.add_development_dependency "bundler"
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
   spec.add_development_dependency "guard", "~> 2.14"
