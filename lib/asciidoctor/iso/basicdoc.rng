@@ -52,9 +52,9 @@
     <optional>
       <ref name="section-title"/>
     </optional>
-    <optional>
+    <zeroOrMore>
       <ref name="BasicBlock"/>
-    </optional>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="note"/>
     </zeroOrMore>
@@ -567,6 +567,7 @@
       <ref name="pagebreak"/>
       <ref name="bookmark"/>
       <ref name="image"/>
+      <ref name="index"/>
     </choice>
   </define>
   <define name="PureTextElement">
@@ -689,6 +690,17 @@
   <define name="pagebreak">
     <element name="pagebreak">
       <empty/>
+    </element>
+  </define>
+  <define name="index">
+    <element name="index">
+      <attribute name="primary"/>
+      <optional>
+        <attribute name="secondary"/>
+      </optional>
+      <optional>
+        <attribute name="tertiary"/>
+      </optional>
     </element>
   </define>
   <!-- bare ID element, used for referencing arbitrary spans of text -->

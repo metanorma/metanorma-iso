@@ -76,10 +76,12 @@
     <define name="sections">
       <element name="sections">
         <ref name="clause"/>
-        <choice>
-          <ref name="term-clause"/>
-          <ref name="terms"/>
-        </choice>
+        <optional>
+          <choice>
+            <ref name="term-clause"/>
+            <ref name="terms"/>
+          </choice>
+        </optional>
         <optional>
           <ref name="definitions"/>
         </optional>
@@ -397,6 +399,7 @@
         </optional>
         <choice>
           <ref name="image"/>
+          <ref name="pre"/>
           <oneOrMore>
             <ref name="subfigure"/>
           </oneOrMore>

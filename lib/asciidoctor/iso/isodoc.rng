@@ -207,9 +207,9 @@
     </optional>
     <choice>
       <group>
-        <optional>
+        <zeroOrMore>
           <ref name="BasicBlock"/>
-        </optional>
+        </zeroOrMore>
         <zeroOrMore>
           <ref name="note"/>
         </zeroOrMore>
@@ -244,9 +244,9 @@
     </optional>
     <choice>
       <group>
-        <optional>
+        <zeroOrMore>
           <ref name="BasicBlock"/>
-        </optional>
+        </zeroOrMore>
         <zeroOrMore>
           <ref name="note"/>
         </zeroOrMore>
@@ -289,9 +289,9 @@
       </optional>
       <choice>
         <group>
-          <optional>
+          <zeroOrMore>
             <ref name="BasicBlock"/>
-          </optional>
+          </zeroOrMore>
           <zeroOrMore>
             <ref name="note"/>
           </zeroOrMore>
