@@ -638,9 +638,9 @@
     <zeroOrMore>
       <ref name="license"/>
     </zeroOrMore>
-    <optional>
+    <zeroOrMore>
       <ref name="bclassification"/>
-    </optional>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="bkeyword"/>
     </zeroOrMore>
