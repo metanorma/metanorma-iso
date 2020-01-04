@@ -631,9 +631,9 @@ RSpec.describe Asciidoctor::ISO do
         <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
         <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
-         <docidentifier>ISO 123:–</docidentifier>
+         <docidentifier>ISO 123:—</docidentifier>
          <date type="published">
-           <on>--</on>
+           <on>–</on>
          </date>
          <contributor>
            <role type="publisher"/>
