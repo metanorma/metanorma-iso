@@ -67,7 +67,7 @@ module Asciidoctor
       def locality_erefs_validate(root)
         root.xpath("//eref[locality]").each do |t|
           if /^(ISO|IEC)/.match t["citeas"]
-            unless /:[ ]?(\d+{4}|--)$/.match t["citeas"]
+            unless /:[ ]?(\d+{4}|–)$/.match t["citeas"]
               warn "ISO: undated reference #{t['citeas']} should not contain "\
                 "specific elements"
             end
@@ -157,7 +157,7 @@ module Asciidoctor
       end
 
       def bibitem_validate(xmldoc)
-        xmldoc.xpath("//bibitem[date/on = '--']").each do |b|
+        xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
           found = false
           b.xpath("./note").each do |n|
             found = true if /^ISO DATE:/.match n.text

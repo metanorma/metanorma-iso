@@ -40,6 +40,12 @@
       <attribute name="filename"/>
     </optional>
     <optional>
+      <attribute name="model"/>
+    </optional>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
       <ref name="reqtitle"/>
     </optional>
     <optional>
