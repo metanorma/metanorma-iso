@@ -55,9 +55,6 @@
     <zeroOrMore>
       <ref name="BasicBlock"/>
     </zeroOrMore>
-    <zeroOrMore>
-      <ref name="note"/>
-    </zeroOrMore>
   </define>
   <define name="references">
     <element name="references">
@@ -99,6 +96,10 @@
       <ref name="example"/>
       <ref name="review"/>
       <ref name="pre"/>
+      <ref name="note"/>
+      <ref name="pagebreak"/>
+      <ref name="hr"/>
+      <ref name="bookmark"/>
     </choice>
   </define>
   <define name="paragraph">
@@ -341,7 +342,14 @@
   <define name="tname">
     <element name="name">
       <oneOrMore>
-        <ref name="PureTextElement"/>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="eref"/>
+          <ref name="stem"/>
+          <ref name="keyword"/>
+          <ref name="xref"/>
+          <ref name="hyperlink"/>
+        </choice>
       </oneOrMore>
     </element>
   </define>
@@ -592,14 +600,20 @@
   <define name="em">
     <element name="em">
       <zeroOrMore>
-        <ref name="PureTextElement"/>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="stem"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>
   <define name="strong">
     <element name="strong">
       <zeroOrMore>
-        <ref name="PureTextElement"/>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="stem"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>
