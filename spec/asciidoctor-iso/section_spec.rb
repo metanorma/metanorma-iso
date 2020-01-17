@@ -67,14 +67,14 @@ RSpec.describe Asciidoctor::ISO do
 
        <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
-         <p>For the purposes of this document, the following terms and definitions apply.</p>
-         <p>ISO and IEC maintain terminological databases for use in
+         <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
+         <p id="_">ISO and IEC maintain terminological databases for use in
 standardization at the following addresses:</p>
 
-<ul>
-<li> <p>ISO Online browsing platform: available at
+<ul id="_">
+<li> <p id="_">ISO Online browsing platform: available at
   <link target="http://www.iso.org/obp"/></p> </li>
-<li> <p>IEC Electropedia: available at
+<li> <p id="_">IEC Electropedia: available at
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
 
@@ -110,7 +110,7 @@ standardization at the following addresses:</p>
           <title>Appendix 1</title>
        </appendix></annex><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
-         <p>There are no normative references in this document.</p>
+         <p id="_">There are no normative references in this document.</p>
        </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
          <references id="_" obligation="informative">
@@ -198,14 +198,14 @@ standardization at the following addresses:</p>
      
        <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
-         <p>For the purposes of this document, the following terms and definitions apply.</p>
-         <p>ISO and IEC maintain terminological databases for use in
+         <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
+         <p id="_">ISO and IEC maintain terminological databases for use in
 standardization at the following addresses:</p>
 
-<ul>
-<li> <p>ISO Online browsing platform: available at
+<ul id="_">
+<li> <p id="_">ISO Online browsing platform: available at
   <link target="http://www.iso.org/obp"/></p> </li>
-<li> <p>IEC Electropedia: available at
+<li> <p id="_">IEC Electropedia: available at
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
          <term id="_">
@@ -249,7 +249,7 @@ standardization at the following addresses:</p>
          <bibliography>
            <references id='_' obligation='informative'>
              <title>Normative References</title>
-             <p>There are no normative references in this document.</p>
+             <p id="_">There are no normative references in this document.</p>
            </references>
            <clause id='_' obligation='informative'>
              <title>Bibliography</title>
@@ -357,22 +357,21 @@ standardization at the following addresses:</p>
       === Term1
 
      INPUT
-             #{BLANK_HDR}
-             <termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/>
+          #{BLANK_HDR.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
         <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">Foreword</p>
        </foreword></preface><sections>
        <terms id="_" obligation="normative">
-          <title>Terms and definitions</title><p>For the purposes of this document, the terms and definitions 
+          <title>Terms and definitions</title><p id="_">For the purposes of this document, the terms and definitions 
   given in <eref bibitemid="iso1234"/> and <eref bibitemid="iso5678"/> and the following apply.</p>
-  <p>ISO and IEC maintain terminological databases for use in
+  <p id="_">ISO and IEC maintain terminological databases for use in
 standardization at the following addresses:</p>
 
-<ul>
-<li> <p>ISO Online browsing platform: available at
+<ul id="_">
+<li> <p id="_">ISO Online browsing platform: available at
   <link target="http://www.iso.org/obp"/></p> </li>
-<li> <p>IEC Electropedia: available at
+<li> <p id="_">IEC Electropedia: available at
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
 
@@ -396,24 +395,37 @@ standardization at the following addresses:</p>
 
      INPUT
              #{BLANK_HDR}
-        <preface><foreword obligation="informative">
-         <title>Foreword</title>
-         <p id="_">Foreword</p>
-       </foreword></preface><sections>
-       <terms id="_" obligation="normative">
-          <title>Terms and definitions</title><p>No terms and definitions are listed in this document.</p>
-          <p>ISO and IEC maintain terminological databases for use in
-standardization at the following addresses:</p>
-
-<ul>
-<li> <p>ISO Online browsing platform: available at
-  <link target="http://www.iso.org/obp"/></p> </li>
-<li> <p>IEC Electropedia: available at
-<link target="http://www.electropedia.org"/>
-</p> </li> </ul>
-
-       </terms></sections>
-       </iso-standard>
+ <preface>
+            <foreword obligation='informative'>
+              <title>Foreword</title>
+              <p id='_'>Foreword</p>
+            </foreword>
+          </preface>
+          <sections>
+            <terms id='_' obligation='normative'>
+              <title>Terms and definitions</title>
+              <p id='_'>No terms and definitions are listed in this document.</p>
+              <p id='_'>
+                ISO and IEC maintain terminological databases for use in standardization
+                at the following addresses:
+              </p>
+              <ul id='_'>
+                <li>
+                  <p id='_'>
+                    ISO Online browsing platform: available at 
+                    <link target='http://www.iso.org/obp'/>
+                  </p>
+                </li>
+                <li>
+                  <p id='_'>
+                    IEC Electropedia: available at 
+                    <link target='http://www.electropedia.org'/>
+                  </p>
+                </li>
+              </ul>
+            </terms>
+          </sections>
+        </iso-standard>
 
      OUTPUT
     end
@@ -428,23 +440,22 @@ standardization at the following addresses:</p>
       == Terms and Definitions
 
      INPUT
-             #{BLANK_HDR}
-             <termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/>
+     #{BLANK_HDR.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
         <preface><foreword obligation="informative">
          <title>Foreword</title>
          <p id="_">Foreword</p>
        </foreword></preface><sections>
        <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
-         <p>For the purposes of this document,
+         <p id="_">For the purposes of this document,
         the terms and definitions given in <eref bibitemid="iso1234"/> and <eref bibitemid="iso5678"/> apply.</p>
-        <p>ISO and IEC maintain terminological databases for use in
+        <p id="_">ISO and IEC maintain terminological databases for use in
 standardization at the following addresses:</p>
 
-<ul>
-<li> <p>ISO Online browsing platform: available at
+<ul id="_">
+<li> <p id="_">ISO Online browsing platform: available at
   <link target="http://www.iso.org/obp"/></p> </li>
-<li> <p>IEC Electropedia: available at
+<li> <p id="_">IEC Electropedia: available at
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
 

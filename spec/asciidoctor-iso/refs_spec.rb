@@ -17,7 +17,7 @@ RSpec.describe Asciidoctor::ISO do
        <sections>
               </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
-         <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+         <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:—</docidentifier>
@@ -53,7 +53,7 @@ RSpec.describe Asciidoctor::ISO do
       <sections>
       </sections><bibliography><references id="_" obligation="informative">
         <title>Normative References</title>
-        <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+        <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
         <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:1066 (all parts)</docidentifier>
@@ -88,7 +88,7 @@ RSpec.describe Asciidoctor::ISO do
 
        </sections><bibliography><references id="_" obligation="informative">
          <title>Normative References</title>
-         <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+         <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
          <bibitem id="iso123">
          <formattedref format="application/x-isodoc+xml">
            <em>Standard</em>

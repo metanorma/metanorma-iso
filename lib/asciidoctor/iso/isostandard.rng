@@ -66,6 +66,7 @@
             <choice>
               <ref name="ISO8601Date"/>
               <value>--</value>
+              <value>–</value>
             </choice>
           </element>
         </choice>
