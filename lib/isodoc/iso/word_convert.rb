@@ -112,7 +112,6 @@ module IsoDoc
       def word_cleanup(docxml)
         authority_hdr_cleanup(docxml)
         super
-        authority_cleanup(docxml)
         docxml
       end
 
