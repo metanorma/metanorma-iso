@@ -40,23 +40,6 @@ module IsoDoc
         insert
       end
 
-      def html_preface(docxml)
-        super
-        authority_cleanup(docxml)
-        docxml
-      end
-
-      def authority_cleanup(docxml)
-        dest = docxml.at("//div[@id = 'copyright']")
-        auth = docxml.at("//div[@class = 'copyright']")
-        auth&.xpath(".//h1 | .//h2")&.each { |h| h["class"] = "IntroTitle" }
-        dest and auth and dest.replace(auth.remove)
-        dest = docxml.at("//div[@id = 'license']")
-        auth = docxml.at("//div[@class = 'license']")
-        auth&.xpath(".//h1 | .//h2")&.each { |h| h["class"] = "IntroTitle" }
-        dest and auth and dest.replace(auth.remove)
-      end
-
       include BaseConvert
     end
   end
