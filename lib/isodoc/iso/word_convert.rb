@@ -47,17 +47,6 @@ module IsoDoc
         end
       end
 
-      def make_body2(body, docxml)
-        body.div **{ class: "WordSection2" } do |div2|
-          boilerplate docxml, div2
-          abstract docxml, div2
-          foreword docxml, div2
-          introduction docxml, div2
-          div2.p { |p| p << "&nbsp;" } # placeholder
-        end
-        section_break(body)
-      end
-
       def colophon(body, docxml)
         stage =  @meta.get[:stage_int]
         return if !stage.nil? && stage < 60
