@@ -97,12 +97,12 @@ module IsoDoc
       end
 
       def authority_cleanup(docxml)
-        insert = docxml.at("//div[@id = 'license']")
-        auth = docxml&.at("//div[@class = 'license']")&.remove
+        insert = docxml.at("//div[@id = 'boilerplate-license-destination']")
+        auth = docxml&.at("//div[@class = 'boilerplate-license']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzWarning" }
         auth and insert.children = auth
-        insert = docxml.at("//div[@id = 'copyright']")
-        auth = docxml&.at("//div[@class = 'copyright']")&.remove
+        insert = docxml.at("//div[@id = 'boilerplate-copyright-destination']")
+        auth = docxml&.at("//div[@class = 'boilerplate-copyright']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzCopyright" }
         auth&.xpath(".//p[@id = 'authority2']")&.each { |p| p["class"] = "zzCopyright1" }
         auth&.xpath(".//p[@id = 'authority3']")&.each { |p| p["class"] = "zzAddress" }
