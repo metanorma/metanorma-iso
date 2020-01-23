@@ -104,8 +104,9 @@ module IsoDoc
         insert = docxml.at("//div[@id = 'boilerplate-copyright-destination']")
         auth = docxml&.at("//div[@class = 'boilerplate-copyright']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzCopyright" }
-        auth&.xpath(".//p[@id = 'authority2']")&.each { |p| p["class"] = "zzCopyright1" }
-        auth&.xpath(".//p[@id = 'authority3']")&.each { |p| p["class"] = "zzAddress" }
+        auth&.xpath(".//p[@id = 'boilerplate-message']")&.each { |p| p["class"] = "zzCopyright1" }
+        auth&.xpath(".//p[@id = 'boilerplate-address']")&.each { |p| p["class"] = "zzAddress" }
+        auth&.xpath(".//p[@id = 'boilerplate-name']")&.each { |p| p["class"] = "boilerplate-name" }
         auth and insert.children = auth
       end
 

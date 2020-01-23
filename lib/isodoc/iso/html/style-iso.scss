@@ -205,14 +205,13 @@ span.partlabel {
     padding-bottom: 1em;
 }
 
-.copyright .year, .copyright .message,
-.copyright .name, .copyright .address {
+.boilerplate-copyright p {
     margin-top: 1em;
     display: block;
 }
 
-.copyright .message, .copyright .name, 
-.copyright .address {
+.boilerplate-copyright #boilerplate-message, .boilerplate-copyright #boilerplate-name, 
+.boilerplate-copyright #boilerplate-address {
     font-size: 0.9em;
 }
 

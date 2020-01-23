@@ -204,20 +204,19 @@ span.title {
     line-height: 0.5em;
 }
 
-.copyright .name {
+.boilerplate-copyright #boilerplate-name {
     font-weight: 900;
     padding-top: 1em;
 }
 
-.copyright .year, .copyright .message,
-.copyright .name, .copyright .address {
+.boilerplate-copyright p {
     margin-top: 1em;
     line-height: 1.1em;
     display: block;
 }
 
-.copyright .message, .copyright .name, 
-.copyright .address {
+.boilerplate-copyright #boilerplate-message, .boilerplate-copyright #boilerplate-name, 
+.boilerplate-copyright #boilerplate-address {
     font-size: 0.9em;
 }
 
