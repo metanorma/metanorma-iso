@@ -6,7 +6,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch "test/caller_locations"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "test/caller_locations"
 
 if File.exist? 'Gemfile.devel'
   eval File.read('Gemfile.devel'), nil, 'Gemfile.devel' # rubocop:disable Security/Eval
