@@ -1,11 +1,11 @@
 <boilerplate>
   <copyright-statement>
     <clause>
-    <p id="authority1">
+    <p id="boilerplate-year">
     &copy; {{ agency }} {{ docyear }}, Published in Switzerland
   </p>
 
-  <p id="authority2">
+  <p id="boilerplate-message">
     All rights
 reserved. Unless otherwise specified, no part of this publication may be
 reproduced or utilized otherwise in any form or by any means, electronic or
@@ -14,8 +14,9 @@ without prior written permission. Permission can be requested from either ISO
 at the address below or ISO's member body in the country of the requester.
   </p>
 
-  <p id="authority3" align="left">
-    ISO copyright office<br/>
+  <p id="boilerplate-name">ISO copyright office</p>
+
+  <p id="boilerplate-address" align="left">
     Ch. de Blandonnet 8 &#x2022; CP 401<br/>
     CH-1214 Vernier, Geneva, Switzerland<br/>
     Tel.&nbsp;&nbsp;+ 41 22 749 01 11<br/>

@@ -489,15 +489,16 @@ RSpec.describe IsoDoc do
     <boilerplate>
   <copyright-statement>
     <clause>
-    <p id="authority1">
+    <p id="boilerplate-year">
     © ISO 2019, Published in Switzerland
   </p>
 
-  <p id="authority2">
+  <p id="boilerplate-message">
 I am the Walrus.
   </p>
 
-  <p id="authority3" align="left">
+    <p id="boilerplate-name">ISO copyright office</p>
+  <p id="boilerplate-address" align="left">
     ISO copyright office<br/>
     Ch. de Blandonnet 8 ?~@? CP 401<br/>
     CH-1214 Vernier, Geneva, Switzerland<br/>
@@ -545,11 +546,12 @@ end
     <boilerplate>
   <copyright-statement>
     <clause>
-    <p id="authority1">Published in Elbonia</p>
+    <p id="boilerplate-year">Published in Elbonia</p>
 
-  <p id="authority2">No soup for you</p>
+  <p id="boilerplate-message">No soup for you</p>
 
-  <p id="authority3" align="left">Elbonia 5000</p>
+  <p id="boilerplate-name">Dilbert Associates</p>
+  <p id="boilerplate-address" align="left">Elbonia 5000</p>
 </clause>
   </copyright-statement>
 
@@ -567,15 +569,17 @@ end
     INPUT
     word = File.read("test.doc", encoding: "UTF-8")
     expect(xmlpp(word.sub(%r{^.*<p class="zzCopyright">}m, '<p class="zzCopyright">').sub(%r{</p>.*$}m, '</p>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <p class="zzCopyright"><a name="authority1" id="authority1"></a>Published in Elbonia</p>
+           <p class="zzCopyright"><a name="boilerplate-year" id="boilerplate-year"></a>Published in Elbonia</p>
            OUTPUT
     expect(xmlpp(word.sub(%r{^.*<p class="zzCopyright1">}m, '<p class="zzCopyright1">').sub(%r{</p>.*$}m, '</p>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <p class="zzCopyright1"><a name="authority2" id="authority2"></a>No soup for you</p>
+           <p class="zzCopyright1"><a name="boilerplate-message" id="boilerplate-message"></a>No soup for you</p>
            OUTPUT
     expect(xmlpp(word.sub(%r{^.*<p align="left" style="text-align:left" class="zzAddress">}m, '<p align="left" style="text-align:left" class="zzAddress">').sub(%r{</p>.*$}m, '</p>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <p align="left" style="text-align:left" class="zzAddress"><a name="authority3" id="authority3"></a>Elbonia 5000</p>
+           <p align="left" style="text-align:left" class="zzAddress"><a name="boilerplate-address" id="boilerplate-address"></a>Elbonia 5000</p>
            OUTPUT
-    expect(word).to include '<p class="zzWarning">I am the Walrus</p>'
+    expect(xmlpp(word.sub(%r{^.*<p class="boilerplate-name">}m, '<p class="boilerplate-name">').sub(%r{</p>.*$}m, '</p>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    <p class="boilerplate-name"><a name="boilerplate-name" id="boilerplate-name"></a>Dilbert Associates</p>
+           OUTPUT
     expect(word).to include '<p class="zzWarning">I am the Walrus</p>'
 end
 

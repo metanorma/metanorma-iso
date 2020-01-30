@@ -99,31 +99,6 @@ module Asciidoctor
           "#{num.nil? ? abbrid : sprintf("%09d", num.to_i)} :: "\
           "#{id&.text} :: #{title}"
       end
-
-      def boilerplate_cleanup(xmldoc)
-        super
-        initial_boilerplate(xmldoc)
-      end
-
-      def initial_boilerplate(x)
-        return if x.at("//boilerplate")
-        preface = x.at("//preface") || x.at("//sections") || x.at("//annex") ||
-          x.at("//references") || return
-        preface.previous = boilerplate(x)
-      end
-
-      def boilerplate(x_orig)
-        x = x_orig.dup
-        # TODO variable
-        x.root.add_namespace(nil, "http://riboseinc.com/isoxml")
-        x = Nokogiri::XML(x.to_xml)
-        conv = IsoDoc::Iso::HtmlConvert.new({})
-        conv.metadata_init("en", "Latn", {})
-        conv.info(x, nil)
-        file = @boilerplateauthority ? "#{@localdir}/#{@boilerplateauthority}" :
-          File.join(File.dirname(__FILE__), "iso_intro.xml")
-          conv.populate_template((File.read(file, encoding: "UTF-8")), nil)
-      end
     end
   end
 end
