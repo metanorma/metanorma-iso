@@ -269,13 +269,36 @@ p.IntroTitle, li.IntroTitle, div.IntroTitle
 	tab-stops:20.15pt;
 	font-size:14.0pt;
 	mso-bidi-font-size:11.0pt;
-	page-break-before:always;
 	font-family:$headerfont;
 	mso-fareast-font-family:$headerfont;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
+        page-break-before:always;
 	mso-bidi-font-weight:normal;}
+p.TitlePageSubhead, li.TitlePageSubhead, div.TitlePageSubhead {
+  mso-style-noshow:yes;
+        mso-style-unhide:no;
+        mso-style-parent:"Foreword Title";
+        margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:15.5pt;
+        margin-left:0cm;
+        text-align:center;
+        line-height:15.5pt;
+        mso-pagination:widow-orphan;
+        page-break-after:avoid;
+        mso-hyphenate:none;
+        tab-stops:20.15pt;
+        font-size:14.0pt;
+        mso-bidi-font-size:11.0pt;
+        font-family:$headerfont;
+        mso-fareast-font-family:$headerfont;
+        mso-bidi-font-family:$headerfont;
+        mso-ansi-language:EN-GB;
+        font-weight:bold;
+        mso-bidi-font-weight:normal;
+}
 p.Terms, li.Terms, div.Terms
 	{mso-style-name:"Term\(s\)";
 	mso-style-priority:8;
@@ -704,16 +727,16 @@ div.coverpage_warning
   font-style: italic;
 }
 
-.copyright {
+.boilerplate-copyright {
   padding: 1em;
 }
 
-.copyright .name {
+.boilerplate-copyright .boilerplate-name {
   color: #485094;
   font-weight: 600;
 }
 
-.copyright .address {
+.boilerplate-copyright .boilerplate-address {
   color: #485094;
 }
 

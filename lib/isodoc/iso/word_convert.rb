@@ -47,17 +47,6 @@ module IsoDoc
         end
       end
 
-      def make_body2(body, docxml)
-        body.div **{ class: "WordSection2" } do |div2|
-          boilerplate docxml, div2
-          abstract docxml, div2
-          foreword docxml, div2
-          introduction docxml, div2
-          div2.p { |p| p << "&nbsp;" } # placeholder
-        end
-        section_break(body)
-      end
-
       def colophon(body, docxml)
         stage =  @meta.get[:stage_int]
         return if !stage.nil? && stage < 60
@@ -108,22 +97,22 @@ module IsoDoc
       end
 
       def authority_cleanup(docxml)
-        insert = docxml.at("//div[@id = 'license']")
-        auth = docxml&.at("//div[@class = 'license']")&.remove
+        insert = docxml.at("//div[@id = 'boilerplate-license-destination']")
+        auth = docxml&.at("//div[@class = 'boilerplate-license']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzWarning" }
         auth and insert.children = auth
-        insert = docxml.at("//div[@id = 'copyright']")
-        auth = docxml&.at("//div[@class = 'copyright']")&.remove
+        insert = docxml.at("//div[@id = 'boilerplate-copyright-destination']")
+        auth = docxml&.at("//div[@class = 'boilerplate-copyright']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzCopyright" }
-        auth&.xpath(".//p[@id = 'authority2']")&.each { |p| p["class"] = "zzCopyright1" }
-        auth&.xpath(".//p[@id = 'authority3']")&.each { |p| p["class"] = "zzAddress" }
+        auth&.xpath(".//p[@id = 'boilerplate-message']")&.each { |p| p["class"] = "zzCopyright1" }
+        auth&.xpath(".//p[@id = 'boilerplate-address']")&.each { |p| p["class"] = "zzAddress" }
+        auth&.xpath(".//p[@id = 'boilerplate-name']")&.each { |p| p["class"] = "boilerplate-name" }
         auth and insert.children = auth
       end
 
       def word_cleanup(docxml)
         authority_hdr_cleanup(docxml)
         super
-        authority_cleanup(docxml)
         docxml
       end
 
