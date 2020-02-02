@@ -440,6 +440,27 @@ p.MsoHeader, li.MsoHeader, div.MsoHeader
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
+p.MsoHeaderLandscape, li.MsoHeaderLandscape, div.MsoHeaderLandscape
+        {mso-style-noshow:yes;
+        mso-style-priority:99;
+        mso-style-unhide:no;
+        mso-style-link:"Header Char";
+        margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:30.0pt;
+        margin-left:0cm;
+        text-align:justify;
+        line-height:11.0pt;
+        mso-line-height-rule:exactly;
+        mso-pagination:widow-orphan;
+        tab-stops:20.15pt;
+        font-size:11.0pt;
+        font-family:$headerfont;
+        mso-fareast-font-family:$headerfont;
+        mso-bidi-font-family:$headerfont;
+        mso-ansi-language:EN-GB;
+        font-weight:bold;
+        mso-bidi-font-weight:normal;}
 p.MsoFooter, li.MsoFooter, div.MsoFooter
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
@@ -459,6 +480,25 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 	mso-fareast-font-family:$headerfont;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;}
+p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape
+        {mso-style-noshow:yes;
+        mso-style-priority:99;
+        mso-style-unhide:no;
+        mso-style-link:"Footer Char";
+        margin-top:18.0pt;
+        margin-right:0cm;
+        margin-bottom:6.0pt;
+        margin-left:0cm;
+        text-align:justify;
+        line-height:11.0pt;
+        mso-line-height-rule:exactly;
+        mso-pagination:widow-orphan;
+        tab-stops:right 734.0pt;
+        font-size:11.0pt;
+        font-family:$headerfont;
+        mso-fareast-font-family:$headerfont;
+        mso-bidi-font-family:$headerfont;
+        mso-ansi-language:EN-GB;}
 span.MsoFootnoteReference
 	{mso-style-priority:99;
 	vertical-align:super;}
