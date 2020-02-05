@@ -2,7 +2,7 @@
   <copyright-statement>
     <clause>
     <p id="boilerplate-year">
-    &copy; {{ agency }} {{ docyear }}, Published in Switzerland
+    &copy; {{ agency }} {{ docyear }}
   </p>
 
   <p id="boilerplate-message">
@@ -14,15 +14,17 @@ without prior written permission. Permission can be requested from either ISO
 at the address below or ISO's member body in the country of the requester.
   </p>
 
-  <p id="boilerplate-name">ISO copyright office</p>
-
   <p id="boilerplate-address" align="left">
+    ISO copyright office<br/>
     Ch. de Blandonnet 8 &#x2022; CP 401<br/>
     CH-1214 Vernier, Geneva, Switzerland<br/>
     Tel.&nbsp;&nbsp;+ 41 22 749 01 11<br/>
     Fax&nbsp;&nbsp;+ 41 22 749 09 47<br/>
-    copyright@iso.org<br/>
-    www.iso.org
+    Email: copyright@iso.org<br/>
+    Website: www.iso.org
+  </p>
+    <p id="boilerplate-place">
+    Published in Switzerland
   </p>
 </clause>
   </copyright-statement>
