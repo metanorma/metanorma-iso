@@ -82,13 +82,13 @@ module IsoDoc
       end
 
       def authority_hdr_cleanup(docxml)
-        docxml&.xpath("//div[@class = 'license']").each do |d|
+        docxml&.xpath("//div[@class = 'boilerplate-license']").each do |d|
           d.xpath(".//h1").each do |p|
             p.name = "p"
             p["class"] = "zzWarningHdr"
           end
         end
-        docxml&.xpath("//div[@class = 'copyright']").each do |d|
+        docxml&.xpath("//div[@class = 'boilerplate-copyright']").each do |d|
           d.xpath(".//h1").each do |p|
             p.name = "p"
             p["class"] = "zzCopyrightHdr"

@@ -571,7 +571,7 @@ end
     expect(xmlpp(word.sub(%r{^.*<div class="boilerplate-copyright">}m, '<div class="boilerplate-copyright">').sub(%r{</div>.*$}m, '</div></div>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <div class='boilerplate-copyright'>
   <div>
-    <h1/>
+    <p class='zzCopyrightHdr'/>
     <p class='zzCopyright'>
       <a name='boilerplate-year' id='boilerplate-year'/>
       Published in Elbonia
