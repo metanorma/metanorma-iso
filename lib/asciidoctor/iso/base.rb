@@ -11,7 +11,7 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       XML_ROOT_TAG = "iso-standard".freeze
-      XML_NAMESPACE = "http://riboseinc.com/isoxml".freeze
+      XML_NAMESPACE = "https://www.metanorma.com/ns/iso".freeze
 
       def html_converter(node)
         IsoDoc::Iso::HtmlConvert.new(html_extract_attributes(node))
