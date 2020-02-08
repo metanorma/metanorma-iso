@@ -10,6 +10,9 @@ require "fileutils"
 module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
+      XML_ROOT_TAG = "iso-standard".freeze
+      XML_NAMESPACE = "https://www.metanorma.com/ns/iso".freeze
+
       def html_converter(node)
         IsoDoc::Iso::HtmlConvert.new(html_extract_attributes(node))
       end
@@ -35,14 +38,6 @@ module Asciidoctor
         end
         @files_to_delete.each { |f| FileUtils.rm f }
         ret
-      end
-
-      def makexml1(node)
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<iso-standard>"]
-        result << noko { |ixml| front node, ixml }
-        result << noko { |ixml| middle node, ixml }
-        result << "</iso-standard>"
-        textcleanup(result)
       end
 
       def load_yaml(lang, script)
