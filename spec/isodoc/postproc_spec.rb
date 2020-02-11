@@ -91,6 +91,12 @@ RSpec.describe IsoDoc do
     expect(word).to match(/<style>/)
   end
 
+    it "generates Pdf output docs with null configuration from file" do
+    FileUtils.rm_f "spec/assets/iso.pdf"
+    IsoDoc::Iso::PdfConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("spec/assets/iso.xml", nil, false)
+    expect(File.exist?("spec/assets/iso.pdf")).to be true
+  end
+
   it "converts annex subheadings to h2Annex class for Word" do
     FileUtils.rm_f "test.doc"
     FileUtils.rm_f "test.html"
