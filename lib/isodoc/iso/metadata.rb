@@ -48,7 +48,7 @@ module IsoDoc
                               isoxml&.at(ns("//bibdata/status/substage"))&.text,
                               isoxml&.at(ns("//bibdata/status/iteration"))&.text,
                               isoxml&.at(ns("//version/draft"))&.text)
-          set(:stageabbr, abbr)
+          set(:statusabbr, abbr)
         end
         revdate = isoxml.at(ns("//version/revision-date"))
         set(:revdate, revdate&.text)
@@ -57,6 +57,8 @@ module IsoDoc
       def docid(isoxml, _out)
         dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso']"))
         set(:docnumber, dn&.text)
+        dn = isoxml.at(ns("//bibdata/docnumber"))
+        set(:docnumeric, dn&.text)
         tcdn = isoxml.xpath(ns("//bibdata/docidentifier[@type = 'iso-tc']"))
         set(:tc_docnumber, tcdn.map { |n| n.text })
       end
