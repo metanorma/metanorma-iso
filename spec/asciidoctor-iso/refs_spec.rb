@@ -44,6 +44,11 @@ RSpec.describe Asciidoctor::ISO do
 
     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
+
+      == Clause
+
+      <<iso123>>
+
       [bibliography]
       == Normative References
 
@@ -51,7 +56,14 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
       #{BLANK_HDR}
       <sections>
-      </sections><bibliography><references id="_" obligation="informative">
+  <clause id='_' inline-header='false' obligation='normative'>
+    <title>Clause</title>
+    <p id='_'>
+      <eref type='inline' bibitemid='iso123' citeas='ISO 123:1066'/>
+    </p>
+  </clause>
+</sections>
+      <bibliography><references id="_" obligation="informative">
         <title>Normative References</title>
         <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
         <bibitem id="iso123" type="standard">

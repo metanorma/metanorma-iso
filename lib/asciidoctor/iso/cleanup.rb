@@ -58,6 +58,11 @@ module Asciidoctor
           id.content = id_prefix(prefix, id)
       end
 
+      def format_ref(ref, type, isopub)
+        ref = ref.sub(/ \(All Parts\)/i, "")
+        super
+      end
+
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
       OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or "\
         "@type = 'ISBN'".freeze
