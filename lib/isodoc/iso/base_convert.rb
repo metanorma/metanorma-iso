@@ -10,8 +10,7 @@ module IsoDoc
       end
 
       def implicit_reference(b)
-        isocode = b.at(ns("./docidentifier")).text
-        isocode == "IEV"
+        b&.at(ns("./docidentifier"))&.text == "IEV"
       end
 
       def introduction(isoxml, out)
@@ -188,6 +187,14 @@ module IsoDoc
 
       def clausedelim
         ""
+      end
+
+      def format_ref(ref, prefix, isopub, date, allparts)
+        ref = ref.sub(/ \(All Parts\)/i, "")
+        ref = docid_prefix(prefix, ref)
+        return "[#{ref}]" if /^\d+$/.match(ref) && !prefix &&
+          !/^\[.*\]$/.match(ref)
+          ref
       end
     end
   end
