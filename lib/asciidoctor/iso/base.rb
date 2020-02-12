@@ -27,7 +27,6 @@ module Asciidoctor
       end
 
       def document(node)
-              require "byebug"; byebug
         init(node)
         ret = makexml(node).to_xml(indent: 2)
         unless node.attr("nodoc") || !node.attr("docfile")
