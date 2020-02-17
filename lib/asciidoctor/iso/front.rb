@@ -59,7 +59,7 @@ module Asciidoctor
 
       def id_stage_abbr(stage, substage, node)
         IsoDoc::Iso::Metadata.new("en", "Latn", {}).
-          stage_abbrev(stage, substage, node.attr("iteration"),
+          status_abbrev(stage, substage, node.attr("iteration"),
                        node.attr("draft"))
       end
 

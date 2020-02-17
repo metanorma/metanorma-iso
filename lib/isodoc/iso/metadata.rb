@@ -28,7 +28,11 @@ module IsoDoc
         "95": "(Withdrawal)",
       }.freeze
 
-      def stage_abbrev(stage, substage, iter, draft)
+      def stage_abbr(stage)
+        self.class::STAGE_ABBRS[stage.to_sym] || "??"
+      end
+
+      def status_abbrev(stage, substage, iter, draft)
         return "" unless stage
         stage = self.class::STAGE_ABBRS[stage.to_sym] || "??"
         stage = "PRF" if stage == "IS" && substage == "00"
@@ -43,22 +47,25 @@ module IsoDoc
         if docstatus
           set(:stage, docstatus.text)
           set(:stage_int, docstatus.text.to_i)
-          set(:unpublished, docstatus.text.to_i > 0 && docstatus.text.to_i < 60)
-          abbr = stage_abbrev(docstatus.text,
-                              isoxml&.at(ns("//bibdata/status/substage"))&.text,
-                              isoxml&.at(ns("//bibdata/status/iteration"))&.text,
-                              isoxml&.at(ns("//version/draft"))&.text)
-          set(:statusabbr, abbr)
+          set(:unpublished, unpublished(docstatus.text))
+          set(:statusabbr, status_abbrev(docstatus.text,
+                                         isoxml&.at(ns("//bibdata/status/substage"))&.text,
+                                         isoxml&.at(ns("//bibdata/status/iteration"))&.text,
+                                         isoxml&.at(ns("//version/draft"))&.text))
+          unpublished(docstatus.text) and
+            set(:stageabbr, stage_abbr(docstatus.text))
         end
         revdate = isoxml.at(ns("//version/revision-date"))
         set(:revdate, revdate&.text)
       end
 
+      def unpublished(status)
+        status.to_i > 0 && status.to_i < 60
+      end
+
       def docid(isoxml, _out)
         dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso']"))
         set(:docnumber, dn&.text)
-        dn = isoxml.at(ns("//bibdata/docnumber"))
-        set(:docnumeric, dn&.text)
         tcdn = isoxml.xpath(ns("//bibdata/docidentifier[@type = 'iso-tc']"))
         set(:tc_docnumber, tcdn.map { |n| n.text })
       end
