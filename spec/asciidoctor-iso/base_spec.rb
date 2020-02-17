@@ -89,7 +89,7 @@ RSpec.describe Asciidoctor::ISO do
       :library-ics: 1,2,3
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="https://www.metanorma.com/ns/iso">
+       <iso-standard xmlns="https://www.metanorma.org/ns/iso">
        <bibdata type="standard">
    <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
    <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -185,7 +185,7 @@ RSpec.describe Asciidoctor::ISO do
       :copyright-year: 2001
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="https://www.metanorma.com/ns/iso">
+       <iso-standard xmlns="https://www.metanorma.org/ns/iso">
        <bibdata type="standard">
          <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
          <docidentifier type='iso-with-lang'>ISO/IEC/IETF 1000-1-1:2001 (X)</docidentifier>
@@ -293,7 +293,7 @@ RSpec.describe Asciidoctor::ISO do
       :docstage: 50
       :language: fr
     INPUT
-    <iso-standard xmlns="https://www.metanorma.com/ns/iso">
+    <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO/FDIS 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO/FDIS 1000 (F)</docidentifier>
@@ -356,7 +356,7 @@ OUTPUT
       :docnumber: 1000
       :docstage: 60
     INPUT
-<iso-standard xmlns="https://www.metanorma.com/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO 1000 (E)</docidentifier>
@@ -420,7 +420,7 @@ OUTPUT
       :docstage: 60
       :docsubstage: 00
     INPUT
-<iso-standard xmlns="https://www.metanorma.com/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO/PRF 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO/PRF 1000 (E)</docidentifier>
