@@ -144,7 +144,7 @@ module Asciidoctor
           warn("ISO style: There are sections after the final Bibliography")
       end
 
-      def style_warning(node, msg, text)
+      def style_warning(node, msg, text = nil)
         return if @novalid
         w = "ISO style: WARNING (#{Standoc::Utils::current_location(node)}): #{msg}"
         w += ": #{text}" if text
