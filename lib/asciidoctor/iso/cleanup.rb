@@ -9,14 +9,15 @@ require "pp"
 module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
-      PRE_NORMREF_FOOTNOTES = "//foreword//fn | //introduction//fn |"\
-        "//clause[title = 'Scope']//fn" .freeze
+      PRE_NORMREF_FOOTNOTES = "//preface//fn | "\
+        "//clause[title = 'Scope']//fn".freeze
 
       NORMREF_FOOTNOTES =
         "//references[title = 'Normative References']//fn".freeze
 
       POST_NORMREF_FOOTNOTES =
-        "//clause[not(title = 'Scope')]//fn | "\
+        "//sections//clause[not(title = 'Scope')]//fn | "\
+        "//annex//fn | "\
         "//references[title = 'Bibliography']//fn".freeze
 
       def other_footnote_renumber(xmldoc)
