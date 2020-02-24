@@ -4,7 +4,7 @@ RSpec.describe Asciidoctor::ISO do
   it "processes sections" do
     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
-      .Foreword
+      == Foreword
 
       Text
 
@@ -55,7 +55,7 @@ RSpec.describe Asciidoctor::ISO do
       === Bibliography Subsection
     INPUT
             #{BLANK_HDR}
-       <preface><foreword obligation="informative">
+       <preface><foreword id='_' obligation='informative'>
          <title>Foreword</title>
          <p id="_">Text</p>
        </foreword><introduction id="_" obligation="informative"><title>Introduction</title><clause id="_" inline-header="false" obligation="informative">

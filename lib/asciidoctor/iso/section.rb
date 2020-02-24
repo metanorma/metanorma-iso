@@ -8,6 +8,7 @@ module Asciidoctor
         a = section_attributes(node)
         noko do |xml|
           case sectiontype(node)
+          when "foreword" then foreword_parse(a, xml, node)
           when "introduction" then introduction_parse(a, xml, node)
           when "patent notice" then patent_notice_parse(xml, node)
           when "scope" then scope_parse(a, xml, node)
