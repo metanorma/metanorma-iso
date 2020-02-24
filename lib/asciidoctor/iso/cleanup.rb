@@ -63,6 +63,7 @@ module Asciidoctor
         super
       end
 
+      TERM_CLAUSE = "//sections//terms".freeze
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
       OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or "\
         "@type = 'ISBN'".freeze
