@@ -8,6 +8,7 @@ module Asciidoctor
         a = section_attributes(node)
         noko do |xml|
           case sectiontype(node)
+          when "foreword" then foreword_parse(a, xml, node)
           when "introduction" then introduction_parse(a, xml, node)
           when "patent notice" then patent_notice_parse(xml, node)
           when "scope" then scope_parse(a, xml, node)
@@ -18,6 +19,8 @@ module Asciidoctor
             @term_def = false
           when "symbols and abbreviated terms"
             symbols_parse(a, xml, node)
+          when "acknowledgements"
+            acknowledgements_parse(a, xml, node)
           when "bibliography" then bibliography_parse(a, xml, node)
           else
             if @term_def then term_def_subclause_parse(a, xml, node)
