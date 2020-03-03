@@ -711,12 +711,12 @@ margin-left: 2em;
 3.6 Source Code + figures
 */
 
-.Sourcecode {
+pre {
 font-family: $monospacefont;
 font-variant-ligatures: none;
 }
 
-.figure, .Sourcecode, .pseudocode {
+.figure, pre, .pseudocode {
 background-color: #f7f7f7;
 line-height: 1.6em;
 padding: 1.5em;
@@ -781,7 +781,7 @@ margin-top:0;
 }
 
 
-.example .Sourcecode, .example .pseudocode {
+.example pre, .example .pseudocode {
       background: none;
 }
 
