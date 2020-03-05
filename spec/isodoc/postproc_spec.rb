@@ -287,29 +287,154 @@ RSpec.describe IsoDoc do
              <div id="A">
                <h1>1&#xA0; Clause 4</h1>
                <a rel="footnote" href="#fn:3" epub:type="footnote" id="fnref:1">
-                 <sup>1</sup>
+                 <sup>1)</sup>
                </a>
                <div id="N">
 
-                <h2>1.1&#xA0; Introduction to this<a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2</sup></a></h2>
+                <h2>1.1&#xA0; Introduction to this<a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2)</sup></a></h2>
               </div>
                <div id="O">
                 <h2>1.2&#xA0; Clause 4.2</h2>
-                <p>A<a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2</sup></a></p>
+                <p>A<a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2)</sup></a></p>
               </div>
              </div>
              <aside id="fn:3" class="footnote">
          <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:3" epub:type="footnote">
-                 <sup>1</sup>
+                 <sup>1)</sup>
                </a>This is a footnote.</p>
        <a href="#fnref:1">&#x21A9;</a></aside>
              <aside id="fn:2" class="footnote">
-         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2</sup></a>Formerly denoted as 15 % (m/m).</p>
+         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2)</sup></a>Formerly denoted as 15 % (m/m).</p>
        <a href="#fnref:2">&#x21A9;</a></aside>
 
            </main>
     OUTPUT
   end
+
+    it "renders footnote numbers in Word" do
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <sections>
+               <clause id="A" inline-header="false" obligation="normative"><title>Clause 4</title><fn reference="3">
+  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
+</fn><clause id="N" inline-header="false" obligation="normative">
+
+         <title>Introduction to this<fn reference="2">
+  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
+</fn></title>
+       </clause>
+       <clause id="O" inline-header="false" obligation="normative">
+         <title>Clause 4.2</title>
+         <p>A<fn reference="1">
+  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
+</fn></p>
+       </clause></clause>
+        </sections>
+        </iso-standard>
+    INPUT
+    html = File.read("test.doc", encoding: "UTF-8").sub(/^.*<div class="WordSection3"/m, '<body xmlns:epub="epub"><div class="WordSection3"').
+      sub(%r{</body>.*$}m, "</body>").gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
+    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+     <body xmlns:epub='epub'>
+         <div class='WordSection3'>
+           <p class='zzSTDTitle1'/>
+           <div>
+             <a name='A' id='A'/>
+             <h1>
+               1
+               <span style='mso-tab-count:1'>&#xA0; </span>
+               Clause 4
+             </h1>
+             <span style='mso-bookmark:_Ref'>
+               <a href='#_ftn1' epub:type='footnote' style='mso-footnote-id:ftn1' name='_ftnref1' title='' id='_ftnref1'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+             </span>
+             <div>
+               <a name='N' id='N'/>
+               <h2>
+                 1.1
+                 <span style='mso-tab-count:1'>&#xA0; </span>
+                 Introduction to this
+                 <span style='mso-bookmark:_Ref'>
+                   <a href='#_ftn2' epub:type='footnote' style='mso-footnote-id:ftn2' name='_ftnref2' title='' id='_ftnref2'>
+                     <span class='MsoFootnoteReference'>
+                       <span style='mso-special-character:footnote'/>
+                     </span>
+                     <span class='MsoFootnoteReference'>)</span>
+                   </a>
+                 </span>
+               </h2>
+             </div>
+             <div>
+               <a name='O' id='O'/>
+               <h2>
+                 1.2
+                 <span style='mso-tab-count:1'>&#xA0; </span>
+                 Clause 4.2
+               </h2>
+               <p class='MsoNormal'>
+                 A
+                 <span style='mso-bookmark:_Ref'>
+                   <a href='#_ftn3' epub:type='footnote' style='mso-footnote-id:ftn3' name='_ftnref3' title='' id='_ftnref3'>
+                     <span class='MsoFootnoteReference'>
+                       <span style='mso-special-character:footnote'/>
+                     </span>
+                     <span class='MsoFootnoteReference'>)</span>
+                   </a>
+                 </span>
+               </p>
+             </div>
+           </div>
+         </div>
+         <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+         <div class='colophon'/>
+         <div style='mso-element:footnote-list'>
+           <div style='mso-element:footnote' id='ftn1'>
+             <p class='MsoFootnoteText'>
+               <a name='_ff27c067-2785-4551-96cf-0a73530ff1e6' id='_ff27c067-2785-4551-96cf-0a73530ff1e6'/>
+               <a style='mso-footnote-id:ftn1' href='#_ftn1' name='_ftnref1' title='' id='_ftnref1'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+               This is a footnote.
+             </p>
+           </div>
+           <div style='mso-element:footnote' id='ftn2'>
+             <p class='MsoFootnoteText'>
+               <a name='_ff27c067-2785-4551-96cf-0a73530ff1e6' id='_ff27c067-2785-4551-96cf-0a73530ff1e6'/>
+               <a style='mso-footnote-id:ftn2' href='#_ftn2' name='_ftnref2' title='' id='_ftnref2'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+               Formerly denoted as 15 % (m/m).
+             </p>
+           </div>
+           <div style='mso-element:footnote' id='ftn3'>
+             <p class='MsoFootnoteText'>
+               <a name='_ff27c067-2785-4551-96cf-0a73530ff1e6' id='_ff27c067-2785-4551-96cf-0a73530ff1e6'/>
+               <a style='mso-footnote-id:ftn3' href='#_ftn3' name='_ftnref3' title='' id='_ftnref3'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+               Formerly denoted as 15 % (m/m).
+             </p>
+           </div>
+         </div>
+       </body>
+    OUTPUT
+  end
+
 
   it "moves images in HTML" do
     FileUtils.rm_f "test.html"

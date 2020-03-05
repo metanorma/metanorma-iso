@@ -116,6 +116,10 @@ module IsoDoc
         docxml
       end
 
+      def footnote_reference_format(a)
+        a.children = "<span class='MsoFootnoteReference'>#{a.children.to_xml}</span>)"
+      end
+
       include BaseConvert
     end
   end
