@@ -183,7 +183,7 @@ RSpec.describe Asciidoctor::ISO do
       * [[[iso216,ISO 216:2001]]], _Reference_
     INPUT
       #{BLANK_HDR}
-        <preface><foreword obligation="informative">
+        <preface><foreword id='_' obligation="informative">
         <title>Foreword</title>
         <p id="_">
         <eref type="inline" bibitemid="iso216" citeas="ISO 216:2001"/>
@@ -222,7 +222,7 @@ RSpec.describe Asciidoctor::ISO do
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
       #{BLANK_HDR}
-      <preface><foreword obligation="informative">
+      <preface><foreword id='_' obligation="informative">
         <title>Foreword</title>
         <p id="_">
         <eref type="inline" bibitemid="iso216" citeas="ISO 216"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>the reference</eref>
@@ -260,7 +260,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
        <preface>
-       <foreword obligation="informative">
+       <foreword id='_' obligation="informative">
          <title>Foreword</title>
          <p id="_">
          <eref type="inline" bibitemid="iso216" citeas="ISO 216"/>
@@ -421,17 +421,17 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
        <sections>
              <table id="_"><thead><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr></thead>
          <tbody>
            <tr>
@@ -468,13 +468,13 @@ RSpec.describe Asciidoctor::ISO do
              <th align="left">c</th>
            </tr>
          <tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr></thead>
          <tbody>
 
@@ -612,7 +612,7 @@ RSpec.describe Asciidoctor::ISO do
       footnote:[Footnote2]
     INPUT
       #{BLANK_HDR}
-      <preface><foreword obligation="informative">
+      <preface><foreword id='_' obligation="informative">
         <title>Foreword</title>
         <p id="_"><fn reference="1">
         <p id="_">Footnote</p>

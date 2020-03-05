@@ -242,7 +242,7 @@ standardization at the following addresses:</p>
 
      INPUT
           #{BLANK_HDR.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
-        <preface><foreword obligation="informative">
+        <preface><foreword id='_' obligation="informative">
          <title>Foreword</title>
          <p id="_">Foreword</p>
        </foreword></preface><sections>
@@ -280,7 +280,7 @@ standardization at the following addresses:</p>
      INPUT
              #{BLANK_HDR}
  <preface>
-            <foreword obligation='informative'>
+            <foreword id='_' obligation='informative'>
               <title>Foreword</title>
               <p id='_'>Foreword</p>
             </foreword>
@@ -325,7 +325,7 @@ standardization at the following addresses:</p>
 
      INPUT
      #{BLANK_HDR.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
-        <preface><foreword obligation="informative">
+        <preface><foreword id='_' obligation="informative">
          <title>Foreword</title>
          <p id="_">Foreword</p>
        </foreword></preface><sections>
