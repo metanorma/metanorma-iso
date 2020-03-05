@@ -40,6 +40,10 @@ module IsoDoc
         insert
       end
 
+      def footnote_reference_format(a)
+        a.content = a.content + ")"
+      end
+
       include BaseConvert
     end
   end

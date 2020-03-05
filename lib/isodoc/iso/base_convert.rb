@@ -196,6 +196,10 @@ module IsoDoc
           !/^\[.*\]$/.match(ref)
           ref
       end
+
+      def table_footnote_reference_format(a)
+        a.content = a.content + ")"
+      end
     end
   end
 end
