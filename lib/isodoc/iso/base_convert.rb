@@ -200,6 +200,11 @@ module IsoDoc
       def table_footnote_reference_format(a)
         a.content = a.content + ")"
       end
+
+      def clause_parse_title(node, div, c1, out)
+        return inline_header_title(out, node, c1) if c1.nil?
+        super
+      end
     end
   end
 end

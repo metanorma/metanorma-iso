@@ -304,6 +304,51 @@ OUTPUT
 OUTPUT
   end
 
+    it "processes subclauses with and without titles" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+       <sections>
+       <clause id="D" obligation="normative">
+         <title>Scope</title>
+<clause id="D1" obligation="normative">
+         <title>Scope 1</title>
+         </clause>
+<clause id="D2" obligation="normative">
+         </clause>
+       </clause>
+       </sections>
+       </iso-standard>
+INPUT
+<html xmlns:epub='http://www.idpf.org/2007/ops' lang='en'>
+  <head/>
+  <body lang='en'>
+    <div class='title-section'>
+      <p>&#160;</p>
+    </div>
+    <br/>
+    <div class='prefatory-section'>
+      <p>&#160;</p>
+    </div>
+    <br/>
+    <div class='main-section'>
+      <p class='zzSTDTitle1'/>
+      <div id='D'>
+        <h1>1&#160; Scope</h1>
+        <div id='D1'>
+          <h2>1.1&#160; Scope 1</h2>
+        </div>
+        <div id='D2'>
+          <span class='zzMoveToFollowing'>
+            <b>1.2&#160; </b>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+OUTPUT
+    end
+
   it "processes simple terms & definitions" do
         expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
                <iso-standard xmlns="http://riboseinc.com/isoxml">
