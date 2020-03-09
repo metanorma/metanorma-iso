@@ -44,6 +44,12 @@ module IsoDoc
         a.content = a.content + ")"
       end
 
+      def table_th_center(docxml)
+        docxml.xpath("//thead//th | //thead//td").each do |th|
+          th["style"] += ";text-align:center;vertical-align:middle;"
+        end
+      end
+
       include BaseConvert
     end
   end

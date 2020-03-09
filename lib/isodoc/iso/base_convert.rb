@@ -208,6 +208,7 @@ module IsoDoc
       def cleanup(docxml)
         super
         remove_internal_hyperlinks(docxml)
+        table_th_center(docxml)
         docxml
       end
 
@@ -220,6 +221,13 @@ module IsoDoc
           next unless @anchors[anchor][:type]
           next if @anchors[anchor][:type] == "clause"
           a.replace(a.children)
+        end
+      end
+
+      def table_th_center(docxml)
+        docxml.xpath("//thead//th | //thead//td").each do |th|
+          th["align"] = "center"
+          th["valign"] = "middle"
         end
       end
     end
