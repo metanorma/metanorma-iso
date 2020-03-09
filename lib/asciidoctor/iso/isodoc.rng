@@ -646,6 +646,11 @@
       <attribute name="script"/>
     </optional>
     <optional>
+      <attribute name="inline-header">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="obligation">
         <choice>
           <value>normative</value>

@@ -91,6 +91,7 @@ module Asciidoctor
       # then standard class (docid class other than DOI &c)
       # then docnumber if present, numeric sort
       #      else alphanumeric metanorma id (abbreviation)
+      # then doc part number if present, numeric sort
       # then doc id (not DOI &c)
       # then title
       def sort_biblio_key(bib)
@@ -99,12 +100,13 @@ module Asciidoctor
         id = bib&.at("./docidentifier[not(#{OTHERIDS})]")
         metaid = bib&.at("./docidentifier[@type = 'metanorma']")&.text
         abbrid = metaid unless /^\[\d+\]$/.match(metaid)
+        /\d-(?<partid>\d+)/ =~ id&.text
         type = id['type'] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
         "#{pubclass} :: #{type} :: "\
           "#{num.nil? ? abbrid : sprintf("%09d", num.to_i)} :: "\
-          "#{id&.text} :: #{title}"
+          "#{partid} :: #{id&.text} :: #{title}"
       end
     end
   end
