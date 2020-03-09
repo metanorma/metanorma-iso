@@ -718,4 +718,109 @@ end
     expect(word).to include '<p class="zzWarning">I am the Walrus</p>'
 end
 
+    it "skips internal hyperlinks" do
+      FileUtils.rm_f "test.html"
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <preface>
+    <foreword>
+    <p>
+    <xref target="scope"/>
+    <xref target="terms"/>
+    <xref target="_waxy_rice"/>
+    <xref target="N"/>
+    <xref target="N1"/>
+    <xref target="N2"/>
+    <xref target="N3"/>
+    <xref target="N4"/>
+    <xref target="N5"/>
+    <xref target="N6"/>
+    <xref target="N7"/>
+    <xref target="N8"/>
+    <xref target="N9"/>
+    <xref target="N10"/>
+      <eref bibitemid="ISO712"/>
+    </p>
+    </foreword>
+    </preface>
+    <sections>
+    <clause id="scope"><title>Scope</title>
+    <note id="N">
+  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+</note>
+<figure id="N1">
+  <name>Split-it-right sample divider</name>
+  </figure>
+  <example id="N2">
+  <p>Hello</p>
+</example>
+<formula id="N3">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </formula>
+  <table id="N4">
+    <name>Repeatability and reproducibility of husked rice yield</name>
+    <tbody>
+    <tr>
+      <td align="left">Number of laboratories retained after eliminating outliers</td>
+      <td align="center">13</td>
+      <td align="center">11</td>
+    </tr>
+    </tbody>
+    </table>
+    <ol id="N6">
+      <li id="N7"><p>A</p></li>
+</ol>
+<requirement id="N8">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </requirement>
+<recommendation id="N9">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </requirement>
+<permission id="N10">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </requirement>
+    </clause>
+    <terms id="terms">
+<term id="_waxy_rice"><preferred>waxy rice</preferred>
+<termnote id="N5">
+  <p id="_b0cb3dfd-78fc-47dd-a339-84070d947463">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+</termnote></term>
+</terms>
+</sections>
+<bibliography><references id="_normative_references" obligation="informative"><title>Normative References</title>
+    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+<bibitem id="ISO712" type="standard">
+  <title format="text/plain">Cereals or cereal products</title>
+  <title type="main" format="text/plain">Cereals and cereal products</title>
+  <docidentifier type="ISO">ISO 712</docidentifier>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+    </organization>
+  </contributor>
+</bibitem>
+</references>
+</bibliography>
+</iso-standard>
+      INPUT
+expect(File.exist?("test.html")).to be true
+ html = File.read("test.html", encoding: "UTF-8").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
+   sub(%r{</main>.*$}m, "</main>").sub(%r{^.*?<div>}m, "<div>").sub(%r{</div>.*$}m, "</div>")
+    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      <div>
+    <h1 class='ForewordTitle'>Foreword</h1>
+    <p>
+      <a href='#scope'>Clause 1</a>
+      <a href='#terms'>Clause 3</a>
+      <a href='#_waxy_rice'>3.1</a>
+       Clause 1, Note Figure 1 Clause 1, Example Clause 1, Formula (1) Table 1
+      3.1, Note 1 Clause 1, List Clause 1 a) Clause 1, Requirement 1 Clause 1,
+      Recommendation 1 Clause 1, Permission 1
+      <a href='#ISO712'>ISO 712</a>
+    </p>
+  </div>
+OUTPUT
+    end
 end

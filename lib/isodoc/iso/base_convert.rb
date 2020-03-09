@@ -19,7 +19,6 @@ module IsoDoc
         title_attr = { class: "IntroTitle" }
         page_break(out)
         out.div **{ class: "Section3", id: f["id"] } do |div|
-          # div.h1 "Introduction", **attr_code(title_attr)
           clause_name(num, @introduction_lbl, div, title_attr)
           f.elements.each do |e|
             if e.name == "patent-notice"
@@ -204,6 +203,24 @@ module IsoDoc
       def clause_parse_title(node, div, c1, out)
         return inline_header_title(out, node, c1) if c1.nil?
         super
+      end
+
+      def cleanup(docxml)
+        super
+        remove_internal_hyperlinks(docxml)
+        docxml
+      end
+
+      def remove_internal_hyperlinks(docxml)
+        docxml.xpath("//a[@href]").each do |a|
+          next unless /^#/.match(a[:href])
+          anchor = a[:href].sub(/^#/, "")
+          next if a["epub:type"] == "footnote"
+          next unless @anchors[anchor]
+          next unless @anchors[anchor][:type]
+          next if @anchors[anchor][:type] == "clause"
+          a.replace(a.children)
+        end
       end
     end
   end
