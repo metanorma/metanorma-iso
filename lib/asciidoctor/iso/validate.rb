@@ -17,19 +17,19 @@ module Asciidoctor
           title = c.at("./title")
           location = c["id"] || c.text[0..60] + "..."
           location += ":#{title.text}" if c["id"] && !title.nil?
-          warn "ISO style: #{location}: subclause is only child"
+          @log.add("Style", nil, "#{location}: subclause is only child")
         end
       end
 
       def isosubgroup_validate(root)
         root.xpath("//technical-committee/@type").each do |t|
           unless %w{TC PC JTC JPC}.include? t.text
-            warn "ISO: invalid technical committee type #{t}"
+            @log.add("Document Attributes", nil, "invalid technical committee type #{t}")
           end
         end
         root.xpath("//subcommittee/@type").each do |t|
           unless %w{SC JSC}.include? t.text
-            warn "ISO: invalid subcommittee type #{t}"
+            @log.add("Document Attributes", nil, "invalid subcommittee type #{t}")
           end
         end
       end
@@ -42,7 +42,7 @@ module Asciidoctor
           next unless !preceding.nil? && /\b(see| refer to)\s*$/mi.match(preceding)
           (target = root.at("//*[@id = '#{t['target']}']")) || next
           if target&.at("./ancestor-or-self::*[@obligation = 'normative']")
-            warn "ISO: 'see #{t['target']}' is pointing to a normative section"
+            @log.add("Style", t, "'see #{t['target']}' is pointing to a normative section")
           end
         end
       end
@@ -53,12 +53,12 @@ module Asciidoctor
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? && /\b(see|refer to)\s*$/mi.match(preceding)
           unless target = root.at("//*[@id = '#{t['bibitemid']}']")
-            warn "ISO: '#{t} is not pointing to a real reference"
+            @log.add("Bibliography", t, "'#{t} is not pointing to a real reference")
             next
           end
           if target.at("./ancestor::references"\
               "[title = 'Normative References']")
-            warn "ISO: 'see #{t}' is pointing to a normative reference"
+            @log.add("Style", t, "'see #{t}' is pointing to a normative reference")
           end
         end
       end
@@ -68,15 +68,15 @@ module Asciidoctor
         root.xpath("//eref[locality]").each do |t|
           if /^(ISO|IEC)/.match t["citeas"]
             unless /:[ ]?(\d+{4}|–)$/.match t["citeas"]
-              warn "ISO: undated reference #{t['citeas']} should not contain "\
-                "specific elements"
+              @log.add("Style", t, "undated reference #{t['citeas']} should not contain "\
+                "specific elements")
             end
           end
         end
       end
 
-      def termdef_warn(text, re, term, msg)
-        re.match(text) && warn("ISO style: #{term}: #{msg}")
+      def termdef_warn(text, re, t, term, msg)
+        re.match(text) && @log.add("Style", t, "#{term}: #{msg}")
       end
 
       # ISO/IEC DIR 2, 16.5.6
@@ -84,9 +84,9 @@ module Asciidoctor
         xmldoc.xpath("//term").each do |t|
           para = t.at("./definition") || return
           term = t.at("./preferred").text
-          termdef_warn(para.text, /^(the|a)\b/i, term,
+          termdef_warn(para.text, /^(the|a)\b/i, t, term,
                        "term definition starts with article")
-          termdef_warn(para.text, /\.$/i, term,
+          termdef_warn(para.text, /\.$/i, t, term,
                        "term definition ends with period")
         end
         cited_term_style(xmldoc)
@@ -107,31 +107,31 @@ module Asciidoctor
         %w(international-standard technical-specification technical-report 
         publicly-available-specification international-workshop-agreement 
         guide).include? doctype or
-        warn "ISO Document Attributes: #{doctype} is not a recognised document type"
+        @log.add("Document Attributes", nil, "#{doctype} is not a recognised document type")
       end
 
       def script_validate(xmldoc)
         script = xmldoc&.at("//bibdata/script")&.text
         script == "Latn" or
-          warn "ISO Document Attributes: #{script} is not a recognised script"
+          @log.add("Document Attributes", nil, "#{script} is not a recognised script")
       end
 
       def stage_validate(xmldoc)
         stage = xmldoc&.at("//bibdata/status/stage")&.text
         %w(00 10 20 30 40 50 60 90 95).include? stage or
-          warn "ISO Document Attributes: #{stage} is not a recognised stage"
+          @log.add("Document Attributes", nil, "#{stage} is not a recognised stage")
       end
 
       def substage_validate(xmldoc)
         substage = xmldoc&.at("//bibdata/status/substage")&.text or return
         %w(00 20 60 90 92 93 98 99).include? substage or
-          warn "ISO Document Attributes: #{substage} is not a recognised substage"
+          @log.add("Document Attributes", nil, "#{substage} is not a recognised substage")
       end
 
       def iteration_validate(xmldoc)
         iteration = xmldoc&.at("//bibdata/status/iteration")&.text or return
         /^\d+/.match(iteration) or
-          warn "ISO Document Attributes: #{iteration} is not a recognised iteration"
+          @log.add("Document Attributes", nil, "#{iteration} is not a recognised iteration")
       end
 
       def bibdata_validate(doc)
@@ -163,8 +163,8 @@ module Asciidoctor
             found = true if /^ISO DATE:/.match n.text
           end
           found or
-            warn "Reference #{b&.at("./@id")&.text} does not have an "\
-          "associated footnote indicating unpublished status"
+            @log.add("Style", b, "Reference #{b&.at("./@id")&.text} does not have an "\
+          "associated footnote indicating unpublished status")
         end
       end
 
