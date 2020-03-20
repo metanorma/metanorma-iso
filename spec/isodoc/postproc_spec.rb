@@ -555,6 +555,14 @@ RSpec.describe IsoDoc do
                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
              </p>
              <div class="Section3"><a name="P" id="P"></a>
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (normative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                <div class="example"><a name="_63112cbc-cde0-435f-9553-e0b8c4f5851c" id="_63112cbc-cde0-435f-9553-e0b8c4f5851c"></a>
                  <p class="example"><span class="example_label">EXAMPLE  1</span><span style="mso-tab-count:1">&#xA0; </span>'1M', '01M', and '0001M' all describe the calendar month January.</p>
                </div>
@@ -592,10 +600,18 @@ RSpec.describe IsoDoc do
                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
              </p>
              <div class="Section3"><a name="P" id="P"></a>
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (normative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                <div class="figure"><a name="samplecode" id="samplecode"></a>
          <p class="MsoNormal">Hello</p>
          <p class="MsoNormal">Key</p>
-         <p class="MsoNormal"><b>Key</b></p><div class="figdl" style="page-break-after:avoid;"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
+         <p style='page-break-after:avoid;' class='MsoNormal'><b>Key</b></p><div class="figdl" style="page-break-after:avoid;"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
          <p class="FigureTitle" style="text-align:center;">Figure A.1</p></div>
              </div>
            </div>

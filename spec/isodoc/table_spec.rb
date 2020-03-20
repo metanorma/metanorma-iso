@@ -223,116 +223,67 @@ OUTPUT
     INPUT
 
        expect(File.exist?("test.doc")).to be true
-       html = File.read("test.doc").sub(/^.+?<table /m, '<table xmlns:m="m" ').sub(%r{</table>\s*</table>.*$}m, "</table></table>")
-       expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
-       <table xmlns:m='m' class='MsoISOTable' style='mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;' title='tool tip' summary='long desc'>
-         <a name='tableD-1' id='tableD-1'/>
-         <thead>
-           <tr>
-             <td rowspan='2' align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' valign="middle">Description</td>
-             <td colspan='4' align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;' valign="middle">Rice sample</td>
-           </tr>
-           <tr>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' valign="middle">Arborio</td>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' valign="middle">
-               Drago
-               <a href='#tableD-1a' class='TableFootnoteRef'>a)</a>
-             </td>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' valign="middle">
-               Balilla
-               <a href='#tableD-1a' class='TableFootnoteRef'>a)</a>
-             </td>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' valign="middle">Thaibonnet</td>
-           </tr>
-         </thead>
-         <tbody>
-           <tr>
-             <th align='left' style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Number of laboratories retained after eliminating outliers</th>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>13</td>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>11</td>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>13</td>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>13</td>
-           </tr>
-           <tr>
-             <td align='left' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>Mean value, g/100 g</td>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>81,2</td>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>82,0</td>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>81,8</td>
-             <td align='center' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>77,7</td>
-           </tr>
-         </tbody>
-         <tfoot>
-           <tr>
-             <td align='left' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;'>
-               Reproducibility limit,
-               <span class='stem'>
-                 <m:oMath>
-                   <m:r>
-                     <m:t>R</m:t>
-                   </m:r>
-                 </m:oMath>
-               </span>
-                (= 2,83
-               <span class='stem'>
-                 <m:oMath>
-                   <m:sSub>
-                     <m:e>
-                       <m:r>
-                         <m:t>s</m:t>
-                       </m:r>
-                     </m:e>
-                     <m:sub>
-                       <m:r>
-                         <m:t>R</m:t>
-                       </m:r>
-                     </m:sub>
-                   </m:sSub>
-                 </m:oMath>
-               </span>
-               )
-             </td>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;'>2,89</td>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;'>0,57</td>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;'>2,26</td>
-             <td align='center' style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;'>6,06</td>
-           </tr>
-           <tr>
-             <td colspan='5' style='border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
-               <div id='' class='Note'>
-                 <p class='Note'>
-                   <span class='note_label'>NOTE</span>
-                   <span style='mso-tab-count:1'>&#xA0; </span>
-                   This is a table about rice
-                 </p>
+       html = File.read("test.doc").sub(/^.+?<table /m, '<table xmlns:m="m" ').sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
+       expect(("<div>#{html}")).to be_equivalent_to xmlpp(<<~"OUTPUT")
+       <div><table xmlns:m="m" class="MsoISOTable" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" title="tool tip" summary="long desc"><a name="tableD-1" id="tableD-1"></a>
+                   <thead>
+                     <tr>
+                       <td rowspan="2" align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Description</td>
+                       <td colspan="4" align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;" valign="middle">Rice sample</td>
+                     </tr>
+                     <tr>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Arborio</td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Drago<a href="#tableD-1a" class="TableFootnoteRef">a)</a></td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Balilla<a href="#tableD-1a" class="TableFootnoteRef">a)</a></td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Thaibonnet</td>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <tr>
+                       <th align="left" style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">Number of laboratories retained after eliminating outliers</th>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">13</td>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">11</td>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">13</td>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;">13</td>
+                     </tr>
+                     <tr>
+                       <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">Mean value, g/100 g</td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">81,2</td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">82,0</td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">81,8</td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">77,7</td>
+                     </tr>
+                   </tbody>
+                   <tfoot>
+                     <tr>
+                       <td align="left" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">Reproducibility limit, <span class="stem"><m:oMath>
+         <m:r><m:t>R</m:t></m:r>
+       </m:oMath>
+       </span> (= 2,83 <span class="stem"><m:oMath>
+         <m:sSub><m:e><m:r><m:t>s</m:t></m:r></m:e><m:sub><m:r><m:t>R</m:t></m:r></m:sub></m:sSub>
+       </m:oMath>
+       </span>)</td>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">2,89</td>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">0,57</td>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">2,26</td>
+                       <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">6,06</td>
+                     </tr>
+                   <tr><td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;"><div id="" class="Note">
+                     <p class="Note"><span class="note_label">NOTE</span><span style="mso-tab-count:1">&#xA0; </span>This is a table about rice</p>
+                   </div><div class="TableFootnote"><div><a name="ftntableD-1a" id="ftntableD-1a"></a>
+         <p class="TableFootnote"><a name="_0fe65e9a-5531-408e-8295-eeff35f41a55" id="_0fe65e9a-5531-408e-8295-eeff35f41a55"></a><span><span class="TableFootnoteRef"><a name="tableD-1a" id="tableD-1a"></a>a)</span><span style="mso-tab-count:1">&#xA0; </span></span>Parboiled rice.</p>
+       </div></div></td></tr></tfoot>
+
+
+                 </table><table class="dl">
+                     <tr>
+                       <td valign="top" align="left">
+                         <p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal">Drago</p>
+                       </td>
+                       <td valign="top">A type of rice</td>
+                     </tr>
+                   </table>
                </div>
-               <div class='TableFootnote'>
-                 <div>
-                   <a name='ftntableD-1a' id='ftntableD-1a'/>
-                   <p class='TableFootnote'>
-                     <a name='_0fe65e9a-5531-408e-8295-eeff35f41a55' id='_0fe65e9a-5531-408e-8295-eeff35f41a55'/>
-                     <span>
-                       <span class='TableFootnoteRef'>
-                         <a name='tableD-1a' id='tableD-1a'/>
-                         a)
-                       </span>
-                       <span style='mso-tab-count:1'>&#xA0; </span>
-                     </span>
-                     Parboiled rice.
-                   </p>
-                 </div>
-               </div>
-             </td>
-           </tr>
-         </tfoot>
-         <table class='dl'>
-           <tr>
-             <td valign='top' align='left'>
-               <p align='left' style='margin-left:0pt;text-align:left;' class='MsoNormal'>Drago</p>
-             </td>
-             <td valign='top'>A type of rice</td>
-           </tr>
-         </table>
-       </table>
 OUTPUT
 end
 end
