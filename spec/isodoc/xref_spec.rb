@@ -91,6 +91,14 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                  <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <div id="AN" class="Note"><p><span class="note_label">NOTE</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
            </div>
@@ -205,6 +213,14 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                  <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
                <div id="AN" class="figure">
 
@@ -318,6 +334,14 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                  <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
          </div>
                  <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
@@ -426,6 +450,14 @@ RSpec.describe IsoDoc do
       </div>
       <br/>
       <div id="annex1" class="Section3">
+      <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
         <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
         <div id="AN" class="example"><p><span class="example_label">EXAMPLE</span>&#160; Hello</p></div>
     </div>
@@ -540,6 +572,14 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                  <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <div id="AN" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.1)</p></div>
            </div>
@@ -692,6 +732,14 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                  <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <p class="TableTitle" style="text-align:center;">Table A.1&#160;&#8212; Repeatability and reproducibility of husked rice yield</p><table id="AN" class="MsoISOTable" style="border-width:1px;border-spacing:0;"><tbody><tr><td style="text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">Number of laboratories retained after eliminating outliers</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">13</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">11</td></tr></tbody></table>
        </div>
@@ -1025,6 +1073,14 @@ Text</div>
              </div>
              <br/>
              <div id="annex1" class="Section3">
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <ol type="a" id="AN">
          <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
@@ -1131,6 +1187,14 @@ Text</div>
              </div>
              <br/>
              <div id="annex1" class="Section3">
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <ol type="a" id="ANl">
          <li id="AN"><p>A</p></li>

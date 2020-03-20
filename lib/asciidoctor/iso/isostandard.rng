@@ -73,6 +73,19 @@
         </choice>
       </element>
     </define>
+    <define name="ul">
+      <element name="ul">
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+        <oneOrMore>
+          <ref name="ul_li"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="note"/>
+        </zeroOrMore>
+      </element>
+    </define>
     <define name="sections">
       <element name="sections">
         <ref name="clause"/>
@@ -325,6 +338,51 @@
         </oneOrMore>
       </choice>
     </define>
+    <define name="table">
+      <element name="table">
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+        <optional>
+          <attribute name="width"/>
+        </optional>
+        <optional>
+          <attribute name="unnumbered">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="subsequence"/>
+        </optional>
+        <optional>
+          <attribute name="alt"/>
+        </optional>
+        <optional>
+          <attribute name="summary"/>
+        </optional>
+        <optional>
+          <attribute name="uri">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <optional>
+          <ref name="tname"/>
+        </optional>
+        <optional>
+          <ref name="thead"/>
+        </optional>
+        <ref name="tbody"/>
+        <optional>
+          <ref name="tfoot"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="table-note"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="dl"/>
+        </optional>
+      </element>
+    </define>
   </include>
   <!-- end overrides -->
   <!--
@@ -429,6 +487,28 @@
   <define name="annex-appendix">
     <element name="appendix">
       <ref name="Clause-Section"/>
+    </element>
+  </define>
+  <define name="ul_li">
+    <element name="li">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="uncheckedcheckbox">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="checkedcheckbox">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="paragraph-with-footnote"/>
+      </oneOrMore>
     </element>
   </define>
 </grammar>

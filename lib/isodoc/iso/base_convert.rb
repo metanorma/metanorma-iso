@@ -230,6 +230,17 @@ module IsoDoc
           th["valign"] = "middle"
         end
       end
+
+      def hierarchical_formula_names(clause, num)
+      c = IsoDoc::Function::XrefGen::Counter.new
+       clause.xpath(ns(".//formula")).each do |t|
+         next if t["id"].nil? || t["id"].empty?
+         @anchors[t["id"]] =
+           anchor_struct("#{num}#{hiersep}#{c.increment(t).print}", t,
+                         t["inequality"] ? @inequality_lbl : @formula_lbl,
+                         "formula", t["unnumbered"])
+       end
+      end
     end
   end
 end
