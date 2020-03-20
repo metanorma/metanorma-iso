@@ -17,29 +17,29 @@ module Asciidoctor
       def foreword_validate(root)
         f = root.at("//foreword") || return
         s = f.at("./clause")
-        warn "ISO style: foreword contains subclauses" unless s.nil?
+        @log.add("Style", f, "foreword contains subclauses") unless s.nil?
       end
 
       # ISO/IEC DIR 2, 15.4
       def normref_validate(root)
         f = root.at("//references[title = 'Normative References']") || return
         f.at("./references | ./clause") &&
-          warn("ISO style: normative references contains subclauses")
+          @log.add("Style", f, "normative references contains subclauses")
       end
 
-      ONE_SYMBOLS_WARNING = "ISO style: only one Symbols and Abbreviated "\
+      ONE_SYMBOLS_WARNING = "Only one Symbols and Abbreviated "\
         "Terms section in the standard".freeze
 
-      NON_DL_SYMBOLS_WARNING = "ISO style: Symbols and Abbreviated Terms can "\
+      NON_DL_SYMBOLS_WARNING = "Symbols and Abbreviated Terms can "\
         "only contain a definition list".freeze
 
       def symbols_validate(root)
         f = root.xpath("//definitions")
         f.empty? && return
-        (f.size == 1) || warn(ONE_SYMBOLS_WARNING)
+        (f.size == 1) || @log.add("Style", f.first, ONE_SYMBOLS_WARNING)
         f.first.elements.each do |e|
           unless e.name == "dl"
-            warn(NON_DL_SYMBOLS_WARNING)
+            @log.add("Style", f.first, NON_DL_SYMBOLS_WARNING)
             return
           end
         end
@@ -48,7 +48,7 @@ module Asciidoctor
       def seqcheck(names, msg, accepted)
         n = names.shift
         unless accepted.include? n
-          warn "ISO style: #{msg}"
+          @log.add("Style", nil, msg)
           names = []
         end
         names
@@ -109,46 +109,46 @@ module Asciidoctor
           n = names.shift || return
         end
         unless n
-          warn "ISO style: Document must contain at least one clause"
+          @log.add("Style", nil, "Document must contain at least one clause")
           return
         end
         n[:tag] == "clause" ||
-          warn("ISO style: Document must contain clause after "\
+          @log.add("Style", nil, "Document must contain clause after "\
                "Terms and Definitions")
         n == { tag: "clause", title: "Scope" } &&
-          warn("ISO style: Scope must occur before Terms and Definitions")
+          @log.add("Style", nil, "Scope must occur before Terms and Definitions")
         n = names.shift || return
         while n[:tag] == "clause"
           n[:title] == "Scope" &&
-            warn("ISO style: Scope must occur before Terms and Definitions")
+            @log.add("Style", nil, "Scope must occur before Terms and Definitions")
           n = names.shift || return
         end
         unless n[:tag] == "annex" || n[:tag] == "references"
-          warn "ISO style: Only annexes and references can follow clauses"
+          @log.add("Style", nil, "Only annexes and references can follow clauses")
         end
         while n[:tag] == "annex"
           n = names.shift
           if n.nil?
-            warn("ISO style: Document must include (references) "\
+            @log.add("Style", nil, "Document must include (references) "\
                  "Normative References")
             return
           end
         end
         n == { tag: "references", title: "Normative References" } ||
-          warn("ISO style: Document must include (references) "\
+          @log.add("Style", nil, "Document must include (references) "\
                "Normative References")
         n = names.shift
         n == { tag: "references", title: "Bibliography" } ||
-          warn("ISO style: Final section must be (references) Bibliography")
+          @log.add("Style", nil, "Final section must be (references) Bibliography")
         names.empty? ||
-          warn("ISO style: There are sections after the final Bibliography")
+          @log.add("Style", nil, "There are sections after the final Bibliography")
       end
 
       def style_warning(node, msg, text = nil)
         return if @novalid
-        w = "ISO style: WARNING (#{Standoc::Utils::current_location(node)}): #{msg}"
+        w = msg
         w += ": #{text}" if text
-        warn w
+        @log.add("Style", node, w)
       end
 
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
@@ -174,7 +174,7 @@ module Asciidoctor
       def norm_bibitem_style(root)
         root.xpath(NORM_BIBITEMS).each do |b|
           if b.at(Standoc::Converter::ISO_PUBLISHER_XPATH).nil?
-            Standoc::Utils::warning(b, NORM_ISO_WARN, b.text)
+            @log.add("Style", b, "#{NORM_ISO_WARN}: #{b.text}")
           end
         end
       end

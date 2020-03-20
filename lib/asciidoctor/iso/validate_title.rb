@@ -7,10 +7,10 @@ module Asciidoctor
         title_intro_en = root.at("//title[@type='title-intro' and @language='en']")
         title_intro_fr = root.at("//title[@type='title-intro' and @language='fr']")
         if title_intro_en.nil? && !title_intro_fr.nil?
-          warn "No English Title Intro!"
+          @log.add("Style", title_intro_fr, "No English Title Intro!")
         end
         if !title_intro_en.nil? && title_intro_fr.nil?
-          warn "No French Title Intro!"
+          @log.add("Style", title_intro_en, "No French Title Intro!")
         end
       end
 
@@ -18,10 +18,10 @@ module Asciidoctor
         title_main_en = root.at("//title[@type='title-main' and @language='en']")
         title_main_fr = root.at("//title[@type='title-main' and @language='fr']")
         if title_main_en.nil? && !title_main_fr.nil?
-          warn "No English Title!"
+          @log.add("Style", title_main_fr, "No English Title!")
         end
         if !title_main_en.nil? && title_main_fr.nil?
-          warn "No French Title!"
+          @log.add("Style", title_main_en, "No French Title!")
         end
       end
 
@@ -29,9 +29,9 @@ module Asciidoctor
         title_part_en = root.at("//title[@type='title-part' and @language='en']")
         title_part_fr = root.at("//title[@type='title-part' and @language='fr']")
         (title_part_en.nil? && !title_part_fr.nil?) &&
-          warn("No English Title Part!")
+          @log.add("Style", title_part_fr, "No English Title Part!")
         (!title_part_en.nil? && title_part_fr.nil?) &&
-          warn("No French Title Part!")
+          @log.add("Style", title_part_en, "No French Title Part!")
       end
 
       # ISO/IEC DIR 2, 11.4
@@ -41,7 +41,7 @@ module Asciidoctor
         iec = root.at("//bibdata/contributor[role/@type = 'publisher']/"\
                       "organization[abbreviation = 'IEC' or "\
                       "name = 'International Electrotechnical Commission']")
-        warn("Subpart defined on non-IEC document!") if subpart && !iec
+        @log.add("Style", docid, "Subpart defined on non-IEC document!") if subpart && !iec
       end
 
       # ISO/IEC DIR 2, 11.5.2
@@ -50,11 +50,11 @@ module Asciidoctor
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
         title_main_en = root.at("//title[@type='title-main' and @language='en']")
         if !title_main_en.nil? && doctypes.match(title_main_en.text)
-          warn "Main Title may name document type"
+          @log.add("Style", title_main_en, "Main Title may name document type")
         end
         title_intro_en = root.at("//title[@type='title-intro' and @language='en']")
         if !title_intro_en.nil? && doctypes.match(title_intro_en.text)
-          warn "Title Intro may name document type"
+          @log.add("Style", title_intro_en, "Title Intro may name document type")
         end
       end
 
@@ -65,7 +65,7 @@ module Asciidoctor
           s.xpath("./clause | ./terms | ./references").each do |ss|
             subtitle = ss.at("./title")
             !subtitle.nil? && !subtitle&.text&.empty? ||
-              warn("#{title}: each first-level subclause must have a title")
+              @log.add("Style", ss, "#{title}: each first-level subclause must have a title")
           end
         end
       end
@@ -82,7 +82,7 @@ module Asciidoctor
           withtitle = withtitle || (subtitle && !subtitle.text.empty?)
         end
         notitle && withtitle &&
-          warn("#{label}: all subclauses must have a title, or none")
+          @log.add("Style", nil, "#{label}: all subclauses must have a title, or none")
       end
 
       def title_validate(root)
