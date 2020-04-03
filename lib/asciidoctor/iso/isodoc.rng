@@ -101,9 +101,7 @@
         <ref name="structuredidentifier"/>
       </zeroOrMore>
     </define>
-    <define name="TitleType">
-      <text/>
-    </define>
+    <!-- TitleType = text -->
     <define name="sections">
       <element name="sections">
         <oneOrMore>

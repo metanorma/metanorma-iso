@@ -703,21 +703,11 @@
   </define>
   <define name="TypedTitleString">
     <optional>
-      <attribute name="type">
-        <ref name="TitleType"/>
-      </attribute>
+      <attribute name="type"/>
     </optional>
     <ref name="FormattedString"/>
   </define>
-  <define name="TitleType">
-    <choice>
-      <value>alternative</value>
-      <value>original</value>
-      <value>unofficial</value>
-      <value>subtitle</value>
-      <value>main</value>
-    </choice>
-  </define>
+  <!-- TitleType = ( "alternative" | "original" | "unofficial" | "subtitle" | "main" ) -->
   <define name="TypedUri">
     <optional>
       <attribute name="type"/>

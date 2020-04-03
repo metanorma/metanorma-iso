@@ -224,8 +224,8 @@ OUTPUT
 
        expect(File.exist?("test.doc")).to be true
        html = File.read("test.doc").sub(/^.+?<table /m, '<table xmlns:m="m" ').sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
-       expect(("<div>#{html}")).to be_equivalent_to xmlpp(<<~"OUTPUT")
-       <div><table xmlns:m="m" class="MsoISOTable" style="mso-table-lspace:15.0cm;margin-left:423.0pt;mso-table-rspace:15.0cm;margin-right:423.0pt;mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" title="tool tip" summary="long desc"><a name="tableD-1" id="tableD-1"></a>
+       expect(xmlpp("<div>#{html}")).to be_equivalent_to xmlpp(<<~"OUTPUT")
+       <div><table xmlns:m="m" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" title="tool tip" summary="long desc"><a name="tableD-1" id="tableD-1"></a>
                    <thead>
                      <tr>
                        <td rowspan="2" align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Description</td>

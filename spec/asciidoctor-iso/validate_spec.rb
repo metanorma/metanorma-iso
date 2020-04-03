@@ -238,7 +238,7 @@ it "warns that term source is not a real reference" do
   [.source]
   <<iso123>>
   INPUT
-    expect(File.read("test.err")).to include "iso123 is not a real reference"
+    expect(File.read("test.err")).to include "iso123 does not have a corresponding anchor ID in the bibliography"
 end
 
 it "warns that undated reference has locality" do
