@@ -66,7 +66,7 @@ module Asciidoctor
       def id_stage_prefix(dn, node)
         stage = get_stage(node)
         substage = get_substage(node)
-        if stage && (stage.to_i < 60 || stage.to_i == 60 && substage.to_i < 60)
+        if stage && (stage.to_i < 60)
           abbr = id_stage_abbr(stage, substage, node)
           dn = "/#{abbr} #{dn}" unless abbr.nil? || abbr.empty? # prefixes added in cleanup
         else

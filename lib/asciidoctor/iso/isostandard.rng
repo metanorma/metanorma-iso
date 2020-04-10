@@ -43,6 +43,9 @@
         <ref name="ics"/>
       </zeroOrMore>
       <ref name="structuredidentifier"/>
+      <optional>
+        <ref name="stagename"/>
+      </optional>
     </define>
     <define name="bdate">
       <element name="date">
@@ -509,6 +512,11 @@
       <oneOrMore>
         <ref name="paragraph-with-footnote"/>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="stagename">
+    <element name="stagename">
+      <text/>
     </element>
   </define>
 </grammar>

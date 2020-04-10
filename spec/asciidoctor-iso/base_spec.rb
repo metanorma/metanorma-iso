@@ -422,8 +422,8 @@ OUTPUT
     INPUT
 <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO/PRF 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO/PRF 1000 (E)</docidentifier>
+  <docidentifier type="iso">ISO 1000</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO 1000 (E)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>

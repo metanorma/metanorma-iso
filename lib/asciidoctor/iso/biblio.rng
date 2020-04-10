@@ -49,11 +49,17 @@
   </define>
   <define name="stage">
     <element name="stage">
+      <optional>
+        <attribute name="abbreviation"/>
+      </optional>
       <text/>
     </element>
   </define>
   <define name="substage">
     <element name="substage">
+      <optional>
+        <attribute name="abbreviation"/>
+      </optional>
       <text/>
     </element>
   </define>
