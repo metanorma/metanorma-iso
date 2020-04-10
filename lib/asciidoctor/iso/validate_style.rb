@@ -8,7 +8,7 @@ module Asciidoctor
       def extract_text(node)
         return "" if node.nil?
         node1 = Nokogiri::XML.fragment(node.to_s)
-        node1.xpath("//link | //locality").each(&:remove)
+        node1.xpath("//link | //locality | //localityStack").each(&:remove)
         ret = ""
         node1.traverse { |x| ret += x.text if x.text? }
         ret

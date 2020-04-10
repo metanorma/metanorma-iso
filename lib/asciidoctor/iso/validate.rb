@@ -65,7 +65,7 @@ module Asciidoctor
 
       # ISO/IEC DIR 2, 10.4
       def locality_erefs_validate(root)
-        root.xpath("//eref[locality]").each do |t|
+        root.xpath("//eref[descendant::locality]").each do |t|
           if /^(ISO|IEC)/.match t["citeas"]
             unless /:[ ]?(\d+{4}|–)$/.match t["citeas"]
               @log.add("Style", t, "undated reference #{t['citeas']} should not contain "\
