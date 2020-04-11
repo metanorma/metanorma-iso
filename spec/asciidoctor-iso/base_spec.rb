@@ -124,7 +124,7 @@ RSpec.describe Asciidoctor::ISO do
          <language>en</language>
          <script>Latn</script>
          <status>
-           <stage>10</stage>
+           <stage abbreviation="NWIP">10</stage>
            <substage>20</substage>
            <iteration>3</iteration>
          </status>
@@ -160,6 +160,7 @@ RSpec.describe Asciidoctor::ISO do
 <structuredidentifier>
   <project-number part="1">ISO 1000</project-number>
 </structuredidentifier>
+<stagename>New work item proposal</stagename>
        </ext>
        </bibdata>
        <sections/>
@@ -235,7 +236,7 @@ RSpec.describe Asciidoctor::ISO do
          <language>el</language>
          <script>Grek</script>
          <status>
-           <stage>60</stage>
+           <stage abbreviation="IS">60</stage>
            <substage>60</substage>
          </status>
          <copyright>
@@ -274,6 +275,7 @@ RSpec.describe Asciidoctor::ISO do
          <structuredidentifier>
            <project-number part="1" subpart="1">ISO/IEC/IETF 1000</project-number>
          </structuredidentifier>
+         <stagename>International standard</stagename>
          </ext>
        </bibdata>
        <sections/>
@@ -316,7 +318,7 @@ RSpec.describe Asciidoctor::ISO do
   <language>fr</language>
   <script>Latn</script>
   <status>
-    <stage>50</stage>
+    <stage abbreviation="FDIS">50</stage>
     <substage>00</substage>
   </status>
   <copyright>
@@ -338,6 +340,7 @@ RSpec.describe Asciidoctor::ISO do
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
+    <stagename>Final draft international standard</stagename>
   </ext>
 </bibdata>
 <sections/>
@@ -379,7 +382,7 @@ OUTPUT
   <language>en</language>
   <script>Latn</script>
   <status>
-    <stage>60</stage>
+    <stage abbreviation="IS">60</stage>
     <substage>60</substage>
   </status>
   <copyright>
@@ -401,6 +404,7 @@ OUTPUT
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
+    <stagename>International standard</stagename>
   </ext>
 </bibdata>
 <sections/>
@@ -443,7 +447,7 @@ OUTPUT
   <language>en</language>
   <script>Latn</script>
   <status>
-    <stage>60</stage>
+    <stage abbreviation="PRF">60</stage>
     <substage>00</substage>
   </status>
   <copyright>
@@ -465,6 +469,7 @@ OUTPUT
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
+    <stagename>Proof</stagename>
   </ext>
 </bibdata>
 <sections/>

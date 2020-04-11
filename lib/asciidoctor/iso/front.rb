@@ -9,6 +9,41 @@ require "pp"
 module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
+       STAGE_ABBRS = {
+        "00": "PWI",
+        "10": "NWIP",
+        "20": "WD",
+        "30": "CD",
+        "40": "DIS",
+        "50": "FDIS",
+        "60": "IS",
+        "90": "(Review)",
+        "95": "(Withdrawal)",
+      }.freeze
+
+       STAGE_NAMES = {
+        "00": "Preliminary work item",
+        "10": "New work item proposal",
+        "20": "Working draft",
+        "30": "Committee draft",
+        "40": "Draft international standard",
+        "50": "Final draft international standard",
+        "60": "International standard",
+        "90": "Review",
+        "95": "Withdrawal",
+      }.freeze
+
+      def stage_abbr(stage, substage)
+        return nil if stage.to_i > 60
+        return "PRF" if stage == "60" && substage == "00"
+        STAGE_ABBRS[stage.to_sym]
+      end
+
+      def stage_name(stage, substage)
+        return "Proof" if stage == "60" && substage == "00"
+        STAGE_NAMES[stage.to_sym]
+      end
+
       def metadata_id(node, xml)
         iso_id(node, xml)
         node&.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
@@ -40,6 +75,7 @@ module Asciidoctor
       def metadata_ext(node, xml)
         super
         structured_id(node, xml)
+        xml.stagename stage_name(get_stage(node), get_substage(node))
       end
 
       def structured_id(node, xml)
@@ -59,7 +95,7 @@ module Asciidoctor
 
       def id_stage_abbr(stage, substage, node)
         IsoDoc::Iso::Metadata.new("en", "Latn", {}).
-          status_abbrev(stage, substage, node.attr("iteration"),
+          status_abbrev(stage_abbr(stage, substage), substage, node.attr("iteration"),
                        node.attr("draft"))
       end
 
@@ -131,9 +167,11 @@ module Asciidoctor
       end
 
       def metadata_status(node, xml)
+        stage = get_stage(node)
+        substage = get_substage(node)
         xml.status do |s|
-          s.stage get_stage(node)
-          s.substage get_substage(node)
+          s.stage stage, **attr_code(abbreviation: stage_abbr(stage, substage))
+          s.substage substage
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end
       end

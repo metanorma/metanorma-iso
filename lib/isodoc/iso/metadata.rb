@@ -16,26 +16,8 @@ module IsoDoc
       }
       end
 
-      STAGE_ABBRS = {
-        "00": "PWI",
-        "10": "NWIP",
-        "20": "WD",
-        "30": "CD",
-        "40": "DIS",
-        "50": "FDIS",
-        "60": "IS",
-        "90": "(Review)",
-        "95": "(Withdrawal)",
-      }.freeze
-
-      def stage_abbr(stage)
-        self.class::STAGE_ABBRS[stage.to_sym] || "??"
-      end
-
       def status_abbrev(stage, substage, iter, draft)
         return "" unless stage
-        stage = self.class::STAGE_ABBRS[stage.to_sym] || "??"
-        stage = "PRF" if stage == "IS" && substage == "00"
         stage += iter if iter
         stage = "Pre" + stage if draft =~ /^0\./
         stage
@@ -48,12 +30,12 @@ module IsoDoc
           set(:stage, docstatus.text)
           set(:stage_int, docstatus.text.to_i)
           set(:unpublished, unpublished(docstatus.text))
-          set(:statusabbr, status_abbrev(docstatus.text,
+          set(:statusabbr, status_abbrev(docstatus["abbreviation"] || "??",
                                          isoxml&.at(ns("//bibdata/status/substage"))&.text,
                                          isoxml&.at(ns("//bibdata/status/iteration"))&.text,
                                          isoxml&.at(ns("//version/draft"))&.text))
           unpublished(docstatus.text) and
-            set(:stageabbr, stage_abbr(docstatus.text))
+            set(:stageabbr, docstatus["abbreviation"])
         end
         revdate = isoxml.at(ns("//version/revision-date"))
         set(:revdate, revdate&.text)

@@ -1058,9 +1058,11 @@
       <attribute name="type">
         <ref name="DocRelationType"/>
       </attribute>
-      <element name="description">
-        <ref name="FormattedString"/>
-      </element>
+      <optional>
+        <element name="description">
+          <ref name="FormattedString"/>
+        </element>
+      </optional>
       <element name="bibitem">
         <ref name="BibliographicItem"/>
       </element>

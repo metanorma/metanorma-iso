@@ -46,7 +46,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
   <language>en</language>
   <script>Latn</script>
   <status>
-    <stage>30</stage>
+    <stage abbreviation="CD">30</stage>
     <substage>92</substage>
     <iteration>3</iteration>
   </status>
@@ -69,6 +69,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
   <structuredidentifier>
     <project-number part="1">ISO/PreCD3 17301</project-number>
   </structuredidentifier>
+  <stagename>Committee draft</stagename>
   </ext>
 </bibdata>
 </iso-standard>
@@ -120,7 +121,7 @@ OUTPUT
   <language>en</language>
   <script>Latn</script>
   <status>
-    <stage>60</stage>
+    <stage abbreviation="IS">60</stage>
     <substage>92</substage>
   </status>
   <copyright>
@@ -147,6 +148,7 @@ OUTPUT
     <structuredidentifier>
     <project-number part="1" subpart="3">ISO/IEC/CD 17301</project-number>
   </strucuredidentifier>
+  <stagename>International standard</stagename>
   </ext>
 </bibdata>
 </iso-standard>
