@@ -91,9 +91,9 @@ module IsoDoc
         end
       end
 
-      def eref_localities1_zh(target, type, from, to)
+      def eref_localities1_zh(target, type, from, to, delim)
         subsection = from&.text&.match(/\./)
-        ret = type == "list" ? "" : ","
+        ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{to}" if to
         loc = (@locality[type] || type.sub(/^locality:/, "").capitalize )
@@ -103,11 +103,11 @@ module IsoDoc
         ret
       end
 
-      def eref_localities1(target, type, from, to, lang = "en")
+      def eref_localities1(target, type, from, to, delim, lang = "en")
         subsection = from&.text&.match(/\./)
         type = type.downcase
-        return l10n(eref_localities1_zh(target, type, from, to)) if lang == "zh"
-        ret = type == "list" ? "" : ","
+        return l10n(eref_localities1_zh(target, type, from, to, delim)) if lang == "zh"
+        ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         loc = @locality[type] || type.sub(/^locality:/, "").capitalize
         ret += " #{loc}" unless subsection && type == "clause" ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/)

@@ -225,7 +225,10 @@ RSpec.describe Asciidoctor::ISO do
       <preface><foreword id='_' obligation="informative">
         <title>Foreword</title>
         <p id="_">
-        <eref type="inline" bibitemid="iso216" citeas="ISO 216"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>the reference</eref>
+        <eref type="inline" bibitemid="iso216" citeas="ISO 216">
+        <localityStack>
+        <locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>
+        </localityStack>the reference</eref>
         </p>
       </foreword></preface><sections>
       </sections><bibliography><references id="_" obligation="informative">
@@ -302,7 +305,11 @@ RSpec.describe Asciidoctor::ISO do
          <term id="_">
          <preferred>Term1</preferred>
          <termsource status="identical">
-         <origin bibitemid="ISO2191" type="inline" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></origin>
+         <origin bibitemid="ISO2191" type="inline" citeas="">
+         <localityStack>
+        <locality type="section"><referenceFrom>1</referenceFrom></locality>
+         </localityStack>
+        </origin>
        </termsource>
        </term>
        </terms>
