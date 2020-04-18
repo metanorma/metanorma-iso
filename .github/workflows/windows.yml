@@ -27,15 +27,14 @@ jobs:
         run: |
           gem install bundler
           bundle config --local path vendor/bundle
-          bundle update
           bundle install --jobs 4 --retry 3
       - name: Use Node
         uses: actions/setup-node@v1
         with:
-          node-version: '8'
+          node-version: '12'
       - name: Install Puppeteer
         run: |
-          npm install -g puppeteer
+          npm install -g puppeteer@3.0.0
       - name: Install PlantUML
         run: |
           cinst -y plantuml
