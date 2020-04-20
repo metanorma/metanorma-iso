@@ -303,8 +303,23 @@
         <ref name="paragraph"/>
       </element>
     </define>
+    <define name="TextElement" combine="choice">
+      <ref name="concept"/>
+    </define>
   </include>
   <!-- end overrides -->
+  <define name="concept">
+    <element name="concept">
+      <optional>
+        <attribute name="term"/>
+      </optional>
+      <choice>
+        <ref name="eref"/>
+        <ref name="xref"/>
+        <ref name="termref"/>
+      </choice>
+    </element>
+  </define>
   <define name="BasicBlock" combine="choice">
     <choice>
       <ref name="requirement"/>
@@ -911,12 +926,24 @@
   </define>
   <define name="origin">
     <element name="origin">
-      <ref name="erefType"/>
+      <choice>
+        <ref name="erefType"/>
+        <ref name="termref"/>
+      </choice>
     </element>
   </define>
   <define name="modification">
     <element name="modification">
       <ref name="paragraph"/>
+    </element>
+  </define>
+  <define name="termref">
+    <element name="termref">
+      <attribute name="base"/>
+      <attribute name="target"/>
+      <optional>
+        <text/>
+      </optional>
     </element>
   </define>
   <define name="structuredidentifier">
