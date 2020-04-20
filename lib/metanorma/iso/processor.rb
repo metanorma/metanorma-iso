@@ -2,6 +2,10 @@ require "metanorma/processor"
 
 module Metanorma
   module Iso
+    def self.pdf_fonts
+      ["Cambria", "Times New Roman", "Cambria Math", "HanSans", "Courier"]
+    end
+
     class Processor < Metanorma::Processor
 
       def initialize
