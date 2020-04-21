@@ -293,29 +293,154 @@ RSpec.describe IsoDoc do
              <div id="A">
                <h1>1&#xA0; Clause 4</h1>
                <a rel="footnote" href="#fn:3" epub:type="footnote" id="fnref:1">
-                 <sup>1</sup>
+                 <sup>1)</sup>
                </a>
                <div id="N">
 
-                <h2>1.1&#xA0; Introduction to this<a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2</sup></a></h2>
+                <h2>1.1&#xA0; Introduction to this<a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2)</sup></a></h2>
               </div>
                <div id="O">
                 <h2>1.2&#xA0; Clause 4.2</h2>
-                <p>A<a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2</sup></a></p>
+                <p>A<a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2)</sup></a></p>
               </div>
              </div>
              <aside id="fn:3" class="footnote">
          <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:3" epub:type="footnote">
-                 <sup>1</sup>
+                 <sup>1)</sup>
                </a>This is a footnote.</p>
        <a href="#fnref:1">&#x21A9;</a></aside>
              <aside id="fn:2" class="footnote">
-         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2</sup></a>Formerly denoted as 15 % (m/m).</p>
+         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2)</sup></a>Formerly denoted as 15 % (m/m).</p>
        <a href="#fnref:2">&#x21A9;</a></aside>
 
            </main>
     OUTPUT
   end
+
+    it "renders footnote numbers in Word" do
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <sections>
+               <clause id="A" inline-header="false" obligation="normative"><title>Clause 4</title><fn reference="3">
+  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
+</fn><clause id="N" inline-header="false" obligation="normative">
+
+         <title>Introduction to this<fn reference="2">
+  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
+</fn></title>
+       </clause>
+       <clause id="O" inline-header="false" obligation="normative">
+         <title>Clause 4.2</title>
+         <p>A<fn reference="1">
+  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
+</fn></p>
+       </clause></clause>
+        </sections>
+        </iso-standard>
+    INPUT
+    html = File.read("test.doc", encoding: "UTF-8").sub(/^.*<div class="WordSection3"/m, '<body xmlns:epub="epub"><div class="WordSection3"').
+      sub(%r{</body>.*$}m, "</body>").gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
+    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+     <body xmlns:epub='epub'>
+         <div class='WordSection3'>
+           <p class='zzSTDTitle1'/>
+           <div>
+             <a name='A' id='A'/>
+             <h1>
+               1
+               <span style='mso-tab-count:1'>&#xA0; </span>
+               Clause 4
+             </h1>
+             <span style='mso-bookmark:_Ref'>
+               <a href='#_ftn1' epub:type='footnote' style='mso-footnote-id:ftn1' name='_ftnref1' title='' id='_ftnref1'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+             </span>
+             <div>
+               <a name='N' id='N'/>
+               <h2>
+                 1.1
+                 <span style='mso-tab-count:1'>&#xA0; </span>
+                 Introduction to this
+                 <span style='mso-bookmark:_Ref'>
+                   <a href='#_ftn2' epub:type='footnote' style='mso-footnote-id:ftn2' name='_ftnref2' title='' id='_ftnref2'>
+                     <span class='MsoFootnoteReference'>
+                       <span style='mso-special-character:footnote'/>
+                     </span>
+                     <span class='MsoFootnoteReference'>)</span>
+                   </a>
+                 </span>
+               </h2>
+             </div>
+             <div>
+               <a name='O' id='O'/>
+               <h2>
+                 1.2
+                 <span style='mso-tab-count:1'>&#xA0; </span>
+                 Clause 4.2
+               </h2>
+               <p class='MsoNormal'>
+                 A
+                 <span style='mso-bookmark:_Ref'>
+                   <a href='#_ftn3' epub:type='footnote' style='mso-footnote-id:ftn3' name='_ftnref3' title='' id='_ftnref3'>
+                     <span class='MsoFootnoteReference'>
+                       <span style='mso-special-character:footnote'/>
+                     </span>
+                     <span class='MsoFootnoteReference'>)</span>
+                   </a>
+                 </span>
+               </p>
+             </div>
+           </div>
+         </div>
+         <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+         <div class='colophon'/>
+         <div style='mso-element:footnote-list'>
+           <div style='mso-element:footnote' id='ftn1'>
+             <p class='MsoFootnoteText'>
+               <a name='_ff27c067-2785-4551-96cf-0a73530ff1e6' id='_ff27c067-2785-4551-96cf-0a73530ff1e6'/>
+               <a style='mso-footnote-id:ftn1' href='#_ftn1' name='_ftnref1' title='' id='_ftnref1'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+               This is a footnote.
+             </p>
+           </div>
+           <div style='mso-element:footnote' id='ftn2'>
+             <p class='MsoFootnoteText'>
+               <a name='_ff27c067-2785-4551-96cf-0a73530ff1e6' id='_ff27c067-2785-4551-96cf-0a73530ff1e6'/>
+               <a style='mso-footnote-id:ftn2' href='#_ftn2' name='_ftnref2' title='' id='_ftnref2'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+               Formerly denoted as 15 % (m/m).
+             </p>
+           </div>
+           <div style='mso-element:footnote' id='ftn3'>
+             <p class='MsoFootnoteText'>
+               <a name='_ff27c067-2785-4551-96cf-0a73530ff1e6' id='_ff27c067-2785-4551-96cf-0a73530ff1e6'/>
+               <a style='mso-footnote-id:ftn3' href='#_ftn3' name='_ftnref3' title='' id='_ftnref3'>
+                 <span class='MsoFootnoteReference'>
+                   <span style='mso-special-character:footnote'/>
+                 </span>
+                 <span class='MsoFootnoteReference'>)</span>
+               </a>
+               Formerly denoted as 15 % (m/m).
+             </p>
+           </div>
+         </div>
+       </body>
+    OUTPUT
+  end
+
 
   it "moves images in HTML" do
     FileUtils.rm_f "test.html"
@@ -436,6 +561,14 @@ RSpec.describe IsoDoc do
                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
              </p>
              <div class="Section3"><a name="P" id="P"></a>
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (normative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                <div class="example"><a name="_63112cbc-cde0-435f-9553-e0b8c4f5851c" id="_63112cbc-cde0-435f-9553-e0b8c4f5851c"></a>
                  <p class="example"><span class="example_label">EXAMPLE  1</span><span style="mso-tab-count:1">&#xA0; </span>'1M', '01M', and '0001M' all describe the calendar month January.</p>
                </div>
@@ -473,10 +606,18 @@ RSpec.describe IsoDoc do
                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
              </p>
              <div class="Section3"><a name="P" id="P"></a>
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (normative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
                <div class="figure"><a name="samplecode" id="samplecode"></a>
          <p class="MsoNormal">Hello</p>
          <p class="MsoNormal">Key</p>
-         <p class="MsoNormal"><b>Key</b></p><div class="figdl" style="page-break-after:avoid;"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
+         <p style='page-break-after:avoid;' class='MsoNormal'><b>Key</b></p><div class="figdl" style="page-break-after:avoid;"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
          <p class="FigureTitle" style="text-align:center;">Figure A.1</p></div>
              </div>
            </div>
@@ -577,10 +718,9 @@ end
     expect(xmlpp(word.sub(%r{^.*<div class="boilerplate-copyright">}m, '<div class="boilerplate-copyright">').sub(%r{</div>.*$}m, '</div></div>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <div class='boilerplate-copyright'>
   <div>
-    <p class='zzCopyrightHdr'/>
     <p class='zzCopyright'>
       <a name='boilerplate-year' id='boilerplate-year'/>
-      Published in Elbonia
+      <span><b/></span>Published in Elbonia
     </p>
     <p class='zzCopyright1'>
       <a name='boilerplate-message' id='boilerplate-message'/>
@@ -600,4 +740,109 @@ end
     expect(word).to include '<p class="zzWarning">I am the Walrus</p>'
 end
 
+    it "skips internal hyperlinks" do
+      FileUtils.rm_f "test.html"
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <preface>
+    <foreword>
+    <p>
+    <xref target="scope"/>
+    <xref target="terms"/>
+    <xref target="_waxy_rice"/>
+    <xref target="N"/>
+    <xref target="N1"/>
+    <xref target="N2"/>
+    <xref target="N3"/>
+    <xref target="N4"/>
+    <xref target="N5"/>
+    <xref target="N6"/>
+    <xref target="N7"/>
+    <xref target="N8"/>
+    <xref target="N9"/>
+    <xref target="N10"/>
+      <eref bibitemid="ISO712"/>
+    </p>
+    </foreword>
+    </preface>
+    <sections>
+    <clause id="scope"><title>Scope</title>
+    <note id="N">
+  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+</note>
+<figure id="N1">
+  <name>Split-it-right sample divider</name>
+  </figure>
+  <example id="N2">
+  <p>Hello</p>
+</example>
+<formula id="N3">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </formula>
+  <table id="N4">
+    <name>Repeatability and reproducibility of husked rice yield</name>
+    <tbody>
+    <tr>
+      <td align="left">Number of laboratories retained after eliminating outliers</td>
+      <td align="center">13</td>
+      <td align="center">11</td>
+    </tr>
+    </tbody>
+    </table>
+    <ol id="N6">
+      <li id="N7"><p>A</p></li>
+</ol>
+<requirement id="N8">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </requirement>
+<recommendation id="N9">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </requirement>
+<permission id="N10">
+  <stem type="AsciiMath">r = 1 %</stem>
+  </requirement>
+    </clause>
+    <terms id="terms">
+<term id="_waxy_rice"><preferred>waxy rice</preferred>
+<termnote id="N5">
+  <p id="_b0cb3dfd-78fc-47dd-a339-84070d947463">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+</termnote></term>
+</terms>
+</sections>
+<bibliography><references id="_normative_references" obligation="informative"><title>Normative References</title>
+    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+<bibitem id="ISO712" type="standard">
+  <title format="text/plain">Cereals or cereal products</title>
+  <title type="main" format="text/plain">Cereals and cereal products</title>
+  <docidentifier type="ISO">ISO 712</docidentifier>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+    </organization>
+  </contributor>
+</bibitem>
+</references>
+</bibliography>
+</iso-standard>
+      INPUT
+expect(File.exist?("test.html")).to be true
+ html = File.read("test.html", encoding: "UTF-8").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
+   sub(%r{</main>.*$}m, "</main>").sub(%r{^.*?<div>}m, "<div>").sub(%r{</div>.*$}m, "</div>")
+    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      <div>
+    <h1 class='ForewordTitle'>Foreword</h1>
+    <p>
+      <a href='#scope'>Clause 1</a>
+      <a href='#terms'>Clause 3</a>
+      <a href='#_waxy_rice'>3.1</a>
+       Clause 1, Note Figure 1 Clause 1, Example Clause 1, Formula (1) Table 1
+      3.1, Note 1 Clause 1, List Clause 1 a) Clause 1, Requirement 1 Clause 1,
+      Recommendation 1 Clause 1, Permission 1
+      <a href='#ISO712'>ISO 712</a>
+    </p>
+  </div>
+OUTPUT
+    end
 end

@@ -11,7 +11,7 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       XML_ROOT_TAG = "iso-standard".freeze
-      XML_NAMESPACE = "https://www.metanorma.com/ns/iso".freeze
+      XML_NAMESPACE = "https://www.metanorma.org/ns/iso".freeze
 
       def html_converter(node)
         IsoDoc::Iso::HtmlConvert.new(html_extract_attributes(node))
@@ -41,6 +41,7 @@ module Asciidoctor
           doc_converter(node).convert(@filename + ".xml")
           pdf_converter(node).convert(@filename + ".xml")
         end
+        @log.write(@localdir + @filename + ".err") unless @novalid
         @files_to_delete.each { |f| FileUtils.rm f }
         ret
       end

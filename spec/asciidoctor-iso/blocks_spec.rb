@@ -263,7 +263,7 @@ RSpec.describe Asciidoctor::ISO do
       == Section 1
       INPUT
       #{BLANK_HDR}
-             <preface><foreword obligation="informative">
+             <preface><foreword id="_" obligation="informative">
          <title>Foreword</title>
          <p id="_">This is a preamble</p>
        </foreword></preface><sections>
@@ -351,7 +351,11 @@ RSpec.describe Asciidoctor::ISO do
       #{BLANK_HDR}
        <sections>
          <quote id="_">
-         <source type="inline" bibitemid="ISO7301" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></source>
+         <source type="inline" bibitemid="ISO7301" citeas="">
+         <localityStack>
+        <locality type="section"><referenceFrom>1</referenceFrom></locality>
+         </localityStack>
+        </source>
          <author>ISO</author>
          <p id="_">Block quotation</p>
        </quote>
@@ -427,7 +431,11 @@ RSpec.describe Asciidoctor::ISO do
          <term id="_">
          <preferred>Term1</preferred>
          <termsource status="identical">
-         <origin bibitemid="ISO2191" type="inline" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></origin>
+         <origin bibitemid="ISO2191" type="inline" citeas="">
+         <localityStack>
+        <locality type="section"><referenceFrom>1</referenceFrom></locality>
+         </localityStack>
+        </origin>
        </termsource>
        </term>
        </terms>
@@ -454,7 +462,11 @@ RSpec.describe Asciidoctor::ISO do
          <term id="_">
          <preferred>Term1</preferred>
          <termsource status="modified">
-         <origin bibitemid="ISO2191" type="inline" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></origin>
+         <origin bibitemid="ISO2191" type="inline" citeas="">
+         <localityStack>
+        <locality type="section"><referenceFrom>1</referenceFrom></locality>
+         </localityStack>
+        </origin>
          <modification>
            <p id="_">with adjustments</p>
          </modification>

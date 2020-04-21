@@ -7,103 +7,14 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+@import 'base_style/all';
+
+body {
+    @include bodyStyle1(16px, 1.4em, -internal-root-color, #ffffff, 300);
+    main {
         margin: 0;
-        padding: 0;
+    }
 }
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-        border: 0;
-        font-size: 100%;
-}
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, tt, var,
-b, u, i, center,
-dl, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-        vertical-align: baseline;
-}
-
-html, body, div, span, applet, object, iframe,
-p, blockquote, 
-a, abbr, acronym, address, big, cite, 
-del, dfn, em, img, ins, q, s, 
-small, strike, strong, sub, sup, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  font-family: $bodyfont;
-}
-
-code, pre, tt, kbd, samp {
-  font-family: $monospacefont;
-  font-variant-ligatures: none;
-}
-
-code *, pre *, tt *, kbd *, samp * {
-  font-family: $monospacefont !important;
-  font-variant-ligatures: none;
-}
-
-dl {
-  display: grid;
-  grid-template-columns: max-content auto;
-}
-
-dt {
-  grid-column-start: 1;
-}
-
-dd {
-  grid-column-start: 2;
-}
-
-dd p, dt p {
-  margin-top: 0px;
-}
-
-h1, h2, h3, h4, h5, h6, .h2Annex {
-  font-family: $headerfont;
-}
-
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -120,10 +31,6 @@ blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
 }
 
 /* New CSS */
@@ -159,7 +66,7 @@ main {
     margin-left: -3em;
     /*padding-top: 2em;*/
     padding-bottom: 2em;
-    
+
 }
 
 .doctitle-en span {
@@ -177,14 +84,6 @@ main {
 .doctitle-part {
     margin-top: 1em;
 }
-
-/*
-span.title {
-    text-transform: uppercase;
-    font-size: 1em;
-    font-weight: 800;
-}
-*/
 
 span.title, span.subtitle, span.part {
     font-weight: 800;
@@ -250,39 +149,27 @@ a {
     text-decoration-color: black;
 }
 
-nav a {
-    text-decoration: none;
-    color: black;
-}
-
 h2 p {
     display: inline;
 }
 
-  
-  ul > li {
+
+ul > li {
     list-style: none;
-  }
-  
-ul > li > p:first-child:before {
-  content: "\2014";
-  display: inline-block;
-  width: 1em;
-  margin-left: -1.5em;
-  margin-right: 0.5em;
 }
 
-  li p {
-      /* display: inline-block; */
-      margin-bottom: 0.6em;
-      line-height: 1.2;
-  }
-  
+ul > li > p:first-child:before {
+    content: "\2014";
+    display: inline-block;
+    width: 1em;
+    margin-left: -1.5em;
+    margin-right: 0.5em;
+}
 
-  #toc li:before {
-    content: " ";
-    display: none;
-  }
+li p {
+    margin-bottom: 0.6em;
+    line-height: 1.2;
+}
 
 p.AltTerms {
     margin-bottom: 0;
@@ -295,49 +182,37 @@ p.Terms {
     margin-top: 0em;
 }
 
-/* already added to isodoc/base */
-strong, b {
-    font-weight: bold;
-}
-
 /* Navigation*/
 
+#toc {
+    @include toc(null, #f7f7f7, black);
+    @include sidebarToc();
+
+    .toc-active,
+    li:hover {
+        box-shadow: 0px 1px 0px 0px black !important;
+        background: none;
+    }
+
+    li:before {
+        content: " ";
+        display: none;
+    }
+}
+
+nav {
+    @include sidebarNav(#f7f7f7, 278px, 20px);
+    line-height: 1.2em;
+}
+
+#toggle {
+    @include sidebarNavToggle(black, #f7f7f7);
+    border-right: solid black 1px;
+    margin-left: -4em;
+    margin-top: -2em;
+}
+
 @media screen and (min-width: 768px) {
-    nav {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 278px;
-        font-size: 0.9em;
-        overflow: auto;
-        padding: 0 0 0 20px;
-        background-color:#f7f7f7; 
-        line-height: 1.2em;
-    }
-
-    #toggle {
-        position: fixed;
-        height: 100%;
-        width: 30px;
-        border-right: solid black 1px;
-        background-color: #f7f7f7;
-        color: black!important;
-        cursor: pointer;
-        margin-left: -4em;
-        margin-top: -2em;
-    }
-
-    #toggle span {
-        text-align: center;
-        width: 100%;
-        position: absolute;             
-        top: 50%;
-        transform: translate(0, -50%);
-        
-    }
-
-
     .container {
         padding-left: 360px;
     }
@@ -357,17 +232,6 @@ strong, b {
 }
 
 @media screen and (max-width: 768px) {
-    #toc {
-        padding: 0 1.5em 0 1.5em;
-        overflow: visible;
-    }
-
-    #toggle {
-        display: none;
-        margin-left: -4em;
-        margin-top: -2em;
-    }
-
     body {
         margin-left: 2em;
     }
@@ -382,61 +246,16 @@ strong, b {
         width: 100%;
     }
 }
-  
-  div.figure > img { 
-    margin-left: auto;
-margin-right: auto;
-display: block;
-max-width: 100%;
-height: auto;
-  }
-    
 
-
-#toc ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.figure,
+pre,
+.pseudocode {
+    @include pseudocodeBlock(#f7f7f7);
+    font-size: 1em;
 }
 
-#toc li a {
-    padding: 5px 10px;
-}
-
-#toc a {
-    text-decoration: none;
-    display: block;
-}
-
-#toc a:hover {
-    box-shadow: none;
-    color: black;
-}
-
-#toc .h2 {
-    padding-left: 30px;
-}
-
-#toc .h3 {
-    padding-left: 50px;
-}
-
-#toc .toc-active a {
-    color: black;
-}
-
-/*#toc .toc-active, #toc li:hover {
-    background: #1d1d1d;
-    box-shadow: inset -5px 0px 10px -5px #1d1d1d!important;
-}*/
-
-#toc .toc-active, #toc li:hover {
-    box-shadow: 0px 1px 0px 0px black!important;
-    color: black;
-}
-
-#toc li:hover a {
-    color: black;
+div.figure {
+    @include figureBlock();
 }
 
 /*
@@ -444,56 +263,20 @@ height: auto;
 */
 
 .document-type-band {
-    left:0;
-    top:180px;
-    height: 100%;
-    position: fixed;
-    display: block;
-    z-index: 99;
-    /*box-shadow: -5px 0px 10px #1d1d1d*/
+    @include docBand($order: 2, $offset: 180px);
 
+    .document-type {
+        top: 20px;
+    }
 }
 
 .document-stage-band {
-    left:0;
-    top:0;
-    height: 100%;
-    position: fixed;
-    display: block;
-    z-index: 98;
-    box-shadow: -5px 0px 10px #1d1d1d
+    @include docBand(1, 100%);
 }
 
-.document-type {
-    position: relative;
-    width: 25px;
-}
-
-.document-stage {
-    position: relative;
-    width: 25px;
-}
-
-p.document-type, p.document-stage {
-    color: white;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    margin:0;
-    margin-left: 6px;
-    writing-mode:vertical-rl;
-	-webkit-transform:rotate(180deg);
-	-moz-transform:rotate(180deg);
-	-o-transform: rotate(180deg);
-	white-space:nowrap;
-	display:block;
-    bottom:0;
-}
-
-p.document-type {
-    font-weight: 400;
-    height: 210px;
+p.document-stage {
+    @include docBandTitle(210px);
+    writing-mode: vertical-rl;
 }
 
 #governance-band p.document-type {
@@ -536,7 +319,7 @@ p.document-stage {
     font-size: 1em;
     margin: 0 0 2em 0;
     text-transform: uppercase;
-    }
+}
 
 #working-draft {
     border-bottom: solid 3px #fda706;
@@ -582,56 +365,161 @@ p.document-stage {
 /* 3 Other styles */
 
 /*
+  3.2 Links
+*/
+a {
+    color: black;
+    text-decoration-color: black;
+}
+
+/*
     3.3 Lists
 */
-        
-ul, ol {margin-left: 2em;}
-      
-#toc-list ul {margin-bottom: 0.25em;}
-  
-#toc-list ol li {list-style-type: none;}
+
+ul, ol {
+    margin-left: 2em;
+}
+
+#toc-list ul {
+    margin-bottom: 0.25em;
+}
+
+#toc-list ol li {
+    list-style-type: none;
+}
+
+/* https://github.com/metanorma/metanorma-iso/issues/319 : force a) parentheses for ordered lists */
+
+ol[type="alphabet"] {
+  counter-reset: alphabet;
+}
+ol[type="arabic"] {
+  counter-reset: arabic;
+}
+ol[type="roman"] {
+  counter-reset: roman;
+}
+ol[type="alphabet_upper"] {
+  counter-reset: alphabet_upper;
+}
+ol[type="roman_upper"] {
+  counter-reset: roman_upper;
+}
+ol[type="alphabet"] ol[type="alphabet"] {
+  counter-reset: alphabet2;
+}
+ol[type="arabic"] ol[type="arabic"] {
+  counter-reset: arabic2;
+}
+ol[type="roman"] ol[type="roman"] {
+  counter-reset: roman2;
+}
+ol[type="alphabet_upper"] ol[type="alphabet_upper"] {
+  counter-reset: alphabet_upper2;
+}
+ol[type="roman_upper"] ol[type="roman_upper"] {
+  counter-reset: roman_upper2;
+}
+ol {
+  counter-reset: alphabet;
+}
+
+ol > li {
+  list-style: none;
+  position: relative;
+}
+ol > li:before {
+  position: absolute;
+  left: -1.4em;
+}
+ol[type="roman"] > li:before {
+  left: -2.0em;
+}
+ol[type="roman_upper"] > li:before {
+  left: -2.3em;
+}
+ol[type="alphabet"] > li:before {
+  counter-increment: alphabet;
+  content: counter(alphabet, lower-alpha)") "
+}
+ol[type="arabic"] > li:before {
+  counter-increment: arabic;
+  content: counter(arabic, decimal)") "
+}
+ol[type="roman"] > li:before {
+  counter-increment: roman;
+  content: counter(roman, lower-roman)") "
+}
+ol[type="alphabet_upper"] > li:before {
+  counter-increment: alphabet_upper;
+  content: counter(alphabet_upper, upper-alpha)") "
+}
+ol[type="roman_upper"] > li:before {
+  counter-increment: roman_upper;
+  content: counter(roman_upper, upper-roman)") "
+}
+ol > li:before {
+  counter-increment: alphabet;
+  content: counter(alphabet, lower-alpha)") "
+}
+ol[type="alphabet"] ol[type="alphabet"] > li:before {
+  counter-increment: alphabet2;
+  content: counter(alphabet2, lower-alpha)") "
+}
+ol[type="arabic"] ol[type="arabic"] > li:before {
+  counter-increment: arabic2;
+  content: counter(arabic2, decimal)") "
+}
+ol[type="roman"] ol[type="roman"] > li:before {
+  counter-increment: roman2;
+  content: counter(roman2, lower-roman)") "
+}
+ol[type="alphabet_upper"] ol[type="alphabet_upper"] > li:before {
+  counter-increment: alphabet_upper2;
+  content: counter(alphabet_upper2, upper-alpha)") "
+}
+ol[type="roman_upper"] ol[type="roman_upper"] > li:before {
+  counter-increment: roman_upper2;
+  content: counter(roman_upper2, upper-roman)") "
+}
 
 /*
 3.4 Rules
 */
 
 .rule {
-    width: 100%;
-    height: 1px;
-    background-color: #0e1a85;
-    margin: 2em 0;
-  }
+    @include rule(1px, #0e1a85)
+}
 
 /*
 3.5 Bibliograhy
 */
 
 p.Biblio, p.NormRef {
-margin-top: 1em;
-margin-left: 2em;
+    margin-top: 1em;
+    margin-left: 2em;
 }
 
 /*
 3.6 Source Code + figures
 */
 
-.Sourcecode {
-font-family: $monospacefont;
-font-variant-ligatures: none;
+.figure,
+pre,
+.pseudocode {
+    @include pseudocodeBlock(#f7f7f7);
+    font-size: 1em;
 }
 
-.figure, .Sourcecode, .pseudocode {
-background-color: #f7f7f7;
-line-height: 1.6em;
-padding: 1.5em;
-margin: 2em 0 1em 0;
-overflow: auto;
+pre {
+    @include monospaceBlockStyle()
 }
+
+@include admonitionBlock();
+@include recommendationBlock();
 
 .figure-title, .FigureTitle, .SourceTitle, .AdmonitionTitle, .RecommendationTitle {
-font-weight: 700;
-font-size: 1em;
-text-align: center;
+    @include blockTitle()
 }
 
 /*
@@ -639,11 +527,11 @@ text-align: center;
 */
 
 .Note, .note {
-background-color: #fff495;
-color: #47430c;
-padding: 0.5em;
-margin: 1.5em 0 1.5em 0;
-text-align: left;
+    background-color: #fff495;
+    color: #47430c;
+    padding: 0.5em;
+    margin: 1.5em 0 1.5em 0;
+    text-align: left;
 }
 
 .Note p, .note p {
@@ -651,11 +539,11 @@ text-align: left;
 }
 
 .Admonition {
-background-color: #ffcccc;
-color: #47430c;
-padding: 0.5em;
-margin: 1.5em 0 1.5em 0;
-text-align: left;
+    background-color: #ffcccc;
+    color: #47430c;
+    padding: 0.5em;
+    margin: 1.5em 0 1.5em 0;
+    text-align: left;
 }
 
 .Admonition p {
@@ -668,25 +556,18 @@ text-align: left;
 */
 
 .example {
-background-color: #e1eef1;
-padding: 0.5em;
-margin: 2em 0 1em 0;
-text-align: left;
-}
+    @include exampleBlock(#e1eef1, black, 0.5em);
+    color: black;
 
-.example p {
-    margin: 0;
-}
+    padding-left: 0.5em;
+    .example-title {
+        margin-top: 0;
+    }
 
-.example .example-title {
-font-weight: 700;
-text-transform: uppercase;
-margin-top:0;
-}
-
-
-.example .Sourcecode, .example .pseudocode {
-      background: none;
+    pre,
+    .pseudocode {
+        background: none;
+    }
 }
 
 /*
@@ -694,38 +575,24 @@ margin-top:0;
 */
 
 table {
-border-collapse: collapse;
-width: 100%;
-font-weight: 300;
-margin: 1em 0 2em 0;
-margin-left: auto;
-margin-right: auto;
-padding-right: 2em;
-text-align: center;
+    @include table(1px solid black);
+    text-align: center;
 }
 
-table, th, td {
-border: 1px solid black;
-font-size: 0.95em;
-}
-
-td, th {
-padding: 1em!important;
-}
-
-td.header {
-font-weight: 400;
+td,
+th {
+    padding: 1em !important;
 }
 
 p.TableTitle {
-text-align: center;
-margin-top: 2.5em;
-font-weight: 800;
-font-size: 1.1em;
+    text-align: center;
+    margin-top: 2.5em;
+    font-weight: 800;
+    font-size: 1.1em;
 }
 
 .TableFootnote {
-    text-align: left!important;
+    text-align: left !important;
 }
 
 /*
@@ -733,16 +600,16 @@ font-size: 1.1em;
 */
 
 a.footnote-number, a.TableFootnoteRef, span.TableFootnoteRef {
-vertical-align: super;
-font-size: 0.8em;
+    vertical-align: super;
+    font-size: 0.8em;
 }
 
 .footnote {
-font-size: 0.9em;
+    font-size: 0.9em;
 }
 
-sup a { 
-  vertical-align: super; 
+sup a {
+  vertical-align: super;
   font-size: 0.8em;
 }
 #footnote_box {
@@ -758,7 +625,7 @@ sup a {
 
 ol.footnotes-list, aside.footnote {
     margin-left: 1em;
-    
+
 }
 
 ol.footnotes-list li, aside.footnote {
@@ -786,28 +653,24 @@ ol > li > p:before {
 3.11 Blockquotes
 */
 
-.blockquote, .Quote {
-background-color: #f7f7f7;
-font-style: italic;
-width: 80%;
-padding: 1.5em;
-margin-top: 2em;
-margin-left: auto;
-margin-right: auto;
+.Quote {
+    @include blockquoteBlock(#f7f7f7);
 }
-
 
 /*
 3.12 Formulas
 */
 
 .formula {
-background-color: #f7f7f7;
-padding: 1.5em;
-margin-top: 2em;
-text-align: center;
-margin-left: 20%;
-margin-right: 20%;
+    @include formulaBlock(#f7f7f7);
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+dl.formula_dl {
+    background-color: #f7f7f7;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 /*
@@ -829,6 +692,3 @@ font-weight: 600;
 .Admonition p, .admonition p {
     margin: 0;
 }
-
-
-

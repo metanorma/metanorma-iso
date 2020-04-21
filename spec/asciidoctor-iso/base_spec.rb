@@ -89,7 +89,7 @@ RSpec.describe Asciidoctor::ISO do
       :library-ics: 1,2,3
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="https://www.metanorma.com/ns/iso">
+       <iso-standard xmlns="https://www.metanorma.org/ns/iso">
        <bibdata type="standard">
    <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
    <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -124,7 +124,7 @@ RSpec.describe Asciidoctor::ISO do
          <language>en</language>
          <script>Latn</script>
          <status>
-           <stage>10</stage>
+           <stage abbreviation="NWIP">10</stage>
            <substage>20</substage>
            <iteration>3</iteration>
          </status>
@@ -160,6 +160,7 @@ RSpec.describe Asciidoctor::ISO do
 <structuredidentifier>
   <project-number part="1">ISO 1000</project-number>
 </structuredidentifier>
+<stagename>New work item proposal</stagename>
        </ext>
        </bibdata>
        <sections/>
@@ -185,7 +186,7 @@ RSpec.describe Asciidoctor::ISO do
       :copyright-year: 2001
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="https://www.metanorma.com/ns/iso">
+       <iso-standard xmlns="https://www.metanorma.org/ns/iso">
        <bibdata type="standard">
          <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
          <docidentifier type='iso-with-lang'>ISO/IEC/IETF 1000-1-1:2001 (X)</docidentifier>
@@ -235,7 +236,7 @@ RSpec.describe Asciidoctor::ISO do
          <language>el</language>
          <script>Grek</script>
          <status>
-           <stage>60</stage>
+           <stage abbreviation="IS">60</stage>
            <substage>60</substage>
          </status>
          <copyright>
@@ -274,6 +275,7 @@ RSpec.describe Asciidoctor::ISO do
          <structuredidentifier>
            <project-number part="1" subpart="1">ISO/IEC/IETF 1000</project-number>
          </structuredidentifier>
+         <stagename>International standard</stagename>
          </ext>
        </bibdata>
        <sections/>
@@ -293,7 +295,7 @@ RSpec.describe Asciidoctor::ISO do
       :docstage: 50
       :language: fr
     INPUT
-    <iso-standard xmlns="https://www.metanorma.com/ns/iso">
+    <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO/FDIS 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO/FDIS 1000 (F)</docidentifier>
@@ -316,7 +318,7 @@ RSpec.describe Asciidoctor::ISO do
   <language>fr</language>
   <script>Latn</script>
   <status>
-    <stage>50</stage>
+    <stage abbreviation="FDIS">50</stage>
     <substage>00</substage>
   </status>
   <copyright>
@@ -338,6 +340,7 @@ RSpec.describe Asciidoctor::ISO do
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
+    <stagename>Final draft international standard</stagename>
   </ext>
 </bibdata>
 <sections/>
@@ -356,7 +359,7 @@ OUTPUT
       :docnumber: 1000
       :docstage: 60
     INPUT
-<iso-standard xmlns="https://www.metanorma.com/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO 1000 (E)</docidentifier>
@@ -379,7 +382,7 @@ OUTPUT
   <language>en</language>
   <script>Latn</script>
   <status>
-    <stage>60</stage>
+    <stage abbreviation="IS">60</stage>
     <substage>60</substage>
   </status>
   <copyright>
@@ -401,6 +404,7 @@ OUTPUT
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
+    <stagename>International standard</stagename>
   </ext>
 </bibdata>
 <sections/>
@@ -420,10 +424,10 @@ OUTPUT
       :docstage: 60
       :docsubstage: 00
     INPUT
-<iso-standard xmlns="https://www.metanorma.com/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO/PRF 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO/PRF 1000 (E)</docidentifier>
+  <docidentifier type="iso">ISO 1000</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO 1000 (E)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -443,7 +447,7 @@ OUTPUT
   <language>en</language>
   <script>Latn</script>
   <status>
-    <stage>60</stage>
+    <stage abbreviation="PRF">60</stage>
     <substage>00</substage>
   </status>
   <copyright>
@@ -465,6 +469,7 @@ OUTPUT
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
+    <stagename>Proof</stagename>
   </ext>
 </bibdata>
 <sections/>
@@ -496,7 +501,7 @@ OUTPUT
       :no-isobib:
     INPUT
     html = File.read("test.html", encoding: "utf-8")
-    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
     expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "Cambria", serif;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Cambria", serif;]m)
   end
@@ -511,7 +516,7 @@ OUTPUT
       :no-isobib:
     INPUT
     html = File.read("test_alt.html", encoding: "utf-8")
-    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: "Space Mono", monospace;]m)
+    expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: "Space Mono", monospace;]m)
     expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "Lato", sans-serif;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Lato", sans-serif;]m)
   end
@@ -527,7 +532,7 @@ OUTPUT
       :script: Hans
     INPUT
     html = File.read("test.html", encoding: "utf-8")
-    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
     expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "SimSun", serif;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "SimHei", sans-serif;]m)
   end
@@ -546,7 +551,7 @@ OUTPUT
       :monospace-font: Andale Mono
     INPUT
     html = File.read("test.html", encoding: "utf-8")
-    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
+    expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: Andale Mono;]m)
     expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: Zapf Chancery;]m)
     expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: Comic Sans;]m)
   end

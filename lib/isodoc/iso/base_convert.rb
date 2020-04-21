@@ -10,8 +10,7 @@ module IsoDoc
       end
 
       def implicit_reference(b)
-        isocode = b.at(ns("./docidentifier")).text
-        isocode == "IEV"
+        b&.at(ns("./docidentifier"))&.text == "IEV"
       end
 
       def introduction(isoxml, out)
@@ -20,7 +19,6 @@ module IsoDoc
         title_attr = { class: "IntroTitle" }
         page_break(out)
         out.div **{ class: "Section3", id: f["id"] } do |div|
-          # div.h1 "Introduction", **attr_code(title_attr)
           clause_name(num, @introduction_lbl, div, title_attr)
           f.elements.each do |e|
             if e.name == "patent-notice"
@@ -93,9 +91,9 @@ module IsoDoc
         end
       end
 
-      def eref_localities1_zh(target, type, from, to)
+      def eref_localities1_zh(target, type, from, to, delim)
         subsection = from&.text&.match(/\./)
-        ret = type == "list" ? "" : ","
+        ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{to}" if to
         loc = (@locality[type] || type.sub(/^locality:/, "").capitalize )
@@ -105,11 +103,11 @@ module IsoDoc
         ret
       end
 
-      def eref_localities1(target, type, from, to, lang = "en")
+      def eref_localities1(target, type, from, to, delim, lang = "en")
         subsection = from&.text&.match(/\./)
         type = type.downcase
-        return l10n(eref_localities1_zh(target, type, from, to)) if lang == "zh"
-        ret = type == "list" ? "" : ","
+        return l10n(eref_localities1_zh(target, type, from, to, delim)) if lang == "zh"
+        ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         loc = @locality[type] || type.sub(/^locality:/, "").capitalize
         ret += " #{loc}" unless subsection && type == "clause" ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/)
@@ -188,6 +186,60 @@ module IsoDoc
 
       def clausedelim
         ""
+      end
+
+      def format_ref(ref, prefix, isopub, date, allparts)
+        ref = ref.sub(/ \(All Parts\)/i, "")
+        ref = docid_prefix(prefix, ref)
+        return "[#{ref}]" if /^\d+$/.match(ref) && !prefix &&
+          !/^\[.*\]$/.match(ref)
+          ref
+      end
+
+      def table_footnote_reference_format(a)
+        a.content = a.content + ")"
+      end
+
+      def clause_parse_title(node, div, c1, out)
+        return inline_header_title(out, node, c1) if c1.nil?
+        super
+      end
+
+      def cleanup(docxml)
+        super
+        remove_internal_hyperlinks(docxml)
+        table_th_center(docxml)
+        docxml
+      end
+
+      def remove_internal_hyperlinks(docxml)
+        docxml.xpath("//a[@href]").each do |a|
+          next unless /^#/.match(a[:href])
+          anchor = a[:href].sub(/^#/, "")
+          next if a["epub:type"] == "footnote"
+          next unless @anchors[anchor]
+          next unless @anchors[anchor][:type]
+          next if @anchors[anchor][:type] == "clause"
+          a.replace(a.children)
+        end
+      end
+
+      def table_th_center(docxml)
+        docxml.xpath("//thead//th | //thead//td").each do |th|
+          th["align"] = "center"
+          th["valign"] = "middle"
+        end
+      end
+
+      def hierarchical_formula_names(clause, num)
+      c = IsoDoc::Function::XrefGen::Counter.new
+       clause.xpath(ns(".//formula")).each do |t|
+         next if t["id"].nil? || t["id"].empty?
+         @anchors[t["id"]] =
+           anchor_struct("#{num}#{hiersep}#{c.increment(t).print}", t,
+                         t["inequality"] ? @inequality_lbl : @formula_lbl,
+                         "formula", t["unnumbered"])
+       end
       end
     end
   end

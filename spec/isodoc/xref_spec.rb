@@ -82,7 +82,7 @@ RSpec.describe IsoDoc do
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
-                 <div id="widgets1"><h2>3.1&#160; </h2>
+                 <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
            <div id="note1" class="Note"><p><span class="note_label">NOTE  1</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
            <div id="note2" class="Note"><p><span class="note_label">NOTE  2</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
        <p>    <a href="#note1">Note  1</a> <a href="#note2">Note  2</a> </p>
@@ -91,10 +91,18 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
-                 <div id="annex1a"><h2>A.1&#160; </h2>
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <div id="AN" class="Note"><p><span class="note_label">NOTE</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
            </div>
-                 <div id="annex1b"><h2>A.2&#160; </h2>
+                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
            <div id="Anote1" class="Note"><p><span class="note_label">NOTE  1</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
            <div id="Anote2" class="Note"><p><span class="note_label">NOTE  2</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
            </div>
@@ -191,7 +199,7 @@ RSpec.describe IsoDoc do
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
-                 <div id="widgets1"><h2>3.1&#160; </h2>
+                 <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
                <div id="note1" class="figure">
 
          <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
@@ -205,13 +213,21 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
-                 <div id="annex1a"><h2>A.1&#160; </h2>
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
                <div id="AN" class="figure">
 
          <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
          <p class="FigureTitle" style="text-align:center;">Figure A.1&#160;&#8212; Split-it-right sample divider</p></div>
            </div>
-                 <div id="annex1b"><h2>A.2&#160; </h2>
+                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
                <div id="Anote1" class="figure">
 
          <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
@@ -302,7 +318,7 @@ RSpec.describe IsoDoc do
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
-                 <div id="widgets1"><h2>3.1&#160; </h2>
+                 <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
          <div id="N" class="figure">
              <div id="note1" class="figure">
 
@@ -318,9 +334,17 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
-                 <div id="annex1a"><h2>A.1&#160; </h2>
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
          </div>
-                 <div id="annex1b"><h2>A.2&#160; </h2>
+                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
          <div id="AN" class="figure">
              <div id="Anote1" class="figure">
 
@@ -418,7 +442,7 @@ RSpec.describe IsoDoc do
 </div>
       <div id="widgets">
         <h1>3&#160; Widgets</h1>
-        <div id="widgets1"><h2>3.1&#160; </h2>
+        <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
         <div id="note1" class="example"><p><span class="example_label">EXAMPLE  1</span>&#160; Hello</p></div>
         <div id="note2" class="example"><p><span class="example_label">EXAMPLE  2</span>&#160; Hello</p></div>
 <p>    <a href="#note1">Example  1</a> <a href="#note2">Example  2</a> </p>
@@ -426,10 +450,18 @@ RSpec.describe IsoDoc do
       </div>
       <br/>
       <div id="annex1" class="Section3">
-        <div id="annex1a"><h2>A.1&#160; </h2>
+      <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+        <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
         <div id="AN" class="example"><p><span class="example_label">EXAMPLE</span>&#160; Hello</p></div>
     </div>
-        <div id="annex1b"><h2>A.2&#160; </h2>
+        <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
         <div id="Anote1" class="example"><p><span class="example_label">EXAMPLE  1</span>&#160; Hello</p></div>
         <div id="Anote2" class="example"><p><span class="example_label">EXAMPLE  2</span>&#160; Hello</p></div>
     </div>
@@ -532,7 +564,7 @@ RSpec.describe IsoDoc do
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
-                 <div id="widgets1"><h2>3.1&#160; </h2>
+                 <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
            <div id="note1" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (2)</p></div>
            <div id="note2" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (3)</p></div>
          <p>    <a href="#note1">Formula (2)</a> <a href="#note2">Formula (3)</a> </p>
@@ -540,10 +572,18 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
-                 <div id="annex1a"><h2>A.1&#160; </h2>
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <div id="AN" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.1)</p></div>
            </div>
-                 <div id="annex1b"><h2>A.2&#160; </h2>
+                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
            <div id="Anote1" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.2)</p></div>
            <div id="Anote2" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.3)</p></div>
            </div>
@@ -684,7 +724,7 @@ RSpec.describe IsoDoc do
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
-                 <div id="widgets1"><h2>3.1&#160; </h2>
+                 <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
            <p class="TableTitle" style="text-align:center;">Table 2&#160;&#8212; Repeatability and reproducibility of husked rice yield</p><table id="note1" class="MsoISOTable" style="border-width:1px;border-spacing:0;"><tbody><tr><td style="text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">Number of laboratories retained after eliminating outliers</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">13</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">11</td></tr></tbody></table>
            <p class="TableTitle" style="text-align:center;">Table 3&#160;&#8212; Repeatability and reproducibility of husked rice yield</p><table id="note2" class="MsoISOTable" style="border-width:1px;border-spacing:0;"><tbody><tr><td style="text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">Number of laboratories retained after eliminating outliers</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">13</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">11</td></tr></tbody></table>
        <p>    <a href="#note1">Table 2</a> <a href="#note2">Table 3</a> </p>
@@ -692,10 +732,18 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
-                 <div id="annex1a"><h2>A.1&#160; </h2>
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <p class="TableTitle" style="text-align:center;">Table A.1&#160;&#8212; Repeatability and reproducibility of husked rice yield</p><table id="AN" class="MsoISOTable" style="border-width:1px;border-spacing:0;"><tbody><tr><td style="text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">Number of laboratories retained after eliminating outliers</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">13</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">11</td></tr></tbody></table>
        </div>
-                 <div id="annex1b"><h2>A.2&#160; </h2>
+                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
            <p class="TableTitle" style="text-align:center;">Table A.2&#160;&#8212; Repeatability and reproducibility of husked rice yield</p><table id="Anote1" class="MsoISOTable" style="border-width:1px;border-spacing:0;"><tbody><tr><td style="text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">Number of laboratories retained after eliminating outliers</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">13</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">11</td></tr></tbody></table>
            <p class="TableTitle" style="text-align:center;">Table A.3&#160;&#8212; Repeatability and reproducibility of husked rice yield</p><table id="Anote2" class="MsoISOTable" style="border-width:1px;border-spacing:0;"><tbody><tr><td style="text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">Number of laboratories retained after eliminating outliers</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">13</td><td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;">11</td></tr></tbody></table>
        </div>
@@ -874,7 +922,10 @@ RSpec.describe IsoDoc do
                <div id="C">
                  <h2>0.1&#160; Introduction Subsection</h2>
         </div>
-        <div id="C1"><h2>0.2&#160; </h2>Text</div>
+        <div id="C1"><span class='zzMoveToFollowing'>
+  <b>0.2&#160; </b>
+</span>
+Text</div>
              </div>
     <p class="zzSTDTitle1"/>
     <div id="D">
@@ -1011,7 +1062,7 @@ RSpec.describe IsoDoc do
        </div>
              <div id="widgets">
                <h1>3&#160; Widgets</h1>
-               <div id="widgets1"><h2>3.1&#160; </h2>
+               <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
            <ol type="a" id="note1">
          <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
        </ol>
@@ -1022,12 +1073,20 @@ RSpec.describe IsoDoc do
              </div>
              <br/>
              <div id="annex1" class="Section3">
-               <div id="annex1a"><h2>A.1&#160; </h2>
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+               <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <ol type="a" id="AN">
          <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
        </ol>
            </div>
-               <div id="annex1b"><h2>A.2&#160; </h2>
+               <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
            <ol type="a" id="Anote1">
          <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
        </ol>
@@ -1117,7 +1176,7 @@ RSpec.describe IsoDoc do
        </div>
              <div id="widgets">
                <h1>3&#160; Widgets</h1>
-               <div id="widgets1"><h2>3.1&#160; </h2>
+               <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
            <ol type="a" id="note1l">
          <li id="note1"><p>A</p></li>
        </ol>
@@ -1128,12 +1187,20 @@ RSpec.describe IsoDoc do
              </div>
              <br/>
              <div id="annex1" class="Section3">
-               <div id="annex1a"><h2>A.1&#160; </h2>
+             <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+  (informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+               <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
            <ol type="a" id="ANl">
          <li id="AN"><p>A</p></li>
        </ol>
            </div>
-               <div id="annex1b"><h2>A.2&#160; </h2>
+               <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
            <ol type="a" id="Anote1l">
          <li id="Anote1"><p>A</p></li>
        </ol>

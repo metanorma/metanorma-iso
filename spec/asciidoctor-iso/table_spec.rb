@@ -51,13 +51,13 @@ RSpec.describe Asciidoctor::ISO do
          <table id="_">
          <name>Table Name</name>
          <thead><tr>
-             <td align="left">A</td>
-             <td align="left">B</td>
-             <td align="left">C</td>
+             <th align="left">A</th>
+             <th align="left">B</th>
+             <th align="left">C</th>
            </tr><tr>
              <th align="left">1</th>
-             <td align="left">2</td>
-             <td align="left">3</td>
+             <th align="left">2</th>
+             <th align="left">3</th>
            </tr></thead>
          <tbody>
 
@@ -88,13 +88,13 @@ RSpec.describe Asciidoctor::ISO do
     #{BLANK_HDR}
            <sections>
          <table id="_"><thead><tr>
-             <td align="left">A</td>
-             <td align="left">B</td>
-             <td align="left">C</td>
+             <th align="left">A</th>
+             <th align="left">B</th>
+             <th align="left">C</th>
            </tr><tr>
              <th align="left">1</th>
-             <td align="left">2</td>
-             <td align="left">3</td>
+             <th align="left">2</th>
+             <th align="left">3</th>
            </tr></thead>
          <tbody>
 
@@ -153,10 +153,10 @@ RSpec.describe Asciidoctor::ISO do
        <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>w</mi><mi>max</mi></msub></math></stem></th>
            </tr>
          <tr>
-             <td align="left">in husked rice</td>
-             <td align="center">in milled rice (non-glutinous)</td>
-             <td align="center">in husked parboiled rice</td>
-             <td align="center">in milled parboiled rice</td>
+             <th align="left">in husked rice</th>
+             <th align="center">in milled rice (non-glutinous)</th>
+             <th align="center">in husked parboiled rice</th>
+             <th align="center">in milled parboiled rice</th>
            </tr></thead>
          <tbody>
 

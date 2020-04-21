@@ -7,123 +7,42 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-}
+@import 'base_style/all';
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	border: 0;
-	font-size: 100%;
-}
+body {
+    @include bodyStyle1(null, 1.3, -internal-root-color, #ffffff, 300);
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, tt, var,
-b, u, i, center,
-dl, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-        vertical-align: baseline;
-}
-
-
-html, body, div, span, applet, object, iframe,
-p, blockquote, 
-a, abbr, acronym, address, big, cite, 
-del, dfn, em, img, ins, q, s, 
-small, strike, strong, sub, sup, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  font-family: $bodyfont;
-}
-
-code, pre, tt, kbd, samp {
-  font-family: $monospacefont;
-  font-variant-ligatures: none;
-}
-
-code *, pre *, tt *, kbd *, samp * {
-  font-family: $monospacefont !important;
-  font-variant-ligatures: none;
-}
-
-h1, h2, h3, h4, h5, h6, .h2Annex {
-  font-family: $headerfont;
-}
-
-dl {
-  display: grid;
-  grid-template-columns: max-content auto;
-}
-
-dt {
-  grid-column-start: 1;
-}
-
-dd {
-  grid-column-start: 2;
-}
-
-dd p, dt p {
-  margin-top: 0px;
+    main {
+        margin: 0;
+    }
 }
 
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
 }
-body {
-	line-height: 1.3;
+
+blockquote,
+q {
+    quotes: none;
 }
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
 }
 
 /* New CSS */
@@ -138,7 +57,8 @@ main {
     padding-right: 2em;
 }
 
-.title-section, .prefatory-section {
+.title-section,
+.prefatory-section {
     padding-left: 4em;
     padding-top: 2em;
 }
@@ -147,7 +67,8 @@ main {
     margin-bottom: 5em;
 }
 
-.doctitle-en, .doctitle-fr {
+.doctitle-en,
+.doctitle-fr {
     margin-top: 2em;
     text-align: left;
 }
@@ -158,7 +79,7 @@ main {
     margin-left: -3em;
     padding-top: 2em;
     padding-bottom: 2em;
-    
+
 }
 
 .doctitle-en span {
@@ -168,7 +89,6 @@ main {
     display: block;
     color: white;
 }
-
 
 .doctitle-fr span {
     font-size: 1.2em;
@@ -198,7 +118,8 @@ span.title {
     padding-bottom: 1em;
 }
 
-.coverpage_docnumber, .coverpage_techcommittee {
+.coverpage_docnumber,
+.coverpage_techcommittee {
     text-align: right;
     font-size: 0.9em;
     line-height: 0.5em;
@@ -222,7 +143,11 @@ h1 {
     font-weight: 900;
 }
 
-h2, h3, h4, h5, h6 {
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 700;
 }
 
@@ -240,7 +165,12 @@ h2 {
     margin-bottom: 1em;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     line-height: 1.2;
 }
 
@@ -268,16 +198,37 @@ a {
     text-decoration-color: black;
 }
 
-nav a {
-    color: black;
-    text-decoration: none;
-    line-height: 1.2em;
+h2 p {
+    display: inline;
+}
+
+ul>li {
+    list-style: none;
+}
+
+ul>li>p:first-child:before {
+    content: "\2014";
+    display: inline-block;
+    width: 1em;
+    margin-left: -1.5em;
+    margin-right: 0.5em;
+}
+
+li p {
+    /* display: inline-block; */
+    margin-bottom: 0.6em;
+    line-height: 1.2;
+}
+
+#toc li:before {
+    content: " ";
+    display: none;
 }
 
 p.AltTerms {
+    margin-bottom: 0;
     font-style: italic;
     margin-left: 2em;
-    margin-bottom: 0em;
 }
 
 p.Terms {
@@ -285,47 +236,36 @@ p.Terms {
     margin-top: 0em;
 }
 
-/* already added to isodoc/base */
-strong, b {
-    font-weight: bold;
-}
-
 /* Navigation*/
 
+#toc {
+    @include toc(null, #1d1d1d, white);
+    @include sidebarToc();
+
+    // .toc-active,
+    // li:hover {
+    //     background: #1d1d1d;
+    //     box-shadow: inset -5px 0px 10px -5px #1d1d1d !important;
+    // }
+
+    li:before {
+        content: " ";
+        display: none;
+    }
+}
+
+nav {
+    @include sidebarNav(#f7f7f7, 278px, 20px);
+    line-height: 1.2em;
+}
+
+#toggle {
+    @include sidebarNavToggle(white, black);
+    margin-left: -4em;
+    margin-top: -2em;
+}
+
 @media screen and (min-width: 768px) {
-    nav {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 278px;
-        font-size: 0.9em;
-        overflow: auto;
-        padding: 0 0 0 20px;
-        background-color:#f7f7f7; 
-    }
-
-    #toggle {
-        position: fixed;
-        height: 100%;
-        width: 30px;
-        background-color:black;
-        color: white!important;
-        cursor: pointer;
-        margin-left: -4em;
-        margin-top: -2em;
-    }
-
-    #toggle span {
-        text-align: center;
-        width: 100%;
-        position: absolute;             
-        top: 50%;
-        transform: translate(0, -50%);
-        
-    }
-
-
     .container {
         padding-left: 360px;
     }
@@ -339,23 +279,12 @@ strong, b {
     }
 
     ul#toc-list {
-        padding:0;
-        margin:0;
+        padding: 0;
+        margin: 0;
     }
 }
 
 @media screen and (max-width: 768px) {
-    #toc {
-        padding: 0 1.5em 0 1.5em;
-        overflow: visible;
-    }
-
-    #toggle {
-        display: none;
-        margin-left: -4em;
-        margin-top: -2em;
-    }
-
     body {
         margin-left: 2em;
     }
@@ -364,152 +293,54 @@ strong, b {
         padding: 0;
     }
 
-    .title-section, .prefatory-section {
+    .title-section,
+    .prefatory-section {
         padding-left: 0;
         padding-top: 0;
         width: 100%;
     }
 }
-  
-  div.figure > img { 
-    margin-left: auto;
-margin-right: auto;
-display: block;
-max-width: 100%;
-height: auto;
-  }
-    
 
-#toc ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.figure,
+pre,
+.pseudocode {
+    @include pseudocodeBlock(#f7f7f7);
+    font-size: 1em;
 }
 
-#toc li a {
-    padding: 5px 10px;
+div.figure {
+    @include figureBlock();
 }
-
-#toc a {
-    text-decoration: none;
-    display: block;
-}
-
-#toc a:hover {
-    box-shadow: none;
-    color: white;
-}
-
-#toc .h2 {
-    padding-left: 30px;
-}
-
-#toc .h3 {
-    padding-left: 50px;
-}
-
-#toc .toc-active a {
-    color: white;
-}
-
-#toc .toc-active, #toc li:hover {
-    background: #1d1d1d;
-    box-shadow: inset -5px 0px 10px -5px #1d1d1d!important;
-
-}
-
-#toc li:hover a {
-    color: white;
-}
-
-ul > li {
-    list-style: none;
-  }
-
-ul > li > p:first-child:before {
-  content: "\2014";
-  display: inline-block;
-  width: 1em;
-  margin-left: -1.5em;
-  margin-right: 0.5em;
-}
-
-  li p {
-      /* display: inline-block; */
-      margin-bottom: 0.6em;
-      line-height: 1.2;
-  }
-
-  #toc li:before {
-    content: " ";
-    display: none;
-  }
 
 /*
     Document types + stages
 */
 
 .document-type-band {
-    left:0;
-    top:180px;
-    height: 100%;
-    position: fixed;
-    display: block;
-    z-index: 99;
-    /*box-shadow: -5px 0px 10px #1d1d1d*/
+    @include docBand($order: 2, $offset: 180px);
 
+    .document-type {
+        top: 20px;
+    }
 }
 
 .document-stage-band {
-    left:0;
-    top:0;
-    height: 100%;
-    position: fixed;
-    display: block;
-    z-index: 98;
-    box-shadow: -5px 0px 10px #1d1d1d
+    @include docBand(1, 100%);
 }
 
-.document-type {
-    position: relative;
-    width: 25px;
-}
-
-.document-stage {
-    position: relative;
-    width: 25px;
-}
-
-p.document-type, p.document-stage {
-    color: white;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    margin:0;
-    margin-left: 6px;
-    writing-mode:vertical-rl;
-	-webkit-transform:rotate(180deg);
-	-moz-transform:rotate(180deg);
-	-o-transform: rotate(180deg);
-	white-space:nowrap;
-	display:block;
-    bottom:0;
-}
-
-p.document-type {
-    font-weight: 400;
-    height: 210px;
+p.document-stage {
+    @include docBandTitle(210px);
+    writing-mode: vertical-rl;
 }
 
 #governance-band p.document-type {
     font-weight: 400;
-    height: 230px!important;
+    height: 230px !important;
 }
 
 p.document-stage {
     font-weight: 300;
-    height:160px;
+    height: 160px;
 }
 
 #standard-band {
@@ -542,7 +373,7 @@ p.document-stage {
     font-size: 1em;
     margin: 0 0 2em 0;
     text-transform: uppercase;
-    }
+}
 
 #working-draft {
     border-bottom: solid 3px #fda706;
@@ -588,71 +419,89 @@ p.document-stage {
 /* 3 Other styles */
 
 /*
+  3.2 Links
+*/
+a {
+    color: black;
+    text-decoration-color: black;
+}
+
+/*
     3.3 Lists
 */
-        
-ul, ol {margin-left: 2em;}
-      
-#toc-list ul {margin-bottom: 0.25em;}
-  
-#toc-list ul li {list-style-type: none;}
+
+ul,
+ol {
+    margin-left: 2em;
+}
+
+#toc-list ul {
+    margin-bottom: 0.25em;
+}
+
+#toc-list ol li {
+    list-style-type: none;
+}
 
 /*
 3.4 Rules
 */
 
 .rule {
-    width: 100%;
-    height: 1px;
-    background-color: #0e1a85;
-    margin: 2em 0;
-  }
+    @include rule(1px, #0e1a85)
+}
 
 /*
 3.5 Bibliograhy
 */
 
-p.Biblio, p.NormRef {
-margin-top: 1em;
-margin-left: 2em;
+p.Biblio,
+p.NormRef {
+    margin-top: 1em;
+    margin-left: 2em;
 }
 
 /*
 3.6 Source Code + figures
 */
 
-.Sourcecode {
-font-family: $monospacefont;
-font-variant-ligatures: none;
+.figure,
+pre,
+.pseudocode {
+    @include pseudocodeBlock(#f7f7f7);
+    font-size: 1em;
 }
 
-.figure, .Sourcecode, .pseudocode {
-background-color: #f7f7f7;
-line-height: 1.6em;
-padding: 1.5em;
-margin: 2em 0 1em 0;
-overflow: auto;
+pre {
+    @include monospaceBlockStyle()
 }
 
-.figure-title, .FigureTitle, .SourceTitle, .AdmonitionTitle, .RecommendationTitle {
-font-weight: 700;
-font-size: 1em;
-text-align: center;
+@include admonitionBlock();
+@include recommendationBlock();
+
+.figure-title,
+.FigureTitle,
+.SourceTitle,
+.AdmonitionTitle,
+.RecommendationTitle {
+    @include blockTitle()
 }
 
 /*
 3.7 Notes
 */
 
-.Note, .note {
+.Note,
+.note {
     background-color: #fff495;
     color: #47430c;
     padding: 0.5em;
     margin: 1.5em 0 1.5em 0;
     text-align: left;
 }
-    
-.Note p, .note p {
+
+.Note p,
+.note p {
     margin: 0;
 }
 
@@ -674,27 +523,19 @@ text-align: center;
 */
 
 .example {
-    background-color: #e1eef1;
-    padding: 0.5em;
-    margin: 2em 0 1em 0;
-    text-align: left;
+    @include exampleBlock(#e1eef1, black, 0.5em);
+    color: black;
+
     padding-left: 2em;
-}
-    
-.example p {
-    margin: 0;
-}
 
-.example .example-title {
-font-weight: 700;
-text-transform: uppercase;
-margin-top:0;
-margin-left:-1.5em;
-}
+    .example-title {
+        margin-left: -1.5em;
+    }
 
-
-.example .Sourcecode, .example .pseudocode {
-      background: none;
+    pre,
+    .pseudocode {
+        background: none;
+    }
 }
 
 /*
@@ -702,58 +543,47 @@ margin-left:-1.5em;
 */
 
 table {
-border-collapse: collapse;
-width: 100%;
-font-weight: 300;
-margin: 1em 0 2em 0;
-margin-left: auto;
-margin-right: auto;
-padding-right: 2em;
-text-align: center;
+    @include table(1px solid black);
+    text-align: center;
 }
 
-table, th, td {
-border: 1px solid black;
-font-size: 0.95em;
-}
-
-td, th {
-padding: 1em!important;
-}
-
-td.header {
-font-weight: 400;
+td,
+th {
+    padding: 1em !important;
 }
 
 p.TableTitle {
-text-align: center;
-margin-top: 2.5em;
-font-weight: 800;
-font-size: 1.1em;
+    text-align: center;
+    margin-top: 2.5em;
+    font-weight: 800;
+    font-size: 1.1em;
 }
 
 .TableFootnote {
-    text-align: left!important;
+    text-align: left !important;
 }
 
 /*
 3.10 Footnotes
 */
 
-a.footnote-number, a.TableFootnoteRef, span.TableFootnoteRef {
-vertical-align: super;
-font-size: 0.8em;
+a.footnote-number,
+a.TableFootnoteRef,
+span.TableFootnoteRef {
+    vertical-align: super;
+    font-size: 0.8em;
 }
 
 .footnote {
-font-size: 0.9em;
+    font-size: 0.9em;
 }
 
-sup a { 
-    vertical-align: super; 
+sup a {
+    vertical-align: super;
     font-size: 0.8em;
-  }
-  #footnote_box {
+}
+
+#footnote_box {
     font-size: 14px;
     background: white;
     padding: 0 10px;
@@ -762,62 +592,61 @@ sup a {
     -moz-box-shadow: 0px 0px 5px #888;
     -webkit-box-shadow: 0px 0px 5px #888;
     box-shadow: 0px 0px 5px #888;
-  }
-  
-  ol.footnotes-list, aside.footnote {
-      margin-left: 1em;
-      
-  }
-  
-  ol.footnotes-list li, aside.footnote {
-      font-size: 0.9em;
-      vertical-align: top;
-      list-style:decimal;
-      margin-bottom: 1em;
-  }
-  
-  ol.footnotes-list:first-child {
-      margin-top: 2em;
-  }
-  
-  ol.footnotes-list p, aside.footnote {
-      display: inline;
-  }
-  
-  ol > li > p:before {
-      content: "";
-      display: none;
-  }
-  
+}
+
+ol.footnotes-list,
+aside.footnote {
+    margin-left: 1em;
+
+}
+
+ol.footnotes-list li,
+aside.footnote {
+    font-size: 0.9em;
+    vertical-align: top;
+    list-style: decimal;
+    margin-bottom: 1em;
+}
+
+ol.footnotes-list:first-child {
+    margin-top: 2em;
+}
+
+ol.footnotes-list p,
+aside.footnote {
+    display: inline;
+}
+
+ol>li>p:before {
+    content: "";
+    display: none;
+}
 
 
 /*
 3.11 Blockquotes
 */
 
-.blockquote, .Quote {
-background-color: #f7f7f7;
-font-style: italic;
-width: 80%;
-padding: 1.5em;
-margin-top: 2em;
-margin-left: auto;
-margin-right: auto;
+.Quote {
+    @include blockquoteBlock(#f7f7f7);
 }
-
 
 /*
 3.12 Formulas
 */
 
 .formula {
-background-color: #f7f7f7;
-padding: 1.5em;
-margin-top: 2em;
-text-align: center;
-margin-left: 20%;
-margin-right: 20%;
-font-size: 0.9em;
+    @include formulaBlock(#f7f7f7);
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 0.9em;
+}
+
+dl.formula_dl {
+    background-color: #f7f7f7;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 0.9em;
 }
 
 /*
@@ -825,11 +654,11 @@ Keywords
 */
 
 span.keyword {
-font-weight: 600;
+    font-weight: 600;
 }
 
-
-.Admonition, .admonition {
+.Admonition,
+.admonition {
     background-color: #ffb3b3;
     /* color: #47430c;*/
     padding: 0.5em;
@@ -837,9 +666,7 @@ font-weight: 600;
     text-align: left;
 }
 
-.Admonition p, .admonition p {
+.Admonition p,
+.admonition p {
     margin: 0;
 }
-
-
-

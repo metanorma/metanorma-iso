@@ -49,11 +49,17 @@
   </define>
   <define name="stage">
     <element name="stage">
+      <optional>
+        <attribute name="abbreviation"/>
+      </optional>
       <text/>
     </element>
   </define>
   <define name="substage">
     <element name="substage">
+      <optional>
+        <attribute name="abbreviation"/>
+      </optional>
       <text/>
     </element>
   </define>
@@ -452,9 +458,14 @@
     <attribute name="bibitemid">
       <data type="IDREF"/>
     </attribute>
-    <zeroOrMore>
-      <ref name="locality"/>
-    </zeroOrMore>
+    <choice>
+      <zeroOrMore>
+        <ref name="locality"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="localityStack"/>
+      </zeroOrMore>
+    </choice>
     <optional>
       <ref name="date"/>
     </optional>
@@ -467,6 +478,25 @@
   <define name="locality">
     <element name="locality">
       <ref name="BibItemLocality"/>
+    </element>
+  </define>
+  <define name="localityStack">
+    <element name="localityStack">
+      <zeroOrMore>
+        <ref name="locality"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="sourceLocality">
+    <element name="sourceLocality">
+      <ref name="BibItemLocality"/>
+    </element>
+  </define>
+  <define name="sourceLocalityStack">
+    <element name="sourceLocalityStack">
+      <zeroOrMore>
+        <ref name="sourceLocality"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="BibItemLocality">
@@ -703,21 +733,11 @@
   </define>
   <define name="TypedTitleString">
     <optional>
-      <attribute name="type">
-        <ref name="TitleType"/>
-      </attribute>
+      <attribute name="type"/>
     </optional>
     <ref name="FormattedString"/>
   </define>
-  <define name="TitleType">
-    <choice>
-      <value>alternative</value>
-      <value>original</value>
-      <value>unofficial</value>
-      <value>subtitle</value>
-      <value>main</value>
-    </choice>
-  </define>
+  <!-- TitleType = ( "alternative" | "original" | "unofficial" | "subtitle" | "main" ) -->
   <define name="TypedUri">
     <optional>
       <attribute name="type"/>
@@ -1038,12 +1058,30 @@
       <attribute name="type">
         <ref name="DocRelationType"/>
       </attribute>
+      <optional>
+        <element name="description">
+          <ref name="FormattedString"/>
+        </element>
+      </optional>
       <element name="bibitem">
         <ref name="BibliographicItem"/>
       </element>
-      <zeroOrMore>
-        <ref name="locality"/>
-      </zeroOrMore>
+      <choice>
+        <zeroOrMore>
+          <ref name="locality"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="localityStack"/>
+        </zeroOrMore>
+      </choice>
+      <choice>
+        <zeroOrMore>
+          <ref name="sourceLocality"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="sourceLocalityStack"/>
+        </zeroOrMore>
+      </choice>
     </element>
   </define>
   <define name="version">

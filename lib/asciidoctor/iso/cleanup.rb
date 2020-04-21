@@ -9,14 +9,15 @@ require "pp"
 module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
-      PRE_NORMREF_FOOTNOTES = "//foreword//fn | //introduction//fn |"\
-        "//clause[title = 'Scope']//fn" .freeze
+      PRE_NORMREF_FOOTNOTES = "//preface//fn | "\
+        "//clause[title = 'Scope']//fn".freeze
 
       NORMREF_FOOTNOTES =
         "//references[title = 'Normative References']//fn".freeze
 
       POST_NORMREF_FOOTNOTES =
-        "//clause[not(title = 'Scope')]//fn | "\
+        "//sections//clause[not(title = 'Scope')]//fn | "\
+        "//annex//fn | "\
         "//references[title = 'Bibliography']//fn".freeze
 
       def other_footnote_renumber(xmldoc)
@@ -58,6 +59,12 @@ module Asciidoctor
           id.content = id_prefix(prefix, id)
       end
 
+      def format_ref(ref, type, isopub)
+        ref = ref.sub(/ \(All Parts\)/i, "")
+        super
+      end
+
+      TERM_CLAUSE = "//sections//terms".freeze
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
       OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or "\
         "@type = 'ISBN'".freeze
@@ -84,6 +91,7 @@ module Asciidoctor
       # then standard class (docid class other than DOI &c)
       # then docnumber if present, numeric sort
       #      else alphanumeric metanorma id (abbreviation)
+      # then doc part number if present, numeric sort
       # then doc id (not DOI &c)
       # then title
       def sort_biblio_key(bib)
@@ -92,12 +100,13 @@ module Asciidoctor
         id = bib&.at("./docidentifier[not(#{OTHERIDS})]")
         metaid = bib&.at("./docidentifier[@type = 'metanorma']")&.text
         abbrid = metaid unless /^\[\d+\]$/.match(metaid)
+        /\d-(?<partid>\d+)/ =~ id&.text
         type = id['type'] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
         "#{pubclass} :: #{type} :: "\
           "#{num.nil? ? abbrid : sprintf("%09d", num.to_i)} :: "\
-          "#{id&.text} :: #{title}"
+          "#{partid} :: #{id&.text} :: #{title}"
       end
     end
   end

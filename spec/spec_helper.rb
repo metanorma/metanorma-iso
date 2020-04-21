@@ -106,7 +106,7 @@ BOILERPLATE =
 
 BLANK_HDR = <<~"HDR"
 <?xml version="1.0" encoding="UTF-8"?>
-<iso-standard xmlns="https://www.metanorma.com/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <contributor>
     <role type="author"/>
@@ -125,7 +125,7 @@ BLANK_HDR = <<~"HDR"
   <language>en</language>
   <script>Latn</script>
   <status>
-    <stage>60</stage>
+    <stage abbreviation="IS">60</stage>
     <substage>60</substage>
   </status>
   <copyright>
@@ -144,6 +144,7 @@ BLANK_HDR = <<~"HDR"
     <subcommittee/>
     <workgroup/>
   </editorialgroup>
+  <stagename>International standard</stagename>
   </ext>
 </bibdata>
 #{BOILERPLATE}

@@ -13,7 +13,6 @@ module Asciidoctor
     # schema encapsulation of the document for validation
     class Converter < ::Asciidoctor::Standoc::Converter
       register_for "iso"
-
     end
   end
 end

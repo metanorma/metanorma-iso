@@ -183,7 +183,7 @@ RSpec.describe Asciidoctor::ISO do
       * [[[iso216,ISO 216:2001]]], _Reference_
     INPUT
       #{BLANK_HDR}
-        <preface><foreword obligation="informative">
+        <preface><foreword id='_' obligation="informative">
         <title>Foreword</title>
         <p id="_">
         <eref type="inline" bibitemid="iso216" citeas="ISO 216:2001"/>
@@ -222,10 +222,13 @@ RSpec.describe Asciidoctor::ISO do
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
       #{BLANK_HDR}
-      <preface><foreword obligation="informative">
+      <preface><foreword id='_' obligation="informative">
         <title>Foreword</title>
         <p id="_">
-        <eref type="inline" bibitemid="iso216" citeas="ISO 216"><locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>the reference</eref>
+        <eref type="inline" bibitemid="iso216" citeas="ISO 216">
+        <localityStack>
+        <locality type="whole"/><locality type="clause"><referenceFrom>3</referenceFrom></locality><locality type="example"><referenceFrom>9</referenceFrom><referenceTo>11</referenceTo></locality><locality type="locality:prelude"><referenceFrom>33</referenceFrom></locality><locality type="locality:entirety"/>
+        </localityStack>the reference</eref>
         </p>
       </foreword></preface><sections>
       </sections><bibliography><references id="_" obligation="informative">
@@ -260,7 +263,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
        <preface>
-       <foreword obligation="informative">
+       <foreword id='_' obligation="informative">
          <title>Foreword</title>
          <p id="_">
          <eref type="inline" bibitemid="iso216" citeas="ISO 216"/>
@@ -302,7 +305,11 @@ RSpec.describe Asciidoctor::ISO do
          <term id="_">
          <preferred>Term1</preferred>
          <termsource status="identical">
-         <origin bibitemid="ISO2191" type="inline" citeas=""><locality type="section"><referenceFrom>1</referenceFrom></locality></origin>
+         <origin bibitemid="ISO2191" type="inline" citeas="">
+         <localityStack>
+        <locality type="section"><referenceFrom>1</referenceFrom></locality>
+         </localityStack>
+        </origin>
        </termsource>
        </term>
        </terms>
@@ -421,17 +428,17 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
        <sections>
              <table id="_"><thead><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr></thead>
          <tbody>
            <tr>
@@ -468,13 +475,13 @@ RSpec.describe Asciidoctor::ISO do
              <th align="left">c</th>
            </tr>
          <tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr><tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <th align="left">a</th>
+             <th align="left">b</th>
+             <th align="left">c</th>
            </tr></thead>
          <tbody>
 
@@ -612,7 +619,7 @@ RSpec.describe Asciidoctor::ISO do
       footnote:[Footnote2]
     INPUT
       #{BLANK_HDR}
-      <preface><foreword obligation="informative">
+      <preface><foreword id='_' obligation="informative">
         <title>Foreword</title>
         <p id="_"><fn reference="1">
         <p id="_">Footnote</p>
@@ -744,6 +751,8 @@ RSpec.describe Asciidoctor::ISO do
     
     == Clause 1
     <<ref1>>
+    <<ref1a>>
+    <<ref1b>>
     <<ref2>>
     <<ref3>>
     <<ref4>>
@@ -762,6 +771,8 @@ RSpec.describe Asciidoctor::ISO do
     * [[[ref3,IEC 123]]], _Standard IEC 123_
     * [[[ref5,20]]], _Standard 10_
     * [[[ref1,ISO 123]]], _Standard ISO 123_
+    * [[[ref1a,ISO 123-100]]], _Standard ISO 123_
+    * [[[ref1b,ISO/TS 123-1]]], _Standard ISO 123_
     * [[[ref4,GB 123]]], _Standard GB 123_
     * [[[ref2,ISO/IEC 123]]], _Standard ISO/IEC 123_
     * [[[ref6,(B)]]], _Standard 20_
@@ -781,10 +792,12 @@ RSpec.describe Asciidoctor::ISO do
         <sections><clause id="_" inline-header="false" obligation="normative">
          <title>Clause 1</title>
          <p id="_"><eref type="inline" bibitemid="ref1" citeas="ISO 123"/>
+         <eref type='inline' bibitemid='ref1a' citeas='ISO 123-100'/>
+<eref type='inline' bibitemid='ref1b' citeas='ISO/TS 123-1'/>
        <eref type="inline" bibitemid="ref2" citeas="ISO/IEC 123"/>
        <eref type="inline" bibitemid="ref3" citeas="IEC 123"/>
        <eref type="inline" bibitemid="ref4" citeas="GB 123"/>
-       <eref type="inline" bibitemid="ref5" citeas="[4]"/>
+       <eref type="inline" bibitemid="ref5" citeas="[6]"/>
        <eref type="inline" bibitemid="ref6" citeas="[B]"/>
        <eref type="inline" bibitemid="ref7" citeas="[A]"/>
        <xref target="ref8"/>
@@ -802,24 +815,54 @@ RSpec.describe Asciidoctor::ISO do
              <abbreviation>ISO</abbreviation>
            </organization>
          </contributor>
-       </bibitem><bibitem id="ref2" type="standard">
-         <title format="text/plain">Standard ISO/IEC 123</title>
-         <docidentifier>ISO/IEC 123</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Electrotechnical Commission</name>
-             <abbreviation>IEC</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem><bibitem id="ref3" type="standard">
+       </bibitem>
+        <bibitem id='ref2' type='standard'>
+                 <title format='text/plain'>Standard ISO/IEC 123</title>
+                 <docidentifier>ISO/IEC 123</docidentifier>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </contributor>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Electrotechnical Commission</name>
+                     <abbreviation>IEC</abbreviation>
+                   </organization>
+                 </contributor>
+               </bibitem>
+       <bibitem id='ref1b' type='standard'>
+  <title format='text/plain'>Standard ISO 123</title>
+  <docidentifier>ISO/TS 123-1</docidentifier>
+  <contributor>
+    <role type='publisher'/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type='publisher'/>
+    <organization>
+      <name>TS</name>
+    </organization>
+  </contributor>
+</bibitem>
+<bibitem id='ref1a' type='standard'>
+  <title format='text/plain'>Standard ISO 123</title>
+  <docidentifier>ISO 123-100</docidentifier>
+  <contributor>
+    <role type='publisher'/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+</bibitem>
+       <bibitem id="ref3" type="standard">
          <title format="text/plain">Standard IEC 123</title>
          <docidentifier>IEC 123</docidentifier>
          <contributor>
@@ -833,7 +876,7 @@ RSpec.describe Asciidoctor::ISO do
          <formattedref format="application/x-isodoc+xml">
            <em>Standard 10</em>
          </formattedref>
-         <docidentifier type="metanorma">[4]</docidentifier>
+         <docidentifier type="metanorma">[6]</docidentifier>
        </bibitem><bibitem id="ref4">
          <formattedref format="application/x-isodoc+xml">
            <em>Standard GB 123</em>
@@ -900,7 +943,7 @@ RSpec.describe Asciidoctor::ISO do
          <formattedref format="application/x-isodoc+xml">
            <em>Standard 10</em>
          </formattedref>
-         <docidentifier type="metanorma">[11]</docidentifier>
+         <docidentifier type="metanorma">[13]</docidentifier>
        </bibitem><bibitem id="ref14">
          <formattedref format="application/x-isodoc+xml">
            <em>Standard GB 123</em>
