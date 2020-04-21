@@ -1,4 +1,67 @@
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso">
+  <bibdata type="standard">
+    <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
+    <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+    <title type="main" language="en" format="text/plain">Specifications and test methods</title>
+    <title type="title-part" language="en" format="text/plain">Rice</title>
+    <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
+    <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
+    <title type="title-part" language="fr" format="text/plain">Riz</title>
+  <docidentifier type="iso">ISO/PreCD3 17301-1</docidentifier>
+  <docidentifier type="iso-tc">17301</docidentifier>
+  <docnumber>1730</docnumber>
+  <date type="published"><on>2011</on></date>
+  <date type="accessed"><on>2012</on></date>
+  <date type="created"><from>2010</from><to>2011</to></date>
+  <date type="activated"><on>2013</on></date>
+  <date type="obsoleted"><on>2014</on></date>
+  <edition>2</edition>
+  <version>
+  <revision-date>2016-05-01</revision-date>
+  <draft>0.4</draft>
+</version>
+  <contributor>
+    <role type="author"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <language>en</language>
+  <script>Latn</script>
+  <status>
+    <stage abbreviation="CD">35</stage>
+    <substage abbreviation="3CD">20</substage>
+    <iteration>3</iteration>
+  </status>
+  <copyright>
+    <from>2016</from>
+    <owner>
+      <organization>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </owner>
+  </copyright>
+  <ext>
+  <doctype>international-standard</doctype>
+  <editorialgroup>
+    <technical-committee number="34">Food products</technical-committee>
+    <subcommittee number="4">Cereals and pulses</subcommittee>
+    <workgroup number="3">Rice Group</workgroup>
+    <secretariat>GB</secretariat>
+  </editorialgroup>
+  <structuredidentifier>
+    <project-number part="1">ISO/PreCD3 17301</project-number>
+  </structuredidentifier>
+  </ext>
+</bibdata>
     <foreword>
     <note>
   <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
