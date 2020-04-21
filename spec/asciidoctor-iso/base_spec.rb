@@ -35,6 +35,7 @@ RSpec.describe Asciidoctor::ISO do
       :docfile: test.adoc
       :novalid:
       :no-isobib:
+      :no-pdf:
     INPUT
     #{BLANK_HDR}
 <sections/>
@@ -486,6 +487,7 @@ OUTPUT
       :docfile: test.adoc
       :novalid:
       :no-isobib:
+      :no-pdf:
     INPUT
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r{<script>})
@@ -499,6 +501,7 @@ OUTPUT
       :docfile: test.adoc
       :novalid:
       :no-isobib:
+      :no-pdf:
     INPUT
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
@@ -514,6 +517,7 @@ OUTPUT
       :docfile: test.adoc
       :novalid:
       :no-isobib:
+      :no-pdf:
     INPUT
     html = File.read("test_alt.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: "Space Mono", monospace;]m)
@@ -530,6 +534,7 @@ OUTPUT
       :novalid:
       :no-isobib:
       :script: Hans
+      :no-pdf:
     INPUT
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
@@ -549,6 +554,7 @@ OUTPUT
       :body-font: Zapf Chancery
       :header-font: Comic Sans
       :monospace-font: Andale Mono
+      :no-pdf:
     INPUT
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: Andale Mono;]m)
@@ -565,6 +571,7 @@ OUTPUT
       :docfile: test.adoc
       :novalid:
       :no-isobib:
+      :no-pdf:
     INPUT
     word = File.read("test.doc", encoding: "utf-8")
     html = File.read("test.html", encoding: "utf-8")

@@ -18,7 +18,8 @@ module Metanorma
         super.merge(
           html: "html",
           html_alt: "alt.html",
-          doc: "doc"
+          doc: "doc",
+          pdf: "pdf"
         )
       end
 
@@ -38,6 +39,8 @@ module Metanorma
           IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true)).convert(outname, isodoc_node)
         when :doc
           IsoDoc::Iso::WordConvert.new(options).convert(outname, isodoc_node)
+        when :pdf
+          IsoDoc::Iso::PdfConvert.new(options).convert(outname, isodoc_node)
         else
           super
         end
