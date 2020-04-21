@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:iso="http://riboseinc.com/isoxml" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:xalan="http://xml.apache.org/xalan" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:iso="https://www.metanorma.org/ns/iso" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:xalan="http://xml.apache.org/xalan" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" version="1.0">
 
 	<xsl:output method="xml" encoding="UTF-8" indent="no"/>
 	
@@ -20,9 +20,61 @@
 	<xsl:variable name="title-en" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'main']"/>
 	<xsl:variable name="title-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'main']"/>
 	<xsl:variable name="title-intro" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-intro']"/>
+	<xsl:variable name="title-intro-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-intro']"/>
 	<xsl:variable name="title-main" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-main']"/>
+	<xsl:variable name="title-main-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-main']"/>
 	<xsl:variable name="part" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:project-number/@part"/>
 	<xsl:variable name="title-part" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-part']"/>
+	<xsl:variable name="title-part-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-part']"/>
+
+	<xsl:variable name="doctype" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:doctype"/>
+	<xsl:variable name="doctype_uppercased" select="translate(translate($doctype,'-',' '), $lower,$upper)"/>
+	
+	<xsl:variable name="stage" select="number(/iso:iso-standard/iso:bibdata/iso:status/iso:stage)"/>
+	<xsl:variable name="stage-abbrev" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:status/iso:stage/@abbreviation)"/>
+	<xsl:variable name="stage-fullname" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:stagename)"/>
+	<xsl:variable name="substage" select="number(/iso:iso-standard/iso:bibdata/iso:status/iso:substage)"/>	
+	<xsl:variable name="iteration" select="number(/iso:iso-standard/iso:bibdata/iso:status/iso:iteration)"/>	
+	<xsl:variable name="stage-name">
+		<xsl:choose>
+			<xsl:when test="$stage-abbrev != ''">
+				<xsl:value-of select="$stage-abbrev"/>
+			</xsl:when>
+			<!--  and $substage = 0 -->
+			<xsl:when test="$stage = 0">NWIP</xsl:when> <!-- NWIP (NP, PWI) -->
+			<xsl:when test="$stage = 10">AWI</xsl:when>
+			<xsl:when test="$stage = 20">WD</xsl:when>
+			<xsl:when test="$stage = 30">CD</xsl:when>
+			<xsl:when test="$stage = 40">DIS</xsl:when>
+			<xsl:when test="$stage = 50">FDIS</xsl:when>
+			<xsl:when test="$stage = 60 and $substage = 0">IS</xsl:when>
+			<xsl:when test="$stage &gt;=60">published</xsl:when>
+			<xsl:otherwise/>
+		</xsl:choose>
+	</xsl:variable>
+	
+	<!-- UPPERCASED stage name -->
+	<xsl:variable name="stage-name-uppercased">
+		<xsl:if test="$stage-fullname != '' and $stage-abbrev != ''">
+			<item name="{$stage-abbrev}">
+				<xsl:if test="$stage-abbrev = 'NWIP' or 'AWI' or 'WD' or 'CD' or 'DIS' or 'FDIS'">
+					<xsl:attribute name="show">true</xsl:attribute>
+					<xsl:attribute name="shortname">DRAFT</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="$stage-abbrev = 'FDIS'">
+					<xsl:attribute name="shortname">FINAL DRAFT</xsl:attribute>
+				</xsl:if>
+				<xsl:value-of select="translate($stage-fullname, $lower, $upper)"/>
+			</item>
+		</xsl:if>
+		<item name="NWIP" show="true" shortname="DRAFT">NEW WORK ITEM PROPOSAL DRAFT</item>
+		<item name="AWI" show="true" shortname="DRAFT">APPROVED WORK ITEM</item>
+		<item name="WD" show="true" shortname="DRAFT">WORKING DRAFT</item>
+		<item name="CD" show="true" shortname="DRAFT">COMMITTEE DRAFT</item>
+		<item name="DIS" show="true" shortname="DRAFT">DRAFT</item>
+		<item name="FDIS" show="true" shortname="FINAL DRAFT">FINAL DRAFT</item>
+		<item name="IS">PROOF</item>
+	</xsl:variable>
 	
 	<!-- 
 		<status>
@@ -33,13 +85,22 @@
 		as the International Harmonized Stage Codes (https://www.iso.org/stage-codes.html):
 		stage 60 means published, everything before is a Draft (90 means withdrawn, but the document doesn't change anymore) -->
 	<xsl:variable name="isPublished">
-		<xsl:variable name="stage" select="number(/iso:iso-standard/iso:bibdata/iso:status/iso:stage)"/>
 		<xsl:choose>
 			<xsl:when test="string($stage) = 'NaN'">false</xsl:when>
 			<xsl:when test="$stage &gt;=60">true</xsl:when>
+			<xsl:when test="normalize-space($stage-name) != ''">true</xsl:when>
 			<xsl:otherwise>false</xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
+	
+	<xsl:variable name="document-master-reference">
+		<xsl:choose>
+			<xsl:when test="$stage-name != ''">-publishedISO</xsl:when>
+			<xsl:otherwise/>
+		</xsl:choose>
+	</xsl:variable>
+	
+	<xsl:variable name="proof-text">PROOF/ÉPREUVE</xsl:variable>
 	
 	<!-- Example:
 		<item level="1" id="Foreword" display="true">Foreword</item>
@@ -74,8 +135,10 @@
 	</xsl:variable>
 	
 	<xsl:template match="/">
+		<xsl:message>INFO: Document namespace: '<xsl:value-of select="namespace-uri(/*)"/>'</xsl:message>
 		<fo:root font-family="Cambria, Times New Roman, Cambria Math, HanSans" font-size="11pt" xml:lang="{$lang}"> <!-- alternatives: SimSun -->
 			<fo:layout-master-set>
+				
 				<!-- cover page -->
 				<fo:simple-page-master master-name="cover-page" page-width="{$pageWidth}" page-height="{$pageHeight}">
 					<fo:region-body margin-top="25.4mm" margin-bottom="25.4mm" margin-left="31.7mm" margin-right="31.7mm"/>
@@ -84,6 +147,7 @@
 					<fo:region-start region-name="cover-left-region" extent="31.7mm"/>
 					<fo:region-end region-name="cover-right-region" extent="31.7mm"/>
 				</fo:simple-page-master>
+				
 				<fo:simple-page-master master-name="cover-page-published" page-width="{$pageWidth}" page-height="{$pageHeight}">
 					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="78mm" margin-right="18.5mm"/>
 					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
@@ -91,15 +155,31 @@
 					<fo:region-start region-name="cover-left-region" extent="78mm"/>
 					<fo:region-end region-name="cover-right-region" extent="18.5mm"/>
 				</fo:simple-page-master>
+				
+				
+				<fo:simple-page-master master-name="cover-page-publishedISO-odd" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="25mm" margin-right="12.5mm"/>
+					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
+					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
+					<fo:region-start region-name="cover-left-region" extent="25mm"/>
+					<fo:region-end region-name="cover-right-region" extent="12.5mm"/>
+				</fo:simple-page-master>
+				<fo:simple-page-master master-name="cover-page-publishedISO-even" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="12.5mm" margin-right="25mm"/>
+					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
+					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
+					<fo:region-start region-name="cover-left-region" extent="12.5mm"/>
+					<fo:region-end region-name="cover-right-region" extent="25mm"/>
+				</fo:simple-page-master>
+				<fo:page-sequence-master master-name="cover-page-publishedISO">
+					<fo:repeatable-page-master-alternatives>
+						<fo:conditional-page-master-reference odd-or-even="even" master-reference="cover-page-publishedISO-even"/>
+						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="cover-page-publishedISO-odd"/>
+					</fo:repeatable-page-master-alternatives>
+				</fo:page-sequence-master>
+
+
 				<!-- contents pages -->
-				<!-- first page -->
-				<!-- <fo:simple-page-master master-name="odd" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="19mm" margin-right="19mm"/>
-					<fo:region-before region-name="header-first" extent="27.4mm"/>
-					<fo:region-after region-name="footer-odd" extent="13mm"/>
-					<fo:region-start region-name="left-region" extent="19mm"/>
-					<fo:region-end region-name="right-region" extent="19mm"/>
-				</fo:simple-page-master> -->
 				<!-- odd pages -->
 				<fo:simple-page-master master-name="odd" page-width="{$pageWidth}" page-height="{$pageHeight}">
 					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="19mm" margin-right="19mm"/>
@@ -116,21 +196,66 @@
 					<fo:region-start region-name="left-region" extent="19mm"/>
 					<fo:region-end region-name="right-region" extent="19mm"/>
 				</fo:simple-page-master>
+				<fo:page-sequence-master master-name="preface">
+					<fo:repeatable-page-master-alternatives>
+						<fo:conditional-page-master-reference odd-or-even="even" master-reference="even"/>
+						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="odd"/>
+					</fo:repeatable-page-master-alternatives>
+				</fo:page-sequence-master>
 				<fo:page-sequence-master master-name="document">
 					<fo:repeatable-page-master-alternatives>
-						<!-- <fo:conditional-page-master-reference page-position="first" master-reference="first-page"/> -->
 						<fo:conditional-page-master-reference odd-or-even="even" master-reference="even"/>
 						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="odd"/>
 					</fo:repeatable-page-master-alternatives>
 				</fo:page-sequence-master>
 				
-				<fo:simple-page-master master-name="last-page" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="19mm" margin-right="19mm"/>
-					<fo:region-before/>
-					<fo:region-after region-name="last-page-footer" extent="13mm"/>
-					<fo:region-start region-name="left-region" extent="19mm"/>
-					<fo:region-end region-name="right-region" extent="19mm"/>
+				
+				<!-- first page -->
+				<fo:simple-page-master master-name="first-publishedISO" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="25mm" margin-right="12.5mm"/>
+					<fo:region-before region-name="header-first" extent="27.4mm"/> <!--   display-align="center" -->
+					<fo:region-after region-name="footer-odd" extent="13mm"/>
+					<fo:region-start region-name="left-region" extent="25mm"/>
+					<fo:region-end region-name="right-region" extent="12.5mm"/>
 				</fo:simple-page-master>
+				<!-- odd pages -->
+				<fo:simple-page-master master-name="odd-publishedISO" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="25mm" margin-right="12.5mm"/>
+					<fo:region-before region-name="header-odd" extent="27.4mm"/> <!--   display-align="center" -->
+					<fo:region-after region-name="footer-odd" extent="13mm"/>
+					<fo:region-start region-name="left-region" extent="25mm"/>
+					<fo:region-end region-name="right-region" extent="12.5mm"/>
+				</fo:simple-page-master>
+				<!-- even pages -->
+				<fo:simple-page-master master-name="even-publishedISO" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="12.5mm" margin-right="25mm"/>
+					<fo:region-before region-name="header-even" extent="27.4mm"/>
+					<fo:region-after region-name="footer-even" extent="13mm"/>
+					<fo:region-start region-name="left-region" extent="12.5mm"/>
+					<fo:region-end region-name="right-region" extent="25mm"/>
+				</fo:simple-page-master>
+				<fo:page-sequence-master master-name="preface-publishedISO">
+					<fo:repeatable-page-master-alternatives>
+						<fo:conditional-page-master-reference odd-or-even="even" master-reference="even-publishedISO"/>
+						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="odd-publishedISO"/>
+					</fo:repeatable-page-master-alternatives>
+				</fo:page-sequence-master>
+				<fo:page-sequence-master master-name="document-publishedISO">
+					<fo:repeatable-page-master-alternatives>
+						<fo:conditional-page-master-reference master-reference="first-publishedISO" page-position="first"/>
+						<fo:conditional-page-master-reference odd-or-even="even" master-reference="even-publishedISO"/>
+						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="odd-publishedISO"/>
+					</fo:repeatable-page-master-alternatives>
+				</fo:page-sequence-master>
+				
+				<fo:simple-page-master master-name="last-page" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="12.5mm" margin-right="25mm"/>
+					<fo:region-before region-name="header-even" extent="27.4mm"/>
+					<fo:region-after region-name="last-page-footer" extent="13mm"/>
+					<fo:region-start region-name="left-region" extent="12.5mm"/>
+					<fo:region-end region-name="right-region" extent="25mm"/>
+				</fo:simple-page-master>
+				
 			</fo:layout-master-set>
 
 			<fo:declarations>
@@ -163,6 +288,357 @@
 			
 			<!-- cover page -->
 			<xsl:choose>
+				<xsl:when test="$stage-name != ''">
+					<fo:page-sequence master-reference="cover-page-publishedISO" force-page-count="no-force">
+						<fo:static-content flow-name="cover-page-footer" font-size="10pt">
+							<fo:table table-layout="fixed" width="100%">
+								<fo:table-column column-width="52mm"/>
+								<fo:table-column column-width="7.5mm"/>
+								<fo:table-column column-width="112.5mm"/>
+								<fo:table-body>
+									<fo:table-row>
+										<fo:table-cell font-size="6.5pt" text-align="justify" display-align="after" padding-bottom="8mm"><!-- before -->
+											<!-- margin-top="-30mm"  -->
+											<fo:block margin-top="-100mm">
+												<xsl:if test="$stage-name = 'DIS' or $stage-name = 'NWIP' or $stage-name = 'AWI' or $stage-name = 'WD' or $stage-name = 'CD'">
+													<fo:block margin-bottom="1.5mm">
+														<xsl:text>THIS DOCUMENT IS A DRAFT CIRCULATED FOR COMMENT AND APPROVAL. IT IS THEREFORE SUBJECT TO CHANGE AND MAY NOT BE REFERRED TO AS AN INTERNATIONAL STANDARD UNTIL PUBLISHED AS SUCH.</xsl:text>
+													</fo:block>
+												</xsl:if>
+												<xsl:if test="$stage-name = 'FDIS' or $stage-name = 'DIS' or $stage-name = 'NWIP' or $stage-name = 'AWI' or $stage-name = 'WD' or $stage-name = 'CD'">
+													<fo:block margin-bottom="1.5mm">
+														<xsl:text>RECIPIENTS OF THIS DRAFT ARE INVITED TO
+																			SUBMIT, WITH THEIR COMMENTS, NOTIFICATION
+																			OF ANY RELEVANT PATENT RIGHTS OF WHICH
+																			THEY ARE AWARE AND TO PROVIDE SUPPORTING
+																			DOCUMENTATION.</xsl:text>
+													</fo:block>
+													<fo:block>
+														<xsl:text>IN ADDITION TO THEIR EVALUATION AS
+																BEING ACCEPTABLE FOR INDUSTRIAL, TECHNOLOGICAL,
+																COMMERCIAL AND USER PURPOSES,
+																DRAFT INTERNATIONAL STANDARDS MAY ON
+																OCCASION HAVE TO BE CONSIDERED IN THE
+																LIGHT OF THEIR POTENTIAL TO BECOME STANDARDS
+																TO WHICH REFERENCE MAY BE MADE IN
+																NATIONAL REGULATIONS.</xsl:text>
+													</fo:block>
+												</xsl:if>
+											</fo:block>
+										</fo:table-cell>
+										<fo:table-cell>
+											<fo:block> </fo:block>
+										</fo:table-cell>
+										<fo:table-cell>
+											<xsl:if test="$stage-name = 'DIS'">
+												<fo:block-container margin-top="-15mm" margin-bottom="7mm" margin-left="1mm">
+													<fo:block font-size="9pt" border="0.5pt solid black" fox:border-radius="5pt" padding-left="2mm" padding-top="2mm" padding-bottom="2mm">
+														<xsl:text>This document is circulated as received from the committee secretariat.</xsl:text>
+													</fo:block>
+												</fo:block-container>
+											</xsl:if>
+											<fo:block>
+												<fo:table table-layout="fixed" width="100%" border-top="1mm double black" margin-bottom="3mm">
+													<fo:table-column column-width="50%"/>
+													<fo:table-column column-width="50%"/>
+													<fo:table-body>
+														<fo:table-row height="34mm">
+															<fo:table-cell display-align="center">
+																<fo:block text-align="left" margin-top="2mm">
+																	<xsl:variable name="docid" select="substring-before(/iso:iso-standard/iso:bibdata/iso:docidentifier, ' ')"/>
+																	<xsl:for-each select="xalan:tokenize($docid, '/')">
+																		<xsl:choose>
+																			<xsl:when test=". = 'ISO'">
+																				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo))}" width="21mm" content-height="21mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
+																			</xsl:when>
+																			<xsl:when test=". = 'IEC'">
+																				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEC-Logo))}" width="19.8mm" content-height="19.8mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
+																			</xsl:when>
+																			<xsl:otherwise/>
+																		</xsl:choose>
+																		<xsl:if test="position() != last()">
+																			<fo:inline padding-right="1mm"> </fo:inline>
+																		</xsl:if>
+																	</xsl:for-each>
+																</fo:block>
+															</fo:table-cell>
+															<fo:table-cell display-align="center">
+																<fo:block text-align="right">
+																	<fo:block>Reference number</fo:block>
+																	<fo:block><xsl:value-of select="$ISOname"/></fo:block>
+																	<fo:block> </fo:block>
+																	<fo:block> </fo:block>
+																	<fo:block><fo:inline font-size="9pt">©</fo:inline><xsl:value-of select="concat(' ISO ', iso:iso-standard/iso:bibdata/iso:copyright/iso:from)"/></fo:block>
+																</fo:block>
+															</fo:table-cell>
+														</fo:table-row>
+													</fo:table-body>
+												</fo:table>
+											</fo:block>
+										</fo:table-cell>
+									</fo:table-row>
+								</fo:table-body>
+							</fo:table>
+						</fo:static-content>
+						
+						<xsl:choose>
+							<xsl:when test="$stage-name = 'DIS'">
+								<fo:flow flow-name="xsl-region-body">
+									<fo:block-container>
+										<fo:block margin-top="-1mm" font-size="20pt" text-align="right">
+											<xsl:value-of select="xalan:nodeset($stage-name-uppercased)/item[@name = $stage-name and @show = 'true']/text()"/>
+											<xsl:text> </xsl:text>
+											<xsl:value-of select="$doctype_uppercased"/>
+										</fo:block>
+										<fo:block font-size="20pt" font-weight="bold" text-align="right">
+											<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso']"/>
+										</fo:block>
+										
+										
+										<fo:table table-layout="fixed" width="100%" margin-top="18mm">
+											<fo:table-column column-width="59.5mm"/>
+											<fo:table-column column-width="52mm"/>
+											<fo:table-column column-width="59mm"/>
+											<fo:table-body>
+												<fo:table-row>
+													<fo:table-cell>
+														<fo:block> </fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block margin-bottom="3mm">ISO/TC <fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee/@number"/></fo:inline>
+														</fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block>Secretariat: <fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/></fo:inline></fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+												<fo:table-row>
+													<fo:table-cell>
+														<fo:block> </fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block>Voting begins on:</fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block>Voting terminates on:</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+												<fo:table-row>
+													<fo:table-cell>
+														<fo:block> </fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block><fo:inline font-weight="bold">2018</fo:inline>-xx-xx</fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block><fo:inline font-weight="bold">2018</fo:inline>-xx-xx</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+											</fo:table-body>
+										</fo:table>
+										
+										<fo:block-container border-top="1mm double black" line-height="1.1" margin-top="3mm">
+											<fo:block margin-right="5mm">
+												<fo:block font-size="18pt" font-weight="bold" margin-top="6pt">
+													<xsl:if test="normalize-space($title-intro) != ''">
+														<xsl:value-of select="$title-intro"/>
+														<xsl:text> — </xsl:text>
+													</xsl:if>
+													
+													<xsl:value-of select="$title-main"/>
+													
+													<xsl:if test="normalize-space($title-part) != ''">
+														<xsl:if test="$part != ''">
+															<xsl:text> — </xsl:text>
+															<fo:block font-weight="normal" margin-top="6pt">
+																<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
+																<xsl:text>:</xsl:text>
+															</fo:block>
+														</xsl:if>
+														<xsl:value-of select="$title-part"/>
+													</xsl:if>
+												</fo:block>
+															
+												<fo:block font-size="9pt"><xsl:value-of select="$linebreak"/></fo:block>
+												<fo:block font-size="11pt" font-style="italic" line-height="1.5">
+													
+													<xsl:if test="normalize-space($title-intro-fr) != ''">
+														<xsl:value-of select="$title-intro-fr"/>
+														<xsl:text> — </xsl:text>
+													</xsl:if>
+													
+													<xsl:value-of select="$title-main-fr"/>
+													
+													<xsl:if test="normalize-space($title-part-fr) != ''">
+														<xsl:if test="$part != ''">
+															<xsl:text> — </xsl:text>
+															<xsl:text>Partie </xsl:text>
+															<xsl:value-of select="$part"/>
+															<xsl:text>:</xsl:text>
+														</xsl:if>
+														<xsl:value-of select="$title-part-fr"/>
+													</xsl:if>
+												</fo:block>
+											</fo:block>
+											<fo:block margin-top="10mm">ICS: xx.xxx.xx; xx.xxx.xx</fo:block>
+										</fo:block-container>
+										
+										
+									</fo:block-container>
+								</fo:flow>
+							
+							</xsl:when>
+							<xsl:otherwise>
+						
+								<fo:flow flow-name="xsl-region-body">
+									<fo:block-container>
+										<fo:table table-layout="fixed" width="100%" font-size="24pt" line-height="1"> <!-- margin-bottom="35mm" -->
+											<fo:table-column column-width="59.5mm"/>
+											<fo:table-column column-width="67.5mm"/>
+											<fo:table-column column-width="45.5mm"/>
+											<fo:table-body>
+												<fo:table-row>
+													<fo:table-cell>
+														<fo:block font-size="18pt">
+															<xsl:variable name="stgname" select="xalan:nodeset($stage-name-uppercased)/item[@name = $stage-name and @show = 'true']/text()"/>
+															<xsl:value-of select="translate($stgname, ' ', $linebreak)"/>
+															<xsl:if test="number($iteration) = $iteration and ($stage-name = 'NWIP' or $stage-name = 'AWI' or $stage-name = 'WD' or $stage-name = 'CD')"> <!-- not NaN -->
+																<xsl:text> </xsl:text><xsl:value-of select="$iteration"/>
+															</xsl:if>
+															<!-- <xsl:if test="$stage-name = 'draft'">DRAFT</xsl:if>
+															<xsl:if test="$stage-name = 'final-draft'">FINAL<xsl:value-of select="$linebreak"/>DRAFT</xsl:if> -->
+														</fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block text-align="left">
+															<xsl:value-of select="$doctype_uppercased"/>
+														</fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block text-align="right" font-weight="bold" margin-bottom="13mm">
+															<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso']"/>
+														</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+												<fo:table-row height="42mm">
+													<fo:table-cell number-columns-spanned="3" font-size="10pt" line-height="1.2">
+														<fo:block text-align="right">
+															<xsl:variable name="edition" select="/iso:iso-standard/iso:bibdata/iso:edition"/>
+															<xsl:if test="$stage-name = 'IS' or $stage-name = 'published'">
+																<xsl:choose>
+																	<xsl:when test="$edition = 1">First</xsl:when>
+																	<xsl:when test="$edition = 2">Second</xsl:when>
+																	<xsl:when test="$edition = 3">Third</xsl:when>
+																	<xsl:otherwise><xsl:value-of select="$edition"/></xsl:otherwise>
+																</xsl:choose>
+																<xsl:text> edition</xsl:text>
+															</xsl:if>
+															<xsl:if test="$stage-name = 'published'">
+																<xsl:value-of select="$linebreak"/>
+																<xsl:value-of select="substring(/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date,1, 7)"/>
+															</xsl:if>
+															<!-- <xsl:value-of select="$linebreak"/>
+															<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/> -->
+															</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+											</fo:table-body>
+										</fo:table>
+										
+										
+										<fo:table table-layout="fixed" width="100%">
+											<fo:table-column column-width="52mm"/>
+											<fo:table-column column-width="7.5mm"/>
+											<fo:table-column column-width="112.5mm"/>
+											<fo:table-body>
+												<fo:table-row> <!--  border="1pt solid black" height="150mm"  -->
+													<fo:table-cell font-size="11pt">
+														<fo:block>
+															<xsl:if test="$stage-name = 'FDIS'">
+																<fo:block-container border="0.5mm solid black" width="51mm">
+																	<fo:block margin="2mm">
+																			<fo:block margin-bottom="8pt">ISO/TC <fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee/@number"/></fo:inline></fo:block>
+																			<fo:block margin-bottom="6pt">Secretariat: <xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/></fo:block>
+																			<fo:block margin-bottom="6pt">Voting begins on:<xsl:value-of select="$linebreak"/>
+																				<fo:inline font-weight="bold">2018</fo:inline>-xx-xx
+																			</fo:block>
+																			<fo:block>Voting terminates on:<xsl:value-of select="$linebreak"/>
+																				<fo:inline font-weight="bold">2018</fo:inline>-xx-xx
+																			</fo:block>
+																	</fo:block>
+																</fo:block-container>
+															</xsl:if>
+														</fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block> </fo:block>
+													</fo:table-cell>
+													<fo:table-cell>
+														<fo:block-container border-top="1mm double black" line-height="1.1">
+															<fo:block margin-right="5mm">
+																<fo:block font-size="18pt" font-weight="bold" margin-top="12pt">
+																	
+																	<xsl:if test="normalize-space($title-intro) != ''">
+																		<xsl:value-of select="$title-intro"/>
+																		<xsl:text> — </xsl:text>
+																	</xsl:if>
+																	
+																	<xsl:value-of select="$title-main"/>
+																	
+																	<xsl:if test="normalize-space($title-part) != ''">
+																		<xsl:if test="$part != ''">
+																			<xsl:text> — </xsl:text>
+																			<fo:block font-weight="normal" margin-top="6pt">
+																				<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
+																				<xsl:text>:</xsl:text>
+																			</fo:block>
+																		</xsl:if>
+																		<xsl:value-of select="$title-part"/>
+																	</xsl:if>
+																</fo:block>
+																			
+																<fo:block font-size="9pt"><xsl:value-of select="$linebreak"/></fo:block>
+																<fo:block font-size="11pt" font-style="italic" line-height="1.5">
+																	
+																	<xsl:if test="normalize-space($title-intro-fr) != ''">
+																		<xsl:value-of select="$title-intro-fr"/>
+																		<xsl:text> — </xsl:text>
+																	</xsl:if>
+																	
+																	<xsl:value-of select="$title-main-fr"/>
+																	
+																	<xsl:if test="normalize-space($title-part-fr) != ''">
+																		<xsl:if test="$part != ''">
+																			<xsl:text> — </xsl:text>
+																			<xsl:text>Partie </xsl:text>
+																			<xsl:value-of select="$part"/>
+																			<xsl:text>:</xsl:text>
+																		</xsl:if>
+																		<xsl:value-of select="$title-part-fr"/>
+																	</xsl:if>
+																</fo:block>
+															</fo:block>
+														</fo:block-container>
+													</fo:table-cell>
+												</fo:table-row>
+											</fo:table-body>
+										</fo:table>
+									</fo:block-container>
+									<fo:block-container position="absolute" left="60mm" top="222mm" height="25mm" display-align="after">
+										<fo:block>
+											<xsl:if test="$stage-name = 'IS'">
+												<fo:block font-size="39pt" font-weight="bold"><xsl:value-of select="$proof-text"/></fo:block>
+											</xsl:if>
+										</fo:block>
+									</fo:block-container>
+								</fo:flow>
+						</xsl:otherwise>
+						</xsl:choose>
+						
+						
+					</fo:page-sequence>
+				</xsl:when>
+					
 				<xsl:when test="$isPublished = 'true'">
 					<fo:page-sequence master-reference="cover-page-published" force-page-count="no-force">
 						<fo:static-content flow-name="cover-page-footer" font-size="10pt">
@@ -173,7 +649,7 @@
 									<fo:table-row height="32mm">
 										<fo:table-cell display-align="center">
 											<fo:block text-align="left">
-												<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo))}" width="21mm" content-height="21mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
+												<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo2))}" width="21mm" content-height="21mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
 											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell display-align="center">
@@ -198,8 +674,7 @@
 										<fo:table-row>
 											<fo:table-cell>
 												<fo:block text-align="left">
-													<xsl:variable name="doctype" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:doctype"/>
-													<xsl:value-of select="translate(translate($doctype,'-',' '), $lower,$upper)"/>
+													<xsl:value-of select="$doctype_uppercased"/>
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell>
@@ -229,31 +704,45 @@
 								<fo:block-container border-top="1mm double black" line-height="1.1">
 									<fo:block margin-right="40mm">
 									<fo:block font-size="18pt" font-weight="bold" margin-top="12pt">
-										<xsl:value-of select="$title-intro"/>
-										<xsl:text> — </xsl:text>
-										<xsl:value-of select="$title-main"/>
-										<xsl:if test="$part != ''">
+									
+										<xsl:if test="normalize-space($title-intro) != ''">
+											<xsl:value-of select="$title-intro"/>
 											<xsl:text> — </xsl:text>
-											<fo:block font-weight="normal" margin-top="6pt">
-												<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
-												<xsl:text>:</xsl:text>
-											</fo:block>
 										</xsl:if>
-										<xsl:value-of select="$title-part"/>
+										
+										<xsl:value-of select="$title-main"/>
+										
+										<xsl:if test="normalize-space($title-part) != ''">
+											<xsl:if test="$part != ''">
+												<xsl:text> — </xsl:text>
+												<fo:block font-weight="normal" margin-top="6pt">
+													<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
+													<xsl:text>:</xsl:text>
+												</fo:block>
+											</xsl:if>
+											<xsl:value-of select="$title-part"/>
+										</xsl:if>
 									</fo:block>
 												
 									<fo:block font-size="9pt"><xsl:value-of select="$linebreak"/></fo:block>
 									<fo:block font-size="11pt" font-style="italic" line-height="1.5">
-										<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-intro']"/>
-										<xsl:text> — </xsl:text>
-										<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-main']"/>
-										<xsl:if test="$part != ''">
+										
+										<xsl:if test="normalize-space($title-intro-fr) != ''">
+											<xsl:value-of select="$title-intro-fr"/>
 											<xsl:text> — </xsl:text>
-											<xsl:text>Partie </xsl:text>
-											<xsl:value-of select="$part"/>
-											<xsl:text>:</xsl:text>
 										</xsl:if>
-										<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-part']"/>
+										
+										<xsl:value-of select="$title-main-fr"/>
+
+										<xsl:if test="normalize-space($title-part-fr) != ''">
+											<xsl:if test="$part != ''">
+												<xsl:text> — </xsl:text>
+												<xsl:text>Partie </xsl:text>
+												<xsl:value-of select="$part"/>
+												<xsl:text>:</xsl:text>
+											</xsl:if>
+											<xsl:value-of select="$title-part-fr"/>
+										</xsl:if>
 									</fo:block>
 									</fo:block>
 								</fo:block-container>
@@ -338,38 +827,51 @@
 							<fo:block-container font-size="16pt">
 								<!-- Information and documentation — Codes for transcription systems  -->
 									<fo:block font-weight="bold">
-										<xsl:value-of select="$title-intro"/>
-										<xsl:text> — </xsl:text>
-										<xsl:value-of select="$title-main"/>
-										<xsl:if test="$part != ''">
+									
+										<xsl:if test="normalize-space($title-intro) != ''">
+											<xsl:value-of select="$title-intro"/>
 											<xsl:text> — </xsl:text>
-											<fo:block font-weight="normal" margin-top="6pt">
-												<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
-												<xsl:text>:</xsl:text>
-											</fo:block>
 										</xsl:if>
-										<xsl:value-of select="$title-part"/>
+										
+										<xsl:value-of select="$title-main"/>
+										
+										<xsl:if test="normalize-space($title-part) != ''">
+											<xsl:if test="$part != ''">
+												<xsl:text> — </xsl:text>
+												<fo:block font-weight="normal" margin-top="6pt">
+													<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
+													<xsl:text>:</xsl:text>
+												</fo:block>
+											</xsl:if>
+											<xsl:value-of select="$title-part"/>
+										</xsl:if>
 									</fo:block>
 									
 									<fo:block font-size="12pt"><xsl:value-of select="$linebreak"/></fo:block>
 									<fo:block>
-										<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-intro']"/>
-										<xsl:text> — </xsl:text>
-										<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-main']"/>
-										<xsl:if test="$part != ''">
+										<xsl:if test="normalize-space($title-intro-fr) != ''">
+											<xsl:value-of select="$title-intro-fr"/>
 											<xsl:text> — </xsl:text>
-											<fo:block margin-top="6pt" font-weight="normal">
-												<xsl:text>Partie </xsl:text><xsl:value-of select="$part"/>
-												<xsl:text>:</xsl:text>
-											</fo:block>
 										</xsl:if>
-										<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-part']"/>
+										
+										<xsl:value-of select="$title-main-fr"/>
+										
+										<xsl:if test="normalize-space($title-part-fr) != ''">
+											<xsl:if test="$part != ''">
+												<xsl:text> — </xsl:text>
+												<fo:block margin-top="6pt" font-weight="normal">
+													<xsl:text>Partie </xsl:text><xsl:value-of select="$part"/>
+													<xsl:text>:</xsl:text>
+												</fo:block>
+											</xsl:if>
+											<xsl:value-of select="$title-part-fr"/>
+										</xsl:if>
 									</fo:block>
 							</fo:block-container>
 							<fo:block font-size="11pt" margin-bottom="8pt"><xsl:value-of select="$linebreak"/></fo:block>
 							<fo:block-container font-size="40pt" text-align="center" margin-bottom="12pt" border="0.5pt solid black">
-								<xsl:variable name="stage" select="substring-after(substring-before(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'], ' '), '/')"/>
-								<fo:block padding-top="2mm"><xsl:value-of select="$stage"/><xsl:text> stage</xsl:text></fo:block>
+								<xsl:variable name="stage-title" select="substring-after(substring-before(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'], ' '), '/')"/>
+								<fo:block padding-top="2mm"><xsl:value-of select="$stage-title"/><xsl:text> stage</xsl:text></fo:block>
 							</fo:block-container>
 							<fo:block><xsl:value-of select="$linebreak"/></fo:block>
 							
@@ -385,14 +887,14 @@
 				</xsl:otherwise>
 			</xsl:choose>	
 			
-			<fo:page-sequence master-reference="document" format="i" force-page-count="no-force">
+			<fo:page-sequence master-reference="preface{$document-master-reference}" format="i" force-page-count="no-force">
 				<xsl:call-template name="insertHeaderFooter">
 					<xsl:with-param name="font-weight">normal</xsl:with-param>
 				</xsl:call-template>
 				<fo:flow flow-name="xsl-region-body" line-height="115%">
 					<xsl:if test="/iso:iso-standard/iso:boilerplate/iso:copyright-statement">
 					
-						<fo:block-container height="250mm" display-align="after">
+						<fo:block-container height="252mm" display-align="after">
 							<fo:block margin-bottom="3mm">
 								<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
 								<fo:inline padding-left="6mm" font-size="12pt" font-weight="bold">COPYRIGHT PROTECTED DOCUMENT</fo:inline>
@@ -479,7 +981,7 @@
 			</fo:page-sequence>
 			
 			<!-- BODY -->
-			<fo:page-sequence master-reference="document" initial-page-number="1" force-page-count="no-force">
+			<fo:page-sequence master-reference="document{$document-master-reference}" initial-page-number="1" force-page-count="no-force">
 				<fo:static-content flow-name="xsl-footnote-separator">
 					<fo:block>
 						<fo:leader leader-pattern="rule" leader-length="30%"/>
@@ -488,17 +990,6 @@
 				<xsl:call-template name="insertHeaderFooter"/>
 				<fo:flow flow-name="xsl-region-body">
 				
-					<fo:block-container absolute-position="fixed" left="19mm" top="13mm" height="9mm" width="172mm" border-top="0.5mm solid black" border-bottom="0.5mm solid black" display-align="center" background-color="white">
-						<fo:block text-align-last="justify" font-size="12pt" font-weight="bold">
-							<xsl:variable name="doctype" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:doctype"/>
-							<fo:inline><xsl:value-of select="translate(translate($doctype,'-',' '), $lower,$upper)"/></fo:inline>
-							<fo:inline keep-together.within-line="always">
-								<fo:leader leader-pattern="space"/>
-								<fo:inline><xsl:value-of select="$ISOname"/></fo:inline>
-							</fo:inline>
-						</fo:block>
-					</fo:block-container>
-					
 					
 					<fo:block-container>
 						<!-- Information and documentation — Codes for transcription systems -->
@@ -508,15 +999,21 @@
 						 -->
 						<fo:block font-size="18pt" font-weight="bold" margin-top="12pt" margin-bottom="18pt">
 							<fo:block>
-								<xsl:value-of select="$title-intro"/>
-								<xsl:text> — </xsl:text>
-								<xsl:value-of select="$title-main"/>
-								<xsl:if test="$part != ''">
+								<xsl:if test="normalize-space($title-intro) != ''">
+									<xsl:value-of select="$title-intro"/>
 									<xsl:text> — </xsl:text>
-									<fo:block font-weight="normal" margin-top="12pt">
-										<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
-										<xsl:text>:</xsl:text>
-									</fo:block>
+								</xsl:if>
+								
+								<xsl:value-of select="$title-main"/>
+								
+								<xsl:if test="normalize-space($title-part) != ''">
+									<xsl:if test="$part != ''">
+										<xsl:text> — </xsl:text>
+										<fo:block font-weight="normal" margin-top="12pt">
+											<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
+											<xsl:text>:</xsl:text>
+										</fo:block>
+									</xsl:if>
 								</xsl:if>
 							</fo:block>
 							<fo:block>
@@ -559,13 +1056,42 @@
 			
 			<xsl:if test="$isPublished = 'true'">
 				<fo:page-sequence master-reference="last-page" force-page-count="no-force">
+					<xsl:call-template name="insertHeaderEven"/>
 					<fo:static-content flow-name="last-page-footer" font-size="10pt">
-						<fo:block font-size="9pt"><xsl:value-of select="$copyrightText"/></fo:block>
+						<fo:table table-layout="fixed" width="100%">
+							<fo:table-column column-width="33%"/>
+							<fo:table-column column-width="33%"/>
+							<fo:table-column column-width="34%"/>
+							<fo:table-body>
+								<fo:table-row>
+									<fo:table-cell display-align="center">
+										<fo:block font-size="9pt"><xsl:value-of select="$copyrightText"/></fo:block>
+									</fo:table-cell>
+									<fo:table-cell>
+										<fo:block font-size="11pt" font-weight="bold" text-align="center">
+											<xsl:if test="$stage-name = 'IS'">
+												<xsl:value-of select="$proof-text"/>
+											</xsl:if>
+										</fo:block>
+									</fo:table-cell>
+									<fo:table-cell>
+										<fo:block> </fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+							</fo:table-body>
+						</fo:table>
 					</fo:static-content>
 					<fo:flow flow-name="xsl-region-body">
 						<fo:block-container height="252mm" display-align="after">
 							<fo:block-container border-top="1mm double black">
-								<fo:block font-size="12pt" font-weight="bold" padding-top="3mm" padding-bottom="1mm">ICS  67.060</fo:block>
+								<fo:block font-size="12pt" font-weight="bold" padding-top="3.5mm" padding-bottom="0.5mm">
+									<xsl:choose>
+										<xsl:when test="$stage-name = 'FDIS'">ICS  01.140.30</xsl:when>
+										<xsl:when test="$stage-name = 'IS'">ICS  35.240.63</xsl:when>
+										<xsl:when test="$stage-name = 'published'">ICS  35.240.30</xsl:when>
+										<xsl:otherwise>ICS  67.060</xsl:otherwise>
+									</xsl:choose>
+									</fo:block>
 								<fo:block font-size="9pt">Price based on <fo:page-number-citation ref-id="lastBlock"/> pages</fo:block>
 							</fo:block-container>
 						</fo:block-container>
@@ -762,7 +1288,7 @@
 				<!-- <xsl:attribute name="margin-bottom">12pt</xsl:attribute> -->
 				<xsl:attribute name="margin-bottom">3pt</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="not(following-sibling::iso:p)">
+			<xsl:if test="contains(@id, 'address')"> <!-- not(following-sibling::iso:p) -->
 				<!-- <xsl:attribute name="margin-left">7.1mm</xsl:attribute> -->
 				<xsl:attribute name="margin-left">4mm</xsl:attribute>
 			</xsl:if>
@@ -1553,27 +2079,50 @@
 	
 	<xsl:template name="insertHeaderFooter">
 		<xsl:param name="font-weight" select="'bold'"/>
-		<fo:static-content flow-name="header-even">
-			<fo:block-container height="24mm" display-align="before">
-				<fo:block font-size="12pt" font-weight="bold" padding-top="12.5mm"><xsl:value-of select="$ISOname"/></fo:block>
-			</fo:block-container>
-		</fo:static-content>
+		<xsl:call-template name="insertHeaderEven"/>
 		<fo:static-content flow-name="footer-even">
 			<fo:block-container> <!--  display-align="after" -->
 				<fo:table table-layout="fixed" width="100%">
-					<fo:table-column column-width="50%"/>
-					<fo:table-column column-width="50%"/>
+					<fo:table-column column-width="33%"/>
+					<fo:table-column column-width="33%"/>
+					<fo:table-column column-width="34%"/>
 					<fo:table-body>
 						<fo:table-row>
-							<fo:table-cell padding-top="0mm" font-size="11pt" font-weight="{$font-weight}">
+							<fo:table-cell display-align="center" padding-top="0mm" font-size="11pt" font-weight="{$font-weight}">
 								<fo:block><fo:page-number/></fo:block>
 							</fo:table-cell>
-							<fo:table-cell padding-top="0mm" font-size="9pt">
+							<fo:table-cell display-align="center">
+								<fo:block font-size="11pt" font-weight="bold" text-align="center">
+									<xsl:if test="$stage-name = 'IS'">
+										<xsl:value-of select="$proof-text"/>
+									</xsl:if>
+								</fo:block>
+							</fo:table-cell>
+							<fo:table-cell display-align="center" padding-top="0mm" font-size="9pt">
 								<fo:block text-align="right"><xsl:value-of select="$copyrightText"/></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 					</fo:table-body>
 				</fo:table>
+			</fo:block-container>
+		</fo:static-content>
+		<fo:static-content flow-name="header-first">
+			<fo:block-container margin-top="13mm" height="9mm" width="172mm" border-top="0.5mm solid black" border-bottom="0.5mm solid black" display-align="center" background-color="white">
+				<fo:block text-align-last="justify" font-size="12pt" font-weight="bold">
+					
+					<xsl:variable name="stgname" select="xalan:nodeset($stage-name-uppercased)/item[@name = $stage-name and @show = 'true']/@shortname"/>
+					<xsl:if test="$stgname != ''">
+					<!-- <xsl:if test="$stage-name = 'final-draft' or $stage-name = 'draft'"> -->
+						<!-- <fo:inline><xsl:value-of select="translate(translate($stage-name,'-',' '), $lower,$upper)"/></fo:inline> -->
+						<fo:inline><xsl:value-of select="$stgname"/></fo:inline>
+						<xsl:text> </xsl:text>
+					</xsl:if>
+					<fo:inline><xsl:value-of select="$doctype_uppercased"/></fo:inline>
+					<fo:inline keep-together.within-line="always">
+						<fo:leader leader-pattern="space"/>
+						<fo:inline><xsl:value-of select="$ISOname"/></fo:inline>
+					</fo:inline>
+				</fo:block>
 			</fo:block-container>
 		</fo:static-content>
 		<fo:static-content flow-name="header-odd">
@@ -1584,14 +2133,22 @@
 		<fo:static-content flow-name="footer-odd">
 			<fo:block-container> <!--  display-align="after" -->
 				<fo:table table-layout="fixed" width="100%">
-					<fo:table-column column-width="50%"/>
-					<fo:table-column column-width="50%"/>
+					<fo:table-column column-width="33%"/>
+					<fo:table-column column-width="33%"/>
+					<fo:table-column column-width="34%"/>
 					<fo:table-body>
 						<fo:table-row>
-							<fo:table-cell padding-top="0mm" font-size="9pt">
+							<fo:table-cell display-align="center" padding-top="0mm" font-size="9pt">
 								<fo:block><xsl:value-of select="$copyrightText"/></fo:block>
 							</fo:table-cell>
-							<fo:table-cell padding-top="0mm" font-size="11pt" font-weight="{$font-weight}">
+							<fo:table-cell display-align="center">
+								<fo:block font-size="11pt" font-weight="bold" text-align="center">
+									<xsl:if test="$stage-name = 'IS'">
+										<xsl:value-of select="$proof-text"/>
+									</xsl:if>
+								</fo:block>
+							</fo:table-cell>
+							<fo:table-cell display-align="center" padding-top="0mm" font-size="11pt" font-weight="{$font-weight}">
 								<fo:block text-align="right"><fo:page-number/></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
@@ -1600,7 +2157,14 @@
 			</fo:block-container>
 		</fo:static-content>
 	</xsl:template>
-
+	<xsl:template name="insertHeaderEven">
+		<fo:static-content flow-name="header-even">
+			<fo:block-container height="24mm" display-align="before">
+				<fo:block font-size="12pt" font-weight="bold" padding-top="12.5mm"><xsl:value-of select="$ISOname"/></fo:block>
+			</fo:block-container>
+		</fo:static-content>
+	</xsl:template>
+	
 	<xsl:template name="getId">
 		<xsl:choose>
 			<xsl:when test="../@id">
@@ -1718,7 +2282,7 @@
 		<xsl:value-of select="$section"/>
 	</xsl:template>
 
-	<xsl:variable name="Image-ISO-Logo">
+	<xsl:variable name="Image-ISO-Logo2">
 		<xsl:text>
 			iVBORw0KGgoAAAANSUhEUgAAAPoAAADsCAIAAADSASzsAAAAAXNSR0IArs4c6QAAAARnQU1B
 			AACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAC6PSURBVHhe7Z13XBTX18Y3iYolCmrs
@@ -1946,6 +2510,288 @@
 		</xsl:text>
 	</xsl:variable>
 	
+	<xsl:variable name="Image-ISO-Logo">
+		<xsl:text>iVBORw0KGgoAAAANSUhEUgAAAPcAAADiCAYAAACSl1F7AAAAGXRFWHRTb2Z0d2FyZQBBZG9i
+			ZSBJbWFnZVJlYWR5ccllPAAABT9pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tl
+			dCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1l
+			dGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUu
+			Ni1jMDE0IDc5LjE1Njc5NywgMjAxNC8wOC8yMC0wOTo1MzowMiAgICAgICAgIj4gPHJkZjpS
+			REYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgt
+			bnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wUmlnaHRzPSJo
+			dHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvcmlnaHRzLyIgeG1sbnM6eG1wTU09Imh0dHA6
+			Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRv
+			YmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9u
+			cy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxl
+			bWVudHMvMS4xLyIgeG1wUmlnaHRzOk1hcmtlZD0iVHJ1ZSIgeG1wUmlnaHRzOldlYlN0YXRl
+			bWVudD0iaHR0cDovL3d3dy5pc28ub3JnL2lzby9ob21lL3BvbGljaWVzLmh0bSIgeG1wTU06
+			T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjNjZGZlYTk5LWYzY2QtNDcyYS1hNGVmLWQ4
+			ZmY5MDQ4YTk0NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozRjU0RkYwNTc5OTIxMUVB
+			QjEyNkEyOUU0MUE2ODdFNCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozRjU0RkYwNDc5
+			OTIxMUVBQjEyNkEyOUU0MUE2ODdFNCIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBJbkRlc2ln
+			biBDQyAyMDE3IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5j
+			ZUlEPSJ1dWlkOjRhOTA3NDQ2LTExMTgtNGZmZi1iY2E4LWU1NWI5YjBhNTBmZCIgc3RSZWY6
+			ZG9jdW1lbnRJRD0ieG1wLmlkOjFlNzM4NzEwLWMyNzUtYjU0Yy1hYWUwLWYwMzYwMTQyZTJl
+			ZSIvPiA8ZGM6cmlnaHRzPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0
+			Ij7CqSBJU08g77u/MjAxOO+7vzwvcmRmOmxpPiA8L3JkZjpBbHQ+IDwvZGM6cmlnaHRzPiA8
+			ZGM6Y3JlYXRvcj4gPHJkZjpTZXE+IDxyZGY6bGk+SVNPPC9yZGY6bGk+IDwvcmRmOlNlcT4g
+			PC9kYzpjcmVhdG9yPiA8ZGM6dGl0bGU+IDxyZGY6QWx0PiA8cmRmOmxpIHhtbDpsYW5nPSJ4
+			LWRlZmF1bHQiPklTTy9GRElTIDg2MDEtMjoyMDE5PC9yZGY6bGk+IDwvcmRmOkFsdD4gPC9k
+			Yzp0aXRsZT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/
+			eHBhY2tldCBlbmQ9InIiPz7JxxdJAAAhu0lEQVR42uxdB9gV1bXdiv4g0lQsqBAUe6+A7dmw
+			xf4sIRoVjSbGksRoYkmeYqJRoxITNZqoscRnYk1i14iCXVMUKyKgYAeRIohge2c5677/Ov+5
+			7b8zZ+beu9b37e/C3PnvzJw565y999l7n0WGDz9ojJlta4IgNAuudTJiUbWDIDQnRG5BELkF
+			QRC5BUEQuQVBELkFQRC5BUEQuQVB5BYEQeQWBEHkFgRB5BYEQeQWBEHkFgSRWxAEkVsQBJFb
+			EASRWxAEkVsQBJFbEERuQRBEbkEQRG5BEERuQRBqwGJqgobFp04mOJnq5C0n7/HzXSfTnMx1
+			8omTeU4WOJnPv1vCSVcn3Z20OVnSyXJOVnCykpPl+bmyk7WcLK6mFrmF9PCGkyecvOjkBSfj
+			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
+			GAcdXP9eq1y1BRl1WGJDrD7CfQep2yQPrRemh4G0s0dyVvqtlQ7OiBN9NP+/PFV4VPTcgmou
+			wl6voh0bj7fGzPkc1epq0x5fpd3+eAm/wuUWhcJ+TjIiHfMB3uM7NbYJKs4cT19FH3URkbvR
+			gXpmSBOFowi5xtdatHZcjZf7Pc6aN/D/S9D2RX03eJF9Ti8s023EmRge+lJ51m/TLr60zL0g
+			QaawvgznXWfW7bF8uCcHo93U58JhkeHDDxpj+dskvdkxm/Yz1PcnzJ/xlJTZtQ3JWbBnsRwH
+			D/bDlm4K6RD6HoZb9iWiWg2YQEZoFM0G8LAfRcEMirJAd1DdTXJnEajSY81f8yxpdKP5sAdn
+			6pX1mqWWtzpWLCL6xyQ4wksfo0qc11roXai2oxT0ThTlVIvcQpnZbw9rT2WcR7Udzi5ExGEX
+			k6kZ3Rtsd4TBIqBmK5K6h16ZyC10DqgFPoxSAMJOsQQ1nmSfQtX+XdrTnVXrl6AWsTxVagi2
+			+UGmGzzvvfQ6RG4hXcD7PsRK1y0D+d/jrF/Y0vdja/eId6OAzF2pSi9HP4Agcgs5J39PNYOg
+			CDVBELkFQRC5BUEQuQVBELkFQRC5BUEQuQVB5BYEQeQWBEHkFgRB5BYEQeQWBEHkFgSRWxAE
+			kVsQBJFbEASRWxAEkVsQBJFbEERuQRBEbkEQRG5BEERuQRBEbkEQRG5BELkFQWgkYDuhiU76
+			qCkEoWkwtUDuI9UWgtB8+D8BBgBziI7n+Kw0uQAAAABJRU5ErkJggg==
+		</xsl:text>
+	</xsl:variable>
+	
+	<xsl:variable name="Image-IEC-Logo">
+		<xsl:text>iVBORw0KGgoAAAANSUhEUgAAAOwAAADlCAYAAABQ3BvcAAAAGXRFWHRTb2Z0d2FyZQBBZG9i
+			ZSBJbWFnZVJlYWR5ccllPAAAA39pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tl
+			dCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1l
+			dGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUu
+			Ni1jMDE0IDc5LjE1Njc5NywgMjAxNC8wOC8yMC0wOTo1MzowMiAgICAgICAgIj4gPHJkZjpS
+			REYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgt
+			bnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6
+			Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRv
+			YmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9u
+			cy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUZCNjhD
+			NjM3QTUxMTFFQUE0MDdDNjQ1OTIxQjc1Q0IiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6
+			QUZCNjhDNjI3QTUxMTFFQUE0MDdDNjQ1OTIxQjc1Q0IiIHhtcDpDcmVhdG9yVG9vbD0iTW96
+			aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTRfNikgQXBwbGVXZWJL
+			aXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzc3LjAuMzg2NS45MCBTYWZh
+			cmkvNTM3LjM2Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InV1aWQ6
+			OGRjOTFlYTktMGJlYy00YjJiLWI5ZjctYTNlMjA3ZTBiM2RjIiBzdFJlZjpkb2N1bWVudElE
+			PSJ1dWlkOmZmYjEyOTA0LTcyNWItNGRlOS1iNTYxLWU3YmY0YjEzMDMyZSIvPiA8L3JkZjpE
+			ZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/
+			PuNo9+0AAA5WSURBVHja7J1pkBXlFYYPEQRlFAxjQFExIho0igY3NJAyRkVErTJKTFwTo0lc
+			UdyIK2i5gFvFRI0aV1BBQDRaMYLEBTXGjS2ZuCO4sOjIKKIMAjkn/VlSFMz0vff0dud5qt7i
+			xzSnu7/u9/a3n1bdu205UUQOEQDIO8O+RRkAFAcMC4BhAQDDAmBYAMCwAIBhATAsAGBYAMCw
+			ABgWADAsAGBYAAwLABgWADAsAIYFAAwLABgWAMMCAIYFAAwLgGEBAMMCAIYFwLAAgGEBAMMC
+			YFgAwLAAgGEBMCwAYFgAwLAAGBYAMCwAYFgADAsAGBYAMCwAhgUADAsAGBYAwwIAhgUADAuA
+			YQEgW1pTBFAgPlW9qZob9LFqkapRtUTVUbWuagPVJqotgrpXy7uOYSHPzFZNUj2tekn1umpF
+			GXHaqnZU9Vb1Ue0bDI1hm6PLJl2k9Tq+p21ctkwWzJ+fh/JcrFpeoOffLrzMeeIV1f2qiao3
+			nGIuVb0YdLOqVTDwANVhqh9g2LUwZtw46dq1q2vMuro6OeiAAVmU39uq+8JX4NVQZSsSl6gu
+			zsF1WNX2dtUtocqbNCtV04OuCNXmY1WnqjbO8wOj06k83gi/zD1UF6ieKqBZ88BM1XEq+wU/
+			JyWzrok5qktV3VS/Ub2HYauH60N1anyZ7SkQ+afqAFUv1V2hypoHvghf+W1Ul6mWYdjiYuY8
+			XnWG6kuKoyzmharnnqrHQtU0j5hxL1Ttai0uDFtMfhvaWVAe1tbfVnV3jo26OtODacfm5YIY
+			1omHVZNupRjKwsZHT034x65GtZdqJ9VWqs4SjclalbZB9YHqNdXLEg0PfVVC7M9VR4R27ZkY
+			Nv+8rzqLYiiLD1UDJRqq8aZ3iL2fanfVOjH/n3UOPhq+9H+P+bW3Y4aEH4BzMWy+sc6HzyiG
+			knlLtX/41wubwXRi6EvoWWaMDVU/D7KJGMNDdT1OB+J5qvaqUzBsPrHxwTsSir29ajdVhwzv
+			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
+			QDH4nwADAD8qVGA5YSc/AAAAAElFTkSuQmCC
+			</xsl:text>
+	</xsl:variable>
+	
 	<xsl:variable name="Image-Attention">
 		<xsl:text>
 			iVBORw0KGgoAAAANSUhEUgAAAFEAAABHCAIAAADwYjznAAAAAXNSR0IArs4c6QAAAARnQU1B
@@ -2022,13 +2868,13 @@
 			ubYJPnswvSFSFVBu3ryZJ5fj+e+//wVuVmgt0lkFPgAAAABJRU5ErkJggg==
 		</xsl:text>
 	</xsl:variable>
-<xsl:variable xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="linebreak" select="'&#8232;'"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="text()">
+<xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="linebreak" select="'&#8232;'"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="text()">
 		<xsl:value-of select="."/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='br']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='br']">
 		<xsl:value-of select="$linebreak"/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='td']//text() | *[local-name()='th']//text()" priority="1">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='td']//text() | *[local-name()='th']//text()" priority="1">
 		<xsl:call-template name="add-zero-spaces"/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='table']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']">
 	
 		<xsl:variable name="simple-table">
 			<!-- <xsl:copy> -->
@@ -2055,6 +2901,7 @@
 						
 						
 						
+						
 						<xsl:text>Table </xsl:text>
 						<xsl:choose>
 							<xsl:when test="ancestor::*[local-name()='executivesummary']"> <!-- NIST -->
@@ -2074,10 +2921,11 @@
 								<!-- <xsl:number format="1"/> -->
 								<xsl:number format="A." count="*[local-name()='annex']"/>
 								<!-- <xsl:number format="1" level="any" count="*[local-name()='sections']//*[local-name()='table'][not(@unnumbered) or @unnumbered != 'true']"/> -->
-								<xsl:number format="1" level="any" count="//*[local-name()='table']                                          [not(ancestor::*[local-name()='annex']) and not(ancestor::*[local-name()='executivesummary'])]                                          [not(@unnumbered) or @unnumbered != 'true']"/>
+								<xsl:number format="1" level="any" count="//*[local-name()='table']                                          [not(ancestor::*[local-name()='annex'])                                           and not(ancestor::*[local-name()='executivesummary'])                                          and not(ancestor::*[local-name()='bibdata'])]                                          [not(@unnumbered) or @unnumbered != 'true']"/>
 							</xsl:otherwise>
 						</xsl:choose>
 						<xsl:if test="*[local-name()='name']">
+							
 							
 							
 								<xsl:text> — </xsl:text>
@@ -2087,7 +2935,8 @@
 					</fo:block>
 				
 				
-				<xsl:call-template name="fn_name_display"/>
+					<xsl:call-template name="fn_name_display"/>
+				
 			</xsl:otherwise>
 		</xsl:choose>
 		
@@ -2140,9 +2989,13 @@
 			
 			
 			
+			
+			
 			<fo:table id="{@id}" table-layout="fixed" width="100%" margin-left="{$margin-left}mm" margin-right="{$margin-left}mm">
 				
 					<xsl:attribute name="border">1.5pt solid black</xsl:attribute>
+				
+				
 				
 				
 				
@@ -2164,15 +3017,15 @@
 				<xsl:apply-templates/>
 			</fo:table>
 		</fo:block-container>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='table']/*[local-name()='name']"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='table']/*[local-name()='name']" mode="process">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']/*[local-name()='name']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']/*[local-name()='name']" mode="process">
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="calculate-columns-numbers">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="calculate-columns-numbers">
 		<xsl:param name="table-row"/>
 		<xsl:variable name="columns-count" select="count($table-row/*)"/>
 		<xsl:variable name="sum-colspans" select="sum($table-row/*/@colspan)"/>
 		<xsl:variable name="columns-with-colspan" select="count($table-row/*[@colspan])"/>
 		<xsl:value-of select="$columns-count + $sum-colspans - $columns-with-colspan"/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="calculate-column-widths">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="calculate-column-widths">
 		<xsl:param name="table"/>
 		<xsl:param name="cols-count"/>
 		<xsl:param name="curr-col" select="1"/>
@@ -2259,14 +3112,14 @@
 				<xsl:with-param name="table" select="$table"/>
 			</xsl:call-template>
 		</xsl:if>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='table2']"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='thead']"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='thead']" mode="process">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table2']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='thead']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='thead']" mode="process">
 		<!-- <fo:table-header font-weight="bold">
 			<xsl:apply-templates />
 		</fo:table-header> -->
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='tfoot']"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='tfoot']" mode="process">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='tfoot']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='tfoot']" mode="process">
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='tbody']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='tbody']">
 		<xsl:variable name="cols-count">
 			<xsl:choose>
 				<xsl:when test="../*[local-name()='thead']">
@@ -2306,7 +3159,7 @@
 				
 			</xsl:if>
 		</fo:table-body>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='tr']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='tr']">
 		<xsl:variable name="parent-name" select="local-name(..)"/>
 		<!-- <xsl:variable name="namespace" select="substring-before(name(/*), '-')"/> -->
 		<fo:table-row min-height="4mm">
@@ -2339,12 +3192,14 @@
 						<xsl:attribute name="border-right">solid black 1pt</xsl:attribute>
 					
 				</xsl:if>
+				
 			<xsl:apply-templates/>
 		</fo:table-row>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='th']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='th']">
 		<fo:table-cell text-align="{@align}" font-weight="bold" border="solid black 1pt" padding-left="1mm" display-align="center">
 			
 				<xsl:attribute name="padding-top">1mm</xsl:attribute>
+			
 			
 			
 			
@@ -2364,7 +3219,7 @@
 				<xsl:apply-templates/>
 			</fo:block>
 		</fo:table-cell>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='td']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='td']">
 		<fo:table-cell text-align="{@align}" display-align="center" border="solid black 1pt" padding-left="1mm">
 			 <!--  and ancestor::*[local-name() = 'thead'] -->
 				<xsl:attribute name="padding-top">0.5mm</xsl:attribute>
@@ -2374,6 +3229,7 @@
 				<xsl:if test="ancestor::*[local-name() = 'tfoot']">
 					<xsl:attribute name="border">solid black 0</xsl:attribute>
 				</xsl:if>
+			
 			
 			
 			
@@ -2403,7 +3259,7 @@
 			
 			
 		</fo:table-cell>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='table']/*[local-name()='note']"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='table']/*[local-name()='note']" mode="process">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']/*[local-name()='note']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']/*[local-name()='note']" mode="process">
 		
 		
 			<fo:block font-size="10pt" margin-bottom="12pt">
@@ -2421,12 +3277,13 @@
 				<xsl:apply-templates mode="process"/>
 			</fo:block>
 		
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='table']/*[local-name()='note']/*[local-name()='p']" mode="process">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']/*[local-name()='note']/*[local-name()='p']" mode="process">
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="fn_display">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="fn_display">
 		<xsl:variable name="references">
 			<xsl:for-each select="..//*[local-name()='fn'][local-name(..) != 'name']">
 				<fn reference="{@reference}" id="{@reference}_{ancestor::*[@id][1]/@id}">
+					
 					
 					<xsl:apply-templates/>
 				</fn>
@@ -2457,7 +3314,7 @@
 				</fo:block>
 			</xsl:if>
 		</xsl:for-each>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="fn_name_display">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="fn_name_display">
 		<!-- <xsl:variable name="references">
 			<xsl:for-each select="*[local-name()='name']//*[local-name()='fn']">
 				<fn reference="{@reference}" id="{@reference}_{ancestor::*[@id][1]/@id}">
@@ -2473,7 +3330,7 @@
 				<xsl:apply-templates/>
 			</fo:block>
 		</xsl:for-each>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="fn_display_figure">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="fn_display_figure">
 		<xsl:variable name="key_iso">
 			true <!-- and (not(@class) or @class !='pseudocode') -->
 		</xsl:variable>
@@ -2523,7 +3380,7 @@
 			</fo:block>
 		</xsl:if>
 		
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='fn']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='fn']">
 		<!-- <xsl:variable name="namespace" select="substring-before(name(/*), '-')"/> -->
 		<fo:inline font-size="80%" keep-with-previous.within-line="always">
 			
@@ -2536,14 +3393,15 @@
 			
 			
 			<fo:basic-link internal-destination="{@reference}_{ancestor::*[@id][1]/@id}" fox:alt-text="{@reference}"> <!-- @reference   | ancestor::*[local-name()='clause'][1]/@id-->
+				
 				<xsl:value-of select="@reference"/>
 			</fo:basic-link>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='fn']/*[local-name()='p']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='fn']/*[local-name()='p']">
 		<fo:inline>
 			<xsl:apply-templates/>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dl']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dl']">
 		<xsl:variable name="parent" select="local-name(..)"/>
 		
 		<xsl:variable name="key_iso">
@@ -2600,7 +3458,6 @@
 				
 				
 				<fo:block>
-					
 					
 					<!-- create virtual html table for dl/[dt and dd] -->
 					<xsl:variable name="html-table">
@@ -2674,7 +3531,7 @@
 				</fo:block>
 			</fo:block>
 		</xsl:if>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dl']/*[local-name()='note']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dl']/*[local-name()='note']">
 		<xsl:param name="key_iso"/>
 		
 		<!-- <tr>
@@ -2699,7 +3556,7 @@
 				</fo:block>
 			</fo:table-cell>
 		</fo:table-row>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dt']" mode="dl">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dt']" mode="dl">
 		<tr>
 			<td>
 				<xsl:apply-templates/>
@@ -2712,7 +3569,7 @@
 			</td>
 		</tr>
 		
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dt']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dt']">
 		<xsl:param name="key_iso"/>
 		
 		<fo:table-row>
@@ -2722,6 +3579,7 @@
 						<xsl:attribute name="margin-top">0</xsl:attribute>
 						
 					</xsl:if>
+					
 					
 					<xsl:apply-templates/>
 				</fo:block>
@@ -2737,37 +3595,37 @@
 			</fo:table-cell>
 		</fo:table-row>
 		
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dd']" mode="dl"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dd']" mode="dl_process">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']" mode="dl"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']" mode="dl_process">
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dd']"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dd']" mode="process">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']" mode="process">
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='dd']/*[local-name()='p']" mode="inline">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']/*[local-name()='p']" mode="inline">
 		<fo:inline><xsl:apply-templates/></fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='em']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='em']">
 		<fo:inline font-style="italic">
 			<xsl:apply-templates/>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='strong']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='strong']">
 		<fo:inline font-weight="bold">
 			<xsl:apply-templates/>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='sup']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='sup']">
 		<fo:inline font-size="80%" vertical-align="super">
 			<xsl:apply-templates/>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='sub']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='sub']">
 		<fo:inline font-size="80%" vertical-align="sub">
 			<xsl:apply-templates/>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='tt']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='tt']">
 		<fo:inline font-family="Courier" font-size="10pt">
 			<xsl:apply-templates/>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='del']">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='del']">
 		<fo:inline font-size="10pt" color="red" text-decoration="line-through">
 			<xsl:apply-templates/>
 		</fo:inline>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="text()[ancestor::*[local-name()='smallcap']]">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="text()[ancestor::*[local-name()='smallcap']]">
 		<xsl:variable name="text" select="normalize-space(.)"/>
 		<fo:inline font-size="75%">
 				<xsl:if test="string-length($text) &gt; 0">
@@ -2776,7 +3634,7 @@
 					</xsl:call-template>
 				</xsl:if>
 			</fo:inline> 
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="recursiveSmallCaps">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="recursiveSmallCaps">
     <xsl:param name="text"/>
     <xsl:variable name="char" select="substring($text,1,1)"/>
     <xsl:variable name="upperCase" select="translate($char, $lower, $upper)"/>
@@ -2795,7 +3653,7 @@
         <xsl:with-param name="text" select="substring($text,2)"/>
       </xsl:call-template>
     </xsl:if>
-  </xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="tokenize">
+  </xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="tokenize">
 		<xsl:param name="text"/>
 		<xsl:param name="separator" select="' '"/>
 		<xsl:choose>
@@ -2843,7 +3701,7 @@
 				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="max_length">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="max_length">
 		<xsl:param name="words"/>
 		<xsl:for-each select="$words//word">
 				<xsl:sort select="." data-type="number" order="descending"/>
@@ -2851,11 +3709,12 @@
 						<xsl:value-of select="."/>
 				</xsl:if>
 		</xsl:for-each>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="add-zero-spaces">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="add-zero-spaces">
 		<xsl:param name="text" select="."/>
 		<xsl:variable name="zero-space-after-chars">-</xsl:variable>
 		<xsl:variable name="zero-space-after-dot">.</xsl:variable>
 		<xsl:variable name="zero-space-after-colon">:</xsl:variable>
+		<xsl:variable name="zero-space-after-equal">=</xsl:variable>
 		<xsl:variable name="zero-space">​</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="contains($text, $zero-space-after-chars)">
@@ -2882,11 +3741,45 @@
 					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-colon)"/>
 				</xsl:call-template>
 			</xsl:when>
+			<xsl:when test="contains($text, $zero-space-after-equal)">
+				<xsl:value-of select="substring-before($text, $zero-space-after-equal)"/>
+				<xsl:value-of select="$zero-space-after-equal"/>
+				<xsl:value-of select="$zero-space"/>
+				<xsl:call-template name="add-zero-spaces">
+					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-equal)"/>
+				</xsl:call-template>
+			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$text"/>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="getSimpleTable">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="add-zero-spaces-equal">
+		<xsl:param name="text" select="."/>
+		<xsl:variable name="zero-space-after-equals">==========</xsl:variable>
+		<xsl:variable name="zero-space-after-equal">=</xsl:variable>
+		<xsl:variable name="zero-space">​</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="contains($text, $zero-space-after-equals)">
+				<xsl:value-of select="substring-before($text, $zero-space-after-equals)"/>
+				<xsl:value-of select="$zero-space-after-equals"/>
+				<xsl:value-of select="$zero-space"/>
+				<xsl:call-template name="add-zero-spaces-equal">
+					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-equals)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="contains($text, $zero-space-after-equal)">
+				<xsl:value-of select="substring-before($text, $zero-space-after-equal)"/>
+				<xsl:value-of select="$zero-space-after-equal"/>
+				<xsl:value-of select="$zero-space"/>
+				<xsl:call-template name="add-zero-spaces-equal">
+					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-equal)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$text"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="getSimpleTable">
 		<xsl:variable name="simple-table">
 		
 			<!-- Step 1. colspan processing -->
@@ -2913,9 +3806,9 @@
 			</xsl:choose> -->
 		</xsl:variable>
 		<xsl:copy-of select="$simple-table"/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='thead'] | *[local-name()='tbody']" mode="simple-table-colspan">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='thead'] | *[local-name()='tbody']" mode="simple-table-colspan">
 		<xsl:apply-templates mode="simple-table-colspan"/>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='fn']" mode="simple-table-colspan"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='th'] | *[local-name()='td']" mode="simple-table-colspan">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='fn']" mode="simple-table-colspan"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='th'] | *[local-name()='td']" mode="simple-table-colspan">
 		<xsl:choose>
 			<xsl:when test="@colspan">
 				<xsl:variable name="td">
@@ -2937,16 +3830,16 @@
 				</xsl:element>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="@colspan" mode="simple-table-colspan"/><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="*[local-name()='tr']" mode="simple-table-colspan">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="@colspan" mode="simple-table-colspan"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='tr']" mode="simple-table-colspan">
 		<xsl:element name="tr">
 			<xsl:apply-templates select="@*" mode="simple-table-colspan"/>
 			<xsl:apply-templates mode="simple-table-colspan"/>
 		</xsl:element>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="@*|node()" mode="simple-table-colspan">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="@*|node()" mode="simple-table-colspan">
 		<xsl:copy>
 				<xsl:apply-templates select="@*|node()" mode="simple-table-colspan"/>
 		</xsl:copy>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="repeatNode">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="repeatNode">
 		<xsl:param name="count"/>
 		<xsl:param name="node"/>
 		
@@ -2957,18 +3850,18 @@
 			</xsl:call-template>
 			<xsl:copy-of select="$node"/>
 		</xsl:if>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="@*|node()" mode="simple-table-rowspan">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="@*|node()" mode="simple-table-rowspan">
 		<xsl:copy>
 				<xsl:apply-templates select="@*|node()" mode="simple-table-rowspan"/>
 		</xsl:copy>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="tbody" mode="simple-table-rowspan">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="tbody" mode="simple-table-rowspan">
 		<xsl:copy>
 				<xsl:copy-of select="tr[1]"/>
 				<xsl:apply-templates select="tr[2]" mode="simple-table-rowspan">
 						<xsl:with-param name="previousRow" select="tr[1]"/>
 				</xsl:apply-templates>
 		</xsl:copy>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" match="tr" mode="simple-table-rowspan">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="tr" mode="simple-table-rowspan">
 		<xsl:param name="previousRow"/>
 		<xsl:variable name="currentRow" select="."/>
 	
@@ -3002,10 +3895,28 @@
 		<xsl:apply-templates select="following-sibling::tr[1]" mode="simple-table-rowspan">
 				<xsl:with-param name="previousRow" select="$newRow"/>
 		</xsl:apply-templates>
-	</xsl:template><xsl:template xmlns:iec="http://riboseinc.com/isoxml" xmlns:itu="https://open.ribose.com/standards/itu" xmlns:nist="http://www.nist.gov/metanorma" xmlns:un="https://open.ribose.com/standards/unece" xmlns:csd="https://www.calconnect.org/standards/csd" name="getLang">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="getLang">
 		<xsl:variable name="language" select="//*[local-name()='bibdata']//*[local-name()='language']"/>
 		<xsl:choose>
 			<xsl:when test="$language = 'English'">en</xsl:when>
 			<xsl:otherwise><xsl:value-of select="$language"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="capitalizeWords">
+		<xsl:param name="str"/>
+		<xsl:variable name="str2" select="translate($str, '-', ' ')"/>
+		<xsl:choose>
+			<xsl:when test="contains($str2, ' ')">
+				<xsl:variable name="substr" select="substring-before($str2, ' ')"/>
+				<xsl:value-of select="translate(substring($substr, 1, 1), $lower, $upper)"/>
+				<xsl:value-of select="substring($substr, 2)"/>
+				<xsl:text> </xsl:text>
+				<xsl:call-template name="capitalizeWords">
+					<xsl:with-param name="str" select="substring-after($str2, ' ')"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="translate(substring($str2, 1, 1), $lower, $upper)"/>
+				<xsl:value-of select="substring($str2, 2)"/>
+			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template></xsl:stylesheet>
