@@ -68,7 +68,7 @@ RSpec.describe IsoDoc do
   <button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>
   <br/>
   <div>
-    <h1 class='ForewordTitle' id="toc0">Foreword</h1>
+    <h1 class='ForewordTitle'>Foreword</h1>
     <p class='TableTitle' style='text-align:center;'>
       Table 1&#xA0;&#x2014; Repeatability and reproducibility of
       <i>husked</i>
