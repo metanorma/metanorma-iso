@@ -63,7 +63,7 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	tab-stops:20.15pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
 p.MsoNormalIndent, li.MsoNormalIndent, div.MsoNormalIndent
@@ -78,7 +78,7 @@ p.MsoNormalIndent, li.MsoNormalIndent, div.MsoNormalIndent
 	tab-stops:20.15pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
 p.MsoBlockText, li.MsoBlockText, div.MsoBlockText
@@ -98,7 +98,7 @@ p.MsoBlockText, li.MsoBlockText, div.MsoBlockText
 	font-family:$bodyfont;
 	mso-ascii-font-family:$bodyfont;
 	mso-ascii-theme-font:minor-latin;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-fareast-theme-font:minor-fareast;
 	mso-hansi-font-family:$bodyfont;
 	mso-hansi-theme-font:minor-latin;
@@ -187,7 +187,7 @@ h1
 	font-size:13.0pt;
 	mso-bidi-font-size:11.0pt;
 	font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-font-kerning:0pt;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -215,7 +215,7 @@ h1.Annex
 	font-size:13.0pt;
 	mso-bidi-font-size:11.0pt;
 	font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-font-kerning:0pt;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -242,7 +242,7 @@ h1.Annex
         font-weight:bold;
         mso-bidi-font-size:11.0pt;
         font-family:$headerfont;
-        mso-fareast-font-family:$headerfont;
+        mso-fareast-font-family:"SimHei",serif;
         mso-ansi-language:EN-GB;
         mso-fareast-language:JA;
         mso-bidi-font-weight:normal;}
@@ -269,7 +269,7 @@ h2
 	font-size:11.0pt;
 	font-family:$headerfont;
         font-weight:bold;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
@@ -295,7 +295,7 @@ h3      {mso-list:l1 level3 lfo6;}
 	font-size:11.0pt;
 	font-family:$headerfont;
         font-weight:bold;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
@@ -321,7 +321,7 @@ h4      {mso-list:l1 level4 lfo6;}
 	font-size:11.0pt;
 	font-family:$headerfont;
         font-weight:bold;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
@@ -347,7 +347,7 @@ h6
 	font-size:11.0pt;
 	font-family:$headerfont;
         font-weight:bold;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
@@ -368,7 +368,7 @@ p.MsoToc1, li.MsoToc1, div.MsoToc1
 	tab-stops:20.15pt 36.0pt right dotted 487.6pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
@@ -391,7 +391,7 @@ p.MsoToc2, li.MsoToc2, div.MsoToc2
 	tab-stops:20.15pt 36.0pt right dotted 487.6pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
@@ -414,7 +414,7 @@ p.MsoToc3, li.MsoToc3, div.MsoToc3
 	tab-stops:20.15pt 36.0pt right dotted 487.6pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
@@ -435,7 +435,7 @@ p.MsoHeader, li.MsoHeader, div.MsoHeader
 	tab-stops:20.15pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
@@ -456,7 +456,7 @@ p.MsoHeaderLandscape, li.MsoHeaderLandscape, div.MsoHeaderLandscape
         tab-stops:20.15pt;
         font-size:11.0pt;
         font-family:$headerfont;
-        mso-fareast-font-family:$headerfont;
+        mso-fareast-font-family:"SimHei",serif;
         mso-bidi-font-family:$headerfont;
         mso-ansi-language:EN-GB;
         font-weight:bold;
@@ -477,7 +477,7 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 	tab-stops:right 487.6pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;}
 p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape
@@ -496,7 +496,7 @@ p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape
         tab-stops:right 734.0pt;
         font-size:11.0pt;
         font-family:$headerfont;
-        mso-fareast-font-family:$headerfont;
+        mso-fareast-font-family:"SimHei",serif;
         mso-bidi-font-family:$headerfont;
         mso-ansi-language:EN-GB;}
 span.MsoFootnoteReference
@@ -516,7 +516,7 @@ p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
 	tab-stops:20.15pt;
 	font-size:10.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:EN-US;}
@@ -534,7 +534,7 @@ p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
 	mso-pagination:widow-orphan;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
 a:link, span.MsoHyperlink
@@ -568,7 +568,7 @@ span.Heading1Char
 	mso-ansi-font-size:13.0pt;
 	font-family:$headerfont;
 	mso-ascii-font-family:Cambria;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-hansi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -584,7 +584,7 @@ span.Heading2Char
 	mso-ansi-font-size:12.0pt;
 	font-family:$headerfont;
 	mso-ascii-font-family:Cambria;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-hansi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -600,7 +600,7 @@ span.Heading3Char
 	mso-ansi-font-size:11.0pt;
 	font-family:$headerfont;
 	mso-ascii-font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-hansi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -616,7 +616,7 @@ span.Heading4Char
 	mso-ansi-font-size:11.0pt;
 	font-family:$headerfont;
 	mso-ascii-font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-hansi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -632,7 +632,7 @@ span.Heading5Char
 	mso-ansi-font-size:11.0pt;
 	font-family:$headerfont;
 	mso-ascii-font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-hansi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -648,7 +648,7 @@ span.Heading6Char
 	mso-ansi-font-size:11.0pt;
 	font-family:$headerfont;
 	mso-ascii-font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-hansi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -673,7 +673,7 @@ p.a2, li.a2, div.a2
 	font-size:13.0pt;
 	mso-bidi-font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -698,7 +698,7 @@ p.a3, li.a3, div.a3
 	font-size:12.0pt;
 	mso-bidi-font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -722,7 +722,7 @@ p.a4, li.a4, div.a4
 	tab-stops:20.15pt 44.0pt list 54.0pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -746,7 +746,7 @@ p.a5, li.a5, div.a5
 	tab-stops:20.15pt list 54.0pt left 62.35pt 68.0pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -770,7 +770,7 @@ p.a6, li.a6, div.a6
 	tab-stops:20.15pt 62.35pt 68.0pt list 72.0pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -810,7 +810,7 @@ span.BodyTextChar
 	mso-ansi-font-size:11.0pt;
 	mso-bidi-font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-ansi-language:EN-GB;}
 p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
 	{mso-style-noshow:yes;
@@ -826,7 +826,7 @@ p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
 	tab-stops:20.15pt;
 	font-size:12.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:EN-US;}
@@ -852,7 +852,7 @@ p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
 	tab-stops:20.15pt;
 	font-size:10.0pt;
 	font-family:$headerfont;
-	mso-fareast-font-family:$headerfont;
+	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:EN-US;
@@ -870,14 +870,14 @@ p.Tablebody, li.Tablebody, div.Tablebody
 	font-size:10.0pt;
 	mso-bidi-font-size:11.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
 	mso-ascii-font-family:$bodyfont;
-	mso-fareast-font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
 	mso-hansi-font-family:$bodyfont;}
  /* Page Definitions */
 @page
