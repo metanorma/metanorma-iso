@@ -767,6 +767,8 @@
       <value>unchanged</value>
       <value>circulated</value>
       <value>adapted</value>
+      <value>vote-started</value>
+      <value>vote-ended</value>
     </choice>
   </define>
   <define name="bdate">

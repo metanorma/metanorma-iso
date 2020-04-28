@@ -136,7 +136,7 @@
 	
 	<xsl:template match="/">
 		<xsl:message>INFO: Document namespace: '<xsl:value-of select="namespace-uri(/*)"/>'</xsl:message>
-		<fo:root font-family="Cambria, Times New Roman, Cambria Math, HanSans" font-size="11pt" xml:lang="{$lang}"> <!-- alternatives: SimSun -->
+		<fo:root font-family="Cambria, Times New Roman, Cambria Math, HanSans" font-size="11pt" xml:lang="{$lang}"> <!--   -->
 			<fo:layout-master-set>
 				
 				<!-- cover page -->
@@ -1934,13 +1934,12 @@
 		<fo:inline><xsl:apply-templates/></fo:inline>
 	</xsl:template>
 	
-	<xsl:template match="mathml:math">
-		<!-- <fo:inline font-size="12pt" color="red">
-			MathML issue! <xsl:apply-templates />
-		</fo:inline> -->
-		<fo:instream-foreign-object fox:alt-text="Math">
-			<xsl:copy-of select="."/>
-		</fo:instream-foreign-object>
+	<xsl:template match="mathml:math" priority="2">
+		<fo:inline font-family="Cambria Math">
+			<fo:instream-foreign-object fox:alt-text="Math">
+				<xsl:copy-of select="."/>
+			</fo:instream-foreign-object>
+		</fo:inline>
 	</xsl:template>
 	
 	<xsl:template match="iso:xref">
@@ -2891,6 +2890,7 @@
 		
 			<fo:block space-before="6pt"> </fo:block>				
 		
+		
 		<xsl:choose>
 			<xsl:when test="@unnumbered = 'true'"/>
 			<xsl:otherwise>
@@ -2898,6 +2898,7 @@
 				
 				
 					<fo:block font-weight="bold" text-align="center" margin-bottom="6pt" keep-with-next="always">
+						
 						
 						
 						
@@ -2918,10 +2919,11 @@
 								
 							</xsl:when>
 							<xsl:otherwise>
-								<!-- <xsl:number format="1"/> -->
-								<xsl:number format="A." count="*[local-name()='annex']"/>
-								<!-- <xsl:number format="1" level="any" count="*[local-name()='sections']//*[local-name()='table'][not(@unnumbered) or @unnumbered != 'true']"/> -->
-								<xsl:number format="1" level="any" count="//*[local-name()='table']                                          [not(ancestor::*[local-name()='annex'])                                           and not(ancestor::*[local-name()='executivesummary'])                                          and not(ancestor::*[local-name()='bibdata'])]                                          [not(@unnumbered) or @unnumbered != 'true']"/>
+								
+								
+									<xsl:number format="A." count="*[local-name()='annex']"/>
+									<xsl:number format="1" level="any" count="//*[local-name()='table']                                           [not(ancestor::*[local-name()='annex'])                                            and not(ancestor::*[local-name()='executivesummary'])                                           and not(ancestor::*[local-name()='bibdata'])]                                           [not(@unnumbered) or @unnumbered != 'true']"/>
+									
 							</xsl:otherwise>
 						</xsl:choose>
 						<xsl:if test="*[local-name()='name']">
@@ -2991,9 +2993,11 @@
 			
 			
 			
+			
 			<fo:table id="{@id}" table-layout="fixed" width="100%" margin-left="{$margin-left}mm" margin-right="{$margin-left}mm">
 				
 					<xsl:attribute name="border">1.5pt solid black</xsl:attribute>
+				
 				
 				
 				
@@ -3149,8 +3153,15 @@
 							<xsl:attribute name="border-top">solid black 0pt</xsl:attribute>
 						
 						
+						
 						<!-- fn will be processed inside 'note' processing -->
+						
+						
 						<xsl:apply-templates select="../*[local-name()='note']" mode="process"/>
+						
+						<!-- horizontal row separator -->
+						
+						
 						<!-- fn processing -->
 						<xsl:call-template name="fn_display"/>
 						
@@ -3184,12 +3195,14 @@
 						</xsl:choose>
 					
 					
+					
 				</xsl:if>
 				<xsl:if test="$parent-name = 'tfoot'">
 					
 						<xsl:attribute name="font-size">9pt</xsl:attribute>
 						<xsl:attribute name="border-left">solid black 1pt</xsl:attribute>
 						<xsl:attribute name="border-right">solid black 1pt</xsl:attribute>
+					
 					
 				</xsl:if>
 				
@@ -3199,6 +3212,7 @@
 		<fo:table-cell text-align="{@align}" font-weight="bold" border="solid black 1pt" padding-left="1mm" display-align="center">
 			
 				<xsl:attribute name="padding-top">1mm</xsl:attribute>
+			
 			
 			
 			
@@ -3229,6 +3243,7 @@
 				<xsl:if test="ancestor::*[local-name() = 'tfoot']">
 					<xsl:attribute name="border">solid black 0</xsl:attribute>
 				</xsl:if>
+			
 			
 			
 			
@@ -3267,6 +3282,7 @@
 					<xsl:attribute name="font-size">9pt</xsl:attribute>
 					<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 				
+				
 				<fo:inline padding-right="2mm">
 					<xsl:text>NOTE </xsl:text>
 					
@@ -3297,10 +3313,12 @@
 						<xsl:attribute name="font-size">9pt</xsl:attribute>
 						<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 					
+					
 					<fo:inline font-size="80%" padding-right="5mm" id="{@id}">
 						
 						
 							<xsl:attribute name="alignment-baseline">hanging</xsl:attribute>
+						
 						
 						
 						
@@ -3346,6 +3364,7 @@
 				<fo:table width="95%" table-layout="fixed">
 					<xsl:if test="normalize-space($key_iso) = 'true'">
 						<xsl:attribute name="font-size">10pt</xsl:attribute>
+						
 					</xsl:if>
 					<fo:table-column column-width="15%"/>
 					<fo:table-column column-width="85%"/>
@@ -3441,6 +3460,7 @@
 						<xsl:attribute name="font-size">10pt</xsl:attribute>
 						<xsl:attribute name="margin-bottom">0</xsl:attribute>
 					
+					
 					<xsl:text>Key</xsl:text>
 				</fo:block>
 			</xsl:when>
@@ -3484,6 +3504,7 @@
 							</xsl:when>
 							<xsl:when test="normalize-space($key_iso) = 'true'">
 								<xsl:attribute name="font-size">10pt</xsl:attribute>
+								
 							</xsl:when>
 						</xsl:choose>
 						<xsl:choose>
@@ -3575,6 +3596,7 @@
 		<fo:table-row>
 			<fo:table-cell>
 				<fo:block margin-top="6pt">
+					
 					<xsl:if test="normalize-space($key_iso) = 'true'">
 						<xsl:attribute name="margin-top">0</xsl:attribute>
 						
@@ -3919,4 +3941,10 @@
 				<xsl:value-of select="substring($str2, 2)"/>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="mathml:math">
+		<fo:inline font-family="STIX2Math">
+			<fo:instream-foreign-object fox:alt-text="Math"> 
+				<xsl:copy-of select="."/>
+			</fo:instream-foreign-object>
+		</fo:inline>
 	</xsl:template></xsl:stylesheet>
