@@ -1021,38 +1021,63 @@
   </define>
   <define name="DocRelationType">
     <choice>
-      <value>obsoletes</value>
-      <value>obsoletedBy</value>
-      <value>supersedes</value>
-      <value>supersededBy</value>
-      <value>updates</value>
-      <value>updatedBy</value>
-      <value>complements</value>
-      <value>derivedFrom</value>
+      <value>includes</value>
+      <value>includedIn</value>
+      <value>hasPart</value>
+      <value>partOf</value>
+      <value>merges</value>
+      <value>mergedInto</value>
+      <value>splits</value>
+      <value>splitInto</value>
+      <value>instance</value>
+      <value>hasInstance</value>
+      <value>exemplarOf</value>
+      <value>hasExemplar</value>
+      <value>manifestationOf</value>
+      <value>hasManifestation</value>
+      <value>reproductionOf</value>
+      <value>hasReproduction</value>
+      <value>reprintOf</value>
+      <value>hasReprint</value>
+      <value>expressionOf</value>
+      <value>hasExpression</value>
       <value>translatedFrom</value>
       <value>hasTranslation</value>
-      <value>adoptedFrom</value>
-      <value>equivalent</value>
-      <value>identical</value>
-      <value>nonequivalent</value>
-      <value>includedIn</value>
-      <value>includes</value>
-      <value>instance</value>
-      <value>instanceOf</value>
-      <value>partOf</value>
-      <value>hasPart</value>
-      <value>hasDraft</value>
+      <value>arrangementOf</value>
+      <value>hasArrangement</value>
+      <value>abridgementOf</value>
+      <value>hasAbridgement</value>
+      <value>annotationOf</value>
+      <value>hasAnnotation</value>
       <value>draftOf</value>
-      <value>merges</value>
-      <value>splits</value>
-      <value>amends</value>
-      <value>amendedBy</value>
-      <value>corrects</value>
-      <value>correctedBy</value>
-      <value>revises</value>
-      <value>revisedBy</value>
+      <value>hasDraft</value>
+      <value>editionOf</value>
+      <value>hasEdition</value>
+      <value>updates</value>
+      <value>updatedBy</value>
+      <value>derivedFrom</value>
+      <value>derives</value>
       <value>describes</value>
       <value>describedBy</value>
+      <value>catalogues</value>
+      <value>cataloguedBy</value>
+      <value>hasSuccessor</value>
+      <value>successorOf</value>
+      <value>adaptedFrom</value>
+      <value>hasAdaptation</value>
+      <value>adoptedFrom</value>
+      <value>adoptedAs</value>
+      <value>reviewOf</value>
+      <value>hasReview</value>
+      <value>commentaryOf</value>
+      <value>hasCommentary</value>
+      <value>related</value>
+      <value>complements</value>
+      <value>complementOf</value>
+      <value>obsoletes</value>
+      <value>obsoletedBy</value>
+      <value>cited</value>
+      <value>isCitedIn</value>
     </choice>
   </define>
   <define name="docrelation">

@@ -6,6 +6,7 @@
 
 	
 	
+	<xsl:variable name="debug">false</xsl:variable>
 	<xsl:variable name="pageWidth" select="'210mm'"/>
 	<xsl:variable name="pageHeight" select="'297mm'"/>
 
@@ -57,22 +58,39 @@
 	<xsl:variable name="stage-name-uppercased">
 		<xsl:if test="$stage-fullname != '' and $stage-abbrev != ''">
 			<item name="{$stage-abbrev}">
-				<xsl:if test="$stage-abbrev = 'NWIP' or 'AWI' or 'WD' or 'CD' or 'DIS' or 'FDIS'">
+				<xsl:if test="$stage-abbrev = 'NWIP'">
 					<xsl:attribute name="show">true</xsl:attribute>
-					<xsl:attribute name="shortname">DRAFT</xsl:attribute>
+					<xsl:attribute name="header">PRELIMINARY WORK ITEM</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="$stage-abbrev = 'AWI'">
+					<xsl:attribute name="show">true</xsl:attribute>
+					<xsl:attribute name="header">APPROVED WORK ITEM</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="$stage-abbrev = 'WD'">
+					<xsl:attribute name="show">true</xsl:attribute>
+					<xsl:attribute name="header">WORKING DRAFT</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="$stage-abbrev = 'CD'">
+					<xsl:attribute name="show">true</xsl:attribute>
+					<xsl:attribute name="header">COMMITTEE DRAFT</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="$stage-abbrev = 'DIS'">
+					<xsl:attribute name="show">true</xsl:attribute>
+					<xsl:attribute name="header">DRAFT INTERNATIONAL STANDARD</xsl:attribute>
 				</xsl:if>
 				<xsl:if test="$stage-abbrev = 'FDIS'">
-					<xsl:attribute name="shortname">FINAL DRAFT</xsl:attribute>
+					<xsl:attribute name="show">true</xsl:attribute>
+					<xsl:attribute name="header">FINAL DRAFT INTERNATIONAL STANDARD</xsl:attribute>
 				</xsl:if>
 				<xsl:value-of select="translate($stage-fullname, $lower, $upper)"/>
 			</item>
 		</xsl:if>
-		<item name="NWIP" show="true" shortname="DRAFT">NEW WORK ITEM PROPOSAL DRAFT</item>
-		<item name="AWI" show="true" shortname="DRAFT">APPROVED WORK ITEM</item>
-		<item name="WD" show="true" shortname="DRAFT">WORKING DRAFT</item>
-		<item name="CD" show="true" shortname="DRAFT">COMMITTEE DRAFT</item>
-		<item name="DIS" show="true" shortname="DRAFT">DRAFT</item>
-		<item name="FDIS" show="true" shortname="FINAL DRAFT">FINAL DRAFT</item>
+		<item name="NWIP" show="true" header="PRELIMINARY WORK ITEM">NEW WORK ITEM PROPOSAL DRAFT</item>
+		<item name="AWI" show="true" header="APPROVED WORK ITEM">APPROVED WORK ITEM</item>
+		<item name="WD" show="true" header="WORKING DRAFT">WORKING DRAFT</item>
+		<item name="CD" show="true" header="COMMITTEE DRAFT">COMMITTEE DRAFT</item>
+		<item name="DIS" show="true" header="DRAFT INTERNATIONAL STANDARD">DRAFT</item>
+		<item name="FDIS" show="true" header="FINAL DRAFT INTERNATIONAL STANDARD">FINAL DRAFT</item>
 		<item name="IS">PROOF</item>
 	</xsl:variable>
 	
@@ -101,6 +119,10 @@
 	</xsl:variable>
 	
 	<xsl:variable name="proof-text">PROOF/ÉPREUVE</xsl:variable>
+
+	<xsl:variable name="title-figure">
+		<xsl:text>Figure </xsl:text>
+	</xsl:variable>
 	
 	<!-- Example:
 		<item level="1" id="Foreword" display="true">Foreword</item>
@@ -918,10 +940,12 @@
 							</fo:inline>
 						</fo:block>
 						
-						<xsl:text disable-output-escaping="yes">&lt;!--</xsl:text>
-							DEBUG
-							contents=<xsl:copy-of select="xalan:nodeset($contents)"/>
-						<xsl:text disable-output-escaping="yes">--&gt;</xsl:text>
+						<xsl:if test="$debug = 'true'">
+							<xsl:text disable-output-escaping="yes">&lt;!--</xsl:text>
+								DEBUG
+								contents=<xsl:copy-of select="xalan:nodeset($contents)"/>
+							<xsl:text disable-output-escaping="yes">--&gt;</xsl:text>
+						</xsl:if>
 						
 						<xsl:variable name="margin-left">12</xsl:variable>
 						<xsl:for-each select="xalan:nodeset($contents)//item[@display = 'true'][not(@level = 2 and starts-with(@section, '0'))]"><!-- skip clause from preface -->
@@ -1208,7 +1232,8 @@
 	<xsl:template match="iso:figure" mode="contents">
 		<item level="" id="{@id}" display="false">
 			<xsl:attribute name="section">
-				<xsl:text>Figure </xsl:text><xsl:number format="A.1-1" level="multiple" count="iso:annex | iso:figure"/>
+				<xsl:call-template name="getFigureNumber"/>
+				<!-- <xsl:text>Figure </xsl:text><xsl:number format="A.1-1" level="multiple" count="iso:annex | iso:figure"/> -->
 			</xsl:attribute>
 		</item>
 	</xsl:template>
@@ -1542,24 +1567,20 @@
 	<xsl:template match="text()">
 		<xsl:value-of select="."/>
 	</xsl:template>
-	
-
 
 	<xsl:template match="iso:image">
 		<fo:block-container text-align="center">
 			<fo:block>
 				<fo:external-graphic src="{@src}" fox:alt-text="Image {@alt}"/>
 			</fo:block>
-			<fo:block font-weight="bold" margin-top="12pt" margin-bottom="12pt">Figure <xsl:number format="1" level="any"/></fo:block>
+			<fo:block font-weight="bold" margin-top="12pt" margin-bottom="12pt">
+				<xsl:value-of select="$title-figure"/>
+				<xsl:call-template name="getFigureNumber"/>
+			</fo:block>
 		</fo:block-container>
-		
 	</xsl:template>
 
 	<xsl:template match="iso:figure">
-		<xsl:variable name="title">
-			<xsl:text>Figure </xsl:text>
-		</xsl:variable>
-		
 		<fo:block-container id="{@id}">
 			<fo:block>
 				<xsl:apply-templates/>
@@ -1569,23 +1590,7 @@
 				<xsl:call-template name="note"/>
 			</xsl:for-each>
 			<fo:block font-weight="bold" text-align="center" margin-top="12pt" margin-bottom="12pt" keep-with-previous="always">
-				
-				<xsl:choose>
-					<xsl:when test="ancestor::iso:annex">
-						<xsl:choose>
-							<xsl:when test="local-name(..) = 'figure'">
-								<xsl:number format="a) "/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="$title"/><xsl:number format="A.1-1" level="multiple" count="iso:annex | iso:figure"/>
-							</xsl:otherwise>
-						</xsl:choose>
-						
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="$title"/><xsl:number format="1" level="any"/>
-					</xsl:otherwise>
-				</xsl:choose>
+				<xsl:call-template name="getFigureNumber"/>
 				<xsl:if test="iso:name">
 					<xsl:if test="not(local-name(..) = 'figure')">
 						<xsl:text> — </xsl:text>
@@ -1596,6 +1601,24 @@
 		</fo:block-container>
 	</xsl:template>
 	
+	<xsl:template name="getFigureNumber">
+		<xsl:choose>
+			<xsl:when test="ancestor::iso:annex">
+				<xsl:choose>
+					<xsl:when test="local-name(..) = 'figure'">
+						<xsl:number format="a) "/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$title-figure"/><xsl:number format="A.1-1" level="multiple" count="iso:annex | iso:figure"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$title-figure"/><xsl:number format="1" level="any"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
 	<xsl:template match="iso:figure/iso:name"/>
 	<xsl:template match="iso:figure/iso:fn" priority="2"/>
 	<xsl:template match="iso:figure/iso:note"/>
@@ -1603,11 +1626,9 @@
 	
 	<xsl:template match="iso:figure/iso:image">
 		<fo:block text-align="center">
-			<fo:external-graphic src="{@src}" content-width="100%" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/> <!-- content-width="75%"  -->
+			<fo:external-graphic src="{@src}" width="100%" content-height="scale-to-fit" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/> 
 		</fo:block>
 	</xsl:template>
-	
-	
 	
 	
 	<xsl:template match="iso:bibitem">
@@ -1662,10 +1683,15 @@
 		<fo:list-block provisional-distance-between-starts="7mm">
 			<xsl:apply-templates/>
 		</fo:list-block>
+		<xsl:for-each select="./iso:note//iso:p">
+			<xsl:call-template name="note"/>
+		</xsl:for-each>
 	</xsl:template>
 	
+	<xsl:template match="iso:ul//iso:note |  iso:ol//iso:note"/>
+	
 	<xsl:template match="iso:li">
-		<fo:list-item>
+		<fo:list-item id="{@id}">
 			<fo:list-item-label end-indent="label-end()">
 				<fo:block>
 					<xsl:choose>
@@ -1688,6 +1714,7 @@
 			</fo:list-item-label>
 			<fo:list-item-body start-indent="body-start()">
 				<xsl:apply-templates/>
+				<xsl:apply-templates select=".//iso:note" mode="process"/>
 			</fo:list-item-body>
 		</fo:list-item>
 	</xsl:template>
@@ -2109,14 +2136,16 @@
 			<fo:block-container margin-top="13mm" height="9mm" width="172mm" border-top="0.5mm solid black" border-bottom="0.5mm solid black" display-align="center" background-color="white">
 				<fo:block text-align-last="justify" font-size="12pt" font-weight="bold">
 					
-					<xsl:variable name="stgname" select="xalan:nodeset($stage-name-uppercased)/item[@name = $stage-name and @show = 'true']/@shortname"/>
+					<xsl:variable name="stgname" select="normalize-space(xalan:nodeset($stage-name-uppercased)/item[@name = $stage-name and @show = 'true']/@header)"/>
 					<xsl:if test="$stgname != ''">
 					<!-- <xsl:if test="$stage-name = 'final-draft' or $stage-name = 'draft'"> -->
 						<!-- <fo:inline><xsl:value-of select="translate(translate($stage-name,'-',' '), $lower,$upper)"/></fo:inline> -->
 						<fo:inline><xsl:value-of select="$stgname"/></fo:inline>
-						<xsl:text> </xsl:text>
+						<!-- <xsl:text>&#xA0;</xsl:text> -->
 					</xsl:if>
-					<fo:inline><xsl:value-of select="$doctype_uppercased"/></fo:inline>
+					<xsl:if test="$stgname = ''">
+						<fo:inline><xsl:value-of select="$doctype_uppercased"/></fo:inline>
+					</xsl:if>
 					<fo:inline keep-together.within-line="always">
 						<fo:leader leader-pattern="space"/>
 						<fo:inline><xsl:value-of select="$ISOname"/></fo:inline>
