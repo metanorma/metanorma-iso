@@ -78,7 +78,7 @@ RSpec.describe IsoDoc do
                    <a href="#N">Note</a>
                  </p>
                </div>
-               <div id="terms"><h1>2&#160; Terms and definitions</h1>
+               <div id="terms"><h1>2&#160; </h1>
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
@@ -195,7 +195,7 @@ RSpec.describe IsoDoc do
                    <a href="#N">Figure 1</a>
                  </p>
                </div>
-               <div id="terms"><h1>2&#160; Terms and definitions</h1>
+               <div id="terms"><h1>2&#160; </h1>
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
@@ -314,7 +314,7 @@ RSpec.describe IsoDoc do
                <div id="scope">
                  <h1>1&#160; Scope</h1>
                </div>
-               <div id="terms"><h1>2&#160; Terms and definitions</h1>
+               <div id="terms"><h1>2&#160; </h1>
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
@@ -438,7 +438,7 @@ RSpec.describe IsoDoc do
           <a href="#N">Example</a>
         </p>
       </div>
-      <div id="terms"><h1>2&#160; Terms and definitions</h1>
+      <div id="terms"><h1>2&#160; </h1>
 </div>
       <div id="widgets">
         <h1>3&#160; Widgets</h1>
@@ -560,7 +560,7 @@ RSpec.describe IsoDoc do
                    <a href="#N">Formula (1)</a>
                  </p>
                </div>
-               <div id="terms"><h1>2&#160; Terms and definitions</h1>
+               <div id="terms"><h1>2&#160; </h1>
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
@@ -720,7 +720,7 @@ RSpec.describe IsoDoc do
                    <a href="#N">Table 1</a>
                  </p>
                </div>
-               <div id="terms"><h1>2&#160; Terms and definitions</h1>
+               <div id="terms"><h1>2&#160; </h1>
        </div>
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
@@ -799,7 +799,7 @@ RSpec.describe IsoDoc do
                <div id="scope">
                  <h1>1&#160; Scope</h1>
                </div>
-               <div id="terms"><h1>2&#160; Terms and definitions</h1>
+               <div id="terms"><h1>2&#160; </h1>
        <p class="TermNum" id="_waxy_rice">2.1</p><p class="Terms" style="text-align:left;">waxy rice</p>
        <div class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div><p class="TermNum" id="_nonwaxy_rice">2.2</p><p class="Terms" style="text-align:left;">nonwaxy rice</p>
        <div class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div>
@@ -1058,7 +1058,7 @@ Text</div>
          <li><p>A</p></li>
        </ol>
              </div>
-             <div id="terms"><h1>2&#160; Terms and definitions</h1>
+             <div id="terms"><h1>2&#160; </h1>
        </div>
              <div id="widgets">
                <h1>3&#160; Widgets</h1>
@@ -1172,7 +1172,7 @@ Text</div>
          <li id="N"><p>A</p></li>
        </ol>
              </div>
-             <div id="terms"><h1>2&#160; Terms and definitions</h1>
+             <div id="terms"><h1>2&#160; </h1>
        </div>
              <div id="widgets">
                <h1>3&#160; Widgets</h1>

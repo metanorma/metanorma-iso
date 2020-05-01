@@ -15,16 +15,14 @@ RSpec.describe IsoDoc do
         <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </clause>
-       <patent-notice>
        <p>This is patent boilerplate</p>
-       </patent-notice>
        </introduction></preface><sections>
        <clause id="D" obligation="normative">
          <title>Scope</title>
          <p id="E">Text</p>
        </clause>
 
-       <clause id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title><terms id="I" obligation="normative">
+       <clause id="H" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="I" obligation="normative">
          <title>Normal Terms</title>
          <term id="J">
          <preferred>Term2</preferred>
@@ -161,16 +159,14 @@ RSpec.describe IsoDoc do
         <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </clause>
-       <patent-notice>
        <p>This is patent boilerplate</p>
-       </patent-notice>
        </introduction></preface><sections>
        <clause id="D" obligation="normative">
          <title>Scope</title>
          <p id="E">Text</p>
        </clause>
 
-       <clause id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title><terms id="I" obligation="normative">
+       <clause id="H" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="I" obligation="normative">
          <title>Normal Terms</title>
          <term id="J">
          <preferred>Term2</preferred>
@@ -307,16 +303,14 @@ RSpec.describe IsoDoc do
         <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </clause>
-       <patent-notice>
        <p>This is patent boilerplate</p>
-       </patent-notice>
        </introduction></preface><sections>
        <clause id="D" obligation="normative">
          <title>Scope</title>
          <p id="E">Text</p>
        </clause>
 
-       <clause id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title><terms id="I" obligation="normative">
+       <clause id="H" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="I" obligation="normative">
          <title>Normal Terms</title>
          <term id="J">
          <preferred>Term2</preferred>
@@ -454,16 +448,14 @@ RSpec.describe IsoDoc do
         <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </clause>
-       <patent-notice>
        <p>This is patent boilerplate</p>
-       </patent-notice>
        </introduction></preface><sections>
        <clause id="D" obligation="normative">
          <title>Scope</title>
          <p id="E"><eref type="inline" bibitemid="ISO712"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality></eref></p>
        </clause>
 
-       <clause id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title><terms id="I" obligation="normative">
+       <clause id="H" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="I" obligation="normative">
          <title>Normal Terms</title>
          <term id="J">
          <preferred>Term2</preferred>

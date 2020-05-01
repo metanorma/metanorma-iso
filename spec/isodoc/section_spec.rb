@@ -12,9 +12,7 @@ RSpec.describe IsoDoc do
         <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </clause>
-       <patent-notice>
        <p>This is patent boilerplate</p>
-       </patent-notice>
        </introduction></preface><sections>
        <clause id="D" obligation="normative">
          <title>Scope</title>
@@ -92,7 +90,7 @@ RSpec.describe IsoDoc do
                 <div>
                   <h1>2&#160; Normative references</h1>
                 </div>
-                <div id="H"><h1>3&#160; Terms, definitions, symbols and abbreviated terms</h1>
+                <div id="H"><h1>3&#160; Terms, Definitions, Symbols and Abbreviated Terms</h1>
         <div id="I">
            <h2>3.1&#160; Normal Terms</h2>
            <p class="TermNum" id="J">3.1.1</p>
@@ -160,9 +158,7 @@ OUTPUT
         <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
          <title>Introduction Subsection</title>
        </clause>
-       <patent-notice>
        <p>This is patent boilerplate</p>
-       </patent-notice>
        </introduction></preface><sections>
        <clause id="D" obligation="normative">
          <title>Scope</title>
@@ -248,7 +244,7 @@ OUTPUT
                <div>
                  <h1>2<span style="mso-tab-count:1">&#160; </span>Normative references</h1>
                </div>
-               <div id="H"><h1>3<span style="mso-tab-count:1">&#160; </span>Terms, definitions, symbols and abbreviated terms</h1>
+               <div id="H"><h1>3<span style="mso-tab-count:1">&#160; </span>Terms, Definitions, Symbols and Abbreviated Terms</h1>
        <div id="I">
           <h2>3.1<span style="mso-tab-count:1">&#160; </span>Normal Terms</h2>
           <p class="TermNum" id="J">3.1.1</p>
@@ -363,7 +359,7 @@ OUTPUT
     INPUT
     #{HTML_HDR}
                <p class="zzSTDTitle1"/>
-               <div id="H"><h1>1&#160; Terms and definitions</h1>
+               <div id="H"><h1>1&#160; Terms, Definitions, Symbols and Abbreviated Terms</h1>
        <p class="TermNum" id="J">1.1</p>
          <p class="Terms" style="text-align:left;">Term2</p>
        </div>

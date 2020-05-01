@@ -54,7 +54,7 @@ RSpec.describe IsoDoc do
     INPUT
     #{HTML_HDR}
              <p class="zzSTDTitle1"/>
-             <div id="_terms_and_definitions"><h1>1&#160; Terms and definitions</h1>
+             <div id="_terms_and_definitions"><h1>1&#160; Terms and Definitions</h1>
        <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
 
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">&lt;rice&gt; rice retaining its husk after threshing</p>
@@ -141,7 +141,7 @@ OUTPUT
 </sections>
 </iso-standard>
     INPUT
-                 <div id="_terms_and_definitions"><h1>1<span style="mso-tab-count:1">&#160; </span>Terms and definitions</h1>
+                 <div id="_terms_and_definitions"><h1>1<span style="mso-tab-count:1">&#160; </span>Terms and Definitions</h1>
        <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
 
        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">&lt;rice&gt; rice retaining its husk after threshing</p>

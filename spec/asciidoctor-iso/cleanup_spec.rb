@@ -195,6 +195,7 @@ RSpec.describe Asciidoctor::ISO do
         <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
          <docidentifier>ISO 216:2001</docidentifier>
+         <docnumber>216</docnumber>
          <date type="published">
            <on>2001</on>
          </date>
@@ -237,6 +238,7 @@ RSpec.describe Asciidoctor::ISO do
         <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
          <docidentifier>ISO 216</docidentifier>
+         <docnumber>216</docnumber>
          <contributor>
            <role type="publisher"/>
            <organization>
@@ -274,6 +276,7 @@ RSpec.describe Asciidoctor::ISO do
   <bibitem id="iso216" type="standard">
   <title format="text/plain">Reference</title>
   <docidentifier>ISO 216</docidentifier>
+  <docnumber>216</docnumber>
   <contributor>
     <role type="publisher"/>
     <organization>
@@ -335,6 +338,7 @@ RSpec.describe Asciidoctor::ISO do
              <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
          <docidentifier>ISO 216</docidentifier>
+         <docnumber>216</docnumber>
          <contributor>
            <role type="publisher"/>
            <organization>
@@ -639,6 +643,7 @@ RSpec.describe Asciidoctor::ISO do
         <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:—</docidentifier>
+         <docnumber>123</docnumber>
          <date type="published">
            <on>–</on>
          </date>
@@ -789,36 +794,46 @@ RSpec.describe Asciidoctor::ISO do
     * [[[ref17,(A)]]], _Standard 30_
     INPUT
         #{BLANK_HDR}
-        <sections><clause id="_" inline-header="false" obligation="normative">
-         <title>Clause 1</title>
-         <p id="_"><eref type="inline" bibitemid="ref1" citeas="ISO 123"/>
-         <eref type='inline' bibitemid='ref1a' citeas='ISO 123-100'/>
-<eref type='inline' bibitemid='ref1b' citeas='ISO/TS 123-1'/>
-       <eref type="inline" bibitemid="ref2" citeas="ISO/IEC 123"/>
-       <eref type="inline" bibitemid="ref3" citeas="IEC 123"/>
-       <eref type="inline" bibitemid="ref4" citeas="GB 123"/>
-       <eref type="inline" bibitemid="ref5" citeas="[6]"/>
-       <eref type="inline" bibitemid="ref6" citeas="[B]"/>
-       <eref type="inline" bibitemid="ref7" citeas="[A]"/>
-       <xref target="ref8"/>
-       <xref target="ref9"/>
-       <eref type="inline" bibitemid="ref10" citeas="ISO/IEC 123"/></p>
-       </clause>
-       </sections><bibliography><clause id="_" obligation="informative"><title>Bibliography</title><references id="_" obligation="informative">
-         <title>Clause 1</title><bibitem id="ref1" type="standard">
-         <title format="text/plain">Standard ISO 123</title>
-         <docidentifier>ISO 123</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem>
-        <bibitem id='ref2' type='standard'>
+        <sections>
+           <clause id='_' inline-header='false' obligation='normative'>
+             <title>Clause 1</title>
+             <p id='_'>
+               <eref type='inline' bibitemid='ref1' citeas='ISO 123'/>
+               <eref type='inline' bibitemid='ref1a' citeas='ISO 123-100'/>
+               <eref type='inline' bibitemid='ref1b' citeas='ISO/TS 123-1'/>
+               <eref type='inline' bibitemid='ref2' citeas='ISO/IEC 123'/>
+               <eref type='inline' bibitemid='ref3' citeas='IEC 123'/>
+               <eref type='inline' bibitemid='ref4' citeas='GB 123'/>
+               <eref type='inline' bibitemid='ref5' citeas='[6]'/>
+               <eref type='inline' bibitemid='ref6' citeas='[B]'/>
+               <eref type='inline' bibitemid='ref7' citeas='[A]'/>
+               <xref target='ref8'/>
+               <xref target='ref9'/>
+               <eref type='inline' bibitemid='ref10' citeas='ISO/IEC 123'/>
+             </p>
+           </clause>
+         </sections>
+         <bibliography>
+           <clause id='_' obligation='informative'>
+             <title>Bibliography</title>
+             <references id='_' obligation='informative'>
+               <title>Clause 1</title>
+               <bibitem id='ref1' type='standard'>
+                 <title format='text/plain'>Standard ISO 123</title>
+                 <docidentifier>ISO 123</docidentifier>
+                 <docnumber>123</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </contributor>
+               </bibitem>
+               <bibitem id='ref2' type='standard'>
                  <title format='text/plain'>Standard ISO/IEC 123</title>
                  <docidentifier>ISO/IEC 123</docidentifier>
+                 <docnumber>123</docnumber>
                  <contributor>
                    <role type='publisher'/>
                    <organization>
@@ -834,140 +849,146 @@ RSpec.describe Asciidoctor::ISO do
                    </organization>
                  </contributor>
                </bibitem>
-       <bibitem id='ref1b' type='standard'>
-  <title format='text/plain'>Standard ISO 123</title>
-  <docidentifier>ISO/TS 123-1</docidentifier>
-  <contributor>
-    <role type='publisher'/>
-    <organization>
-      <name>International Organization for Standardization</name>
-      <abbreviation>ISO</abbreviation>
-    </organization>
-  </contributor>
-  <contributor>
-    <role type='publisher'/>
-    <organization>
-      <name>TS</name>
-    </organization>
-  </contributor>
-</bibitem>
-<bibitem id='ref1a' type='standard'>
-  <title format='text/plain'>Standard ISO 123</title>
-  <docidentifier>ISO 123-100</docidentifier>
-  <contributor>
-    <role type='publisher'/>
-    <organization>
-      <name>International Organization for Standardization</name>
-      <abbreviation>ISO</abbreviation>
-    </organization>
-  </contributor>
-</bibitem>
-       <bibitem id="ref3" type="standard">
-         <title format="text/plain">Standard IEC 123</title>
-         <docidentifier>IEC 123</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Electrotechnical Commission</name>
-             <abbreviation>IEC</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem><bibitem id="ref5">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard 10</em>
-         </formattedref>
-         <docidentifier type="metanorma">[6]</docidentifier>
-       </bibitem><bibitem id="ref4">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard GB 123</em>
-         </formattedref>
-         <docidentifier>GB 123</docidentifier>
-       </bibitem><bibitem id="ref7">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard 30</em>
-         </formattedref>
-         <docidentifier type="metanorma">[A]</docidentifier>
-       </bibitem><bibitem id="ref6">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard 20</em>
-         </formattedref>
-         <docidentifier type="metanorma">[B]</docidentifier>
-       </bibitem>
-
-
-
-
-
-
-
-       </references>
-       <references id="_" obligation="informative">
-         <bibitem id="ref11" type="standard">
-         <title format="text/plain">Standard ISO 123</title>
-         <docidentifier>ISO 123</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem><bibitem id="ref10" type="standard">
-         <title format="text/plain">Standard ISO/IEC 123</title>
-         <docidentifier>ISO/IEC 123</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Electrotechnical Commission</name>
-             <abbreviation>IEC</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem><bibitem id="ref13" type="standard">
-         <title format="text/plain">Standard IEC 123</title>
-         <docidentifier>IEC 123</docidentifier>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Electrotechnical Commission</name>
-             <abbreviation>IEC</abbreviation>
-           </organization>
-         </contributor>
-       </bibitem><bibitem id="ref15">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard 10</em>
-         </formattedref>
-         <docidentifier type="metanorma">[13]</docidentifier>
-       </bibitem><bibitem id="ref14">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard GB 123</em>
-         </formattedref>
-         <docidentifier>GB 123</docidentifier>
-       </bibitem><bibitem id="ref17">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard 30</em>
-         </formattedref>
-         <docidentifier type="metanorma">[A]</docidentifier>
-       </bibitem><bibitem id="ref16">
-         <formattedref format="application/x-isodoc+xml">
-           <em>Standard 20</em>
-         </formattedref>
-         <docidentifier type="metanorma">[B]</docidentifier>
-       </bibitem>
-
-
-
-
-
-
-
-       </references></clause></bibliography>
+               <bibitem id='ref1b' type='standard'>
+                 <title format='text/plain'>Standard ISO 123</title>
+                 <docidentifier>ISO/TS 123-1</docidentifier>
+                 <docnumber>123-1</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </contributor>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>TS</name>
+                   </organization>
+                 </contributor>
+               </bibitem>
+               <bibitem id='ref1a' type='standard'>
+                 <title format='text/plain'>Standard ISO 123</title>
+                 <docidentifier>ISO 123-100</docidentifier>
+                 <docnumber>123-100</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </contributor>
+               </bibitem>
+               <bibitem id='ref3' type='standard'>
+                 <title format='text/plain'>Standard IEC 123</title>
+                 <docidentifier>IEC 123</docidentifier>
+                 <docnumber>123</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Electrotechnical Commission</name>
+                     <abbreviation>IEC</abbreviation>
+                   </organization>
+                 </contributor>
+               </bibitem>
+               <bibitem id='ref5'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard 10</em>
+                 </formattedref>
+                 <docidentifier type='metanorma'>[6]</docidentifier>
+               </bibitem>
+               <bibitem id='ref6'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard 20</em>
+                 </formattedref>
+                 <docidentifier type='metanorma'>[B]</docidentifier>
+               </bibitem>
+               <bibitem id='ref7'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard 30</em>
+                 </formattedref>
+                 <docidentifier type='metanorma'>[A]</docidentifier>
+               </bibitem>
+               <bibitem id='ref4'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard GB 123</em>
+                 </formattedref>
+                 <docidentifier>GB 123</docidentifier>
+                 <docnumber>123</docnumber>
+               </bibitem>
+             </references>
+             <references id='_' obligation='informative'>
+               <bibitem id='ref11' type='standard'>
+                 <title format='text/plain'>Standard ISO 123</title>
+                 <docidentifier>ISO 123</docidentifier>
+                 <docnumber>123</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </contributor>
+               </bibitem>
+               <bibitem id='ref10' type='standard'>
+                 <title format='text/plain'>Standard ISO/IEC 123</title>
+                 <docidentifier>ISO/IEC 123</docidentifier>
+                 <docnumber>123</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </contributor>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Electrotechnical Commission</name>
+                     <abbreviation>IEC</abbreviation>
+                   </organization>
+                 </contributor>
+               </bibitem>
+               <bibitem id='ref13' type='standard'>
+                 <title format='text/plain'>Standard IEC 123</title>
+                 <docidentifier>IEC 123</docidentifier>
+                 <docnumber>123</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Electrotechnical Commission</name>
+                     <abbreviation>IEC</abbreviation>
+                   </organization>
+                 </contributor>
+               </bibitem>
+               <bibitem id='ref15'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard 10</em>
+                 </formattedref>
+                 <docidentifier type='metanorma'>[13]</docidentifier>
+               </bibitem>
+               <bibitem id='ref16'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard 20</em>
+                 </formattedref>
+                 <docidentifier type='metanorma'>[B]</docidentifier>
+               </bibitem>
+               <bibitem id='ref17'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard 30</em>
+                 </formattedref>
+                 <docidentifier type='metanorma'>[A]</docidentifier>
+               </bibitem>
+               <bibitem id='ref14'>
+                 <formattedref format='application/x-isodoc+xml'>
+                   <em>Standard GB 123</em>
+                 </formattedref>
+                 <docidentifier>GB 123</docidentifier>
+                 <docnumber>123</docnumber>
+               </bibitem>
+             </references>
+           </clause>
+         </bibliography>
        </iso-standard>
     OUTPUT
   end

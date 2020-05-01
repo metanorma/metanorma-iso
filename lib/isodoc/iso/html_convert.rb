@@ -31,15 +31,6 @@ module IsoDoc
         }
       end
 
-      def insertall_after_here(node, insert, name)
-        node.children.each do |n|
-          next unless n.name == name
-          insert.next = n.remove
-          insert = n
-        end
-        insert
-      end
-
       def footnote_reference_format(a)
         a.content = a.content + ")"
       end

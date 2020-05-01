@@ -21,11 +21,7 @@ module IsoDoc
         out.div **{ class: "Section3", id: f["id"] } do |div|
           clause_name(num, @introduction_lbl, div, title_attr)
           f.elements.each do |e|
-            if e.name == "patent-notice"
-              e.elements.each { |e1| parse(e1, div) }
-            else
-              parse(e, div) unless e.name == "title"
-            end
+            parse(e, div) unless e.name == "title"
           end
         end
       end
@@ -170,6 +166,15 @@ module IsoDoc
         end
       end
 
+      def insertall_after_here(node, insert, name)
+        node.children.each do |n|
+          next unless n.name == name
+          insert.next = n.remove
+          insert = n
+        end
+        insert
+      end
+
       def termexamples_before_termnotes(node)
         return unless node.at(ns("./termnote")) && node.at(ns("./termexample"))
         return unless insert = node.at(ns("./definition"))
@@ -177,11 +182,9 @@ module IsoDoc
         insert = insertall_after_here(node, insert, "termnote")
       end
 
-      def term_parse(node, out)
+      def termdef_parse(node, out)
         termexamples_before_termnotes(node)
-        out.p **{ class: "Terms", style:"text-align:left;" } do |p|
-          node.children.each { |c| parse(c, p) }
-        end
+        super
       end
 
       def clausedelim
@@ -232,14 +235,14 @@ module IsoDoc
       end
 
       def hierarchical_formula_names(clause, num)
-      c = IsoDoc::Function::XrefGen::Counter.new
-       clause.xpath(ns(".//formula")).each do |t|
-         next if t["id"].nil? || t["id"].empty?
-         @anchors[t["id"]] =
-           anchor_struct("#{num}#{hiersep}#{c.increment(t).print}", t,
-                         t["inequality"] ? @inequality_lbl : @formula_lbl,
-                         "formula", t["unnumbered"])
-       end
+        c = IsoDoc::Function::XrefGen::Counter.new
+        clause.xpath(ns(".//formula")).each do |t|
+          next if t["id"].nil? || t["id"].empty?
+          @anchors[t["id"]] =
+            anchor_struct("#{num}#{hiersep}#{c.increment(t).print}", t,
+                          t["inequality"] ? @inequality_lbl : @formula_lbl,
+                          "formula", t["unnumbered"])
+        end
       end
     end
   end

@@ -21,6 +21,7 @@ RSpec.describe Asciidoctor::ISO do
          <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:—</docidentifier>
+         <docnumber>123</docnumber>
          <date type="published">
            <on>–</on>
          </date>
@@ -69,6 +70,7 @@ RSpec.describe Asciidoctor::ISO do
         <bibitem id="iso123" type="standard">
          <title format="text/plain">Standard</title>
          <docidentifier>ISO 123:1066 (all parts)</docidentifier>
+         <docnumber>123</docnumber>
          <date type="published">
            <on>1066</on>
          </date>
@@ -106,6 +108,7 @@ RSpec.describe Asciidoctor::ISO do
            <em>Standard</em>
          </formattedref>
          <docidentifier>XYZ 123:1066 (all parts)</docidentifier>
+         <docnumber>123:1066 (all parts)</docnumber>
        </bibitem>
        </references>
        </bibliography>
