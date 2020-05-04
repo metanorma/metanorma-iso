@@ -10,6 +10,13 @@ module IsoDoc
         super
       end
 
+      def googlefonts()
+      <<~HEAD.freeze
+      <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,900" rel="stylesheet">
+      HEAD
+    end
+
       def default_fonts(options)
         {
           bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' :
