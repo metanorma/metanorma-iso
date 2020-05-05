@@ -3,7 +3,7 @@ require "metanorma/processor"
 module Metanorma
   module Iso
     def self.fonts_used
-      ["Cambria", "Times New Roman", "Cambria Math", "HanSans", "Courier"]
+      ["Cambria", "Times New Roman", "Cambria Math", "HanSans", "Courier New"]
     end
 
     class Processor < Metanorma::Processor
