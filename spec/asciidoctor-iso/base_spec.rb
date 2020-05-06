@@ -88,6 +88,7 @@ RSpec.describe Asciidoctor::ISO do
       :title-main-fr: Titre Principal
       :title-part-fr: Part du Titre
       :library-ics: 1,2,3
+      :copyright-year: 2000
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="https://www.metanorma.org/ns/iso">
@@ -101,7 +102,8 @@ RSpec.describe Asciidoctor::ISO do
    <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
    <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
          <docidentifier type="iso">ISO/PreNWIP3 1000-1</docidentifier>
-         <docidentifier type='iso-with-lang'>ISO/PreNWIP3 1000-1 (E)</docidentifier>
+         <docidentifier type='iso-with-lang'>ISO/PreNWIP3 1000-1(E)</docidentifier>
+         <docidentifier type='iso-reference'>ISO/PreNWIP3 1000-1:2000(E)</docidentifier>
 <docnumber>1000</docnumber>
          <contributor>
            <role type="author"/>
@@ -130,7 +132,7 @@ RSpec.describe Asciidoctor::ISO do
            <iteration>3</iteration>
          </status>
          <copyright>
-           <from>#{Date.today.year}</from>
+           <from>2000</from>
            <owner>
              <organization>
              <name>International Organization for Standardization</name>
@@ -171,7 +173,7 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "processes complex metadata" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to <<~'OUTPUT'
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~'OUTPUT')
       = Document title
       Author
       :docfile: test.adoc
@@ -190,7 +192,8 @@ RSpec.describe Asciidoctor::ISO do
        <iso-standard xmlns="https://www.metanorma.org/ns/iso">
        <bibdata type="standard">
          <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
-         <docidentifier type='iso-with-lang'>ISO/IEC/IETF 1000-1-1:2001 (X)</docidentifier>
+         <docidentifier type='iso-with-lang'>ISO/IEC/IETF 1000-1-1:2001(X)</docidentifier>
+         <docidentifier type='iso-reference'>ISO/IEC/IETF 1000-1-1:2001(X)</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
          <docidentifier type="iso-tc">2003</docidentifier>
          <docnumber>1000</docnumber>
@@ -299,7 +302,8 @@ RSpec.describe Asciidoctor::ISO do
     <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO/FDIS 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO/FDIS 1000 (F)</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO/FDIS 1000(F)</docidentifier>
+  <docidentifier type='iso-reference'>ISO/FDIS 1000(F)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -363,7 +367,8 @@ OUTPUT
 <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO 1000 (E)</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
+  <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -428,7 +433,8 @@ OUTPUT
 <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
   <docidentifier type="iso">ISO 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO 1000 (E)</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
+  <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>

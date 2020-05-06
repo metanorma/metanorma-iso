@@ -56,9 +56,11 @@ module Asciidoctor
         return unless node.attr("docnumber")
         part, subpart = node&.attr("partnumber")&.split(/-/)
         dn = add_id_parts(node.attr("docnumber"), part, subpart)
-        dn = id_stage_prefix(dn, node)
-        xml.docidentifier dn, **attr_code(type: "iso")
-        xml.docidentifier id_langsuffix(dn, node), **attr_code(type: "iso-with-lang")
+        dn1 = id_stage_prefix(dn, node, false)
+        dn2 = id_stage_prefix(dn, node, true)
+        xml.docidentifier dn1, **attr_code(type: "iso")
+        xml.docidentifier id_langsuffix(dn1, node), **attr_code(type: "iso-with-lang")
+        xml.docidentifier id_langsuffix(dn2, node), **attr_code(type: "iso-reference")
       end
 
       def id_langsuffix(dn, node)
@@ -69,7 +71,7 @@ module Asciidoctor
                  else
                    "(X)"
                  end
-        "#{dn} #{suffix}"
+        "#{dn}#{suffix}"
       end
 
       def metadata_ext(node, xml)
@@ -99,13 +101,14 @@ module Asciidoctor
                        node.attr("draft"))
       end
 
-      def id_stage_prefix(dn, node)
+      def id_stage_prefix(dn, node, force_year)
         stage = get_stage(node)
         substage = get_substage(node)
         if stage && (stage.to_i < 60)
           abbr = id_stage_abbr(stage, substage, node)
           dn = "/#{abbr} #{dn}" unless abbr.nil? || abbr.empty? # prefixes added in cleanup
-        else
+        end
+        if force_year || !(stage && (stage.to_i < 60))
           dn += ":#{node.attr("copyright-year")}" if node.attr("copyright-year")
         end
         dn

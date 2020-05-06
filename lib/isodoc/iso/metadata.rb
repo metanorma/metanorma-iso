@@ -52,6 +52,8 @@ module IsoDoc
         set(:tc_docnumber, tcdn.map { |n| n.text })
         dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso-with-lang']"))
         set(:docnumber_lang, dn&.text)
+        dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso-reference']"))
+        set(:docnumber_reference, dn&.text)
       end
 
       # we don't leave this to i18n.rb, because we have both English and

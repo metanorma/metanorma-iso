@@ -57,6 +57,8 @@ module Asciidoctor
           id.content = id_prefix(prefix, id)
         id = xmldoc.at("//bibdata/docidentifier[@type = 'iso-with-lang']") and
           id.content = id_prefix(prefix, id)
+        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso-reference']") and
+          id.content = id_prefix(prefix, id)
       end
 
       def format_ref(ref, type, isopub)
