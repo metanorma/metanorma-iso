@@ -20,7 +20,7 @@ module Asciidoctor
         "//annex//fn | "\
         "//references[title = 'Bibliography']//fn".freeze
 
-      AUTOMATIC_GENERATED_ID_REGEXP = /\A_/.freeze
+      AUTOMATIC_GENERATED_ID_REGEXP = /\A_/
 
       def other_footnote_renumber(xmldoc)
         seen = {}

@@ -22,7 +22,8 @@ RSpec.describe Asciidoctor::ISO do
     subject(:convert) do
       xmlpp(
         strip_guid(
-          Asciidoctor.convert(input, backend: :iso, header_footer: true)))
+          Asciidoctor.convert(
+            input, backend: :iso, header_footer: true)))
     end
     let(:input) do
       <<~XML
