@@ -62,7 +62,7 @@ RSpec.describe Asciidoctor::ISO do
                 </p>
               </li>
             </ul>
-            <term id='text-name2'>
+            <term id='term-name2'>
               <preferred>name2</preferred>
             </term>
           </terms>
@@ -71,7 +71,7 @@ RSpec.describe Asciidoctor::ISO do
             <p id='_'>
               <em>name</em>
               (
-              <xref target='text-name2'>name2</xref>
+              <xref target='term-name2'>name2</xref>
               )
             </p>
           </clause>
@@ -123,7 +123,7 @@ RSpec.describe Asciidoctor::ISO do
                   </p>
                 </li>
               </ul>
-              <term id='text-name'>
+              <term id='term-name'>
                 <preferred>name</preferred>
               </term>
             </terms>
@@ -132,7 +132,7 @@ RSpec.describe Asciidoctor::ISO do
               <p id='_'>
                 <em>name</em>
                 (
-                <xref target='text-name'>name</xref>
+                <xref target='term-name'>name</xref>
                 )
               </p>
             </clause>
@@ -156,12 +156,12 @@ RSpec.describe Asciidoctor::ISO do
           === name
           === name2
 
-          [[text-name]]
+          [[term-name]]
           == Main
 
           paragraph
 
-          [[text-name2]]
+          [[term-name2]]
           == Second
 
           term:[name]
@@ -193,27 +193,27 @@ RSpec.describe Asciidoctor::ISO do
                   </p>
                 </li>
               </ul>
-              <term id='text-name-1'>
+              <term id='term-name-1'>
                 <preferred>name</preferred>
               </term>
-              <term id='text-name2-1'>
+              <term id='term-name2-1'>
                 <preferred>name2</preferred>
               </term>
             </terms>
-            <clause id='text-name' inline-header='false' obligation='normative'>
+            <clause id='term-name' inline-header='false' obligation='normative'>
               <title>Main</title>
               <p id='_'>paragraph</p>
             </clause>
-            <clause id='text-name2' inline-header='false' obligation='normative'>
+            <clause id='term-name2' inline-header='false' obligation='normative'>
               <title>Second</title>
               <p id='_'>
                 <em>name</em>
                 (
-                <xref target='text-name-1'>name</xref>
+                <xref target='term-name-1'>name</xref>
                 )
                 <em>name2</em>
                   (
-                <xref target='text-name2-1'>name2</xref>
+                <xref target='term-name2-1'>name2</xref>
                 )
               </p>
             </clause>

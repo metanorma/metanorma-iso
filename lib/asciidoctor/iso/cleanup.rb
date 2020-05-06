@@ -97,7 +97,12 @@ module Asciidoctor
         termlookup = replace_automatic_genrated_ids_terms(xmldoc)
         xmldoc.xpath('//termxref').each do |node|
           target = node.text
-          next if termlookup[target].nil?
+          if termlookup[target].nil?
+            @log.add("AsciiDoc Input",
+                     node,
+                     "#{target} does not refer to a real term")
+            next
+          end
 
           node.name = 'xref'
           node['target'] = termlookup[target]
@@ -115,11 +120,11 @@ module Asciidoctor
       end
 
       def unique_text_id(xmldoc, text)
-        return "text-#{text}" if xmldoc.at("//*[@id = 'text-#{text}']").nil?
+        return "term-#{text}" if xmldoc.at("//*[@id = 'term-#{text}']").nil?
 
         (1..Float::INFINITY).lazy.each do |index|
-          if xmldoc.at("//*[@id = 'text-#{text}-#{index}']").nil?
-            break("text-#{text}-#{index}")
+          if xmldoc.at("//*[@id = 'term-#{text}-#{index}']").nil?
+            break("term-#{text}-#{index}")
           end
         end
       end
