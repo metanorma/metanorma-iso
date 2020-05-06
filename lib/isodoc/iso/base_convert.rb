@@ -210,21 +210,8 @@ module IsoDoc
 
       def cleanup(docxml)
         super
-        remove_internal_hyperlinks(docxml)
         table_th_center(docxml)
         docxml
-      end
-
-      def remove_internal_hyperlinks(docxml)
-        docxml.xpath("//a[@href]").each do |a|
-          next unless /^#/.match(a[:href])
-          anchor = a[:href].sub(/^#/, "")
-          next if a["epub:type"] == "footnote"
-          next unless @anchors[anchor]
-          next unless @anchors[anchor][:type]
-          next if @anchors[anchor][:type] == "clause"
-          a.replace(a.children)
-        end
       end
 
       def table_th_center(docxml)
