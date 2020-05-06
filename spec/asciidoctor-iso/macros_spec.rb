@@ -19,7 +19,11 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   describe 'term inline macros' do
-    subject(:convert) { xmlpp(strip_guid(Asciidoctor.convert(input, backend: :iso, header_footer: true))) }
+    subject(:convert) do
+      xmlpp(
+        strip_guid(
+          Asciidoctor.convert(input, backend: :iso, header_footer: true)))
+    end
     let(:input) do
       <<~XML
         #{ASCIIDOC_BLANK_HDR}

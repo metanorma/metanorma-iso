@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'asciidoctor/extensions'
 
 module Asciidoctor
   module Iso
+    # Macro to transform `term[X,Y]` into em, termxref xml
     class TermRefInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
       use_dsl
 
@@ -9,8 +12,9 @@ module Asciidoctor
       name_positional_attributes 'name', 'termxref'
       using_format :short
 
-      def process(parent, target, attrs)
-        "<em>#{attrs['name']}</em> (<termxref>#{attrs['termxref'] || attrs['name']}</termxref>)"
+      def process(_parent, _target, attrs)
+        termref = attrs['termxref'] || attrs['name']
+        "<em>#{attrs['name']}</em> (<termxref>#{termref}</termxref>)"
       end
     end
   end
