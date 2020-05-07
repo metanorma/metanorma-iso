@@ -1,3 +1,5 @@
+# frozen_string_literal: true.
+
 module Asciidoctor
   module ISO
     # Intelligent term lookup xml modifier
@@ -26,19 +28,21 @@ module Asciidoctor
         xmldoc.xpath('//termxref').each do |node|
           target = normalize_ref_id(node.text)
           if termlookup[target].nil?
-            log.add("AsciiDoc Input",
-                    node,
-                    "#{target} does not refer to a real term")
+            log.add('AsciiDoc Input', node, "#{target} does not refer to a real term")
             next
           end
 
-          node.name = 'xref'
-          node['target'] = termlookup[target]
-          # Support for automatic clause numbering, delete text from xref
-          if node['defaultref']
-            node.children.remove
-            node.remove_attribute('defaultref')
-          end
+          modify_ref_node(node, target)
+        end
+      end
+
+      def modify_ref_node(node, target)
+        node.name = 'xref'
+        node['target'] = termlookup[target]
+        # Support for automatic clause numbering, delete text from xref
+        if node['defaultref']
+          node.children.remove
+          node.remove_attribute('defaultref')
         end
       end
 
