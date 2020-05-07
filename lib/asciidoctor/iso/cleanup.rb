@@ -20,6 +20,8 @@ module Asciidoctor
         "//annex//fn | "\
         "//references[title = 'Bibliography']//fn".freeze
 
+      AUTOMATIC_GENERATED_ID_REGEXP = /\A_/
+
       def other_footnote_renumber(xmldoc)
         seen = {}
         i = 0
@@ -85,6 +87,47 @@ module Asciidoctor
       def sort_biblio(bib)
         bib.sort do |a, b|
           sort_biblio_key(a) <=> sort_biblio_key(b)
+        end
+      end
+
+      def termdef_cleanup(xmldoc)
+        generate_termref_links(xmldoc)
+        super
+      end
+
+      def generate_termref_links(xmldoc)
+        termlookup = replace_automatic_genrated_ids_terms(xmldoc)
+        xmldoc.xpath('//termxref').each do |node|
+          target = node.text
+          if termlookup[target].nil?
+            @log.add("AsciiDoc Input",
+                     node,
+                     "#{target} does not refer to a real term")
+            next
+          end
+
+          node.name = 'xref'
+          node['target'] = termlookup[target]
+        end
+      end
+
+      def replace_automatic_genrated_ids_terms(xmldoc)
+        xmldoc.xpath('//term').each.with_object({}) do |term_node, termlookup|
+          next if AUTOMATIC_GENERATED_ID_REGEXP.match(term_node['id']).nil?
+
+          term_text = term_node.at('./preferred').text
+          term_node['id'] = unique_text_id(xmldoc, term_text)
+          termlookup[term_text] = term_node['id']
+        end
+      end
+
+      def unique_text_id(xmldoc, text)
+        return "term-#{text}" if xmldoc.at("//*[@id = 'term-#{text}']").nil?
+
+        (1..Float::INFINITY).lazy.each do |index|
+          if xmldoc.at("//*[@id = 'term-#{text}-#{index}']").nil?
+            break("term-#{text}-#{index}")
+          end
         end
       end
 
