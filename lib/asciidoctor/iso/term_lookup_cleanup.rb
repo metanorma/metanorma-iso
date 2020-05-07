@@ -17,7 +17,6 @@ module Asciidoctor
 
       def call
         @termlookup = replace_automatic_generated_ids_terms
-                      .merge(existing_terms)
         set_termxref_tags_target
       end
 
@@ -25,9 +24,7 @@ module Asciidoctor
 
       def set_termxref_tags_target
         xmldoc.xpath('//termxref').each do |node|
-          target = node.text
-          # require 'byebug'
-          # byebug
+          target = normalize_ref_id(node.text)
           if termlookup[target].nil?
             log.add("AsciiDoc Input",
                     node,
@@ -45,24 +42,22 @@ module Asciidoctor
         end
       end
 
-      def existing_terms
-        xmldoc.xpath('//clause').each.with_object({}) do |term_node, res|
-          next if term_node['id'].match(EXISTING_TERM_REGEXP).nil?
+      def replace_automatic_generated_ids_terms
+        xmldoc.xpath('//term').each.with_object({}) do |term_node, res|
+          next if AUTOMATIC_GENERATED_ID_REGEXP.match(term_node['id']).nil?
 
-          res[term_node.at('./title').text] = term_node['id']
+          normalize_id_and_memorize(term_node, res, './preferred')
         end
       end
 
-      def replace_automatic_generated_ids_terms
-        xmldoc.xpath('//term').each.with_object({}) do |term_node, res|
-          # require 'byebug'
-          # byebug
-          next if AUTOMATIC_GENERATED_ID_REGEXP.match(term_node['id']).nil?
+      def normalize_id_and_memorize(term_node, res_table, text_selector)
+        term_text = normalize_ref_id(term_node.at(text_selector).text)
+        term_node['id'] = unique_text_id(term_text)
+        res_table[term_text] = term_node['id']
+      end
 
-          term_text = term_node.at('./preferred').text
-          term_node['id'] = unique_text_id(term_text)
-          res[term_text] = term_node['id']
-        end
+      def normalize_ref_id(text)
+        text.downcase.gsub(/[[:space:]]/, '-')
       end
 
       def unique_text_id(text)

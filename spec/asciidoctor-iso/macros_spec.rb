@@ -71,7 +71,7 @@ RSpec.describe Asciidoctor::ISO do
             <p id='_'>
               <em>name</em>
               (
-              <xref target='term-name2'/>
+              <xref target='term-name2'>name2</xref>
               )
             </p>
           </clause>
@@ -132,7 +132,7 @@ RSpec.describe Asciidoctor::ISO do
               <p id='_'>
                 <em>name</em>
                 (
-                <xref target='term-name'>name</xref>
+                <xref target='term-name' />
                 )
               </p>
             </clause>
@@ -209,62 +209,15 @@ RSpec.describe Asciidoctor::ISO do
               <p id='_'>
                 <em>name</em>
                 (
-                <xref target='term-name-1'>name</xref>
+                <xref target='term-name-1' />
                 )
                 <em>name2</em>
                   (
-                <xref target='term-name2-1'>name2</xref>
+                <xref target='term-name2-1' />
                 )
               </p>
             </clause>
           </sections>
-          </iso-standard>
-        XML
-      end
-
-      it 'generates unique ids which dont match existing ids' do
-        expect(convert).to(be_equivalent_to(xmlpp(output)))
-      end
-    end
-
-    context 'using clause tags with id matcing `term-*`' do
-      let(:input) do
-        <<~XML
-          #{ASCIIDOC_BLANK_HDR}
-
-          [[terms-concepts]]
-          ==== Basic concepts
-
-          paragraph
-
-          [[term-date]]
-          ===== date
-
-          paragraph
-
-          term:[date]
-        XML
-      end
-
-      let(:output) do
-        <<~XML
-          #{BLANK_HDR}
-            <sections>
-              <clause id='terms-concepts' inline-header='false' obligation='normative'>
-                <title>Basic concepts</title>
-                <p id='_'>paragraph</p>
-                <clause id='term-date' inline-header='false' obligation='normative'>
-                  <title>date</title>
-                  <p id='_'>paragraph</p>
-                  <p id='_'>
-                    <em>date</em>
-                     (
-                    <xref target='term-date'>date</xref>
-                    )
-                  </p>
-                </clause>
-              </clause>
-            </sections>
           </iso-standard>
         XML
       end

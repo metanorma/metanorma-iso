@@ -14,7 +14,7 @@ module Asciidoctor
 
       def process(_parent, _target, attrs)
         termref = attrs['termxref'] || attrs['name']
-        defaultref = attrs['termxref'].nil? ? nil : ' defaultref'
+        defaultref = attrs['termxref'].nil? ? ' defaultref' : ''
         "<em>#{attrs['name']}</em> (<termxref#{defaultref}>#{termref}</termxref>)"
       end
     end
