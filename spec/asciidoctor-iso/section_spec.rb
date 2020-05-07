@@ -84,7 +84,7 @@ standardization at the following addresses:</p>
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
 
-         <term id="_">
+         <term id="term-term1">
          <preferred>Term1</preferred>
        </term>
        </terms>
@@ -109,7 +109,7 @@ standardization at the following addresses:</p>
   </li>
 </ul>
          <title>Normal Terms</title>
-         <term id="_">
+         <term id="term-term2">
          <preferred>Term2</preferred>
        </term>
        </terms>
@@ -247,7 +247,7 @@ standardization at the following addresses:</p>
          <p id="_">Foreword</p>
        </foreword></preface><sections>
        <terms id="_" obligation="normative">
-          <title>Terms and definitions</title><p id="_">For the purposes of this document, the terms and definitions 
+          <title>Terms and definitions</title><p id="_">For the purposes of this document, the terms and definitions
   given in <eref bibitemid="iso1234"/> and <eref bibitemid="iso5678"/> and the following apply.</p>
   <p id="_">ISO and IEC maintain terminological databases for use in
 standardization at the following addresses:</p>
@@ -259,7 +259,7 @@ standardization at the following addresses:</p>
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
 
-  <term id="_">
+  <term id="term-term1">
   <preferred>Term1</preferred>
 </term>
        </terms></sections>
@@ -296,13 +296,13 @@ standardization at the following addresses:</p>
               <ul id='_'>
                 <li>
                   <p id='_'>
-                    ISO Online browsing platform: available at 
+                    ISO Online browsing platform: available at
                     <link target='http://www.iso.org/obp'/>
                   </p>
                 </li>
                 <li>
                   <p id='_'>
-                    IEC Electropedia: available at 
+                    IEC Electropedia: available at
                     <link target='http://www.electropedia.org'/>
                   </p>
                 </li>

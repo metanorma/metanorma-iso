@@ -6,12 +6,17 @@ require "open-uri"
 require "pp"
 require "isodoc"
 require "fileutils"
+require 'asciidoctor/iso/macros'
 
 module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       XML_ROOT_TAG = "iso-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/iso".freeze
+
+      Asciidoctor::Extensions.register do
+        inline_macro Asciidoctor::Iso::TermRefInlineMacro
+      end
 
       def html_converter(node)
         IsoDoc::Iso::HtmlConvert.new(html_extract_attributes(node))

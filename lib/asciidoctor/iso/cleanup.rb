@@ -5,6 +5,7 @@ require "json"
 require "pathname"
 require "open-uri"
 require "pp"
+require "asciidoctor/iso/term_lookup_cleanup"
 
 module Asciidoctor
   module ISO
@@ -86,6 +87,11 @@ module Asciidoctor
         bib.sort do |a, b|
           sort_biblio_key(a) <=> sort_biblio_key(b)
         end
+      end
+
+      def termdef_cleanup(xmldoc)
+        Asciidoctor::ISO::TermLookupCleanup.new(xmldoc, @log).call
+        super
       end
 
       # TODO sort by authors
