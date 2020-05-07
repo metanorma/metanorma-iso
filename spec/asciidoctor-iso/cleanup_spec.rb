@@ -54,7 +54,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
          #{TERM_BOILERPLATE}
-         <term id="term-Tempus">
+         <term id="term-tempus">
          <preferred>Tempus</preferred>
          <domain>relativity</domain><definition><p id="_"> Time</p></definition>
        </term>
@@ -118,7 +118,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative"><title>Terms and definitions</title>
 
          #{TERM_BOILERPLATE}
-       <term id="term-Time">
+       <term id="term-time">
        <preferred>Time</preferred>
          <definition><p id="_">This paragraph is extraneous</p></definition>
        </term></terms>
@@ -305,7 +305,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
          #{TERM_BOILERPLATE}
-         <term id="term-Term1">
+         <term id="term-term1">
          <preferred>Term1</preferred>
          <termsource status="identical">
          <origin bibitemid="ISO2191" type="inline" citeas="">

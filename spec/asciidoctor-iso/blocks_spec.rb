@@ -113,7 +113,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
          #{TERM_BOILERPLATE}
-         <term id="term-Term1">
+         <term id="term-term1">
          <preferred>Term1</preferred>
          <termnote id="_">
          <p id="_">This is a note</p>
@@ -223,7 +223,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
          #{TERM_BOILERPLATE}
-         <term id="term-Term1">
+         <term id="term-term1">
          <preferred>Term1</preferred>
          <termexample id="_">
          <p id="_">This is an example</p>
@@ -428,7 +428,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
          #{TERM_BOILERPLATE}
-         <term id="term-Term1">
+         <term id="term-term1">
          <preferred>Term1</preferred>
          <termsource status="identical">
          <origin bibitemid="ISO2191" type="inline" citeas="">
@@ -459,7 +459,7 @@ RSpec.describe Asciidoctor::ISO do
          <terms id="_" obligation="normative">
          <title>Terms and definitions</title>
          #{TERM_BOILERPLATE}
-         <term id="term-Term1">
+         <term id="term-term1">
          <preferred>Term1</preferred>
          <termsource status="modified">
          <origin bibitemid="ISO2191" type="inline" citeas="">

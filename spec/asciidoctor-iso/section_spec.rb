@@ -84,7 +84,7 @@ standardization at the following addresses:</p>
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
 
-         <term id="term-Term1">
+         <term id="term-term1">
          <preferred>Term1</preferred>
        </term>
        </terms>
@@ -109,7 +109,7 @@ standardization at the following addresses:</p>
   </li>
 </ul>
          <title>Normal Terms</title>
-         <term id="term-Term2">
+         <term id="term-term2">
          <preferred>Term2</preferred>
        </term>
        </terms>
@@ -259,7 +259,7 @@ standardization at the following addresses:</p>
 <link target="http://www.electropedia.org"/>
 </p> </li> </ul>
 
-  <term id="term-Term1">
+  <term id="term-term1">
   <preferred>Term1</preferred>
 </term>
        </terms></sections>
