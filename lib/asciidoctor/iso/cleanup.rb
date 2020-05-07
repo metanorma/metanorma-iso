@@ -115,7 +115,7 @@ module Asciidoctor
         xmldoc.xpath('//term').each.with_object({}) do |term_node, termlookup|
           next if AUTOMATIC_GENERATED_ID_REGEXP.match(term_node['id']).nil?
 
-          term_text = term_node.at('./preferred').text.downcase.gsub(/ /, "-")
+          term_text = term_node.at('./preferred').text
           term_node['id'] = unique_text_id(xmldoc, term_text)
           termlookup[term_text] = term_node['id']
         end
