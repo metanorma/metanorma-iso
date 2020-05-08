@@ -41,7 +41,10 @@ module Asciidoctor
                 "#{target}" is not defined in document.).gsub(/\s+/, ' '))
         log.add('AsciiDoc Input', node, "#{target} does not refer to a real term")
         node.next.remove
+        term_name_node = node.previous.previous
+        term_name_node.remove
         node.previous.remove
+        node.add_previous_sibling(term_name_node.text)
         node.remove
       end
 

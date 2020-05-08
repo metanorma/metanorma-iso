@@ -276,7 +276,7 @@ RSpec.describe Asciidoctor::ISO do
                        (
                       <xref target='term-name'/>
                       )
-                      <em>missing</em>
+                      missing
                     </p>
                   </definition>
                 </term>
