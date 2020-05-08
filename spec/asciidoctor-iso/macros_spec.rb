@@ -71,7 +71,7 @@ RSpec.describe Asciidoctor::ISO do
             <p id='_'>
               <em>name</em>
               (
-              <xref target='term-name2'>name2</xref>
+              <xref target='term-name2'/>
               )
             </p>
           </clause>
@@ -218,6 +218,70 @@ RSpec.describe Asciidoctor::ISO do
               </p>
             </clause>
           </sections>
+          </iso-standard>
+        XML
+      end
+
+      it 'generates unique ids which dont match existing ids' do
+        expect(convert).to(be_equivalent_to(xmlpp(output)))
+      end
+    end
+
+    context 'when missing actual ref' do
+      let(:input) do
+        <<~XML
+          #{ASCIIDOC_BLANK_HDR}
+
+          == Terms and Definitions
+
+          === name
+
+          paragraph
+
+          term:[name]
+          term:[missing]
+        XML
+      end
+      let(:output) do
+        <<~XML
+          #{BLANK_HDR}
+            <sections>
+              <terms id='_' obligation='normative'>
+                <title>Terms and definitions</title>
+                <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
+                <p id='_'>
+                  ISO and IEC maintain terminological databases for use in standardization
+                  at the following addresses:
+                </p>
+                <ul id='_'>
+                  <li>
+                    <p id='_'>
+                      ISO Online browsing platform: available at
+                      <link target='http://www.iso.org/obp'/>
+                    </p>
+                  </li>
+                  <li>
+                    <p id='_'>
+                      IEC Electropedia: available at
+                      <link target='http://www.electropedia.org'/>
+                    </p>
+                  </li>
+                </ul>
+                <term id='term-name'>
+                  <preferred>name</preferred>
+                  <definition>
+                    <p id='_'>paragraph</p>
+                    <p id='_'>
+                      <em>name</em>
+                       (
+                      <xref target='term-name'/>
+                      )
+                      <em>missing</em>
+                    </p>
+                  </definition>
+                </term>
+              </terms>
+            </sections>
           </iso-standard>
         XML
       end

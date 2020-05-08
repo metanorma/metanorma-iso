@@ -28,7 +28,7 @@ module Asciidoctor
         xmldoc.xpath('//termxref').each do |node|
           target = normalize_ref_id(node.text)
           if termlookup[target].nil?
-            log.add('AsciiDoc Input', node, "#{target} does not refer to a real term")
+            remove_missing_ref(node, target)
             next
           end
 
@@ -36,14 +36,20 @@ module Asciidoctor
         end
       end
 
+      def remove_missing_ref(node, target)
+        warn(%Q(Error: Term reference in `term[#{target}]` missing: \
+                "#{target}" is not defined in document.).gsub(/\s+/, ' '))
+        log.add('AsciiDoc Input', node, "#{target} does not refer to a real term")
+        node.next.remove
+        node.previous.remove
+        node.remove
+      end
+
       def modify_ref_node(node, target)
         node.name = 'xref'
         node['target'] = termlookup[target]
-        # Support for automatic clause numbering, delete text from xref
-        if node['defaultref']
-          node.children.remove
-          node.remove_attribute('defaultref')
-        end
+        node.children.remove
+        node.remove_attribute('defaultref')
       end
 
       def replace_automatic_generated_ids_terms
