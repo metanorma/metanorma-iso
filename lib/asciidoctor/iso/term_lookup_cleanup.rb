@@ -37,9 +37,12 @@ module Asciidoctor
       end
 
       def remove_missing_ref(node, target)
-        warn(%Q(Error: Term reference in `term[#{target}]` missing: \
-                "#{target}" is not defined in document.).gsub(/\s+/, ' '))
-        log.add('AsciiDoc Input', node, "#{target} does not refer to a real term")
+        log.add('AsciiDoc Input',
+                node,
+                %(Error: Term reference in `term[#{target}]` missing: \
+                "#{target}" is not defined in document))
+        # Term ref have parentess around it - (ref),
+        # if no target remove parentes and render as text
         node.next.remove
         term_name_node = node.previous.previous
         term_name_node.remove
