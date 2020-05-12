@@ -4,38 +4,12 @@ require "uri"
 module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
-      def section(node)
-        a = section_attributes(node)
-        noko do |xml|
-          case sectiontype(node)
-          when "foreword" then foreword_parse(a, xml, node)
-          when "introduction" then introduction_parse(a, xml, node)
-          when "patent notice" then patent_notice_parse(xml, node)
-          when "scope" then scope_parse(a, xml, node)
-          when "normative references" then norm_ref_parse(a, xml, node)
-          when "terms and definitions"
-            @term_def = true
-            term_def_parse(a, xml, node, true)
-            @term_def = false
-          when "symbols and abbreviated terms"
-            symbols_parse(a, xml, node)
-          when "acknowledgements"
-            acknowledgements_parse(a, xml, node)
-          when "bibliography" then bibliography_parse(a, xml, node)
-          else
-            if @term_def then term_def_subclause_parse(a, xml, node)
-            elsif @biblio then bibliography_parse(a, xml, node)
-            elsif node.attr("style") == "bibliography"
-              bibliography_parse(a, xml, node)
-            elsif node.attr("style") == "appendix" && node.level == 1
-              annex_parse(a, xml, node)
-            elsif node.option? "appendix"
-              appendix_parse(a, xml, node)
-            else
-              clause_parse(a, xml, node)
-            end
-          end
-        end.join("\n")
+      def clause_parse(attrs, xml, node)
+        title = node&.attr("heading")&.downcase ||
+          node.title.gsub(/<[^>]+>/, "").downcase
+        title == "scope" and return scope_parse(attrs, xml, node)
+        node.option? "appendix" and return appendix_parse(attrs, xml, node)
+        super
       end
 
       def appendix_parse(attrs, xml, node)

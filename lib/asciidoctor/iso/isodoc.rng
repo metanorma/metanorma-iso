@@ -129,6 +129,9 @@
             </choice>
           </attribute>
         </optional>
+        <attribute name="normative">
+          <data type="boolean"/>
+        </attribute>
         <optional>
           <ref name="section-title"/>
         </optional>
