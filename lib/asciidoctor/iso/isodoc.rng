@@ -306,11 +306,11 @@
         <ref name="paragraph"/>
       </element>
     </define>
-    <define name="TextElement" combine="choice">
-      <ref name="concept"/>
-    </define>
   </include>
   <!-- end overrides -->
+  <define name="TextElement" combine="choice">
+    <ref name="concept"/>
+  </define>
   <define name="concept">
     <element name="concept">
       <optional>

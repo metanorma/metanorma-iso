@@ -158,7 +158,7 @@ RSpec.describe IsoDoc do
     <eref type="inline" bibitemid="ISO712" citeas="ISO 712">A</stem>
     </p>
     </foreword></preface>
-    <bibliography><references id="_normative_references" obligation="informative"><title>Normative References</title>
+    <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
 <bibitem id="ISO712" type="standard">
   <title format="text/plain">Cereals and cereal products</title>
   <docidentifier>ISO 712</docidentifier>
@@ -213,7 +213,7 @@ RSpec.describe IsoDoc do
     <eref type="inline" bibitemid="ISO712" citeas="ISO 712">A</eref>
     </p>
     </foreword></preface>
-    <bibliography><references id="_normative_references" obligation="informative"><title>Normative References</title>
+    <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
 <bibitem id="ISO712" type="standard">
   <title format="text/plain">Cereals and cereal products</title>
   <docidentifier>ISO 712</docidentifier>

@@ -56,12 +56,12 @@ RSpec.describe IsoDoc do
               <appendix id="Q2" inline-header="false" obligation="normative">
          <title>An Appendix</title>
        </appendix>
-       <references id="Q3"><title>Annex Bibliography</title></references>
-       </annex><bibliography><references id="R" obligation="informative">
+       <references id="Q3" normative="false"><title>Annex Bibliography</title></references>
+       </annex><bibliography><references id="R" obligation="informative" normative="true">
          <title>Normative References</title>
        </references><clause id="S" obligation="informative">
          <title>Bibliography</title>
-         <references id="T" obligation="informative">
+         <references id="T" obligation="informative" normative="false">
          <title>Bibliography Subsection</title>
        </references>
        </clause>
@@ -202,11 +202,11 @@ OUTPUT
               <appendix id="Q2" inline-header="false" obligation="normative">
          <title>An Appendix</title>
        </appendix>
-       </annex><bibliography><references id="R" obligation="informative">
+       </annex><bibliography><references id="R" obligation="informative" normative="true">
          <title>Normative References</title>
        </references><clause id="S" obligation="informative">
          <title>Bibliography</title>
-         <references id="T" obligation="informative">
+         <references id="T" obligation="informative" normative="false">
          <title>Bibliography Subsection</title>
        </references>
        </clause>

@@ -96,7 +96,7 @@ RSpec.describe IsoDoc::Iso do
   <eref bibitemid="ISO20483"/>
   </p>
     </foreword></preface>
-    <bibliography><references id="_normative_references" obligation="informative"><title>Normative References</title>
+    <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
           <bibitem type="international-standard" id="IEV">
   <title format="text/plain" language="en" script="Latn">Electropedia: 
   The World's Online Electrotechnical Vocabulary</title>

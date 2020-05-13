@@ -18,7 +18,7 @@ RSpec.describe IsoDoc do
   <eref bibitemid="ref12"/>
   </p>
     </foreword></preface>
-    <bibliography><references id="_normative_references" obligation="informative"><title>Normative References</title>
+    <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
     <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
 <bibitem id="ISO712" type="standard">
   <title format="text/plain">Cereals or cereal products</title>
@@ -65,7 +65,7 @@ RSpec.describe IsoDoc do
 </bibitem>
 <note><p>This is an annotation of ISO 20483:2013-2014</p></note>
 
-</references><references id="_bibliography" obligation="informative">
+</references><references id="_bibliography" obligation="informative" normative="false">
   <title>Bibliography</title>
 <bibitem id="ISBN" type="ISBN">
   <title format="text/plain">Chemicals for analytical laboratory use</title>
