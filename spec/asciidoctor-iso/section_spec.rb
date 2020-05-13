@@ -133,12 +133,12 @@ standardization at the following addresses:</p>
        </clause>
        <appendix id="_" inline-header="false" obligation="normative">
           <title>Appendix 1</title>
-       </appendix></annex><bibliography><references id="_" obligation="informative">
+       </appendix></annex><bibliography><references id="_" obligation="informative" normative="true">
          <title>Normative References</title>
          <p id="_">There are no normative references in this document.</p>
        </references><clause id="_" obligation="informative">
          <title>Bibliography</title>
-         <references id="_" obligation="informative">
+         <references id="_" obligation="informative" normative="false">
          <title>Bibliography Subsection</title>
        </references>
        </clause>

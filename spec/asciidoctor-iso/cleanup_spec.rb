@@ -189,7 +189,7 @@ RSpec.describe Asciidoctor::ISO do
         <eref type="inline" bibitemid="iso216" citeas="ISO 216:2001"/>
       </p>
       </foreword></preface><sections>
-      </sections><bibliography><references id="_" obligation="informative">
+      </sections><bibliography><references id="_" obligation="informative" normative="true">
         <title>Normative References</title>
         <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
         <bibitem id="iso216" type="standard">
@@ -232,7 +232,7 @@ RSpec.describe Asciidoctor::ISO do
         </localityStack>the reference</eref>
         </p>
       </foreword></preface><sections>
-      </sections><bibliography><references id="_" obligation="informative">
+      </sections><bibliography><references id="_" obligation="informative" normative="true">
         <title>Normative References</title>
         <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
         <bibitem id="iso216" type="standard">
@@ -271,7 +271,7 @@ RSpec.describe Asciidoctor::ISO do
          <eref type="inline" bibitemid="iso216" citeas="ISO 216"/>
        </p>
        </foreword></preface><sections>
-       </sections><bibliography><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative" normative="false">
   <title>Bibliography</title>
   <bibitem id="iso216" type="standard">
   <title format="text/plain">Reference</title>
@@ -333,7 +333,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
       #{BLANK_HDR}
       <sections></sections>
-      <bibliography><references id="_" obligation="informative"><title>Normative References</title>
+      <bibliography><references id="_" obligation="informative" normative="true"><title>Normative References</title>
       <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
              <bibitem id="iso216" type="standard">
          <title format="text/plain">Reference</title>
@@ -637,7 +637,7 @@ RSpec.describe Asciidoctor::ISO do
         <p id="_">Footnote2</p>
       </fn>
       </p>
-      </clause></sections><bibliography><references id="_" obligation="informative">
+      </clause></sections><bibliography><references id="_" obligation="informative" normative="true">
         <title>Normative References</title>
         <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
         <bibitem id="iso123" type="standard">
@@ -816,7 +816,7 @@ RSpec.describe Asciidoctor::ISO do
          <bibliography>
            <clause id='_' obligation='informative'>
              <title>Bibliography</title>
-             <references id='_' obligation='informative'>
+             <references id='_' obligation='informative' normative="false">
                <title>Clause 1</title>
                <bibitem id='ref1' type='standard'>
                  <title format='text/plain'>Standard ISO 123</title>
@@ -917,7 +917,7 @@ RSpec.describe Asciidoctor::ISO do
                  <docnumber>123</docnumber>
                </bibitem>
              </references>
-             <references id='_' obligation='informative'>
+             <references id='_' obligation='informative' normative="false">
                <bibitem id='ref11' type='standard'>
                  <title format='text/plain'>Standard ISO 123</title>
                  <docidentifier>ISO 123</docidentifier>

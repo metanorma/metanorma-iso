@@ -15,7 +15,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
        <sections>
-              </sections><bibliography><references id="_" obligation="informative">
+              </sections><bibliography><references id="_" obligation="informative" normative="true">
          <title>Normative References</title>
          <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
          <bibitem id="iso123" type="standard">
@@ -64,7 +64,7 @@ RSpec.describe Asciidoctor::ISO do
     </p>
   </clause>
 </sections>
-      <bibliography><references id="_" obligation="informative">
+      <bibliography><references id="_" obligation="informative" normative="true">
         <title>Normative References</title>
         <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
         <bibitem id="iso123" type="standard">
@@ -100,7 +100,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
 
-       </sections><bibliography><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative" normative="true">
          <title>Normative References</title>
          <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
          <bibitem id="iso123">
@@ -127,7 +127,7 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
               <sections>
 
-       </sections><bibliography><references id="_" obligation="informative">
+       </sections><bibliography><references id="_" obligation="informative" normative="false">
          <title>Bibliography</title>
          <bibitem id="iso123">
          <formattedref format="application/x-isodoc+xml">
