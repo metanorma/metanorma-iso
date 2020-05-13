@@ -22,7 +22,7 @@ module Asciidoctor
 
       # ISO/IEC DIR 2, 15.4
       def normref_validate(root)
-        f = root.at("//references[title = 'Normative References']") || return
+        f = root.at("//references[@normative = 'true']") || return
         f.at("./references | ./clause") &&
           @log.add("Style", f, "normative references contains subclauses")
       end
@@ -168,7 +168,7 @@ module Asciidoctor
         "//li[not(p)] | //dt | //dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
 
       NORM_BIBITEMS =
-        "//references[title = 'Normative References']/bibitem".freeze
+        "//references[@normative = 'true']/bibitem".freeze
 
       # ISO/IEC DIR 2, 10.2
       def norm_bibitem_style(root)
