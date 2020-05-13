@@ -2,6 +2,9 @@
 
 	<xsl:output method="xml" encoding="UTF-8" indent="no"/>
 	
+	<xsl:param name="svg_images"/>
+	<xsl:variable name="images" select="document($svg_images)"/>
+	
 	
 
 	<xsl:key name="kfn" match="iso:p/iso:fn" use="@reference"/>
@@ -17,8 +20,9 @@
 	<xsl:variable name="lang-1st-letter_tmp" select="substring-before(substring-after(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-with-lang'], '('), ')')"/>
 	<xsl:variable name="lang-1st-letter" select="concat('(', $lang-1st-letter_tmp , ')')"/>
   
-	<xsl:variable name="ISOname" select="concat(/iso:iso-standard/iso:bibdata/iso:docidentifier, ':', /iso:iso-standard/iso:bibdata/iso:copyright/iso:from , $lang-1st-letter)"/>
-	
+	<!-- <xsl:variable name="ISOname" select="concat(/iso:iso-standard/iso:bibdata/iso:docidentifier, ':', /iso:iso-standard/iso:bibdata/iso:copyright/iso:from , $lang-1st-letter)"/> -->
+	<xsl:variable name="ISOname" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-reference']"/>
+
 	<!-- Information and documentation — Codes for transcription systems  -->
 	<xsl:variable name="title-en" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'main']"/>
 	<xsl:variable name="title-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'main']"/>
@@ -50,6 +54,7 @@
 			<xsl:when test="$stage = 40">DIS</xsl:when>
 			<xsl:when test="$stage = 50">FDIS</xsl:when>
 			<xsl:when test="$stage = 60 and $substage = 0">PRF</xsl:when>
+			<xsl:when test="$stage = 60 and $substage = 60">IS</xsl:when>
 			<xsl:when test="$stage &gt;=60">published</xsl:when>
 			<xsl:otherwise/>
 		</xsl:choose>
@@ -128,6 +133,13 @@
 		<xsl:choose>
 			<xsl:when test="$stage-abbreviation != ''">-publishedISO</xsl:when>
 			<xsl:otherwise/>
+		</xsl:choose>
+	</xsl:variable>
+
+	<xsl:variable name="force-page-count-preface">
+		<xsl:choose>
+			<xsl:when test="$document-master-reference != ''">end-on-even</xsl:when>
+			<xsl:otherwise>no-force</xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
 	
@@ -269,12 +281,22 @@
 					<fo:region-start region-name="left-region" extent="12.5mm"/>
 					<fo:region-end region-name="right-region" extent="25mm"/>
 				</fo:simple-page-master>
+				<fo:simple-page-master master-name="blankpage" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="12.5mm" margin-right="25mm"/>
+					<fo:region-before region-name="header" extent="27.4mm"/>
+					<fo:region-after region-name="footer" extent="13mm"/>
+					<fo:region-start region-name="left" extent="12.5mm"/>
+					<fo:region-end region-name="right" extent="25mm"/>
+				</fo:simple-page-master>
 				<fo:page-sequence-master master-name="preface-publishedISO">
 					<fo:repeatable-page-master-alternatives>
+						<fo:conditional-page-master-reference master-reference="blankpage" blank-or-not-blank="blank"/>
 						<fo:conditional-page-master-reference odd-or-even="even" master-reference="even-publishedISO"/>
 						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="odd-publishedISO"/>
 					</fo:repeatable-page-master-alternatives>
 				</fo:page-sequence-master>
+				
+				
 				<fo:page-sequence-master master-name="document-publishedISO">
 					<fo:repeatable-page-master-alternatives>
 						<fo:conditional-page-master-reference master-reference="first-publishedISO" page-position="first"/>
@@ -400,7 +422,9 @@
 															<fo:table-cell display-align="center">
 																<fo:block text-align="right">
 																	<fo:block>Reference number</fo:block>
-																	<fo:block><xsl:value-of select="$ISOname"/></fo:block>
+																	<fo:block>
+																		<xsl:value-of select="$ISOname"/>																		
+																	</fo:block>
 																	<fo:block> </fo:block>
 																	<fo:block> </fo:block>
 																	<fo:block><fo:inline font-size="9pt">©</fo:inline><xsl:value-of select="concat(' ISO ', iso:iso-standard/iso:bibdata/iso:copyright/iso:from)"/></fo:block>
@@ -462,22 +486,22 @@
 														<fo:block> </fo:block>
 													</fo:table-cell>
 													<fo:table-cell>
-														<fo:block>
+														<fo:block font-weight="bold">
 															<xsl:choose>
 																<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on">
-																	<fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on"/></fo:inline>
+																	<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on"/>
 																</xsl:when>
-																<xsl:otherwise><fo:inline font-weight="bold">XXXX</fo:inline>-xx-xx</xsl:otherwise>
+																<xsl:otherwise>YYYY-MM-DD</xsl:otherwise>
 															</xsl:choose>
 														</fo:block>
 													</fo:table-cell>
 													<fo:table-cell>
-														<fo:block>
+														<fo:block font-weight="bold">
 															<xsl:choose>
 																<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on">
-																	<fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on"/></fo:inline>
+																	<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on"/>
 																</xsl:when>
-																<xsl:otherwise><fo:inline font-weight="bold">XXXX</fo:inline>-xx-xx</xsl:otherwise>
+																<xsl:otherwise>YYYY-MM-DD</xsl:otherwise>
 															</xsl:choose>
 														</fo:block>
 													</fo:table-cell>
@@ -582,14 +606,19 @@
 												<fo:table-row height="42mm">
 													<fo:table-cell number-columns-spanned="3" font-size="10pt" line-height="1.2">
 														<fo:block text-align="right">
-															
 															<xsl:if test="$stage-abbreviation = 'PRF' or                          $stage-abbreviation = 'IS' or                          $stage-abbreviation = 'published'">
 																<xsl:call-template name="printEdition"/>
 															</xsl:if>
-															<xsl:if test="$stage-abbreviation = 'IS' or                          $stage-abbreviation = 'published'">
-																<xsl:value-of select="$linebreak"/>
-																<xsl:value-of select="substring(/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date,1, 7)"/>
-															</xsl:if>
+															<xsl:choose>
+																<xsl:when test="$stage-abbreviation = 'IS'">
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'published']"/>
+																</xsl:when>
+																<xsl:when test="$stage-abbreviation = 'published'">
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="substring(/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date,1, 7)"/>
+																</xsl:when>
+															</xsl:choose>
 															<!-- <xsl:value-of select="$linebreak"/>
 															<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/> -->
 															</fo:block>
@@ -613,20 +642,24 @@
 																			<fo:block margin-bottom="8pt">ISO/TC <fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee/@number"/></fo:inline></fo:block>
 																			<fo:block margin-bottom="6pt">Secretariat: <xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/></fo:block>
 																			<fo:block margin-bottom="6pt">Voting begins on:<xsl:value-of select="$linebreak"/>
-																				<xsl:choose>
-																					<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on">
-																						<fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on"/></fo:inline>
-																					</xsl:when>
-																					<xsl:otherwise><fo:inline font-weight="bold">XXXX</fo:inline>-xx-xx</xsl:otherwise>
-																				</xsl:choose>
+																				<fo:inline font-weight="bold">
+																					<xsl:choose>
+																						<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on">
+																							<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on"/>
+																						</xsl:when>
+																						<xsl:otherwise>YYYY-MM-DD</xsl:otherwise>
+																					</xsl:choose>
+																				</fo:inline>
 																			</fo:block>
 																			<fo:block>Voting terminates on:<xsl:value-of select="$linebreak"/>
-																				<xsl:choose>
-																					<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on">
-																						<fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on"/></fo:inline>
-																					</xsl:when>
-																					<xsl:otherwise><fo:inline font-weight="bold">XXXX</fo:inline>-xx-xx</xsl:otherwise>
-																				</xsl:choose>
+																				<fo:inline font-weight="bold">
+																					<xsl:choose>
+																						<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on">
+																							<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on"/>
+																						</xsl:when>
+																						<xsl:otherwise>YYYY-MM-DD</xsl:otherwise>
+																					</xsl:choose>
+																				</fo:inline>
 																			</fo:block>
 																	</fo:block>
 																</fo:block-container>
@@ -869,12 +902,8 @@
 								
 								<fo:block margin-bottom="100pt">
 									<xsl:text>Secretariat: </xsl:text>
-									<xsl:choose>
-										<xsl:when test="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat">
-											<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/>
-										</xsl:when>
-										<xsl:otherwise>XXXX</xsl:otherwise>
-									</xsl:choose>
+									<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/>
+									<xsl:text> </xsl:text>
 								</fo:block>
 									
 								
@@ -943,7 +972,7 @@
 				</xsl:otherwise>
 			</xsl:choose>	
 			
-			<fo:page-sequence master-reference="preface{$document-master-reference}" format="i" force-page-count="no-force">
+			<fo:page-sequence master-reference="preface{$document-master-reference}" format="i" force-page-count="{$force-page-count-preface}">
 				<xsl:call-template name="insertHeaderFooter">
 					<xsl:with-param name="font-weight">normal</xsl:with-param>
 				</xsl:call-template>
@@ -987,6 +1016,9 @@
 							<fo:block>
 								<xsl:if test="@level = 1">
 									<xsl:attribute name="margin-top">5pt</xsl:attribute>
+								</xsl:if>
+								<xsl:if test="@level = 3">
+									<xsl:attribute name="margin-top">-0.7pt</xsl:attribute>
 								</xsl:if>
 								<fo:list-block>
 									<xsl:attribute name="margin-left"><xsl:value-of select="$margin-left * (@level - 1)"/>mm</xsl:attribute>
@@ -1055,7 +1087,7 @@
 							<xsl:value-of select="$title-en"/>
 						</fo:block>
 						 -->
-						<fo:block font-size="18pt" font-weight="bold" margin-top="12pt" margin-bottom="18pt">
+						<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1">
 							<fo:block>
 								<xsl:if test="normalize-space($title-intro) != ''">
 									<xsl:value-of select="$title-intro"/>
@@ -1067,7 +1099,7 @@
 								<xsl:if test="normalize-space($title-part) != ''">
 									<xsl:if test="$part != ''">
 										<xsl:text> — </xsl:text>
-										<fo:block font-weight="normal" margin-top="12pt">
+										<fo:block font-weight="normal" margin-top="12pt" line-height="1.1">
 											<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
 											<xsl:text>:</xsl:text>
 										</fo:block>
@@ -1088,13 +1120,13 @@
 							<xsl:with-param name="sectionNum" select="'1'"/>
 						</xsl:apply-templates>
 
-						<fo:block space-before="27pt"> </fo:block>
+						<!-- <fo:block space-before="27pt">&#xA0;</fo:block> -->
 						 <!-- Normative references  -->
 						<xsl:apply-templates select="/iso:iso-standard/iso:bibliography/iso:references[1]">
 							<xsl:with-param name="sectionNum" select="'2'"/>
 						</xsl:apply-templates>
 						
-						<fo:block space-before="18pt"> </fo:block>
+						<!-- <fo:block space-before="18pt">&#xA0;</fo:block> -->
 						 <!-- main sections -->
 						<xsl:apply-templates select="/iso:iso-standard/iso:sections/*[position() &gt; 1]">
 							<xsl:with-param name="sectionNumSkew" select="'1'"/>
@@ -1302,8 +1334,6 @@
 		</item>
 	</xsl:template>
 	
-	
-	
 	<xsl:template match="iso:formula" mode="contents">
 		<item level="" id="{@id}" display="false">
 			<xsl:attribute name="section">
@@ -1311,6 +1341,46 @@
 			</xsl:attribute>
 		</item>
 	</xsl:template>
+	
+	<xsl:template match="iso:li" mode="contents">
+		<xsl:param name="sectionNum"/>
+		<item level="" id="{@id}" display="false" type="li">
+			<xsl:attribute name="section">
+				<xsl:call-template name="getListItemFormat"/>
+			</xsl:attribute>
+			<xsl:attribute name="parent_section">
+				<xsl:for-each select="ancestor::*[not(local-name() = 'p' or local-name() = 'ol')][1]">
+					<xsl:call-template name="getSection">
+						<xsl:with-param name="sectionNum" select="$sectionNum"/>
+					</xsl:call-template>
+				</xsl:for-each>
+			</xsl:attribute>
+		</item>
+		<xsl:apply-templates mode="contents">
+			<xsl:with-param name="sectionNum" select="$sectionNum"/>
+		</xsl:apply-templates>
+	</xsl:template>
+
+	<xsl:template name="getListItemFormat">
+		<xsl:choose>
+			<xsl:when test="local-name(..) = 'ul'">—</xsl:when> <!-- dash -->
+			<xsl:otherwise> <!-- for ordered lists -->
+				<xsl:choose>
+					<xsl:when test="../@type = 'arabic'">
+						<xsl:number format="a)"/>
+					</xsl:when>
+					<xsl:when test="../@type = 'alphabet'">
+						<xsl:number format="a)"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:number format="1."/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	
 	<!-- ============================= -->
 	<!-- ============================= -->
 	
@@ -1445,7 +1515,7 @@
 		<xsl:variable name="font-size">
 			<xsl:choose>
 				<xsl:when test="ancestor::iso:annex and $level = 2">13pt</xsl:when>
-				<xsl:when test="ancestor::iso:annex and $level = 3">11pt</xsl:when>
+				<xsl:when test="ancestor::iso:annex and $level = 3">12pt</xsl:when>
 				<xsl:when test="ancestor::iso:preface">16pt</xsl:when>
 				<xsl:when test="$level = 2">12pt</xsl:when>
 				<xsl:when test="$level &gt;= 3">11pt</xsl:when>
@@ -1485,15 +1555,17 @@
 					<xsl:attribute name="margin-top"> <!-- margin-top -->
 						<xsl:choose>
 							<xsl:when test="ancestor::iso:preface">8pt</xsl:when>
-							<xsl:when test="$level = 2 and ancestor::annex">18pt</xsl:when>
-							<xsl:when test="$level = '' or $level = 1">6pt</xsl:when><!-- 13.5pt -->
+							<xsl:when test="$level = 2 and ancestor::iso:annex">18pt</xsl:when>
+							<xsl:when test="$level = 1">18pt</xsl:when>
+							<xsl:when test="$level = ''">6pt</xsl:when><!-- 13.5pt -->
 							<xsl:otherwise>12pt</xsl:otherwise>
 						</xsl:choose>
 					</xsl:attribute>
 					<xsl:attribute name="margin-bottom">
 						<xsl:choose>
 							<xsl:when test="ancestor::iso:preface">18pt</xsl:when>
-							<xsl:otherwise>12pt</xsl:otherwise>
+							<!-- <xsl:otherwise>12pt</xsl:otherwise> -->
+							<xsl:otherwise>8pt</xsl:otherwise>
 						</xsl:choose>
 					</xsl:attribute>
 					<xsl:attribute name="keep-with-next">always</xsl:attribute>		
@@ -1545,10 +1617,12 @@
 				<xsl:choose>
 					<!-- <xsl:when test="ancestor::iso:preface">justify</xsl:when> -->
 					<xsl:when test="@align"><xsl:value-of select="@align"/></xsl:when>
+					<xsl:when test="ancestor::iso:td/@align"><xsl:value-of select="ancestor::iso:td/@align"/></xsl:when>
+					<xsl:when test="ancestor::iso:th/@align"><xsl:value-of select="ancestor::iso:th/@align"/></xsl:when>
 					<xsl:otherwise>justify</xsl:otherwise><!-- left -->
 				</xsl:choose>
 			</xsl:attribute>
-			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 			<xsl:apply-templates/>
 		</xsl:element>
 		<xsl:if test="$element-name = 'fo:inline' and not($inline = 'true') and not(local-name(..) = 'admonition')">
@@ -1562,6 +1636,18 @@
 		<xsl:if test="$inline = 'true'">
 			<fo:block> </fo:block>
 		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="iso:li//iso:p//text()">
+		<xsl:choose>
+			<xsl:when test="contains(., '&#9;')">
+				<fo:inline white-space="pre"><xsl:value-of select="."/></fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
+		
 	</xsl:template>
 	
 	<!--
@@ -1690,7 +1776,17 @@
 	
 	<xsl:template match="iso:figure/iso:image">
 		<fo:block text-align="center">
-			<fo:external-graphic src="{@src}" width="100%" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/> 
+			<xsl:variable name="src">
+				<xsl:choose>
+					<xsl:when test="@mimetype = 'image/svg+xml' and $images/images/image[@id = current()/@id]">
+						<xsl:value-of select="$images/images/image[@id = current()/@id]/@src"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="@src"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>		
+			<fo:external-graphic src="{$src}" width="100%" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>  <!-- src="{@src}" -->
 		</fo:block>
 	</xsl:template>
 	
@@ -1725,14 +1821,14 @@
 			<xsl:variable name="number">
 				<xsl:number level="any" count="iso:bibitem/iso:note"/>
 			</xsl:variable>
-			<fo:inline font-size="85%" keep-with-previous.within-line="always" vertical-align="super"> <!--60% -->
+			<fo:inline font-size="8pt" keep-with-previous.within-line="always" baseline-shift="30%"> <!--85% vertical-align="super"-->
 				<fo:basic-link internal-destination="footnote_{../@id}" fox:alt-text="footnote {$number}">
 					<xsl:value-of select="$number"/><xsl:text>)</xsl:text>
 				</fo:basic-link>
 			</fo:inline>
 			<fo:footnote-body>
-				<fo:block font-size="10pt" margin-bottom="12pt">
-					<fo:inline id="footnote_{../@id}" keep-with-next.within-line="always" alignment-baseline="hanging" padding-right="9mm"><!-- font-size="60%"  -->
+				<fo:block font-size="10pt" margin-bottom="4pt" start-indent="0pt">
+					<fo:inline id="footnote_{../@id}" keep-with-next.within-line="always" alignment-baseline="hanging" padding-right="3mm"><!-- font-size="60%"  -->
 						<xsl:value-of select="$number"/><xsl:text>)</xsl:text>
 					</fo:inline>
 					<xsl:apply-templates/>
@@ -1744,7 +1840,7 @@
 	
 	
 	<xsl:template match="iso:ul | iso:ol">
-		<fo:list-block provisional-distance-between-starts="7mm">
+		<fo:list-block provisional-distance-between-starts="7mm" margin-top="8pt"> <!-- margin-bottom="8pt" -->
 			<xsl:apply-templates/>
 		</fo:list-block>
 		<xsl:for-each select="./iso:note//iso:p">
@@ -1758,22 +1854,7 @@
 		<fo:list-item id="{@id}">
 			<fo:list-item-label end-indent="label-end()">
 				<fo:block>
-					<xsl:choose>
-						<xsl:when test="local-name(..) = 'ul'">—</xsl:when> <!-- dash -->
-						<xsl:otherwise> <!-- for ordered lists -->
-							<xsl:choose>
-								<xsl:when test="../@type = 'arabic'">
-									<xsl:number format="a)"/>
-								</xsl:when>
-								<xsl:when test="../@type = 'alphabet'">
-									<xsl:number format="a)"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:number format="1."/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:otherwise>
-					</xsl:choose>
+					<xsl:call-template name="getListItemFormat"/>
 				</fo:block>
 			</fo:list-item-label>
 			<fo:list-item-body start-indent="body-start()">
@@ -1783,19 +1864,13 @@
 		</fo:list-item>
 	</xsl:template>
 	
-	<xsl:template match="iso:link">
-		<fo:inline>
-			<fo:basic-link external-destination="{@target}" color="blue" text-decoration="underline" fox:alt-text="{@target}">
-				<xsl:choose>
-					<xsl:when test="normalize-space(.) = ''">
-						<xsl:value-of select="@target"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:apply-templates/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</fo:basic-link>
-		</fo:inline>
+	<xsl:template match="iso:term">
+		<xsl:param name="sectionNum"/>
+		<fo:block margin-bottom="10pt">
+			<xsl:apply-templates>
+				<xsl:with-param name="sectionNum" select="$sectionNum"/>
+			</xsl:apply-templates>
+		</fo:block>
 	</xsl:template>
 	
 	<xsl:template match="iso:preferred">
@@ -1803,7 +1878,13 @@
 		<fo:block line-height="1.1">
 			<fo:block font-weight="bold" keep-with-next="always">
 				<fo:inline id="{../@id}">
-					<xsl:value-of select="$sectionNum"/>.<xsl:number count="iso:term"/>
+					<xsl:variable name="section">
+						<xsl:call-template name="getSection">
+							<xsl:with-param name="sectionNum" select="$sectionNum"/>
+						</xsl:call-template>
+					</xsl:variable>
+					<xsl:value-of select="$section"/>
+					<!-- <xsl:value-of select="$sectionNum"/>.<xsl:number count="iso:term"/> -->
 				</fo:inline>
 			</fo:block>
 			<fo:block font-weight="bold" keep-with-next="always">
@@ -1837,14 +1918,17 @@
 	</xsl:template>
 	
 	<xsl:template match="iso:termsource">
-		<fo:block margin-bottom="8pt" keep-with-previous="always">
+		<fo:block margin-bottom="8pt"> <!-- keep-with-previous="always" -->
 			<!-- Example: [SOURCE: ISO 5127:2017, 3.1.6.02] -->
 			<fo:basic-link internal-destination="{iso:origin/@bibitemid}" fox:alt-text="{iso:origin/@citeas}">
 				<xsl:text>[SOURCE: </xsl:text>
 				<xsl:value-of select="iso:origin/@citeas"/>
-				<xsl:if test="iso:origin/iso:locality/iso:referenceFrom">
+				
+				<xsl:apply-templates select="iso:origin/iso:localityStack"/>
+				
+				<!-- <xsl:if test="iso:origin/iso:locality/iso:referenceFrom">
 					<xsl:text>, </xsl:text><xsl:value-of select="iso:origin/iso:locality/iso:referenceFrom"/>
-				</xsl:if>
+				</xsl:if> -->
 			</fo:basic-link>
 			<xsl:apply-templates select="iso:modification"/>
 			<xsl:text>]</xsl:text>
@@ -1860,7 +1944,7 @@
 	</xsl:template>
 	
 	<xsl:template match="iso:termnote">
-		<fo:block font-size="10pt" margin-bottom="12pt">
+		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="8pt" text-align="justify">
 			<xsl:text>Note </xsl:text>
 			<xsl:number/>
 			<xsl:text> to entry: </xsl:text>
@@ -1870,6 +1954,10 @@
 	
 	<xsl:template match="iso:termnote/iso:p">
 		<fo:inline><xsl:apply-templates/></fo:inline>
+		<!-- <xsl:if test="following-sibling::* and not(following-sibling::iso:p)">
+			<xsl:value-of select="$linebreak"/>
+			<xsl:value-of select="$linebreak"/>
+		</xsl:if> -->
 	</xsl:template>
 	
 	<xsl:template match="iso:domain">
@@ -1878,8 +1966,13 @@
 	
 	
 	<xsl:template match="iso:termexample">
-		<fo:block font-size="10pt" margin-bottom="12pt">
-			<fo:inline padding-right="10mm">EXAMPLE</fo:inline>
+		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="8pt" text-align="justify">
+			<fo:inline padding-right="5mm">
+				<xsl:text>EXAMPLE </xsl:text>
+				<xsl:if test="count(ancestor::iso:term[1]//iso:termexample) &gt; 1">
+					<xsl:number/>
+				</xsl:if>
+			</fo:inline>
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template>
@@ -1919,9 +2012,11 @@
 						<xsl:if test="iso:docidentifier">
 							<xsl:choose>
 								<xsl:when test="iso:docidentifier/@type = 'metanorma'"/>
-								<xsl:otherwise><fo:inline><xsl:value-of select="iso:docidentifier"/>, </fo:inline></xsl:otherwise>
+								<xsl:otherwise><fo:inline><xsl:value-of select="iso:docidentifier"/></fo:inline></xsl:otherwise>
 							</xsl:choose>
 						</xsl:if>
+						<xsl:apply-templates select="iso:note"/>
+						<xsl:if test="iso:docidentifier">, </xsl:if>
 						<xsl:choose>
 							<xsl:when test="iso:title[@type = 'main' and @language = 'en']">
 								<xsl:apply-templates select="iso:title[@type = 'main' and @language = 'en']"/>
@@ -1964,10 +2059,7 @@
 	<xsl:template match="iso:source">
 		<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
 			<xsl:value-of select="@citeas" disable-output-escaping="yes"/>
-			<xsl:if test="iso:locality">
-				<xsl:text>, </xsl:text>
-				<xsl:apply-templates select="iso:locality"/>
-			</xsl:if>
+			<xsl:apply-templates select="iso:localityStack"/>
 		</fo:basic-link>
 	</xsl:template>
 	
@@ -1980,10 +2072,14 @@
 	</xsl:template>
 	
 	<xsl:template match="iso:appendix//iso:example">
-		<fo:block font-size="10pt" margin-bottom="12pt">
-			<xsl:text>EXAMPLE</xsl:text>
+		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="8pt">
+			<xsl:variable name="claims_id" select="ancestor::iso:clause[1]/@id"/>
+			<xsl:text>EXAMPLE </xsl:text>
+			<xsl:if test="count(ancestor::iso:clause[1]//iso:example) &gt; 1">
+					<xsl:number count="iso:example[ancestor::iso:clause[@id = $claims_id]]" level="any"/><xsl:text> </xsl:text>
+				</xsl:if>
 			<xsl:if test="iso:name">
-				<xsl:text> — </xsl:text><xsl:apply-templates select="iso:name" mode="process"/>
+				<xsl:text>— </xsl:text><xsl:apply-templates select="iso:name" mode="process"/>
 			</xsl:if>
 		</fo:block>
 		<xsl:apply-templates/>
@@ -2034,17 +2130,35 @@
 	</xsl:template>
 	
 	<xsl:template match="iso:xref">
+		<xsl:param name="sectionNum"/>
+		
 		<xsl:variable name="target" select="normalize-space(@target)"/>
 		<fo:basic-link internal-destination="{$target}" fox:alt-text="{$target}">
 			<xsl:variable name="section" select="xalan:nodeset($contents)//item[@id = $target]/@section"/>
-			<xsl:if test="not(starts-with($section, 'Figure') or starts-with($section, 'Table'))">
+			<!-- <xsl:if test="not(starts-with($section, 'Figure') or starts-with($section, 'Table'))"> -->
 				<xsl:attribute name="color">blue</xsl:attribute>
 				<xsl:attribute name="text-decoration">underline</xsl:attribute>
-			</xsl:if>
+			<!-- </xsl:if> -->
 			<xsl:variable name="type" select="xalan:nodeset($contents)//item[@id = $target]/@type"/>
 			<xsl:variable name="root" select="xalan:nodeset($contents)//item[@id =$target]/@root"/>
+			<xsl:variable name="level" select="xalan:nodeset($contents)//item[@id =$target]/@level"/>
 			<xsl:choose>
-				<xsl:when test="$type = 'clause' and $root != 'annex'">Clause </xsl:when><!-- and not (ancestor::annex) -->
+				<xsl:when test="$type = 'clause' and $root != 'annex' and $level = 1">Clause </xsl:when><!-- and not (ancestor::annex) -->
+				<xsl:when test="$type = 'li'">
+					<xsl:attribute name="color">black</xsl:attribute>
+					<xsl:attribute name="text-decoration">none</xsl:attribute>
+					<xsl:variable name="parent_section" select="xalan:nodeset($contents)//item[@id =$target]/@parent_section"/>
+					<xsl:variable name="currentSection">
+						<xsl:call-template name="getSection"/>
+					</xsl:variable>
+					<xsl:if test="not(contains($parent_section, $currentSection))">
+						<fo:basic-link internal-destination="{$target}" fox:alt-text="{$target}">
+							<xsl:attribute name="color">blue</xsl:attribute>
+							<xsl:attribute name="text-decoration">underline</xsl:attribute>
+							<xsl:value-of select="$parent_section"/><xsl:text> </xsl:text>
+						</fo:basic-link>
+					</xsl:if>
+				</xsl:when>
 				<xsl:otherwise/> <!-- <xsl:value-of select="$type"/> -->
 			</xsl:choose>
 			<xsl:value-of select="$section"/>
@@ -2064,20 +2178,35 @@
 	</xsl:template>
 	
 	<xsl:template match="iso:example/iso:p">
-		<fo:block font-size="10pt">
-			<fo:inline padding-right="9mm">EXAMPLE</fo:inline>
+		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="8pt">
+			<!-- <xsl:if test="ancestor::iso:li">
+				<xsl:attribute name="font-size">11pt</xsl:attribute>
+			</xsl:if> -->
+			<xsl:variable name="claims_id" select="ancestor::iso:clause[1]/@id"/>
+			<fo:inline padding-right="5mm">
+				<xsl:text>EXAMPLE </xsl:text>
+				<xsl:if test="count(ancestor::iso:clause[1]//iso:example) &gt; 1">
+					<xsl:number count="iso:example[ancestor::iso:clause[@id = $claims_id]]" level="any"/>
+				</xsl:if>
+			</fo:inline>
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template>
 	
 	<xsl:template match="iso:note/iso:p" name="note">
-		<fo:block font-size="10pt" margin-bottom="12pt">
-			<fo:inline padding-right="6mm">NOTE</fo:inline>
+		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="12pt" text-align="justify">
+			<xsl:variable name="claims_id" select="ancestor::iso:clause[1]/@id"/>
+			<fo:inline padding-right="6mm">
+				<xsl:text>NOTE </xsl:text>
+				<xsl:if test="count(ancestor::iso:clause[1]//iso:note) &gt; 1">
+					<xsl:number count="iso:note[ancestor::iso:clause[@id = $claims_id]]" level="any"/>
+				</xsl:if>
+			</fo:inline>
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template>
 
-	<!-- <eref type="inline" bibitemid="ISO20483" citeas="ISO 20483:2013"><locality type="annex"><referenceFrom>C</referenceFrom></locality></eref> -->
+	<!-- <eref type="inline" bibitemid="IEC60050-113" citeas="IEC 60050-113:2011"><localityStack><locality type="clause"><referenceFrom>113-01-12</referenceFrom></locality></localityStack></eref> -->
 	<xsl:template match="iso:eref">
 		<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}"> <!-- font-size="9pt" color="blue" vertical-align="super" -->
 			<xsl:if test="@type = 'footnote'">
@@ -2086,30 +2215,32 @@
 				<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
 				<xsl:attribute name="vertical-align">super</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="@type = 'inline'">
+			<!-- <xsl:if test="@type = 'inline'">
 				<xsl:attribute name="color">blue</xsl:attribute>
 				<xsl:attribute name="text-decoration">underline</xsl:attribute>
-			</xsl:if>
-			<!-- <xsl:if test="@type = 'inline'">
-				<xsl:attribute name="text-decoration">underline</xsl:attribute>
 			</xsl:if> -->
-			<xsl:value-of select="@citeas" disable-output-escaping="yes"/>
-			<xsl:if test="iso:locality">
-				<xsl:text>, </xsl:text>
-				<!-- <xsl:choose>
-						<xsl:when test="iso:locality/@type = 'section'">Section </xsl:when>
-						<xsl:when test="iso:locality/@type = 'clause'">Clause </xsl:when>
-						<xsl:otherwise></xsl:otherwise>
-					</xsl:choose> -->
-					<xsl:apply-templates select="iso:locality"/>
-			</xsl:if>
+			
+			<xsl:choose>
+				<xsl:when test="@citeas and normalize-space(text()) = ''">
+					<xsl:value-of select="@citeas" disable-output-escaping="yes"/>
+				</xsl:when>
+				<xsl:when test="@bibitemid and normalize-space(text()) = ''">
+					<xsl:value-of select="//iso:bibitem[@id = current()/@bibitemid]/iso:docidentifier"/>
+				</xsl:when>
+				<xsl:otherwise/>
+			</xsl:choose>
+			<xsl:apply-templates select="iso:localityStack"/>
+			<xsl:apply-templates select="text()"/>
 		</fo:basic-link>
 	</xsl:template>
 	
 	<xsl:template match="iso:locality">
 		<xsl:choose>
+			<xsl:when test="ancestor::iso:termsource"/>
+			<xsl:when test="@type ='clause' and ancestor::iso:eref"/>
 			<xsl:when test="@type ='clause'">Clause </xsl:when>
 			<xsl:when test="@type ='annex'">Annex </xsl:when>
+			<xsl:when test="@type ='table'">Table </xsl:when>
 			<xsl:otherwise><xsl:value-of select="@type"/></xsl:otherwise>
 		</xsl:choose>
 		<xsl:text> </xsl:text><xsl:value-of select="iso:referenceFrom"/>
@@ -2300,7 +2431,7 @@
 						</xsl:when>
 						<xsl:when test="$level &gt;= 2">
 							<xsl:variable name="num">
-								<xsl:number format=".1" level="multiple" count="iso:clause/iso:clause | iso:clause/iso:terms | iso:terms/iso:term | iso:clause/iso:term"/>
+								<xsl:number format=".1" level="multiple" count="iso:clause/iso:clause |                                            iso:clause/iso:terms |                                            iso:terms/iso:term |                                            iso:clause/iso:term |                                             iso:terms/iso:clause |                                           iso:terms/iso:definitions |                                           iso:definitions/iso:clause |                                           iso:clause/iso:definitions"/>
 							</xsl:variable>
 							<xsl:value-of select="concat($sectionNum, $num)"/>
 						</xsl:when>
@@ -2321,12 +2452,13 @@
 					</xsl:choose>
 				</xsl:when> -->
 				<xsl:when test="ancestor::iso:annex">
+					<xsl:variable name="annexid" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:annexid)"/>
 					<xsl:choose>
 						<xsl:when test="$level = 1">
 							<xsl:text>Annex </xsl:text>
 							<xsl:choose>
-								<xsl:when test="count(//iso:annex) = 1">
-									<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:annexid"/>
+								<xsl:when test="count(//iso:annex) = 1 and $annexid != ''">
+									<xsl:value-of select="$annexid"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:number format="A" level="any" count="iso:annex"/>
@@ -2334,9 +2466,10 @@
 							</xsl:choose>
 						</xsl:when>
 						<xsl:otherwise>
+							<xsl:variable name="annexid" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:annexid)"/>
 							<xsl:choose>
-								<xsl:when test="count(//iso:annex) = 1">
-									<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:annexid"/><xsl:number format=".1" level="multiple" count="iso:clause"/>
+								<xsl:when test="count(//iso:annex) = 1 and $annexid != ''">
+									<xsl:value-of select="$annexid"/><xsl:number format=".1" level="multiple" count="iso:clause"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:number format="A.1" level="multiple" count="iso:annex | iso:clause"/>
@@ -3051,11 +3184,17 @@
 		<xsl:if test="$edition != ''"><xsl:text> edition</xsl:text></xsl:if>
 	</xsl:template>
 	
-<xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="linebreak" select="'&#8232;'"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="text()">
+<xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="linebreak" select="'&#8232;'"/><xsl:attribute-set xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" name="link-style">
+		
+			<xsl:attribute name="color">blue</xsl:attribute>
+			<xsl:attribute name="text-decoration">underline</xsl:attribute>
+		
+		
+	</xsl:attribute-set><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="text()">
 		<xsl:value-of select="."/>
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='br']">
 		<xsl:value-of select="$linebreak"/>
-	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='td']//text() | *[local-name()='th']//text()" priority="1">
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='td']//text() | *[local-name()='th']//text() | *[local-name()='dt']//text() | *[local-name()='dd']//text()" priority="1">
 		<xsl:call-template name="add-zero-spaces"/>
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']">
 	
@@ -3071,9 +3210,9 @@
 	
 		<!-- <xsl:variable name="namespace" select="substring-before(name(/*), '-')"/> -->
 		
-		
-			<fo:block space-before="6pt"> </fo:block>				
-		
+		<!-- <xsl:if test="$namespace = 'iso'">
+			<fo:block space-before="6pt">&#xA0;</fo:block>				
+		</xsl:if> -->
 		
 		<xsl:choose>
 			<xsl:when test="@unnumbered = 'true'"/>
@@ -3082,6 +3221,10 @@
 				
 				
 					<fo:block font-weight="bold" text-align="center" margin-bottom="6pt" keep-with-next="always">
+						
+							<xsl:attribute name="margin-top">12pt</xsl:attribute>
+						
+						
 						
 						
 						
@@ -3094,7 +3237,10 @@
 							</xsl:when>
 							<xsl:when test="ancestor::*[local-name()='annex']">
 								
-									<xsl:number format="A." count="*[local-name()='annex']"/><xsl:number format="1"/>
+									<xsl:variable name="annex-id" select="ancestor::iso:annex/@id"/>
+									<xsl:number format="A." count="*[local-name()='annex']"/><xsl:number format="1" level="any" count="iso:table[(not(@unnumbered) or @unnumbered != 'true') and ancestor::iso:annex[@id = $annex-id]]"/>
+								
+								
 								
 								
 								
@@ -3154,11 +3300,11 @@
 			</xsl:call-template>
 		</xsl:variable>
 		
-		<xsl:variable name="colwidths2">
+		<!-- <xsl:variable name="colwidths2">
 			<xsl:call-template name="calculate-column-widths">
 				<xsl:with-param name="cols-count" select="$cols-count"/>
 			</xsl:call-template>
-		</xsl:variable>
+		</xsl:variable> -->
 		
 		<!-- cols-count=<xsl:copy-of select="$cols-count"/>
 		colwidthsNew=<xsl:copy-of select="$colwidths"/>
@@ -3178,11 +3324,20 @@
 			
 			
 			
+			
+				<xsl:attribute name="margin-left">0mm</xsl:attribute>
+				<xsl:attribute name="margin-right">0mm</xsl:attribute>
+				<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+			
 			<fo:table id="{@id}" table-layout="fixed" width="100%" margin-left="{$margin-left}mm" margin-right="{$margin-left}mm" table-omit-footer-at-break="true">
 				
 					<xsl:attribute name="border">1.5pt solid black</xsl:attribute>
 				
 				
+				
+				
+					<xsl:attribute name="margin-left">0mm</xsl:attribute>
+					<xsl:attribute name="margin-right">0mm</xsl:attribute>
 				
 				
 				
@@ -3204,6 +3359,9 @@
 				</xsl:for-each>
 				<xsl:apply-templates/>
 			</fo:table>
+			
+			
+			
 		</fo:block-container>
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']/*[local-name()='name']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table']/*[local-name()='name']" mode="process">
 		<xsl:apply-templates/>
@@ -3257,9 +3415,13 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:for-each select="xalan:nodeset($table)//tr">
+							<xsl:variable name="td_text">
+								<xsl:apply-templates select="td[$curr-col]" mode="td_text"/>
+							</xsl:variable>
 							<xsl:variable name="words">
 								<xsl:call-template name="tokenize">
-									<xsl:with-param name="text" select="translate(td[$curr-col],'- —:', '    ')"/>
+									<!-- <xsl:with-param name="text" select="translate(td[$curr-col],'- —:', '    ')"/> -->
+									<xsl:with-param name="text" select="translate(normalize-space($td_text),'- —:', '    ')"/>
 								</xsl:call-template>
 							</xsl:variable>
 							<xsl:variable name="max_length">
@@ -3300,6 +3462,9 @@
 				<xsl:with-param name="table" select="$table"/>
 			</xsl:call-template>
 		</xsl:if>
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="text()" mode="td_text">
+		<xsl:variable name="zero-space">​</xsl:variable>
+		<xsl:value-of select="translate(., $zero-space, ' ')"/><xsl:text> </xsl:text>
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='table2']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='thead']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='thead']" mode="process">
 		<!-- font-weight="bold" -->
 		<fo:table-header>
@@ -3345,7 +3510,10 @@
 							<!-- fn will be processed inside 'note' processing -->
 							
 							
-							<xsl:apply-templates select="../*[local-name()='note']" mode="process"/>
+							<!-- except gb -->
+							
+								<xsl:apply-templates select="../*[local-name()='note']" mode="process"/>
+							
 							
 							<!-- horizontal row separator -->
 							
@@ -3408,6 +3576,7 @@
 					
 				</xsl:if>
 				
+				
 			<xsl:apply-templates/>
 		</fo:table-row>
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='th']">
@@ -3450,6 +3619,8 @@
 			
 			
 			
+			
+			
 			<xsl:if test="@colspan">
 				<xsl:attribute name="number-columns-spanned">
 					<xsl:value-of select="@colspan"/>
@@ -3485,11 +3656,18 @@
 					<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 				
 				
+				
 				<fo:inline padding-right="2mm">
+					
 					<xsl:text>NOTE </xsl:text>
 					
+						<xsl:variable name="id" select="ancestor::*[local-name() = 'table'][1]/@id"/>
+						<xsl:if test="count(//*[local-name()='note'][ancestor::*[@id = $id]]) &gt; 1">
+							<xsl:number count="*[local-name()='note'][ancestor::*[@id = $id]]" level="any"/>
+						</xsl:if>
+						
 					
-						<xsl:number format="1 "/>
+					
 					
 				</fo:inline>
 				<xsl:apply-templates mode="process"/>
@@ -3516,10 +3694,12 @@
 						<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 					
 					
+					
 					<fo:inline font-size="80%" padding-right="5mm" id="{@id}">
 						
 						
 							<xsl:attribute name="alignment-baseline">hanging</xsl:attribute>
+						
 						
 						
 						
@@ -3613,6 +3793,7 @@
 			
 			
 			
+			
 			<fo:basic-link internal-destination="{@reference}_{ancestor::*[@id][1]/@id}" fox:alt-text="{@reference}"> <!-- @reference   | ancestor::*[local-name()='clause'][1]/@id-->
 				
 				<xsl:value-of select="@reference"/>
@@ -3638,7 +3819,7 @@
 					<fo:block margin-bottom="12pt" text-align="left">
 						
 							<xsl:attribute name="margin-bottom">0</xsl:attribute>
-						
+												
 						<xsl:text>where </xsl:text>
 						<xsl:apply-templates select="*[local-name()='dt']/*"/>
 						<xsl:text/>
@@ -3653,6 +3834,7 @@
 					
 					
 					
+					
 					<xsl:text>where</xsl:text>
 				</fo:block>
 			</xsl:when>
@@ -3661,6 +3843,7 @@
 					
 						<xsl:attribute name="font-size">10pt</xsl:attribute>
 						<xsl:attribute name="margin-bottom">0</xsl:attribute>
+					
 					
 					
 					<xsl:text>Key</xsl:text>
@@ -3675,11 +3858,12 @@
 					<xsl:if test="$parent = 'formula'">
 						<xsl:attribute name="margin-left">4mm</xsl:attribute>
 					</xsl:if>
-				
+					<xsl:attribute name="margin-top">12pt</xsl:attribute>
 				
 				
 				
 				<fo:block>
+					
 					
 					<!-- create virtual html table for dl/[dt and dd] -->
 					<xsl:variable name="html-table">
@@ -3700,6 +3884,7 @@
 					<!-- colwidths=<xsl:value-of select="$colwidths"/> -->
 					
 					<fo:table width="95%" table-layout="fixed">
+						
 						<xsl:choose>
 							<xsl:when test="normalize-space($key_iso) = 'true' and $parent = 'formula'">
 								<!-- <xsl:attribute name="font-size">11pt</xsl:attribute> -->
@@ -3799,6 +3984,9 @@
 			<fo:table-cell>
 				<fo:block margin-top="6pt">
 					
+						<xsl:attribute name="margin-top">0pt</xsl:attribute>
+					
+					
 					<xsl:if test="normalize-space($key_iso) = 'true'">
 						<xsl:attribute name="margin-top">0</xsl:attribute>
 						
@@ -3806,6 +3994,7 @@
 					
 					
 					<xsl:apply-templates/>
+					
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell>
@@ -3824,7 +4013,7 @@
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']"/><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']" mode="process">
 		<xsl:apply-templates/>
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='dd']/*[local-name()='p']" mode="inline">
-		<fo:inline><xsl:apply-templates/></fo:inline>
+		<fo:inline><xsl:text> </xsl:text><xsl:apply-templates/></fo:inline>
 	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='em']">
 		<fo:inline font-style="italic">
 			<xsl:apply-templates/>
@@ -3939,6 +4128,7 @@
 		<xsl:variable name="zero-space-after-dot">.</xsl:variable>
 		<xsl:variable name="zero-space-after-colon">:</xsl:variable>
 		<xsl:variable name="zero-space-after-equal">=</xsl:variable>
+		<xsl:variable name="zero-space-after-underscore">_</xsl:variable>
 		<xsl:variable name="zero-space">​</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="contains($text, $zero-space-after-chars)">
@@ -3971,6 +4161,14 @@
 				<xsl:value-of select="$zero-space"/>
 				<xsl:call-template name="add-zero-spaces">
 					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-equal)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="contains($text, $zero-space-after-underscore)">
+				<xsl:value-of select="substring-before($text, $zero-space-after-underscore)"/>
+				<xsl:value-of select="$zero-space-after-underscore"/>
+				<xsl:value-of select="$zero-space"/>
+				<xsl:call-template name="add-zero-spaces">
+					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-underscore)"/>
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:otherwise>
@@ -4148,5 +4346,41 @@
 			<fo:instream-foreign-object fox:alt-text="Math"> 
 				<xsl:copy-of select="."/>
 			</fo:instream-foreign-object>
+		</fo:inline>
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='localityStack']">
+		<xsl:for-each select="*[local-name()='locality']">
+			<xsl:if test="position() =1"><xsl:text>, </xsl:text></xsl:if>
+			<xsl:apply-templates select="."/>
+			<xsl:if test="position() != last()"><xsl:text>; </xsl:text></xsl:if>
+		</xsl:for-each>
+	</xsl:template><xsl:template xmlns:iec="https://www.metanorma.org/ns/iec" xmlns:itu="https://www.metanorma.org/ns/itu" xmlns:nist="https://www.metanorma.org/ns/nist" xmlns:un="https://www.metanorma.org/ns/un" xmlns:csd="https://www.metanorma.org/ns/csd" xmlns:ogc="https://www.metanorma.org/ns/ogc" match="*[local-name()='link']" name="link">
+		<xsl:variable name="target">
+			<xsl:choose>
+				<xsl:when test="starts-with(normalize-space(@target), 'mailto:')">
+					<xsl:value-of select="normalize-space(substring-after(@target, 'mailto:'))"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="normalize-space(@target)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<fo:inline xsl:use-attribute-sets="link-style">
+			<xsl:choose>
+				<xsl:when test="$target = ''">
+					<xsl:apply-templates/>
+				</xsl:when>
+				<xsl:otherwise>
+					<fo:basic-link external-destination="{@target}" fox:alt-text="{@target}">
+						<xsl:choose>
+							<xsl:when test="normalize-space(.) = ''">
+								<xsl:value-of select="$target"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:apply-templates/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</fo:basic-link>
+				</xsl:otherwise>
+			</xsl:choose>
 		</fo:inline>
 	</xsl:template></xsl:stylesheet>

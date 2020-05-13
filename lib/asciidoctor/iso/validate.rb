@@ -56,8 +56,7 @@ module Asciidoctor
             @log.add("Bibliography", t, "'#{t} is not pointing to a real reference")
             next
           end
-          if target.at("./ancestor::references"\
-              "[title = 'Normative References']")
+          if target.at("./ancestor::references[@normative = 'true']")
             @log.add("Style", t, "'see #{t}' is pointing to a normative reference")
           end
         end
