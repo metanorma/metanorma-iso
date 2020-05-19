@@ -678,8 +678,8 @@ documentation.</p>
 </iso-standard>
     INPUT
     word = File.read("test.html", encoding: "UTF-8")
-    expect(xmlpp(word)).to include "<h1 class='IntroTitle'>Warning for Stuff</h1>"
-    expect(xmlpp(word)).to include "I am the Walrus."
+    expect((word)).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'
+    expect((word)).to include "I am the Walrus."
 end
 
   it "processes boilerplate (Word)" do
