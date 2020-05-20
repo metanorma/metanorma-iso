@@ -263,6 +263,8 @@
         <value>publicly-available-specification</value>
         <value>international-workshop-agreement</value>
         <value>guide</value>
+        <value>amendment</value>
+        <value>technical-corrigendum</value>
       </choice>
     </define>
     <define name="structuredidentifier">

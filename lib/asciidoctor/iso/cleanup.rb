@@ -36,6 +36,7 @@ module Asciidoctor
       end
 
       def id_prefix(prefix, id)
+        return id.text if @amd # we're just inheriting the prefixes from parent doc
         prefix.join("/") + ( id.text.match(%{^/}) ? "" :  " " ) + id.text
       end
 

@@ -53,14 +53,34 @@ module Asciidoctor
       end
 
       def iso_id(node, xml)
-        return unless node.attr("docnumber")
-        part, subpart = node&.attr("partnumber")&.split(/-/)
-        dn = add_id_parts(node.attr("docnumber"), part, subpart)
+        return unless !@amd && node.attr("docnumber") || @amd && node.attr("updates")
+        dn = iso_id1(node)
         dn1 = id_stage_prefix(dn, node, false)
         dn2 = id_stage_prefix(dn, node, true)
         xml.docidentifier dn1, **attr_code(type: "iso")
         xml.docidentifier id_langsuffix(dn1, node), **attr_code(type: "iso-with-lang")
         xml.docidentifier id_langsuffix(dn2, node), **attr_code(type: "iso-reference")
+      end
+
+      def iso_id1(node)
+        if @amd
+          dn = node.attr("updates")
+          return add_amd_parts(dn, node)
+        else
+          part, subpart = node&.attr("partnumber")&.split(/-/)
+          return add_id_parts(node.attr("docnumber"), part, subpart)
+        end
+      end
+
+      def add_amd_parts(dn, node)
+        a = node.attr("amendment-number")
+        c = node.attr("corrigendum-number")
+        case node.attr("doctype")
+        when "amendment"
+          "#{dn}/Amd.#{node.attr('amendment-number')}"
+        when "technical corrigendum"
+          "#{dn}/Cor.#{node.attr('corrigendum-number')}"
+        end
       end
 
       def id_langsuffix(dn, node)
@@ -78,6 +98,8 @@ module Asciidoctor
         super
         structured_id(node, xml)
         xml.stagename stage_name(get_stage(node), get_substage(node))
+        @amd && a = node.attr("updates-document-type") and
+          xml.updates_document_type a
       end
 
       def structured_id(node, xml)
@@ -85,7 +107,8 @@ module Asciidoctor
         part, subpart = node&.attr("partnumber")&.split(/-/)
         xml.structuredidentifier do |i|
           i.project_number node.attr("docnumber"),
-            **attr_code(part: part, subpart: subpart)
+            **attr_code(part: part, subpart: subpart, amendment: node.attr("amendment-number"),
+                        corrigendum: node.attr("corrigendum-number"), origyr: node.attr("created-date"))
         end
       end
 
@@ -98,7 +121,7 @@ module Asciidoctor
       def id_stage_abbr(stage, substage, node)
         IsoDoc::Iso::Metadata.new("en", "Latn", {}).
           status_abbrev(stage_abbr(stage, substage), substage, node.attr("iteration"),
-                       node.attr("draft"))
+                        node.attr("draft"))
       end
 
       def id_stage_prefix(dn, node, force_year)
@@ -106,10 +129,14 @@ module Asciidoctor
         substage = get_substage(node)
         if stage && (stage.to_i < 60)
           abbr = id_stage_abbr(stage, substage, node)
-          dn = "/#{abbr} #{dn}" unless abbr.nil? || abbr.empty? # prefixes added in cleanup
+          unless abbr.nil? || abbr.empty? # prefixes added in cleanup
+            dn = @amd ? dn.sub(/ /, "/#{abbr} ") : "/#{abbr} #{dn}"
+          end
         end
         if force_year || !(stage && (stage.to_i < 60))
-          dn += ":#{node.attr("copyright-year")}" if node.attr("copyright-year")
+          year = @amd ? (node.attr("copyright-year") || node.attr("updated-date").sub(/-.*$/, "")) :
+            node.attr("copyright-year")
+          dn += ":#{year}" if year
         end
         dn
       end
@@ -208,12 +235,21 @@ module Asciidoctor
         end
       end
 
+      def title_amd(node, t, lang, at)
+        return unless node.attr("title-amd-#{lang}")
+        t.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
+          t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(node.attr("title-amd-#{lang}"))
+        end
+      end
+
       def title_full(node, t, lang, at)
         title = node.attr("title-main-#{lang}")
         intro = node.attr("title-intro-#{lang}")
         part = node.attr("title-part-#{lang}")
+        amd = node.attr("title-amd-#{lang}")
         title = "#{intro} -- #{title}" if intro
         title = "#{title} -- #{part}" if part
+        title = "#{title} -- #{amd}" if amd && @amd
         t.title **attr_code(at.merge(type: "main")) do |t1|
           t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(title)
         end
@@ -226,6 +262,7 @@ module Asciidoctor
           title_intro(node, xml, lang, at)
           title_main(node, xml, lang, at)
           title_part(node, xml, lang, at)
+          title_amd(node, xml, lang, at) if @amd
         end
       end
     end

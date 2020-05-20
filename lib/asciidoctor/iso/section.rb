@@ -35,6 +35,18 @@ module Asciidoctor
           xml_section << content
         end
       end
+
+      def section_attributes(node)
+        super.merge(
+          change: @amd ? node.attr("change") : nil,
+          locality: @amd ? node.attr("locality") : nil,
+        )
+      end
+
+      def sectiontype(node, level = true)
+        return nil if @amd
+        super
+      end
     end
   end
 end
