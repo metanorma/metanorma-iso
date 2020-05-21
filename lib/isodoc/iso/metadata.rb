@@ -127,9 +127,9 @@ module IsoDoc
         set(:doctitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
         set(:doctitlepartlabel, part_prefix(partnumber, subpartnumber, "en"))
         set(:doctitlepart, @c.encode(part.text, :hexadecimal)) if part
-        set(:doctitleamdlabel, amd_prefix(amdnumber, "en"))
+        set(:doctitleamdlabel, amd_prefix(amdnumber, "en")) if amdnumber
         set(:doctitleamd, @c.encode(amd.text, :hexadecimal)) if amd
-        set(:doctitlecorrlabel, corr_prefix(corrnumber, "en"))
+        set(:doctitlecorrlabel, corr_prefix(corrnumber, "en")) if corrnumber
       end
 
       def subtitle(isoxml, _out)
@@ -148,9 +148,9 @@ module IsoDoc
         set(:docsubtitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
         set(:docsubtitlepartlabel, part_prefix(partnumber, subpartnumber, "fr"))
         set(:docsubtitlepart, @c.encode(part.text, :hexadecimal)) if part
-        set(:docsubtitleamdlabel, amd_prefix(amdnumber, "fr"))
+        set(:docsubtitleamdlabel, amd_prefix(amdnumber, "fr")) if amdnumber
         set(:docsubtitleamd, @c.encode(amd.text, :hexadecimal)) if amd
-        set(:docsubtitlecorrlabel, corr_prefix(corrnumber, "fr"))
+        set(:docsubtitlecorrlabel, corr_prefix(corrnumber, "fr")) if corrnumber
       end
 
       def author(xml, _out)
