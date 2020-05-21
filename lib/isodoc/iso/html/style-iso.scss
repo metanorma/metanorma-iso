@@ -130,6 +130,17 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
 }
 
+{% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: initial;
+    font-style: italic;
+}
+
+{% endif %}
+
+
 p {
     margin-top: 1em;
     margin-bottom: 1em;

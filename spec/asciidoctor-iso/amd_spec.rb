@@ -73,13 +73,13 @@ end
     INPUT
     #{BLANK_HDR.sub(%r{<doctype>article</doctype>}, "<doctype>amendment</doctype>")}
   <sections>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Foreword</title>
       <p id='_'>Text</p>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Introduction</title>
-      <clause id='_' inline-header='false' obligation='normative'>
+      <clause id='_' obligation='normative'>
         <title>Introduction Subsection</title>
       </clause>
     </clause>
@@ -87,58 +87,58 @@ end
       <title>Scope</title>
       <p id='_'>Text</p>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Acknowledgements</title>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Normative References</title>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Terms and Definitions</title>
-      <clause id='_' inline-header='false' obligation='normative'>
+      <clause id='_' obligation='normative'>
         <title>Term1</title>
       </clause>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
-      <clause id='_' inline-header='false' obligation='normative'>
+      <clause id='_' obligation='normative'>
         <title>Normal Terms</title>
-        <clause id='_' inline-header='false' obligation='normative'>
+        <clause id='_' obligation='normative'>
           <title>Term2</title>
         </clause>
       </clause>
-      <clause id='_' inline-header='false' obligation='normative'>
+      <clause id='_' obligation='normative'>
         <title>Symbols and Abbreviated Terms</title>
       </clause>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Symbols and Abbreviated Terms</title>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Clause 4</title>
-      <clause id='_' inline-header='false' obligation='normative'>
+      <clause id='_' obligation='normative'>
         <title>Introduction</title>
       </clause>
-      <clause id='_' inline-header='false' obligation='normative'>
+      <clause id='_' obligation='normative'>
         <title>Clause 4.2</title>
       </clause>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Terms and Definitions</title>
     </clause>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Bibliography</title>
-      <clause id='_' inline-header='false' obligation='normative'>
+      <clause id='_' obligation='normative'>
         <title>Bibliography Subsection</title>
       </clause>
     </clause>
   </sections>
-  <annex id='_' inline-header='false' obligation='normative'>
+  <annex id='_' obligation='normative'>
     <title>Annex</title>
-    <clause id='_' inline-header='false' obligation='normative'>
+    <clause id='_' obligation='normative'>
       <title>Annex A.1</title>
     </clause>
-    <appendix id='_' inline-header='false' obligation='normative'>
+    <appendix id='_' obligation='normative'>
       <title>Appendix 1</title>
     </appendix>
   </annex>
@@ -150,12 +150,12 @@ OUTPUT
       it "processes section attributes" do
      expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{AMD_BLANK_HDR}
-      [change=delete,locality="clause=introduction,paragraph=4-7"]
+      [change=delete,locality="clause=introduction,paragraph=4-7",inline-header="true"]
       == Clause 1
 
      INPUT
              #{BLANK_HDR.sub(%r{<doctype>article</doctype>}, "<doctype>amendment</doctype>")}
-       <sections><clause id="_" inline-header="false" obligation="normative"  change="delete" locality="clause=introduction,paragraph=4-7">
+       <sections><clause id="_" obligation="normative"  change="delete" locality="clause=introduction,paragraph=4-7">
          <title>Clause 1</title>
        </clause>
        </sections>
@@ -217,14 +217,30 @@ OUTPUT
     INPUT
     <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
   <bibdata type='standard'>
-    <title language='en' format='text/plain' type='main'>Introduction — Main Title — Title — Title Part</title>
+    <title language='en' format='text/plain' type='main'>Introduction — Main Title — Title — Title Part — Mass fraction of
+       extraneous matter, milled rice (nonglutinous), sample dividers and
+       recommendations relating to storage and transport conditions</title>
     <title language='en' format='text/plain' type='title-intro'>Introduction</title>
     <title language='en' format='text/plain' type='title-main'>Main Title — Title</title>
     <title language='en' format='text/plain' type='title-part'>Title Part</title>
-    <title language='fr' format='text/plain' type='main'>Introduction Française — Titre Principal — Part du Titre</title>
+    <title language='en' format='text/plain' type='title-amd'>
+  Mass fraction of extraneous matter, milled rice (nonglutinous), sample
+  dividers and recommendations relating to storage and transport conditions
+</title>
+<title language='fr' format='text/plain' type='main'>
+  Introduction Française — Titre Principal — Part du Titre — Fraction
+  massique de matière étrangère, riz usiné (non gluant), diviseurs
+  d’échantillon et recommandations relatives aux conditions d’entreposage et
+  de transport
+</title>
     <title language='fr' format='text/plain' type='title-intro'>Introduction Française</title>
     <title language='fr' format='text/plain' type='title-main'>Titre Principal</title>
     <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
+    <title language='fr' format='text/plain' type='title-amd'>
+  Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs
+  d’échantillon et recommandations relatives aux conditions d’entreposage et
+  de transport
+</title>
     <docidentifier type='iso'>ISO/PreNWIP3 17301-1:2016/Amd.1</docidentifier>
     <docidentifier type='iso-with-lang'>ISO/PreNWIP3 17301-1:2016/Amd.1(E)</docidentifier>
     <docidentifier type='iso-reference'>ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)</docidentifier>

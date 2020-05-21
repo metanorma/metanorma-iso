@@ -9,6 +9,34 @@ module IsoDoc
         @meta = Metadata.new(lang, script, labels)
       end
 
+      def convert1(docxml, filename, dir)
+        doctype = docxml&.at(ns("//bibdata/ext/doctype"))&.text
+        @amd = %w(amendment technical-corrigendum).include? doctype
+        if @amd
+          @oldsuppressheadingnumbers = @suppressheadingnumbers
+          @suppressheadingnumbers = true
+        end
+        super
+      end
+
+      def annex(isoxml, out)
+        @amd and @suppressheadingnumbers = @oldsuppressheadingnumbers
+        super
+        @amd and @suppressheadingnumbers = true
+      end
+
+      def anchor_names(docxml)
+        if @amd
+          back_anchor_names(docxml)
+          note_anchor_names(docxml.xpath(ns("//annex//table | //annex//figure")))
+          note_anchor_names(docxml.xpath(ns("//annex")))
+          example_anchor_names(docxml.xpath(ns("//annex")))
+          list_anchor_names(docxml.xpath(ns("//annex")))
+        else
+          super
+        end
+      end
+
       def implicit_reference(b)
         b&.at(ns("./docidentifier"))&.text == "IEV"
       end

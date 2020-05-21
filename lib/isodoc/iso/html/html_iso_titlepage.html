@@ -26,7 +26,14 @@ name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
   {% if doctitlepartlabel %}<span class="partlabel">{{ doctitlepartlabel }}: </span>{% endif %}
   <span class="part">{{ doctitlepart }}</span>
   {% endif %}
-</div></div>
+</div>
+{% if doctitleamdlabel %}
+<div class="doctitle-part">{{ doctitleamdlabel }}{% if doctitleamd %}: {{ doctitleamd }}{% endif %}</div>
+{% endif %}
+{% if doctitlecorrlabel %}
+<div class="doctitle-part">{{ doctitlecorrlabel }}</div>
+{% endif %}
+</div>
 
 <div class="doctitle-fr"><div><span class="title">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &mdash; {% endif %}</span><span class="subtitle">{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &mdash;{% endif %}</span>
   {% if docsubtitlepart %}
@@ -34,7 +41,14 @@ name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
   {% if docsubtitlepartlabel %}<span class="partlabel">{{ docsubtitlepartlabel }}: </span>{% endif %}
   <span class="part">{{ docsubtitlepart }}</span>
   {% endif %}
-</div></div>
+</div>
+{% if docsubtitleamdlabel %}
+<div>{{ docsubtitleamdlabel }}{% if docsubtitleamd %}: {{ docsubtitleamd }}{% endif %}</div>
+{% endif %}
+{% if docsubtitlecorrlabel %}
+<div>{{ docsubtitlecorrlabel }}</div>
+{% endif %}
+</div>
 
 <div class="coverpage_docstage">
   {% if unpublished %}
@@ -45,19 +59,5 @@ name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
 {% if unpublished %}
 <div class="coverpage_warning">
   <div id="boilerplate-license-destination"/>
-<!--
-<p>Warning for WDs
-and CDs</p>
-
-<p>This
-document is not an ISO International Standard. It is distributed for review and
-comment. It is subject to change without notice and may not be referred to as
-an International Standard.</p>
-
-<p>Recipients
-of this draft are invited to submit, with their comments, notification of any
-relevant patent rights of which they are aware and to provide supporting
-documentation.</p>
--->
 </div>
 {% endif %}

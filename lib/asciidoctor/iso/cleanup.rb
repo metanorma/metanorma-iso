@@ -117,6 +117,14 @@ module Asciidoctor
           "#{num.nil? ? abbrid : sprintf("%09d", num.to_i)} :: "\
           "#{partid} :: #{id&.text} :: #{title}"
       end
+
+      def sections_cleanup(x)
+        super
+        return unless @amd
+        x.xpath("//*[@inline-header]").each do |h|
+          h.delete('inline-header')
+        end
+      end
     end
   end
 end

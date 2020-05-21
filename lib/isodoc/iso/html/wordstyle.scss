@@ -184,7 +184,12 @@ h1
 	mso-list:l1 level1 lfo6;
 	mso-hyphenate:none;
 	tab-stops:20.0pt list 21.6pt left 28.0pt;
-	font-size:13.0pt;
+        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        font-style: italic ;
+	font-size:11.0pt;
+        {% else %}
+        font-size:13.0pt;
+        {% endif %}
 	mso-bidi-font-size:11.0pt;
 	font-family:$headerfont;
 	mso-fareast-font-family:"SimHei",serif;
@@ -238,8 +243,13 @@ h1.Annex
         mso-outline-level:2;
         mso-hyphenate:none;
         tab-stops:27.0pt 35.0pt;
-        font-size:12.0pt;
+        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        font-style: italic ;
+        font-size:11.0pt;
+        {% else %}
+        font-size:13.0pt;
         font-weight:bold;
+        {% endif %}
         mso-bidi-font-size:11.0pt;
         font-family:$headerfont;
         mso-fareast-font-family:"SimHei",serif;
@@ -266,9 +276,14 @@ h2
 	mso-outline-level:3;
 	mso-hyphenate:none;
 	tab-stops:list 36.0pt left 44.0pt;
-	font-size:11.0pt;
-	font-family:$headerfont;
+        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        font-style: italic ;
+        font-size:11.0pt;
+        {% else %}
+        font-size:13.0pt;
         font-weight:bold;
+        {% endif %}
+	font-family:$headerfont;
 	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -294,7 +309,11 @@ h3      {mso-list:l1 level3 lfo6;}
 	tab-stops:51.05pt 57.0pt 68.0pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
+        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        font-style: italic ;
+        {% else %}
         font-weight:bold;
+        {% endif %}
 	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -320,7 +339,11 @@ h4      {mso-list:l1 level4 lfo6;}
 	tab-stops:51.05pt list 54.0pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
+        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        font-style: italic ;
+        {% else %}
         font-weight:bold;
+        {% endif %}
 	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
@@ -346,7 +369,11 @@ h6
 	tab-stops:51.05pt list 72.0pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
+        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        font-style: italic ;
+        {% else %}
         font-weight:bold;
+        {% endif %}
 	mso-fareast-font-family:"SimHei",serif;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;

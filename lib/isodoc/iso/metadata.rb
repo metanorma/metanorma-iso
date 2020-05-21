@@ -65,6 +65,20 @@ module IsoDoc
         end
       end
 
+      def amd_label(lang)
+        case lang
+        when "en" then "AMENDMENT"
+        when "fr" then "AMENDMENT"
+        end
+      end
+
+      def corr_label(lang)
+        case lang
+        when "en" then "TECHNICAL CORRIGENDUM"
+        when "fr" then "RECTIFICATIF TECHNIQUE"
+        end
+      end
+
       def part_title(part, partnum, subpartnum, lang)
         return "" unless part
         suffix = @c.encode(part.text, :hexadecimal)
@@ -76,6 +90,14 @@ module IsoDoc
       def part_prefix(partnum, subpartnum, lang)
         partnum = "#{partnum}&ndash;#{subpartnum}" if partnum && subpartnum
         "#{part_label(lang)}&nbsp;#{partnum}"
+      end
+
+      def amd_prefix(num, lang)
+        "#{amd_label(lang)}&nbsp;#{num}"
+      end
+
+       def corr_prefix(num, lang)
+        "#{corr_label(lang)}&nbsp;#{num}"
       end
 
       def compose_title(main, intro, part, partnum, subpartnum, lang)
@@ -95,6 +117,9 @@ module IsoDoc
         part = isoxml.at(ns("//bibdata//title[@type='title-part' and @language='en']"))
         partnumber = isoxml.at(ns("//bibdata//project-number/@part"))
         subpartnumber = isoxml.at(ns("//bibdata//project-number/@subpart"))
+        amdnumber = isoxml.at(ns("//bibdata//project-number/@amendment"))
+        corrnumber = isoxml.at(ns("//bibdata//project-number/@corrigendum"))
+        amd = isoxml.at(ns("//bibdata//title[@type='title-amd' and @language='en']"))
 
         set(:doctitlemain, @c.encode(main ? main.text : "", :hexadecimal))
         main = compose_title(main, intro, part, partnumber, subpartnumber, "en")
@@ -102,6 +127,9 @@ module IsoDoc
         set(:doctitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
         set(:doctitlepartlabel, part_prefix(partnumber, subpartnumber, "en"))
         set(:doctitlepart, @c.encode(part.text, :hexadecimal)) if part
+        set(:doctitleamdlabel, amd_prefix(amdnumber, "en"))
+        set(:doctitleamd, @c.encode(amd.text, :hexadecimal)) if amd
+        set(:doctitlecorrlabel, corr_prefix(corrnumber, "en"))
       end
 
       def subtitle(isoxml, _out)
@@ -110,12 +138,19 @@ module IsoDoc
         part = isoxml.at(ns("//bibdata//title[@type='title-part' and @language='fr']"))
         partnumber = isoxml.at(ns("//bibdata//project-number/@part"))
         subpartnumber = isoxml.at(ns("//bibdata//project-number/@subpart"))
+        amdnumber = isoxml.at(ns("//bibdata//project-number/@amendment"))
+        corrnumber = isoxml.at(ns("//bibdata//project-number/@corrigendum"))
+        amd = isoxml.at(ns("//bibdata//title[@type='title-amd' and @language='fr']"))
+
         set(:docsubtitlemain, @c.encode(main ? main.text : "", :hexadecimal))
         main = compose_title(main, intro, part, partnumber, subpartnumber, "fr")
         set(:docsubtitle, main)
         set(:docsubtitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
         set(:docsubtitlepartlabel, part_prefix(partnumber, subpartnumber, "fr"))
         set(:docsubtitlepart, @c.encode(part.text, :hexadecimal)) if part
+        set(:docsubtitleamdlabel, amd_prefix(amdnumber, "fr"))
+        set(:docsubtitleamd, @c.encode(amd.text, :hexadecimal)) if amd
+        set(:docsubtitlecorrlabel, corr_prefix(corrnumber, "fr"))
       end
 
       def author(xml, _out)

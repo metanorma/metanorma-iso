@@ -236,9 +236,9 @@ module Asciidoctor
       end
 
       def title_amd(node, t, lang, at)
-        return unless node.attr("title-amd-#{lang}")
+        return unless node.attr("title-amendment-#{lang}")
         t.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
-          t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(node.attr("title-amd-#{lang}"))
+          t1 << Asciidoctor::Standoc::Utils::asciidoc_sub(node.attr("title-amendment-#{lang}"))
         end
       end
 
@@ -246,7 +246,7 @@ module Asciidoctor
         title = node.attr("title-main-#{lang}")
         intro = node.attr("title-intro-#{lang}")
         part = node.attr("title-part-#{lang}")
-        amd = node.attr("title-amd-#{lang}")
+        amd = node.attr("title-amendment-#{lang}")
         title = "#{intro} -- #{title}" if intro
         title = "#{title} -- #{part}" if part
         title = "#{title} -- #{amd}" if amd && @amd
