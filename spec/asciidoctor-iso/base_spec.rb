@@ -187,13 +187,14 @@ RSpec.describe Asciidoctor::ISO do
       :script: Grek
       :publisher: IEC,IETF,ISO
       :copyright-year: 2001
+      :doctype: technical-report
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="https://www.metanorma.org/ns/iso">
        <bibdata type="standard">
-         <docidentifier type="iso">ISO/IEC/IETF 1000-1-1:2001</docidentifier>
-         <docidentifier type='iso-with-lang'>ISO/IEC/IETF 1000-1-1:2001(X)</docidentifier>
-         <docidentifier type='iso-reference'>ISO/IEC/IETF 1000-1-1:2001(X)</docidentifier>
+         <docidentifier type="iso">ISO/IEC/IETF/TR 1000-1-1:2001</docidentifier>
+         <docidentifier type='iso-with-lang'>ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
+         <docidentifier type='iso-reference'>ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
          <docidentifier type="iso-tc">2003</docidentifier>
          <docnumber>1000</docnumber>
@@ -270,7 +271,7 @@ RSpec.describe Asciidoctor::ISO do
            </owner>
          </copyright>
          <ext>
-         <doctype>article</doctype>
+         <doctype>technical-report</doctype>
          <editorialgroup>
            <technical-committee/>
            <subcommittee/>
@@ -298,12 +299,13 @@ RSpec.describe Asciidoctor::ISO do
       :docnumber: 1000
       :docstage: 50
       :language: fr
+      :doctype: technical-specification
     INPUT
     <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO/FDIS 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO/FDIS 1000(F)</docidentifier>
-  <docidentifier type='iso-reference'>ISO/FDIS 1000(F)</docidentifier>
+  <docidentifier type="iso">ISO/FDTS TS 1000</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO/FDTS TS 1000(F)</docidentifier>
+  <docidentifier type='iso-reference'>ISO/FDTS TS 1000(F)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -323,7 +325,7 @@ RSpec.describe Asciidoctor::ISO do
   <language>fr</language>
   <script>Latn</script>
   <status>
-    <stage abbreviation="FDIS">50</stage>
+    <stage abbreviation="FDTS">50</stage>
     <substage>00</substage>
   </status>
   <copyright>
@@ -336,7 +338,7 @@ RSpec.describe Asciidoctor::ISO do
     </owner>
   </copyright>
   <ext>
-    <doctype>article</doctype>
+    <doctype>technical-specification</doctype>
     <editorialgroup>
       <technical-committee/>
       <subcommittee/>
@@ -345,7 +347,7 @@ RSpec.describe Asciidoctor::ISO do
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
-    <stagename>Final draft international standard</stagename>
+    <stagename>Final draft technical standard</stagename>
   </ext>
 </bibdata>
 <sections/>

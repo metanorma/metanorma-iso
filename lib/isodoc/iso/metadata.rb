@@ -16,8 +16,12 @@ module IsoDoc
       }
       end
 
-      def status_abbrev(stage, substage, iter, draft)
+      def status_abbrev(stage, substage, iter, draft, doctype)
         return "" unless stage
+        if %w(technical-report technical-specification).include?(doctype)
+          stage = "DTS" if stage == "DIS"
+          stage = "FDTS" if stage == "FDIS"
+        end
         stage += iter if iter
         stage = "Pre" + stage if draft =~ /^0\./
         stage
@@ -33,7 +37,8 @@ module IsoDoc
           set(:statusabbr, status_abbrev(docstatus["abbreviation"] || "??",
                                          isoxml&.at(ns("//bibdata/status/substage"))&.text,
                                          isoxml&.at(ns("//bibdata/status/iteration"))&.text,
-                                         isoxml&.at(ns("//version/draft"))&.text))
+                                         isoxml&.at(ns("//version/draft"))&.text,
+                                         isoxml&.at(ns("//bibdata/ext/doctype"))&.text))
           unpublished(docstatus.text) and
             set(:stageabbr, docstatus["abbreviation"])
         end
@@ -96,7 +101,7 @@ module IsoDoc
         "#{amd_label(lang)}&nbsp;#{num}"
       end
 
-       def corr_prefix(num, lang)
+      def corr_prefix(num, lang)
         "#{corr_label(lang)}&nbsp;#{num}"
       end
 

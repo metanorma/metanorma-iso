@@ -33,15 +33,23 @@ module Asciidoctor
         "95": "Withdrawal",
       }.freeze
 
-      def stage_abbr(stage, substage)
+      def stage_abbr(stage, substage, doctype)
         return nil if stage.to_i > 60
         return "PRF" if stage == "60" && substage == "00"
-        STAGE_ABBRS[stage.to_sym]
+        ret = STAGE_ABBRS[stage.to_sym]
+        ret = "DTS" if ret == "DIS" && %w(technical-report technical-specification).include?(doctype)
+        ret = "FDTS" if ret == "FDIS" && %w(technical-report technical-specification).include?(doctype)
+        ret
       end
 
-      def stage_name(stage, substage)
+      def stage_name(stage, substage, doctype)
         return "Proof" if stage == "60" && substage == "00"
-        STAGE_NAMES[stage.to_sym]
+        ret = STAGE_NAMES[stage.to_sym]
+        if %w(technical-report technical-specification).include? doctype
+        ret = "Draft technical standard" if ret == "Draft international standard"
+        ret = "Final draft technical standard" if ret == "Final draft international standard"
+        end
+        ret
       end
 
       def metadata_id(node, xml)
@@ -68,7 +76,7 @@ module Asciidoctor
           return add_amd_parts(dn, node)
         else
           part, subpart = node&.attr("partnumber")&.split(/-/)
-          return add_id_parts(node.attr("docnumber"), part, subpart)
+          dn = add_id_parts(node.attr("docnumber"), part, subpart)
         end
       end
 
@@ -97,7 +105,7 @@ module Asciidoctor
       def metadata_ext(node, xml)
         super
         structured_id(node, xml)
-        xml.stagename stage_name(get_stage(node), get_substage(node))
+        xml.stagename stage_name(get_stage(node), get_substage(node), node.attr("doctype"))
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
       end
@@ -120,18 +128,22 @@ module Asciidoctor
 
       def id_stage_abbr(stage, substage, node)
         IsoDoc::Iso::Metadata.new("en", "Latn", {}).
-          status_abbrev(stage_abbr(stage, substage), substage, node.attr("iteration"),
-                        node.attr("draft"))
+          status_abbrev(stage_abbr(stage, substage, node.attr("doctype")),
+          substage, node.attr("iteration"),
+          node.attr("draft"), node.attr("doctype"))
       end
 
       def id_stage_prefix(dn, node, force_year)
         stage = get_stage(node)
         substage = get_substage(node)
+        typeabbr = get_typeabbr(node)
         if stage && (stage.to_i < 60)
           abbr = id_stage_abbr(stage, substage, node)
           unless abbr.nil? || abbr.empty? # prefixes added in cleanup
-            dn = @amd ? dn.sub(/ /, "/#{abbr} ") : "/#{abbr} #{dn}"
+            dn = @amd ? dn.sub(/ /, "/#{abbr} ") : "/#{abbr} #{typeabbr}#{dn}"
           end
+        elsif typeabbr && !@amd
+          dn = "/#{typeabbr}#{dn}"
         end
         if force_year || !(stage && (stage.to_i < 60))
           year = @amd ? (node.attr("copyright-year") || node.attr("updated-date").sub(/-.*$/, "")) :
@@ -196,11 +208,20 @@ module Asciidoctor
         node.attr("docsubstage") || ( stage == "60" ? "60" : "00" )
       end
 
+      def get_typeabbr(node)
+        case node.attr("doctype")
+        when "technical-report" then "TR "
+        when "technical-specification" then "TS "
+        else
+          nil
+        end
+      end
+
       def metadata_status(node, xml)
         stage = get_stage(node)
         substage = get_substage(node)
         xml.status do |s|
-          s.stage stage, **attr_code(abbreviation: stage_abbr(stage, substage))
+          s.stage stage, **attr_code(abbreviation: stage_abbr(stage, substage, node.attr("doctype")))
           s.substage substage
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end
