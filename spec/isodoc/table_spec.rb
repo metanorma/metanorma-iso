@@ -80,51 +80,51 @@ RSpec.describe IsoDoc do
       </caption>
       <thead>
         <tr>
-          <td rowspan='2' style='text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;padding:0;;text-align:center;vertical-align:middle;' scope='col'>Description</td>
-          <td colspan='4' style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;padding:0;;text-align:center;vertical-align:middle;' scope='colgroup'>Rice sample</td>
+          <td rowspan='2' style='text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>Description</td>
+          <td colspan='4' style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;;text-align:center;vertical-align:middle;' scope='colgroup'>Rice sample</td>
         </tr>
         <tr>
-          <td style='text-align:left;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;;text-align:center;vertical-align:middle;' scope='col'>Arborio</td>
-          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;;text-align:center;vertical-align:middle;' scope='col'>
+          <td style='text-align:left;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>Arborio</td>
+          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>
             Drago
             <a href='#tableD-1a' class='TableFootnoteRef'>a)</a>
           </td>
-          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;;text-align:center;vertical-align:middle;' scope='col'>
+          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>
             Balilla
             <a href='#tableD-1a' class='TableFootnoteRef'>a)</a>
           </td>
-          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;;text-align:center;vertical-align:middle;' scope='col'>Thaibonnet</td>
+          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>Thaibonnet</td>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th style='font-weight:bold;text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;padding:0;' scope='row'>Number of laboratories retained after eliminating outliers</th>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;padding:0;'>13</td>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;padding:0;'>11</td>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;padding:0;'>13</td>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;padding:0;'>13</td>
+          <th style='font-weight:bold;text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;' scope='row'>Number of laboratories retained after eliminating outliers</th>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>13</td>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>11</td>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>13</td>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>13</td>
         </tr>
         <tr>
-          <td style='text-align:left;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;'>Mean value, g/100 g</td>
-          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;'>81,2</td>
-          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;'>82,0</td>
-          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;'>81,8</td>
-          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;padding:0;'>77,7</td>
+          <td style='text-align:left;border-top:none;border-bottom:solid windowtext 1.5pt;'>Mean value, g/100 g</td>
+          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;'>81,2</td>
+          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;'>82,0</td>
+          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;'>81,8</td>
+          <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;'>77,7</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
-          <td style='text-align:left;border-top:solid windowtext 1.5pt;border-bottom:0pt;padding:0;'>
+          <td style='text-align:left;border-top:solid windowtext 1.5pt;border-bottom:0pt;'>
             Reproducibility limit,
             <span class='stem'>(#(R)#)</span>
              (= 2,83
             <span class='stem'>(#(s_R)#)</span>
             )
           </td>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;padding:0;'>2,89</td>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;padding:0;'>0,57</td>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;padding:0;'>2,26</td>
-          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;padding:0;'>6,06</td>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;'>2,89</td>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;'>0,57</td>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;'>2,26</td>
+          <td style='text-align:center;border-top:solid windowtext 1.5pt;border-bottom:0pt;'>6,06</td>
         </tr>
         <tr>
           <td colspan='5' style='border-top:0pt;border-bottom:solid windowtext 1.5pt;'>

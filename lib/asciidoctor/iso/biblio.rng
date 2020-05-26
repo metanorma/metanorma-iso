@@ -88,7 +88,7 @@
       <text/>
     </element>
   </define>
-  <define name="LocalizedString">
+  <define name="LocalizedString1">
     <optional>
       <!-- multiple languages and scripts possible: comma delimit them if so -->
       <attribute name="language"/>
@@ -97,6 +97,16 @@
       <attribute name="script"/>
     </optional>
     <text/>
+  </define>
+  <define name="LocalizedString">
+    <choice>
+      <ref name="LocalizedString1"/>
+      <oneOrMore>
+        <element name="variant">
+          <ref name="LocalizedString1"/>
+        </element>
+      </oneOrMore>
+    </choice>
   </define>
   <!--
     Unlike UML, change type to format: type is overloaded
@@ -121,7 +131,7 @@
     </optional>
     <ref name="LocalizedStringOrXsAny"/>
   </define>
-  <define name="LocalizedStringOrXsAny">
+  <define name="LocalizedStringOrXsAny1">
     <optional>
       <!-- multiple languages and scripts possible: comma delimit them if so -->
       <attribute name="language"/>
@@ -135,6 +145,16 @@
         <ref name="AnyElement"/>
       </choice>
     </oneOrMore>
+  </define>
+  <define name="LocalizedStringOrXsAny">
+    <choice>
+      <ref name="LocalizedStringOrXsAny1"/>
+      <oneOrMore>
+        <element name="variant">
+          <ref name="LocalizedStringOrXsAny1"/>
+        </element>
+      </oneOrMore>
+    </choice>
   </define>
   <define name="contributor">
     <element name="contributor">
