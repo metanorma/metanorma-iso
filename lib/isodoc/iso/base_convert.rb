@@ -219,12 +219,10 @@ module IsoDoc
         ""
       end
 
-      def format_ref(ref, prefix, isopub, date, allparts)
-        ref = ref.sub(/ \(All Parts\)/i, "")
-        ref = docid_prefix(prefix, ref)
-        return "[#{ref}]" if /^\d+$/.match(ref) && !prefix &&
-          !/^\[.*\]$/.match(ref)
-          ref
+      def reference_names(ref)
+        super
+        @anchors[ref["id"]] = { xref: @anchors[ref["id"]][:xref].
+                                sub(/ \(All Parts\)/i, "") }
       end
 
       def table_footnote_reference_format(a)
