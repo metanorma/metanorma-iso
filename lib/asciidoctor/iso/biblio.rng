@@ -1021,7 +1021,9 @@
       <optional>
         <ref name="to"/>
       </optional>
-      <ref name="owner"/>
+      <oneOrMore>
+        <ref name="owner"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="from">
