@@ -9,7 +9,7 @@ require "pp"
 module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
-       STAGE_ABBRS = {
+      STAGE_ABBRS = {
         "00": "PWI",
         "10": "NWIP",
         "20": "WD",
@@ -21,13 +21,25 @@ module Asciidoctor
         "95": "(Withdrawal)",
       }.freeze
 
-       STAGE_NAMES = {
+      STAGE_ABBRS = {
+        "00": "PWI",
+        "10": "NWIP",
+        "20": "WD",
+        "30": "CD",
+        "40": "DIS",
+        "50": "FDIS",
+        "60": "IS",
+        "90": "(Review)",
+        "95": "(Withdrawal)",
+      }.freeze
+
+      STAGE_NAMES = {
         "00": "Preliminary work item",
         "10": "New work item proposal",
         "20": "Working draft",
         "30": "Committee draft",
-        "40": "Draft international standard",
-        "50": "Final draft international standard",
+        "40": "Draft",
+        "50": "Final draft",
         "60": "International standard",
         "90": "Review",
         "95": "Withdrawal",
@@ -35,20 +47,21 @@ module Asciidoctor
 
       def stage_abbr(stage, substage, doctype)
         return nil if stage.to_i > 60
-        return "PRF" if stage == "60" && substage == "00"
         ret = STAGE_ABBRS[stage.to_sym]
-        ret = "DTS" if ret == "DIS" && %w(technical-report technical-specification).include?(doctype)
-        ret = "FDTS" if ret == "FDIS" && %w(technical-report technical-specification).include?(doctype)
+        ret = "PRF" if stage == "60" && substage == "00"
+        if %w(amendment technical-corrigendum technical-report technical-specification).include?(doctype)
+          ret = "NP" if stage == "10"
+          ret = "AWI" if stage == "10" && substage == "99"
+          ret = "D" if stage == "40" and doctype == "amendment"
+          ret = "FD" if stage == "50" and %w(amendment technical-corrigendum).include?(doctype)
+          ret = "D" if stage == "50" and %w(technical-report technical-specification).include?(doctype)
+        end
         ret
       end
 
       def stage_name(stage, substage, doctype)
         return "Proof" if stage == "60" && substage == "00"
         ret = STAGE_NAMES[stage.to_sym]
-        if %w(technical-report technical-specification).include? doctype
-        ret = "Draft technical standard" if ret == "Draft international standard"
-        ret = "Final draft technical standard" if ret == "Final draft international standard"
-        end
         ret
       end
 
@@ -85,8 +98,8 @@ module Asciidoctor
         c = node.attr("corrigendum-number")
         case node.attr("doctype")
         when "amendment"
-          "#{dn}/Amd.#{node.attr('amendment-number')}"
-        when "technical corrigendum"
+          "#{dn}/Amd #{node.attr('amendment-number')}"
+        when "technical-corrigendum"
           "#{dn}/Cor.#{node.attr('corrigendum-number')}"
         end
       end
@@ -119,10 +132,14 @@ module Asciidoctor
       end
 
       def id_stage_abbr(stage, substage, node)
-        IsoDoc::Iso::Metadata.new("en", "Latn", {}).
+        ret = IsoDoc::Iso::Metadata.new("en", "Latn", {}).
           status_abbrev(stage_abbr(stage, substage, node.attr("doctype")),
-          substage, node.attr("iteration"),
-          node.attr("draft"), node.attr("doctype"))
+                        substage, node.attr("iteration"),
+                        node.attr("draft"), node.attr("doctype"))
+        if %w(amendment technical-corrigendum amendment technical-corrigendum).include?(node.attr("doctype"))
+          ret = ret + " " unless %w(40 50).include?(stage)
+        end
+        ret
       end
 
       def id_stage_prefix(dn, node, force_year)
@@ -132,13 +149,19 @@ module Asciidoctor
         if stage && (stage.to_i < 60)
           abbr = id_stage_abbr(stage, substage, node)
           unless abbr.nil? || abbr.empty? # prefixes added in cleanup
-            dn = @amd ? dn.sub(/ /, "/#{abbr} ") : "/#{abbr} #{typeabbr}#{dn}"
+            dn = if @amd
+                   a = dn.split(%r{/})
+                   a[-1] = "#{abbr}#{a[-1]}"
+                   a.join("/")
+                 else
+                   "/#{abbr}#{typeabbr} #{dn}"
+                 end
           end
         elsif typeabbr && !@amd
           dn = "/#{typeabbr}#{dn}"
         end
         if force_year || !(stage && (stage.to_i < 60))
-          year = @amd ? (node.attr("copyright-year") || node.attr("updated-date").sub(/-.*$/, "")) :
+          year = @amd ? (node.attr("copyright-year") || node.attr("updated-date")&.sub(/-.*$/, "")) :
             node.attr("copyright-year")
           dn += ":#{year}" if year
         end

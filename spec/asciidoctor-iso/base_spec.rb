@@ -303,9 +303,9 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
     <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO/FDTS TS 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO/FDTS TS 1000(F)</docidentifier>
-  <docidentifier type='iso-reference'>ISO/FDTS TS 1000(F)</docidentifier>
+  <docidentifier type="iso">ISO/DTS 1000</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO/DTS 1000(F)</docidentifier>
+  <docidentifier type='iso-reference'>ISO/DTS 1000(F)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -325,7 +325,7 @@ RSpec.describe Asciidoctor::ISO do
   <language>fr</language>
   <script>Latn</script>
   <status>
-    <stage abbreviation="FDTS">50</stage>
+    <stage abbreviation="D">50</stage>
     <substage>00</substage>
   </status>
   <copyright>
@@ -347,7 +347,7 @@ RSpec.describe Asciidoctor::ISO do
     <structuredidentifier>
       <project-number>ISO 1000</project-number>
     </structuredidentifier>
-    <stagename>Final draft technical standard</stagename>
+    <stagename>Final draft</stagename>
   </ext>
 </bibdata>
 <sections/>

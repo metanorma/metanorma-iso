@@ -241,9 +241,9 @@ OUTPUT
   d’échantillon et recommandations relatives aux conditions d’entreposage et
   de transport
 </title>
-    <docidentifier type='iso'>ISO/PreNWIP3 17301-1:2016/Amd.1</docidentifier>
-    <docidentifier type='iso-with-lang'>ISO/PreNWIP3 17301-1:2016/Amd.1(E)</docidentifier>
-    <docidentifier type='iso-reference'>ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)</docidentifier>
+    <docidentifier type='iso'>ISO 17301-1:2016/PreNP3 Amd 1</docidentifier>
+    <docidentifier type='iso-with-lang'>ISO 17301-1:2016/PreNP3 Amd 1(E)</docidentifier>
+    <docidentifier type='iso-reference'>ISO 17301-1:2016/PreNP3 Amd 1:2017(E)</docidentifier>
     <docnumber>17301</docnumber>
     <date type='created'>
       <on>2016-05-01</on>
@@ -270,7 +270,7 @@ OUTPUT
     <language>en</language>
     <script>Latn</script>
     <status>
-      <stage abbreviation='NWIP'>10</stage>
+      <stage abbreviation='NP'>10</stage>
       <substage>20</substage>
       <iteration>3</iteration>
     </status>
@@ -314,5 +314,413 @@ OUTPUT
 </iso-standard>
 OUTPUT
   end
+
+    it "processes metadata, amendment" do
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+= Document title
+Author
+:docfile: test.adoc
+:nodoc:
+:novalid:
+:no-isobib:
+:docnumber: 17301
+:partnumber: 1
+:doctype: amendment
+:docstage: 30
+:updates: ISO 17301-1:2030
+:amendment-number: 1
+INPUT
+ <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+   <bibdata type='standard'>
+     <docidentifier type='iso'>ISO 17301-1:2030/CD Amd 1</docidentifier>
+     <docidentifier type='iso-with-lang'>ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
+     <docidentifier type='iso-reference'>ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
+     <docnumber>17301</docnumber>
+     <contributor>
+       <role type='author'/>
+       <organization>
+         <name>International Organization for Standardization</name>
+         <abbreviation>ISO</abbreviation>
+       </organization>
+     </contributor>
+     <contributor>
+       <role type='publisher'/>
+       <organization>
+         <name>International Organization for Standardization</name>
+         <abbreviation>ISO</abbreviation>
+       </organization>
+     </contributor>
+     <language>en</language>
+     <script>Latn</script>
+     <status>
+       <stage abbreviation='CD'>30</stage>
+       <substage>00</substage>
+     </status>
+     <copyright>
+       <from>2020</from>
+       <owner>
+         <organization>
+           <name>International Organization for Standardization</name>
+           <abbreviation>ISO</abbreviation>
+         </organization>
+       </owner>
+     </copyright>
+     <ext>
+       <doctype>amendment</doctype>
+       <editorialgroup>
+         <technical-committee/>
+         <subcommittee/>
+         <workgroup/>
+       </editorialgroup>
+       <structuredidentifier>
+         <project-number part='1' amendment='1'>17301</project-number>
+       </structuredidentifier>
+       <stagename>Committee draft</stagename>
+     </ext>
+   </bibdata>
+   <sections/>
+ </iso-standard>
+OUTPUT
+  end
+
+    it "processes metadata, amendment" do
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+= Document title
+Author
+:docfile: test.adoc
+:nodoc:
+:novalid:
+:no-isobib:
+:docnumber: 17301
+:partnumber: 1
+:doctype: amendment
+:docstage: 40
+:updates: ISO 17301-1:2030
+:amendment-number: 1
+INPUT
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+         <bibdata type='standard'>
+           <docidentifier type='iso'>ISO 17301-1:2030/DAmd 1</docidentifier>
+           <docidentifier type='iso-with-lang'>ISO 17301-1:2030/DAmd 1(E)</docidentifier>
+           <docidentifier type='iso-reference'>ISO 17301-1:2030/DAmd 1(E)</docidentifier>
+           <docnumber>17301</docnumber>
+           <contributor>
+             <role type='author'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type='publisher'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <language>en</language>
+           <script>Latn</script>
+           <status>
+             <stage abbreviation='D'>40</stage>
+             <substage>00</substage>
+           </status>
+           <copyright>
+             <from>2020</from>
+             <owner>
+               <organization>
+                 <name>International Organization for Standardization</name>
+                 <abbreviation>ISO</abbreviation>
+               </organization>
+             </owner>
+           </copyright>
+           <ext>
+             <doctype>amendment</doctype>
+             <editorialgroup>
+               <technical-committee/>
+               <subcommittee/>
+               <workgroup/>
+             </editorialgroup>
+             <structuredidentifier>
+               <project-number part='1' amendment='1'>17301</project-number>
+             </structuredidentifier>
+             <stagename>Draft</stagename>
+           </ext>
+         </bibdata>
+         <sections/>
+       </iso-standard>
+OUTPUT
+  end
+
+      it "processes metadata, amendment" do
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+= Document title
+Author
+:docfile: test.adoc
+:nodoc:
+:novalid:
+:no-isobib:
+:docnumber: 17301
+:partnumber: 1
+:doctype: amendment
+:updates: ISO 17301-1:2030
+:amendment-number: 1
+INPUT
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+         <bibdata type='standard'>
+           <docidentifier type='iso'>ISO 17301-1:2030/Amd 1</docidentifier>
+           <docidentifier type='iso-with-lang'>ISO 17301-1:2030/Amd 1(E)</docidentifier>
+           <docidentifier type='iso-reference'>ISO 17301-1:2030/Amd 1(E)</docidentifier>
+           <docnumber>17301</docnumber>
+           <contributor>
+             <role type='author'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type='publisher'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <language>en</language>
+           <script>Latn</script>
+           <status>
+             <stage abbreviation='IS'>60</stage>
+             <substage>60</substage>
+           </status>
+           <copyright>
+             <from>2020</from>
+             <owner>
+               <organization>
+                 <name>International Organization for Standardization</name>
+                 <abbreviation>ISO</abbreviation>
+               </organization>
+             </owner>
+           </copyright>
+           <ext>
+             <doctype>amendment</doctype>
+             <editorialgroup>
+               <technical-committee/>
+               <subcommittee/>
+               <workgroup/>
+             </editorialgroup>
+             <structuredidentifier>
+               <project-number part='1' amendment='1'>17301</project-number>
+             </structuredidentifier>
+             <stagename>International standard</stagename>
+           </ext>
+         </bibdata>
+         <sections/>
+       </iso-standard>
+OUTPUT
+  end
+
+  it "processes metadata, corrigendum" do
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+= Document title
+Author
+:docfile: test.adoc
+:nodoc:
+:novalid:
+:no-isobib:
+:docnumber: 17301
+:partnumber: 1
+:doctype: technical-corrigendum
+:docstage: 30
+:updates: ISO 17301-1:2030
+:corrigendum-number: 3
+INPUT
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+  <bibdata type='standard'>
+    <docidentifier type='iso'>ISO 17301-1:2030/CD Cor.3</docidentifier>
+    <docidentifier type='iso-with-lang'>ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
+    <docidentifier type='iso-reference'>ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
+    <docnumber>17301</docnumber>
+    <contributor>
+      <role type='author'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type='publisher'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </contributor>
+    <language>en</language>
+    <script>Latn</script>
+    <status>
+      <stage abbreviation='CD'>30</stage>
+      <substage>00</substage>
+    </status>
+    <copyright>
+      <from>2020</from>
+      <owner>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+      <doctype>technical-corrigendum</doctype>
+      <editorialgroup>
+        <technical-committee/>
+        <subcommittee/>
+        <workgroup/>
+      </editorialgroup>
+      <structuredidentifier>
+        <project-number part='1' corrigendum='3'>17301</project-number>
+      </structuredidentifier>
+      <stagename>Committee draft</stagename>
+    </ext>
+  </bibdata>
+  <sections/>
+</iso-standard>
+OUTPUT
+  end
+
+    it "processes metadata, corrigendum" do
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+= Document title
+Author
+:docfile: test.adoc
+:nodoc:
+:novalid:
+:no-isobib:
+:docnumber: 17301
+:partnumber: 1
+:doctype: technical-corrigendum
+:docstage: 50
+:updates: ISO 17301-1:2030
+:corrigendum-number: 3
+INPUT
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+  <bibdata type='standard'>
+    <docidentifier type='iso'>ISO 17301-1:2030/FDCor.3</docidentifier>
+    <docidentifier type='iso-with-lang'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
+    <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
+    <docnumber>17301</docnumber>
+    <contributor>
+      <role type='author'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type='publisher'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </contributor>
+    <language>en</language>
+    <script>Latn</script>
+    <status>
+      <stage abbreviation='FD'>50</stage>
+      <substage>00</substage>
+    </status>
+    <copyright>
+      <from>2020</from>
+      <owner>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+      <doctype>technical-corrigendum</doctype>
+      <editorialgroup>
+        <technical-committee/>
+        <subcommittee/>
+        <workgroup/>
+      </editorialgroup>
+      <structuredidentifier>
+        <project-number part='1' corrigendum='3'>17301</project-number>
+      </structuredidentifier>
+      <stagename>Final draft</stagename>
+    </ext>
+  </bibdata>
+  <sections/>
+</iso-standard>
+OUTPUT
+  end
+
+      it "processes metadata, corrigendum" do
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+= Document title
+Author
+:docfile: test.adoc
+:nodoc:
+:novalid:
+:no-isobib:
+:docnumber: 17301
+:partnumber: 1
+:doctype: technical-corrigendum
+:updates: ISO 17301-1:2030
+:corrigendum-number: 3
+INPUT
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+         <bibdata type='standard'>
+           <docidentifier type='iso'>ISO 17301-1:2030/Cor.3</docidentifier>
+           <docidentifier type='iso-with-lang'>ISO 17301-1:2030/Cor.3(E)</docidentifier>
+           <docidentifier type='iso-reference'>ISO 17301-1:2030/Cor.3(E)</docidentifier>
+           <docnumber>17301</docnumber>
+           <contributor>
+             <role type='author'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type='publisher'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <language>en</language>
+           <script>Latn</script>
+           <status>
+             <stage abbreviation='IS'>60</stage>
+             <substage>60</substage>
+           </status>
+           <copyright>
+             <from>2020</from>
+             <owner>
+               <organization>
+                 <name>International Organization for Standardization</name>
+                 <abbreviation>ISO</abbreviation>
+               </organization>
+             </owner>
+           </copyright>
+           <ext>
+             <doctype>technical-corrigendum</doctype>
+             <editorialgroup>
+               <technical-committee/>
+               <subcommittee/>
+               <workgroup/>
+             </editorialgroup>
+             <structuredidentifier>
+               <project-number part='1' corrigendum='3'>17301</project-number>
+             </structuredidentifier>
+             <stagename>International standard</stagename>
+           </ext>
+         </bibdata>
+         <sections/>
+       </iso-standard>
+OUTPUT
+  end
+
+
 
 end
