@@ -21,18 +21,6 @@ module Asciidoctor
         "95": "(Withdrawal)",
       }.freeze
 
-      STAGE_ABBRS = {
-        "00": "PWI",
-        "10": "NWIP",
-        "20": "WD",
-        "30": "CD",
-        "40": "DIS",
-        "50": "FDIS",
-        "60": "IS",
-        "90": "(Review)",
-        "95": "(Withdrawal)",
-      }.freeze
-
       STAGE_NAMES = {
         "00": "Preliminary work item",
         "10": "New work item proposal",
