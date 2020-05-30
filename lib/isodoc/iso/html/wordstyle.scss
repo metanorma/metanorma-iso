@@ -184,9 +184,10 @@ h1
 	mso-list:l1 level1 lfo6;
 	mso-hyphenate:none;
 	tab-stops:20.0pt list 21.6pt left 28.0pt;
-        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
         font-style: italic ;
 	font-size:11.0pt;
+        font-weight: normal ;
         {% else %}
         font-size:13.0pt;
         {% endif %}
@@ -197,6 +198,11 @@ h1
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
+h1.ForewordTitle {
+        font-size:13.0pt;
+        font-style: normal ;
+        font-weight: bold;
+}
 h1.Annex
 	{mso-style-priority:1;
 	mso-style-unhide:no;
@@ -243,9 +249,10 @@ h1.Annex
         mso-outline-level:2;
         mso-hyphenate:none;
         tab-stops:27.0pt 35.0pt;
-        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
         font-style: italic ;
         font-size:11.0pt;
+        font-weight: normal ;
         {% else %}
         font-size:13.0pt;
         font-weight:bold;
@@ -276,9 +283,10 @@ h2
 	mso-outline-level:3;
 	mso-hyphenate:none;
 	tab-stops:list 36.0pt left 44.0pt;
-        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
         font-style: italic ;
         font-size:11.0pt;
+        font-weight: normal ;
         {% else %}
         font-size:13.0pt;
         font-weight:bold;
@@ -309,8 +317,9 @@ h3      {mso-list:l1 level3 lfo6;}
 	tab-stops:51.05pt 57.0pt 68.0pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
-        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
         font-style: italic ;
+        font-weight: normal ;
         {% else %}
         font-weight:bold;
         {% endif %}
@@ -339,8 +348,9 @@ h4      {mso-list:l1 level4 lfo6;}
 	tab-stops:51.05pt list 54.0pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
-        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
         font-style: italic ;
+        font-weight: normal ;
         {% else %}
         font-weight:bold;
         {% endif %}
@@ -369,8 +379,9 @@ h6
 	tab-stops:51.05pt list 72.0pt;
 	font-size:11.0pt;
 	font-family:$headerfont;
-        {% if doctype == "amendment" or doctype == "technical-corrigendum" %}
+        {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
         font-style: italic ;
+        font-weight: normal ;
         {% else %}
         font-weight:bold;
         {% endif %}
@@ -599,7 +610,10 @@ span.Heading1Char
 	mso-hansi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
+        {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
+        {% else %}
 	font-weight:bold;
+        {% endif %}
 	mso-bidi-font-weight:normal;}
 span.Heading2Char
 	{mso-style-name:"Heading 2 Char";
