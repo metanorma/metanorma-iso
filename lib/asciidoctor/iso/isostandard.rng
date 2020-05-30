@@ -91,6 +91,12 @@
     </define>
     <define name="sections">
       <element name="sections">
+        <zeroOrMore>
+          <choice>
+            <ref name="note"/>
+            <ref name="admonition"/>
+          </choice>
+        </zeroOrMore>
         <ref name="clause"/>
         <optional>
           <choice>

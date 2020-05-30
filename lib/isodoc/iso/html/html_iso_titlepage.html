@@ -61,3 +61,12 @@ name="CVP_Secretariat_Loca">Secretariat</a>: {{ secretariat }}</p>
   <div id="boilerplate-license-destination"/>
 </div>
 {% endif %}
+
+{% if ics %}
+<p><b>ICS:</b> {{ ics }}</p>
+{% endif %}
+
+{% if keywords.size > 0 %}
+<p><b>Descriptors:</b> {{ keywords | join: ", " }}
+{% endif %}
+

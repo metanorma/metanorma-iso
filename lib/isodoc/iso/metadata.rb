@@ -208,7 +208,7 @@ module IsoDoc
         super
         ics = []
         isoxml.xpath(ns("//bibdata/ext/ics/code")).each { |i| ics << i.text }
-        set(:ics, ics.empty? ? "XXX" : ics.join(", "))
+        set(:ics, ics.empty? ? nil : ics.join(", "))
       end
     end
   end
