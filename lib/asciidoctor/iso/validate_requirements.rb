@@ -16,7 +16,7 @@ module Asciidoctor
            (is|are)_not_(allowed | permitted |
                          acceptable | permissible) |
            (is|are)_not_to_be |
-           do_not )
+           [.,:;]_do_not )
         \\b
       REGEXP
       REQUIREMENT_RE =

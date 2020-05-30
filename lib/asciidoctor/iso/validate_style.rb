@@ -1,6 +1,6 @@
 require "metanorma-standoc"
 require "nokogiri"
-require "pp"
+require "tokenizer"
 
 module Asciidoctor
   module ISO
@@ -70,7 +70,7 @@ module Asciidoctor
       # and a negative match on its preceding token
       def style_two_regex_not_prev(n, text, re, re_prev, warning)
         return if text.nil?
-        arr = text.split(/\W+/)
+        arr = Tokenizer::WhitespaceTokenizer.new.tokenize(text)
         arr.each_index do |i|
           m = re.match arr[i]
           m_prev = i.zero? ? nil : re_prev.match(arr[i - 1])
@@ -91,9 +91,10 @@ module Asciidoctor
       # ISO/IEC DIR 2, 9.1
       # ISO/IEC DIR 2, Table B.1
       def style_number(n, t)
-        style_two_regex_not_prev(n, t, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
-                                 %r{(\bISO|\bIEC|\bIEEE/)$},
-                                 "number not broken up in threes")
+        style_two_regex_not_prev(
+          n, t, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
+          %r{\b(ISO|IEC|IEEE/|(in|January|February|March|April|May|June|August|September|October|November|december)\b)$},
+          "number not broken up in threes")
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
                     "possible decimal point", n, t)
         style_regex(/\b(?<num>billion[s]?)\b/i,

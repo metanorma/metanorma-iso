@@ -512,7 +512,7 @@
         </attribute>
       </optional>
       <oneOrMore>
-        <ref name="paragraph-with-footnote"/>
+        <ref name="BasicBlock"/>
       </oneOrMore>
     </element>
   </define>

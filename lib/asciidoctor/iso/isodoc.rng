@@ -902,7 +902,15 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
-      <ref name="paragraph"/>
+      <oneOrMore>
+        <choice>
+          <ref name="paragraph"/>
+          <ref name="ul"/>
+          <ref name="ol"/>
+          <ref name="dl"/>
+          <ref name="formula"/>
+        </choice>
+      </oneOrMore>
     </element>
   </define>
   <define name="termexample">
