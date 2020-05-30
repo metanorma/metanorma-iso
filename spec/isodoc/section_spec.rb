@@ -458,5 +458,32 @@ OUTPUT
       OUTPUT
    end
 
+      it "processes middle title" do
+         expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+          <title language='en' format='text/plain' type='title-intro'>Introduction</title>
+    <title language='en' format='text/plain' type='title-main'>Main Title — Title</title>
+    <title language='en' format='text/plain' type='title-part'>Title Part</title>
+    <ext>
+          <structuredidentifier>
+        <project-number part='1' origyr='2016-05-01'>17301</project-number>
+      </structuredidentifier>
+</ext>
+      </bibdata>
+       <sections/>
+      </iso-standard>
+    INPUT
+    #{HTML_HDR}
+      <p class='zzSTDTitle1'>Introduction &#8212; Main Title&#8201;&#8212;&#8201;Title &#8212; </p>
+      <p class='zzSTDTitle2'>
+        Part&#160;1:
+        <br/><b>Title Part</b>
+      </p>
+    </div>
+  </body>
+</html>
+    OUTPUT
+      end
 
 end

@@ -1,5 +1,6 @@
 require "isodoc"
 require_relative "metadata"
+require_relative "sections"
 require "fileutils"
 
 module IsoDoc
@@ -19,12 +20,6 @@ module IsoDoc
         super
       end
 
-      def annex(isoxml, out)
-        @amd and @suppressheadingnumbers = @oldsuppressheadingnumbers
-        super
-        @amd and @suppressheadingnumbers = true
-      end
-
       def anchor_names(docxml)
         if @amd
           back_anchor_names(docxml)
@@ -39,28 +34,6 @@ module IsoDoc
 
       def implicit_reference(b)
         b&.at(ns("./docidentifier"))&.text == "IEV"
-      end
-
-      def introduction(isoxml, out)
-        f = isoxml.at(ns("//introduction")) || return
-        num = f.at(ns(".//clause")) ? "0" : nil
-        title_attr = { class: "IntroTitle" }
-        page_break(out)
-        out.div **{ class: "Section3", id: f["id"] } do |div|
-          clause_name(num, @introduction_lbl, div, title_attr)
-          f.elements.each do |e|
-            parse(e, div) unless e.name == "title"
-          end
-        end
-      end
-
-      def foreword(isoxml, out)
-        f = isoxml.at(ns("//foreword")) || return
-        page_break(out)
-        out.div **attr_code(id: f["id"]) do |s|
-          s.h1(**{ class: "ForewordTitle" }) { |h1| h1 << @foreword_lbl }
-          f.elements.each { |e| parse(e, s) unless e.name == "title" }
-        end
       end
 
       def initial_anchor_names(d)
@@ -227,11 +200,6 @@ module IsoDoc
 
       def table_footnote_reference_format(a)
         a.content = a.content + ")"
-      end
-
-      def clause_parse_title(node, div, c1, out)
-        return inline_header_title(out, node, c1) if c1.nil?
-        super
       end
 
       def cleanup(docxml)
