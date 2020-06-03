@@ -6,14 +6,14 @@ module IsoDoc
       def initialize(lang, script, labels)
         super
         @metadata = {
-        tc: "XXXX",
-        sc: "XXXX",
-        wg: "XXXX",
-        editorialgroup: [],
-        secretariat: "XXXX",
-        obsoletes: nil,
-        obsoletes_part: nil
-      }
+          tc: "XXXX",
+          sc: "XXXX",
+          wg: "XXXX",
+          editorialgroup: [],
+          secretariat: "XXXX",
+          obsoletes: nil,
+          obsoletes_part: nil
+        }
       end
 
       def status_abbrev(stage, substage, iter, draft, doctype)
@@ -22,7 +22,9 @@ module IsoDoc
           stage = "DTS" if stage == "DIS"
           stage = "FDTS" if stage == "FDIS"
         end
-        stage += iter if iter
+        if %w(PWI NWIP WD CD).include?(stage)
+          stage += iter if iter
+        end
         stage = "Pre" + stage if draft =~ /^0\./
         stage
       end

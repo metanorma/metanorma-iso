@@ -241,9 +241,9 @@ OUTPUT
   d’échantillon et recommandations relatives aux conditions d’entreposage et
   de transport
 </title>
-    <docidentifier type='iso'>ISO 17301-1:2016/PreNP3 Amd 1</docidentifier>
-    <docidentifier type='iso-with-lang'>ISO 17301-1:2016/PreNP3 Amd 1(E)</docidentifier>
-    <docidentifier type='iso-reference'>ISO 17301-1:2016/PreNP3 Amd 1:2017(E)</docidentifier>
+    <docidentifier type='iso'>ISO 17301-1:2016/PreNP Amd 1</docidentifier>
+    <docidentifier type='iso-with-lang'>ISO 17301-1:2016/PreNP Amd 1(E)</docidentifier>
+    <docidentifier type='iso-reference'>ISO 17301-1:2016/PreNP Amd 1:2017(E)</docidentifier>
     <docnumber>17301</docnumber>
     <date type='created'>
       <on>2016-05-01</on>

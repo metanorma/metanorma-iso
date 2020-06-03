@@ -77,7 +77,7 @@ RSpec.describe Asciidoctor::ISO do
       :workgroup-number_2: 31
       :workgroup-type_2: C1
       :secretariat: SECRETARIAT
-      :docstage: 10
+      :docstage: 20
       :docsubstage: 20
       :iteration: 3
       :language: en
@@ -101,10 +101,10 @@ RSpec.describe Asciidoctor::ISO do
    <title language="fr" format="text/plain" type="title-intro">Introduction Française</title>
    <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
    <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
-         <docidentifier type="iso">ISO/PreNWIP3 1000-1</docidentifier>
-         <docidentifier type='iso-with-lang'>ISO/PreNWIP3 1000-1(E)</docidentifier>
-         <docidentifier type='iso-reference'>ISO/PreNWIP3 1000-1:2000(E)</docidentifier>
-<docnumber>1000</docnumber>
+         <docidentifier type="iso">ISO/PreWD3 1000-1</docidentifier>
+         <docidentifier type='iso-with-lang'>ISO/PreWD3 1000-1(E)</docidentifier>
+         <docidentifier type='iso-reference'>ISO/PreWD3 1000-1:2000(E)</docidentifier>
+        <docnumber>1000</docnumber>
          <contributor>
            <role type="author"/>
            <organization>
@@ -127,7 +127,7 @@ RSpec.describe Asciidoctor::ISO do
          <language>en</language>
          <script>Latn</script>
          <status>
-           <stage abbreviation="NWIP">10</stage>
+           <stage abbreviation="WD">20</stage>
            <substage>20</substage>
            <iteration>3</iteration>
          </status>
@@ -163,7 +163,7 @@ RSpec.describe Asciidoctor::ISO do
 <structuredidentifier>
   <project-number part="1">ISO 1000</project-number>
 </structuredidentifier>
-<stagename>New work item proposal</stagename>
+<stagename>Third working draft</stagename>
        </ext>
        </bibdata>
        <sections/>
@@ -288,7 +288,7 @@ RSpec.describe Asciidoctor::ISO do
     OUTPUT
   end
 
-    it "defaults substage" do
+    it "defaults substage, defines iteration on stage 50, gives stage 50 on technical specification" do
     expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
@@ -300,12 +300,13 @@ RSpec.describe Asciidoctor::ISO do
       :docstage: 50
       :language: fr
       :doctype: technical-specification
+      :iteration: 2
     INPUT
     <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO/DTS 1000</docidentifier>
-  <docidentifier type='iso-with-lang'>ISO/DTS 1000(F)</docidentifier>
-  <docidentifier type='iso-reference'>ISO/DTS 1000(F)</docidentifier>
+  <docidentifier type="iso">ISO/DTS 1000.2</docidentifier>
+  <docidentifier type='iso-with-lang'>ISO/DTS 1000.2(F)</docidentifier>
+  <docidentifier type='iso-reference'>ISO/DTS 1000.2(F)</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
@@ -327,6 +328,7 @@ RSpec.describe Asciidoctor::ISO do
   <status>
     <stage abbreviation="D">50</stage>
     <substage>00</substage>
+    <iteration>2</iteration>
   </status>
   <copyright>
     <from>#{Date.today.year}</from>

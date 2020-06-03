@@ -13,7 +13,8 @@ module Asciidoctor
       def metadata_ext(node, xml)
         super
         structured_id(node, xml)
-        xml.stagename stage_name(get_stage(node), get_substage(node), node.attr("doctype"))
+        xml.stagename stage_name(get_stage(node), get_substage(node),
+                                 node.attr("doctype"), node.attr("iteration"))
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
       end
