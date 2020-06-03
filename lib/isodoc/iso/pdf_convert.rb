@@ -31,7 +31,7 @@ module IsoDoc
         end
         FileUtils.rm_rf dir
         ::Metanorma::Output::XslfoPdf.new.convert(
-          filename, outname_html + ".pdf", File.join(@libdir, pdf_stylesheet(docxml))
+          filename, outname_html + ".pdf", File.join(@libdir, pdf_stylesheet(docxml)))
       end
     end
   end
