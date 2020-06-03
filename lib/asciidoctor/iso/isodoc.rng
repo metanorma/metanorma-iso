@@ -53,6 +53,14 @@
         <optional>
           <attribute name="alt"/>
         </optional>
+        <optional>
+          <attribute name="case">
+            <choice>
+              <value>capital</value>
+              <value>lowercase</value>
+            </choice>
+          </attribute>
+        </optional>
         <text/>
       </element>
     </define>
