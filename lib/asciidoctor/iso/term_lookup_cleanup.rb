@@ -31,23 +31,20 @@ module Asciidoctor
             remove_missing_ref(node, target)
             next
           end
-
           modify_ref_node(node, target)
         end
       end
 
       def remove_missing_ref(node, target)
-        log.add('AsciiDoc Input',
-                node,
+        log.add('AsciiDoc Input', node,
                 %(Error: Term reference in `term[#{target}]` missing: \
                 "#{target}" is not defined in document))
-        # Term ref have parentess around it - (ref),
-        # if no target remove parentes and render as text
-        node.next.remove
         term_name_node = node.previous.previous
         term_name_node.remove
-        node.previous.remove
-        node.add_previous_sibling(term_name_node.text)
+        term_name_node.name = "strong"
+        term_name_node.children.first.content =
+          %(term "#{term_name_node.text}" not resolved)
+        node.add_previous_sibling(term_name_node)
         node.remove
       end
 

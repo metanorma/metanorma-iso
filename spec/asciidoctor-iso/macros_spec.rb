@@ -34,7 +34,7 @@ RSpec.describe Asciidoctor::ISO do
 
         == Main
 
-        term:[name,name2]
+        term:[name,name2] is a term
       XML
     end
     let(:output) do
@@ -72,7 +72,7 @@ RSpec.describe Asciidoctor::ISO do
               <em>name</em>
               (
               <xref target='term-name2'/>
-              )
+              ) is a term
             </p>
           </clause>
         </sections>
@@ -95,7 +95,7 @@ RSpec.describe Asciidoctor::ISO do
 
           == Main
 
-          term:[name]
+          term:[name] is a term
         XML
       end
       let(:output) do
@@ -133,7 +133,7 @@ RSpec.describe Asciidoctor::ISO do
                 <em>name</em>
                 (
                 <xref target='term-name' />
-                )
+                ) is a term
               </p>
             </clause>
           </sections>
@@ -164,8 +164,8 @@ RSpec.describe Asciidoctor::ISO do
           [[term-name2]]
           == Second
 
-          term:[name]
-          term:[name2]
+          term:[name] is a term
+          term:[name2] is a term
         XML
       end
       let(:output) do
@@ -210,11 +210,11 @@ RSpec.describe Asciidoctor::ISO do
                 <em>name</em>
                 (
                 <xref target='term-name-1' />
-                )
+                ) is a term
                 <em>name2</em>
                   (
                 <xref target='term-name2-1' />
-                )
+                ) is a term
               </p>
             </clause>
           </sections>
@@ -238,8 +238,9 @@ RSpec.describe Asciidoctor::ISO do
 
           paragraph
 
-          term:[name]
-          term:[missing]
+          term:[name] is a term
+
+          Moreover, term:[missing] is a term
         XML
       end
       let(:output) do
@@ -272,11 +273,12 @@ RSpec.describe Asciidoctor::ISO do
                   <definition>
                     <p id='_'>paragraph</p>
                     <p id='_'>
-                      <em>name</em>
+                      <em>name</em> 
                        (
                       <xref target='term-name'/>
-                      )
-                      missing
+                      ) is a term
+                      </p>
+                      <p id="_">Moreover, (<strong>term “missing” not resolved</strong>) is a term
                     </p>
                   </definition>
                 </term>

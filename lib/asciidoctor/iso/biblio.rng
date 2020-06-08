@@ -661,9 +661,9 @@
     <optional>
       <ref name="status"/>
     </optional>
-    <optional>
+    <zeroOrMore>
       <ref name="copyright"/>
-    </optional>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="docrelation"/>
     </zeroOrMore>
@@ -1024,6 +1024,14 @@
       <oneOrMore>
         <ref name="owner"/>
       </oneOrMore>
+      <optional>
+        <ref name="copyright_scope"/>
+      </optional>
+    </element>
+  </define>
+  <define name="copyright_scope">
+    <element name="scope">
+      <text/>
     </element>
   </define>
   <define name="from">

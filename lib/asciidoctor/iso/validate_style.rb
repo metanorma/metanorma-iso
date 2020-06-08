@@ -93,7 +93,7 @@ module Asciidoctor
       def style_number(n, t)
         style_two_regex_not_prev(
           n, t, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
-          %r{\b(ISO|IEC|IEEE/|(in|January|February|March|April|May|June|August|September|October|November|december)\b)$},
+          %r{\b(ISO|IEC|IEEE/|(in|January|February|March|April|May|June|August|September|October|November|December)\b)$},
           "number not broken up in threes")
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
                     "possible decimal point", n, t)
