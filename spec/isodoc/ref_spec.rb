@@ -139,7 +139,7 @@ RSpec.describe IsoDoc do
                <h1>1&#160; Normative references</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                <p id="ISO712" class="NormRef">ISO 712, <i>Cereals and cereal products</i></p>
-               <p id="ISO16634" class="NormRef">ISO 16634:-- (all parts)<a rel="footnote" href="#fn:1" epub:type="footnote"><sup>1</sup></a>, <i>Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</i></p>
+               <p id="ISO16634" class="NormRef">ISO 16634:-- (all parts)<a class="FootnoteRef" href="#fn:1"><sup>1</sup></a>, <i>Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</i></p>
                <p id="ISO20483" class="NormRef">ISO 20483:2013-2014, <i>Cereals and pulses</i></p>
                <p id="ref1" class="NormRef">ICC 167, <span style="font-variant:small-caps;">Standard No I.C.C 167</span>. <i>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</i> (see <a href="http://www.icc.or.at">http://www.icc.or.at</a>)</p>
                <div id="" class="Note">

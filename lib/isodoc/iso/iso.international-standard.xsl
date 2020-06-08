@@ -31,8 +31,8 @@
 	<xsl:variable name="title-main" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-main']"/>
 	<xsl:variable name="title-main-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-main']"/>
 	<xsl:variable name="part" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:project-number/@part"/>
-	<xsl:variable name="title-part" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-part']"/>
-	<xsl:variable name="title-part-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-part']"/>
+	
+	
 
 	<xsl:variable name="doctype_uppercased" select="translate(translate(/iso:iso-standard/iso:bibdata/iso:ext/iso:doctype,'-',' '), $lower,$upper)"/>
 	
@@ -144,10 +144,6 @@
 	</xsl:variable>
 	
 	<xsl:variable name="proof-text">PROOF/ÉPREUVE</xsl:variable>
-
-	<xsl:variable name="title-figure">
-		<xsl:text>Figure </xsl:text>
-	</xsl:variable>
 	
 	<!-- Example:
 		<item level="1" id="Foreword" display="true">Foreword</item>
@@ -520,8 +516,10 @@
 													</xsl:if>
 													
 													<xsl:value-of select="$title-main"/>
+
+													<xsl:call-template name="printTitlePartEn"/>
 													
-													<xsl:if test="normalize-space($title-part) != ''">
+													<!-- <xsl:if test="normalize-space($title-part) != ''">
 														<xsl:if test="$part != ''">
 															<xsl:text> — </xsl:text>
 															<fo:block font-weight="normal" margin-top="6pt">
@@ -530,7 +528,7 @@
 															</fo:block>
 														</xsl:if>
 														<xsl:value-of select="$title-part"/>
-													</xsl:if>
+													</xsl:if> -->
 												</fo:block>
 															
 												<fo:block font-size="9pt"><xsl:value-of select="$linebreak"/></fo:block>
@@ -542,16 +540,9 @@
 													</xsl:if>
 													
 													<xsl:value-of select="$title-main-fr"/>
+
+													<xsl:call-template name="printTitlePartFr"/>
 													
-													<xsl:if test="normalize-space($title-part-fr) != ''">
-														<xsl:if test="$part != ''">
-															<xsl:text> — </xsl:text>
-															<xsl:text>Partie </xsl:text>
-															<xsl:value-of select="$part"/>
-															<xsl:text>:</xsl:text>
-														</xsl:if>
-														<xsl:value-of select="$title-part-fr"/>
-													</xsl:if>
 												</fo:block>
 											</fo:block>
 											<fo:block margin-top="10mm">
@@ -683,7 +674,8 @@
 																	
 																	<xsl:value-of select="$title-main"/>
 																	
-																	<xsl:if test="normalize-space($title-part) != ''">
+																	<xsl:call-template name="printTitlePartEn"/>
+																	<!-- <xsl:if test="normalize-space($title-part) != ''">
 																		<xsl:if test="$part != ''">
 																			<xsl:text> — </xsl:text>
 																			<fo:block font-weight="normal" margin-top="6pt">
@@ -692,7 +684,7 @@
 																			</fo:block>
 																		</xsl:if>
 																		<xsl:value-of select="$title-part"/>
-																	</xsl:if>
+																	</xsl:if> -->
 																</fo:block>
 																			
 																<fo:block font-size="9pt"><xsl:value-of select="$linebreak"/></fo:block>
@@ -705,15 +697,8 @@
 																	
 																	<xsl:value-of select="$title-main-fr"/>
 																	
-																	<xsl:if test="normalize-space($title-part-fr) != ''">
-																		<xsl:if test="$part != ''">
-																			<xsl:text> — </xsl:text>
-																			<xsl:text>Partie </xsl:text>
-																			<xsl:value-of select="$part"/>
-																			<xsl:text>:</xsl:text>
-																		</xsl:if>
-																		<xsl:value-of select="$title-part-fr"/>
-																	</xsl:if>
+																	<xsl:call-template name="printTitlePartFr"/>
+																	
 																</fo:block>
 															</fo:block>
 														</fo:block-container>
@@ -803,7 +788,8 @@
 										
 										<xsl:value-of select="$title-main"/>
 										
-										<xsl:if test="normalize-space($title-part) != ''">
+										<xsl:call-template name="printTitlePartEn"/>
+										<!-- <xsl:if test="normalize-space($title-part) != ''">
 											<xsl:if test="$part != ''">
 												<xsl:text> — </xsl:text>
 												<fo:block font-weight="normal" margin-top="6pt">
@@ -812,7 +798,7 @@
 												</fo:block>
 											</xsl:if>
 											<xsl:value-of select="$title-part"/>
-										</xsl:if>
+										</xsl:if> -->
 									</fo:block>
 												
 									<fo:block font-size="9pt"><xsl:value-of select="$linebreak"/></fo:block>
@@ -825,15 +811,8 @@
 										
 										<xsl:value-of select="$title-main-fr"/>
 
-										<xsl:if test="normalize-space($title-part-fr) != ''">
-											<xsl:if test="$part != ''">
-												<xsl:text> — </xsl:text>
-												<xsl:text>Partie </xsl:text>
-												<xsl:value-of select="$part"/>
-												<xsl:text>:</xsl:text>
-											</xsl:if>
-											<xsl:value-of select="$title-part-fr"/>
-										</xsl:if>
+										<xsl:call-template name="printTitlePartFr"/>
+										
 									</fo:block>
 									</fo:block>
 								</fo:block-container>
@@ -922,7 +901,8 @@
 										
 										<xsl:value-of select="$title-main"/>
 										
-										<xsl:if test="normalize-space($title-part) != ''">
+										<xsl:call-template name="printTitlePartEn"/>
+										<!-- <xsl:if test="normalize-space($title-part) != ''">
 											<xsl:if test="$part != ''">
 												<xsl:text> — </xsl:text>
 												<fo:block font-weight="normal" margin-top="6pt">
@@ -931,7 +911,7 @@
 												</fo:block>
 											</xsl:if>
 											<xsl:value-of select="$title-part"/>
-										</xsl:if>
+										</xsl:if> -->
 									</fo:block>
 									
 									<fo:block font-size="12pt"><xsl:value-of select="$linebreak"/></fo:block>
@@ -943,15 +923,16 @@
 										
 										<xsl:value-of select="$title-main-fr"/>
 										
-										<xsl:if test="normalize-space($title-part-fr) != ''">
+										<xsl:variable name="part-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-part']"/>
+										<xsl:if test="normalize-space($part-fr) != ''">
 											<xsl:if test="$part != ''">
 												<xsl:text> — </xsl:text>
 												<fo:block margin-top="6pt" font-weight="normal">
-													<xsl:text>Partie </xsl:text><xsl:value-of select="$part"/>
+													<xsl:value-of select="$title-part-fr"/><xsl:value-of select="$part"/>
 													<xsl:text>:</xsl:text>
 												</fo:block>
 											</xsl:if>
-											<xsl:value-of select="$title-part-fr"/>
+											<xsl:value-of select="$part-fr"/>
 										</xsl:if>
 									</fo:block>
 							</fo:block-container>
@@ -1090,6 +1071,7 @@
 						</fo:block>
 						 -->
 						<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1">
+							<xsl:variable name="part-en" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-part']"/>
 							<fo:block>
 								<xsl:if test="normalize-space($title-intro) != ''">
 									<xsl:value-of select="$title-intro"/>
@@ -1098,18 +1080,19 @@
 								
 								<xsl:value-of select="$title-main"/>
 								
-								<xsl:if test="normalize-space($title-part) != ''">
+								<xsl:if test="normalize-space($part-en) != ''">
 									<xsl:if test="$part != ''">
 										<xsl:text> — </xsl:text>
 										<fo:block font-weight="normal" margin-top="12pt" line-height="1.1">
-											<xsl:text>Part </xsl:text><xsl:value-of select="$part"/>
+											<xsl:value-of select="$title-part-en"/>
+											<xsl:value-of select="$part"/>
 											<xsl:text>:</xsl:text>
 										</fo:block>
 									</xsl:if>
 								</xsl:if>
 							</fo:block>
 							<fo:block>
-								<xsl:value-of select="$title-part"/>
+								<xsl:value-of select="$part-en"/>
 							</fo:block>
 						</fo:block>
 					
@@ -1921,7 +1904,9 @@
 		<fo:block margin-bottom="8pt"> <!-- keep-with-previous="always" -->
 			<!-- Example: [SOURCE: ISO 5127:2017, 3.1.6.02] -->
 			<fo:basic-link internal-destination="{iso:origin/@bibitemid}" fox:alt-text="{iso:origin/@citeas}">
-				<xsl:text>[SOURCE: </xsl:text>
+				<xsl:text>[</xsl:text>
+				<xsl:value-of select="$title-source"/>
+				<xsl:text>: </xsl:text>
 				<xsl:value-of select="iso:origin/@citeas"/>
 				
 				<xsl:apply-templates select="iso:origin/iso:localityStack"/>
@@ -1936,7 +1921,7 @@
 	</xsl:template>
 	
 	<xsl:template match="iso:modification">
-		<xsl:text>, modified — </xsl:text>
+		<xsl:text>, </xsl:text><xsl:value-of select="$title-modified"/><xsl:text> — </xsl:text>
 		<xsl:apply-templates/>
 	</xsl:template>
 	<xsl:template match="iso:modification/iso:p">
@@ -1945,9 +1930,11 @@
 	
 	<xsl:template match="iso:termnote">
 		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="8pt" text-align="justify">
-			<xsl:text>Note </xsl:text>
-			<xsl:number/>
-			<xsl:text> to entry: </xsl:text>
+			<!-- <xsl:text>Note </xsl:text>
+			<xsl:number />
+			<xsl:text> to entry: </xsl:text> -->
+			<xsl:variable name="num"><xsl:number/></xsl:variable>			
+			<xsl:value-of select="java:replaceAll(java:java.lang.String.new($title-note-to-entry),'#',$num)"/>
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template>
@@ -1968,7 +1955,7 @@
 	<xsl:template match="iso:termexample">
 		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="8pt" text-align="justify">
 			<fo:inline padding-right="5mm">
-				<xsl:text>EXAMPLE </xsl:text>
+				<xsl:value-of select="$title-example"/>
 				<xsl:if test="count(ancestor::iso:term[1]//iso:termexample) &gt; 1">
 					<xsl:number/>
 				</xsl:if>
@@ -2117,8 +2104,8 @@
 				<xsl:attribute name="font-size">11pt</xsl:attribute>
 			</xsl:if> -->
 			<xsl:variable name="claims_id" select="ancestor::iso:clause[1]/@id"/>
-			<fo:inline padding-right="5mm">
-				<xsl:text>EXAMPLE </xsl:text>
+			<fo:inline padding-right="5mm">				
+				<xsl:value-of select="$title-example"/>
 				<xsl:if test="count(ancestor::iso:clause[1]//iso:example) &gt; 1">
 					<xsl:number count="iso:example[ancestor::iso:clause[@id = $claims_id]]" level="any"/>
 				</xsl:if>
@@ -2130,8 +2117,8 @@
 	<xsl:template match="iso:note/iso:p" name="note">
 		<fo:block font-size="10pt" margin-top="8pt" margin-bottom="12pt" text-align="justify">
 			<xsl:variable name="claims_id" select="ancestor::iso:clause[1]/@id"/>
-			<fo:inline padding-right="6mm">
-				<xsl:text>NOTE </xsl:text>
+			<fo:inline padding-right="6mm">				
+				<xsl:value-of select="$title-note"/>
 				<xsl:if test="count(ancestor::iso:clause[1]//iso:note) &gt; 1">
 					<xsl:number count="iso:note[ancestor::iso:clause[@id = $claims_id]]" level="any"/>
 				</xsl:if>
@@ -3116,11 +3103,40 @@
 		</xsl:choose>
 		<xsl:if test="$edition != ''"><xsl:text> edition</xsl:text></xsl:if>
 	</xsl:template>
+
+	<xsl:template name="printTitlePartFr">
+		<xsl:variable name="part-fr" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'fr' and @type = 'title-part']"/>
+		<xsl:if test="normalize-space($part-fr) != ''">
+			<xsl:if test="$part != ''">
+				<xsl:text> — </xsl:text>
+				<xsl:value-of select="$title-part-fr"/>
+				<xsl:value-of select="$part"/>
+				<xsl:text>:</xsl:text>
+			</xsl:if>
+			<xsl:value-of select="$part-fr"/>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template name="printTitlePartEn">
+		<xsl:variable name="part-en" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-part']"/>
+		<xsl:if test="normalize-space($part-en) != ''">
+			<xsl:if test="$part != ''">
+				<xsl:text> — </xsl:text>
+				<fo:block font-weight="normal" margin-top="6pt">
+					<xsl:value-of select="$title-part-en"/>
+					<xsl:value-of select="$part"/>
+					<xsl:text>:</xsl:text>
+				</fo:block>
+			</xsl:if>
+			<xsl:value-of select="$part-en"/>
+		</xsl:if>
+	</xsl:template>
+	
 	
 <xsl:variable name="title-table">
 		
 			<xsl:text>Table </xsl:text>
-									
+		
 		
 	</xsl:variable><xsl:variable name="title-note">
 		
@@ -3137,7 +3153,7 @@
 			<xsl:text>EXAMPLE </xsl:text>
 		
 		
-	</xsl:variable><xsl:variable name="title-annex">
+	</xsl:variable><xsl:variable name="title-inequality">Inequality </xsl:variable><xsl:variable name="title-equation">Equation </xsl:variable><xsl:variable name="title-annex">
 		
 			<xsl:text>Annex </xsl:text>
 		
@@ -3153,7 +3169,8 @@
 		<xsl:text>Edition </xsl:text>
 	</xsl:variable><xsl:variable name="title-toc">
 		
-	</xsl:variable><xsl:variable name="title-key">Key</xsl:variable><xsl:variable name="title-where">where</xsl:variable><xsl:variable name="title-descriptors">Descriptors</xsl:variable><xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable name="linebreak" select="'&#8232;'"/><xsl:attribute-set name="link-style">
+		
+	</xsl:variable><xsl:variable name="title-page">Page</xsl:variable><xsl:variable name="title-key">Key</xsl:variable><xsl:variable name="title-where">where</xsl:variable><xsl:variable name="title-descriptors">Descriptors</xsl:variable><xsl:variable name="title-part-en">Part </xsl:variable><xsl:variable name="title-part-fr">Partie </xsl:variable><xsl:variable name="title-note-to-entry">Note # to entry: </xsl:variable><xsl:variable name="title-modified">modified</xsl:variable><xsl:variable name="title-source">SOURCE</xsl:variable><xsl:variable name="title-keywords">Keywords</xsl:variable><xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable name="linebreak" select="'&#8232;'"/><xsl:attribute-set name="link-style">
 		
 			<xsl:attribute name="color">blue</xsl:attribute>
 			<xsl:attribute name="text-decoration">underline</xsl:attribute>
@@ -3314,6 +3331,9 @@
 			<fo:table id="{@id}" table-layout="fixed" width="100%" margin-left="{$margin-left}mm" margin-right="{$margin-left}mm" table-omit-footer-at-break="true">
 				
 					<xsl:attribute name="border">1.5pt solid black</xsl:attribute>
+					<xsl:if test="*[local-name()='thead']">
+						<xsl:attribute name="border-top">1pt solid black</xsl:attribute>
+					</xsl:if>
 				
 				
 				
@@ -3486,13 +3506,34 @@
 	</xsl:template><xsl:template match="*[local-name()='link']" mode="td_text">
 		<xsl:value-of select="@target"/>
 	</xsl:template><xsl:template match="*[local-name()='table2']"/><xsl:template match="*[local-name()='thead']"/><xsl:template match="*[local-name()='thead']" mode="process">
+		<xsl:param name="cols-count"/>
 		<!-- font-weight="bold" -->
-		<fo:table-header>
+		<fo:table-header>			
+			
+				<fo:table-row>
+					<fo:table-cell number-columns-spanned="{$cols-count}"> <!-- border-left="1pt solid white" border-right="1pt solid white" border-top="1pt solid white" -->
+						<fo:block text-align="center" font-size="11pt" font-weight="bold">
+							<!-- (continued) -->
+							<fo:block-container position="absolute" top="-7mm">
+								<fo:block>
+									<fo:retrieve-table-marker retrieve-class-name="table_continued" retrieve-position-within-table="first-starting" retrieve-boundary-within-table="table-fragment"/>
+								</fo:block>
+							</fo:block-container>
+							
+						</fo:block>
+						<!-- <fo:block>fn_name_display
+							<xsl:call-template name="fn_name_display"/>
+						</fo:block> -->
+						
+					</fo:table-cell>
+				</fo:table-row>
+			
 			<xsl:apply-templates/>
 		</fo:table-header>
 	</xsl:template><xsl:template match="*[local-name()='tfoot']"/><xsl:template match="*[local-name()='tfoot']" mode="process">
 		<xsl:apply-templates/>
 	</xsl:template><xsl:template name="insertTableFooter">
+		<xsl:param name="cols-count"/>
 		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'] or ..//*[local-name()='fn'][local-name(..) != 'name']"/>
 		<xsl:if test="../*[local-name()='tfoot'] or           $isNoteOrFnExist = 'true'">
 		
@@ -3503,22 +3544,7 @@
 				<!-- if there are note(s) or fn(s) then create footer row -->
 				<xsl:if test="$isNoteOrFnExist = 'true'">
 				
-					<xsl:variable name="cols-count">
-						<xsl:choose>
-							<xsl:when test="../*[local-name()='thead']">
-								<!-- <xsl:value-of select="count(../*[local-name()='thead']/*[local-name()='tr']/*[local-name()='th'])"/> -->
-								<xsl:call-template name="calculate-columns-numbers">
-									<xsl:with-param name="table-row" select="../*[local-name()='thead']/*[local-name()='tr'][1]"/>
-								</xsl:call-template>
-							</xsl:when>
-							<xsl:otherwise>
-								<!-- <xsl:value-of select="count(./*[local-name()='tr'][1]/*[local-name()='td'])"/> -->
-								<xsl:call-template name="calculate-columns-numbers">
-									<xsl:with-param name="table-row" select="./*[local-name()='tr'][1]"/>
-								</xsl:call-template>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:variable>
+					
 				
 					<fo:table-row>
 						<fo:table-cell border="solid black 1pt" padding-left="1mm" padding-right="1mm" padding-top="1mm" number-columns-spanned="{$cols-count}">
@@ -3550,9 +3576,28 @@
 		</xsl:if>
 	</xsl:template><xsl:template match="*[local-name()='tbody']">
 		
-		<xsl:apply-templates select="../*[local-name()='thead']" mode="process"/>
+		<xsl:variable name="cols-count">
+			<xsl:choose>
+				<xsl:when test="../*[local-name()='thead']">					
+					<xsl:call-template name="calculate-columns-numbers">
+						<xsl:with-param name="table-row" select="../*[local-name()='thead']/*[local-name()='tr'][1]"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>					
+					<xsl:call-template name="calculate-columns-numbers">
+						<xsl:with-param name="table-row" select="./*[local-name()='tr'][1]"/>
+					</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 		
-		<xsl:call-template name="insertTableFooter"/>
+		<xsl:apply-templates select="../*[local-name()='thead']" mode="process">
+			<xsl:with-param name="cols-count" select="$cols-count"/>
+		</xsl:apply-templates>
+		
+		<xsl:call-template name="insertTableFooter">
+			<xsl:with-param name="cols-count" select="$cols-count"/>
+		</xsl:call-template>
 		
 		<fo:table-body>
 			<xsl:apply-templates/>
@@ -3652,6 +3697,21 @@
 				</xsl:attribute>
 			</xsl:if>
 			<fo:block>
+				
+					<xsl:variable name="row_number">
+						<xsl:number format="1" count="*[local-name() = 'tr'] | *[local-name() = 'th']"/>
+					</xsl:variable>
+					<fo:marker marker-class-name="table_continued">						
+						<xsl:if test="$row_number &gt; 1">
+								<fo:inline>
+									<xsl:value-of select="$title-table"/>									
+									<xsl:call-template name="getTableNumber"/>
+									<xsl:text> </xsl:text>
+									<fo:inline font-style="italic" font-weight="normal">(continued)</fo:inline>
+								</fo:inline>
+						</xsl:if>
+					</fo:marker>
+								
 				<xsl:apply-templates/>
 			</fo:block>
 			<!-- <xsl:choose>
@@ -3842,7 +3902,7 @@
 					<fo:block margin-bottom="12pt" text-align="left">
 						
 							<xsl:attribute name="margin-bottom">0</xsl:attribute>
-												
+						
 						<xsl:value-of select="$title-where"/><xsl:text> </xsl:text>
 						<xsl:apply-templates select="*[local-name()='dt']/*"/>
 						<xsl:text/>
@@ -3857,7 +3917,7 @@
 					
 					
 					
-										
+					
 					<xsl:value-of select="$title-where"/>
 				</fo:block>
 			</xsl:when>
@@ -4007,6 +4067,7 @@
 		
 		<fo:table-row>
 			<fo:table-cell>
+				
 				<fo:block margin-top="6pt">
 					
 						<xsl:attribute name="margin-top">0pt</xsl:attribute>
@@ -4019,8 +4080,10 @@
 					
 					
 					
+					
+					
 					<xsl:apply-templates/>
-										
+					
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell>

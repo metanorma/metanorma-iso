@@ -292,25 +292,25 @@ RSpec.describe IsoDoc do
              <p class="zzSTDTitle1"></p>
              <div id="A">
                <h1 id="toc0">1&#xA0; Clause 4</h1>
-               <a rel="footnote" href="#fn:3" epub:type="footnote" id="fnref:1">
+               <a href="#fn:3" class="FootnoteRef" id="fnref:1">
                  <sup>1)</sup>
                </a>
                <div id="N">
 
-                <h2 id="toc1">1.1&#xA0; Introduction to this<a rel="footnote" href="#fn:2" epub:type="footnote" id="fnref:2"><sup>2)</sup></a></h2>
+                <h2 id="toc1">1.1&#xA0; Introduction to this<a href="#fn:2" class="FootnoteRef" id="fnref:2"><sup>2)</sup></a></h2>
               </div>
                <div id="O">
                 <h2 id="toc2">1.2&#xA0; Clause 4.2</h2>
-                <p>A<a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2)</sup></a></p>
+                <p>A<a class="FootnoteRef" href="#fn:2"><sup>2)</sup></a></p>
               </div>
              </div>
              <aside id="fn:3" class="footnote">
-         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:3" epub:type="footnote">
+         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a class="FootnoteRef" href="#fn:3">
                  <sup>1)</sup>
                </a>This is a footnote.</p>
        <a href="#fnref:1">&#x21A9;</a></aside>
              <aside id="fn:2" class="footnote">
-         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a rel="footnote" href="#fn:2" epub:type="footnote"><sup>2)</sup></a>Formerly denoted as 15 % (m/m).</p>
+         <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6"><a href="#fn:2" class="FootnoteRef"><sup>2)</sup></a>Formerly denoted as 15 % (m/m).</p>
        <a href="#fnref:2">&#x21A9;</a></aside>
 
            </main>
@@ -353,7 +353,7 @@ RSpec.describe IsoDoc do
                Clause 4
              </h1>
              <span style='mso-bookmark:_Ref'>
-               <a href='#_ftn1' epub:type='footnote' style='mso-footnote-id:ftn1' name='_ftnref1' title='' id='_ftnref1'>
+               <a href='#_ftn1' class='FootnoteRef' epub:type='footnote' style='mso-footnote-id:ftn1' name='_ftnref1' title='' id='_ftnref1'>
                  <span class='MsoFootnoteReference'>
                    <span style='mso-special-character:footnote'/>
                  </span>
@@ -367,7 +367,7 @@ RSpec.describe IsoDoc do
                  <span style='mso-tab-count:1'>&#xA0; </span>
                  Introduction to this
                  <span style='mso-bookmark:_Ref'>
-                   <a href='#_ftn2' epub:type='footnote' style='mso-footnote-id:ftn2' name='_ftnref2' title='' id='_ftnref2'>
+                   <a href='#_ftn2' epub:type='footnote' class='FootnoteRef' style='mso-footnote-id:ftn2' name='_ftnref2' title='' id='_ftnref2'>
                      <span class='MsoFootnoteReference'>
                        <span style='mso-special-character:footnote'/>
                      </span>
@@ -386,7 +386,7 @@ RSpec.describe IsoDoc do
                <p class='MsoNormal'>
                  A
                  <span style='mso-bookmark:_Ref'>
-                   <a href='#_ftn3' epub:type='footnote' style='mso-footnote-id:ftn3' name='_ftnref3' title='' id='_ftnref3'>
+                   <a href='#_ftn3' class='FootnoteRef' epub:type='footnote' style='mso-footnote-id:ftn3' name='_ftnref3' title='' id='_ftnref3'>
                      <span class='MsoFootnoteReference'>
                        <span style='mso-special-character:footnote'/>
                      </span>
