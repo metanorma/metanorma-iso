@@ -36,6 +36,11 @@ module Asciidoctor
         IsoDoc::Iso::PdfConvert.new(doc_extract_attributes(node))
       end
 
+      def sts_converter(node)
+        return nil if node.attr("no-pdf")
+        IsoDoc::Iso::StsConvert.new(html_extract_attributes(node))
+      end
+
       def init(node)
         super
         @amd = %w(amendment technical-corrigendum).include? node.attr("doctype")
@@ -51,6 +56,7 @@ module Asciidoctor
           html_converter(node).convert(@filename + ".xml")
           doc_converter(node).convert(@filename + ".xml")
           pdf_converter(node)&.convert(@filename + ".xml")
+          sts_converter(node)&.convert(@filename + ".xml")
         end
         @log.write(@localdir + @filename + ".err") unless @novalid
         @files_to_delete.each { |f| FileUtils.rm f }

@@ -15,7 +15,7 @@ RSpec.describe Metanorma::Iso::Processor do
 
   it "registers output formats against metanorma" do
     expect(processor.output_formats.sort.to_s).to be_equivalent_to <<~"OUTPUT"
-    [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:pdf, "pdf"], [:rxl, "rxl"], [:xml, "xml"]]
+    [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:pdf, "pdf"], [:rxl, "rxl"], [:sts, "sts.xml"], [:xml, "xml"]]
     OUTPUT
   end
 

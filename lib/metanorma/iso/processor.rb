@@ -24,7 +24,8 @@ module Metanorma
           html: "html",
           html_alt: "alt.html",
           doc: "doc",
-          pdf: "pdf"
+          pdf: "pdf",
+          sts: "sts.xml"
         )
       end
 
@@ -46,6 +47,8 @@ module Metanorma
           IsoDoc::Iso::WordConvert.new(options).convert(outname, isodoc_node)
         when :pdf
           IsoDoc::Iso::PdfConvert.new(options).convert(outname, isodoc_node)
+        when :sts
+          IsoDoc::Iso::StsConvert.new(options).convert(outname, isodoc_node)
         else
           super
         end
