@@ -57,15 +57,15 @@ module Asciidoctor
 
       def replace_automatic_generated_ids_terms
         xmldoc.xpath('//term').each.with_object({}) do |term_node, res|
-          next if AUTOMATIC_GENERATED_ID_REGEXP.match(term_node['id']).nil?
-
           normalize_id_and_memorize(term_node, res, './preferred')
         end
       end
 
       def normalize_id_and_memorize(term_node, res_table, text_selector)
         term_text = normalize_ref_id(term_node.at(text_selector).text)
+                  unless AUTOMATIC_GENERATED_ID_REGEXP.match(term_node['id']).nil?
         term_node['id'] = unique_text_id(term_text)
+                  end
         res_table[term_text] = term_node['id']
       end
 

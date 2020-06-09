@@ -234,11 +234,16 @@ RSpec.describe Asciidoctor::ISO do
 
           == Terms and Definitions
 
-          === name
+          === name identity
+
+          [[name-check]]
+          === name check
 
           paragraph
 
-          term:[name] is a term
+          term:[name check] is a term
+
+          term:[name identity] is a term
 
           Moreover, term:[missing] is a term
         XML
@@ -268,14 +273,23 @@ RSpec.describe Asciidoctor::ISO do
                     </p>
                   </li>
                 </ul>
-                <term id='term-name'>
-                  <preferred>name</preferred>
+                <term id='term-name-identity'>
+  <preferred>name identity</preferred>
+</term>
+                <term id='name-check'>
+                  <preferred>name check</preferred>
                   <definition>
                     <p id='_'>paragraph</p>
                     <p id='_'>
-                      <em>name</em> 
+                      <em>name check</em> 
                        (
-                      <xref target='term-name'/>
+                      <xref target='name-check'/>
+                      ) is a term
+                      </p>
+                      <p id='_'>
+                      <em>name identity</em>
+                       (
+                      <xref target='term-name-identity'/>
                       ) is a term
                       </p>
                       <p id="_">Moreover, (<strong>term “missing” not resolved</strong>) is a term
