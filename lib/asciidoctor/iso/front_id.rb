@@ -75,7 +75,7 @@ module Asciidoctor
         dn = iso_id1(node)
         dn1 = id_stage_prefix(dn, node, false)
         dn2 = id_stage_prefix(dn, node, true)
-        xml.docidentifier dn1, **attr_code(type: "iso")
+        xml.docidentifier dn1, **attr_code(type: "ISO")
         xml.docidentifier id_langsuffix(dn1, node),
           **attr_code(type: "iso-with-lang")
         xml.docidentifier id_langsuffix(dn2, node),

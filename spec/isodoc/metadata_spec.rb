@@ -16,7 +16,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
     <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
     <title type="title-part" language="fr" format="text/plain">Riz</title>
-  <docidentifier type="iso">ISO/PreCD3 17301-1</docidentifier>
+  <docidentifier type="ISO">ISO/PreCD3 17301-1</docidentifier>
   <docidentifier type="iso-with-lang">ISO/PreCD3 17301-1 (E)</docidentifier>
   <docidentifier type="iso-reference">ISO/PreCD3 17301-1:2000 (E)</docidentifier>
   <docidentifier type="iso-tc">17301</docidentifier>
@@ -144,7 +144,7 @@ OUTPUT
     <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
     <title type="title-part" language="fr" format="text/plain">Riz</title>
   </title>
-  <docidentifier type="iso">ISO/IEC/CD 17301-1-3</docidentifier>
+  <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
   <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
   <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
   <docidentifier type="iso-tc">17301</docidentifier>

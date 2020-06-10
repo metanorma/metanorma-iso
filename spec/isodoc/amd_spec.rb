@@ -491,7 +491,7 @@ OUTPUT
     <title language='fr' format='text/plain' type='title-main'>Titre Principal</title>
     <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
     <title language='fr' format='text/plain' type='title-amd'>Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
-    <docidentifier type='iso'>ISO/PreNWIP3 17301-1:2016/Amd.1</docidentifier>
+    <docidentifier type='ISO'>ISO/PreNWIP3 17301-1:2016/Amd.1</docidentifier>
     <docidentifier type='iso-with-lang'>ISO/PreNWIP3 17301-1:2016/Amd.1(E)</docidentifier>
     <docidentifier type='iso-reference'>ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)</docidentifier>
     <docnumber>17301</docnumber>

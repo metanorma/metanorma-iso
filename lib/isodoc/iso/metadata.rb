@@ -53,7 +53,7 @@ module IsoDoc
       end
 
       def docid(isoxml, _out)
-        dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso']"))
+        dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'ISO']"))
         set(:docnumber, dn&.text)
         tcdn = isoxml.xpath(ns("//bibdata/docidentifier[@type = 'iso-tc']"))
         set(:tc_docnumber, tcdn.map { |n| n.text })

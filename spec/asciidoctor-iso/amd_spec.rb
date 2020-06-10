@@ -241,7 +241,7 @@ OUTPUT
   d’échantillon et recommandations relatives aux conditions d’entreposage et
   de transport
 </title>
-    <docidentifier type='iso'>ISO 17301-1:2016/PreNP Amd 1</docidentifier>
+    <docidentifier type='ISO'>ISO 17301-1:2016/PreNP Amd 1</docidentifier>
     <docidentifier type='iso-with-lang'>ISO 17301-1:2016/PreNP Amd 1(E)</docidentifier>
     <docidentifier type='iso-reference'>ISO 17301-1:2016/PreNP Amd 1:2017(E)</docidentifier>
     <docnumber>17301</docnumber>
@@ -332,7 +332,7 @@ Author
 INPUT
  <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
    <bibdata type='standard'>
-     <docidentifier type='iso'>ISO 17301-1:2030/CD Amd 1</docidentifier>
+     <docidentifier type='ISO'>ISO 17301-1:2030/CD Amd 1</docidentifier>
      <docidentifier type='iso-with-lang'>ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
      <docidentifier type='iso-reference'>ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
      <docnumber>17301</docnumber>
@@ -400,7 +400,7 @@ Author
 INPUT
 <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
          <bibdata type='standard'>
-           <docidentifier type='iso'>ISO 17301-1:2030/DAmd 1</docidentifier>
+           <docidentifier type='ISO'>ISO 17301-1:2030/DAmd 1</docidentifier>
            <docidentifier type='iso-with-lang'>ISO 17301-1:2030/DAmd 1(E)</docidentifier>
            <docidentifier type='iso-reference'>ISO 17301-1:2030/DAmd 1(E)</docidentifier>
            <docnumber>17301</docnumber>
@@ -467,7 +467,7 @@ Author
 INPUT
 <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
          <bibdata type='standard'>
-           <docidentifier type='iso'>ISO 17301-1:2030/Amd 1</docidentifier>
+           <docidentifier type='ISO'>ISO 17301-1:2030/Amd 1</docidentifier>
            <docidentifier type='iso-with-lang'>ISO 17301-1:2030/Amd 1(E)</docidentifier>
            <docidentifier type='iso-reference'>ISO 17301-1:2030/Amd 1(E)</docidentifier>
            <docnumber>17301</docnumber>
@@ -535,7 +535,7 @@ Author
 INPUT
 <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
   <bibdata type='standard'>
-    <docidentifier type='iso'>ISO 17301-1:2030/CD Cor.3</docidentifier>
+    <docidentifier type='ISO'>ISO 17301-1:2030/CD Cor.3</docidentifier>
     <docidentifier type='iso-with-lang'>ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
     <docidentifier type='iso-reference'>ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
     <docnumber>17301</docnumber>
@@ -603,7 +603,7 @@ Author
 INPUT
 <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
   <bibdata type='standard'>
-    <docidentifier type='iso'>ISO 17301-1:2030/FDCor.3</docidentifier>
+    <docidentifier type='ISO'>ISO 17301-1:2030/FDCor.3</docidentifier>
     <docidentifier type='iso-with-lang'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
     <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
     <docnumber>17301</docnumber>
@@ -670,7 +670,7 @@ Author
 INPUT
 <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
          <bibdata type='standard'>
-           <docidentifier type='iso'>ISO 17301-1:2030/Cor.3</docidentifier>
+           <docidentifier type='ISO'>ISO 17301-1:2030/Cor.3</docidentifier>
            <docidentifier type='iso-with-lang'>ISO 17301-1:2030/Cor.3(E)</docidentifier>
            <docidentifier type='iso-reference'>ISO 17301-1:2030/Cor.3(E)</docidentifier>
            <docnumber>17301</docnumber>

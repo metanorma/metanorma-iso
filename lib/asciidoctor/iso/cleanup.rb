@@ -53,7 +53,7 @@ module Asciidoctor
       # ISO as a prefix goes first
       def docidentifier_cleanup(xmldoc)
         prefix = get_id_prefix(xmldoc)
-        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso']") or return
+        id = xmldoc.at("//bibdata/docidentifier[@type = 'ISO']") or return
         id.content = id_prefix(prefix, id)
         id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") and
           id.content = id_prefix(prefix, id)

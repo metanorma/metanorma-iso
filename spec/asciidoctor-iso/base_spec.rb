@@ -101,7 +101,7 @@ RSpec.describe Asciidoctor::ISO do
    <title language="fr" format="text/plain" type="title-intro">Introduction Française</title>
    <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
    <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
-         <docidentifier type="iso">ISO/PreWD3 1000-1</docidentifier>
+         <docidentifier type="ISO">ISO/PreWD3 1000-1</docidentifier>
          <docidentifier type='iso-with-lang'>ISO/PreWD3 1000-1(E)</docidentifier>
          <docidentifier type='iso-reference'>ISO/PreWD3 1000-1:2000(E)</docidentifier>
         <docnumber>1000</docnumber>
@@ -192,7 +192,7 @@ RSpec.describe Asciidoctor::ISO do
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="https://www.metanorma.org/ns/iso">
        <bibdata type="standard">
-         <docidentifier type="iso">ISO/IEC/IETF/TR 1000-1-1:2001</docidentifier>
+         <docidentifier type="ISO">ISO/IEC/IETF/TR 1000-1-1:2001</docidentifier>
          <docidentifier type='iso-with-lang'>ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
          <docidentifier type='iso-reference'>ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
@@ -304,7 +304,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
     <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO/DTS 1000.2</docidentifier>
+  <docidentifier type="ISO">ISO/DTS 1000.2</docidentifier>
   <docidentifier type='iso-with-lang'>ISO/DTS 1000.2(F)</docidentifier>
   <docidentifier type='iso-reference'>ISO/DTS 1000.2(F)</docidentifier>
   <docnumber>1000</docnumber>
@@ -370,7 +370,7 @@ OUTPUT
     INPUT
 <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO 1000</docidentifier>
+  <docidentifier type="ISO">ISO 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
   <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
   <docnumber>1000</docnumber>
@@ -436,7 +436,7 @@ OUTPUT
     INPUT
 <iso-standard xmlns="https://www.metanorma.org/ns/iso">
 <bibdata type="standard">
-  <docidentifier type="iso">ISO 1000</docidentifier>
+  <docidentifier type="ISO">ISO 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
   <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
   <docnumber>1000</docnumber>
