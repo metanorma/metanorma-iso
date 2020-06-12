@@ -532,7 +532,7 @@
   </define>
   <define name="LocalityType">
     <data type="string">
-      <param name="pattern">section|clause|part|paragraph|chapter|page|whole|table|annex|figure|note|list|example|volume|issue|time|locality:[a-zA-Z0-9_]+</param>
+      <param name="pattern">section|clause|part|paragraph|chapter|page|whole|table|annex|figure|note|list|example|volume|issue|time|anchor|locality:[a-zA-Z0-9_]+</param>
     </data>
   </define>
   <define name="referenceFrom">
