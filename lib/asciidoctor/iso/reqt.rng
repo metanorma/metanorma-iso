@@ -31,7 +31,20 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="number"/>
+    </optional>
+    <optional>
       <attribute name="subsequence"/>
+    </optional>
+    <optional>
+      <attribute name="keep-with-next">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="keep-lines-together">
+        <data type="boolean"/>
+      </attribute>
     </optional>
     <attribute name="id">
       <data type="ID"/>
@@ -138,6 +151,16 @@
     </optional>
     <optional>
       <attribute name="exclude">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="keep-with-next">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="keep-lines-together">
         <data type="boolean"/>
       </attribute>
     </optional>
