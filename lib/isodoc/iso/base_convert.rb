@@ -226,6 +226,19 @@ module IsoDoc
                           "formula", t["unnumbered"])
         end
       end
+
+      def formula_where(dl, out)
+        return if dl.nil?
+        return super unless (dl&.xpath(ns("./dt"))&.size == 1 && 
+          dl&.at(ns("./dd"))&.elements&.size == 1 &&
+          dl&.at(ns("./dd/p")))
+        out.span **{ class: "zzMoveToFollowing" } do |s|
+          s << "#{@where_lbl} "
+          dl.at(ns("./dt")).children.each { |n| parse(n, s) }
+          s << " "
+        end
+        parse(dl.at(ns("./dd/p")), out)
+      end
     end
   end
 end
