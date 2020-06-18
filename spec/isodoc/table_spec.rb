@@ -87,11 +87,11 @@ RSpec.describe IsoDoc do
           <td style='text-align:left;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>Arborio</td>
           <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>
             Drago
-            <a href='#tableD-1a' class='TableFootnoteRef'>a)</a>
+            <a href='#tableD-1a' class='TableFootnoteRef'>a</a>
           </td>
           <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>
             Balilla
-            <a href='#tableD-1a' class='TableFootnoteRef'>a)</a>
+            <a href='#tableD-1a' class='TableFootnoteRef'>a</a>
           </td>
           <td style='text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;;text-align:center;vertical-align:middle;' scope='col'>Thaibonnet</td>
         </tr>
@@ -138,7 +138,7 @@ RSpec.describe IsoDoc do
               <div id='fn:tableD-1a'>
                 <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55' class='TableFootnote'>
                   <span>
-                    <span id='tableD-1a' class='TableFootnoteRef'>a)</span>
+                    <span id='tableD-1a' class='TableFootnoteRef'>a</span>
                     &#xA0;
                   </span>
                   Parboiled rice.
@@ -233,8 +233,8 @@ OUTPUT
                      </tr>
                      <tr>
                        <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Arborio</td>
-                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Drago<a href="#tableD-1a" class="TableFootnoteRef">a)</a></td>
-                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Balilla<a href="#tableD-1a" class="TableFootnoteRef">a)</a></td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Drago<a href="#tableD-1a" class="TableFootnoteRef">a</a></td>
+                       <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Balilla<a href="#tableD-1a" class="TableFootnoteRef">a</a></td>
                        <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;" valign="middle">Thaibonnet</td>
                      </tr>
                    </thead>
@@ -271,7 +271,7 @@ OUTPUT
                    <tr><td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;"><div id="" class="Note">
                      <p class="Note"><span class="note_label">NOTE</span><span style="mso-tab-count:1">&#xA0; </span>This is a table about rice</p>
                    </div><div class="TableFootnote"><div><a name="ftntableD-1a" id="ftntableD-1a"></a>
-         <p class="TableFootnote"><a name="_0fe65e9a-5531-408e-8295-eeff35f41a55" id="_0fe65e9a-5531-408e-8295-eeff35f41a55"></a><span><span class="TableFootnoteRef"><a name="tableD-1a" id="tableD-1a"></a>a)</span><span style="mso-tab-count:1">&#xA0; </span></span>Parboiled rice.</p>
+         <p class="TableFootnote"><a name="_0fe65e9a-5531-408e-8295-eeff35f41a55" id="_0fe65e9a-5531-408e-8295-eeff35f41a55"></a><span><span class="TableFootnoteRef"><a name="tableD-1a" id="tableD-1a"></a>a</span><span style="mso-tab-count:1">&#xA0; </span></span>Parboiled rice.</p>
        </div></div></td></tr></tfoot>
 
 
