@@ -303,11 +303,11 @@ RSpec.describe IsoDoc do
                  <h1 class="ForewordTitle">Foreword</h1>
                  <p>
          <a href="#N">Figure 1</a>
-         <a href="#note1">Figure 1-1</a>
-         <a href="#note2">Figure 1-2</a>
+         <a href="#note1">Figure 1 a)</a>
+         <a href="#note2">Figure 1 b)</a>
          <a href="#AN">Figure A.1</a>
-         <a href="#Anote1">Figure A.1-1</a>
-         <a href="#Anote2">Figure A.1-2</a>
+         <a href="#Anote1">Figure A.1 a)</a>
+         <a href="#Anote2">Figure A.1 b)</a>
          </p>
                </div>
                <p class="zzSTDTitle1"/>
@@ -323,14 +323,17 @@ RSpec.describe IsoDoc do
              <div id="note1" class="figure">
 
        <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
-       <p class="FigureTitle" style="text-align:center;">Figure 1-1&#160;&#8212; Split-it-right sample divider</p></div>
+       <p class='FigureTitle' style='text-align:center;'>a)&#160;&#8212; Split-it-right sample divider</p>
+       </div>
          <div id="note2" class="figure">
 
        <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
-       <p class="FigureTitle" style="text-align:center;">Figure 1-2&#160;&#8212; Split-it-right sample divider</p></div>
+       <p class='FigureTitle' style='text-align:center;'>b)&#160;&#8212; Split-it-right sample divider</p>
        </div>
-       <p>    <a href="#note1">Figure 1-1</a> <a href="#note2">Figure 1-2</a> </p>
+       <p class='FigureTitle' style='text-align:center;'>Figure 1</p>
          </div>
+       <p>    <a href="#note1">Figure 1 a)</a> <a href="#note2">Figure 1 b)</a> </p>
+               </div>
                </div>
                <br/>
                <div id="annex1" class="Section3">
@@ -349,12 +352,15 @@ RSpec.describe IsoDoc do
              <div id="Anote1" class="figure">
 
        <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
-       <p class="FigureTitle" style="text-align:center;">Figure A.1-1&#160;&#8212; Split-it-right sample divider</p></div>
+       <p class='FigureTitle' style='text-align:center;'>a)&#160;&#8212; Split-it-right sample divider</p>
+       </div>
          <div id="Anote2" class="figure">
 
        <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
-       <p class="FigureTitle" style="text-align:center;">Figure A.1-2&#160;&#8212; Split-it-right sample divider</p></div>
+       <p class='FigureTitle' style='text-align:center;'>b)&#160;&#8212; Split-it-right sample divider</p>
        </div>
+       <p class='FigureTitle' style='text-align:center;'>Figure A.1</p>
+         </div>
          </div>
                </div>
              </div>
