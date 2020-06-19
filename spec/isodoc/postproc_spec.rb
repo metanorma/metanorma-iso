@@ -730,7 +730,7 @@ end
       <a name='boilerplate-place' id='boilerplate-place'/>
       Dilbert Associates
     </p>
-    <p align='left' style='text-align:left' class='zzAddress'>
+    <p align='left' style='text-align:left;' class='zzAddress'>
       <a name='boilerplate-address' id='boilerplate-address'/>
       Elbonia 5000
     </p>

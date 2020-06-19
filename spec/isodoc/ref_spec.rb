@@ -142,7 +142,7 @@ RSpec.describe IsoDoc do
                <p id="ISO16634" class="NormRef">ISO 16634:-- (all parts)<a class="FootnoteRef" href="#fn:1"><sup>1</sup></a>, <i>Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</i></p>
                <p id="ISO20483" class="NormRef">ISO 20483:2013-2014, <i>Cereals and pulses</i></p>
                <p id="ref1" class="NormRef">ICC 167, <span style="font-variant:small-caps;">Standard No I.C.C 167</span>. <i>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</i> (see <a href="http://www.icc.or.at">http://www.icc.or.at</a>)</p>
-               <div id="" class="Note">
+               <div class="Note">
                  <p><span class="note_label">NOTE</span>&#160; This is an annotation of ISO 20483:2013-2014</p>
                </div>
              </div>
@@ -151,10 +151,10 @@ RSpec.describe IsoDoc do
                <h1 class="Section3">Bibliography</h1>
                <p id="ISBN" class="Biblio">[1]&#160; <i>Chemicals for analytical laboratory use</i></p>
                <p id="ISSN" class="Biblio">[2]&#160; <i>Instruments for analytical laboratory use</i></p>
-               <div id="" class="Note">
+               <div class="Note">
   <p><span class="note_label">NOTE</span>&#160; This is an annotation of document ISSN.</p>
 </div>
-<div id="" class="Note">
+<div class="Note">
   <p><span class="note_label">NOTE</span>&#160; This is another annotation of document ISSN.</p>
 </div>
                <p id="ISO3696" class="Biblio">[3]&#160; ISO 3696, <i>Water for analytical laboratory use</i></p>

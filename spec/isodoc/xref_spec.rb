@@ -561,7 +561,7 @@ RSpec.describe IsoDoc do
                <p class="zzSTDTitle1"/>
                <div id="scope">
                  <h1>1&#160; Scope</h1>
-                 <div id="N" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (1)</p></div>
+                 <div id="N"><div class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (1)</p></div></div>
                  <p>
                    <a href="#N">Formula (1)</a>
                  </p>
@@ -571,8 +571,8 @@ RSpec.describe IsoDoc do
                <div id="widgets">
                  <h1>3&#160; Widgets</h1>
                  <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
-           <div id="note1" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (2)</p></div>
-           <div id="note2" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (3)</p></div>
+           <div id="note1"><div class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (2)</p></div></div>
+           <div id="note2"><div class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (3)</p></div></div>
          <p>    <a href="#note1">Formula (2)</a> <a href="#note2">Formula (3)</a> </p>
            </div>
                </div>
@@ -587,11 +587,11 @@ RSpec.describe IsoDoc do
   <b/>
 </h1>
                  <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
-           <div id="AN" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.1)</p></div>
+           <div id="AN"><div class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.1)</p></div></div>
            </div>
                  <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
-           <div id="Anote1" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.2)</p></div>
-           <div id="Anote2" class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.3)</p></div>
+           <div id="Anote1"><div class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.2)</p></div></div>
+           <div id="Anote2"><div class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (A.3)</p></div></div>
            </div>
                </div>
              </div>
@@ -807,9 +807,9 @@ RSpec.describe IsoDoc do
                </div>
                <div id="terms"><h1>2&#160; </h1>
        <p class="TermNum" id="_waxy_rice">2.1</p><p class="Terms" style="text-align:left;">waxy rice</p>
-       <div class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div><p class="TermNum" id="_nonwaxy_rice">2.2</p><p class="Terms" style="text-align:left;">nonwaxy rice</p>
-       <div class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div>
-       <div class="Note"><p>Note 2 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div></div>
+       <div id="note1" class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div><p class="TermNum" id="_nonwaxy_rice">2.2</p><p class="Terms" style="text-align:left;">nonwaxy rice</p>
+       <div id="note2" class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div>
+       <div id="note3" class="Note"><p>Note 2 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div></div>
              </div>
            </body>
        </html>

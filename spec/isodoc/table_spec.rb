@@ -128,7 +128,7 @@ RSpec.describe IsoDoc do
         </tr>
         <tr>
           <td colspan='5' style='border-top:0pt;border-bottom:solid windowtext 1.5pt;'>
-            <div id='' class='Note'>
+            <div class='Note'>
               <p>
                 <span class='note_label'>NOTE</span>
                 &#xA0; This is a table about rice
@@ -268,7 +268,7 @@ OUTPUT
                        <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">2,26</td>
                        <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">6,06</td>
                      </tr>
-                   <tr><td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;"><div id="" class="Note">
+                   <tr><td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;"><div class="Note">
                      <p class="Note"><span class="note_label">NOTE</span><span style="mso-tab-count:1">&#xA0; </span>This is a table about rice</p>
                    </div><div class="TableFootnote"><div><a name="ftntableD-1a" id="ftntableD-1a"></a>
          <p class="TableFootnote"><a name="_0fe65e9a-5531-408e-8295-eeff35f41a55" id="_0fe65e9a-5531-408e-8295-eeff35f41a55"></a><span><span class="TableFootnoteRef"><a name="tableD-1a" id="tableD-1a"></a>a</span><span style="mso-tab-count:1">&#xA0; </span></span>Parboiled rice.</p>
