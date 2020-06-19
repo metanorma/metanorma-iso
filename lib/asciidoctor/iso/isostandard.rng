@@ -363,6 +363,9 @@
           </attribute>
         </optional>
         <optional>
+          <attribute name="number"/>
+        </optional>
+        <optional>
           <attribute name="subsequence"/>
         </optional>
         <optional>

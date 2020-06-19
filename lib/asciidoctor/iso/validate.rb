@@ -171,10 +171,7 @@ module Asciidoctor
       def bibitem_validate(xmldoc)
         xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
           found = false
-          b.xpath("./note").each do |n|
-            found = true if /^ISO DATE:/.match n.text
-          end
-          found or
+          b.xpath("./note[@type = 'ISO DATE']") or
             @log.add("Style", b,
                      "Reference #{b&.at("./@id")&.text} does not have an "\
                      "associated footnote indicating unpublished status")
