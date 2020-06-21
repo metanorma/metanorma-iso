@@ -37,18 +37,25 @@ module Metanorma
         Metanorma::Input::Asciidoc.new.process(file, filename, @asciidoctor_backend)
       end
 
-      def output(isodoc_node, outname, format, options={})
+      def use_presentation_xml(ext)
+        return true if :html_alt
+        super
+      end
+
+      def output(isodoc_node, inname, outname, format, options={})
         case format
         when :html
-          IsoDoc::Iso::HtmlConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Iso::HtmlConvert.new(options).convert(outname, isodoc_node, nil, inname)
         when :html_alt
-          IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true)).convert(outname, isodoc_node)
+          IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true)).convert(outname, isodoc_node, nil, inname)
         when :doc
-          IsoDoc::Iso::WordConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Iso::WordConvert.new(options).convert(outname, isodoc_node, nil, inname)
         when :pdf
-          IsoDoc::Iso::PdfConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Iso::PdfConvert.new(options).convert(outname, isodoc_node, nil, inname)
         when :sts
-          IsoDoc::Iso::StsConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Iso::StsConvert.new(options).convert(outname, isodoc_node, nil, inname)
+        when :presentation
+          IsoDoc::Iso::PresentationXMLConvert.new(options).convert(outname, isodoc_node, nil, inname)
         else
           super
         end
