@@ -11,10 +11,17 @@ module IsoDoc
         @meta = Metadata.new(lang, script, labels)
       end
 
-      def convert1(docxml, filename, dir)
+      def xref_init(lang, script, klass, labels, options)
+        @xrefs = Xref.new(lang, script, klass, labels, options)
+      end
+
+      def amd(docxml)
         doctype = docxml&.at(ns("//bibdata/ext/doctype"))&.text
-        @amd = %w(amendment technical-corrigendum).include? doctype
-        if @amd
+        %w(amendment technical-corrigendum).include? doctype
+      end
+
+      def convert1(docxml, filename, dir)
+        if amd(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
           @suppressheadingnumbers = true
         end
@@ -62,12 +69,12 @@ module IsoDoc
       end
 
       def prefix_container(container, linkend, target)
-        delim = anchor(target, :type) == "listitem" ? " " : ", "
-        l10n(anchor(container, :xref) + delim + linkend)
+        delim = @xrefs.anchor(target, :type) == "listitem" ? " " : ", "
+        l10n(@xrefs.anchor(container, :xref) + delim + linkend)
       end
 
       def example_span_label(node, div, name)
-        n = get_anchors[node["id"]]
+        n = @xrefs.get[node["id"]]
         div.span **{ class: "example_label" } do |p|
           lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @example_lbl :
             l10n("#{@example_lbl} #{n[:label]}")
@@ -139,12 +146,6 @@ module IsoDoc
         ""
       end
 
-      def reference_names(ref)
-        super
-        @anchors[ref["id"]] = { xref: @anchors[ref["id"]][:xref].
-                                sub(/ \(All Parts\)/i, "") }
-      end
-
       def cleanup(docxml)
         super
         table_th_center(docxml)
@@ -200,17 +201,17 @@ module IsoDoc
         div << " &mdash; "
       end
 
-       def figure_name_parse(node, div, name)
-      lbl = anchor(node['id'], :label, false)
-      lbl = nil if labelled_ancestor(node) && node.ancestors("figure").empty?
-      return if lbl.nil? && name.nil?
-      div.p **{ class: "FigureTitle", style: "text-align:center;" } do |p|
-        figname = node.parent.name == "figure" ? "" : "#{@figure_lbl} "
-        lbl.nil? or p << l10n("#{figname}#{lbl}")
-        name and !lbl.nil? and p << "&nbsp;&mdash; "
-        name and name.children.each { |n| parse(n, div) }
+      def figure_name_parse(node, div, name)
+        lbl = @xrefs.anchor(node['id'], :label, false)
+        lbl = nil if labelled_ancestor(node) && node.ancestors("figure").empty?
+        return if lbl.nil? && name.nil?
+        div.p **{ class: "FigureTitle", style: "text-align:center;" } do |p|
+          figname = node.parent.name == "figure" ? "" : "#{@figure_lbl} "
+          lbl.nil? or p << l10n("#{figname}#{lbl}")
+          name and !lbl.nil? and p << "&nbsp;&mdash; "
+          name and name.children.each { |n| parse(n, div) }
+        end
       end
-    end
     end
   end
 end

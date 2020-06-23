@@ -1,8 +1,8 @@
 module IsoDoc
   module Iso
-    module BaseConvert
-      def anchor_names(docxml)
-        if @amd
+    class Xref < IsoDoc::Xref
+      def parse(docxml)
+        if @klass.amd(docxml)
           back_anchor_names(docxml)
           note_anchor_names(docxml.xpath(ns("//annex//table | //annex//figure")))
           note_anchor_names(docxml.xpath(ns("//annex")))
@@ -33,7 +33,7 @@ module IsoDoc
 
       def appendix_names(clause, num)
         clause.xpath(ns("./appendix")).each_with_index do |c, i|
-          @anchors[c["id"]] = anchor_struct(i + 1, nil, @appendix_lbl, "clause")
+          @anchors[c["id"]] = anchor_struct(i + 1, nil, @labels["appendix"], "clause")
           @anchors[c["id"]][:level] = 2
           @anchors[c["id"]][:container] = clause["id"]
         end
@@ -58,12 +58,12 @@ module IsoDoc
       end
 
       def hierarchical_formula_names(clause, num)
-        c = IsoDoc::Function::XrefGen::Counter.new
+        c = IsoDoc::XrefGen::Counter.new
         clause.xpath(ns(".//formula")).each do |t|
           next if t["id"].nil? || t["id"].empty?
           @anchors[t["id"]] =
             anchor_struct("#{num}#{hiersep}#{c.increment(t).print}", t,
-                          t["inequality"] ? @inequality_lbl : @formula_lbl,
+                          t["inequality"] ? @labels["inequality"] : @labels["formula"],
                           "formula", t["unnumbered"])
         end
       end
@@ -71,13 +71,13 @@ module IsoDoc
       def figure_anchor(t, sublabel, label)
         @anchors[t["id"]] = anchor_struct(
           (sublabel ? "#{label} #{sublabel}" : label),
-          nil, @figure_lbl, "figure", t["unnumbered"])
+          nil, @labels["figure"], "figure", t["unnumbered"])
         sublabel && t["unnumbered"] != "true" and
           @anchors[t["id"]][:label] = sublabel
       end
 
       def sequential_figure_names(clause)
-        c = IsoDoc::Function::XrefGen::Counter.new
+        c = IsoDoc::XrefGen::Counter.new
         j = 0
         clause.xpath(ns(".//figure | .//sourcecode[not(ancestor::example)]")).
           each do |t|
@@ -89,7 +89,7 @@ module IsoDoc
       end
 
       def hierarchical_figure_names(clause, num)
-        c = IsoDoc::Function::XrefGen::Counter.new
+        c = IsoDoc::XrefGen::Counter.new
         j = 0
         clause.xpath(ns(".//figure |  .//sourcecode[not(ancestor::example)]")).
           each do |t|
@@ -99,6 +99,12 @@ module IsoDoc
           next if t["id"].nil? || t["id"].empty?
           figure_anchor(t, sublabel, label)
         end
+      end
+
+      def reference_names(ref)
+        super
+        @anchors[ref["id"]] = { xref: @anchors[ref["id"]][:xref].
+                                sub(/ \(All Parts\)/i, "") }
       end
     end
   end

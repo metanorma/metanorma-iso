@@ -30,9 +30,9 @@ module IsoDoc
       end
 
       def annex(isoxml, out)
-        @amd and @suppressheadingnumbers = @oldsuppressheadingnumbers
+        amd(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
         super
-        @amd and @suppressheadingnumbers = true
+        amd(isoxml) and @suppressheadingnumbers = true
       end
 
       def introduction(isoxml, out)
