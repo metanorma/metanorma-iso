@@ -15,7 +15,7 @@ RSpec.describe Metanorma::Iso::Processor do
 
   it "registers output formats against metanorma" do
     expect(processor.output_formats.sort.to_s).to be_equivalent_to <<~"OUTPUT"
-    [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:pdf, "pdf"], [:rxl, "rxl"], [:sts, "sts.xml"], [:xml, "xml"]]
+    [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:xml, "xml"]]
     OUTPUT
   end
 
@@ -35,7 +35,7 @@ RSpec.describe Metanorma::Iso::Processor do
 
   it "generates HTML from IsoDoc XML" do
     FileUtils.rm_f "test.xml"
-    processor.output(<<~"INPUT", "test.html", :html)
+    processor.output(<<~"INPUT", "test.xml", "test.html", :html)
                <iso-standard xmlns="http://riboseinc.com/isoxml">
        <sections>
        <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
