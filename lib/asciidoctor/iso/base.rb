@@ -57,7 +57,7 @@ module Asciidoctor
           html_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.html")
           doc_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.doc")
           pdf_converter(node)&.convert(@filename + ".presentation.xml", nil, false, "#{@filename}.pdf")
-          sts_converter(node)&.convert(@filename + ".xml")
+          #sts_converter(node)&.convert(@filename + ".xml")
       end
 
       def load_yaml(lang, script)
