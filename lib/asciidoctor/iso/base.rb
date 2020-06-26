@@ -41,26 +41,23 @@ module Asciidoctor
         IsoDoc::Iso::StsConvert.new(html_extract_attributes(node))
       end
 
+      def presentation_xml_converter(node)
+        IsoDoc::Iso::PresentationXMLConvert.new(html_extract_attributes(node))
+      end
+
       def init(node)
         super
         @amd = %w(amendment technical-corrigendum).include? node.attr("doctype")
       end
 
-      def document(node)
-        init(node)
-        ret = makexml(node).to_xml(indent: 2)
-        unless node.attr("nodoc") || !node.attr("docfile")
+      def outputs(node, ret)
           File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
-          html_converter_alt(node).convert(@filename + ".xml")
-          FileUtils.mv "#{@filename}.html", "#{@filename}_alt.html"
-          html_converter(node).convert(@filename + ".xml")
-          doc_converter(node).convert(@filename + ".xml")
-          pdf_converter(node)&.convert(@filename + ".xml")
-          sts_converter(node)&.convert(@filename + ".xml")
-        end
-        @log.write(@localdir + @filename + ".err") unless @novalid
-        @files_to_delete.each { |f| FileUtils.rm f }
-        ret
+          presentation_xml_converter(node).convert(@filename + ".xml")
+          html_converter_alt(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}_alt.html")
+          html_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.html")
+          doc_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.doc")
+          pdf_converter(node)&.convert(@filename + ".presentation.xml", nil, false, "#{@filename}.pdf")
+          #sts_converter(node)&.convert(@filename + ".xml")
       end
 
       def load_yaml(lang, script)
