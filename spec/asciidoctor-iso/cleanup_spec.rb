@@ -547,7 +547,7 @@ RSpec.describe Asciidoctor::ISO do
     INPUT
        #{BLANK_HDR}
        <sections><formula id="_">
-          <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi><mtext>or</mtext><mi>μ</mi><mi>l</mi><mi>a</mi></math></stem>
+          <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi><mi>or</mi><mi>μ</mi><mi>l</mi><mi>a</mi></math></stem>
        <dl id="_">
          <dt>a</dt>
          <dd>

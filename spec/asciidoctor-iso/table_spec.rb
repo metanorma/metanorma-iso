@@ -150,7 +150,7 @@ RSpec.describe Asciidoctor::ISO do
            <tr>
              <th rowspan="2" align="left">Defect</th>
              <th colspan="4" align="center">Maximum permissible mass fraction of defects in husked rice<br/>
-       <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>w</mi><mi>max</mi></msub></math></stem></th>
+       <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>w</mi><mo>max</mo></msub></math></stem></th>
            </tr>
          <tr>
              <th align="left">in husked rice</th>
