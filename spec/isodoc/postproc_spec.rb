@@ -442,42 +442,6 @@ RSpec.describe IsoDoc do
   end
 
 
-  it "moves images in HTML" do
-    FileUtils.rm_f "test.html"
-    FileUtils.rm_rf "_images"
-    FileUtils.rm_rf "test_htmlimages"
-    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface><foreword>
-         <figure id="_">
-         <name>Split-it-right sample divider</name>
-                  <image src="spec/assets/rice_image1.png" id="_" mimetype="image/png"/>
-                  <image src="spec/assets/rice_image1.png" id="_" width="20000" height="300000" mimetype="image/png"/>
-                  <image src="spec/assets/rice_image1.png" id="_" width="99" height="auto" mimetype="image/png"/>
-       </figure>
-       </foreword></preface>
-        </iso-standard>
-    INPUT
-    html = File.read("test.html", encoding: "UTF-8").sub(/^.*<main class="main-section">/m, '<main class="main-section">').
-      sub(%r{</main>.*$}m, "</main>")
-    expect(`ls test_htmlimages`).to match(/\.png$/)
-    expect(xmlpp(html.gsub(/\/[0-9a-f-]+\.png/, "/_.png"))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-             <br />
-             <div>
-               <h1 class="ForewordTitle" id="toc0">Foreword</h1>
-               <div id="_" class="figure">
-               <img src="test_htmlimages/_.png" height="776" width="922" />
-<img src="test_htmlimages/_.png" height="800" width="53" />
-<img src="test_htmlimages/_.png" height="83" width="99" />
-       <p class="FigureTitle" style="text-align:center;">Figure 1&#xA0;&#x2014; Split-it-right sample divider</p></div>
-             </div>
-             <p class="zzSTDTitle1"></p>
-           </main>
-    OUTPUT
-
-  end
-
   it "processes IsoXML terms for HTML" do
     FileUtils.rm_f "test.html"
     FileUtils.rm_f "test.doc"
@@ -618,7 +582,7 @@ RSpec.describe IsoDoc do
          <p class="MsoNormal">Hello</p>
          <p class="MsoNormal">Key</p>
          <p style='page-break-after:avoid;' class='MsoNormal'><b>Key</b></p><div class="figdl" style="page-break-after:avoid;"><table class="figdl"><tr><td valign="top" align="left"><p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal"><p class="MsoNormal">A</p></p></td><td valign="top"><p class="MsoNormal">B</p></td></tr></table></div>
-         <p class="FigureTitle" style="text-align:center;">Figure A.1</p></div>
+         <p class="FigureTitle" style="text-align:center;"/></div>
              </div>
            </div>
 

@@ -113,8 +113,8 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
-  it "cross-references figures" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+   it "cross-references figures (Presentation XML)" do
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
     <foreword id="fwd">
@@ -170,6 +170,137 @@ RSpec.describe IsoDoc do
     </clause>
     </annex>
     </iso-standard>
+    INPUT
+     <?xml version='1.0'?>
+ <iso-standard xmlns='http://riboseinc.com/isoxml'>
+   <preface>
+     <foreword id='fwd'>
+       <p>
+         <xref target='N'/>
+         <xref target='note1'/>
+         <xref target='note2'/>
+         <xref target='AN'/>
+         <xref target='Anote1'/>
+         <xref target='Anote2'/>
+       </p>
+     </foreword>
+   </preface>
+   <sections>
+     <clause id='scope'>
+       <title>Scope</title>
+       <figure id='N'>
+         <name>Figure 1&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+       <p>
+         <xref target='N'/>
+       </p>
+     </clause>
+     <terms id='terms'/>
+     <clause id='widgets'>
+       <title>Widgets</title>
+       <clause id='widgets1'>
+         <figure id='note1'>
+           <name>Figure 2&#xA0;&#x2014; Split-it-right sample divider</name>
+           <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+         </figure>
+         <figure id='note2'>
+           <name>Figure 3&#xA0;&#x2014; Split-it-right sample divider</name>
+           <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+         </figure>
+         <p>
+           <xref target='note1'/>
+           <xref target='note2'/>
+         </p>
+       </clause>
+     </clause>
+   </sections>
+   <annex id='annex1'>
+     <clause id='annex1a'>
+       <figure id='AN'>
+         <name>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+     </clause>
+     <clause id='annex1b'>
+       <figure id='Anote1'>
+         <name>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+       <figure id='Anote2'>
+         <name>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+     </clause>
+   </annex>
+ </iso-standard>
+    OUTPUT
+    end
+
+  it "cross-references figures (HTML)" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+ <iso-standard xmlns='http://riboseinc.com/isoxml'>
+   <preface>
+     <foreword id='fwd'>
+       <p>
+         <xref target='N'/>
+         <xref target='note1'/>
+         <xref target='note2'/>
+         <xref target='AN'/>
+         <xref target='Anote1'/>
+         <xref target='Anote2'/>
+       </p>
+     </foreword>
+   </preface>
+   <sections>
+     <clause id='scope'>
+       <title>Scope</title>
+       <figure id='N'>
+         <name>Figure 1&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+       <p>
+         <xref target='N'/>
+       </p>
+     </clause>
+     <terms id='terms'/>
+     <clause id='widgets'>
+       <title>Widgets</title>
+       <clause id='widgets1'>
+         <figure id='note1'>
+           <name>Figure 2&#xA0;&#x2014; Split-it-right sample divider</name>
+           <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+         </figure>
+         <figure id='note2'>
+           <name>Figure 3&#xA0;&#x2014; Split-it-right sample divider</name>
+           <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+         </figure>
+         <p>
+           <xref target='note1'/>
+           <xref target='note2'/>
+         </p>
+       </clause>
+     </clause>
+   </sections>
+   <annex id='annex1'>
+     <clause id='annex1a'>
+       <figure id='AN'>
+         <name>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+     </clause>
+     <clause id='annex1b'>
+       <figure id='Anote1'>
+         <name>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+       <figure id='Anote2'>
+         <name>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+     </clause>
+   </annex>
+ </iso-standard>
     INPUT
     #{HTML_HDR}
     <br/>
@@ -244,8 +375,8 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
-  it "cross-references subfigures" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+  it "cross-references subfigures (Presentation XML)" do
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
     <foreword id="fwd">
@@ -296,6 +427,125 @@ RSpec.describe IsoDoc do
     </clause>
     </annex>
     </iso-standard>
+    INPUT
+      <?xml version='1.0'?>
+  <iso-standard xmlns='http://riboseinc.com/isoxml'>
+    <preface>
+      <foreword id='fwd'>
+        <p>
+          <xref target='N'/>
+          <xref target='note1'/>
+          <xref target='note2'/>
+          <xref target='AN'/>
+          <xref target='Anote1'/>
+          <xref target='Anote2'/>
+        </p>
+      </foreword>
+    </preface>
+    <sections>
+      <clause id='scope'>
+        <title>Scope</title>
+      </clause>
+      <terms id='terms'/>
+      <clause id='widgets'>
+        <title>Widgets</title>
+        <clause id='widgets1'>
+          <figure id='N'>
+            <name>Figure 1</name>
+            <figure id='note1'>
+              <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
+              <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+            </figure>
+            <figure id='note2'>
+              <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
+              <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+            </figure>
+          </figure>
+          <p>
+            <xref target='note1'/>
+            <xref target='note2'/>
+          </p>
+        </clause>
+      </clause>
+    </sections>
+    <annex id='annex1'>
+      <clause id='annex1a'> </clause>
+      <clause id='annex1b'>
+        <figure id='AN'>
+          <name>Figure A.1</name>
+          <figure id='Anote1'>
+            <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
+            <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+          </figure>
+          <figure id='Anote2'>
+            <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
+            <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+          </figure>
+        </figure>
+      </clause>
+    </annex>
+  </iso-standard>
+    OUTPUT
+  end
+
+  it "cross-references subfigures" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+  <iso-standard xmlns='http://riboseinc.com/isoxml'>
+    <preface>
+      <foreword id='fwd'>
+        <p>
+          <xref target='N'/>
+          <xref target='note1'/>
+          <xref target='note2'/>
+          <xref target='AN'/>
+          <xref target='Anote1'/>
+          <xref target='Anote2'/>
+        </p>
+      </foreword>
+    </preface>
+    <sections>
+      <clause id='scope'>
+        <title>Scope</title>
+      </clause>
+      <terms id='terms'/>
+      <clause id='widgets'>
+        <title>Widgets</title>
+        <clause id='widgets1'>
+          <figure id='N'>
+            <name>Figure 1</name>
+            <figure id='note1'>
+              <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
+              <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+            </figure>
+            <figure id='note2'>
+              <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
+              <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+            </figure>
+          </figure>
+          <p>
+            <xref target='note1'/>
+            <xref target='note2'/>
+          </p>
+        </clause>
+      </clause>
+    </sections>
+    <annex id='annex1'>
+      <clause id='annex1a'> </clause>
+      <clause id='annex1b'>
+        <figure id='AN'>
+          <name>Figure A.1</name>
+          <figure id='Anote1'>
+            <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
+            <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+          </figure>
+          <figure id='Anote2'>
+            <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
+            <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+          </figure>
+        </figure>
+      </clause>
+    </annex>
+  </iso-standard>
     INPUT
         #{HTML_HDR}
     <br/>

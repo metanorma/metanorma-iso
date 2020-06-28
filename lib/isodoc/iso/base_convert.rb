@@ -1,25 +1,10 @@
 require "isodoc"
-require_relative "metadata"
 require_relative "sections"
-require_relative "xref"
 require "fileutils"
 
 module IsoDoc
   module Iso
     module BaseConvert
-      def metadata_init(lang, script, labels)
-        @meta = Metadata.new(lang, script, labels)
-      end
-
-      def xref_init(lang, script, klass, labels, options)
-        @xrefs = Xref.new(lang, script, klass, labels, options)
-      end
-
-      def amd(docxml)
-        doctype = docxml&.at(ns("//bibdata/ext/doctype"))&.text
-        %w(amendment technical-corrigendum).include? doctype
-      end
-
       def convert1(docxml, filename, dir)
         if amd(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
@@ -202,13 +187,13 @@ module IsoDoc
       end
 
       def figure_name_parse(node, div, name)
-        lbl = @xrefs.anchor(node['id'], :label, false)
-        lbl = nil if labelled_ancestor(node) && node.ancestors("figure").empty?
-        return if lbl.nil? && name.nil?
+        #lbl = @xrefs.anchor(node['id'], :label, false)
+        #lbl = nil if labelled_ancestor(node) && node.ancestors("figure").empty?
+        #return if lbl.nil? && name.nil?
         div.p **{ class: "FigureTitle", style: "text-align:center;" } do |p|
-          figname = node.parent.name == "figure" ? "" : "#{@figure_lbl} "
-          lbl.nil? or p << l10n("#{figname}#{lbl}")
-          name and !lbl.nil? and p << "&nbsp;&mdash; "
+          #figname = node.parent.name == "figure" ? "" : "#{@figure_lbl} "
+          #lbl.nil? or p << l10n("#{figname}#{lbl}")
+          #name and !lbl.nil? and p << "&nbsp;&mdash; "
           name and name.children.each { |n| parse(n, div) }
         end
       end

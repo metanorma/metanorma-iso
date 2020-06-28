@@ -1,4 +1,4 @@
-require_relative "base_convert"
+require_relative "init"
 require "isodoc"
 
 module IsoDoc
@@ -8,6 +8,28 @@ module IsoDoc
     # schema encapsulation of the document for validation
     #
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
+      def initialize(options)
+        super
+      end
+
+      def xref_init(lang, script, klass, labels, options)
+        @xrefs = Xref.new(lang, script, klass, labels, options)
+      end
+
+      def figure(docxml)
+        docxml.xpath(ns("//figure")).each do |f|
+          return if labelled_ancestor(f) && f.ancestors("figure").empty?
+          lbl = @xrefs.anchor(f['id'], :label, false) or return
+          unless name = f.at(ns("./name"))
+            f.children.first.previous = "<name></name>"
+            name = f.children.first
+          end
+          figname = f.parent.name == "figure" ? "" : "#{@figure_lbl} "
+          prefix_name(name, "&nbsp;&mdash; ", l10n("#{figname}#{lbl}"))
+        end
+      end
+
+      include Init
     end
   end
 end
