@@ -59,13 +59,9 @@ module IsoDoc
       end
 
       def example_span_label(node, div, name)
-        n = @xrefs.get[node["id"]]
+        return if name.nil?
         div.span **{ class: "example_label" } do |p|
-          lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @example_lbl :
-            l10n("#{@example_lbl} #{n[:label]}")
-          p << lbl
-          name and !lbl.nil? and p << "&nbsp;&mdash; "
-          name and name.children.each { |n| parse(n, div) }
+          name.children.each { |n| parse(n, div) }
         end
       end
 
@@ -187,13 +183,7 @@ module IsoDoc
       end
 
       def figure_name_parse(node, div, name)
-        #lbl = @xrefs.anchor(node['id'], :label, false)
-        #lbl = nil if labelled_ancestor(node) && node.ancestors("figure").empty?
-        #return if lbl.nil? && name.nil?
         div.p **{ class: "FigureTitle", style: "text-align:center;" } do |p|
-          #figname = node.parent.name == "figure" ? "" : "#{@figure_lbl} "
-          #lbl.nil? or p << l10n("#{figname}#{lbl}")
-          #name and !lbl.nil? and p << "&nbsp;&mdash; "
           name and name.children.each { |n| parse(n, div) }
         end
       end

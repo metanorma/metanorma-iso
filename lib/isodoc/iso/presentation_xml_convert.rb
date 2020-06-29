@@ -16,17 +16,18 @@ module IsoDoc
         @xrefs = Xref.new(lang, script, klass, labels, options)
       end
 
-      def figure(docxml)
-        docxml.xpath(ns("//figure")).each do |f|
-          return if labelled_ancestor(f) && f.ancestors("figure").empty?
-          lbl = @xrefs.anchor(f['id'], :label, false) or return
-          unless name = f.at(ns("./name"))
-            f.children.first.previous = "<name></name>"
-            name = f.children.first
-          end
-          figname = f.parent.name == "figure" ? "" : "#{@figure_lbl} "
-          prefix_name(name, "&nbsp;&mdash; ", l10n("#{figname}#{lbl}"))
-        end
+      def figure1(f)
+        return if labelled_ancestor(f) && f.ancestors("figure").empty?
+        lbl = @xrefs.anchor(f['id'], :label, false) or return
+        figname = f.parent.name == "figure" ? "" : "#{@figure_lbl} "
+        prefix_name(f, "&nbsp;&mdash; ", l10n("#{figname}#{lbl}"))
+      end
+
+      def example1(f)
+        n = @xrefs.get[f["id"]]
+        lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @example_lbl :
+          l10n("#{@example_lbl} #{n[:label]}")
+        prefix_name(f, "&nbsp;&mdash; ", lbl)
       end
 
       include Init

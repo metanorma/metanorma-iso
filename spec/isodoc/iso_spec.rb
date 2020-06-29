@@ -163,8 +163,8 @@ RSpec.describe IsoDoc::Iso do
     OUTPUT
 end
 
-  it "processes examples" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+   it "processes examples (Presentation XML)" do
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <preface><foreword>
     <example id="samplecode">
@@ -173,6 +173,33 @@ end
 </example>
     </foreword></preface>
     </iso-standard>
+    INPUT
+    <?xml version='1.0'?>
+<iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <preface>
+    <foreword>
+      <example id='samplecode'>
+        <name>EXAMPLE&#xA0;&#x2014; Title</name>
+        <p>Hello</p>
+      </example>
+    </foreword>
+  </preface>
+</iso-standard>
+OUTPUT
+   end
+
+  it "processes examples (HTML)" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+<iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <preface>
+    <foreword>
+      <example id='samplecode'>
+        <name>EXAMPLE&#xA0;&#x2014; Title</name>
+        <p>Hello</p>
+      </example>
+    </foreword>
+  </preface>
+</iso-standard>
     INPUT
         #{HTML_HDR}
                      <br/>
@@ -189,9 +216,8 @@ end
     OUTPUT
   end
 
-
-  it "processes sequences of examples" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+   it "processes sequences of examples (Presentation XML)" do
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <preface><foreword>
     <example id="samplecode">
@@ -203,6 +229,41 @@ end
 </example>
     </foreword></preface>
     </iso-standard>
+    INPUT
+    <?xml version='1.0'?>
+<iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <preface>
+    <foreword>
+      <example id='samplecode'>
+        <name>EXAMPLE 1</name>
+        <quote>Hello</quote>
+      </example>
+      <example id='samplecode2'>
+        <name>EXAMPLE 2&#xA0;&#x2014; Title</name>
+        <p>Hello</p>
+      </example>
+    </foreword>
+  </preface>
+</iso-standard>
+OUTPUT
+end
+
+  it "processes sequences of examples (HTML)" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    <iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <preface>
+    <foreword>
+      <example id='samplecode'>
+        <name>EXAMPLE 1</name>
+        <quote>Hello</quote>
+      </example>
+      <example id='samplecode2'>
+        <name>EXAMPLE 2&#xA0;&#x2014; Title</name>
+        <p>Hello</p>
+      </example>
+    </foreword>
+  </preface>
+</iso-standard>
     INPUT
         #{HTML_HDR}
              <br/>
@@ -225,14 +286,16 @@ end
 
     it "processes examples (Word)" do
     expect(xmlpp(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>"))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-    <iso-standard xmlns="http://riboseinc.com/isoxml">
-    <preface><foreword>
-    <example id="samplecode">
-    <name>Title</name>
-  <p>Hello</p>
-</example>
-    </foreword></preface>
-    </iso-standard>
+    <iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <preface>
+    <foreword>
+      <example id='samplecode'>
+        <name>EXAMPLE&#xA0;&#x2014; Title</name>
+        <p>Hello</p>
+      </example>
+    </foreword>
+  </preface>
+</iso-standard>
     INPUT
            <body lang="EN-US" link="blue" vlink="#954F72">
            <div class="WordSection1">
@@ -268,17 +331,20 @@ end
 
   it "processes sequences of examples (Word)" do
     expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")).to be_equivalent_to <<~"OUTPUT"
-    <iso-standard xmlns="http://riboseinc.com/isoxml">
-    <preface><foreword>
-    <example id="samplecode">
-  <quote>Hello</quote>
-</example>
-    <example id="samplecode2">
-    <name>Title</name>
-  <p>Hello</p>
-</example>
-    </foreword></preface>
-    </iso-standard>
+    <iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <preface>
+    <foreword>
+      <example id='samplecode'>
+        <name>EXAMPLE 1</name>
+        <quote>Hello</quote>
+      </example>
+      <example id='samplecode2'>
+        <name>EXAMPLE 2&#xA0;&#x2014; Title</name>
+        <p>Hello</p>
+      </example>
+    </foreword>
+  </preface>
+</iso-standard>
     INPUT
            <body lang="EN-US" link="blue" vlink="#954F72">
            <div class="WordSection1">
