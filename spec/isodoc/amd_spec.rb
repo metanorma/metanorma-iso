@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "cross-references notes in amendments" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata> <ext> <doctype>amendment</doctype> </ext> </bibdata>
     <preface>
@@ -56,61 +56,100 @@ RSpec.describe IsoDoc do
     </annex>
     </iso-standard>
     INPUT
-    #{HTML_HDR}
-    <br/>
-               <div>
-                 <h1 class="ForewordTitle">Foreword</h1>
-                 <p>
+                 <!--
            <a href="#N">[N]</a>
            <a href="#note1">[note1]</a>
            <a href="#note2">[note2]</a>
            <a href="#AN">A.1, Note</a>
            <a href="#Anote1">A.2, Note 1</a>
            <a href="#Anote2">A.2, Note 2</a>
-           </p>
-               </div>
-               <p class="zzSTDTitle1"/>
-               <div id="scope">
-                 <h1>Scope</h1>
-                 <div id="N" class="Note">
-                   <p><span class="note_label">NOTE</span>&#160; These results are based on a study carried out on three different types of kernel.</p>
-                 </div>
-                 <p>
-                   <a href="#N">[n]</a>
-                 </p>
-               </div>
-               <div id="terms"><h1/>
-       </div>
-               <div id="widgets">
-                 <h1>Widgets</h1>
-                 <div id="widgets1"><span class='zzMoveToFollowing'><b/></span>
-           <div id="note1" class="Note"><p><span class="note_label">NOTE</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
-           <div id="note2" class="Note"><p><span class="note_label">NOTE</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
-       <p>    <a href="#note1">[note1]</a> <a href="#note2">[note2]</a> </p>
-
-           </div>
-               </div>
-               <br/>
-               <div id="annex1" class="Section3">
-               <h1 class='Annex'>
-               <b>Annex A</b>
-  <br/>
-  (informative)
-  <br/>
-  <br/>
-  <b/>
-</h1>
-                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
-           <div id="AN" class="Note"><p><span class="note_label">NOTE</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
-           </div>
-                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
-           <div id="Anote1" class="Note"><p><span class="note_label">NOTE 1</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
-           <div id="Anote2" class="Note"><p><span class="note_label">NOTE 2</span>&#160; These results are based on a study carried out on three different types of kernel.</p></div>
-           </div>
-               </div>
-             </div>
-           </body>
-       </html>
+           -->
+     <?xml version='1.0'?>
+<iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <bibdata>
+    <ext>
+      <doctype>amendment</doctype>
+    </ext>
+  </bibdata>
+  <preface>
+    <foreword>
+      <p>
+        <xref target='N'/>
+        <xref target='note1'/>
+        <xref target='note2'/>
+        <xref target='AN'/>
+        <xref target='Anote1'/>
+        <xref target='Anote2'/>
+      </p>
+    </foreword>
+  </preface>
+  <sections>
+    <clause id='scope'>
+      <title>Scope</title>
+      <note id='N'>
+        <name>NOTE</name>
+        <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
+          These results are based on a study carried out on three different
+          types of kernel.
+        </p>
+      </note>
+      <p>
+        <xref target='N'/>
+      </p>
+    </clause>
+    <terms id='terms'/>
+    <clause id='widgets'>
+      <title>Widgets</title>
+      <clause id='widgets1'>
+        <note id='note1'>
+          <name>NOTE</name>
+          <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
+            These results are based on a study carried out on three different
+            types of kernel.
+          </p>
+        </note>
+        <note id='note2'>
+          <name>NOTE</name>
+          <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a'>
+            These results are based on a study carried out on three different
+            types of kernel.
+          </p>
+        </note>
+        <p>
+          <xref target='note1'/>
+          <xref target='note2'/>
+        </p>
+      </clause>
+    </clause>
+  </sections>
+  <annex id='annex1'>
+    <clause id='annex1a'>
+      <note id='AN'>
+        <name>NOTE</name>
+        <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
+          These results are based on a study carried out on three different
+          types of kernel.
+        </p>
+      </note>
+    </clause>
+    <clause id='annex1b'>
+      <note id='Anote1'>
+        <name>NOTE 1</name>
+        <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
+          These results are based on a study carried out on three different
+          types of kernel.
+        </p>
+      </note>
+      <note id='Anote2'>
+        <name>NOTE 2</name>
+        <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a'>
+          These results are based on a study carried out on three different
+          types of kernel.
+        </p>
+      </note>
+    </clause>
+  </annex>
+</iso-standard>
     OUTPUT
   end
 

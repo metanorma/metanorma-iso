@@ -44,6 +44,7 @@ RSpec.describe IsoDoc do
           </dd>
         </dl>
         <note id='_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0'>
+        <name>NOTE</name>
           <p id='_511aaa98-4116-42af-8e5b-c87cdf5bfdc8'>
             [durationUnits] is essentially a duration statement without the "P"
             prefix. "P" is unnecessary because between "G" and "U" duration is
@@ -124,7 +125,6 @@ OUTPUT
         </dl>
         <div id='_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0' class='Note'>
           <p>
-            <span class='note_label'>NOTE</span>
             &#160; [durationUnits] is essentially a duration statement without
             the "P" prefix. "P" is unnecessary because between "G" and "U"
             duration is always expressed.
@@ -215,7 +215,7 @@ OUTPUT
                </table>
                <div id='_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0' class='Note'>
                  <p class='Note'>
-                   <span class='note_label'>NOTE</span>
+                   <span class='note_label'/>
                    <span style='mso-tab-count:1'>&#160; </span>
                    [durationUnits] is essentially a duration statement without the "P"
                    prefix. "P" is unnecessary because between "G" and "U" duration is
@@ -270,7 +270,7 @@ OUTPUT
                </span>
                <p id='_1b99995d-ff03-40f5-8f2e-ab9665a69b77'>is the repeatability limit.</p>
 
-           <div id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0" class="Note"><p><span class="note_label">NOTE</span>&#160; [durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p></div>
+           <div id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0" class="Note"><p>&#160; [durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p></div>
            </div>
 
                  <div id="_be9158af-7e93-4ee2-90c5-26d31c181935"><div class="formula"><p><span class="stem">(#(r = 1 %)#)</span>&#160; (1)</p></div></div>

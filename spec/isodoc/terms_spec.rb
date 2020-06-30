@@ -99,12 +99,14 @@ RSpec.describe IsoDoc do
           <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>rice retaining its husk after threshing</p>
         </definition>
         <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74e'>
+<name>Note 1 to entry</name>
           <p id='_19830f33-e46c-42cc-94ca-a5ef101132d5'>
             The starch of waxy rice consists almost entirely of amylopectin. The
             kernels have a tendency to stick together after cooking.
           </p>
         </termnote>
         <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74f'>
+<name>Note 2 to entry</name>
           <ul>
             <li>A</li>
           </ul>
@@ -180,12 +182,14 @@ OUTPUT
           <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>rice retaining its husk after threshing</p>
         </definition>
         <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74e'>
+<name>Note 1 to entry</name>
           <p id='_19830f33-e46c-42cc-94ca-a5ef101132d5'>
             The starch of waxy rice consists almost entirely of amylopectin. The
             kernels have a tendency to stick together after cooking.
           </p>
         </termnote>
         <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74f'>
+<name>Note 2 to entry</name>
           <ul>
             <li>A</li>
           </ul>
@@ -297,12 +301,14 @@ OUTPUT
           <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>rice retaining its husk after threshing</p>
         </definition>
         <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74e'>
+<name>Note 1 to entry</name>
           <p id='_19830f33-e46c-42cc-94ca-a5ef101132d5'>
             The starch of waxy rice consists almost entirely of amylopectin. The
             kernels have a tendency to stick together after cooking.
           </p>
         </termnote>
         <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74f'>
+<name>Note 2 to entry</name>
           <ul>
             <li>A</li>
           </ul>
