@@ -1,6 +1,279 @@
 require "spec_helper"
 
 RSpec.describe IsoDoc do
+  it "renders figures (HTML)" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+ <iso-standard xmlns='http://riboseinc.com/isoxml'>
+   <preface>
+     <foreword id='fwd'>
+       <p>
+       </p>
+     </foreword>
+   </preface>
+   <sections>
+     <clause id='scope'>
+       <title>Scope</title>
+       <figure id='N'>
+         <name>Figure 1&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+       <p>
+       </p>
+     </clause>
+     <terms id='terms'/>
+     <clause id='widgets'>
+       <title>Widgets</title>
+       <clause id='widgets1'>
+         <figure id='note1'>
+           <name>Figure 2&#xA0;&#x2014; Split-it-right sample divider</name>
+           <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+         </figure>
+         <figure id='note2'>
+           <name>Figure 3&#xA0;&#x2014; Split-it-right sample divider</name>
+           <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+         </figure>
+         <p>
+         </p>
+       </clause>
+     </clause>
+   </sections>
+   <annex id='annex1'>
+     <clause id='annex1a'>
+       <figure id='AN'>
+         <name>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</name>
+<image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+     </clause>
+     <clause id='annex1b'>
+       <figure id='Anote1'>
+         <name>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+       <figure id='Anote2'>
+         <name>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</name>
+         <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+       </figure>
+     </clause>
+   </annex>
+ </iso-standard>
+    INPUT
+    #{HTML_HDR}
+    <br/>
+               <div id="fwd">
+                 <h1 class="ForewordTitle">Foreword</h1>
+                 <p>
+           </p>
+               </div>
+               <p class="zzSTDTitle1"/>
+               <div id="scope">
+                 <h1>1&#160; Scope</h1>
+                 <div id="N" class="figure">
+
+         <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+         <p class="FigureTitle" style="text-align:center;">Figure 1&#160;&#8212; Split-it-right sample divider</p></div>
+                 <p>
+                 </p>
+               </div>
+               <div id="terms"><h1>2&#160; </h1>
+       </div>
+               <div id="widgets">
+                 <h1>3&#160; Widgets</h1>
+                 <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
+               <div id="note1" class="figure">
+
+         <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+         <p class="FigureTitle" style="text-align:center;">Figure 2&#160;&#8212; Split-it-right sample divider</p></div>
+           <div id="note2" class="figure">
+
+         <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+         <p class="FigureTitle" style="text-align:center;">Figure 3&#160;&#8212; Split-it-right sample divider</p></div>
+         <p>   </p> 
+           </div>
+               </div>
+               <br/>
+               <div id="annex1" class="Section3">
+               <h1 class='Annex'>
+  <b>Annex A</b>
+  <br/>
+(informative)
+  <br/>
+  <br/>
+  <b/>
+</h1>
+                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
+               <div id="AN" class="figure">
+
+         <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+         <p class="FigureTitle" style="text-align:center;">Figure A.1&#160;&#8212; Split-it-right sample divider</p></div>
+           </div>
+                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
+               <div id="Anote1" class="figure">
+
+         <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+         <p class="FigureTitle" style="text-align:center;">Figure A.2&#160;&#8212; Split-it-right sample divider</p></div>
+           <div id="Anote2" class="figure">
+
+         <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+         <p class="FigureTitle" style="text-align:center;">Figure A.3&#160;&#8212; Split-it-right sample divider</p></div>
+           </div>
+               </div>
+             </div>
+           </body>
+       </html>
+    OUTPUT
+  end
+
+   it "renders subfigures (HTML)" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+  <iso-standard xmlns='http://riboseinc.com/isoxml'>
+    <preface>
+      <foreword id='fwd'>
+        <p>
+          <xref target='N'/>
+          <xref target='note1'/>
+          <xref target='note2'/>
+          <xref target='AN'/>
+          <xref target='Anote1'/>
+          <xref target='Anote2'/>
+        </p>
+      </foreword>
+    </preface>
+    <sections>
+      <clause id='scope'>
+        <title>Scope</title>
+      </clause>
+      <terms id='terms'/>
+      <clause id='widgets'>
+        <title>Widgets</title>
+        <clause id='widgets1'>
+          <figure id='N'>
+            <name>Figure 1</name>
+            <figure id='note1'>
+              <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
+              <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+            </figure>
+            <figure id='note2'>
+              <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
+              <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+            </figure>
+          </figure>
+          <p>
+            <xref target='note1'/>
+            <xref target='note2'/>
+          </p>
+        </clause>
+      </clause>
+    </sections>
+    <annex id='annex1'>
+      <clause id='annex1a'> </clause>
+      <clause id='annex1b'>
+        <figure id='AN'>
+          <name>Figure A.1</name>
+          <figure id='Anote1'>
+            <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
+            <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+          </figure>
+          <figure id='Anote2'>
+            <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
+<image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+          </figure>
+        </figure>
+      </clause>
+    </annex>
+  </iso-standard>
+    INPUT
+    <html lang='en'>
+         <head/>
+         <body lang='en'>
+           <div class='title-section'>
+             <p>&#160;</p>
+           </div>
+           <br/>
+           <div class='prefatory-section'>
+             <p>&#160;</p>
+           </div>
+           <br/>
+           <div class='main-section'>
+             <br/>
+             <div id='fwd'>
+               <h1 class='ForewordTitle'>Foreword</h1>
+               <p>
+                 <a href='#N'/>
+                 <a href='#note1'/>
+                 <a href='#note2'/>
+                 <a href='#AN'/>
+                 <a href='#Anote1'/>
+                 <a href='#Anote2'/>
+               </p>
+             </div>
+             <p class='zzSTDTitle1'/>
+             <div id='scope'>
+               <h1>1&#160; Scope</h1>
+             </div>
+             <div id='terms'>
+               <h1>2&#160; </h1>
+             </div>
+             <div id='widgets'>
+               <h1>3&#160; Widgets</h1>
+               <div id='widgets1'>
+                 <span class='zzMoveToFollowing'>
+                   <b>3.1&#160; </b>
+                 </span>
+                 <div id='N' class='figure'>
+                   <div id='note1' class='figure'>
+                     <img src='rice_images/rice_image1.png' height='auto' width='auto'/>
+                     <p class='FigureTitle' style='text-align:center;'>a)&#160;&#8212; Split-it-right sample divider</p>
+                   </div>
+                   <div id='note2' class='figure'>
+                     <img src='rice_images/rice_image1.png' height='auto' width='auto'/>
+                     <p class='FigureTitle' style='text-align:center;'>b)&#160;&#8212; Split-it-right sample divider</p>
+                   </div>
+                   <p class='FigureTitle' style='text-align:center;'>Figure 1</p>
+                 </div>
+                 <p>
+                   <a href='#note1'/>
+                   <a href='#note2'/>
+                 </p>
+               </div>
+             </div>
+             <br/>
+             <div id='annex1' class='Section3'>
+               <h1 class='Annex'>
+<b>Annex A</b>
+                 <br/>
+                 (informative)
+                 <br/>
+                 <br/>
+                 <b/>
+               </h1>
+               <div id='annex1a'>
+                 <span class='zzMoveToFollowing'>
+                   <b>A.1&#160; </b>
+                 </span>
+               </div>
+               <div id='annex1b'>
+                 <span class='zzMoveToFollowing'>
+                   <b>A.2&#160; </b>
+                 </span>
+                 <div id='AN' class='figure'>
+                   <div id='Anote1' class='figure'>
+                     <img src='rice_images/rice_image1.png' height='auto' width='auto'/>
+                     <p class='FigureTitle' style='text-align:center;'>a)&#160;&#8212; Split-it-right sample divider</p>
+                   </div>
+                   <div id='Anote2' class='figure'>
+                     <img src='rice_images/rice_image1.png' height='auto' width='auto'/>
+                     <p class='FigureTitle' style='text-align:center;'>b)&#160;&#8212; Split-it-right sample divider</p>
+                   </div>
+                   <p class='FigureTitle' style='text-align:center;'>Figure A.1</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+  end
+
    it "processes formulae (Presentation XML)" do
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns="http://riboseinc.com/isoxml">

@@ -56,14 +56,6 @@ RSpec.describe IsoDoc do
     </annex>
     </iso-standard>
     INPUT
-                 <!--
-           <a href="#N">[N]</a>
-           <a href="#note1">[note1]</a>
-           <a href="#note2">[note2]</a>
-           <a href="#AN">A.1, Note</a>
-           <a href="#Anote1">A.2, Note 1</a>
-           <a href="#Anote2">A.2, Note 2</a>
-           -->
      <?xml version='1.0'?>
 <iso-standard xmlns='http://riboseinc.com/isoxml'>
   <bibdata>
@@ -74,12 +66,12 @@ RSpec.describe IsoDoc do
   <preface>
     <foreword>
       <p>
-        <xref target='N'/>
-        <xref target='note1'/>
-        <xref target='note2'/>
-        <xref target='AN'/>
-        <xref target='Anote1'/>
-        <xref target='Anote2'/>
+        <xref target='N'>[N]</xref>
+<xref target='note1'>[note1]</xref>
+<xref target='note2'>[note2]</xref>
+<xref target='AN'>A.1, Note</xref>
+<xref target='Anote1'>A.2, Note 1</xref>
+<xref target='Anote2'>A.2, Note 2</xref>
       </p>
     </foreword>
   </preface>
@@ -94,7 +86,7 @@ RSpec.describe IsoDoc do
         </p>
       </note>
       <p>
-        <xref target='N'/>
+       <xref target='N'>[n]</xref>
       </p>
     </clause>
     <terms id='terms'/>
@@ -116,8 +108,8 @@ RSpec.describe IsoDoc do
           </p>
         </note>
         <p>
-          <xref target='note1'/>
-          <xref target='note2'/>
+        <xref target='note1'>[note1]</xref>
+<xref target='note2'>[note2]</xref>
         </p>
       </clause>
     </clause>
@@ -154,7 +146,7 @@ RSpec.describe IsoDoc do
   end
 
   it "cross-references sections" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata> <ext> <doctype>amendment</doctype> </ext> </bibdata>
       <preface>
@@ -218,80 +210,83 @@ RSpec.describe IsoDoc do
        </bibliography>
        </iso-standard>
     INPUT
-        #{HTML_HDR}
-    <br/>
-    <div>
-    <h1 class="ForewordTitle">Foreword</h1>
-    <p id="A">This is a preamble
-                     <a href='#C'>[C]</a>
-                 <a href='#C1'>[C1]</a>
-                 <a href='#D'>[D]</a>
-                 <a href='#H'>[H]</a>
-                 <a href='#I'>[I]</a>
-                 <a href='#J'>[J]</a>
-                 <a href='#K'>[K]</a>
-                 <a href='#L'>[L]</a>
-                 <a href='#M'>[M]</a>
-                 <a href='#N'>[N]</a>
-                 <a href='#O'>[O]</a>
-                 <a href='#P'>Annex A</a>
-                 <a href='#Q'>A.1</a>
-                 <a href='#Q1'>A.1.1</a>
-                 <a href='#Q2'>Annex A, Appendix 1</a>
-                 <a href='#R'>[R]</a>
-    </p>
-    </div>
-    <br/>
-                 <div class="Section3" id="B">
-                 <h1 class="IntroTitle">Introduction</h1>
-               <div id="C">
-                 <h1>Introduction Subsection</h1>
-        </div>
-        <div id="C1"><span class='zzMoveToFollowing'>
-  <b/>
-</span>
-Text</div>
-             </div>
-    <p class="zzSTDTitle1"/>
-    <div id="D">
-    <h1>Scope</h1>
-      <p id="E">Text</p>
-    </div>
-    <div>
-    <h1>Normative references</h1>
-    </div>
-               <div id="M">
-                 <h1>Clause 4</h1>
-                 <div id="N">
-          <h1>Introduction</h1>
-        </div>
-                 <div id="O">
-          <h1>Clause 4.2</h1>
-        </div>
-               </div>
-               <br/>
-               <div id="P" class="Section3">
-                 <h1 class="Annex"><b>Annex A</b><br/>(normative)<br/><br/><b>Annex</b></h1>
-                 <div id="Q">
-          <h2>A.1&#160; Annex A.1</h2>
-          <div id="Q1">
-          <h3>A.1.1&#160; Annex A.1a</h3>
-          </div>
-        </div>
-       <div id="Q2">
-        <h2>Appendix 1&#160; An Appendix</h2>
-        </div>
-               </div>
-               <br/>
-               <div>
-                 <h1 class="Section3">Bibliography</h1>
-                 <div>
-                   <h2 class="Section3">Bibliography Subsection</h2>
-                 </div>
-               </div>
-             </div>
-           </body>
-       </html>
+    <?xml version='1.0'?>
+       <iso-standard xmlns='http://riboseinc.com/isoxml'>
+         <bibdata>
+           <ext>
+             <doctype>amendment</doctype>
+           </ext>
+         </bibdata>
+         <preface>
+           <foreword obligation='informative'>
+             <title>Foreword</title>
+             <p id='A'>
+               This is a preamble
+               <xref target='C'>[C]</xref>
+               <xref target='C1'>[C1]</xref>
+               <xref target='D'>[D]</xref>
+               <xref target='H'>[H]</xref>
+               <xref target='I'>[I]</xref>
+               <xref target='J'>[J]</xref>
+               <xref target='K'>[K]</xref>
+               <xref target='L'>[L]</xref>
+               <xref target='M'>[M]</xref>
+               <xref target='N'>[N]</xref>
+               <xref target='O'>[O]</xref>
+               <xref target='P'>Annex A</xref>
+               <xref target='Q'>A.1</xref>
+               <xref target='Q1'>A.1.1</xref>
+               <xref target='Q2'>Annex A, Appendix 1</xref>
+               <xref target='R'>[R]</xref>
+             </p>
+           </foreword>
+           <introduction id='B' obligation='informative'>
+             <title>Introduction</title>
+             <clause id='C' inline-header='false' obligation='informative'>
+               <title>Introduction Subsection</title>
+             </clause>
+             <clause id='C1' inline-header='false' obligation='informative'>Text</clause>
+           </introduction>
+         </preface>
+         <sections>
+           <clause id='D' obligation='normative'>
+             <title>Scope</title>
+             <p id='E'>Text</p>
+           </clause>
+           <clause id='M' inline-header='false' obligation='normative'>
+             <title>Clause 4</title>
+             <clause id='N' inline-header='false' obligation='normative'>
+               <title>Introduction</title>
+             </clause>
+             <clause id='O' inline-header='false' obligation='normative'>
+               <title>Clause 4.2</title>
+             </clause>
+           </clause>
+         </sections>
+         <annex id='P' inline-header='false' obligation='normative'>
+           <title>Annex</title>
+           <clause id='Q' inline-header='false' obligation='normative'>
+             <title>Annex A.1</title>
+             <clause id='Q1' inline-header='false' obligation='normative'>
+               <title>Annex A.1a</title>
+             </clause>
+           </clause>
+           <appendix id='Q2' inline-header='false' obligation='normative'>
+             <title>An Appendix</title>
+           </appendix>
+         </annex>
+         <bibliography>
+           <references id='R' obligation='informative' normative='true'>
+             <title>Normative References</title>
+           </references>
+           <clause id='S' obligation='informative'>
+             <title>Bibliography</title>
+             <references id='T' obligation='informative' normative='false'>
+               <title>Bibliography Subsection</title>
+             </references>
+           </clause>
+         </bibliography>
+       </iso-standard>
     OUTPUT
   end
 

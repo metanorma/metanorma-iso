@@ -92,8 +92,8 @@ RSpec.describe IsoDoc::Iso do
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <preface><foreword>
   <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
-  <eref bibitemid="IEV"/>
-  <eref bibitemid="ISO20483"/>
+  <eref bibitemid="IEV">IEV</eref>
+  <eref bibitemid="ISO20483">ISO 20483</eref>
   </p>
     </foreword></preface>
     <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>

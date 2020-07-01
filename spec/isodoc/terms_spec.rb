@@ -80,7 +80,7 @@ RSpec.describe IsoDoc do
           <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'>
             <locality type='clause'>
               <referenceFrom>3.1</referenceFrom>
-            </locality>
+            </locality>ISO 7301:2011, 3.1
           </origin>
           <modification>
             <p id='_e73a417d-ad39-417d-a4c8-20e4e2529489'>
@@ -125,7 +125,7 @@ RSpec.describe IsoDoc do
           <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'>
             <locality type='clause'>
               <referenceFrom>3.1</referenceFrom>
-            </locality>
+            </locality>ISO 7301:2011, 3.1
           </origin>
         </termsource>
       </term>
@@ -164,7 +164,7 @@ OUTPUT
           <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'>
             <locality type='clause'>
               <referenceFrom>3.1</referenceFrom>
-            </locality>
+            </locality>ISO 7301:2011, 3.1
           </origin>
           <modification>
             <p id='_e73a417d-ad39-417d-a4c8-20e4e2529489'>The term "cargo rice" is shown as deprecated, and Note 1 to entry
@@ -208,7 +208,7 @@ OUTPUT
           <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'>
             <locality type='clause'>
               <referenceFrom>3.1</referenceFrom>
-            </locality>
+            </locality>ISO 7301:2011, 3.1
           </origin>
         </termsource>
       </term>
@@ -283,7 +283,7 @@ OUTPUT
           <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'>
             <locality type='clause'>
               <referenceFrom>3.1</referenceFrom>
-            </locality>
+            </locality>ISO 7301:2011, 3.1
           </origin>
           <modification>
             <p id='_e73a417d-ad39-417d-a4c8-20e4e2529489'>The term "cargo rice" is shown as deprecated, and Note 1 to entry
@@ -327,7 +327,7 @@ OUTPUT
           <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'>
             <locality type='clause'>
               <referenceFrom>3.1</referenceFrom>
-            </locality>
+            </locality>ISO 7301:2011, 3.1
           </origin>
         </termsource>
       </term>

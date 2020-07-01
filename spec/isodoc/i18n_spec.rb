@@ -433,8 +433,8 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
-  it "processes Simplified Chinese" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+   it "processes Simplified Chinese (Presentation XML)" do
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>zh</language>
@@ -513,6 +513,186 @@ RSpec.describe IsoDoc do
        </bibliography>
        </iso-standard>
         INPUT
+         <?xml version='1.0'?>
+       <iso-standard xmlns='http://riboseinc.com/isoxml'>
+         <bibdata>
+           <language>zh</language>
+           <script>Hans</script>
+         </bibdata>
+         <preface>
+           <foreword obligation='informative'>
+             <title>Foreword</title>
+             <p id='A'>This is a preamble</p>
+           </foreword>
+           <introduction id='B' obligation='informative'>
+             <title>Introduction</title>
+             <clause id='C' inline-header='false' obligation='informative'>
+               <title>Introduction Subsection</title>
+             </clause>
+             <p>This is patent boilerplate</p>
+           </introduction>
+         </preface>
+         <sections>
+           <clause id='D' obligation='normative'>
+             <title>Scope</title>
+             <p id='E'>
+               <eref type='inline' bibitemid='ISO712'>
+                 <locality type='table'>
+                   <referenceFrom>1</referenceFrom>
+                   <referenceTo>1</referenceTo>
+                 </locality>
+                 ISO 712&#x3001;&#x7B2C;1&#x2013;1&#x8868;
+               </eref>
+             </p>
+           </clause>
+           <clause id='H' obligation='normative'>
+             <title>Terms, definitions, symbols and abbreviated terms</title>
+             <terms id='I' obligation='normative'>
+               <title>Normal Terms</title>
+               <term id='J'>
+                 <preferred>Term2</preferred>
+               </term>
+             </terms>
+             <definitions id='K'>
+               <dl>
+                 <dt>Symbol</dt>
+                 <dd>Definition</dd>
+               </dl>
+             </definitions>
+           </clause>
+           <definitions id='L'>
+             <dl>
+               <dt>Symbol</dt>
+               <dd>Definition</dd>
+             </dl>
+           </definitions>
+           <clause id='M' inline-header='false' obligation='normative'>
+             <title>Clause 4</title>
+             <clause id='N' inline-header='false' obligation='normative'>
+               <title>Introduction</title>
+             </clause>
+             <clause id='O' inline-header='false' obligation='normative'>
+               <title>Clause 4.2</title>
+             </clause>
+           </clause>
+         </sections>
+         <annex id='P' inline-header='false' obligation='normative'>
+           <title>Annex</title>
+           <clause id='Q' inline-header='false' obligation='normative'>
+             <title>Annex A.1</title>
+             <clause id='Q1' inline-header='false' obligation='normative'>
+               <title>Annex A.1a</title>
+             </clause>
+           </clause>
+           <appendix id='Q2' inline-header='false' obligation='normative'>
+             <title>An Appendix</title>
+           </appendix>
+         </annex>
+         <bibliography>
+           <references id='R' obligation='informative' normative='true'>
+             <title>Normative References</title>
+             <bibitem id='ISO712' type='standard'>
+               <title format='text/plain'>Cereals and cereal products</title>
+               <docidentifier>ISO 712</docidentifier>
+               <contributor>
+                 <role type='publisher'/>
+                 <organization>
+                   <abbreviation>ISO</abbreviation>
+                 </organization>
+               </contributor>
+             </bibitem>
+           </references>
+           <clause id='S' obligation='informative'>
+             <title>Bibliography</title>
+             <references id='T' obligation='informative' normative='false'>
+               <title>Bibliography Subsection</title>
+             </references>
+           </clause>
+         </bibliography>
+       </iso-standard>
+OUTPUT
+   end
+
+  it "processes Simplified Chinese" do
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+      <language>zh</language>
+      <script>Hans</script>
+      </bibdata>
+      <preface>
+      <foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="A">This is a preamble</p>
+       </foreword>
+        <introduction id="B" obligation="informative"><title>Introduction</title><clause id="C" inline-header="false" obligation="informative">
+         <title>Introduction Subsection</title>
+       </clause>
+       <p>This is patent boilerplate</p>
+       </introduction></preface><sections>
+       <clause id="D" obligation="normative">
+         <title>Scope</title>
+         <p id="E"><eref type="inline" bibitemid="ISO712"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality>ISO 712&#x3001;&#x7B2C;1&#x2013;1&#x8868;</eref></p>
+       </clause>
+
+       <clause id="H" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="I" obligation="normative">
+         <title>Normal Terms</title>
+         <term id="J">
+         <preferred>Term2</preferred>
+       </term>
+       </terms>
+       <definitions id="K">
+         <dl>
+         <dt>Symbol</dt>
+         <dd>Definition</dd>
+         </dl>
+       </definitions>
+       </clause>
+       <definitions id="L">
+         <dl>
+         <dt>Symbol</dt>
+         <dd>Definition</dd>
+         </dl>
+       </definitions>
+       <clause id="M" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
+         <title>Introduction</title>
+       </clause>
+       <clause id="O" inline-header="false" obligation="normative">
+         <title>Clause 4.2</title>
+       </clause></clause>
+
+       </sections><annex id="P" inline-header="false" obligation="normative">
+         <title>Annex</title>
+         <clause id="Q" inline-header="false" obligation="normative">
+         <title>Annex A.1</title>
+         <clause id="Q1" inline-header="false" obligation="normative">
+         <title>Annex A.1a</title>
+         </clause>
+       </clause>
+              <appendix id="Q2" inline-header="false" obligation="normative">
+         <title>An Appendix</title>
+       </appendix>
+       </annex><bibliography><references id="R" obligation="informative" normative="true">
+         <title>Normative References</title>
+         <bibitem id="ISO712" type="standard">
+  <title format="text/plain">Cereals and cereal products</title>
+  <docidentifier>ISO 712</docidentifier>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+</bibitem>
+       </references><clause id="S" obligation="informative">
+         <title>Bibliography</title>
+         <references id="T" obligation="informative" normative="false">
+         <title>Bibliography Subsection</title>
+       </references>
+       </clause>
+       </bibliography>
+       </iso-standard>
+        INPUT
     #{HTML_HDR.gsub(/"en"/, '"zh"')}
                      <br/>
              <div>
@@ -531,7 +711,7 @@ RSpec.describe IsoDoc do
              <div id="D">
                <h1>1&#160; &#33539;&#22260;</h1>
                <p id="E">
-                 <a href="#ISO712">ISO 712&#12289;&#31532;1&#8211;<referenceto>1</referenceto>&#34920;</a>
+                <a href='#ISO712'>ISO 712&#12289;&#31532;1&#8211;1&#34920;</a>
                </p>
              </div>
              <div>
