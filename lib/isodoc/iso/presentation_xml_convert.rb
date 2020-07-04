@@ -12,6 +12,13 @@ module IsoDoc
         super
       end
 
+      def convert1(docxml, filename, dir)
+        if amd(docxml)
+          @suppressheadingnumbers = true
+        end
+        super
+      end
+
       def xref_init(lang, script, klass, labels, options)
         @xrefs = Xref.new(lang, script, klass, labels, options)
       end

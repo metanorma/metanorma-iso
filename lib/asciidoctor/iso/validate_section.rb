@@ -48,11 +48,9 @@ module Asciidoctor
       def seqcheck(names, msg, accepted)
         n = names.shift 
         return [] if n.nil?
-        #unless accepted.include? n
         test = accepted.map { |a| n.at(a) }
         if test.all? { |a| a.nil? }
           @log.add("Style", nil, msg)
-          #names = []
         end
         names
       end
@@ -63,35 +61,19 @@ module Asciidoctor
         [
           {
             msg: "Initial section must be (content) Foreword",
-            #val:  [{ tag: "foreword", title: "Foreword" }],
             val:  ["./self::foreword"]
           },
           {
             msg: "Prefatory material must be followed by (clause) Scope",
-            #val:  [{ tag: "introduction", title: "Introduction" },
-                   #{ tag: "clause", title: "Scope" }],
             val: ["./self::introduction", "./self::clause[@type = 'scope']" ]
           },
           {
             msg: "Prefatory material must be followed by (clause) Scope",
-            #val: [{ tag: "clause", title: "Scope" }],
             val: ["./self::clause[@type = 'scope']" ]
           },
           {
             msg: "Normative References must be followed by "\
             "Terms and Definitions",
-            #val: [
-              #{ tag: "terms", title: "Terms and definitions" },
-              #{ tag: "clause", title: "Terms and definitions" },
-              #{
-                #tag: "terms",
-                #title: "Terms, definitions, symbols and abbreviated terms",
-              #},
-              #{
-                #tag: "clause",
-                #title: "Terms, definitions, symbols and abbreviated terms",
-              #},
-            #],
             val: ["./self::terms | .//terms"]
           },
       ].freeze
@@ -103,44 +85,34 @@ module Asciidoctor
 
       def sections_sequence_validate(root)
         names = root.xpath(SECTIONS_XPATH)
-        #names = f.map { |s| { tag: s.name, title: s&.at("./title")&.text } }
         names = seqcheck(names, SEQ[0][:msg], SEQ[0][:val]) 
         n = names[0]
         names = seqcheck(names, SEQ[1][:msg], SEQ[1][:val]) 
-        #if n == { tag: "introduction", title: "Introduction" }
         if n&.at("./self::introduction")
           names = seqcheck(names, SEQ[2][:msg], SEQ[2][:val]) 
         end
         names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val]) 
         n = names.shift
-        #if n == { tag: "definitions", title: nil }
         if n&.at("./self::definitions")
           n = names.shift
         end
         if n.nil? || n.name != "clause"
           @log.add("Style", nil, "Document must contain at least one clause")
         end
-        #n[:tag] == "clause" ||
-        #require "byebug"; byebug
         n&.at("./self::clause") ||
           @log.add("Style", nil, "Document must contain clause after "\
                "Terms and Definitions")
-        #n == { tag: "clause", title: "Scope" } &&
         n&.at("./self::clause[@type = 'scope']") &&
           @log.add("Style", nil, "Scope must occur before Terms and Definitions")
         n = names.shift 
-        #while n[:tag] == "clause"
         while n&.name == "clause"
-          #n[:title] == "Scope" &&
           n&.at("./self::clause[@type = 'scope']")
             @log.add("Style", nil, "Scope must occur before Terms and Definitions")
           n = names.shift 
         end
-        #unless n[:tag] == "annex" || n[:tag] == "references"
         unless %w(annex references).include? n&.name
           @log.add("Style", nil, "Only annexes and references can follow clauses")
         end
-        #while n[:tag] == "annex"
         while n&.name == "annex"
           n = names.shift
           if n.nil?
@@ -148,13 +120,11 @@ module Asciidoctor
                  "Normative References")
           end
         end
-        #n == { tag: "references", title: "Normative References" } ||
         n&.at("./self::references[@normative = 'true']") ||
           @log.add("Style", nil, "Document must include (references) "\
                "Normative References")
         n = names&.shift
         n&.at("./self::references[@normative = 'false']") ||
-        #n == { tag: "references", title: "Bibliography" } ||
           @log.add("Style", nil, "Final section must be (references) Bibliography")
         names.empty? ||
           @log.add("Style", nil, "There are sections after the final Bibliography")
