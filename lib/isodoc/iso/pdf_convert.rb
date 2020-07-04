@@ -15,7 +15,7 @@ module IsoDoc
 
       def pdf_stylesheet(docxml)
         case doctype = docxml&.at(ns("//bibdata/ext/doctype"))&.text
-        when "amendment", "technical-corrigendum" then "itu.recommendation-annex.xsl"
+        when "amendment", "technical-corrigendum" then "iso.amendment.xsl"
         else
           "iso.international-standard.xsl"
         end
