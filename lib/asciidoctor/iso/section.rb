@@ -29,7 +29,7 @@ module Asciidoctor
       end
 
       def scope_parse(attrs, xml, node)
-        xml.clause **attr_code(attrs) do |xml_section|
+        xml.clause **attr_code(attrs.merge(type: "scope")) do |xml_section|
           xml_section.title { |t| t << "Scope" }
           content = node.content
           xml_section << content

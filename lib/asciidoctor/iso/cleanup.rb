@@ -11,13 +11,13 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       PRE_NORMREF_FOOTNOTES = "//preface//fn | "\
-        "//clause[title = 'Scope']//fn".freeze
+        "//clause[@type = 'scope']//fn".freeze
 
       NORMREF_FOOTNOTES =
         "//references[@normative = 'true']//fn".freeze
 
       POST_NORMREF_FOOTNOTES =
-        "//sections//clause[not(title = 'Scope')]//fn | "\
+        "//sections//clause[not(@type = 'scope')]//fn | "\
         "//annex//fn | "\
         "//references[@normative = 'false']//fn".freeze
 

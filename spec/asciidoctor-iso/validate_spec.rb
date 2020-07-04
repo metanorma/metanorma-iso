@@ -527,10 +527,23 @@ it "Style warning if Symbols and Abbreviated Terms contains extraneous matter" d
     expect(File.read("test.err")).to include "Symbols and Abbreviated Terms can only contain a definition list"
 end
 
+it "Warning if missing foreword" do
+    FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  #{VALIDATING_BLANK_HDR}
+
+  == Symbols and Abbreviated Terms
+
+  Paragraph
+  INPUT
+    expect(File.read("test.err")).to include "Initial section must be (content) Foreword"
+end
+
 it "Warning if do not start with scope or introduction" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
+  Foreword
 
   == Symbols and Abbreviated Terms
 
@@ -594,7 +607,7 @@ it "Warning if there are no clauses in the document" do
   == Symbols and Abbreviated Terms
 
   INPUT
-    expect(File.read("test.err")).to include "Document must contain clause after Terms and Definitions"
+    expect(File.read("test.err")).to include "Document must contain at least one clause"
 end
 
 it "Warning if scope occurs after Terms and Definitions" do

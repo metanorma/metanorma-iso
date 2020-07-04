@@ -961,9 +961,6 @@
   </define>
   <define name="content-subsection">
     <element name="clause">
-      <optional>
-        <attribute name="type"/>
-      </optional>
       <ref name="Content-Section"/>
     </element>
   </define>
@@ -993,6 +990,9 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
       <ref name="section-title"/>
     </optional>
     <group>
@@ -1011,9 +1011,6 @@
   </define>
   <define name="clause">
     <element name="clause">
-      <optional>
-        <attribute name="type"/>
-      </optional>
       <ref name="Clause-Section"/>
     </element>
   </define>
@@ -1041,6 +1038,9 @@
           <value>informative</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="type"/>
     </optional>
     <optional>
       <ref name="section-title"/>
