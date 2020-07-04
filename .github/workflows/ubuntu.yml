@@ -29,14 +29,17 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          architecture: 'x64'
       - name: Update gems
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
       - name: Install PlantUML
-        run: |
-          sudo bash -c "curl -L https://github.com/riboseinc/plantuml-install/raw/master/ubuntu.sh | bash"
+        uses: nick-invision/retry@v1
+        with:
+          polling_interval_seconds: 5
+          timeout_minutes: 5
+          max_attempts: 3
+          command: sudo bash -c "curl -L https://github.com/metanorma/plantuml-install/raw/master/ubuntu.sh | bash"
       - name: Run specs
         run: |
           bundle exec rake
