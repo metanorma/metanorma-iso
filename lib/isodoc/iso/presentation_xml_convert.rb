@@ -14,9 +14,19 @@ module IsoDoc
 
       def convert1(docxml, filename, dir)
         if amd(docxml)
+          @oldsuppressheadingnumbers = @suppressheadingnumbers
           @suppressheadingnumbers = true
         end
         super
+      end
+
+      def annex(isoxml)
+        amd(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
+        super
+        isoxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
+          clause1(f)
+        end
+        amd(isoxml) and @suppressheadingnumbers = true
       end
 
       def xref_init(lang, script, klass, labels, options)
@@ -53,7 +63,8 @@ module IsoDoc
         return "" if type == "anchor"
         subsection = from&.text&.match(/\./)
         type = type.downcase
-        return l10n(eref_localities1_zh(target, type, from, to, delim)) if lang == "zh"
+        lang == "zh" and
+          return l10n(eref_localities1_zh(target, type, from, to, delim))
         ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         loc = @locality[type] || type.sub(/^locality:/, "").capitalize
         ret += " #{loc}" unless subsection && type == "clause" ||
@@ -73,6 +84,24 @@ module IsoDoc
         return if name.nil?
         div.span **{ class: "example_label" } do |p|
           name.children.each { |n| parse(n, div) }
+        end
+      end
+
+      def clause1(f)
+        if !f.at(ns("./title")) &&
+            !%w(sections preface bibliography).include?(f.parent.name)
+          f["inline-header"] = "true"
+        end
+        super
+      end
+
+      def clause(docxml)
+        docxml.xpath(ns("//clause[not(ancestor::boilerplate)]"\
+                        "[not(ancestor::annex)] | "\
+                        "//terms | //definitions | //references | "\
+                        "//preface/introduction[clause]")).
+        each do |f|
+          clause1(f)
         end
       end
 

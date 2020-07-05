@@ -66,7 +66,7 @@ RSpec.describe Asciidoctor::ISO do
   <title>Acknowledgements</title>
 </acknowledgements>
 </preface><sections>
-       <clause id="_" obligation="normative">
+       <clause id="_" obligation="normative" type="scope">
          <title>Scope</title>
          <p id="_">Text</p>
        </clause>
@@ -88,7 +88,9 @@ standardization at the following addresses:</p>
          <preferred>Term1</preferred>
        </term>
        </terms>
-       <clause id="_" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title><terms id="_" obligation="normative">
+       <clause id="_" obligation="normative"><title>Terms, definitions, symbols and abbreviated terms</title>
+<terms id="_" obligation="normative">
+<title>Normal Terms</title>
        <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
 <p id='_'>
   ISO and IEC maintain terminological databases for use in
@@ -108,13 +110,14 @@ standardization at the following addresses:</p>
     </p>
   </li>
 </ul>
-         <title>Normal Terms</title>
          <term id="term-term2">
          <preferred>Term2</preferred>
        </term>
        </terms>
-       <definitions id="_"><title>Symbols and Abbreviated Terms</title></definitions></clause>
-       <definitions id="_"><title>Symbols and Abbreviated Terms</title></definitions>
+       <definitions id="_" obligation="normative">
+<title>Symbols and Abbreviated Terms</title></definitions></clause>
+       <definitions id="_" obligation="normative">
+<title>Symbols and Abbreviated Terms</title></definitions>
        <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="_" inline-header="false" obligation="normative">
          <title>Introduction</title>
        </clause>

@@ -96,7 +96,7 @@ RSpec.describe IsoDoc::Iso do
   <eref bibitemid="ISO20483">ISO 20483</eref>
   </p>
     </foreword></preface>
-    <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
+    <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>1<tab/>Normative References</title>
           <bibitem type="international-standard" id="IEV">
   <title format="text/plain" language="en" script="Latn">Electropedia: 
   The World's Online Electrotechnical Vocabulary</title>
@@ -153,8 +153,8 @@ RSpec.describe IsoDoc::Iso do
              </div>
              <p class="zzSTDTitle1"/>
              <div>
-               <h1>1&#160; Normative references</h1>
-               <p id="ISO20483" class="NormRef">ISO 20483, <i> Cereals and pulses</i></p>
+               <h1>1&#160; Normative References</h1>
+               <p id="ISO20483" class="NormRef">ISO 20483, <i>Cereals and pulses</i></p>
              </div>
            </div>
          </body>

@@ -77,7 +77,7 @@ RSpec.describe IsoDoc do
   </preface>
   <sections>
     <clause id='scope'>
-      <title>Scope</title>
+      <title depth="1">Scope</title>
       <note id='N'>
         <name>NOTE</name>
         <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
@@ -91,8 +91,8 @@ RSpec.describe IsoDoc do
     </clause>
     <terms id='terms'/>
     <clause id='widgets'>
-      <title>Widgets</title>
-      <clause id='widgets1'>
+      <title depth="1">Widgets</title>
+      <clause id='widgets1' inline-header="true">
         <note id='note1'>
           <name>NOTE</name>
           <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
@@ -115,7 +115,13 @@ RSpec.describe IsoDoc do
     </clause>
   </sections>
   <annex id='annex1'>
-    <clause id='annex1a'>
+  <title>
+  <strong>Annex A</strong>
+  <br/>
+  (informative)
+</title>
+<clause id='annex1a' inline-header='true'>
+<title>A.1</title>
       <note id='AN'>
         <name>NOTE</name>
         <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
@@ -124,7 +130,8 @@ RSpec.describe IsoDoc do
         </p>
       </note>
     </clause>
-    <clause id='annex1b'>
+    <clause id='annex1b' inline-header="true">
+     <title>A.2</title>
       <note id='Anote1'>
         <name>NOTE 1</name>
         <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
@@ -176,7 +183,7 @@ RSpec.describe IsoDoc do
        </clause>
        <clause id="C1" inline-header="false" obligation="informative">Text</clause>
        </introduction></preface><sections>
-       <clause id="D" obligation="normative">
+       <clause id="D" obligation="normative" type="scope">
          <title>Scope</title>
          <p id="E">Text</p>
        </clause>
@@ -241,48 +248,67 @@ RSpec.describe IsoDoc do
              </p>
            </foreword>
            <introduction id='B' obligation='informative'>
-             <title>Introduction</title>
+             <title depth="1">Introduction</title>
              <clause id='C' inline-header='false' obligation='informative'>
-               <title>Introduction Subsection</title>
+               <title depth="1">Introduction Subsection</title>
              </clause>
-             <clause id='C1' inline-header='false' obligation='informative'>Text</clause>
+             <clause id='C1' inline-header='true' obligation='informative'>Text</clause>
            </introduction>
          </preface>
          <sections>
-           <clause id='D' obligation='normative'>
-             <title>Scope</title>
+           <clause id='D' obligation='normative' type="scope">
+             <title depth="1">Scope</title>
              <p id='E'>Text</p>
            </clause>
            <clause id='M' inline-header='false' obligation='normative'>
-             <title>Clause 4</title>
+             <title depth="1">Clause 4</title>
              <clause id='N' inline-header='false' obligation='normative'>
-               <title>Introduction</title>
+               <title depth="1">Introduction</title>
              </clause>
              <clause id='O' inline-header='false' obligation='normative'>
-               <title>Clause 4.2</title>
+               <title depth="1">Clause 4.2</title>
              </clause>
            </clause>
          </sections>
          <annex id='P' inline-header='false' obligation='normative'>
-           <title>Annex</title>
+         <title>
+  <strong>Annex A</strong>
+  <br/>
+  (normative)
+  <br/>
+  <br/>
+  <strong>Annex</strong>
+</title>
            <clause id='Q' inline-header='false' obligation='normative'>
-             <title>Annex A.1</title>
+           <title depth='2'>
+  A.1
+  <tab/>
+  Annex A.1
+</title>
              <clause id='Q1' inline-header='false' obligation='normative'>
-               <title>Annex A.1a</title>
+             <title depth='3'>
+  A.1.1
+  <tab/>
+  Annex A.1a
+</title>
              </clause>
            </clause>
            <appendix id='Q2' inline-header='false' obligation='normative'>
-             <title>An Appendix</title>
+           <title depth='2'>
+  Appendix 1
+  <tab/>
+  An Appendix
+</title>
            </appendix>
          </annex>
          <bibliography>
            <references id='R' obligation='informative' normative='true'>
-             <title>Normative References</title>
+             <title depth="1">Normative References</title>
            </references>
            <clause id='S' obligation='informative'>
-             <title>Bibliography</title>
+             <title depth="1">Bibliography</title>
              <references id='T' obligation='informative' normative='false'>
-               <title>Bibliography Subsection</title>
+               <title depth="2">Bibliography Subsection</title>
              </references>
            </clause>
          </bibliography>
@@ -291,7 +317,7 @@ RSpec.describe IsoDoc do
   end
 
     it "processes section names" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata> <ext> <doctype>amendment</doctype> </ext> </bibdata>
       <boilerplate>
@@ -334,7 +360,7 @@ RSpec.describe IsoDoc do
          <title>Acknowledgements</title>
        </acknowledgements>
         </preface><sections>
-       <clause id="D" obligation="normative">
+       <clause id="D" obligation="normative" type="scope">
          <title>Scope</title>
          <p id="E">Text</p>
        </clause>
@@ -356,7 +382,6 @@ RSpec.describe IsoDoc do
          <clause id="Q1" inline-header="false" obligation="normative">
          <title>Annex A.1a</title>
          </clause>
-         <references id="Q2" normative="false"><title>Annex Bibliography</title></references>
        </clause>
        </annex>
        <annex id="P1" inline-header="false" obligation="normative">
@@ -372,6 +397,112 @@ RSpec.describe IsoDoc do
        </bibliography>
        </iso-standard>
     INPUT
+    presxml = <<~OUTPUT
+    <iso-standard xmlns='http://riboseinc.com/isoxml'>
+         <bibdata>
+           <ext>
+             <doctype>amendment</doctype>
+           </ext>
+         </bibdata>
+         <boilerplate>
+           <copyright-statement>
+             <clause>
+               <title>Copyright</title>
+             </clause>
+           </copyright-statement>
+           <license-statement>
+             <clause>
+               <title>License</title>
+             </clause>
+           </license-statement>
+           <legal-statement>
+             <clause>
+               <title>Legal</title>
+             </clause>
+           </legal-statement>
+           <feedback-statement>
+             <clause>
+               <title>Feedback</title>
+             </clause>
+           </feedback-statement>
+         </boilerplate>
+         <preface>
+           <abstract obligation='informative'>
+             <title>Foreword</title>
+           </abstract>
+           <foreword obligation='informative'>
+             <title>Foreword</title>
+             <p id='A'>This is a preamble</p>
+           </foreword>
+           <introduction id='B' obligation='informative'>
+             <title depth='1'>Introduction</title>
+             <clause id='C' inline-header='false' obligation='informative'>
+               <title depth='1'>Introduction Subsection</title>
+             </clause>
+           </introduction>
+           <clause id='B1'>
+             <title depth='1'>Dedication</title>
+           </clause>
+           <clause id='B2'>
+             <title depth='1'>Note to reader</title>
+           </clause>
+           <acknowledgements obligation='informative'>
+             <title>Acknowledgements</title>
+           </acknowledgements>
+         </preface>
+         <sections>
+           <clause id='D' obligation='normative' type="scope">
+             <title depth='1'>Scope</title>
+             <p id='E'>Text</p>
+           </clause>
+           <clause id='M' inline-header='false' obligation='normative'>
+             <title depth='1'>Clause 4</title>
+             <clause id='N' inline-header='false' obligation='normative'>
+               <title depth='1'>Introduction</title>
+             </clause>
+             <clause id='O' inline-header='false' obligation='normative'>
+               <title depth='1'>Clause 4.2</title>
+             </clause>
+             <clause id='O1' inline-header='true' obligation='normative'> </clause>
+           </clause>
+         </sections>
+         <annex id='P' inline-header='false' obligation='normative'>
+           <title>
+             <strong>Annex A</strong>
+             <br/>
+             (normative)
+             <br/>
+             <br/>
+             <strong>Annex</strong>
+           </title>
+           <clause id='Q' inline-header='false' obligation='normative'>
+             <title depth='2'>A.1<tab/>Annex A.1</title>
+             <clause id='Q1' inline-header='false' obligation='normative'>
+               <title depth='3'>A.1.1<tab/>Annex A.1a</title>
+             </clause>
+           </clause>
+         </annex>
+         <annex id='P1' inline-header='false' obligation='normative'>
+           <title>
+             <strong>Annex B</strong>
+             <br/>
+             (normative)
+           </title>
+         </annex>
+         <bibliography>
+           <references id='R' obligation='informative' normative='true'>
+             <title depth='1'>Normative References</title>
+           </references>
+           <clause id='S' obligation='informative'>
+             <title depth='1'>Bibliography</title>
+             <references id='T' obligation='informative' normative='false'>
+               <title depth='2'>Bibliography Subsection</title>
+             </references>
+           </clause>
+         </bibliography>
+       </iso-standard>
+       OUTPUT
+    html = <<~OUTPUT
     <html xmlns:epub='http://www.idpf.org/2007/ops' lang='en'>
   <head/>
   <body lang='en'>
@@ -440,7 +571,7 @@ RSpec.describe IsoDoc do
         <p id='E'>Text</p>
       </div>
       <div>
-        <h1>Normative references</h1>
+        <h1>Normative References</h1>
       </div>
       <div id='M'>
         <h1>Clause 4</h1>
@@ -451,9 +582,6 @@ RSpec.describe IsoDoc do
           <h1>Clause 4.2</h1>
         </div>
         <div id='O1'>
-        <span class='zzMoveToFollowing'>
-  <b/>
-</span>
         </div>
       </div>
       <br/>
@@ -471,9 +599,6 @@ RSpec.describe IsoDoc do
           <div id='Q1'>
             <h3>A.1.1&#160; Annex A.1a</h3>
           </div>
-          <div>
-          <h3>A.1.2&#160; Annex Bibliography</h3>
-          </div>
         </div>
       </div>
       <br/>
@@ -482,9 +607,6 @@ RSpec.describe IsoDoc do
         <b>Annex B</b>
 <br/>
 (normative)
-          <br/>
-          <br/>
-          <b/>
         </h1>
       </div>
       <br/>
@@ -498,6 +620,8 @@ RSpec.describe IsoDoc do
   </body>
 </html>
 OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
     end
 
      it "processes IsoXML metadata" do

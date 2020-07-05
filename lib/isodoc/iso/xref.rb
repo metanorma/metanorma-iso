@@ -21,6 +21,8 @@ module IsoDoc
       # we can reference 0-number clauses in introduction
       def introduction_names(clause)
         return if clause.nil?
+        clause.at(ns("./clause")) and @anchors[clause["id"]] = 
+          { label: "0", level: 1, xref: clause.at(ns("./title"))&.text, type: "clause" }
         clause.xpath(ns("./clause")).each_with_index do |c, i|
           section_names1(c, "0.#{i + 1}", 2)
         end

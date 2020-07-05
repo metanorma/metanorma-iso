@@ -2,6 +2,7 @@ require "spec_helper"
 require "fileutils"
 
 RSpec.describe IsoDoc do
+
   it "generates file based on string input" do
     FileUtils.rm_f "test.doc"
     FileUtils.rm_f "test.html"
@@ -105,10 +106,10 @@ RSpec.describe IsoDoc do
     <annex id="P" inline-header="false" obligation="normative">
          <title>Annex</title>
          <clause id="Q" inline-header="false" obligation="normative">
-         <title>Annex A.1</title>
+         <title>A.1<tab/>Annex A.1</title>
          </clause>
                 <appendix id="Q2" inline-header="false" obligation="normative">
-         <title>An Appendix</title>
+         <title>Appendix 1<tab/>An Appendix</title>
        </appendix>
     </annex>
     </iso-standard>
@@ -120,7 +121,7 @@ RSpec.describe IsoDoc do
                <p class="zzSTDTitle1"></p>
                <p class="MsoNormal"><br clear="all" style="mso-special-character:line-break;page-break-before:always"/></p>
                <div class="Section3"><a name="P" id="P"></a>
-                 <h1 class="Annex"><b>Annex A</b><br/>(normative)<br/><br/><b>Annex</b></h1>
+                 <h1 class="Annex">Annex</h1>
                  <div><a name="Q" id="Q"></a>
             <p class="h2Annex">A.1<span style="mso-tab-count:1">&#xA0; </span>Annex A.1</p>
        </div>
@@ -138,9 +139,11 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
     <sections>
-    <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
+    <terms id="_terms_and_definitions" obligation="normative"><title>1<tab/>Terms and Definitions</title>
 
-<term id="paddy1"><preferred>paddy</preferred>
+<term id="paddy1">
+<name>1.1</name>
+<preferred>paddy</preferred>
 <definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></definition>
 <termsource status="modified">
   <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality>ISO 7301:2011, 3.1</origin>
@@ -190,14 +193,14 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-               <clause id="A" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
+               <clause id="A" inline-header="false" obligation="normative"><title>1<tab/>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
 
-         <title>Introduction<bookmark id="Q"/> to this<fn reference="1">
+         <title>1.1<tab/>Introduction<bookmark id="Q"/> to this<fn reference="1">
   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
 </fn></title>
        </clause>
        <clause id="O" inline-header="false" obligation="normative">
-         <title>Clause 4.2</title>
+         <title>1.2<tab/>Clause 4.2</title>
          <p>A<fn reference="1">
   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
 </fn></p>
@@ -263,21 +266,21 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
-  it "reorders footnote numbers in HTML" do
+  it "reorders footnote numbers" do
     FileUtils.rm_f "test.html"
-    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", <<~"INPUT", false)
+    input = <<~INPUT
         <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-               <clause id="A" inline-header="false" obligation="normative"><title>Clause 4</title><fn reference="3">
+               <clause id="A" inline-header="false" obligation="normative"><title>1<tab/>Clause 4</title><fn reference="3">
   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
 </fn><clause id="N" inline-header="false" obligation="normative">
 
-         <title>Introduction to this<fn reference="2">
+         <title>1.1<tab/>Introduction to this<fn reference="2">
   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
 </fn></title>
        </clause>
        <clause id="O" inline-header="false" obligation="normative">
-         <title>Clause 4.2</title>
+         <title>1.2<tab/>Clause 4.2</title>
          <p>A<fn reference="1">
   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
 </fn></p>
@@ -285,6 +288,7 @@ RSpec.describe IsoDoc do
         </sections>
         </iso-standard>
     INPUT
+    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", input, false)
     html = File.read("test.html", encoding: "UTF-8").sub(/^.*<main class="main-section">/m, '<main xmlns:epub="epub" class="main-section">').
       sub(%r{</main>.*$}m, "</main>")
     expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -315,30 +319,9 @@ RSpec.describe IsoDoc do
 
            </main>
     OUTPUT
-  end
 
-    it "renders footnote numbers in Word" do
     FileUtils.rm_f "test.doc"
-    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", <<~"INPUT", false)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <sections>
-               <clause id="A" inline-header="false" obligation="normative"><title>Clause 4</title><fn reference="3">
-  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
-</fn><clause id="N" inline-header="false" obligation="normative">
-
-         <title>Introduction to this<fn reference="2">
-  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
-</fn></title>
-       </clause>
-       <clause id="O" inline-header="false" obligation="normative">
-         <title>Clause 4.2</title>
-         <p>A<fn reference="1">
-  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p>
-</fn></p>
-       </clause></clause>
-        </sections>
-        </iso-standard>
-    INPUT
+    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css", wordintropage: "spec/assets/wordintro.html"}).convert("test", input, false)
     html = File.read("test.doc", encoding: "UTF-8").sub(/^.*<div class="WordSection3"/m, '<body xmlns:epub="epub"><div class="WordSection3"').
       sub(%r{</body>.*$}m, "</body>").gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
     expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -450,7 +433,9 @@ RSpec.describe IsoDoc do
     <sections>
     <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
 
-<term id="paddy1"><preferred>paddy</preferred>
+<term id="paddy1">
+<name>1.1</name>
+<preferred>paddy</preferred>
 <domain>rice</domain>
 <definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></definition>
 <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f892">
@@ -472,7 +457,9 @@ RSpec.describe IsoDoc do
   </modification>
 </termsource></term>
 
-<term id="paddy"><preferred>paddy</preferred><admitted>paddy rice</admitted>
+<term id="paddy">
+<name>1.2</name>
+<preferred>paddy</preferred><admitted>paddy rice</admitted>
 <admitted>rough rice</admitted>
 <deprecates>cargo rice</deprecates>
 <definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></definition>
@@ -525,14 +512,6 @@ RSpec.describe IsoDoc do
                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
              </p>
              <div class="Section3"><a name="P" id="P"></a>
-             <h1 class='Annex'>
-  <b>Annex A</b>
-  <br/>
-  (normative)
-  <br/>
-  <br/>
-  <b/>
-</h1>
                <div class="example"><a name="_63112cbc-cde0-435f-9553-e0b8c4f5851c" id="_63112cbc-cde0-435f-9553-e0b8c4f5851c"></a>
                  <p class="example"><span style="mso-tab-count:1">&#xA0; </span>'1M', '01M', and '0001M' all describe the calendar month January.</p>
                </div>
@@ -570,14 +549,6 @@ RSpec.describe IsoDoc do
                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
              </p>
              <div class="Section3"><a name="P" id="P"></a>
-             <h1 class='Annex'>
-  <b>Annex A</b>
-  <br/>
-  (normative)
-  <br/>
-  <br/>
-  <b/>
-</h1>
                <div class="figure"><a name="samplecode" id="samplecode"></a>
          <p class="MsoNormal">Hello</p>
          <p class="MsoNormal">Key</p>
@@ -649,8 +620,8 @@ end
   it "processes boilerplate (Word)" do
      FileUtils.rm_f "test.doc"
     FileUtils.rm_f "test.html"
-    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
+    input = <<~INPUT
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
         <status><stage>30</stage></status>
         </bibdata>
@@ -677,14 +648,17 @@ end
 
 </boilerplate>
 </iso-standard>
-    INPUT
+INPUT
+presxml = input
+expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
     expect(xmlpp(word.sub(%r{^.*<div class="boilerplate-copyright">}m, '<div class="boilerplate-copyright">').sub(%r{</div>.*$}m, '</div></div>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <div class='boilerplate-copyright'>
   <div>
     <p class='zzCopyright'>
       <a name='boilerplate-year' id='boilerplate-year'/>
-      <span><b/></span>Published in Elbonia
+      Published in Elbonia
     </p>
     <p class='zzCopyright1'>
       <a name='boilerplate-message' id='boilerplate-message'/>

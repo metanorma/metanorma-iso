@@ -83,7 +83,7 @@ end
         <title>Introduction Subsection</title>
       </clause>
     </clause>
-    <clause id='_' obligation='normative'>
+    <clause id='_' obligation='normative' type="scope">
       <title>Scope</title>
       <p id='_'>Text</p>
     </clause>

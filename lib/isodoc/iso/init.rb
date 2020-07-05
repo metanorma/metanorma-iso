@@ -17,6 +17,10 @@ module IsoDoc
         doctype = docxml&.at(ns("//bibdata/ext/doctype"))&.text
         %w(amendment technical-corrigendum).include? doctype
       end
+
+      def clausedelim
+        ""
+      end
     end
   end
 end

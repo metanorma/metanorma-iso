@@ -91,10 +91,6 @@ module IsoDoc
         super
       end
 
-      def clausedelim
-        ""
-      end
-
       def cleanup(docxml)
         super
         table_th_center(docxml)

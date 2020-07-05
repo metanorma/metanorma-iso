@@ -11,7 +11,7 @@ RSpec.describe IsoDoc do
      </foreword>
    </preface>
    <sections>
-     <clause id='scope'>
+     <clause id='scope' type="scope">
        <title>Scope</title>
        <figure id='N'>
          <name>Figure 1&#xA0;&#x2014; Split-it-right sample divider</name>
@@ -66,7 +66,7 @@ RSpec.describe IsoDoc do
                </div>
                <p class="zzSTDTitle1"/>
                <div id="scope">
-                 <h1>1&#160; Scope</h1>
+                 <h1>Scope</h1>
                  <div id="N" class="figure">
 
          <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
@@ -74,11 +74,11 @@ RSpec.describe IsoDoc do
                  <p>
                  </p>
                </div>
-               <div id="terms"><h1>2&#160; </h1>
+               <div id="terms"><h1/>
        </div>
                <div id="widgets">
-                 <h1>3&#160; Widgets</h1>
-                 <div id="widgets1"><span class='zzMoveToFollowing'><b>3.1&#160; </b></span>
+                 <h1>Widgets</h1>
+                 <div id="widgets1">
                <div id="note1" class="figure">
 
          <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
@@ -92,21 +92,13 @@ RSpec.describe IsoDoc do
                </div>
                <br/>
                <div id="annex1" class="Section3">
-               <h1 class='Annex'>
-  <b>Annex A</b>
-  <br/>
-(informative)
-  <br/>
-  <br/>
-  <b/>
-</h1>
-                 <div id="annex1a"><span class='zzMoveToFollowing'><b>A.1&#160; </b></span>
+                 <div id="annex1a">
                <div id="AN" class="figure">
 
          <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
          <p class="FigureTitle" style="text-align:center;">Figure A.1&#160;&#8212; Split-it-right sample divider</p></div>
            </div>
-                 <div id="annex1b"><span class='zzMoveToFollowing'><b>A.2&#160; </b></span>
+                 <div id="annex1b">
                <div id="Anote1" class="figure">
 
          <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
@@ -139,7 +131,7 @@ RSpec.describe IsoDoc do
       </foreword>
     </preface>
     <sections>
-      <clause id='scope'>
+      <clause id='scope' type="scope">
         <title>Scope</title>
       </clause>
       <terms id='terms'/>
@@ -208,17 +200,14 @@ RSpec.describe IsoDoc do
              </div>
              <p class='zzSTDTitle1'/>
              <div id='scope'>
-               <h1>1&#160; Scope</h1>
+               <h1>Scope</h1>
              </div>
              <div id='terms'>
-               <h1>2&#160; </h1>
+               <h1/>
              </div>
              <div id='widgets'>
-               <h1>3&#160; Widgets</h1>
+               <h1>Widgets</h1>
                <div id='widgets1'>
-                 <span class='zzMoveToFollowing'>
-                   <b>3.1&#160; </b>
-                 </span>
                  <div id='N' class='figure'>
                    <div id='note1' class='figure'>
                      <img src='rice_images/rice_image1.png' height='auto' width='auto'/>
@@ -238,23 +227,9 @@ RSpec.describe IsoDoc do
              </div>
              <br/>
              <div id='annex1' class='Section3'>
-               <h1 class='Annex'>
-<b>Annex A</b>
-                 <br/>
-                 (informative)
-                 <br/>
-                 <br/>
-                 <b/>
-               </h1>
                <div id='annex1a'>
-                 <span class='zzMoveToFollowing'>
-                   <b>A.1&#160; </b>
-                 </span>
                </div>
                <div id='annex1b'>
-                 <span class='zzMoveToFollowing'>
-                   <b>A.2&#160; </b>
-                 </span>
                  <div id='AN' class='figure'>
                    <div id='Anote1' class='figure'>
                      <img src='rice_images/rice_image1.png' height='auto' width='auto'/>
