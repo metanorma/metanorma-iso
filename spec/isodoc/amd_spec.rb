@@ -405,22 +405,22 @@ RSpec.describe IsoDoc do
          <boilerplate>
            <copyright-statement>
              <clause>
-               <title>Copyright</title>
+               <title depth="1">Copyright</title>
              </clause>
            </copyright-statement>
            <license-statement>
              <clause>
-               <title>License</title>
+               <title depth="1">License</title>
              </clause>
            </license-statement>
            <legal-statement>
              <clause>
-               <title>Legal</title>
+               <title depth="1">Legal</title>
              </clause>
            </legal-statement>
            <feedback-statement>
              <clause>
-               <title>Feedback</title>
+               <title depth="1">Feedback</title>
              </clause>
            </feedback-statement>
          </boilerplate>

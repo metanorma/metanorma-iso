@@ -561,9 +561,7 @@ RSpec.describe IsoDoc do
   end
 
       it "processes boilerplate" do
-     FileUtils.rm_f "test.doc"
-    FileUtils.rm_f "test.html"
-    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", <<~"INPUT", false)
+        input = <<~INPUT
     <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
         <status><stage>30</stage></status>
@@ -597,8 +595,7 @@ I am the Walrus.
     <clause>
 <title>Warning for Stuff</title>
 
-<p>This
-document is not an ISO International Standard. It is distributed for review and
+<p>This document is not an ISO International Standard. It is distributed for review and
 comment. It is subject to change without notice and may not be referred to as
 an International Standard.</p>
 
@@ -612,70 +609,100 @@ documentation.</p>
 </boilerplate>
 </iso-standard>
     INPUT
+
+    presxml = <<~OUTPUT
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+               <bibdata type="standard">
+               <status><stage>30</stage></status>
+               </bibdata>
+           <boilerplate>
+         <copyright-statement>
+           <clause inline-header="true">
+           <p id="boilerplate-year">
+           &#xA9; ISO 2019, Published in Switzerland
+         </p>
+
+         <p id="boilerplate-message">
+       I am the Walrus.
+         </p>
+
+           <p id="boilerplate-name">ISO copyright office</p>
+         <p id="boilerplate-address" align="left">
+           ISO copyright office<br/>
+           Ch. de Blandonnet 8 ?~@? CP 401<br/>
+           CH-1214 Vernier, Geneva, Switzerland<br/>
+           Tel. + 41 22 749 01 11<br/>
+           Fax + 41 22 749 09 47<br/>
+           copyright@iso.org<br/>
+           www.iso.org
+         </p>
+       </clause>
+         </copyright-statement>
+
+
+         <license-statement>
+           <clause>
+       <title depth="1">Warning for Stuff</title>
+
+       <p>This document is not an ISO International Standard. It is distributed for review and
+       comment. It is subject to change without notice and may not be referred to as
+       an International Standard.</p>
+
+       <p>Recipients
+       of this draft are invited to submit, with their comments, notification of any
+       relevant patent rights of which they are aware and to provide supporting
+       documentation.</p>
+       </clause>
+         </license-statement>
+
+       </boilerplate>
+       </iso-standard>
+    OUTPUT
+
+     FileUtils.rm_f "test.doc"
+    FileUtils.rm_f "test.html"
+expect((IsoDoc::Iso::PresentationXMLConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", presxml, false)
     word = File.read("test.html", encoding: "UTF-8")
     expect((word)).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'
     expect((word)).to include "I am the Walrus."
-end
-
-  it "processes boilerplate (Word)" do
-     FileUtils.rm_f "test.doc"
-    FileUtils.rm_f "test.html"
-    input = <<~INPUT
-    <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <bibdata type="standard">
-        <status><stage>30</stage></status>
-        </bibdata>
-    <boilerplate>
-  <copyright-statement>
-    <clause>
-    <p id="boilerplate-year">Published in Elbonia</p>
-
-  <p id="boilerplate-message">No soup for you</p>
-
-  <p id="boilerplate-place">Dilbert Associates</p>
-  <p id="boilerplate-address" align="left">Elbonia 5000</p>
-</clause>
-  </copyright-statement>
-
-
-  <license-statement>
-    <clause>
-<title>Warning for Stuff</title>
-
-<p>I am the Walrus</p>
-</clause>
-  </license-statement>
-
-</boilerplate>
-</iso-standard>
-INPUT
-presxml = input
-expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
     IsoDoc::Iso::WordConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
     expect(xmlpp(word.sub(%r{^.*<div class="boilerplate-copyright">}m, '<div class="boilerplate-copyright">').sub(%r{</div>.*$}m, '</div></div>'))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-    <div class='boilerplate-copyright'>
-  <div>
-    <p class='zzCopyright'>
-      <a name='boilerplate-year' id='boilerplate-year'/>
-      Published in Elbonia
-    </p>
-    <p class='zzCopyright1'>
-      <a name='boilerplate-message' id='boilerplate-message'/>
-      No soup for you
-    </p>
-    <p class='zzCopyright1'>
-      <a name='boilerplate-place' id='boilerplate-place'/>
-      Dilbert Associates
-    </p>
-    <p align='left' style='text-align:left;' class='zzAddress'>
-      <a name='boilerplate-address' id='boilerplate-address'/>
-      Elbonia 5000
-    </p>
-  </div>
-</div>
+<div class='boilerplate-copyright'>
+         <div>
+           <p class='zzCopyright'>
+             <a name='boilerplate-year' id='boilerplate-year'/>
+              &#xA9; ISO 2019, Published in Switzerland 
+           </p>
+           <p class='zzCopyright1'>
+             <a name='boilerplate-message' id='boilerplate-message'/>
+              I am the Walrus. 
+           </p>
+           <p class='zzCopyright'>
+             <a name='boilerplate-name' id='boilerplate-name'/>
+             ISO copyright office
+           </p>
+           <p style='text-align:left;' align='left' class='zzAddress'>
+             <a name='boilerplate-address' id='boilerplate-address'/>
+              ISO copyright office
+             <br/>
+              Ch. de Blandonnet 8 ?~@? CP 401
+             <br/>
+              CH-1214 Vernier, Geneva, Switzerland
+             <br/>
+              Tel. + 41 22 749 01 11
+             <br/>
+              Fax + 41 22 749 09 47
+             <br/>
+              copyright@iso.org
+             <br/>
+              www.iso.org 
+           </p>
+         </div>
+       </div>
            OUTPUT
-    expect(word).to include '<p class="zzWarning">I am the Walrus</p>'
+           expect(word).to include '<p class="zzWarning">This document is not an ISO International Standard'
 end
 
 end
