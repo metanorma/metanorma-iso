@@ -360,11 +360,6 @@ RSpec.describe IsoDoc do
          <title>Acknowledgements</title>
        </acknowledgements>
         </preface><sections>
-       <clause id="D" obligation="normative" type="scope">
-         <title>Scope</title>
-         <p id="E">Text</p>
-       </clause>
-
        <clause id="M" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="N" inline-header="false" obligation="normative">
          <title>Introduction</title>
        </clause>
@@ -374,7 +369,10 @@ RSpec.describe IsoDoc do
        <clause id="O1" inline-header="false" obligation="normative">
        </clause>
         </clause>
-
+<clause id="D" obligation="normative" type="scope">
+         <title>Scope</title>
+         <p id="E">Text</p>
+       </clause>
        </sections><annex id="P" inline-header="false" obligation="normative">
          <title>Annex</title>
          <clause id="Q" inline-header="false" obligation="normative">
@@ -451,10 +449,6 @@ RSpec.describe IsoDoc do
            </acknowledgements>
          </preface>
          <sections>
-           <clause id='D' obligation='normative' type="scope">
-             <title depth='1'>Scope</title>
-             <p id='E'>Text</p>
-           </clause>
            <clause id='M' inline-header='false' obligation='normative'>
              <title depth='1'>Clause 4</title>
              <clause id='N' inline-header='false' obligation='normative'>
@@ -464,6 +458,10 @@ RSpec.describe IsoDoc do
                <title depth='1'>Clause 4.2</title>
              </clause>
              <clause id='O1' inline-header='true' obligation='normative'> </clause>
+           </clause>
+            <clause id='D' obligation='normative' type="scope">
+             <title depth='1'>Scope</title>
+             <p id='E'>Text</p>
            </clause>
          </sections>
          <annex id='P' inline-header='false' obligation='normative'>
@@ -566,10 +564,6 @@ RSpec.describe IsoDoc do
         <h1 class='IntroTitle'>Acknowledgements</h1>
       </div>
       <p class='zzSTDTitle1'/>
-      <div id='D'>
-        <h1>Scope</h1>
-        <p id='E'>Text</p>
-      </div>
       <div>
         <h1>Normative References</h1>
       </div>
@@ -583,6 +577,10 @@ RSpec.describe IsoDoc do
         </div>
         <div id='O1'>
         </div>
+      </div>
+      <div id='D'>
+        <h1>Scope</h1>
+        <p id='E'>Text</p>
       </div>
       <br/>
       <div id='P' class='Section3'>

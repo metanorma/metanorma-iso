@@ -96,8 +96,7 @@ module IsoDoc
       end
 
       def clause(docxml)
-        docxml.xpath(ns("//clause[not(ancestor::boilerplate)]"\
-                        "[not(ancestor::annex)] | "\
+        docxml.xpath(ns("//clause[not(ancestor::annex)] | "\
                         "//terms | //definitions | //references | "\
                         "//preface/introduction[clause]")).
         each do |f|
