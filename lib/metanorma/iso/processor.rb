@@ -33,10 +33,6 @@ module Metanorma
         "Metanorma::ISO #{Metanorma::ISO::VERSION}"
       end
 
-      def input_to_isodoc(file, filename)
-        Metanorma::Input::Asciidoc.new.process(file, filename, @asciidoctor_backend)
-      end
-
       def use_presentation_xml(ext)
         return true if ext == :html_alt
         super
