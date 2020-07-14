@@ -36,14 +36,14 @@ module IsoDoc
       def figure1(f)
         return if labelled_ancestor(f) && f.ancestors("figure").empty?
         lbl = @xrefs.anchor(f['id'], :label, false) or return
-        figname = f.parent.name == "figure" ? "" : "#{@figure_lbl} "
+        figname = f.parent.name == "figure" ? "" : "#{@i18n.figure} "
         prefix_name(f, "&nbsp;&mdash; ", l10n("#{figname}#{lbl}"), "name")
       end
 
       def example1(f)
         n = @xrefs.get[f["id"]]
-        lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @example_lbl :
-          l10n("#{@example_lbl} #{n[:label]}")
+        lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @i18n.example :
+          l10n("#{@i18n.example} #{n[:label]}")
         prefix_name(f, "&nbsp;&mdash; ", lbl, "name")
       end
 
@@ -52,7 +52,7 @@ module IsoDoc
         ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{to.text}" if to
-        loc = (@locality[type] || type.sub(/^locality:/, "").capitalize )
+        loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize )
         ret += " #{loc}" unless subsection && type == "clause" ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/)
         ret += ")" if type == "list"
@@ -66,7 +66,7 @@ module IsoDoc
         lang == "zh" and
           return l10n(eref_localities1_zh(target, type, from, to, delim))
         ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
-        loc = @locality[type] || type.sub(/^locality:/, "").capitalize
+        loc = @i18n.locality[type] || type.sub(/^locality:/, "").capitalize
         ret += " #{loc}" unless subsection && type == "clause" ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/)
         ret += " #{from.text}" if from

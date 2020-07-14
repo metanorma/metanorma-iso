@@ -133,7 +133,7 @@ module Asciidoctor
       end
 
       def id_stage_abbr(stage, substage, node)
-        ret = IsoDoc::Iso::Metadata.new("en", "Latn", {}).
+        ret = IsoDoc::Iso::Metadata.new("en", "Latn", @i18n).
           status_abbrev(stage_abbr(stage, substage, node.attr("doctype")),
                         substage, node.attr("iteration"),
                         node.attr("draft"), node.attr("doctype"))

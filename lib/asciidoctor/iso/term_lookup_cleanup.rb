@@ -75,7 +75,6 @@ module Asciidoctor
 
       def unique_text_id(text)
         return "term-#{text}" if xmldoc.at("//*[@id = 'term-#{text}']").nil?
-
         (1..Float::INFINITY).lazy.each do |index|
           if xmldoc.at("//*[@id = 'term-#{text}-#{index}']").nil?
             break("term-#{text}-#{index}")

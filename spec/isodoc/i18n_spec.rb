@@ -676,7 +676,7 @@ OUTPUT
              </div>
              <br/>
              <div>
-               <h1 class="Section3">Bibliographie</h1>
+               <h1 class="Section3">Bibliography</h1>
                <div>
                  <h2 class="Section3">Bibliography Subsection</h2>
                </div>
@@ -938,7 +938,7 @@ OUTPUT
              </div>
              <br/>
              <div>
-               <h1 class="Section3">&#21442;&#32771;&#25991;&#29486;</h1>
+               <h1 class="Section3">Bibliography</h1>
                <div>
                  <h2 class="Section3">Bibliography Subsection</h2>
                </div>

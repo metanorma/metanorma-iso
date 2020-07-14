@@ -3,7 +3,7 @@ require "isodoc"
 module IsoDoc
   module Iso
     class  Metadata < IsoDoc::Metadata
-      def initialize(lang, script, labels)
+      def initialize(lang, script, i18n)
         super
         @metadata = {
           tc: "XXXX",

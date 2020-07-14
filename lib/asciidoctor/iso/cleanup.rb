@@ -4,7 +4,6 @@ require "htmlentities"
 require "json"
 require "pathname"
 require "open-uri"
-require "pp"
 require "asciidoctor/iso/term_lookup_cleanup"
 
 module Asciidoctor

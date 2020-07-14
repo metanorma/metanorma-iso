@@ -110,7 +110,7 @@ module IsoDoc
                              dl&.at(ns("./dd"))&.elements&.size == 1 &&
                              dl&.at(ns("./dd/p")))
         out.span **{ class: "zzMoveToFollowing" } do |s|
-          s << "#{@where_lbl} "
+          s << "#{@i18n.where} "
           dl.at(ns("./dt")).children.each { |n| parse(n, s) }
           s << " "
         end

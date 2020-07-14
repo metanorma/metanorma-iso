@@ -4,7 +4,6 @@ require "htmlentities"
 require "json"
 require "pathname"
 require "open-uri"
-require "pp"
 require_relative "front_id"
 
 module Asciidoctor
