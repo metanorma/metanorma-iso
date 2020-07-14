@@ -30,13 +30,14 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   spec.add_dependency "ruby-jing"
-  spec.add_dependency "isodoc", "~> 1.1.0"
+  # spec.add_dependency "isodoc", "~> 1.1.0"
   spec.add_dependency "metanorma-standoc", "~> 1.4.0"
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "twitter_cldr"
   spec.add_dependency "mn2sts", "~> 1.2.0"
 
   spec.add_development_dependency "byebug"
+  spec.add_development_dependency "sassc", "2.4.0"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
   spec.add_development_dependency "guard", "~> 2.14"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
