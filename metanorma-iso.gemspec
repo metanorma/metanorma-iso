@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mn2sts", "~> 1.2.0"
 
   spec.add_development_dependency "byebug"
+  spec.add_development_dependency "sassc", "2.4.0"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
   spec.add_development_dependency "guard", "~> 2.14"
   spec.add_development_dependency "guard-rspec", "~> 4.7"

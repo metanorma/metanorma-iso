@@ -5,6 +5,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}" }
 
 #gem "asciimath", git: "https://github.com/asciidoctor/asciimath"
+
 gemspec
 
 if File.exist? 'Gemfile.devel'
