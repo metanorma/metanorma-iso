@@ -66,7 +66,7 @@ RSpec.describe Asciidoctor::ISO do
   <title>Acknowledgements</title>
 </acknowledgements>
 </preface><sections>
-       <clause id="_" obligation="normative" type="scope">
+       <clause id="_" obligation="normative" inline-header='false' type="scope">
          <title>Scope</title>
          <p id="_">Text</p>
        </clause>
@@ -115,9 +115,9 @@ standardization at the following addresses:</p>
        </term>
        </terms>
        <definitions id="_" obligation="normative">
-<title>Symbols and Abbreviated Terms</title></definitions></clause>
+<title>Symbols and abbreviated terms</title></definitions></clause>
        <definitions id="_" obligation="normative">
-<title>Symbols and Abbreviated Terms</title></definitions>
+<title>Symbols and abbreviated terms</title></definitions>
        <clause id="_" inline-header="false" obligation="normative"><title>Clause 4</title><clause id="_" inline-header="false" obligation="normative">
          <title>Introduction</title>
        </clause>
@@ -137,7 +137,7 @@ standardization at the following addresses:</p>
        <appendix id="_" inline-header="false" obligation="normative">
           <title>Appendix 1</title>
        </appendix></annex><bibliography><references id="_" obligation="informative" normative="true">
-         <title>Normative References</title>
+         <title>Normative references</title>
          <p id="_">There are no normative references in this document.</p>
        </references><clause id="_" obligation="informative">
          <title>Bibliography</title>

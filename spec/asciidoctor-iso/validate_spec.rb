@@ -625,27 +625,6 @@ it "Warning if scope occurs after Terms and Definitions" do
 
   == Terms and Definitions
 
-  == Scope
-
-  INPUT
-    expect(File.read("test.err")).to include "Scope must occur before Terms and Definitions"
-end
-
-it "Warning if scope occurs after Terms and Definitions" do
-    FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  #{VALIDATING_BLANK_HDR}
-
-  .Foreword
-  Foreword
-
-  == Scope
-
-  [bibliography]
-  == Normative References
-
-  == Terms and Definitions
-
   == Clause
 
   == Scope

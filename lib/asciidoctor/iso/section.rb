@@ -5,11 +5,13 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       def clause_parse(attrs, xml, node)
-        title = node&.attr("heading")&.downcase ||
-          node.title.gsub(/<[^>]+>/, "").downcase
-        title == "scope" and return scope_parse(attrs, xml, node)
         node.option? "appendix" and return appendix_parse(attrs, xml, node)
         super
+      end
+
+      def scope_parse(attrs, xml, node)
+        attrs = attrs.merge(type: "scope") unless @amd 
+        clause_parse(attrs, xml, node)
       end
 
       def appendix_parse(attrs, xml, node)
@@ -26,14 +28,6 @@ module Asciidoctor
         #  xml_section << node.content
         # end
         xml << node.content
-      end
-
-      def scope_parse(attrs, xml, node)
-        xml.clause **attr_code(attrs.merge(type: "scope")) do |xml_section|
-          xml_section.title { |t| t << "Scope" }
-          content = node.content
-          xml_section << content
-        end
       end
 
       def section_attributes(node)

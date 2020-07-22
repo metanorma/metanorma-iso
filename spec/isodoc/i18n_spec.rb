@@ -612,7 +612,7 @@ OUTPUT
     #{HTML_HDR.gsub(/"en"/, '"fr"')}
              <br/>
              <div>
-               <h1 class="ForewordTitle">Avant-propos</h1>
+               <h1 class="ForewordTitle">Foreword</h1>
                <p id="A">This is a preamble</p>
              </div>
              <br/>
@@ -870,7 +870,7 @@ OUTPUT
     #{HTML_HDR.gsub(/"en"/, '"zh"')}
                      <br/>
              <div>
-               <h1 class="ForewordTitle">&#21069;&#35328;</h1>
+               <h1 class="ForewordTitle">Foreword</h1>
                <p id="A">This is a preamble</p>
              </div>
              <br/>

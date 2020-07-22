@@ -923,6 +923,9 @@
         <attribute name="script"/>
       </optional>
       <optional>
+        <attribute name="type"/>
+      </optional>
+      <optional>
         <attribute name="obligation">
           <choice>
             <value>normative</value>
@@ -1179,6 +1182,9 @@
       </optional>
       <optional>
         <attribute name="script"/>
+      </optional>
+      <optional>
+        <attribute name="type"/>
       </optional>
       <optional>
         <attribute name="obligation">

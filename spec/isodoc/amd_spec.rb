@@ -344,7 +344,7 @@ RSpec.describe IsoDoc do
       </boilerplate>
       <preface>
       <abstract obligation="informative">
-         <title>Foreword</title>
+         <title>Abstract</title>
       </abstract>
       <foreword obligation="informative">
          <title>Foreword</title>
@@ -369,7 +369,7 @@ RSpec.describe IsoDoc do
        <clause id="O1" inline-header="false" obligation="normative">
        </clause>
         </clause>
-<clause id="D" obligation="normative" type="scope">
+<clause id="D" obligation="normative">
          <title>Scope</title>
          <p id="E">Text</p>
        </clause>
@@ -426,7 +426,7 @@ RSpec.describe IsoDoc do
          </boilerplate>
          <preface>
            <abstract obligation='informative'>
-             <title>Foreword</title>
+             <title>Abstract</title>
            </abstract>
            <foreword obligation='informative'>
              <title>Foreword</title>
@@ -459,7 +459,7 @@ RSpec.describe IsoDoc do
              </clause>
              <clause id='O1' inline-header='true' obligation='normative'> </clause>
            </clause>
-            <clause id='D' obligation='normative' type="scope">
+            <clause id='D' obligation='normative'>
              <title depth='1'>Scope</title>
              <p id='E'>Text</p>
            </clause>
