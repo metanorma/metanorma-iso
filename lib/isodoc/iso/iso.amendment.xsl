@@ -3996,6 +3996,7 @@
 				<fo:inline padding-right="2mm">
 					
 					
+					
 					<xsl:variable name="title-note">
 						<xsl:call-template name="getTitle">
 							<xsl:with-param name="name" select="'title-note'"/>
@@ -5079,4 +5080,35 @@
 		</xsl:if>
 	</xsl:template><xsl:template name="getDocumentId">		
 		<xsl:call-template name="getLang"/><xsl:value-of select="//*[local-name() = 'p'][1]/@id"/>
+	</xsl:template><xsl:template name="namespaceCheck">
+		<xsl:variable name="documentNS" select="namespace-uri(/*)"/>
+		<xsl:variable name="XSLNS">			
+			
+				<xsl:value-of select="document('')//*/namespace::iso"/>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+						
+						
+		</xsl:variable>
+		<xsl:if test="$documentNS != $XSLNS">
+			<xsl:message>[WARNING]: Document namespace: '<xsl:value-of select="$documentNS"/>' doesn't equal to xslt namespace '<xsl:value-of select="$XSLNS"/>'</xsl:message>
+		</xsl:if>
+	</xsl:template><xsl:template name="getLanguage">
+		<xsl:param name="lang"/>		
+		<xsl:variable name="language" select="java:toLowerCase(java:java.lang.String.new($lang))"/>
+		<xsl:choose>
+			<xsl:when test="$language = 'en'">English</xsl:when>
+			<xsl:when test="$language = 'fr'">French</xsl:when>
+			<xsl:when test="$language = 'de'">Deutsch</xsl:when>
+			<xsl:when test="$language = 'cn'">Chinese</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$language"/></xsl:otherwise>
+		</xsl:choose>
 	</xsl:template></xsl:stylesheet>
