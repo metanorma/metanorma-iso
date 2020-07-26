@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   spec.add_dependency "ruby-jing"
-  spec.add_dependency "isodoc", "~> 1.1.3.pre.alpha2"
+  spec.add_dependency "isodoc", "~> 1.1.3.pre.alpha3"
   spec.add_dependency "metanorma-standoc", "~> 1.4.0"
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "twitter_cldr"
@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
   spec.add_development_dependency "guard", "~> 2.14"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
-  spec.add_development_dependency "rake", "~> 12.0"
+  spec.add_development_dependency "rake" #, "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.6"
   spec.add_development_dependency "rubocop", "= 0.54.0"
   spec.add_development_dependency "simplecov", "~> 0.15"
