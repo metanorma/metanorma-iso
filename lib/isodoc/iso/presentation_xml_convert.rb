@@ -37,7 +37,8 @@ module IsoDoc
         return if labelled_ancestor(f) && f.ancestors("figure").empty?
         lbl = @xrefs.anchor(f['id'], :label, false) or return
         figname = f.parent.name == "figure" ? "" : "#{@i18n.figure} "
-        prefix_name(f, "&nbsp;&mdash; ", l10n("#{figname}#{lbl}"), "name")
+        connective = f.parent.name == "figure" ? "&nbsp; " : "&nbsp;&mdash; "
+        prefix_name(f, connective, l10n("#{figname}#{lbl}"), "name")
       end
 
       def example1(f)
