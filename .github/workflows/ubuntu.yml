@@ -39,7 +39,7 @@ jobs:
           polling_interval_seconds: 5
           timeout_minutes: 5
           max_attempts: 3
-          command: sudo bash -c "curl -L https://github.com/metanorma/plantuml-install/raw/master/ubuntu.sh | bash"
+          command: sudo apt-get update -y && sudo bash -c "curl -L https://github.com/metanorma/plantuml-install/raw/master/ubuntu.sh | bash"
       - name: Run specs
         run: |
           bundle exec rake
