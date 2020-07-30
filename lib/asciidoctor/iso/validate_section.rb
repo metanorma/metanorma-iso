@@ -7,6 +7,7 @@ module Asciidoctor
         foreword_validate(doc.root)
         normref_validate(doc.root)
         symbols_validate(doc.root)
+        sections_presence_validate(doc.root)
         sections_sequence_validate(doc.root)
         section_style(doc.root)
         subclause_validate(doc.root)
@@ -53,6 +54,15 @@ module Asciidoctor
           @log.add("Style", nil, msg)
         end
         names
+      end
+
+      def sections_presence_validate(root)
+        root.at("//sections/clause[@type = 'scope']") or
+          @log.add("Style", nil, "Scope clause missing")
+        root.at("//references[@normative = 'true']") or
+          @log.add("Style", nil, "Normative references missing")
+        root.at("//terms") or
+          @log.add("Style", nil, "Terms & definitions missing")
       end
 
       # spec of permissible section sequence

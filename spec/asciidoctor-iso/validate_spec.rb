@@ -3,6 +3,93 @@ require "fileutils"
 
 RSpec.describe Asciidoctor::ISO do
 
+it "Warns of missing scope" do
+    FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: pizza
+
+  text
+  INPUT
+    expect(File.read("test.err")).to include "Scope clause missing"
+  FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: pizza
+
+  == Scope
+  INPUT
+    expect(File.read("test.err")).not_to include "Scope clause missing"
+
+end
+
+it "Warns of missing normative references" do
+    FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: pizza
+
+  text
+  INPUT
+    expect(File.read("test.err")).to include "Normative references missing"
+  FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: pizza
+
+  [bibliography]
+  == Normative references
+  INPUT
+    expect(File.read("test.err")).not_to include "Normative references missing"
+
+end
+
+it "Warns of missing terms & definitions" do
+    FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: pizza
+
+  text
+  INPUT
+    expect(File.read("test.err")).to include "Terms & definitions missing"
+  FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: pizza
+
+  == Terms and definitions
+  === Term 1
+  INPUT
+    expect(File.read("test.err")).not_to include "Terms & definitions missing"
+
+end
+
+
 it "Warns of illegal doctype" do
     FileUtils.rm_f "test.err"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
