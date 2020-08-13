@@ -186,6 +186,7 @@ RSpec.describe Asciidoctor::ISO do
       :language: el
       :script: Grek
       :publisher: IEC,IETF,ISO
+      :copyright-holder: ISO,IETF
       :copyright-year: 2001
       :doctype: technical-report
     INPUT
@@ -248,8 +249,8 @@ RSpec.describe Asciidoctor::ISO do
            <from>2001</from>
            <owner>
              <organization>
-               <name>International Electrotechnical Commission</name>
-               <abbreviation>IEC</abbreviation>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
              </organization>
            </owner>
          </copyright>
@@ -258,15 +259,6 @@ RSpec.describe Asciidoctor::ISO do
            <owner>
              <organization>
                <name>IETF</name>
-             </organization>
-           </owner>
-         </copyright>
-         <copyright>
-           <from>2001</from>
-           <owner>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
              </organization>
            </owner>
          </copyright>

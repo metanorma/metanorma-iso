@@ -53,7 +53,7 @@ module Asciidoctor
       end
 
       def metadata_copyright(node, xml)
-        publishers = node.attr("publisher") || "ISO"
+        publishers = node.attr("copyright-holder") || node.attr("publisher") || "ISO"
         publishers.split(/,[ ]?/).each do |p|
           xml.copyright do |c|
             c.from (node.attr("copyright-year") || Date.today.year)
