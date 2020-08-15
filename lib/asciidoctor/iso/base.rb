@@ -46,7 +46,7 @@ module Asciidoctor
 
       def init(node)
         super
-        @amd = %w(amendment technical-corrigendum).include? node.attr("doctype")
+        @amd = %w(amendment technical-corrigendum).include? doctype(node)
       end
 
       def outputs(node, ret)

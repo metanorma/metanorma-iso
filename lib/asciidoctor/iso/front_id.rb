@@ -95,7 +95,7 @@ module Asciidoctor
       def add_amd_parts(dn, node)
         a = node.attr("amendment-number")
         c = node.attr("corrigendum-number")
-        case node.attr("doctype")
+        case doctype(node)
         when "amendment"
           "#{dn}/Amd #{node.attr('amendment-number')}"
         when "technical-corrigendum"
@@ -134,11 +134,11 @@ module Asciidoctor
 
       def id_stage_abbr(stage, substage, node)
         ret = IsoDoc::Iso::Metadata.new("en", "Latn", @i18n).
-          status_abbrev(stage_abbr(stage, substage, node.attr("doctype")),
+          status_abbrev(stage_abbr(stage, substage, doctype(node)),
                         substage, node.attr("iteration"),
-                        node.attr("draft"), node.attr("doctype"))
+                        node.attr("draft"), doctype(node))
         if %w(amendment technical-corrigendum amendment
-          technical-corrigendum).include?(node.attr("doctype"))
+          technical-corrigendum).include?(doctype(node))
           ret = ret + " " unless %w(40 50).include?(stage)
         end
         ret
@@ -184,7 +184,7 @@ module Asciidoctor
       end
 
       def get_typeabbr(node)
-        case node.attr("doctype")
+        case doctype(node)
         when "technical-report" then "TR "
         when "technical-specification" then "TS "
         else

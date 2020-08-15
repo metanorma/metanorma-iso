@@ -13,7 +13,7 @@ module Asciidoctor
         super
         structured_id(node, xml)
         xml.stagename stage_name(get_stage(node), get_substage(node),
-                                 node.attr("doctype"), node.attr("iteration"))
+                                 doctype(node), node.attr("iteration"))
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
       end
@@ -68,7 +68,7 @@ module Asciidoctor
         stage = get_stage(node)
         substage = get_substage(node)
         xml.status do |s|
-          s.stage stage, **attr_code(abbreviation: stage_abbr(stage, substage, node.attr("doctype")))
+          s.stage stage, **attr_code(abbreviation: stage_abbr(stage, substage, doctype(node)))
           s.substage substage
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end
