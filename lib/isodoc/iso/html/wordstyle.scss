@@ -246,7 +246,6 @@ h1.Annex
         line-height:12.5pt;
         mso-pagination:widow-orphan;
         page-break-after:avoid;
-        mso-outline-level:2;
         mso-hyphenate:none;
         tab-stops:27.0pt 35.0pt;
         {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
@@ -264,7 +263,9 @@ h1.Annex
         mso-fareast-language:JA;
         mso-bidi-font-weight:normal;}
 h2
-	{ mso-list:l1 level2 lfo6;}
+	{ mso-list:l1 level2 lfo6;
+        mso-outline-level:2;
+        }
 .h3Annex, h3
 	{mso-style-priority:3;
 	mso-style-unhide:no;
@@ -296,7 +297,9 @@ h2
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-h3      {mso-list:l1 level3 lfo6;}
+h3      {mso-list:l1 level3 lfo6;
+	mso-outline-level:3;
+        }
 .h4Annex, h4
 	{mso-style-priority:4;
 	mso-style-unhide:no;
@@ -312,7 +315,6 @@ h3      {mso-list:l1 level3 lfo6;}
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
-	mso-outline-level:4;
 	mso-hyphenate:none;
 	tab-stops:51.05pt 57.0pt 68.0pt;
 	font-size:11.0pt;
@@ -327,7 +329,9 @@ h3      {mso-list:l1 level3 lfo6;}
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-h4      {mso-list:l1 level4 lfo6;}
+h4      {mso-list:l1 level4 lfo6;
+	mso-outline-level:4;
+        }
 .h5Annex, h5
 	{mso-style-priority:5;
 	mso-style-unhide:no;
@@ -343,7 +347,6 @@ h4      {mso-list:l1 level4 lfo6;}
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
-	mso-outline-level:5;
 	mso-hyphenate:none;
 	tab-stops:51.05pt list 54.0pt;
 	font-size:11.0pt;
@@ -358,7 +361,9 @@ h4      {mso-list:l1 level4 lfo6;}
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-h5      {mso-list:l1 level5 lfo6;}
+h5      {mso-list:l1 level5 lfo6;
+	mso-outline-level:5;
+        }
 h6
 	{mso-style-priority:6;
 	mso-style-unhide:no;
@@ -374,7 +379,6 @@ h6
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
-	mso-outline-level:6;
 	mso-hyphenate:none;
 	tab-stops:51.05pt list 72.0pt;
 	font-size:11.0pt;
@@ -389,7 +393,9 @@ h6
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-h6      {mso-list:l1 level6 lfo6;}
+h6      {mso-list:l1 level6 lfo6;
+	mso-outline-level:6;
+        }
 p.MsoToc1, li.MsoToc1, div.MsoToc1
 	{mso-style-priority:39;
 	mso-style-unhide:no;

@@ -8,15 +8,19 @@ module IsoDoc
       def initialize(options)
         @libdir = File.dirname(__FILE__)
         super
+        @wordToClevels = options[:doctoclevels].to_i
+        @wordToClevels = 3 if @wordToClevels.zero?
+        @htmlToClevels = options[:htmltoclevels].to_i
+        @htmlToClevels = 3 if @htmlToClevels.zero?
       end
 
       def default_fonts(options)
         {
           bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' :
                      '"Cambria",serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
-                       '"Cambria",serif'),
-          monospacefont: '"Courier New",monospace',
+                     headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
+                                  '"Cambria",serif'),
+                                  monospacefont: '"Courier New",monospace',
         }
       end
 
@@ -24,16 +28,16 @@ module IsoDoc
         {
           htmlstylesheet: (options[:alt] ? html_doc_path("style-human.scss") :
                            html_doc_path("style-iso.scss")),
-          htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
-          htmlintropage: html_doc_path("html_iso_intro.html"),
-          scripts: html_doc_path("scripts.html"),
-          wordstylesheet: html_doc_path("wordstyle.scss"),
-          standardstylesheet: html_doc_path("isodoc.scss"),
-          header: html_doc_path("header.html"),
-          wordcoverpage: html_doc_path("word_iso_titlepage.html"),
-          wordintropage: html_doc_path("word_iso_intro.html"),
-          ulstyle: "l3", 
-          olstyle: "l2",
+        htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
+        htmlintropage: html_doc_path("html_iso_intro.html"),
+        scripts: html_doc_path("scripts.html"),
+        wordstylesheet: html_doc_path("wordstyle.scss"),
+        standardstylesheet: html_doc_path("isodoc.scss"),
+        header: html_doc_path("header.html"),
+        wordcoverpage: html_doc_path("word_iso_titlepage.html"),
+        wordintropage: html_doc_path("word_iso_intro.html"),
+        ulstyle: "l3", 
+        olstyle: "l2",
         }
       end
 

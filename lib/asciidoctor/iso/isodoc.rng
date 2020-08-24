@@ -42,8 +42,11 @@
     </define>
     <define name="xref">
       <element name="xref">
+        <!-- attribute target { xsd:IDREF }, -->
         <attribute name="target">
-          <data type="IDREF"/>
+          <data type="string">
+            <param name="pattern">\i\c*|\c+#\c+</param>
+          </data>
         </attribute>
         <optional>
           <attribute name="type">
