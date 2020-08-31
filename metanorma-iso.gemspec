@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "metanorma-standoc", "~> 1.5.0"
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "twitter_cldr"
-  spec.add_dependency "mn2sts", "~> 1.2.0"
+  spec.add_dependency "mn2sts", "~> 1.5.0"
 
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "sassc", "2.4.0"
