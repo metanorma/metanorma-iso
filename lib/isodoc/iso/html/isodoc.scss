@@ -627,7 +627,7 @@ table.formula_dl {
 	margin-left:20.15pt;
 }
 
-table.MsoISOTable
+table.MsoISOTable, table.MsoISOTableBig
 	{mso-style-name:"Table ISO";
 	mso-tstyle-rowband-size:0;
 	mso-tstyle-colband-size:0;
@@ -647,15 +647,15 @@ table.MsoISOTable
 	mso-border-insidev:.75pt solid windowtext;
 	font-size:10.0pt;
 	font-family:$bodyfont;}
-table.MsoISOTable th
+table.MsoISOTable th, table.MsoISOTableBig th
     {border:solid windowtext 1pt;
     mso-border-alt:solid windowtext 1pt;
     padding:0cm 2.85pt 0cm 2.85pt;}
-table.MsoISOTable td
+table.MsoISOTable td, table.MsoISOTableBig td
     {border:solid windowtext 1pt;
     mso-border-alt:solid windowtext 1pt;
     padding:0cm 2.85pt 0cm 2.85pt;}
-table.MsoISOTable p
+table.MsoISOTable p, table.MsoISOTableBig p
 {font-size:10.0pt; }
 table.MsoTableGrid
 	{mso-style-name:"Table Grid";
