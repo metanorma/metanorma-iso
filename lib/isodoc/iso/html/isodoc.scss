@@ -842,6 +842,20 @@ div.example p.MsoListParagraph {
 
 div.Note p.MsoListParagraph {
   font-size: 10.0pt;
+  margin-left: 1.0cm;
+}
+
+div.Note span.stem {
+  font-size: 10.0pt; }
+
+div.Note p.Sourcecode, div.Note pre.Sourcecode  {
+  font-size: 8.0pt;
+  margin-left: 1.0cm;
+}
+
+div.Note table.dl  {
+  font-size: 10.0pt;
+  margin-left: 1.0cm;
 }
 
 span.note_label, span.example_label, td.example_label, td.note_label

@@ -581,6 +581,8 @@
             <ref name="ol"/>
             <ref name="dl"/>
             <ref name="formula"/>
+            <ref name="quote"/>
+            <ref name="sourcecode"/>
           </choice>
         </oneOrMore>
       </element>
