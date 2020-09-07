@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe IsoDoc do
-   it "processes IsoXML bibliographies (Presentation XML)" do
+   it "processes IsoXML bibliographies" do
      input = <<~INPUT
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata>

@@ -402,6 +402,16 @@
           </choice>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="valign">
+          <choice>
+            <value>top</value>
+            <value>middle</value>
+            <value>bottom</value>
+            <value>baseline</value>
+          </choice>
+        </attribute>
+      </optional>
       <choice>
         <zeroOrMore>
           <ref name="TextElement"/>
@@ -426,6 +436,16 @@
             <value>left</value>
             <value>right</value>
             <value>center</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="valign">
+          <choice>
+            <value>top</value>
+            <value>middle</value>
+            <value>bottom</value>
+            <value>baseline</value>
           </choice>
         </attribute>
       </optional>
