@@ -1,20 +1,16 @@
 module IsoDoc
   module Iso
     class Xref < IsoDoc::Xref
-      def parse(docxml)
-        if @klass.amd(docxml)
-          back_anchor_names(docxml)
-          note_anchor_names(docxml.xpath(ns("//annex//table | //annex//figure")))
-          note_anchor_names(docxml.xpath(ns("//annex")))
-          example_anchor_names(docxml.xpath(ns("//annex")))
-          list_anchor_names(docxml.xpath(ns("//annex")))
+      def initial_anchor_names(d)
+        if @klass.amd(d)
+          d.xpath(ns("//preface/*")).each { |c| c.element? and preface_names(c) }
+          sequential_asset_names(d.xpath(ns("//preface/*")))
+          middle_section_asset_names(d)
+          termnote_anchor_names(d)
+          termexample_anchor_names(d)
         else
           super
         end
-      end
-
-      def initial_anchor_names(d)
-        super
         introduction_names(d.at(ns("//introduction")))
       end
 

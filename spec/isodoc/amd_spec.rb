@@ -66,9 +66,9 @@ RSpec.describe IsoDoc do
   <preface>
     <foreword>
       <p>
-        <xref target='N'>[N]</xref>
-<xref target='note1'>[note1]</xref>
-<xref target='note2'>[note2]</xref>
+        <xref target='N'>[scope], Note</xref>
+<xref target='note1'>[widgets1], Note 1</xref>
+<xref target='note2'>[widgets1], Note 2</xref>
 <xref target='AN'>A.1, Note</xref>
 <xref target='Anote1'>A.2, Note 1</xref>
 <xref target='Anote2'>A.2, Note 2</xref>
@@ -86,7 +86,7 @@ RSpec.describe IsoDoc do
         </p>
       </note>
       <p>
-       <xref target='N'>[n]</xref>
+       <xref target='N'>Note</xref>
       </p>
     </clause>
     <terms id='terms'/>
@@ -94,22 +94,22 @@ RSpec.describe IsoDoc do
       <title depth="1">Widgets</title>
       <clause id='widgets1' inline-header="true">
         <note id='note1'>
-          <name>NOTE</name>
+          <name>NOTE 1</name>
           <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f'>
             These results are based on a study carried out on three different
             types of kernel.
           </p>
         </note>
         <note id='note2'>
-          <name>NOTE</name>
+          <name>NOTE 2</name>
           <p id='_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a'>
             These results are based on a study carried out on three different
             types of kernel.
           </p>
         </note>
         <p>
-        <xref target='note1'>[note1]</xref>
-<xref target='note2'>[note2]</xref>
+        <xref target='note1'>Note 1</xref>
+<xref target='note2'>Note 2</xref>
         </p>
       </clause>
     </clause>
@@ -229,8 +229,8 @@ RSpec.describe IsoDoc do
              <title>Foreword</title>
              <p id='A'>
                This is a preamble
-               <xref target='C'>[C]</xref>
-               <xref target='C1'>[C1]</xref>
+               <xref target='C'>0.1</xref>
+               <xref target='C1'>0.2</xref>
                <xref target='D'>[D]</xref>
                <xref target='H'>[H]</xref>
                <xref target='I'>[I]</xref>
@@ -250,7 +250,7 @@ RSpec.describe IsoDoc do
            <introduction id='B' obligation='informative'>
              <title depth="1">Introduction</title>
              <clause id='C' inline-header='false' obligation='informative'>
-               <title depth="1">Introduction Subsection</title>
+               <title depth="2">Introduction Subsection</title>
              </clause>
              <clause id='C1' inline-header='true' obligation='informative'>Text</clause>
            </introduction>
@@ -435,7 +435,7 @@ RSpec.describe IsoDoc do
            <introduction id='B' obligation='informative'>
              <title depth='1'>Introduction</title>
              <clause id='C' inline-header='false' obligation='informative'>
-               <title depth='1'>Introduction Subsection</title>
+               <title depth='2'>Introduction Subsection</title>
              </clause>
            </introduction>
            <clause id='B1'>
@@ -548,7 +548,7 @@ RSpec.describe IsoDoc do
       <div class='Section3' id='B'>
         <h1 class='IntroTitle'>Introduction</h1>
         <div id='C'>
-          <h1>Introduction Subsection</h1>
+          <h2>Introduction Subsection</h2>
         </div>
       </div>
       <br/>
