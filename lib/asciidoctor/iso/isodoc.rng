@@ -1573,11 +1573,17 @@
           <zeroOrMore>
             <ref name="BasicBlock"/>
           </zeroOrMore>
-          <ref name="note"/>
         </element>
       </optional>
       <optional>
-        <element name="replacement">
+        <element name="newcontent">
+          <zeroOrMore>
+            <ref name="BasicBlock"/>
+          </zeroOrMore>
+        </element>
+      </optional>
+      <optional>
+        <element name="description">
           <zeroOrMore>
             <ref name="BasicBlock"/>
           </zeroOrMore>
