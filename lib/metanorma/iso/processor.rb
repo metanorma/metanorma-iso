@@ -26,7 +26,7 @@ module Metanorma
           doc: "doc",
           pdf: "pdf",
           sts: "sts.xml",
-          isosts: "sts.xml"
+          isosts: "iso.sts.xml"
         )
       end
 
