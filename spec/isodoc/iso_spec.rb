@@ -271,7 +271,7 @@ end
                <h1 class="ForewordTitle">Foreword</h1>
                <div id="samplecode" class="example">
                  <p><span class="example_label">EXAMPLE  1</span>&#160; </p>
-                  <div class="Quote">Hello<p class="QuoteAttribution"/></div>
+                  <div class="Quote">Hello</div>
                </div>
                <div id="samplecode2" class="example">
                  <p><span class="example_label">EXAMPLE  2&#160;&#8212; Title</span>&#160; Hello</p>
@@ -330,7 +330,7 @@ end
 
 
   it "processes sequences of examples (Word)" do
-    expect(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")).to be_equivalent_to <<~"OUTPUT"
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true).sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>"))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns='http://riboseinc.com/isoxml'>
   <preface>
     <foreword>
@@ -361,7 +361,7 @@ end
                <h1 class="ForewordTitle">Foreword</h1>
                <div id="samplecode" class="example">
                  <p><span class="example_label">EXAMPLE  1</span><span style="mso-tab-count:1">&#160; </span></p>
-                 <div class="Quote">Hello<p class="QuoteAttribution"/></div>
+                 <div class="Quote">Hello</div>
                </div>
                <div id="samplecode2" class="example">
                  <p><span class="example_label">EXAMPLE  2&#160;&#8212; Title</span><span style="mso-tab-count:1">&#160; </span>Hello</p>

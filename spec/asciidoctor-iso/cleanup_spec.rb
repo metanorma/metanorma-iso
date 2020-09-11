@@ -425,9 +425,9 @@ RSpec.describe Asciidoctor::ISO do
        <sections><table id="_">
          <tbody>
            <tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <td valign="top" align="left">a</td>
+             <td valign="top" align="left">b</td>
+             <td valign="top" align="left">c</td>
            </tr>
          </tbody>
        <dl id="_">
@@ -456,23 +456,23 @@ RSpec.describe Asciidoctor::ISO do
        #{BLANK_HDR}
        <sections>
              <table id="_"><thead><tr>
-             <th align="left">a</th>
-             <th align="left">b</th>
-             <th align="left">c</th>
+             <th valign="top" align="left">a</th>
+             <th valign="top" align="left">b</th>
+             <th valign="top" align="left">c</th>
            </tr><tr>
-             <th align="left">a</th>
-             <th align="left">b</th>
-             <th align="left">c</th>
+             <th valign="top" align="left">a</th>
+             <th valign="top" align="left">b</th>
+             <th valign="top" align="left">c</th>
            </tr><tr>
-             <th align="left">a</th>
-             <th align="left">b</th>
-             <th align="left">c</th>
+             <th valign="top" align="left">a</th>
+             <th valign="top" align="left">b</th>
+             <th valign="top" align="left">c</th>
            </tr></thead>
          <tbody>
            <tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <td valign="top" align="left">a</td>
+             <td valign="top" align="left">b</td>
+             <td valign="top" align="left">c</td>
            </tr>
          </tbody>
        </table>
@@ -498,26 +498,26 @@ RSpec.describe Asciidoctor::ISO do
          <table id="_">
          <thead>
            <tr>
-             <th align="left">a</th>
-             <th align="left">b</th>
-             <th align="left">c</th>
+             <th valign="top" align="left">a</th>
+             <th valign="top" align="left">b</th>
+             <th valign="top" align="left">c</th>
            </tr>
          <tr>
-             <th align="left">a</th>
-             <th align="left">b</th>
-             <th align="left">c</th>
+             <th valign="top" align="left">a</th>
+             <th valign="top" align="left">b</th>
+             <th valign="top" align="left">c</th>
            </tr><tr>
-             <th align="left">a</th>
-             <th align="left">b</th>
-             <th align="left">c</th>
+             <th valign="top" align="left">a</th>
+             <th valign="top" align="left">b</th>
+             <th valign="top" align="left">c</th>
            </tr></thead>
          <tbody>
 
 
            <tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <td valign="top" align="left">a</td>
+             <td valign="top" align="left">b</td>
+             <td valign="top" align="left">c</td>
            </tr>
          </tbody>
        </table>
@@ -541,9 +541,9 @@ RSpec.describe Asciidoctor::ISO do
               <sections><table id="_">
          <tbody>
            <tr>
-             <td align="left">a</td>
-             <td align="left">b</td>
-             <td align="left">c</td>
+             <td valign="top" align="left">a</td>
+             <td valign="top" align="left">b</td>
+             <td valign="top" align="left">c</td>
            </tr>
          </tbody>
        <note id="_">

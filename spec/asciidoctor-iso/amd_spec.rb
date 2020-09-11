@@ -131,22 +131,6 @@ RSpec.describe Asciidoctor::ISO do
 OUTPUT
     end
 
-      it "processes section attributes" do
-     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-      #{AMD_BLANK_HDR}
-      [change=delete,locality="clause=introduction,paragraph=4-7",inline-header="true"]
-      == Clause 1
-
-     INPUT
-             #{BLANK_HDR.sub(%r{<doctype>article</doctype>}, "<doctype>amendment</doctype>")}
-       <sections><clause id="_" obligation="normative"  change="delete" locality="clause=introduction,paragraph=4-7">
-         <title>Clause 1</title>
-       </clause>
-       </sections>
-       </iso-standard>
-     OUTPUT
-  end
-
   it "processes default metadata, amendment" do
     expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
