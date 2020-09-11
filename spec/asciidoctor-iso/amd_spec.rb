@@ -2,22 +2,6 @@ require "spec_helper"
 require "fileutils"
 
 RSpec.describe Asciidoctor::ISO do
-  it "validates amendment document against distinct ISO XML schema" do
-    FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  = Document title
-  Author
-  :docfile: test.adoc
-  :nodoc:
-  :no-isobib:
-  :doctype: amendment
-
-  [change=mid-air]
-  == Para
-  INPUT
-    expect(File.read("test.err")).to include 'value of attribute "change" is invalid; must be equal to'
-end
-
     it "processes amendment sections" do
     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{AMD_BLANK_HDR}
