@@ -56,7 +56,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
            <?xml version='1.0'?>
-        <iso-standard xmlns='http://riboseinc.com/isoxml'>
+        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
           <preface>
             <foreword>
               <p>
@@ -202,7 +202,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
      <?xml version='1.0'?>
- <iso-standard xmlns='http://riboseinc.com/isoxml'>
+ <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
    <preface>
      <foreword id='fwd'>
        <p>
@@ -322,7 +322,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
       <?xml version='1.0'?>
-  <iso-standard xmlns='http://riboseinc.com/isoxml'>
+  <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
     <preface>
       <foreword id='fwd'>
         <p>
@@ -435,7 +435,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
 <?xml version='1.0'?>
-<iso-standard xmlns='http://riboseinc.com/isoxml'>
+<iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <preface>
     <foreword>
       <p>
@@ -568,7 +568,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
            <?xml version='1.0'?>
-<iso-standard xmlns='http://riboseinc.com/isoxml'>
+<iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <preface>
     <foreword>
       <p>
@@ -729,7 +729,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
        <?xml version='1.0'?>
-        <iso-standard xmlns='http://riboseinc.com/isoxml'>
+        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
           <preface>
             <foreword>
               <p>
@@ -863,7 +863,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
            <?xml version='1.0'?>
-<iso-standard xmlns='http://riboseinc.com/isoxml'>
+<iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <preface>
     <foreword>
       <p>
@@ -998,7 +998,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
      <?xml version='1.0'?>
-        <iso-standard xmlns='http://riboseinc.com/isoxml'>
+        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
           <preface>
             <foreword obligation='informative'>
               <title>Foreword</title>
@@ -1198,7 +1198,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
            <?xml version='1.0'?>
-        <iso-standard xmlns='http://riboseinc.com/isoxml'>
+        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
           <preface>
             <foreword>
               <p>
@@ -1318,7 +1318,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
             <?xml version='1.0'?>
-        <iso-standard xmlns='http://riboseinc.com/isoxml'>
+        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
           <preface>
             <foreword>
               <p>
@@ -1422,7 +1422,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
         <?xml version='1.0'?>
-<iso-standard xmlns='http://riboseinc.com/isoxml'>
+<iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <preface>
     <foreword>
       <p>

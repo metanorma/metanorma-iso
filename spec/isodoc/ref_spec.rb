@@ -121,7 +121,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns='http://riboseinc.com/isoxml'>
+       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
            <language>en</language>
          </bibdata>

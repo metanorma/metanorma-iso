@@ -64,6 +64,11 @@
             </choice>
           </attribute>
         </optional>
+        <optional>
+          <attribute name="droploc">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
         <text/>
       </element>
     </define>
@@ -859,6 +864,13 @@
   </define>
   <define name="standard-document">
     <element name="standard-document">
+      <attribute name="version"/>
+      <attribute name="type">
+        <choice>
+          <value>semantic</value>
+          <value>presentation</value>
+        </choice>
+      </attribute>
       <ref name="bibdata"/>
       <optional>
         <ref name="boilerplate"/>
@@ -880,7 +892,7 @@
       <oneOrMore>
         <choice>
           <ref name="content"/>
-          <ref name="preface_abstract"/>
+          <ref name="abstract"/>
           <ref name="foreword"/>
           <ref name="introduction"/>
           <ref name="acknowledgements"/>
@@ -1479,11 +1491,6 @@
           <text/>
         </element>
       </optional>
-    </element>
-  </define>
-  <define name="preface_abstract">
-    <element name="abstract">
-      <ref name="Basic-Section"/>
     </element>
   </define>
   <define name="term-clause">
