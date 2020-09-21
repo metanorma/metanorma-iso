@@ -18,18 +18,9 @@ module Asciidoctor
           xml.updates_document_type a
       end
 
-      def organization(org, orgname)
-        if ["ISO",
-            "International Organization for Standardization"].include? orgname
-          org.name "International Organization for Standardization"
-          org.abbreviation "ISO"
-        elsif ["IEC",
-               "International Electrotechnical Commission"].include? orgname
-          org.name "International Electrotechnical Commission"
-          org.abbreviation "IEC"
-        else
-          org.name orgname
-        end
+      def org_abbrev
+        { "International Organization for Standardization" => "ISO",
+          "International Electrotechnical Commission" => "IEC" }
       end
 
       def metadata_author(node, xml)
