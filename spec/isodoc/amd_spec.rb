@@ -57,7 +57,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
      <?xml version='1.0'?>
-<iso-standard xmlns='http://riboseinc.com/isoxml'>
+<iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <bibdata>
     <ext>
       <doctype>amendment</doctype>
@@ -218,7 +218,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     <?xml version='1.0'?>
-       <iso-standard xmlns='http://riboseinc.com/isoxml'>
+       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
            <ext>
              <doctype>amendment</doctype>
@@ -396,7 +396,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-    <iso-standard xmlns='http://riboseinc.com/isoxml'>
+    <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
            <ext>
              <doctype>amendment</doctype>

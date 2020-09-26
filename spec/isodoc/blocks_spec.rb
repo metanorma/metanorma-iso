@@ -272,7 +272,7 @@ RSpec.describe IsoDoc do
     </iso-standard>
     INPUT
     <?xml version='1.0'?>
-<iso-standard xmlns='http://riboseinc.com/isoxml'>
+<iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <preface>
     <foreword>
       <formula id='_be9158af-7e93-4ee2-90c5-26d31c181934' unnumbered='true'>

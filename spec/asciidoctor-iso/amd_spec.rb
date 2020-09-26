@@ -183,7 +183,7 @@ OUTPUT
       :doctype: amendment
       :updates-document-type: international-standard
     INPUT
-    <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+    <iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
   <bibdata type='standard'>
     <title language='en' format='text/plain' type='main'>Introduction — Main Title — Title — Title Part — Mass fraction of
        extraneous matter, milled rice (nonglutinous), sample dividers and
@@ -298,7 +298,7 @@ Author
 :updates: ISO 17301-1:2030
 :amendment-number: 1
 INPUT
- <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+ <iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
    <bibdata type='standard'>
      <docidentifier type='ISO'>ISO 17301-1:2030/CD Amd 1</docidentifier>
      <docidentifier type='iso-with-lang'>ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
@@ -366,7 +366,7 @@ Author
 :updates: ISO 17301-1:2030
 :amendment-number: 1
 INPUT
-<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
          <bibdata type='standard'>
            <docidentifier type='ISO'>ISO 17301-1:2030/DAmd 1</docidentifier>
            <docidentifier type='iso-with-lang'>ISO 17301-1:2030/DAmd 1(E)</docidentifier>
@@ -433,7 +433,7 @@ Author
 :updates: ISO 17301-1:2030
 :amendment-number: 1
 INPUT
-<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
          <bibdata type='standard'>
            <docidentifier type='ISO'>ISO 17301-1:2030/Amd 1</docidentifier>
            <docidentifier type='iso-with-lang'>ISO 17301-1:2030/Amd 1(E)</docidentifier>
@@ -501,7 +501,7 @@ Author
 :updates: ISO 17301-1:2030
 :corrigendum-number: 3
 INPUT
-<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
   <bibdata type='standard'>
     <docidentifier type='ISO'>ISO 17301-1:2030/CD Cor.3</docidentifier>
     <docidentifier type='iso-with-lang'>ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
@@ -569,7 +569,7 @@ Author
 :updates: ISO 17301-1:2030
 :corrigendum-number: 3
 INPUT
-<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
   <bibdata type='standard'>
     <docidentifier type='ISO'>ISO 17301-1:2030/FDCor.3</docidentifier>
     <docidentifier type='iso-with-lang'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
@@ -636,7 +636,7 @@ Author
 :updates: ISO 17301-1:2030
 :corrigendum-number: 3
 INPUT
-<iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+<iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
          <bibdata type='standard'>
            <docidentifier type='ISO'>ISO 17301-1:2030/Cor.3</docidentifier>
            <docidentifier type='iso-with-lang'>ISO 17301-1:2030/Cor.3(E)</docidentifier>
