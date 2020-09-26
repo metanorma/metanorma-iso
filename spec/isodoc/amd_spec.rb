@@ -63,6 +63,11 @@ RSpec.describe IsoDoc do
       <doctype>amendment</doctype>
     </ext>
   </bibdata>
+  <local_bibdata>
+    <ext>
+      <doctype>amendment</doctype>
+    </ext>
+  </local_bibdata>
   <preface>
     <foreword>
       <p>
@@ -224,6 +229,11 @@ RSpec.describe IsoDoc do
              <doctype>amendment</doctype>
            </ext>
          </bibdata>
+         <local_bibdata>
+           <ext>
+             <doctype>amendment</doctype>
+           </ext>
+         </local_bibdata>
          <preface>
            <foreword obligation='informative'>
              <title>Foreword</title>
@@ -402,6 +412,11 @@ RSpec.describe IsoDoc do
              <doctype>amendment</doctype>
            </ext>
          </bibdata>
+         <local_bibdata>
+           <ext>
+             <doctype>amendment</doctype>
+           </ext>
+         </local_bibdata>
          <boilerplate>
            <copyright-statement>
              <clause>

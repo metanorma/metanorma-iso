@@ -615,6 +615,9 @@ documentation.</p>
                <bibdata type="standard">
                <status><stage>30</stage></status>
                </bibdata>
+               <local_bibdata type="standard">
+               <status><stage>30</stage></status>
+               </local_bibdata>
            <boilerplate>
          <copyright-statement>
            <clause inline-header="true">
