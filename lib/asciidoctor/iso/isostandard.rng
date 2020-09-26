@@ -253,7 +253,7 @@
     <define name="preface">
       <element name="preface">
         <optional>
-          <ref name="preface_abstract"/>
+          <ref name="abstract"/>
         </optional>
         <ref name="foreword"/>
         <optional>
@@ -405,6 +405,13 @@
   -->
   <define name="iso-standard">
     <element name="iso-standard">
+      <attribute name="version"/>
+      <attribute name="type">
+        <choice>
+          <value>semantic</value>
+          <value>presentation</value>
+        </choice>
+      </attribute>
       <ref name="bibdata"/>
       <zeroOrMore>
         <ref name="termdocsource"/>
