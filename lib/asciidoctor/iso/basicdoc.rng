@@ -158,17 +158,7 @@
         <data type="ID"/>
       </attribute>
       <oneOrMore>
-        <choice>
-          <ref name="formula"/>
-          <ref name="ul"/>
-          <ref name="ol"/>
-          <ref name="dl"/>
-          <ref name="quote"/>
-          <ref name="sourcecode"/>
-          <ref name="paragraph"/>
-          <ref name="table"/>
-          <ref name="figure"/>
-        </choice>
+        <ref name="paragraph"/>
       </oneOrMore>
     </element>
   </define>
@@ -1028,6 +1018,9 @@
           <value>alphabet_upper</value>
         </choice>
       </attribute>
+      <optional>
+        <attribute name="start"/>
+      </optional>
       <oneOrMore>
         <ref name="li"/>
       </oneOrMore>
