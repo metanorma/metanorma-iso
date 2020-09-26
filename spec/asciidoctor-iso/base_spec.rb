@@ -91,7 +91,7 @@ RSpec.describe Asciidoctor::ISO do
       :copyright-year: 2000
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+       <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
        <bibdata type="standard">
    <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part</title>
    <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -173,7 +173,7 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "processes complex metadata" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~'OUTPUT')
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -191,7 +191,7 @@ RSpec.describe Asciidoctor::ISO do
       :doctype: technical-report
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
-       <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+       <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
        <bibdata type="standard">
          <docidentifier type="ISO">ISO/IEC/IETF/TR 1000-1-1:2001</docidentifier>
          <docidentifier type='iso-with-lang'>ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
@@ -294,7 +294,7 @@ RSpec.describe Asciidoctor::ISO do
       :doctype: technical-specification
       :iteration: 2
     INPUT
-    <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+    <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
 <bibdata type="standard">
   <docidentifier type="ISO">ISO/DTS 1000.2</docidentifier>
   <docidentifier type='iso-with-lang'>ISO/DTS 1000.2(F)</docidentifier>
@@ -360,7 +360,7 @@ OUTPUT
       :docnumber: 1000
       :docstage: 60
     INPUT
-<iso-standard xmlns="https://www.metanorma.org/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
 <bibdata type="standard">
   <docidentifier type="ISO">ISO 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
@@ -426,7 +426,7 @@ OUTPUT
       :docstage: 60
       :docsubstage: 00
     INPUT
-<iso-standard xmlns="https://www.metanorma.org/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
 <bibdata type="standard">
   <docidentifier type="ISO">ISO 1000</docidentifier>
   <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>

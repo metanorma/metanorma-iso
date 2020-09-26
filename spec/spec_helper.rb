@@ -117,7 +117,7 @@ BOILERPLATE =
 
 BLANK_HDR = <<~"HDR"
 <?xml version="1.0" encoding="UTF-8"?>
-<iso-standard xmlns="https://www.metanorma.org/ns/iso">
+<iso-standard xmlns="https://www.metanorma.org/ns/iso" type="semantic" version="#{Metanorma::ISO::VERSION}">
 <bibdata type="standard">
   <contributor>
     <role type="author"/>

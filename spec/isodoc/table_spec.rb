@@ -61,7 +61,7 @@ RSpec.describe IsoDoc do
 </iso-standard>
     INPUT
     <?xml version='1.0'?>
-       <iso-standard xmlns='http://riboseinc.com/isoxml'>
+       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <preface>
            <foreword>
              <table id='tableD-1' alt='tool tip' summary='long desc'>

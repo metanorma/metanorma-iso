@@ -611,7 +611,7 @@ documentation.</p>
     INPUT
 
     presxml = <<~OUTPUT
-    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
                <bibdata type="standard">
                <status><stage>30</stage></status>
                </bibdata>
