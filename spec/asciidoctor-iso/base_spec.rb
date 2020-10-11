@@ -328,7 +328,7 @@ RSpec.describe Asciidoctor::ISO do
         <subdivision>Subdivision</subdivision>
         <abbreviation>SD</abbreviation>
         <address>
-          <formattedAddress>1 Infinity Loop + California</formattedAddress>
+          <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
         </address>
         <phone>3333333</phone>
         <phone type='fax'>4444444</phone>
@@ -343,7 +343,7 @@ RSpec.describe Asciidoctor::ISO do
         <subdivision>Subdivision</subdivision>
         <abbreviation>SD</abbreviation>
         <address>
-          <formattedAddress>1 Infinity Loop + California</formattedAddress>
+          <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
         </address>
         <phone>3333333</phone>
         <phone type='fax'>4444444</phone>
@@ -368,7 +368,7 @@ RSpec.describe Asciidoctor::ISO do
           <subdivision>Subdivision</subdivision>
           <abbreviation>SD</abbreviation>
           <address>
-            <formattedAddress>1 Infinity Loop + California</formattedAddress>
+            <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
           </address>
           <phone>3333333</phone>
           <phone type='fax'>4444444</phone>
