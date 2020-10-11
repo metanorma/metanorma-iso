@@ -189,6 +189,12 @@ RSpec.describe Asciidoctor::ISO do
       :copyright-holder: ISO,IETF
       :copyright-year: 2001
       :doctype: technical-report
+      :pub-address: 1 Infinity Loop + \
+      California
+      :pub-phone: 3333333
+      :pub-fax: 4444444
+      :pub-email: x@example.com
+      :pub-uri: http://www.example.com
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
@@ -279,6 +285,116 @@ RSpec.describe Asciidoctor::ISO do
        </iso-standard>
     OUTPUT
   end
+
+     it "processes subdivisions" do
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, "")))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :revdate: 2000-01
+      :published-date: 1000-01
+      :docnumber: 1000
+      :partnumber: 1-1
+      :tc-docnumber: 2000
+      :language: el
+      :script: Grek
+      :subdivision: Subdivision
+      :subdivision-abbr: SD
+      :doctype: This is a DocType
+      :pub-address: 1 Infinity Loop + \\
+      California
+      :pub-phone: 3333333
+      :pub-fax: 4444444
+      :pub-email: x@example.com
+      :pub-uri: http://www.example.com
+
+    INPUT
+    <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
+  <bibdata type='standard'>
+    <docidentifier type='ISO'>SD 1000-1-1</docidentifier>
+    <docidentifier type='iso-with-lang'>SD 1000-1-1(X)</docidentifier>
+    <docidentifier type='iso-reference'>SD 1000-1-1(X)</docidentifier>
+    <docidentifier type='iso-tc'>2000</docidentifier>
+    <docnumber>1000</docnumber>
+    <date type='published'>
+      <on>1000-01</on>
+    </date>
+    <contributor>
+      <role type='author'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <subdivision>Subdivision</subdivision>
+        <abbreviation>SD</abbreviation>
+        <address>
+          <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
+        </address>
+        <phone>3333333</phone>
+        <phone type='fax'>4444444</phone>
+        <email>x@example.com</email>
+        <uri>http://www.example.com</uri>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type='publisher'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <subdivision>Subdivision</subdivision>
+        <abbreviation>SD</abbreviation>
+        <address>
+          <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
+        </address>
+        <phone>3333333</phone>
+        <phone type='fax'>4444444</phone>
+        <email>x@example.com</email>
+        <uri>http://www.example.com</uri>
+      </organization>
+    </contributor>
+    <version>
+      <revision-date>2000-01</revision-date>
+    </version>
+    <language>el</language>
+    <script>Grek</script>
+    <status>
+      <stage abbreviation='IS'>60</stage>
+      <substage>60</substage>
+    </status>
+    <copyright>
+      <from>2020</from>
+      <owner>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <subdivision>Subdivision</subdivision>
+          <abbreviation>SD</abbreviation>
+          <address>
+            <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
+          </address>
+          <phone>3333333</phone>
+          <phone type='fax'>4444444</phone>
+          <email>x@example.com</email>
+          <uri>http://www.example.com</uri>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+      <doctype>this-is-a-doctype</doctype>
+      <editorialgroup>
+        <technical-committee/>
+        <subcommittee/>
+        <workgroup/>
+      </editorialgroup>
+      <structuredidentifier>
+        <project-number part='1' subpart='1'>SD 1000</project-number>
+      </structuredidentifier>
+      <stagename>International standard</stagename>
+    </ext>
+  </bibdata>
+  <sections> </sections>
+</iso-standard>
+
+OUTPUT
+     end
 
     it "defaults substage, defines iteration on stage 50, gives stage 50 on technical specification" do
     expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
