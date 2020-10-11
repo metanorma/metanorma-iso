@@ -2,6 +2,26 @@ require "spec_helper"
 require "fileutils"
 
 RSpec.describe Asciidoctor::ISO do
+  context "when xref_error.adoc compilation" do
+    around do |example|
+      FileUtils.rm_f "spec/assets/xref_error.err"
+      example.run
+      Dir["spec/assets/xref_error*"].each do |file|
+        next if file.match?(/adoc$/)
+
+        FileUtils.rm_f(file)
+      end
+    end
+
+    it "generates error file" do
+      expect do
+        Metanorma::Compile
+          .new
+          .compile("spec/assets/xref_error.adoc", type: "iso")
+      end.to(change { File.exist?("spec/assets/xref_error.err") }
+              .from(false).to(true))
+    end
+  end
 
 it "Warns of missing scope" do
     FileUtils.rm_f "test.err"
@@ -332,7 +352,7 @@ it "warns that undated reference has locality" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
-  
+
   == Scope
   <<iso123,clause=1>>
 
@@ -417,7 +437,7 @@ it "warns that Scope contains subclauses" do
   #{VALIDATING_BLANK_HDR}
 
   == Scope
-  
+
   === Scope subclause
   INPUT
     expect(File.read("test.err")).to include "Scope contains subclauses: should be succinct"
@@ -427,7 +447,7 @@ end
 it "warns that Table should have title" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  #{VALIDATING_BLANK_HDR}     
+  #{VALIDATING_BLANK_HDR}
 
   |===
   |a |b |c
@@ -439,7 +459,7 @@ end
 it "gives Style warning if number not broken up in threes" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  #{VALIDATING_BLANK_HDR}     
+  #{VALIDATING_BLANK_HDR}
 
   == Clause
   12121
@@ -450,7 +470,7 @@ end
 it "gives No style warning if number not broken up in threes is ISO reference" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  #{VALIDATING_BLANK_HDR}     
+  #{VALIDATING_BLANK_HDR}
 
   == Clause
   ISO 12121
@@ -461,7 +481,7 @@ end
 it "Style warning if decimal point" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  #{VALIDATING_BLANK_HDR}     
+  #{VALIDATING_BLANK_HDR}
 
   == Clause
   8.1
@@ -472,7 +492,7 @@ end
 it "Style warning if billion used" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  #{VALIDATING_BLANK_HDR}     
+  #{VALIDATING_BLANK_HDR}
 
   == Clause
   "Billions" are a term of art.
@@ -483,7 +503,7 @@ end
 it "Style warning if no space before percent sign" do
     FileUtils.rm_f "test.err"
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
-  #{VALIDATING_BLANK_HDR}     
+  #{VALIDATING_BLANK_HDR}
 
   == Clause
   95%
@@ -572,7 +592,7 @@ end
 # it "Style warning if foreword contains subclauses" do
   # expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-standard unit}).to_stderr
   #  #{VALIDATING_BLANK_HDR}
-# 
+#
   # INPUT
 # end
 
@@ -644,7 +664,7 @@ it "Warning if introduction not followed by scope" do
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
-  .Foreword 
+  .Foreword
   Foreword
 
   == Introduction
@@ -661,7 +681,7 @@ it "Warning if normative references not followed by terms and definitions" do
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
-  .Foreword 
+  .Foreword
   Foreword
 
   == Scope
@@ -681,7 +701,7 @@ it "Warning if there are no clauses in the document" do
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
-  .Foreword 
+  .Foreword
   Foreword
 
   == Scope
@@ -1089,7 +1109,7 @@ it "Warning if term definition starts with article" do
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Terms and Definitions
-  
+
   === Term
 
   The definition of a term is a part of the specialized vocabulary of a particular field
@@ -1102,7 +1122,7 @@ it "Warning if term definition ends with period" do
   Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Terms and Definitions
-  
+
   === Term
 
   Part of the specialized vocabulary of a particular field.
@@ -1202,7 +1222,7 @@ it "Warn if an undated reference has no associated footnote" do
     FileUtils.rm_f "test.err"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
-  
+
   [bibliography]
   == Bibliography
   * [[[ISO8,ISO 8:--]]], _Title_
