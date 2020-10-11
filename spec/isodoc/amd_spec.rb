@@ -642,7 +642,7 @@ OUTPUT
     arr = c.convert_init(<<~"INPUT", "test", false)
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
-  expect(Hash[c.info(Nokogiri::XML(<<~"INPUT"), nil).sort]).to be_equivalent_to <<~"OUTPUT"
+  expect(metadata(c.info(Nokogiri::XML(<<~"INPUT"), nil))).to be_equivalent_to <<~"OUTPUT"
       <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
   <bibdata type='standard'>
     <title language='en' format='text/plain' type='main'>Introduction — Main Title — Title — Title Part  — Mass fraction of
@@ -735,8 +735,6 @@ OUTPUT
 </iso-standard>
 INPUT
 {:agency=>"ISO",
-:authors=>[],
-:authors_affiliations=>{},
 :createddate=>"2016-05-01",
 :docnumber=>"ISO/PreNWIP3 17301-1:2016/Amd.1",
 :docnumber_lang=>"ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
@@ -765,9 +763,6 @@ INPUT
 :edition=>"2",
 :editorialgroup=>["A 1", "B 2", "C 3"],
 :ics=>"1, 2, 3",
-:keywords=>[],
-:obsoletes=>nil,
-:obsoletes_part=>nil,
 :publisher=>"International Organization for Standardization",
 :revdate=>"2000-01-01",
 :revdate_monthyear=>"January 2000",
@@ -778,7 +773,6 @@ INPUT
 :stageabbr=>"NWIP",
 :statusabbr=>"PreNWIP3",
 :tc=>"A 1",
-:tc_docnumber=>[],
 :unpublished=>true,
 :wg=>"C 3"}
 OUTPUT
