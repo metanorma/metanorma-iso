@@ -6,17 +6,6 @@ RSpec.describe Asciidoctor::ISO do
     expect(Metanorma::ISO::VERSION).not_to be nil
   end
 
-  #it "generates output for the Rice document" do
-    #FileUtils.rm_f %w(spec/examples/rice.xml spec/examples/rice.doc spec/examples/rice.html spec/examples/rice_alt.html)
-    #FileUtils.cd "spec/examples"
-    #Asciidoctor.convert_file "rice.adoc", {:attributes=>{"backend"=>"iso"}, :safe=>0, :header_footer=>true, :requires=>["metanorma-iso"], :failure_level=>4, :mkdirs=>true, :to_file=>nil}
-    #FileUtils.cd "../.."
-    #expect(File.exist?("spec/examples/rice.xml"))).to be true
-    #expect(File.exist?("spec/examples/rice.doc"))).to be true
-    #expect(File.exist?("spec/examples/rice.html"))).to be true
-    #expect(File.exist?("spec/examples/rice_alt.html"))).to be true
-  #end
-
   it "processes a blank document" do
     expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     #{ASCIIDOC_BLANK_HDR}
@@ -38,6 +27,25 @@ RSpec.describe Asciidoctor::ISO do
       :no-pdf:
     INPUT
     #{BLANK_HDR}
+<sections/>
+</iso-standard>
+    OUTPUT
+    expect(File.exist?("test.doc")).to be true
+    expect(File.exist?("htmlstyle.css")).to be false
+  end
+
+    it "converts a blank document in French" do
+    FileUtils.rm_f "test.doc"
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      = Document title
+      Author
+      :docfile: test.adoc
+      :novalid:
+      :no-isobib:
+      :no-pdf:
+      :language: fr
+    INPUT
+    #{BLANK_HDR_FR}
 <sections/>
 </iso-standard>
     OUTPUT

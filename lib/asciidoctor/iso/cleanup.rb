@@ -124,6 +124,11 @@ module Asciidoctor
           h.delete('inline-header')
         end
       end
+
+      def boilerplate_file(xmldoc)
+        file = @lang == "fr" ? "boilerplate-fr.xml" : "boilerplate.xml"
+        File.join(@libdir, file)
+      end
     end
   end
 end

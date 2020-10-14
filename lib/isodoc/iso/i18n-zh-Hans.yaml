@@ -6,3 +6,7 @@ term_def_boilerplate: |
       <li> <p>IEC Electropedia:
         位于<link target="http://www.electropedia.org"/>
       </p> </li> </ul>
+all_rights_reserved: 版权所有
+reference_number: 参考编号
+price_based_on: 价格基于%页
+

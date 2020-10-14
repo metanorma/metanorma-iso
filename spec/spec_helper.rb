@@ -118,8 +118,15 @@ BOILERPLATE =
   gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
 )
 
+BOILERPLATE_FR =
+  HTMLEntities.new.decode(
+  File.read(File.join(File.dirname(__FILE__), "..", "lib", "asciidoctor", "iso", "boilerplate-fr.xml"), encoding: "utf-8").
+  gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s).
+  gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "").
+  gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
+)
 
-BLANK_HDR = <<~"HDR"
+BLANK_HDR1 = <<~"HDR"
 <?xml version="1.0" encoding="UTF-8"?>
 <iso-standard xmlns="https://www.metanorma.org/ns/iso" type="semantic" version="#{Metanorma::ISO::VERSION}">
 <bibdata type="standard">
@@ -162,7 +169,16 @@ BLANK_HDR = <<~"HDR"
   <stagename>International standard</stagename>
   </ext>
 </bibdata>
+HDR
+
+BLANK_HDR = <<~"HDR"
+#{BLANK_HDR1}
 #{BOILERPLATE}
+HDR
+
+BLANK_HDR_FR = <<~"HDR"
+#{BLANK_HDR1.sub(%r{<language>en</language>}, "<language>fr</language>")}
+#{BOILERPLATE_FR}
 HDR
 
 TERM_BOILERPLATE = <<~END
