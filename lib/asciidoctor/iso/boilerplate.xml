@@ -1,6 +1,7 @@
 <boilerplate>
   <copyright-statement>
     <clause>
+      <title>COPYRIGHT PROTECTED DOCUMENT</title>
     <p id="boilerplate-year">
     &copy; {{ agency }} {{ docyear }}
   </p>

@@ -74,7 +74,7 @@ mso-line-height-rule:exactly'><span lang=EN-GB>{{ docnumber_reference }}{{ draft
 
 <p class=MsoHeader style='margin-bottom:18.0pt'><span lang=EN-GB
 style='font-size:10.0pt;mso-bidi-font-size:11.0pt;font-weight:normal'>©
-{{ agency }}&nbsp;{{ docyear }}&nbsp;– All rights reserved</span><span lang=EN-GB
+{{ agency }}&nbsp;{{ docyear }}&nbsp;– {{ all_rights_reserved }}</span><span lang=EN-GB
 style='font-weight:normal'><o:p></o:p></span></p>
 
 </div>
@@ -93,7 +93,7 @@ style='mso-bidi-font-weight:normal'><span lang=EN-GB style='font-size:10.0pt;
 mso-bidi-font-size:11.0pt'><span style='mso-element:field-end'></span></span></b><![endif]--><span
 lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><span
 style='mso-tab-count:1'>                                                                                                                                                                           </span>©
-{{ agency }}&nbsp;{{ docyear }}&nbsp;– All rights reserved<o:p></o:p></span></p>
+{{ agency }}&nbsp;{{ docyear }}&nbsp;– {{ all_rights_reserved }}<o:p></o:p></span></p>
 
 </div>
 
@@ -129,7 +129,7 @@ lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><span
 style='mso-element:field-end'></span></span><![endif]--><span lang=EN-GB
 style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><span style='mso-tab-count:
 1'>                                                                                                                                                                           </span>©
-{{ agency }}&nbsp;{{ docyear }}&nbsp;– All rights reserved<o:p></o:p></span></p>
+{{ agency }}&nbsp;{{ docyear }}&nbsp;– {{ all_rights_reserved }}<o:p></o:p></span></p>
 </div>
 
 <div style='mso-element:footer' id=ef2l>
@@ -144,7 +144,7 @@ lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><span
 style='mso-element:field-end'></span></span><![endif]--><span lang=EN-GB
 style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><span style='mso-tab-count:
 1'>                                                                                                                                                                           </span>©
-{{ agency }}&nbsp;{{ docyear }}&nbsp;– All rights reserved<o:p></o:p></span></p>
+{{ agency }}&nbsp;{{ docyear }}&nbsp;– {{ all_rights_reserved }}<o:p></o:p></span></p>
 </div>
 
 <div style='mso-element:footer' id=f2>
@@ -188,7 +188,7 @@ style='mso-bidi-font-weight:normal'><span lang=EN-GB style='font-size:10.0pt;
 mso-bidi-font-size:11.0pt'><span style='mso-element:field-end'></span></span></b><![endif]--><span
 lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><span
 style='mso-tab-count:1'>                                                                                                                                                                           </span>©
-{{ agency }}&nbsp;{{ docyear }}&nbsp;– All rights reserved<o:p></o:p></span></p>
+{{ agency }}&nbsp;{{ docyear }}&nbsp;– {{ all_rights_reserved }}<o:p></o:p></span></p>
 </div>
 
 <div style='mso-element:footer' id=ef3l>
@@ -204,7 +204,7 @@ style='mso-bidi-font-weight:normal'><span lang=EN-GB style='font-size:10.0pt;
 mso-bidi-font-size:11.0pt'><span style='mso-element:field-end'></span></span></b><![endif]--><span
 lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><span
 style='mso-tab-count:1'>                                                                                                                                                                           </span>©
-{{ agency }}&nbsp;{{ docyear }}&nbsp;– All rights reserved<o:p></o:p></span></p>
+{{ agency }}&nbsp;{{ docyear }}&nbsp;– {{ all_rights_reserved }}<o:p></o:p></span></p>
 </div>
 
 <div style='mso-element:footer' id=f3>
@@ -246,18 +246,10 @@ lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:11.0pt'><o:p></o:p></span>
 {% endif %}
 
 <p class=MsoFooter style='margin-top:0cm'><span lang=EN-AU style='font-size:
-10.0pt;mso-ansi-language:EN-AU'>Price based on </span><!--[if supportFields]><span
-lang=EN-AU style='font-size:10.0pt;mso-ansi-language:EN-AU'><span
-style='mso-element:field-begin'></span><span style='mso-spacerun:yes'> </span>NUMPAGES<span
-style='mso-spacerun:yes'>  </span>\* MERGEFORMAT <span style='mso-element:field-separator'></span></span><![endif]--><span
-lang=EN-AU style='font-size:10.0pt;mso-ansi-language:EN-AU'><span
-style='mso-no-proof:yes'>26</span></span><!--[if supportFields]><span
-lang=EN-AU style='font-size:10.0pt;mso-ansi-language:EN-AU'><span
-style='mso-element:field-end'></span></span><![endif]--><span lang=EN-AU
-style='font-size:10.0pt;mso-ansi-language:EN-AU'> pages<o:p></o:p></span></p>
+10.0pt;mso-ansi-language:EN-AU'>{{ price_based_on | replace: "%", "<span style='mso-element:field-begin'></span><span style='mso-spacerun:yes'> </span>NUMPAGES<span style='mso-spacerun:yes'>  </span>\* MERGEFORMAT <span style='mso-element:field-separator'></span><span style='mso-no-proof:yes'>26</span><span style='mso-element:field-end'></span>" }}</span></p>
 
 <p class=MsoFooter><span lang=EN-AU style='font-size:10.0pt;'>©
-{{ agency }}&nbsp;{{ docyear }}&nbsp;– All rights reserved<o:p></o:p></span></p>
+{{ agency }}&nbsp;{{ docyear }}&nbsp;– {{ all_rights_reserved }}<o:p></o:p></span></p>
 
 </div>
 
