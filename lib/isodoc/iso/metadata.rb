@@ -5,15 +5,13 @@ module IsoDoc
     class  Metadata < IsoDoc::Metadata
       def initialize(lang, script, i18n)
         super
-        @metadata = {
-          tc: "XXXX",
-          sc: "XXXX",
-          wg: "XXXX",
-          editorialgroup: [],
-          secretariat: "XXXX",
-          obsoletes: nil,
-          obsoletes_part: nil
-        }
+        set(:tc, "XXXX")
+        set(:sc, "XXXX")
+        set(:wg, "XXXX")
+        set(:editorialgroup, [])
+        set(:secretariat, "XXX")
+        set(:obsoletes, nil)
+        set(:obsoletes_part, nil)
       end
 
       def status_abbrev(stage, substage, iter, draft, doctype)

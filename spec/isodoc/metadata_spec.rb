@@ -81,6 +81,9 @@ INPUT
 {:accesseddate=>"2012",
 :activateddate=>"2013",
 :agency=>"ISO",
+:circulateddate=>"XXX",
+:confirmeddate=>"XXX",
+:copieddate=>"XXX",
 :createddate=>"2010&ndash;2011",
 :docnumber=>"ISO/PreCD3 17301-1",
 :docnumber_lang=>"ISO/PreCD3 17301-1 (E)",
@@ -102,13 +105,18 @@ INPUT
 :draftinfo=>" (draft 0.4, 2016-05-01)",
 :edition=>"2",
 :editorialgroup=>["TC 34", "SC 4", "WG 3"],
+:implementeddate=>"XXX",
+:issueddate=>"XXX",
 :keywords=>["kw2", "kw1"],
+:lang=>"en",
 :obsoleteddate=>"2014",
 :publisheddate=>"2011",
 :publisher=>"International Organization for Standardization",
+:receiveddate=>"XXX",
 :revdate=>"2016-05-01",
 :revdate_monthyear=>"May 2016",
 :sc=>"SC 4",
+:script=>"Latn",
 :secretariat=>"GB",
 :stage=>"30",
 :stage_int=>30,
@@ -116,12 +124,17 @@ INPUT
 :statusabbr=>"PreCD3",
 :tc=>"TC 34",
 :tc_docnumber=>["17301", "17302"],
+:transmitteddate=>"XXX",
+:unchangeddate=>"XXX",
 :unpublished=>true,
+:updateddate=>"XXX",
+:vote_endeddate=>"XXX",
+:vote_starteddate=>"XXX",
 :wg=>"WG 3"}
 OUTPUT
   end
 
-  it "processes IsoXML metadata" do
+  it "processes IsoXML metadata #2" do
     c = IsoDoc::Iso::HtmlConvert.new({})
     arr = c.convert_init(<<~"INPUT", "test", false)
     <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -198,7 +211,12 @@ OUTPUT
 </bibdata>
 </iso-standard>
 INPUT
-{:agency=>"ISO/IEC",
+{:accesseddate=>"XXX",
+:agency=>"ISO/IEC",
+:circulateddate=>"XXX",
+:confirmeddate=>"XXX",
+:copieddate=>"XXX",
+:createddate=>"XXX",
 :docnumber=>"ISO/IEC/CD 17301-1-3",
 :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
 :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -216,17 +234,29 @@ INPUT
 :docyear=>"2016",
 :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
 :ics=>"1.2.3, 1.2.3",
+:implementeddate=>"XXX",
+:issueddate=>"XXX",
+:lang=>"en",
+:obsoleteddate=>"XXX",
 :obsoletes=>"IEC 8121",
 :obsoletes_part=>"3.1",
+:publisheddate=>"XXX",
 :publisher=>"International Organization for Standardization and International Electrotechnical Commission",
+:receiveddate=>"XXX",
 :sc=>"DEF 4",
-:secretariat=>"XXXX",
+:script=>"Latn",
+:secretariat=>"XXX",
 :stage=>"60",
 :stage_int=>60,
 :statusabbr=>"IS",
 :tc=>"ABC 34",
 :tc_docnumber=>["17301"],
+:transmitteddate=>"XXX",
+:unchangeddate=>"XXX",
 :unpublished=>false,
+:updateddate=>"XXX",
+:vote_endeddate=>"XXX",
+:vote_starteddate=>"XXX",
 :wg=>"GHI 3"}
 OUTPUT
   end
