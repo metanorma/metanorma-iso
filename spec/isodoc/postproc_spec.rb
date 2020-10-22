@@ -613,11 +613,8 @@ documentation.</p>
     presxml = <<~OUTPUT
     <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
                <bibdata type="standard">
-               <status><stage>30</stage></status>
+               <status><stage language="">30</stage></status>
                </bibdata>
-               <local_bibdata type="standard">
-               <status><stage>30</stage></status>
-               </local_bibdata>
            <boilerplate>
          <copyright-statement>
            <clause inline-header="true">
@@ -664,7 +661,7 @@ documentation.</p>
 
      FileUtils.rm_f "test.doc"
     FileUtils.rm_f "test.html"
-expect((IsoDoc::Iso::PresentationXMLConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", input, true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(presxml)
+expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", input, true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
     IsoDoc::Iso::HtmlConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("test", presxml, false)
     word = File.read("test.html", encoding: "UTF-8")
     expect((word)).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'

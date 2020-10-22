@@ -131,33 +131,35 @@ module IsoDoc
       end
 
       def title(isoxml, _out)
-        intro, main, part, amd = title_parts(isoxml, "en")
+        lang = @lang == "fr" ? "fr" : "en"
+        intro, main, part, amd = title_parts(isoxml, lang)
         partnumber, subpartnumber, amdnumber, corrnumber = title_nums(isoxml)
 
         set(:doctitlemain, @c.encode(main ? main.text : "", :hexadecimal))
-        main = compose_title(main, intro, part, partnumber, subpartnumber, "en")
+        main = compose_title(main, intro, part, partnumber, subpartnumber, lang)
         set(:doctitle, main)
         set(:doctitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
-        set(:doctitlepartlabel, part_prefix(partnumber, subpartnumber, "en"))
+        set(:doctitlepartlabel, part_prefix(partnumber, subpartnumber, lang))
         set(:doctitlepart, @c.encode(part.text, :hexadecimal)) if part
-        set(:doctitleamdlabel, amd_prefix(amdnumber, "en")) if amdnumber
+        set(:doctitleamdlabel, amd_prefix(amdnumber, lang)) if amdnumber
         set(:doctitleamd, @c.encode(amd.text, :hexadecimal)) if amd
-        set(:doctitlecorrlabel, corr_prefix(corrnumber, "en")) if corrnumber
+        set(:doctitlecorrlabel, corr_prefix(corrnumber, lang)) if corrnumber
       end
 
       def subtitle(isoxml, _out)
-        intro, main, part, amd = title_parts(isoxml, "fr")
+        lang = @lang == "fr" ? "en" : "fr"
+        intro, main, part, amd = title_parts(isoxml, lang)
         partnumber, subpartnumber, amdnumber, corrnumber = title_nums(isoxml)
 
         set(:docsubtitlemain, @c.encode(main ? main.text : "", :hexadecimal))
-        main = compose_title(main, intro, part, partnumber, subpartnumber, "fr")
+        main = compose_title(main, intro, part, partnumber, subpartnumber, lang)
         set(:docsubtitle, main)
         set(:docsubtitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
-        set(:docsubtitlepartlabel, part_prefix(partnumber, subpartnumber, "fr"))
+        set(:docsubtitlepartlabel, part_prefix(partnumber, subpartnumber, lang))
         set(:docsubtitlepart, @c.encode(part.text, :hexadecimal)) if part
-        set(:docsubtitleamdlabel, amd_prefix(amdnumber, "fr")) if amdnumber
+        set(:docsubtitleamdlabel, amd_prefix(amdnumber, lang)) if amdnumber
         set(:docsubtitleamd, @c.encode(amd.text, :hexadecimal)) if amd
-        set(:docsubtitlecorrlabel, corr_prefix(corrnumber, "fr")) if corrnumber
+        set(:docsubtitlecorrlabel, corr_prefix(corrnumber, lang)) if corrnumber
       end
 
       def author(xml, _out)

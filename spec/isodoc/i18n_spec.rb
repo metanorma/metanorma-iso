@@ -74,11 +74,8 @@ RSpec.describe IsoDoc do
         presxml = <<~OUTPUT
          <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
-           <language>en</language>
+           <language current="true">en</language>
          </bibdata>
-         <local_bibdata>
-           <language>en</language>
-         </local_bibdata>
          <preface>
            <foreword obligation='informative'>
              <title>Foreword</title>
@@ -241,12 +238,12 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
   end
 
   it "defaults to English" do
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>tlh</language>
@@ -316,11 +313,8 @@ RSpec.describe IsoDoc do
         INPUT
         <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
-           <language>tlh</language>
+           <language current="true">tlh</language>
          </bibdata>
-          <local_bibdata>
-           <language>tlh</language>
-         </local_bibdata>
          <preface>
            <foreword obligation='informative'>
              <title>Foreword</title>
@@ -528,11 +522,8 @@ RSpec.describe IsoDoc do
        presxml = <<~OUTPUT
        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
-           <language>fr</language>
+           <language current="true">fr</language>
          </bibdata>
-          <local_bibdata>
-           <language>fr</language>
-         </local_bibdata>
          <preface>
            <foreword obligation='informative'>
              <title>Foreword</title>
@@ -694,7 +685,7 @@ OUTPUT
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
   end
 
@@ -781,13 +772,9 @@ OUTPUT
         presxml = <<~OUTPUT
        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
-           <language>zh</language>
-           <script>Hans</script>
+           <language current="true">zh</language>
+           <script current="true">Hans</script>
          </bibdata>
-         <local_bibdata>
-           <language>zh</language>
-           <script>Hans</script>
-         </local_bibdata>
          <preface>
            <foreword obligation='informative'>
              <title>Foreword</title>
@@ -960,7 +947,7 @@ OUTPUT
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
   end
 
