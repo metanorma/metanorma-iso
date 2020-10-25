@@ -18,24 +18,28 @@ RSpec.describe Asciidoctor::ISO do
 
   it "converts a blank document" do
     FileUtils.rm_f "test.doc"
+    FileUtils.rm_f "test.html"
+    FileUtils.rm_f "test.pdf"
+    FileUtils.rm_f "test_alt.html"
     expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
       :novalid:
       :no-isobib:
-      :no-pdf:
     INPUT
     #{BLANK_HDR}
 <sections/>
 </iso-standard>
     OUTPUT
+    expect(File.exist?("test_alt.html")).to be true
+    expect(File.exist?("test.html")).to be true
     expect(File.exist?("test.doc")).to be true
+    expect(File.exist?("test.pdf")).to be true
     expect(File.exist?("htmlstyle.css")).to be false
   end
 
     it "converts a blank document in French" do
-    FileUtils.rm_f "test.doc"
     expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
@@ -49,8 +53,6 @@ RSpec.describe Asciidoctor::ISO do
 <sections/>
 </iso-standard>
     OUTPUT
-    expect(File.exist?("test.doc")).to be true
-    expect(File.exist?("htmlstyle.css")).to be false
   end
 
   it "processes default metadata" do

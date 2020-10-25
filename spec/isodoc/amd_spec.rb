@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "cross-references notes in amendments" do
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
     <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata> <ext> <doctype>amendment</doctype> </ext> </bibdata>
     <preface>
@@ -60,14 +60,9 @@ RSpec.describe IsoDoc do
 <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <bibdata>
     <ext>
-      <doctype>amendment</doctype>
+      <doctype language="">amendment</doctype>
     </ext>
   </bibdata>
-  <local_bibdata>
-    <ext>
-      <doctype>amendment</doctype>
-    </ext>
-  </local_bibdata>
   <preface>
     <foreword>
       <p>
@@ -158,7 +153,7 @@ RSpec.describe IsoDoc do
   end
 
   it "cross-references sections" do
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     <bibdata> <ext> <doctype>amendment</doctype> </ext> </bibdata>
       <preface>
@@ -226,14 +221,9 @@ RSpec.describe IsoDoc do
        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
            <ext>
-             <doctype>amendment</doctype>
+             <doctype language="">amendment</doctype>
            </ext>
          </bibdata>
-         <local_bibdata>
-           <ext>
-             <doctype>amendment</doctype>
-           </ext>
-         </local_bibdata>
          <preface>
            <foreword obligation='informative'>
              <title>Foreword</title>
@@ -409,14 +399,9 @@ RSpec.describe IsoDoc do
     <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
          <bibdata>
            <ext>
-             <doctype>amendment</doctype>
+             <doctype language="">amendment</doctype>
            </ext>
          </bibdata>
-         <local_bibdata>
-           <ext>
-             <doctype>amendment</doctype>
-           </ext>
-         </local_bibdata>
          <boilerplate>
            <copyright-statement>
              <clause>
@@ -633,7 +618,7 @@ RSpec.describe IsoDoc do
   </body>
 </html>
 OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)).sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
     end
 
@@ -734,7 +719,11 @@ OUTPUT
   <sections/>
 </iso-standard>
 INPUT
-{:agency=>"ISO",
+{:accesseddate=>"XXX",
+:agency=>"ISO",
+:circulateddate=>"XXX",
+:confirmeddate=>"XXX",
+:copieddate=>"XXX",
 :createddate=>"2016-05-01",
 :docnumber=>"ISO/PreNWIP3 17301-1:2016/Amd.1",
 :docnumber_lang=>"ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
@@ -757,26 +746,202 @@ INPUT
 :doctitlepart=>"Title Part",
 :doctitlepartlabel=>"Part&nbsp;1",
 :doctype=>"Amendment",
+:doctype_display=>"Amendment",
 :docyear=>"2017",
 :draft=>"0.3.4",
 :draftinfo=>" (draft 0.3.4, 2000-01-01)",
 :edition=>"2",
 :editorialgroup=>["A 1", "B 2", "C 3"],
 :ics=>"1, 2, 3",
+:implementeddate=>"XXX",
+:issueddate=>"XXX",
+:lang=>"en",
+:obsoleteddate=>"XXX",
+:publisheddate=>"XXX",
 :publisher=>"International Organization for Standardization",
+:receiveddate=>"XXX",
 :revdate=>"2000-01-01",
 :revdate_monthyear=>"January 2000",
 :sc=>"B 2",
+:script=>"Latn",
 :secretariat=>"SECRETARIAT",
 :stage=>"10",
 :stage_int=>10,
 :stageabbr=>"NWIP",
 :statusabbr=>"PreNWIP3",
 :tc=>"A 1",
+:transmitteddate=>"XXX",
+:unchangeddate=>"XXX",
 :unpublished=>true,
+:updateddate=>"XXX",
+:vote_endeddate=>"XXX",
+:vote_starteddate=>"XXX",
 :wg=>"C 3"}
 OUTPUT
   end
+
+     it "processes IsoXML metadata in French" do
+    c = IsoDoc::Iso::HtmlConvert.new({})
+    arr = c.convert_init(<<~"INPUT", "test", false)
+    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <bibdata>
+    <language>fr</language>
+    </bibdata>
+    </iso-standard>
+    INPUT
+  expect(metadata(c.info(Nokogiri::XML(<<~"INPUT"), nil))).to be_equivalent_to <<~"OUTPUT"
+      <iso-standard xmlns='https://www.metanorma.org/ns/iso'>
+  <bibdata type='standard'>
+    <title language='en' format='text/plain' type='main'>Introduction — Main Title — Title — Title Part  — Mass fraction of
+       extraneous matter, milled rice (nonglutinous), sample dividers and
+       recommendations relating to storage and transport conditions</title>
+    <title language='en' format='text/plain' type='title-intro'>Introduction</title>
+    <title language='en' format='text/plain' type='title-main'>Main Title — Title</title>
+    <title language='en' format='text/plain' type='title-part'>Title Part</title>
+    <title language='en' format='text/plain' type='title-amd'>Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+<title language='fr' format='text/plain' type='main'>
+  Introduction Française — Titre Principal — Part du Titre — Fraction
+  massique de matière étrangère, riz usiné (non gluant), diviseurs
+  d’échantillon et recommandations relatives aux conditions d’entreposage et
+  de transport
+</title>
+    <title language='fr' format='text/plain' type='title-intro'>Introduction Française</title>
+    <title language='fr' format='text/plain' type='title-main'>Titre Principal</title>
+    <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
+    <title language='fr' format='text/plain' type='title-amd'>Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+    <docidentifier type='ISO'>ISO/PreNWIP3 17301-1:2016/Amd.1</docidentifier>
+    <docidentifier type='iso-with-lang'>ISO/PreNWIP3 17301-1:2016/Amd.1(E)</docidentifier>
+    <docidentifier type='iso-reference'>ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)</docidentifier>
+    <docnumber>17301</docnumber>
+    <date type='created'>
+      <on>2016-05-01</on>
+    </date>
+    <contributor>
+      <role type='author'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type='publisher'/>
+      <organization>
+        <name>International Organization for Standardization</name>
+        <abbreviation>ISO</abbreviation>
+      </organization>
+    </contributor>
+    <edition>2</edition>
+    <version>
+      <revision-date>2000-01-01</revision-date>
+      <draft>0.3.4</draft>
+    </version>
+    <language>fr</language>
+    <script>Latn</script>
+    <status>
+      <stage abbreviation='NWIP'>10</stage>
+      <substage>20</substage>
+      <iteration>3</iteration>
+    </status>
+    <copyright>
+      <from>2017</from>
+      <owner>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+      <doctype language="">amendment</doctype>
+      <doctype language="fr">Amendment</doctype>
+      <editorialgroup>
+        <technical-committee number='1' type='A'>TC</technical-committee>
+        <technical-committee number='11' type='A1'>TC1</technical-committee>
+        <subcommittee number='2' type='B'>SC</subcommittee>
+        <subcommittee number='21' type='B1'>SC1</subcommittee>
+        <workgroup number='3' type='C'>WG</workgroup>
+        <workgroup number='31' type='C1'>WG1</workgroup>
+        <secretariat>SECRETARIAT</secretariat>
+      </editorialgroup>
+      <ics>
+        <code>1</code>
+      </ics>
+      <ics>
+        <code>2</code>
+      </ics>
+      <ics>
+        <code>3</code>
+      </ics>
+      <structuredidentifier>
+        <project-number part='1' amendment='1' corrigendum='2' origyr='2016-05-01'>17301</project-number>
+      </structuredidentifier>
+      <stagename>New work item proposal</stagename>
+      <updates-document-type>international-standard</updates-document-type>
+    </ext>
+  </bibdata>
+  <sections/>
+</iso-standard>
+INPUT
+{:accesseddate=>"XXX",
+:agency=>"ISO",
+:circulateddate=>"XXX",
+:confirmeddate=>"XXX",
+:copieddate=>"XXX",
+:createddate=>"2016-05-01",
+:docnumber=>"ISO/PreNWIP3 17301-1:2016/Amd.1",
+:docnumber_lang=>"ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
+:docnumber_reference=>"ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)",
+:docnumeric=>"17301",
+:docsubtitle=>"Introduction&nbsp;&mdash; Main Title&#x2009;&#x2014;&#x2009;Title&nbsp;&mdash; Part&nbsp;1: Title Part",
+:docsubtitleamd=>"Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions",
+:docsubtitleamdlabel=>"AMENDMENT&nbsp;1",
+:docsubtitlecorrlabel=>"TECHNICAL CORRIGENDUM&nbsp;2",
+:docsubtitleintro=>"Introduction",
+:docsubtitlemain=>"Main Title&#x2009;&#x2014;&#x2009;Title",
+:docsubtitlepart=>"Title Part",
+:docsubtitlepartlabel=>"Part&nbsp;1",
+:doctitle=>"Introduction Fran&#xe7;aise&nbsp;&mdash; Titre Principal&nbsp;&mdash; Partie&nbsp;1: Part du Titre",
+:doctitleamd=>"Fraction massique de mati&#xe8;re &#xe9;trang&#xe8;re, riz usin&#xe9; (non gluant), diviseurs d&#x2019;&#xe9;chantillon et recommandations relatives aux conditions d&#x2019;entreposage et de transport",
+:doctitleamdlabel=>"AMENDMENT&nbsp;1",
+:doctitlecorrlabel=>"RECTIFICATIF TECHNIQUE&nbsp;2",
+:doctitleintro=>"Introduction Fran&#xe7;aise",
+:doctitlemain=>"Titre Principal",
+:doctitlepart=>"Part du Titre",
+:doctitlepartlabel=>"Partie&nbsp;1",
+:doctype=>"Amendment",
+:doctype_display=>"Amendment",
+:docyear=>"2017",
+:draft=>"0.3.4",
+:draftinfo=>" (brouillon 0.3.4, 2000-01-01)",
+:edition=>"2",
+:editorialgroup=>["A 1", "B 2", "C 3"],
+:ics=>"1, 2, 3",
+:implementeddate=>"XXX",
+:issueddate=>"XXX",
+:lang=>"fr",
+:obsoleteddate=>"XXX",
+:publisheddate=>"XXX",
+:publisher=>"International Organization for Standardization",
+:receiveddate=>"XXX",
+:revdate=>"2000-01-01",
+:revdate_monthyear=>"Janvier 2000",
+:sc=>"B 2",
+:script=>"Latn",
+:secretariat=>"SECRETARIAT",
+:stage=>"10",
+:stage_int=>10,
+:stageabbr=>"NWIP",
+:statusabbr=>"PreNWIP3",
+:tc=>"A 1",
+:transmitteddate=>"XXX",
+:unchangeddate=>"XXX",
+:unpublished=>true,
+:updateddate=>"XXX",
+:vote_endeddate=>"XXX",
+:vote_starteddate=>"XXX",
+:wg=>"C 3"}
+OUTPUT
+     end
 
   it "processes middle title" do
          expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
