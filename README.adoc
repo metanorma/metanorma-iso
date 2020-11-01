@@ -16,7 +16,7 @@ For the conceptual underpinnings of this gem, and the other gems in the Metanorm
 
 == Outputs
 
-This gem processes Metanorma documents following a template for generating ISO
+This gem processes https://www.metanorma.com[Metanorma documents] following a template for generating ISO
 International Standards. The following outputs are generated.
 
 * The XML representation of the document, intended as a document model for ISO
