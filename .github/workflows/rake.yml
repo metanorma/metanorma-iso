@@ -32,21 +32,19 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Use Ruby
-        uses: actions/setup-ruby@v1
+      - uses: actions/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
 
       - uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: bundle-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: bundle
+          key: bundle-${{ matrix.os }}-${{ matrix.ruby }}-${{ hashFiles('**/*.gemspec') }}
+          restore-keys: bundle-${{ matrix.os }}-${{ matrix.ruby }}
 
-      - name: Update gems
-        run: bundle install --jobs 4 --retry 3
+      - run: bundle install --jobs 4 --retry 3 --path vendor/bundle
 
-      - name: Install PlantUML Ubuntu
+      - name: install plantuml ubuntu
         if: matrix.os == 'ubuntu-latest'
         uses: nick-invision/retry@v1
         with:
@@ -57,14 +55,10 @@ jobs:
             sudo apt-get update -y && sudo bash -c 
             "curl -L https://github.com/metanorma/plantuml-install/raw/master/ubuntu.sh | bash"
 
-      - name: Install PlantUML macOS
-        if: matrix.os == 'macos-latest'
+      - if: matrix.os == 'macos-latest'
         run: brew install plantuml
 
-      - name: Install PlantUML Windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          cinst -y plantuml
+      - if: matrix.os == 'windows-latest'
+        run: cinst -y plantuml
 
-      - name: Run specs
-        run: bundle exec rake
+      - run: bundle exec rake
