@@ -8,8 +8,6 @@ image:https://codeclimate.com/github/metanorma/metanorma-iso/badges/gpa.svg["Cod
 image:https://img.shields.io/github/issues-pr-raw/metanorma/metanorma-iso.svg["Pull Requests", link="https://github.com/metanorma/metanorma-iso/pulls"]
 image:https://img.shields.io/github/commits-since/metanorma/metanorma-iso/latest.svg["Commits since latest",link="https://github.com/metanorma/metanorma-iso/releases"]
 
-_Formerly known as_ `asciidoctor-iso`.
-
 == Functionality and Approach
 
 For the conceptual underpinnings of this gem, and the other gems in the Metanorma suite, see the https://github.com/metanorma/metanorma-model-standoc/blob/master/README.adoc[metanorma-standoc README].
@@ -79,3 +77,6 @@ See https://www.metanorma.com/author/iso/[The ISO flavor of Metanorma].
 * Example documents are avalable at the https://github.com/metanorma/mn-samples-iso[mn-samples-iso] repository.
 * Document templates are available at the https://github.com/metanorma/mn-templates-iso[mn-templates-iso] repository.
 
+== Notes
+
+Metanorma-ISO was formerly published as `asciidoctor-iso`.
