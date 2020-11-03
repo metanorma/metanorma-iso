@@ -9,4 +9,5 @@ term_def_boilerplate: |
 all_rights_reserved: 版权所有
 reference_number: 参考编号
 price_based_on: 价格基于%页
+under_preparation: 制定中（出版时最新状态为%）
 
