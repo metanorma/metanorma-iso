@@ -202,6 +202,23 @@ it "Warns of illegal script" do
     expect(File.read("test.err")).to include "pizza is not a recognised script"
 end
 
+it "warns that technical report may contain requirement" do
+    FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: technical-report
+
+  == Random clause
+
+  The widget is required not to be larger than 15 cm.
+  INPUT
+    expect(File.read("test.err")).to include "Technical Report clause may contain requirement"
+end
+
 
 it "warns that introduction may contain requirement" do
     FileUtils.rm_f "test.err"
