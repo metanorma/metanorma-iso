@@ -157,6 +157,15 @@ module Asciidoctor
         scope = root.at("//clause[@type = 'scope']/clause")
         # ISO/IEC DIR 2, 14.4
         scope.nil? || style_warning(scope, SCOPE_WARN, nil)
+        tech_report_style(root)
+      end
+
+      def tech_report_style(root)
+        root.at("//bibdata/ext/doctype")&.text == "technical-report" or return
+        root.xpath("//sections/clause[not(@type = 'scope')] | //annex").each do |s|
+          r = requirement_check(extract_text(s))
+          style_warning(s, "Technical Report clause may contain requirement", r) if r
+        end
       end
 
       ASSETS_TO_STYLE =
