@@ -129,6 +129,39 @@ module Asciidoctor
         file = @lang == "fr" ? "boilerplate-fr.xml" : "boilerplate.xml"
         File.join(@libdir, file)
       end
+
+      def footnote_cleanup(xmldoc)
+        unpub_footnotes(xmldoc)
+        super
+      end
+
+      def unpub_footnotes(xmldoc)
+        xmldoc.xpath("//bibitem/note[@type = 'Unpublished-Status']").each do |n|
+          id = n.parent["id"]
+          e = xmldoc.at("//eref[@bibitemid = '#{id}']") or next
+          e.next = n.dup
+          e.next.name = "fn"
+          e.next.delete("format")
+          e.next.delete("type")
+        end
+      end
+
+      def bibitem_cleanup(xmldoc)
+        super
+        unpublished_note(xmldoc)
+      end
+
+      def unpublished_note(xmldoc)
+        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]").each do |b|
+          next if pub_class(b) > 2
+          next unless s = b.at("./status/stage") and s.text.to_i < 60
+          id = b.at("docidentifier").text
+          b.at("./language | ./script | ./abstract | ./status").previous = <<~NOTE
+          <note type="Unpublished-Status">
+            <p>#{@i18n.under_preparation.sub(/%/, id)}</p></note>
+          NOTE
+        end
+      end
     end
   end
 end
