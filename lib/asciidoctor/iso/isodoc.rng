@@ -24,6 +24,14 @@
     <start>
       <ref name="standard-document"/>
     </start>
+    <define name="doctype">
+      <element name="doctype">
+        <optional>
+          <attribute name="abbreviation"/>
+        </optional>
+        <ref name="DocumentType"/>
+      </element>
+    </define>
     <define name="hyperlink">
       <element name="link">
         <attribute name="target">
@@ -138,6 +146,11 @@
         </optional>
         <optional>
           <attribute name="keep-lines-together">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="key">
             <data type="boolean"/>
           </attribute>
         </optional>

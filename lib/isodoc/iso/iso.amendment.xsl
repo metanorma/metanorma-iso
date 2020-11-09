@@ -17,7 +17,12 @@
 
 	<xsl:variable name="docidentifierISO" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'] | /iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'ISO']"/>
 
-	<xsl:variable name="copyrightText" select="concat('© ISO ', iso:iso-standard/iso:bibdata/iso:copyright/iso:from ,' – All rights reserved')"/>
+	<xsl:variable name="all_rights_reserved">
+		<xsl:call-template name="getLocalizedString">
+			<xsl:with-param name="key">all_rights_reserved</xsl:with-param>
+		</xsl:call-template>
+	</xsl:variable>	
+	<xsl:variable name="copyrightText" select="concat('© ISO ', /iso:iso-standard/iso:bibdata/iso:copyright/iso:from ,' – ', $all_rights_reserved)"/>
   
 	<xsl:variable name="lang-1st-letter_tmp" select="substring-before(substring-after(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-with-lang'], '('), ')')"/>
 	<xsl:variable name="lang-1st-letter" select="concat('(', $lang-1st-letter_tmp , ')')"/>
@@ -162,6 +167,9 @@
 	<xsl:template match="/">
 		<xsl:call-template name="namespaceCheck"/>
 		<fo:root font-family="Cambria, Times New Roman, Cambria Math, HanSans" font-size="11pt" xml:lang="{$lang}"> <!--   -->
+			<xsl:if test="$lang = 'zh'">
+				<xsl:attribute name="font-family">HanSans, Times New Roman, Cambria Math</xsl:attribute>
+			</xsl:if>
 			<fo:layout-master-set>
 				
 				<!-- cover page -->
@@ -376,8 +384,13 @@
 																</fo:block>
 															</fo:table-cell>
 															<fo:table-cell display-align="center">
-																<fo:block text-align="right">
-																	<fo:block>Reference number</fo:block>
+																<fo:block text-align="right">																	
+																	<!-- Reference number -->
+																	<fo:block>
+																		<xsl:call-template name="getLocalizedString">
+																			<xsl:with-param name="key">reference_number</xsl:with-param>																			
+																		</xsl:call-template>
+																	</fo:block>
 																	<fo:block>
 																		<xsl:value-of select="$ISOname"/>																		
 																	</fo:block>
@@ -756,8 +769,12 @@
 											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell display-align="center">
-											<fo:block text-align="right">
-												<fo:block>Reference number</fo:block>
+											<fo:block text-align="right">												
+												<fo:block>
+													<xsl:call-template name="getLocalizedString">
+														<xsl:with-param name="key">reference_number</xsl:with-param>																			
+													</xsl:call-template>
+												</fo:block>
 												<fo:block><xsl:value-of select="$ISOname"/></fo:block>
 												<fo:block> </fo:block>
 												<fo:block> </fo:block>
@@ -984,10 +1001,10 @@
 					<xsl:if test="/iso:iso-standard/iso:boilerplate/iso:copyright-statement">
 					
 						<fo:block-container height="252mm" display-align="after">
-							<fo:block margin-bottom="3mm">
-								<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
-								<fo:inline padding-left="6mm" font-size="12pt" font-weight="bold">COPYRIGHT PROTECTED DOCUMENT</fo:inline>
-							</fo:block>
+							<!-- <fo:block margin-bottom="3mm">
+								<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>								
+								<fo:inline padding-left="6mm" font-size="12pt" font-weight="bold"></fo:inline>
+							</fo:block> -->
 							<fo:block line-height="90%">
 								<fo:block font-size="9pt" text-align="justify">
 									<xsl:apply-templates select="/iso:iso-standard/iso:boilerplate/iso:copyright-statement"/>
@@ -1106,20 +1123,26 @@
 						</fo:block>
 						 -->
 						<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1">
-							<xsl:variable name="part-en" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-part']"/>
+						
+							<xsl:variable name="title-part-doc-lang" select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-part']"/>
+							
+							<xsl:variable name="title-intro-doc-lang" select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-intro']"/>
+							
 							<fo:block>
-								<xsl:if test="normalize-space($title-intro) != ''">
-									<xsl:value-of select="$title-intro"/>
+								<xsl:if test="normalize-space($title-intro-doc-lang) != ''">
+									<xsl:value-of select="$title-intro-doc-lang"/>
 									<xsl:text> — </xsl:text>
 								</xsl:if>
 								
-								<xsl:value-of select="$title-main"/>
+								<xsl:variable name="title-main-doc-lang" select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-main']"/>
 								
-								<xsl:if test="normalize-space($part-en) != ''">
+								<xsl:value-of select="$title-main-doc-lang"/>
+								
+								<xsl:if test="normalize-space($title-part-doc-lang) != ''">
 									<xsl:if test="$part != ''">
 										<xsl:text> — </xsl:text>
-										<fo:block font-weight="normal" margin-top="12pt" line-height="1.1">
-											<xsl:value-of select="java:replaceAll(java:java.lang.String.new($titles/title-part[@lang='en']),'#',$part)"/>
+										<fo:block font-weight="normal" margin-top="12pt" line-height="1.1">											
+											<xsl:value-of select="java:replaceAll(java:java.lang.String.new($titles/title-part[@lang=$lang]),'#',$part)"/>											
 											<!-- <xsl:value-of select="$title-part-en"/>
 											<xsl:value-of select="$part"/>
 											<xsl:text>:</xsl:text> -->
@@ -1128,10 +1151,10 @@
 								</xsl:if>
 							</fo:block>
 							<fo:block>
-								<xsl:value-of select="$part-en"/>
+								<xsl:value-of select="$title-part-doc-lang"/>
 							</fo:block>
 							
-							<xsl:variable name="title-amd" select="/iso:iso-standard/iso:bibdata/iso:title[@language = 'en' and @type = 'title-amd']"/>
+							<xsl:variable name="title-amd" select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-amd']"/>
 							<xsl:if test="$doctype = 'amendment' and normalize-space($title-amd) != ''">
 								<fo:block margin-top="12pt">
 									<xsl:call-template name="printAmendmentTitle"/>
@@ -1215,7 +1238,28 @@
 										</xsl:call-template>
 									</fo:block>
 								</xsl:if>
-								<fo:block font-size="9pt">Price based on <fo:page-number-citation ref-id="lastBlock"/> pages</fo:block>
+								<xsl:variable name="countPages"/>
+								<xsl:variable name="price_based_on">
+									<xsl:call-template name="getLocalizedString">
+										<xsl:with-param name="key">price_based_on</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+								<xsl:variable name="price_based_on_items">
+									<xsl:call-template name="split">
+										<xsl:with-param name="pText" select="$price_based_on"/>
+										<xsl:with-param name="sep" select="'%'"/>
+										<xsl:with-param name="normalize-space">false</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+								<!-- Price based on ... pages -->
+								<fo:block font-size="9pt">
+									<xsl:for-each select="xalan:nodeset($price_based_on_items)/item">
+										<xsl:value-of select="."/>
+										<xsl:if test="position() != last()">
+											<fo:page-number-citation ref-id="lastBlock"/>
+										</xsl:if>										
+									</xsl:for-each>
+								</fo:block>
 							</fo:block-container>
 						</fo:block-container>
 					</fo:flow>
@@ -1364,6 +1408,14 @@
 				<fo:block>copyright@iso.org</fo:block>
 				<fo:block>www.iso.org</fo:block>
 			</fo:block> -->
+	
+	<xsl:template match="iso:copyright-statement/iso:clause[1]/iso:title">
+		<fo:block margin-bottom="3mm">
+				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
+				<!-- <fo:inline padding-left="6mm" font-size="12pt" font-weight="bold">COPYRIGHT PROTECTED DOCUMENT</fo:inline> -->
+				<fo:inline padding-left="6mm" font-size="12pt" font-weight="bold"><xsl:apply-templates/></fo:inline>
+			</fo:block>
+	</xsl:template>
 	
 	<xsl:template match="iso:copyright-statement//iso:p">
 		<fo:block>
@@ -1629,6 +1681,9 @@
 			<xsl:if test="normalize-space($docidentifier) != ''">, </xsl:if>
 			<fo:inline font-style="italic">
 				<xsl:choose>
+					<xsl:when test="iso:title[@type = 'main' and @language = $lang]">
+						<xsl:value-of select="iso:title[@type = 'main' and @language = $lang]"/>
+					</xsl:when>
 					<xsl:when test="iso:title[@type = 'main' and @language = 'en']">
 						<xsl:value-of select="iso:title[@type = 'main' and @language = 'en']"/>
 					</xsl:when>
@@ -1748,6 +1803,9 @@
 						<xsl:apply-templates select="iso:note"/>
 						<xsl:if test="normalize-space($docidentifier) != ''">, </xsl:if>
 						<xsl:choose>
+							<xsl:when test="iso:title[@type = 'main' and @language = $lang]">
+								<xsl:apply-templates select="iso:title[@type = 'main' and @language = $lang]"/>
+							</xsl:when>
 							<xsl:when test="iso:title[@type = 'main' and @language = 'en']">
 								<xsl:apply-templates select="iso:title[@type = 'main' and @language = 'en']"/>
 							</xsl:when>
@@ -1789,7 +1847,12 @@
 	
 	<xsl:template match="iso:admonition">
 		<fo:block margin-bottom="12pt" font-weight="bold"> <!-- text-align="center"  -->			
-			<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(@type))"/>
+			<xsl:variable name="type">
+				<xsl:call-template name="getLocalizedString">
+					<xsl:with-param name="key">admonition.<xsl:value-of select="@type"/></xsl:with-param>
+				</xsl:call-template>
+			</xsl:variable>			
+			<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($type))"/>
 			<xsl:text> — </xsl:text>
 			<xsl:apply-templates/>
 		</fo:block>
@@ -2111,14 +2174,23 @@
 				<xsl:text>Part #:</xsl:text>
 			
 			
+			
 		</title-part>
 		<title-part lang="fr">
 			
 				<xsl:text>Partie #:</xsl:text>
 			
 			
+			
 		</title-part>		
 		<title-part lang="zh">第 # 部分:</title-part>
+		
+		<title-subpart lang="en">			
+			
+		</title-subpart>
+		<title-subpart lang="fr">		
+			
+		</title-subpart>
 		
 		<title-modified lang="en">modified</title-modified>
 		<title-modified lang="fr">modifiée</title-modified>
@@ -2597,7 +2669,9 @@
 		
 		
 		
-		
+		<!-- <xsl:if test="$namespace = 'bipm'">
+			<fo:block>&#xA0;</fo:block>				
+		</xsl:if> -->
 		
 		<!-- $namespace = 'iso' or  -->
 		
@@ -2772,6 +2846,7 @@
 			<fo:block xsl:use-attribute-sets="table-name-style">
 				
 					<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
+				
 				
 				<xsl:apply-templates/>				
 			</fo:block>
@@ -3184,6 +3259,7 @@
 				
 				
 				
+				
 				<!-- <xsl:if test="$namespace = 'bipm'">
 					<xsl:attribute name="height">8mm</xsl:attribute>
 				</xsl:if> -->
@@ -3277,7 +3353,8 @@
 				</xsl:attribute>
 			</xsl:if>
 			<xsl:call-template name="display-align"/>
-			<fo:block>								
+			<fo:block>
+								
 				<xsl:apply-templates/>
 			</fo:block>			
 		</fo:table-cell>
@@ -3501,7 +3578,11 @@
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template><xsl:template match="*[local-name()='dl']">
-		<fo:block-container margin-left="0mm">
+		<fo:block-container>
+			
+				<xsl:attribute name="margin-left">0mm</xsl:attribute>
+			
+			
 			<xsl:if test="parent::*[local-name() = 'note']">
 				<xsl:attribute name="margin-left">
 					<xsl:choose>
@@ -3511,8 +3592,11 @@
 				</xsl:attribute>
 				
 			</xsl:if>
-			<fo:block-container margin-left="0mm">
-	
+			<fo:block-container>
+				
+					<xsl:attribute name="margin-left">0mm</xsl:attribute>
+				
+				
 				<xsl:variable name="parent" select="local-name(..)"/>
 				
 				<xsl:variable name="key_iso">
@@ -3530,9 +3614,12 @@
 									<xsl:attribute name="margin-bottom">0</xsl:attribute>
 								
 								<xsl:variable name="title-where">
-									<xsl:call-template name="getTitle">
-										<xsl:with-param name="name" select="'title-where'"/>
-									</xsl:call-template>
+									
+										<xsl:call-template name="getLocalizedString">
+											<xsl:with-param name="key">where</xsl:with-param>
+										</xsl:call-template>
+									
+									
 								</xsl:variable>
 								<xsl:value-of select="$title-where"/><xsl:text> </xsl:text>
 								<xsl:apply-templates select="*[local-name()='dt']/*"/>
@@ -3550,9 +3637,12 @@
 							
 							
 							<xsl:variable name="title-where">
-								<xsl:call-template name="getTitle">
-									<xsl:with-param name="name" select="'title-where'"/>
-								</xsl:call-template>
+								
+									<xsl:call-template name="getLocalizedString">
+										<xsl:with-param name="key">where</xsl:with-param>
+									</xsl:call-template>
+								
+																
 							</xsl:variable>
 							<xsl:value-of select="$title-where"/>
 						</fo:block>
@@ -3566,9 +3656,12 @@
 							
 							
 							<xsl:variable name="title-key">
-								<xsl:call-template name="getTitle">
-									<xsl:with-param name="name" select="'title-key'"/>
-								</xsl:call-template>
+								
+									<xsl:call-template name="getLocalizedString">
+										<xsl:with-param name="key">key</xsl:with-param>
+									</xsl:call-template>
+								
+								
 							</xsl:variable>
 							<xsl:value-of select="$title-key"/>
 						</fo:block>
@@ -4146,7 +4239,18 @@
 				<xsl:with-param name="previousRow" select="$newRow"/>
 		</xsl:apply-templates>
 	</xsl:template><xsl:template name="getLang">
-		<xsl:variable name="language" select="//*[local-name()='bibdata']//*[local-name()='language']"/>
+		<xsl:variable name="language_current" select="normalize-space(//*[local-name()='bibdata']//*[local-name()='language'][@current = 'true'])"/>
+		<xsl:variable name="language">
+			<xsl:choose>
+				<xsl:when test="$language_current != ''">
+					<xsl:value-of select="$language_current"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="//*[local-name()='bibdata']//*[local-name()='language']"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		
 		<xsl:choose>
 			<xsl:when test="$language = 'English'">en</xsl:when>
 			<xsl:otherwise><xsl:value-of select="$language"/></xsl:otherwise>
@@ -4181,6 +4285,7 @@
 		<xsl:value-of select="substring($str, 2)"/>		
 	</xsl:template><xsl:template match="mathml:math">
 		<fo:inline font-family="STIX Two Math"> <!--  -->
+			
 			<xsl:variable name="mathml">
 				<xsl:apply-templates select="." mode="mathml"/>
 			</xsl:variable>
@@ -4263,10 +4368,14 @@
 		</fo:inline>		
 	</xsl:template><xsl:template match="*[local-name() = 'modification']">
 		<xsl:variable name="title-modified">
-			<xsl:call-template name="getTitle">
-				<xsl:with-param name="name" select="'title-modified'"/>
-			</xsl:call-template>
+			
+				<xsl:call-template name="getLocalizedString">
+					<xsl:with-param name="key">modified</xsl:with-param>
+				</xsl:call-template>
+			
+			
 		</xsl:variable>
+		
 		<xsl:choose>
 			<xsl:when test="$lang = 'zh'"><xsl:text>、</xsl:text><xsl:value-of select="$title-modified"/><xsl:text>—</xsl:text></xsl:when>
 			<xsl:otherwise><xsl:text>, </xsl:text><xsl:value-of select="$title-modified"/><xsl:text> — </xsl:text></xsl:otherwise>
@@ -4993,9 +5102,14 @@
 			
 				<fo:inline>
 					
-					<xsl:call-template name="getTitle">
-						<xsl:with-param name="name" select="'title-source'"/>
-					</xsl:call-template>
+					
+					
+						<xsl:call-template name="getLocalizedString">
+							<xsl:with-param name="key">source</xsl:with-param>
+						</xsl:call-template>
+					
+					
+					
 					<xsl:text>: </xsl:text>
 				</fo:inline>
 			
@@ -5144,9 +5258,12 @@
 		</fo:block>
 	</xsl:template><xsl:template match="*[local-name() = 'deprecates']">
 		<xsl:variable name="title-deprecated">
-			<xsl:call-template name="getTitle">
-				<xsl:with-param name="name" select="'title-deprecated'"/>
-			</xsl:call-template>
+			
+				<xsl:call-template name="getLocalizedString">
+					<xsl:with-param name="key">deprecated</xsl:with-param>
+				</xsl:call-template>
+			
+			
 		</xsl:variable>
 		<fo:block xsl:use-attribute-sets="deprecates-style">
 			<xsl:value-of select="$title-deprecated"/>: <xsl:apply-templates/>
@@ -5514,13 +5631,22 @@
 	</xsl:template><xsl:template name="split">
 		<xsl:param name="pText" select="."/>
 		<xsl:param name="sep" select="','"/>
+		<xsl:param name="normalize-space" select="'true'"/>
 		<xsl:if test="string-length($pText) &gt;0">
 		<item>
-			<xsl:value-of select="normalize-space(substring-before(concat($pText, ','), $sep))"/>
+			<xsl:choose>
+				<xsl:when test="$normalize-space = 'true'">
+					<xsl:value-of select="normalize-space(substring-before(concat($pText, $sep), $sep))"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="substring-before(concat($pText, $sep), $sep)"/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</item>
 		<xsl:call-template name="split">
 			<xsl:with-param name="pText" select="substring-after($pText, $sep)"/>
 			<xsl:with-param name="sep" select="$sep"/>
+			<xsl:with-param name="normalize-space" select="$normalize-space"/>
 		</xsl:call-template>
 		</xsl:if>
 	</xsl:template><xsl:template name="getDocumentId">		
@@ -5586,4 +5712,23 @@
 				<xsl:with-param name="letter-spacing" select="$letter-spacing"/>
 			</xsl:call-template>
 		</xsl:if>
+	</xsl:template><xsl:template name="repeat">
+		<xsl:param name="char" select="'*'"/>
+		<xsl:param name="count"/>
+		<xsl:if test="$count &gt; 0">
+			<xsl:value-of select="$char"/>
+			<xsl:call-template name="repeat">
+				<xsl:with-param name="char" select="$char"/>
+				<xsl:with-param name="count" select="$count - 1"/>
+			</xsl:call-template>
+		</xsl:if>
+	</xsl:template><xsl:template name="getLocalizedString">
+		<xsl:param name="key"/>		
+		
+		<xsl:variable name="curr_lang">
+			<xsl:call-template name="getLang"/>
+		</xsl:variable>
+		
+		<xsl:value-of select="/*/*[local-name() = 'localized-strings']/*[local-name() = 'localized-string'][@key = $key and @language = $curr_lang]"/>
+		
 	</xsl:template></xsl:stylesheet>
