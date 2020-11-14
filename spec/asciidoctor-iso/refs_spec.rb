@@ -68,7 +68,7 @@ RSpec.describe Asciidoctor::ISO do
                <note format='text/plain' type='Unpublished-Status'>The standard is in press</note>
              </bibitem>
              <bibitem id='fdis' type='standard'>
-               <fetched>2020-11-09</fetched>
+               <fetched>#{Date.today}</fetched>
                <title type='title-intro' format='text/plain' language='fr' script='Latn'>Traitement de produits de soins de santé</title>
                <title type='title-main' format='text/plain' language='fr' script='Latn'>
                  Informations relatives au traitement des dispositifs médicaux à
