@@ -325,7 +325,7 @@ nav {
 pre,
 .pseudocode {
     @include pseudocodeBlock(#f7f7f7);
-    font-size: 1em;
+    font-size: $normalfontsize;
 }
 
 div.figure {
@@ -489,7 +489,7 @@ p.NormRef {
 pre,
 .pseudocode {
     @include pseudocodeBlock(#f7f7f7);
-    font-size: 1em;
+    font-size: $normalfontsize;
 }
 
 pre {
@@ -598,7 +598,7 @@ span.TableFootnoteRef {
 }
 
 .footnote {
-    font-size: 0.9em;
+    font-size: $footnotefontsize;
 }
 
 sup a {
@@ -607,7 +607,7 @@ sup a {
 }
 
 #footnote_box {
-    font-size: 14px;
+    font-size: $footnotefontsize;
     background: white;
     padding: 0 10px;
     margin: 10px;
@@ -625,7 +625,7 @@ aside.footnote {
 
 ol.footnotes-list li,
 aside.footnote {
-    font-size: 0.9em;
+    font-size: $footnotefontsize;
     vertical-align: top;
     list-style: decimal;
     margin-bottom: 1em;
@@ -662,14 +662,14 @@ ol>li>p:before {
     @include formulaBlock(#f7f7f7);
     margin-left: 20%;
     margin-right: 20%;
-    font-size: 0.9em;
+    font-size: $smallerfontsize; 
 }
 
 dl.formula_dl {
     background-color: #f7f7f7;
     margin-left: 20%;
     margin-right: 20%;
-    font-size: 0.9em;
+    font-size: $smallerfontsize; 
 }
 
 /*

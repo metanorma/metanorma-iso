@@ -25,6 +25,9 @@ module IsoDoc
                      options[:alt] ? '"Lato",sans-serif' : '"Cambria",serif'),
         monospacefont: (options[:alt] ?  '"Space Mono",monospace' :
                         '"Courier New",monospace'),
+                        normalfontsize: "1.0em",
+                        smallerfontsize: "0.9em",
+                        footnotefontsize: "0.9em",
         }
       end
 

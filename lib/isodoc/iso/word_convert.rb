@@ -21,6 +21,10 @@ module IsoDoc
                      headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
                                   '"Cambria",serif'),
                                   monospacefont: '"Courier New",monospace',
+                                  normalfontsize: "11.0pt",
+                                  monospacefontsize: "9.0pt",
+                                  smallerfontsize: "10.0pt",
+                                  footnotefontsize: "10.0pt",
         }
       end
 
