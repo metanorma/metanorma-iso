@@ -11,13 +11,7 @@ module Metanorma
       end
 
       def fonts_manifest
-        super + {
-          "Cambria" => ["Regular"],
-          "Cambria Math" => ["Regular"],
-          "Times New Roman" => ["Regular"],
-          "HanSans" => ["Regular"],
-          "Courier New" => ["Regular"],
-        }
+        __dir__ + "/fonts_manifest.yaml"
       end
 
       def output_formats
