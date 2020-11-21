@@ -10,10 +10,6 @@ module Metanorma
         @asciidoctor_backend = :iso
       end
 
-      def fonts_manifest
-        __dir__ + "/fonts_manifest.yaml"
-      end
-
       def output_formats
         super.merge(
           html: "html",
