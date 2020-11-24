@@ -14,7 +14,8 @@ module IsoDoc
       end
 
       def implicit_reference(b)
-        b&.at(ns("./docidentifier"))&.text == "IEV"
+        return true if b&.at(ns("./docidentifier"))&.text == "IEV"
+        super
       end
 
       # terms not defined in standoc
