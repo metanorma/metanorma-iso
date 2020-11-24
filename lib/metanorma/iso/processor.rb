@@ -2,15 +2,6 @@ require "metanorma/processor"
 
 module Metanorma
   module Iso
-    def self.fonts_used
-      {
-        html: ["Cambria", "Times New Roman", "Cambria Math", "HanSans", "Courier New"],
-        html_alt: ["Cambria", "Times New Roman", "Cambria Math", "HanSans", "Courier New"],
-        doc: ["Cambria", "Times New Roman", "Cambria Math", "HanSans", "Courier New"],
-        pdf: ["Cambria", "Times New Roman", "Cambria Math", "HanSans", "Courier New"],
-      }
-    end
-
     class Processor < Metanorma::Processor
 
       def initialize
