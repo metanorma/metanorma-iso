@@ -34,6 +34,9 @@ module IsoDoc
           @anchors[c["id"]] = anchor_struct(i + 1, nil, @labels["appendix"], "clause")
           @anchors[c["id"]][:level] = 2
           @anchors[c["id"]][:container] = clause["id"]
+          c.xpath(ns("./clause | ./references")).each_with_index do |c, j|
+            appendix_names1(c, l10n("#{@labels["appendix"]} #{i + 1}.#{j + 1}"), 3, clause["id"])
+          end
         end
       end
 
@@ -52,6 +55,13 @@ module IsoDoc
         @anchors[clause["id"]] = { label: num, xref: num, level: level }
         clause.xpath(ns("./clause | ./references")).each_with_index do |c, i|
           annex_names1(c, "#{num}.#{i + 1}", level + 1)
+        end
+      end
+
+      def appendix_names1(clause, num, level, container)
+        @anchors[clause["id"]] = { label: num, xref: num, level: level, container: container }
+        clause.xpath(ns("./clause | ./references")).each_with_index do |c, i|
+          appendix_names1(c, "#{num}.#{i + 1}", level + 1, container)
         end
       end
 

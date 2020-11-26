@@ -2547,6 +2547,7 @@
 			<xsl:attribute name="margin-bottom">10pt</xsl:attribute>
 		
 	</xsl:attribute-set><xsl:attribute-set name="figure-name-style">
+		
 				
 		
 		
@@ -4315,6 +4316,7 @@
 			</xsl:choose>
 		</xsl:variable>
 		<fo:inline xsl:use-attribute-sets="link-style">
+			
 			<xsl:choose>
 				<xsl:when test="$target = ''">
 					<xsl:apply-templates/>
@@ -4528,7 +4530,8 @@
 			</fo:inline>
 		</xsl:if>
 	</xsl:template><xsl:template match="*[local-name() = 'figure']">
-		<fo:block-container id="{@id}">
+		<fo:block-container id="{@id}">			
+			
 			<fo:block>
 				<xsl:apply-templates/>
 			</fo:block>

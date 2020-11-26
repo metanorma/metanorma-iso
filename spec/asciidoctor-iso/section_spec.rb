@@ -50,6 +50,8 @@ RSpec.describe Asciidoctor::ISO do
       [%appendix]
       === Appendix 1
 
+      ==== Appendix subclause
+
       == Bibliography
 
       === Bibliography Subsection
@@ -136,6 +138,9 @@ standardization at the following addresses:</p>
        </clause>
        <appendix id="_" inline-header="false" obligation="normative">
           <title>Appendix 1</title>
+          <clause id='_' inline-header='false' obligation='normative'>
+  <title>Appendix subclause</title>
+</clause>
        </appendix></annex><bibliography><references id="_" obligation="informative" normative="true">
          <title>Normative references</title>
          <p id="_">There are no normative references in this document.</p>
