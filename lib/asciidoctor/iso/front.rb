@@ -18,6 +18,11 @@ module Asciidoctor
           xml.updates_document_type a
       end
 
+      def metadata_doctype(node, xml)
+        xml.doctype doctype(node)
+        a = node.attr("horizontal") and xml.horizontal a
+      end
+
       def org_abbrev
         { "International Organization for Standardization" => "ISO",
           "International Electrotechnical Commission" => "IEC" }

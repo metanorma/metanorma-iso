@@ -64,6 +64,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
   <keyword>kw1</keyword>
   <ext>
   <doctype>international-standard</doctype>
+  <horizontal>true</horizontal>
   <editorialgroup>
     <technical-committee number="34">Food products</technical-committee>
     <subcommittee number="4">Cereals and pulses</subcommittee>
@@ -106,6 +107,7 @@ INPUT
 :draftinfo=>" (draft 0.4, 2016-05-01)",
 :edition=>"2",
 :editorialgroup=>["TC 34", "SC 4", "WG 3"],
+:horizontal=>"true",
 :implementeddate=>"XXX",
 :issueddate=>"XXX",
 :keywords=>["kw2", "kw1"],

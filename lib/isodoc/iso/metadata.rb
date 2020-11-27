@@ -211,6 +211,7 @@ module IsoDoc
         ics = []
         isoxml.xpath(ns("//bibdata/ext/ics/code")).each { |i| ics << i.text }
         set(:ics, ics.empty? ? nil : ics.join(", "))
+        a = isoxml.at(ns("//bibdata/ext/horizontal")) and set(:horizontal, a.text)
       end
     end
   end
