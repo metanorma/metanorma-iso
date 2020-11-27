@@ -99,6 +99,7 @@ RSpec.describe Asciidoctor::ISO do
       :title-part-fr: Part du Titre
       :library-ics: 1,2,3
       :copyright-year: 2000
+      :horizontal: true
     INPUT
            <?xml version="1.0" encoding="UTF-8"?>
        <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
@@ -152,6 +153,7 @@ RSpec.describe Asciidoctor::ISO do
          </copyright>
          <ext>
          <doctype>article</doctype>
+         <horizontal>true</horizontal>
          <editorialgroup>
            <technical-committee number="1" type="A">TC</technical-committee>
            <technical-committee number="11" type="A1">TC1</technical-committee>

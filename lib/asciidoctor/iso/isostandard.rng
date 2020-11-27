@@ -38,6 +38,9 @@
     </define>
     <define name="BibDataExtensionType">
       <ref name="doctype"/>
+      <optional>
+        <ref name="horizontal"/>
+      </optional>
       <ref name="editorialgroup"/>
       <zeroOrMore>
         <ref name="ics"/>
@@ -427,6 +430,11 @@
         <ref name="annex"/>
       </zeroOrMore>
       <ref name="bibliography"/>
+    </element>
+  </define>
+  <define name="horizontal">
+    <element name="horizontal">
+      <data type="boolean"/>
     </element>
   </define>
   <define name="documentnumber">
