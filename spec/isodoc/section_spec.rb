@@ -55,6 +55,9 @@ RSpec.describe IsoDoc do
        </clause>
               <appendix id="Q2" inline-header="false" obligation="normative">
          <title>An Appendix</title>
+         <clause id='Q2a' inline-header='false' obligation='normative'>
+  <title>Appendix subclause</title>
+</clause>
        </appendix>
        <references id="Q3" normative="false"><title>Annex Bibliography</title></references>
        </annex><bibliography><references id="R" obligation="informative" normative="true">
@@ -140,6 +143,13 @@ RSpec.describe IsoDoc do
      </clause>
      <appendix id='Q2' inline-header='false' obligation='normative'>
      <title depth='2'>Appendix 1<tab/>An Appendix</title>
+     <clause id='Q2a' inline-header='false' obligation='normative'>
+  <title depth='3'>
+    Appendix 1.1
+    <tab/>
+    Appendix subclause
+  </title>
+</clause>
      </appendix>
      <references id='Q3' normative='false'>
        <title depth='2'>A.2<tab/>Annex Bibliography</title>
@@ -222,6 +232,9 @@ RSpec.describe IsoDoc do
          </div>
                   <div id="Q2">
                 <h2>Appendix 1&#160; An Appendix</h2>
+                <div id='Q2a'>
+  <h3> Appendix 1.1 &#160; Appendix subclause </h3>
+</div>
                 </div>
                  <div>
                 <h2 class="Section3">A.2&#160; Annex Bibliography</h2>
@@ -318,6 +331,13 @@ OUTPUT
         </div>
                  <div id="Q2">
           <h2>Appendix 1<span style="mso-tab-count:1">&#160; </span>An Appendix</h2>
+          <div id='Q2a'>
+  <h3>
+     Appendix 1.1
+    <span style='mso-tab-count:1'>&#160; </span>
+     Appendix subclause
+  </h3>
+</div>
           </div>
 <div>
   <h2 class='Section3'>
