@@ -28,6 +28,7 @@ module IsoDoc
                         normalfontsize: "1.0em",
                         smallerfontsize: "0.9em",
                         footnotefontsize: "0.9em",
+                        monospacefontsize: "0.8em",
         }
       end
 
