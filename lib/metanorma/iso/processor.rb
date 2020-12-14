@@ -25,6 +25,17 @@ module Metanorma
         "Metanorma::ISO #{Metanorma::ISO::VERSION}"
       end
 
+      def fonts_manifest
+        {
+          "Cambria" => nil,
+          "Cambria Math" => nil,
+          "Times New Roman" => nil,
+          "Source Han Sans" => nil,
+          "Courier" => nil,
+          "Courier New" => nil,
+        }
+      end
+
       def use_presentation_xml(ext)
         return true if ext == :html_alt
         super
