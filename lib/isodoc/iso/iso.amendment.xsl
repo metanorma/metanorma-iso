@@ -1363,10 +1363,10 @@
 			<xsl:otherwise> <!-- for ordered lists -->
 				<xsl:choose>
 					<xsl:when test="../@type = 'arabic'">
-						<xsl:number format="a)"/>
+						<xsl:number format="a)" lang="en"/>
 					</xsl:when>
 					<xsl:when test="../@type = 'alphabet'">
-						<xsl:number format="a)"/>
+						<xsl:number format="a)" lang="en"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:number format="1."/>
@@ -2702,10 +2702,12 @@
 		
 		
 		<xsl:variable name="colwidths">
-			<xsl:call-template name="calculate-column-widths">
-				<xsl:with-param name="cols-count" select="$cols-count"/>
-				<xsl:with-param name="table" select="$simple-table"/>
-			</xsl:call-template>
+			<xsl:if test="not(*[local-name()='colgroup']/*[local-name()='col'])">
+				<xsl:call-template name="calculate-column-widths">
+					<xsl:with-param name="cols-count" select="$cols-count"/>
+					<xsl:with-param name="table" select="$simple-table"/>
+				</xsl:call-template>
+			</xsl:if>
 		</xsl:variable>
 		<!-- colwidths=<xsl:copy-of select="$colwidths"/> -->
 		
@@ -2788,16 +2790,25 @@
 					<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute> <!-- set 0pt border, because there is a separete table below for footer  -->
 				</xsl:if>
 				
-				<xsl:for-each select="xalan:nodeset($colwidths)//column">
-					<xsl:choose>
-						<xsl:when test=". = 1 or . = 0">
-							<fo:table-column column-width="proportional-column-width(2)"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<fo:table-column column-width="proportional-column-width({.})"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:for-each>
+				<xsl:choose>
+					<xsl:when test="*[local-name()='colgroup']/*[local-name()='col']">
+						<xsl:for-each select="*[local-name()='colgroup']/*[local-name()='col']">
+							<fo:table-column column-width="{@width}"/>
+						</xsl:for-each>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:for-each select="xalan:nodeset($colwidths)//column">
+							<xsl:choose>
+								<xsl:when test=". = 1 or . = 0">
+									<fo:table-column column-width="proportional-column-width(2)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<fo:table-column column-width="proportional-column-width({.})"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:for-each>
+					</xsl:otherwise>
+				</xsl:choose>
 				
 				<xsl:choose>
 					<xsl:when test="not(*[local-name()='tbody']) and *[local-name()='thead']">
@@ -2810,10 +2821,12 @@
 				
 			</fo:table>
 			
+			<xsl:variable name="colgroup" select="*[local-name()='colgroup']"/>				
 			<xsl:for-each select="*[local-name()='tbody']"><!-- select context to tbody -->
 				<xsl:call-template name="insertTableFooterInSeparateTable">
 					<xsl:with-param name="table_attributes" select="$table_attributes"/>
 					<xsl:with-param name="colwidths" select="$colwidths"/>				
+					<xsl:with-param name="colgroup" select="$colgroup"/>				
 				</xsl:call-template>
 			</xsl:for-each>
 			
@@ -3075,12 +3088,22 @@
 	</xsl:template><xsl:template name="insertTableFooterInSeparateTable">
 		<xsl:param name="table_attributes"/>
 		<xsl:param name="colwidths"/>
+		<xsl:param name="colgroup"/>
 		
 		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'] or ..//*[local-name()='fn'][local-name(..) != 'name']"/>
 		
 		<xsl:if test="$isNoteOrFnExist = 'true'">
 		
-			<xsl:variable name="cols-count" select="count(xalan:nodeset($colwidths)//column)"/>
+			<xsl:variable name="cols-count">
+				<xsl:choose>
+					<xsl:when test="xalan:nodeset($colgroup)//*[local-name()='col']">
+						<xsl:value-of select="count(xalan:nodeset($colgroup)//*[local-name()='col'])"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="count(xalan:nodeset($colwidths)//column)"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
 			
 			<fo:table keep-with-previous="always">
 				<xsl:for-each select="xalan:nodeset($table_attributes)/attribute">
@@ -3098,16 +3121,25 @@
 					</xsl:choose>
 				</xsl:for-each>
 				
-				<xsl:for-each select="xalan:nodeset($colwidths)//column">
-					<xsl:choose>
-						<xsl:when test=". = 1 or . = 0">
-							<fo:table-column column-width="proportional-column-width(2)"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<fo:table-column column-width="proportional-column-width({.})"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:for-each>
+				<xsl:choose>
+					<xsl:when test="xalan:nodeset($colgroup)//*[local-name()='col']">
+						<xsl:for-each select="xalan:nodeset($colgroup)//*[local-name()='col']">
+							<fo:table-column column-width="{@width}"/>
+						</xsl:for-each>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:for-each select="xalan:nodeset($colwidths)//column">
+							<xsl:choose>
+								<xsl:when test=". = 1 or . = 0">
+									<fo:table-column column-width="proportional-column-width(2)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<fo:table-column column-width="proportional-column-width({.})"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:for-each>
+					</xsl:otherwise>
+				</xsl:choose>
 				
 				<fo:table-body>
 					<fo:table-row>
@@ -5378,7 +5410,8 @@
 			<fo:table-column column-width="107mm"/>
 			<fo:table-column column-width="15mm"/>
 			<fo:table-body>
-				<fo:table-row font-family="Arial" text-align="center" font-weight="bold" background-color="black" color="white">
+				<fo:table-row text-align="center" font-weight="bold" background-color="black" color="white">
+					
 					<fo:table-cell border="1pt solid black"><fo:block>Date</fo:block></fo:table-cell>
 					<fo:table-cell border="1pt solid black"><fo:block>Type</fo:block></fo:table-cell>
 					<fo:table-cell border="1pt solid black"><fo:block>Change</fo:block></fo:table-cell>
@@ -5396,6 +5429,10 @@
 			<fo:block><xsl:apply-templates/></fo:block>
 		</fo:table-cell>
 	</xsl:template><xsl:template name="processBibitem">
+		
+		
+		<!-- end BIPM bibitem processing-->
+		
 		 
 		
 		

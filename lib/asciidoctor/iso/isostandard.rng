@@ -383,6 +383,9 @@
           </attribute>
         </optional>
         <optional>
+          <ref name="colgroup"/>
+        </optional>
+        <optional>
           <ref name="tname"/>
         </optional>
         <optional>

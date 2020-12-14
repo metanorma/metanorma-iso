@@ -596,6 +596,7 @@
       <ref name="bookmark"/>
       <ref name="image"/>
       <ref name="index"/>
+      <ref name="index-xref"/>
     </choice>
   </define>
   <define name="PureTextElement">
@@ -735,6 +736,37 @@
       <optional>
         <attribute name="tertiary"/>
       </optional>
+    </element>
+  </define>
+  <define name="index-xref">
+    <element name="index-xref">
+      <attribute name="also">
+        <data type="boolean"/>
+      </attribute>
+      <element name="primary">
+        <oneOrMore>
+          <ref name="PureTextElement"/>
+        </oneOrMore>
+      </element>
+      <optional>
+        <element name="secondary">
+          <oneOrMore>
+            <ref name="PureTextElement"/>
+          </oneOrMore>
+        </element>
+      </optional>
+      <optional>
+        <element name="tertiary">
+          <oneOrMore>
+            <ref name="PureTextElement"/>
+          </oneOrMore>
+        </element>
+      </optional>
+      <element name="target">
+        <oneOrMore>
+          <ref name="PureTextElement"/>
+        </oneOrMore>
+      </element>
     </element>
   </define>
   <!-- bare ID element, used for referencing arbitrary spans of text -->
