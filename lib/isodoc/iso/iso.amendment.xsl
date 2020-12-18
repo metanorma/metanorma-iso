@@ -1363,13 +1363,22 @@
 			<xsl:otherwise> <!-- for ordered lists -->
 				<xsl:choose>
 					<xsl:when test="../@type = 'arabic'">
-						<xsl:number format="a)" lang="en"/>
+						<xsl:number format="1." lang="en"/>
 					</xsl:when>
 					<xsl:when test="../@type = 'alphabet'">
 						<xsl:number format="a)" lang="en"/>
 					</xsl:when>
+					<xsl:when test="../@type = 'alphabet_upper'">
+						<xsl:number format="A." lang="en"/>
+					</xsl:when>
+					<xsl:when test="../@type = 'roman'">
+						<xsl:number format="i)"/>
+					</xsl:when>
+					<xsl:when test="../@type = 'roman_upper'">
+						<xsl:number format="I."/>
+					</xsl:when>
 					<xsl:otherwise>
-						<xsl:number format="1."/>
+						<xsl:number format="a)"/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:otherwise>
@@ -2513,6 +2522,7 @@
 		
 	</xsl:attribute-set><xsl:attribute-set name="termnote-name-style">		
 				
+		
 	</xsl:attribute-set><xsl:attribute-set name="quote-style">		
 		
 		
@@ -3613,7 +3623,9 @@
 	</xsl:template><xsl:template match="*[local-name()='dl']">
 		<fo:block-container>
 			
-				<xsl:attribute name="margin-left">0mm</xsl:attribute>
+				<xsl:if test="not(ancestor::*[local-name() = 'quote'])">
+					<xsl:attribute name="margin-left">0mm</xsl:attribute>
+				</xsl:if>
 			
 			
 			<xsl:if test="parent::*[local-name() = 'note']">
@@ -3628,6 +3640,7 @@
 			<fo:block-container>
 				
 					<xsl:attribute name="margin-left">0mm</xsl:attribute>
+					<xsl:attribute name="margin-right">0mm</xsl:attribute>
 				
 				
 				<xsl:variable name="parent" select="local-name(..)"/>
@@ -3825,12 +3838,32 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template><xsl:template name="getMaxLength_dt">
-		<xsl:for-each select="*[local-name()='dt']">
-			<xsl:sort select="string-length(normalize-space(.))" data-type="number" order="descending"/>
-			<xsl:if test="position() = 1">
-				<xsl:value-of select="string-length(normalize-space(.))"/>
-			</xsl:if>
-		</xsl:for-each>
+		<xsl:variable name="lengths">
+			<xsl:for-each select="*[local-name()='dt']">
+				<xsl:variable name="maintext_length" select="string-length(normalize-space(.))"/>
+				<xsl:variable name="attributes">
+					<xsl:for-each select=".//@open"><xsl:value-of select="."/></xsl:for-each>
+					<xsl:for-each select=".//@close"><xsl:value-of select="."/></xsl:for-each>
+				</xsl:variable>
+				<length><xsl:value-of select="string-length(normalize-space(.)) + string-length($attributes)"/></length>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="maxLength">
+			<!-- <xsl:for-each select="*[local-name()='dt']">
+				<xsl:sort select="string-length(normalize-space(.))" data-type="number" order="descending"/>
+				<xsl:if test="position() = 1">
+					<xsl:value-of select="string-length(normalize-space(.))"/>
+				</xsl:if>
+			</xsl:for-each> -->
+			<xsl:for-each select="xalan:nodeset($lengths)/length">
+				<xsl:sort select="." data-type="number" order="descending"/>
+				<xsl:if test="position() = 1">
+					<xsl:value-of select="."/>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<!-- <xsl:message>DEBUG:<xsl:value-of select="$maxLength"/></xsl:message> -->
+		<xsl:value-of select="$maxLength"/>
 	</xsl:template><xsl:template match="*[local-name()='dl']/*[local-name()='note']" priority="2">
 		<xsl:param name="key_iso"/>
 		
@@ -4631,6 +4664,8 @@
 											<xsl:variable name="bookmark-title_">
 												<xsl:call-template name="getLangVersion">
 													<xsl:with-param name="lang" select="@lang"/>
+													<xsl:with-param name="doctype" select="@doctype"/>
+													<xsl:with-param name="title" select="@title-part"/>
 												</xsl:call-template>
 											</xsl:variable>
 											<xsl:choose>
@@ -4648,13 +4683,34 @@
 											</xsl:choose>
 										</fo:bookmark-title>
 										<xsl:apply-templates select="contents/item" mode="bookmark"/>
+										
+										<xsl:call-template name="insertFigureBookmarks">
+											<xsl:with-param name="contents" select="contents"/>
+										</xsl:call-template>
+										
+										<xsl:call-template name="insertTableBookmarks">
+											<xsl:with-param name="contents" select="contents"/>
+											<xsl:with-param name="lang" select="@lang"/>
+										</xsl:call-template>
+										
 									</fo:bookmark>
 									
 								</xsl:for-each>
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:for-each select="xalan:nodeset($contents)/doc">
+								
 									<xsl:apply-templates select="contents/item" mode="bookmark"/>
+									
+									<xsl:call-template name="insertFigureBookmarks">
+										<xsl:with-param name="contents" select="contents"/>
+									</xsl:call-template>
+										
+									<xsl:call-template name="insertTableBookmarks">
+										<xsl:with-param name="contents" select="contents"/>
+										<xsl:with-param name="lang" select="@lang"/>
+									</xsl:call-template>
+									
 								</xsl:for-each>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -4673,8 +4729,44 @@
 				
 			</fo:bookmark-tree>
 		</xsl:if>
+	</xsl:template><xsl:template name="insertFigureBookmarks">
+		<xsl:param name="contents"/>
+		<xsl:if test="xalan:nodeset($contents)/figure">
+			<fo:bookmark internal-destination="{xalan:nodeset($contents)/figure[1]/@id}" starting-state="hide">
+				<fo:bookmark-title>Figures</fo:bookmark-title>
+				<xsl:for-each select="xalan:nodeset($contents)/figure">
+					<fo:bookmark internal-destination="{@id}">
+						<fo:bookmark-title>
+							<xsl:value-of select="normalize-space(title)"/>
+						</fo:bookmark-title>
+					</fo:bookmark>
+				</xsl:for-each>
+			</fo:bookmark>	
+		</xsl:if>
+	</xsl:template><xsl:template name="insertTableBookmarks">
+		<xsl:param name="contents"/>
+		<xsl:param name="lang"/>
+		<xsl:if test="xalan:nodeset($contents)/table">
+			<fo:bookmark internal-destination="{xalan:nodeset($contents)/table[1]/@id}" starting-state="hide">
+				<fo:bookmark-title>
+					<xsl:choose>
+						<xsl:when test="$lang = 'fr'">Tableaux</xsl:when>
+						<xsl:otherwise>Tables</xsl:otherwise>
+					</xsl:choose>
+				</fo:bookmark-title>
+				<xsl:for-each select="xalan:nodeset($contents)/table">
+					<fo:bookmark internal-destination="{@id}">
+						<fo:bookmark-title>
+							<xsl:value-of select="normalize-space(title)"/>
+						</fo:bookmark-title>
+					</fo:bookmark>
+				</xsl:for-each>
+			</fo:bookmark>	
+		</xsl:if>
 	</xsl:template><xsl:template name="getLangVersion">
 		<xsl:param name="lang"/>
+		<xsl:param name="doctype" select="''"/>
+		<xsl:param name="title" select="''"/>
 		<xsl:choose>
 			<xsl:when test="$lang = 'en'">
 				
@@ -5170,7 +5262,8 @@
 			<fo:block-container margin-left="0mm">
 		
 				<fo:block xsl:use-attribute-sets="quote-style">
-					<xsl:apply-templates select=".//*[local-name() = 'p']"/>
+					<!-- <xsl:apply-templates select=".//*[local-name() = 'p']"/> -->
+					<xsl:apply-templates select="./*[not(local-name() = 'author') and not(local-name() = 'source')]"/> <!-- process all nested nodes, except author and source -->
 				</fo:block>
 				<xsl:if test="*[local-name() = 'author'] or *[local-name() = 'source']">
 					<fo:block xsl:use-attribute-sets="quote-source-style">

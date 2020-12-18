@@ -729,12 +729,27 @@
   </define>
   <define name="index">
     <element name="index">
-      <attribute name="primary"/>
+      <attribute name="to">
+        <data type="IDREF"/>
+      </attribute>
+      <element name="primary">
+        <oneOrMore>
+          <ref name="PureTextElement"/>
+        </oneOrMore>
+      </element>
       <optional>
-        <attribute name="secondary"/>
+        <element name="secondary">
+          <oneOrMore>
+            <ref name="PureTextElement"/>
+          </oneOrMore>
+        </element>
       </optional>
       <optional>
-        <attribute name="tertiary"/>
+        <element name="tertiary">
+          <oneOrMore>
+            <ref name="PureTextElement"/>
+          </oneOrMore>
+        </element>
       </optional>
     </element>
   </define>

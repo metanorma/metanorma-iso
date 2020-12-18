@@ -56,6 +56,13 @@
           </data>
         </attribute>
         <optional>
+          <attribute name="to">
+            <data type="string">
+              <param name="pattern">\i\c*|\c+#\c+</param>
+            </data>
+          </attribute>
+        </optional>
+        <optional>
           <attribute name="type">
             <ref name="ReferenceFormat"/>
           </attribute>
