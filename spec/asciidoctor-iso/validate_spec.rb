@@ -979,7 +979,7 @@ it "No warning if joint IEC/non-IEC document with subpart" do
   :nodoc:
   :docnumber: 10
   :partnumber: 1-1
-  :publisher: ISO,IEC
+  :publisher: ISO;IEC
   :no-isobib:
 
   INPUT

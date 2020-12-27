@@ -197,8 +197,8 @@ RSpec.describe Asciidoctor::ISO do
       :tc-docnumber: 2000, 2003
       :language: el
       :script: Grek
-      :publisher: IEC,IETF,ISO
-      :copyright-holder: ISO,IETF
+      :publisher: IEC;IETF;ISO
+      :copyright-holder: ISO;IETF
       :copyright-year: 2001
       :doctype: technical-report
       :pub-address: 1 Infinity Loop + \
