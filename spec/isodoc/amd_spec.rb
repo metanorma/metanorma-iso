@@ -67,8 +67,8 @@ RSpec.describe IsoDoc do
     <foreword>
       <p>
         <xref target='N'>Scope, Note</xref>
-<xref target='note1'>Widgets, Note 1</xref>
-<xref target='note2'>Widgets, Note 2</xref>
+<xref target='note1'>Widgets, 1, Note 1</xref>
+<xref target='note2'>Widgets, 1, Note 2</xref>
 <xref target='AN'>A.1, Note</xref>
 <xref target='Anote1'>A.2, Note 1</xref>
 <xref target='Anote2'>A.2, Note 2</xref>
@@ -570,10 +570,10 @@ RSpec.describe IsoDoc do
       <div id='M'>
         <h1>Clause 4</h1>
         <div id='N'>
-          <h1>Introduction</h1>
+          <h2>Introduction</h2>
         </div>
         <div id='O'>
-          <h1>Clause 4.2</h1>
+          <h2>Clause 4.2</h2>
         </div>
         <div id='O1'>
         </div>
