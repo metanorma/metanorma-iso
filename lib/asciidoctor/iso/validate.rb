@@ -146,6 +146,17 @@ module Asciidoctor
                    "#{iteration} is not a recognised iteration")
       end
 
+      # DRG directives 3.7; but anticipated by standoc
+      def figure_validate(xmldoc)
+        xmldoc.xpath("//figure//figure").each do |f|
+          { footnote: "fn", note: "note", key: "dl" }.each do |k, v|
+            f.xpath(".//#{v}").each do |n|
+              @log.add("Style", n, "#{k} is not permitted in a subfigure")
+            end
+          end
+        end
+      end
+
       def bibdata_validate(doc)
         doctype_validate(doc)
         script_validate(doc)
@@ -166,6 +177,7 @@ module Asciidoctor
         locality_erefs_validate(doc.root)
         bibdata_validate(doc.root)
         bibitem_validate(doc.root)
+        figure_validate(doc.root)
       end
 
       def bibitem_validate(xmldoc)
