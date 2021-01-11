@@ -254,6 +254,9 @@
           </attribute>
         </optional>
         <optional>
+          <attribute name="width"/>
+        </optional>
+        <optional>
           <ref name="colgroup"/>
         </optional>
         <optional>
@@ -837,6 +840,9 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name="number"/>
+      </optional>
+      <optional>
         <attribute name="obligation">
           <choice>
             <value>normative</value>
@@ -891,9 +897,11 @@
       <element name="code">
         <text/>
       </element>
-      <element name="text">
-        <text/>
-      </element>
+      <optional>
+        <element name="text">
+          <text/>
+        </element>
+      </optional>
     </element>
   </define>
   <define name="standard-document">
@@ -1064,6 +1072,9 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="number"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -1115,6 +1126,9 @@
     </optional>
     <optional>
       <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="number"/>
     </optional>
     <optional>
       <ref name="section-title"/>
@@ -1217,6 +1231,9 @@
       </optional>
       <optional>
         <attribute name="type"/>
+      </optional>
+      <optional>
+        <attribute name="number"/>
       </optional>
       <optional>
         <attribute name="obligation">
@@ -1546,6 +1563,7 @@
           <value>add</value>
           <value>modify</value>
           <value>delete</value>
+          <value>replace</value>
         </choice>
       </attribute>
       <optional>
@@ -1576,6 +1594,11 @@
       </optional>
       <optional>
         <element name="newcontent">
+          <optional>
+            <attribute name="id">
+              <data type="ID"/>
+            </attribute>
+          </optional>
           <zeroOrMore>
             <ref name="BasicBlock"/>
           </zeroOrMore>

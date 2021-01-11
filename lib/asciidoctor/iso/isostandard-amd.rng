@@ -15,9 +15,6 @@
     <define name="clause">
       <element name="clause">
         <optional>
-          <attribute name="type"/>
-        </optional>
-        <optional>
           <attribute name="change">
             <choice>
               <value>add</value>
@@ -34,6 +31,13 @@
     </define>
     <define name="iso-standard">
       <element name="iso-standard">
+        <attribute name="version"/>
+        <attribute name="type">
+          <choice>
+            <value>semantic</value>
+            <value>presentation</value>
+          </choice>
+        </attribute>
         <ref name="bibdata"/>
         <optional>
           <ref name="boilerplate"/>
@@ -68,7 +72,7 @@
         </optional>
         <optional>
           <attribute name="origyr">
-            <data type="int"/>
+            <ref name="ISO8601Date"/>
           </attribute>
         </optional>
         <text/>
