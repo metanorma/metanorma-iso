@@ -1,7 +1,7 @@
 module IsoDoc
   module Iso
     module BaseConvert
-      def middle_title(_isoxml, out)
+      def middle_title(isoxml, out)
         middle_title_main(out)
         middle_title_amd(out)
       end
