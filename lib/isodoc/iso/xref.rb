@@ -8,6 +8,7 @@ module IsoDoc
         if @klass.amd(d)
           d.xpath(ns("//preface/*")).each { |c| c.element? and preface_names(c) }
           sequential_asset_names(d.xpath(ns("//preface/*")))
+          d.xpath(ns("//sections/clause")).each { |c| c.element? and preface_names(c) }
           middle_section_asset_names(d)
           termnote_anchor_names(d)
           termexample_anchor_names(d)
