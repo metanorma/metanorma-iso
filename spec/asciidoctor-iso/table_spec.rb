@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes basic tables" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       .Table Name
       |===
@@ -36,7 +36,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "inserts header rows in a table with a name and no header" do
-        expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+        expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=2]
       .Table Name
@@ -76,7 +76,7 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "inserts header rows in a table without a name and no header" do
-        expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+        expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=2]
       |===
@@ -112,7 +112,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes complex tables" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [cols="<,^,^,^,^",options="header,footer",headerrows=2]
       .Maximum permissible mass fraction of defects

@@ -3,7 +3,7 @@ require "fileutils"
 
 RSpec.describe Asciidoctor::ISO do
     it "processes amendment sections" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{AMD_BLANK_HDR}
       == Foreword
 
@@ -132,7 +132,7 @@ OUTPUT
     end
 
   it "processes default metadata, amendment" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -284,7 +284,7 @@ OUTPUT
   end
 
     it "processes metadata, amendment" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
 = Document title
 Author
 :docfile: test.adoc
@@ -352,7 +352,7 @@ OUTPUT
   end
 
     it "processes metadata, amendment" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
 = Document title
 Author
 :docfile: test.adoc
@@ -420,7 +420,7 @@ OUTPUT
   end
 
       it "processes metadata, amendment" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
 = Document title
 Author
 :docfile: test.adoc
@@ -487,7 +487,7 @@ OUTPUT
   end
 
   it "processes metadata, corrigendum" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
 = Document title
 Author
 :docfile: test.adoc
@@ -555,7 +555,7 @@ OUTPUT
   end
 
     it "processes metadata, corrigendum" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
 = Document title
 Author
 :docfile: test.adoc
@@ -623,7 +623,7 @@ OUTPUT
   end
 
       it "processes metadata, corrigendum" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
 = Document title
 Author
 :docfile: test.adoc

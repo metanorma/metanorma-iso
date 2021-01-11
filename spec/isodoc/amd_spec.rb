@@ -66,9 +66,9 @@ RSpec.describe IsoDoc do
   <preface>
     <foreword>
       <p>
-        <xref target='N'>[scope], Note</xref>
-<xref target='note1'>[widgets1], Note 1</xref>
-<xref target='note2'>[widgets1], Note 2</xref>
+        <xref target='N'>Scope, Note</xref>
+<xref target='note1'>Widgets, 1, Note 1</xref>
+<xref target='note2'>Widgets, 1, Note 2</xref>
 <xref target='AN'>A.1, Note</xref>
 <xref target='Anote1'>A.2, Note 1</xref>
 <xref target='Anote2'>A.2, Note 2</xref>
@@ -231,15 +231,15 @@ RSpec.describe IsoDoc do
                This is a preamble
                <xref target='C'>0.1</xref>
                <xref target='C1'>0.2</xref>
-               <xref target='D'>[D]</xref>
+               <xref target='D'>Scope</xref>
                <xref target='H'>[H]</xref>
                <xref target='I'>[I]</xref>
                <xref target='J'>[J]</xref>
                <xref target='K'>[K]</xref>
                <xref target='L'>[L]</xref>
-               <xref target='M'>[M]</xref>
-               <xref target='N'>[N]</xref>
-               <xref target='O'>[O]</xref>
+               <xref target='M'>Clause 4</xref>
+               <xref target='N'>Introduction</xref>
+               <xref target='O'>Clause 4.2</xref>
                <xref target='P'>Annex A</xref>
                <xref target='Q'>A.1</xref>
                <xref target='Q1'>A.1.1</xref>
@@ -263,10 +263,10 @@ RSpec.describe IsoDoc do
            <clause id='M' inline-header='false' obligation='normative'>
              <title depth="1">Clause 4</title>
              <clause id='N' inline-header='false' obligation='normative'>
-               <title depth="1">Introduction</title>
+               <title depth="2">Introduction</title>
              </clause>
              <clause id='O' inline-header='false' obligation='normative'>
-               <title depth="1">Clause 4.2</title>
+               <title depth="2">Clause 4.2</title>
              </clause>
            </clause>
          </sections>
@@ -452,10 +452,10 @@ RSpec.describe IsoDoc do
            <clause id='M' inline-header='false' obligation='normative'>
              <title depth='1'>Clause 4</title>
              <clause id='N' inline-header='false' obligation='normative'>
-               <title depth='1'>Introduction</title>
+               <title depth='2'>Introduction</title>
              </clause>
              <clause id='O' inline-header='false' obligation='normative'>
-               <title depth='1'>Clause 4.2</title>
+               <title depth='2'>Clause 4.2</title>
              </clause>
              <clause id='O1' inline-header='true' obligation='normative'> </clause>
            </clause>
@@ -570,10 +570,10 @@ RSpec.describe IsoDoc do
       <div id='M'>
         <h1>Clause 4</h1>
         <div id='N'>
-          <h1>Introduction</h1>
+          <h2>Introduction</h2>
         </div>
         <div id='O'>
-          <h1>Clause 4.2</h1>
+          <h2>Clause 4.2</h2>
         </div>
         <div id='O1'>
         </div>
