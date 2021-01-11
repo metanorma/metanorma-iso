@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes simple lists" do
-    output = Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+    output = Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
       #{ASCIIDOC_BLANK_HDR}
       * List 1
       * List 2
@@ -57,7 +57,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "processes complex lists" do
-    output = Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+    output = Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
       #{ASCIIDOC_BLANK_HDR}
       [[id]]
       * First
@@ -165,7 +165,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
     it "anchors lists and list items" do
-     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [[id1]]
       * [[id2]] List item

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes inline_quoted formatting" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       _emphasis_
       *strong*
@@ -47,7 +47,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes breaks" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       Line break +
       line break
@@ -66,7 +66,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes links" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       mailto:fred@example.com
       http://example.com[]
@@ -83,7 +83,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "processes bookmarks" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       Text [[bookmark]] Text
     INPUT
@@ -96,7 +96,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
     it "processes crossreferences" do
-      expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [[reference]]
       == Section
@@ -121,7 +121,7 @@ RSpec.describe Asciidoctor::ISO do
     end
 
     it "processes bibliographic anchors" do
-      expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Normative References
@@ -152,7 +152,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes footnotes" do
-      expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       Hello!footnote:[Footnote text]
     INPUT
