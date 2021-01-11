@@ -4,11 +4,14 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       def section_validate(doc)
-        foreword_validate(doc.root)
-        normref_validate(doc.root)
-        symbols_validate(doc.root)
-        sections_presence_validate(doc.root)
-        sections_sequence_validate(doc.root)
+        doctype = doc&.at("//bibdata/ext/doctype")&.text
+        unless %w(amendment technical-corrigendum).include? doctype
+          foreword_validate(doc.root)
+          normref_validate(doc.root)
+          symbols_validate(doc.root)
+          sections_presence_validate(doc.root)
+          sections_sequence_validate(doc.root)
+        end
         section_style(doc.root)
         subclause_validate(doc.root)
         super
@@ -111,13 +114,13 @@ module Asciidoctor
         end
         n&.at("./self::clause") ||
           @log.add("Style", nil, "Document must contain clause after "\
-               "Terms and Definitions")
+                   "Terms and Definitions")
         n&.at("./self::clause[@type = 'scope']") &&
           @log.add("Style", nil, "Scope must occur before Terms and Definitions")
         n = names.shift 
         while n&.name == "clause"
           n&.at("./self::clause[@type = 'scope']")
-            @log.add("Style", nil, "Scope must occur before Terms and Definitions")
+          @log.add("Style", nil, "Scope must occur before Terms and Definitions")
           n = names.shift 
         end
         unless %w(annex references).include? n&.name
@@ -127,12 +130,12 @@ module Asciidoctor
           n = names.shift
           if n.nil?
             @log.add("Style", nil, "Document must include (references) "\
-                 "Normative References")
+                     "Normative References")
           end
         end
         n&.at("./self::references[@normative = 'true']") ||
           @log.add("Style", nil, "Document must include (references) "\
-               "Normative References")
+                   "Normative References")
         n = names&.shift
         n&.at("./self::references[@normative = 'false']") ||
           @log.add("Style", nil, "Final section must be (references) Bibliography")

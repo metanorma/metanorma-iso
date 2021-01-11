@@ -36,6 +36,7 @@ it "Warns of missing scope" do
   text
   INPUT
     expect(File.read("test.err")).to include "Scope clause missing"
+
   FileUtils.rm_f "test.err"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
   = Document title
@@ -49,6 +50,18 @@ it "Warns of missing scope" do
   INPUT
     expect(File.read("test.err")).not_to include "Scope clause missing"
 
+  FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  text
+  INPUT
+    expect(File.read("test.err")).not_to include "Scope clause missing"
 end
 
 it "Warns of missing normative references" do
@@ -64,6 +77,7 @@ it "Warns of missing normative references" do
   text
   INPUT
     expect(File.read("test.err")).to include "Normative references missing"
+
   FileUtils.rm_f "test.err"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
   = Document title
@@ -75,6 +89,19 @@ it "Warns of missing normative references" do
 
   [bibliography]
   == Normative references
+  INPUT
+    expect(File.read("test.err")).not_to include "Normative references missing"
+
+  FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  text
   INPUT
     expect(File.read("test.err")).not_to include "Normative references missing"
 
@@ -93,6 +120,7 @@ it "Warns of missing terms & definitions" do
   text
   INPUT
     expect(File.read("test.err")).to include "Terms & definitions missing"
+
   FileUtils.rm_f "test.err"
     Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
   = Document title
@@ -107,8 +135,19 @@ it "Warns of missing terms & definitions" do
   INPUT
     expect(File.read("test.err")).not_to include "Terms & definitions missing"
 
-end
+FileUtils.rm_f "test.err"
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
 
+  text
+  INPUT
+    expect(File.read("test.err")).not_to include "Terms & definitions missing"
+end
 
 it "Warns of illegal doctype" do
     FileUtils.rm_f "test.err"
@@ -661,6 +700,22 @@ it "Warning if missing foreword" do
   Paragraph
   INPUT
     expect(File.read("test.err")).to include "Initial section must be (content) Foreword"
+
+        FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  == Symbols and Abbreviated Terms
+
+  Paragraph
+  INPUT
+    expect(File.read("test.err")).not_to include "Initial section must be (content) Foreword"
+
 end
 
 it "Warning if do not start with scope or introduction" do
@@ -674,6 +729,24 @@ it "Warning if do not start with scope or introduction" do
   Paragraph
   INPUT
     expect(File.read("test.err")).to include "Prefatory material must be followed by (clause) Scope"
+
+  FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  Foreword
+
+  == Symbols and Abbreviated Terms
+
+  Paragraph
+  INPUT
+    expect(File.read("test.err")).not_to include "Prefatory material must be followed by (clause) Scope"
+
 end
 
 it "Warning if introduction not followed by scope" do
@@ -691,6 +764,27 @@ it "Warning if introduction not followed by scope" do
   Paragraph
   INPUT
     expect(File.read("test.err")).to include "Prefatory material must be followed by (clause) Scope"
+
+  FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  .Foreword
+  Foreword
+
+  == Introduction
+
+  == Symbols and Abbreviated Terms
+
+  Paragraph
+  INPUT
+    expect(File.read("test.err")).not_to include "Prefatory material must be followed by (clause) Scope"
+
 end
 
 it "Warning if normative references not followed by terms and definitions" do
@@ -711,6 +805,30 @@ it "Warning if normative references not followed by terms and definitions" do
   Paragraph
   INPUT
     expect(File.read("test.err")).to include "Normative References must be followed by Terms and Definitions"
+
+        FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  [bibliography]
+  == Normative References
+
+  == Symbols and Abbreviated Terms
+
+  Paragraph
+  INPUT
+    expect(File.read("test.err")).not_to include "Normative References must be followed by Terms and Definitions"
+
 end
 
 it "Warning if there are no clauses in the document" do
@@ -732,6 +850,30 @@ it "Warning if there are no clauses in the document" do
 
   INPUT
     expect(File.read("test.err")).to include "Document must contain at least one clause"
+
+      FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  [bibliography]
+  == Normative References
+
+  == Terms and Definitions
+
+  == Symbols and Abbreviated Terms
+
+  INPUT
+    expect(File.read("test.err")).not_to include "Document must contain at least one clause"
 end
 
 it "Warning if scope occurs after Terms and Definitions" do
@@ -755,6 +897,33 @@ it "Warning if scope occurs after Terms and Definitions" do
 
   INPUT
     expect(File.read("test.err")).to include "Scope must occur before Terms and Definitions"
+
+  FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  [bibliography]
+  == Normative References
+
+  == Terms and Definitions
+
+  == Clause
+
+  == Scope
+
+  INPUT
+    expect(File.read("test.err")).not_to include "Scope must occur before Terms and Definitions"
+
 end
 
 it "Warning if Symbols and Abbreviated Terms does not occur immediately after Terms and Definitions" do
@@ -778,6 +947,34 @@ it "Warning if Symbols and Abbreviated Terms does not occur immediately after Te
 
   INPUT
     expect(File.read("test.err")).to include "Only annexes and references can follow clauses"
+
+  FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  [bibliography]
+  == Normative References
+
+  == Terms and Definitions
+
+  == Clause
+
+  == Symbols and Abbreviated Terms
+
+  INPUT
+    expect(File.read("test.err")).not_to include "Only annexes and references can follow clauses"
+
 end
 
 it "Warning if no normative references" do
@@ -805,6 +1002,37 @@ it "Warning if no normative references" do
 
   INPUT
     expect(File.read("test.err")).to include "Document must include (references) Normative References"
+
+  FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  == Terms and Definitions
+
+  == Clause
+
+  [appendix]
+  == Appendix A
+
+  [appendix]
+  == Appendix B
+
+  [appendix]
+  == Appendix C
+
+  INPUT
+    expect(File.read("test.err")).not_to include "Document must include (references) Normative References"
+
 end
 
 it "Warning if final section is not named Bibliography" do
@@ -838,6 +1066,43 @@ it "Warning if final section is not named Bibliography" do
 
   INPUT
     expect(File.read("test.err")).to include "There are sections after the final Bibliography"
+
+    FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  [bibliography]
+  == Normative References
+
+  == Terms and Definitions
+
+  == Clause
+
+  [appendix]
+  == Appendix A
+
+  [appendix]
+  == Appendix B
+
+  [bibliography]
+  == Bibliography
+
+  [bibliography]
+  == Appendix C
+
+  INPUT
+    expect(File.read("test.err")).not_to include "There are sections after the final Bibliography"
+
 end
 
 it "Warning if final section is not styled Bibliography" do
@@ -867,6 +1132,40 @@ it "Warning if final section is not styled Bibliography" do
 
   INPUT
     expect(File.read("test.err")).to include "Section not marked up as [bibliography]"
+
+
+  FileUtils.rm_f "test.err"
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
+  :doctype: amendment
+
+  .Foreword
+  Foreword
+
+  == Scope
+
+  [bibliography]
+  == Normative References
+
+  == Terms and Definitions
+
+  == Clause
+
+  [appendix]
+  == Appendix A
+
+  [appendix]
+  == Appendix B
+
+  == Bibliography
+
+  INPUT
+    expect(File.read("test.err")).not_to include "Section not marked up as [bibliography]"
+
 end
 
 it "Warning if English title intro and no French title intro" do

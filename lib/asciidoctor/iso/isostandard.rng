@@ -141,21 +141,27 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name="type"/>
+      </optional>
+      <optional>
         <ref name="section-title"/>
       </optional>
-      <choice>
-        <group>
-          <oneOrMore>
-            <ref name="BasicBlock"/>
-          </oneOrMore>
-          <zeroOrMore>
-            <ref name="note"/>
-          </zeroOrMore>
-        </group>
+      <group>
+        <choice>
+          <group>
+            <oneOrMore>
+              <ref name="BasicBlock"/>
+            </oneOrMore>
+            <zeroOrMore>
+              <ref name="note"/>
+            </zeroOrMore>
+          </group>
+          <ref name="amend"/>
+        </choice>
         <oneOrMore>
           <ref name="clause-subsection"/>
         </oneOrMore>
-      </choice>
+      </group>
     </define>
     <define name="term">
       <element name="term">
