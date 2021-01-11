@@ -1,5 +1,8 @@
 module IsoDoc
   module Iso
+    class Counter < IsoDoc::XrefGen::Counter
+    end
+
     class Xref < IsoDoc::Xref
       def initial_anchor_names(d)
         if @klass.amd(d)
@@ -19,8 +22,10 @@ module IsoDoc
         return if clause.nil?
         clause.at(ns("./clause")) and @anchors[clause["id"]] = 
           { label: "0", level: 1, xref: clause.at(ns("./title"))&.text, type: "clause" }
-        clause.xpath(ns("./clause")).each_with_index do |c, i|
-          section_names1(c, "0.#{i + 1}", 2)
+        i = Counter.new
+        clause.xpath(ns("./clause")).each do |c|
+          i.increment(c)
+          section_names1(c, "0.#{i.print}", 2)
         end
       end
 
@@ -30,12 +35,16 @@ module IsoDoc
       end
 
       def appendix_names(clause, num)
-        clause.xpath(ns("./appendix")).each_with_index do |c, i|
-          @anchors[c["id"]] = anchor_struct(i + 1, nil, @labels["appendix"], "clause")
+        i = Counter.new
+        clause.xpath(ns("./appendix")).each do |c|
+          i.increment(c)
+          @anchors[c["id"]] = anchor_struct(i.print, nil, @labels["appendix"], "clause")
           @anchors[c["id"]][:level] = 2
           @anchors[c["id"]][:container] = clause["id"]
-          c.xpath(ns("./clause | ./references")).each_with_index do |c, j|
-            appendix_names1(c, l10n("#{@labels["appendix"]} #{i + 1}.#{j + 1}"), 3, clause["id"])
+          j = Counter.new
+          c.xpath(ns("./clause | ./references")).each do |c1|
+            j.increment(c1)
+            appendix_names1(c1, l10n("#{@labels["appendix"]} #{i.print}.#{j.print}"), 3, clause["id"])
           end
         end
       end
@@ -44,24 +53,30 @@ module IsoDoc
         @anchors[clause["id"]] =
           { label: num, level: level, xref: num }
         # subclauses are not prefixed with "Clause"
+        i = Counter.new
         clause.xpath(ns("./clause | ./terms | ./term | ./definitions | "\
                         "./references")).
-                       each_with_index do |c, i|
-          section_names1(c, "#{num}.#{i + 1}", level + 1)
+                       each do |c|
+          i.increment(c)
+          section_names1(c, "#{num}.#{i.print}", level + 1)
         end
       end
 
       def annex_names1(clause, num, level)
         @anchors[clause["id"]] = { label: num, xref: num, level: level }
-        clause.xpath(ns("./clause | ./references")).each_with_index do |c, i|
-          annex_names1(c, "#{num}.#{i + 1}", level + 1)
+        i = Counter.new
+        clause.xpath(ns("./clause | ./references")).each do |c|
+          i.increment(c)
+          annex_names1(c, "#{num}.#{i.print}", level + 1)
         end
       end
 
       def appendix_names1(clause, num, level, container)
         @anchors[clause["id"]] = { label: num, xref: num, level: level, container: container }
-        clause.xpath(ns("./clause | ./references")).each_with_index do |c, i|
-          appendix_names1(c, "#{num}.#{i + 1}", level + 1, container)
+        i = Counter.new
+        clause.xpath(ns("./clause | ./references")).each do |c|
+          i.increment(c)
+          appendix_names1(c, "#{num}.#{i.print}", level + 1, container)
         end
       end
 

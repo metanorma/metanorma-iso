@@ -325,7 +325,7 @@ INPUT
        <substage>00</substage>
      </status>
      <copyright>
-       <from>2020</from>
+       <from>#{Time.now.year}</from>
        <owner>
          <organization>
            <name>International Organization for Standardization</name>
@@ -393,7 +393,7 @@ INPUT
              <substage>00</substage>
            </status>
            <copyright>
-             <from>2020</from>
+             <from>#{Time.now.year}</from>
              <owner>
                <organization>
                  <name>International Organization for Standardization</name>
@@ -460,7 +460,7 @@ INPUT
              <substage>60</substage>
            </status>
            <copyright>
-             <from>2020</from>
+             <from>#{Time.now.year}</from>
              <owner>
                <organization>
                  <name>International Organization for Standardization</name>
@@ -528,7 +528,7 @@ INPUT
       <substage>00</substage>
     </status>
     <copyright>
-      <from>2020</from>
+      <from>#{Time.now.year}</from>
       <owner>
         <organization>
           <name>International Organization for Standardization</name>
@@ -596,7 +596,7 @@ INPUT
       <substage>00</substage>
     </status>
     <copyright>
-      <from>2020</from>
+      <from>#{Time.now.year}</from>
       <owner>
         <organization>
           <name>International Organization for Standardization</name>
@@ -663,7 +663,7 @@ INPUT
              <substage>60</substage>
            </status>
            <copyright>
-             <from>2020</from>
+             <from>#{Time.now.year}</from>
              <owner>
                <organization>
                  <name>International Organization for Standardization</name>
