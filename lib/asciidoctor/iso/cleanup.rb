@@ -179,10 +179,16 @@ module Asciidoctor
       end
 
       def express_eref_to_xref(e, id)
-        e.name = "xref"
         loc = e&.at("./location[@type = 'anchor']")&.remove&.text
+        target = loc ? "#{id}.#{loc}" : id
+        e.name = "xref"
         e.delete("bibitem")
-        e["target"] = loc ? "#{id}.#{loc}" : id
+        if e.document.at("//*[@id = '#{target}']")
+          e["target"] = target
+        else
+          e["target"] = id
+          e.children = %(** Missing target #{loc})
+        end
       end
 
       def resolve_local_express_refs(xmldoc, refs)

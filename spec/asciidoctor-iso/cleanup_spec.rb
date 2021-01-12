@@ -1031,6 +1031,7 @@ RSpec.describe Asciidoctor::ISO do
       express_ref:[A.B.C]
       express_ref:[A]
       express_ref:[action.AA]
+      express_ref:[action.AB]
 
       [[action]]
       [type="express-schema"]
@@ -1054,6 +1055,7 @@ RSpec.describe Asciidoctor::ISO do
                </eref>
                <eref bibitem='express-schema_A'/>
 <xref target='action.AA'>AA</xref>
+<xref target='action'>** Missing target AB</xref>
              </p>
            </clause>
            <clause id='action' type='express-schema' inline-header='false' obligation='normative'>
