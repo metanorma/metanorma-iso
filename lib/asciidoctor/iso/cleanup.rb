@@ -156,6 +156,54 @@ module Asciidoctor
           NOTE
         end
       end
+
+      def biblio_cleanup(xmldoc)
+        super
+        express_hidden_refs(xmldoc)
+      end
+
+      def gather_express_refs(xmldoc)
+        xmldoc.xpath("//eref[@type = 'express']").each_with_object({}) do |e, m|
+          e.delete("type")
+          m[e["bibitem"]] = true
+        end.keys
+      end
+
+      def insert_express_biblio(xmldoc, refs)
+        ins = xmldoc.at("bibliography") or
+          xmldoc.root << "<bibliography/>" and ins = xmldoc.at("bibliography")
+        ins = ins.add_child("<references hidden='true' normative='false'/>").first
+        refs.each do |x|
+          ins << %(<bibitem id="#{x}" type="internal"><docidentifier type="repository">#{x}</docidentifier></bibitem>)
+        end
+      end
+
+      def express_eref_to_xref(e, id)
+        e.name = "xref"
+        loc = e&.at("./location[@type = 'anchor']")&.remove&.text
+        e.delete("bibitem")
+        e["target"] = loc ? "#{id}.#{loc}" : id
+      end
+
+      def resolve_local_express_refs(xmldoc, refs)
+        refs.each_with_object([]) do |r, m|
+          id = r.sub(/^express-schema_/, "")
+          if xmldoc.at("//*[@id = '#{id}'][@type = 'express-schema']")
+            xmldoc.xpath("//eref[@bibitem = '#{r}']").each do |e|
+              express_eref_to_xref(e, id)
+            end
+          else
+            m << r
+          end
+        end
+      end
+
+      def express_hidden_refs(xmldoc)
+        refs = gather_express_refs(xmldoc)
+        refs = resolve_local_express_refs(xmldoc, refs)
+        refs.empty? and return
+        insert_express_biblio(xmldoc, refs)
+      end
     end
   end
 end

@@ -62,6 +62,21 @@ module Asciidoctor
                                        nil, false, "#{@filename}.pdf")
           #sts_converter(node)&.convert(@filename + ".xml")
       end
+
+      class ExpressRefMacro < Asciidoctor::Extensions::InlineMacroProcessor
+        use_dsl
+        named :express_ref
+        parse_content_as :text
+        using_format :short
+
+        def process(parent, _target, attrs)
+          vals = attrs["text"].split(".")
+          if vals.size > 1
+            loc = %|<location type="anchor">#{vals[1..-1].join(".")}</location>#{vals[-1]}|
+          end
+          %{<eref type="express" bibitem="express-schema_#{vals[0]}">#{loc}</eref>}
+        end
+      end
     end
   end
 end
