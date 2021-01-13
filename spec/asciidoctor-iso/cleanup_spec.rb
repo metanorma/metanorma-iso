@@ -1075,7 +1075,7 @@ RSpec.describe Asciidoctor::ISO do
            </references>
            <references hidden='true' normative='false'>
              <bibitem id='express-schema_A' type='internal'>
-               <docidentifier type='repository'>express-schema_A</docidentifier>
+               <docidentifier type='repository'>express-schema/A</docidentifier>
              </bibitem>
            </references>
          </bibliography>
@@ -1108,7 +1108,7 @@ RSpec.describe Asciidoctor::ISO do
          <bibliography>
            <references hidden='true' normative='false'>
              <bibitem id='express-schema_A' type='internal'>
-               <docidentifier type='repository'>express-schema_A</docidentifier>
+               <docidentifier type='repository'>express-schema/A</docidentifier>
              </bibitem>
            </references>
          </bibliography>
