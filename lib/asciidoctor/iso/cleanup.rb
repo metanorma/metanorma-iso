@@ -165,7 +165,7 @@ module Asciidoctor
       def gather_express_refs(xmldoc)
         xmldoc.xpath("//eref[@type = 'express']").each_with_object({}) do |e, m|
           e.delete("type")
-          m[e["bibitem"]] = true
+          m[e["bibitemid"]] = true
         end.keys
       end
 
@@ -182,7 +182,7 @@ module Asciidoctor
         loc = e&.at("./location[@type = 'anchor']")&.remove&.text
         target = loc ? "#{id}.#{loc}" : id
         e.name = "xref"
-        e.delete("bibitem")
+        e.delete("bibitemid")
         if e.document.at("//*[@id = '#{target}']")
           e["target"] = target
         else
@@ -195,7 +195,7 @@ module Asciidoctor
         refs.each_with_object([]) do |r, m|
           id = r.sub(/^express-schema_/, "")
           if xmldoc.at("//*[@id = '#{id}'][@type = 'express-schema']")
-            xmldoc.xpath("//eref[@bibitem = '#{r}']").each do |e|
+            xmldoc.xpath("//eref[@bibitemid = '#{r}']").each do |e|
               express_eref_to_xref(e, id)
             end
           else

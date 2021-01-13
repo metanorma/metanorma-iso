@@ -74,7 +74,7 @@ module Asciidoctor
           if vals.size > 1
             loc = %|<location type="anchor">#{vals[1..-1].join(".")}</location>#{vals[-1]}|
           end
-          %{<eref type="express" bibitem="express-schema_#{vals[0]}">#{loc}</eref>}
+          %{<eref type="express" bibitemid="express-schema_#{vals[0]}">#{loc}</eref>}
         end
       end
     end

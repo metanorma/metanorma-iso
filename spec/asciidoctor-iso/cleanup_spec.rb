@@ -1049,11 +1049,11 @@ RSpec.describe Asciidoctor::ISO do
            <clause id='_' inline-header='false' obligation='normative'>
              <title>Clause</title>
              <p id='_'>
-               <eref bibitem='express-schema_A'>
+               <eref bibitemid='express-schema_A'>
                  <location type='anchor'>B.C</location>
                  C
                </eref>
-               <eref bibitem='express-schema_A'/>
+               <eref bibitemid='express-schema_A'/>
 <xref target='action.AA'>AA</xref>
 <xref target='action'>** Missing target AB</xref>
              </p>
@@ -1097,11 +1097,11 @@ RSpec.describe Asciidoctor::ISO do
            <clause id='_' inline-header='false' obligation='normative'>
              <title>Clause</title>
              <p id='_'>
-               <eref bibitem='express-schema_A'>
+               <eref bibitemid='express-schema_A'>
                  <location type='anchor'>B.C</location>
                  C
                </eref>
-               <eref bibitem='express-schema_A'/>
+               <eref bibitemid='express-schema_A'/>
              </p>
            </clause>
          </sections>
