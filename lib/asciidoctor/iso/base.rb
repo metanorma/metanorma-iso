@@ -52,14 +52,10 @@ module Asciidoctor
       def outputs(node, ret)
           File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
           presentation_xml_converter(node).convert(@filename + ".xml")
-          html_converter_alt(node).convert(@filename + ".presentation.xml", 
-                                           nil, false, "#{@filename}_alt.html")
-          html_converter(node).convert(@filename + ".presentation.xml", 
-                                       nil, false, "#{@filename}.html")
-          doc_converter(node).convert(@filename + ".presentation.xml", 
-                                      nil, false, "#{@filename}.doc")
-          pdf_converter(node)&.convert(@filename + ".presentation.xml", 
-                                       nil, false, "#{@filename}.pdf")
+          html_converter_alt(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}_alt.html")
+          html_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.html")
+          doc_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.doc")
+          pdf_converter(node)&.convert(@filename + ".presentation.xml", nil, false, "#{@filename}.pdf")
           #sts_converter(node)&.convert(@filename + ".xml")
       end
 
@@ -76,7 +72,7 @@ module Asciidoctor
             <locality type="anchor"><referenceFrom>#{vals[1..-1].join(".")}</referenceFrom></locality>#{vals[-1]}
             END
           end
-          %{<eref type="express-schema" bibitemid="express-schema_#{vals[0]}">#{loc}</eref>}
+          %{<eref type="express-schema" bibitemid="express-schema_#{vals[0]}">#{loc&.strip}</eref>}
         end
       end
     end
