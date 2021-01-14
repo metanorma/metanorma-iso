@@ -1050,7 +1050,7 @@ RSpec.describe Asciidoctor::ISO do
              <title>Clause</title>
              <p id='_'>
                <eref bibitemid='express-schema_A'>
-                 <location type='anchor'>B.C</location>
+                 <locality type='anchor'>B.C</locality>
                  C
                </eref>
                <eref bibitemid='express-schema_A'/>
@@ -1098,7 +1098,7 @@ RSpec.describe Asciidoctor::ISO do
              <title>Clause</title>
              <p id='_'>
                <eref bibitemid='express-schema_A'>
-                 <location type='anchor'>B.C</location>
+                 <locality type='anchor'>B.C</locality>
                  C
                </eref>
                <eref bibitemid='express-schema_A'/>

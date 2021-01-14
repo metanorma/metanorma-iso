@@ -72,7 +72,7 @@ module Asciidoctor
         def process(parent, _target, attrs)
           vals = attrs["text"].split(".")
           if vals.size > 1
-            loc = %|<location type="anchor">#{vals[1..-1].join(".")}</location>#{vals[-1]}|
+            loc = %|<locality type="anchor">#{vals[1..-1].join(".")}</locality>#{vals[-1]}|
           end
           %{<eref type="express-schema" bibitemid="express-schema_#{vals[0]}">#{loc}</eref>}
         end

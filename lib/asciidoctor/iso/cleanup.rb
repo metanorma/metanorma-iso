@@ -183,7 +183,7 @@ module Asciidoctor
       end
 
       def express_eref_to_xref(e, id)
-        loc = e&.at("./location[@type = 'anchor']")&.remove&.text
+        loc = e&.at("./locality[@type = 'anchor']")&.remove&.text
         target = loc ? "#{id}.#{loc}" : id
         e.name = "xref"
         e.delete("bibitemid")
