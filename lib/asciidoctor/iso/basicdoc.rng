@@ -729,9 +729,11 @@
   </define>
   <define name="index">
     <element name="index">
-      <attribute name="to">
-        <data type="IDREF"/>
-      </attribute>
+      <optional>
+        <attribute name="to">
+          <data type="IDREF"/>
+        </attribute>
+      </optional>
       <element name="primary">
         <oneOrMore>
           <ref name="PureTextElement"/>

@@ -789,6 +789,9 @@
       <attribute name="width"/>
     </element>
   </define>
+  <define name="BibItemType" combine="choice">
+    <value>internal</value>
+  </define>
   <define name="TextElement" combine="choice">
     <ref name="concept"/>
   </define>
