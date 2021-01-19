@@ -17,7 +17,7 @@ RSpec.describe Asciidoctor::ISO do
       expect do
         Metanorma::Compile
           .new
-          .compile("spec/assets/xref_error.adoc", type: "iso")
+          .compile("spec/assets/xref_error.adoc", type: "iso", agree_to_terms: true)
       end.to(change { File.exist?("spec/assets/xref_error.err") }
               .from(false).to(true))
     end
