@@ -49,8 +49,8 @@ RSpec.describe IsoDoc::Iso do
     INPUT
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: "Courier New", monospace;]m)
-    expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "SimSun", serif;]m)
-    expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "SimHei", sans-serif;]m)
+    expect(html).to match(%r[blockquote[^{]+\{[^{]+font-family: "Source Han Sans", serif;]m)
+    expect(html).to match(%r[\.h2Annex[^{]+\{[^{]+font-family: "Source Han Sans", sans-serif;]m)
   end
 
   it "processes isodoc as ISO: user nominated fonts" do
