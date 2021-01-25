@@ -46,7 +46,7 @@ module Asciidoctor
 
        def ol_attrs(node)
         attr_code(keep_attrs(node).
-                  merge(id: ::Asciidoctor::Standoc::Utils::anchor_or_uuid(node)))
+                  merge(id: ::Metanorma::Utils::anchor_or_uuid(node)))
       end
 
       def outputs(node, ret)

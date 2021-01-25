@@ -30,8 +30,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   spec.add_dependency "ruby-jing"
-  spec.add_dependency "isodoc", "~> 1.4.2"
-  spec.add_dependency "metanorma-standoc", "~> 1.7.0"
+  spec.add_dependency "isodoc", "~> 1.5.0"
+  spec.add_dependency "metanorma-standoc", "~> 1.8.0"
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "twitter_cldr"
   spec.add_dependency "mn2sts", "~> 1.5.0"
