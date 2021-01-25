@@ -259,6 +259,18 @@ def stub_fetch_ref(**opts)
   end.at_least :once
 end
 
+def mock_pdf
+  allow(::Mn2pdf).to receive(:convert) do |url, output, c, d|
+    FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
+  end
+end
+
+def mock_sts
+  allow(::Mn2sts).to receive(:convert) do |url, output, c, d|
+    FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
+  end
+end
+
 private
 
 def get_xml(search, code, opts)

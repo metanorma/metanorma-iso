@@ -15,6 +15,8 @@ RSpec.describe Asciidoctor::ISO do
 
     it "generates error file" do
       expect do
+        mock_pdf
+        mock_sts
         Metanorma::Compile
           .new
           .compile("spec/assets/xref_error.adoc", type: "iso", :"agree-to-terms" => true)

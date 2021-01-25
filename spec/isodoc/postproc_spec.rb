@@ -94,6 +94,7 @@ RSpec.describe IsoDoc do
 
     it "generates Pdf output docs with null configuration from file" do
     FileUtils.rm_f "spec/assets/iso.pdf"
+    mock_pdf
     IsoDoc::Iso::PdfConvert.new({wordstylesheet: "spec/assets/word.css", htmlstylesheet: "spec/assets/html.css"}).convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.pdf")).to be true
   end
