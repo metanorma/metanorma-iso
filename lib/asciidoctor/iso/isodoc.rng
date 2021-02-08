@@ -812,6 +812,8 @@
       <ref name="requirement"/>
       <ref name="recommendation"/>
       <ref name="permission"/>
+      <ref name="imagemap"/>
+      <ref name="svgmap"/>
     </choice>
   </define>
   <define name="bibliography">
@@ -1633,6 +1635,67 @@
         </choice>
       </attribute>
       <text/>
+    </element>
+  </define>
+  <define name="imagemap">
+    <element name="imagemap">
+      <ref name="figure"/>
+      <zeroOrMore>
+        <element name="area">
+          <attribute name="type">
+            <choice>
+              <value>rect</value>
+              <value>circle</value>
+              <value>ellipse</value>
+              <value>poly</value>
+            </choice>
+          </attribute>
+          <choice>
+            <ref name="xref"/>
+            <ref name="hyperlink"/>
+            <ref name="eref"/>
+          </choice>
+          <oneOrMore>
+            <element name="coords">
+              <attribute name="x">
+                <data type="float"/>
+              </attribute>
+              <attribute name="y">
+                <data type="float"/>
+              </attribute>
+            </element>
+          </oneOrMore>
+          <optional>
+            <element name="radius">
+              <attribute name="x">
+                <data type="float"/>
+              </attribute>
+              <optional>
+                <attribute name="y">
+                  <data type="float"/>
+                </attribute>
+              </optional>
+            </element>
+          </optional>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="svgmap">
+    <element name="svgmap">
+      <ref name="figure"/>
+      <zeroOrMore>
+        <element name="target">
+          <attribute name="href">
+            <data type="anyURI"/>
+          </attribute>
+          <choice>
+            <ref name="xref"/>
+            <ref name="hyperlink"/>
+            <ref name="eref"/>
+          </choice>
+        </element>
+      </zeroOrMore>
     </element>
   </define>
 </grammar>
