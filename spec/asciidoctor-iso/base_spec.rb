@@ -7,7 +7,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes a blank document" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
     #{ASCIIDOC_BLANK_HDR}
     INPUT
     #{BLANK_HDR}
@@ -21,7 +21,7 @@ RSpec.describe Asciidoctor::ISO do
     FileUtils.rm_f "test.html"
     FileUtils.rm_f "test.pdf"
     FileUtils.rm_f "test_alt.html"
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -40,7 +40,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
     it "converts a blank document in French" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -56,7 +56,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
   it "processes default metadata" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -185,7 +185,7 @@ RSpec.describe Asciidoctor::ISO do
 
 
   it "processes complex metadata" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -299,7 +299,7 @@ RSpec.describe Asciidoctor::ISO do
   end
 
      it "processes subdivisions" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, "")))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, "")))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -409,7 +409,7 @@ OUTPUT
      end
 
     it "defaults substage, defines iteration on stage 50, gives stage 50 on technical specification" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -478,7 +478,7 @@ OUTPUT
     end
 
         it "defaults substage for stage 60" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -543,7 +543,7 @@ OUTPUT
     end
 
   it "populates metadata for PRF" do
-    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true).sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       = Document title
       Author
       :docfile: test.adoc
@@ -611,7 +611,7 @@ OUTPUT
 
   it "reads scripts into blank HTML document" do
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -625,7 +625,7 @@ OUTPUT
 
   it "uses default fonts" do
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -641,7 +641,7 @@ OUTPUT
 
   it "uses default fonts for alt doc" do
     FileUtils.rm_f "test_alt.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -657,7 +657,7 @@ OUTPUT
 
   it "uses Chinese fonts" do
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -674,7 +674,7 @@ OUTPUT
 
   it "uses specified fonts" do
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -695,7 +695,7 @@ OUTPUT
   it "strips MS-specific CSS" do
     FileUtils.rm_f "test.html"
     FileUtils.rm_f "test.doc"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc

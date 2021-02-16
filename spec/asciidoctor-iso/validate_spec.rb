@@ -19,7 +19,7 @@ RSpec.describe Asciidoctor::ISO do
         mock_sts
         Metanorma::Compile
           .new
-          .compile("spec/assets/xref_error.adoc", type: "iso", :"agree-to-terms" => true)
+          .compile("spec/assets/xref_error.adoc", type: "iso", no_install_fonts: true)
       end.to(change { File.exist?("spec/assets/xref_error.err") }
               .from(false).to(true))
     end
@@ -27,7 +27,7 @@ RSpec.describe Asciidoctor::ISO do
 
 it "Warns of image names not compliant with DRG" do
       FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -96,7 +96,7 @@ end
 
 it "Warns of missing scope" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -109,7 +109,7 @@ it "Warns of missing scope" do
     expect(File.read("test.err")).to include "Scope clause missing"
 
   FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -137,7 +137,7 @@ end
 
 it "Warns of missing normative references" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -150,7 +150,7 @@ it "Warns of missing normative references" do
     expect(File.read("test.err")).to include "Normative references missing"
 
   FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -180,7 +180,7 @@ end
 
 it "Warns of missing terms & definitions" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -193,7 +193,7 @@ it "Warns of missing terms & definitions" do
     expect(File.read("test.err")).to include "Terms & definitions missing"
 
   FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -222,7 +222,7 @@ end
 
 it "Warns of illegal doctype" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -237,7 +237,7 @@ end
 
 it "Warns of illegal script" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -252,7 +252,7 @@ end
 
 it "Warns of illegal stage" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -267,7 +267,7 @@ end
 
 it "Warns of illegal substage" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -283,7 +283,7 @@ end
 
 it "Warns of illegal iteration" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -299,7 +299,7 @@ end
 
 it "Warns of illegal script" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -314,7 +314,7 @@ end
 
 it "warns that technical report may contain requirement" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -332,7 +332,7 @@ end
 
 it "warns that introduction may contain requirement" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Introduction
 
@@ -343,7 +343,7 @@ end
 
 it "warns that foreword may contain recommendation" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   It is not recommended that widgets should be larger than 15 cm.
@@ -355,7 +355,7 @@ end
 
 it "warns that foreword may contain permission" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   No widget is required to be larger than 15 cm.
@@ -367,7 +367,7 @@ end
 
 it "warns that scope may contain recommendation" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -378,7 +378,7 @@ end
 
 it "warns that definition may contain requirement" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Terms and Definitions
@@ -393,7 +393,7 @@ end
 
 it "warns that term example may contain recommendation" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Terms and Definitions
@@ -408,7 +408,7 @@ end
 
 it "warns that note may contain recommendation" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   NOTE: It is not recommended that widgets should be larger than 15 cm.
@@ -418,7 +418,7 @@ end
 
 it "warns that footnote may contain recommendation" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   footnote:[It is not recommended that widgets should be larger than 15 cm.]
@@ -428,7 +428,7 @@ end
 
 it "warns that term source is not in expected format" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   [.source]
@@ -439,7 +439,7 @@ end
 
 it "warns that figure does not have title" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   image::spec/examples/rice_images/rice_image1.png[]
@@ -449,7 +449,7 @@ end
 
 it "warns that callouts do not match annotations" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
       #{VALIDATING_BLANK_HDR}
       [source,ruby]
       --
@@ -466,7 +466,7 @@ end
 
 it "warns that term source is not a real reference" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   [.source]
@@ -477,7 +477,7 @@ end
 
 it "warns that undated reference has locality" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -492,7 +492,7 @@ end
 
 it "do not warn that undated reference which is a bibliographic reference has locality" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -507,7 +507,7 @@ end
 
 it "do not warn that undated IEV reference has locality" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -522,7 +522,7 @@ end
 
 it "do not warn that in print has locality" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -537,7 +537,7 @@ end
 
 it "warns of Non-reference in bibliography" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Normative References
@@ -548,7 +548,7 @@ end
 
 it "warns of Non-ISO reference in Normative References" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   [bibliography]
@@ -560,7 +560,7 @@ end
 
 it "warns that Scope contains subclauses" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Scope
@@ -573,7 +573,7 @@ end
 
 it "warns that Table should have title" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   |===
@@ -585,7 +585,7 @@ end
 
 it "gives Style warning if number not broken up in threes" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -596,7 +596,7 @@ end
 
 it "gives No style warning if number not broken up in threes is ISO reference" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -607,7 +607,7 @@ end
 
 it "Style warning if decimal point" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -618,7 +618,7 @@ end
 
 it "Style warning if billion used" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -629,7 +629,7 @@ end
 
 it "Style warning if no space before percent sign" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -640,7 +640,7 @@ end
 
 it "Style warning if unbracketed tolerance before percent sign" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -651,7 +651,7 @@ end
 
 it "Style warning if dots in abbreviation" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -662,7 +662,7 @@ end
 
 it "No Style warning if dots in abbreviation are e.g." do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -673,7 +673,7 @@ end
 
 it "Style warning if ppm used" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -684,7 +684,7 @@ end
 
 it "Style warning if space between number and degree" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -695,7 +695,7 @@ end
 
 it "Style warning if no space between number and SI unit" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -706,7 +706,7 @@ end
 
 it "Style warning if mins used" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Clause
@@ -717,7 +717,7 @@ end
 
 # can't test: our asciidoc template won't allow this to be generated
 # it "Style warning if foreword contains subclauses" do
-  # expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true) }.to output(%r{non-standard unit}).to_stderr
+  # expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{non-standard unit}).to_stderr
   #  #{VALIDATING_BLANK_HDR}
 #
   # INPUT
@@ -725,7 +725,7 @@ end
 
 # can't test: we strip out any such content from Normative references preemptively
 #it "Style warning if Normative References contains subclauses" do
-  #expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true) }.to output(%r{normative references contains subclauses}).to_stderr
+  #expect { Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true) }.to output(%r{normative references contains subclauses}).to_stderr
   ##{VALIDATING_BLANK_HDR}
 #
   #[bibliography]
@@ -737,7 +737,7 @@ end
 
 it "Style warning if two Symbols and Abbreviated Terms sections" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Terms and Abbreviations
@@ -751,7 +751,7 @@ end
 
 it "Style warning if Symbols and Abbreviated Terms contains extraneous matter" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Symbols and Abbreviated Terms
@@ -763,7 +763,7 @@ end
 
 it "Warning if missing foreword" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   == Symbols and Abbreviated Terms
@@ -791,7 +791,7 @@ end
 
 it "Warning if do not start with scope or introduction" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   Foreword
 
@@ -822,7 +822,7 @@ end
 
 it "Warning if introduction not followed by scope" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -860,7 +860,7 @@ end
 
 it "Warning if normative references not followed by terms and definitions" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -904,7 +904,7 @@ end
 
 it "Warning if there are no clauses in the document" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -949,7 +949,7 @@ end
 
 it "Warning if scope occurs after Terms and Definitions" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -999,7 +999,7 @@ end
 
 it "Warning if Symbols and Abbreviated Terms does not occur immediately after Terms and Definitions" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -1050,7 +1050,7 @@ end
 
 it "Warning if no normative references" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -1108,7 +1108,7 @@ end
 
 it "Warning if final section is not named Bibliography" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -1178,7 +1178,7 @@ end
 
 it "Warning if final section is not styled Bibliography" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   .Foreword
@@ -1241,7 +1241,7 @@ end
 
 it "Warning if English title intro and no French title intro" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1255,7 +1255,7 @@ end
 
 it "Warning if French title intro and no English title intro" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1270,7 +1270,7 @@ end
 
 it "Warning if English title and no French intro" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1284,7 +1284,7 @@ end
 
 it "Warning if French title and no English title" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1298,7 +1298,7 @@ end
 
 it "Warning if English title part and no French title part" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1312,7 +1312,7 @@ end
 
 it "Warning if French title part and no English title part" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1326,7 +1326,7 @@ end
 
 it "Warning if non-IEC document with subpart" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1342,7 +1342,7 @@ end
 
 it "No warning if joint IEC/non-IEC document with subpart" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1358,7 +1358,7 @@ end
 
 it "Warning if main title contains document type" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1372,7 +1372,7 @@ end
 
 it "Warning if intro title contains document type" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1386,7 +1386,7 @@ end
 
 it "Each first-level subclause must have a title" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Clause
 
@@ -1397,7 +1397,7 @@ end
 
 it "All subclauses must have a title, or none" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Clause
 
@@ -1412,7 +1412,7 @@ end
 
 it "Warning if subclause is only child of its parent, or none" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Clause
 
@@ -1424,7 +1424,7 @@ end
 
 it "Warning if invalid technical committee type" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1438,7 +1438,7 @@ end
 
 it "Warning if invalid subcommittee type" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1452,7 +1452,7 @@ end
 
 it "Warning if invalid subcommittee type" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1466,7 +1466,7 @@ end
 
 it "Warning if 'see' crossreference points to normative section" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   [[terms]]
   == Terms and Definitions
@@ -1479,7 +1479,7 @@ end
 
 it "Warning if 'see' reference points to normative reference" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   [bibliography]
   == Normative References
@@ -1493,7 +1493,7 @@ end
 
 it "Warning if term definition starts with article" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Terms and Definitions
 
@@ -1506,7 +1506,7 @@ end
 
 it "Warning if term definition ends with period" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Terms and Definitions
 
@@ -1519,7 +1519,7 @@ end
 
 it "validates document against ISO XML schema" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   [align=mid-air]
@@ -1530,7 +1530,7 @@ end
 
 it "Warn if more than 7 levels of subclause" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1563,7 +1563,7 @@ end
 
 it "Do not warn if not more than 7 levels of subclause" do
     FileUtils.rm_f "test.err"
-  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+  Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   = Document title
   Author
   :docfile: test.adoc
@@ -1593,7 +1593,7 @@ end
 
 it "Warn if term citation in Terms & Definitions not preceded with italicised term" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
   == Terms and Definitions
 
@@ -1607,7 +1607,7 @@ end
 
 it "Warn if an undated reference has no associated footnote" do
     FileUtils.rm_f "test.err"
-    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true, agree_to_terms: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :iso, header_footer: true)
   #{VALIDATING_BLANK_HDR}
 
   [bibliography]
