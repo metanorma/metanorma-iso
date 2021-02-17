@@ -23,250 +23,235 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.around do |example|
+    Dir.mktmpdir("rspec-") do |dir|
+      tmp_assets = File.join(dir, "spec/assets/")
+      FileUtils.mkdir_p tmp_assets
+      FileUtils.cp_r Dir.glob("spec/assets/*"), tmp_assets
+      Dir.chdir(dir) { example.run }
+    end
+  end
 end
 
-def strip_guid(x)
-  x.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
+def strip_guid(xml)
+  xml.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
 end
 
-def metadata(x)
-  Hash[x.sort].delete_if{ |k, v| v.nil? || v.respond_to?(:empty?) && v.empty? }
+def metadata(hash)
+  Hash[hash.sort].delete_if { |_, v| v.nil? || v.respond_to?(:empty?) && v.empty? }
 end
 
-def xmlpp(x)
+def xmlpp(xml)
   s = ""
   f = REXML::Formatters::Pretty.new(2)
   f.compact = true
-  f.write(REXML::Document.new(x),s)
+  f.write(REXML::Document.new(xml), s)
   s
 end
 
-ASCIIDOC_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :no-isobib:
+ASCIIDOC_BLANK_HDR = <<~"HDR".freeze
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :novalid:
+  :no-isobib:
 
 HDR
 
-AMD_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :no-isobib:
-      :doctype: amendment
+AMD_BLANK_HDR = <<~"HDR".freeze
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :novalid:
+  :no-isobib:
+  :doctype: amendment
 
 HDR
 
-ISOBIB_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :no-isobib-cache:
+ISOBIB_BLANK_HDR = <<~"HDR".freeze
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :novalid:
+  :no-isobib-cache:
 
 HDR
 
-FLUSH_CACHE_ISOBIB_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :flush-caches:
+FLUSH_CACHE_ISOBIB_BLANK_HDR = <<~"HDR".freeze
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :novalid:
+  :flush-caches:
 
 HDR
 
-CACHED_ISOBIB_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
+CACHED_ISOBIB_BLANK_HDR = <<~"HDR".freeze
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :novalid:
 
 HDR
 
-LOCAL_CACHED_ISOBIB_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
-      :local-cache:
+LOCAL_CACHED_ISOBIB_BLANK_HDR = <<~"HDR".freeze
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :novalid:
+  :local-cache:
 
 HDR
 
-VALIDATING_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-
+VALIDATING_BLANK_HDR = <<~"HDR".freeze
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :no-isobib:
 HDR
+
+ASCIIDOCTOR_ISO_DIR = Pathname.new(File.dirname(__FILE__)) / "../lib/asciidoctor/iso"
 
 BOILERPLATE =
   HTMLEntities.new.decode(
-  File.read(File.join(File.dirname(__FILE__), "..", "lib", "asciidoctor", "iso", "boilerplate.xml"), encoding: "utf-8").
-  gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s).
-  gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "").
-  gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
-)
+    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate.xml", encoding: "utf-8")
+      .gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
+      .gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "")
+      .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
+  )
 
 BOILERPLATE_FR =
   HTMLEntities.new.decode(
-  File.read(File.join(File.dirname(__FILE__), "..", "lib", "asciidoctor", "iso", "boilerplate-fr.xml"), encoding: "utf-8").
-  gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s).
-  gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "").
-  gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
-)
+    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-fr.xml", encoding: "utf-8")
+    .gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
+    .gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "")
+    .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
+  )
 
-BLANK_HDR1 = <<~"HDR"
-<?xml version="1.0" encoding="UTF-8"?>
-<iso-standard xmlns="https://www.metanorma.org/ns/iso" type="semantic" version="#{Metanorma::ISO::VERSION}">
-<bibdata type="standard">
-  <contributor>
-    <role type="author"/>
-    <organization>
-      <name>International Organization for Standardization</name>
-      <abbreviation>ISO</abbreviation>
-    </organization>
-  </contributor>
-  <contributor>
-    <role type="publisher"/>
-    <organization>
-      <name>International Organization for Standardization</name>
-      <abbreviation>ISO</abbreviation>
-    </organization>
-  </contributor>
-  <language>en</language>
-  <script>Latn</script>
-  <status>
-    <stage abbreviation="IS">60</stage>
-    <substage>60</substage>
-  </status>
-  <copyright>
-    <from>#{Time.new.year}</from>
-    <owner>
-      <organization>
-        <name>International Organization for Standardization</name>
-        <abbreviation>ISO</abbreviation>
-      </organization>
-    </owner>
-  </copyright>
-  <ext>
-    <doctype>article</doctype>
-  <editorialgroup>
-    <technical-committee/>
-    <subcommittee/>
-    <workgroup/>
-  </editorialgroup>
-  <stagename>International standard</stagename>
-  </ext>
-</bibdata>
+BLANK_HDR1 = <<~"HDR".freeze
+  <?xml version="1.0" encoding="UTF-8"?>
+  <iso-standard xmlns="https://www.metanorma.org/ns/iso" type="semantic" version="#{Metanorma::ISO::VERSION}">
+    <bibdata type="standard">
+      <contributor>
+        <role type="author"/>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <language>en</language>
+      <script>Latn</script>
+      <status>
+        <stage abbreviation="IS">60</stage>
+        <substage>60</substage>
+      </status>
+      <copyright>
+        <from>#{Time.new.year}</from>
+        <owner>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </owner>
+      </copyright>
+      <ext>
+        <doctype>article</doctype>
+        <editorialgroup>
+          <technical-committee/>
+          <subcommittee/>
+          <workgroup/>
+        </editorialgroup>
+        <stagename>International standard</stagename>
+      </ext>
+    </bibdata>
 HDR
 
-BLANK_HDR = <<~"HDR"
-#{BLANK_HDR1}
-#{BOILERPLATE}
+BLANK_HDR = <<~"HDR".freeze
+  #{BLANK_HDR1}
+  #{BOILERPLATE}
 HDR
 
-BLANK_HDR_FR = <<~"HDR"
-#{BLANK_HDR1.sub(%r{<language>en</language>}, "<language>fr</language>")}
-#{BOILERPLATE_FR}
+BLANK_HDR_FR = <<~"HDR".freeze
+  #{BLANK_HDR1.sub(%r{<language>en</language>}, '<language>fr</language>')}
+  #{BOILERPLATE_FR}
 HDR
 
-TERM_BOILERPLATE = <<~END
+TERM_BOILERPLATE = <<~TERM.freeze
   <p id="_">For the purposes of this document,
     the following terms and definitions apply.</p>
-<p id="_">ISO and IEC maintain terminological databases for use in
-standardization at the following addresses:</p>
+  <p id="_">ISO and IEC maintain terminological databases for use in
+    standardization at the following addresses:</p>
 
-<ul id="_">
-<li> <p id="_">ISO Online browsing platform: available at
-  <link target="http://www.iso.org/obp"/></p> </li>
-<li> <p id="_">IEC Electropedia: available at
-<link target="http://www.electropedia.org"/>
-</p> </li> </ul>
-END
+  <ul id="_">
+    <li>
+      <p id="_">ISO Online browsing platform: available at
+        <link target="http://www.iso.org/obp"/></p>
+    </li>
+    <li>
+      <p id="_">IEC Electropedia: available at
+        <link target="http://www.electropedia.org"/>
+      </p>
+    </li>
+  </ul>
+TERM
 
-HTML_HDR = <<~END
-        <html xmlns:epub="http://www.idpf.org/2007/ops" lang="en">
-          <head/>
-          <body lang="en">
-            <div class="title-section">
-              <p>&#160;</p>
-            </div>
-            <br/>
-            <div class="prefatory-section">
-              <p>&#160;</p>
-            </div>
-            <br/>
-            <div class="main-section">
-END
+HTML_HDR = <<~HDR.freeze
+  <html xmlns:epub="http://www.idpf.org/2007/ops" lang="en">
+    <head/>
+    <body lang="en">
+      <div class="title-section">
+        <p>&#160;</p>
+      </div>
+      <br/>
+      <div class="prefatory-section">
+        <p>&#160;</p>
+      </div>
+      <br/>
+      <div class="main-section">
+HDR
 
-WORD_HDR = <<~END
-       <html xmlns:epub="http://www.idpf.org/2007/ops">
-          <head>
-            <title>test</title>
-          </head>
-         <body lang="EN-US" link="blue" vlink="#954F72">
-           <div class="WordSection1">
-             <p>&#160;</p>
-           </div>
-           <p><br clear="all" class="section"/></p>
-           <div class="WordSection2">
-             <p>&#160;</p>
-           </div>
-           <p><br clear="all" class="section"/></p>
-           <div class="WordSection3">
-END
+WORD_HDR = <<~HDR.freeze
+  <html xmlns:epub="http://www.idpf.org/2007/ops">
+    <head>
+      <title>test</title>
+    </head>
+    <body lang="EN-US" link="blue" vlink="#954F72">
+      <div class="WordSection1">
+        <p>&#160;</p>
+      </div>
+      <p><br clear="all" class="section"/></p>
+      <div class="WordSection2">
+        <p>&#160;</p>
+      </div>
+      <p><br clear="all" class="section"/></p>
+      <div class="WordSection3">
+HDR
 
-
-def stub_fetch_ref(**opts)
-  xml = ""
-
-  hit = double("hit")
-  expect(hit).to receive(:"[]").with("title") do
-    Nokogiri::XML(xml).at("//docidentifier").content
-  end.at_least(:once)
-
-  hit_instance = double("hit_instance")
-  expect(hit_instance).to receive(:hit).and_return(hit).at_least(:once)
-  expect(hit_instance).to receive(:to_xml) do |builder, opt|
-    expect(builder).to be_instance_of Nokogiri::XML::Builder
-    expect(opt).to eq opts
-    builder << xml
-  end.at_least :once
-
-  hit_page = double("hit_page")
-  expect(hit_page).to receive(:first).and_return(hit_instance).at_least :once
-
-  hit_pages = double("hit_pages")
-  expect(hit_pages).to receive(:first).and_return(hit_page).at_least :once
-
-  expect(Isobib::IsoBibliography).to receive(:search).
-    and_wrap_original do |search, *args|
-    code = args[0]
-    expect(code).to be_instance_of String
-    xml = get_xml(search, code, opts)
-    hit_pages
-  end.at_least :once
-end
+OPTIONS = [backend: :iso, header_footer: true].freeze
 
 def mock_pdf
-  allow(::Mn2pdf).to receive(:convert) do |url, output, c, d|
+  allow(::Mn2pdf).to receive(:convert) do |url, output,|
     FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
   end
 end
 
 def mock_sts
-  allow(::Mn2sts).to receive(:convert) do |url, output, c, d|
+  allow(::Mn2sts).to receive(:convert) do |url, output,|
     FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
   end
 end
@@ -274,7 +259,7 @@ end
 private
 
 def get_xml(search, code, opts)
-  c = code.gsub(%r{[\/\s:-]}, "_").sub(%r{_+$}, "").downcase
+  c = code.gsub(%r{[/\s:-]}, "_").sub(%r{_+$}, "").downcase
   o = opts.keys.join "_"
   file = "spec/examples/#{[c, o].join '_'}.xml"
   if File.exist? file
@@ -289,11 +274,9 @@ def get_xml(search, code, opts)
 end
 
 def mock_open_uri(code)
-  #expect(OpenURI).to receive(:open_uri).and_wrap_original do |m, *args|
   expect(Iev).to receive(:get).with(code, "en") do |m, *args|
     file = "spec/examples/#{code.tr('-', '_')}.html"
     File.write file, m.call(*args).read unless File.exist? file
     File.read file
   end.at_least :once
 end
-
