@@ -61,7 +61,7 @@ module Asciidoctor
           id.content = id_prefix(prefix, id)
       end
 
-      def format_ref(ref, type, isopub)
+      def format_ref(ref, type)
         ref = ref.sub(/ \(All Parts\)/i, "")
         super
       end

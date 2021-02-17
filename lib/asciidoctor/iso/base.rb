@@ -44,23 +44,23 @@ module Asciidoctor
         @amd = %w(amendment technical-corrigendum).include? doctype(node)
       end
 
-       def ol_attrs(node)
+      def ol_attrs(node)
         attr_code(keep_attrs(node).
                   merge(id: ::Metanorma::Utils::anchor_or_uuid(node)))
       end
 
       def outputs(node, ret)
-          File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
-          presentation_xml_converter(node).convert(@filename + ".xml")
-          html_converter_alt(node).convert(@filename + ".presentation.xml", 
-                                           nil, false, "#{@filename}_alt.html")
-          html_converter(node).convert(@filename + ".presentation.xml", 
-                                       nil, false, "#{@filename}.html")
-          doc_converter(node).convert(@filename + ".presentation.xml", 
-                                      nil, false, "#{@filename}.doc")
-          pdf_converter(node)&.convert(@filename + ".presentation.xml", 
-                                       nil, false, "#{@filename}.pdf")
-          #sts_converter(node)&.convert(@filename + ".xml")
+        File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
+        presentation_xml_converter(node).convert(@filename + ".xml")
+        html_converter_alt(node).convert(@filename + ".presentation.xml", 
+                                         nil, false, "#{@filename}_alt.html")
+        html_converter(node).convert(@filename + ".presentation.xml", 
+                                     nil, false, "#{@filename}.html")
+        doc_converter(node).convert(@filename + ".presentation.xml", 
+                                    nil, false, "#{@filename}.doc")
+        pdf_converter(node)&.convert(@filename + ".presentation.xml", 
+                                     nil, false, "#{@filename}.pdf")
+        #sts_converter(node)&.convert(@filename + ".xml")
       end
     end
   end
