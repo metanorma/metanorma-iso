@@ -429,6 +429,9 @@
         <ref name="termdocsource"/>
       </zeroOrMore>
       <optional>
+        <ref name="misccontainer"/>
+      </optional>
+      <optional>
         <ref name="boilerplate"/>
       </optional>
       <ref name="preface"/>
@@ -439,6 +442,9 @@
         <ref name="annex"/>
       </zeroOrMore>
       <ref name="bibliography"/>
+      <zeroOrMore>
+        <ref name="indexsect"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="horizontal">

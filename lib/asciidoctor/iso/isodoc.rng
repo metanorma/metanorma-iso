@@ -920,6 +920,9 @@
       </attribute>
       <ref name="bibdata"/>
       <optional>
+        <ref name="misccontainer"/>
+      </optional>
+      <optional>
         <ref name="boilerplate"/>
       </optional>
       <optional>
@@ -929,9 +932,19 @@
       <zeroOrMore>
         <ref name="annex"/>
       </zeroOrMore>
+      <optional>
+        <ref name="bibliography"/>
+      </optional>
       <zeroOrMore>
-        <ref name="references"/>
+        <ref name="indexsect"/>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="misccontainer">
+    <element name="misc-container">
+      <oneOrMore>
+        <ref name="AnyElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="preface">
@@ -954,6 +967,11 @@
   </define>
   <define name="introduction">
     <element name="introduction">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="indexsect">
+    <element name="indexsect">
       <ref name="Content-Section"/>
     </element>
   </define>

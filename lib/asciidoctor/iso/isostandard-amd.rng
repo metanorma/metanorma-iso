@@ -40,6 +40,9 @@
         </attribute>
         <ref name="bibdata"/>
         <optional>
+          <ref name="misccontainer"/>
+        </optional>
+        <optional>
           <ref name="boilerplate"/>
         </optional>
         <ref name="preface"/>
