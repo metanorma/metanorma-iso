@@ -158,6 +158,7 @@
 		<contents>
 			<xsl:call-template name="processPrefaceSectionsDefault_Contents"/>
 			<xsl:call-template name="processMainSectionsDefault_Contents"/>
+			<xsl:apply-templates select="//iso:indexsect" mode="contents"/>
 		</contents>
 	</xsl:variable>
 	
@@ -171,6 +172,9 @@
 			<xsl:if test="$lang = 'zh'">
 				<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
 			</xsl:if>
+			
+			
+			
 			<fo:layout-master-set>
 				
 				<!-- cover page -->
@@ -299,6 +303,29 @@
 					<fo:region-start region-name="left-region" extent="12.5mm"/>
 					<fo:region-end region-name="right-region" extent="25mm"/>
 				</fo:simple-page-master>
+				
+				<!-- Index pages -->
+				<fo:simple-page-master master-name="index-odd" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="25mm" margin-right="12.5mm" column-count="2" column-gap="10mm"/>
+					<fo:region-before region-name="header-odd" extent="27.4mm"/>
+					<fo:region-after region-name="footer-odd" extent="13mm"/>
+					<fo:region-start region-name="left-region" extent="25mm"/>
+					<fo:region-end region-name="right-region" extent="12.5mm"/>
+				</fo:simple-page-master>
+				<fo:simple-page-master master-name="index-even" page-width="{$pageWidth}" page-height="{$pageHeight}">
+					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="12.5mm" margin-right="25mm" column-count="2" column-gap="10mm"/>
+					<fo:region-before region-name="header-even" extent="27.4mm"/>
+					<fo:region-after region-name="footer-even" extent="13mm"/>
+					<fo:region-start region-name="left-region" extent="12.5mm"/>
+					<fo:region-end region-name="right-region" extent="25mm"/>
+				</fo:simple-page-master>
+				<fo:page-sequence-master master-name="index">
+					<fo:repeatable-page-master-alternatives>						
+						<fo:conditional-page-master-reference odd-or-even="even" master-reference="index-even"/>
+						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="index-odd"/>
+					</fo:repeatable-page-master-alternatives>
+				</fo:page-sequence-master>
+				
 				
 			</fo:layout-master-set>
 
@@ -1183,6 +1210,10 @@
 				</fo:flow>
 			</fo:page-sequence>
 			
+			
+			<!-- Index -->
+			<xsl:apply-templates select="//iso:indexsect" mode="index"/>
+			
 			<xsl:if test="$isPublished = 'true'">
 				<fo:page-sequence master-reference="last-page" force-page-count="no-force">
 					<xsl:call-template name="insertHeaderEven"/>
@@ -1315,7 +1346,10 @@
 		</xsl:variable>
 		
 		<xsl:variable name="type">
-			<xsl:value-of select="local-name()"/>
+			<xsl:choose>
+				<xsl:when test="local-name() = 'indexsect'">index</xsl:when>
+				<xsl:otherwise><xsl:value-of select="local-name()"/></xsl:otherwise>
+			</xsl:choose>
 		</xsl:variable>
 			
 		<xsl:variable name="display">
@@ -1348,10 +1382,15 @@
 			</xsl:variable>
 			
 			<item id="{@id}" level="{$level}" section="{$section}" type="{$type}" root="{$root}" display="{$display}">
+				<xsl:if test="$type = 'index'">
+					<xsl:attribute name="level">1</xsl:attribute>
+				</xsl:if>
 				<title>
 					<xsl:apply-templates select="xalan:nodeset($title)" mode="contents_item"/>
 				</title>
-				<xsl:apply-templates mode="contents"/>
+				<xsl:if test="$type != 'index'">
+					<xsl:apply-templates mode="contents"/>
+				</xsl:if>
 			</item>
 		</xsl:if>
 	</xsl:template>
@@ -1910,6 +1949,65 @@
 			</fo:instream-foreign-object>
 		</fo:block>
 	</xsl:template>
+	
+	<!-- =================== -->
+	<!-- Index processing -->
+	<!-- =================== -->
+	
+	<xsl:template match="iso:indexsect"/>
+	<xsl:template match="iso:indexsect" mode="index">
+	
+		<fo:page-sequence master-reference="index" force-page-count="no-force">
+			<xsl:variable name="header-title">
+				<xsl:choose>
+					<xsl:when test="./iso:title[1]/*[local-name() = 'tab']">
+						<xsl:apply-templates select="./iso:title[1]/*[local-name() = 'tab'][1]/following-sibling::node()" mode="header"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:apply-templates select="./iso:title[1]" mode="header"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:call-template name="insertHeaderFooter">
+				<xsl:with-param name="header-title" select="$header-title"/>
+			</xsl:call-template>
+			
+			<fo:flow flow-name="xsl-region-body">
+				<fo:block id="{@id}" span="all">
+					<xsl:apply-templates select="iso:title"/>
+				</fo:block>
+				<fo:block>
+					<xsl:apply-templates select="*[not(local-name() = 'title')]"/>
+				</fo:block>
+			</fo:flow>
+		</fo:page-sequence>
+	</xsl:template>
+	
+	<!-- <xsl:template match="iso:clause[@type = 'index']/iso:title" priority="4"> -->
+	<xsl:template match="iso:indexsect/iso:title" priority="4">
+		<fo:block font-size="16pt" font-weight="bold" margin-bottom="84pt">
+			<!-- Index -->
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
+		
+	<!-- <xsl:template match="iso:clause[@type = 'index']/iso:clause/iso:title" priority="4"> -->
+	<xsl:template match="iso:indexsect/iso:clause/iso:title" priority="4">
+		<!-- Letter A, B, C, ... -->
+		<fo:block font-size="10pt" font-weight="bold" margin-bottom="3pt" keep-with-next="always">
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
+	
+	<xsl:template match="iso:indexsect//iso:li/text()">
+		<!-- to split by '_' and other chars -->
+		<xsl:call-template name="add-zero-spaces-java"/>
+	</xsl:template>
+	
+	<!-- =================== -->
+	<!-- End of Index processing -->
+	<!-- =================== -->
+	
 	
 	<xsl:template name="insertHeaderFooter">
 		<xsl:param name="font-weight" select="'bold'"/>
