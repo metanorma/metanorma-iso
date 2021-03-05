@@ -1892,7 +1892,24 @@
 		</fo:block>
 	</xsl:template>
 	
-
+	<xsl:template match="*[local-name() = 'figure'][not(*[local-name() = 'image'])]/*[local-name() = 'svg']" priority="2">
+		<fo:block xsl:use-attribute-sets="image-style">
+			<fo:instream-foreign-object fox:alt-text="{../*[local-name() = 'name']}">
+				<xsl:attribute name="width">100%</xsl:attribute>
+				<xsl:attribute name="content-height">100%</xsl:attribute>
+				<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+				<!-- useful height 297 - 27.4 - 13 =  256.6 -->
+				<!-- useful width 210 - 12.5 - 25 = 172.5 -->
+				<!-- useful height / width = 1.48, 1.4 - with title -->
+				<xsl:if test="@height &gt; (@width * 1.4)"> <!-- for images with big height -->
+					<xsl:variable name="width" select="((@width * 1.4) div @height) * 100"/>
+					<xsl:attribute name="width"><xsl:value-of select="$width"/>%</xsl:attribute>
+				</xsl:if>
+				<xsl:attribute name="scaling">uniform</xsl:attribute>
+				<xsl:copy-of select="."/>
+			</fo:instream-foreign-object>
+		</fo:block>
+	</xsl:template>
 	
 	<xsl:template name="insertHeaderFooter">
 		<xsl:param name="font-weight" select="'bold'"/>
@@ -5383,7 +5400,9 @@
 			</xsl:if>	
 		
 			<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
-					
+				<xsl:if test="normalize-space(@citeas) = ''">
+					<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
+				</xsl:if>
 				<xsl:if test="@type = 'inline'">
 					
 					
