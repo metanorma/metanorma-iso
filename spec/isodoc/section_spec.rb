@@ -655,4 +655,123 @@ RSpec.describe IsoDoc do
         </html>
       OUTPUT
   end
+
+  it "generates an index in English" do
+    input = <<~INPUT
+      <iso-standard xmlns="https://open.ribose.com/standards/bipm">
+        <bibdata>
+          <language>en</language>
+          <script>Latn</script>
+        </bibdata>
+        <sections>
+          <clause id="A">
+            <index><primary>&#xE9;long&#xE9;</primary></index>
+            <index><primary>&#xEA;tre</primary><secondary>Husserl</secondary><tertiary>en allemand</tertiary></index>
+            <index><primary><em>Eman</em>cipation</primary></index>
+            <index><primary><em>Eman</em>cipation</primary><secondary>dans la France</secondary></index>
+            <index><primary><em>Eman</em>cipation</primary><secondary>dans la France</secondary><tertiary>en Bretagne</tertiary></index>
+            <clause id="B">
+              <index><primary><em>Eman</em>cipation</primary></index>
+              <index><primary>zebra</primary></index>
+              <index><primary><em>Eman</em>cipation</primary><secondary>dans les &#xC9;tats-Unis</secondary></index>
+              <index><primary><em>Eman</em>cipation</primary><secondary>dans la France</secondary><tertiary>&#xE0; Paris</tertiary></index>
+              <index-xref also="true"><primary>&#xEA;tre</primary><secondary>Husserl</secondary><target>zebra</target></index-xref>
+              <index-xref also="true"><primary>&#xEA;tre</primary><secondary>Husserl</secondary><target><em>Eman</em>cipation</target></index-xref>
+              <index-xref also="false"><primary>&#xEA;tre</primary><secondary>Husserl</secondary><target>zebra</target></index-xref>
+              <index-xref also="false"><primary><em>Dasein</em></primary><target>&#xEA;tre</target></index-xref>
+              <index-xref also="false"><primary><em>Dasein</em></primary><target><em>Eman</em>cipation</target></index-xref>
+            </clause>
+          </clause>
+        </sections>
+      </bipm-standard>
+    INPUT
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)
+      .gsub(%r{<localized-strings>.*</localized-strings>}m, "")))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+   <iso-standard xmlns='https://open.ribose.com/standards/bipm' type='presentation'>
+  <bibdata>
+    <language current='true'>en</language>
+    <script current='true'>Latn</script>
+  </bibdata>
+  <sections>
+    <clause id='A'>
+      <title>1</title>
+      <bookmark id='_'/>
+      <bookmark id='_'/>
+      <bookmark id='_'/>
+      <bookmark id='_'/>
+      <bookmark id='_'/>
+      <clause id='B' inline-header='true'>
+        <title>1.1</title>
+        <bookmark id='_'/>
+        <bookmark id='_'/>
+        <bookmark id='_'/>
+        <bookmark id='_'/>
+      </clause>
+    </clause>
+  </sections>
+  <indexsect id='_'>
+    <title>Index</title>
+    <ul>
+      <li>
+        <em>Dasein</em>
+        , see
+        <em>Eman</em>
+        cipation, &#xEA;tre
+      </li>
+      <li>
+        &#xE9;long&#xE9;,
+        <xref target='_' pagenumber='true'>Clause 1</xref>
+      </li>
+      <li>
+        <em>Eman</em>
+        cipation,
+        <xref target='_' pagenumber='true'>Clause 1</xref>
+        ,
+        <xref target='_' pagenumber='true'>1.1</xref>
+        <ul>
+          <li>
+            dans la France,
+            <xref target='_' pagenumber='true'>Clause 1</xref>
+            <ul>
+              <li>
+                &#xE0; Paris,
+                <xref target='_' pagenumber='true'>1.1</xref>
+              </li>
+              <li>
+                en Bretagne,
+                <xref target='_' pagenumber='true'>Clause 1</xref>
+              </li>
+            </ul>
+          </li>
+          <li>
+            dans les &#xC9;tats-Unis,
+            <xref target='_' pagenumber='true'>1.1</xref>
+          </li>
+        </ul>
+      </li>
+      <li>
+        &#xEA;tre
+        <ul>
+          <li>
+            Husserl, see zebra, see also
+            <em>Eman</em>
+            cipation, zebra
+            <ul>
+              <li>
+                en allemand,
+                <xref target='_' pagenumber='true'>Clause 1</xref>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        zebra,
+        <xref target='_' pagenumber='true'>1.1</xref>
+      </li>
+    </ul>
+  </indexsect>
+</iso-standard>
+    OUTPUT
+  end
 end
