@@ -685,8 +685,7 @@ RSpec.describe IsoDoc do
         </sections>
       </bipm-standard>
     INPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)
-      .gsub(%r{<localized-strings>.*</localized-strings>}m, "")))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    presxml = <<~OUTPUT
    <iso-standard xmlns='https://open.ribose.com/standards/bipm' type='presentation'>
   <bibdata>
     <language current='true'>en</language>
@@ -773,5 +772,106 @@ RSpec.describe IsoDoc do
   </indexsect>
 </iso-standard>
     OUTPUT
+    html = <<~OUTPUT
+    <html lang='en'>
+  <head/>
+  <body lang='en'>
+    <div class='title-section'>
+      <p>&#160;</p>
+    </div>
+    <br/>
+    <div class='prefatory-section'>
+      <p>&#160;</p>
+    </div>
+    <br/>
+    <div class='main-section'>
+      <p class='zzSTDTitle1'/>
+      <div id='A'>
+        <h1>1</h1>
+        <a id='_'/>
+        <a id='_'/>
+        <a id='_'/>
+        <a id='_'/>
+        <a id='_'/>
+        <div id='B'>
+          <span class='zzMoveToFollowing'>
+            <b>1.1&#160; </b>
+          </span>
+          <a id='_'/>
+          <a id='_'/>
+          <a id='_'/>
+          <a id='_'/>
+        </div>
+      </div>
+      <div id='_'>
+        <h1>Index</h1>
+        <ul>
+          <li>
+            <i>Dasein</i>
+             , see
+            <i>Eman</i>
+             cipation, &#234;tre
+          </li>
+          <li>
+             &#233;long&#233;,
+            <a href='#_'>Clause 1</a>
+          </li>
+          <li>
+            <i>Eman</i>
+             cipation,
+            <a href='#_'>Clause 1</a>
+             ,
+            <a href='#_'>1.1</a>
+            <ul>
+              <li>
+                 dans la France,
+                <a href='#_'>Clause 1</a>
+                <ul>
+                  <li>
+                     &#224; Paris,
+                    <a href='#_'>1.1</a>
+                  </li>
+                  <li>
+                     en Bretagne,
+                    <a href='#_'>Clause 1</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                 dans les &#201;tats-Unis,
+                <a href='#_'>1.1</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+             &#234;tre
+            <ul>
+              <li>
+                 Husserl, see zebra, see also
+                <i>Eman</i>
+                 cipation, zebra
+                <ul>
+                  <li>
+                     en allemand,
+                    <a href='#_'>Clause 1</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+             zebra,
+            <a href='#_'>1.1</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+    OUTPUT
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)
+      .gsub(%r{<localized-strings>.*</localized-strings>}m, "")))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
   end
 end

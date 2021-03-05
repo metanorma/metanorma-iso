@@ -152,6 +152,17 @@ module IsoDoc
           name and name.children.each { |n| parse(n, div) }
         end
       end
+
+      def middle(isoxml, out)
+        super
+        indexsect isoxml, out
+      end
+
+      def indexsect(isoxml, out)
+        isoxml.xpath(ns("//indexsect")).each do |i|
+          clause_parse(i, out)
+        end
+      end
     end
   end
 end
