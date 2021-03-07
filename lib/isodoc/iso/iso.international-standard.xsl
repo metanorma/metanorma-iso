@@ -20,8 +20,9 @@
 	<xsl:variable name="marginTop" select="27.4"/>
 	<xsl:variable name="marginBottom" select="13"/>
 
+	<xsl:variable name="figure_name_height">14</xsl:variable>
 	<xsl:variable name="width_effective" select="$pageWidth - $marginLeftRight1 - $marginLeftRight2"/><!-- paper width minus margins -->
-	<xsl:variable name="height_effective" select="$pageHeight - $marginTop - $marginBottom"/><!-- paper height minus margins -->
+	<xsl:variable name="height_effective" select="$pageHeight - $marginTop - $marginBottom - $figure_name_height"/><!-- paper height minus margins and title height -->
 	<xsl:variable name="image_dpi" select="96"/>
 	<xsl:variable name="width_effective_px" select="$width_effective div 25.4 * $image_dpi"/>
 	<xsl:variable name="height_effective_px" select="$height_effective div 25.4 * $image_dpi"/>
@@ -1970,11 +1971,20 @@
 							<xsl:when test="$height * $scale_x &gt; $height_effective_px">
 								<xsl:value-of select="$height_effective_px div ($height * $scale_x)"/>
 							</xsl:when>
-							<xsl:otherwise><xsl:value-of select="$scale_x"/></xsl:otherwise>
+							<xsl:otherwise>1</xsl:otherwise>
 						</xsl:choose>
 					</xsl:variable>
 					
-					<xsl:variable name="scale" select="$scale_y"/>
+					<xsl:variable name="scale">
+						<xsl:choose>
+							<xsl:when test="$scale_y != 1">
+								<xsl:value-of select="$scale_x * $scale_y"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$scale_x"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
 					 
 					<xsl:variable name="width_scale" select="round($width * $scale)"/>
 					<xsl:variable name="height_scale" select="round($height * $scale)"/>
