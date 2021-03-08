@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:iso="https://www.metanorma.org/ns/iso" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:xalan="http://xml.apache.org/xalan" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" xmlns:java="http://xml.apache.org/xalan/java" exclude-result-prefixes="java" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:iso="https://www.metanorma.org/ns/iso" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:xalan="http://xml.apache.org/xalan" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf" xmlns:java="http://xml.apache.org/xalan/java" exclude-result-prefixes="java" version="1.0">
 
 	<xsl:output method="xml" encoding="UTF-8" indent="no"/>
 	
@@ -9,6 +9,8 @@
 	
 
 	<xsl:key name="kfn" match="iso:p/iso:fn" use="@reference"/>
+	
+	<xsl:key name="attachments" match="iso:eref[contains(@bibitemid, '.exp')]" use="@bibitemid"/>
 	
 	
 	
@@ -184,8 +186,6 @@
 				<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
 			</xsl:if>
 			
-			
-			
 			<fo:layout-master-set>
 				
 				<!-- cover page -->
@@ -339,9 +339,16 @@
 				
 				
 			</fo:layout-master-set>
+			
+			<fo:declarations>
+				<xsl:call-template name="addPDFUAmeta"/>
+				<xsl:for-each select="//*[local-name() = 'eref'][generate-id(.)=generate-id(key('attachments',@bibitemid)[1])]">
+					<xsl:variable name="url" select="concat('url(', ., ')')"/>
+					<pdf:embedded-file src="{$url}"/>
+				</xsl:for-each>
+			</fo:declarations>
 
-
-			<xsl:call-template name="addPDFUAmeta"/>
+			
 			
 			<xsl:call-template name="addBookmarks">
 				<xsl:with-param name="contents" select="$contents"/>
@@ -2150,7 +2157,20 @@
 	<!-- End SVG images processing -->
 	<!-- =================== -->
 	
+	<!-- For express listings PDF attachments -->
+	<xsl:template match="*[local-name() = 'eref'][contains(., '.exp')]" priority="2">
+		<fo:inline xsl:use-attribute-sets="eref-style">
+			<xsl:variable name="url" select="concat('url(embedded-file:', @bibitemid, ')')"/>
+			<fo:basic-link external-destination="{$url}" fox:alt-text="{@citeas}">
+				<xsl:if test="normalize-space(@citeas) = ''">
+					<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
+				</xsl:if>
+				<xsl:apply-templates/>
+			</fo:basic-link>
+		</fo:inline>
+	</xsl:template>
 	
+
 	<!-- =================== -->
 	<!-- Index processing -->
 	<!-- =================== -->
@@ -6275,70 +6295,68 @@
 		<xsl:variable name="lang">
 			<xsl:call-template name="getLang"/>
 		</xsl:variable>
-		<fo:declarations>
-			<pdf:catalog xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
-					<pdf:dictionary type="normal" key="ViewerPreferences">
-						<pdf:boolean key="DisplayDocTitle">true</pdf:boolean>
-					</pdf:dictionary>
-				</pdf:catalog>
-			<x:xmpmeta xmlns:x="adobe:ns:meta/">
-				<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-					<rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" rdf:about="">
-					<!-- Dublin Core properties go here -->
-						<dc:title>
-							<xsl:variable name="title">
-								<xsl:for-each select="(//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']">
-									
-										<xsl:value-of select="*[local-name() = 'title'][@language = $lang and @type = 'main']"/>
-									
-									
-									
-									
-									
-																	
-								</xsl:for-each>
-							</xsl:variable>
-							<xsl:choose>
-								<xsl:when test="normalize-space($title) != ''">
-									<xsl:value-of select="$title"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:text> </xsl:text>
-								</xsl:otherwise>
-							</xsl:choose>							
-						</dc:title>
-						<dc:creator>
+		<pdf:catalog>
+				<pdf:dictionary type="normal" key="ViewerPreferences">
+					<pdf:boolean key="DisplayDocTitle">true</pdf:boolean>
+				</pdf:dictionary>
+			</pdf:catalog>
+		<x:xmpmeta xmlns:x="adobe:ns:meta/">
+			<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+				<rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" rdf:about="">
+				<!-- Dublin Core properties go here -->
+					<dc:title>
+						<xsl:variable name="title">
 							<xsl:for-each select="(//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']">
 								
-									<xsl:for-each select="*[local-name() = 'contributor'][*[local-name() = 'role']/@type='author']">
-										<xsl:value-of select="*[local-name() = 'organization']/*[local-name() = 'name']"/>
-										<xsl:if test="position() != last()">; </xsl:if>
-									</xsl:for-each>
+									<xsl:value-of select="*[local-name() = 'title'][@language = $lang and @type = 'main']"/>
 								
 								
 								
+								
+								
+																
 							</xsl:for-each>
-						</dc:creator>
-						<dc:description>
-							<xsl:variable name="abstract">
-								
-									<xsl:copy-of select="//*[contains(local-name(), '-standard')]/*[local-name() = 'preface']/*[local-name() = 'abstract']//text()"/>									
-								
-								
-							</xsl:variable>
-							<xsl:value-of select="normalize-space($abstract)"/>
-						</dc:description>
-						<pdf:Keywords>
-							<xsl:call-template name="insertKeywords"/>
-						</pdf:Keywords>
-					</rdf:Description>
-					<rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" rdf:about="">
-						<!-- XMP properties go here -->
-						<xmp:CreatorTool/>
-					</rdf:Description>
-				</rdf:RDF>
-			</x:xmpmeta>
-		</fo:declarations>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="normalize-space($title) != ''">
+								<xsl:value-of select="$title"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text> </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>							
+					</dc:title>
+					<dc:creator>
+						<xsl:for-each select="(//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']">
+							
+								<xsl:for-each select="*[local-name() = 'contributor'][*[local-name() = 'role']/@type='author']">
+									<xsl:value-of select="*[local-name() = 'organization']/*[local-name() = 'name']"/>
+									<xsl:if test="position() != last()">; </xsl:if>
+								</xsl:for-each>
+							
+							
+							
+						</xsl:for-each>
+					</dc:creator>
+					<dc:description>
+						<xsl:variable name="abstract">
+							
+								<xsl:copy-of select="//*[contains(local-name(), '-standard')]/*[local-name() = 'preface']/*[local-name() = 'abstract']//text()"/>									
+							
+							
+						</xsl:variable>
+						<xsl:value-of select="normalize-space($abstract)"/>
+					</dc:description>
+					<pdf:Keywords>
+						<xsl:call-template name="insertKeywords"/>
+					</pdf:Keywords>
+				</rdf:Description>
+				<rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" rdf:about="">
+					<!-- XMP properties go here -->
+					<xmp:CreatorTool/>
+				</rdf:Description>
+			</rdf:RDF>
+		</x:xmpmeta>
 	</xsl:template><xsl:template name="getId">
 		<xsl:choose>
 			<xsl:when test="../@id">
