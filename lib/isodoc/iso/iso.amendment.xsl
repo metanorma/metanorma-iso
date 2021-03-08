@@ -2139,11 +2139,11 @@
 		<xsl:param name="height"/>
 		<xsl:param name="dest"/>
 		<fo:block-container position="absolute" left="{$left}px" top="{$top}px" width="{$width}px" height="{$height}px">
-		 <fo:block>
+		 <fo:block font-size="1pt">
 			<fo:basic-link internal-destination="{$dest}" fox:alt-text="svg link">
-				<fo:inline-container>
-					<fo:block-container height="{$height}px" width="100%">
-						<!-- <xsl:if test="local-name()='polygon'">
+				<fo:inline-container inline-progression-dimension="100%">
+					<fo:block-container height="{$height - 1}px" width="100%">
+						<!-- DEBUG <xsl:if test="local-name()='polygon'">
 							<xsl:attribute name="background-color">magenta</xsl:attribute>
 						</xsl:if> -->
 					<fo:block> </fo:block></fo:block-container>
@@ -5725,31 +5725,47 @@
 		<xsl:text>— </xsl:text>
 		<xsl:apply-templates/>
 	</xsl:template><xsl:template match="*[local-name() = 'eref']">
-		<fo:inline xsl:use-attribute-sets="eref-style">
-			<xsl:if test="@type = 'footnote'">
-				
-					<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
-					<xsl:attribute name="font-size">80%</xsl:attribute>
-					<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
-					<xsl:attribute name="vertical-align">super</xsl:attribute>
-									
-				
-			</xsl:if>	
-		
-			<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
-				<xsl:if test="normalize-space(@citeas) = ''">
-					<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
-				</xsl:if>
-				<xsl:if test="@type = 'inline'">
-					
-					
-					
-				</xsl:if>
-			
-			
-				<xsl:apply-templates/>
-			</fo:basic-link>
-		</fo:inline>
+	
+		<xsl:variable name="bibitemid">
+			<xsl:choose>
+				<xsl:when test="//*[local-name() = 'bibitem'][@hidden='true' and @id = current()/@bibitemid]"/>
+				<xsl:when test="//*[local-name() = 'references'][@hidden='true']/*[local-name() = 'bibitem'][@id = current()/@bibitemid]"/>
+				<xsl:otherwise><xsl:value-of select="@bibitemid"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+	
+		<xsl:choose>
+			<xsl:when test="normalize-space($bibitemid) != ''">
+				<fo:inline xsl:use-attribute-sets="eref-style">
+					<xsl:if test="@type = 'footnote'">
+						
+							<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
+							<xsl:attribute name="font-size">80%</xsl:attribute>
+							<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
+							<xsl:attribute name="vertical-align">super</xsl:attribute>
+											
+						
+					</xsl:if>	
+											
+					<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
+						<xsl:if test="normalize-space(@citeas) = ''">
+							<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
+						</xsl:if>
+						<xsl:if test="@type = 'inline'">
+							
+							
+							
+						</xsl:if>
+
+						<xsl:apply-templates/>
+					</fo:basic-link>
+							
+				</fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<fo:inline><xsl:apply-templates/></fo:inline>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template><xsl:template match="*[local-name() = 'tab']">
 		<!-- zero-space char -->
 		<xsl:variable name="depth">
