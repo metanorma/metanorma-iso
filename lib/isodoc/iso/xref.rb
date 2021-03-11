@@ -130,6 +130,11 @@ module IsoDoc
         @anchors[ref["id"]] = { xref: @anchors[ref["id"]][:xref].
                                 sub(/ \(All Parts\)/i, "") }
       end
+
+      def back_anchor_names(docxml)
+        super
+        docxml.xpath(ns("//indexsect")).each { |b| preface_names(b) }
+      end
     end
   end
 end
