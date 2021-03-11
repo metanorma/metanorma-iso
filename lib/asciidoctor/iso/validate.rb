@@ -209,6 +209,7 @@ module Asciidoctor
       def image_name_validate(xmldoc)
         prefix = image_name_prefix(xmldoc) or return
         xmldoc.xpath("//image").each do |i|
+          next if i["src"].start_with?("data:")
           if /^ISO_\d+_/.match(File.basename(i["src"]))
           elsif /^(SL)?#{prefix}fig/.match(File.basename(i["src"]))
             image_name_validate1(i, prefix)
