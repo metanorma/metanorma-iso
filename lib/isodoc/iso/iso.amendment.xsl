@@ -2748,6 +2748,9 @@
 		
 		
 		
+			<xsl:attribute name="text-align">justify</xsl:attribute>
+		
+		
 		
 		
 		
@@ -5574,8 +5577,8 @@
 			<xsl:apply-templates select="*[local-name()='name']" mode="presentation"/>
 			
 			<xsl:variable name="element">
-				block				
-				
+								
+				inline
 				<xsl:if test=".//*[local-name() = 'table']">block</xsl:if> 
 			</xsl:variable>
 			
@@ -5618,9 +5621,15 @@
 		</xsl:choose>
 
 	</xsl:template><xsl:template match="*[local-name() = 'example']/*[local-name() = 'p']">
-	
+		<xsl:variable name="num"><xsl:number/></xsl:variable>
 		<xsl:variable name="element">
-			block
+			
+			
+				<xsl:choose>
+					<xsl:when test="$num = 1">inline</xsl:when>
+					<xsl:otherwise>block</xsl:otherwise>
+				</xsl:choose>
+			
 			
 		</xsl:variable>		
 		<xsl:choose>			
