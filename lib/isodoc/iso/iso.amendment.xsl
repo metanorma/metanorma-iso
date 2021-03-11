@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:iso="https://www.metanorma.org/ns/iso" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:xalan="http://xml.apache.org/xalan" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" xmlns:java="http://xml.apache.org/xalan/java" exclude-result-prefixes="java" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:iso="https://www.metanorma.org/ns/iso" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:xalan="http://xml.apache.org/xalan" xmlns:fox="http://xmlgraphics.apache.org/fop/extensions" xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf" xmlns:java="http://xml.apache.org/xalan/java" exclude-result-prefixes="java" version="1.0">
 
 	<xsl:output method="xml" encoding="UTF-8" indent="no"/>
 	
@@ -10,11 +10,24 @@
 
 	<xsl:key name="kfn" match="iso:p/iso:fn" use="@reference"/>
 	
+	<xsl:key name="attachments" match="iso:eref[contains(@bibitemid, '.exp')]" use="@bibitemid"/>
+	
 	
 	
 	<xsl:variable name="debug">false</xsl:variable>
-	<xsl:variable name="pageWidth" select="'210mm'"/>
-	<xsl:variable name="pageHeight" select="'297mm'"/>
+	<xsl:variable name="pageWidth" select="210"/>
+	<xsl:variable name="pageHeight" select="297"/>
+	<xsl:variable name="marginLeftRight1" select="25"/>
+	<xsl:variable name="marginLeftRight2" select="12.5"/>
+	<xsl:variable name="marginTop" select="27.4"/>
+	<xsl:variable name="marginBottom" select="13"/>
+
+	<xsl:variable name="figure_name_height">14</xsl:variable>
+	<xsl:variable name="width_effective" select="$pageWidth - $marginLeftRight1 - $marginLeftRight2"/><!-- paper width minus margins -->
+	<xsl:variable name="height_effective" select="$pageHeight - $marginTop - $marginBottom - $figure_name_height"/><!-- paper height minus margins and title height -->
+	<xsl:variable name="image_dpi" select="96"/>
+	<xsl:variable name="width_effective_px" select="$width_effective div 25.4 * $image_dpi"/>
+	<xsl:variable name="height_effective_px" select="$height_effective div 25.4 * $image_dpi"/>
 
 	<xsl:variable name="docidentifierISO" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'] | /iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'ISO']"/>
 
@@ -158,6 +171,7 @@
 		<contents>
 			<xsl:call-template name="processPrefaceSectionsDefault_Contents"/>
 			<xsl:call-template name="processMainSectionsDefault_Contents"/>
+			<xsl:apply-templates select="//iso:indexsect" mode="contents"/>
 		</contents>
 	</xsl:variable>
 	
@@ -171,10 +185,11 @@
 			<xsl:if test="$lang = 'zh'">
 				<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
 			</xsl:if>
+			
 			<fo:layout-master-set>
 				
 				<!-- cover page -->
-				<fo:simple-page-master master-name="cover-page" page-width="{$pageWidth}" page-height="{$pageHeight}">
+				<fo:simple-page-master master-name="cover-page" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 					<fo:region-body margin-top="25.4mm" margin-bottom="25.4mm" margin-left="31.7mm" margin-right="31.7mm"/>
 					<fo:region-before region-name="cover-page-header" extent="25.4mm"/>
 					<fo:region-after/>
@@ -182,7 +197,7 @@
 					<fo:region-end region-name="cover-right-region" extent="31.7mm"/>
 				</fo:simple-page-master>
 				
-				<fo:simple-page-master master-name="cover-page-published" page-width="{$pageWidth}" page-height="{$pageHeight}">
+				<fo:simple-page-master master-name="cover-page-published" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="78mm" margin-right="18.5mm"/>
 					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
 					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
@@ -191,19 +206,19 @@
 				</fo:simple-page-master>
 				
 				
-				<fo:simple-page-master master-name="cover-page-publishedISO-odd" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="25mm" margin-right="12.5mm"/>
+				<fo:simple-page-master master-name="cover-page-publishedISO-odd" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
 					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
 					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
-					<fo:region-start region-name="cover-left-region" extent="25mm"/>
-					<fo:region-end region-name="cover-right-region" extent="12.5mm"/>
+					<fo:region-start region-name="cover-left-region" extent="{$marginLeftRight1}mm"/>
+					<fo:region-end region-name="cover-right-region" extent="{$marginLeftRight2}mm"/>
 				</fo:simple-page-master>
-				<fo:simple-page-master master-name="cover-page-publishedISO-even" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="12.5mm" margin-right="25mm"/>
+				<fo:simple-page-master master-name="cover-page-publishedISO-even" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
 					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
-					<fo:region-start region-name="cover-left-region" extent="12.5mm"/>
-					<fo:region-end region-name="cover-right-region" extent="25mm"/>
+					<fo:region-start region-name="cover-left-region" extent="{$marginLeftRight2}mm"/>
+					<fo:region-end region-name="cover-right-region" extent="{$marginLeftRight1}mm"/>
 				</fo:simple-page-master>
 				<fo:page-sequence-master master-name="cover-page-publishedISO">
 					<fo:repeatable-page-master-alternatives>
@@ -215,7 +230,7 @@
 
 				<!-- contents pages -->
 				<!-- odd pages -->
-				<fo:simple-page-master master-name="odd" page-width="{$pageWidth}" page-height="{$pageHeight}">
+				<fo:simple-page-master master-name="odd" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="19mm" margin-right="19mm"/>
 					<fo:region-before region-name="header-odd" extent="27.4mm"/> <!--   display-align="center" -->
 					<fo:region-after region-name="footer-odd" extent="13mm"/>
@@ -223,7 +238,7 @@
 					<fo:region-end region-name="right-region" extent="19mm"/>
 				</fo:simple-page-master>
 				<!-- even pages -->
-				<fo:simple-page-master master-name="even" page-width="{$pageWidth}" page-height="{$pageHeight}">
+				<fo:simple-page-master master-name="even" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="19mm" margin-right="19mm"/>
 					<fo:region-before region-name="header-even" extent="27.4mm"/> <!--   display-align="center" -->
 					<fo:region-after region-name="footer-even" extent="13mm"/>
@@ -245,35 +260,35 @@
 				
 				
 				<!-- first page -->
-				<fo:simple-page-master master-name="first-publishedISO" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="25mm" margin-right="12.5mm"/>
-					<fo:region-before region-name="header-first" extent="27.4mm"/> <!--   display-align="center" -->
-					<fo:region-after region-name="footer-odd" extent="13mm"/>
-					<fo:region-start region-name="left-region" extent="25mm"/>
-					<fo:region-end region-name="right-region" extent="12.5mm"/>
+				<fo:simple-page-master master-name="first-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+					<fo:region-before region-name="header-first" extent="{$marginTop}mm"/> <!--   display-align="center" -->
+					<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
+					<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 				</fo:simple-page-master>
 				<!-- odd pages -->
-				<fo:simple-page-master master-name="odd-publishedISO" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="25mm" margin-right="12.5mm"/>
-					<fo:region-before region-name="header-odd" extent="27.4mm"/> <!--   display-align="center" -->
-					<fo:region-after region-name="footer-odd" extent="13mm"/>
-					<fo:region-start region-name="left-region" extent="25mm"/>
-					<fo:region-end region-name="right-region" extent="12.5mm"/>
+				<fo:simple-page-master master-name="odd-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+					<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/> <!--   display-align="center" -->
+					<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
+					<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 				</fo:simple-page-master>
 				<!-- even pages -->
-				<fo:simple-page-master master-name="even-publishedISO" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="12.5mm" margin-right="25mm"/>
-					<fo:region-before region-name="header-even" extent="27.4mm"/>
-					<fo:region-after region-name="footer-even" extent="13mm"/>
-					<fo:region-start region-name="left-region" extent="12.5mm"/>
-					<fo:region-end region-name="right-region" extent="25mm"/>
+				<fo:simple-page-master master-name="even-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+					<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
+					<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
+					<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
 				</fo:simple-page-master>
-				<fo:simple-page-master master-name="blankpage" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="12.5mm" margin-right="25mm"/>
-					<fo:region-before region-name="header" extent="27.4mm"/>
-					<fo:region-after region-name="footer" extent="13mm"/>
-					<fo:region-start region-name="left" extent="12.5mm"/>
-					<fo:region-end region-name="right" extent="25mm"/>
+				<fo:simple-page-master master-name="blankpage" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+					<fo:region-before region-name="header" extent="{$marginTop}mm"/>
+					<fo:region-after region-name="footer" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left" extent="{$marginLeftRight2}mm"/>
+					<fo:region-end region-name="right" extent="{$marginLeftRight1}mm"/>
 				</fo:simple-page-master>
 				<fo:page-sequence-master master-name="preface-publishedISO">
 					<fo:repeatable-page-master-alternatives>
@@ -292,17 +307,48 @@
 					</fo:repeatable-page-master-alternatives>
 				</fo:page-sequence-master>
 				
-				<fo:simple-page-master master-name="last-page" page-width="{$pageWidth}" page-height="{$pageHeight}">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="12.5mm" margin-right="25mm"/>
-					<fo:region-before region-name="header-even" extent="27.4mm"/>
-					<fo:region-after region-name="last-page-footer" extent="13mm"/>
-					<fo:region-start region-name="left-region" extent="12.5mm"/>
-					<fo:region-end region-name="right-region" extent="25mm"/>
+				<fo:simple-page-master master-name="last-page" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+					<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
+					<fo:region-after region-name="last-page-footer" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
+					<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
 				</fo:simple-page-master>
 				
+				<!-- Index pages -->
+				<fo:simple-page-master master-name="index-odd" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm" column-count="2" column-gap="10mm"/>
+					<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/>
+					<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
+					<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
+				</fo:simple-page-master>
+				<fo:simple-page-master master-name="index-even" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm" column-count="2" column-gap="10mm"/>
+					<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
+					<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
+					<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
+					<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
+				</fo:simple-page-master>
+				<fo:page-sequence-master master-name="index">
+					<fo:repeatable-page-master-alternatives>						
+						<fo:conditional-page-master-reference odd-or-even="even" master-reference="index-even"/>
+						<fo:conditional-page-master-reference odd-or-even="odd" master-reference="index-odd"/>
+					</fo:repeatable-page-master-alternatives>
+				</fo:page-sequence-master>
+				
+				
 			</fo:layout-master-set>
+			
+			<fo:declarations>
+				<xsl:call-template name="addPDFUAmeta"/>
+				<xsl:for-each select="//*[local-name() = 'eref'][generate-id(.)=generate-id(key('attachments',@bibitemid)[1])]">
+					<xsl:variable name="url" select="concat('url(', ., ')')"/>
+					<pdf:embedded-file src="{$url}"/>
+				</xsl:for-each>
+			</fo:declarations>
 
-			<xsl:call-template name="addPDFUAmeta"/>
+			
 			
 			<xsl:call-template name="addBookmarks">
 				<xsl:with-param name="contents" select="$contents"/>
@@ -1183,6 +1229,10 @@
 				</fo:flow>
 			</fo:page-sequence>
 			
+			
+			<!-- Index -->
+			<xsl:apply-templates select="//iso:indexsect" mode="index"/>
+			
 			<xsl:if test="$isPublished = 'true'">
 				<fo:page-sequence master-reference="last-page" force-page-count="no-force">
 					<xsl:call-template name="insertHeaderEven"/>
@@ -1315,7 +1365,10 @@
 		</xsl:variable>
 		
 		<xsl:variable name="type">
-			<xsl:value-of select="local-name()"/>
+			<xsl:choose>
+				<xsl:when test="local-name() = 'indexsect'">index</xsl:when>
+				<xsl:otherwise><xsl:value-of select="local-name()"/></xsl:otherwise>
+			</xsl:choose>
 		</xsl:variable>
 			
 		<xsl:variable name="display">
@@ -1348,10 +1401,15 @@
 			</xsl:variable>
 			
 			<item id="{@id}" level="{$level}" section="{$section}" type="{$type}" root="{$root}" display="{$display}">
+				<xsl:if test="$type = 'index'">
+					<xsl:attribute name="level">1</xsl:attribute>
+				</xsl:if>
 				<title>
 					<xsl:apply-templates select="xalan:nodeset($title)" mode="contents_item"/>
 				</title>
-				<xsl:apply-templates mode="contents"/>
+				<xsl:if test="$type != 'index'">
+					<xsl:apply-templates mode="contents"/>
+				</xsl:if>
 			</item>
 		</xsl:if>
 	</xsl:template>
@@ -1589,6 +1647,9 @@
 				</xsl:choose>
 			</xsl:attribute>
 			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+			<xsl:if test="@id">
+				<xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+			</xsl:if>
 			<xsl:apply-templates/>
 		</xsl:element>
 		<xsl:if test="$element-name = 'fo:inline' and not($inline = 'true') and not(local-name(..) = 'admonition')">
@@ -1892,7 +1953,300 @@
 		</fo:block>
 	</xsl:template>
 	
+	<!-- =================== -->
+	<!-- SVG images processing -->
+	<!-- =================== -->
+	<xsl:template match="*[local-name() = 'figure'][not(*[local-name() = 'image'])]/*[local-name() = 'svg']" priority="2">
+		
+		<xsl:choose>
+			<xsl:when test=".//*[local-name() = 'a'][*[local-name() = 'rect'] or *[local-name() = 'polygon'] or *[local-name() = 'circle'] or *[local-name() = 'ellipse']]">
+				<fo:block>
+					<xsl:variable name="width" select="@width"/>
+					<xsl:variable name="height" select="@height"/>
+					
+					<xsl:variable name="scale_x">
+						<xsl:choose>
+							<xsl:when test="$width &gt; $width_effective_px">
+								<xsl:value-of select="$width_effective_px div $width"/>
+							</xsl:when>
+							<xsl:otherwise>1</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					
+					<xsl:variable name="scale_y">
+						<xsl:choose>
+							<xsl:when test="$height * $scale_x &gt; $height_effective_px">
+								<xsl:value-of select="$height_effective_px div ($height * $scale_x)"/>
+							</xsl:when>
+							<xsl:otherwise>1</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					
+					<xsl:variable name="scale">
+						<xsl:choose>
+							<xsl:when test="$scale_y != 1">
+								<xsl:value-of select="$scale_x * $scale_y"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$scale_x"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					 
+					<xsl:variable name="width_scale" select="round($width * $scale)"/>
+					<xsl:variable name="height_scale" select="round($height * $scale)"/>
+					
+					<fo:table table-layout="fixed" width="100%">
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="{$width_scale}px"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-body>
+							<fo:table-row>
+								<fo:table-cell column-number="2">
+									<fo:block>
+										<fo:block-container width="{$width_scale}px" height="{$height_scale}px">
+											<fo:block text-depth="0" line-height="0" font-size="0">
+												<fo:instream-foreign-object fox:alt-text="{../*[local-name() = 'name']}">
+													<xsl:attribute name="width">100%</xsl:attribute>
+													<xsl:attribute name="content-height">100%</xsl:attribute>
+													<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+													<xsl:attribute name="scaling">uniform</xsl:attribute>
 
+													<xsl:apply-templates select="." mode="svg_remove_a"/>
+												</fo:instream-foreign-object>
+											</fo:block>
+											
+											<xsl:apply-templates select=".//*[local-name() = 'a'][*[local-name() = 'rect'] or *[local-name() = 'polygon'] or *[local-name() = 'circle'] or *[local-name() = 'ellipse']]" mode="svg_imagemap_links">
+												<xsl:with-param name="scale" select="$scale"/>
+											</xsl:apply-templates>
+										</fo:block-container>
+									</fo:block>
+								</fo:table-cell>
+							</fo:table-row>
+						</fo:table-body>
+					</fo:table>
+				</fo:block>
+				
+			</xsl:when>
+			<xsl:otherwise>
+				<fo:block xsl:use-attribute-sets="image-style">
+					<fo:instream-foreign-object fox:alt-text="{../*[local-name() = 'name']}">
+						<xsl:attribute name="width">100%</xsl:attribute>
+						<xsl:attribute name="content-height">100%</xsl:attribute>
+						<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+						<!-- effective height 297 - 27.4 - 13 =  256.6 -->
+						<!-- effective width 210 - 12.5 - 25 = 172.5 -->
+						<!-- effective height / width = 1.48, 1.4 - with title -->
+						<xsl:if test="@height &gt; (@width * 1.4)"> <!-- for images with big height -->
+							<xsl:variable name="width" select="((@width * 1.4) div @height) * 100"/>
+							<xsl:attribute name="width"><xsl:value-of select="$width"/>%</xsl:attribute>
+						</xsl:if>
+						<xsl:attribute name="scaling">uniform</xsl:attribute>
+						<xsl:copy-of select="."/>
+					</fo:instream-foreign-object>
+				</fo:block>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template match="@*|node()" mode="svg_remove_a">
+		<xsl:copy>
+				<xsl:apply-templates select="@*|node()" mode="svg_remove_a"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'a']" mode="svg_remove_a">
+		<xsl:apply-templates mode="svg_remove_a"/>
+	</xsl:template>
+	
+	<xsl:template match="*[local-name() = 'a']" mode="svg_imagemap_links">
+		<xsl:param name="scale"/>
+		<xsl:variable name="dest">
+			<xsl:choose>
+				<xsl:when test="starts-with(@href, '#')">
+					<xsl:value-of select="substring-after(@href, '#')"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="@href"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:for-each select="./*[local-name() = 'rect']">
+			<xsl:call-template name="insertSVGMapLink">
+				<xsl:with-param name="left" select="floor(@x * $scale)"/>
+				<xsl:with-param name="top" select="floor(@y * $scale)"/>
+				<xsl:with-param name="width" select="floor(@width * $scale)"/>
+				<xsl:with-param name="height" select="floor(@height * $scale)"/>
+				<xsl:with-param name="dest" select="$dest"/>
+			</xsl:call-template>
+		</xsl:for-each>
+		
+		<xsl:for-each select="./*[local-name() = 'polygon']">
+			<xsl:variable name="points">
+				<xsl:call-template name="split">
+					<xsl:with-param name="pText" select="@points"/>
+				</xsl:call-template>
+			</xsl:variable>
+			<xsl:variable name="x_coords">
+				<xsl:for-each select="xalan:nodeset($points)//item[position() mod 2 = 1]">
+					<xsl:sort select="." data-type="number"/>
+					<x><xsl:value-of select="."/></x>
+				</xsl:for-each>
+			</xsl:variable>
+			<xsl:variable name="y_coords">
+				<xsl:for-each select="xalan:nodeset($points)//item[position() mod 2 = 0]">
+					<xsl:sort select="." data-type="number"/>
+					<y><xsl:value-of select="."/></y>
+				</xsl:for-each>
+			</xsl:variable>
+			<xsl:variable name="x" select="xalan:nodeset($x_coords)//x[1]"/>
+			<xsl:variable name="y" select="xalan:nodeset($y_coords)//y[1]"/>
+			<xsl:variable name="width" select="xalan:nodeset($x_coords)//x[last()] - $x"/>
+			<xsl:variable name="height" select="xalan:nodeset($y_coords)//y[last()] - $y"/>
+			<xsl:call-template name="insertSVGMapLink">
+				<xsl:with-param name="left" select="floor($x * $scale)"/>
+				<xsl:with-param name="top" select="floor($y * $scale)"/>
+				<xsl:with-param name="width" select="floor($width * $scale)"/>
+				<xsl:with-param name="height" select="floor($height * $scale)"/>
+				<xsl:with-param name="dest" select="$dest"/>
+			</xsl:call-template>
+		</xsl:for-each>
+		
+		<xsl:for-each select="./*[local-name() = 'circle']">
+			<xsl:call-template name="insertSVGMapLink">
+				<xsl:with-param name="left" select="floor((@cx - @r) * $scale)"/>
+				<xsl:with-param name="top" select="floor((@cy - @r) * $scale)"/>
+				<xsl:with-param name="width" select="floor(@r * 2 * $scale)"/>
+				<xsl:with-param name="height" select="floor(@r * 2 * $scale)"/>
+				<xsl:with-param name="dest" select="$dest"/>
+			</xsl:call-template>
+		</xsl:for-each>
+		<xsl:for-each select="./*[local-name() = 'ellipse']">
+			<xsl:call-template name="insertSVGMapLink">
+				<xsl:with-param name="left" select="floor((@cx - @rx) * $scale)"/>
+				<xsl:with-param name="top" select="floor((@cy - @ry) * $scale)"/>
+				<xsl:with-param name="width" select="floor(@rx * 2 * $scale)"/>
+				<xsl:with-param name="height" select="floor(@ry * 2 * $scale)"/>
+				<xsl:with-param name="dest" select="$dest"/>
+			</xsl:call-template>
+		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template name="insertSVGMapLink">
+		<xsl:param name="left"/>
+		<xsl:param name="top"/>
+		<xsl:param name="width"/>
+		<xsl:param name="height"/>
+		<xsl:param name="dest"/>
+		<fo:block-container position="absolute" left="{$left}px" top="{$top}px" width="{$width}px" height="{$height}px">
+		 <fo:block font-size="1pt">
+			<fo:basic-link internal-destination="{$dest}" fox:alt-text="svg link">
+				<fo:inline-container inline-progression-dimension="100%">
+					<fo:block-container height="{$height - 1}px" width="100%">
+						<!-- DEBUG <xsl:if test="local-name()='polygon'">
+							<xsl:attribute name="background-color">magenta</xsl:attribute>
+						</xsl:if> -->
+					<fo:block> </fo:block></fo:block-container>
+				</fo:inline-container>
+			</fo:basic-link>
+		 </fo:block>
+	  </fo:block-container>
+	</xsl:template>
+	
+	<!-- =================== -->
+	<!-- End SVG images processing -->
+	<!-- =================== -->
+	
+	<!-- For express listings PDF attachments -->
+	<xsl:template match="*[local-name() = 'eref'][contains(., '.exp')]" priority="2">
+		<fo:inline xsl:use-attribute-sets="eref-style">
+			<xsl:variable name="url" select="concat('url(embedded-file:', @bibitemid, ')')"/>
+			<fo:basic-link external-destination="{$url}" fox:alt-text="{@citeas}">
+				<xsl:if test="normalize-space(@citeas) = ''">
+					<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
+				</xsl:if>
+				<xsl:apply-templates/>
+			</fo:basic-link>
+		</fo:inline>
+	</xsl:template>
+	
+
+	<!-- =================== -->
+	<!-- Index processing -->
+	<!-- =================== -->
+	
+	<xsl:template match="iso:indexsect"/>
+	<xsl:template match="iso:indexsect" mode="index">
+	
+		<fo:page-sequence master-reference="index" force-page-count="no-force">
+			<xsl:variable name="header-title">
+				<xsl:choose>
+					<xsl:when test="./iso:title[1]/*[local-name() = 'tab']">
+						<xsl:apply-templates select="./iso:title[1]/*[local-name() = 'tab'][1]/following-sibling::node()" mode="header"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:apply-templates select="./iso:title[1]" mode="header"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:call-template name="insertHeaderFooter">
+				<xsl:with-param name="header-title" select="$header-title"/>
+			</xsl:call-template>
+			
+			<fo:flow flow-name="xsl-region-body">
+				<fo:block id="{@id}" span="all">
+					<xsl:apply-templates select="iso:title"/>
+				</fo:block>
+				<fo:block>
+					<xsl:apply-templates select="*[not(local-name() = 'title')]"/>
+				</fo:block>
+			</fo:flow>
+		</fo:page-sequence>
+	</xsl:template>
+	
+	<!-- <xsl:template match="iso:clause[@type = 'index']/iso:title" priority="4"> -->
+	<xsl:template match="iso:indexsect/iso:title" priority="4">
+		<fo:block font-size="16pt" font-weight="bold" margin-bottom="84pt">
+			<!-- Index -->
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
+		
+	<!-- <xsl:template match="iso:clause[@type = 'index']/iso:clause/iso:title" priority="4"> -->
+	<xsl:template match="iso:indexsect/iso:clause/iso:title" priority="4">
+		<!-- Letter A, B, C, ... -->
+		<fo:block font-size="10pt" font-weight="bold" margin-bottom="3pt" keep-with-next="always">
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
+	
+	<xsl:template match="iso:indexsect//iso:li/text()">
+		<!-- to split by '_' and other chars -->
+		<xsl:call-template name="add-zero-spaces-java"/>
+	</xsl:template>
+	
+	<xsl:template match="iso:xref" priority="2">
+		<fo:basic-link internal-destination="{@target}" fox:alt-text="{@target}" xsl:use-attribute-sets="xref-style">
+			<xsl:choose>
+				<xsl:when test="@pagenumber='true'">
+					<fo:inline>
+						<xsl:if test="@id">
+							<xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+						</xsl:if>
+						<fo:page-number-citation ref-id="{@target}"/>
+					</fo:inline>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</fo:basic-link>
+	</xsl:template>
+	
+	<!-- =================== -->
+	<!-- End of Index processing -->
+	<!-- =================== -->
+	
 	
 	<xsl:template name="insertHeaderFooter">
 		<xsl:param name="font-weight" select="'bold'"/>
@@ -2392,6 +2746,9 @@
 			<xsl:attribute name="margin-top">8pt</xsl:attribute>
 			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 		
+		
+		
+			<xsl:attribute name="text-align">justify</xsl:attribute>
 		
 		
 		
@@ -4076,6 +4433,10 @@
 		<fo:inline font-size="10pt" color="red" text-decoration="line-through">
 			<xsl:apply-templates/>
 		</fo:inline>
+	</xsl:template><xsl:template match="*[local-name()='hi']">
+		<fo:inline background-color="yellow">
+			<xsl:apply-templates/>
+		</fo:inline>
 	</xsl:template><xsl:template match="text()[ancestor::*[local-name()='smallcap']]">
 		<xsl:variable name="text" select="normalize-space(.)"/>
 		<fo:inline font-size="75%">
@@ -4676,6 +5037,7 @@
 		<fo:block id="{@id}">
 			<xsl:apply-templates/>
 		</fo:block>
+		<xsl:apply-templates select="*[local-name() = 'name']" mode="presentation"/>
 	</xsl:template><xsl:template match="*[local-name() = 'figure'][@class = 'pseudocode']//*[local-name() = 'p']">
 		<fo:block xsl:use-attribute-sets="figure-pseudocode-p-style">
 			<xsl:apply-templates/>
@@ -5215,8 +5577,8 @@
 			<xsl:apply-templates select="*[local-name()='name']" mode="presentation"/>
 			
 			<xsl:variable name="element">
-				block				
-				
+								
+				inline
 				<xsl:if test=".//*[local-name() = 'table']">block</xsl:if> 
 			</xsl:variable>
 			
@@ -5259,9 +5621,15 @@
 		</xsl:choose>
 
 	</xsl:template><xsl:template match="*[local-name() = 'example']/*[local-name() = 'p']">
-	
+		<xsl:variable name="num"><xsl:number/></xsl:variable>
 		<xsl:variable name="element">
-			block
+			
+			
+				<xsl:choose>
+					<xsl:when test="$num = 1">inline</xsl:when>
+					<xsl:otherwise>block</xsl:otherwise>
+				</xsl:choose>
+			
 			
 		</xsl:variable>		
 		<xsl:choose>			
@@ -5366,29 +5734,47 @@
 		<xsl:text>— </xsl:text>
 		<xsl:apply-templates/>
 	</xsl:template><xsl:template match="*[local-name() = 'eref']">
-		<fo:inline xsl:use-attribute-sets="eref-style">
-			<xsl:if test="@type = 'footnote'">
-				
-					<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
-					<xsl:attribute name="font-size">80%</xsl:attribute>
-					<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
-					<xsl:attribute name="vertical-align">super</xsl:attribute>
-									
-				
-			</xsl:if>	
-		
-			<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
-					
-				<xsl:if test="@type = 'inline'">
-					
-					
-					
-				</xsl:if>
-			
-			
-				<xsl:apply-templates/>
-			</fo:basic-link>
-		</fo:inline>
+	
+		<xsl:variable name="bibitemid">
+			<xsl:choose>
+				<xsl:when test="//*[local-name() = 'bibitem'][@hidden='true' and @id = current()/@bibitemid]"/>
+				<xsl:when test="//*[local-name() = 'references'][@hidden='true']/*[local-name() = 'bibitem'][@id = current()/@bibitemid]"/>
+				<xsl:otherwise><xsl:value-of select="@bibitemid"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+	
+		<xsl:choose>
+			<xsl:when test="normalize-space($bibitemid) != ''">
+				<fo:inline xsl:use-attribute-sets="eref-style">
+					<xsl:if test="@type = 'footnote'">
+						
+							<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
+							<xsl:attribute name="font-size">80%</xsl:attribute>
+							<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
+							<xsl:attribute name="vertical-align">super</xsl:attribute>
+											
+						
+					</xsl:if>	
+											
+					<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
+						<xsl:if test="normalize-space(@citeas) = ''">
+							<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
+						</xsl:if>
+						<xsl:if test="@type = 'inline'">
+							
+							
+							
+						</xsl:if>
+
+						<xsl:apply-templates/>
+					</fo:basic-link>
+							
+				</fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<fo:inline><xsl:apply-templates/></fo:inline>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template><xsl:template match="*[local-name() = 'tab']">
 		<!-- zero-space char -->
 		<xsl:variable name="depth">
@@ -5934,70 +6320,68 @@
 		<xsl:variable name="lang">
 			<xsl:call-template name="getLang"/>
 		</xsl:variable>
-		<fo:declarations>
-			<pdf:catalog xmlns:pdf="http://xmlgraphics.apache.org/fop/extensions/pdf">
-					<pdf:dictionary type="normal" key="ViewerPreferences">
-						<pdf:boolean key="DisplayDocTitle">true</pdf:boolean>
-					</pdf:dictionary>
-				</pdf:catalog>
-			<x:xmpmeta xmlns:x="adobe:ns:meta/">
-				<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-					<rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" rdf:about="">
-					<!-- Dublin Core properties go here -->
-						<dc:title>
-							<xsl:variable name="title">
-								<xsl:for-each select="(//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']">
-									
-										<xsl:value-of select="*[local-name() = 'title'][@language = $lang and @type = 'main']"/>
-									
-									
-									
-									
-									
-																	
-								</xsl:for-each>
-							</xsl:variable>
-							<xsl:choose>
-								<xsl:when test="normalize-space($title) != ''">
-									<xsl:value-of select="$title"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:text> </xsl:text>
-								</xsl:otherwise>
-							</xsl:choose>							
-						</dc:title>
-						<dc:creator>
+		<pdf:catalog>
+				<pdf:dictionary type="normal" key="ViewerPreferences">
+					<pdf:boolean key="DisplayDocTitle">true</pdf:boolean>
+				</pdf:dictionary>
+			</pdf:catalog>
+		<x:xmpmeta xmlns:x="adobe:ns:meta/">
+			<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+				<rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" rdf:about="">
+				<!-- Dublin Core properties go here -->
+					<dc:title>
+						<xsl:variable name="title">
 							<xsl:for-each select="(//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']">
 								
-									<xsl:for-each select="*[local-name() = 'contributor'][*[local-name() = 'role']/@type='author']">
-										<xsl:value-of select="*[local-name() = 'organization']/*[local-name() = 'name']"/>
-										<xsl:if test="position() != last()">; </xsl:if>
-									</xsl:for-each>
+									<xsl:value-of select="*[local-name() = 'title'][@language = $lang and @type = 'main']"/>
 								
 								
 								
+								
+								
+																
 							</xsl:for-each>
-						</dc:creator>
-						<dc:description>
-							<xsl:variable name="abstract">
-								
-									<xsl:copy-of select="//*[contains(local-name(), '-standard')]/*[local-name() = 'preface']/*[local-name() = 'abstract']//text()"/>									
-								
-								
-							</xsl:variable>
-							<xsl:value-of select="normalize-space($abstract)"/>
-						</dc:description>
-						<pdf:Keywords>
-							<xsl:call-template name="insertKeywords"/>
-						</pdf:Keywords>
-					</rdf:Description>
-					<rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" rdf:about="">
-						<!-- XMP properties go here -->
-						<xmp:CreatorTool/>
-					</rdf:Description>
-				</rdf:RDF>
-			</x:xmpmeta>
-		</fo:declarations>
+						</xsl:variable>
+						<xsl:choose>
+							<xsl:when test="normalize-space($title) != ''">
+								<xsl:value-of select="$title"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text> </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>							
+					</dc:title>
+					<dc:creator>
+						<xsl:for-each select="(//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']">
+							
+								<xsl:for-each select="*[local-name() = 'contributor'][*[local-name() = 'role']/@type='author']">
+									<xsl:value-of select="*[local-name() = 'organization']/*[local-name() = 'name']"/>
+									<xsl:if test="position() != last()">; </xsl:if>
+								</xsl:for-each>
+							
+							
+							
+						</xsl:for-each>
+					</dc:creator>
+					<dc:description>
+						<xsl:variable name="abstract">
+							
+								<xsl:copy-of select="//*[contains(local-name(), '-standard')]/*[local-name() = 'preface']/*[local-name() = 'abstract']//text()"/>									
+							
+							
+						</xsl:variable>
+						<xsl:value-of select="normalize-space($abstract)"/>
+					</dc:description>
+					<pdf:Keywords>
+						<xsl:call-template name="insertKeywords"/>
+					</pdf:Keywords>
+				</rdf:Description>
+				<rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" rdf:about="">
+					<!-- XMP properties go here -->
+					<xmp:CreatorTool/>
+				</rdf:Description>
+			</rdf:RDF>
+		</x:xmpmeta>
 	</xsl:template><xsl:template name="getId">
 		<xsl:choose>
 			<xsl:when test="../@id">
