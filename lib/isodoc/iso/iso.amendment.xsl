@@ -3392,7 +3392,15 @@
 	</xsl:template><xsl:template match="*[local-name()='link']" mode="td_text">
 		<xsl:value-of select="@target"/>
 	</xsl:template><xsl:template match="*[local-name()='math']" mode="td_text">
-		<xsl:variable name="math_text" select="normalize-space(.)"/>
+		<xsl:variable name="mathml">
+			<xsl:for-each select="*">
+				<xsl:if test="local-name() != 'unit' and local-name() != 'prefix' and local-name() != 'dimension' and local-name() != 'quantity'">
+					<xsl:copy-of select="."/>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		
+		<xsl:variable name="math_text" select="normalize-space(xalan:nodeset($mathml))"/>
 		<xsl:value-of select="translate($math_text, ' ', '#')"/><!-- mathml images as one 'word' without spaces -->
 	</xsl:template><xsl:template match="*[local-name()='table2']"/><xsl:template match="*[local-name()='thead']"/><xsl:template match="*[local-name()='thead']" mode="process">
 		<xsl:param name="cols-count"/>
@@ -4795,7 +4803,7 @@
 			<xsl:apply-templates select="@*|node()" mode="mathml"/>
 		</xsl:copy>
 		<mathml:mspace width="0.5ex"/>
-	</xsl:template><xsl:template match="*[local-name()='localityStack']"/><xsl:template match="*[local-name()='link']" name="link">
+	</xsl:template><xsl:template match="mathml:math/*[local-name()='unit']" mode="mathml"/><xsl:template match="mathml:math/*[local-name()='prefix']" mode="mathml"/><xsl:template match="mathml:math/*[local-name()='dimension']" mode="mathml"/><xsl:template match="mathml:math/*[local-name()='quantity']" mode="mathml"/><xsl:template match="*[local-name()='localityStack']"/><xsl:template match="*[local-name()='link']" name="link">
 		<xsl:variable name="target">
 			<xsl:choose>
 				<xsl:when test="starts-with(normalize-space(@target), 'mailto:')">
