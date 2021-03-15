@@ -1,12 +1,9 @@
 require_relative "init"
 require "isodoc"
+require_relative "index"
 
 module IsoDoc
   module Iso
-
-    # A {Converter} implementation that generates HTML output, and a document
-    # schema encapsulation of the document for validation
-    #
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
       def initialize(options)
         super
