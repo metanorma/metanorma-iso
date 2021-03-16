@@ -102,7 +102,7 @@
           </attribute>
         </optional>
         <oneOrMore>
-          <ref name="li"/>
+          <ref name="ul_li"/>
         </oneOrMore>
         <zeroOrMore>
           <ref name="note"/>
@@ -1714,6 +1714,28 @@
           </choice>
         </element>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="ul_li">
+    <element name="li">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="uncheckedcheckbox">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="checkedcheckbox">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="BasicBlock"/>
+      </oneOrMore>
     </element>
   </define>
 </grammar>
