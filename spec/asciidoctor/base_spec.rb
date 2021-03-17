@@ -406,7 +406,7 @@ RSpec.describe Asciidoctor::ISO do
       OUTPUT
   end
 
-  it "defaults substage, defines iteration on stage 50, gives stage 50 on technical specification" do
+  it "defaults substage, defines iteration on stage 50" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -417,15 +417,15 @@ RSpec.describe Asciidoctor::ISO do
       :docnumber: 1000
       :docstage: 50
       :language: fr
-      :doctype: technical-specification
+      :doctype: international-standard
       :iteration: 2
     INPUT
     expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO/DTS 1000.2</docidentifier>
-          <docidentifier type="iso-with-lang">ISO/DTS 1000.2(F)</docidentifier>
-          <docidentifier type="iso-reference">ISO/DTS 1000.2(F)</docidentifier>
+        <docidentifier type='ISO'>ISO/FDIS 1000.2</docidentifier>
+<docidentifier type='iso-with-lang'>ISO/FDIS 1000.2(F)</docidentifier>
+<docidentifier type='iso-reference'>ISO/FDIS 1000.2(F)</docidentifier>
           <docnumber>1000</docnumber>
           <contributor>
             <role type="author"/>
@@ -444,7 +444,7 @@ RSpec.describe Asciidoctor::ISO do
           <language>fr</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="D">50</stage>
+            <stage abbreviation="FDIS">50</stage>
             <substage>00</substage>
             <iteration>2</iteration>
           </status>
@@ -458,7 +458,7 @@ RSpec.describe Asciidoctor::ISO do
             </owner>
           </copyright>
           <ext>
-            <doctype>technical-specification</doctype>
+            <doctype>international-standard</doctype>
             <editorialgroup>
               <technical-committee/>
               <subcommittee/>
