@@ -67,7 +67,7 @@ module Asciidoctor
         stage = get_stage(node)
         substage = get_substage(node)
         xml.status do |s|
-          s.stage stage, **attr_code(abbreviation: stage_abbr(stage, substage, doctype(node)))
+          s.stage stage, **attr_code(abbreviation: cover_stage_abbr(node))
           s.substage substage
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end

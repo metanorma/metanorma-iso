@@ -24,6 +24,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+=begin
   config.around do |example|
     Dir.mktmpdir("rspec-") do |dir|
       tmp_assets = File.join(dir, "spec/assets/")
@@ -32,6 +33,7 @@ RSpec.configure do |config|
       Dir.chdir(dir) { example.run }
     end
   end
+=end
 end
 
 def strip_guid(xml)

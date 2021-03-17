@@ -124,15 +124,27 @@ module Asciidoctor
         dn
       end
 
-      def id_stage_abbr(stage, substage, node)
-        ret = IsoDoc::Iso::Metadata.new("en", "Latn", @i18n).
-          status_abbrev(stage_abbr(stage, substage, doctype(node)),
-                        substage, node.attr("iteration"),
-                        node.attr("draft"), doctype(node))
+      def id_stage_abbr(stage, substage, node, bare = false)
+        ret = bare ? 
+          IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+          .status_abbrev(stage_abbr(stage, substage, doctype(node)),
+        substage, nil, nil, doctype(node)) :
+        IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+          .status_abbrev(stage_abbr(stage, substage, doctype(node)),
+        substage, node.attr("iteration"),
+        node.attr("draft"), doctype(node))
         if %w(amendment technical-corrigendum technical-report technical-specification).include?(doctype(node))
           ret = ret + " " unless %w(D FD).include?(ret)
         end
         ret
+      end
+
+      def cover_stage_abbr(node)
+        stage = get_stage(node)
+        abbr = id_stage_abbr(get_stage(node), get_substage(node), node, true)
+        typeabbr = get_typeabbr(node, true)
+        typeabbr = "" if stage.to_i > 50 || stage.to_i == 60 && get_substage(node).to_i < 60
+        "#{abbr}#{typeabbr}".strip
       end
 
       def id_stage_prefix(dn, node, force_year)
@@ -174,10 +186,12 @@ module Asciidoctor
         node.attr("docsubstage") || ( stage == "60" ? "60" : "00" )
       end
 
-      def get_typeabbr(node)
+      def get_typeabbr(node, amd = false)
         case doctype(node)
         when "technical-report" then "TR "
         when "technical-specification" then "TS "
+        when "amendment" then (amd ? "Amd " : "")
+        when "technical-corrigendum" then (amd ? "Cor " : "")
         else
           nil
         end
