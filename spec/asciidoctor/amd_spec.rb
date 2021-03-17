@@ -235,7 +235,7 @@ RSpec.describe Asciidoctor::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="NP">10</stage>
+            <stage abbreviation="NP Amd">10</stage>
             <substage>20</substage>
             <iteration>3</iteration>
           </status>
@@ -320,7 +320,7 @@ RSpec.describe Asciidoctor::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="CD">30</stage>
+            <stage abbreviation="CD Amd">30</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -389,7 +389,7 @@ RSpec.describe Asciidoctor::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="D">40</stage>
+            <stage abbreviation="DAmd">40</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -527,7 +527,7 @@ RSpec.describe Asciidoctor::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="CD">30</stage>
+            <stage abbreviation="CD Cor">30</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -596,7 +596,7 @@ RSpec.describe Asciidoctor::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation='FD'>50</stage>
+            <stage abbreviation='FDCor'>50</stage>
             <substage>00</substage>
           </status>
           <copyright>
