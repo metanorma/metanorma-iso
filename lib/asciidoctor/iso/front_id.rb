@@ -11,7 +11,7 @@ module Asciidoctor
     class Converter < Standoc::Converter
       STAGE_ABBRS = {
         "00": "PWI",
-        "10": "NWIP",
+        "10": "NP",
         "20": "WD",
         "30": "CD",
         "40": "DIS",
@@ -37,15 +37,11 @@ module Asciidoctor
         return nil if stage.to_i > 60
         ret = STAGE_ABBRS[stage.to_sym]
         ret = "PRF" if stage == "60" && substage == "00"
+        ret = "AWI" if stage == "10" && substage == "99"
         if %w(amendment technical-corrigendum technical-report 
           technical-specification).include?(doctype)
-          ret = "NP" if stage == "10"
-          ret = "AWI" if stage == "10" && substage == "99"
-          ret = "D" if stage == "40" and doctype == "amendment"
-          ret = "FD" if stage == "50" and
-            %w(amendment technical-corrigendum).include?(doctype)
-          ret = "D" if stage == "50" and
-            %w(technical-report technical-specification).include?(doctype)
+          ret = "D" if stage == "40" && doctype == "amendment"
+          ret = "FD" if stage == "50" && %w(amendment technical-corrigendum).include?(doctype)
         end
         ret
       end
@@ -54,8 +50,7 @@ module Asciidoctor
         return "Proof" if stage == "60" && substage == "00"
         ret = STAGE_NAMES[stage.to_sym]
         if iteration && %w(20 30).include?(stage)
-          prefix  = iteration.to_i.localize(@lang.to_sym).
-            to_rbnf_s("SpelloutRules", "spellout-ordinal")
+          prefix = iteration.to_i.localize(@lang.to_sym).to_rbnf_s("SpelloutRules", "spellout-ordinal")
           ret = "#{prefix.capitalize} #{ret.downcase}"
         end
         ret
@@ -70,16 +65,13 @@ module Asciidoctor
       end
 
       def iso_id(node, xml)
-        return unless !@amd && node.attr("docnumber") ||
-          @amd && node.attr("updates")
+        return unless !@amd && node.attr("docnumber") || @amd && node.attr("updates")
         dn = iso_id1(node)
         dn1 = id_stage_prefix(dn, node, false)
         dn2 = id_stage_prefix(dn, node, true)
         xml.docidentifier dn1, **attr_code(type: "ISO")
-        xml.docidentifier id_langsuffix(dn1, node),
-          **attr_code(type: "iso-with-lang")
-        xml.docidentifier id_langsuffix(dn2, node),
-          **attr_code(type: "iso-reference")
+        xml.docidentifier id_langsuffix(dn1, node), **attr_code(type: "iso-with-lang")
+        xml.docidentifier id_langsuffix(dn2, node), **attr_code(type: "iso-reference")
       end
 
       def iso_id1(node)
@@ -137,9 +129,8 @@ module Asciidoctor
           status_abbrev(stage_abbr(stage, substage, doctype(node)),
                         substage, node.attr("iteration"),
                         node.attr("draft"), doctype(node))
-        if %w(amendment technical-corrigendum amendment
-          technical-corrigendum).include?(doctype(node))
-          ret = ret + " " unless %w(40 50).include?(stage)
+        if %w(amendment technical-corrigendum technical-report technical-specification).include?(doctype(node))
+          ret = ret + " " unless %w(D FD).include?(ret)
         end
         ret
       end
