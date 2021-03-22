@@ -9,3 +9,5 @@ spec/examples/rice.doc
 spec/examples/rice.html
 spec/examples/rice.xml
 spec/examples/rice_files/
+
+.rubocop-https--*
