@@ -1226,7 +1226,7 @@ RSpec.describe Asciidoctor::ISO do
     expect(File.read("test.err")).to include "No English Title Intro"
   end
 
-  it "Warning if English title and no French intro" do
+  it "Warning if English title and no French title" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -1237,6 +1237,7 @@ RSpec.describe Asciidoctor::ISO do
 
     INPUT
     expect(File.read("test.err")).to include "No French Title"
+    expect(File.read("test.err")).not_to include "No French Intro"
   end
 
   it "Warning if French title and no English title" do
@@ -1276,6 +1277,21 @@ RSpec.describe Asciidoctor::ISO do
 
     INPUT
     expect(File.read("test.err")).to include "No English Title Part"
+  end
+
+    it "No warning if French main title and English main title" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :title-part-fr: Title
+      :title-part-en: Title
+      :no-isobib:
+
+    INPUT
+    expect(File.read("test.err")).not_to include "No French Title Intro"
+    expect(File.read("test.err")).not_to include "No French Title Part"
   end
 
   it "Warning if non-IEC document with subpart" do
