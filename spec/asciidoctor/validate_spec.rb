@@ -4,6 +4,7 @@ require "fileutils"
 RSpec.describe Asciidoctor::ISO do
   context "when xref_error.adoc compilation" do
     it "generates error file" do
+      FileUtils.rm_f "xref_error.err"
       File.write("xref_error.adoc", <<~"CONTENT")
         = X
         A

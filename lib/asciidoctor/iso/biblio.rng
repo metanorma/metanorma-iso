@@ -124,7 +124,7 @@
           <value>application/tei+xml</value>
           <value>text/x-asciidoc</value>
           <value>text/markdown</value>
-          <value>application/x-isodoc+xml</value>
+          <value>application/x-metanorma+xml</value>
           <text/>
         </choice>
       </attribute>
@@ -452,6 +452,7 @@
       <attribute name="type">
         <choice>
           <value>isni</value>
+          <value>orcid</value>
           <value>uri</value>
         </choice>
       </attribute>
@@ -461,10 +462,7 @@
   <define name="org-identifier">
     <element name="identifier">
       <attribute name="type">
-        <choice>
-          <value>orcid</value>
-          <value>uri</value>
-        </choice>
+        <data type="string" datatypeLibrary=""/>
       </attribute>
       <text/>
     </element>
@@ -1106,7 +1104,7 @@
       <value>complementOf</value>
       <value>obsoletes</value>
       <value>obsoletedBy</value>
-      <value>cited</value>
+      <value>cites</value>
       <value>isCitedIn</value>
     </choice>
   </define>
