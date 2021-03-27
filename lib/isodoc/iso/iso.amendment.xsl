@@ -5,6 +5,7 @@
 	<xsl:param name="svg_images"/>
 	<xsl:param name="external_index"/><!-- path to index xml, generated on 1st pass, based on FOP Intermediate Format -->
 	<xsl:variable name="images" select="document($svg_images)"/>
+	<xsl:param name="basepath"/>
 	
 	
 
@@ -343,8 +344,8 @@
 			<fo:declarations>
 				<xsl:call-template name="addPDFUAmeta"/>
 				<xsl:for-each select="//*[local-name() = 'eref'][generate-id(.)=generate-id(key('attachments',@bibitemid)[1])]">
-					<xsl:variable name="url" select="concat('url(', ., ')')"/>
-					<pdf:embedded-file src="{$url}"/>
+					<xsl:variable name="url" select="concat('url(file:',$basepath, @bibitemid, ')')"/>
+					<pdf:embedded-file src="{$url}" filename="{@bibitemid}"/>
 				</xsl:for-each>
 			</fo:declarations>
 
@@ -2172,7 +2173,7 @@
 	<!-- =================== -->
 	
 	<!-- For express listings PDF attachments -->
-	<xsl:template match="*[local-name() = 'eref'][contains(., '.exp')]" priority="2">
+	<xsl:template match="*[local-name() = 'eref'][contains(@bibitemid, '.exp')]" priority="2">
 		<fo:inline xsl:use-attribute-sets="eref-style">
 			<xsl:variable name="url" select="concat('url(embedded-file:', @bibitemid, ')')"/>
 			<fo:basic-link external-destination="{$url}" fox:alt-text="{@citeas}">
