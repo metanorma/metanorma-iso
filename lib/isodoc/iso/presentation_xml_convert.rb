@@ -45,19 +45,19 @@ module IsoDoc
         prefix_name(f, "&nbsp;&mdash; ", lbl, "name")
       end
 
-      def eref_localities1_zh(target, type, from, to, delim)
+      def eref_localities1_zh(target, type, from, to, n, delim)
         subsection = from&.text&.match(/\./)
         ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{to.text}" if to
         loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize )
         ret += " #{loc}" unless subsection && type == "clause" ||
-          type == "list" || target.match(/^IEV$|^IEC 60050-/)
+          type == "list" || target.match(/^IEV$|^IEC 60050-/) || n["droploc"] == "true"
         ret += ")" if type == "list"
         ret
       end
 
-      def eref_localities1(target, type, from, to, delim, lang = "en")
+      def eref_localities1(target, type, from, to, delim, n, lang = "en")
         return "" if type == "anchor"
         subsection = from&.text&.match(/\./)
         type = type.downcase
@@ -65,7 +65,7 @@ module IsoDoc
           return l10n(eref_localities1_zh(target, type, from, to, delim))
         ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
         loc = @i18n.locality[type] || type.sub(/^locality:/, "").capitalize
-        ret += " #{loc}" unless subsection && type == "clause" ||
+        ret += eref_locality_populate(type, n) unless subsection && type == "clause" ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/)
         ret += " #{from.text}" if from
         ret += "&ndash;#{to.text}" if to

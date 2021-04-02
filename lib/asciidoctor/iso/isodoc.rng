@@ -86,6 +86,35 @@
         <text/>
       </element>
     </define>
+    <define name="erefType">
+      <optional>
+        <attribute name="normative">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <attribute name="citeas"/>
+      <attribute name="type">
+        <ref name="ReferenceFormat"/>
+      </attribute>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="case">
+          <choice>
+            <value>capital</value>
+            <value>lowercase</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="droploc">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <ref name="CitationType"/>
+      <text/>
+    </define>
     <define name="ul">
       <element name="ul">
         <attribute name="id">
