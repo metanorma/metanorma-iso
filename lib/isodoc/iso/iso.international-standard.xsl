@@ -3001,6 +3001,12 @@
 		
 			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 		
+	</xsl:attribute-set><xsl:attribute-set name="add-style">
+		<xsl:attribute name="color">red</xsl:attribute>
+		<xsl:attribute name="text-decoration">underline</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="del-style">
+		<xsl:attribute name="color">red</xsl:attribute>
+		<xsl:attribute name="text-decoration">line-through</xsl:attribute>
 	</xsl:attribute-set><xsl:template name="processPrefaceSectionsDefault_Contents">
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='abstract']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='foreword']" mode="contents"/>
@@ -4452,8 +4458,12 @@
 		<fo:inline text-decoration="underline">
 			<xsl:apply-templates/>
 		</fo:inline>
+	</xsl:template><xsl:template match="*[local-name()='add']">
+		<fo:inline xsl:use-attribute-sets="add-style">
+			<xsl:apply-templates/>
+		</fo:inline>
 	</xsl:template><xsl:template match="*[local-name()='del']">
-		<fo:inline font-size="10pt" color="red" text-decoration="line-through">
+		<fo:inline xsl:use-attribute-sets="del-style">
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template><xsl:template match="*[local-name()='hi']">
