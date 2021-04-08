@@ -86,6 +86,35 @@
         <text/>
       </element>
     </define>
+    <define name="erefType">
+      <optional>
+        <attribute name="normative">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <attribute name="citeas"/>
+      <attribute name="type">
+        <ref name="ReferenceFormat"/>
+      </attribute>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="case">
+          <choice>
+            <value>capital</value>
+            <value>lowercase</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="droploc">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <ref name="CitationType"/>
+      <text/>
+    </define>
     <define name="ul">
       <element name="ul">
         <attribute name="id">
@@ -775,6 +804,78 @@
         <ref name="paragraph"/>
       </element>
     </define>
+    <define name="em">
+      <element name="em">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="stem"/>
+            <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="strong">
+      <element name="strong">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="stem"/>
+            <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="tt">
+      <element name="tt">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="keyword">
+      <element name="keyword">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="strike">
+      <element name="strike">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="underline">
+      <element name="underline">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="smallcap">
+      <element name="smallcap">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
   </include>
   <!-- end overrides -->
   <define name="colgroup">
@@ -793,7 +894,35 @@
     <value>internal</value>
   </define>
   <define name="TextElement" combine="choice">
-    <ref name="concept"/>
+    <choice>
+      <ref name="concept"/>
+      <ref name="add"/>
+      <ref name="del"/>
+    </choice>
+  </define>
+  <define name="add">
+    <element name="add">
+      <choice>
+        <ref name="PureTextElement"/>
+        <ref name="eref"/>
+        <ref name="stem"/>
+        <ref name="keyword"/>
+        <ref name="xref"/>
+        <ref name="hyperlink"/>
+      </choice>
+    </element>
+  </define>
+  <define name="del">
+    <element name="del">
+      <choice>
+        <ref name="PureTextElement"/>
+        <ref name="eref"/>
+        <ref name="stem"/>
+        <ref name="keyword"/>
+        <ref name="xref"/>
+        <ref name="hyperlink"/>
+      </choice>
+    </element>
   </define>
   <define name="concept">
     <element name="concept">

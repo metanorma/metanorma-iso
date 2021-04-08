@@ -38,7 +38,6 @@ module IsoDoc
                            html_doc_path("style-iso.scss")),
         htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
         htmlintropage: html_doc_path("html_iso_intro.html"),
-        scripts: html_doc_path("scripts.html"),
         }
       end
 

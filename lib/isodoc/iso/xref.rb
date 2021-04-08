@@ -85,6 +85,7 @@ module IsoDoc
         c = IsoDoc::XrefGen::Counter.new
         clause.xpath(ns(".//formula")).each do |t|
           next if t["id"].nil? || t["id"].empty?
+
           @anchors[t["id"]] =
             anchor_struct("#{num}#{hiersep}#{c.increment(t).print}", t,
                           t["inequality"] ? @labels["inequality"] : @labels["formula"],
@@ -108,6 +109,7 @@ module IsoDoc
           j = subfigure_increment(j, c, t)
           sublabel = j.zero? ? nil : "#{(j+96).chr})"
           next if t["id"].nil? || t["id"].empty?
+
           figure_anchor(t, sublabel, c.print)
         end
       end
@@ -115,20 +117,21 @@ module IsoDoc
       def hierarchical_figure_names(clause, num)
         c = IsoDoc::XrefGen::Counter.new
         j = 0
-        clause.xpath(ns(".//figure |  .//sourcecode[not(ancestor::example)]")).
-          each do |t|
+        clause.xpath(ns(".//figure |  .//sourcecode[not(ancestor::example)]"))
+          .each do |t|
           j = subfigure_increment(j, c, t)
           label = "#{num}#{hiersep}#{c.print}"
-          sublabel = j.zero? ? nil : "#{(j+96).chr})"
+          sublabel = j.zero? ? nil : "#{(j + 96).chr})"
           next if t["id"].nil? || t["id"].empty?
+
           figure_anchor(t, sublabel, label)
         end
       end
 
       def reference_names(ref)
         super
-        @anchors[ref["id"]] = { xref: @anchors[ref["id"]][:xref].
-                                sub(/ \(All Parts\)/i, "") }
+        @anchors[ref["id"]] = { xref: @anchors[ref["id"]][:xref]
+          .sub(/ \(All Parts\)/i, "") }
       end
 
       def back_anchor_names(docxml)
