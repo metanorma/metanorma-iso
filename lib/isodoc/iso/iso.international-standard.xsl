@@ -5077,25 +5077,37 @@
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template><xsl:template match="*[local-name() = 'image']">
-		<fo:block xsl:use-attribute-sets="image-style">
-			
-			
-			<xsl:variable name="src">
-				<xsl:choose>
-					<xsl:when test="@mimetype = 'image/svg+xml' and $images/images/image[@id = current()/@id]">
-						<xsl:value-of select="$images/images/image[@id = current()/@id]/@src"/>
-					</xsl:when>
-					<xsl:when test="not(starts-with(@src, 'data:'))">
-						<xsl:value-of select="concat('url(file:',$basepath, @src, ')')"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="@src"/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:variable>
-			
-			<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" xsl:use-attribute-sets="image-graphic-style"/>
-		</fo:block>
+		<xsl:choose>
+			<xsl:when test="ancestor::*[local-name() = 'title']">
+				<fo:inline padding-left="1mm" padding-right="1mm">
+					<xsl:variable name="src">
+						<xsl:call-template name="image_src"/>
+					</xsl:variable>
+					<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" vertical-align="middle"/>
+				</fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<fo:block xsl:use-attribute-sets="image-style">
+					
+					<xsl:variable name="src">
+						<xsl:call-template name="image_src"/>
+					</xsl:variable>
+					<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" xsl:use-attribute-sets="image-graphic-style"/>
+				</fo:block>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template><xsl:template name="image_src">
+		<xsl:choose>
+			<xsl:when test="@mimetype = 'image/svg+xml' and $images/images/image[@id = current()/@id]">
+				<xsl:value-of select="$images/images/image[@id = current()/@id]/@src"/>
+			</xsl:when>
+			<xsl:when test="not(starts-with(@src, 'data:'))">
+				<xsl:value-of select="concat('url(file:',$basepath, @src, ')')"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="@src"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'name']"/><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'name'] |                *[local-name() = 'table']/*[local-name() = 'name'] |               *[local-name() = 'permission']/*[local-name() = 'name'] |               *[local-name() = 'recommendation']/*[local-name() = 'name'] |               *[local-name() = 'requirement']/*[local-name() = 'name']" mode="contents">		
 		<xsl:apply-templates mode="contents"/>
 		<xsl:text> </xsl:text>
