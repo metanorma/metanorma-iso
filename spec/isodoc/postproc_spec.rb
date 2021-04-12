@@ -6,6 +6,11 @@ WORD_HTML_CSS = {
   htmlstylesheet: "spec/assets/html.css",
 }.freeze
 
+WORD_HTML_CSS_SUBDIR = {
+  wordstylesheet: "word.css",
+  htmlstylesheet: "html.css",
+}.freeze
+
 WORD_HTML_CSS_HEADER_HTML = {
   wordstylesheet: "spec/assets/word.css",
   htmlstylesheet: "spec/assets/html.css",
@@ -93,7 +98,7 @@ RSpec.describe IsoDoc do
   end
 
   it "generates HTML output docs with null configuration from file" do
-    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS.dup).convert("spec/assets/iso.xml", nil, false)
+    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS_SUBDIR.dup).convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.html")).to be true
     html = File.read("spec/assets/iso.html", encoding: "UTF-8")
     expect(html).to match(/<style>/)
@@ -102,7 +107,7 @@ RSpec.describe IsoDoc do
   end
 
   it "generates Word output docs with null configuration from file" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup).convert("spec/assets/iso.xml", nil, false)
+    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS_SUBDIR.dup).convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.doc")).to be true
     word = File.read("spec/assets/iso.doc", encoding: "UTF-8")
     expect(word).to match(/<w:WordDocument>/)
@@ -229,10 +234,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = File.read("test.doc", encoding: "UTF-8")
-      .sub(%r{^.*Content-Location: file:///C:/Doc/test_files/header.html}m,
-           "Content-Location: file:///C:/Doc/test_files/header.html")
-      .sub(/------=_NextPart.*$/m, "")
-    expect(word).to include(%{Content-Location: file:///C:/Doc/test_files/header.html})
+    expect(word).to include('Content-Disposition: inline; filename="header.html"')
   end
 
   it "populates Word ToC" do
