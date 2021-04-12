@@ -28,7 +28,8 @@ module IsoDoc
 
       def figure1(f)
         return if labelled_ancestor(f) && f.ancestors("figure").empty?
-        lbl = @xrefs.anchor(f['id'], :label, false) or return
+
+        lbl = @xrefs.anchor(f["id"], :label, false) or return
         figname = f.parent.name == "figure" ? "" : "#{@i18n.figure} "
         connective = f.parent.name == "figure" ? "&nbsp; " : "&nbsp;&mdash; "
         prefix_name(f, connective, l10n("#{figname}#{lbl}"), "name")
@@ -36,17 +37,24 @@ module IsoDoc
 
       def example1(f)
         n = @xrefs.get[f["id"]]
-        lbl = (n.nil? || n[:label].nil? || n[:label].empty?) ? @i18n.example :
-          l10n("#{@i18n.example} #{n[:label]}")
+        lbl = if n.nil? || n[:label].nil? || n[:label].empty?
+                @i18n.example
+              else
+                l10n("#{@i18n.example} #{n[:label]}")
+              end
         prefix_name(f, "&nbsp;&mdash; ", lbl, "name")
       end
 
       def eref_localities1_zh(target, type, from, to, n, delim)
         subsection = from&.text&.match(/\./)
-        ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
+        ret = if delim == ";"
+                ";"
+              else
+                type == "list" ? "" : delim
+              end
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{to.text}" if to
-        loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize )
+        loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize)
         ret += " #{loc}" unless subsection && type == "clause" ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/) || n["droploc"] == "true"
         ret += ")" if type == "list"
@@ -55,14 +63,19 @@ module IsoDoc
 
       def eref_localities1(target, type, from, to, delim, n, lang = "en")
         return "" if type == "anchor"
+
         subsection = from&.text&.match(/\./)
         type = type.downcase
         lang == "zh" and
-          return l10n(eref_localities1_zh(target, type, from, to, delim))
-        ret = (delim == ";") ? ";" : (type == "list") ? "" : delim
-        loc = @i18n.locality[type] || type.sub(/^locality:/, "").capitalize
-        ret += eref_locality_populate(type, n) unless subsection && type == "clause" ||
-          type == "list" || target.match(/^IEV$|^IEC 60050-/)
+          return l10n(eref_localities1_zh(target, type, from, to, n, delim))
+        ret = if delim == ";"
+                ";"
+              else
+                type == "list" ? "" : delim
+              end
+        ret += eref_locality_populate(type, n) unless subsection &&
+          type == "clause" || type == "list" ||
+          target.match(/^IEV$|^IEC 60050-/)
         ret += " #{from.text}" if from
         ret += "&ndash;#{to.text}" if to
         ret += ")" if type == "list"
@@ -74,9 +87,10 @@ module IsoDoc
         l10n(@xrefs.anchor(container, :xref) + delim + linkend)
       end
 
-      def example_span_label(node, div, name)
+      def example_span_label(_node, div, name)
         return if name.nil?
-        div.span **{ class: "example_label" } do |p|
+
+        div.span **{ class: "example_label" } do |_p|
           name.children.each { |n| parse(n, div) }
         end
       end
@@ -92,8 +106,8 @@ module IsoDoc
       def clause(docxml)
         docxml.xpath(ns("//clause[not(ancestor::annex)] | "\
                         "//terms | //definitions | //references | "\
-                        "//preface/introduction[clause]")).
-        each do |f|
+                        "//preface/introduction[clause]"))
+          .each do |f|
           clause1(f)
         end
       end
