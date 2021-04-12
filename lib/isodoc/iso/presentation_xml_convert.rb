@@ -5,10 +5,6 @@ require_relative "index"
 module IsoDoc
   module Iso
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
-      def initialize(options)
-        super
-      end
-
       def convert1(docxml, filename, dir)
         if amd(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
