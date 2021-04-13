@@ -43,6 +43,7 @@ module Asciidoctor
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? &&
             /\b(see| refer to)\s*$/mi.match(preceding)
+
           (target = root.at("//*[@id = '#{t['target']}']")) || next
           if target&.at("./ancestor-or-self::*[@obligation = 'normative']")
             @log.add("Style", t,
@@ -57,6 +58,7 @@ module Asciidoctor
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? &&
             /\b(see|refer to)\s*$/mi.match(preceding)
+
           unless target = root.at("//*[@id = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
@@ -72,7 +74,7 @@ module Asciidoctor
       # ISO/IEC DIR 2, 10.4
       def locality_erefs_validate(root)
         root.xpath("//eref[descendant::locality]").each do |t|
-          if /^(ISO|IEC)/.match t["citeas"]
+          if /^(ISO|IEC)/.match? t["citeas"]
             unless /:[ ]?(\d+{4}|–)$/.match t["citeas"]
               @log.add("Style", t,
                        "undated reference #{t['citeas']} should not contain "\
@@ -103,6 +105,7 @@ module Asciidoctor
       def cited_term_style(xmldoc)
         xmldoc.xpath("//term//xref").each do |x|
           next unless xmldoc.at("//term[@id = '#{x['target']}']")
+
           x&.previous&.text == " (" and x&.previous&.previous&.name == "em" or
             style_warning(x, "term citation not preceded with italicised term",
                           x.parent.text)
@@ -158,11 +161,12 @@ module Asciidoctor
       end
 
       def image_name_prefix(xmldoc)
-        std = xmldoc&.at("//bibdata/ext/structuredidentifier/project-number") or return
+        std = xmldoc&.at("//bibdata/ext/structuredidentifier/project-number") or
+          return
         num = xmldoc&.at("//bibdata/docnumber")&.text or return
         ed = xmldoc&.at("//bibdata/edition")&.text || "1"
         prefix = num
-        part = std["part"] and prefix += "-#{std['part']}"
+        std["part"] and prefix += "-#{std['part']}"
         prefix += "_ed#{ed}"
         amd = std["amendment"] and prefix += "amd#{amd}"
         prefix
@@ -182,8 +186,10 @@ module Asciidoctor
       end
 
       def disjunct_error(i, cond1, cond2, msg1, msg2)
-        cond1 && !cond2 and @log.add("Style", i, "image name #{i['src']} #{msg1}")
-        !cond1 && cond2 and @log.add("Style", i, "image name #{i['src']} #{msg2}")
+        cond1 && !cond2 and
+          @log.add("Style", i, "image name #{i['src']} #{msg1}")
+        !cond1 && cond2 and
+          @log.add("Style", i, "image name #{i['src']} #{msg2}")
       end
 
       def image_name_validate1(i, prefix)
@@ -193,16 +199,19 @@ module Asciidoctor
           @log.add("Style", i, "image name #{i['src']} does not match DRG requirements")
           return
         end
-        warn i['src']
+        warn i["src"]
         disjunct_error(i, i.at("./ancestor::table"), !m[:tab].nil?,
-                       "is under a table but is not so labelled", "is labelled as under a table but is not")
+                       "is under a table but is not so labelled",
+                       "is labelled as under a table but is not")
         disjunct_error(i, i.at("./ancestor::annex"), !m[:annex].nil?,
-                       "is under an annex but is not so labelled", "is labelled as under an annex but is not")
+                       "is under an annex but is not so labelled",
+                       "is labelled as under an annex but is not")
         disjunct_error(i, i.xpath("./ancestor::figure").size > 1, !m[:subfig].nil?,
                        "does not have a subfigure letter but is a subfigure",
                        "has a subfigure letter but is not a subfigure")
         lang = image_name_suffix(i.document.root)
-        (m[:lang] || "_e") == lang or @log.add("Style", i, "image name #{i['src']} expected to have suffix #{lang}")
+        (m[:lang] || "_e") == lang or
+          @log.add("Style", i, "image name #{i['src']} expected to have suffix #{lang}")
       end
 
       # DRG directives 3.2
@@ -210,11 +219,13 @@ module Asciidoctor
         prefix = image_name_prefix(xmldoc) or return
         xmldoc.xpath("//image").each do |i|
           next if i["src"].start_with?("data:")
-          if /^ISO_\d+_/.match(File.basename(i["src"]))
-          elsif /^(SL)?#{prefix}fig/.match(File.basename(i["src"]))
+
+          if /^ISO_\d+_/.match?(File.basename(i["src"]))
+          elsif /^(SL)?#{prefix}fig/.match?(File.basename(i["src"]))
             image_name_validate1(i, prefix)
           else
-            @log.add("Style", i, "image name #{i['src']} does not match DRG requirements: expect #{prefix}fig")
+            @log.add("Style", i,
+                     "image name #{i['src']} does not match DRG requirements: expect #{prefix}fig")
           end
         end
       end
@@ -251,7 +262,7 @@ module Asciidoctor
         xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
           b.at("./note[@type = 'Unpublished-Status']") or
             @log.add("Style", b,
-                     "Reference #{b&.at("./@id")&.text} does not have an "\
+                     "Reference #{b&.at('./@id')&.text} does not have an "\
                      "associated footnote indicating unpublished status")
         end
       end

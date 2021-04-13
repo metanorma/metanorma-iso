@@ -38,6 +38,7 @@ module Metanorma
 
       def use_presentation_xml(ext)
         return true if ext == :html_alt
+
         super
       end
 

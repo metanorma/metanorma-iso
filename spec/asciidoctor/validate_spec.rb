@@ -71,47 +71,67 @@ RSpec.describe Asciidoctor::ISO do
 
     INPUT
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/rice_image1.png does not match DRG requirements: expect 1000-1_ed2amd3fig"
+      "image name spec/examples/rice_images/rice_image1.png does not match "\
+      "DRG requirements: expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1001_ed2amd3fig1.png does not match DRG requirements: " \
-        "expect 1000-1_ed2amd3fig"
+      "image name spec/examples/rice_images/1001_ed2amd3fig1.png does not "\
+      "match DRG requirements: " \
+      "expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/SL1000-1_ed2amd3fig1.png does not match DRG requirements: " \
-        "expect 1000-1_ed2amd3fig"
+      "image name spec/examples/rice_images/SL1000-1_ed2amd3fig1.png does not "\
+      "match DRG requirements: " \
+      "expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/ISO_1213_1.png does not match DRG requirements: expect 1000-1_ed2amd3fig"
+      "image name spec/examples/rice_images/ISO_1213_1.png does not match DRG "\
+      "requirements: expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figA.png does not match DRG requirements"
+      "image name spec/examples/rice_images/1000-1_ed2amd3figA.png does not "\
+      "match DRG requirements"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figTab1.png does not match DRG requirements"
+      "image name spec/examples/rice_images/1000-1_ed2amd3figTab1.png does "\
+      "not match DRG requirements"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figTab1.png is under a table but is not so labelled"
+      "image name spec/examples/rice_images/1000-1_ed2amd3figTab1.png is "\
+      "under a table but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig2.png is under a table but is not so labelled"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig2.png is under "\
+      "a table but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figTab2.png is labelled as under a table but is not"
+      "image name spec/examples/rice_images/1000-1_ed2amd3figTab2.png is "\
+      "labelled as under a table but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png is labelled as under a table but is not"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png is "\
+      "labelled as under a table but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figA2.png is under an annex but is not so labelled"
+      "image name spec/examples/rice_images/1000-1_ed2amd3figA2.png is "\
+      "under an annex but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig3.png is under an annex but is not so labelled"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig3.png is "\
+      "under an annex but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figA1.png is labelled as under an annex but is not"
+      "image name spec/examples/rice_images/1000-1_ed2amd3figA1.png is "\
+      "labelled as under an annex but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png is labelled as under an annex but is not"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png is "\
+      "labelled as under an annex but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1b.png has a subfigure letter but is not a subfigure"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig1b.png has a "\
+      "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig4.png does not have a subfigure letter but is a subfigure"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig4.png does not "\
+      "have a subfigure letter but is a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1a.png has a subfigure letter but is not a subfigure"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig1a.png has a "\
+      "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png has a subfigure letter but is not a subfigure"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png has a "\
+      "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig5_f.png expected to have suffix _e"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig5_f.png expected "\
+      "to have suffix _e"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png expected to have suffix _e"
+      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png expected "\
+      "to have suffix _e"
   end
 
   context "Warns of missing scope" do
@@ -188,7 +208,8 @@ RSpec.describe Asciidoctor::ISO do
         [bibliography]
         == Normative references
       INPUT
-      expect(File.read("test.err")).not_to include "Normative references missing"
+      expect(File.read("test.err"))
+        .not_to include "Normative references missing"
     end
 
     it "Normative references not missing 2" do
@@ -202,7 +223,8 @@ RSpec.describe Asciidoctor::ISO do
 
         text
       INPUT
-      expect(File.read("test.err")).not_to include "Normative references missing"
+      expect(File.read("test.err"))
+        .not_to include "Normative references missing"
     end
   end
 
@@ -262,7 +284,8 @@ RSpec.describe Asciidoctor::ISO do
 
       text
     INPUT
-    expect(File.read("test.err")).to include "pizza is not a recognised document type"
+    expect(File.read("test.err"))
+      .to include "pizza is not a recognised document type"
   end
 
   it "Warns of illegal script" do
@@ -305,7 +328,8 @@ RSpec.describe Asciidoctor::ISO do
 
       text
     INPUT
-    expect(File.read("test.err")).to include "pizza is not a recognised substage"
+    expect(File.read("test.err"))
+      .to include "pizza is not a recognised substage"
   end
 
   it "Warns of illegal iteration" do
@@ -320,7 +344,8 @@ RSpec.describe Asciidoctor::ISO do
 
       text
     INPUT
-    expect(File.read("test.err")).to include "pizza is not a recognised iteration"
+    expect(File.read("test.err"))
+      .to include "pizza is not a recognised iteration"
   end
 
   it "Warns of illegal script" do
@@ -350,7 +375,8 @@ RSpec.describe Asciidoctor::ISO do
 
       The widget is required not to be larger than 15 cm.
     INPUT
-    expect(File.read("test.err")).to include "Technical Report clause may contain requirement"
+    expect(File.read("test.err"))
+      .to include "Technical Report clause may contain requirement"
   end
 
   it "warns that introduction may contain requirement" do
@@ -360,7 +386,8 @@ RSpec.describe Asciidoctor::ISO do
 
       The widget is required not to be larger than 15 cm.
     INPUT
-    expect(File.read("test.err")).to include "Introduction may contain requirement"
+    expect(File.read("test.err"))
+      .to include "Introduction may contain requirement"
   end
 
   it "warns that foreword may contain recommendation" do
@@ -371,7 +398,8 @@ RSpec.describe Asciidoctor::ISO do
 
       == Clause
     INPUT
-    expect(File.read("test.err")).to include "Foreword may contain recommendation"
+    expect(File.read("test.err"))
+      .to include "Foreword may contain recommendation"
   end
 
   it "warns that foreword may contain permission" do
@@ -406,7 +434,8 @@ RSpec.describe Asciidoctor::ISO do
       It is required that there is a definition.
 
     INPUT
-    expect(File.read("test.err")).to include "Definition may contain requirement"
+    expect(File.read("test.err"))
+      .to include "Definition may contain requirement"
   end
 
   it "warns that term example may contain recommendation" do
@@ -420,7 +449,8 @@ RSpec.describe Asciidoctor::ISO do
       [example]
       It is not recommended that widgets should be larger than 15 cm.
     INPUT
-    expect(File.read("test.err")).to include "Example may contain recommendation"
+    expect(File.read("test.err"))
+      .to include "Example may contain recommendation"
   end
 
   it "warns that note may contain recommendation" do
@@ -438,7 +468,8 @@ RSpec.describe Asciidoctor::ISO do
 
       footnote:[It is not recommended that widgets should be larger than 15 cm.]
     INPUT
-    expect(File.read("test.err")).to include "Footnote may contain recommendation"
+    expect(File.read("test.err"))
+      .to include "Footnote may contain recommendation"
   end
 
   it "warns that term source is not in expected format" do
@@ -496,8 +527,8 @@ RSpec.describe Asciidoctor::ISO do
       [bibliography]
       == Normative References
       * [[[iso123,ISO 123]]] _Standard_
-    INPUT
-    expect(File.read("test.err")).to include "undated reference ISO 123 should not contain specific elements"
+      INPUT
+      expect(File.read("test.err")).to include "undated reference ISO 123 should not contain specific elements"
   end
 
   it "do not warn that undated reference which is a bibliographic reference has locality" do
@@ -510,8 +541,8 @@ RSpec.describe Asciidoctor::ISO do
       [bibliography]
       == Bibliography
       * [[[iso123,1]]] _Standard_
-    INPUT
-    expect(File.read("test.err")).not_to include "undated reference [1] should not contain specific elements"
+      INPUT
+      expect(File.read("test.err")).not_to include "undated reference [1] should not contain specific elements"
   end
 
   it "do not warn that undated IEV reference has locality" do
@@ -524,8 +555,8 @@ RSpec.describe Asciidoctor::ISO do
       [bibliography]
       == Normative References
       * [[[iev,IEV]]] _Standard_
-    INPUT
-    expect(File.read("test.err")).not_to include "undated reference IEV should not contain specific elements"
+      INPUT
+      expect(File.read("test.err")).not_to include "undated reference IEV should not contain specific elements"
   end
 
   it "do not warn that in print has locality" do
@@ -538,8 +569,8 @@ RSpec.describe Asciidoctor::ISO do
       [bibliography]
       == Normative References
       * [[[iev,ISO 123:--]]] _Standard_
-    INPUT
-    expect(File.read("test.err")).not_to include "undated reference ISO 123 should not contain specific elements"
+      INPUT
+      expect(File.read("test.err")).not_to include "undated reference ISO 123 should not contain specific elements"
   end
 
   it "warns of Non-reference in bibliography" do
@@ -1280,7 +1311,7 @@ RSpec.describe Asciidoctor::ISO do
     expect(File.read("test.err")).to include "No English Title Part"
   end
 
-    it "No warning if French main title and English main title" do
+  it "No warning if French main title and English main title" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -1433,8 +1464,8 @@ RSpec.describe Asciidoctor::ISO do
 
       == Clause
       See <<terms>>
-    INPUT
-    expect(File.read("test.err")).to include "'see terms' is pointing to a normative section"
+      INPUT
+      expect(File.read("test.err")).to include "'see terms' is pointing to a normative section"
   end
 
   it "Warning if 'see' reference points to normative reference" do
@@ -1446,8 +1477,8 @@ RSpec.describe Asciidoctor::ISO do
 
       == Clause
       See <<terms>>
-    INPUT
-    expect(File.read("test.err")).to include "is pointing to a normative reference"
+      INPUT
+      expect(File.read("test.err")).to include "is pointing to a normative reference"
   end
 
   it "Warning if term definition starts with article" do
@@ -1554,8 +1585,8 @@ RSpec.describe Asciidoctor::ISO do
       === Term
 
       The definition of a term (<<term>>) is a part of the specialized vocabulary of a particular field
-    INPUT
-    expect(File.read("test.err")).to include "term citation not preceded with italicised term"
+      INPUT
+      expect(File.read("test.err")).to include "term citation not preceded with italicised term"
   end
 
   it "Warn if an undated reference has no associated footnote" do

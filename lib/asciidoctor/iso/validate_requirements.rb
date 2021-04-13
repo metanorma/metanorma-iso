@@ -1,6 +1,4 @@
 require "metanorma-standoc"
-require "nokogiri"
-require "pp"
 
 module Asciidoctor
   module ISO
@@ -20,7 +18,7 @@ module Asciidoctor
         \\b
       REGEXP
       REQUIREMENT_RE =
-        Regexp.new(REQUIREMENT_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
+        Regexp.new(self::REQUIREMENT_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
       def requirement_check(text)
@@ -38,7 +36,7 @@ module Asciidoctor
         \\b
       REGEXP
       RECOMMENDATION_RE =
-        Regexp.new(RECOMMENDATION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
+        Regexp.new(self::RECOMMENDATION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
       def recommendation_check(text)
@@ -57,7 +55,7 @@ module Asciidoctor
         \\b
       REGEXP
       PERMISSION_RE =
-        Regexp.new(PERMISSION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
+        Regexp.new(self::PERMISSION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
       def permission_check(text)
@@ -77,7 +75,7 @@ module Asciidoctor
         \\b
       REGEXP
       POSSIBILITY_RE =
-        Regexp.new(POSSIBILITY_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
+        Regexp.new(self::POSSIBILITY_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
                    Regexp::IGNORECASE)
 
       def possibility(text)
@@ -87,7 +85,7 @@ module Asciidoctor
 
       def external_constraint(text)
         text.split(/\.\s+/).each do |t|
-          return t if /\b(must)\b/xi.match t
+          return t if /\b(must)\b/xi.match? t
         end
         nil
       end

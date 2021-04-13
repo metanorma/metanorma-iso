@@ -35,6 +35,7 @@ module Asciidoctor
 
       def id_prefix(prefix, id)
         return id.text if @amd # we're just inheriting the prefixes from parent doc
+
         prefix.join("/") + ( id.text.match(%{^/}) ? "" :  " " ) + id.text
       end
 
@@ -79,6 +80,7 @@ module Asciidoctor
         return 2 if bib.at("#{PUBLISHER}[name = 'International "\
                            "Electrotechnical Commission']")
         return 3 if bib.at("./docidentifier[@type][not(#{OTHERIDS})]")
+
         4
       end
 
@@ -111,15 +113,16 @@ module Asciidoctor
           "#{partid} :: #{id&.text} :: #{title}"
       end
 
-      def sections_cleanup(x)
+      def sections_cleanup(xml)
         super
         return unless @amd
-        x.xpath("//*[@inline-header]").each do |h|
-          h.delete('inline-header')
+
+        xml.xpath("//*[@inline-header]").each do |h|
+          h.delete("inline-header")
         end
       end
 
-      def boilerplate_file(xmldoc)
+      def boilerplate_file(_xmldoc)
         file = @lang == "fr" ? "boilerplate-fr.xml" : "boilerplate.xml"
         File.join(@libdir, file)
       end
@@ -146,12 +149,15 @@ module Asciidoctor
       end
 
       def unpublished_note(xmldoc)
-        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]").each do |b|
+        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
+          .each do |b|
           next if pub_class(b) > 2
           next unless s = b.at("./status/stage") and s.text.to_i < 60
+
           id = b.at("docidentifier").text
-          b.at("./language | ./script | ./abstract | ./status").previous = <<~NOTE
-          <note type="Unpublished-Status">
+          b.at("./language | ./script | ./abstract | ./status")
+            .previous = <<~NOTE
+            <note type="Unpublished-Status">
             <p>#{@i18n.under_preparation.sub(/%/, id)}</p></note>
           NOTE
         end

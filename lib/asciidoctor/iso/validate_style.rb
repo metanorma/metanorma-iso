@@ -7,6 +7,7 @@ module Asciidoctor
     class Converter < Standoc::Converter
       def extract_text(node)
         return "" if node.nil?
+
         node1 = Nokogiri::XML.fragment(node.to_s)
         node1.xpath("//link | //locality | //localityStack").each(&:remove)
         ret = ""
@@ -17,18 +18,21 @@ module Asciidoctor
       # ISO/IEC DIR 2, 12.2
       def foreword_style(node)
         return if @novalid
+
         style_no_guidance(node, extract_text(node), "Foreword")
       end
 
       # ISO/IEC DIR 2, 14.2
       def scope_style(node)
         return if @novalid
+
         style_no_guidance(node, extract_text(node), "Scope")
       end
 
       # ISO/IEC DIR 2, 13.2
       def introduction_style(node)
         return if @novalid
+
         r = requirement_check(extract_text(node))
         style_warning(node, "Introduction may contain requirement", r) if r
       end
@@ -36,6 +40,7 @@ module Asciidoctor
       # ISO/IEC DIR 2, 16.5.6
       def definition_style(node)
         return if @novalid
+
         r = requirement_check(extract_text(node))
         style_warning(node, "Definition may contain requirement", r) if r
       end
@@ -44,6 +49,7 @@ module Asciidoctor
       # ISO/IEC DIR 2, 25.5
       def example_style(node)
         return if @novalid
+
         style_no_guidance(node, extract_text(node), "Example")
         style(node, extract_text(node))
       end
@@ -51,6 +57,7 @@ module Asciidoctor
       # ISO/IEC DIR 2, 24.5
       def note_style(node)
         return if @novalid
+
         style_no_guidance(node, extract_text(node), "Note")
         style(node, extract_text(node))
       end
@@ -58,6 +65,7 @@ module Asciidoctor
       # ISO/IEC DIR 2, 26.5
       def footnote_style(node)
         return if @novalid
+
         style_no_guidance(node, extract_text(node), "Footnote")
         style(node, extract_text(node))
       end
@@ -70,6 +78,7 @@ module Asciidoctor
       # and a negative match on its preceding token
       def style_two_regex_not_prev(n, text, re, re_prev, warning)
         return if text.nil?
+
         arr = Tokenizer::WhitespaceTokenizer.new.tokenize(text)
         arr.each_index do |i|
           m = re.match arr[i]
@@ -80,43 +89,45 @@ module Asciidoctor
         end
       end
 
-      def style(n, t)
+      def style(node, text)
         return if @novalid
-        style_number(n, t)
-        style_percent(n, t)
-        style_abbrev(n, t)
-        style_units(n, t)
+
+        style_number(node, text)
+        style_percent(node, text)
+        style_abbrev(node, text)
+        style_units(node, text)
       end
 
       # ISO/IEC DIR 2, 9.1
       # ISO/IEC DIR 2, Table B.1
-      def style_number(n, t)
+      def style_number(node, text)
         style_two_regex_not_prev(
-          n, t, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
+          node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
           %r{\b(ISO|IEC|IEEE/|(in|January|February|March|April|May|June|August|September|October|November|December)\b)$},
-          "number not broken up in threes")
+          "number not broken up in threes"
+        )
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
-                    "possible decimal point", n, t)
-        style_regex(/\b(?<num>billion[s]?)\b/i,
-                    "ambiguous number", n, t)
+                    "possible decimal point", node, text)
+        style_regex(/\b(?<num>billions?)\b/i,
+                    "ambiguous number", node, text)
       end
 
       # ISO/IEC DIR 2, 9.2.1
-      def style_percent(n, t)
+      def style_percent(node, text)
         style_regex(/\b(?<num>[0-9.,]+%)/,
-                    "no space before percent sign", n, t)
+                    "no space before percent sign", node, text)
         style_regex(/\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
-                    "unbracketed tolerance before percent sign", n, t)
+                    "unbracketed tolerance before percent sign", node, text)
       end
 
       # ISO/IEC DIR 2, 8.4
       # ISO/IEC DIR 2, 9.3
-      def style_abbrev(n, t)
+      def style_abbrev(node, text)
         style_regex(/(^|\s)(?!e\.g\.|i\.e\.)
                     (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
-                      "no dots in abbreviations", n, t)
+                    "no dots in abbreviations", node, text)
         style_regex(/\b(?<num>ppm)\b/i,
-                    "language-specific abbreviation", n, t)
+                    "language-specific abbreviation", node, text)
       end
 
       # leaving out as problematic: N J K C S T H h d B o E
@@ -125,12 +136,12 @@ module Asciidoctor
         "bit|kB|MB|Hart|nat|Sh|var)".freeze
 
       # ISO/IEC DIR 2, 9.3
-      def style_units(n, t)
+      def style_units(node, text)
         style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,
-                    "space between number and degrees/minutes/seconds", n, t)
+                    "space between number and degrees/minutes/seconds", node, text)
         style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/,
-                    "no space between number and SI unit", n, t)
-        style_non_std_units(n, t)
+                    "no space between number and SI unit", node, text)
+        style_non_std_units(node, text)
       end
 
       NONSTD_UNITS = {
@@ -139,10 +150,10 @@ module Asciidoctor
       }.freeze
 
       # ISO/IEC DIR 2, 9.3
-      def style_non_std_units(n, t)
+      def style_non_std_units(node, text)
         NONSTD_UNITS.each do |k, v|
           style_regex(/\b(?<num>[0-9][0-9,]*\s+#{k})\b/,
-                      "non-standard unit (should be #{v})", n, t)
+                      "non-standard unit (should be #{v})", node, text)
         end
       end
     end
