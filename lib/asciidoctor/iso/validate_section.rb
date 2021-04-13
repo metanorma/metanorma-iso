@@ -50,8 +50,9 @@ module Asciidoctor
       end
 
       def seqcheck(names, msg, accepted)
-        n = names.shift 
+        n = names.shift
         return [] if n.nil?
+
         test = accepted.map { |a| n.at(a) }
         if test.all? { |a| a.nil? }
           @log.add("Style", nil, msg)
@@ -200,6 +201,17 @@ module Asciidoctor
       def subclause_validate(root)
         root.xpath("//clause/clause/clause/clause/clause/clause/clause/clause").each do |c|
           style_warning(c, "Exceeds the maximum clause depth of 7", nil)
+        end
+      end
+
+      # ISO/IEC DIR 2, 22.3.2
+      def onlychild_clause_validate(root)
+        root.xpath(Standoc::Utils::SUBCLAUSE_XPATH).each do |c|
+          next unless c.xpath("../clause").size == 1
+          title = c.at("./title")
+          location = c["id"] || c.text[0..60] + "..."
+          location += ":#{title.text}" if c["id"] && !title.nil?
+          @log.add("Style", nil, "#{location}: subclause is only child")
         end
       end
     end
