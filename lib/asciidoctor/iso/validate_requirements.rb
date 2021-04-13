@@ -17,13 +17,15 @@ module Asciidoctor
            [.,:;]_do_not )
         \\b
       REGEXP
-      REQUIREMENT_RE =
-        Regexp.new(self::REQUIREMENT_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
-                   Regexp::IGNORECASE)
+
+      def requirement_re
+        Regexp.new(self.class::REQUIREMENT_RE_STR.gsub(/\s/, "")
+          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+      end
 
       def requirement_check(text)
         text.split(/\.\s+/).each do |t|
-          return t if REQUIREMENT_RE.match t
+          return t if requirement_re.match t
         end
         nil
       end
@@ -35,13 +37,15 @@ module Asciidoctor
             it_is_(not_)?recommended_that
         \\b
       REGEXP
-      RECOMMENDATION_RE =
-        Regexp.new(self::RECOMMENDATION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
-                   Regexp::IGNORECASE)
+
+      def recommendation_re
+        Regexp.new(self.class::RECOMMENDATION_RE_STR.gsub(/\s/, "")
+          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+      end
 
       def recommendation_check(text)
         text.split(/\.\s+/).each do |t|
-          return t if RECOMMENDATION_RE.match t
+          return t if recommendation_re.match t
         end
         nil
       end
@@ -54,13 +58,15 @@ module Asciidoctor
             no\\b[^.,]+\\b(is|are)_required
         \\b
       REGEXP
-      PERMISSION_RE =
-        Regexp.new(self::PERMISSION_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
-                   Regexp::IGNORECASE)
+
+      def permission_re
+        Regexp.new(self.class::PERMISSION_RE_STR.gsub(/\s/, "")
+          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+      end
 
       def permission_check(text)
         text.split(/\.\s+/).each do |t|
-          return t if PERMISSION_RE.match t
+          return t if permission_re.match t
         end
         nil
       end
@@ -74,12 +80,14 @@ module Asciidoctor
            it_is_not_possible_to
         \\b
       REGEXP
-      POSSIBILITY_RE =
-        Regexp.new(self::POSSIBILITY_RE_STR.gsub(/\s/, "").gsub(/_/, "\\s"),
-                   Regexp::IGNORECASE)
+
+      def possibility_re
+        Regexp.new(self.class::POSSIBILITY_RE_STR.gsub(/\s/, "")
+          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+      end
 
       def possibility(text)
-        text.split(/\.\s+/).each { |t| return t if POSSIBILITY_RE.match t }
+        text.split(/\.\s+/).each { |t| return t if possibility_re.match t }
         nil
       end
 
