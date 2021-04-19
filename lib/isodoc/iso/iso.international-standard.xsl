@@ -948,22 +948,24 @@
 																																				/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup/@type, ' ',
 																																				/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup/@number)"/>
 								 -->
-								<!-- ISO/TC 34/SC 4/WG 3 -->
-								<fo:block margin-bottom="12pt">
-									<xsl:text>ISO</xsl:text>
-									<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee[@number]">
-										<xsl:text>/TC </xsl:text><xsl:value-of select="@number"/>
-									</xsl:for-each>
-									<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:subcommittee[@number]">
-										<xsl:text>/SC </xsl:text>
-										<xsl:value-of select="@number"/>
-									</xsl:for-each>
-									<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup[@number]">
-										<xsl:text>/WG </xsl:text>
-										<xsl:value-of select="@number"/>
-									</xsl:for-each>
-								</fo:block>
-								
+								 
+								 <xsl:if test="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee[normalize-space(@number) != ''] or                   /iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:subcommittee[normalize-space(@number) != ''] or                  /iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup[normalize-space(@number) != '']">
+									<!-- ISO/TC 34/SC 4/WG 3 -->
+									<fo:block margin-bottom="12pt">
+										<xsl:text>ISO</xsl:text>
+										<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee[normalize-space(@number) != '']">
+											<xsl:text>/TC </xsl:text><xsl:value-of select="@number"/>
+										</xsl:for-each>
+										<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:subcommittee[normalize-space(@number) != '']">
+											<xsl:text>/SC </xsl:text>
+											<xsl:value-of select="@number"/>
+										</xsl:for-each>
+										<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup[normalize-space(@number) != '']">
+											<xsl:text>/WG </xsl:text>
+											<xsl:value-of select="@number"/>
+										</xsl:for-each>
+									</fo:block>
+								</xsl:if>
 								<!-- Secretariat: AFNOR  -->
 								
 								<fo:block margin-bottom="100pt">
@@ -1025,7 +1027,15 @@
 							<fo:block font-size="11pt" margin-bottom="8pt"><xsl:value-of select="$linebreak"/></fo:block>
 							<fo:block-container font-size="40pt" text-align="center" margin-bottom="12pt" border="0.5pt solid black">
 								<xsl:variable name="stage-title" select="substring-after(substring-before($docidentifierISO, ' '), '/')"/>
-								<fo:block padding-top="2mm"><xsl:value-of select="$stage-title"/><xsl:text> stage</xsl:text></fo:block>
+								<xsl:choose>
+									<xsl:when test="normalize-space($stage-title) != ''">
+										<fo:block padding-top="2mm"><xsl:value-of select="$stage-title"/><xsl:text> stage</xsl:text></fo:block>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:attribute name="border">0pt solid white</xsl:attribute>
+										<fo:block> </fo:block>
+									</xsl:otherwise>
+								</xsl:choose>
 							</fo:block-container>
 							<fo:block><xsl:value-of select="$linebreak"/></fo:block>
 							
@@ -1806,7 +1816,7 @@
 		</xsl:for-each>
 	</xsl:template>
 	
-	<xsl:template match="iso:ul//iso:note |  iso:ol//iso:note" priority="2"/>
+	<xsl:template match="iso:ul/iso:note |  iso:ol/iso:note | iso:ul/iso:li/iso:note |  iso:ol/iso:li/iso:note" priority="2"/>
 	
 	<xsl:template match="iso:li">
 		<fo:list-item id="{@id}">
@@ -1818,7 +1828,10 @@
 			<fo:list-item-body start-indent="body-start()">
 				<fo:block>
 					<xsl:apply-templates/>
-					<xsl:apply-templates select=".//iso:note" mode="process"/>
+					<!-- <xsl:apply-templates select=".//iso:note" mode="process"/> -->
+					<xsl:for-each select="./iso:note">
+						<xsl:call-template name="note"/>
+					</xsl:for-each>
 				</fo:block>
 			</fo:list-item-body>
 		</fo:list-item>
@@ -1826,6 +1839,10 @@
 	
 	<xsl:template match="iso:note" mode="process">
 		<xsl:call-template name="note"/>
+	</xsl:template>
+	
+	<xsl:template match="*" mode="process">
+		<xsl:apply-templates select="."/>
 	</xsl:template>
 	
 	<xsl:template match="iso:preferred">		
@@ -1915,6 +1932,12 @@
 				<xsl:apply-templates select="." mode="mathml"/>
 			</xsl:variable>
 			<fo:instream-foreign-object fox:alt-text="Math">
+				<xsl:if test="count(ancestor::*[local-name() = 'table']) &gt; 1">
+					<xsl:attribute name="width">95%</xsl:attribute>
+					<xsl:attribute name="content-height">100%</xsl:attribute>
+					<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+					<xsl:attribute name="scaling">uniform</xsl:attribute>
+				</xsl:if>
 				<!-- <xsl:copy-of select="."/> -->
 				<xsl:copy-of select="xalan:nodeset($mathml)"/>
 			</fo:instream-foreign-object>
@@ -2777,6 +2800,7 @@
 		
 		
 			 <xsl:attribute name="padding-right">5mm</xsl:attribute>
+			 <xsl:attribute name="keep-with-next">always</xsl:attribute>
 		
 		
 		
@@ -3044,6 +3068,10 @@
 	</xsl:attribute-set><xsl:attribute-set name="add-style">
 		<xsl:attribute name="color">red</xsl:attribute>
 		<xsl:attribute name="text-decoration">underline</xsl:attribute>
+		<!-- <xsl:attribute name="color">black</xsl:attribute>
+		<xsl:attribute name="background-color">rgb(0, 255, 0)</xsl:attribute>
+		<xsl:attribute name="padding-top">1mm</xsl:attribute>
+		<xsl:attribute name="padding-bottom">0.5mm</xsl:attribute> -->
 	</xsl:attribute-set><xsl:attribute-set name="del-style">
 		<xsl:attribute name="color">red</xsl:attribute>
 		<xsl:attribute name="text-decoration">line-through</xsl:attribute>
@@ -3112,7 +3140,7 @@
 			
 				
 			
-			<xsl:variable name="cols-count" select="count(xalan:nodeset($simple-table)//tr[1]/td)"/>
+			<xsl:variable name="cols-count" select="count(xalan:nodeset($simple-table)/*/tr[1]/td)"/>
 			
 			<!-- <xsl:variable name="cols-count">
 				<xsl:choose>
@@ -3130,8 +3158,6 @@
 			</xsl:variable> -->
 			<!-- cols-count=<xsl:copy-of select="$cols-count"/> -->
 			<!-- cols-count2=<xsl:copy-of select="$cols-count2"/> -->
-			
-			
 			
 			<xsl:variable name="colwidths">
 				<xsl:if test="not(*[local-name()='colgroup']/*[local-name()='col'])">
@@ -3198,6 +3224,12 @@
 						<attribute name="border">1.5pt solid black</attribute>
 						<xsl:if test="*[local-name()='thead']">
 							<attribute name="border-top">1pt solid black</attribute>
+						</xsl:if>
+					
+					
+						<xsl:if test="ancestor::*[local-name() = 'table']">
+							<!-- for internal table in table cell -->
+							<attribute name="border">0.5pt solid black</attribute>
 						</xsl:if>
 					
 					
@@ -3383,7 +3415,7 @@
 						</xsl:for-each>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:for-each select="xalan:nodeset($table)//tr">
+						<xsl:for-each select="xalan:nodeset($table)/*/tr">
 							<xsl:variable name="td_text">
 								<xsl:apply-templates select="td[$curr-col]" mode="td_text"/>
 								
@@ -3852,6 +3884,9 @@
 			
 			
 			
+			<xsl:if test=".//*[local-name() = 'table']">
+				<xsl:attribute name="padding-right">1mm</xsl:attribute>
+			</xsl:if>
 			<xsl:if test="@colspan">
 				<xsl:attribute name="number-columns-spanned">
 					<xsl:value-of select="@colspan"/>
@@ -3985,13 +4020,13 @@
 						</xsl:choose>
 					</xsl:variable>
 					<!-- <xsl:variable name="ns" select="substring-before(name(/*), '-')"/> -->
-					<xsl:element name="{$ns}:table">
+					<!-- <xsl:element name="{$ns}:table"> -->
 						<xsl:for-each select="*[local-name() = 'dl'][1]">
 							<tbody>
 								<xsl:apply-templates mode="dl"/>
 							</tbody>
 						</xsl:for-each>
-					</xsl:element>
+					<!-- </xsl:element> -->
 				</xsl:variable>
 				
 				<xsl:call-template name="calculate-column-widths">
@@ -4225,11 +4260,11 @@
 										</xsl:choose>
 									</xsl:variable>
 									<!-- <xsl:variable name="ns" select="substring-before(name(/*), '-')"/> -->
-									<xsl:element name="{$ns}:table">
+									<!-- <xsl:element name="{$ns}:table"> -->
 										<tbody>
 											<xsl:apply-templates mode="dl"/>
 										</tbody>
-									</xsl:element>
+									<!-- </xsl:element> -->
 								</xsl:variable>
 								<!-- html-table<xsl:copy-of select="$html-table"/> -->
 								<xsl:variable name="colwidths">
@@ -5690,6 +5725,7 @@
 		<xsl:variable name="element">
 			
 			inline
+			<xsl:if test="following-sibling::*[1][local-name() = 'table']">block</xsl:if> 
 		</xsl:variable>		
 		<xsl:choose>
 			<xsl:when test="ancestor::*[local-name() = 'appendix']">
@@ -5697,7 +5733,7 @@
 					<xsl:apply-templates/>
 				</fo:inline>
 			</xsl:when>
-			<xsl:when test="normalize-space($element) = 'block'">
+			<xsl:when test="contains(normalize-space($element), 'block')">
 				<fo:block xsl:use-attribute-sets="example-name-style">
 					<xsl:apply-templates/>
 				</fo:block>
