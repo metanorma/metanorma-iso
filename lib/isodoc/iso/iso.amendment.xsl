@@ -4557,9 +4557,71 @@
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template><xsl:template match="*[local-name()='add']">
-		<fo:inline xsl:use-attribute-sets="add-style">
-			<xsl:apply-templates/>
-		</fo:inline>
+		<xsl:choose>
+			<xsl:when test="@amendment">
+				<fo:inline>
+					<xsl:call-template name="insertTag">
+						<xsl:with-param name="kind">A</xsl:with-param>
+						<xsl:with-param name="value"><xsl:value-of select="@amendment"/></xsl:with-param>
+					</xsl:call-template>
+					<xsl:apply-templates/>
+					<xsl:call-template name="insertTag">
+						<xsl:with-param name="type">closing</xsl:with-param>
+						<xsl:with-param name="kind">A</xsl:with-param>
+						<xsl:with-param name="value"><xsl:value-of select="@amendment"/></xsl:with-param>
+					</xsl:call-template>
+				</fo:inline>
+			</xsl:when>
+			<xsl:when test="@corrigenda">
+				<fo:inline>
+					<xsl:call-template name="insertTag">
+						<xsl:with-param name="kind">C</xsl:with-param>
+						<xsl:with-param name="value"><xsl:value-of select="@corrigenda"/></xsl:with-param>
+					</xsl:call-template>
+					<xsl:apply-templates/>
+					<xsl:call-template name="insertTag">
+						<xsl:with-param name="type">closing</xsl:with-param>
+						<xsl:with-param name="kind">C</xsl:with-param>
+						<xsl:with-param name="value"><xsl:value-of select="@corrigenda"/></xsl:with-param>
+					</xsl:call-template>
+				</fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<fo:inline xsl:use-attribute-sets="add-style">
+					<xsl:apply-templates/>
+				</fo:inline>
+			</xsl:otherwise>
+		</xsl:choose>
+		
+	</xsl:template><xsl:template name="insertTag">
+		<xsl:param name="type"/>
+		<xsl:param name="kind"/>
+		<xsl:param name="value"/>
+		<xsl:variable name="add_width" select="string-length($value) * 20"/>
+		<xsl:variable name="maxwidth" select="60 + $add_width"/>
+			<fo:instream-foreign-object fox:alt-text="OpeningTag" baseline-shift="-20%"><!-- alignment-baseline="middle" -->
+				<!-- <xsl:attribute name="width">7mm</xsl:attribute>
+				<xsl:attribute name="content-height">100%</xsl:attribute> -->
+				<xsl:attribute name="height">5mm</xsl:attribute>
+				<xsl:attribute name="content-width">100%</xsl:attribute>
+				<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+				<xsl:attribute name="scaling">uniform</xsl:attribute>
+				<svg xmlns="http://www.w3.org/2000/svg" width="{$maxwidth + 32}" height="80">
+					<g>
+						<xsl:if test="$type = 'closing'">
+							<xsl:attribute name="transform">scale(-1 1) translate(-<xsl:value-of select="$maxwidth + 32"/>,0)</xsl:attribute>
+						</xsl:if>
+						<polyline points="0,0 {$maxwidth},0 {$maxwidth + 30},40 {$maxwidth},80 0,80 " stroke="black" stroke-width="5" fill="white"/>
+						<line x1="0" y1="0" x2="0" y2="80" stroke="black" stroke-width="20"/>
+					</g>
+					<text font-family="Arial" x="15" y="57" font-size="40pt">
+						<xsl:if test="$type = 'closing'">
+							<xsl:attribute name="x">25</xsl:attribute>
+						</xsl:if>
+						<xsl:value-of select="$kind"/><tspan dy="10" font-size="30pt"><xsl:value-of select="$value"/></tspan>
+					</text>
+				</svg>
+			</fo:instream-foreign-object>
 	</xsl:template><xsl:template match="*[local-name()='del']">
 		<fo:inline xsl:use-attribute-sets="del-style">
 			<xsl:apply-templates/>
@@ -5199,9 +5261,8 @@
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template><xsl:template match="*[local-name() = 'image']">
-		<xsl:variable name="isAdded" select="@added"/>
-		<xsl:variable name="isDeleted" select="@deleted"/>
-		
+		<xsl:variable name="isAdded" select="../@added"/>
+		<xsl:variable name="isDeleted" select="../@deleted"/>
 		<xsl:choose>
 			<xsl:when test="ancestor::*[local-name() = 'title']">
 				<fo:inline padding-left="1mm" padding-right="1mm">
@@ -5299,8 +5360,8 @@
 	</xsl:template><xsl:template name="svg_cross">
 		<xsl:param name="width"/>
 		<xsl:param name="height"/>
-		<line x1="0" y1="0" x2="{$width}" y2="{$height}" style="stroke: rgb(255, 0, 0); stroke-width:4px; "/>
-		<line x1="0" y1="{$height}" x2="{$width}" y2="0" style="stroke: rgb(255, 0, 0); stroke-width:4px; "/>
+		<line xmlns="http://www.w3.org/2000/svg" x1="0" y1="0" x2="{$width}" y2="{$height}" style="stroke: rgb(255, 0, 0); stroke-width:4px; "/>
+		<line xmlns="http://www.w3.org/2000/svg" x1="0" y1="{$height}" x2="{$width}" y2="0" style="stroke: rgb(255, 0, 0); stroke-width:4px; "/>
 	</xsl:template><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'name']"/><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'name'] |                *[local-name() = 'table']/*[local-name() = 'name'] |               *[local-name() = 'permission']/*[local-name() = 'name'] |               *[local-name() = 'recommendation']/*[local-name() = 'name'] |               *[local-name() = 'requirement']/*[local-name() = 'name']" mode="contents">		
 		<xsl:apply-templates mode="contents"/>
 		<xsl:text> </xsl:text>
@@ -6807,7 +6868,9 @@
 				</xsl:if>
 				<xsl:if test="$isDeleted = 'true'">
 					<xsl:attribute name="border"><xsl:value-of select="$border-block-deleted"/></xsl:attribute>
-					<xsl:attribute name="background-color">rgb(255, 185, 185)</xsl:attribute>
+					<xsl:if test="local-name() = 'table'">
+						<xsl:attribute name="background-color">rgb(255, 185, 185)</xsl:attribute>
+					</xsl:if>
 					<!-- <xsl:attribute name="color"><xsl:value-of select="$color-deleted-text"/></xsl:attribute> -->
 					<xsl:attribute name="padding">2mm</xsl:attribute>
 				</xsl:if>
