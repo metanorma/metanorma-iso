@@ -1926,26 +1926,6 @@
 	</xsl:template>
 
 	
-	<xsl:template match="mathml:math" priority="2">
-		<fo:inline font-family="Cambria Math">
-			<xsl:variable name="mathml">
-				<xsl:apply-templates select="." mode="mathml"/>
-			</xsl:variable>
-			<fo:instream-foreign-object fox:alt-text="Math">
-				<xsl:if test="count(ancestor::*[local-name() = 'table']) &gt; 1">
-					<xsl:attribute name="width">95%</xsl:attribute>
-					<xsl:attribute name="content-height">100%</xsl:attribute>
-					<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
-					<xsl:attribute name="scaling">uniform</xsl:attribute>
-				</xsl:if>
-				<!-- <xsl:copy-of select="."/> -->
-				<xsl:copy-of select="xalan:nodeset($mathml)"/>
-			</fo:instream-foreign-object>
-		</fo:inline>
-	</xsl:template>
-	
-
-	
 	<xsl:template match="iso:admonition">
 		<fo:block margin-bottom="12pt" font-weight="bold"> <!-- text-align="center"  -->			
 			<xsl:variable name="type">
@@ -3065,17 +3045,27 @@
 		
 			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 		
-	</xsl:attribute-set><xsl:attribute-set name="add-style">
+	</xsl:attribute-set><xsl:variable name="color-added-text">
+		<xsl:text>rgb(0, 255, 0)</xsl:text>
+	</xsl:variable><xsl:attribute-set name="add-style">
 		<xsl:attribute name="color">red</xsl:attribute>
 		<xsl:attribute name="text-decoration">underline</xsl:attribute>
 		<!-- <xsl:attribute name="color">black</xsl:attribute>
-		<xsl:attribute name="background-color">rgb(0, 255, 0)</xsl:attribute>
+		<xsl:attribute name="background-color"><xsl:value-of select="$color-added-text"/></xsl:attribute>
 		<xsl:attribute name="padding-top">1mm</xsl:attribute>
 		<xsl:attribute name="padding-bottom">0.5mm</xsl:attribute> -->
-	</xsl:attribute-set><xsl:attribute-set name="del-style">
-		<xsl:attribute name="color">red</xsl:attribute>
+	</xsl:attribute-set><xsl:variable name="color-deleted-text">
+		<xsl:text>red</xsl:text>
+	</xsl:variable><xsl:attribute-set name="del-style">
+		<xsl:attribute name="color"><xsl:value-of select="$color-deleted-text"/></xsl:attribute>
 		<xsl:attribute name="text-decoration">line-through</xsl:attribute>
-	</xsl:attribute-set><xsl:template name="processPrefaceSectionsDefault_Contents">
+	</xsl:attribute-set><xsl:attribute-set name="mathml-style">
+		<xsl:attribute name="font-family">STIX Two Math</xsl:attribute>
+		
+			<xsl:attribute name="font-family">Cambria Math</xsl:attribute>
+		
+		
+	</xsl:attribute-set><xsl:variable name="border-block-added">2.5pt solid rgb(0, 176, 80)</xsl:variable><xsl:variable name="border-block-deleted">2.5pt solid rgb(255, 0, 0)</xsl:variable><xsl:template name="processPrefaceSectionsDefault_Contents">
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='abstract']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='foreword']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='introduction']" mode="contents"/>
@@ -3120,16 +3110,17 @@
 		<xsl:call-template name="add-zero-spaces-java"/>
 	</xsl:template><xsl:template match="*[local-name()='table']" name="table">
 	
+		<xsl:variable name="table-preamble">
+			
+			
+		</xsl:variable>
+		
 		<xsl:variable name="table">
 	
 			<xsl:variable name="simple-table">	
 				<xsl:call-template name="getSimpleTable"/>			
 			</xsl:variable>
 		
-			
-			
-			
-			
 			<!-- <xsl:if test="$namespace = 'bipm'">
 				<fo:block>&#xA0;</fo:block>				
 			</xsl:if> -->
@@ -3185,6 +3176,7 @@
 					<xsl:otherwise>0</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
+			
 			
 			<fo:block-container margin-left="-{$margin-left}mm" margin-right="-{$margin-left}mm">			
 				
@@ -3327,7 +3319,8 @@
 			</fo:block-container>
 		</xsl:variable>
 		
-		
+		<xsl:variable name="isAdded" select="@added"/>
+		<xsl:variable name="isDeleted" select="@deleted"/>
 		
 		<xsl:choose>
 			<xsl:when test="@width">
@@ -3341,7 +3334,14 @@
 						<fo:table-body>
 							<fo:table-row>
 								<fo:table-cell column-number="2">
-									<fo:block><xsl:copy-of select="$table"/></fo:block>
+									<xsl:copy-of select="$table-preamble"/>
+									<fo:block>
+										<xsl:call-template name="setTrackChangesStyles">
+											<xsl:with-param name="isAdded" select="$isAdded"/>
+											<xsl:with-param name="isDeleted" select="$isDeleted"/>
+										</xsl:call-template>
+										<xsl:copy-of select="$table"/>
+									</fo:block>
 								</fo:table-cell>
 							</fo:table-row>
 						</fo:table-body>
@@ -3352,7 +3352,22 @@
 				
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:copy-of select="$table"/>
+				<xsl:choose>
+					<xsl:when test="$isAdded = 'true' or $isDeleted = 'true'">
+						<xsl:copy-of select="$table-preamble"/>
+						<fo:block>
+							<xsl:call-template name="setTrackChangesStyles">
+								<xsl:with-param name="isAdded" select="$isAdded"/>
+								<xsl:with-param name="isDeleted" select="$isDeleted"/>
+							</xsl:call-template>
+							<xsl:copy-of select="$table"/>
+						</fo:block>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:copy-of select="$table-preamble"/>
+						<xsl:copy-of select="$table"/>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
 		
@@ -4123,6 +4138,8 @@
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template><xsl:template match="*[local-name()='dl']">
+		<xsl:variable name="isAdded" select="@added"/>
+		<xsl:variable name="isDeleted" select="@deleted"/>
 		<fo:block-container>
 			
 				<xsl:if test="not(ancestor::*[local-name() = 'quote'])">
@@ -4139,6 +4156,12 @@
 				</xsl:attribute>
 				
 			</xsl:if>
+			
+			<xsl:call-template name="setTrackChangesStyles">
+				<xsl:with-param name="isAdded" select="$isAdded"/>
+				<xsl:with-param name="isDeleted" select="$isDeleted"/>
+			</xsl:call-template>
+			
 			<fo:block-container>
 				
 					<xsl:attribute name="margin-left">0mm</xsl:attribute>
@@ -4879,12 +4902,29 @@
 		<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(substring($str, 1, 1)))"/>
 		<xsl:value-of select="substring($str, 2)"/>		
 	</xsl:template><xsl:template match="mathml:math">
-		<fo:inline font-family="STIX Two Math"> <!--  -->
+		<xsl:variable name="isAdded" select="@added"/>
+		<xsl:variable name="isDeleted" select="@deleted"/>
+		
+		<fo:inline xsl:use-attribute-sets="mathml-style">
+			
+			
+			<xsl:call-template name="setTrackChangesStyles">
+				<xsl:with-param name="isAdded" select="$isAdded"/>
+				<xsl:with-param name="isDeleted" select="$isDeleted"/>
+			</xsl:call-template>
 			
 			<xsl:variable name="mathml">
 				<xsl:apply-templates select="." mode="mathml"/>
 			</xsl:variable>
 			<fo:instream-foreign-object fox:alt-text="Math">
+				
+				
+					<xsl:if test="count(ancestor::*[local-name() = 'table']) &gt; 1">
+						<xsl:attribute name="width">95%</xsl:attribute>
+						<xsl:attribute name="content-height">100%</xsl:attribute>
+						<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+						<xsl:attribute name="scaling">uniform</xsl:attribute>
+					</xsl:if>
 				
 				<!-- <xsl:copy-of select="."/> -->
 				<xsl:copy-of select="xalan:nodeset($mathml)"/>
@@ -5131,7 +5171,14 @@
 			</fo:inline>
 		</xsl:if>
 	</xsl:template><xsl:template match="*[local-name() = 'figure']" name="figure">
+		<xsl:variable name="isAdded" select="@added"/>
+		<xsl:variable name="isDeleted" select="@deleted"/>
 		<fo:block-container id="{@id}">			
+			
+			<xsl:call-template name="setTrackChangesStyles">
+				<xsl:with-param name="isAdded" select="$isAdded"/>
+				<xsl:with-param name="isDeleted" select="$isDeleted"/>
+			</xsl:call-template>
 			
 			<fo:block>
 				<xsl:apply-templates/>
@@ -5152,6 +5199,9 @@
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template><xsl:template match="*[local-name() = 'image']">
+		<xsl:variable name="isAdded" select="@added"/>
+		<xsl:variable name="isDeleted" select="@deleted"/>
+		
 		<xsl:choose>
 			<xsl:when test="ancestor::*[local-name() = 'title']">
 				<fo:inline padding-left="1mm" padding-right="1mm">
@@ -5167,7 +5217,26 @@
 					<xsl:variable name="src">
 						<xsl:call-template name="image_src"/>
 					</xsl:variable>
-					<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" xsl:use-attribute-sets="image-graphic-style"/>
+					
+					<xsl:choose>
+						<xsl:when test="$isDeleted = 'true'">
+							<!-- enclose in svg -->
+							<fo:instream-foreign-object fox:alt-text="Image {@alt}">
+								<xsl:attribute name="width">100%</xsl:attribute>
+								<xsl:attribute name="content-height">100%</xsl:attribute>
+								<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+								<xsl:attribute name="scaling">uniform</xsl:attribute>
+								
+								
+									<xsl:apply-templates select="." mode="cross_image"/>
+									
+							</fo:instream-foreign-object>
+						</xsl:when>
+						<xsl:otherwise>
+							<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" xsl:use-attribute-sets="image-graphic-style"/>
+						</xsl:otherwise>
+					</xsl:choose>
+					
 				</fo:block>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -5183,6 +5252,55 @@
 				<xsl:value-of select="@src"/>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template><xsl:template match="*[local-name() = 'image']" mode="cross_image">
+		<xsl:choose>
+			<xsl:when test="@mimetype = 'image/svg+xml' and $images/images/image[@id = current()/@id]">
+				<xsl:variable name="src">
+					<xsl:value-of select="$images/images/image[@id = current()/@id]/@src"/>
+				</xsl:variable>
+				<xsl:variable name="width" select="document($src)/@width"/>
+				<xsl:variable name="height" select="document($src)/@height"/>
+				<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="enable-background:new 0 0 595.28 841.89;" height="{$height}" width="{$width}" viewBox="0 0 {$width} {$height}" y="0px" x="0px" id="Layer_1" version="1.1">
+					<image xlink:href="{$src}" style="overflow:visible;"/>
+				</svg>
+			</xsl:when>
+			<xsl:when test="not(starts-with(@src, 'data:'))">
+				<xsl:variable name="src">
+					<xsl:value-of select="concat('url(file:',$basepath, @src, ')')"/>
+				</xsl:variable>
+				<xsl:variable name="file" select="java:java.io.File.new(@src)"/>
+				<xsl:variable name="bufferedImage" select="java:javax.imageio.ImageIO.read($file)"/>
+				<xsl:variable name="width" select="java:getWidth($bufferedImage)"/>
+				<xsl:variable name="height" select="java:getHeight($bufferedImage)"/>
+				<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="enable-background:new 0 0 595.28 841.89;" height="{$height}" width="{$width}" viewBox="0 0 {$width} {$height}" y="0px" x="0px" id="Layer_1" version="1.1">
+					<image xlink:href="{$src}" style="overflow:visible;"/>
+				</svg>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:variable name="base64String" select="substring-after(@src, 'base64,')"/>
+				<xsl:variable name="decoder" select="java:java.util.Base64.getDecoder()"/>
+				<xsl:variable name="fileContent" select="java:decode($decoder, $base64String)"/>
+				<xsl:variable name="bis" select="java:java.io.ByteArrayInputStream.new($fileContent)"/>
+				<xsl:variable name="bufferedImage" select="java:javax.imageio.ImageIO.read($bis)"/>
+				<xsl:variable name="width" select="java:getWidth($bufferedImage)"/>
+				<!-- width=<xsl:value-of select="$width"/> -->
+				<xsl:variable name="height" select="java:getHeight($bufferedImage)"/>
+				<!-- height=<xsl:value-of select="$height"/> -->
+				<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="enable-background:new 0 0 595.28 841.89;" height="{$height}" width="{$width}" viewBox="0 0 {$width} {$height}" y="0px" x="0px" id="Layer_1" version="1.1">
+					<image xlink:href="{@src}" height="{$height}" width="{$width}" style="overflow:visible;"/>
+					<xsl:call-template name="svg_cross">
+						<xsl:with-param name="width" select="$width"/>
+						<xsl:with-param name="height" select="$height"/>
+					</xsl:call-template>
+				</svg>
+			</xsl:otherwise>
+		</xsl:choose>
+		
+	</xsl:template><xsl:template name="svg_cross">
+		<xsl:param name="width"/>
+		<xsl:param name="height"/>
+		<line x1="0" y1="0" x2="{$width}" y2="{$height}" style="stroke: rgb(255, 0, 0); stroke-width:4px; "/>
+		<line x1="0" y1="{$height}" x2="{$width}" y2="0" style="stroke: rgb(255, 0, 0); stroke-width:4px; "/>
 	</xsl:template><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'name']"/><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'name'] |                *[local-name() = 'table']/*[local-name() = 'name'] |               *[local-name() = 'permission']/*[local-name() = 'name'] |               *[local-name() = 'recommendation']/*[local-name() = 'name'] |               *[local-name() = 'requirement']/*[local-name() = 'name']" mode="contents">		
 		<xsl:apply-templates mode="contents"/>
 		<xsl:text> </xsl:text>
@@ -6668,6 +6786,32 @@
 				<xsl:value-of select="/*/*[local-name() = 'localized-strings']/*[local-name() = 'localized-string'][@key = $key and @language = $curr_lang]"/>
 			</xsl:when>
 			<xsl:otherwise><xsl:value-of select="$key"/></xsl:otherwise>
+		</xsl:choose>
+		
+	</xsl:template><xsl:template name="setTrackChangesStyles">
+		<xsl:param name="isAdded"/>
+		<xsl:param name="isDeleted"/>
+		<xsl:choose>
+			<xsl:when test="local-name() = 'math'">
+				<xsl:if test="$isAdded = 'true'">
+					<xsl:attribute name="background-color"><xsl:value-of select="$color-added-text"/></xsl:attribute>
+				</xsl:if>
+				<xsl:if test="$isDeleted = 'true'">
+					<xsl:attribute name="background-color"><xsl:value-of select="$color-deleted-text"/></xsl:attribute>
+				</xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:if test="$isAdded = 'true'">
+					<xsl:attribute name="border"><xsl:value-of select="$border-block-added"/></xsl:attribute>
+					<xsl:attribute name="padding">2mm</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="$isDeleted = 'true'">
+					<xsl:attribute name="border"><xsl:value-of select="$border-block-deleted"/></xsl:attribute>
+					<xsl:attribute name="background-color">rgb(255, 185, 185)</xsl:attribute>
+					<!-- <xsl:attribute name="color"><xsl:value-of select="$color-deleted-text"/></xsl:attribute> -->
+					<xsl:attribute name="padding">2mm</xsl:attribute>
+				</xsl:if>
+			</xsl:otherwise>
 		</xsl:choose>
 		
 	</xsl:template></xsl:stylesheet>
