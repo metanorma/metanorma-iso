@@ -17,8 +17,8 @@ module Asciidoctor
       end
 
       def html_converter_alt(node)
-        IsoDoc::Iso::HtmlConvert.new(html_extract_attributes(node).
-                                     merge(alt: true))
+        IsoDoc::Iso::HtmlConvert.new(html_extract_attributes(node)
+                                     .merge(alt: true))
       end
 
       def doc_converter(node)
@@ -27,11 +27,13 @@ module Asciidoctor
 
       def pdf_converter(node)
         return nil if node.attr("no-pdf")
+
         IsoDoc::Iso::PdfConvert.new(doc_extract_attributes(node))
       end
 
       def sts_converter(node)
         return nil if node.attr("no-pdf")
+
         IsoDoc::Iso::StsConvert.new(html_extract_attributes(node))
       end
 
@@ -45,22 +47,22 @@ module Asciidoctor
       end
 
       def ol_attrs(node)
-        attr_code(keep_attrs(node).
-                  merge(id: ::Metanorma::Utils::anchor_or_uuid(node)))
+        attr_code(keep_attrs(node)
+                  .merge(id: ::Metanorma::Utils::anchor_or_uuid(node)))
       end
 
       def outputs(node, ret)
-        File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
-        presentation_xml_converter(node).convert(@filename + ".xml")
-        html_converter_alt(node).convert(@filename + ".presentation.xml", 
+        File.open("#{@filename}.xml", "w:UTF-8") { |f| f.write(ret) }
+        presentation_xml_converter(node).convert("#{@filename}.xml")
+        html_converter_alt(node).convert("#{@filename}.presentation.xml",
                                          nil, false, "#{@filename}_alt.html")
-        html_converter(node).convert(@filename + ".presentation.xml", 
+        html_converter(node).convert("#{@filename}.presentation.xml",
                                      nil, false, "#{@filename}.html")
-        doc_converter(node).convert(@filename + ".presentation.xml", 
+        doc_converter(node).convert("#{@filename}.presentation.xml",
                                     nil, false, "#{@filename}.doc")
-        pdf_converter(node)&.convert(@filename + ".presentation.xml", 
+        pdf_converter(node)&.convert("#{@filename}.presentation.xml",
                                      nil, false, "#{@filename}.pdf")
-        #sts_converter(node)&.convert(@filename + ".xml")
+        # sts_converter(node)&.convert(@filename + ".xml")
       end
     end
   end

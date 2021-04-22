@@ -479,7 +479,8 @@ RSpec.describe Asciidoctor::ISO do
       [.source]
       I am a generic paragraph
     INPUT
-    expect(File.read("test.err")).to include "term reference not in expected format"
+    expect(File.read("test.err"))
+      .to include "term reference not in expected format"
   end
 
   it "warns that figure does not have title" do
@@ -504,7 +505,8 @@ RSpec.describe Asciidoctor::ISO do
       <1> This is one callout
       <2> This is another callout
     INPUT
-    expect(File.read("test.err")).to include "mismatch of callouts and annotations"
+    expect(File.read("test.err"))
+      .to include "mismatch of callouts and annotations"
   end
 
   it "warns that term source is not a real reference" do
@@ -514,7 +516,8 @@ RSpec.describe Asciidoctor::ISO do
       [.source]
       <<iso123>>
     INPUT
-    expect(File.read("test.err")).to include "iso123 does not have a corresponding anchor ID in the bibliography"
+    expect(File.read("test.err"))
+      .to include "iso123 does not have a corresponding anchor ID in the bibliography"
   end
 
   it "warns that undated reference has locality" do
@@ -528,7 +531,8 @@ RSpec.describe Asciidoctor::ISO do
       == Normative References
       * [[[iso123,ISO 123]]] _Standard_
       INPUT
-      expect(File.read("test.err")).to include "undated reference ISO 123 should not contain specific elements"
+      expect(File.read("test.err"))
+        .to include "undated reference ISO 123 should not contain specific elements"
   end
 
   it "do not warn that undated reference which is a bibliographic reference has locality" do
@@ -542,7 +546,8 @@ RSpec.describe Asciidoctor::ISO do
       == Bibliography
       * [[[iso123,1]]] _Standard_
       INPUT
-      expect(File.read("test.err")).not_to include "undated reference [1] should not contain specific elements"
+      expect(File.read("test.err"))
+        .not_to include "undated reference [1] should not contain specific elements"
   end
 
   it "do not warn that undated IEV reference has locality" do
@@ -556,7 +561,8 @@ RSpec.describe Asciidoctor::ISO do
       == Normative References
       * [[[iev,IEV]]] _Standard_
       INPUT
-      expect(File.read("test.err")).not_to include "undated reference IEV should not contain specific elements"
+      expect(File.read("test.err"))
+        .not_to include "undated reference IEV should not contain specific elements"
   end
 
   it "do not warn that in print has locality" do
@@ -591,7 +597,8 @@ RSpec.describe Asciidoctor::ISO do
       == Normative References
       * [[[XYZ,IESO 121]]] _Standard_
     INPUT
-    expect(File.read("test.err")).to include "non-ISO/IEC reference not expected as normative"
+    expect(File.read("test.err"))
+      .to include "non-ISO/IEC reference not expected as normative"
   end
 
   it "warns that Scope contains subclauses" do
@@ -602,7 +609,8 @@ RSpec.describe Asciidoctor::ISO do
 
       === Scope subclause
     INPUT
-    expect(File.read("test.err")).to include "Scope contains subclauses: should be succinct"
+    expect(File.read("test.err"))
+      .to include "Scope contains subclauses: should be succinct"
   end
 
   it "warns that Table should have title" do
@@ -768,7 +776,8 @@ RSpec.describe Asciidoctor::ISO do
 
       == Symbols and Abbreviated Terms
     INPUT
-    expect(File.read("test.err")).to include "Only one Symbols and Abbreviated Terms section in the standard"
+    expect(File.read("test.err"))
+      .to include "Only one Symbols and Abbreviated Terms section in the standard"
   end
 
   it "Style warning if Symbols and Abbreviated Terms contains extraneous matter" do
@@ -779,7 +788,8 @@ RSpec.describe Asciidoctor::ISO do
 
       Paragraph
     INPUT
-    expect(File.read("test.err")).to include "Symbols and Abbreviated Terms can only contain a definition list"
+    expect(File.read("test.err"))
+      .to include "Symbols and Abbreviated Terms can only contain a definition list"
   end
 
   it "Warning if missing foreword" do
@@ -790,7 +800,8 @@ RSpec.describe Asciidoctor::ISO do
 
       Paragraph
     INPUT
-    expect(File.read("test.err")).to include "Initial section must be (content) Foreword"
+    expect(File.read("test.err"))
+      .to include "Initial section must be (content) Foreword"
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
@@ -804,7 +815,8 @@ RSpec.describe Asciidoctor::ISO do
 
       Paragraph
     INPUT
-    expect(File.read("test.err")).not_to include "Initial section must be (content) Foreword"
+    expect(File.read("test.err"))
+      .not_to include "Initial section must be (content) Foreword"
   end
 
   it "Warning if do not start with scope or introduction" do
@@ -816,7 +828,8 @@ RSpec.describe Asciidoctor::ISO do
 
       Paragraph
     INPUT
-    expect(File.read("test.err")).to include "Prefatory material must be followed by (clause) Scope"
+    expect(File.read("test.err"))
+      .to include "Prefatory material must be followed by (clause) Scope"
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
@@ -832,7 +845,8 @@ RSpec.describe Asciidoctor::ISO do
 
       Paragraph
     INPUT
-    expect(File.read("test.err")).not_to include "Prefatory material must be followed by (clause) Scope"
+    expect(File.read("test.err"))
+      .not_to include "Prefatory material must be followed by (clause) Scope"
   end
 
   it "Warning if introduction not followed by scope" do
@@ -848,7 +862,8 @@ RSpec.describe Asciidoctor::ISO do
 
       Paragraph
     INPUT
-    expect(File.read("test.err")).to include "Prefatory material must be followed by (clause) Scope"
+    expect(File.read("test.err"))
+      .to include "Prefatory material must be followed by (clause) Scope"
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
@@ -867,7 +882,8 @@ RSpec.describe Asciidoctor::ISO do
 
       Paragraph
     INPUT
-    expect(File.read("test.err")).not_to include "Prefatory material must be followed by (clause) Scope"
+    expect(File.read("test.err"))
+      .not_to include "Prefatory material must be followed by (clause) Scope"
   end
 
   it "Warning if normative references not followed by terms and definitions" do
@@ -1338,7 +1354,8 @@ RSpec.describe Asciidoctor::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err")).to include "Subpart defined on non-IEC document"
+    expect(File.read("test.err"))
+      .to include "Subpart defined on non-IEC document"
   end
 
   it "No warning if joint IEC/non-IEC document with subpart" do
@@ -1353,7 +1370,8 @@ RSpec.describe Asciidoctor::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err")).not_to include "Subpart defined on non-IEC document"
+    expect(File.read("test.err"))
+      .not_to include "Subpart defined on non-IEC document"
   end
 
   it "Warning if main title contains document type" do
@@ -1379,7 +1397,8 @@ RSpec.describe Asciidoctor::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err")).to include "Title Intro may name document type"
+    expect(File.read("test.err"))
+      .to include "Title Intro may name document type"
   end
 
   it "Each first-level subclause must have a title" do
@@ -1389,7 +1408,8 @@ RSpec.describe Asciidoctor::ISO do
 
       === {blank}
     INPUT
-    expect(File.read("test.err")).to include "each first-level subclause must have a title"
+    expect(File.read("test.err"))
+      .to include "each first-level subclause must have a title"
   end
 
   it "All subclauses must have a title, or none" do
@@ -1403,7 +1423,8 @@ RSpec.describe Asciidoctor::ISO do
 
       ==== Subsubclause
     INPUT
-    expect(File.read("test.err")).to include "all subclauses must have a title, or none"
+    expect(File.read("test.err"))
+      .to include "all subclauses must have a title, or none"
   end
 
   it "Warning if subclause is only child of its parent, or none" do
@@ -1464,8 +1485,9 @@ RSpec.describe Asciidoctor::ISO do
 
       == Clause
       See <<terms>>
-      INPUT
-      expect(File.read("test.err")).to include "'see terms' is pointing to a normative section"
+    INPUT
+    expect(File.read("test.err"))
+      .to include "'see terms' is pointing to a normative section"
   end
 
   it "Warning if 'see' reference points to normative reference" do
@@ -1477,8 +1499,9 @@ RSpec.describe Asciidoctor::ISO do
 
       == Clause
       See <<terms>>
-      INPUT
-      expect(File.read("test.err")).to include "is pointing to a normative reference"
+    INPUT
+    expect(File.read("test.err"))
+      .to include "is pointing to a normative reference"
   end
 
   it "Warning if term definition starts with article" do
@@ -1490,7 +1513,8 @@ RSpec.describe Asciidoctor::ISO do
 
       The definition of a term is a part of the specialized vocabulary of a particular field
     INPUT
-    expect(File.read("test.err")).to include "term definition starts with article"
+    expect(File.read("test.err"))
+      .to include "term definition starts with article"
   end
 
   it "Warning if term definition ends with period" do

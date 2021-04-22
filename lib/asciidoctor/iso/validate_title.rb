@@ -54,14 +54,12 @@ module Asciidoctor
         doctypes = /International\sStandard | Technical\sSpecification |
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
         title_main_en = title_lang_part(root, "main", "en")
-        if !title_main_en.nil? && doctypes.match(title_main_en.text)
+        !title_main_en.nil? && doctypes.match(title_main_en.text) and
           @log.add("Style", title_main_en, "Main Title may name document type")
-        end
         title_intro_en = title_lang_part(root, "intro", "en")
-        if !title_intro_en.nil? && doctypes.match(title_intro_en.text)
+        !title_intro_en.nil? && doctypes.match(title_intro_en.text) and
           @log.add("Style", title_intro_en,
                    "Title Intro may name document type")
-        end
       end
 
       # ISO/IEC DIR 2, 22.2

@@ -56,8 +56,8 @@ module IsoDoc
         # subclauses are not prefixed with "Clause"
         i = Counter.new
         clause.xpath(ns("./clause | ./terms | ./term | ./definitions | "\
-                        "./references")).
-                       each do |c|
+                        "./references"))
+          .each do |c|
           i.increment(c)
           section_names1(c, "#{num}.#{i.print}", level + 1)
         end

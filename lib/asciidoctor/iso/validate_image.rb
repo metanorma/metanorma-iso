@@ -37,20 +37,25 @@ module Asciidoctor
         end
       end
 
-      def disjunct_error(i, cond1, cond2, msg1, msg2)
+      def disjunct_error(img, cond1, cond2, msg1, msg2)
         cond1 && !cond2 and
-          @log.add("Style", i, "image name #{i['src']} #{msg1}")
+          @log.add("Style", img, "image name #{img['src']} #{msg1}")
         !cond1 && cond2 and
-          @log.add("Style", i, "image name #{i['src']} #{msg2}")
+          @log.add("Style", img, "image name #{img['src']} #{msg2}")
+      end
+
+      def image_name_parse(img, prefix)
+        m = %r[(SL)?#{prefix}fig(?<tab>Tab)?(?<annex>[A-Z])?(Text)?(?<num>\d+)
+            (?<subfig>[a-z])?(?<key>_key\d+)?(?<lang>_[a-z])?$]x
+          .match(File.basename(img["src"], ".*"))
+        m.nil? and
+          @log.add("Style", img,
+                   "image name #{img['src']} does not match DRG requirements")
+        m
       end
 
       def image_name_validate1(i, prefix)
-        m = %r[(SL)?#{prefix}fig(?<tab>Tab)?(?<annex>[A-Z])?(Text)?(?<num>\d+)
-            (?<subfig>[a-z])?(?<key>_key\d+)?(?<lang>_[a-z])?$]x.match(File.basename(i["src"], ".*"))
-        if m.nil?
-          @log.add("Style", i, "image name #{i['src']} does not match DRG requirements")
-          return
-        end
+        m = image_name_parse(i, prefix) or return
         warn i["src"]
         disjunct_error(i, i.at("./ancestor::table"), !m[:tab].nil?,
                        "is under a table but is not so labelled",
@@ -63,7 +68,8 @@ module Asciidoctor
                        "has a subfigure letter but is not a subfigure")
         lang = image_name_suffix(i.document.root)
         (m[:lang] || "_e") == lang or
-          @log.add("Style", i, "image name #{i['src']} expected to have suffix #{lang}")
+          @log.add("Style", i,
+                   "image name #{i['src']} expected to have suffix #{lang}")
       end
 
       # DRG directives 3.2

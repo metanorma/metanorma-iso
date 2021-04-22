@@ -26,23 +26,23 @@ module IsoDoc
         @xrefs = Xref.new(lang, script, klass, labels, options)
       end
 
-      def figure1(f)
-        return if labelled_ancestor(f) && f.ancestors("figure").empty?
+      def figure1(node)
+        return if labelled_ancestor(node) && node.ancestors("figure").empty?
 
-        lbl = @xrefs.anchor(f["id"], :label, false) or return
-        figname = f.parent.name == "figure" ? "" : "#{@i18n.figure} "
-        connective = f.parent.name == "figure" ? "&nbsp; " : "&nbsp;&mdash; "
-        prefix_name(f, connective, l10n("#{figname}#{lbl}"), "name")
+        lbl = @xrefs.anchor(node["id"], :label, false) or return
+        figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
+        connective = node.parent.name == "figure" ? "&nbsp; " : "&nbsp;&mdash; "
+        prefix_name(node, connective, l10n("#{figname}#{lbl}"), "name")
       end
 
-      def example1(f)
-        n = @xrefs.get[f["id"]]
+      def example1(node)
+        n = @xrefs.get[node["id"]]
         lbl = if n.nil? || n[:label].nil? || n[:label].empty?
                 @i18n.example
               else
                 l10n("#{@i18n.example} #{n[:label]}")
               end
-        prefix_name(f, "&nbsp;&mdash; ", lbl, "name")
+        prefix_name(node, "&nbsp;&mdash; ", lbl, "name")
       end
 
       def eref_localities1_zh(target, type, from, to, n, delim)
@@ -56,7 +56,8 @@ module IsoDoc
         ret += "&ndash;#{to.text}" if to
         loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize)
         ret += " #{loc}" unless subsection && type == "clause" ||
-          type == "list" || target.match(/^IEV$|^IEC 60050-/) || n["droploc"] == "true"
+          type == "list" || target.match(/^IEV$|^IEC 60050-/) ||
+          n["droploc"] == "true"
         ret += ")" if type == "list"
         ret
       end
@@ -95,10 +96,10 @@ module IsoDoc
         end
       end
 
-      def clause1(f)
-        if !f.at(ns("./title")) &&
-            !%w(sections preface bibliography).include?(f.parent.name)
-          f["inline-header"] = "true"
+      def clause1(node)
+        if !node.at(ns("./title")) &&
+            !%w(sections preface bibliography).include?(node.parent.name)
+          node["inline-header"] = "true"
         end
         super
       end

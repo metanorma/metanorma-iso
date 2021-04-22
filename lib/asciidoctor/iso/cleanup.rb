@@ -22,21 +22,19 @@ module Asciidoctor
       def other_footnote_renumber(xmldoc)
         seen = {}
         i = 0
-        xmldoc.xpath(PRE_NORMREF_FOOTNOTES).each do |fn|
-          i, seen = other_footnote_renumber1(fn, i, seen)
-        end
-        xmldoc.xpath(NORMREF_FOOTNOTES).each do |fn|
-          i, seen = other_footnote_renumber1(fn, i, seen)
-        end
-        xmldoc.xpath(POST_NORMREF_FOOTNOTES).each do |fn|
-          i, seen = other_footnote_renumber1(fn, i, seen)
+        [PRE_NORMREF_FOOTNOTES, NORMREF_FOOTNOTES,
+         POST_NORMREF_FOOTNOTES].each do |xpath|
+          xmldoc.xpath(xpath).each do |fn|
+            i, seen = other_footnote_renumber1(fn, i, seen)
+          end
         end
       end
 
       def id_prefix(prefix, id)
-        return id.text if @amd # we're just inheriting the prefixes from parent doc
+        # we're just inheriting the prefixes from parent doc
+        return id.text if @amd
 
-        prefix.join("/") + ( id.text.match(%{^/}) ? "" :  " " ) + id.text
+        prefix.join("/") + (id.text.match?(%{^/}) ? "" : " ") + id.text
       end
 
       def get_id_prefix(xmldoc)
@@ -103,13 +101,13 @@ module Asciidoctor
         num = bib&.at("./docnumber")&.text
         id = bib&.at("./docidentifier[not(#{OTHERIDS})]")
         metaid = bib&.at("./docidentifier[@type = 'metanorma']")&.text
-        abbrid = metaid unless /^\[\d+\]$/.match(metaid)
+        abbrid = metaid unless /^\[\d+\]$/.match?(metaid)
         /\d-(?<partid>\d+)/ =~ id&.text
-        type = id['type'] if id
+        type = id["type"] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
         "#{pubclass} :: #{type} :: "\
-          "#{num.nil? ? abbrid : sprintf("%09d", num.to_i)} :: "\
+          "#{num.nil? ? abbrid : sprintf('%09d', num.to_i)} :: "\
           "#{partid} :: #{id&.text} :: #{title}"
       end
 
@@ -152,14 +150,14 @@ module Asciidoctor
         xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
           .each do |b|
           next if pub_class(b) > 2
-          next unless s = b.at("./status/stage") and s.text.to_i < 60
+          next unless (s = b.at("./status/stage")) && (s.text.to_i < 60)
 
           id = b.at("docidentifier").text
           b.at("./language | ./script | ./abstract | ./status")
             .previous = <<~NOTE
-            <note type="Unpublished-Status">
-            <p>#{@i18n.under_preparation.sub(/%/, id)}</p></note>
-          NOTE
+              <note type="Unpublished-Status">
+              <p>#{@i18n.under_preparation.sub(/%/, id)}</p></note>
+            NOTE
         end
       end
     end

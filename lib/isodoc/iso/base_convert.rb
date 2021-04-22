@@ -15,6 +15,7 @@ module IsoDoc
 
       def implicit_reference(b)
         return true if b&.at(ns("./docidentifier"))&.text == "IEV"
+
         super
       end
 
@@ -27,8 +28,9 @@ module IsoDoc
         end
       end
 
-      def example_span_label(node, div, name)
+      def example_span_label(_node, div, name)
         return if name.nil?
+
         div.span **{ class: "example_label" } do |p|
           name.children.each { |n| parse(n, div) }
         end
@@ -56,6 +58,7 @@ module IsoDoc
         node.elements.each do |e|
           next if e.name == "name"
           return true if e.name == "p"
+
           return false
         end
         false
@@ -74,6 +77,7 @@ module IsoDoc
       def insertall_after_here(node, insert, name)
         node.children.each do |n|
           next unless n.name == name
+
           insert.next = n.remove
           insert = n
         end
@@ -83,6 +87,7 @@ module IsoDoc
       def termexamples_before_termnotes(node)
         return unless node.at(ns("./termnote")) && node.at(ns("./termexample"))
         return unless insert = node.at(ns("./definition"))
+
         insert = insertall_after_here(node, insert, "termexample")
         insert = insertall_after_here(node, insert, "termnote")
       end
@@ -110,6 +115,7 @@ module IsoDoc
         return super unless (dl&.xpath(ns("./dt"))&.size == 1 && 
                              dl&.at(ns("./dd"))&.elements&.size == 1 &&
                              dl&.at(ns("./dd/p")))
+
         out.span **{ class: "zzMoveToFollowing" } do |s|
           s << "#{@i18n.where} "
           dl.at(ns("./dt")).children.each { |n| parse(n, s) }
@@ -149,7 +155,7 @@ module IsoDoc
 
       def figure_name_parse(node, div, name)
         div.p **{ class: "FigureTitle", style: "text-align:center;" } do |p|
-          name and name.children.each { |n| parse(n, div) }
+          name&.children&.each { |n| parse(n, div) }
         end
       end
 

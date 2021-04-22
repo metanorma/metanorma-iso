@@ -12,7 +12,7 @@ module Asciidoctor
         node1.xpath("//link | //locality | //localityStack").each(&:remove)
         ret = ""
         node1.traverse { |x| ret += x.text if x.text? }
-        ret
+        HTMLEntities.new.decode(ret)
       end
 
       # ISO/IEC DIR 2, 12.2
@@ -138,7 +138,8 @@ module Asciidoctor
       # ISO/IEC DIR 2, 9.3
       def style_units(node, text)
         style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,
-                    "space between number and degrees/minutes/seconds", node, text)
+                    "space between number and degrees/minutes/seconds",
+                    node, text)
         style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/,
                     "no space between number and SI unit", node, text)
         style_non_std_units(node, text)

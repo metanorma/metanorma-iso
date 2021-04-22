@@ -33,7 +33,9 @@ module Asciidoctor
         csv_split(publishers).each do |p|
           xml.contributor do |c|
             c.role **{ type: "author" }
-            c.organization { |a| organization(a, p, node, !node.attr("publisher")) }
+            c.organization do |a|
+              organization(a, p, node, !node.attr("publisher"))
+            end
           end
         end
       end
@@ -43,20 +45,25 @@ module Asciidoctor
         csv_split(publishers).each do |p|
           xml.contributor do |c|
             c.role **{ type: "publisher" }
-            c.organization { |a| organization(a, p, node, !node.attr("publisher")) }
+            c.organization do |a|
+              organization(a, p, node, !node.attr("publisher"))
+            end
           end
         end
       end
 
       def metadata_copyright(node, xml)
-        publishers = node.attr("copyright-holder") || node.attr("publisher") || "ISO"
+        publishers = node.attr("copyright-holder") || node.attr("publisher") ||
+          "ISO"
         csv_split(publishers).each do |p|
           xml.copyright do |c|
             c.from (node.attr("copyright-year") || Date.today.year)
             c.owner do |owner|
               owner.organization do |o|
-                organization(o, p, node,
-                             !(node.attr("copyright-holder") || node.attr("publisher")))
+                organization(
+                  o, p, node,
+                  !(node.attr("copyright-holder") || node.attr("publisher"))
+                )
               end
             end
           end
@@ -82,34 +89,37 @@ module Asciidoctor
         end
       end
 
-      def title_intro(node, t, lang, at)
+      def title_intro(node, xml, lang, at)
         return unless node.attr("title-intro-#{lang}")
-        t.title(**attr_code(at.merge(type: "title-intro"))) do |t1|
+
+        xml.title(**attr_code(at.merge(type: "title-intro"))) do |t1|
           t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-intro-#{lang}"))
         end
       end
 
-      def title_main(node, t, lang, at)
-        t.title **attr_code(at.merge(type: "title-main")) do |t1|
+      def title_main(node, xml, lang, at)
+        xml.title **attr_code(at.merge(type: "title-main")) do |t1|
           t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-main-#{lang}"))
         end
       end
 
-      def title_part(node, t, lang, at)
+      def title_part(node, xml, lang, at)
         return unless node.attr("title-part-#{lang}")
-        t.title(**attr_code(at.merge(type: "title-part"))) do |t1|
+
+        xml.title(**attr_code(at.merge(type: "title-part"))) do |t1|
           t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-part-#{lang}"))
         end
       end
 
-      def title_amd(node, t, lang, at)
+      def title_amd(node, xml, lang, at)
         return unless node.attr("title-amendment-#{lang}")
-        t.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
+
+        xml.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
           t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-amendment-#{lang}"))
         end
       end
 
-      def title_full(node, t, lang, at)
+      def title_full(node, xml, lang, at)
         title = node.attr("title-main-#{lang}")
         intro = node.attr("title-intro-#{lang}")
         part = node.attr("title-part-#{lang}")
@@ -117,7 +127,7 @@ module Asciidoctor
         title = "#{intro} -- #{title}" if intro
         title = "#{title} -- #{part}" if part
         title = "#{title} -- #{amd}" if amd && @amd
-        t.title **attr_code(at.merge(type: "main")) do |t1|
+        xml.title **attr_code(at.merge(type: "main")) do |t1|
           t1 << Metanorma::Utils::asciidoc_sub(title)
         end
       end

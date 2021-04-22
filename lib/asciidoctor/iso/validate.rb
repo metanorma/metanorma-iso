@@ -27,9 +27,9 @@ module Asciidoctor
       end
 
       # ISO/IEC DIR 2, 15.5.3
+      # does not deal with preceding text marked up
       def see_xrefs_validate(root)
         root.xpath("//xref").each do |t|
-          # does not deal with preceding text marked up
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? &&
             /\b(see| refer to)\s*$/mi.match(preceding)
@@ -45,37 +45,34 @@ module Asciidoctor
       # ISO/IEC DIR 2, 15.5.3
       def see_erefs_validate(root)
         root.xpath("//eref").each do |t|
-          preceding = t.at("./preceding-sibling::text()[last()]")
-          next unless !preceding.nil? &&
-            /\b(see|refer to)\s*$/mi.match(preceding)
+          prec = t.at("./preceding-sibling::text()[last()]")
+          next unless !prec.nil? && /\b(see|refer to)\s*$/mi.match(prec)
 
           unless target = root.at("//*[@id = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
             next
           end
-          if target.at("./ancestor::references[@normative = 'true']")
+          target.at("./ancestor::references[@normative = 'true']") and
             @log.add("Style", t,
                      "'see #{t}' is pointing to a normative reference")
-          end
         end
       end
 
       # ISO/IEC DIR 2, 10.4
       def locality_erefs_validate(root)
         root.xpath("//eref[descendant::locality]").each do |t|
-          if /^(ISO|IEC)/.match? t["citeas"]
-            unless /:[ ]?(\d+{4}|–)$/.match t["citeas"]
-              @log.add("Style", t,
-                       "undated reference #{t['citeas']} should not contain "\
-                       "specific elements")
-            end
+          if /^(ISO|IEC)/.match?(t["citeas"]) &&
+              !(/: ?(\d+{4}|–)$/.match?(t["citeas"]))
+            @log.add("Style", t,
+                     "undated reference #{t['citeas']} should not contain "\
+                     "specific elements")
           end
         end
       end
 
-      def termdef_warn(text, re, t, term, msg)
-        re.match(text) && @log.add("Style", t, "#{term}: #{msg}")
+      def termdef_warn(text, regex, elem, term, msg)
+        regex.match(text) && @log.add("Style", elem, "#{term}: #{msg}")
       end
 
       # ISO/IEC DIR 2, 16.5.6
