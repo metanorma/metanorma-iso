@@ -238,12 +238,26 @@ RSpec.describe Asciidoctor::ISO do
             <organization>
               <name>International Electrotechnical Commission</name>
               <abbreviation>IEC</abbreviation>
+              <address>
+  <formattedAddress>1 Infinity Loop + California</formattedAddress>
+</address>
+<phone>3333333</phone>
+<phone type='fax'>4444444</phone>
+<email>x@example.com</email>
+<uri>http://www.example.com</uri>
             </organization>
           </contributor>
           <contributor>
             <role type="publisher"/>
             <organization>
               <name>IETF</name>
+              <address>
+  <formattedAddress>1 Infinity Loop + California</formattedAddress>
+</address>
+<phone>3333333</phone>
+<phone type='fax'>4444444</phone>
+<email>x@example.com</email>
+<uri>http://www.example.com</uri>
             </organization>
           </contributor>
           <contributor>
@@ -251,6 +265,13 @@ RSpec.describe Asciidoctor::ISO do
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
+              <address>
+  <formattedAddress>1 Infinity Loop + California</formattedAddress>
+</address>
+<phone>3333333</phone>
+<phone type='fax'>4444444</phone>
+<email>x@example.com</email>
+<uri>http://www.example.com</uri>
             </organization>
           </contributor>
           <language>el</language>
@@ -265,6 +286,14 @@ RSpec.describe Asciidoctor::ISO do
               <organization>
                 <name>International Organization for Standardization</name>
                 <abbreviation>ISO</abbreviation>
+                <address>
+  <formattedAddress>1 Infinity Loop + California</formattedAddress>
+</address>
+<phone>3333333</phone>
+<phone type='fax'>4444444</phone>
+<email>x@example.com</email>
+<uri>http://www.example.com</uri>
+
               </organization>
             </owner>
           </copyright>
@@ -273,6 +302,13 @@ RSpec.describe Asciidoctor::ISO do
             <owner>
               <organization>
                 <name>IETF</name>
+                <address>
+  <formattedAddress>1 Infinity Loop + California</formattedAddress>
+</address>
+<phone>3333333</phone>
+<phone type='fax'>4444444</phone>
+<email>x@example.com</email>
+<uri>http://www.example.com</uri>
               </organization>
             </owner>
           </copyright>
@@ -336,13 +372,6 @@ RSpec.describe Asciidoctor::ISO do
                 <name>International Organization for Standardization</name>
                 <subdivision>Subdivision</subdivision>
                 <abbreviation>SD</abbreviation>
-                <address>
-                  <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
-                </address>
-                <phone>3333333</phone>
-                <phone type='fax'>4444444</phone>
-                <email>x@example.com</email>
-                <uri>http://www.example.com</uri>
               </organization>
             </contributor>
             <contributor>

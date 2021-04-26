@@ -34,7 +34,7 @@ module Asciidoctor
           xml.contributor do |c|
             c.role **{ type: "author" }
             c.organization do |a|
-              organization(a, p, node, !node.attr("publisher"))
+              organization(a, p, false, node, !node.attr("publisher"))
             end
           end
         end
@@ -46,7 +46,7 @@ module Asciidoctor
           xml.contributor do |c|
             c.role **{ type: "publisher" }
             c.organization do |a|
-              organization(a, p, node, !node.attr("publisher"))
+              organization(a, p, true, node, !node.attr("publisher"))
             end
           end
         end
@@ -61,7 +61,7 @@ module Asciidoctor
             c.owner do |owner|
               owner.organization do |o|
                 organization(
-                  o, p, node,
+                  o, p, true, node,
                   !(node.attr("copyright-holder") || node.attr("publisher"))
                 )
               end
