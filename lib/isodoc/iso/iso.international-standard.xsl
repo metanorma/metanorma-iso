@@ -6145,9 +6145,8 @@
 				</fo:inline>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:if test="$lang != 'ar'">
-					<fo:inline padding-right="{$padding-right}mm">​</fo:inline>
-				</xsl:if>
+				<xsl:variable name="direction"><xsl:if test="$lang = 'ar'"><xsl:value-of select="$RLM"/></xsl:if></xsl:variable>
+				<fo:inline padding-right="{$padding-right}mm"><xsl:value-of select="$direction"/>​</fo:inline>
 			</xsl:otherwise>
 		</xsl:choose>
 		
@@ -6887,7 +6886,7 @@
 				</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template><xsl:variable name="LRM" select="'‎'"/><xsl:template name="setWritingMode">
+	</xsl:template><xsl:variable name="LRM" select="'‎'"/><xsl:variable name="RLM" select="'‏'"/><xsl:template name="setWritingMode">
 		<xsl:if test="$lang = 'ar'">
 			<xsl:attribute name="writing-mode">rl-tb</xsl:attribute>
 		</xsl:if>
