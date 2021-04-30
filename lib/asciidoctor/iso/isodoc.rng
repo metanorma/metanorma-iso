@@ -943,7 +943,169 @@
       <ref name="permission"/>
       <ref name="imagemap"/>
       <ref name="svgmap"/>
+      <ref name="inputform"/>
     </choice>
+  </define>
+  <define name="inputform">
+    <element name="form">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="name"/>
+      <attribute name="action"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="TextElement"/>
+          <ref name="FormInput"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="FormInput">
+    <choice>
+      <ref name="input"/>
+      <ref name="formlabel"/>
+      <ref name="select"/>
+      <ref name="textarea"/>
+    </choice>
+  </define>
+  <define name="InputType">
+    <choice>
+      <value>button</value>
+      <value>checkbox</value>
+      <value>date</value>
+      <value>file</value>
+      <value>password</value>
+      <value>radio</value>
+      <value>submit</value>
+      <value>text</value>
+    </choice>
+  </define>
+  <define name="input">
+    <element name="input">
+      <attribute name="type">
+        <ref name="InputType"/>
+      </attribute>
+      <optional>
+        <attribute name="checked">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="disabled">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="readonly">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="maxlength">
+          <data type="int"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="minlength">
+          <data type="int"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="name"/>
+      </optional>
+      <optional>
+        <attribute name="value"/>
+      </optional>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+    </element>
+  </define>
+  <define name="formlabel">
+    <element name="label">
+      <attribute name="for">
+        <data type="IDREF"/>
+      </attribute>
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="select">
+    <element name="select">
+      <optional>
+        <attribute name="name"/>
+      </optional>
+      <optional>
+        <attribute name="value"/>
+      </optional>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="disabled">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="multiple">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="size">
+          <data type="int"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="option"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="option">
+    <element name="option">
+      <optional>
+        <attribute name="disabled">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="value"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="PureTextElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="textarea">
+    <element name="textarea">
+      <optional>
+        <attribute name="name"/>
+      </optional>
+      <optional>
+        <attribute name="value"/>
+      </optional>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="rows">
+          <data type="int"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="cols">
+          <data type="int"/>
+        </attribute>
+      </optional>
+    </element>
   </define>
   <define name="bibliography">
     <element name="bibliography">

@@ -25,80 +25,86 @@ WORD_HTML_CSS_WORDINTRO = {
 
 RSpec.describe IsoDoc do
   it "generates file based on string input" do
-    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS.merge(filename: "test")).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <bibdata>
-          <title>
-            <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
-            <title format="text/plain" language="en" type="title-main">Specifications and test methods</title>
-            <title format="text/plain" language="en" type="title-part">Rice</title>
-          </title>
-        </bibdata>
-        <preface>
-          <foreword>
-            <note>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-            </note>
-          </foreword>
-        </preface>
-      </iso-standard>
+    IsoDoc::Iso::HtmlConvert
+      .new(WORD_HTML_CSS.merge(filename: "test"))
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata>
+            <title>
+              <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
+              <title format="text/plain" language="en" type="title-main">Specifications and test methods</title>
+              <title format="text/plain" language="en" type="title-part">Rice</title>
+            </title>
+          </bibdata>
+          <preface>
+            <foreword>
+              <note>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+            </foreword>
+          </preface>
+        </iso-standard>
     INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
-    expect(html).to match(
-      %r{<title>Cereals and pulses&#xA0;&#x2014; Specifications and test methods&#xA0;&#x2014; Rice</title>}
-    )
+    expect(html).to include "<title>Cereals and pulses&#xA0;&#x2014; "\
+      "Specifications and test methods&#xA0;&#x2014; Rice</title>"
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
 
   it "generates HTML output docs with null configuration" do
-    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <bibdata>
-          <title>
-            <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
-            <title format="text/plain" language="en" type="title-main">Specifications and test methods</title>
-            <title format="text/plain" language="en" type="title-part">Rice</title>
-          </title>
-        </bibdata>
-        <preface>
-          <foreword>
-            <note>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-            </note>
-          </foreword>
-        </preface>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::HtmlConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata>
+            <title>
+              <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
+              <title format="text/plain" language="en" type="title-main">Specifications and test methods</title>
+              <title format="text/plain" language="en" type="title-part">Rice</title>
+            </title>
+          </bibdata>
+          <preface>
+            <foreword>
+              <note>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+            </foreword>
+          </preface>
+        </iso-standard>
+      INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
-    expect(html).to match(
-      %r{<title>Cereals and pulses&#xA0;&#x2014; Specifications and test methods&#xA0;&#x2014; Rice</title>}
-    )
+    expect(html).to include "title>Cereals and pulses&#xA0;&#x2014; "\
+      "Specifications and test methods&#xA0;&#x2014; Rice</title>"
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
 
   it "generates Word output docs with null configuration" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword>
-            <note>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-            </note>
-          </foreword>
-        </preface>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface>
+            <foreword>
+              <note>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+            </foreword>
+          </preface>
+        </iso-standard>
+      INPUT
     expect(File.exist?("test.doc")).to be true
     word = File.read("test.doc", encoding: "UTF-8")
     expect(word).to match(/<style>/)
   end
 
   it "generates HTML output docs with null configuration from file" do
-    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS_SUBDIR.dup).convert("spec/assets/iso.xml", nil, false)
+    IsoDoc::Iso::HtmlConvert
+      .new(WORD_HTML_CSS_SUBDIR.dup)
+      .convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.html")).to be true
     html = File.read("spec/assets/iso.html", encoding: "UTF-8")
     expect(html).to match(/<style>/)
@@ -107,7 +113,9 @@ RSpec.describe IsoDoc do
   end
 
   it "generates Word output docs with null configuration from file" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS_SUBDIR.dup).convert("spec/assets/iso.xml", nil, false)
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS_SUBDIR.dup)
+      .convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.doc")).to be true
     word = File.read("spec/assets/iso.doc", encoding: "UTF-8")
     expect(word).to match(/<w:WordDocument>/)
@@ -116,28 +124,32 @@ RSpec.describe IsoDoc do
 
   it "generates Pdf output docs with null configuration from file" do
     mock_pdf
-    IsoDoc::Iso::PdfConvert.new(WORD_HTML_CSS.dup).convert("spec/assets/iso.xml", nil, false)
+    IsoDoc::Iso::PdfConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("spec/assets/iso.xml", nil, false)
     expect(File.exist?("spec/assets/iso.pdf")).to be true
   end
 
   it "converts annex subheadings to h2Annex class for Word" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <annex id="P" inline-header="false" obligation="normative">
-          <title>Annex</title>
-          <clause id="Q" inline-header="false" obligation="normative">
-            <title>A.1
-              <tab/>
-              Annex A.1</title>
-          </clause>
-          <appendix id="Q2" inline-header="false" obligation="normative">
-            <title>Appendix 1
-              <tab/>
-              An Appendix</title>
-          </appendix>
-        </annex>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <annex id="P" inline-header="false" obligation="normative">
+            <title>Annex</title>
+            <clause id="Q" inline-header="false" obligation="normative">
+              <title>A.1
+                <tab/>
+                Annex A.1</title>
+            </clause>
+            <appendix id="Q2" inline-header="false" obligation="normative">
+              <title>Appendix 1
+                <tab/>
+                An Appendix</title>
+            </appendix>
+          </annex>
+        </iso-standard>
+      INPUT
 
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
@@ -170,33 +182,35 @@ RSpec.describe IsoDoc do
   end
 
   it "populates Word template with terms reference labels" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <sections>
-          <terms id="_terms_and_definitions" obligation="normative">
-            <title>1
-              <tab/>
-              Terms and Definitions</title>
-            <term id="paddy1">
-              <name>1.1</name>
-              <preferred>paddy</preferred>
-              <definition>
-                <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-              </definition>
-              <termsource status="modified">
-                <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline">
-                  <locality type="clause">
-                    <referenceFrom>3.1</referenceFrom>
-                  </locality>ISO 7301:2011, 3.1</origin>
-                <modification>
-                  <p id="_e73a417d-ad39-417d-a4c8-20e4e2529489">The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here</p>
-                </modification>
-              </termsource>
-            </term>
-          </terms>
-        </sections>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <sections>
+            <terms id="_terms_and_definitions" obligation="normative">
+              <title>1
+                <tab/>
+                Terms and Definitions</title>
+              <term id="paddy1">
+                <name>1.1</name>
+                <preferred>paddy</preferred>
+                <definition>
+                  <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
+                </definition>
+                <termsource status="modified">
+                  <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline">
+                    <locality type="clause">
+                      <referenceFrom>3.1</referenceFrom>
+                    </locality>ISO 7301:2011, 3.1</origin>
+                  <modification>
+                    <p id="_e73a417d-ad39-417d-a4c8-20e4e2529489">The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here</p>
+                  </modification>
+                </termsource>
+              </term>
+            </terms>
+          </sections>
+        </iso-standard>
+      INPUT
 
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
@@ -224,139 +238,144 @@ RSpec.describe IsoDoc do
   end
 
   it "populates Word header" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS_HEADER_HTML.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <bibdata type="article">
-          <docidentifier>
-            <project-number part="1">1000</project-number>
-          </docidentifier>
-        </bibdata>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS_HEADER_HTML.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata type="article">
+            <docidentifier>
+              <project-number part="1">1000</project-number>
+            </docidentifier>
+          </bibdata>
+        </iso-standard>
+      INPUT
     word = File.read("test.doc", encoding: "UTF-8")
     expect(word).to include('Content-Disposition: inline; filename="header.html"')
   end
 
   it "populates Word ToC" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <sections>
-          <clause id="A" inline-header="false" obligation="normative">
-            <title>1
-              <tab/>
-              Clause 4</title>
-            <clause id="N" inline-header="false" obligation="normative">
-              <title>1.1
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS_WORDINTRO.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <sections>
+            <clause id="A" inline-header="false" obligation="normative">
+              <title>1
                 <tab/>
-                Introduction
-                <bookmark id="Q"/>
-                to this
-                <fn reference="1">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-              </title>
+                Clause 4</title>
+              <clause id="N" inline-header="false" obligation="normative">
+                <title>1.1
+                  <tab/>
+                  Introduction
+                  <bookmark id="Q"/>
+                  to this
+                  <fn reference="1">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                </title>
+              </clause>
+              <clause id="O" inline-header="false" obligation="normative">
+                <title>1.2
+                  <tab/>
+                  Clause 4.2</title>
+                <p>A
+                  <fn reference="1">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                </p>
+              </clause>
             </clause>
-            <clause id="O" inline-header="false" obligation="normative">
-              <title>1.2
-                <tab/>
-                Clause 4.2</title>
-              <p>A
-                <fn reference="1">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-              </p>
-            </clause>
-          </clause>
-        </sections>
-      </iso-standard>
-    INPUT
+          </sections>
+        </iso-standard>
+      INPUT
 
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*An empty word intro page\./m, "")
       .sub(%r{</div>.*$}m, "</div>")
 
-    expect(xmlpp("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}")).to be_equivalent_to xmlpp(<<~'OUTPUT')
-      <div>
-        <p class="MsoToc1">
-          <span lang="EN-GB" xml:lang="EN-GB">
-            <span style="mso-element:field-begin"/>
-            <span style="mso-spacerun:yes"> </span>TOC
-               \o &quot;1-3&quot; \h \z \u
-            <span style="mso-element:field-separator"/></span>
-          <span class="MsoHyperlink">
-            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-              <a href="#_Toc">1 Clause 4
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-tab-count:1 dotted">. </span></span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-begin"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-separator"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-end"/>
-                </span>
-              </a>
+    expect(xmlpp("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}"))
+      .to be_equivalent_to xmlpp(<<~'OUTPUT')
+        <div>
+          <p class="MsoToc1">
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <span style="mso-element:field-begin"/>
+              <span style="mso-spacerun:yes"> </span>TOC
+                 \o &quot;1-3&quot; \h \z \u
+              <span style="mso-element:field-separator"/></span>
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">1 Clause 4
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-tab-count:1 dotted">. </span></span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-begin"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-separator"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-end"/>
+                  </span>
+                </a>
+              </span>
             </span>
-          </span>
-        </p>
-        <p class="MsoToc2">
-          <span class="MsoHyperlink">
-            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-              <a href="#_Toc">1.1 Introduction to this
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-tab-count:1 dotted">. </span></span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-begin"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-separator"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-end"/>
-                </span>
-              </a>
+          </p>
+          <p class="MsoToc2">
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">1.1 Introduction to this
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-tab-count:1 dotted">. </span></span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-begin"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-separator"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-end"/>
+                  </span>
+                </a>
+              </span>
             </span>
-          </span>
-        </p>
-        <p class="MsoToc2">
-          <span class="MsoHyperlink">
-            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-              <a href="#_Toc">1.2 Clause 4.2
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-tab-count:1 dotted">. </span></span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-begin"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-separator"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-end"/>
-                </span>
-              </a>
+          </p>
+          <p class="MsoToc2">
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">1.2 Clause 4.2
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-tab-count:1 dotted">. </span></span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-begin"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-separator"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-end"/>
+                  </span>
+                </a>
+              </span>
             </span>
-          </span>
-        </p>
-        <p class="MsoToc1">
-          <span lang="EN-GB" xml:lang="EN-GB">
-            <span style="mso-element:field-end"/>
-          </span>
-          <span lang="EN-GB" xml:lang="EN-GB">
-            <p class="MsoNormal"> </p>
-          </span>
-        </p>
-        <p class="MsoNormal"> </p>
-      </div>
-    OUTPUT
+          </p>
+          <p class="MsoToc1">
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <span style="mso-element:field-end"/>
+            </span>
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <p class="MsoNormal"> </p>
+            </span>
+          </p>
+          <p class="MsoNormal"> </p>
+        </div>
+      OUTPUT
   end
 
   it "reorders footnote numbers" do
@@ -390,10 +409,13 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
 
-    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS_WORDINTRO.dup).convert("test", input, false)
+    IsoDoc::Iso::HtmlConvert
+      .new(WORD_HTML_CSS_WORDINTRO.dup)
+      .convert("test", input, false)
 
     html = File.read("test.html", encoding: "UTF-8")
-      .sub(/^.*<main class="main-section">/m, '<main xmlns:epub="epub" class="main-section">')
+      .sub(/^.*<main class="main-section">/m,
+           '<main xmlns:epub="epub" class="main-section">')
       .sub(%r{</main>.*$}m, "</main>")
 
     expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -436,11 +458,15 @@ RSpec.describe IsoDoc do
       </main>
     OUTPUT
 
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup).convert("test", input, false)
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS_WORDINTRO.dup)
+      .convert("test", input, false)
 
     html = File.read("test.doc", encoding: "UTF-8")
-      .sub(/^.*<div class="WordSection3"/m, '<body xmlns:epub="epub"><div class="WordSection3"')
-      .sub(%r{</body>.*$}m, "</body>").gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
+      .sub(/^.*<div class="WordSection3"/m,
+           '<body xmlns:epub="epub"><div class="WordSection3"')
+      .sub(%r{</body>.*$}m, "</body>")
+      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
 
     expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
         <body xmlns:epub="epub">
@@ -529,75 +555,77 @@ RSpec.describe IsoDoc do
   end
 
   it "processes IsoXML terms for HTML" do
-    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <sections>
-          <terms id="_terms_and_definitions" obligation="normative">
-            <title>Terms and Definitions</title>
-            <term id="paddy1">
-              <name>1.1</name>
-              <preferred>paddy</preferred>
-              <domain>rice</domain>
-              <definition>
-                <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-              </definition>
-              <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f892">
-                <p id="_65c9a509-9a89-4b54-a890-274126aeb55c">Foreign seeds, husks, bran, sand, dust.</p>
-                <ul>
-                  <li>A</li>
-                </ul>
-              </termexample>
-              <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f894">
-                <ul>
-                  <li>A</li>
-                </ul>
-              </termexample>
-              <termsource status="modified">
-                <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline">
-                  <locality type="clause">
-                    <referenceFrom>3.1</referenceFrom>
-                  </locality>
-                </origin>
-                <modification>
-                  <p id="_e73a417d-ad39-417d-a4c8-20e4e2529489">The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here</p>
-                </modification>
-              </termsource>
-            </term>
-            <term id="paddy">
-              <name>1.2</name>
-              <preferred>paddy</preferred>
-              <admitted>paddy rice</admitted>
-              <admitted>rough rice</admitted>
-              <deprecates>cargo rice</deprecates>
-              <definition>
-                <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-              </definition>
-              <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f893">
-                <ul>
-                  <li>A</li>
-                </ul>
-              </termexample>
-              <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74e">
-                <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
-              </termnote>
-              <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74f">
-                <ul>
-                  <li>A</li>
-                </ul>
-                <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
-              </termnote>
-              <termsource status="identical">
-                <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline">
-                  <locality type="clause">
-                    <referenceFrom>3.1</referenceFrom>
-                  </locality>
-                </origin>
-              </termsource>
-            </term>
-          </terms>
-        </sections>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::HtmlConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <sections>
+            <terms id="_terms_and_definitions" obligation="normative">
+              <title>Terms and Definitions</title>
+              <term id="paddy1">
+                <name>1.1</name>
+                <preferred>paddy</preferred>
+                <domain>rice</domain>
+                <definition>
+                  <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
+                </definition>
+                <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f892">
+                  <p id="_65c9a509-9a89-4b54-a890-274126aeb55c">Foreign seeds, husks, bran, sand, dust.</p>
+                  <ul>
+                    <li>A</li>
+                  </ul>
+                </termexample>
+                <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f894">
+                  <ul>
+                    <li>A</li>
+                  </ul>
+                </termexample>
+                <termsource status="modified">
+                  <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline">
+                    <locality type="clause">
+                      <referenceFrom>3.1</referenceFrom>
+                    </locality>
+                  </origin>
+                  <modification>
+                    <p id="_e73a417d-ad39-417d-a4c8-20e4e2529489">The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here</p>
+                  </modification>
+                </termsource>
+              </term>
+              <term id="paddy">
+                <name>1.2</name>
+                <preferred>paddy</preferred>
+                <admitted>paddy rice</admitted>
+                <admitted>rough rice</admitted>
+                <deprecates>cargo rice</deprecates>
+                <definition>
+                  <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
+                </definition>
+                <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f893">
+                  <ul>
+                    <li>A</li>
+                  </ul>
+                </termexample>
+                <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74e">
+                  <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+                </termnote>
+                <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74f">
+                  <ul>
+                    <li>A</li>
+                  </ul>
+                  <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+                </termnote>
+                <termsource status="identical">
+                  <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline">
+                    <locality type="clause">
+                      <referenceFrom>3.1</referenceFrom>
+                    </locality>
+                  </origin>
+                </termsource>
+              </term>
+            </terms>
+          </sections>
+        </iso-standard>
+      INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
     expect(html).to match(%r{<h2 class="TermNum" id="paddy1">1\.1</h2>})
@@ -605,18 +633,20 @@ RSpec.describe IsoDoc do
   end
 
   it "inserts default paragraph between two tables for Word" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <annex id="P" inline-header="false" obligation="normative">
-          <example id="_63112cbc-cde0-435f-9553-e0b8c4f5851c">
-            <p id="_158d4efa-b1c9-4aec-b325-756de8e4c968">'1M', '01M', and '0001M' all describe the calendar month January.</p>
-          </example>
-          <example id="_63112cbc-cde0-435f-9553-e0b8c4f5851d">
-            <p id="_158d4efa-b1c9-4aec-b325-756de8e4c969">'2M', '02M', and '0002M' all describe the calendar month February.</p>
-          </example>
-        </annex>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <annex id="P" inline-header="false" obligation="normative">
+            <example id="_63112cbc-cde0-435f-9553-e0b8c4f5851c">
+              <p id="_158d4efa-b1c9-4aec-b325-756de8e4c968">'1M', '01M', and '0001M' all describe the calendar month January.</p>
+            </example>
+            <example id="_63112cbc-cde0-435f-9553-e0b8c4f5851d">
+              <p id="_158d4efa-b1c9-4aec-b325-756de8e4c969">'2M', '02M', and '0002M' all describe the calendar month February.</p>
+            </example>
+          </annex>
+        </iso-standard>
+      INPUT
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
@@ -644,24 +674,26 @@ RSpec.describe IsoDoc do
   end
 
   it "processes figure keys (Word)" do
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <annex id="P" inline-header="false" obligation="normative">
-          <figure id="samplecode">
-            <p>Hello</p>
-            <p>Key</p>
-            <dl>
-              <dt>
-                <p>A</p>
-              </dt>
-              <dd>
-                <p>B</p>
-              </dd>
-            </dl>
-          </figure>
-        </annex>
-      </iso-standard>
-    INPUT
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <annex id="P" inline-header="false" obligation="normative">
+            <figure id="samplecode">
+              <p>Hello</p>
+              <p>Key</p>
+              <dl>
+                <dt>
+                  <p>A</p>
+                </dt>
+                <dd>
+                  <p>B</p>
+                </dd>
+              </dl>
+            </figure>
+          </annex>
+        </iso-standard>
+      INPUT
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
@@ -797,17 +829,22 @@ RSpec.describe IsoDoc do
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)
 
-    IsoDoc::Iso::HtmlConvert.new(WORD_HTML_CSS.dup).convert("test", presxml, false)
+    IsoDoc::Iso::HtmlConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", presxml, false)
 
     word = File.read("test.html", encoding: "UTF-8")
     expect((word)).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'
     expect((word)).to include "I am the Walrus."
 
-    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup).convert("test", presxml, false)
+    IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
+      .convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
     expect(xmlpp(word
-      .sub(%r{^.*<div class="boilerplate-copyright">}m, '<div class="boilerplate-copyright">')
-      .sub(%r{</div>.*$}m, "</div></div>"))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+      .sub(%r{^.*<div class="boilerplate-copyright">}m,
+           '<div class="boilerplate-copyright">')
+      .sub(%r{</div>.*$}m, "</div></div>")))
+      .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <div class="boilerplate-copyright">
           <div>
             <p class="zzCopyright">
@@ -839,125 +876,129 @@ RSpec.describe IsoDoc do
           </div>
         </div>
       OUTPUT
-    expect(word).to include '<p class="zzWarning">This document is not an ISO International Standard'
+    expect(word).to include '<p class="zzWarning">This document is not "\
+    "an ISO International Standard'
   end
 
   it "populates Word ToC" do
-    IsoDoc::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <sections>
-          <clause id="A" inline-header="false" obligation="normative">
-            <title>Clause 4</title>
-            <clause id="N" inline-header="false" obligation="normative">
-              <title>Introduction
-                <bookmark id="Q"/>
-                to this
-                <fn reference="1">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-              </title>
-            </clause>
-            <clause id="O" inline-header="false" obligation="normative">
-              <title>Clause 4.2</title>
-              <p>A
-                <fn reference="1">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-              </p>
-              <clause id="P" inline-header="false" obligation="normative">
-                <title>Clause 4.2.1</title>
+    IsoDoc::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <sections>
+            <clause id="A" inline-header="false" obligation="normative">
+              <title>Clause 4</title>
+              <clause id="N" inline-header="false" obligation="normative">
+                <title>Introduction
+                  <bookmark id="Q"/>
+                  to this
+                  <fn reference="1">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                </title>
+              </clause>
+              <clause id="O" inline-header="false" obligation="normative">
+                <title>Clause 4.2</title>
+                <p>A
+                  <fn reference="1">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                </p>
+                <clause id="P" inline-header="false" obligation="normative">
+                  <title>Clause 4.2.1</title>
+                </clause>
               </clause>
             </clause>
-          </clause>
-        </sections>
-      </iso-standard>
-    INPUT
+          </sections>
+        </iso-standard>
+      INPUT
     word = File.read("test.doc")
-      .sub(/^.*<div class="WordSection2">/m, '<div class="WordSection2">')
+      .sub(/^.*<div class="WordSection2">/m,
+           '<div class="WordSection2">')
       .sub(%r{<p class="MsoNormal">\s*<br clear="all" class="section"/>\s*</p>\s*<div class="WordSection3">.*$}m, "")
 
-    expect(xmlpp(word.gsub(/_Toc\d\d+/, "_Toc"))).to be_equivalent_to xmlpp(<<~'OUTPUT')
-      <div class="WordSection2">An empty word intro page.
-        <p class="MsoToc1">
-          <span lang="EN-GB" xml:lang="EN-GB">
-            <span style="mso-element:field-begin"/>
-            <span style="mso-spacerun:yes"> </span>
-            TOC
-               \o &quot;1-2&quot; \h \z \u
-            <span style="mso-element:field-separator"/></span>
-          <span class="MsoHyperlink">
-            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-              <a href="#_Toc">Clause 4
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-tab-count:1 dotted">. </span></span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-begin"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-separator"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-end"/>
-                </span>
-              </a>
+    expect(xmlpp(word.gsub(/_Toc\d\d+/, "_Toc")))
+      .to be_equivalent_to xmlpp(<<~'OUTPUT')
+        <div class="WordSection2">An empty word intro page.
+          <p class="MsoToc1">
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <span style="mso-element:field-begin"/>
+              <span style="mso-spacerun:yes"> </span>
+              TOC
+                 \o &quot;1-2&quot; \h \z \u
+              <span style="mso-element:field-separator"/></span>
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">Clause 4
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-tab-count:1 dotted">. </span></span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-begin"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-separator"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-end"/>
+                  </span>
+                </a>
+              </span>
             </span>
-          </span>
-        </p>
-        <p class="MsoToc2">
-          <span class="MsoHyperlink">
-            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-              <a href="#_Toc">Introduction to this
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-tab-count:1 dotted">. </span></span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-begin"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-separator"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-end"/>
-                </span>
-              </a>
+          </p>
+          <p class="MsoToc2">
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">Introduction to this
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-tab-count:1 dotted">. </span></span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-begin"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-separator"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-end"/>
+                  </span>
+                </a>
+              </span>
             </span>
-          </span>
-        </p>
-        <p class="MsoToc2">
-          <span class="MsoHyperlink">
-            <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-              <a href="#_Toc">Clause 4.2
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-tab-count:1 dotted">. </span></span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-begin"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-separator"/>
-                </span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
-                <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
-                  <span style="mso-element:field-end"/>
-                </span>
-              </a>
+          </p>
+          <p class="MsoToc2">
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">Clause 4.2
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-tab-count:1 dotted">. </span></span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-begin"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">PAGEREF _Toc \h </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-separator"/>
+                  </span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">1</span>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB"/>
+                  <span class="MsoTocTextSpan" lang="EN-GB" xml:lang="EN-GB">
+                    <span style="mso-element:field-end"/>
+                  </span>
+                </a>
+              </span>
             </span>
-          </span>
-        </p>
-        <p class="MsoToc1">
-          <span lang="EN-GB" xml:lang="EN-GB">
-            <span style="mso-element:field-end"/>
-          </span>
-          <span lang="EN-GB" xml:lang="EN-GB">
-            <p class="MsoNormal"> </p>
-          </span>
-        </p>
-        <p class="MsoNormal"> </p>
-      </div>
-    OUTPUT
+          </p>
+          <p class="MsoToc1">
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <span style="mso-element:field-end"/>
+            </span>
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <p class="MsoNormal"> </p>
+            </span>
+          </p>
+          <p class="MsoNormal"> </p>
+        </div>
+      OUTPUT
   end
 end

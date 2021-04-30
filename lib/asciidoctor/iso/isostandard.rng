@@ -256,6 +256,7 @@
         <value>guide</value>
         <value>amendment</value>
         <value>technical-corrigendum</value>
+        <value>directive</value>
       </choice>
     </define>
     <define name="structuredidentifier">
