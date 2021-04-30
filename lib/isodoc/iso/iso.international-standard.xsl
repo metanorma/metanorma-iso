@@ -6515,6 +6515,70 @@
 		<xsl:value-of select="substring(.,1,1)"/>
 	</xsl:template><xsl:template match="*[local-name() = 'title']" mode="title">
 		<fo:inline><xsl:apply-templates/></fo:inline>
+	</xsl:template><xsl:template match="*[local-name() = 'form']">
+		<fo:block>
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template><xsl:template match="*[local-name() = 'form']//*[local-name() = 'label']">
+		<fo:inline><xsl:apply-templates/></fo:inline>
+	</xsl:template><xsl:template match="*[local-name() = 'form']//*[local-name() = 'input'][@type = 'text' or @type = 'date' or @type = 'file' or @type = 'password']">
+		<fo:inline>
+			<xsl:call-template name="text_input"/>
+		</fo:inline>
+	</xsl:template><xsl:template name="text_input">
+		<xsl:variable name="count">
+			<xsl:choose>
+				<xsl:when test="normalize-space(@maxlength) != ''"><xsl:value-of select="@maxlength"/></xsl:when>
+				<xsl:when test="normalize-space(@size) != ''"><xsl:value-of select="@size"/></xsl:when>
+				<xsl:otherwise>10</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:call-template name="repeat">
+			<xsl:with-param name="char" select="'_'"/>
+			<xsl:with-param name="count" select="$count"/>
+		</xsl:call-template>
+		<xsl:text> </xsl:text>
+	</xsl:template><xsl:template match="*[local-name() = 'form']//*[local-name() = 'input'][@type = 'button']">
+		<xsl:variable name="caption">
+			<xsl:choose>
+				<xsl:when test="normalize-space(@value) != ''"><xsl:value-of select="@value"/></xsl:when>
+				<xsl:otherwise>BUTTON</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<fo:inline>[<xsl:value-of select="$caption"/>]</fo:inline>
+	</xsl:template><xsl:template match="*[local-name() = 'form']//*[local-name() = 'input'][@type = 'checkbox']">
+		<fo:inline padding-right="1mm">
+			<fo:instream-foreign-object fox:alt-text="Box" baseline-shift="-10%">
+				<xsl:attribute name="height">3.5mm</xsl:attribute>
+				<xsl:attribute name="content-width">100%</xsl:attribute>
+				<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+				<xsl:attribute name="scaling">uniform</xsl:attribute>
+				<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+					<polyline points="0,0 80,0 80,80 0,80 0,0" stroke="black" stroke-width="5" fill="white"/>
+				</svg>
+			</fo:instream-foreign-object>
+		</fo:inline>
+	</xsl:template><xsl:template match="*[local-name() = 'form']//*[local-name() = 'input'][@type = 'radio']">
+		<fo:inline padding-right="1mm">
+			<fo:instream-foreign-object fox:alt-text="Box" baseline-shift="-10%">
+				<xsl:attribute name="height">3.5mm</xsl:attribute>
+				<xsl:attribute name="content-width">100%</xsl:attribute>
+				<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+				<xsl:attribute name="scaling">uniform</xsl:attribute>
+				<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+					<circle cx="40" cy="40" r="30" stroke="black" stroke-width="5" fill="white"/>
+					<circle cx="40" cy="40" r="15" stroke="black" stroke-width="5" fill="white"/>
+				</svg>
+			</fo:instream-foreign-object>
+		</fo:inline>
+	</xsl:template><xsl:template match="*[local-name() = 'form']//*[local-name() = 'select']">
+		<fo:inline>
+			<xsl:call-template name="text_input"/>
+		</fo:inline>
+	</xsl:template><xsl:template match="*[local-name() = 'form']//*[local-name() = 'textarea']">
+		<fo:block-container border="1pt solid black" width="50%">
+			<fo:block> </fo:block>
+		</fo:block-container>
 	</xsl:template><xsl:template name="convertDate">
 		<xsl:param name="date"/>
 		<xsl:param name="format" select="'short'"/>
