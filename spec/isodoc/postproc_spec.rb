@@ -876,8 +876,8 @@ RSpec.describe IsoDoc do
           </div>
         </div>
       OUTPUT
-    expect(word).to include '<p class="zzWarning">This document is not "\
-    "an ISO International Standard'
+    expect(word).to include '<p class="zzWarning">This document is not '\
+      "an ISO International Standard"
   end
 
   it "populates Word ToC" do

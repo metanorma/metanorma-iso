@@ -147,16 +147,17 @@ module Asciidoctor
         "#{abbr}#{typeabbr}".strip
       end
 
-      def id_stage_prefix(dn, node, force_year)
+      def id_stage_prefix(docnum, node, force_year)
         stage = get_stage(node)
         typeabbr = get_typeabbr(node)
         if stage && (stage.to_i < 60)
-          dn = unpub_stage_prefix(dn, stage, typeabbr, node)
-        elsif typeabbr && !@amd then dn = "/#{typeabbr}#{dn}"
+          docnum = unpub_stage_prefix(docnum, stage, typeabbr, node)
+        elsif typeabbr == "DIR " then docnum = "#{typeabbr}#{docnum}"
+        elsif typeabbr && !@amd then docnum = "/#{typeabbr}#{docnum}"
         end
         (force_year || !(stage && (stage.to_i < 60))) and
-          dn = id_add_year(dn, node)
-        dn
+          docnum = id_add_year(docnum, node)
+        docnum
       end
 
       def unpub_stage_prefix(dn, stage, typeabbr, node)
@@ -188,6 +189,7 @@ module Asciidoctor
 
       def get_typeabbr(node, amd = false)
         case doctype(node)
+        when "directive" then "DIR "
         when "technical-report" then "TR "
         when "technical-specification" then "TS "
         when "amendment" then (amd ? "Amd " : "")
