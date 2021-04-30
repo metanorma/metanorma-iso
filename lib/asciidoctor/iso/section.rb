@@ -10,7 +10,7 @@ module Asciidoctor
       end
 
       def scope_parse(attrs, xml, node)
-        attrs = attrs.merge(type: "scope") unless @amd 
+        attrs = attrs.merge(type: "scope") unless @amd
         clause_parse(attrs, xml, node)
       end
 
@@ -32,6 +32,7 @@ module Asciidoctor
 
       def sectiontype(node, level = true)
         return nil if @amd
+
         super
       end
     end

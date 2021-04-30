@@ -4,24 +4,33 @@ module IsoDoc
     end
 
     class Xref < IsoDoc::Xref
-      def initial_anchor_names(d)
-        if @klass.amd(d)
-          d.xpath(ns("//preface/*")).each { |c| c.element? and preface_names(c) }
-          sequential_asset_names(d.xpath(ns("//preface/*")))
-          d.xpath(ns("//sections/clause")).each { |c| c.element? and preface_names(c) }
-          middle_section_asset_names(d)
-          termnote_anchor_names(d)
-          termexample_anchor_names(d)
+      def initial_anchor_names(doc)
+        if @klass.amd(doc)
+          initial_anchor_names_amd(doc)
         else
           super
         end
-        introduction_names(d.at(ns("//introduction")))
+        introduction_names(doc.at(ns("//introduction")))
+      end
+
+      def initial_anchor_names_amd(doc)
+        doc.xpath(ns("//preface/*")).each do |c|
+          c.element? and preface_names(c)
+        end
+        sequential_asset_names(doc.xpath(ns("//preface/*")))
+        doc.xpath(ns("//sections/clause")).each do |c|
+          c.element? and preface_names(c)
+        end
+        middle_section_asset_names(doc)
+        termnote_anchor_names(doc)
+        termexample_anchor_names(doc)
       end
 
       # we can reference 0-number clauses in introduction
       def introduction_names(clause)
         return if clause.nil?
-        clause.at(ns("./clause")) and @anchors[clause["id"]] = 
+
+        clause.at(ns("./clause")) and @anchors[clause["id"]] =
           { label: "0", level: 1, xref: clause.at(ns("./title"))&.text, type: "clause" }
         i = Counter.new
         clause.xpath(ns("./clause")).each do |c|
@@ -35,17 +44,19 @@ module IsoDoc
         super
       end
 
-      def appendix_names(clause, num)
+      def appendix_names(clause, _num)
         i = Counter.new
         clause.xpath(ns("./appendix")).each do |c|
           i.increment(c)
-          @anchors[c["id"]] = anchor_struct(i.print, nil, @labels["appendix"], "clause")
+          @anchors[c["id"]] = anchor_struct(i.print, nil, @labels["appendix"],
+                                            "clause")
           @anchors[c["id"]][:level] = 2
           @anchors[c["id"]][:container] = clause["id"]
           j = Counter.new
           c.xpath(ns("./clause | ./references")).each do |c1|
             j.increment(c1)
-            appendix_names1(c1, l10n("#{@labels["appendix"]} #{i.print}.#{j.print}"), 3, clause["id"])
+            lbl = "#{@labels['appendix']} #{i.print}.#{j.print}"
+            appendix_names1(c1, l10n(lbl), 3, clause["id"])
           end
         end
       end
@@ -73,7 +84,8 @@ module IsoDoc
       end
 
       def appendix_names1(clause, num, level, container)
-        @anchors[clause["id"]] = { label: num, xref: num, level: level, container: container }
+        @anchors[clause["id"]] = { label: num, xref: num, level: level,
+                                   container: container }
         i = Counter.new
         clause.xpath(ns("./clause | ./references")).each do |c|
           i.increment(c)
@@ -96,7 +108,8 @@ module IsoDoc
       def figure_anchor(t, sublabel, label)
         @anchors[t["id"]] = anchor_struct(
           (sublabel ? "#{label} #{sublabel}" : label),
-          nil, @labels["figure"], "figure", t["unnumbered"])
+          nil, @labels["figure"], "figure", t["unnumbered"]
+        )
         sublabel && t["unnumbered"] != "true" and
           @anchors[t["id"]][:label] = sublabel
       end
@@ -104,10 +117,10 @@ module IsoDoc
       def sequential_figure_names(clause)
         c = IsoDoc::XrefGen::Counter.new
         j = 0
-        clause.xpath(ns(".//figure | .//sourcecode[not(ancestor::example)]")).
-          each do |t|
+        clause.xpath(ns(".//figure | .//sourcecode[not(ancestor::example)]"))
+          .each do |t|
           j = subfigure_increment(j, c, t)
-          sublabel = j.zero? ? nil : "#{(j+96).chr})"
+          sublabel = j.zero? ? nil : "#{(j + 96).chr})"
           next if t["id"].nil? || t["id"].empty?
 
           figure_anchor(t, sublabel, c.print)

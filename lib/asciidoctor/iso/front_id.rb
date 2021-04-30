@@ -35,22 +35,26 @@ module Asciidoctor
 
       def stage_abbr(stage, substage, doctype)
         return nil if stage.to_i > 60
+
         ret = STAGE_ABBRS[stage.to_sym]
         ret = "PRF" if stage == "60" && substage == "00"
         ret = "AWI" if stage == "10" && substage == "99"
-        if %w(amendment technical-corrigendum technical-report 
-          technical-specification).include?(doctype)
+        if %w(amendment technical-corrigendum technical-report
+              technical-specification).include?(doctype)
           ret = "D" if stage == "40" && doctype == "amendment"
-          ret = "FD" if stage == "50" && %w(amendment technical-corrigendum).include?(doctype)
+          ret = "FD" if stage == "50" && %w(amendment technical-corrigendum)
+            .include?(doctype)
         end
         ret
       end
 
       def stage_name(stage, substage, doctype, iteration = nil)
         return "Proof" if stage == "60" && substage == "00"
+
         ret = STAGE_NAMES[stage.to_sym]
         if iteration && %w(20 30).include?(stage)
-          prefix = iteration.to_i.localize(@lang.to_sym).to_rbnf_s("SpelloutRules", "spellout-ordinal")
+          prefix = iteration.to_i.localize(@lang.to_sym)
+            .to_rbnf_s("SpelloutRules", "spellout-ordinal")
           ret = "#{prefix.capitalize} #{ret.downcase}"
         end
         ret
@@ -65,37 +69,39 @@ module Asciidoctor
       end
 
       def iso_id(node, xml)
-        return unless !@amd && node.attr("docnumber") || @amd && node.attr("updates")
+        !@amd && node.attr("docnumber") || @amd && node.attr("updates") or
+          return
+
         dn = iso_id1(node)
         dn1 = id_stage_prefix(dn, node, false)
         dn2 = id_stage_prefix(dn, node, true)
         xml.docidentifier dn1, **attr_code(type: "ISO")
-        xml.docidentifier id_langsuffix(dn1, node), **attr_code(type: "iso-with-lang")
-        xml.docidentifier id_langsuffix(dn2, node), **attr_code(type: "iso-reference")
+        xml.docidentifier(id_langsuffix(dn1, node),
+                          **attr_code(type: "iso-with-lang"))
+        xml.docidentifier(id_langsuffix(dn2, node),
+                          **attr_code(type: "iso-reference"))
       end
 
       def iso_id1(node)
         if @amd
           dn = node.attr("updates")
-          return add_amd_parts(dn, node)
+          add_amd_parts(dn, node)
         else
           part, subpart = node&.attr("partnumber")&.split(/-/)
-          return add_id_parts(node.attr("docnumber"), part, subpart)
+          add_id_parts(node.attr("docnumber"), part, subpart)
         end
       end
 
-      def add_amd_parts(dn, node)
-        a = node.attr("amendment-number")
-        c = node.attr("corrigendum-number")
+      def add_amd_parts(docnum, node)
         case doctype(node)
         when "amendment"
-          "#{dn}/Amd #{node.attr('amendment-number')}"
+          "#{docnum}/Amd #{node.attr('amendment-number')}"
         when "technical-corrigendum"
-          "#{dn}/Cor.#{node.attr('corrigendum-number')}"
+          "#{docnum}/Cor.#{node.attr('corrigendum-number')}"
         end
       end
 
-      def id_langsuffix(dn, node)
+      def id_langsuffix(docnum, node)
         lang = node.attr("language") || "en"
         suffix = case lang
                  when "en" then "(E)"
@@ -103,38 +109,43 @@ module Asciidoctor
                  else
                    "(X)"
                  end
-        "#{dn}#{suffix}"
+        "#{docnum}#{suffix}"
       end
 
       def structured_id(node, xml)
         return unless node.attr("docnumber")
+
         part, subpart = node&.attr("partnumber")&.split(/-/)
         xml.structuredidentifier do |i|
-          i.project_number node.attr("docnumber"),
-            **attr_code(part: part, subpart: subpart,
-                        amendment: node.attr("amendment-number"),
-                        corrigendum: node.attr("corrigendum-number"),
-                        origyr: node.attr("created-date"))
+          i.project_number(node.attr("docnumber"), **attr_code(
+            part: part, subpart: subpart,
+            amendment: node.attr("amendment-number"),
+            corrigendum: node.attr("corrigendum-number"),
+            origyr: node.attr("created-date")
+          ))
         end
       end
 
-      def add_id_parts(dn, part, subpart)
-        dn += "-#{part}" if part
-        dn += "-#{subpart}" if subpart
-        dn
+      def add_id_parts(docnum, part, subpart)
+        docnum += "-#{part}" if part
+        docnum += "-#{subpart}" if subpart
+        docnum
       end
 
       def id_stage_abbr(stage, substage, node, bare = false)
-        ret = bare ? 
-          IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
-          .status_abbrev(stage_abbr(stage, substage, doctype(node)),
-        substage, nil, nil, doctype(node)) :
-        IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
-          .status_abbrev(stage_abbr(stage, substage, doctype(node)),
-        substage, node.attr("iteration"),
-        node.attr("draft"), doctype(node))
-        if %w(amendment technical-corrigendum technical-report technical-specification).include?(doctype(node))
-          ret = ret + " " unless %w(D FD).include?(ret)
+        ret = if bare
+                IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+                  .status_abbrev(stage_abbr(stage, substage, doctype(node)),
+                substage, nil, nil, doctype(node))
+              else
+                IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+                  .status_abbrev(stage_abbr(stage, substage, doctype(node)),
+                substage, node.attr("iteration"),
+                node.attr("draft"), doctype(node))
+              end
+        if %w(amendment technical-corrigendum technical-report
+              technical-specification).include?(doctype(node))
+          ret = "#{ret} " unless %w(D FD).include?(ret)
         end
         ret
       end
@@ -143,47 +154,50 @@ module Asciidoctor
         stage = get_stage(node)
         abbr = id_stage_abbr(get_stage(node), get_substage(node), node, true)
         typeabbr = get_typeabbr(node, true)
-        typeabbr = "" if stage.to_i > 50 || stage.to_i == 60 && get_substage(node).to_i < 60
+        if stage.to_i > 50 || stage.to_i == 60 && get_substage(node).to_i < 60
+          typeabbr = ""
+        end
         "#{abbr}#{typeabbr}".strip
       end
 
-      def id_stage_prefix(dn, node, force_year)
+      def id_stage_prefix(docnum, node, force_year)
         stage = get_stage(node)
         typeabbr = get_typeabbr(node)
         if stage && (stage.to_i < 60)
-          dn = unpub_stage_prefix(dn, stage, typeabbr, node)
-        elsif typeabbr && !@amd then dn = "/#{typeabbr}#{dn}"
+          docnum = unpub_stage_prefix(docnum, stage, typeabbr, node)
+        elsif typeabbr && !@amd then docnum = "/#{typeabbr}#{docnum}"
         end
         (force_year || !(stage && (stage.to_i < 60))) and
-          dn = id_add_year(dn, node)
-        dn
+          docnum = id_add_year(dn, node)
+        docnum
       end
 
-      def unpub_stage_prefix(dn, stage, typeabbr, node)
+      def unpub_stage_prefix(docnum, stage, typeabbr, node)
         abbr = id_stage_abbr(stage, get_substage(node), node)
         %w(40 50).include?(stage) && i = node.attr("iteration") and
           itersuffix = ".#{i}"
-        return dn if abbr.nil? || abbr.empty? # prefixes added in cleanup
-        return "/#{abbr}#{typeabbr} #{dn}#{itersuffix}" unless @amd
-        a = dn.split(%r{/})
+        return docnum if abbr.nil? || abbr.empty? # prefixes added in cleanup
+        return "/#{abbr}#{typeabbr} #{docnum}#{itersuffix}" unless @amd
+
+        a = docnum.split(%r{/})
         a[-1] = "#{abbr}#{a[-1]}#{itersuffix}"
         a.join("/")
       end
 
-      def id_add_year(dn, node)
+      def id_add_year(docnum, node)
         year = node.attr("copyright-year")
         @amd and year ||= node.attr("updated-date")&.sub(/-.*$/, "")
-        dn += ":#{year}" if year
-        dn
+        docnum += ":#{year}" if year
+        docnum
       end
 
       def get_stage(node)
-        stage = node.attr("status") || node.attr("docstage") || "60"
+        node.attr("status") || node.attr("docstage") || "60"
       end
 
       def get_substage(node)
         stage = get_stage(node)
-        node.attr("docsubstage") || ( stage == "60" ? "60" : "00" )
+        node.attr("docsubstage") || (stage == "60" ? "60" : "00")
       end
 
       def get_typeabbr(node, amd = false)

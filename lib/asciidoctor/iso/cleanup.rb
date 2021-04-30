@@ -65,8 +65,12 @@ module Asciidoctor
         super
       end
 
-      TERM_CLAUSE = "//sections//terms".freeze
+      TERM_CLAUSE = "//sections//terms | "\
+        "//sections//clause[descendant::terms][not(descendant::definitions)]"
+        .freeze
+
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
+
       OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or "\
         "@type = 'ISBN'".freeze
 
@@ -154,11 +158,19 @@ module Asciidoctor
 
           id = b.at("docidentifier").text
           b.at("./language | ./script | ./abstract | ./status")
-            .previous = <<~NOTE
-              <note type="Unpublished-Status">
-              <p>#{@i18n.under_preparation.sub(/%/, id)}</p></note>
-            NOTE
+            .previous = %(<note type="Unpublished-Status">
+                          <p>#{@i18n.under_preparation.sub(/%/, id)}</p></note>)
         end
+      end
+
+      def termdef_boilerplate_insert(xmldoc, isodoc, once = false)
+        once = true
+        super
+      end
+
+      def term_defs_boilerplate_cont(src, term, isodoc)
+        @vocab and src.empty? and return
+        super
       end
     end
   end

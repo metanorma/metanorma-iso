@@ -44,6 +44,7 @@ module Asciidoctor
       def init(node)
         super
         @amd = %w(amendment technical-corrigendum).include? doctype(node)
+        @vocab = node.attr("docsubtype") == "vocabulary"
       end
 
       def ol_attrs(node)
