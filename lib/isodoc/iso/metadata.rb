@@ -16,6 +16,7 @@ module IsoDoc
 
       def status_abbrev(stage, substage, iter, draft, doctype)
         return "" unless stage
+
         if %w(technical-report technical-specification).include?(doctype)
           stage = "DTS" if stage == "DIS"
           stage = "FDTS" if stage == "FDIS"
