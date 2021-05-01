@@ -3896,6 +3896,7 @@
 			
 			
 			
+			
 				<xsl:if test="ancestor::*[local-name() = 'tfoot']">
 					<xsl:attribute name="border">solid black 0</xsl:attribute>
 				</xsl:if>
