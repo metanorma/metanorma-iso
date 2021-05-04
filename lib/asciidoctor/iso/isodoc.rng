@@ -876,6 +876,18 @@
         </zeroOrMore>
       </element>
     </define>
+    <define name="pagebreak">
+      <element name="pagebreak">
+        <optional>
+          <attribute name="orientation">
+            <choice>
+              <value>landscape</value>
+              <value>portrait</value>
+            </choice>
+          </attribute>
+        </optional>
+      </element>
+    </define>
   </include>
   <!-- end overrides -->
   <define name="colgroup">

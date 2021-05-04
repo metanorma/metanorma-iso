@@ -168,7 +168,7 @@ module Asciidoctor
         elsif typeabbr && !@amd then docnum = "/#{typeabbr}#{docnum}"
         end
         (force_year || !(stage && (stage.to_i < 60))) and
-          docnum = id_add_year(dn, node)
+          docnum = id_add_year(docnum, node)
         docnum
       end
 
