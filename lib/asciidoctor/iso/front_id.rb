@@ -165,6 +165,7 @@ module Asciidoctor
         typeabbr = get_typeabbr(node)
         if stage && (stage.to_i < 60)
           docnum = unpub_stage_prefix(docnum, stage, typeabbr, node)
+        elsif typeabbr == "DIR " then docnum = "#{typeabbr}#{docnum}"
         elsif typeabbr && !@amd then docnum = "/#{typeabbr}#{docnum}"
         end
         (force_year || !(stage && (stage.to_i < 60))) and
@@ -202,6 +203,7 @@ module Asciidoctor
 
       def get_typeabbr(node, amd = false)
         case doctype(node)
+        when "directive" then "DIR "
         when "technical-report" then "TR "
         when "technical-specification" then "TS "
         when "amendment" then (amd ? "Amd " : "")
