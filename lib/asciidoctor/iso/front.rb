@@ -115,7 +115,9 @@ module Asciidoctor
         return unless node.attr("title-amendment-#{lang}")
 
         xml.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-amendment-#{lang}"))
+          t1 << Metanorma::Utils::asciidoc_sub(
+            node.attr("title-amendment-#{lang}")
+          )
         end
       end
 

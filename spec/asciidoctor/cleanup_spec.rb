@@ -2,20 +2,23 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "removes empty text elements" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == {blank}
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative"/>
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes stem-only terms as admitted" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -25,6 +28,7 @@ RSpec.describe Asciidoctor::ISO do
 
       Time
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -66,10 +70,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "moves term domains out of the term definition paragraph" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -77,6 +83,7 @@ RSpec.describe Asciidoctor::ISO do
 
       domain:[relativity] Time
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -92,10 +99,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "permits multiple blocks in term definition paragraph" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       = Document title
       Author
       :docfile: test.adoc
@@ -115,6 +124,7 @@ RSpec.describe Asciidoctor::ISO do
 
       This paragraph is extraneous
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -156,10 +166,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
        </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "keeps any initial boilerplate from terms and definitions" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -171,6 +183,7 @@ RSpec.describe Asciidoctor::ISO do
 
       This paragraph is extraneous
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -191,10 +204,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "moves notes inside preceding blocks, if they are not at clause end, and the blocks are not delimited" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [stem]
       ++++
@@ -206,6 +221,7 @@ RSpec.describe Asciidoctor::ISO do
 
       Indeed.
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <formula id="_">
@@ -229,10 +245,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "does not move notes inside preceding blocks, if they are at clause end" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [source,ruby]
       [1...x].each do |y|
@@ -241,6 +259,7 @@ RSpec.describe Asciidoctor::ISO do
 
       NOTE: That loop does not do much
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <sourcecode id="_" lang="ruby">[1...x].each do |y|
@@ -252,10 +271,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "converts xrefs to references into erefs" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       <<iso216>>
 
@@ -263,6 +284,7 @@ RSpec.describe Asciidoctor::ISO do
       == Normative References
       * [[[iso216,ISO 216:2001]]], _Reference_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
@@ -297,10 +319,12 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "extracts localities from erefs" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       <<iso216,whole,clause=3,example=9-11,locality:prelude=33,locality:entirety:the reference>>
 
@@ -308,6 +332,7 @@ RSpec.describe Asciidoctor::ISO do
       == Normative References
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
@@ -353,10 +378,12 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "strips type from xrefs" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       <<iso216>>
 
@@ -364,6 +391,7 @@ RSpec.describe Asciidoctor::ISO do
       == Clause
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
@@ -394,10 +422,12 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes localities in term sources" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -406,6 +436,7 @@ RSpec.describe Asciidoctor::ISO do
       [.source]
       <<ISO2191,section=1>>
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -426,10 +457,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "removes extraneous material from Normative References" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Normative References
@@ -438,6 +471,7 @@ RSpec.describe Asciidoctor::ISO do
 
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections></sections>
         <bibliography>
@@ -460,29 +494,35 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "inserts IDs into paragraphs" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       Paragraph
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <p id="_">Paragraph</p>
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "inserts IDs into notes" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [example]
       ====
       NOTE: This note has no ID
       ====
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <example id="_">
@@ -493,10 +533,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "moves table key inside table" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       |===
       |a |b |c
@@ -506,6 +548,7 @@ RSpec.describe Asciidoctor::ISO do
 
       a:: b
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <table id="_">
@@ -526,10 +569,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes headerrows attribute for table without header rows" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=3]
       |===
@@ -539,6 +584,7 @@ RSpec.describe Asciidoctor::ISO do
       |a |b |c
       |===
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <table id="_">
@@ -570,10 +616,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes headerrows attribute for table with header rows" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=3]
       |===
@@ -584,6 +632,7 @@ RSpec.describe Asciidoctor::ISO do
       |a |b |c
       |===
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <table id="_">
@@ -615,10 +664,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "moves table notes inside table" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       |===
       |a |b |c
@@ -628,6 +679,7 @@ RSpec.describe Asciidoctor::ISO do
 
       NOTE: Note 2
     INPUT
+    output = <<~OUTPUT
        #{BLANK_HDR}
         <sections>
           <table id="_">
@@ -648,10 +700,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "moves formula key inside formula" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [stem]
       ++++
@@ -662,6 +716,7 @@ RSpec.describe Asciidoctor::ISO do
 
       a:: b
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <formula id="_">
@@ -684,10 +739,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "moves footnotes inside figures" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       image::spec/examples/rice_images/rice_image1.png[]
 
@@ -695,6 +752,7 @@ RSpec.describe Asciidoctor::ISO do
 
       footnote:[This is another footnote to a figure]
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <figure id="_">
@@ -709,10 +767,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "moves figure key inside figure" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       image::spec/examples/rice_images/rice_image1.png[]
 
@@ -720,6 +780,7 @@ RSpec.describe Asciidoctor::ISO do
 
       a:: b
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <figure id="_">
@@ -734,10 +795,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "numbers bibliographic notes and footnotes sequentially" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       footnote:[Footnote]
 
@@ -749,6 +812,7 @@ RSpec.describe Asciidoctor::ISO do
       == Clause
       footnote:[Footnote2]
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
@@ -794,10 +858,12 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "defaults section obligations" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
 
       == Clause
@@ -808,6 +874,7 @@ RSpec.describe Asciidoctor::ISO do
 
       Text
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
@@ -821,10 +888,12 @@ RSpec.describe Asciidoctor::ISO do
         </annex>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "extends clause levels past 5" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
 
       == Clause1
@@ -852,6 +921,7 @@ RSpec.describe Asciidoctor::ISO do
       ====== Clause 5B
 
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
@@ -887,10 +957,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "reorders references in bibliography, and renumbers citations accordingly" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
 
       == Clause 1
@@ -932,6 +1004,7 @@ RSpec.describe Asciidoctor::ISO do
       * [[[ref16,(B)]]], _Standard 20_
       * [[[ref17,(A)]]], _Standard 30_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
@@ -1130,5 +1203,290 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  context "terms & definitions boilerplate" do
+    it "places normal terms & definitions boilerplate in flat clause" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+
+        == Terms and definitions
+
+        === Term1
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR}
+        <sections>
+          <terms id='_' obligation='normative'>
+            <title>Terms and definitions</title>
+            <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
+            <p id='_'>
+              ISO and IEC maintain terminological databases for use in standardization
+              at the following addresses:
+            </p>
+            <ul id='_'>
+              <li>
+                <p id='_'>
+                  ISO Online browsing platform: available at
+                  <link target='http://www.iso.org/obp'/>
+                </p>
+              </li>
+              <li>
+                <p id='_'>
+                  IEC Electropedia: available at
+                  <link target='http://www.electropedia.org'/>
+                </p>
+              </li>
+            </ul>
+            <term id='term-term1'>
+              <preferred>Term1</preferred>
+            </term>
+          </terms>
+        </sections>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+
+    it "places normal terms & definitions boilerplate in multi-clause" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+
+        == Terms and definitions
+
+        === Normal Terms
+
+        ==== Term1
+
+        === Abnormal terms
+
+        ==== Term 2
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR}
+          <sections>
+            <clause id='_' obligation='normative'>
+              <title>Terms and definitions</title>
+              <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
+              <p id='_'>
+                ISO and IEC maintain terminological databases for use in standardization
+                at the following addresses:
+              </p>
+              <ul id='_'>
+                <li>
+                  <p id='_'>
+                    ISO Online browsing platform: available at
+                    <link target='http://www.iso.org/obp'/>
+                  </p>
+                </li>
+                <li>
+                  <p id='_'>
+                    IEC Electropedia: available at
+                    <link target='http://www.electropedia.org'/>
+                  </p>
+                </li>
+              </ul>
+              <terms id='_' obligation='normative'>
+                <title>Normal Terms</title>
+                <term id='term-term1'>
+                  <preferred>Term1</preferred>
+                </term>
+              </terms>
+              <terms id='_' obligation='normative'>
+                <title>Abnormal terms</title>
+                <term id='term-term-2'>
+                  <preferred>Term 2</preferred>
+                </term>
+              </terms>
+            </clause>
+          </sections>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+
+    it "places normal terms & definitions boilerplate in single clause that excludes symbols" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+
+        == Terms, definitions, symbols and abbreviated terms
+
+        === Terms and definitions
+
+        ==== Normal Terms
+
+        ===== Term1
+
+        ==== Abnormal terms
+
+        ===== Term 2
+
+        === Symbols and abbreviated terms
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR}
+          <sections>
+            <clause id='_' obligation='normative'>
+              <title>Terms, definitions, symbols and abbreviated terms</title>
+              <clause id='_' obligation='normative'>
+                <title>Terms and definitions</title>
+                <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
+                <p id='_'>
+                  ISO and IEC maintain terminological databases for use in
+                  standardization at the following addresses:
+                </p>
+                <ul id='_'>
+                  <li>
+                    <p id='_'>
+                      ISO Online browsing platform: available at
+                      <link target='http://www.iso.org/obp'/>
+                    </p>
+                  </li>
+                  <li>
+                    <p id='_'>
+                      IEC Electropedia: available at
+                      <link target='http://www.electropedia.org'/>
+                    </p>
+                  </li>
+                </ul>
+                <terms id='_' obligation='normative'>
+                  <title>Normal Terms</title>
+                  <term id='term-term1'>
+                    <preferred>Term1</preferred>
+                  </term>
+                </terms>
+                <terms id='_' obligation='normative'>
+                  <title>Abnormal terms</title>
+                  <term id='term-term-2'>
+                    <preferred>Term 2</preferred>
+                  </term>
+                </terms>
+              </clause>
+              <definitions id='_' obligation='normative'>
+                <title>Symbols and abbreviated terms</title>
+              </definitions>
+            </clause>
+          </sections>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+
+    it "places normal terms & definitions boilerplate in first of multiple clauses that excludes symbols" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+
+        == Terms, definitions, symbols and abbreviated terms
+
+        === Terms and definitions
+
+        ==== Term1
+
+        [heading=terms]
+        === Other Terms
+
+        ==== Term 2
+
+        === Symbols and abbreviated terms
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR}
+          <sections>
+            <clause id='_' obligation='normative'>
+              <title>Terms, definitions, symbols and abbreviated terms</title>
+              <terms id='_' obligation='normative'>
+                <title>Terms and definitions</title>
+                <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
+                <p id='_'>
+                  ISO and IEC maintain terminological databases for use in
+                  standardization at the following addresses:
+                </p>
+                <ul id='_'>
+                  <li>
+                    <p id='_'>
+                      ISO Online browsing platform: available at
+                      <link target='http://www.iso.org/obp'/>
+                    </p>
+                  </li>
+                  <li>
+                    <p id='_'>
+                      IEC Electropedia: available at
+                      <link target='http://www.electropedia.org'/>
+                    </p>
+                  </li>
+                </ul>
+                <term id='term-term1'>
+                  <preferred>Term1</preferred>
+                </term>
+              </terms>
+              <terms id='_' obligation='normative'>
+                <title>Other Terms</title>
+                <term id='term-term-2'>
+                  <preferred>Term 2</preferred>
+                </term>
+              </terms>
+              <definitions id='_' obligation='normative'>
+                <title>Symbols and abbreviated terms</title>
+              </definitions>
+            </clause>
+          </sections>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+
+    it "modifies normal terms & definitions boilerplate in vocabulary document" do
+      input = <<~INPUT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :novalid:
+        :no-isobib:
+        :docsubtype: vocabulary
+
+        == Terms and definitions
+
+        === Term1
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR.sub(%r{</doctype>}, '</doctype><subdoctype>vocabulary</subdoctype>')}
+        <sections>
+          <terms id='_' obligation='normative'>
+            <title>Terms and definitions</title>
+            <p id='_'>
+              ISO and IEC maintain terminological databases for use in standardization
+              at the following addresses:
+            </p>
+            <ul id='_'>
+              <li>
+                <p id='_'>
+                  ISO Online browsing platform: available at
+                  <link target='http://www.iso.org/obp'/>
+                </p>
+              </li>
+              <li>
+                <p id='_'>
+                  IEC Electropedia: available at
+                  <link target='http://www.electropedia.org'/>
+                </p>
+              </li>
+            </ul>
+            <term id='term-term1'>
+              <preferred>Term1</preferred>
+            </term>
+          </terms>
+        </sections>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
   end
 end

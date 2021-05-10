@@ -101,20 +101,6 @@ RSpec.describe Asciidoctor::ISO do
             <title>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="_" obligation="normative">
               <title>Normal Terms</title>
-              <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
-              <p id="_">ISO and IEC maintain terminological databases for use in standardization at the following addresses:</p>
-              <ul id="_">
-                <li>
-                  <p id="_">ISO Online browsing platform: available at
-
-                    <link target="http://www.iso.org/obp"/></p>
-                </li>
-                <li>
-                  <p id="_">IEC Electropedia: available at
-
-                    <link target="http://www.electropedia.org"/></p>
-                </li>
-              </ul>
               <term id="term-term2">
                 <preferred>Term2</preferred>
               </term>
