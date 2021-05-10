@@ -1752,61 +1752,7 @@
 		<xsl:apply-templates/>
 	</xsl:template>
 	
-	
-	
-	<xsl:template match="iso:bibitem">
-		<fo:block id="{@id}" margin-bottom="6pt"> <!-- 12 pt -->
-			<xsl:variable name="docidentifier">
-				<xsl:if test="iso:docidentifier">
-					<xsl:choose>
-						<xsl:when test="iso:docidentifier/@type = 'metanorma'"/>
-						<xsl:otherwise><xsl:value-of select="iso:docidentifier"/></xsl:otherwise>
-					</xsl:choose>
-				</xsl:if>
-			</xsl:variable>
-			<xsl:value-of select="$docidentifier"/>
-			<xsl:apply-templates select="iso:note"/>			
-			<xsl:if test="normalize-space($docidentifier) != ''">, </xsl:if>
-			<fo:inline font-style="italic">
-				<xsl:choose>
-					<xsl:when test="iso:title[@type = 'main' and @language = $lang]">
-						<xsl:value-of select="iso:title[@type = 'main' and @language = $lang]"/>
-					</xsl:when>
-					<xsl:when test="iso:title[@type = 'main' and @language = 'en']">
-						<xsl:value-of select="iso:title[@type = 'main' and @language = 'en']"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="iso:title"/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</fo:inline>
-		</fo:block>
-	</xsl:template>
-	
-	
-	<xsl:template match="iso:bibitem/iso:note" priority="2">
-		<fo:footnote>
-			<xsl:variable name="number">
-				<xsl:number level="any" count="iso:bibitem/iso:note"/>
-			</xsl:variable>
-			<fo:inline font-size="8pt" keep-with-previous.within-line="always" baseline-shift="30%"> <!--85% vertical-align="super"-->
-				<fo:basic-link internal-destination="{generate-id()}" fox:alt-text="footnote {$number}">
-					<xsl:value-of select="$number"/><xsl:text>)</xsl:text>
-				</fo:basic-link>
-			</fo:inline>
-			<fo:footnote-body>
-				<fo:block font-size="10pt" margin-bottom="4pt" start-indent="0pt">
-					<fo:inline id="{generate-id()}" keep-with-next.within-line="always" alignment-baseline="hanging" padding-right="3mm"><!-- font-size="60%"  -->
-						<xsl:value-of select="$number"/><xsl:text>)</xsl:text>
-					</fo:inline>
-					<xsl:apply-templates/>
-				</fo:block>
-			</fo:footnote-body>
-		</fo:footnote>
-	</xsl:template>
-	
-	
-	
+		
 	<xsl:template match="iso:ul | iso:ol" mode="ul_ol">
 		<fo:list-block provisional-distance-between-starts="7mm" margin-top="8pt"> <!-- margin-bottom="8pt" -->
 			<xsl:apply-templates/>
@@ -1872,6 +1818,59 @@
 	</xsl:template>
 
 
+	<xsl:template match="iso:bibitem">
+		<fo:block id="{@id}" margin-bottom="6pt">
+			<xsl:call-template name="bibitem"/>
+		</fo:block>
+	</xsl:template>
+	
+	<xsl:template name="bibitem">
+		<xsl:variable name="docidentifier">
+			<xsl:if test="iso:docidentifier">
+				<xsl:choose>
+					<xsl:when test="iso:docidentifier/@type = 'metanorma'"/>
+					<xsl:otherwise><xsl:value-of select="iso:docidentifier"/></xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+		</xsl:variable>
+		<xsl:value-of select="$docidentifier"/>
+		<xsl:apply-templates select="iso:note"/>			
+		<xsl:if test="normalize-space($docidentifier) != ''">, </xsl:if>
+		<xsl:choose>
+			<xsl:when test="iso:title[@type = 'main' and @language = $lang]">
+				<xsl:apply-templates select="iso:title[@type = 'main' and @language = $lang]"/>
+			</xsl:when>
+			<xsl:when test="iso:title[@type = 'main' and @language = 'en']">
+				<xsl:apply-templates select="iso:title[@type = 'main' and @language = 'en']"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="iso:title"/>
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:apply-templates select="iso:formattedref"/>
+	</xsl:template>
+	
+	<xsl:template match="iso:bibitem/iso:note" priority="2">
+		<fo:footnote>
+			<xsl:variable name="number">
+				<xsl:number level="any" count="iso:bibitem/iso:note"/>
+			</xsl:variable>
+			<fo:inline font-size="8pt" keep-with-previous.within-line="always" baseline-shift="30%"> <!--85% vertical-align="super"-->
+				<fo:basic-link internal-destination="{generate-id()}" fox:alt-text="footnote {$number}">
+					<xsl:value-of select="$number"/><xsl:text>)</xsl:text>
+				</fo:basic-link>
+			</fo:inline>
+			<fo:footnote-body>
+				<fo:block font-size="10pt" margin-bottom="4pt" start-indent="0pt">
+					<fo:inline id="{generate-id()}" keep-with-next.within-line="always" alignment-baseline="hanging" padding-right="3mm"><!-- font-size="60%"  -->
+						<xsl:value-of select="$number"/><xsl:text>)</xsl:text>
+					</fo:inline>
+					<xsl:apply-templates/>
+				</fo:block>
+			</fo:footnote-body>
+		</fo:footnote>
+	</xsl:template>
+
 	<!-- Example: [1] ISO 9:1995, Information and documentation – Transliteration of Cyrillic characters into Latin characters – Slavic and non-Slavic languages -->
 	<!-- <xsl:template match="iso:references[@id = '_bibliography']/iso:bibitem"> -->
 	<xsl:template match="iso:references[not(@normative='true')]/iso:bibitem">
@@ -1886,40 +1885,18 @@
 				</fo:list-item-label>
 				<fo:list-item-body start-indent="body-start()">
 					<fo:block>
-						<xsl:variable name="docidentifier">
-							<xsl:if test="iso:docidentifier">
-								<xsl:choose>
-									<xsl:when test="iso:docidentifier/@type = 'metanorma'"/>
-									<xsl:otherwise><xsl:value-of select="iso:docidentifier"/></xsl:otherwise>
-								</xsl:choose>
-							</xsl:if>
-						</xsl:variable>
-						<xsl:value-of select="$docidentifier"/>
-						<xsl:apply-templates select="iso:note"/>
-						<xsl:if test="normalize-space($docidentifier) != ''">, </xsl:if>
-						<xsl:choose>
-							<xsl:when test="iso:title[@type = 'main' and @language = $lang]">
-								<xsl:apply-templates select="iso:title[@type = 'main' and @language = $lang]"/>
-							</xsl:when>
-							<xsl:when test="iso:title[@type = 'main' and @language = 'en']">
-								<xsl:apply-templates select="iso:title[@type = 'main' and @language = 'en']"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:apply-templates select="iso:title"/>
-							</xsl:otherwise>
-						</xsl:choose>
-						<xsl:apply-templates select="iso:formattedref"/>
+						<xsl:call-template name="bibitem"/>
 					</fo:block>
 				</fo:list-item-body>
 			</fo:list-item>
 		</fo:list-block>
 	</xsl:template>
 	
-	<!-- <xsl:template match="iso:references[@id = '_bibliography']/iso:bibitem" mode="contents"/> -->
-	<xsl:template match="iso:references[not(@normative='true')]/iso:bibitem" mode="contents"/>
+	<!-- <xsl:template match="iso:references[@id = '_bibliography']/iso:bibitem" mode="contents"/> [not(@normative='true')] -->
+	<xsl:template match="iso:references/iso:bibitem" mode="contents"/>
 	
-	<!-- <xsl:template match="iso:references[@id = '_bibliography']/iso:bibitem/iso:title"> -->
-	<xsl:template match="iso:references[not(@normative='true')]/iso:bibitem/iso:title">
+	<!-- <xsl:template match="iso:references[@id = '_bibliography']/iso:bibitem/iso:title"> iso:references[not(@normative='true')]/ -->
+	<xsl:template match="iso:bibitem/iso:title">
 		<fo:inline font-style="italic">
 			<xsl:apply-templates/>
 		</fo:inline>
@@ -4549,6 +4526,7 @@
 				
 				
 				
+				
 						
 			</xsl:variable>
 			<xsl:variable name="font-size" select="normalize-space($_font-size)"/>		
@@ -5630,6 +5608,7 @@
 						
 						
 						9
+						
 						
 						
 								
@@ -6841,6 +6820,7 @@
 	</xsl:template><xsl:template name="namespaceCheck">
 		<xsl:variable name="documentNS" select="namespace-uri(/*)"/>
 		<xsl:variable name="XSLNS">			
+			
 			
 				<xsl:value-of select="document('')//*/namespace::iso"/>
 			
