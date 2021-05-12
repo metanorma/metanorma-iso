@@ -24,16 +24,14 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-=begin
-  config.around do |example|
-    Dir.mktmpdir("rspec-") do |dir|
-      tmp_assets = File.join(dir, "spec/assets/")
-      FileUtils.mkdir_p tmp_assets
-      FileUtils.cp_r Dir.glob("spec/assets/*"), tmp_assets
-      Dir.chdir(dir) { example.run }
-    end
-  end
-=end
+  #   config.around do |example|
+  #     Dir.mktmpdir("rspec-") do |dir|
+  #       tmp_assets = File.join(dir, "spec/assets/")
+  #       FileUtils.mkdir_p tmp_assets
+  #       FileUtils.cp_r Dir.glob("spec/assets/*"), tmp_assets
+  #       Dir.chdir(dir) { example.run }
+  #     end
+  #   end
 end
 
 def strip_guid(xml)
@@ -120,22 +118,25 @@ VALIDATING_BLANK_HDR = <<~"HDR".freeze
   :no-isobib:
 HDR
 
-ASCIIDOCTOR_ISO_DIR = Pathname.new(File.dirname(__FILE__)) / "../lib/asciidoctor/iso"
+ASCIIDOCTOR_ISO_DIR = Pathname
+  .new(File.dirname(__FILE__)) / "../lib/asciidoctor/iso"
 
 BOILERPLATE =
   HTMLEntities.new.decode(
     File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate.xml", encoding: "utf-8")
-      .gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
+      .gsub(/\{\{ agency \}\}/, "ISO")
+  .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
       .gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "")
-      .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
+      .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
   )
 
 BOILERPLATE_FR =
   HTMLEntities.new.decode(
     File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-fr.xml", encoding: "utf-8")
-    .gsub(/\{\{ agency \}\}/, "ISO").gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
+    .gsub(/\{\{ agency \}\}/, "ISO")
+    .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
     .gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "")
-    .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’")
+    .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
   )
 
 BLANK_HDR1 = <<~"HDR".freeze
