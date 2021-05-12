@@ -99,6 +99,7 @@ module Asciidoctor
         "//clause[descendant::references][not(parent::clause)]".freeze
 
       def sections_sequence_validate(root)
+        vocab = root&.at("//bibdata/ext/subdoctype")&.text == "vocabulary"
         names = root.xpath(SECTIONS_XPATH)
         names = seqcheck(names, SEQ[0][:msg], SEQ[0][:val])
         n = names[0]
@@ -112,21 +113,27 @@ module Asciidoctor
           n = names.shift
         end
         if n.nil? || n.name != "clause"
-          @log.add("Style", nil, "Document must contain at least one clause")
+          @log.add("Style", n, "Document must contain at least one clause")
         end
         n&.at("./self::clause") ||
-          @log.add("Style", nil, "Document must contain clause after "\
+          @log.add("Style", n, "Document must contain clause after "\
                    "Terms and Definitions")
         n&.at("./self::clause[@type = 'scope']") &&
-          @log.add("Style", nil, "Scope must occur before Terms and Definitions")
+          @log.add("Style", n, "Scope must occur before Terms and Definitions")
         n = names.shift
-        while n&.name == "clause"
+        while n&.name == "clause" || (vocab && n&.name == "terms")
           n&.at("./self::clause[@type = 'scope']")
-          @log.add("Style", nil, "Scope must occur before Terms and Definitions")
+          @log.add("Style", n, "Scope must occur before Terms and Definitions")
           n = names.shift
         end
-        unless %w(annex references).include? n&.name
-          @log.add("Style", nil, "Only annexes and references can follow clauses")
+        if vocab
+          unless %w(annex references terms).include? n&.name
+            @log.add("Style", n, "Only terms, annexes and references can follow clauses")
+          end
+        else
+          unless %w(annex references).include? n&.name
+            @log.add("Style", n, "Only annexes and references can follow clauses")
+          end
         end
         while n&.name == "annex"
           n = names.shift
@@ -140,9 +147,9 @@ module Asciidoctor
                    "Normative References")
         n = names&.shift
         n&.at("./self::references[@normative = 'false']") ||
-          @log.add("Style", nil, "Final section must be (references) Bibliography")
+          @log.add("Style", n, "Final section must be (references) Bibliography")
         names.empty? ||
-          @log.add("Style", nil, "There are sections after the final Bibliography")
+          @log.add("Style", n, "There are sections after the final Bibliography")
       end
 
       def style_warning(node, msg, text = nil)
