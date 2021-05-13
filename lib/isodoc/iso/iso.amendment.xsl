@@ -5951,7 +5951,7 @@
 				</fo:inline>
 			</xsl:otherwise>
 		</xsl:choose>	
-	</xsl:template><xsl:template match="*[local-name() = 'termsource']">
+	</xsl:template><xsl:template match="*[local-name() = 'termsource']" name="termsource">
 		<fo:block xsl:use-attribute-sets="termsource-style">
 			<!-- Example: [SOURCE: ISO 5127:2017, 3.1.6.02] -->			
 			<xsl:variable name="termsource_text">
