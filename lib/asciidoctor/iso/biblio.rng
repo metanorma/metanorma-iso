@@ -787,6 +787,7 @@
       <value>adapted</value>
       <value>vote-started</value>
       <value>vote-ended</value>
+      <value>announced</value>
     </choice>
   </define>
   <define name="bdate">

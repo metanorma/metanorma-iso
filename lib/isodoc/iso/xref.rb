@@ -30,8 +30,9 @@ module IsoDoc
       def introduction_names(clause)
         return if clause.nil?
 
-        clause.at(ns("./clause")) and @anchors[clause["id"]] =
-          { label: "0", level: 1, xref: clause.at(ns("./title"))&.text, type: "clause" }
+        clause.at(ns("./clause")) and
+          @anchors[clause["id"]] = { label: "0", level: 1, type: "clause",
+                                     xref: clause.at(ns("./title"))&.text }
         i = Counter.new
         clause.xpath(ns("./clause")).each do |c|
           i.increment(c)
