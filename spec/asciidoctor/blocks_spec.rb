@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Asciidoctor::ISO do
   it "processes open blocks" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       --
       x
@@ -12,6 +12,7 @@ RSpec.describe Asciidoctor::ISO do
       z
       --
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <p id="_">x</p>
@@ -20,10 +21,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes stem blocks" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [stem]
       ++++
@@ -36,6 +39,7 @@ RSpec.describe Asciidoctor::ISO do
       <mml:math><mml:msub xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">F</mml:mi> </mml:mrow> </mml:mrow> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">&#x0391;</mml:mi> </mml:mrow> </mml:mrow> </mml:msub> </mml:math>
       ++++
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <formula id="_">
@@ -73,10 +77,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "ignores review blocks unless document is in draft mode" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [[foreword]]
       .Foreword
@@ -89,16 +95,19 @@ RSpec.describe Asciidoctor::ISO do
       For further information on the Foreword, see *ISO/IEC Directives, Part 2, 2016, Clause 12.*
       ****
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <p id="foreword">Foreword</p>
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes review blocks if document is in draft mode" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -118,23 +127,25 @@ RSpec.describe Asciidoctor::ISO do
       For further information on the Foreword, see *ISO/IEC Directives, Part 2, 2016, Clause 12.*
       ****
     INPUT
-    expect(xmlpp(strip_guid(output).sub(/^.+<sections>/m, "<iso-standard><sections>")))
-      .to be_equivalent_to xmlpp(<<~"OUTPUT")
-        <iso-standard>
-          <sections>
-            <p id="foreword">Foreword</p>
-            <review date="20170101T00:00:00Z" from="foreword" id="_" reviewer="ISO" to="foreword">
-              <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
-              <p id="_">For further information on the Foreword, see#{' '}
-                <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p>
-            </review>
-          </sections>
-        </iso-standard>
-      OUTPUT
+    output = <<~OUTPUT
+      <iso-standard>
+        <sections>
+          <p id="foreword">Foreword</p>
+          <review date="20170101T00:00:00Z" from="foreword" id="_" reviewer="ISO" to="foreword">
+            <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
+            <p id="_">For further information on the Foreword, see#{' '}
+              <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p>
+          </review>
+        </sections>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(input)
+      .sub(/^.+<sections>/m, "<iso-standard><sections>")))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes term notes" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -142,6 +153,7 @@ RSpec.describe Asciidoctor::ISO do
 
       NOTE: This is a note
     INPUT
+    output = <<~OUTPUT
         #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -156,13 +168,16 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes notes" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       NOTE: This is a note
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
         <note id="_">
@@ -171,15 +186,18 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes literals" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       ....
       LITERAL
       ....
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <figure id="_">
@@ -188,13 +206,16 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes simple admonitions with Asciidoc names" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       CAUTION: Only use paddy or parboiled rice for the determination of husked rice yield.
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <admonition id="_" type="caution">
@@ -203,10 +224,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes complex admonitions with non-Asciidoc names" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [CAUTION,type=Safety Precautions]
       .Safety Precautions
@@ -218,6 +241,7 @@ RSpec.describe Asciidoctor::ISO do
       . Celery makes them sad.
       ====
     INPUT
+    output = <<~OUTPUT
         #{BLANK_HDR}
         <sections>
           <admonition id="_" type="safety precautions">
@@ -238,10 +262,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes term examples" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -250,6 +276,7 @@ RSpec.describe Asciidoctor::ISO do
       [example]
       This is an example
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -264,10 +291,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes examples" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [example]
       ====
@@ -276,6 +305,7 @@ RSpec.describe Asciidoctor::ISO do
       Amen
       ====
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <example id="_">
@@ -285,15 +315,18 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes preambles" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       This is a preamble
 
       == Section 1
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
@@ -308,15 +341,18 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes images" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       .Split-it-right sample divider
       image::spec/examples/rice_images/rice_image1.png[]
 
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <figure id="_">
@@ -326,15 +362,18 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "accepts width and height attributes on images" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [height=4,width=3]
       image::spec/examples/rice_images/rice_image1.png[]
 
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <figure id="_">
@@ -343,15 +382,18 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "accepts auto for width and height attributes on images" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [height=4,width=auto]
       image::spec/examples/rice_images/rice_image1.png[]
 
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <figure id="_">
@@ -360,30 +402,36 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "accepts alignment attribute on paragraphs" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [align=right]
       This para is right-aligned.
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
            <p align="right" id="_">This para is right-aligned.</p>
          </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes blockquotes" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [quote, ISO, "ISO7301,section 1"]
       ____
       Block quotation
       ____
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <quote id="_">
@@ -400,10 +448,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes source code" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [source,ruby]
       --
@@ -413,6 +463,7 @@ RSpec.describe Asciidoctor::ISO do
       end
       --
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <sourcecode id="_" lang="ruby">
@@ -424,10 +475,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes callouts" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [source,ruby]
       --
@@ -439,6 +492,7 @@ RSpec.describe Asciidoctor::ISO do
       <1> This is one callout
       <2> This is another callout
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <sourcecode id="_" lang="ruby">
@@ -456,10 +510,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes unmodified term sources" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -468,6 +524,7 @@ RSpec.describe Asciidoctor::ISO do
       [.source]
       <<ISO2191,section=1>>
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -488,10 +545,12 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes modified term sources" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       == Terms and Definitions
 
@@ -500,6 +559,7 @@ RSpec.describe Asciidoctor::ISO do
       [.source]
       <<ISO2191,section=1>>, with adjustments
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
@@ -523,5 +583,7 @@ RSpec.describe Asciidoctor::ISO do
         </sections>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 end
