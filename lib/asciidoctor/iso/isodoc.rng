@@ -1191,9 +1191,7 @@
   </define>
   <define name="IsoWorkgroup">
     <optional>
-      <attribute name="number">
-        <data type="int"/>
-      </attribute>
+      <attribute name="number"/>
     </optional>
     <optional>
       <attribute name="type"/>
