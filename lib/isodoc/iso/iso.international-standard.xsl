@@ -2729,6 +2729,7 @@
 		
 		
 		
+		
 	</xsl:attribute-set><xsl:attribute-set name="example-body-style">
 		
 		
@@ -2748,9 +2749,7 @@
 		
 		
 		
-		
-		
-		
+				
 				
 		
 		
@@ -5919,6 +5918,7 @@
 		<fo:inline><xsl:apply-templates/></fo:inline>
 	</xsl:template><xsl:template match="*[local-name() = 'example']">
 		<fo:block id="{@id}" xsl:use-attribute-sets="example-style">
+			
 			
 			<xsl:apply-templates select="*[local-name()='name']" mode="presentation"/>
 			
