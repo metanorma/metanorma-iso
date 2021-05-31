@@ -6998,7 +6998,14 @@
 			<xsl:when test="/*/*[local-name() = 'localized-strings']/*[local-name() = 'localized-string'][@key = $key and @language = $curr_lang]">
 				<xsl:value-of select="/*/*[local-name() = 'localized-strings']/*[local-name() = 'localized-string'][@key = $key and @language = $curr_lang]"/>
 			</xsl:when>
-			<xsl:otherwise><xsl:value-of select="$key"/></xsl:otherwise>
+			<xsl:otherwise>
+				<xsl:variable name="key_">
+					<xsl:call-template name="capitalize">
+						<xsl:with-param name="str" select="translate($key, '_', ' ')"/>
+					</xsl:call-template>
+				</xsl:variable>
+				<xsl:value-of select="$key_"/>
+			</xsl:otherwise>
 		</xsl:choose>
 		
 	</xsl:template><xsl:template name="setTrackChangesStyles">
