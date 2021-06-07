@@ -99,20 +99,21 @@ module IsoDoc
         clause.xpath(ns(".//formula")).each do |t|
           next if t["id"].nil? || t["id"].empty?
 
-          @anchors[t["id"]] =
-            anchor_struct("#{num}#{hiersep}#{c.increment(t).print}", t,
-                          t["inequality"] ? @labels["inequality"] : @labels["formula"],
-                          "formula", t["unnumbered"])
+          @anchors[t["id"]] = anchor_struct(
+            "#{num}#{hiersep}#{c.increment(t).print}", t,
+            t["inequality"] ? @labels["inequality"] : @labels["formula"],
+            "formula", t["unnumbered"]
+          )
         end
       end
 
-      def figure_anchor(t, sublabel, label)
-        @anchors[t["id"]] = anchor_struct(
+      def figure_anchor(elem, sublabel, label)
+        @anchors[elem["id"]] = anchor_struct(
           (sublabel ? "#{label} #{sublabel}" : label),
-          nil, @labels["figure"], "figure", t["unnumbered"]
+          nil, @labels["figure"], "figure", elem["unnumbered"]
         )
-        sublabel && t["unnumbered"] != "true" and
-          @anchors[t["id"]][:label] = sublabel
+        sublabel && elem["unnumbered"] != "true" and
+          @anchors[elem["id"]][:label] = sublabel
       end
 
       def sequential_figure_names(clause)

@@ -83,6 +83,9 @@
     </define>
     <define name="BibDataExtensionType">
       <ref name="doctype"/>
+      <optional>
+        <ref name="docsubtype"/>
+      </optional>
       <ref name="editorialgroup"/>
       <zeroOrMore>
         <ref name="ics"/>

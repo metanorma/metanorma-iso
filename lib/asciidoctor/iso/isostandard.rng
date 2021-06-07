@@ -39,6 +39,9 @@
     <define name="BibDataExtensionType">
       <ref name="doctype"/>
       <optional>
+        <ref name="docsubtype"/>
+      </optional>
+      <optional>
         <ref name="horizontal"/>
       </optional>
       <ref name="editorialgroup"/>
@@ -257,6 +260,14 @@
         <value>amendment</value>
         <value>technical-corrigendum</value>
         <value>directive</value>
+      </choice>
+    </define>
+    <define name="DocumentSubtype">
+      <choice>
+        <value>specification</value>
+        <value>method-of-test</value>
+        <value>vocabulary</value>
+        <value>code-of-practice</value>
       </choice>
     </define>
     <define name="structuredidentifier">
