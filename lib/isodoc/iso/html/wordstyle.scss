@@ -35,6 +35,13 @@
 	mso-font-pitch:variable;
 	mso-font-signature:-536870145 1073743103 0 0 415 0;}
 @font-face
+	{font-family:"Segoe UI";
+	panose-1:2 11 5 2 4 2 4 2 2 3;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-469750017 -1073683329 9 0 511 0;}
+@font-face
 	{font-family:"Malgun Gothic";
 	panose-1:2 11 5 3 2 0 0 2 0 4;
 	mso-font-charset:129;
@@ -55,7 +62,7 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	mso-style-parent:"";
 	margin-top:0cm;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-align:justify;
 	line-height:12.0pt;
@@ -108,15 +115,105 @@ p.MsoBlockText, li.MsoBlockText, div.MsoBlockText
 	mso-themecolor:accent1;
 	mso-ansi-language:EN-AU;
 	font-style:italic;}
+p.MsoList, li.MsoList, div.MsoList
+	{mso-style-priority:4;
+	mso-style-unhide:no;
+	mso-style-parent:"MsoListParagraph";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:21.25pt;
+	mso-add-space:auto;
+	text-align:justify;
+	text-indent:-21.25pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-list:l3 level1 lfo20;
+	font-size:$normalfontsize;
+	font-family:$bodyfont;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:EN-US;}
+p.MsoListCxSpFirst, li.MsoListCxSpFirst, div.MsoListCxSpFirst
+	{mso-style-priority:4;
+	mso-style-unhide:no;
+	mso-style-parent:"MsoListParagraph";
+	mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.25pt;
+	mso-add-space:auto;
+	text-align:justify;
+	text-indent:-21.25pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-list:l3 level1 lfo20;
+	font-size:$normalfontsize;
+	font-family:$bodyfont;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:EN-US;}
+p.MsoListCxSpMiddle, li.MsoListCxSpMiddle, div.MsoListCxSpMiddle
+	{mso-style-priority:4;
+	mso-style-unhide:no;
+	mso-style-parent:"MsoListParagraph";
+	mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.25pt;
+	mso-add-space:auto;
+	text-align:justify;
+	text-indent:-21.25pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-list:l3 level1 lfo20;
+	font-size:$normalfontsize;
+	font-family:$bodyfont;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:EN-US;}
+p.MsoListCxSpLast, li.MsoListCxSpLast, div.MsoListCxSpLast
+	{mso-style-priority:4;
+	mso-style-unhide:no;
+	mso-style-parent:"MsoListParagraph";
+	mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:21.25pt;
+	mso-add-space:auto;
+	text-align:justify;
+	text-indent:-21.25pt;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-list:l3 level1 lfo20;
+	font-size:$normalfontsize;
+	font-family:$bodyfont;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:EN-US;}
 p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
 	{mso-style-priority:34;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
 	margin-top:0cm;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	/* do not put in margin-left, it is specific to list level */
+	text-align:justify;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
 	font-size:$normalfontsize;
 	font-family:$bodyfont;
 	mso-ansi-language:EN-AU;
@@ -128,9 +225,12 @@ p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphC
 	mso-style-type:export-only;
 	margin-top:0cm;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:0cm;
 	/* do not put in margin-left, it is specific to list level */
+	text-align:justify;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
 	font-size:$normalfontsize;
 	font-family:$bodyfont;
 	mso-ansi-language:EN-AU;
@@ -142,9 +242,12 @@ p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagrap
 	mso-style-type:export-only;
 	margin-top:0cm;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:0cm;
 	/* do not put in margin-left, it is specific to list level */
+	text-align:justify;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
 	font-size:$normalfontsize;
 	font-family:$bodyfont;
 	mso-ansi-language:EN-AU;
@@ -156,9 +259,12 @@ p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxS
 	mso-style-type:export-only;
 	margin-top:0cm;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	/* do not put in margin-left, it is specific to list level */
+	text-align:justify;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
 	font-size:$normalfontsize;
 	font-family:$bodyfont;
 	mso-ansi-language:EN-AU;
@@ -174,7 +280,7 @@ h1
 	mso-style-next:Normal;
 	margin-top:13.5pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:13.5pt;
@@ -187,9 +293,10 @@ h1
 {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
         font-style: italic ;
 	font-size:$normalfontsize;
-        font-weight: normal ;
+        font-weight: normal;
 {% else %}
         font-size:13.0pt;
+        font-weight: bold;
 {% endif %}
 	mso-bidi-font-size:$normalfontsize;
 	font-family:$headerfont;
@@ -211,7 +318,7 @@ h1.Annex
 	mso-style-next:Normal;
 	margin-top:13.5pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:13.5pt;
@@ -240,7 +347,7 @@ h1.Annex
         mso-style-next:Normal;
         margin-top:3.0pt;
         margin-right:0cm;
-        margin-bottom:12.0pt;
+        margin-bottom:6.0pt;
         margin-left:0cm;
         text-indent:0cm;
         line-height:12.5pt;
@@ -275,7 +382,7 @@ h2
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.0pt;
@@ -309,7 +416,7 @@ h3      {mso-list:l1 level3 lfo6;
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.0pt;
@@ -341,7 +448,7 @@ h4      {mso-list:l1 level4 lfo6;
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.0pt;
@@ -373,7 +480,7 @@ h6
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.0pt;
@@ -404,7 +511,6 @@ p.MsoToc1, li.MsoToc1, div.MsoToc1
 	margin-right:25.0pt;
 	margin-bottom:0cm;
 	margin-left:36.0pt;
-	margin-bottom:.0001pt;
 	text-indent:-36.0pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
@@ -427,7 +533,6 @@ p.MsoToc2, li.MsoToc2, div.MsoToc2
 	margin-right:25.0pt;
 	margin-bottom:0cm;
 	margin-left:36.0pt;
-	margin-bottom:.0001pt;
 	text-indent:-36.0pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
@@ -450,7 +555,6 @@ p.MsoToc3, li.MsoToc3, div.MsoToc3
 	margin-right:25.0pt;
 	margin-bottom:0cm;
 	margin-left:36.0pt;
-	margin-bottom:.0001pt;
 	text-indent:-36.0pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
@@ -546,6 +650,26 @@ p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape
 span.MsoFootnoteReference
 	{mso-style-priority:99;
 	vertical-align:super;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-priority:35;
+	mso-style-qformat:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:9.0pt;
+	font-family:$bodyfont;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	color:#44546A;
+	mso-themecolor:text2;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:EN-US;
+	font-style:italic;}
 p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
@@ -576,6 +700,7 @@ p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
 	text-align:justify;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
 	font-size:$normalfontsize;
 	font-family:$bodyfont;
 	mso-fareast-font-family:"SimSun",serif;
@@ -595,14 +720,54 @@ a:visited, span.MsoHyperlinkFollowed
 	mso-themecolor:followedhyperlink;
         text-decoration:underline;
         text-underline:single;
-        color:purple;}
+        color:#954F72;}
+p
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:$normalfontsize;
+	font-family:$bodyfont;
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"Balloon Text Char";
+	margin:0cm;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:9.0pt;
+	font-family:"Segoe UI",sans-serif;
+	mso-fareast-font-family:Calibri;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:EN-US;}
+span.Char1
+	{mso-style-name:"Balloon Text Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Balloon Text";
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;
+	font-family:"Segoe UI",sans-serif;
+	mso-ascii-font-family:"Segoe UI";
+	mso-hansi-font-family:"Segoe UI";
+	mso-bidi-font-family:"Segoe UI";
+	mso-ansi-language:EN-GB;}
 span.MsoPlaceholderText
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	color:gray;}
-span.Heading1Char
+span.Heading1Char, span.1Char
 	{mso-style-name:"Heading 1 Char";
 	mso-style-priority:1;
 	mso-style-unhide:no;
@@ -621,7 +786,7 @@ span.Heading1Char
 	font-weight:bold;
 {% endif %}
 	mso-bidi-font-weight:normal;}
-span.Heading2Char
+span.Heading2Char, span.2Char
 	{mso-style-name:"Heading 2 Char";
 	mso-style-priority:2;
 	mso-style-unhide:no;
@@ -637,7 +802,7 @@ span.Heading2Char
 	mso-fareast-language:JA;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-span.Heading3Char
+span.Heading3Char, span.3Char
 	{mso-style-name:"Heading 3 Char";
 	mso-style-priority:3;
 	mso-style-unhide:no;
@@ -653,7 +818,7 @@ span.Heading3Char
 	mso-fareast-language:JA;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-span.Heading4Char
+span.Heading4Char, span.4Char
 	{mso-style-name:"Heading 4 Char";
 	mso-style-priority:4;
 	mso-style-unhide:no;
@@ -669,7 +834,7 @@ span.Heading4Char
 	mso-fareast-language:JA;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-span.Heading5Char
+span.Heading5Char, span.5Char
 	{mso-style-name:"Heading 5 Char";
 	mso-style-priority:5;
 	mso-style-unhide:no;
@@ -685,7 +850,7 @@ span.Heading5Char
 	mso-fareast-language:JA;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-span.Heading6Char
+span.Heading6Char, span.6Char
 	{mso-style-name:"Heading 6 Char";
 	mso-style-priority:6;
 	mso-style-unhide:no;
@@ -708,7 +873,7 @@ p.a2, li.a2, div.a2
 	mso-style-next:Normal;
 	margin-top:13.5pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:13.5pt;
@@ -733,7 +898,7 @@ p.a3, li.a3, div.a3
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.5pt;
@@ -758,7 +923,7 @@ p.a4, li.a4, div.a4
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.0pt;
@@ -782,7 +947,7 @@ p.a5, li.a5, div.a5
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.0pt;
@@ -806,7 +971,7 @@ p.a6, li.a6, div.a6
 	mso-style-next:Normal;
 	margin-top:3.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-indent:0cm;
 	line-height:12.0pt;
@@ -822,7 +987,7 @@ p.a6, li.a6, div.a6
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;}
-span.FooterChar
+span.FooterChar, span.Char
 	{mso-style-name:"Footer Char";
 	mso-style-noshow:yes;
 	mso-style-priority:99;
@@ -833,7 +998,7 @@ span.FooterChar
 	mso-ansi-font-size:$normalfontsize;
 	mso-bidi-font-size:$normalfontsize;
 	mso-ansi-language:EN-GB;}
-span.HeaderChar
+span.HeaderChar, span.Char0
 	{mso-style-name:"Header Char";
 	mso-style-noshow:yes;
 	mso-style-priority:99;
@@ -846,7 +1011,7 @@ span.HeaderChar
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-span.BodyTextChar
+span.BodyTextChar, span.Char3
 	{mso-style-name:"Body Text Char";
 	mso-style-noshow:yes;
 	mso-style-priority:99;
@@ -912,7 +1077,7 @@ p.Tablebody, li.Tablebody, div.Tablebody
 	margin-right:0cm;
 	margin-bottom:3.0pt;
 	margin-left:0cm;
-	line-height:10.5pt;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
@@ -923,6 +1088,8 @@ p.Tablebody, li.Tablebody, div.Tablebody
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
+	font-family:$bodyfont;
+	font-size:10.0pt;
 	mso-ascii-font-family:$bodyfont;
 	mso-fareast-font-family:"SimSun",serif;
 	mso-hansi-font-family:$bodyfont;}
