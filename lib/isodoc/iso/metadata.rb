@@ -38,12 +38,12 @@ module IsoDoc
           set(:statusabbr, status_abbrev(docstatus["abbreviation"] || "??",
                                          isoxml&.at(ns("//bibdata/status/substage"))&.text,
                                          isoxml&.at(ns("//bibdata/status/iteration"))&.text,
-                                         isoxml&.at(ns("//version/draft"))&.text,
+                                         isoxml&.at(ns("//bibdata/version/draft"))&.text,
                                          isoxml&.at(ns("//bibdata/ext/doctype"))&.text))
           unpublished(docstatus.text) and
             set(:stageabbr, docstatus["abbreviation"])
         end
-        revdate = isoxml.at(ns("//version/revision-date"))
+        revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
       end
 
