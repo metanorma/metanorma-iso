@@ -3521,6 +3521,7 @@
 					<xsl:with-param name="cols-count" select="$cols-count"/>
 				</xsl:call-template>				
 			
+			
 			<xsl:apply-templates/>
 		</fo:table-header>
 	</xsl:template><xsl:template name="table-header-title">
