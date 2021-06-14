@@ -93,7 +93,7 @@ module IsoDoc
       def word_annex_cleanup_h1(docxml)
         docxml.xpath("//h1[@class = 'Annex']").each do |h|
           h.name = "p"
-          h2["class"] = "ANNEX"
+          h["class"] = "ANNEX"
         end
         docxml
           .xpath("//*[@class = 'BiblioTitle' or @class = 'ForewordTitle' or "\
