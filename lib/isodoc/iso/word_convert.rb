@@ -14,18 +14,16 @@ module IsoDoc
         @htmlToClevels = 3 if @htmlToClevels.zero?
       end
 
+      def font_choice(options)
+        if options[:script] == "Hans" then '"Source Han Sans",serif'
+        else '"Cambria",serif'
+        end
+      end
+
       def default_fonts(options)
         {
-          bodyfont: (if options[:script] == "Hans"
-                       '"Source Han Sans",serif'
-                     else
-                       '"Cambria",serif'
-                     end),
-          headerfont: (if options[:script] == "Hans"
-                         '"Source Han Sans",sans-serif'
-                       else
-                         '"Cambria",serif'
-                       end),
+          bodyfont: font_choice(options),
+          headerfont: font_choice(options),
           monospacefont: '"Courier New",monospace',
           normalfontsize: "11.0pt",
           monospacefontsize: "9.0pt",
@@ -77,7 +75,8 @@ module IsoDoc
         super
         xml.xpath("//div[@class = 'figure']//table[@class = 'dl']").each do |t|
           t["class"] = "figdl"
-          d = t.add_previous_sibling("<div class='figdl'/>")
+          d = t.add_previous_sibling("<div class='figdl' "\
+                                     "style='page-break-after:avoid;'/>")
           t.parent = d.first
         end
       end
@@ -90,6 +89,10 @@ module IsoDoc
         end
       end
 
+      def word_annex_cleanup(docxml)
+        (2..6).each { |i| word_annex_cleanup1(docxml, i) }
+      end
+
       def word_annex_cleanup_h1(docxml)
         docxml.xpath("//h1[@class = 'Annex']").each do |h|
           h.name = "p"
@@ -100,14 +103,6 @@ module IsoDoc
         "@class = 'IntroTitle']").each do |h|
           h.name = "p"
         end
-      end
-
-      def word_annex_cleanup(docxml)
-        word_annex_cleanup1(docxml, 2)
-        word_annex_cleanup1(docxml, 3)
-        word_annex_cleanup1(docxml, 4)
-        word_annex_cleanup1(docxml, 5)
-        word_annex_cleanup1(docxml, 6)
       end
 
       def style_cleanup(docxml)
@@ -194,8 +189,10 @@ module IsoDoc
       end
 
       def para_class(node)
-        if !node.ancestors("definition").empty? then "Definition"
-        elsif !node.ancestors("foreword").empty? then "ForewordText"
+        if !node.ancestors("definition").empty? && !@in_footnote
+          "Definition"
+        elsif !node.ancestors("foreword").empty? && !@in_footnote
+          "ForewordText"
         else
           super
         end
@@ -223,6 +220,15 @@ module IsoDoc
         s = node.ancestors("annex").empty? ? "Tabletitle" : "AnnexTableTitle"
         out.p **{ class: s, style: "text-align:center;" } do |p|
           name&.children&.each { |n| parse(n, p) }
+        end
+      end
+
+      def annex_name(_annex, name, div)
+        return if name.nil?
+
+        name&.at(ns("./strong"))&.remove # supplied by CSS list numbering
+        div.h1 **{ class: "Annex" } do |t|
+          name.children.each { |c2| parse(c2, t) }
         end
       end
 

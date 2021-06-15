@@ -1,8 +1,8 @@
 require "spec_helper"
 
 RSpec.describe IsoDoc do
-  it "renders figures (HTML)" do
-    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
+  it "renders figures" do
+    input = <<~INPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml'>
         <preface>
           <foreword id='fwd'>
@@ -57,7 +57,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    html = <<~OUTPUT
       #{HTML_HDR}
           <br/>
           <div id="fwd">
@@ -113,6 +113,85 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
+    word = <<~OUTPUT
+        <body lang='EN-US' link='blue' vlink='#954F72'>
+          <div class='WordSection1'>
+            <p>&#xA0;</p>
+          </div>
+          <p>
+            <br clear='all' class='section'/>
+          </p>
+          <div class='WordSection2'>
+            <p>
+              <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+            </p>
+            <div id='fwd'>
+              <h1 class='ForewordTitle'>Foreword</h1>
+              <p class='ForewordText'> </p>
+            </div>
+            <p>&#xA0;</p>
+          </div>
+          <p>
+            <br clear='all' class='section'/>
+          </p>
+          <div class='WordSection3'>
+            <p class='zzSTDTitle1'/>
+            <div id='scope'>
+              <h1>Scope</h1>
+              <div id='N' class='figure'>
+                <img src='rice_images/rice_image1.png'/>
+                <p class='FigureTitle' style='text-align:center;'>Figure 1&#xA0;&#x2014; Split-it-right sample divider</p>
+              </div>
+              <p> </p>
+            </div>
+            <div id='terms'>
+              <h1/>
+            </div>
+            <div id='widgets'>
+              <h1>Widgets</h1>
+              <div id='widgets1'>
+                <div id='note1' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='FigureTitle' style='text-align:center;'>Figure 2&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+                <div id='note2' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='FigureTitle' style='text-align:center;'>Figure 3&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+                <p> </p>
+              </div>
+            </div>
+            <p>
+              <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+            </p>
+            <div id='annex1' class='Section3'>
+              <div id='annex1a'>
+                <div id='AN' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+              </div>
+              <div id='annex1b'>
+                <div id='Anote1' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+                <div id='Anote2' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+          <div class='colophon'/>
+        </body>
+    OUTPUT
+    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", input, true)
+    expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
+    output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
+    expect(xmlpp(Nokogiri::XML(output).at("//body").to_xml))
+      .to be_equivalent_to xmlpp(word)
   end
 
   it "renders subfigures (HTML)" do
@@ -250,8 +329,8 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
-  it "processes formulae (Presentation XML)" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)
+  it "processes formulae" do
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <foreword>
@@ -282,7 +361,7 @@ RSpec.describe IsoDoc do
         </preface>
       </iso-standard>
     INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    presxml = <<~OUTPUT
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
@@ -319,45 +398,8 @@ RSpec.describe IsoDoc do
         </preface>
       </iso-standard>
     OUTPUT
-  end
 
-  it "processes formulae (HTML)" do
-    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword>
-            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
-              <stem type="AsciiMath">r = 1 %</stem>
-              <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
-                <dt>
-                  <stem type="AsciiMath">r</stem>
-                </dt>
-                <dd>
-                  <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
-                </dd>
-                <dt>
-                  <stem type="AsciiMath">s_1</stem>
-                </dt>
-                <dd>
-                  <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the other repeatability limit.</p>
-                </dd>
-              </dl>
-              <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
-                <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot;
-                  prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is
-                  always expressed.
-                </p>
-              </note>
-            </formula>
-            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
-              <name>1</name>
-              <stem type="AsciiMath">r = 1 %</stem>
-            </formula>
-          </foreword>
-        </preface>
-      </iso-standard>
-    INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    html = <<~OUTPUT
       #{HTML_HDR}
               <br/>
                 <div>
@@ -385,6 +427,7 @@ RSpec.describe IsoDoc do
                     </dl>
                     <div id='_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0' class='Note'>
                       <p>
+                      <span class='note_label'>NOTE</span>
                         &#160; [durationUnits] is essentially a duration statement without
                         the "P" prefix. "P" is unnecessary because between "G" and "U"
                         duration is always expressed.
@@ -405,47 +448,8 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-  end
 
-  it "processes formulae (Word)" do
-    output = IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", true)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword>
-            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
-              <stem type="AsciiMath">r = 1 %</stem>
-              <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
-                <dt>
-                  <stem type="AsciiMath">r</stem>
-                </dt>
-                <dd>
-                  <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
-                </dd>
-                <dt>
-                  <stem type="AsciiMath">s_1</stem>
-                </dt>
-                <dd>
-                  <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the other repeatability limit.</p>
-                </dd>
-              </dl>
-              <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
-                <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot;
-                  prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is
-                  always expressed.
-                </p>
-              </note>
-            </formula>
-            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
-              <name>1</name>
-              <stem type="AsciiMath">r = 1 %</stem>
-            </formula>
-          </foreword>
-        </preface>
-      </iso-standard>
-    INPUT
-    expect(xmlpp(output
-      .sub(%r{^.*<div>\s*<h1 class="ForewordTitle">}m, '<div><h1 class="ForewordTitle">')
-      .sub(%r{<p>&#160;</p>\s*</div>.*$}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    word = <<~OUTPUT
             <div>
               <h1 class='ForewordTitle'>Foreword</h1>
               <div id='_be9158af-7e93-4ee2-90c5-26d31c181934'><div class='formula'>
@@ -463,7 +467,7 @@ RSpec.describe IsoDoc do
                     </p>
                   </td>
                   <td valign="top">
-                    <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
+                    <p class="ForewordText" id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
                   </td>
                 </tr>
                 <tr>
@@ -473,13 +477,13 @@ RSpec.describe IsoDoc do
                     </p>
                   </td>
                   <td valign="top">
-                    <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the other repeatability limit.</p>
+                    <p class="ForewordText" id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the other repeatability limit.</p>
                   </td>
                 </tr>
               </table>
               <div id='_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0' class='Note'>
                 <p class='Note'>
-                  <span class='note_label'/>
+                      <span class='note_label'>NOTE</span>
                   <span style='mso-tab-count:1'>&#160; </span>
                   [durationUnits] is essentially a duration statement without the "P"
                   prefix. "P" is unnecessary because between "G" and "U" duration is
@@ -497,6 +501,14 @@ RSpec.describe IsoDoc do
           </div>
         </div>
       OUTPUT
+    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)
+    expect(xmlpp(output)).to be_equivalent_to xmlpp(presxml)
+    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)
+    expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
+    output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
+    expect(xmlpp(output
+      .sub(%r{^.*<div>\s*<h1 class="ForewordTitle">}m, '<div><h1 class="ForewordTitle">')
+      .sub(%r{<p>&#160;</p>\s*</div>.*$}m, ""))).to be_equivalent_to xmlpp(word)
   end
 
   it "processes formulae with single definition list entry" do

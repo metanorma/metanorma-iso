@@ -122,10 +122,9 @@ p.MsoList, li.MsoList, div.MsoList
 	margin-top:0cm;
 	margin-right:0cm;
 	margin-bottom:6.0pt;
-	margin-left:21.25pt;
+	/* do not put in margin-left, it is specific to list level */
 	mso-add-space:auto;
 	text-align:justify;
-	text-indent:-21.25pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
@@ -144,10 +143,9 @@ p.MsoListCxSpFirst, li.MsoListCxSpFirst, div.MsoListCxSpFirst
 	margin-top:0cm;
 	margin-right:0cm;
 	margin-bottom:0cm;
-	margin-left:21.25pt;
+	/* do not put in margin-left, it is specific to list level */
 	mso-add-space:auto;
 	text-align:justify;
-	text-indent:-21.25pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
@@ -166,10 +164,9 @@ p.MsoListCxSpMiddle, li.MsoListCxSpMiddle, div.MsoListCxSpMiddle
 	margin-top:0cm;
 	margin-right:0cm;
 	margin-bottom:0cm;
-	margin-left:21.25pt;
+	/* do not put in margin-left, it is specific to list level */
 	mso-add-space:auto;
 	text-align:justify;
-	text-indent:-21.25pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
@@ -188,10 +185,9 @@ p.MsoListCxSpLast, li.MsoListCxSpLast, div.MsoListCxSpLast
 	margin-top:0cm;
 	margin-right:0cm;
 	margin-bottom:6.0pt;
-	margin-left:21.25pt;
+	/* do not put in margin-left, it is specific to list level */
 	mso-add-space:auto;
 	text-align:justify;
-	text-indent:-21.25pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
@@ -727,7 +723,6 @@ p
 	mso-margin-top-alt:auto;
 	margin-right:0cm;
 	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
 	font-family:$bodyfont;

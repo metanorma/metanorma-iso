@@ -148,6 +148,9 @@ RSpec.describe IsoDoc do
                 An Appendix</title>
             </appendix>
           </annex>
+          <bibliography>
+            <references id="R" normative="false"><title>Bibliography</title></references>
+          </bibliography>
         </iso-standard>
       INPUT
 
@@ -163,7 +166,7 @@ RSpec.describe IsoDoc do
         </p>
         <div class="Section3">
           <a id="P" name="P"/>
-          <h1 class="Annex">Annex</h1>
+          <p class="ANNEX">Annex</p>
           <div>
             <a id="Q" name="Q"/>
             <p class="h2Annex">A.1
@@ -176,6 +179,12 @@ RSpec.describe IsoDoc do
               <span style="mso-tab-count:1">  </span>
               An Appendix</p>
           </div>
+        </div>
+        <p class='MsoNormal'>
+          <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+        </p>
+        <div>
+          <p class='BiblioTitle'>Bibliography</p>
         </div>
       </div>
     OUTPUT
@@ -227,9 +236,9 @@ RSpec.describe IsoDoc do
           <p class="TermNum">
             <a id="paddy1" name="paddy1"/>1.1</p>
           <p class="Terms" style="text-align:left;">paddy</p>
-          <p class="MsoNormal">
+          <p class="Definition">
             <a id="_eb29b35e-123e-4d1c-b50b-2714d41e747f" name="_eb29b35e-123e-4d1c-b50b-2714d41e747f"/>rice retaining its husk after threshing</p>
-          <p class="MsoNormal">[SOURCE:
+          <p class="Source">[SOURCE:
             <a href="#ISO7301">ISO 7301:2011, 3.1</a>
             , modified — The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here]</p>
         </div>
@@ -297,8 +306,9 @@ RSpec.describe IsoDoc do
           <p class="MsoToc1">
             <span lang="EN-GB" xml:lang="EN-GB">
               <span style="mso-element:field-begin"/>
-              <span style="mso-spacerun:yes"> </span>TOC
-                 \o &quot;1-3&quot; \h \z \u
+              <span style='mso-spacerun:yes'>&#xA0;</span>
+              TOC \o "1-3" \h \z \t "Heading 1;1;ANNEX;1;Biblio Title;1;Foreword
+              Title;1;Intro Title;1"
               <span style="mso-element:field-separator"/></span>
             <span class="MsoHyperlink">
               <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
@@ -658,14 +668,14 @@ RSpec.describe IsoDoc do
         </p>
         <div class="Section3">
           <a id="P" name="P"/>
-          <div class="example">
+          <div class="Example">
             <a id="_63112cbc-cde0-435f-9553-e0b8c4f5851c" name="_63112cbc-cde0-435f-9553-e0b8c4f5851c"/>
-            <p class="example">
+            <p class="Example">
               <span style="mso-tab-count:1">  </span>'1M', '01M', and '0001M' all describe the calendar month January.</p>
           </div>
-          <div class="example">
+          <div class="Example">
             <a id="_63112cbc-cde0-435f-9553-e0b8c4f5851d" name="_63112cbc-cde0-435f-9553-e0b8c4f5851d"/>
-            <p class="example">
+            <p class="Example">
               <span style="mso-tab-count:1">  </span>'2M', '02M', and '0002M' all describe the calendar month February.</p>
           </div>
         </div>
@@ -726,7 +736,6 @@ RSpec.describe IsoDoc do
                 </tr>
               </table>
             </div>
-            <p class="FigureTitle" style="text-align:center;"/>
           </div>
         </div>
       </div>

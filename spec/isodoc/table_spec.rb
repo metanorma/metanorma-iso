@@ -1,160 +1,13 @@
 require "spec_helper"
-  
-RSpec.describe IsoDoc do
-  it "processes IsoXML tables (Presentation XML)" do
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
-      .convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <preface>
-            <foreword>
-              <table alt="tool tip" id="tableD-1" summary="long desc">
-                <name>Repeatability and reproducibility of 
-                  <em>husked</em>
-                  rice yield</name>
-                <thead>
-                  <tr>
-                    <td align="left" rowspan="2">Description</td>
-                    <td align="center" colspan="4">Rice sample</td>
-                  </tr>
-                  <tr>
-                    <td align="left">Arborio</td>
-                    <td align="center">Drago
-                      <fn reference="a">
-                        <p id="_0fe65e9a-5531-408e-8295-eeff35f41a55">Parboiled rice.</p></fn>
-                    </td>
-                    <td align="center">Balilla
-                      <fn reference="a">
-                        <p id="_0fe65e9a-5531-408e-8295-eeff35f41a55">Parboiled rice.</p></fn>
-                    </td>
-                    <td align="center">Thaibonnet</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th align="left">Number of laboratories retained after eliminating outliers</th>
-                    <td align="center">13</td>
-                    <td align="center">11</td>
-                    <td align="center">13</td>
-                    <td align="center">13</td>
-                  </tr>
-                  <tr>
-                    <td align="left">Mean value, g/100 g</td>
-                    <td align="center">81,2</td>
-                    <td align="center">82,0</td>
-                    <td align="center">81,8</td>
-                    <td align="center">77,7</td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td align="left">Reproducibility limit, 
-                      <stem type="AsciiMath">R</stem>
-                      (= 2,83 
-                      <stem type="AsciiMath">s_R</stem>
-                      )</td>
-                    <td align="center">2,89</td>
-                    <td align="center">0,57</td>
-                    <td align="center">2,26</td>
-                    <td align="center">6,06</td>
-                  </tr>
-                </tfoot>
-                <dl>
-                  <dt>Drago</dt>
-                  <dd>A type of rice</dd>
-                </dl>
-                <note>
-                  <p>This is a table about rice</p>
-                </note>
-              </table>
-            </foreword>
-          </preface>
-        </iso-standard>
-      INPUT
-        <?xml version='1.0'?>
-        <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
-          <preface>
-            <foreword>
-              <table id='tableD-1' alt='tool tip' summary='long desc'>
-                <name>
-                  Table 1&#xA0;&#x2014; Repeatability and reproducibility of
-                  <em>husked</em>
-                   rice yield
-                </name>
-                <thead>
-                  <tr>
-                    <td rowspan='2' align='left'>Description</td>
-                    <td colspan='4' align='center'>Rice sample</td>
-                  </tr>
-                  <tr>
-                    <td align='left'>Arborio</td>
-                    <td align='center'>
-                      Drago
-                      <fn reference='a'>
-                        <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55'>Parboiled rice.</p>
-                      </fn>
-                    </td>
-                    <td align='center'>
-                      Balilla
-                      <fn reference='a'>
-                        <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55'>Parboiled rice.</p>
-                      </fn>
-                    </td>
-                    <td align='center'>Thaibonnet</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th align='left'>Number of laboratories retained after eliminating outliers</th>
-                    <td align='center'>13</td>
-                    <td align='center'>11</td>
-                    <td align='center'>13</td>
-                    <td align='center'>13</td>
-                  </tr>
-                  <tr>
-                    <td align='left'>Mean value, g/100 g</td>
-                    <td align='center'>81,2</td>
-                    <td align='center'>82,0</td>
-                    <td align='center'>81,8</td>
-                    <td align='center'>77,7</td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td align='left'>
-                      Reproducibility limit,
-                      <stem type='AsciiMath'>R</stem>
-                       (= 2,83
-                      <stem type='AsciiMath'>s_R</stem>
-                      )
-                    </td>
-                    <td align='center'>2,89</td>
-                    <td align='center'>0,57</td>
-                    <td align='center'>2,26</td>
-                    <td align='center'>6,06</td>
-                  </tr>
-                </tfoot>
-                <dl>
-                  <dt>Drago</dt>
-                  <dd>A type of rice</dd>
-                </dl>
-                <note>
-                  <name>NOTE</name>
-                  <p>This is a table about rice</p>
-                </note>
-              </table>
-            </foreword>
-          </preface>
-        </iso-standard>
-      OUTPUT
-  end
 
-  it "processes IsoXML tables (HTML)" do
-    IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", false)
+RSpec.describe IsoDoc do
+  it "processes IsoXML tables" do
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <foreword>
             <table alt="tool tip" id="tableD-1" summary="long desc">
-              <name>Table 1 — Repeatability and reproducibility of 
+              <name>Repeatability and reproducibility of
                 <em>husked</em>
                 rice yield</name>
               <thead>
@@ -193,9 +46,9 @@ RSpec.describe IsoDoc do
               </tbody>
               <tfoot>
                 <tr>
-                  <td align="left">Reproducibility limit, 
+                  <td align="left">Reproducibility limit,
                     <stem type="AsciiMath">R</stem>
-                    (= 2,83 
+                    (= 2,83
                     <stem type="AsciiMath">s_R</stem>
                     )</td>
                   <td align="center">2,89</td>
@@ -209,17 +62,114 @@ RSpec.describe IsoDoc do
                 <dd>A type of rice</dd>
               </dl>
               <note>
+                <p>This is a table about rice</p>
+              </note>
+            </table>
+          </foreword>
+        </preface>
+        <annex id="Annex"><title>Annex</title>
+        <table id="AnnexTable">
+        <name>Another table</name>
+        <tbody><td>?</td></tbody>
+        </table>
+        </annex>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <?xml version='1.0'?>
+      <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
+        <preface>
+          <foreword>
+            <table id='tableD-1' alt='tool tip' summary='long desc'>
+              <name>
+                Table 1&#xA0;&#x2014; Repeatability and reproducibility of
+                <em>husked</em>
+                 rice yield
+              </name>
+              <thead>
+                <tr>
+                  <td rowspan='2' align='left'>Description</td>
+                  <td colspan='4' align='center'>Rice sample</td>
+                </tr>
+                <tr>
+                  <td align='left'>Arborio</td>
+                  <td align='center'>
+                    Drago
+                    <fn reference='a'>
+                      <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55'>Parboiled rice.</p>
+                    </fn>
+                  </td>
+                  <td align='center'>
+                    Balilla
+                    <fn reference='a'>
+                      <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55'>Parboiled rice.</p>
+                    </fn>
+                  </td>
+                  <td align='center'>Thaibonnet</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th align='left'>Number of laboratories retained after eliminating outliers</th>
+                  <td align='center'>13</td>
+                  <td align='center'>11</td>
+                  <td align='center'>13</td>
+                  <td align='center'>13</td>
+                </tr>
+                <tr>
+                  <td align='left'>Mean value, g/100 g</td>
+                  <td align='center'>81,2</td>
+                  <td align='center'>82,0</td>
+                  <td align='center'>81,8</td>
+                  <td align='center'>77,7</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td align='left'>
+                    Reproducibility limit,
+                    <stem type='AsciiMath'>R</stem>
+                     (= 2,83
+                    <stem type='AsciiMath'>s_R</stem>
+                    )
+                  </td>
+                  <td align='center'>2,89</td>
+                  <td align='center'>0,57</td>
+                  <td align='center'>2,26</td>
+                  <td align='center'>6,06</td>
+                </tr>
+              </tfoot>
+              <dl>
+                <dt>Drago</dt>
+                <dd>A type of rice</dd>
+              </dl>
+              <note>
                 <name>NOTE</name>
                 <p>This is a table about rice</p>
               </note>
             </table>
           </foreword>
         </preface>
+        <annex id='Annex'>
+          <title>
+            <strong>Annex A</strong>
+            <br/>
+            (informative)
+            <br/>
+            <br/>
+            <strong>Annex</strong>
+          </title>
+          <table id='AnnexTable'>
+            <name>Table A.1&#xA0;&#x2014; Another table</name>
+            <tbody>
+              <td>?</td>
+            </tbody>
+          </table>
+        </annex>
       </iso-standard>
-    INPUT
-    expect(File.exist?("test.html")).to be true
-    html = File.read("test.html").sub(/^.*<main /m, '<main ').sub(%r{</main>.*$}m, "</main>")
-    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    OUTPUT
+
+    html = <<~OUTPUT
       <main class='main-section'>
         <button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>
         <br/>
@@ -313,81 +263,27 @@ RSpec.describe IsoDoc do
           </table>
         </div>
         <p class='zzSTDTitle1'/>
+        <br/>
+        <div id='Annex' class='Section3'>
+          <h1 class='Annex' id='toc1'>
+            <b>Annex A</b>
+            <br/>
+             (informative)
+            <br/>
+            <br/>
+            <b>Annex</b>
+          </h1>
+          <p class='TableTitle' style='text-align:center;'>Table A.1&#xA0;&#x2014; Another table</p>
+          <table id='AnnexTable' class='MsoISOTable' style='border-width:1px;border-spacing:0;'>
+            <tbody>
+              <tr/>
+            </tbody>
+          </table>
+        </div>
       </main>
     OUTPUT
-  end
 
-  it "processes IsoXML tables (Word)" do
-    IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword>
-            <table alt="tool tip" id="tableD-1" summary="long desc">
-              <name>Table 1&#xA0;&#x2014; Repeatability and reproducibility of <em>husked</em> rice yield</name>
-              <thead>
-                <tr>
-                  <td align="left" rowspan="2">Description</td>
-                  <td align="center" colspan="4">Rice sample</td>
-                </tr>
-                <tr>
-                  <td align="left">Arborio</td>
-                  <td align="center">Drago
-                    <fn reference="a">
-                      <p id="_0fe65e9a-5531-408e-8295-eeff35f41a55">Parboiled rice.</p></fn>
-                  </td>
-                  <td align="center">Balilla
-                    <fn reference="a">
-                      <p id="_0fe65e9a-5531-408e-8295-eeff35f41a55">Parboiled rice.</p></fn>
-                  </td>
-                  <td align="center">Thaibonnet</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th align="left">Number of laboratories retained after eliminating outliers</th>
-                  <td align="center">13</td>
-                  <td align="center">11</td>
-                  <td align="center">13</td>
-                  <td align="center">13</td>
-                </tr>
-                <tr>
-                  <td align="left">Mean value, g/100 g</td>
-                  <td align="center">81,2</td>
-                  <td align="center">82,0</td>
-                  <td align="center">81,8</td>
-                  <td align="center">77,7</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td align="left">Reproducibility limit, 
-                    <stem type="AsciiMath">R</stem>
-                    (= 2,83 
-                    <stem type="AsciiMath">s_R</stem>
-                    )</td>
-                  <td align="center">2,89</td>
-                  <td align="center">0,57</td>
-                  <td align="center">2,26</td>
-                  <td align="center">6,06</td>
-                </tr>
-              </tfoot>
-              <dl>
-                <dt>Drago</dt>
-                <dd>A type of rice</dd>
-              </dl>
-              <note>
-                <name>NOTE</name>
-                <p>This is a table about rice</p>
-              </note>
-            </table>
-          </foreword>
-        </preface>
-      </iso-standard>
-    INPUT
-
-    expect(File.exist?("test.doc")).to be true
-    html = File.read("test.doc").sub(/^.+?<table /m, '<table xmlns:m="m" ').sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
-    expect(xmlpp("<div>#{html}")).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    doc = <<~OUTPUT
       <div>
         <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" summary="long desc" title="tool tip" xmlns:m="m">
           <a id="tableD-1" name="tableD-1"/>
@@ -423,13 +319,13 @@ RSpec.describe IsoDoc do
           </tbody>
           <tfoot>
             <tr>
-              <td align="left" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">Reproducibility limit, 
+              <td align="left" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;">Reproducibility limit,
                 <span class="stem">
                   <m:oMath>
                     <m:r>
                       <m:t>R</m:t></m:r>
                   </m:oMath>
-                </span>(= 2,83 
+                </span>(= 2,83
                 <span class="stem">
                   <m:oMath>
                     <m:sSub>
@@ -483,5 +379,44 @@ RSpec.describe IsoDoc do
         </table>
       </div>
     OUTPUT
+    doc2 = <<~OUTPUT
+      <div class='Section3'>
+        <a name='Annex' id='Annex'/>
+        <p class='ANNEX'>
+          <br/>
+           (informative)
+          <br/>
+          <br/>
+          <b>Annex</b>
+        </p>
+        <p class='AnnexTableTitle' style='text-align:center;'>Table A.1&#xA0;&#x2014; Another table</p>
+        <div align='center' class='table_container'>
+          <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>
+            <a name='AnnexTable' id='AnnexTable'/>
+            <tbody>
+              <tr/>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, false)
+    expect(File.exist?("test.html")).to be true
+    out = File.read("test.html")
+      .sub(/^.*<main /m, "<main ")
+      .sub(%r{</main>.*$}m, "</main>")
+    expect(xmlpp(out)).to be_equivalent_to xmlpp(html)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
+    expect(File.exist?("test.doc")).to be true
+    out = File.read("test.doc")
+      .sub(/^.+?<table /m, '<table xmlns:m="m" ')
+      .sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
+    expect(xmlpp("<div>#{out}")).to be_equivalent_to xmlpp(doc)
+    out = File.read("test.doc")
+      .sub(/^.+?<div class="Section3"/m, '<div class="Section3"')
+      .sub(%r{</div>\s*<br[^>]+>\s*<div class="colophon".*$}m, "")
+    expect(xmlpp(out)).to be_equivalent_to xmlpp(doc2)
   end
 end
