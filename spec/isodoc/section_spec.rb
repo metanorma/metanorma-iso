@@ -281,7 +281,7 @@ RSpec.describe IsoDoc do
     word = <<~OUTPUT
       <body lang="EN-US" link="blue" vlink="#954F72">
         <div class="WordSection1">
-          <p> </p>
+          <p>&#160;</p>
         </div>
         <p>
           <br class="section" clear="all"/>
@@ -292,7 +292,7 @@ RSpec.describe IsoDoc do
           </p>
           <div>
             <h1 class="ForewordTitle">Foreword</h1>
-            <p id="A">This is a preamble</p>
+            <p id="A" class='ForewordText'>This is a preamble</p>
           </div>
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
@@ -308,7 +308,7 @@ RSpec.describe IsoDoc do
             </div>
             <p>This is patent boilerplate</p>
           </div>
-          <p> </p>
+          <p>&#160;</p>
         </div>
         <p>
           <br class="section" clear="all"/>
@@ -383,7 +383,6 @@ RSpec.describe IsoDoc do
           </p>
           <div class="Section3" id="P">
             <h1 class="Annex">
-              <b>Annex A</b>
               <br/>(normative)
               <br/>
               <br/>
@@ -409,7 +408,7 @@ RSpec.describe IsoDoc do
               </div>
             </div>
             <div>
-              <h2 class="Section3">A.2
+              <h2 class="BiblioTitle">A.2
                 <span style="mso-tab-count:1">&#160; </span>
                 Annex Bibliography</h2>
             </div>
@@ -418,9 +417,9 @@ RSpec.describe IsoDoc do
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
           <div>
-            <h1 class="Section3">Bibliography</h1>
+            <h1 class="BiblioTitle">Bibliography</h1>
             <div>
-              <h2 class="Section3">Bibliography Subsection</h2>
+              <h2 class="BiblioTitle">Bibliography Subsection</h2>
             </div>
           </div>
         </div>
@@ -428,12 +427,16 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)))
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)))
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
       .to be_equivalent_to xmlpp(html)
-    expect(xmlpp(IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
-      .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>"))).to be_equivalent_to xmlpp(word)
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true)
+      .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
+      .to be_equivalent_to xmlpp(word)
   end
 
   it "processes subclauses with and without titles" do
@@ -869,8 +872,10 @@ RSpec.describe IsoDoc do
   </body>
 </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)
-      .gsub(%r{<localized-strings>.*</localized-strings>}m, "")))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+      .gsub(%r{<localized-strings>.*</localized-strings>}m, ""))))
+      .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
   end

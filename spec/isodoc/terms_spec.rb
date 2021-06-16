@@ -185,7 +185,7 @@ RSpec.describe IsoDoc do
       <div id="_terms_and_definitions"><h1>1<span style="mso-tab-count:1">&#160; </span>Terms and Definitions</h1>
         <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
 
-        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">&lt;rice&gt; rice retaining its husk after threshing</p>
+        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f" class="Definition">&lt;rice&gt; rice retaining its husk after threshing</p>
         <div id="_bd57bbf1-f948-4bae-b0ce-73c00431f892" class="example"><p><span class="example_label">EXAMPLE 1</span><span style="mso-tab-count:1">&#160; </span>Foreign seeds, husks, bran, sand, dust.</p><ul>
           <li>A</li>
           </ul></div>
@@ -193,7 +193,7 @@ RSpec.describe IsoDoc do
           <li>A</li>
           </ul></div>
 
-        <p>[TERMREF]
+        <p class="Source">[TERMREF]
           <a href="#ISO7301">ISO 7301:2011, 3.1</a>
             [MODIFICATION]The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
         [/TERMREF]</p>
@@ -202,7 +202,7 @@ RSpec.describe IsoDoc do
         <p class="AltTerms" style="text-align:left;">paddy rice</p>
         <p class="AltTerms" style="text-align:left;">rough rice</p>
         <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
-        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
+        <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f" class="Definition">rice retaining its husk after threshing</p>
         <div id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example"><p><span class="example_label">EXAMPLE</span><span style="mso-tab-count:1">&#160; </span></p>
           <ul>
           <li>A</li>
@@ -210,15 +210,18 @@ RSpec.describe IsoDoc do
         </div>
         <div id='_671a1994-4783-40d0-bc81-987d06ffb74e' class="Note"><p class="Note">Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div>
         <div id='_671a1994-4783-40d0-bc81-987d06ffb74f' class="Note"><p class="Note">Note 2 to entry: <ul><li>A</li></ul><p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></p></div>
-        <p>[TERMREF]<a href="#ISO7301">ISO 7301:2011, 3.1</a>
+        <p class="Source">[TERMREF]<a href="#ISO7301">ISO 7301:2011, 3.1</a>
         [/TERMREF]</p>
       </div>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)))
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)))
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
       .to be_equivalent_to xmlpp(html)
-    expect(xmlpp(IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true)
       .sub(%r{^.*<p class="zzSTDTitle1"/>}m, "")
       .sub(%r{</div>\s*<br.*$}m, "")))
       .to be_equivalent_to xmlpp(word)
