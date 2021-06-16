@@ -5044,9 +5044,11 @@
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" mode="mathml"/>
 		</xsl:copy>
-		<!-- if in msub, then don't add space -->
 		<xsl:choose>
+			<!-- if in msub, then don't add space -->
 			<xsl:when test="ancestor::mathml:mrow[parent::mathml:msub and preceding-sibling::*[1][self::mathml:mrow]]"/>
+			<!-- if next char in digit,  don't add space -->
+			<xsl:when test="translate(substring(following-sibling::*[1]/text(),1,1),'0123456789','') = ''"/>
 			<xsl:otherwise>
 				<mathml:mspace width="0.5ex"/>
 			</xsl:otherwise>
