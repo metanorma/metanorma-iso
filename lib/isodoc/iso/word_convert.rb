@@ -21,24 +21,18 @@ module IsoDoc
       end
 
       def default_fonts(options)
-        {
-          bodyfont: font_choice(options),
+        { bodyfont: font_choice(options),
           headerfont: font_choice(options),
           monospacefont: '"Courier New",monospace',
           normalfontsize: "11.0pt",
           monospacefontsize: "9.0pt",
           smallerfontsize: "10.0pt",
-          footnotefontsize: "10.0pt",
-        }
+          footnotefontsize: "10.0pt" }
       end
 
       def default_file_locations(options)
-        {
-          htmlstylesheet: (if options[:alt]
-                             html_doc_path("style-human.scss")
-                           else
-                             html_doc_path("style-iso.scss")
-                           end),
+        a = options[:alt] ? "style-human.scss" : "style-iso.scss"
+        { htmlstylesheet: html_doc_path(a),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),
           wordstylesheet: html_doc_path("wordstyle.scss"),
@@ -47,8 +41,7 @@ module IsoDoc
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),
           ulstyle: "l3",
-          olstyle: "l2",
-        }
+          olstyle: "l2" }
       end
 
       def make_body(xml, docxml)
@@ -98,10 +91,10 @@ module IsoDoc
           h.name = "p"
           h["class"] = "ANNEX"
         end
-        docxml
-          .xpath("//*[@class = 'BiblioTitle' or @class = 'ForewordTitle' or "\
-        "@class = 'IntroTitle']").each do |h|
-          h.name = "p"
+        %w(BiblioTitle ForewordTitle IntroTitle).each do |s|
+          docxml.xpath("//*[@class = '#{s}']").each do |h|
+            h.name = "p"
+          end
         end
       end
 
@@ -168,11 +161,15 @@ module IsoDoc
           "<span class='MsoFootnoteReference'>#{link.children.to_xml}</span>)"
       end
 
+      def bibliography_attrs
+        { class: "BiblioTitle" }
+      end
+
       def bibliography(xml, out)
         f = xml.at(ns(bibliography_xpath)) and f["hidden"] != "true" or return
         page_break(out)
         out.div do |div|
-          div.h1 **{ class: "BiblioTitle" } do |h1|
+          div.h1 **bibliography_attrs do |h1|
             f&.at(ns("./title"))&.children&.each { |c2| parse(c2, h1) }
           end
           biblio_list(f, div, true)
@@ -183,7 +180,7 @@ module IsoDoc
         node["hidden"] != true or return
         out.div do |div|
           clause_parse_title(node, div, node.at(ns("./title")), out,
-                             { class: "BiblioTitle" })
+                             bibliography_attrs)
           biblio_list(node, div, true)
         end
       end
@@ -198,27 +195,39 @@ module IsoDoc
         end
       end
 
+      def termref_attrs
+        { class: "Source" }
+      end
+
       def termref_parse(node, out)
-        out.p **{ class: "Source" } do |p|
+        out.p **termref_attrs do |p|
           p << "[TERMREF]"
           node.children.each { |n| parse(n, p) }
           p << "[/TERMREF]"
         end
       end
 
+      def figure_name_attrs(node)
+        s = node.ancestors("annex").empty? ? "FigureTitle" : "AnnexFigureTitle"
+        { class: s, style: "text-align:center;" }
+      end
+
       def figure_name_parse(node, div, name)
         return if name.nil?
 
-        s = node.ancestors("annex").empty? ? "FigureTitle" : "AnnexFigureTitle"
-        div.p **{ class: s, style: "text-align:center;" } do |p|
+        div.p **figure_name_attrs(node) do |p|
           name.children.each { |n| parse(n, p) }
         end
       end
 
+      def table_title_attrs(node)
+        s = node.ancestors("annex").empty? ? "Tabletitle" : "AnnexTableTitle"
+        { class: s, style: "text-align:center;" }
+      end
+
       def table_title_parse(node, out)
         name = node.at(ns("./name")) or return
-        s = node.ancestors("annex").empty? ? "Tabletitle" : "AnnexTableTitle"
-        out.p **{ class: s, style: "text-align:center;" } do |p|
+        out.p **table_title_attrs(node) do |p|
           name&.children&.each { |n| parse(n, p) }
         end
       end
