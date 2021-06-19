@@ -3368,6 +3368,9 @@
 					<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 				
 				
+				
+				
+				
 				<xsl:choose>
 					<xsl:when test="$continued = 'true'"> 
 						<!-- <xsl:if test="$namespace = 'bsi'"></xsl:if> -->
@@ -3780,8 +3783,8 @@
 					<fo:table-cell>
 						
 						<fo:marker marker-class-name="table_continued">
-								<xsl:value-of select="$title_continued"/>
-						 </fo:marker>
+							<xsl:value-of select="$title_continued"/>
+						</fo:marker>
 						 <fo:block/>
 					</fo:table-cell>
 				</fo:table-row>
@@ -3828,6 +3831,9 @@
 					
 					
 				</xsl:if>
+				
+				
+				
 				
 				
 				
@@ -3917,6 +3923,8 @@
 				<xsl:if test="ancestor::*[local-name() = 'tfoot']">
 					<xsl:attribute name="border">solid black 0</xsl:attribute>
 				</xsl:if>
+			
+			
 			
 			
 			
