@@ -79,7 +79,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
-          <foreword>
+          <foreword displayorder='1'>
             <table id='tableD-1' alt='tool tip' summary='long desc'>
               <name>
                 Table 1&#xA0;&#x2014; Repeatability and reproducibility of
@@ -150,7 +150,7 @@ RSpec.describe IsoDoc do
             </table>
           </foreword>
         </preface>
-        <annex id='Annex'>
+        <annex id='Annex' displayorder='2'>
           <title>
             <strong>Annex A</strong>
             <br/>

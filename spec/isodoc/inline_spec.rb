@@ -318,7 +318,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword>
+          <foreword displayorder="1">
             <p>
               <eref bibitemid="IEV" citeas="IEV" type="inline">
                 <locality type="clause">
@@ -372,7 +372,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <bibliography>
-          <references id="_normative_references" normative="true" obligation="informative">
+          <references id="_normative_references" normative="true" obligation="informative" displayorder="2">
             <title depth="1">1<tab/>
               Normative References</title>
             <bibitem id="ISO712" type="standard">

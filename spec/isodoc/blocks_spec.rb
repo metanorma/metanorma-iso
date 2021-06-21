@@ -365,7 +365,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword>
+          <foreword displayorder="1">
             <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
               <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">

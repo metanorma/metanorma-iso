@@ -86,100 +86,86 @@ RSpec.describe IsoDoc do
     INPUT
 
     presxml = <<~OUTPUT
-      <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
-        <preface>
-          <foreword obligation='informative'>
-            <title>Foreword</title>
-            <p id='A'>This is a preamble</p>
-          </foreword>
-          <introduction id='B' obligation='informative'>
-          <title depth='1'>0<tab/>Introduction</title>
-            <clause id='C' inline-header='false' obligation='informative'>
-              <title depth='2'>0.1<tab/>Introduction Subsection</title>
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+            <foreword obligation="informative" displayorder="1">
+              <title>Foreword</title>
+              <p id="A">This is a preamble</p>
+            </foreword>
+            <introduction id="B" obligation="informative" displayorder="2">
+              <title depth="1">0<tab/>Introduction</title>
+              <clause id="C" inline-header="false" obligation="informative">
+                <title depth="2">0.1<tab/>Introduction Subsection</title>
+              </clause>
+              <p>This is patent boilerplate</p>
+            </introduction>
+          </preface>
+          <sections>
+            <clause id="D" obligation="normative" type="scope" displayorder="3">
+              <title depth="1">1<tab/>Scope</title>
+              <p id="E">Text</p>
             </clause>
-            <p>This is patent boilerplate</p>
-          </introduction>
-        </preface>
-        <sections>
-          <clause id='D' obligation='normative' type="scope">
-            <title depth='1'>1<tab/>Scope</title>
-            <p id='E'>Text</p>
-          </clause>
-          <clause id='H' obligation='normative'>
-            <title depth='1'>3<tab/>Terms, Definitions, Symbols and Abbreviated Terms</title>
-            <terms id='I' obligation='normative'>
-              <title depth='2'>3.1<tab/>Normal Terms</title>
-              <term id='J'>
-                <name>3.1.1</name>
-                <preferred>Term2</preferred>
-              </term>
-            </terms>
-            <definitions id='K' inline-header='true'>
-              <title>3.2</title>
+            <clause id="H" obligation="normative" displayorder="5">
+              <title depth="1">3<tab/>Terms, Definitions, Symbols and Abbreviated Terms</title>
+              <terms id="I" obligation="normative">
+                <title depth="2">3.1<tab/>Normal Terms</title>
+                <term id="J"><name>3.1.1</name>
+                  <preferred>Term2</preferred>
+                </term>
+              </terms>
+              <definitions id="K" inline-header="true"><title>3.2</title>
+                <dl>
+                  <dt>Symbol</dt>
+                  <dd>Definition</dd>
+                </dl>
+              </definitions>
+            </clause>
+            <definitions id="L" displayorder="6"><title>4</title>
               <dl>
                 <dt>Symbol</dt>
                 <dd>Definition</dd>
               </dl>
             </definitions>
-          </clause>
-          <definitions id='L'>
-            <title>4</title>
-            <dl>
-              <dt>Symbol</dt>
-              <dd>Definition</dd>
-            </dl>
-          </definitions>
-          <clause id='M' inline-header='false' obligation='normative'>
-            <title depth='1'>5<tab/>Clause 4</title>
-            <clause id='N' inline-header='false' obligation='normative'>
-              <title depth='2'>5.1<tab/>Introduction</title>
+            <clause id="M" inline-header="false" obligation="normative" displayorder="7">
+              <title depth="1">5<tab/>Clause 4</title>
+              <clause id="N" inline-header="false" obligation="normative">
+                <title depth="2">5.1<tab/>Introduction</title>
+              </clause>
+              <clause id="O" inline-header="false" obligation="normative">
+                <title depth="2">5.2<tab/>Clause 4.2</title>
+              </clause>
             </clause>
-            <clause id='O' inline-header='false' obligation='normative'>
-              <title depth='2'>5.2<tab/>Clause 4.2</title>
+          </sections>
+          <annex id="P" inline-header="false" obligation="normative" displayorder="8">
+            <title><strong>Annex A</strong><br/>(normative)<br/><br/><strong>Annex</strong></title>
+            <clause id="Q" inline-header="false" obligation="normative">
+              <title depth="2">A.1<tab/>Annex A.1</title>
+              <clause id="Q1" inline-header="false" obligation="normative">
+                <title depth="3">A.1.1<tab/>Annex A.1a</title>
+              </clause>
             </clause>
-          </clause>
-        </sections>
-        <annex id='P' inline-header='false' obligation='normative'>
-          <title>
-            <strong>Annex A</strong>
-            <br/>
-            (normative)
-            <br/>
-            <br/>
-            <strong>Annex</strong>
-          </title>
-          <clause id='Q' inline-header='false' obligation='normative'>
-            <title depth='2'>A.1<tab/>Annex A.1</title>
-            <clause id='Q1' inline-header='false' obligation='normative'>
-              <title depth='3'>A.1.1<tab/>Annex A.1a</title>
-            </clause>
-          </clause>
-          <appendix id='Q2' inline-header='false' obligation='normative'>
-            <title depth='2'>Appendix 1<tab/>An Appendix</title>
-            <clause id='Q2a' inline-header='false' obligation='normative'>
-              <title depth='3'>
-                Appendix 1.1
-                <tab/>
-                Appendix subclause
-              </title>
-            </clause>
-          </appendix>
-          <references id='Q3' normative='false'>
-            <title depth='2'>A.2<tab/>Annex Bibliography</title>
-          </references>
-        </annex>
-        <bibliography>
-          <references id='R' obligation='informative' normative='true'>
-            <title depth='1'>2<tab/>Normative References</title>
-          </references>
-          <clause id='S' obligation='informative'>
-            <title depth='1'>Bibliography</title>
-            <references id='T' obligation='informative' normative='false'>
-              <title depth='2'>Bibliography Subsection</title>
+            <appendix id="Q2" inline-header="false" obligation="normative">
+              <title depth="2">Appendix 1<tab/>An Appendix</title>
+              <clause id="Q2a" inline-header="false" obligation="normative">
+                <title depth="3">Appendix 1.1<tab/>Appendix subclause</title>
+              </clause>
+            </appendix>
+            <references id="Q3" normative="false">
+              <title depth="2">A.2<tab/>Annex Bibliography</title>
             </references>
-          </clause>
-        </bibliography>
-      </iso-standard>
+          </annex>
+          <bibliography>
+            <references id="R" normative="true" obligation="informative" displayorder="4">
+              <title depth="1">2<tab/>Normative References</title>
+            </references>
+            <clause id="S" obligation="informative" displayorder="9">
+              <title depth="1">Bibliography</title>
+              <references id="T" normative="false" obligation="informative">
+                <title depth="2">Bibliography Subsection</title>
+              </references>
+            </clause>
+          </bibliography>
+        </iso-standard>
     OUTPUT
 
     html = <<~OUTPUT
@@ -259,7 +245,7 @@ RSpec.describe IsoDoc do
               <div id="Q2">
                 <h2>Appendix 1&#160; An Appendix</h2>
                 <div id="Q2a">
-                  <h3>Appendix 1.1 &#160; Appendix subclause </h3>
+                  <h3>Appendix 1.1&#160; Appendix subclause</h3>
                 </div>
               </div>
               <div>
@@ -458,7 +444,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <sections>
-          <clause id='D' obligation='normative'>
+          <clause id='D' obligation='normative' displayorder="1">
             <title depth='1'>1<tab/>Scope</title>
             <clause id='D1' obligation='normative'>
               <title depth='2'>1.1<tab/>Scope 1</title>
@@ -500,38 +486,42 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)))
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)))
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
       .to be_equivalent_to xmlpp(html)
   end
 
   it "processes simple terms & definitions" do
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", <<~"INPUT", true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <sections>
-            <terms id="H" obligation="normative">
-              <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
-              <term id="J">
-                <name>1.1</name>
-                <preferred>Term2</preferred>
-              </term>
-            </terms>
-          </sections>
-        </iso-standard>
-      INPUT
-        #{HTML_HDR}
-              <p class="zzSTDTitle1"/>
-              <div id="H">
-                <h1>Terms, Definitions, Symbols and Abbreviated Terms</h1>
-                <p class="TermNum" id="J">1.1</p>
-                <p class="Terms" style="text-align:left;">Term2</p>
-              </div>
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <sections>
+          <terms id="H" obligation="normative">
+            <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
+            <term id="J">
+              <name>1.1</name>
+              <preferred>Term2</preferred>
+            </term>
+          </terms>
+        </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      #{HTML_HDR}
+            <p class="zzSTDTitle1"/>
+            <div id="H">
+              <h1>Terms, Definitions, Symbols and Abbreviated Terms</h1>
+              <p class="TermNum" id="J">1.1</p>
+              <p class="Terms" style="text-align:left;">Term2</p>
             </div>
-          </body>
-        </html>
-      OUTPUT
+          </div>
+        </body>
+      </html>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
   it "processes inline section headers" do
@@ -689,188 +679,188 @@ RSpec.describe IsoDoc do
       </bipm-standard>
     INPUT
     presxml = <<~OUTPUT
-   <iso-standard xmlns='https://open.ribose.com/standards/bipm' type='presentation'>
-  <bibdata>
-    <language current='true'>en</language>
-    <script current='true'>Latn</script>
-  </bibdata>
-  <sections>
-    <clause id='A'>
-      <title>1</title>
-      <bookmark id='_'/>
-      <bookmark id='_'/>
-      <bookmark id='_'/>
-      <bookmark id='_'/>
-      <bookmark id='_'/>
-      <clause id='B' inline-header='true'>
-        <title>1.1</title>
-        <bookmark id='_'/>
-        <bookmark id='_'/>
-        <bookmark id='_'/>
-        <bookmark id='_'/>
-      </clause>
-    </clause>
-  </sections>
-  <indexsect id='_'>
-    <title>Index</title>
-    <ul>
-      <li>
-        <em>Dasein</em>
-        , see
-        <em>Eman</em>
-        cipation, &#xEA;tre
-      </li>
-      <li>
-        &#xE9;long&#xE9;,
-        <xref target='_' pagenumber='true'>Clause 1</xref>
-      </li>
-      <li>
-        <em>Eman</em>
-        cipation,
-        <xref target='_' pagenumber='true'>Clause 1</xref>
-        ,
-        <xref target='_' pagenumber='true'>1.1</xref>
-        <ul>
-          <li>
-            dans la France,
-            <xref target='_' pagenumber='true'>Clause 1</xref>
-            <ul>
-              <li>
-                &#xE0; Paris,
-                <xref target='_' pagenumber='true'>1.1</xref>
-              </li>
-              <li>
-                en Bretagne,
-                <xref target='_' pagenumber='true'>Clause 1</xref>
-              </li>
-            </ul>
-          </li>
-          <li>
-            dans les &#xC9;tats-Unis,
-            <xref target='_' pagenumber='true'>1.1</xref>
-          </li>
-        </ul>
-      </li>
-      <li>
-        &#xEA;tre
-        <ul>
-          <li>
-            Husserl, see zebra, see also
-            <em>Eman</em>
-            cipation, zebra
-            <ul>
-              <li>
-                en allemand,
-                <xref target='_' pagenumber='true'>Clause 1</xref>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>
-        zebra,
-        <xref target='_' pagenumber='true'>1.1</xref>
-      </li>
-    </ul>
-  </indexsect>
-</iso-standard>
+         <iso-standard xmlns='https://open.ribose.com/standards/bipm' type='presentation'>
+        <bibdata>
+          <language current='true'>en</language>
+          <script current='true'>Latn</script>
+        </bibdata>
+        <sections>
+          <clause id='A' displayorder="1">
+            <title>1</title>
+            <bookmark id='_'/>
+            <bookmark id='_'/>
+            <bookmark id='_'/>
+            <bookmark id='_'/>
+            <bookmark id='_'/>
+            <clause id='B' inline-header='true'>
+              <title>1.1</title>
+              <bookmark id='_'/>
+              <bookmark id='_'/>
+              <bookmark id='_'/>
+              <bookmark id='_'/>
+            </clause>
+          </clause>
+        </sections>
+        <indexsect id='_'>
+          <title>Index</title>
+          <ul>
+            <li>
+              <em>Dasein</em>
+              , see
+              <em>Eman</em>
+              cipation, &#xEA;tre
+            </li>
+            <li>
+              &#xE9;long&#xE9;,
+              <xref target='_' pagenumber='true'>Clause 1</xref>
+            </li>
+            <li>
+              <em>Eman</em>
+              cipation,
+              <xref target='_' pagenumber='true'>Clause 1</xref>
+              ,
+              <xref target='_' pagenumber='true'>1.1</xref>
+              <ul>
+                <li>
+                  dans la France,
+                  <xref target='_' pagenumber='true'>Clause 1</xref>
+                  <ul>
+                    <li>
+                      &#xE0; Paris,
+                      <xref target='_' pagenumber='true'>1.1</xref>
+                    </li>
+                    <li>
+                      en Bretagne,
+                      <xref target='_' pagenumber='true'>Clause 1</xref>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  dans les &#xC9;tats-Unis,
+                  <xref target='_' pagenumber='true'>1.1</xref>
+                </li>
+              </ul>
+            </li>
+            <li>
+              &#xEA;tre
+              <ul>
+                <li>
+                  Husserl, see zebra, see also
+                  <em>Eman</em>
+                  cipation, zebra
+                  <ul>
+                    <li>
+                      en allemand,
+                      <xref target='_' pagenumber='true'>Clause 1</xref>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              zebra,
+              <xref target='_' pagenumber='true'>1.1</xref>
+            </li>
+          </ul>
+        </indexsect>
+      </iso-standard>
     OUTPUT
     html = <<~OUTPUT
-    <html lang='en'>
-  <head/>
-  <body lang='en'>
-    <div class='title-section'>
-      <p>&#160;</p>
-    </div>
-    <br/>
-    <div class='prefatory-section'>
-      <p>&#160;</p>
-    </div>
-    <br/>
-    <div class='main-section'>
-      <p class='zzSTDTitle1'/>
-      <div id='A'>
-        <h1>1</h1>
-        <a id='_'/>
-        <a id='_'/>
-        <a id='_'/>
-        <a id='_'/>
-        <a id='_'/>
-        <div id='B'>
-          <span class='zzMoveToFollowing'>
-            <b>1.1&#160; </b>
-          </span>
-          <a id='_'/>
-          <a id='_'/>
-          <a id='_'/>
-          <a id='_'/>
-        </div>
-      </div>
-      <div id='_'>
-        <h1>Index</h1>
-        <ul>
-          <li>
-            <i>Dasein</i>
-             , see
-            <i>Eman</i>
-             cipation, &#234;tre
-          </li>
-          <li>
-             &#233;long&#233;,
-            <a href='#_'>Clause 1</a>
-          </li>
-          <li>
-            <i>Eman</i>
-             cipation,
-            <a href='#_'>Clause 1</a>
-             ,
-            <a href='#_'>1.1</a>
-            <ul>
-              <li>
-                 dans la France,
-                <a href='#_'>Clause 1</a>
-                <ul>
-                  <li>
-                     &#224; Paris,
-                    <a href='#_'>1.1</a>
-                  </li>
-                  <li>
-                     en Bretagne,
-                    <a href='#_'>Clause 1</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                 dans les &#201;tats-Unis,
-                <a href='#_'>1.1</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-             &#234;tre
-            <ul>
-              <li>
-                 Husserl, see zebra, see also
-                <i>Eman</i>
-                 cipation, zebra
-                <ul>
-                  <li>
-                     en allemand,
-                    <a href='#_'>Clause 1</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-             zebra,
-            <a href='#_'>1.1</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </body>
-</html>
+          <html lang='en'>
+        <head/>
+        <body lang='en'>
+          <div class='title-section'>
+            <p>&#160;</p>
+          </div>
+          <br/>
+          <div class='prefatory-section'>
+            <p>&#160;</p>
+          </div>
+          <br/>
+          <div class='main-section'>
+            <p class='zzSTDTitle1'/>
+            <div id='A'>
+              <h1>1</h1>
+              <a id='_'/>
+              <a id='_'/>
+              <a id='_'/>
+              <a id='_'/>
+              <a id='_'/>
+              <div id='B'>
+                <span class='zzMoveToFollowing'>
+                  <b>1.1&#160; </b>
+                </span>
+                <a id='_'/>
+                <a id='_'/>
+                <a id='_'/>
+                <a id='_'/>
+              </div>
+            </div>
+            <div id='_'>
+              <h1>Index</h1>
+              <ul>
+                <li>
+                  <i>Dasein</i>
+                   , see
+                  <i>Eman</i>
+                   cipation, &#234;tre
+                </li>
+                <li>
+                   &#233;long&#233;,
+                  <a href='#_'>Clause 1</a>
+                </li>
+                <li>
+                  <i>Eman</i>
+                   cipation,
+                  <a href='#_'>Clause 1</a>
+                   ,
+                  <a href='#_'>1.1</a>
+                  <ul>
+                    <li>
+                       dans la France,
+                      <a href='#_'>Clause 1</a>
+                      <ul>
+                        <li>
+                           &#224; Paris,
+                          <a href='#_'>1.1</a>
+                        </li>
+                        <li>
+                           en Bretagne,
+                          <a href='#_'>Clause 1</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                       dans les &#201;tats-Unis,
+                      <a href='#_'>1.1</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                   &#234;tre
+                  <ul>
+                    <li>
+                       Husserl, see zebra, see also
+                      <i>Eman</i>
+                       cipation, zebra
+                      <ul>
+                        <li>
+                           en allemand,
+                          <a href='#_'>Clause 1</a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                   zebra,
+                  <a href='#_'>1.1</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </body>
+      </html>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)

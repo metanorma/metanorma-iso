@@ -13,8 +13,8 @@ module IsoDoc
         super
       end
 
-      def implicit_reference(b)
-        return true if b&.at(ns("./docidentifier"))&.text == "IEV"
+      def implicit_reference(bib)
+        return true if bib&.at(ns("./docidentifier"))&.text == "IEV"
 
         super
       end
@@ -32,7 +32,7 @@ module IsoDoc
         return if name.nil?
 
         div.span **{ class: "example_label" } do |p|
-          name.children.each { |n| parse(n, div) }
+          name.children.each { |n| parse(n, p) }
         end
       end
 
@@ -89,7 +89,7 @@ module IsoDoc
         return unless insert = node.at(ns("./definition"))
 
         insert = insertall_after_here(node, insert, "termexample")
-        insert = insertall_after_here(node, insert, "termnote")
+        insertall_after_here(node, insert, "termnote")
       end
 
       def termdef_parse(node, out)
@@ -110,18 +110,18 @@ module IsoDoc
         end
       end
 
-      def formula_where(dl, out)
-        return if dl.nil?
-        return super unless (dl&.xpath(ns("./dt"))&.size == 1 && 
-                             dl&.at(ns("./dd"))&.elements&.size == 1 &&
-                             dl&.at(ns("./dd/p")))
+      def formula_where(dlist, out)
+        return if dlist.nil?
+        return super unless (dlist&.xpath(ns("./dt"))&.size == 1 && 
+                             dlist&.at(ns("./dd"))&.elements&.size == 1 &&
+                             dlist&.at(ns("./dd/p")))
 
         out.span **{ class: "zzMoveToFollowing" } do |s|
           s << "#{@i18n.where} "
-          dl.at(ns("./dt")).children.each { |n| parse(n, s) }
+          dlist.at(ns("./dt")).children.each { |n| parse(n, s) }
           s << " "
         end
-        parse(dl.at(ns("./dd/p")), out)
+        parse(dlist.at(ns("./dd/p")), out)
       end
 
       def admonition_parse(node, out)
@@ -153,9 +153,9 @@ module IsoDoc
         div << " &mdash; "
       end
 
-      def figure_name_parse(node, div, name)
+      def figure_name_parse(_node, div, name)
         div.p **{ class: "FigureTitle", style: "text-align:center;" } do |p|
-          name&.children&.each { |n| parse(n, div) }
+          name&.children&.each { |n| parse(n, p) }
         end
       end
 

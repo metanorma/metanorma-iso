@@ -155,7 +155,7 @@ RSpec.describe IsoDoc do
           <language current="true">en</language>
         </bibdata>
         <preface>
-          <foreword>
+          <foreword displayorder="1">
             <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
               <eref bibitemid="ISO712">ISO 712</eref>
               <eref bibitemid="ISBN">[1]</eref>
@@ -168,7 +168,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <bibliography>
-          <references id="_normative_references" normative="true" obligation="informative">
+          <references id="_normative_references" normative="true" obligation="informative" displayorder="2">
             <title depth="1">1<tab/>Normative References</title>
             <p>The following documents are referred to in the text in such a way that
                        some or all of their content constitutes requirements of this document.
@@ -231,14 +231,14 @@ RSpec.describe IsoDoc do
 
                 <link target="http://www.icc.or.at"/>
                 )</formattedref>
-              <docidentifier type="ICC">167</docidentifier>
+              <docidentifier type="ICC">ICC 167</docidentifier>
             </bibitem>
             <note>
               <name>NOTE</name>
               <p>This is an annotation of ISO 20483:2013-2014</p>
             </note>
           </references>
-          <references id="_bibliography" normative="false" obligation="informative">
+          <references id="_bibliography" normative="false" obligation="informative" displayorder="3">
             <title depth="1">Bibliography</title>
             <bibitem id="ISBN" type="ISBN">
               <title format="text/plain">Chemicals for analytical laboratory use</title>
@@ -294,7 +294,7 @@ RSpec.describe IsoDoc do
             </bibitem>
             <bibitem id="ref11">
               <title>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</title>
-              <docidentifier type="IETF">RFC 10</docidentifier>
+              <docidentifier type="IETF">IETF RFC 10</docidentifier>
             </bibitem>
             <bibitem id="ref12">
               <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
@@ -302,7 +302,7 @@ RSpec.describe IsoDoc do
                 <em>How to cite a reference</em>
                 .</formattedref>
               <docidentifier type="metanorma">[Citn]</docidentifier>
-              <docidentifier type="IETF">RFC 20</docidentifier>
+              <docidentifier type="IETF">IETF RFC 20</docidentifier>
             </bibitem>
           </references>
         </bibliography>
