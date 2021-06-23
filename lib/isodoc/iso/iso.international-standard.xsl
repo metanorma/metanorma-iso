@@ -5463,28 +5463,39 @@
 							<xsl:when test="count(xalan:nodeset($contents)/doc) &gt; 1">
 								<xsl:for-each select="xalan:nodeset($contents)/doc">
 									<fo:bookmark internal-destination="{contents/item[1]/@id}" starting-state="hide">
+										<xsl:if test="@bundle = 'true'">
+											<xsl:attribute name="internal-destination"><xsl:value-of select="@firstpage_id"/></xsl:attribute>
+										</xsl:if>
 										<fo:bookmark-title>
-											<xsl:variable name="bookmark-title_">
-												<xsl:call-template name="getLangVersion">
-													<xsl:with-param name="lang" select="@lang"/>
-													<xsl:with-param name="doctype" select="@doctype"/>
-													<xsl:with-param name="title" select="@title-part"/>
-												</xsl:call-template>
-											</xsl:variable>
 											<xsl:choose>
-												<xsl:when test="normalize-space($bookmark-title_) != ''">
-													<xsl:value-of select="normalize-space($bookmark-title_)"/>
+												<xsl:when test="not(normalize-space(@bundle) = 'true')"> <!-- 'bundle' means several different documents (not language versions) in one xml -->
+													<xsl:variable name="bookmark-title_">
+														<xsl:call-template name="getLangVersion">
+															<xsl:with-param name="lang" select="@lang"/>
+															<xsl:with-param name="doctype" select="@doctype"/>
+															<xsl:with-param name="title" select="@title-part"/>
+														</xsl:call-template>
+													</xsl:variable>
+													<xsl:choose>
+														<xsl:when test="normalize-space($bookmark-title_) != ''">
+															<xsl:value-of select="normalize-space($bookmark-title_)"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:choose>
+																<xsl:when test="@lang = 'en'">English</xsl:when>
+																<xsl:when test="@lang = 'fr'">Français</xsl:when>
+																<xsl:when test="@lang = 'de'">Deutsche</xsl:when>
+																<xsl:otherwise><xsl:value-of select="@lang"/> version</xsl:otherwise>
+															</xsl:choose>
+														</xsl:otherwise>
+													</xsl:choose>
 												</xsl:when>
 												<xsl:otherwise>
-													<xsl:choose>
-														<xsl:when test="@lang = 'en'">English</xsl:when>
-														<xsl:when test="@lang = 'fr'">Français</xsl:when>
-														<xsl:when test="@lang = 'de'">Deutsche</xsl:when>
-														<xsl:otherwise><xsl:value-of select="@lang"/> version</xsl:otherwise>
-													</xsl:choose>
+													<xsl:value-of select="@title-part"/>
 												</xsl:otherwise>
 											</xsl:choose>
 										</fo:bookmark-title>
+										
 										<xsl:apply-templates select="contents/item" mode="bookmark"/>
 										
 										<xsl:call-template name="insertFigureBookmarks">
