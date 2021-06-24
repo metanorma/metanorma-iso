@@ -3059,14 +3059,15 @@
 		<xsl:apply-templates select="/*/*[local-name()='sections']/*[local-name()='clause'][@type='scope']" mode="contents"/>			
 		
 		<!-- Normative references  -->
-		<xsl:apply-templates select="/*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true']" mode="contents"/>	
+		<xsl:apply-templates select="/*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true'] |   /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][@normative='true']]" mode="contents"/>	
 		<!-- Terms and definitions -->
 		<xsl:apply-templates select="/*/*[local-name()='sections']/*[local-name()='terms'] |                        /*/*[local-name()='sections']/*[local-name()='clause'][.//*[local-name()='terms']] |                       /*/*[local-name()='sections']/*[local-name()='definitions'] |                        /*/*[local-name()='sections']/*[local-name()='clause'][.//*[local-name()='definitions']]" mode="contents"/>		
 		<!-- Another main sections -->
 		<xsl:apply-templates select="/*/*[local-name()='sections']/*[local-name() != 'terms' and                                                local-name() != 'definitions' and                                                not(@type='scope') and                                               not(local-name() = 'clause' and .//*[local-name()='terms']) and                                               not(local-name() = 'clause' and .//*[local-name()='definitions'])]" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='annex']" mode="contents"/>		
 		<!-- Bibliography -->
-		<xsl:apply-templates select="/*/*[local-name()='bibliography']/*[local-name()='references'][not(@normative='true')]" mode="contents"/>
+		<xsl:apply-templates select="/*/*[local-name()='bibliography']/*[local-name()='references'][not(@normative='true')] |       /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][not(@normative='true')]]" mode="contents"/>
+		
 	</xsl:template><xsl:template name="processPrefaceSectionsDefault">
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='abstract']"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='foreword']"/>
@@ -5083,6 +5084,7 @@
 			</xsl:choose>
 		</xsl:variable>
 		<fo:inline xsl:use-attribute-sets="link-style">
+			
 			
 			
 			<xsl:choose>
