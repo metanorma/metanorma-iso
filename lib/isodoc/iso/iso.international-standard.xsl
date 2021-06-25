@@ -4016,6 +4016,7 @@
 						
 						
 						
+						
 						<xsl:value-of select="@reference"/>
 						
 						
@@ -4154,11 +4155,14 @@
 		<!-- <xsl:variable name="namespace" select="substring-before(name(/*), '-')"/> -->
 		<fo:inline font-size="80%" keep-with-previous.within-line="always">
 			
+			
+			
 				<xsl:if test="ancestor::*[local-name()='td']">
 					<xsl:attribute name="font-weight">normal</xsl:attribute>
 					<!-- <xsl:attribute name="alignment-baseline">hanging</xsl:attribute> -->
 					<xsl:attribute name="baseline-shift">15%</xsl:attribute>
 				</xsl:if>
+			
 			
 			
 			
