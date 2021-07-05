@@ -701,7 +701,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <indexsect id='_'>
+        <indexsect id='_' displayorder="2">
           <title>Index</title>
           <ul>
             <li>

@@ -45,7 +45,7 @@ module IsoDoc
         prefix_name(node, "&nbsp;&mdash; ", lbl, "name")
       end
 
-      def eref_localities1_zh(target, type, from, to, n, delim)
+      def eref_localities1_zh(target, type, from, upto, node, delim)
         subsection = from&.text&.match(/\./)
         ret = if delim == ";"
                 ";"
@@ -53,32 +53,31 @@ module IsoDoc
                 type == "list" ? "" : delim
               end
         ret += " 第#{from.text}" if from
-        ret += "&ndash;#{to.text}" if to
+        ret += "&ndash;#{upto.text}" if upto
         loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize)
         ret += " #{loc}" unless subsection && type == "clause" ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/) ||
-          n["droploc"] == "true"
+          node["droploc"] == "true"
         ret += ")" if type == "list"
         ret
       end
 
-      def eref_localities1(target, type, from, to, delim, n, lang = "en")
+      def eref_localities1(target, type, from, upto, delim, node, lang = "en")
         return "" if type == "anchor"
 
         subsection = from&.text&.match(/\./)
         type = type.downcase
         lang == "zh" and
-          return l10n(eref_localities1_zh(target, type, from, to, n, delim))
-        ret = if delim == ";"
-                ";"
+          return l10n(eref_localities1_zh(target, type, from, upto, node, delim))
+        ret = if delim == ";" then ";"
               else
                 type == "list" ? "" : delim
               end
-        ret += eref_locality_populate(type, n) unless subsection &&
+        ret += eref_locality_populate(type, node) unless subsection &&
           type == "clause" || type == "list" ||
           target.match(/^IEV$|^IEC 60050-/)
         ret += " #{from.text}" if from
-        ret += "&ndash;#{to.text}" if to
+        ret += "&ndash;#{upto.text}" if upto
         ret += ")" if type == "list"
         l10n(ret)
       end
@@ -111,6 +110,16 @@ module IsoDoc
           .each do |f|
           clause1(f)
         end
+      end
+
+      def concept1(node)
+        node&.at(ns("./refterm"))&.remove
+        node&.at(ns("./renderterm"))&.name = "em"
+        r = node.at(ns("./xref | ./eref | ./termref"))
+        r.name == "termref" and
+          r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
+          r.replace("(#{r.to_xml})")
+        node.replace(node.children)
       end
 
       include Init
