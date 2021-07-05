@@ -955,7 +955,24 @@
   <define name="concept">
     <element name="concept">
       <optional>
-        <attribute name="term"/>
+        <element name="refterm">
+          <zeroOrMore>
+            <choice>
+              <ref name="PureTextElement"/>
+              <ref name="stem"/>
+            </choice>
+          </zeroOrMore>
+        </element>
+      </optional>
+      <optional>
+        <element name="renderterm">
+          <zeroOrMore>
+            <choice>
+              <ref name="PureTextElement"/>
+              <ref name="stem"/>
+            </choice>
+          </zeroOrMore>
+        </element>
       </optional>
       <choice>
         <ref name="eref"/>
