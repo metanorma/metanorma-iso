@@ -29,8 +29,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
 
-  spec.add_dependency "isodoc", "~> 1.6.2"
-  spec.add_dependency "metanorma-standoc", "~> 1.9.0"
+  spec.add_dependency "isodoc", "~> 1.7.0"
+  spec.add_dependency "metanorma-standoc", "~> 1.10.0"
   spec.add_dependency "mn2sts", "~> 1.8.0"
   spec.add_dependency "ruby-jing"
   spec.add_dependency "tokenizer", "~> 0.3.0"
