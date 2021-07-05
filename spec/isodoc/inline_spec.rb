@@ -554,7 +554,7 @@ RSpec.describe IsoDoc do
                 </li>
                 <li>
                   <em>word</em>
-                  [term defined in <termref base="IEV" target="135-13-13">The IEV database</termref>]
+                  (<termref base="IEV" target="135-13-13">The IEV database</termref>)
                 </li>
                 </ul>
               </p>
@@ -638,7 +638,7 @@ RSpec.describe IsoDoc do
                    </li>
                    <li>
                      <i>word</i>
-                      [term defined in Termbase IEV, term ID 135-13-13]
+                      (The IEV database)
                    </li>
                  </ul>
                </p>

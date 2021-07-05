@@ -116,7 +116,8 @@ module IsoDoc
         node&.at(ns("./refterm"))&.remove
         node&.at(ns("./renderterm"))&.name = "em"
         r = node.at(ns("./xref | ./eref | ./termref"))
-        r.name == "termref" and
+        c1 = non_locality_elems(r).select { |c| !c.text? || /\S/.match(c) }
+        r.name == "termref" && c1.empty? and
           r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
           r.replace("(#{r.to_xml})")
         node.replace(node.children)
