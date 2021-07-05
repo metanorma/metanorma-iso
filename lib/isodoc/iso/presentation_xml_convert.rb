@@ -113,21 +113,12 @@ module IsoDoc
       end
 
       def concept1(node)
-        unless r = node.at(ns("./refterm"))
-          node.children.first.add_previous_child("<refterm/>")
-          r = node.at(ns("./refterm"))
-        end
-        d = node.at(ns("./xref | ./eref | ./termref"))
-        r&.children&.each(&:remove)
-        d&.children&.each do |n|
-          n.parent = r unless %(locality localityStack).include? n.name
-        end
-        r.remove if r.text.strip.empty?
-        r&.name = "em"
-        if d.text.empty? && d.name == "termref"
-          d.replace(@i18n.term_defined_in.sub(/%/, d.to_xml))
-        elsif !r.text.strip.empty? then d.replace("(#{d.to_xml})")
-        end
+        node&.at(ns("./refterm"))&.remove
+        node&.at(ns("./renderterm"))&.name = "em"
+        r = node.at(ns("./xref | ./eref | ./termref"))
+        r.name == "termref" and
+          r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
+          r.replace("(#{r.to_xml})")
         node.replace(node.children)
       end
 
