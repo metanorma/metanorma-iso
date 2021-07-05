@@ -964,6 +964,16 @@
           </zeroOrMore>
         </element>
       </optional>
+      <optional>
+        <element name="renderterm">
+          <zeroOrMore>
+            <choice>
+              <ref name="PureTextElement"/>
+              <ref name="stem"/>
+            </choice>
+          </zeroOrMore>
+        </element>
+      </optional>
       <choice>
         <ref name="eref"/>
         <ref name="xref"/>
