@@ -998,6 +998,9 @@
       </attribute>
       <attribute name="name"/>
       <attribute name="action"/>
+      <optional>
+        <attribute name="class"/>
+      </optional>
       <zeroOrMore>
         <choice>
           <ref name="TextElement"/>

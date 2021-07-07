@@ -466,6 +466,10 @@ RSpec.describe IsoDoc do
               <renderterm>word</renderterm>
               <termref base='IEV' target='135-13-13'>The IEV database</termref>
             </concept></li>
+            <li><concept><refterm>term</refterm>
+              <renderterm>word</renderterm>
+              <strong>error!</strong>
+            </concept></li>
             </ul>
           </p>
           </foreword></preface>
@@ -556,6 +560,10 @@ RSpec.describe IsoDoc do
                   <em>word</em>
                   [term defined in <termref base="IEV" target="135-13-13">The IEV database</termref>]
                 </li>
+                <li>
+            <em>word</em>
+            <strong>error!</strong>
+              </li>
                 </ul>
               </p>
               </foreword></preface>
@@ -638,8 +646,12 @@ RSpec.describe IsoDoc do
                    </li>
                    <li>
                      <i>word</i>
-                      [term defined in Termbase IEV, term ID 135-13-13]
+                      [term defined in The IEV database]
                    </li>
+                   <li>
+              <i>word</i>
+              <b>error!</b>
+            </li>
                  </ul>
                </p>
              </div>
