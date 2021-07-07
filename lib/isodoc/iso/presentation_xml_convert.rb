@@ -114,8 +114,8 @@ module IsoDoc
 
       def concept1(node)
         node&.at(ns("./refterm"))&.remove
-        node&.at(ns("./renderterm"))&.name = "em"
         node&.at(ns("./renderterm"))&.next = " "
+        node&.at(ns("./renderterm"))&.name = "em"
         if r = node.at(ns("./xref | ./eref | ./termref"))
           r.name == "termref" and
             r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
