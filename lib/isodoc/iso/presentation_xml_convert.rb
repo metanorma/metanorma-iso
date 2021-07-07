@@ -123,6 +123,25 @@ module IsoDoc
         node.replace(node.children)
       end
 
+      # we're assuming terms and clauses in the right place for display,
+      # to cope with multiple terms sections
+      
+      def display_order(docxml)
+        i = 0
+        i = display_order_xpath(docxml, "//preface/*", i)
+        i = display_order_at(docxml, "//clause[@type = 'scope']", i)
+        i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
+        #i = display_order_at(docxml, "//sections/terms | "\
+                             #"//sections/clause[descendant::terms]", i)
+        #i = display_order_at(docxml, "//sections/definitions", i)
+        # i = display_order_xpath(docxml, @xrefs.klass.middle_clause(docxml), i)
+        i = display_order_xpath(docxml, "//sections/clause[not(@type = 'scope')] | "\
+                                "//sections/terms | //sections/definitions", i)
+        i = display_order_xpath(docxml, "//annex", i)
+        i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
+        display_order_xpath(docxml, "//indexsect", i)
+      end
+
       include Init
     end
   end
