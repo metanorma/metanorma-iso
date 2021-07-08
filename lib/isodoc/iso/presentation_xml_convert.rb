@@ -120,11 +120,11 @@ module IsoDoc
       end
 
       def concept_term(node, seen)
-        term = node.at(ns("./refterm")).to_xml
-        if seen[term] then concept1(node)
+        term = node&.at(ns("./refterm"))&.to_xml
+        if term && seen[term] then concept1(node)
         else concept_term1(node)
         end
-        seen[term] = true
+        seen[term] = true if term
         seen
       end
 
