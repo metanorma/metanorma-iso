@@ -112,7 +112,23 @@ module IsoDoc
         end
       end
 
-      def concept1(node)
+      def concept(docxml)
+        docxml.xpath(ns("//terms//concept")).each_with_object({}) do |f, m|
+          concept_term(f, m)
+        end
+        docxml.xpath(ns("//concept")).each { |f| concept1(f) }
+      end
+
+      def concept_term(node, seen)
+        term = node.at(ns("./refterm")).to_xml
+        if seen[term] then concept1(node)
+        else concept_term1(node)
+        end
+        seen[term] = true
+        seen
+      end
+
+      def concept_term1(node)
         node&.at(ns("./refterm"))&.remove
         node&.at(ns("./renderterm"))&.next = " "
         node&.at(ns("./renderterm"))&.name = "em"
@@ -124,17 +140,23 @@ module IsoDoc
         node.replace(node.children)
       end
 
+      def concept1(node)
+        node.replace(node&.at(ns("./renderterm"))&.children ||
+                     node&.at(ns("./refterm"))&.children ||
+                     node.children)
+      end
+
       # we're assuming terms and clauses in the right place for display,
       # to cope with multiple terms sections
-      
+
       def display_order(docxml)
         i = 0
         i = display_order_xpath(docxml, "//preface/*", i)
         i = display_order_at(docxml, "//clause[@type = 'scope']", i)
         i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
-        #i = display_order_at(docxml, "//sections/terms | "\
-                             #"//sections/clause[descendant::terms]", i)
-        #i = display_order_at(docxml, "//sections/definitions", i)
+        # i = display_order_at(docxml, "//sections/terms | "\
+        # "//sections/clause[descendant::terms]", i)
+        # i = display_order_at(docxml, "//sections/definitions", i)
         # i = display_order_xpath(docxml, @xrefs.klass.middle_clause(docxml), i)
         i = display_order_xpath(docxml, "//sections/clause[not(@type = 'scope')] | "\
                                 "//sections/terms | //sections/definitions", i)
