@@ -112,14 +112,14 @@ module IsoDoc
         end
       end
 
-      def concept1(node)
-        node&.at(ns("./refterm"))&.remove
-        node&.at(ns("./renderterm"))&.name = "em"
-        r = node.at(ns("./xref | ./eref | ./termref"))
-        r.name == "termref" and
-          r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
-          r.replace("(#{r.to_xml})")
-        node.replace(node.children)
+      def concept1_ref(node)
+        if r = node.at(ns("./xref | ./eref | ./termref"))
+          return r.remove if node["noref"] == "true"
+
+          r.name == "termref" and
+            r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
+            r.replace("(#{r.to_xml})")
+        end
       end
 
       include Init
