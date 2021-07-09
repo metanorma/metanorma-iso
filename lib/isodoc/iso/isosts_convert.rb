@@ -1,31 +1,30 @@
 require "isodoc"
-require "mn2sts"
+require "mnconvert"
 
 module IsoDoc
   module Iso
-
     # A {Converter} implementation that generates HTML output, and a document
     # schema encapsulation of the document for validation
     #
     class IsoStsConvert < IsoDoc::XslfoPdfConvert
-      def initialize(options)
+      def initialize(_options)
         @libdir = File.dirname(__FILE__)
         @format = :isosts
         @suffix = "isosts.xml"
       end
 
-      def convert(input_filename, file = nil, debug = false, output_filename = nil)
-        file = File.read(input_filename, encoding: "utf-8") if file.nil?
-        docxml, filename, dir = convert_init(file, input_filename, debug)
-        /\.xml$/.match(input_filename) or
-          input_filename = Tempfile.open([filename, ".xml"], encoding: "utf-8") do |f|
-          f.write file
-          f.path
-        end
+      def convert(input_fname, file = nil, debug = false, output_fname = nil)
+        file = File.read(input_fname, encoding: "utf-8") if file.nil?
+        _, fname, dir = convert_init(file, input_fname, debug)
+        /\.xml$/.match(input_fname) or
+          input_fname = Tempfile.open([fname, ".xml"], encoding: "utf-8") do |f|
+            f.write file
+            f.path
+          end
         FileUtils.rm_rf dir
-        Mn2sts.convert(input_filename, output_filename || "#{filename}.#{@suffix}", iso: true)
+        Mnconvert.convert(input_fname, output_fname || "#{fname}.#{@suffix}",
+                          MnConvert::InputFormat::MN, { output_format: :iso })
       end
     end
   end
 end
-
