@@ -99,19 +99,29 @@ module Asciidoctor
         "//clause[descendant::references][not(parent::clause)]".freeze
 
       def sections_sequence_validate(root)
-        vocab = root&.at("//bibdata/ext/subdoctype")&.text == "vocabulary"
+        names, n = sections_sequence_validate_start(root)
+        if root&.at("//bibdata/ext/subdoctype")&.text == "vocabulary"
+          sections_sequence_validate_body_vocab(names, n)
+        else
+          sections_sequence_validate_body(names, n)
+        end
+        sections_sequence_validate_end(names, n)
+      end
+
+      def sections_sequence_validate_start(root)
         names = root.xpath(SECTIONS_XPATH)
         names = seqcheck(names, SEQ[0][:msg], SEQ[0][:val])
         n = names[0]
         names = seqcheck(names, SEQ[1][:msg], SEQ[1][:val])
-        if n&.at("./self::introduction")
+        n&.at("./self::introduction") and
           names = seqcheck(names, SEQ[2][:msg], SEQ[2][:val])
-        end
         names = seqcheck(names, SEQ[3][:msg], SEQ[3][:val])
         n = names.shift
-        if n&.at("./self::definitions")
-          n = names.shift
-        end
+        n = names.shift if n&.at("./self::definitions")
+        [names, n]
+      end
+
+      def sections_sequence_validate_body(names, n)
         if n.nil? || n.name != "clause"
           @log.add("Style", n, "Document must contain at least one clause")
         end
@@ -121,20 +131,30 @@ module Asciidoctor
         n&.at("./self::clause[@type = 'scope']") &&
           @log.add("Style", n, "Scope must occur before Terms and Definitions")
         n = names.shift
-        while n&.name == "clause" || (vocab && n&.name == "terms")
+        while n&.name == "clause"
           n&.at("./self::clause[@type = 'scope']")
           @log.add("Style", n, "Scope must occur before Terms and Definitions")
           n = names.shift
         end
-        if vocab
-          unless %w(annex references terms).include? n&.name
-            @log.add("Style", n, "Only terms, annexes and references can follow clauses")
-          end
-        else
-          unless %w(annex references).include? n&.name
-            @log.add("Style", n, "Only annexes and references can follow clauses")
-          end
+        %w(annex references).include? n&.name or
+          @log.add("Style", n, "Only annexes and references can follow clauses")
+      end
+
+      def sections_sequence_validate_body_vocab(names, n)
+        if n.nil? || n.name != "clause"
+          @log.add("Style", n, "Document must contain at least one clause")
         end
+        n&.at("./self::clause") ||
+          @log.add("Style", n, "Document must contain clause after "\
+                   "Terms and Definitions")
+        n&.at("./self::clause[@type = 'scope']") &&
+          @log.add("Style", n, "Scope must occur before Terms and Definitions")
+        n = names.shift
+        %w(annex references terms).include? n&.name or
+          @log.add("Style", n, "Only terms, annexes and references can follow clauses")
+      end
+
+      def sections_sequence_validate_end(names, n)
         while n&.name == "annex"
           n = names.shift
           if n.nil?

@@ -899,7 +899,7 @@
   </include>
   <!-- end overrides -->
   <define name="docsubtype">
-    <element name="docsubtype">
+    <element name="subdoctype">
       <ref name="DocumentSubtype"/>
     </element>
   </define>
@@ -998,6 +998,9 @@
       </attribute>
       <attribute name="name"/>
       <attribute name="action"/>
+      <optional>
+        <attribute name="class"/>
+      </optional>
       <zeroOrMore>
         <choice>
           <ref name="TextElement"/>
