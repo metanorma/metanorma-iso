@@ -660,7 +660,7 @@ RSpec.describe IsoDoc do
                    </li>
                    <li>
                      <i>word</i>
-                      (The IEV database)
+                      [term defined in The IEV database]
                    </li>
                    <li>
                      <i>word</i>
@@ -741,78 +741,82 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
        .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
-  
+  end
+ 
   it "processes concept attributes" do
     input = <<~INPUT
        <iso-standard xmlns="http://riboseinc.com/isoxml">
-       <preface><foreword>
+       <sections>
+       <clause id="clause1"><title>Clause 1</title></clause>
+       <terms id="A">
        <p>
        <ul>
        <li>
-       <concept noital="true"><refterm>term</refterm>
+       <concept noital="true"><refterm>term1</refterm>
            <renderterm>term</renderterm>
            <xref target='clause1'/>
          </concept></li>
-         <li><concept noref="true"><refterm>term</refterm>
+         <li><concept noref="true"><refterm>term2</refterm>
            <renderterm>term</renderterm>
            <xref target='clause1'/>
          </concept></li>
-       <li><concept noital="true" noref="true"><refterm>term</refterm>
+       <li><concept noital="true" noref="true"><refterm>term3</refterm>
            <renderterm>term</renderterm>
            <xref target='clause1'/>
          </concept></li></ul></p>
-         </foreword></preface>
-       <sections>
-       <clause id="clause1"><title>Clause 1</title></clause>
+       </terms>
        </sections>
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-            <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-              <preface>
-                <foreword displayorder='1'>
-                  <p>
-                    <ul>
-                      <li>term (<xref target='clause1'>Clause 1</xref>)</li>
-                      <li>
-                        <em>term</em>
-                      </li>
-                      <li> term </li>
-                    </ul>
-                  </p>
-                </foreword>
-              </preface>
-              <sections>
-        <clause id='clause1' displayorder='2'>
-          <title depth='1'>1<tab/>Clause 1</title>
-        </clause>
-      </sections>
-            </iso-standard>
+    <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+ <sections>
+ <clause id="clause1" displayorder="1"><title depth="1">1<tab/>Clause 1</title></clause>
+ <terms id="A" displayorder="2"><title>2</title>
+ <p>
+ <ul>
+ <li>
+
+     term
+     (<xref target="clause1">Clause 1</xref>)
+   </li>
+   <li>
+     <em>term</em>
+
+   </li>
+ <li>
+     term
+
+   </li></ul></p>
+ </terms>
+ </sections>
+</iso-standard>
     OUTPUT
     output = <<~OUTPUT
-                #{HTML_HDR}
-            <br/>
-            <div>
-              <h1 class='ForewordTitle'>Foreword</h1>
-              <p>
-                <ul>
-                  <li>
-                    term (<a href='#clause1'>Clause 1</a>)
-                  </li>
-                  <li>
-                    <i>term</i>
-                  </li>
-                  <li>term</li>
-                </ul>
-              </p>
-            </div>
-            <p class='zzSTDTitle1'/>
-            <div id='clause1'>
-              <h1>1&#160; Clause 1</h1>
-            </div>
-          </div>
-        </body>
-      </html>
+    #{HTML_HDR}
+       <p class='zzSTDTitle1'/>
+       <div id='clause1'>
+         <h1>1&#160; Clause 1</h1>
+       </div>
+       <div id='A'>
+         <h1>2</h1>
+         <p>
+           <ul>
+             <li>
+                term (
+               <a href='#clause1'>Clause 1</a>
+               )
+             </li>
+             <li>
+               <i>term</i>
+             </li>
+             <li> term </li>
+           </ul>
+         </p>
+       </div>
+     </div>
+   </body>
+ </html>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
