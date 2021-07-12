@@ -112,7 +112,7 @@ module IsoDoc
         end
       end
 
-      def concept1(node)
+      def concept_term1(node)
         node&.at(ns("./refterm"))&.remove
         node&.at(ns("./renderterm"))&.name = "em"
         r = node.at(ns("./xref | ./eref | ./termref"))
