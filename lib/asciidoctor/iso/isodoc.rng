@@ -899,7 +899,7 @@
   </include>
   <!-- end overrides -->
   <define name="docsubtype">
-    <element name="docsubtype">
+    <element name="subdoctype">
       <ref name="DocumentSubtype"/>
     </element>
   </define>
@@ -954,6 +954,16 @@
   </define>
   <define name="concept">
     <element name="concept">
+      <optional>
+        <attribute name="noital">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="noref">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
       <optional>
         <element name="refterm">
           <zeroOrMore>

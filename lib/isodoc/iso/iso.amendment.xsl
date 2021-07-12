@@ -2099,88 +2099,6 @@
 		<xsl:text>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</xsl:text>
 	</xsl:variable>
 	
-		<xsl:template name="number-to-words">
-		<xsl:param name="number"/>
-		<xsl:variable name="words">
-			<words>
-				<word cardinal="1">One-</word>
-				<word ordinal="1">First </word>
-				<word cardinal="2">Two-</word>
-				<word ordinal="2">Second </word>
-				<word cardinal="3">Three-</word>
-				<word ordinal="3">Third </word>
-				<word cardinal="4">Four-</word>
-				<word ordinal="4">Fourth </word>
-				<word cardinal="5">Five-</word>
-				<word ordinal="5">Fifth </word>
-				<word cardinal="6">Six-</word>
-				<word ordinal="6">Sixth </word>
-				<word cardinal="7">Seven-</word>
-				<word ordinal="7">Seventh </word>
-				<word cardinal="8">Eight-</word>
-				<word ordinal="8">Eighth </word>
-				<word cardinal="9">Nine-</word>
-				<word ordinal="9">Ninth </word>
-				<word ordinal="10">Tenth </word>
-				<word ordinal="11">Eleventh </word>
-				<word ordinal="12">Twelfth </word>
-				<word ordinal="13">Thirteenth </word>
-				<word ordinal="14">Fourteenth </word>
-				<word ordinal="15">Fifteenth </word>
-				<word ordinal="16">Sixteenth </word>
-				<word ordinal="17">Seventeenth </word>
-				<word ordinal="18">Eighteenth </word>
-				<word ordinal="19">Nineteenth </word>
-				<word cardinal="20">Twenty-</word>
-				<word ordinal="20">Twentieth </word>
-				<word cardinal="30">Thirty-</word>
-				<word ordinal="30">Thirtieth </word>
-				<word cardinal="40">Forty-</word>
-				<word ordinal="40">Fortieth </word>
-				<word cardinal="50">Fifty-</word>
-				<word ordinal="50">Fiftieth </word>
-				<word cardinal="60">Sixty-</word>
-				<word ordinal="60">Sixtieth </word>
-				<word cardinal="70">Seventy-</word>
-				<word ordinal="70">Seventieth </word>
-				<word cardinal="80">Eighty-</word>
-				<word ordinal="80">Eightieth </word>
-				<word cardinal="90">Ninety-</word>
-				<word ordinal="90">Ninetieth </word>
-				<word cardinal="100">Hundred-</word>
-				<word ordinal="100">Hundredth </word>
-			</words>
-		</xsl:variable>
-
-		<xsl:variable name="ordinal" select="xalan:nodeset($words)//word[@ordinal = $number]/text()"/>
-
-		<xsl:choose>
-			<xsl:when test="$ordinal != ''">
-				<xsl:value-of select="$ordinal"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:choose>
-					<xsl:when test="$number &lt; 100">
-						<xsl:variable name="decade" select="concat(substring($number,1,1), '0')"/>
-						<xsl:variable name="digit" select="substring($number,2)"/>
-						<xsl:value-of select="xalan:nodeset($words)//word[@cardinal = $decade]/text()"/>
-						<xsl:value-of select="xalan:nodeset($words)//word[@ordinal = $digit]/text()"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<!-- more 100 -->
-						<xsl:variable name="hundred" select="substring($number,1,1)"/>
-						<xsl:variable name="digits" select="number(substring($number,2))"/>
-						<xsl:value-of select="xalan:nodeset($words)//word[@cardinal = $hundred]/text()"/>
-						<xsl:value-of select="xalan:nodeset($words)//word[@cardinal = '100']/text()"/>
-						<xsl:call-template name="number-to-words">
-							<xsl:with-param name="number" select="$digits"/>
-						</xsl:call-template>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	
 	<xsl:template name="printEdition">
 		<xsl:variable name="edition" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:edition)"/>
 		<xsl:text> </xsl:text>
@@ -7106,4 +7024,100 @@
 				<xsl:otherwise><xsl:value-of select="$default"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
+	</xsl:template><xsl:template name="number-to-words">
+		<xsl:param name="number"/>
+		<xsl:param name="first"/>
+		<xsl:if test="$number != ''">
+			<xsl:variable name="words">
+								<words>
+					<word cardinal="1">One-</word>
+					<word ordinal="1">First </word>
+					<word cardinal="2">Two-</word>
+					<word ordinal="2">Second </word>
+					<word cardinal="3">Three-</word>
+					<word ordinal="3">Third </word>
+					<word cardinal="4">Four-</word>
+					<word ordinal="4">Fourth </word>
+					<word cardinal="5">Five-</word>
+					<word ordinal="5">Fifth </word>
+					<word cardinal="6">Six-</word>
+					<word ordinal="6">Sixth </word>
+					<word cardinal="7">Seven-</word>
+					<word ordinal="7">Seventh </word>
+					<word cardinal="8">Eight-</word>
+					<word ordinal="8">Eighth </word>
+					<word cardinal="9">Nine-</word>
+					<word ordinal="9">Ninth </word>
+					<word ordinal="10">Tenth </word>
+					<word ordinal="11">Eleventh </word>
+					<word ordinal="12">Twelfth </word>
+					<word ordinal="13">Thirteenth </word>
+					<word ordinal="14">Fourteenth </word>
+					<word ordinal="15">Fifteenth </word>
+					<word ordinal="16">Sixteenth </word>
+					<word ordinal="17">Seventeenth </word>
+					<word ordinal="18">Eighteenth </word>
+					<word ordinal="19">Nineteenth </word>
+					<word cardinal="20">Twenty-</word>
+					<word ordinal="20">Twentieth </word>
+					<word cardinal="30">Thirty-</word>
+					<word ordinal="30">Thirtieth </word>
+					<word cardinal="40">Forty-</word>
+					<word ordinal="40">Fortieth </word>
+					<word cardinal="50">Fifty-</word>
+					<word ordinal="50">Fiftieth </word>
+					<word cardinal="60">Sixty-</word>
+					<word ordinal="60">Sixtieth </word>
+					<word cardinal="70">Seventy-</word>
+					<word ordinal="70">Seventieth </word>
+					<word cardinal="80">Eighty-</word>
+					<word ordinal="80">Eightieth </word>
+					<word cardinal="90">Ninety-</word>
+					<word ordinal="90">Ninetieth </word>
+					<word cardinal="100">Hundred-</word>
+					<word ordinal="100">Hundredth </word>
+				</words>
+			</xsl:variable>
+
+			<xsl:variable name="ordinal" select="xalan:nodeset($words)//word[@ordinal = $number]/text()"/>
+			
+			<xsl:variable name="value">
+				<xsl:choose>
+					<xsl:when test="$ordinal != ''">
+						<xsl:value-of select="$ordinal"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<xsl:when test="$number &lt; 100">
+								<xsl:variable name="decade" select="concat(substring($number,1,1), '0')"/>
+								<xsl:variable name="digit" select="substring($number,2)"/>
+								<xsl:value-of select="xalan:nodeset($words)//word[@cardinal = $decade]/text()"/>
+								<xsl:value-of select="xalan:nodeset($words)//word[@ordinal = $digit]/text()"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- more 100 -->
+								<xsl:variable name="hundred" select="substring($number,1,1)"/>
+								<xsl:variable name="digits" select="number(substring($number,2))"/>
+								<xsl:value-of select="xalan:nodeset($words)//word[@cardinal = $hundred]/text()"/>
+								<xsl:value-of select="xalan:nodeset($words)//word[@cardinal = '100']/text()"/>
+								<xsl:call-template name="number-to-words">
+									<xsl:with-param name="number" select="$digits"/>
+								</xsl:call-template>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="$first = 'true'">
+					<xsl:variable name="value_lc" select="java:toLowerCase(java:java.lang.String.new($value))"/>
+					<xsl:call-template name="capitalize">
+						<xsl:with-param name="str" select="$value_lc"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$value"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
 	</xsl:template></xsl:stylesheet>

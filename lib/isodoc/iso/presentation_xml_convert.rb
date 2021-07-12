@@ -112,32 +112,14 @@ module IsoDoc
         end
       end
 
-      def concept(docxml)
-        docxml.xpath(ns("//terms//concept")).each_with_object({}) do |f, m|
-          concept_term(f, m)
-        end
-        docxml.xpath(ns("//concept")).each { |f| concept1(f) }
-      end
-
-      def concept_term(node, seen)
-        term = node&.at(ns("./refterm"))&.to_xml
-        if term && seen[term] then concept1(node)
-        else concept_term1(node)
-        end
-        seen[term] = true if term
-        seen
-      end
-
-      def concept_term1(node)
-        node&.at(ns("./refterm"))&.remove
-        node&.at(ns("./renderterm"))&.next = " "
-        node&.at(ns("./renderterm"))&.name = "em"
+      def concept1_ref(node)
         if r = node.at(ns("./xref | ./eref | ./termref"))
+          return r.remove if node["noref"] == "true"
+
           r.name == "termref" and
             r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
             r.replace("(#{r.to_xml})")
         end
-        node.replace(node.children)
       end
 
       def concept1(node)
