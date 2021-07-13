@@ -1189,7 +1189,7 @@ RSpec.describe Asciidoctor::ISO do
     expect(File.read("test.err"))
       .not_to include "Scope must occur before Terms and Definitions"
     expect(File.read("test.err"))
-      .to include "Only terms, annexes and references can follow clauses"
+      .to include "Only annexes and references can follow terms and clauses"
   end
 
 

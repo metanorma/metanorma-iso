@@ -121,55 +121,49 @@ module Asciidoctor
         [names, n]
       end
 
-      def sections_sequence_validate_body(names, n)
-        if n.nil? || n.name != "clause"
-          @log.add("Style", n, "Document must contain at least one clause")
+      def sections_sequence_validate_body(names, elem)
+        if elem.nil? || elem.name != "clause"
+          @log.add("Style", elem, "Document must contain at least one clause")
         end
-        n&.at("./self::clause") ||
-          @log.add("Style", n, "Document must contain clause after "\
+        elem&.at("./self::clause") ||
+          @log.add("Style", elem, "Document must contain clause after "\
                    "Terms and Definitions")
-        n&.at("./self::clause[@type = 'scope']") &&
-          @log.add("Style", n, "Scope must occur before Terms and Definitions")
-        n = names.shift
-        while n&.name == "clause"
-          n&.at("./self::clause[@type = 'scope']")
-          @log.add("Style", n, "Scope must occur before Terms and Definitions")
-          n = names.shift
+        elem&.at("./self::clause[@type = 'scope']") &&
+          @log.add("Style", elem, "Scope must occur before Terms and Definitions")
+        elem = names.shift
+        while elem&.name == "clause"
+          elem&.at("./self::clause[@type = 'scope']")
+          @log.add("Style", elem, "Scope must occur before Terms and Definitions")
+          elem = names.shift
         end
-        %w(annex references).include? n&.name or
-          @log.add("Style", n, "Only annexes and references can follow clauses")
+        %w(annex references).include? elem&.name or
+          @log.add("Style", elem, "Only annexes and references can follow clauses")
       end
 
-      def sections_sequence_validate_body_vocab(names, n)
-        if n.nil? || n.name != "clause"
-          @log.add("Style", n, "Document must contain at least one clause")
+      def sections_sequence_validate_body_vocab(names, elem)
+        while elem && %w(clause terms).include?(elem.name)
+          elem = names.shift
         end
-        n&.at("./self::clause") ||
-          @log.add("Style", n, "Document must contain clause after "\
-                   "Terms and Definitions")
-        n&.at("./self::clause[@type = 'scope']") &&
-          @log.add("Style", n, "Scope must occur before Terms and Definitions")
-        n = names.shift
-        %w(annex references terms).include? n&.name or
-          @log.add("Style", n, "Only terms, annexes and references can follow clauses")
+        %w(annex references).include? elem&.name or
+          @log.add("Style", elem, "Only annexes and references can follow terms and clauses")
       end
 
-      def sections_sequence_validate_end(names, n)
-        while n&.name == "annex"
-          n = names.shift
-          if n.nil?
+      def sections_sequence_validate_end(names, elem)
+        while elem&.name == "annex"
+          elem = names.shift
+          if elem.nil?
             @log.add("Style", nil, "Document must include (references) "\
                      "Normative References")
           end
         end
-        n&.at("./self::references[@normative = 'true']") ||
+        elem&.at("./self::references[@normative = 'true']") ||
           @log.add("Style", nil, "Document must include (references) "\
                    "Normative References")
-        n = names&.shift
-        n&.at("./self::references[@normative = 'false']") ||
-          @log.add("Style", n, "Final section must be (references) Bibliography")
+        elem = names&.shift
+        elem&.at("./self::references[@normative = 'false']") ||
+          @log.add("Style", elem, "Final section must be (references) Bibliography")
         names.empty? ||
-          @log.add("Style", n, "There are sections after the final Bibliography")
+          @log.add("Style", elem, "There are sections after the final Bibliography")
       end
 
       def style_warning(node, msg, text = nil)

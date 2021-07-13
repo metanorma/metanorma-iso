@@ -102,8 +102,8 @@ module Asciidoctor
       # ISO/IEC DIR 2, Table B.1
       def style_number(node, text)
         style_two_regex_not_prev(
-          node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)$/,
-          %r{\b(ISO|IEC|IEEE/|(in|January|February|March|April|May|June|August|September|October|November|December)\b)$},
+          node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/,
+          %r{\b(ISO|IEC|IEEE/|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z},
           "number not broken up in threes"
         )
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
@@ -123,7 +123,7 @@ module Asciidoctor
       # ISO/IEC DIR 2, 8.4
       # ISO/IEC DIR 2, 9.3
       def style_abbrev(node, text)
-        style_regex(/(^|\s)(?!e\.g\.|i\.e\.)
+        style_regex(/(\A|\s)(?!e\.g\.|i\.e\.)
                     (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
                     "no dots in abbreviations", node, text)
         style_regex(/\b(?<num>ppm)\b/i,

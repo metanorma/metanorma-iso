@@ -204,6 +204,18 @@
         </zeroOrMore>
       </element>
     </define>
+    <define name="dt">
+      <element name="dt">
+        <optional>
+          <attribute name="id">
+            <data type="ID"/>
+          </attribute>
+        </optional>
+        <zeroOrMore>
+          <ref name="TextElement"/>
+        </zeroOrMore>
+      </element>
+    </define>
     <define name="example">
       <element name="example">
         <attribute name="id">

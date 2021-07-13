@@ -32,7 +32,7 @@ module Asciidoctor
         root.xpath("//xref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? &&
-            /\b(see| refer to)\s*$/mi.match(preceding)
+            /\b(see| refer to)\s*\Z/mi.match(preceding)
 
           (target = root.at("//*[@id = '#{t['target']}']")) || next
           if target&.at("./ancestor-or-self::*[@obligation = 'normative']")
@@ -46,7 +46,7 @@ module Asciidoctor
       def see_erefs_validate(root)
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
-          next unless !prec.nil? && /\b(see|refer to)\s*$/mi.match(prec)
+          next unless !prec.nil? && /\b(see|refer to)\s*\Z/mi.match(prec)
 
           unless target = root.at("//*[@id = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
@@ -80,9 +80,9 @@ module Asciidoctor
         xmldoc.xpath("//term").each do |t|
           para = t.at("./definition") || return
           term = t.at("./preferred").text
-          termdef_warn(para.text, /^(the|a)\b/i, t, term,
+          termdef_warn(para.text, /\A(the|a)\b/i, t, term,
                        "term definition starts with article")
-          termdef_warn(para.text, /\.$/i, t, term,
+          termdef_warn(para.text, /\.\Z/i, t, term,
                        "term definition ends with period")
         end
       end
@@ -138,7 +138,6 @@ module Asciidoctor
         isosubgroup_validate(doc.root)
         onlychild_clause_validate(doc.root)
         termdef_style(doc.root)
-        iev_validate(doc.root)
         see_xrefs_validate(doc.root)
         see_erefs_validate(doc.root)
         locality_erefs_validate(doc.root)
