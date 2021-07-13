@@ -150,7 +150,6 @@ module Asciidoctor
         isosubgroup_validate(doc.root)
         onlychild_clause_validate(doc.root)
         termdef_style(doc.root)
-        iev_validate(doc.root)
         see_xrefs_validate(doc.root)
         see_erefs_validate(doc.root)
         locality_erefs_validate(doc.root)
