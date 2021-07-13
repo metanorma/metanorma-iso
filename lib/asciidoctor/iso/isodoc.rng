@@ -955,12 +955,12 @@
   <define name="concept">
     <element name="concept">
       <optional>
-        <attribute name="noital">
+        <attribute name="ital">
           <data type="boolean"/>
         </attribute>
       </optional>
       <optional>
-        <attribute name="noref">
+        <attribute name="ref">
           <data type="boolean"/>
         </attribute>
       </optional>

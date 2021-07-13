@@ -116,21 +116,24 @@ module IsoDoc
         docxml.xpath(ns("//terms//concept")).each_with_object({}) do |f, m|
           concept_term(f, m)
         end
-        docxml.xpath(ns("//concept")).each { |f| concept1(f) }
+        docxml.xpath(ns("//concept")).each do |node|
+          concept_render(node, node["ital"] || "false", node["ref"] || "false")
+        end
       end
 
       def concept_term(node, seen)
         term = node&.at(ns("./refterm"))&.to_xml
-        if term && seen[term] then concept1(node)
-        else concept_term1(node)
+        if term && seen[term]
+          concept_render(node, node["ital"] || "false", node["ref"] || "false")
+        else concept_render(node, node["ital"] || "true", node["ref"] || "true")
         end
         seen[term] = true if term
         seen
       end
 
-      def concept1_ref(node)
+      def concept1_ref(node, ref)
         if r = node.at(ns("./xref | ./eref | ./termref"))
-          return r.remove if node["noref"] == "true"
+          return r.remove if ref == "false"
 
           r.name == "termref" and
             r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or

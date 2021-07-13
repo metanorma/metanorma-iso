@@ -752,45 +752,71 @@ RSpec.describe IsoDoc do
        <p>
        <ul>
        <li>
-       <concept noital="true"><refterm>term1</refterm>
+              <concept ital="true"><refterm>term</refterm>
            <renderterm>term</renderterm>
            <xref target='clause1'/>
          </concept></li>
-         <li><concept noref="true"><refterm>term2</refterm>
+         <li><concept ref="true"><refterm>term</refterm>
            <renderterm>term</renderterm>
            <xref target='clause1'/>
          </concept></li>
-       <li><concept noital="true" noref="true"><refterm>term3</refterm>
+       <li><concept ital="true" ref="true"><refterm>term</refterm>
            <renderterm>term</renderterm>
            <xref target='clause1'/>
-         </concept></li></ul></p>
+         </concept></li>
+        <li><concept ital="false"><refterm>term</refterm>
+           <renderterm>term</renderterm>
+           <xref target='clause1'/>
+         </concept></li>
+         <li><concept ref="false"><refterm>term</refterm>
+           <renderterm>term</renderterm>
+           <xref target='clause1'/>
+         </concept></li>
+       <li><concept ital="false" ref="false"><refterm>term</refterm>
+           <renderterm>term</renderterm>
+           <xref target='clause1'/>
+         </concept></li>
+        </ul></p>
        </terms>
        </sections>
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-    <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
- <sections>
- <clause id="clause1" displayorder="1"><title depth="1">1<tab/>Clause 1</title></clause>
- <terms id="A" displayorder="2"><title>2</title>
- <p>
- <ul>
- <li>
+           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <sections>
+        <clause id="clause1" displayorder="1"><title depth="1">1<tab/>Clause 1</title></clause>
+        <terms id="A" displayorder="2"><title>2</title>
+        <p>
+        <ul>
+        <li>
 
-     term
-     (<xref target="clause1">Clause 1</xref>)
-   </li>
-   <li>
-     <em>term</em>
+            <em>term</em>
+            (<xref target="clause1">Clause 1</xref>)
+          </li>
+          <li>
+            term
+            (<xref target="clause1">Clause 1</xref>)
+          </li>
+        <li>
+            <em>term</em>
+            (<xref target="clause1">Clause 1</xref>)
+          </li>
+         <li>
+            term
 
-   </li>
- <li>
-     term
+          </li>
+          <li>
+            term
 
-   </li></ul></p>
- </terms>
- </sections>
-</iso-standard>
+          </li>
+        <li>
+            term
+
+          </li>
+         </ul></p>
+        </terms>
+        </sections>
+       </iso-standard>
     OUTPUT
     output = <<~OUTPUT
     #{HTML_HDR}
@@ -801,17 +827,28 @@ RSpec.describe IsoDoc do
        <div id='A'>
          <h1>2</h1>
          <p>
-           <ul>
-             <li>
-                term (
-               <a href='#clause1'>Clause 1</a>
-               )
-             </li>
-             <li>
-               <i>term</i>
-             </li>
-             <li> term </li>
-           </ul>
+                          <ul>
+                   <li>
+                     <i>term</i>
+                      (
+                     <a href='#clause1'>Clause 1</a>
+                     )
+                   </li>
+                   <li>
+                      term (
+                     <a href='#clause1'>Clause 1</a>
+                     )
+                   </li>
+                   <li>
+                     <i>term</i>
+                      (
+                     <a href='#clause1'>Clause 1</a>
+                     )
+                   </li>
+                   <li> term </li>
+                   <li> term </li>
+                   <li> term </li>
+                 </ul>
          </p>
        </div>
      </div>
