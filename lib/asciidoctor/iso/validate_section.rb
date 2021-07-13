@@ -42,7 +42,7 @@ module Asciidoctor
         f.empty? && return
         (f.size == 1) || @log.add("Style", f.first, ONE_SYMBOLS_WARNING)
         f.first.elements.each do |e|
-          unless e.name == "dl"
+          unless %w(title dl).include? e.name
             @log.add("Style", f.first, NON_DL_SYMBOLS_WARNING)
             return
           end

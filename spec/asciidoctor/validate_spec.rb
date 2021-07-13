@@ -802,6 +802,18 @@ RSpec.describe Asciidoctor::ISO do
     expect(File.read("test.err"))
       .to include "Symbols and Abbreviated Terms can only contain "\
                   "a definition list"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Symbols and Abbreviated Terms
+
+      A:: B
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "Symbols and Abbreviated Terms can only contain "\
+                  "a definition list"
+
   end
 
   it "Warning if missing foreword" do
