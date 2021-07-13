@@ -101,9 +101,9 @@ module Asciidoctor
       def sections_sequence_validate(root)
         names, n = sections_sequence_validate_start(root)
         if root&.at("//bibdata/ext/subdoctype")&.text == "vocabulary"
-          sections_sequence_validate_body_vocab(names, n)
+          names, n = sections_sequence_validate_body_vocab(names, n)
         else
-          sections_sequence_validate_body(names, n)
+          names, n = sections_sequence_validate_body(names, n)
         end
         sections_sequence_validate_end(names, n)
       end
@@ -138,6 +138,7 @@ module Asciidoctor
         end
         %w(annex references).include? elem&.name or
           @log.add("Style", elem, "Only annexes and references can follow clauses")
+        [names, elem]
       end
 
       def sections_sequence_validate_body_vocab(names, elem)
@@ -146,6 +147,7 @@ module Asciidoctor
         end
         %w(annex references).include? elem&.name or
           @log.add("Style", elem, "Only annexes and references can follow terms and clauses")
+        [names, elem]
       end
 
       def sections_sequence_validate_end(names, elem)
