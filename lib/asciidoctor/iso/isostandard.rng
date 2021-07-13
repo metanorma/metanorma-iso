@@ -101,7 +101,11 @@
           <ref name="definitions"/>
         </optional>
         <oneOrMore>
-          <ref name="clause"/>
+          <choice>
+            <ref name="clause"/>
+            <ref name="term-clause"/>
+            <ref name="terms"/>
+          </choice>
         </oneOrMore>
       </element>
     </define>
