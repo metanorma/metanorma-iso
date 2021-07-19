@@ -140,7 +140,7 @@
       <optional>
         <ref name="section-title"/>
       </optional>
-      <group>
+      <choice>
         <choice>
           <group>
             <oneOrMore>
@@ -155,7 +155,7 @@
         <oneOrMore>
           <ref name="clause-subsection"/>
         </oneOrMore>
-      </group>
+      </choice>
     </define>
     <define name="term">
       <element name="term">

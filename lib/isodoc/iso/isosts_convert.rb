@@ -22,7 +22,7 @@ module IsoDoc
             f.path
           end
         FileUtils.rm_rf dir
-        Mnconvert.convert(input_fname, output_fname || "#{fname}.#{@suffix}",
+        MnConvert.convert(input_fname, output_fname || "#{fname}.#{@suffix}",
                           MnConvert::InputFormat::MN, { output_format: :iso })
       end
     end
