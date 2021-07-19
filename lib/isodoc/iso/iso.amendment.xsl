@@ -5058,7 +5058,24 @@
 							</fo:instream-foreign-object>
 						</xsl:when>
 						<xsl:otherwise>
-							<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" xsl:use-attribute-sets="image-graphic-style"/>
+							<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" xsl:use-attribute-sets="image-graphic-style">
+								<xsl:if test="not(@mimetype = 'image/svg+xml') and ../*[local-name() = 'name'] and not(ancestor::*[local-name() = 'table'])">
+										
+									<xsl:variable name="img_src">
+										<xsl:choose>
+											<xsl:when test="not(starts-with(@src, 'data:'))"><xsl:value-of select="concat($basepath, @src)"/></xsl:when>
+											<xsl:otherwise><xsl:value-of select="@src"/></xsl:otherwise>
+										</xsl:choose>
+									</xsl:variable>
+									
+									<xsl:variable name="scale" select="java:org.metanorma.fop.Util.getImageScale($img_src, $width_effective, $height_effective)"/>
+									<xsl:if test="number($scale) &lt; 100">
+										<xsl:attribute name="content-width"><xsl:value-of select="$scale"/>%</xsl:attribute>
+									</xsl:if>
+								
+								</xsl:if>
+							
+							</fo:external-graphic>
 						</xsl:otherwise>
 					</xsl:choose>
 					
@@ -5229,11 +5246,13 @@
 						<xsl:attribute name="width">100%</xsl:attribute>
 						<xsl:attribute name="content-height">100%</xsl:attribute>
 						<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+						<xsl:variable name="svg_width" select="xalan:nodeset($svg_content)/*/@width"/>
+						<xsl:variable name="svg_height" select="xalan:nodeset($svg_content)/*/@height"/>
 						<!-- effective height 297 - 27.4 - 13 =  256.6 -->
 						<!-- effective width 210 - 12.5 - 25 = 172.5 -->
 						<!-- effective height / width = 1.48, 1.4 - with title -->
-						<xsl:if test="@height &gt; (@width * 1.4)"> <!-- for images with big height -->
-							<xsl:variable name="width" select="((@width * 1.4) div @height) * 100"/>
+						<xsl:if test="$svg_height &gt; ($svg_width * 1.4)"> <!-- for images with big height -->
+							<xsl:variable name="width" select="(($svg_width * 1.4) div $svg_height) * 100"/>
 							<xsl:attribute name="width"><xsl:value-of select="$width"/>%</xsl:attribute>
 						</xsl:if>
 						<xsl:attribute name="scaling">uniform</xsl:attribute>
@@ -5250,6 +5269,23 @@
 		<xsl:attribute name="href" namespace="http://www.w3.org/1999/xlink">
 			<xsl:value-of select="."/>
 		</xsl:attribute>
+	</xsl:template><xsl:template match="*[local-name() = 'svg'][not(@width and @height)]" mode="svg_update">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="svg_update"/>
+			<xsl:variable name="viewbox">
+				<xsl:call-template name="split">
+					<xsl:with-param name="pText" select="@viewBox"/>
+					<xsl:with-param name="sep" select="' '"/>
+				</xsl:call-template>
+			</xsl:variable>
+			<xsl:attribute name="width">
+				<xsl:value-of select="round(xalan:nodeset($viewbox)//item[3])"/>
+			</xsl:attribute>
+			<xsl:attribute name="height">
+				<xsl:value-of select="round(xalan:nodeset($viewbox)//item[4])"/>
+			</xsl:attribute>
+			<xsl:apply-templates mode="svg_update"/>
+		</xsl:copy>
 	</xsl:template><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'image'][@mimetype = 'image/svg+xml' and @src[not(starts-with(., 'data:image/'))]]" priority="2">
 		<xsl:variable name="svg_content" select="document(@src)"/>
 		<xsl:variable name="name" select="ancestor::*[local-name() = 'figure']/*[local-name() = 'name']"/>
