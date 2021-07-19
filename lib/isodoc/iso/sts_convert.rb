@@ -19,7 +19,7 @@ module IsoDoc
             f.path
           end
         FileUtils.rm_rf dir
-        Mnconvert.convert(in_fname, out_fname || "#{filename}.#{@suffix}",
+        MnConvert.convert(in_fname, out_fname || "#{filename}.#{@suffix}",
                           MnConvert::InputFormat::MN)
       end
     end
