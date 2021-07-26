@@ -2443,7 +2443,9 @@
 		
 				
 				
-	</xsl:attribute-set><xsl:attribute-set name="table-name-style">
+	</xsl:attribute-set><xsl:variable name="table-border_">
+		
+	</xsl:variable><xsl:variable name="table-border" select="normalize-space($table-border_)"/><xsl:attribute-set name="table-name-style">
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 			
 		
@@ -2875,6 +2877,7 @@
 						<xsl:if test="*[local-name()='thead']">
 							<attribute name="border-top">1pt solid black</attribute>
 						</xsl:if>
+					
 					
 					
 						<xsl:if test="ancestor::*[local-name() = 'table']">
