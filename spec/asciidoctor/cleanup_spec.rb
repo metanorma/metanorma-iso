@@ -230,11 +230,11 @@ RSpec.describe Asciidoctor::ISO do
                 <mi>r</mi>
                 <mo>=</mo>
                 <mn>1</mn>
-                <mi>%</mi>
+                <mo>%</mo>
                 <mi>r</mi>
                 <mo>=</mo>
                 <mn>1</mn>
-                <mi>%</mi>
+                <mo>%</mo>
               </math>
             </stem>
             <note id="_">
