@@ -31,7 +31,7 @@ module Metanorma
           "Cambria Math" => nil,
           "Times New Roman" => nil,
           "Source Han Sans" => nil,
-          "Courier" => nil,
+          "Source Han Sans Normal" => nil,
           "Courier New" => nil,
         }
       end
