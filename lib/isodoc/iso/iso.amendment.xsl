@@ -4791,19 +4791,6 @@
 			<!-- replace start and end spaces to non-break space -->
 			<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),'(^ )|( $)',' ')"/>
 		</xsl:copy>
-	</xsl:template><xsl:template match="mathml:mi[. = ',' and not(following-sibling::*[1][local-name() = 'mtext' and text() = ' '])]" mode="mathml">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" mode="mathml"/>
-		</xsl:copy>
-		<xsl:choose>
-			<!-- if in msub, then don't add space -->
-			<xsl:when test="ancestor::mathml:mrow[parent::mathml:msub and preceding-sibling::*[1][self::mathml:mrow]]"/>
-			<!-- if next char in digit,  don't add space -->
-			<xsl:when test="translate(substring(following-sibling::*[1]/text(),1,1),'0123456789','') = ''"/>
-			<xsl:otherwise>
-				<mathml:mspace width="0.5ex"/>
-			</xsl:otherwise>
-		</xsl:choose>
 	</xsl:template><xsl:template match="mathml:math/*[local-name()='unit']" mode="mathml"/><xsl:template match="mathml:math/*[local-name()='prefix']" mode="mathml"/><xsl:template match="mathml:math/*[local-name()='dimension']" mode="mathml"/><xsl:template match="mathml:math/*[local-name()='quantity']" mode="mathml"/><xsl:template match="*[local-name()='localityStack']"/><xsl:template match="*[local-name()='link']" name="link">
 		<xsl:variable name="target">
 			<xsl:choose>
