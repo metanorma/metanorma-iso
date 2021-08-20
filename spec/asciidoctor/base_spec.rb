@@ -212,6 +212,8 @@ RSpec.describe Asciidoctor::ISO do
       :pub-fax: 4444444
       :pub-email: x@example.com
       :pub-uri: http://www.example.com
+      :docstage: 
+      :docsubstage: 
     INPUT
     expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -304,7 +306,6 @@ RSpec.describe Asciidoctor::ISO do
                 <phone type='fax'>4444444</phone>
                 <email>x@example.com</email>
                 <uri>http://www.example.com</uri>
-        #{'        '}
                               </organization>
                             </owner>
                           </copyright>
