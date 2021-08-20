@@ -32,6 +32,18 @@
         <ref name="DocumentType"/>
       </element>
     </define>
+    <define name="section-title">
+      <element name="title">
+        <zeroOrMore>
+          <ref name="TextElement"/>
+        </zeroOrMore>
+      </element>
+      <zeroOrMore>
+        <element name="variant-title">
+          <ref name="TypedTitleString"/>
+        </element>
+      </zeroOrMore>
+    </define>
     <define name="hyperlink">
       <element name="link">
         <attribute name="target">

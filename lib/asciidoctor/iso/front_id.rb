@@ -193,12 +193,17 @@ module Asciidoctor
       end
 
       def get_stage(node)
-        node.attr("status") || node.attr("docstage") || "60"
+        a = node.attr("status")
+        a = node.attr("docstage") if a.nil? || a.empty?
+        a = "60" if a.nil? || a.empty?
+        a
       end
 
       def get_substage(node)
         stage = get_stage(node)
-        node.attr("docsubstage") || (stage == "60" ? "60" : "00")
+        ret = node.attr("docsubstage")
+        ret = (stage == "60" ? "60" : "00") if ret.nil? || ret.empty?
+        ret
       end
 
       def get_typeabbr(node, amd = false)
