@@ -26,7 +26,7 @@ RSpec.describe Asciidoctor::ISO do
             <title>Clause</title>
             <p id="_">
               <eref bibitemid="iso123" citeas="ISO 123:--" type="inline"/>
-              <fn reference="1">The standard is in press</fn>
+              <fn reference="1"><p id="_">The standard is in press</p></fn>
               <eref bibitemid="iso123" citeas="ISO 123:--" type="inline"/>A.
               <fn reference="2">
                 <p id="_">a footnote</p></fn>

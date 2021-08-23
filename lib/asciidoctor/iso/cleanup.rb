@@ -137,10 +137,9 @@ module Asciidoctor
         xmldoc.xpath("//bibitem/note[@type = 'Unpublished-Status']").each do |n|
           id = n.parent["id"]
           e = xmldoc.at("//eref[@bibitemid = '#{id}']") or next
-          e.next = n.dup
-          e.next.name = "fn"
-          e.next.delete("format")
-          e.next.delete("type")
+          fn = n.children.to_xml
+          n&.elements&.first&.name == "p" or fn = "<p>#{fn}</p>"
+          e.next = "<fn>#{fn}</fn>"
         end
       end
 
