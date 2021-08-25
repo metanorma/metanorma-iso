@@ -586,4 +586,43 @@ RSpec.describe Asciidoctor::ISO do
     expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to xmlpp(output)
   end
+
+  it "processes nested terms" do
+    input = <<~INPUT
+      #{ASCIIDOC_BLANK_HDR}
+      == Terms and Definitions
+
+      [.term]
+      === Term1
+
+      definition
+
+      ==== Term11
+      definition2
+    INPUT
+    output = <<~OUTPUT
+      #{BLANK_HDR}
+      <sections>
+           <terms id='_' obligation='normative'>
+             <title>Terms and definitions</title>
+             #{TERM_BOILERPLATE}
+             <term id='term-term1'>
+               <preferred>Term1</preferred>
+               <definition>
+                 <p id='_'>definition</p>
+               </definition>
+               <term id='term-term11'>
+                 <preferred>Term11</preferred>
+                 <definition>
+                   <p id='_'>definition2</p>
+                 </definition>
+               </term>
+             </term>
+           </terms>
+         </sections>
+       </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
+  end
 end

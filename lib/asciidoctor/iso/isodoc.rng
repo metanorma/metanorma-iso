@@ -170,15 +170,17 @@
             <data type="boolean"/>
           </attribute>
         </optional>
-        <attribute name="type">
-          <choice>
-            <value>roman</value>
-            <value>alphabet</value>
-            <value>arabic</value>
-            <value>roman_upper</value>
-            <value>alphabet_upper</value>
-          </choice>
-        </attribute>
+        <optional>
+          <attribute name="type">
+            <choice>
+              <value>roman</value>
+              <value>alphabet</value>
+              <value>arabic</value>
+              <value>roman_upper</value>
+              <value>alphabet_upper</value>
+            </choice>
+          </attribute>
+        </optional>
         <oneOrMore>
           <ref name="li"/>
         </oneOrMore>

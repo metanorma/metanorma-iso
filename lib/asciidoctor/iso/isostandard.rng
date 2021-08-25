@@ -184,6 +184,9 @@
         <zeroOrMore>
           <ref name="termsource"/>
         </zeroOrMore>
+        <zeroOrMore>
+          <ref name="term"/>
+        </zeroOrMore>
       </element>
     </define>
     <define name="annex">

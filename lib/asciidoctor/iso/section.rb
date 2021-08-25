@@ -15,7 +15,7 @@ module Asciidoctor
       end
 
       def appendix_parse(attrs, xml, node)
-        attrs["inline-header".to_sym] = node.option? "inline-header"
+        attrs[:"inline-header"] = node.option? "inline-header"
         set_obligation(attrs, node)
         xml.appendix **attr_code(attrs) do |xml_section|
           xml_section.title { |name| name << node.title }
@@ -36,6 +36,12 @@ module Asciidoctor
         ret = sectiontype_streamline(sectiontype1(node))
         return ret if ret == "terms and definitions" && @vocab
 
+        super
+      end
+
+      def term_def_subclause_parse(attrs, xml, node)
+        node.role == "term" and
+          return term_def_subclause_parse1(attrs, xml, node)
         super
       end
     end
