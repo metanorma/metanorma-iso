@@ -52,6 +52,14 @@ RSpec.describe IsoDoc do
                 <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></origin>
               </termsource>
             </term>
+            <term id="A">
+              <preferred>term1</preferred>
+              <definition>term1 definition</definition>
+              <term id="B">
+              <preferred>term2</preferred>
+              <definition>term2 definition</definition>
+              </term>
+            </term>
           </terms>
         </sections>
       </iso-standard>
@@ -119,6 +127,16 @@ RSpec.describe IsoDoc do
                 <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'><locality type='clause'><referenceFrom>3.1</referenceFrom></locality>ISO 7301:2011, 3.1</origin>
               </termsource>
             </term>
+            <term id='A'>
+              <name>1.3</name>
+              <preferred>term1</preferred>
+              <definition>term1 definition</definition>
+              <term id='B'>
+                <name>1.3.1</name>
+                <preferred>term2</preferred>
+                <definition>term2 definition</definition>
+              </term>
+            </term>
           </terms>
         </sections>
       </iso-standard>
@@ -175,6 +193,12 @@ RSpec.describe IsoDoc do
               </div>
               <p>[TERMREF]<a href="#ISO7301">ISO 7301:2011, 3.1</a>
               [/TERMREF]</p>
+              <p class='TermNum' id='A'>1.3</p>
+              <p class='Terms' style='text-align:left;'>term1</p>
+               term1 definition
+              <p class='TermNum' id='B'>1.3.1</p>
+              <p class='Terms' style='text-align:left;'>term2</p>
+               term2 definition
             </div>
           </div>
         </body>
@@ -212,6 +236,12 @@ RSpec.describe IsoDoc do
         <div id='_671a1994-4783-40d0-bc81-987d06ffb74f' class="Note"><p class="Note">Note 2 to entry: <ul><li>A</li></ul><p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></p></div>
         <p class="Source">[TERMREF]<a href="#ISO7301">ISO 7301:2011, 3.1</a>
         [/TERMREF]</p>
+        <p class='TermNum' id='A'>1.3</p>
+        <p class='Terms' style='text-align:left;'>term1</p>
+         term1 definition
+        <p class='TermNum' id='B'>1.3.1</p>
+        <p class='Terms' style='text-align:left;'>term2</p>
+         term2 definition
       </div>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
