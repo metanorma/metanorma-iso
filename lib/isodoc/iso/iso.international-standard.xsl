@@ -4791,6 +4791,27 @@
 				<xsl:copy-of select="xalan:nodeset($mathml)"/>
 			</fo:instream-foreign-object>			
 		</fo:inline>
+	</xsl:template><xsl:template match="mathml:*" mode="mathml_actual_text">
+		<!-- <xsl:text>a+b</xsl:text> -->
+		<xsl:text>&lt;</xsl:text>
+		<xsl:value-of select="local-name()"/>
+		<xsl:if test="local-name() = 'math'">
+			<xsl:text> xmlns="http://www.w3.org/1998/Math/MathML"</xsl:text>
+		</xsl:if>
+		<xsl:for-each select="@*">
+			<xsl:text> </xsl:text>
+			<xsl:value-of select="local-name()"/>
+			<xsl:text>="</xsl:text>
+			<xsl:value-of select="."/>
+			<xsl:text>"</xsl:text>
+		</xsl:for-each>
+		<xsl:text>&gt;</xsl:text>		
+		<xsl:apply-templates mode="mathml_actual_text"/>		
+		<xsl:text>&lt;/</xsl:text>
+		<xsl:value-of select="local-name()"/>
+		<xsl:text>&gt;</xsl:text>
+	</xsl:template><xsl:template match="text()" mode="mathml_actual_text">
+		<xsl:value-of select="normalize-space()"/>
 	</xsl:template><xsl:template match="@*|node()" mode="mathml">
 		<xsl:copy>
 				<xsl:apply-templates select="@*|node()" mode="mathml"/>
