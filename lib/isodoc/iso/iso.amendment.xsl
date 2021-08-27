@@ -4780,6 +4780,35 @@
 			<fo:instream-foreign-object fox:alt-text="Math">
 				
 				
+				<xsl:variable name="comment_text_following" select="following-sibling::node()[1][self::comment()]"/>
+				<xsl:variable name="comment_text_">
+					<xsl:choose>
+						<xsl:when test="normalize-space($comment_text_following) != ''">
+							<xsl:value-of select="$comment_text_following"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="normalize-space(translate(.,' ⁢','  '))"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable> 
+				<xsl:variable name="comment_text" select="java:org.metanorma.fop.Util.unescape($comment_text_)"/>
+				
+				<xsl:if test="normalize-space($comment_text) != ''">
+				<!-- put Mathin Alternate Text -->
+					<xsl:attribute name="fox:alt-text">
+						<xsl:value-of select="java:org.metanorma.fop.Util.unescape($comment_text)"/>
+					</xsl:attribute>
+				</xsl:if>
+				
+				<xsl:variable name="mathml_content">
+					<xsl:apply-templates select="." mode="mathml_actual_text"/>
+				</xsl:variable>
+				<!-- put MathML in Actual Text -->
+				<xsl:attribute name="fox:actual-text">
+					<xsl:value-of select="$mathml_content"/>
+				</xsl:attribute>
+				
+				
 					<xsl:if test="count(ancestor::*[local-name() = 'table']) &gt; 1">
 						<xsl:attribute name="width">95%</xsl:attribute>
 						<xsl:attribute name="content-height">100%</xsl:attribute>
