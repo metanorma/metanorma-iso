@@ -2006,7 +2006,7 @@
 	<xsl:template name="insertHeaderFooter">
 		<xsl:param name="font-weight" select="'bold'"/>
 		<xsl:call-template name="insertHeaderEven"/>
-		<fo:static-content flow-name="footer-even">
+		<fo:static-content flow-name="footer-even" role="artifact">
 			<fo:block-container> <!--  display-align="after" -->
 				<fo:table table-layout="fixed" width="100%">
 					<fo:table-column column-width="33%"/>
@@ -2045,12 +2045,12 @@
 				</fo:block>
 			</fo:block-container>
 		</fo:static-content>
-		<fo:static-content flow-name="header-odd">
+		<fo:static-content flow-name="header-odd" role="artifact">
 			<fo:block-container height="24mm" display-align="before">
 				<fo:block font-size="12pt" font-weight="bold" text-align="right" padding-top="12.5mm"><xsl:value-of select="$ISOname"/></fo:block>
 			</fo:block-container>
 		</fo:static-content>
-		<fo:static-content flow-name="footer-odd">
+		<fo:static-content flow-name="footer-odd" role="artifact">
 			<fo:block-container> <!--  display-align="after" -->
 				<fo:table table-layout="fixed" width="100%">
 					<fo:table-column column-width="33%"/>
@@ -2078,7 +2078,7 @@
 		</fo:static-content>
 	</xsl:template>
 	<xsl:template name="insertHeaderEven">
-		<fo:static-content flow-name="header-even">
+		<fo:static-content flow-name="header-even" role="artifact">
 			<fo:block-container height="24mm" display-align="before">
 				<fo:block font-size="12pt" font-weight="bold" padding-top="12.5mm"><xsl:value-of select="$ISOname"/></fo:block>
 			</fo:block-container>
