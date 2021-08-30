@@ -70,18 +70,18 @@ module Asciidoctor
         style(node, extract_text(node))
       end
 
-      def style_regex(re, warning, n, text)
-        (m = re.match(text)) && style_warning(n, warning, m[:num])
+      def style_regex(regex, warning, n, text)
+        (m = regex.match(text)) && style_warning(n, warning, m[:num])
       end
 
       # style check with a regex on a token
       # and a negative match on its preceding token
-      def style_two_regex_not_prev(n, text, re, re_prev, warning)
+      def style_two_regex_not_prev(n, text, regex, re_prev, warning)
         return if text.nil?
 
         arr = Tokenizer::WhitespaceTokenizer.new.tokenize(text)
         arr.each_index do |i|
-          m = re.match arr[i]
+          m = regex.match arr[i]
           m_prev = i.zero? ? nil : re_prev.match(arr[i - 1])
           if !m.nil? && m_prev.nil?
             style_warning(n, warning, m[:num])
@@ -132,22 +132,22 @@ module Asciidoctor
 
       # leaving out as problematic: N J K C S T H h d B o E
       SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|"\
-        "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|"\
-        "bit|kB|MB|Hart|nat|Sh|var)".freeze
+                "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|"\
+                "bit|kB|MB|Hart|nat|Sh|var)".freeze
 
       # ISO/IEC DIR 2, 9.3
       def style_units(node, text)
         style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,
                     "space between number and degrees/minutes/seconds",
                     node, text)
-        style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/,
+        style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/o,
                     "no space between number and SI unit", node, text)
         style_non_std_units(node, text)
       end
 
       NONSTD_UNITS = {
-        "sec": "s", "mins": "min", "hrs": "h", "hr": "h", "cc": "cm^3",
-        "lit": "l", "amp": "A", "amps": "A", "rpm": "r/min"
+        sec: "s", mins: "min", hrs: "h", hr: "h", cc: "cm^3",
+        lit: "l", amp: "A", amps: "A", rpm: "r/min"
       }.freeze
 
       # ISO/IEC DIR 2, 9.3
@@ -156,6 +156,14 @@ module Asciidoctor
           style_regex(/\b(?<num>[0-9][0-9,]*\s+#{k})\b/,
                       "non-standard unit (should be #{v})", node, text)
         end
+      end
+
+      def style_warning(node, msg, text = nil)
+        return if @novalid
+
+        w = msg
+        w += ": #{text}" if text
+        @log.add("Style", node, w)
       end
     end
   end

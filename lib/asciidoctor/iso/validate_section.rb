@@ -32,10 +32,10 @@ module Asciidoctor
       end
 
       ONE_SYMBOLS_WARNING = "Only one Symbols and Abbreviated "\
-        "Terms section in the standard".freeze
+                            "Terms section in the standard".freeze
 
       NON_DL_SYMBOLS_WARNING = "Symbols and Abbreviated Terms can "\
-        "only contain a definition list".freeze
+                               "only contain a definition list".freeze
 
       def symbols_validate(root)
         f = root.xpath("//definitions")
@@ -87,7 +87,7 @@ module Asciidoctor
           },
           {
             msg: "Normative References must be followed by "\
-            "Terms and Definitions",
+                 "Terms and Definitions",
             val: ["./self::terms | .//terms"],
           },
         ].freeze
@@ -127,17 +127,20 @@ module Asciidoctor
         end
         elem&.at("./self::clause") ||
           @log.add("Style", elem, "Document must contain clause after "\
-                   "Terms and Definitions")
+                                  "Terms and Definitions")
         elem&.at("./self::clause[@type = 'scope']") &&
-          @log.add("Style", elem, "Scope must occur before Terms and Definitions")
+          @log.add("Style", elem,
+                   "Scope must occur before Terms and Definitions")
         elem = names.shift
         while elem&.name == "clause"
           elem&.at("./self::clause[@type = 'scope']")
-          @log.add("Style", elem, "Scope must occur before Terms and Definitions")
+          @log.add("Style", elem,
+                   "Scope must occur before Terms and Definitions")
           elem = names.shift
         end
         %w(annex references).include? elem&.name or
-          @log.add("Style", elem, "Only annexes and references can follow clauses")
+          @log.add("Style", elem,
+                   "Only annexes and references can follow clauses")
         [names, elem]
       end
 
@@ -146,7 +149,8 @@ module Asciidoctor
           elem = names.shift
         end
         %w(annex references).include? elem&.name or
-          @log.add("Style", elem, "Only annexes and references can follow terms and clauses")
+          @log.add("Style", elem,
+                   "Only annexes and references can follow terms and clauses")
         [names, elem]
       end
 
@@ -155,25 +159,19 @@ module Asciidoctor
           elem = names.shift
           if elem.nil?
             @log.add("Style", nil, "Document must include (references) "\
-                     "Normative References")
+                                   "Normative References")
           end
         end
         elem&.at("./self::references[@normative = 'true']") ||
           @log.add("Style", nil, "Document must include (references) "\
-                   "Normative References")
+                                 "Normative References")
         elem = names&.shift
         elem&.at("./self::references[@normative = 'false']") ||
-          @log.add("Style", elem, "Final section must be (references) Bibliography")
+          @log.add("Style", elem,
+                   "Final section must be (references) Bibliography")
         names.empty? ||
-          @log.add("Style", elem, "There are sections after the final Bibliography")
-      end
-
-      def style_warning(node, msg, text = nil)
-        return if @novalid
-
-        w = msg
-        w += ": #{text}" if text
-        @log.add("Style", node, w)
+          @log.add("Style", elem,
+                   "There are sections after the final Bibliography")
       end
 
       NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze

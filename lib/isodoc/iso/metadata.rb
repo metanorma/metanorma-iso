@@ -2,7 +2,7 @@ require "isodoc"
 
 module IsoDoc
   module Iso
-    class  Metadata < IsoDoc::Metadata
+    class Metadata < IsoDoc::Metadata
       def initialize(lang, script, i18n)
         super
         set(:tc, "XXXX")
@@ -14,17 +14,17 @@ module IsoDoc
         set(:obsoletes_part, nil)
       end
 
-      def status_abbrev(stage, substage, iter, draft, doctype)
+      def status_abbrev(stage, _substage, iter, draft, doctype)
         return "" unless stage
 
         if %w(technical-report technical-specification).include?(doctype)
           stage = "DTS" if stage == "DIS"
           stage = "FDTS" if stage == "FDIS"
         end
-        if %w(PWI NWIP WD CD).include?(stage)
-          stage += iter if iter
+        if %w(PWI NWIP WD CD).include?(stage) && iter
+          stage += iter
         end
-        stage = "Pre" + stage if draft =~ /^0\./
+        stage = "Pre#{stage}" if /^0\./.match?(draft)
         stage
       end
 
@@ -48,14 +48,14 @@ module IsoDoc
       end
 
       def unpublished(status)
-        status.to_i > 0 && status.to_i < 60
+        status.to_i.positive? && status.to_i < 60
       end
 
       def docid(isoxml, _out)
         dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'ISO']"))
         set(:docnumber, dn&.text)
         tcdn = isoxml.xpath(ns("//bibdata/docidentifier[@type = 'iso-tc']"))
-        set(:tc_docnumber, tcdn.map { |n| n.text })
+        set(:tc_docnumber, tcdn.map(&:text))
         dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso-with-lang']"))
         set(:docnumber_lang, dn&.text)
         dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso-reference']"))
@@ -87,6 +87,7 @@ module IsoDoc
 
       def part_title(part, partnum, subpartnum, lang)
         return "" unless part
+
         suffix = @c.encode(part.text, :hexadecimal)
         partnum = "#{partnum}&ndash;#{subpartnum}" if partnum && subpartnum
         suffix = "#{part_label(lang)}&nbsp;#{partnum}: " + suffix if partnum
@@ -125,10 +126,14 @@ module IsoDoc
       end
 
       def title_parts(isoxml, lang)
-        [isoxml.at(ns("//bibdata//title[@type='title-intro' and @language='#{lang}']")),
-         isoxml.at(ns("//bibdata//title[@type='title-main' and @language='#{lang}']")),
-         isoxml.at(ns("//bibdata//title[@type='title-part' and @language='#{lang}']")),
-         isoxml.at(ns("//bibdata//title[@type='title-amd' and @language='#{lang}']"))]
+        [isoxml.at(ns("//bibdata//title[@type='title-intro' and "\
+                      "@language='#{lang}']")),
+         isoxml.at(ns("//bibdata//title[@type='title-main' and "\
+                      "@language='#{lang}']")),
+         isoxml.at(ns("//bibdata//title[@type='title-part' and "\
+                      "@language='#{lang}']")),
+         isoxml.at(ns("//bibdata//title[@type='title-amd' and "\
+                      "@language='#{lang}']"))]
       end
 
       def title(isoxml, _out)
@@ -139,7 +144,10 @@ module IsoDoc
         set(:doctitlemain, @c.encode(main ? main.text : "", :hexadecimal))
         main = compose_title(main, intro, part, partnumber, subpartnumber, lang)
         set(:doctitle, main)
-        set(:doctitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
+        if intro
+          set(:doctitleintro,
+              @c.encode(intro ? intro.text : "", :hexadecimal))
+        end
         set(:doctitlepartlabel, part_prefix(partnumber, subpartnumber, lang))
         set(:doctitlepart, @c.encode(part.text, :hexadecimal)) if part
         set(:doctitleamdlabel, amd_prefix(amdnumber, lang)) if amdnumber
@@ -155,7 +163,10 @@ module IsoDoc
         set(:docsubtitlemain, @c.encode(main ? main.text : "", :hexadecimal))
         main = compose_title(main, intro, part, partnumber, subpartnumber, lang)
         set(:docsubtitle, main)
-        set(:docsubtitleintro, @c.encode(intro ? intro.text : "", :hexadecimal)) if intro
+        if intro
+          set(:docsubtitleintro,
+              @c.encode(intro ? intro.text : "", :hexadecimal))
+        end
         set(:docsubtitlepartlabel, part_prefix(partnumber, subpartnumber, lang))
         set(:docsubtitlepart, @c.encode(part.text, :hexadecimal)) if part
         set(:docsubtitleamdlabel, amd_prefix(amdnumber, lang)) if amdnumber
@@ -173,8 +184,8 @@ module IsoDoc
 
       def tc(xml)
         tc_num = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/@number"))
-        tc_type = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/@type"))&.
-          text || "TC"
+        tc_type = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/@type"))
+          &.text || "TC"
         if tc_num
           tcid = "#{tc_type} #{tc_num.text}"
           set(:tc,  tcid)
@@ -212,7 +223,8 @@ module IsoDoc
         ics = []
         isoxml.xpath(ns("//bibdata/ext/ics/code")).each { |i| ics << i.text }
         set(:ics, ics.empty? ? nil : ics.join(", "))
-        a = isoxml.at(ns("//bibdata/ext/horizontal")) and set(:horizontal, a.text)
+        a = isoxml.at(ns("//bibdata/ext/horizontal")) and set(:horizontal,
+                                                              a.text)
       end
     end
   end
