@@ -6635,6 +6635,7 @@
 	</xsl:template><xsl:template match="*[local-name() = 'indexsect']//*[local-name() = 'li']" priority="4">
 		<xsl:variable name="level" select="count(ancestor::*[local-name() = 'ul'])"/>
 		<fo:block start-indent="{5 * $level}mm" text-indent="-5mm">
+			
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template><xsl:template match="*[local-name() = 'bookmark']" name="bookmark">
