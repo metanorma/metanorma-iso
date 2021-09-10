@@ -131,26 +131,27 @@ RSpec.describe IsoDoc do
         <sections>
       </iso-standard>
     INPUT
-    expect(xmlpp(output.sub(/<html/, "<html xmlns:m='m'"))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-      #{HTML_HDR.sub(/<html/, "<html xmlns:m='m'")}
-            <br/>
-            <div>
-              <h1 class="ForewordTitle">Foreword</h1>
-              <p>
-                <span class="stem">(#(A)#)</span>
-                <span class="stem">
-                  <m:math>
-                    <m:row>X</m:row>
-                  </m:math>
-                </span>
-                <span class="stem">Latex?</span>
-              </p>
-            </div>
-            <p class="zzSTDTitle1"/>
-          </div>
-        </body>
-      </html>
-    OUTPUT
+    expect(xmlpp(output.sub(/<html/,
+                            "<html xmlns:m='m'"))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+                              #{HTML_HDR.sub(/<html/, "<html xmlns:m='m'")}
+                                    <br/>
+                                    <div>
+                                      <h1 class="ForewordTitle">Foreword</h1>
+                                      <p>
+                                        <span class="stem">(#(A)#)</span>
+                                        <span class="stem">
+                                          <m:math>
+                                            <m:row>X</m:row>
+                                          </m:math>
+                                        </span>
+                                        <span class="stem">Latex?</span>
+                                      </p>
+                                    </div>
+                                    <p class="zzSTDTitle1"/>
+                                  </div>
+                                </body>
+                              </html>
+                            OUTPUT
   end
 
   it "overrides AsciiMath delimiters" do
@@ -232,163 +233,165 @@ RSpec.describe IsoDoc do
   end
 
   it "processes eref content" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword>
-            <p>
-              <eref bibitemid="IEV" citeas="IEV" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1-2-3</referenceFrom>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" citeas="ISO 712" type="inline"/>
-              <eref bibitemid="ISO712" type="inline"/>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                  <referenceTo>1</referenceTo>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1</referenceFrom>
-                </locality>
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1</referenceFrom>
-                </locality>
-                <locality type="list">
-                  <referenceFrom>a</referenceFrom>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1</referenceFrom>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1.5</referenceFrom>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                </locality>A</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="whole"/>
-              </eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="locality:prelude">
-                  <referenceFrom>7</referenceFrom>
-                </locality>
-              </eref>
-              <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
-            </p>
-          </foreword>
-        </preface>
-        <bibliography>
-          <references id="_normative_references" normative="true" obligation="informative">
-            <title>Normative References</title>
-            <bibitem id="ISO712" type="standard">
-              <title format="text/plain">Cereals and cereal products</title>
-              <docidentifier>ISO 712</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
-            </bibitem>
-          </references>
-        </bibliography>
-      </iso-standard>
-    INPUT
-    expect(xmlpp(output).sub(%r{<i18nyaml>.*</i18nyaml>}m, "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
-      <?xml version='1.0'?>
-      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword displayorder="1">
-            <p>
-              <eref bibitemid="IEV" citeas="IEV" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1-2-3</referenceFrom>
-                </locality>IEV, 1-2-3</eref>
-              <eref bibitemid="ISO712" citeas="ISO 712" type="inline">ISO 712</eref>
-              <eref bibitemid="ISO712" type="inline">ISO 712</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                </locality>ISO 712, Table 1</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                  <referenceTo>1</referenceTo>
-                </locality>ISO 712, Table 1–1</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1</referenceFrom>
-                </locality>
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                </locality>ISO 712, Clause 1, Table 1</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1</referenceFrom>
-                </locality>
-                <locality type="list">
-                  <referenceFrom>a</referenceFrom>
-                </locality>ISO 712, Clause 1 a)</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1</referenceFrom>
-                </locality>ISO 712, Clause 1</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="clause">
-                  <referenceFrom>1.5</referenceFrom>
-                </locality>ISO 712, 1.5</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="table">
-                  <referenceFrom>1</referenceFrom>
-                </locality>A</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="whole"/>ISO 712, Whole of text</eref>
-              <eref bibitemid="ISO712" type="inline">
-                <locality type="locality:prelude">
-                  <referenceFrom>7</referenceFrom>
-                </locality>ISO 712, Prelude 7</eref>
-              <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
-            </p>
-          </foreword>
-        </preface>
-        <bibliography>
-          <references id="_normative_references" normative="true" obligation="informative" displayorder="2">
-            <title depth="1">1<tab/>
-              Normative References</title>
-            <bibitem id="ISO712" type="standard">
-              <title format="text/plain">Cereals and cereal products</title>
-              <docidentifier>ISO 712</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
-            </bibitem>
-          </references>
-        </bibliography>
-      </iso-standard>
-    OUTPUT
+    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test",
+                                                                 <<~"INPUT", true)
+                                                                   <iso-standard xmlns="http://riboseinc.com/isoxml">
+                                                                     <preface>
+                                                                       <foreword>
+                                                                         <p>
+                                                                           <eref bibitemid="IEV" citeas="IEV" type="inline">
+                                                                             <locality type="clause">
+                                                                               <referenceFrom>1-2-3</referenceFrom>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" citeas="ISO 712" type="inline"/>
+                                                                           <eref bibitemid="ISO712" type="inline"/>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="table">
+                                                                               <referenceFrom>1</referenceFrom>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="table">
+                                                                               <referenceFrom>1</referenceFrom>
+                                                                               <referenceTo>1</referenceTo>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="clause">
+                                                                               <referenceFrom>1</referenceFrom>
+                                                                             </locality>
+                                                                             <locality type="table">
+                                                                               <referenceFrom>1</referenceFrom>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="clause">
+                                                                               <referenceFrom>1</referenceFrom>
+                                                                             </locality>
+                                                                             <locality type="list">
+                                                                               <referenceFrom>a</referenceFrom>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="clause">
+                                                                               <referenceFrom>1</referenceFrom>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="clause">
+                                                                               <referenceFrom>1.5</referenceFrom>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="table">
+                                                                               <referenceFrom>1</referenceFrom>
+                                                                             </locality>A</eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="whole"/>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" type="inline">
+                                                                             <locality type="locality:prelude">
+                                                                               <referenceFrom>7</referenceFrom>
+                                                                             </locality>
+                                                                           </eref>
+                                                                           <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
+                                                                         </p>
+                                                                       </foreword>
+                                                                     </preface>
+                                                                     <bibliography>
+                                                                       <references id="_normative_references" normative="true" obligation="informative">
+                                                                         <title>Normative References</title>
+                                                                         <bibitem id="ISO712" type="standard">
+                                                                           <title format="text/plain">Cereals and cereal products</title>
+                                                                           <docidentifier>ISO 712</docidentifier>
+                                                                           <contributor>
+                                                                             <role type="publisher"/>
+                                                                             <organization>
+                                                                               <abbreviation>ISO</abbreviation>
+                                                                             </organization>
+                                                                           </contributor>
+                                                                         </bibitem>
+                                                                       </references>
+                                                                     </bibliography>
+                                                                   </iso-standard>
+                                                                 INPUT
+    expect(xmlpp(output).sub(%r{<i18nyaml>.*</i18nyaml>}m,
+                             "")).to be_equivalent_to xmlpp(<<~"OUTPUT")
+                               <?xml version='1.0'?>
+                               <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
+                                 <preface>
+                                   <foreword displayorder="1">
+                                     <p>
+                                       <eref bibitemid="IEV" citeas="IEV" type="inline">
+                                         <locality type="clause">
+                                           <referenceFrom>1-2-3</referenceFrom>
+                                         </locality>IEV, 1-2-3</eref>
+                                       <eref bibitemid="ISO712" citeas="ISO 712" type="inline">ISO 712</eref>
+                                       <eref bibitemid="ISO712" type="inline">ISO 712</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="table">
+                                           <referenceFrom>1</referenceFrom>
+                                         </locality>ISO 712, Table 1</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="table">
+                                           <referenceFrom>1</referenceFrom>
+                                           <referenceTo>1</referenceTo>
+                                         </locality>ISO 712, Table 1–1</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="clause">
+                                           <referenceFrom>1</referenceFrom>
+                                         </locality>
+                                         <locality type="table">
+                                           <referenceFrom>1</referenceFrom>
+                                         </locality>ISO 712, Clause 1, Table 1</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="clause">
+                                           <referenceFrom>1</referenceFrom>
+                                         </locality>
+                                         <locality type="list">
+                                           <referenceFrom>a</referenceFrom>
+                                         </locality>ISO 712, Clause 1 a)</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="clause">
+                                           <referenceFrom>1</referenceFrom>
+                                         </locality>ISO 712, Clause 1</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="clause">
+                                           <referenceFrom>1.5</referenceFrom>
+                                         </locality>ISO 712, 1.5</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="table">
+                                           <referenceFrom>1</referenceFrom>
+                                         </locality>A</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="whole"/>ISO 712, Whole of text</eref>
+                                       <eref bibitemid="ISO712" type="inline">
+                                         <locality type="locality:prelude">
+                                           <referenceFrom>7</referenceFrom>
+                                         </locality>ISO 712, Prelude 7</eref>
+                                       <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
+                                     </p>
+                                   </foreword>
+                                 </preface>
+                                 <bibliography>
+                                   <references id="_normative_references" normative="true" obligation="informative" displayorder="2">
+                                     <title depth="1">1<tab/>
+                                       Normative References</title>
+                                     <bibitem id="ISO712" type="standard">
+                                       <title format="text/plain">Cereals and cereal products</title>
+                                       <docidentifier>ISO 712</docidentifier>
+                                       <contributor>
+                                         <role type="publisher"/>
+                                         <organization>
+                                           <abbreviation>ISO</abbreviation>
+                                         </organization>
+                                       </contributor>
+                                     </bibitem>
+                                   </references>
+                                 </bibliography>
+                               </iso-standard>
+                             OUTPUT
   end
 
   it "processes concept markup" do
@@ -398,7 +401,7 @@ RSpec.describe IsoDoc do
           <terms id="Terms">
           <p>
           <ul>
-                    <li><concept><refterm>term0</refterm>
+            <li><concept><refterm>term0</refterm>
               <xref target='clause1'/>
             </concept></li>
             <li><concept><refterm>term1</refterm>
@@ -742,7 +745,7 @@ RSpec.describe IsoDoc do
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
        .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
   end
- 
+
   it "processes concept attributes" do
     input = <<~INPUT
        <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -776,20 +779,23 @@ RSpec.describe IsoDoc do
            <renderterm>term</renderterm>
            <xref target='clause1'/>
          </concept></li>
+       <li><concept ital="true" ref="true" linkmention="true" linkref="true"><refterm>term</refterm><renderterm>term</renderterm><xref target='clause1'/></concept></li>
+       <li><concept ital="true" ref="true" linkmention="true" linkref="false"><refterm>term</refterm><renderterm>term</renderterm><xref target='clause1'/></concept></li>
+       <li><concept ital="true" ref="true" linkmention="false" linkref="true"><refterm>term</refterm><renderterm>term</renderterm><xref target='clause1'/></concept></li>
+       <li><concept ital="true" ref="true" linkmention="false" linkref="false"><refterm>term</refterm><renderterm>term</renderterm><xref target='clause1'/></concept></li>
         </ul></p>
        </terms>
        </sections>
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <sections>
         <clause id="clause1" displayorder="1"><title depth="1">1<tab/>Clause 1</title></clause>
         <terms id="A" displayorder="2"><title>2</title>
         <p>
         <ul>
         <li>
-
             <em>term</em>
             (<xref target="clause1">Clause 1</xref>)
           </li>
@@ -803,57 +809,82 @@ RSpec.describe IsoDoc do
           </li>
          <li>
             term
-
           </li>
           <li>
             term
-
           </li>
         <li>
             term
-
           </li>
+        <li><xref target="clause1"><em>term</em></xref> (<xref target="clause1">Clause 1</xref>)</li>
+        <li><xref target="clause1"><em>term</em></xref> (Clause 1)</li>
+        <li><em>term</em> (<xref target="clause1">Clause 1</xref>)</li>
+        <li><em>term</em> (Clause 1)</li>
          </ul></p>
         </terms>
         </sections>
        </iso-standard>
     OUTPUT
     output = <<~OUTPUT
-    #{HTML_HDR}
-       <p class='zzSTDTitle1'/>
-       <div id='clause1'>
-         <h1>1&#160; Clause 1</h1>
-       </div>
-       <div id='A'>
-         <h1>2</h1>
-         <p>
-                          <ul>
-                   <li>
-                     <i>term</i>
-                      (
-                     <a href='#clause1'>Clause 1</a>
-                     )
-                   </li>
-                   <li>
-                      term (
-                     <a href='#clause1'>Clause 1</a>
-                     )
-                   </li>
-                   <li>
-                     <i>term</i>
-                      (
-                     <a href='#clause1'>Clause 1</a>
-                     )
-                   </li>
-                   <li> term </li>
-                   <li> term </li>
-                   <li> term </li>
-                 </ul>
-         </p>
-       </div>
-     </div>
-   </body>
- </html>
+         #{HTML_HDR}
+            <p class='zzSTDTitle1'/>
+            <div id='clause1'>
+              <h1>1&#160; Clause 1</h1>
+            </div>
+            <div id='A'>
+              <h1>2</h1>
+              <p>
+                               <ul>
+                        <li>
+                          <i>term</i>
+                           (
+                          <a href='#clause1'>Clause 1</a>
+                          )
+                        </li>
+                        <li>
+                           term (
+                          <a href='#clause1'>Clause 1</a>
+                          )
+                        </li>
+                        <li>
+                          <i>term</i>
+                           (
+                          <a href='#clause1'>Clause 1</a>
+                          )
+                        </li>
+                        <li> term </li>
+                        <li> term </li>
+                        <li> term </li>
+                                    <li>
+              <a href='#clause1'>
+                <i>term</i>
+              </a>
+               (
+              <a href='#clause1'>Clause 1</a>
+              )
+            </li>
+            <li>
+              <a href='#clause1'>
+                <i>term</i>
+              </a>
+               (Clause 1)
+            </li>
+            <li>
+              <i>term</i>
+               (
+              <a href='#clause1'>Clause 1</a>
+              )
+            </li>
+            <li>
+              <i>term</i>
+               (Clause 1)
+            </li>
+                      </ul>
+              </p>
+            </div>
+          </div>
+        </body>
+      </html>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)

@@ -141,13 +141,12 @@ module IsoDoc
         seen
       end
 
-      def concept1_ref(node, ref)
-        if r = node.at(ns("./xref | ./eref | ./termref"))
-          return r.remove if ref == "false"
-
-          r.name == "termref" and
-            r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
-            r.replace("(#{r.to_xml})")
+      def concept1_ref_content(ref)
+        if ref.name == "termref"
+          ref.replace(@i18n.term_defined_in.sub(/%/,
+                                                ref.to_xml))
+        else
+          ref.replace("(#{ref.to_xml})")
         end
       end
 
