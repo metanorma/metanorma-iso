@@ -991,6 +991,16 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name="linkmention">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="linkref">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
         <element name="refterm">
           <zeroOrMore>
             <choice>
@@ -1700,7 +1710,9 @@
       <zeroOrMore>
         <ref name="termgrammar"/>
       </zeroOrMore>
-      <ref name="definition"/>
+      <oneOrMore>
+        <ref name="termdefinition"/>
+      </oneOrMore>
       <zeroOrMore>
         <ref name="termnote"/>
       </zeroOrMore>
@@ -1763,7 +1775,7 @@
       </oneOrMore>
     </element>
   </define>
-  <define name="definition">
+  <define name="termdefinition">
     <element name="definition">
       <oneOrMore>
         <choice>
@@ -1772,6 +1784,9 @@
           <ref name="formula"/>
         </choice>
       </oneOrMore>
+      <zeroOrMore>
+        <ref name="termsource"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="termnote">

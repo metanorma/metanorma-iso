@@ -68,7 +68,8 @@ module IsoDoc
         subsection = from&.text&.match(/\./)
         type = type.downcase
         lang == "zh" and
-          return l10n(eref_localities1_zh(target, type, from, upto, node, delim))
+          return l10n(eref_localities1_zh(target, type, from, upto, node,
+                                          delim))
         ret = if delim == ";" then ";"
               else
                 type == "list" ? "" : delim
@@ -117,27 +118,35 @@ module IsoDoc
           concept_term(f, m)
         end
         docxml.xpath(ns("//concept")).each do |node|
-          concept_render(node, node["ital"] || "false", node["ref"] || "false")
+          concept_render(node, ital: node["ital"] || "false",
+                               ref: node["ref"] || "false",
+                               linkref: node["linkref"] || "true",
+                               linkmention: node["linkmention"] || "false")
         end
       end
 
       def concept_term(node, seen)
         term = node&.at(ns("./refterm"))&.to_xml
         if term && seen[term]
-          concept_render(node, node["ital"] || "false", node["ref"] || "false")
-        else concept_render(node, node["ital"] || "true", node["ref"] || "true")
+          concept_render(node, ital: node["ital"] || "false",
+                               ref: node["ref"] || "false",
+                               linkref: node["linkref"] || "true",
+                               linkmention: node["linkmention"] || "false")
+        else concept_render(node, ital: node["ital"] || "true",
+                                  ref: node["ref"] || "true",
+                                  linkref: node["linkref"] || "true",
+                                  linkmention: node["linkmention"] || "false")
         end
         seen[term] = true if term
         seen
       end
 
-      def concept1_ref(node, ref)
-        if r = node.at(ns("./xref | ./eref | ./termref"))
-          return r.remove if ref == "false"
-
-          r.name == "termref" and
-            r.replace(@i18n.term_defined_in.sub(/%/, r.to_xml)) or
-            r.replace("(#{r.to_xml})")
+      def concept1_ref_content(ref)
+        if ref.name == "termref"
+          ref.replace(@i18n.term_defined_in.sub(/%/,
+                                                ref.to_xml))
+        else
+          ref.replace("(#{ref.to_xml})")
         end
       end
 
@@ -160,7 +169,7 @@ module IsoDoc
         # i = display_order_at(docxml, "//sections/definitions", i)
         # i = display_order_xpath(docxml, @xrefs.klass.middle_clause(docxml), i)
         i = display_order_xpath(docxml, "//sections/clause[not(@type = 'scope')] | "\
-                                "//sections/terms | //sections/definitions", i)
+                                        "//sections/terms | //sections/definitions", i)
         i = display_order_xpath(docxml, "//annex", i)
         i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
         display_order_xpath(docxml, "//indexsect", i)
