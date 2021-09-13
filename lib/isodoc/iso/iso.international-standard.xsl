@@ -6195,15 +6195,17 @@
 		</xsl:if>
 	</xsl:template><xsl:variable name="localized.source">
 		<xsl:call-template name="getLocalizedString">
-				<xsl:with-param name="key">source</xsl:with-param>
-			</xsl:call-template>
+			<xsl:with-param name="key">source</xsl:with-param>
+		</xsl:call-template>
 	</xsl:variable><xsl:template match="*[local-name() = 'origin']">
 		<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
 			<xsl:if test="normalize-space(@citeas) = ''">
 				<xsl:attribute name="fox:alt-text"><xsl:value-of select="@bibitemid"/></xsl:attribute>
 			</xsl:if>
 			
+				
 				<fo:inline>
+					
 					
 					
 					
@@ -6219,6 +6221,7 @@
 			<fo:inline xsl:use-attribute-sets="origin-style">
 				<xsl:apply-templates/>
 			</fo:inline>
+			
 			</fo:basic-link>
 	</xsl:template><xsl:template match="*[local-name() = 'modification']/*[local-name() = 'p']">
 		<fo:inline><xsl:apply-templates/></fo:inline>
