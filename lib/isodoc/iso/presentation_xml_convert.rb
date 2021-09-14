@@ -45,13 +45,15 @@ module IsoDoc
         prefix_name(node, "&nbsp;&mdash; ", lbl, "name")
       end
 
+      def eref_delim(delim, type)
+        if delim == ";" then ";"
+        else type == "list" ? "" : delim
+        end
+      end
+
       def eref_localities1_zh(target, type, from, upto, node, delim)
         subsection = from&.text&.match(/\./)
-        ret = if delim == ";"
-                ";"
-              else
-                type == "list" ? "" : delim
-              end
+        ret = eref_delim(delim, type)
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{upto.text}" if upto
         loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize)
@@ -70,10 +72,7 @@ module IsoDoc
         lang == "zh" and
           return l10n(eref_localities1_zh(target, type, from, upto, node,
                                           delim))
-        ret = if delim == ";" then ";"
-              else
-                type == "list" ? "" : delim
-              end
+        ret = eref_delim(delim, type)
         ret += eref_locality_populate(type, node) unless subsection &&
           type == "clause" || type == "list" ||
           target.match(/^IEV$|^IEC 60050-/)
@@ -114,7 +113,7 @@ module IsoDoc
       end
 
       def concept(docxml)
-        docxml.xpath(ns("//terms//concept")).each_with_object({}) do |f, m|
+        docxml.xpath(ns("//term//concept")).each_with_object({}) do |f, m|
           concept_term(f, m)
         end
         docxml.xpath(ns("//concept")).each do |node|
