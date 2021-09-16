@@ -399,6 +399,7 @@ RSpec.describe IsoDoc do
           <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
           <terms id="Terms">
+          <term id="B"><preferred>B</preferred>
           <p>
           <ul>
             <li><concept><refterm>term0</refterm>
@@ -476,6 +477,7 @@ RSpec.describe IsoDoc do
             </concept></li>
             </ul>
           </p>
+          </term>
           </terms>
           <clause id="clause1"><title>Clause 1</title></clause>
           </sections>
@@ -499,6 +501,9 @@ RSpec.describe IsoDoc do
           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <sections>
           <terms id="Terms" displayorder="2"><title>2</title>
+                <term id='B'>
+        <name>2.1</name>
+        <preferred>B</preferred>
           <p>
           <ul>
                     <li>
@@ -570,6 +575,7 @@ RSpec.describe IsoDoc do
             </li>
             </ul>
           </p>
+          </term>
           </terms>
           <clause id="clause1" displayorder="3"><title depth="1">3<tab/>Clause 1</title></clause>
           </sections>
@@ -608,6 +614,8 @@ RSpec.describe IsoDoc do
              </div>
              <div id='Terms'>
                <h1>2</h1>
+        <p class='TermNum' id='B'>2.1</p>
+        <p class='Terms' style='text-align:left;'>B</p>
                <p>
                  <ul>
                    <li>
@@ -698,6 +706,14 @@ RSpec.describe IsoDoc do
       </foreword></preface>
       <sections>
       <terms id="Terms">
+      <clause id="A">
+             <ul>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+        </ul>
+      </clause>
       <term id="clause1">
        <ul>
       <li><concept><refterm>term1</refterm>
@@ -715,32 +731,38 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-          <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-        <preface>
-          <foreword id='A' displayorder='1'>
-            <ul>
-              <li>term</li>
-            </ul>
-          </foreword>
-        </preface>
-        <sections>
-          <terms id='Terms' displayorder='2'>
-            <title>1</title>
-            <term id='clause1'>
-              <name>1.1</name>
-              <ul>
-                <li>
-                  <em>term</em>
-                   (
-                  <xref target='clause1'>1.1</xref>
-                  )
-                </li>
-                <li>term</li>
-              </ul>
-            </term>
-          </terms>
-        </sections>
-      </iso-standard>
+           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+         <preface>
+           <foreword id='A' displayorder='1'>
+             <ul>
+               <li>term</li>
+             </ul>
+           </foreword>
+         </preface>
+         <sections>
+           <terms id='Terms' displayorder='2'>
+             <title>1</title>
+      <clause id='A' inline-header='true'>
+         <title>1.1</title>
+         <ul>
+           <li> term </li>
+         </ul>
+       </clause>
+             <term id='clause1'>
+               <name>1.2</name>
+               <ul>
+                 <li>
+                   <em>term</em>
+                    (
+                   <xref target='clause1'>1.2</xref>
+                   )
+                 </li>
+                 <li>term</li>
+               </ul>
+             </term>
+           </terms>
+         </sections>
+       </iso-standard>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
        .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
@@ -752,6 +774,7 @@ RSpec.describe IsoDoc do
        <sections>
        <clause id="clause1"><title>Clause 1</title></clause>
        <terms id="A">
+       <term id="B"><preferred>B</preferred<
        <p>
        <ul>
        <li>
@@ -784,6 +807,7 @@ RSpec.describe IsoDoc do
        <li><concept ital="true" ref="true" linkmention="false" linkref="true"><refterm>term</refterm><renderterm>term</renderterm><xref target='clause1'/></concept></li>
        <li><concept ital="true" ref="true" linkmention="false" linkref="false"><refterm>term</refterm><renderterm>term</renderterm><xref target='clause1'/></concept></li>
         </ul></p>
+        </term>
        </terms>
        </sections>
       </iso-standard>
@@ -793,6 +817,9 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="clause1" displayorder="1"><title depth="1">1<tab/>Clause 1</title></clause>
         <terms id="A" displayorder="2"><title>2</title>
+        <term id='B'>
+        <name>2.1</name>
+      <preferred>B</preferred>
         <p>
         <ul>
         <li>
@@ -821,6 +848,7 @@ RSpec.describe IsoDoc do
         <li><em>term</em> (<xref target="clause1">Clause 1</xref>)</li>
         <li><em>term</em> (Clause 1)</li>
          </ul></p>
+         </term>
         </terms>
         </sections>
        </iso-standard>
@@ -833,6 +861,8 @@ RSpec.describe IsoDoc do
             </div>
             <div id='A'>
               <h1>2</h1>
+              <p class='TermNum' id='B'>2.1</p>
+            <p class='Terms' style='text-align:left;'>B</p>
               <p>
                                <ul>
                         <li>
