@@ -6856,14 +6856,16 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<fo:table width="100%" table-layout="fixed" space-after="16pt">
-			<xsl:for-each select="xalan:nodeset($colwidths_)/column">
-				<fo:table-column column-width="proportional-column-width({.})"/>
-			</xsl:for-each>
-			<fo:table-body>
-				<xsl:apply-templates/>
-			</fo:table-body>
-		</fo:table>
+		<fo:block role="TOCI" space-after="16pt">
+			<fo:table width="100%" table-layout="fixed">
+				<xsl:for-each select="xalan:nodeset($colwidths_)/column">
+					<fo:table-column column-width="proportional-column-width({.})"/>
+				</xsl:for-each>
+				<fo:table-body>
+					<xsl:apply-templates/>
+				</fo:table-body>
+			</fo:table>
+		</fo:block>
 	</xsl:template><xsl:template match="*[local-name() = 'toc']//*[local-name() = 'li']">
 		<fo:table-row min-height="5mm">
 			<xsl:apply-templates/>
