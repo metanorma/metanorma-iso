@@ -2731,6 +2731,8 @@
 		
 	</xsl:attribute-set><xsl:attribute-set name="list-style">
 		
+	</xsl:attribute-set><xsl:attribute-set name="toc-style">
+		<xsl:attribute name="line-height">135%</xsl:attribute>
 	</xsl:attribute-set><xsl:variable name="border-block-added">2.5pt solid rgb(0, 176, 80)</xsl:variable><xsl:variable name="border-block-deleted">2.5pt solid rgb(255, 0, 0)</xsl:variable><xsl:template name="processPrefaceSectionsDefault_Contents">
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='abstract']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='foreword']" mode="contents"/>
@@ -6833,6 +6835,84 @@
 		<fo:block-container border="1pt solid black" width="50%">
 			<fo:block> </fo:block>
 		</fo:block-container>
+	</xsl:template><xsl:template match="*[local-name() = 'toc']">
+		<xsl:param name="colwidths"/>
+		<xsl:variable name="colwidths_">
+			<xsl:choose>
+				<xsl:when test="not($colwidths)">
+					<xsl:variable name="toc_table_simple">
+						<tbody>
+							<xsl:apply-templates mode="toc_table_width"/>
+						</tbody>
+					</xsl:variable>
+					<xsl:variable name="cols-count" select="count(xalan:nodeset($toc_table_simple)/*/tr[1]/td)"/>
+					<xsl:call-template name="calculate-column-widths">
+						<xsl:with-param name="cols-count" select="$cols-count"/>
+						<xsl:with-param name="table" select="$toc_table_simple"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:copy-of select="$colwidths"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<fo:table width="100%" table-layout="fixed" space-after="16pt">
+			<xsl:for-each select="xalan:nodeset($colwidths_)/column">
+				<fo:table-column column-width="proportional-column-width({.})"/>
+			</xsl:for-each>
+			<fo:table-body>
+				<xsl:apply-templates/>
+			</fo:table-body>
+		</fo:table>
+	</xsl:template><xsl:template match="*[local-name() = 'toc']//*[local-name() = 'li']">
+		<fo:table-row min-height="5mm">
+			<xsl:apply-templates/>
+		</fo:table-row>
+	</xsl:template><xsl:template match="*[local-name() = 'toc']//*[local-name() = 'li']/*[local-name() = 'p']">
+		<xsl:apply-templates/>
+	</xsl:template><xsl:template match="*[local-name() = 'toc']//*[local-name() = 'xref']" priority="3">
+		<!-- <xref target="cgpm9th1948r6">1.6.3<tab/>&#8220;9th CGPM, 1948:<tab/>decision to establish the SI&#8221;</xref> -->
+		<xsl:variable name="target" select="@target"/>
+		<xsl:for-each select="*[local-name() = 'tab']">
+			<xsl:variable name="current_id" select="generate-id()"/>
+			<fo:table-cell>
+				<fo:block>
+					<fo:basic-link internal-destination="{$target}" fox:alt-text="{.}">
+						<xsl:for-each select="following-sibling::node()[not(self::*[local-name() = 'tab']) and preceding-sibling::*[local-name() = 'tab'][1][generate-id() = $current_id]]">
+							<xsl:choose>
+								<xsl:when test="self::text()"><xsl:value-of select="."/></xsl:when>
+								<xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
+							</xsl:choose>
+						</xsl:for-each>
+					</fo:basic-link>
+				</fo:block>
+			</fo:table-cell>
+		</xsl:for-each>
+		<!-- last column - for page numbers -->
+		<fo:table-cell text-align="right" font-size="10pt" font-weight="bold" font-family="Arial">
+			<fo:block>
+				<fo:basic-link internal-destination="{$target}" fox:alt-text="{.}">
+					<fo:page-number-citation ref-id="{$target}"/>
+				</fo:basic-link>
+			</fo:block>
+		</fo:table-cell>
+	</xsl:template><xsl:template match="*" mode="toc_table_width">
+		<xsl:apply-templates mode="toc_table_width"/>
+	</xsl:template><xsl:template match="*[local-name() = 'clause'][@type = 'toc']/*[local-name() = 'title']" mode="toc_table_width"/><xsl:template match="*[local-name() = 'clause'][not(@type = 'toc')]/*[local-name() = 'title']" mode="toc_table_width"/><xsl:template match="*[local-name() = 'li']" mode="toc_table_width">
+		<tr>
+			<xsl:apply-templates mode="toc_table_width"/>
+		</tr>
+	</xsl:template><xsl:template match="*[local-name() = 'xref']" mode="toc_table_width">
+		<!-- <xref target="cgpm9th1948r6">1.6.3<tab/>&#8220;9th CGPM, 1948:<tab/>decision to establish the SI&#8221;</xref> -->
+		<xsl:for-each select="*[local-name() = 'tab']">
+			<xsl:variable name="current_id" select="generate-id()"/>
+			<td>
+				<xsl:for-each select="following-sibling::node()[not(self::*[local-name() = 'tab']) and preceding-sibling::*[local-name() = 'tab'][1][generate-id() = $current_id]]">
+					<xsl:copy-of select="."/>
+				</xsl:for-each>
+			</td>
+		</xsl:for-each>
+		<td>333</td> <!-- page number, just for fill -->
 	</xsl:template><xsl:template match="*[local-name() = 'variant-title'][@type = 'sub']"/><xsl:template match="*[local-name() = 'variant-title'][@type = 'sub']" mode="subtitle">
 		<fo:inline padding-right="5mm"> </fo:inline>
 		<fo:inline><xsl:apply-templates/></fo:inline>
