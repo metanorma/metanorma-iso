@@ -6883,7 +6883,7 @@
 						<xsl:for-each select="following-sibling::node()[not(self::*[local-name() = 'tab']) and preceding-sibling::*[local-name() = 'tab'][1][generate-id() = $current_id]]">
 							<xsl:choose>
 								<xsl:when test="self::text()"><xsl:value-of select="."/></xsl:when>
-								<xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
+								<xsl:otherwise><xsl:apply-templates select="."/></xsl:otherwise>
 							</xsl:choose>
 						</xsl:for-each>
 					</fo:basic-link>
