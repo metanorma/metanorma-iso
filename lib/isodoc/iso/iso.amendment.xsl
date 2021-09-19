@@ -6918,6 +6918,14 @@
 	</xsl:template><xsl:template match="*[local-name() = 'variant-title'][@type = 'sub']"/><xsl:template match="*[local-name() = 'variant-title'][@type = 'sub']" mode="subtitle">
 		<fo:inline padding-right="5mm"> </fo:inline>
 		<fo:inline><xsl:apply-templates/></fo:inline>
+	</xsl:template><xsl:template match="*[local-name() = 'blacksquare']" name="blacksquare">
+		<fo:inline padding-right="2.5mm" baseline-shift="5%">
+			<fo:instream-foreign-object content-height="2mm" content-width="2mm" fox:alt-text="Quad">
+					<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 2 2">
+						<rect x="0" y="0" width="2" height="2" fill="black"/>
+					</svg>
+				</fo:instream-foreign-object>	
+		</fo:inline>
 	</xsl:template><xsl:template name="convertDate">
 		<xsl:param name="date"/>
 		<xsl:param name="format" select="'short'"/>
