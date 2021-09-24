@@ -2733,13 +2733,18 @@
 		
 	</xsl:attribute-set><xsl:attribute-set name="toc-style">
 		<xsl:attribute name="line-height">135%</xsl:attribute>
-	</xsl:attribute-set><xsl:variable name="border-block-added">2.5pt solid rgb(0, 176, 80)</xsl:variable><xsl:variable name="border-block-deleted">2.5pt solid rgb(255, 0, 0)</xsl:variable><xsl:template name="processPrefaceSectionsDefault_Contents">
+	</xsl:attribute-set><xsl:variable name="border-block-added">2.5pt solid rgb(0, 176, 80)</xsl:variable><xsl:variable name="border-block-deleted">2.5pt solid rgb(255, 0, 0)</xsl:variable><xsl:template name="OLD_processPrefaceSectionsDefault_Contents">
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='abstract']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='foreword']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='introduction']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name() != 'abstract' and local-name() != 'foreword' and local-name() != 'introduction' and local-name() != 'acknowledgements']" mode="contents"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='acknowledgements']" mode="contents"/>
-	</xsl:template><xsl:template name="processMainSectionsDefault_Contents">
+	</xsl:template><xsl:template name="processPrefaceSectionsDefault_Contents">
+		<xsl:for-each select="/*/*[local-name()='preface']/*">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			<xsl:apply-templates select="." mode="contents"/>
+		</xsl:for-each>
+	</xsl:template><xsl:template name="OLD_processMainSectionsDefault_Contents">
 		<xsl:apply-templates select="/*/*[local-name()='sections']/*[local-name()='clause'][@type='scope']" mode="contents"/>			
 		
 		<!-- Normative references  -->
@@ -2752,13 +2757,33 @@
 		<!-- Bibliography -->
 		<xsl:apply-templates select="/*/*[local-name()='bibliography']/*[local-name()='references'][not(@normative='true')] |       /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][not(@normative='true')]]" mode="contents"/>
 		
-	</xsl:template><xsl:template name="processPrefaceSectionsDefault">
+	</xsl:template><xsl:template name="processMainSectionsDefault_Contents">
+		<xsl:for-each select="/*/*[local-name()='sections']/* | /*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true']">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			<xsl:apply-templates select="." mode="contents"/>
+		</xsl:for-each>
+		
+		<xsl:for-each select="/*/*[local-name()='annex']">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			<xsl:apply-templates select="." mode="contents"/>
+		</xsl:for-each>
+		
+		<xsl:for-each select="/*/*[local-name()='bibliography']/*[not(@normative='true')] |          /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][not(@normative='true')]]">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			<xsl:apply-templates select="." mode="contents"/>
+		</xsl:for-each>
+	</xsl:template><xsl:template name="OLD_processPrefaceSectionsDefault">
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='abstract']"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='foreword']"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='introduction']"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name() != 'abstract' and local-name() != 'foreword' and local-name() != 'introduction' and local-name() != 'acknowledgements']"/>
 		<xsl:apply-templates select="/*/*[local-name()='preface']/*[local-name()='acknowledgements']"/>
-	</xsl:template><xsl:template name="processMainSectionsDefault">			
+	</xsl:template><xsl:template name="processPrefaceSectionsDefault">
+		<xsl:for-each select="/*/*[local-name()='preface']/*">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			<xsl:apply-templates select="."/>
+		</xsl:for-each>
+	</xsl:template><xsl:template name="OLD_processMainSectionsDefault">			
 		<xsl:apply-templates select="/*/*[local-name()='sections']/*[local-name()='clause'][@type='scope']"/>
 		
 		<!-- Normative references  -->
@@ -2770,6 +2795,22 @@
 		<xsl:apply-templates select="/*/*[local-name()='annex']"/>
 		<!-- Bibliography -->
 		<xsl:apply-templates select="/*/*[local-name()='bibliography']/*[local-name()='references'][not(@normative='true')]"/>
+	</xsl:template><xsl:template name="processMainSectionsDefault">
+		<xsl:for-each select="/*/*[local-name()='sections']/* | /*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true']">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			
+			<xsl:apply-templates select="."/>
+		</xsl:for-each>
+		
+		<xsl:for-each select="/*/*[local-name()='annex']">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			<xsl:apply-templates select="."/>
+		</xsl:for-each>
+		
+		<xsl:for-each select="/*/*[local-name()='bibliography']/*[not(@normative='true')] |          /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][not(@normative='true')]]">
+			<xsl:sort select="@displayorder" data-type="number"/>
+			<xsl:apply-templates select="."/>
+		</xsl:for-each>
 	</xsl:template><xsl:template match="text()">
 		<xsl:value-of select="."/>
 	</xsl:template><xsl:template match="*[local-name()='br']">
