@@ -2798,8 +2798,8 @@
 	</xsl:template><xsl:template name="processMainSectionsDefault">
 		<xsl:for-each select="/*/*[local-name()='sections']/* | /*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true']">
 			<xsl:sort select="@displayorder" data-type="number"/>
-			
 			<xsl:apply-templates select="."/>
+			
 		</xsl:for-each>
 		
 		<xsl:for-each select="/*/*[local-name()='annex']">
