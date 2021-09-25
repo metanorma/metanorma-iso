@@ -5449,6 +5449,13 @@
 			</xsl:attribute>
 			<xsl:apply-templates mode="svg_update"/>
 		</xsl:copy>
+	</xsl:template><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'image'][*[local-name() = 'svg']]" priority="3">
+		<xsl:variable name="name" select="ancestor::*[local-name() = 'figure']/*[local-name() = 'name']"/>
+		<xsl:for-each select="*[local-name() = 'svg']">
+			<xsl:call-template name="image_svg">
+				<xsl:with-param name="name" select="$name"/>
+			</xsl:call-template>
+		</xsl:for-each>
 	</xsl:template><xsl:template match="*[local-name() = 'figure']/*[local-name() = 'image'][@mimetype = 'image/svg+xml' and @src[not(starts-with(., 'data:image/'))]]" priority="2">
 		<xsl:variable name="svg_content" select="document(@src)"/>
 		<xsl:variable name="name" select="ancestor::*[local-name() = 'figure']/*[local-name() = 'name']"/>
