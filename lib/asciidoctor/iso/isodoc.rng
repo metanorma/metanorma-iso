@@ -1036,11 +1036,20 @@
       <ref name="svgmap"/>
       <ref name="inputform"/>
       <ref name="toc"/>
+      <ref name="passthrough"/>
     </choice>
   </define>
   <define name="toc">
     <element name="toc">
       <ref name="ul"/>
+    </element>
+  </define>
+  <define name="passthrough">
+    <element name="passthrough">
+      <optional>
+        <attribute name="formats"/>
+      </optional>
+      <text/>
     </element>
   </define>
   <define name="inputform">
