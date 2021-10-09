@@ -148,6 +148,10 @@ module Asciidoctor
       def relaton_relations
         super + %w(obsoletes)
       end
+
+      def relaton_relation_descriptions
+        super.merge("amends" => "updates")
+      end
     end
   end
 end
