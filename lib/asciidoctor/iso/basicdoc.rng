@@ -624,6 +624,9 @@
         <choice>
           <ref name="PureTextElement"/>
           <ref name="stem"/>
+          <ref name="eref"/>
+          <ref name="xref"/>
+          <ref name="hyperlink"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -634,6 +637,9 @@
         <choice>
           <ref name="PureTextElement"/>
           <ref name="stem"/>
+          <ref name="eref"/>
+          <ref name="xref"/>
+          <ref name="hyperlink"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -641,7 +647,12 @@
   <define name="tt">
     <element name="tt">
       <zeroOrMore>
-        <ref name="PureTextElement"/>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="eref"/>
+          <ref name="xref"/>
+          <ref name="hyperlink"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>
@@ -822,7 +833,9 @@
       <attribute name="alt"/>
     </optional>
     <ref name="CitationType"/>
-    <text/>
+    <oneOrMore>
+      <ref name="PureTextElement"/>
+    </oneOrMore>
   </define>
   <define name="hyperlink">
     <element name="link">
@@ -835,7 +848,9 @@
       <optional>
         <attribute name="alt"/>
       </optional>
-      <text/>
+      <oneOrMore>
+        <ref name="PureTextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="xref">
@@ -849,7 +864,9 @@
       <optional>
         <attribute name="alt"/>
       </optional>
-      <text/>
+      <oneOrMore>
+        <ref name="PureTextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="fn">

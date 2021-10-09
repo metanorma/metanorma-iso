@@ -118,7 +118,7 @@ p.MsoBlockText, li.MsoBlockText, div.MsoBlockText
 p.MsoList, li.MsoList, div.MsoList
 	{mso-style-priority:4;
 	mso-style-unhide:no;
-	mso-style-parent:"MsoListParagraph";
+	mso-style-parent:"List Paragraph";
 	margin-top:0cm;
 	margin-right:0cm;
 	margin-bottom:6.0pt;
@@ -138,7 +138,7 @@ p.MsoList, li.MsoList, div.MsoList
 p.MsoListCxSpFirst, li.MsoListCxSpFirst, div.MsoListCxSpFirst
 	{mso-style-priority:4;
 	mso-style-unhide:no;
-	mso-style-parent:"MsoListParagraph";
+	mso-style-parent:"List Paragraph";
 	mso-style-type:export-only;
 	margin-top:0cm;
 	margin-right:0cm;
@@ -159,7 +159,7 @@ p.MsoListCxSpFirst, li.MsoListCxSpFirst, div.MsoListCxSpFirst
 p.MsoListCxSpMiddle, li.MsoListCxSpMiddle, div.MsoListCxSpMiddle
 	{mso-style-priority:4;
 	mso-style-unhide:no;
-	mso-style-parent:"MsoListParagraph";
+	mso-style-parent:"List Paragraph";
 	mso-style-type:export-only;
 	margin-top:0cm;
 	margin-right:0cm;
@@ -180,7 +180,7 @@ p.MsoListCxSpMiddle, li.MsoListCxSpMiddle, div.MsoListCxSpMiddle
 p.MsoListCxSpLast, li.MsoListCxSpLast, div.MsoListCxSpLast
 	{mso-style-priority:4;
 	mso-style-unhide:no;
-	mso-style-parent:"MsoListParagraph";
+	mso-style-parent:"List Paragraph";
 	mso-style-type:export-only;
 	margin-top:0cm;
 	margin-right:0cm;
@@ -201,6 +201,7 @@ p.MsoListCxSpLast, li.MsoListCxSpLast, div.MsoListCxSpLast
 p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
 	{mso-style-priority:34;
 	mso-style-unhide:no;
+	mso-style-name:"List Paragraph";
 	mso-style-qformat:yes;
 	margin-top:0cm;
 	margin-right:0cm;
@@ -272,6 +273,7 @@ h1
 	{mso-style-priority:1;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-name:"Heading 1";
 	mso-style-link:"Heading 1 Char";
 	mso-style-next:Normal;
 	margin-top:13.5pt;
@@ -338,6 +340,7 @@ h1.Annex
         {mso-style-priority:2;
         mso-style-unhide:no;
         mso-style-qformat:yes;
+	mso-style-name:"Heading 2";
         mso-style-parent:"Heading 1";
         mso-style-link:"Heading 2 Char";
         mso-style-next:Normal;
@@ -373,6 +376,7 @@ h2
 	{mso-style-priority:3;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-name:"Heading 3";
 	mso-style-parent:"Heading 1";
 	mso-style-link:"Heading 3 Char";
 	mso-style-next:Normal;
@@ -407,6 +411,7 @@ h3      {mso-list:l1 level3 lfo6;
 	{mso-style-priority:4;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-name:"Heading 4";
 	mso-style-parent:"Heading 3";
 	mso-style-link:"Heading 4 Char";
 	mso-style-next:Normal;
@@ -439,6 +444,7 @@ h4      {mso-list:l1 level4 lfo6;
 	{mso-style-priority:5;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-name:"Heading 5";
 	mso-style-parent:"Heading 4";
 	mso-style-link:"Heading 5 Char";
 	mso-style-next:Normal;
@@ -471,6 +477,7 @@ h6
 	{mso-style-priority:6;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
+	mso-style-name:"Heading 6";
 	mso-style-parent:"Heading 5";
 	mso-style-link:"Heading 6 Char";
 	mso-style-next:Normal;
@@ -502,6 +509,7 @@ h6      {mso-list:l1 level6 lfo6;
 p.MsoToc1, li.MsoToc1, div.MsoToc1
 	{mso-style-priority:39;
 	mso-style-unhide:no;
+	mso-style-name:"TOC 1";
 	mso-style-next:Normal;
 	margin-top:6.0pt;
 	margin-right:25.0pt;
@@ -523,6 +531,7 @@ p.MsoToc2, li.MsoToc2, div.MsoToc2
 	{mso-style-noshow:yes;
 	mso-style-priority:39;
 	mso-style-unhide:no;
+	mso-style-name:"TOC 2";
 	mso-style-parent:"TOC 1";
 	mso-style-next:Normal;
 	margin-top:0cm;
@@ -545,6 +554,7 @@ p.MsoToc3, li.MsoToc3, div.MsoToc3
 	{mso-style-noshow:yes;
 	mso-style-priority:39;
 	mso-style-unhide:no;
+	mso-style-name:"TOC 3";
 	mso-style-parent:"TOC 2";
 	mso-style-next:Normal;
 	margin-top:0cm;
@@ -645,6 +655,7 @@ p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape
         mso-ansi-language:EN-GB;}
 span.MsoFootnoteReference
 	{mso-style-priority:99;
+        mso-style-name:"Footnote Reference";
 	vertical-align:super;}
 p.MsoCaption, li.MsoCaption, div.MsoCaption
 	{mso-style-priority:35;
@@ -1022,6 +1033,7 @@ span.BodyTextChar, span.Char3
 p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
 	{mso-style-noshow:yes;
 	mso-style-priority:99;
+	mso-style-name:"Comment Text";
 	mso-style-link:"Comment Text Char";
 	margin-top:0cm;
 	margin-right:0cm;

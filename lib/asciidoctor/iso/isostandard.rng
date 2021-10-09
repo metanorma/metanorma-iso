@@ -142,14 +142,9 @@
       </optional>
       <choice>
         <choice>
-          <group>
-            <oneOrMore>
-              <ref name="BasicBlock"/>
-            </oneOrMore>
-            <zeroOrMore>
-              <ref name="note"/>
-            </zeroOrMore>
-          </group>
+          <oneOrMore>
+            <ref name="BasicBlock"/>
+          </oneOrMore>
           <ref name="amend"/>
         </choice>
         <oneOrMore>
@@ -224,9 +219,6 @@
             ( paragraph-with-footnote | table | note | formula | admonition | ol | ul | dl | figure | quote | sourcecode | review | example )*,
           -->
           <ref name="BasicBlock"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
         </zeroOrMore>
         <zeroOrMore>
           <ref name="clause-hanging-paragraph-with-footnote"/>
@@ -351,14 +343,9 @@
         <ref name="section-title"/>
       </optional>
       <choice>
-        <group>
-          <zeroOrMore>
-            <ref name="BasicBlock"/>
-          </zeroOrMore>
-          <zeroOrMore>
-            <ref name="note"/>
-          </zeroOrMore>
-        </group>
+        <zeroOrMore>
+          <ref name="BasicBlock"/>
+        </zeroOrMore>
         <oneOrMore>
           <ref name="content-subsection"/>
         </oneOrMore>
@@ -474,9 +461,6 @@
       <zeroOrMore>
         <!-- allow hanging paragraphs in annexes: they introduce lists -->
         <ref name="BasicBlock"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="note"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="clause-hanging-paragraph-with-footnote"/>
