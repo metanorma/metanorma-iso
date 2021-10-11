@@ -713,7 +713,7 @@ RSpec.describe Asciidoctor::ISO do
               </copyright>
               <relation type='obsoletes'>
                 <bibitem type='standard'>
-                  <fetched>2021-10-10</fetched>
+                  <fetched>#{Date.today}</fetched>
                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
                   <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of alkalinity</title>
                   <title type='main' format='text/plain' language='en' script='Latn'>
@@ -790,7 +790,7 @@ RSpec.describe Asciidoctor::ISO do
               </relation>
               <relation type='obsoletes'>
                 <bibitem type='standard'>
-                  <fetched>2021-10-10</fetched>
+                  <fetched>#{Date.today}</fetched>
                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
                   <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of dry rubber content</title>
                   <title type='main' format='text/plain' language='en' script='Latn'>
