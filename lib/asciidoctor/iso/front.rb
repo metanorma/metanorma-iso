@@ -116,7 +116,7 @@ module Asciidoctor
 
         xml.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
           t1 << Metanorma::Utils::asciidoc_sub(
-            node.attr("title-amendment-#{lang}")
+            node.attr("title-amendment-#{lang}"),
           )
         end
       end
@@ -143,6 +143,14 @@ module Asciidoctor
           title_part(node, xml, lang, at)
           title_amd(node, xml, lang, at) if @amd
         end
+      end
+
+      def relaton_relations
+        super + %w(obsoletes)
+      end
+
+      def relaton_relation_descriptions
+        super.merge("amends" => "updates")
       end
     end
   end
