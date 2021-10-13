@@ -30,7 +30,7 @@ RSpec.describe IsoDoc do
             <terms id="I" obligation="normative">
               <title>Normal Terms</title>
               <term id="J">
-                <preferred>Term2</preferred>
+                <preferred><expression><name>Term2</name></expression></preferred>
               </term>
             </terms>
             <definitions id="K">
@@ -283,7 +283,7 @@ RSpec.describe IsoDoc do
             <terms id="I" obligation="normative">
               <title>Normal Terms</title>
               <term id="J">
-                <preferred>Term2</preferred>
+                <preferred><expression><name>Term2</name></expression></preferred>
               </term>
             </terms>
             <definitions id="K">
@@ -457,7 +457,7 @@ RSpec.describe IsoDoc do
             <terms id="I" obligation="normative">
               <title>Normal Terms</title>
               <term id="J">
-                <preferred>Term2</preferred>
+                <preferred><expression><name>Term2</name></expression></preferred>
               </term>
             </terms>
             <definitions id="K">
@@ -728,7 +728,7 @@ RSpec.describe IsoDoc do
             <terms id="I" obligation="normative">
               <title>Normal Terms</title>
               <term id="J">
-                <preferred>Term2</preferred>
+                <preferred><expression><name>Term2</name></expression></preferred>
               </term>
             </terms>
             <definitions id="K">

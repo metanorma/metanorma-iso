@@ -7,7 +7,7 @@ RSpec.describe IsoDoc do
         <sections>
           <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
             <term id="paddy1">
-              <preferred>paddy</preferred>
+              <preferred><expression><name>paddy</name></expression></preferred>
               <domain>rice</domain>
               <definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></definition>
               <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f892">
@@ -31,10 +31,10 @@ RSpec.describe IsoDoc do
             </term>
 
             <term id="paddy">
-              <preferred>paddy</preferred>
-              <admitted>paddy rice</admitted>
-              <admitted>rough rice</admitted>
-              <deprecates>cargo rice</deprecates>
+              <preferred><expression><name>paddy</name></expression></preferred>
+              <admitted><expression><name>paddy rice</name></expression></admitted>
+              <admitted><expression><name>rough rice</name></expression></admitted>
+              <deprecates><expression><name>cargo rice</name></expression></deprecates>
               <definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></definition>
               <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74e">
                 <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
@@ -53,10 +53,10 @@ RSpec.describe IsoDoc do
               </termsource>
             </term>
             <term id="A">
-              <preferred>term1</preferred>
+              <preferred><expression><name>term1</name></expression></preferred>
               <definition>term1 definition</definition>
               <term id="B">
-              <preferred>term2</preferred>
+              <preferred><expression><name>term2</name></expression></preferred>
               <definition>term2 definition</definition>
               </term>
             </term>

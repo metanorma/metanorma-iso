@@ -36,6 +36,7 @@ RSpec.describe Asciidoctor::ISO do
             #{TERM_BOILERPLATE}
             <term id="term-t90">
               <preferred>
+                <expression><name>
                 <stem type="MathML">
                   <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <msub>
@@ -47,8 +48,10 @@ RSpec.describe Asciidoctor::ISO do
                     </msub>
                   </math>
                 </stem>
+                </name></expression>
               </preferred>
               <admitted>
+                <expression><name>
                 <stem type="MathML">
                   <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <msub>
@@ -61,6 +64,7 @@ RSpec.describe Asciidoctor::ISO do
                     </msub>
                   </math>
                 </stem>
+                </name></expression>
               </admitted>
               <definition>
                 <p id="_">Time</p>
@@ -90,7 +94,7 @@ RSpec.describe Asciidoctor::ISO do
             <title>Terms and definitions</title>#{TERM_BOILERPLATE}
 
             <term id="term-tempus">
-              <preferred>Tempus</preferred>
+              <preferred><expression><name>Tempus</name></expression></preferred>
               <domain>relativity</domain>
               <definition>
                 <p id="_">Time</p></definition>
@@ -132,6 +136,7 @@ RSpec.describe Asciidoctor::ISO do
             #{TERM_BOILERPLATE}
             <term id="term-t90">
               <preferred>
+                <expression><name>
                 <stem type="MathML">
                   <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <msub>
@@ -143,6 +148,7 @@ RSpec.describe Asciidoctor::ISO do
                     </msub>
                   </math>
                 </stem>
+                </name></expression>
               </preferred>
               <definition>
                 <formula id="_">
@@ -195,7 +201,7 @@ RSpec.describe Asciidoctor::ISO do
                 <p id="_">So am I</p></li>
             </ul>
             <term id="term-time">
-              <preferred>Time</preferred>
+              <preferred><expression><name>Time</name></expression></preferred>
               <definition>
                 <p id="_">This paragraph is extraneous</p>
               </definition>
@@ -443,7 +449,7 @@ RSpec.describe Asciidoctor::ISO do
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="term-term1">
-              <preferred>Term1</preferred>
+              <preferred><expression><name>Term1</name></expression></preferred>
               <termsource status="identical">
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
@@ -1241,7 +1247,7 @@ RSpec.describe Asciidoctor::ISO do
               </li>
             </ul>
             <term id='term-term1'>
-              <preferred>Term1</preferred>
+              <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>
         </sections>
@@ -1292,13 +1298,13 @@ RSpec.describe Asciidoctor::ISO do
               <terms id='_' obligation='normative'>
                 <title>Normal Terms</title>
                 <term id='term-term1'>
-                  <preferred>Term1</preferred>
+                  <preferred><expression><name>Term1</name></expression></preferred>
                 </term>
               </terms>
               <terms id='_' obligation='normative'>
                 <title>Abnormal terms</title>
                 <term id='term-term-2'>
-                  <preferred>Term 2</preferred>
+                  <preferred><expression><name>Term 2</name></expression></preferred>
                 </term>
               </terms>
             </clause>
@@ -1356,13 +1362,13 @@ RSpec.describe Asciidoctor::ISO do
                 <terms id='_' obligation='normative'>
                   <title>Normal Terms</title>
                   <term id='term-term1'>
-                    <preferred>Term1</preferred>
+                    <preferred><expression><name>Term1</name></expression></preferred>
                   </term>
                 </terms>
                 <terms id='_' obligation='normative'>
                   <title>Abnormal terms</title>
                   <term id='term-term-2'>
-                    <preferred>Term 2</preferred>
+                    <preferred><expression><name>Term 2</name></expression></preferred>
                   </term>
                 </terms>
               </clause>
@@ -1421,13 +1427,13 @@ RSpec.describe Asciidoctor::ISO do
                   </li>
                 </ul>
                 <term id='term-term1'>
-                  <preferred>Term1</preferred>
+                  <preferred><expression><name>Term1</name></expression></preferred>
                 </term>
               </terms>
               <terms id='_' obligation='normative'>
                 <title>Other Terms</title>
                 <term id='term-term-2'>
-                  <preferred>Term 2</preferred>
+                  <preferred><expression><name>Term 2</name></expression></preferred>
                 </term>
               </terms>
               <definitions id='_' obligation='normative'>
@@ -1479,7 +1485,7 @@ RSpec.describe Asciidoctor::ISO do
               </li>
             </ul>
             <term id='term-term1'>
-              <preferred>Term1</preferred>
+              <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>
         </sections>

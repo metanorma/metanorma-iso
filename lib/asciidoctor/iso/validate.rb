@@ -63,7 +63,7 @@ module Asciidoctor
       def locality_erefs_validate(root)
         root.xpath("//eref[descendant::locality]").each do |t|
           if /^(ISO|IEC)/.match?(t["citeas"]) &&
-              !(/: ?(\d+{4}|–)$/.match?(t["citeas"]))
+              !/: ?(\d+{4}|–)$/.match?(t["citeas"])
             @log.add("Style", t,
                      "undated reference #{t['citeas']} should not contain "\
                      "specific elements")
@@ -79,7 +79,7 @@ module Asciidoctor
       def termdef_style(xmldoc)
         xmldoc.xpath("//term").each do |t|
           para = t.at("./definition") || return
-          term = t.at("./preferred").text
+          term = t.at("./preferred/expression/name").text
           termdef_warn(para.text, /\A(the|a)\b/i, t, term,
                        "term definition starts with article")
           termdef_warn(para.text, /\.\Z/i, t, term,
@@ -90,10 +90,10 @@ module Asciidoctor
       def doctype_validate(xmldoc)
         doctype = xmldoc&.at("//bibdata/ext/doctype")&.text
         %w(international-standard technical-specification technical-report
-        publicly-available-specification international-workshop-agreement
-        guide amendment technical-corrigendum).include? doctype or
-        @log.add("Document Attributes", nil,
-                 "#{doctype} is not a recognised document type")
+           publicly-available-specification international-workshop-agreement
+           guide amendment technical-corrigendum).include? doctype or
+          @log.add("Document Attributes", nil,
+                   "#{doctype} is not a recognised document type")
       end
 
       def script_validate(xmldoc)

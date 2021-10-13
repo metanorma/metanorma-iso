@@ -1830,16 +1830,12 @@
   </define>
   <define name="preferred">
     <element name="preferred">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="Designation"/>
     </element>
   </define>
   <define name="admitted">
     <element name="admitted">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="Designation"/>
     </element>
   </define>
   <define name="related">
@@ -1860,9 +1856,19 @@
   </define>
   <define name="deprecates">
     <element name="deprecates">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="Designation"/>
+    </element>
+  </define>
+  <define name="Designation">
+    <ref name="expression_designation"/>
+  </define>
+  <define name="expression_designation">
+    <element name="expression">
+      <element name="name">
+        <oneOrMore>
+          <ref name="PureTextElement"/>
+        </oneOrMore>
+      </element>
     </element>
   </define>
   <define name="termdomain">
