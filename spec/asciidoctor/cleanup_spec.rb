@@ -36,7 +36,7 @@ RSpec.describe Asciidoctor::ISO do
             #{TERM_BOILERPLATE}
             <term id="term-t90">
               <preferred>
-                <expression><name>
+                <letter-symbol><name>
                 <stem type="MathML">
                   <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <msub>
@@ -48,10 +48,10 @@ RSpec.describe Asciidoctor::ISO do
                     </msub>
                   </math>
                 </stem>
-                </name></expression>
+                </name></letter-symbol>
               </preferred>
               <admitted>
-                <expression><name>
+                <letter-symbol><name>
                 <stem type="MathML">
                   <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <msub>
@@ -64,11 +64,11 @@ RSpec.describe Asciidoctor::ISO do
                     </msub>
                   </math>
                 </stem>
-                </name></expression>
+                </name></letter-symbol>
               </admitted>
-              <definition>
+              <definition><verbaldefinition>
                 <p id="_">Time</p>
-              </definition>
+              </verbaldefinition></definition>
             </term>
           </terms>
         </sections>
@@ -96,8 +96,8 @@ RSpec.describe Asciidoctor::ISO do
             <term id="term-tempus">
               <preferred><expression><name>Tempus</name></expression></preferred>
               <domain>relativity</domain>
-              <definition>
-                <p id="_">Time</p></definition>
+              <definition><verbaldefinition>
+                <p id="_">Time</p></verbaldefinition></definition>
             </term>
           </terms>
         </sections>
@@ -136,7 +136,7 @@ RSpec.describe Asciidoctor::ISO do
             #{TERM_BOILERPLATE}
             <term id="term-t90">
               <preferred>
-                <expression><name>
+                <letter-symbol><name>
                 <stem type="MathML">
                   <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <msub>
@@ -148,9 +148,11 @@ RSpec.describe Asciidoctor::ISO do
                     </msub>
                   </math>
                 </stem>
-                </name></expression>
+                </name></letter-symbol>
               </preferred>
               <definition>
+                <verbaldefinition><p id="_">This paragraph is extraneous</p></verbaldefinition>
+                <nonverbalrepresentation>
                 <formula id="_">
                   <stem type="MathML">
                     <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -165,8 +167,7 @@ RSpec.describe Asciidoctor::ISO do
                     </math>
                   </stem>
                 </formula>
-                <p id="_">This paragraph is extraneous</p>
-              </definition>
+              </nonverbalrepresentation></definition>
             </term>
           </terms>
         </sections>
@@ -202,9 +203,9 @@ RSpec.describe Asciidoctor::ISO do
             </ul>
             <term id="term-time">
               <preferred><expression><name>Time</name></expression></preferred>
-              <definition>
+              <definition><verbaldefinition>
                 <p id="_">This paragraph is extraneous</p>
-              </definition>
+              </verbaldefinition></definition>
             </term>
           </terms>
         </sections>
@@ -439,6 +440,8 @@ RSpec.describe Asciidoctor::ISO do
 
       === Term1
 
+      Definition
+
       [.source]
       <<ISO2191,section=1>>
     INPUT
@@ -450,7 +453,12 @@ RSpec.describe Asciidoctor::ISO do
             #{TERM_BOILERPLATE}
             <term id="term-term1">
               <preferred><expression><name>Term1</name></expression></preferred>
-              <termsource status="identical">
+                      <definition>
+          <verbaldefinition>
+            <p id='_'>Definition</p>
+          </verbaldefinition>
+        </definition>
+        <termsource status='identical' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">

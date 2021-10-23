@@ -78,8 +78,8 @@ module Asciidoctor
       # ISO/IEC DIR 2, 16.5.6
       def termdef_style(xmldoc)
         xmldoc.xpath("//term").each do |t|
-          para = t.at("./definition") || return
-          term = t.at("./preferred/expression/name").text
+          para = t.at("./definition/verbaldefinition") || return
+          term = t.at("./preferred//name").text
           termdef_warn(para.text, /\A(the|a)\b/i, t, term,
                        "term definition starts with article")
           termdef_warn(para.text, /\.\Z/i, t, term,

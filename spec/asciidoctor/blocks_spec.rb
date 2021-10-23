@@ -521,6 +521,8 @@ RSpec.describe Asciidoctor::ISO do
 
       === Term1
 
+      Definition
+
       [.source]
       <<ISO2191,section=1>>
     INPUT
@@ -532,7 +534,12 @@ RSpec.describe Asciidoctor::ISO do
             #{TERM_BOILERPLATE}
             <term id="term-term1">
               <preferred><expression><name>Term1</name></expression></preferred>
-              <termsource status="identical">
+                      <definition>
+          <verbaldefinition>
+            <p id='_'>Definition</p>
+          </verbaldefinition>
+        </definition>
+        <termsource status='identical' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">
@@ -556,6 +563,8 @@ RSpec.describe Asciidoctor::ISO do
 
       === Term1
 
+      Definition
+
       [.source]
       <<ISO2191,section=1>>, with adjustments
     INPUT
@@ -567,7 +576,12 @@ RSpec.describe Asciidoctor::ISO do
             #{TERM_BOILERPLATE}
             <term id="term-term1">
               <preferred><expression><name>Term1</name></expression></preferred>
-              <termsource status="modified">
+                      <definition>
+          <verbaldefinition>
+            <p id='_'>Definition</p>
+          </verbaldefinition>
+        </definition>
+        <termsource status='modified' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">
@@ -608,14 +622,14 @@ RSpec.describe Asciidoctor::ISO do
              #{TERM_BOILERPLATE}
              <term id='term-term1'>
                <preferred><expression><name>Term1</name></expression></preferred>
-               <definition>
+               <definition><verbaldefinition>
                  <p id='_'>definition</p>
-               </definition>
+               </verbaldefinition></definition>
                <term id='term-term11'>
                  <preferred><expression><name>Term11</name></expression></preferred>
-                 <definition>
+                 <definition><verbaldefinition>
                    <p id='_'>definition2</p>
-                 </definition>
+                 </verbaldefinition></definition>
                </term>
              </term>
            </terms>
