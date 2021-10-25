@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="biblio.rng">
     <start>
       <ref name="document"/>
@@ -19,6 +19,7 @@
   </define>
   <define name="bibdata">
     <element name="bibdata">
+      <a:documentation>Document attributes</a:documentation>
       <ref name="BibData"/>
     </element>
   </define>
@@ -104,10 +105,12 @@
   </define>
   <define name="paragraph">
     <element name="p">
+      <a:documentation>Paragraph</a:documentation>
       <ref name="ParagraphType"/>
     </element>
   </define>
   <define name="Alignments">
+    <a:documentation>Text alignment</a:documentation>
     <choice>
       <value>left</value>
       <value>right</value>
@@ -215,6 +218,7 @@
   </define>
   <define name="quote">
     <element name="quote">
+      <a:documentation>Block quotes</a:documentation>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
@@ -249,6 +253,7 @@
   </define>
   <define name="sourcecode">
     <element name="sourcecode">
+      <a:documentation>Source code, a pre-formatted source snippet to be rendered in monospace font, and with spaces preserved</a:documentation>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
@@ -1047,6 +1052,7 @@
   </define>
   <define name="ul">
     <element name="ul">
+      <a:documentation>Unordered list</a:documentation>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
@@ -1060,6 +1066,7 @@
   </define>
   <define name="li">
     <element name="li">
+      <a:documentation>List item</a:documentation>
       <optional>
         <attribute name="id">
           <data type="ID"/>
@@ -1097,6 +1104,7 @@
   </define>
   <define name="dl">
     <element name="dl">
+      <a:documentation>Definition list</a:documentation>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
@@ -1111,6 +1119,7 @@
   </define>
   <define name="dt">
     <element name="dt">
+      <a:documentation>Definition term</a:documentation>
       <zeroOrMore>
         <ref name="TextElement"/>
       </zeroOrMore>
@@ -1118,6 +1127,7 @@
   </define>
   <define name="dd">
     <element name="dd">
+      <a:documentation>Definition description</a:documentation>
       <zeroOrMore>
         <ref name="paragraph-with-footnote"/>
       </zeroOrMore>

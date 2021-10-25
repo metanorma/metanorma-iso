@@ -76,12 +76,14 @@
   <define name="script">
     <a:documentation>ISO-639</a:documentation>
     <element name="script">
+        <a:documentation>ISO-639</a:documentation>
       <text/>
     </element>
   </define>
   <define name="edition">
     <a:documentation>ISO-15924: Latn</a:documentation>
     <element name="edition">
+      <a:documentation>ISO-15924: Latn</a:documentation>
       <optional>
         <attribute name="number"/>
       </optional>
