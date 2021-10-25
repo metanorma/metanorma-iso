@@ -15,7 +15,7 @@ jobs:
       - name: Setup prerequisites
         run: |
           sudo apt-get update
-          sudo apt-get -y xsltproc
+          sudo apt-get -y install xsltproc
 
       - run: make xsd_doc
         env:
