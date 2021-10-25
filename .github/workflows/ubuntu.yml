@@ -1,0 +1,41 @@
+name: ubuntu
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get -y xsltproc
+
+      - run: make xsd_doc
+        env:
+          GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: xsd_doc
+          path: xsd_doc
+
+  deploy-gh-pages:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@master
+
+    - uses: actions/download-artifact@master
+      with:
+        name: xsd_doc-ubuntu
+        path: xsd_doc
+
