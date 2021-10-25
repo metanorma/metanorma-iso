@@ -133,7 +133,7 @@ RSpec.describe Asciidoctor::ISO do
           <p id="foreword">Foreword</p>
           <review date="20170101T00:00:00Z" from="foreword" id="_" reviewer="ISO" to="foreword">
             <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
-            <p id="_">For further information on the Foreword, see#{' '}
+            <p id="_">For further information on the Foreword, see
               <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p>
           </review>
         </sections>
@@ -158,9 +158,9 @@ RSpec.describe Asciidoctor::ISO do
         <sections>
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
-            #{TERM_BOILERPLATE}#{'     '}
+            #{TERM_BOILERPLATE}
             <term id="term-term1">
-              <preferred>Term1</preferred>
+              <preferred><expression><name>Term1</name></expression></preferred>
               <termnote id="_">
                 <p id="_">This is a note</p></termnote>
             </term>
@@ -283,7 +283,7 @@ RSpec.describe Asciidoctor::ISO do
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="term-term1">
-              <preferred>Term1</preferred>
+              <preferred><expression><name>Term1</name></expression></preferred>
               <termexample id="_">
                 <p id="_">This is an example</p></termexample>
             </term>
@@ -521,6 +521,8 @@ RSpec.describe Asciidoctor::ISO do
 
       === Term1
 
+      Definition
+
       [.source]
       <<ISO2191,section=1>>
     INPUT
@@ -531,8 +533,13 @@ RSpec.describe Asciidoctor::ISO do
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="term-term1">
-              <preferred>Term1</preferred>
-              <termsource status="identical">
+              <preferred><expression><name>Term1</name></expression></preferred>
+                      <definition>
+          <verbaldefinition>
+            <p id='_'>Definition</p>
+          </verbaldefinition>
+        </definition>
+        <termsource status='identical' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">
@@ -556,6 +563,8 @@ RSpec.describe Asciidoctor::ISO do
 
       === Term1
 
+      Definition
+
       [.source]
       <<ISO2191,section=1>>, with adjustments
     INPUT
@@ -566,8 +575,13 @@ RSpec.describe Asciidoctor::ISO do
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="term-term1">
-              <preferred>Term1</preferred>
-              <termsource status="modified">
+              <preferred><expression><name>Term1</name></expression></preferred>
+                      <definition>
+          <verbaldefinition>
+            <p id='_'>Definition</p>
+          </verbaldefinition>
+        </definition>
+        <termsource status='modified' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">
@@ -607,15 +621,15 @@ RSpec.describe Asciidoctor::ISO do
              <title>Terms and definitions</title>
              #{TERM_BOILERPLATE}
              <term id='term-term1'>
-               <preferred>Term1</preferred>
-               <definition>
+               <preferred><expression><name>Term1</name></expression></preferred>
+               <definition><verbaldefinition>
                  <p id='_'>definition</p>
-               </definition>
+               </verbaldefinition></definition>
                <term id='term-term11'>
-                 <preferred>Term11</preferred>
-                 <definition>
+                 <preferred><expression><name>Term11</name></expression></preferred>
+                 <definition><verbaldefinition>
                    <p id='_'>definition2</p>
-                 </definition>
+                 </verbaldefinition></definition>
                </term>
              </term>
            </terms>

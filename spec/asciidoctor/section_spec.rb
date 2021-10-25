@@ -95,7 +95,7 @@ RSpec.describe Asciidoctor::ISO do
               </li>
             </ul>
             <term id="term-term1">
-              <preferred>Term1</preferred>
+              <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>
           <clause id="_" obligation="normative">
@@ -103,7 +103,7 @@ RSpec.describe Asciidoctor::ISO do
             <terms id="_" obligation="normative">
               <title>Normal Terms</title>
               <term id="term-term2">
-                <preferred>Term2</preferred>
+                <preferred><expression><name>Term2</name></expression></preferred>
               </term>
             </terms>
             <definitions id="_" obligation="normative">
@@ -292,7 +292,7 @@ RSpec.describe Asciidoctor::ISO do
               </li>
             </ul>
             <term id="term-term1">
-              <preferred>Term1</preferred>
+              <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>
         </sections>

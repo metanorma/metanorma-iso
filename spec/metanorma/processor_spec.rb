@@ -23,13 +23,16 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "generates IsoDoc XML from a blank document" do
-    expect(xmlpp(processor.input_to_isodoc(<<~"INPUT", nil))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
     INPUT
+    output = <<~OUTPUT
         #{BLANK_HDR}
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(processor.input_to_isodoc(input, nil)))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "generates HTML from IsoDoc XML" do

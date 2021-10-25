@@ -399,7 +399,7 @@ RSpec.describe IsoDoc do
           <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
           <terms id="Terms">
-          <term id="B"><preferred>B</preferred>
+          <term id="B"><preferred><expression><name>B</name></expression></preferred>
           <p>
           <ul>
             <li><concept><refterm>term0</refterm>
@@ -774,7 +774,7 @@ RSpec.describe IsoDoc do
        <sections>
        <clause id="clause1"><title>Clause 1</title></clause>
        <terms id="A">
-       <term id="B"><preferred>B</preferred<
+       <term id="B"><preferred><expression><name>B</name></expression></preferred<
        <p>
        <ul>
        <li>

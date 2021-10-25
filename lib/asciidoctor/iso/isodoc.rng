@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <!-- include "biblio.rnc" { } -->
   <include href="basicdoc.rng">
@@ -1803,17 +1803,20 @@
         <ref name="admitted"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="related"/>
+        <ref name="deprecates"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="deprecates"/>
+        <ref name="related"/>
       </zeroOrMore>
       <optional>
         <ref name="termdomain"/>
       </optional>
-      <zeroOrMore>
-        <ref name="termgrammar"/>
-      </zeroOrMore>
+      <optional>
+        <ref name="termsubject"/>
+      </optional>
+      <optional>
+        <ref name="termusage"/>
+      </optional>
       <oneOrMore>
         <ref name="termdefinition"/>
       </oneOrMore>
@@ -1830,40 +1833,199 @@
   </define>
   <define name="preferred">
     <element name="preferred">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="Designation"/>
     </element>
   </define>
   <define name="admitted">
     <element name="admitted">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="Designation"/>
     </element>
   </define>
   <define name="related">
     <element name="related">
-      <optional>
-        <attribute name="type">
-          <choice>
-            <value>compare</value>
-            <value>contrast</value>
-            <value>see</value>
-          </choice>
-        </attribute>
-      </optional>
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <attribute name="type">
+        <ref name="RelatedTermType"/>
+      </attribute>
+      <element name="preferred">
+        <ref name="Designation"/>
+      </element>
+      <choice>
+        <ref name="eref"/>
+        <ref name="xref"/>
+        <ref name="termref"/>
+      </choice>
     </element>
+  </define>
+  <define name="RelatedTermType">
+    <choice>
+      <value>deprecates</value>
+      <value>supersedes</value>
+      <value>narrower</value>
+      <value>broader</value>
+      <value>equivalent</value>
+      <value>compare</value>
+      <value>contrast</value>
+      <value>see</value>
+    </choice>
   </define>
   <define name="deprecates">
     <element name="deprecates">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="Designation"/>
     </element>
+  </define>
+  <define name="Designation">
+    <optional>
+      <attribute name="absent">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="geographicArea"/>
+    </optional>
+    <choice>
+      <ref name="expression_designation"/>
+      <ref name="letter_symbol_designation"/>
+      <ref name="graphical_symbol_designation"/>
+    </choice>
+    <zeroOrMore>
+      <ref name="termsource"/>
+    </zeroOrMore>
+  </define>
+  <define name="letter_symbol_designation">
+    <element name="letter-symbol">
+      <optional>
+        <attribute name="isInternational">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <element name="name">
+        <oneOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="stem"/>
+          </choice>
+        </oneOrMore>
+      </element>
+    </element>
+  </define>
+  <define name="graphical_symbol_designation">
+    <element name="graphical-symbol">
+      <optional>
+        <attribute name="isInternational">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <ref name="figure"/>
+    </element>
+  </define>
+  <define name="expression_designation">
+    <element name="expression">
+      <optional>
+        <attribute name="language">
+          <a:documentation>ISO-639</a:documentation>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="script">
+          <a:documentation>ISO-15924</a:documentation>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="type">
+          <ref name="ExpressionDesignationType"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="isInternational">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <element name="name">
+        <zeroOrMore>
+          <ref name="PureTextElement"/>
+        </zeroOrMore>
+      </element>
+      <optional>
+        <element name="abbreviationType">
+          <ref name="AbbreviationType"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="pronunciation">
+          <ref name="LocalizedString"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="grammarInfo">
+          <ref name="Grammar"/>
+        </element>
+      </optional>
+    </element>
+  </define>
+  <define name="ExpressionDesignationType">
+    <choice>
+      <value>prefix</value>
+      <value>suffix</value>
+      <value>abbreviation</value>
+      <value>full</value>
+    </choice>
+  </define>
+  <define name="AbbreviationType">
+    <choice>
+      <value>truncation</value>
+      <value>acronym</value>
+      <value>initialism</value>
+    </choice>
+  </define>
+  <define name="Grammar">
+    <zeroOrMore>
+      <element name="gender">
+        <ref name="GrammarGender"/>
+      </element>
+    </zeroOrMore>
+    <optional>
+      <element name="isPreposition">
+        <data type="boolean"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="isParticiple">
+        <data type="boolean"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="isAdjective">
+        <data type="boolean"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="isVerb">
+        <data type="boolean"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="isAdverb">
+        <data type="boolean"/>
+      </element>
+    </optional>
+    <optional>
+      <element name="isNoun">
+        <data type="boolean"/>
+      </element>
+    </optional>
+    <zeroOrMore>
+      <element name="grammarvalue">
+        <text/>
+      </element>
+    </zeroOrMore>
+  </define>
+  <define name="GrammarGender">
+    <choice>
+      <value>masculine</value>
+      <value>feminine</value>
+      <value>neuter</value>
+      <value>common</value>
+    </choice>
   </define>
   <define name="termdomain">
     <element name="domain">
@@ -1872,18 +2034,47 @@
       </oneOrMore>
     </element>
   </define>
-  <define name="termgrammar">
-    <element name="grammar">
+  <define name="termsubject">
+    <element name="subject">
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>
     </element>
   </define>
+  <define name="termusage">
+    <element name="usageinfo">
+      <oneOrMore>
+        <ref name="BasicBlock"/>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="termdefinition">
     <element name="definition">
+      <choice>
+        <ref name="verbaldefinition"/>
+        <ref name="nonverbalrep"/>
+        <group>
+          <ref name="verbaldefinition"/>
+          <ref name="nonverbalrep"/>
+        </group>
+      </choice>
+    </element>
+  </define>
+  <define name="verbaldefinition">
+    <element name="verbaldefinition">
+      <oneOrMore>
+        <ref name="paragraph"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="termsource"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="nonverbalrep">
+    <element name="nonverbalrepresentation">
       <oneOrMore>
         <choice>
-          <ref name="paragraph"/>
+          <ref name="table"/>
           <ref name="figure"/>
           <ref name="formula"/>
         </choice>

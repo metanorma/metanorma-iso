@@ -56,8 +56,16 @@ RSpec.describe Asciidoctor::ISO do
               </msub>
             </math>
           </stem>
-          <admitted>alt</admitted>
-          <deprecates>deprecated</deprecates>
+          <admitted>
+            <expression>
+              <name>alt</name>
+            </expression>
+          </admitted>
+          <deprecates>
+            <expression>
+              <name>deprecated</name>
+            </expression>
+          </deprecates>
           <domain>domain</domain>
           <strike>strike</strike>
           <smallcap>smallcap</smallcap>
