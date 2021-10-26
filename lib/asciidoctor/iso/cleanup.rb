@@ -8,7 +8,7 @@ module Asciidoctor
   module ISO
     class Converter < Standoc::Converter
       PRE_NORMREF_FOOTNOTES = "//preface//fn | "\
-        "//clause[@type = 'scope']//fn".freeze
+                              "//clause[@type = 'scope']//fn".freeze
 
       NORMREF_FOOTNOTES =
         "//references[@normative = 'true']//fn".freeze
@@ -41,7 +41,7 @@ module Asciidoctor
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
                      "/organization").each do |x|
           x1 = x.at("abbreviation")&.text || x.at("name")&.text
-          x1 == "ISO" and prefix.unshift("ISO") or prefix << x1
+          (x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
         end
         prefix
       end
@@ -64,14 +64,15 @@ module Asciidoctor
         super
       end
 
-      TERM_CLAUSE = "//sections//terms | "\
+      TERM_CLAUSE =
+        "//sections//terms | "\
         "//sections//clause[descendant::terms][not(descendant::definitions)]"
-        .freeze
+          .freeze
 
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
 
       OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or "\
-        "@type = 'ISBN'".freeze
+                 "@type = 'ISBN'".freeze
 
       def pub_class(bib)
         return 1 if bib.at("#{PUBLISHER}[abbreviation = 'ISO']")
@@ -111,7 +112,7 @@ module Asciidoctor
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
         "#{pubclass} :: #{type} :: "\
           "#{num.nil? ? abbrid : sprintf('%09d', num.to_i)} :: "\
-          "#{partid} :: #{id&.text} :: #{title}"
+          "#{sprintf('%09d', partid.to_i)} :: #{id&.text} :: #{title}"
       end
 
       def sections_cleanup(xml)

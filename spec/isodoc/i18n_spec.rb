@@ -249,13 +249,18 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
   end
 
   it "defaults to English" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", <<~"INPUT", true)
+    output = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <language>tlh</language>
@@ -334,7 +339,8 @@ RSpec.describe IsoDoc do
         </bibliography>
       </iso-standard>
     INPUT
-    expect(xmlpp(output).sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+    expect(xmlpp(output)
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
           <bibdata>
@@ -686,9 +692,13 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
   end
 
   it "processes Simplified Chinese" do
@@ -989,8 +999,12 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
   end
 end
