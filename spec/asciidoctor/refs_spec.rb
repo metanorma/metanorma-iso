@@ -5,7 +5,7 @@ require "relaton_ietf"
 RSpec.describe Asciidoctor::ISO do
   it "processes draft ISO reference" do
     mock_fdis
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ISOBIB_BLANK_HDR}
       == Clause
       <<iso123>>
@@ -20,6 +20,7 @@ RSpec.describe Asciidoctor::ISO do
       * [[[iso123,ISO 123:--]]] footnote:[The standard is in press] _Standard_
       * [[[fdis,ISO/FDIS 17664-1]]] Title
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
@@ -169,10 +170,12 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes all-parts ISO reference" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
 
       == Clause
@@ -184,6 +187,7 @@ RSpec.describe Asciidoctor::ISO do
 
       * [[[iso123,ISO 123:1066 (all parts)]]] _Standard_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
@@ -219,16 +223,19 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes non-ISO reference in Normative References" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Normative References
 
       * [[[iso123,XYZ 123:1066 (all parts)]]] _Standard_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
 
@@ -248,16 +255,19 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes non-ISO reference in Bibliography" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Bibliography
 
       * [[[iso123,1]]] _Standard_
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
 
@@ -275,6 +285,79 @@ RSpec.describe Asciidoctor::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "sort ISO references in Bibliography" do
+    VCR.use_cassette "sortrefs" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+        [bibliography]
+        == Bibliography
+
+        * [[[iso1,ISO 8000-110]]]
+        * [[[iso2,ISO 8000-61]]]
+        * [[[iso3,ISO 8000-8]]]
+        * [[[iso4,ISO 9]]]
+      INPUT
+      output = <<~OUTPUT
+              #{BLANK_HDR}
+                <sections> </sections>
+          <bibliography>
+            <references id='_' normative='false' obligation='informative'>
+              <title>Bibliography</title>
+              <bibitem id='iso4' type='standard'>
+                <docidentifier>ISO 9</docidentifier>
+                <docnumber>9</docnumber>
+                <contributor>
+                  <role type='publisher'/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                  </organization>
+                </contributor>
+              </bibitem>
+              <bibitem id='iso3' type='standard'>
+                <docidentifier>ISO 8000-8</docidentifier>
+                <docnumber>8000-8</docnumber>
+                <contributor>
+                  <role type='publisher'/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                  </organization>
+                </contributor>
+              </bibitem>
+              <bibitem id='iso2' type='standard'>
+                <docidentifier>ISO 8000-61</docidentifier>
+                <docnumber>8000-61</docnumber>
+                <contributor>
+                  <role type='publisher'/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                  </organization>
+                </contributor>
+              </bibitem>
+              <bibitem id='iso1' type='standard'>
+                <docidentifier>ISO 8000-110</docidentifier>
+                <docnumber>8000-110</docnumber>
+                <contributor>
+                  <role type='publisher'/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                  </organization>
+                </contributor>
+              </bibitem>
+            </references>
+          </bibliography>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
   end
 
   private
