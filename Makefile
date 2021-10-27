@@ -9,10 +9,11 @@ SHELL := /bin/bash
 IGNORE := $(shell mkdir -p $(HOME)/.cache/xml2rfc)
 
 TRANG_RELEASE := https://github.com/relaxng/jing-trang/releases/download/V20181222/trang-20181222.zip
-TRANG_JAR := ${CURDIR}/trang/trang.jar
-XSDVIPATH := ${CURDIR}/xsdvi/xsdvi.jar
-XSLT_FILE := ${CURDIR}/xsl/xs3p.xsl
-XSLT_FILE_MERGE := ${CURDIR}/xsl/xsdmerge.xsl
+TOOLS_DIR := ${CURDIR}/tools
+TRANG_JAR := $(TOOLS_DIR)/trang.jar
+XSDVIPATH := $(TOOLS_DIR)/xsdvi.jar
+XSLT_FILE := $(TOOLS_DIR)/xs3pxsl
+XSLT_FILE_MERGE := $(TOOLS_DIR)/xsdmerge.xsl
 RNG_FILE_SRC := lib/asciidoctor/iso/isostandard.rng
 XSD_FILE_DEST := ${CURDIR}/xsd_doc/isostandard.xsd
 
@@ -46,11 +47,10 @@ open:
 	open *.txt
 
 
-xsdvi/xsdvi.zip:
-	mkdir -p $(dir $@)
-	curl -sSL https://sourceforge.net/projects/xsdvi/files/latest/download > $@
-
-$(XSDVIPATH): xsdvi/xercesImpl.jar
+$(XSDVIPATH):
+	mkdir -p $(dir $@); \
+	curl -sSL https://sourceforge.net/projects/xsdvi/files/latest/download > $(dir $@)/xsdvi.zip; \
+	unzip -p $(dir $@)/xsdvi.zip dist/lib/xercesImpl.jar > $(dir $@)/xercesImpl.jar; \
 	curl -sSL https://github.com/metanorma/xsdvi/releases/download/v1.0/xsdvi-1.0.jar > $@
 
 $(XSLT_FILE):
@@ -60,10 +60,6 @@ $(XSLT_FILE):
 $(XSLT_FILE_MERGE):
 	mkdir -p $(dir $@)
 	curl -sSL https://raw.githubusercontent.com/metanorma/xs3p/main/xsl/xsdmerge.xsl > $@
-
-
-xsdvi/xercesImpl.jar: xsdvi/xsdvi.zip
-	unzip -p $< dist/lib/xercesImpl.jar > $@
 
 $(TRANG_JAR):
 	mkdir -p $(dir $@); \
