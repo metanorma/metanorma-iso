@@ -49,12 +49,14 @@ module IsoDoc
 
       def foreword(isoxml, out)
         f = isoxml.at(ns("//foreword")) || return
+        @foreword = true
         page_break(out)
         out.div **attr_code(id: f["id"]) do |s|
           clause_name(nil, f.at(ns("./title")) || @i18n.foreword, s,
                       { class: "ForewordTitle" })
           f.elements.each { |e| parse(e, s) unless e.name == "title" }
         end
+        @foreword = false
       end
     end
   end

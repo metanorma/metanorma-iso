@@ -2063,7 +2063,12 @@
   <define name="verbaldefinition">
     <element name="verbaldefinition">
       <oneOrMore>
-        <ref name="paragraph"/>
+        <choice>
+          <ref name="paragraph"/>
+          <ref name="dl"/>
+          <ref name="ol"/>
+          <ref name="ul"/>
+        </choice>
       </oneOrMore>
       <zeroOrMore>
         <ref name="termsource"/>
@@ -2161,6 +2166,12 @@
         <choice>
           <value>identical</value>
           <value>modified</value>
+        </choice>
+      </attribute>
+      <attribute name="type">
+        <choice>
+          <value>authoritative</value>
+          <value>lineage</value>
         </choice>
       </attribute>
       <ref name="origin"/>
