@@ -194,6 +194,7 @@
         </optional>
         <optional>
           <attribute name="type">
+            <a:documentation>allow specifying labels of an ordered list</a:documentation>
             <choice>
               <value>roman</value>
               <value>alphabet</value>
