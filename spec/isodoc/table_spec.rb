@@ -368,14 +368,12 @@ RSpec.describe IsoDoc do
               </td>
             </tr>
           </tfoot>
-        </table>
-        <table class="dl">
-          <tr>
-            <td align="left" valign="top">
-              <p align="left" class="MsoNormal" style="margin-left:0pt;text-align:left;">Drago</p>
-            </td>
-            <td valign="top">A type of rice</td>
-          </tr>
+          <dl>
+        <dt>
+          <p align='left' style='margin-left:0pt;text-align:left;' class='MsoNormal'>Drago</p>
+        </dt>
+        <dd>A type of rice</dd>
+        </dl>
         </table>
       </div>
     OUTPUT
