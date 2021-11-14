@@ -7457,12 +7457,15 @@
 		<xsl:param name="default">left</xsl:param>
 		<xsl:attribute name="text-align">
 			<xsl:choose>
-				<xsl:when test="@align"><xsl:value-of select="@align"/></xsl:when>
+				<xsl:when test="@align and not(@align = 'indent')"><xsl:value-of select="@align"/></xsl:when>
 				<xsl:when test="ancestor::*[local-name() = 'td']/@align"><xsl:value-of select="ancestor::*[local-name() = 'td']/@align"/></xsl:when>
 				<xsl:when test="ancestor::*[local-name() = 'th']/@align"><xsl:value-of select="ancestor::*[local-name() = 'th']/@align"/></xsl:when>
 				<xsl:otherwise><xsl:value-of select="$default"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
+		<xsl:if test="@align = 'indent'">
+			<xsl:attribute name="margin-left">7mm</xsl:attribute>
+		</xsl:if>
 	</xsl:template><xsl:template name="number-to-words">
 		<xsl:param name="number"/>
 		<xsl:param name="first"/>
