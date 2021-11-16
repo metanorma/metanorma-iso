@@ -4,7 +4,7 @@ module Metanorma
   module Iso
     class Processor < Metanorma::Processor
 
-      def initialize
+      def initialize # rubocop:disable Lint/MissingSuper
         @short = :iso
         @input_format = :asciidoc
         @asciidoctor_backend = :iso
@@ -17,7 +17,7 @@ module Metanorma
           doc: "doc",
           pdf: "pdf",
           sts: "sts.xml",
-          isosts: "iso.sts.xml"
+          isosts: "iso.sts.xml",
         )
       end
 
