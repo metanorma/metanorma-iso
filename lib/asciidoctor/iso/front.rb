@@ -18,8 +18,8 @@ module Asciidoctor
           xml.updates_document_type a
       end
 
-      def metadata_doctype(node, xml)
-        xml.doctype doctype(node)
+      def metadata_subdoctype(node, xml)
+        super
         a = node.attr("horizontal") and xml.horizontal a
       end
 
