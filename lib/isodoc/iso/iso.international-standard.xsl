@@ -6495,9 +6495,10 @@
 		</fo:block>
 	</xsl:template><xsl:template match="*[local-name() = 'definition'][preceding-sibling::*[local-name() = 'domain']]">
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template match="*[local-name() = 'definition'][preceding-sibling::*[local-name() = 'domain']]/*[local-name() = 'p']">
+	</xsl:template><xsl:template match="*[local-name() = 'definition'][preceding-sibling::*[local-name() = 'domain']]/*[local-name() = 'p'][1]">
 		<fo:inline> <xsl:apply-templates/></fo:inline>
-		<fo:block> </fo:block>
+		<!-- <fo:block>&#xA0;</fo:block> -->
+		<fo:block/>
 	</xsl:template><xsl:template match="/*/*[local-name() = 'sections']/*" priority="2">
 		
 		<fo:block>
