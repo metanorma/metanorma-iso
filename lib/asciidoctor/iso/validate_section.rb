@@ -216,7 +216,7 @@ module Asciidoctor
 
       def asset_style(root)
         root.xpath("//example | //termexample").each { |e| example_style(e) }
-        root.xpath("//definition/verbaldefinition").each { |e| definition_style(e) }
+        root.xpath("//definition/verbal-definition").each { |e| definition_style(e) }
         root.xpath("//note").each { |e| note_style(e) }
         root.xpath("//fn").each { |e| footnote_style(e) }
         root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
