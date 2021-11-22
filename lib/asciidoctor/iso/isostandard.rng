@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar ns="https://www.metanorma.org/ns/iso" xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar ns="https://www.metanorma.org/ns/iso" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <!-- default namespace isostandard = "https://www.metanorma.com/ns/iso" -->
   <include href="isodoc.rng">
     <start>
@@ -359,7 +359,6 @@
   -->
   <define name="iso-standard">
     <element name="iso-standard">
-      <a:documentation>Root element for xml document</a:documentation>
       <attribute name="version"/>
       <attribute name="type">
         <choice>
@@ -470,7 +469,6 @@
   </define>
   <define name="annex-appendix">
     <element name="appendix">
-      <a:documentation>Appendix</a:documentation>
       <ref name="Clause-Section"/>
     </element>
   </define>

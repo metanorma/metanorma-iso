@@ -194,7 +194,6 @@
         </optional>
         <optional>
           <attribute name="type">
-            <a:documentation>allow specifying labels of an ordered list</a:documentation>
             <choice>
               <value>roman</value>
               <value>alphabet</value>
@@ -1815,9 +1814,6 @@
       <optional>
         <ref name="termsubject"/>
       </optional>
-      <optional>
-        <ref name="termusage"/>
-      </optional>
       <oneOrMore>
         <ref name="termdefinition"/>
       </oneOrMore>
@@ -1888,9 +1884,29 @@
       <ref name="letter_symbol_designation"/>
       <ref name="graphical_symbol_designation"/>
     </choice>
+    <optional>
+      <ref name="fieldofapplication"/>
+    </optional>
+    <optional>
+      <ref name="usageinfo"/>
+    </optional>
     <zeroOrMore>
       <ref name="termsource"/>
     </zeroOrMore>
+  </define>
+  <define name="fieldofapplication">
+    <element name="fieldofapplication">
+      <oneOrMore>
+        <ref name="PureTextElement"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="usageinfo">
+    <element name="usageinfo">
+      <oneOrMore>
+        <ref name="PureTextElement"/>
+      </oneOrMore>
+    </element>
   </define>
   <define name="letter_symbol_designation">
     <element name="letter-symbol">
@@ -2039,13 +2055,6 @@
     <element name="subject">
       <oneOrMore>
         <ref name="TextElement"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="termusage">
-    <element name="usageinfo">
-      <oneOrMore>
-        <ref name="BasicBlock"/>
       </oneOrMore>
     </element>
   </define>
