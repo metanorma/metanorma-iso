@@ -121,12 +121,15 @@ RSpec.describe Asciidoctor::ISO do
 
       === stem:[t_90]
 
+      [.definition]
+      --
       [stem]
       ++++
       t_A
       ++++
 
       This paragraph is extraneous
+      --
     INPUT
     output = <<~OUTPUT
       #{BLANK_HDR}
@@ -134,7 +137,7 @@ RSpec.describe Asciidoctor::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-t90">
+            <term id="term-_-t90-">
               <preferred>
                 <letter-symbol><name>
                 <stem type="MathML">
@@ -151,8 +154,7 @@ RSpec.describe Asciidoctor::ISO do
                 </name></letter-symbol>
               </preferred>
               <definition>
-                <verbal-definition><p id="_">This paragraph is extraneous</p></verbal-definition>
-                <non-verbal-representation>
+                <verbal-definition>
                 <formula id="_">
                   <stem type="MathML">
                     <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -167,7 +169,8 @@ RSpec.describe Asciidoctor::ISO do
                     </math>
                   </stem>
                 </formula>
-              </non-verbal-representation></definition>
+                <p id="_">This paragraph is extraneous</p></verbal-definition>
+              </definition>
             </term>
           </terms>
         </sections>

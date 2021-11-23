@@ -65,6 +65,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
+      <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <sections>
           <terms id='_terms_and_definitions' obligation='normative' displayorder='1'>
@@ -72,9 +73,8 @@ RSpec.describe IsoDoc do
 
             <term id='paddy1'><name>1.1</name>
               <preferred>paddy</preferred>
-              <domain>rice</domain>
               <definition>
-                <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>rice retaining its husk after threshing</p>
+                <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>&lt;rice&gt; rice retaining its husk after threshing</p>
               </definition>
               <termexample id='_bd57bbf1-f948-4bae-b0ce-73c00431f892'>
                 <name>EXAMPLE 1</name>
