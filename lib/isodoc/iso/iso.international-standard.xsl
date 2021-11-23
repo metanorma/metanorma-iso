@@ -5855,6 +5855,8 @@
 		
 				
 				
+				
+				
 				<fo:block xsl:use-attribute-sets="sourcecode-style">
 					<xsl:variable name="_font-size">
 						
@@ -5888,12 +5890,16 @@
 				
 				
 				
+				
+				
 				<xsl:apply-templates/>			
 			</fo:block>
-				
+			
 			
 				<xsl:apply-templates select="*[local-name()='name']" mode="presentation"/>
 				
+				
+			
 				
 			</fo:block-container>
 		</fo:block-container>
