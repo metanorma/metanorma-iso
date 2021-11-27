@@ -2000,6 +2000,11 @@
         <ref name="GrammarGender"/>
       </element>
     </zeroOrMore>
+    <zeroOrMore>
+      <element name="number">
+        <ref name="GrammarNumber"/>
+      </element>
+    </zeroOrMore>
     <optional>
       <element name="isPreposition">
         <data type="boolean"/>
@@ -2044,6 +2049,13 @@
       <value>common</value>
     </choice>
   </define>
+  <define name="GrammarNumber">
+    <choice>
+      <value>singular</value>
+      <value>dual</value>
+      <value>plural</value>
+    </choice>
+  </define>
   <define name="termdomain">
     <element name="domain">
       <oneOrMore>
@@ -2078,6 +2090,9 @@
           <ref name="dl"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="table"/>
+          <ref name="figure"/>
+          <ref name="formula"/>
         </choice>
       </oneOrMore>
       <zeroOrMore>
