@@ -72,7 +72,7 @@ RSpec.describe IsoDoc do
           <title depth='1'>1<tab/>Terms and Definitions</title>
 
             <term id='paddy1'><name>1.1</name>
-              <preferred>paddy</preferred>
+              <preferred><strong>paddy</strong></preferred>
               <definition>
                 <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>&lt;rice&gt; rice retaining its husk after threshing</p>
               </definition>
@@ -97,7 +97,7 @@ RSpec.describe IsoDoc do
               </termsource>
             </term>
             <term id='paddy'><name>1.2</name>
-              <preferred>paddy</preferred>
+              <preferred><strong>paddy</strong></preferred>
               <admitted>paddy rice</admitted>
               <admitted>rough rice</admitted>
               <deprecates>cargo rice</deprecates>
@@ -129,11 +129,11 @@ RSpec.describe IsoDoc do
             </term>
             <term id='A'>
               <name>1.3</name>
-              <preferred>term1</preferred>
+              <preferred><strong>term1</strong></preferred>
               <definition>term1 definition</definition>
               <term id='B'>
                 <name>1.3.1</name>
-                <preferred>term2</preferred>
+                <preferred><strong>term2</strong></preferred>
                 <definition>term2 definition</definition>
               </term>
             </term>
@@ -147,7 +147,7 @@ RSpec.describe IsoDoc do
             <p class="zzSTDTitle1"/>
             <div id="_terms_and_definitions">
               <h1>1&#160; Terms and Definitions</h1>
-              <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
+              <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;"><b>paddy</b></p>
 
               <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">&lt;rice&gt; rice retaining its husk after threshing</p>
               <div class="example" id="_bd57bbf1-f948-4bae-b0ce-73c00431f892">
@@ -168,7 +168,7 @@ RSpec.describe IsoDoc do
                   [MODIFICATION]The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
               [/TERMREF]</p>
               <p class="TermNum" id="paddy">1.2</p>
-              <p class="Terms" style="text-align:left;">paddy</p>
+              <p class="Terms" style="text-align:left;"><b>paddy</b></p>
               <p class="AltTerms" style="text-align:left;">paddy rice</p>
               <p class="AltTerms" style="text-align:left;">rough rice</p>
               <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
@@ -194,10 +194,10 @@ RSpec.describe IsoDoc do
               <p>[TERMREF]<a href="#ISO7301">ISO 7301:2011, 3.1</a>
               [/TERMREF]</p>
               <p class='TermNum' id='A'>1.3</p>
-              <p class='Terms' style='text-align:left;'>term1</p>
+              <p class='Terms' style='text-align:left;'><b>term1</b></p>
                term1 definition
               <p class='TermNum' id='B'>1.3.1</p>
-              <p class='Terms' style='text-align:left;'>term2</p>
+              <p class='Terms' style='text-align:left;'><b>term2</b></p>
                term2 definition
             </div>
           </div>
@@ -207,7 +207,7 @@ RSpec.describe IsoDoc do
 
     word = <<~OUTPUT
       <div id="_terms_and_definitions"><h1>1<span style="mso-tab-count:1">&#160; </span>Terms and Definitions</h1>
-        <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;">paddy</p>
+        <p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;"><b>paddy</b></p>
 
         <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f" class="Definition">&lt;rice&gt; rice retaining its husk after threshing</p>
         <div id="_bd57bbf1-f948-4bae-b0ce-73c00431f892" class="example"><p><span class="example_label">EXAMPLE 1</span><span style="mso-tab-count:1">&#160; </span>Foreign seeds, husks, bran, sand, dust.</p><ul>
@@ -222,7 +222,7 @@ RSpec.describe IsoDoc do
             [MODIFICATION]The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
         [/TERMREF]</p>
         <p class="TermNum" id="paddy">1.2</p>
-        <p class="Terms" style="text-align:left;">paddy</p>
+        <p class="Terms" style="text-align:left;"><b>paddy</b></p>
         <p class="AltTerms" style="text-align:left;">paddy rice</p>
         <p class="AltTerms" style="text-align:left;">rough rice</p>
         <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
@@ -237,10 +237,10 @@ RSpec.describe IsoDoc do
         <p class="Source">[TERMREF]<a href="#ISO7301">ISO 7301:2011, 3.1</a>
         [/TERMREF]</p>
         <p class='TermNum' id='A'>1.3</p>
-        <p class='Terms' style='text-align:left;'>term1</p>
+        <p class='Terms' style='text-align:left;'><b>term1</b></p>
          term1 definition
         <p class='TermNum' id='B'>1.3.1</p>
-        <p class='Terms' style='text-align:left;'>term2</p>
+        <p class='Terms' style='text-align:left;'><b>term2</b></p>
          term2 definition
       </div>
     OUTPUT

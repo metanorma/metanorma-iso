@@ -111,7 +111,7 @@ RSpec.describe IsoDoc do
               <title depth="2">3.1<tab/>Normal Terms</title>
               <term id="J">
                 <name>3.1.1</name>
-                <preferred>Term2</preferred>
+                <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
             <definitions id="K" inline-header="true">
@@ -199,7 +199,7 @@ RSpec.describe IsoDoc do
                 <h2>3.1&#160; Normal Terms</h2>
 
                 <p class="TermNum" id="J">3.1.1</p>
-                <p class="Terms" style="text-align:left;">Term2</p>
+                <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
               <div id="K">
                 <span class="zzMoveToFollowing">
@@ -374,7 +374,7 @@ RSpec.describe IsoDoc do
                 <title depth="2">3.1<tab/>Normal Terms</title>
                 <term id="J">
                   <name>3.1.1</name>
-                  <preferred>Term2</preferred>
+                  <preferred><strong>Term2</strong></preferred>
                 </term>
               </terms>
               <definitions id="K" inline-header="true">
@@ -544,7 +544,7 @@ RSpec.describe IsoDoc do
               <title depth="2">3.1<tab/>Normal Terms</title>
               <term id="J">
                 <name>3.1.1</name>
-                <preferred>Term2</preferred>
+                <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
             <definitions id="K" inline-header="true">
@@ -631,7 +631,7 @@ RSpec.describe IsoDoc do
               <div id="I">
                 <h2>3.1&#160; Normal Terms</h2>
                 <p class="TermNum" id="J">3.1.1</p>
-                <p class="Terms" style="text-align:left;">Term2</p>
+                <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
               <div id="K">
                 <span class="zzMoveToFollowing">
@@ -841,7 +841,7 @@ RSpec.describe IsoDoc do
                 Normal Terms</title>
               <term id="J">
                 <name>3.1.1</name>
-                <preferred>Term2</preferred>
+                <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
             <definitions id="K" inline-header="true">
@@ -952,7 +952,7 @@ RSpec.describe IsoDoc do
               <h1>3 &#12288; Terms, definitions, symbols and abbreviated terms</h1>
               <div id="I"><h2>3.1 &#12288; Normal Terms</h2>
                 <p class="TermNum" id="J">3.1.1</p>
-                <p class="Terms" style="text-align:left;">Term2</p>
+                <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div><div id="K">
               <span class='zzMoveToFollowing'>
                 <b>3.2&#12288;</b>

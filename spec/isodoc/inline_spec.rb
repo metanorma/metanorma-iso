@@ -503,7 +503,7 @@ RSpec.describe IsoDoc do
           <terms id="Terms" displayorder="2"><title>2</title>
                 <term id='B'>
         <name>2.1</name>
-        <preferred>B</preferred>
+        <preferred><strong>B</strong></preferred>
           <p>
           <ul>
                     <li>
@@ -615,7 +615,7 @@ RSpec.describe IsoDoc do
              <div id='Terms'>
                <h1>2</h1>
         <p class='TermNum' id='B'>2.1</p>
-        <p class='Terms' style='text-align:left;'>B</p>
+        <p class='Terms' style='text-align:left;'><b>B</b></p>
                <p>
                  <ul>
                    <li>
@@ -819,7 +819,7 @@ RSpec.describe IsoDoc do
         <terms id="A" displayorder="2"><title>2</title>
         <term id='B'>
         <name>2.1</name>
-      <preferred>B</preferred>
+      <preferred><strong>B</strong></preferred>
         <p>
         <ul>
         <li>
@@ -862,7 +862,7 @@ RSpec.describe IsoDoc do
             <div id='A'>
               <h1>2</h1>
               <p class='TermNum' id='B'>2.1</p>
-            <p class='Terms' style='text-align:left;'>B</p>
+            <p class='Terms' style='text-align:left;'><b>B</b></p>
               <p>
                                <ul>
                         <li>

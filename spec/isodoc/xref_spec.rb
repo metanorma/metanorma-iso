@@ -1002,7 +1002,7 @@ RSpec.describe IsoDoc do
             <title>2</title>
             <term id="_waxy_rice">
               <name>2.1</name>
-              <preferred>waxy rice</preferred>
+              <preferred><strong>waxy rice</strong></preferred>
               <termnote id="note1">
                 <name>Note 1 to entry</name>
                 <p id="_b0cb3dfd-78fc-47dd-a339-84070d947463">The starch of waxy rice consists almost entirely of amylopectin. The
@@ -1012,7 +1012,7 @@ RSpec.describe IsoDoc do
             </term>
             <term id="_nonwaxy_rice">
               <name>2.2</name>
-              <preferred>nonwaxy rice</preferred>
+              <preferred><strong>nonwaxy rice</strong></preferred>
               <termnote id="note2">
                 <name>Note 1 to entry</name>
                 <p id="_b0cb3dfd-78fc-47dd-a339-84070d947463">The starch of waxy rice consists almost entirely of amylopectin. The
@@ -1199,7 +1199,7 @@ RSpec.describe IsoDoc do
               </title>
               <term id='J'>
                 <name>3.1.1</name>
-                <preferred>Term2</preferred>
+                <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
             <definitions id='K' inline-header='true'>

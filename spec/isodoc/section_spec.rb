@@ -110,7 +110,7 @@ RSpec.describe IsoDoc do
             <terms id="I" obligation="normative">
               <title depth="2">3.1<tab/>Normal Terms</title>
               <term id="J"><name>3.1.1</name>
-                <preferred>Term2</preferred>
+                <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
             <definitions id="K" inline-header="true"><title>3.2</title>
@@ -196,7 +196,7 @@ RSpec.describe IsoDoc do
               <div id="I">
                 <h2>3.1&#160; Normal Terms</h2>
                 <p class="TermNum" id="J">3.1.1</p>
-                <p class="Terms" style="text-align:left;">Term2</p>
+                <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
               <div id="K">
                 <span class="zzMoveToFollowing">
@@ -321,7 +321,7 @@ RSpec.describe IsoDoc do
                 <span style="mso-tab-count:1">&#160; </span>
                 Normal Terms</h2>
               <p class="TermNum" id="J">3.1.1</p>
-              <p class="Terms" style="text-align:left;">Term2</p>
+              <p class="Terms" style="text-align:left;"><b>Term2</b></p>
             </div>
             <div id="K">
               <span class="zzMoveToFollowing">
