@@ -181,7 +181,7 @@ module IsoDoc
           (v = elem.at(ns("./definition/verbal-definition"))) &&
           v.elements.first.name == "p") or return
         v.elements.first.children.first.previous =
-          "&lt;#{d.remove.children.to_xml}&gt; "
+          "&#x3c;#{d.remove.children.to_xml}&#x3e; "
       end
 
       include Init
