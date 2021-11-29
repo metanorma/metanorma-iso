@@ -66,9 +66,9 @@ RSpec.describe Asciidoctor::ISO do
                 </stem>
                 </name></letter-symbol>
               </admitted>
-              <definition><verbaldefinition>
+              <definition><verbal-definition>
                 <p id="_">Time</p>
-              </verbaldefinition></definition>
+              </verbal-definition></definition>
             </term>
           </terms>
         </sections>
@@ -96,8 +96,8 @@ RSpec.describe Asciidoctor::ISO do
             <term id="term-tempus">
               <preferred><expression><name>Tempus</name></expression></preferred>
               <domain>relativity</domain>
-              <definition><verbaldefinition>
-                <p id="_">Time</p></verbaldefinition></definition>
+              <definition><verbal-definition>
+                <p id="_">Time</p></verbal-definition></definition>
             </term>
           </terms>
         </sections>
@@ -121,12 +121,15 @@ RSpec.describe Asciidoctor::ISO do
 
       === stem:[t_90]
 
+      [.definition]
+      --
       [stem]
       ++++
       t_A
       ++++
 
       This paragraph is extraneous
+      --
     INPUT
     output = <<~OUTPUT
       #{BLANK_HDR}
@@ -134,7 +137,7 @@ RSpec.describe Asciidoctor::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-t90">
+            <term id="term-_-t90-">
               <preferred>
                 <letter-symbol><name>
                 <stem type="MathML">
@@ -151,8 +154,7 @@ RSpec.describe Asciidoctor::ISO do
                 </name></letter-symbol>
               </preferred>
               <definition>
-                <verbaldefinition><p id="_">This paragraph is extraneous</p></verbaldefinition>
-                <nonverbalrepresentation>
+                <verbal-definition>
                 <formula id="_">
                   <stem type="MathML">
                     <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -167,7 +169,8 @@ RSpec.describe Asciidoctor::ISO do
                     </math>
                   </stem>
                 </formula>
-              </nonverbalrepresentation></definition>
+                <p id="_">This paragraph is extraneous</p></verbal-definition>
+              </definition>
             </term>
           </terms>
         </sections>
@@ -203,9 +206,9 @@ RSpec.describe Asciidoctor::ISO do
             </ul>
             <term id="term-time">
               <preferred><expression><name>Time</name></expression></preferred>
-              <definition><verbaldefinition>
+              <definition><verbal-definition>
                 <p id="_">This paragraph is extraneous</p>
-              </verbaldefinition></definition>
+              </verbal-definition></definition>
             </term>
           </terms>
         </sections>
@@ -454,9 +457,9 @@ RSpec.describe Asciidoctor::ISO do
             <term id="term-term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
-          <verbaldefinition>
+          <verbal-definition>
             <p id='_'>Definition</p>
-          </verbaldefinition>
+          </verbal-definition>
         </definition>
         <termsource status='identical' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">

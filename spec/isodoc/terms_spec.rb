@@ -9,7 +9,7 @@ RSpec.describe IsoDoc do
             <term id="paddy1">
               <preferred><expression><name>paddy</name></expression></preferred>
               <domain>rice</domain>
-              <definition><verbaldefinition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></verbaldefinition></definition>
+              <definition><verbal-definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></verbal-definition></definition>
               <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f892">
                 <p id="_65c9a509-9a89-4b54-a890-274126aeb55c">Foreign seeds, husks, bran, sand, dust.</p>
                 <ul>
@@ -35,7 +35,7 @@ RSpec.describe IsoDoc do
               <admitted><expression><name>paddy rice</name></expression></admitted>
               <admitted><expression><name>rough rice</name></expression></admitted>
               <deprecates><expression><name>cargo rice</name></expression></deprecates>
-              <definition><verbaldefinition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></verbaldefinition></definition>
+              <definition><verbal-definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></verbal-definition></definition>
               <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74e">
                 <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
               </termnote>
@@ -54,10 +54,10 @@ RSpec.describe IsoDoc do
             </term>
             <term id="A">
               <preferred><expression><name>term1</name></expression></preferred>
-              <definition><verbaldefinition>term1 definition</verbaldefinition></definition>
+              <definition><verbal-definition>term1 definition</verbal-definition></definition>
               <term id="B">
               <preferred><expression><name>term2</name></expression></preferred>
-              <definition><verbaldefinition>term2 definition</verbaldefinition></definition>
+              <definition><verbal-definition>term2 definition</verbal-definition></definition>
               </term>
             </term>
           </terms>
@@ -65,6 +65,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
+      <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <sections>
           <terms id='_terms_and_definitions' obligation='normative' displayorder='1'>
@@ -72,9 +73,8 @@ RSpec.describe IsoDoc do
 
             <term id='paddy1'><name>1.1</name>
               <preferred>paddy</preferred>
-              <domain>rice</domain>
               <definition>
-                <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>rice retaining its husk after threshing</p>
+                <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>&lt;rice&gt; rice retaining its husk after threshing</p>
               </definition>
               <termexample id='_bd57bbf1-f948-4bae-b0ce-73c00431f892'>
                 <name>EXAMPLE 1</name>

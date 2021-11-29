@@ -57,7 +57,7 @@ module IsoDoc
         ret += " 第#{from.text}" if from
         ret += "&ndash;#{upto.text}" if upto
         loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize)
-        ret += " #{loc}" unless subsection && type == "clause" ||
+        ret += " #{loc}" unless (subsection && type == "clause") ||
           type == "list" || target.match(/^IEV$|^IEC 60050-/) ||
           node["droploc"] == "true"
         ret += ")" if type == "list"
@@ -73,8 +73,8 @@ module IsoDoc
           return l10n(eref_localities1_zh(target, type, from, upto, node,
                                           delim))
         ret = eref_delim(delim, type)
-        ret += eref_locality_populate(type, node) unless subsection &&
-          type == "clause" || type == "list" ||
+        ret += eref_locality_populate(type, node) unless (subsection &&
+          type == "clause") || type == "list" ||
           target.match(/^IEV$|^IEC 60050-/)
         ret += " #{from.text}" if from
         ret += "&ndash;#{upto.text}" if upto
@@ -163,15 +163,25 @@ module IsoDoc
         i = display_order_xpath(docxml, "//preface/*", i)
         i = display_order_at(docxml, "//clause[@type = 'scope']", i)
         i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
-        # i = display_order_at(docxml, "//sections/terms | "\
-        # "//sections/clause[descendant::terms]", i)
-        # i = display_order_at(docxml, "//sections/definitions", i)
-        # i = display_order_xpath(docxml, @xrefs.klass.middle_clause(docxml), i)
-        i = display_order_xpath(docxml, "//sections/clause[not(@type = 'scope')] | "\
-                                        "//sections/terms | //sections/definitions", i)
+        i = display_order_xpath(docxml,
+                                "//sections/clause[not(@type = 'scope')] | "\
+                                "//sections/terms | //sections/definitions", i)
         i = display_order_xpath(docxml, "//annex", i)
         i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
         display_order_xpath(docxml, "//indexsect", i)
+      end
+
+      def termdefinition1(elem)
+        prefix_domain_to_definition(elem)
+        super
+      end
+
+      def prefix_domain_to_definition(elem)
+        ((d = elem.at(ns("./domain"))) &&
+          (v = elem.at(ns("./definition/verbal-definition"))) &&
+          v.elements.first.name == "p") or return
+        v.elements.first.children.first.previous =
+          "&lt;#{d.remove.children.to_xml}&gt; "
       end
 
       include Init

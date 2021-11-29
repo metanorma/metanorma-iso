@@ -58,7 +58,7 @@
           <attribute name="alt"/>
         </optional>
         <optional>
-          <attribute name="updatetype">
+          <attribute name="update-type">
             <data type="boolean"/>
           </attribute>
         </optional>
@@ -1877,7 +1877,7 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="geographicArea"/>
+      <attribute name="geographic-area"/>
     </optional>
     <choice>
       <ref name="expression_designation"/>
@@ -1895,14 +1895,14 @@
     </zeroOrMore>
   </define>
   <define name="fieldofapplication">
-    <element name="fieldofapplication">
+    <element name="field-of-application">
       <oneOrMore>
         <ref name="PureTextElement"/>
       </oneOrMore>
     </element>
   </define>
   <define name="usageinfo">
-    <element name="usageinfo">
+    <element name="usage-info">
       <oneOrMore>
         <ref name="PureTextElement"/>
       </oneOrMore>
@@ -1963,7 +1963,7 @@
         </zeroOrMore>
       </element>
       <optional>
-        <element name="abbreviationType">
+        <element name="abbreviation-type">
           <ref name="AbbreviationType"/>
         </element>
       </optional>
@@ -1973,7 +1973,7 @@
         </element>
       </optional>
       <optional>
-        <element name="grammarInfo">
+        <element name="grammar-info">
           <ref name="Grammar"/>
         </element>
       </optional>
@@ -1998,6 +1998,11 @@
     <zeroOrMore>
       <element name="gender">
         <ref name="GrammarGender"/>
+      </element>
+    </zeroOrMore>
+    <zeroOrMore>
+      <element name="number">
+        <ref name="GrammarNumber"/>
       </element>
     </zeroOrMore>
     <optional>
@@ -2031,7 +2036,7 @@
       </element>
     </optional>
     <zeroOrMore>
-      <element name="grammarvalue">
+      <element name="grammar-value">
         <text/>
       </element>
     </zeroOrMore>
@@ -2042,6 +2047,13 @@
       <value>feminine</value>
       <value>neuter</value>
       <value>common</value>
+    </choice>
+  </define>
+  <define name="GrammarNumber">
+    <choice>
+      <value>singular</value>
+      <value>dual</value>
+      <value>plural</value>
     </choice>
   </define>
   <define name="termdomain">
@@ -2071,13 +2083,16 @@
     </element>
   </define>
   <define name="verbaldefinition">
-    <element name="verbaldefinition">
+    <element name="verbal-definition">
       <oneOrMore>
         <choice>
           <ref name="paragraph"/>
           <ref name="dl"/>
           <ref name="ol"/>
           <ref name="ul"/>
+          <ref name="table"/>
+          <ref name="figure"/>
+          <ref name="formula"/>
         </choice>
       </oneOrMore>
       <zeroOrMore>
@@ -2086,7 +2101,7 @@
     </element>
   </define>
   <define name="nonverbalrep">
-    <element name="nonverbalrepresentation">
+    <element name="non-verbal-representation">
       <oneOrMore>
         <choice>
           <ref name="table"/>
