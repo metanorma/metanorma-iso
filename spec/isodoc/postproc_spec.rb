@@ -48,7 +48,7 @@ RSpec.describe IsoDoc do
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
     expect(html).to include "<title>Cereals and pulses&#xA0;&#x2014; "\
-      "Specifications and test methods&#xA0;&#x2014; Rice</title>"
+                            "Specifications and test methods&#xA0;&#x2014; Rice</title>"
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
@@ -77,7 +77,7 @@ RSpec.describe IsoDoc do
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
     expect(html).to include "title>Cereals and pulses&#xA0;&#x2014; "\
-      "Specifications and test methods&#xA0;&#x2014; Rice</title>"
+                            "Specifications and test methods&#xA0;&#x2014; Rice</title>"
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
@@ -260,6 +260,80 @@ RSpec.describe IsoDoc do
       INPUT
     word = File.read("test.doc", encoding: "UTF-8")
     expect(word).to include('Content-Disposition: inline; filename="header.html"')
+  end
+
+  it "populates HTML ToC" do
+    IsoDoc::Iso::HtmlConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <sections>
+            <clause id="A" inline-header="false" obligation="normative">
+              <title>1
+                <tab/>
+                Clause 4</title>
+              <clause id="N" inline-header="false" obligation="normative">
+                <title>1.1
+                  <tab/>
+                  Introduction
+                  <bookmark id="Q"/>
+                  to this
+                  <fn reference="1">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                </title>
+              </clause>
+              <clause id="O" inline-header="false" obligation="normative">
+                <title>1.2
+                  <tab/>
+                  Clause 4.2</title>
+                <p>A
+                  <fn reference="1">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                </p>
+              </clause>
+            </clause>
+            <clause id="P"><title>2<tab/>Clause 5</title>
+            <clause id="P1"><title>2.1<tab/>Clause 5.1</title></clause>
+            </clause>
+          </sections>
+        </iso-standard>
+      INPUT
+
+    html = Nokogiri::XML(File.read("test.html", encoding: "UTF-8"))
+      .at("//div[@id = 'toc']").to_xml
+
+    expect(xmlpp(html))
+      .to be_equivalent_to xmlpp(<<~'OUTPUT')
+        <div id='toc'>
+          <ul>
+            <li class='h1'>
+              <div class='collapse-group'>
+                <a href='#toc0'>1 &#xA0; Clause 4</a>
+              </div>
+              <div class='collapse-button'/>
+            </li>
+            <ul class='content collapse'>
+              <li class='h2'>
+                <a href='#toc1'> 1.1 &#xA0; Introduction to this </a>
+              </li>
+              <li class='h2'>
+                <a href='#toc2'> 1.2 &#xA0; Clause 4.2</a>
+              </li>
+            </ul>
+            <li class='h1'>
+              <div class='collapse-group'>
+                <a href='#toc3'>2&#xA0; Clause 5</a>
+              </div>
+              <div class='collapse-button'/>
+            </li>
+            <ul class='content collapse'>
+              <li class='h2'>
+                <a href='#toc4'> 2.1&#xA0; Clause 5.1</a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+      OUTPUT
   end
 
   it "populates Word ToC" do
@@ -886,7 +960,7 @@ RSpec.describe IsoDoc do
         </div>
       OUTPUT
     expect(word).to include '<p class="zzWarning">This document is not '\
-      "an ISO International Standard"
+                            "an ISO International Standard"
   end
 
   it "populates Word ToC" do
