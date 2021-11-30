@@ -295,6 +295,7 @@ RSpec.describe IsoDoc do
             <clause id="P"><title>2<tab/>Clause 5</title>
             <clause id="P1"><title>2.1<tab/>Clause 5.1</title></clause>
             </clause>
+            <clause id="Q"><title>3<tab/>Clause 6</title></clause>
           </sections>
         </iso-standard>
       INPUT
@@ -309,28 +310,31 @@ RSpec.describe IsoDoc do
             <li class='h1'>
               <div class='collapse-group'>
                 <a href='#toc0'>1 &#xA0; Clause 4</a>
+                <div class='collapse-button'/>
               </div>
-              <div class='collapse-button'/>
+              <ul class='content collapse'>
+                <li class='h2'>
+                  <a href='#toc1'> 1.1 &#xA0; Introduction to this </a>
+                </li>
+                <li class='h2'>
+                  <a href='#toc2'> 1.2 &#xA0; Clause 4.2</a>
+                </li>
+              </ul>
             </li>
-            <ul class='content collapse'>
-              <li class='h2'>
-                <a href='#toc1'> 1.1 &#xA0; Introduction to this </a>
-              </li>
-              <li class='h2'>
-                <a href='#toc2'> 1.2 &#xA0; Clause 4.2</a>
-              </li>
-            </ul>
             <li class='h1'>
               <div class='collapse-group'>
                 <a href='#toc3'>2&#xA0; Clause 5</a>
+                <div class='collapse-button'/>
               </div>
-              <div class='collapse-button'/>
+              <ul class='content collapse'>
+                <li class='h2'>
+                  <a href='#toc4'> 2.1&#xA0; Clause 5.1</a>
+                </li>
+              </ul>
             </li>
-            <ul class='content collapse'>
-              <li class='h2'>
-                <a href='#toc4'> 2.1&#xA0; Clause 5.1</a>
-              </li>
-            </ul>
+            <li class='h1'>
+              <a href='#toc5'> 3&#xA0; Clause 6</a>
+            </li>
           </ul>
         </div>
       OUTPUT

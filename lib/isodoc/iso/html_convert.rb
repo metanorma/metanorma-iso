@@ -58,10 +58,11 @@ module IsoDoc
       end
 
       def html_toc_entry(level, header)
-        if level == "h1"
+        if level == "h1" && header.parent.at(".//h2[not(@class = 'TermNum')]"\
+                                             "[not(@class = 'noTOC')][text()]")
           <<~HDR
-            <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(header)}</a></li></div>
-            <div class="collapse-button"></div>
+            <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(header)}</a></li>
+            <div class="collapse-button"></div></div>
           HDR
         else
           %(<li class="#{level}"><a href="##{header['id']}">\
@@ -85,17 +86,22 @@ module IsoDoc
           elsif u2 then u2.add_child(l.remove)
           else
             u2 = l.replace("<ul class='content collapse'>#{l}</ul>").first
+            p = u2.previous_element and p << u2
           end
         end
       end
 
-      def html_head
-        super + <<~HEAD.freeze
+      def inject_script(doc)
+        scr = <<~HEAD.freeze
+          <script>
           $(".collapse-button").click(function () {
           $(this).toggleClass('expand'); // expand: the class to change the collapse button shape
           // collapse: the class to collapse/expand the li elements with the h2 class
           $(this).closest('li').children(".content").toggleClass('collapse');})
+          </script>
         HEAD
+        a = super.split(%r{</body>})
+        "#{a[0]}#{scr}</body>#{a[1]}"
       end
 
       def table_th_center(docxml)
