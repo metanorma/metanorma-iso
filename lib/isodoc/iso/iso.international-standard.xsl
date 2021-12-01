@@ -7575,4 +7575,14 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
+	</xsl:template><xsl:template name="setAltText">
+		<xsl:param name="value"/>
+		<xsl:attribute name="fox:alt-text">
+			<xsl:choose>
+				<xsl:when test="normalize-space($value) != ''">
+					<xsl:value-of select="$value"/>
+				</xsl:when>
+				<xsl:otherwise>_</xsl:otherwise>
+			</xsl:choose>
+		</xsl:attribute>
 	</xsl:template></xsl:stylesheet>
