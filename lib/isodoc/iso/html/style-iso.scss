@@ -709,3 +709,31 @@ font-weight: 600;
 .Admonition p, .admonition p {
     margin: 0;
 }
+
+/* Collapse TOC */
+
+                .collapse-group {
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                }
+
+                .collapse-button {
+                        position: absolute;
+                        right: 0;
+                        display: inline-block;
+                        height: 20px;
+                        width: 20px;
+                        cursor: pointer;
+                        background-image: url('data:image/svg+xml,<svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="rgba(0,0,0,.54)" d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>');
+                }
+
+                .collapse {
+                        display: none;
+                }
+
+                .expand {
+                        transform: rotateZ(-180deg);
+                }
+
+
