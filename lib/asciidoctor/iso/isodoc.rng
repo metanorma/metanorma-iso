@@ -1796,6 +1796,20 @@
           <data type="ID"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
+      </optional>
+      <optional>
+        <attribute name="tag"/>
+      </optional>
+      <optional>
+        <attribute name="multilingual-rendering">
+          <ref name="MultilingualRenderingType"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="preferred"/>
       </oneOrMore>

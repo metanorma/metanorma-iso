@@ -206,14 +206,10 @@ RSpec.describe IsoDoc do
                 <definition>
                   <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
                 </definition>
-                <termsource status="modified">
-                  <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline">
-                    <locality type="clause">
-                      <referenceFrom>3.1</referenceFrom>
-                    </locality>ISO 7301:2011, 3.1</origin>
-                  <modification>
-                    <p id="_e73a417d-ad39-417d-a4c8-20e4e2529489">The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here</p>
-                  </modification>
+                <termsource status="modified">[SOURCE:
+                  <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline"><locality type="clause">
+                      <referenceFrom>3.1</referenceFrom></locality>ISO 7301:2011, 3.1</origin>, modified &#x2013;
+                    The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here]
                 </termsource>
               </term>
             </terms>
@@ -226,23 +222,32 @@ RSpec.describe IsoDoc do
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
 
     expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
-      <div class="WordSection3">
-        <p class="zzSTDTitle1"/>
-        <div>
-          <a id="_terms_and_definitions" name="_terms_and_definitions"/>
-          <h1>1
-            <span style="mso-tab-count:1">  </span>
-            Terms and Definitions</h1>
-          <p class="TermNum">
-            <a id="paddy1" name="paddy1"/>1.1</p>
-          <p class="Terms" style="text-align:left;">paddy</p>
-          <p class="Definition">
-            <a id="_eb29b35e-123e-4d1c-b50b-2714d41e747f" name="_eb29b35e-123e-4d1c-b50b-2714d41e747f"/>rice retaining its husk after threshing</p>
-          <p class="Source">[SOURCE:
-            <a href="#ISO7301">ISO 7301:2011, 3.1</a>
-            , modified — The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here]</p>
-        </div>
-      </div>
+           <div class='WordSection3'>
+         <p class='zzSTDTitle1'/>
+         <div>
+           <a name='_terms_and_definitions' id='_terms_and_definitions'/>
+           <h1>
+             1
+             <span style='mso-tab-count:1'>&#xA0; </span>
+              Terms and Definitions
+           </h1>
+           <p class='TermNum'>
+             <a name='paddy1' id='paddy1'/>
+             1.1
+           </p>
+           <p class='Terms' style='text-align:left;'>paddy</p>
+           <p class='Definition'>
+             <a name='_eb29b35e-123e-4d1c-b50b-2714d41e747f' id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'/>
+             rice retaining its husk after threshing
+           </p>
+           <p class='Source'>
+             [SOURCE:
+             <a href='#ISO7301'>ISO 7301:2011, 3.1</a>
+             , modified &#x2013; The term "cargo rice" is shown as deprecated, and Note
+             1 to entry is not included here]
+           </p>
+         </div>
+       </div>
     OUTPUT
   end
 

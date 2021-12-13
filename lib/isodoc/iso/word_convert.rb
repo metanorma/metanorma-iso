@@ -124,9 +124,7 @@ module IsoDoc
 
       def termref_parse(node, out)
         out.p **termref_attrs do |p|
-          p << "[TERMREF]"
           node.children.each { |n| parse(n, p) }
-          p << "[/TERMREF]"
         end
       end
 
