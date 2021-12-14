@@ -184,6 +184,30 @@ module IsoDoc
           "&#x3c;#{d.remove.children.to_xml}&#x3e; "
       end
 
+      def insertall_after_here(node, insert, name)
+        node.children.each do |n|
+          next unless n.name == name
+
+          insert.next = n.remove
+          insert = n
+        end
+        insert
+      end
+
+      def termexamples_before_termnotes(node)
+        return unless insert = node.at(ns("./definition"))
+
+        insert = insertall_after_here(node, insert, "termexample")
+        insertall_after_here(node, insert, "termnote")
+      end
+
+      def terms(docxml)
+        docxml.xpath(ns("//term[termnote][termexample]")).each do |node|
+          termexamples_before_termnotes(node)
+        end
+        super
+      end
+
       include Init
     end
   end

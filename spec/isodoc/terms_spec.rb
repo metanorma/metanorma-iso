@@ -39,15 +39,15 @@ RSpec.describe IsoDoc do
               <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74e">
                 <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
               </termnote>
-              <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74f">
-              <ul><li>A</li></ul>
-                <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
-              </termnote>
               <termexample id="_bd57bbf1-f948-4bae-b0ce-73c00431f893">
                 <ul>
                 <li>A</li>
                 </ul>
               </termexample>
+              <termnote id="_671a1994-4783-40d0-bc81-987d06ffb74f">
+              <ul><li>A</li></ul>
+                <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+              </termnote>
               <termsource status="identical">
                 <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></origin>
               </termsource>

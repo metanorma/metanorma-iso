@@ -74,29 +74,6 @@ module IsoDoc
         end
       end
 
-      def insertall_after_here(node, insert, name)
-        node.children.each do |n|
-          next unless n.name == name
-
-          insert.next = n.remove
-          insert = n
-        end
-        insert
-      end
-
-      def termexamples_before_termnotes(node)
-        return unless node.at(ns("./termnote")) && node.at(ns("./termexample"))
-        return unless insert = node.at(ns("./definition"))
-
-        insert = insertall_after_here(node, insert, "termexample")
-        insertall_after_here(node, insert, "termnote")
-      end
-
-      def termdef_parse(node, out)
-        termexamples_before_termnotes(node)
-        super
-      end
-
       def cleanup(docxml)
         super
         table_th_center(docxml)
@@ -177,14 +154,20 @@ module IsoDoc
 
       def clause_etc(isoxml, out, num)
         isoxml.xpath(ns("//sections/clause[not(@type = 'scope')] | "\
-                        "//sections/terms | //sections/definitions")).each do |f|
-          out.div **attr_code(id: f["id"],
-                              class: f.name == "definitions" ? "Symbols" : nil) do |div|
-            num = num + 1
-            clause_name(num, f&.at(ns("./title")), div, nil)
-            f.elements.each do |e|
-              parse(e, div) unless %w{title source}.include? e.name
-            end
+                        "//sections/terms | //sections/definitions"))
+          .each do |f|
+            clause_etc1(f, out, num)
+          end
+      end
+
+      def clause_etc1(clause, out, num)
+        out.div **attr_code(
+          id: clause["id"],
+          class: clause.name == "definitions" ? "Symbols" : nil) do |div|
+          num = num + 1
+          clause_name(num, clause&.at(ns("./title")), div, nil)
+          clause.elements.each do |e|
+            parse(e, div) unless %w{title source}.include? e.name
           end
         end
       end
