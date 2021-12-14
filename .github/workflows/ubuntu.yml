@@ -36,6 +36,6 @@ jobs:
 
     - uses: actions/download-artifact@master
       with:
-        name: xsd_doc-ubuntu
+        name: xsd_doc
         path: xsd_doc
 
