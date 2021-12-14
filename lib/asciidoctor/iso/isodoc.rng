@@ -1987,7 +1987,7 @@
         </element>
       </optional>
       <optional>
-        <element name="grammar-info">
+        <element name="grammar">
           <ref name="Grammar"/>
         </element>
       </optional>
