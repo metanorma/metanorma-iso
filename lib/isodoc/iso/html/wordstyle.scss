@@ -269,7 +269,7 @@ p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxS
 div.figure, p.figure
         {text-align: center;}
 
-h1
+h1, .h1
 	{mso-style-priority:1;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -284,8 +284,6 @@ h1
 	line-height:13.5pt;
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
-	mso-outline-level:1;
-	mso-list:l1 level1 lfo6;
 	mso-hyphenate:none;
 	tab-stops:20.0pt list 21.6pt left 28.0pt;
 {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
@@ -303,6 +301,10 @@ h1
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
+h1 {
+	mso-outline-level:1;
+	mso-list:l1 level1 lfo6;
+}
 h1.ForewordTitle {
         font-size:13.0pt;
         font-style: normal ;
@@ -336,7 +338,7 @@ h1.Annex
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
-.h2Annex, h2
+.h2Annex, h2, .h2
         {mso-style-priority:2;
         mso-style-unhide:no;
         mso-style-qformat:yes;
@@ -372,7 +374,7 @@ h2
 	{ mso-list:l1 level2 lfo6;
         mso-outline-level:2;
         }
-.h3Annex, h3
+.h3Annex, h3, .h3
 	{mso-style-priority:3;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -407,7 +409,7 @@ h2
 h3      {mso-list:l1 level3 lfo6;
 	mso-outline-level:3;
         }
-.h4Annex, h4
+.h4Annex, h4, .h4
 	{mso-style-priority:4;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -440,7 +442,7 @@ h3      {mso-list:l1 level3 lfo6;
 h4      {mso-list:l1 level4 lfo6;
 	mso-outline-level:4;
         }
-.h5Annex, h5
+.h5Annex, h5, .h5
 	{mso-style-priority:5;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
@@ -473,7 +475,7 @@ h4      {mso-list:l1 level4 lfo6;
 h5      {mso-list:l1 level5 lfo6;
 	mso-outline-level:5;
         }
-h6
+h6, .h6
 	{mso-style-priority:6;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
