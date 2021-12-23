@@ -1423,7 +1423,9 @@
 
 	<xsl:template name="getListItemFormat">
 		<xsl:choose>
-			<xsl:when test="local-name(..) = 'ul'">—</xsl:when> <!-- dash -->
+			<xsl:when test="local-name(..) = 'ul'">
+				<xsl:call-template name="setULLabel"/>
+			</xsl:when>
 			<xsl:otherwise> <!-- for ordered lists -->
 				<xsl:choose>
 					<xsl:when test="../@type = 'arabic'">
@@ -6692,7 +6694,50 @@
 		<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),' ',' ')"/>
 	</xsl:template><xsl:variable name="ul_labels_">
 		
-	</xsl:variable><xsl:variable name="ul_labels" select="xalan:nodeset($ul_labels_)"/><xsl:template match="*[local-name() = 'ul'] | *[local-name() = 'ol']">
+		
+		
+		
+		
+		
+		
+			<label>—</label> <!-- em dash -->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</xsl:variable><xsl:variable name="ul_labels" select="xalan:nodeset($ul_labels_)"/><xsl:template name="setULLabel">
+		<xsl:variable name="list_level_" select="count(ancestor::*[local-name() = 'ul']) + count(ancestor::*[local-name() = 'ol'])"/>
+		<xsl:variable name="list_level">
+			<xsl:choose>
+				<xsl:when test="$list_level_ &lt;= 3"><xsl:value-of select="$list_level_"/></xsl:when>
+				<xsl:otherwise><xsl:value-of select="$list_level_ mod 3"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$ul_labels/label[not(@level)]"> <!-- one label for all levels -->
+				<xsl:apply-templates select="$ul_labels/label[not(@level)]" mode="ul_labels"/>
+			</xsl:when>
+			<xsl:when test="$list_level mod 3 = 0">
+				<xsl:apply-templates select="$ul_labels/label[@level = 3]" mode="ul_labels"/>
+			</xsl:when>
+			<xsl:when test="$list_level mod 2 = 0">
+				<xsl:apply-templates select="$ul_labels/label[@level = 2]" mode="ul_labels"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="$ul_labels/label[@level = 1]" mode="ul_labels"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template><xsl:template match="label" mode="ul_labels">
+		<xsl:copy-of select="@*[not(local-name() = 'level')]"/>
+		<xsl:value-of select="."/>
+	</xsl:template><xsl:template match="*[local-name() = 'ul'] | *[local-name() = 'ol']">
 		<xsl:choose>
 			<xsl:when test="parent::*[local-name() = 'note'] or parent::*[local-name() = 'termnote']">
 				<fo:block-container>
