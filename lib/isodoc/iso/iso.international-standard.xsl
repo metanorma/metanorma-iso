@@ -6690,7 +6690,9 @@
 	</xsl:template><xsl:template match="*[local-name() = 'name']/text()">
 		<!-- 0xA0 to space replacement -->
 		<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),' ',' ')"/>
-	</xsl:template><xsl:template match="*[local-name() = 'ul'] | *[local-name() = 'ol']">
+	</xsl:template><xsl:variable name="ul_labels_">
+		
+	</xsl:variable><xsl:variable name="ul_labels" select="xalan:nodeset($ul_labels_)"/><xsl:template match="*[local-name() = 'ul'] | *[local-name() = 'ol']">
 		<xsl:choose>
 			<xsl:when test="parent::*[local-name() = 'note'] or parent::*[local-name() = 'termnote']">
 				<fo:block-container>
