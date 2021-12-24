@@ -31,7 +31,7 @@ module Asciidoctor
         when "ru" then "_r"
         when "es" then "_s"
         when "ar" then "_a"
-        when "en" then "_e"
+        # when "en" then "_e"
         else
           "_e"
         end
