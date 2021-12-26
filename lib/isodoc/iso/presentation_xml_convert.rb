@@ -113,9 +113,7 @@ module IsoDoc
       end
 
       def concept(docxml)
-        docxml.xpath(ns("//term//concept")).each_with_object({}) do |f, m|
-          concept_term(f, m)
-        end
+        concept_term(docxml)
         docxml.xpath(ns("//concept")).each do |node|
           concept_render(node, ital: node["ital"] || "false",
                                ref: node["ref"] || "false",
@@ -124,7 +122,16 @@ module IsoDoc
         end
       end
 
-      def concept_term(node, seen)
+      def concept_term(docxml)
+        docxml.xpath(ns("//term")).each do |f|
+          m = {}
+          f.xpath(ns(".//concept")).each do |c|
+            concept_term1(c, m)
+          end
+        end
+      end
+
+      def concept_term1(node, seen)
         term = node&.at(ns("./refterm"))&.to_xml
         if term && seen[term]
           concept_render(node, ital: node["ital"] || "false",

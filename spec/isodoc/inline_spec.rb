@@ -726,43 +726,67 @@ RSpec.describe IsoDoc do
         </concept></li>
         </ul>
         </term>
+      <term id="clause2">
+       <ul>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+        </ul>
+        </term>
       </terms>
       </sections>
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-         <preface>
-           <foreword id='A' displayorder='1'>
-             <ul>
-               <li>term</li>
-             </ul>
-           </foreword>
-         </preface>
-         <sections>
-           <terms id='Terms' displayorder='2'>
-             <title>1</title>
-      <clause id='A' inline-header='true'>
-         <title>1.1</title>
-         <ul>
-           <li> term </li>
-         </ul>
-       </clause>
-             <term id='clause1'>
-               <name>1.2</name>
-               <ul>
-                 <li>
-                   <em>term</em>
-                    (
-                   <xref target='clause1'>1.2</xref>
-                   )
-                 </li>
-                 <li>term</li>
-               </ul>
-             </term>
-           </terms>
-         </sections>
-       </iso-standard>
+          <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+        <preface>
+          <foreword id='A' displayorder='1'>
+            <ul>
+              <li>term</li>
+            </ul>
+          </foreword>
+        </preface>
+                 <sections>
+          <terms id='Terms' displayorder='2'>
+            <title>1</title>
+            <clause id='A' inline-header='true'>
+              <title>1.1</title>
+              <ul>
+                <li> term </li>
+              </ul>
+            </clause>
+            <term id='clause1'>
+              <name>1.2</name>
+              <ul>
+                <li>
+                  <em>term</em>
+                   (
+                  <xref target='clause1'>1.2</xref>
+                  )
+                </li>
+                <li> term </li>
+              </ul>
+            </term>
+            <term id='clause2'>
+              <name>1.3</name>
+              <ul>
+                <li>
+                  <em>term</em>
+                   (
+                  <xref target='clause1'>1.2</xref>
+                  )
+                </li>
+                <li> term </li>
+              </ul>
+            </term>
+          </terms>
+        </sections>
+      </iso-standard>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
        .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
