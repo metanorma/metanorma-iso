@@ -21,9 +21,8 @@ module IsoDoc
           stage = "DTS" if stage == "DIS"
           stage = "FDTS" if stage == "FDIS"
         end
-        if %w(PWI NWIP WD CD).include?(stage) && iter
+        %w(PWI NWIP WD CD).include?(stage) && iter and
           stage += iter
-        end
         stage = "Pre#{stage}" if /^0\./.match?(draft)
         stage
       end
@@ -31,20 +30,25 @@ module IsoDoc
       def docstatus(isoxml, _out)
         docstatus = isoxml.at(ns("//bibdata/status/stage"))
         set(:unpublished, false)
-        if docstatus
-          set(:stage, docstatus.text)
-          set(:stage_int, docstatus.text.to_i)
-          set(:unpublished, unpublished(docstatus.text))
-          set(:statusabbr, status_abbrev(docstatus["abbreviation"] || "??",
-                                         isoxml&.at(ns("//bibdata/status/substage"))&.text,
-                                         isoxml&.at(ns("//bibdata/status/iteration"))&.text,
-                                         isoxml&.at(ns("//bibdata/version/draft"))&.text,
-                                         isoxml&.at(ns("//bibdata/ext/doctype"))&.text))
-          unpublished(docstatus.text) and
-            set(:stageabbr, docstatus["abbreviation"])
-        end
         revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
+        if docstatus
+          docstatus1(isoxml, docstatus)
+        end
+      end
+
+      def docstatus1(isoxml, docstatus)
+        set(:stage, docstatus.text)
+        set(:stage_int, docstatus.text.to_i)
+        set(:unpublished, unpublished(docstatus.text))
+        set(:statusabbr,
+            status_abbrev(docstatus["abbreviation"] || "??",
+                          isoxml&.at(ns("//bibdata/status/substage"))&.text,
+                          isoxml&.at(ns("//bibdata/status/iteration"))&.text,
+                          isoxml&.at(ns("//bibdata/version/draft"))&.text,
+                          isoxml&.at(ns("//bibdata/ext/doctype"))&.text))
+        unpublished(docstatus.text) and
+          set(:stageabbr, docstatus["abbreviation"])
       end
 
       def unpublished(status)
@@ -73,8 +77,7 @@ module IsoDoc
 
       def amd_label(lang)
         case lang
-        when "en" then "AMENDMENT"
-        when "fr" then "AMENDMENT"
+        when "en", "fr" then "AMENDMENT"
         end
       end
 
@@ -183,10 +186,10 @@ module IsoDoc
       end
 
       def tc(xml)
-        tc_num = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/@number"))
-        tc_type = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/@type"))
-          &.text || "TC"
-        if tc_num
+        tc_type = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/"\
+                            "@type"))&.text || "TC"
+        if tc_num = xml.at(ns("//bibdata/ext/editorialgroup/"\
+                              "technical-committee/@number"))
           tcid = "#{tc_type} #{tc_num.text}"
           set(:tc,  tcid)
           set(:editorialgroup, get[:editorialgroup] << tcid)
@@ -195,7 +198,8 @@ module IsoDoc
 
       def sc(xml)
         sc_num = xml.at(ns("//bibdata/ext/editorialgroup/subcommittee/@number"))
-        sc_type = xml.at(ns("//bibdata/ext/editorialgroup/subcommittee/@type"))&.text || "SC"
+        sc_type = xml.at(ns("//bibdata/ext/editorialgroup/subcommittee/"\
+                            "@type"))&.text || "SC"
         if sc_num
           scid = "#{sc_type} #{sc_num.text}"
           set(:sc, scid)
@@ -205,7 +209,8 @@ module IsoDoc
 
       def wg(xml)
         wg_num = xml.at(ns("//bibdata/ext/editorialgroup/workgroup/@number"))
-        wg_type = xml.at(ns("//bibdata/ext/editorialgroup/workgroup/@type"))&.text || "WG"
+        wg_type = xml.at(ns("//bibdata/ext/editorialgroup/workgroup/"\
+                            "@type"))&.text || "WG"
         if wg_num
           wgid = "#{wg_type} #{wg_num.text}"
           set(:wg, wgid)

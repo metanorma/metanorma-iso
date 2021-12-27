@@ -57,7 +57,9 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "processes isodoc as ISO: user nominated fonts" do
-    IsoDoc::Iso::HtmlConvert.new(bodyfont: "Zapf Chancery", headerfont: "Comic Sans", monospacefont: "Andale Mono")
+    IsoDoc::Iso::HtmlConvert.new(bodyfont: "Zapf Chancery",
+                                 headerfont: "Comic Sans",
+                                 monospacefont: "Andale Mono")
       .convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>

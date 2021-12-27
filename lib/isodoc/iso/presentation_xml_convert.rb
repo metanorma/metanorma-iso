@@ -115,10 +115,8 @@ module IsoDoc
       def concept(docxml)
         concept_term(docxml)
         docxml.xpath(ns("//concept")).each do |node|
-          concept_render(node, ital: node["ital"] || "false",
-                               ref: node["ref"] || "false",
-                               linkref: node["linkref"] || "true",
-                               linkmention: node["linkmention"] || "false")
+          concept_render(node, ital: "false", ref: "false",
+                               linkref: "true", linkmention: "false")
         end
       end
 
@@ -134,14 +132,10 @@ module IsoDoc
       def concept_term1(node, seen)
         term = node&.at(ns("./refterm"))&.to_xml
         if term && seen[term]
-          concept_render(node, ital: node["ital"] || "false",
-                               ref: node["ref"] || "false",
-                               linkref: node["linkref"] || "true",
-                               linkmention: node["linkmention"] || "false")
-        else concept_render(node, ital: node["ital"] || "true",
-                                  ref: node["ref"] || "true",
-                                  linkref: node["linkref"] || "true",
-                                  linkmention: node["linkmention"] || "false")
+          concept_render(node, ital: "false", ref: "false",
+                               linkref: "true", linkmention: "false")
+        else concept_render(node, ital: "true", ref: "true",
+                                  linkref: "true", linkmention: "false")
         end
         seen[term] = true if term
         seen

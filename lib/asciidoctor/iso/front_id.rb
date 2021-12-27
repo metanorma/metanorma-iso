@@ -48,7 +48,7 @@ module Asciidoctor
         ret
       end
 
-      def stage_name(stage, substage, doctype, iteration = nil)
+      def stage_name(stage, substage, _doctype, iteration = nil)
         return "Proof" if stage == "60" && substage == "00"
 
         ret = STAGE_NAMES[stage.to_sym]
@@ -69,7 +69,7 @@ module Asciidoctor
       end
 
       def iso_id(node, xml)
-        !@amd && node.attr("docnumber") || @amd && node.attr("updates") or
+        (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
           return
 
         dn = iso_id1(node)
@@ -133,28 +133,33 @@ module Asciidoctor
       end
 
       def id_stage_abbr(stage, substage, node, bare = false)
-        ret = if bare
-                IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
-                  .status_abbrev(stage_abbr(stage, substage, doctype(node)),
-                substage, nil, nil, doctype(node))
-              else
-                IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
-                  .status_abbrev(stage_abbr(stage, substage, doctype(node)),
-                substage, node.attr("iteration"),
-                node.attr("draft"), doctype(node))
-              end
+        ret = id_stage_abbr1(stage, substage, node, bare)
         if %w(amendment technical-corrigendum technical-report
-              technical-specification).include?(doctype(node))
-          ret = "#{ret} " unless %w(D FD).include?(ret)
+              technical-specification).include?(doctype(node)) &&
+            !%w(D FD).include?(ret)
+          ret = "#{ret} "
         end
         ret
+      end
+
+      def id_stage_abbr1(stage, substage, node, bare)
+        if bare
+          IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+            .status_abbrev(stage_abbr(stage, substage, doctype(node)),
+                           substage, nil, nil, doctype(node))
+        else
+          IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+            .status_abbrev(stage_abbr(stage, substage, doctype(node)),
+                           substage, node.attr("iteration"),
+                           node.attr("draft"), doctype(node))
+        end
       end
 
       def cover_stage_abbr(node)
         stage = get_stage(node)
         abbr = id_stage_abbr(get_stage(node), get_substage(node), node, true)
         typeabbr = get_typeabbr(node, true)
-        if stage.to_i > 50 || stage.to_i == 60 && get_substage(node).to_i < 60
+        if stage.to_i > 50 || (stage.to_i == 60 && get_substage(node).to_i < 60)
           typeabbr = ""
         end
         "#{abbr}#{typeabbr}".strip
@@ -213,8 +218,6 @@ module Asciidoctor
         when "technical-specification" then "TS "
         when "amendment" then (amd ? "Amd " : "")
         when "technical-corrigendum" then (amd ? "Cor " : "")
-        else
-          nil
         end
       end
     end
