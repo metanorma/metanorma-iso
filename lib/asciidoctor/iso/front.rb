@@ -146,11 +146,24 @@ module Asciidoctor
       end
 
       def relaton_relations
-        super + %w(obsoletes)
+        super + %w(obsoletes successor-of manifestation-of related annotation-of)
       end
 
       def relaton_relation_descriptions
-        super.merge("amends" => "updates")
+        super.merge(
+          "amends" => "updates", "revises" => "updates",
+          "replaces" => "obsoletes",
+          "supersedes" => "obsoletes",
+          "corrects" => "updates",
+          "informatively-cited-in" => "isCitedIn",
+          "informatively-cites" => "cites",
+          "normatively-cited in" => "isCitedIn",
+          "normatively-cites" => "cites",
+          "identical-adopted-from" => "adoptedFrom",
+          "modified-adopted-from" => "adoptedFrom",
+          "related-directive" => "related",
+          "related-mandate" => "related",
+        )
       end
     end
   end
