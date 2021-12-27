@@ -679,6 +679,7 @@ RSpec.describe Asciidoctor::ISO do
         :obsoletes: ABC 1
         :successor-of: ABC 2
         :manifestation-of: ABC 3
+        :annotation-of: ABC 3a
         :related: ABC 4
         :replaces: ABC 5
         :supersedes: ABC 6
@@ -694,381 +695,387 @@ RSpec.describe Asciidoctor::ISO do
       INPUT
       expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
         .to be_equivalent_to xmlpp(<<~"OUTPUT")
-               <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
-                        <bibdata type='standard'>
-           <contributor>
-             <role type='author'/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type='publisher'/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <language>en</language>
-           <script>Latn</script>
-           <status>
-             <stage abbreviation='IS'>60</stage>
-             <substage>60</substage>
-           </status>
-           <copyright>
-             <from>2021</from>
-             <owner>
-               <organization>
-                 <name>International Organization for Standardization</name>
-                 <abbreviation>ISO</abbreviation>
-               </organization>
-             </owner>
-           </copyright>
-           <relation type='obsoletes'>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 1</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='successorOf'>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 2</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='manifestationOf'>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 3</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='related'>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 4</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='updates'>
-             <description>amends</description>
-             <bibitem type='standard'>
-               <fetched/>
-               <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
-               <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
-               <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
-               <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-               <title type='title-main' format='text/plain' language='fr' script='Latn'>&#201;chantillonnage</title>
-               <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc&#8201;&#8212;&#8201;&#201;chantillonnage</title>
-               <uri type='src'>https://www.iso.org/standard/23281.html</uri>
-               <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
-               <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
-               <docidentifier type='ISO'>ISO 123</docidentifier>
-               <docidentifier type='URN'>urn:iso:std:iso:123:stage-90.93:ed-3:en,fr</docidentifier>
-               <docnumber>123</docnumber>
-               <contributor>
-                 <role type='publisher'/>
-                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                   <uri>www.iso.org</uri>
-                 </organization>
-               </contributor>
-               <edition>3</edition>
-               <language>en</language>
-               <language>fr</language>
-               <script>Latn</script>
-               <status>
-                 <stage>90</stage>
-                 <substage>93</substage>
-               </status>
-               <copyright>
-                 <from>2001</from>
-                 <owner>
-                   <organization>
-                     <name>ISO</name>
-                   </organization>
-                 </owner>
-               </copyright>
-               <relation type='obsoletes'>
-                 <bibitem type='standard'>
-                   <formattedref format='text/plain'>ISO 123:1985</formattedref>
-                 </bibitem>
-               </relation>
-               <relation type='instance'>
-                 <bibitem type='standard'>
-                   <fetched/>
-                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
-                   <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
-                   <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
-                   <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-                   <title type='title-main' format='text/plain' language='fr' script='Latn'>&#201;chantillonnage</title>
-                   <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc&#8201;&#8212;&#8201;&#201;chantillonnage</title>
-                   <uri type='src'>https://www.iso.org/standard/23281.html</uri>
-                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
-                   <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
-                   <docidentifier type='ISO'>ISO 123:2001</docidentifier>
-                   <docidentifier type='URN'>urn:iso:std:iso:123:stage-90.93:ed-3:en,fr</docidentifier>
-                   <docnumber>123</docnumber>
-                   <date type='published'>
-                     <on>2001-05</on>
-                   </date>
-                   <contributor>
-                     <role type='publisher'/>
-                     <organization>
-                       <name>International Organization for Standardization</name>
-                       <abbreviation>ISO</abbreviation>
-                       <uri>www.iso.org</uri>
-                     </organization>
-                   </contributor>
-                   <edition>3</edition>
-                   <language>en</language>
-                   <language>fr</language>
-                   <script>Latn</script>
-                   <abstract format='text/plain' language='en' script='Latn'>
-                     This International Standard specifies procedures for sampling
-                     natural rubber latex concentrate and for sampling synthetic rubber
-                     latices and artificial latices. It is also suitable for sampling
-                     rubber latex contained in drums, tank cars or tanks. The
-                     procedures may also be used for sampling plastics dispersions.
-                   </abstract>
-                   <abstract format='text/plain' language='fr' script='Latn'>
-                     La pr&#233;sente Norme internationale sp&#233;cifie des
-                     m&#233;thodes d&#8217;&#233;chantillonnage pour des
-                     concentr&#233;s de latex de caoutchouc naturel et pour
-                     &#233;chantillonner des latex de caoutchouc synth&#233;tique et
-                     des latex artificiels. Elle s&#8217;applique &#233;galement &#224;
-                     l&#8217;&#233;chantillonnage de latex de caoutchouc contenus dans
-                     des f&#251;ts, citernes routi&#232;res ou de stockage. Le mode
-                     op&#233;ratoire peut aussi &#234;tre utilis&#233; pour
-                     l&#8217;&#233;chantillonnage de dispersions de plastiques.
-                   </abstract>
-                   <status>
-                     <stage>90</stage>
-                     <substage>93</substage>
-                   </status>
-                   <copyright>
-                     <from>2001</from>
-                     <owner>
-                       <organization>
-                         <name>ISO</name>
-                       </organization>
-                     </owner>
-                   </copyright>
-                   <relation type='obsoletes'>
-                     <bibitem type='standard'>
-                       <formattedref format='text/plain'>ISO 123:1985</formattedref>
-                     </bibitem>
-                   </relation>
-                   <place>Geneva</place>
-                 </bibitem>
-               </relation>
-               <place>Geneva</place>
-             </bibitem>
-           </relation>
-           <relation type='updates'>
-             <description>amends</description>
-             <bibitem type='standard'>
-               <fetched/>
-               <title type='title-intro' format='text/plain' language='en' script='Latn'>Latex, rubber</title>
-               <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of total solids content</title>
-               <title type='main' format='text/plain' language='en' script='Latn'>Latex, rubber&#8201;&#8212;&#8201;Determination of total solids content</title>
-               <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-               <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination des mati&#232;res solides totales</title>
-               <title type='main' format='text/plain' language='fr' script='Latn'>
-                 Latex de caoutchouc&#8201;&#8212;&#8201;D&#233;termination des
-                 mati&#232;res solides totales
-               </title>
-               <uri type='src'>https://www.iso.org/standard/61884.html</uri>
-               <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
-               <uri type='rss'>https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
-               <docidentifier type='ISO'>ISO 124</docidentifier>
-               <docidentifier type='URN'>urn:iso:std:iso:124:stage-90.93:ed-7:en,fr</docidentifier>
-               <docnumber>124</docnumber>
-               <contributor>
-                 <role type='publisher'/>
-                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                   <uri>www.iso.org</uri>
-                 </organization>
-               </contributor>
-               <edition>7</edition>
-               <language>en</language>
-               <language>fr</language>
-               <script>Latn</script>
-               <status>
-                 <stage>90</stage>
-                 <substage>93</substage>
-               </status>
-               <copyright>
-                 <from>2014</from>
-                 <owner>
-                   <organization>
-                     <name>ISO</name>
-                   </organization>
-                 </owner>
-               </copyright>
-               <relation type='obsoletes'>
-                 <bibitem type='standard'>
-                   <formattedref format='text/plain'>ISO 124:2011</formattedref>
-                 </bibitem>
-               </relation>
-               <relation type='instance'>
-                 <bibitem type='standard'>
-                   <fetched/>
-                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Latex, rubber</title>
-                   <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of total solids content</title>
-                   <title type='main' format='text/plain' language='en' script='Latn'>Latex, rubber&#8201;&#8212;&#8201;Determination of total solids content</title>
-                   <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-                   <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination des mati&#232;res solides totales</title>
-                   <title type='main' format='text/plain' language='fr' script='Latn'>
-                     Latex de caoutchouc&#8201;&#8212;&#8201;D&#233;termination des
-                     mati&#232;res solides totales
-                   </title>
-                   <uri type='src'>https://www.iso.org/standard/61884.html</uri>
-                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
-                   <uri type='rss'>https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
-                   <docidentifier type='ISO'>ISO 124:2014</docidentifier>
-                   <docidentifier type='URN'>urn:iso:std:iso:124:stage-90.93:ed-7:en,fr</docidentifier>
-                   <docnumber>124</docnumber>
-                   <date type='published'>
-                     <on>2014-03</on>
-                   </date>
-                   <contributor>
-                     <role type='publisher'/>
-                     <organization>
-                       <name>International Organization for Standardization</name>
-                       <abbreviation>ISO</abbreviation>
-                       <uri>www.iso.org</uri>
-                     </organization>
-                   </contributor>
-                   <edition>7</edition>
-                   <language>en</language>
-                   <language>fr</language>
-                   <script>Latn</script>
-                   <abstract format='text/plain' language='en' script='Latn'>
-                     ISO 124:2014 specifies methods for the determination of the total
-                     solids content of natural rubber field and concentrated latices
-                     and synthetic rubber latex. These methods are not necessarily
-                     suitable for latex from natural sources other than the Hevea
-                     brasiliensis, for vulcanized latex, for compounded latex, or for
-                     artificial dispersions of rubber.
-                   </abstract>
-                   <abstract format='text/plain' language='fr' script='Latn'>
-                     L&#8217;ISO 124:2014 sp&#233;cifie des m&#233;thodes pour la
-                     d&#233;termination des mati&#232;res solides totales dans le latex
-                     de plantation, le latex de concentr&#233; de caoutchouc naturel et
-                     le latex de caoutchouc synth&#233;tique. Ces m&#233;thodes ne
-                     conviennent pas n&#233;cessairement au latex d&#8217;origine
-                     naturelle autre que celui de l&#8217;Hevea brasiliensis, au latex
-                     vulcanis&#233;, aux m&#233;langes de latex, ou aux dispersions
-                     artificielles de caoutchouc.
-                   </abstract>
-                   <status>
-                     <stage>90</stage>
-                     <substage>93</substage>
-                   </status>
-                   <copyright>
-                     <from>2014</from>
-                     <owner>
-                       <organization>
-                         <name>ISO</name>
-                       </organization>
-                     </owner>
-                   </copyright>
-                   <relation type='obsoletes'>
-                     <bibitem type='standard'>
-                       <formattedref format='text/plain'>ISO 124:2011</formattedref>
-                     </bibitem>
-                   </relation>
-                   <place>Geneva</place>
-                 </bibitem>
-               </relation>
-               <place>Geneva</place>
-             </bibitem>
-           </relation>
-           <relation type='obsoletes'>
-             <description>replaces</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 5</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='obsoletes'>
-             <description>supersedes</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 6</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='updates'>
-             <description>corrects</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 7</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='isCitedIn'>
-             <description>informatively cited in</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 8</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='cites'>
-             <description>informatively cites</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 9</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='cites'>
-             <description>normatively cites</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 11</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='adoptedFrom'>
-             <description>identical adopted from</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 12</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='adoptedFrom'>
-             <description>modified adopted from</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 13</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='related'>
-             <description>related directive</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 14</docidentifier>
-             </bibitem>
-           </relation>
-           <relation type='related'>
-             <description>related mandate</description>
-             <bibitem>
-               <title>--</title>
-               <docidentifier>ABC 15</docidentifier>
-             </bibitem>
-           </relation>
-           <ext>
-             <doctype>article</doctype>
-             <editorialgroup>
-               <technical-committee/>
-               <subcommittee/>
-               <workgroup/>
-             </editorialgroup>
-             <stagename>International standard</stagename>
-           </ext>
-         </bibdata>
-         <sections> </sections>
-          </iso-standard>
+                <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
+                         <bibdata type='standard'>
+            <contributor>
+              <role type='author'/>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
+            <contributor>
+              <role type='publisher'/>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
+            <language>en</language>
+            <script>Latn</script>
+            <status>
+              <stage abbreviation='IS'>60</stage>
+              <substage>60</substage>
+            </status>
+            <copyright>
+              <from>2021</from>
+              <owner>
+                <organization>
+                  <name>International Organization for Standardization</name>
+                  <abbreviation>ISO</abbreviation>
+                </organization>
+              </owner>
+            </copyright>
+            <relation type='obsoletes'>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 1</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='successorOf'>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 2</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='manifestationOf'>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 3</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='annotationOf'>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 3a</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='related'>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 4</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='updates'>
+              <description>amends</description>
+              <bibitem type='standard'>
+                <fetched/>
+                <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
+                <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
+                <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
+                <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
+                <title type='title-main' format='text/plain' language='fr' script='Latn'>&#201;chantillonnage</title>
+                <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc&#8201;&#8212;&#8201;&#201;chantillonnage</title>
+                <uri type='src'>https://www.iso.org/standard/23281.html</uri>
+                <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
+                <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
+                <docidentifier type='ISO'>ISO 123</docidentifier>
+                <docidentifier type='URN'>urn:iso:std:iso:123:stage-90.93:ed-3:en,fr</docidentifier>
+                <docnumber>123</docnumber>
+                <contributor>
+                  <role type='publisher'/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                    <uri>www.iso.org</uri>
+                  </organization>
+                </contributor>
+                <edition>3</edition>
+                <language>en</language>
+                <language>fr</language>
+                <script>Latn</script>
+                <status>
+                  <stage>90</stage>
+                  <substage>93</substage>
+                </status>
+                <copyright>
+                  <from>2001</from>
+                  <owner>
+                    <organization>
+                      <name>ISO</name>
+                    </organization>
+                  </owner>
+                </copyright>
+                <relation type='obsoletes'>
+                  <bibitem type='standard'>
+                    <formattedref format='text/plain'>ISO 123:1985</formattedref>
+                  </bibitem>
+                </relation>
+                <relation type='instance'>
+                  <bibitem type='standard'>
+                    <fetched/>
+                    <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
+                    <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
+                    <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
+                    <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
+                    <title type='title-main' format='text/plain' language='fr' script='Latn'>&#201;chantillonnage</title>
+                    <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc&#8201;&#8212;&#8201;&#201;chantillonnage</title>
+                    <uri type='src'>https://www.iso.org/standard/23281.html</uri>
+                    <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
+                    <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
+                    <docidentifier type='ISO'>ISO 123:2001</docidentifier>
+                    <docidentifier type='URN'>urn:iso:std:iso:123:stage-90.93:ed-3:en,fr</docidentifier>
+                    <docnumber>123</docnumber>
+                    <date type='published'>
+                      <on>2001-05</on>
+                    </date>
+                    <contributor>
+                      <role type='publisher'/>
+                      <organization>
+                        <name>International Organization for Standardization</name>
+                        <abbreviation>ISO</abbreviation>
+                        <uri>www.iso.org</uri>
+                      </organization>
+                    </contributor>
+                    <edition>3</edition>
+                    <language>en</language>
+                    <language>fr</language>
+                    <script>Latn</script>
+                    <abstract format='text/plain' language='en' script='Latn'>
+                      This International Standard specifies procedures for sampling
+                      natural rubber latex concentrate and for sampling synthetic rubber
+                      latices and artificial latices. It is also suitable for sampling
+                      rubber latex contained in drums, tank cars or tanks. The
+                      procedures may also be used for sampling plastics dispersions.
+                    </abstract>
+                    <abstract format='text/plain' language='fr' script='Latn'>
+                      La pr&#233;sente Norme internationale sp&#233;cifie des
+                      m&#233;thodes d&#8217;&#233;chantillonnage pour des
+                      concentr&#233;s de latex de caoutchouc naturel et pour
+                      &#233;chantillonner des latex de caoutchouc synth&#233;tique et
+                      des latex artificiels. Elle s&#8217;applique &#233;galement &#224;
+                      l&#8217;&#233;chantillonnage de latex de caoutchouc contenus dans
+                      des f&#251;ts, citernes routi&#232;res ou de stockage. Le mode
+                      op&#233;ratoire peut aussi &#234;tre utilis&#233; pour
+                      l&#8217;&#233;chantillonnage de dispersions de plastiques.
+                    </abstract>
+                    <status>
+                      <stage>90</stage>
+                      <substage>93</substage>
+                    </status>
+                    <copyright>
+                      <from>2001</from>
+                      <owner>
+                        <organization>
+                          <name>ISO</name>
+                        </organization>
+                      </owner>
+                    </copyright>
+                    <relation type='obsoletes'>
+                      <bibitem type='standard'>
+                        <formattedref format='text/plain'>ISO 123:1985</formattedref>
+                      </bibitem>
+                    </relation>
+                    <place>Geneva</place>
+                  </bibitem>
+                </relation>
+                <place>Geneva</place>
+              </bibitem>
+            </relation>
+            <relation type='updates'>
+              <description>amends</description>
+              <bibitem type='standard'>
+                <fetched/>
+                <title type='title-intro' format='text/plain' language='en' script='Latn'>Latex, rubber</title>
+                <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of total solids content</title>
+                <title type='main' format='text/plain' language='en' script='Latn'>Latex, rubber&#8201;&#8212;&#8201;Determination of total solids content</title>
+                <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
+                <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination des mati&#232;res solides totales</title>
+                <title type='main' format='text/plain' language='fr' script='Latn'>
+                  Latex de caoutchouc&#8201;&#8212;&#8201;D&#233;termination des
+                  mati&#232;res solides totales
+                </title>
+                <uri type='src'>https://www.iso.org/standard/61884.html</uri>
+                <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
+                <uri type='rss'>https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
+                <docidentifier type='ISO'>ISO 124</docidentifier>
+                <docidentifier type='URN'>urn:iso:std:iso:124:stage-90.93:ed-7:en,fr</docidentifier>
+                <docnumber>124</docnumber>
+                <contributor>
+                  <role type='publisher'/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                    <uri>www.iso.org</uri>
+                  </organization>
+                </contributor>
+                <edition>7</edition>
+                <language>en</language>
+                <language>fr</language>
+                <script>Latn</script>
+                <status>
+                  <stage>90</stage>
+                  <substage>93</substage>
+                </status>
+                <copyright>
+                  <from>2014</from>
+                  <owner>
+                    <organization>
+                      <name>ISO</name>
+                    </organization>
+                  </owner>
+                </copyright>
+                <relation type='obsoletes'>
+                  <bibitem type='standard'>
+                    <formattedref format='text/plain'>ISO 124:2011</formattedref>
+                  </bibitem>
+                </relation>
+                <relation type='instance'>
+                  <bibitem type='standard'>
+                    <fetched/>
+                    <title type='title-intro' format='text/plain' language='en' script='Latn'>Latex, rubber</title>
+                    <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of total solids content</title>
+                    <title type='main' format='text/plain' language='en' script='Latn'>Latex, rubber&#8201;&#8212;&#8201;Determination of total solids content</title>
+                    <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
+                    <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination des mati&#232;res solides totales</title>
+                    <title type='main' format='text/plain' language='fr' script='Latn'>
+                      Latex de caoutchouc&#8201;&#8212;&#8201;D&#233;termination des
+                      mati&#232;res solides totales
+                    </title>
+                    <uri type='src'>https://www.iso.org/standard/61884.html</uri>
+                    <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
+                    <uri type='rss'>https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
+                    <docidentifier type='ISO'>ISO 124:2014</docidentifier>
+                    <docidentifier type='URN'>urn:iso:std:iso:124:stage-90.93:ed-7:en,fr</docidentifier>
+                    <docnumber>124</docnumber>
+                    <date type='published'>
+                      <on>2014-03</on>
+                    </date>
+                    <contributor>
+                      <role type='publisher'/>
+                      <organization>
+                        <name>International Organization for Standardization</name>
+                        <abbreviation>ISO</abbreviation>
+                        <uri>www.iso.org</uri>
+                      </organization>
+                    </contributor>
+                    <edition>7</edition>
+                    <language>en</language>
+                    <language>fr</language>
+                    <script>Latn</script>
+                    <abstract format='text/plain' language='en' script='Latn'>
+                      ISO 124:2014 specifies methods for the determination of the total
+                      solids content of natural rubber field and concentrated latices
+                      and synthetic rubber latex. These methods are not necessarily
+                      suitable for latex from natural sources other than the Hevea
+                      brasiliensis, for vulcanized latex, for compounded latex, or for
+                      artificial dispersions of rubber.
+                    </abstract>
+                    <abstract format='text/plain' language='fr' script='Latn'>
+                      L&#8217;ISO 124:2014 sp&#233;cifie des m&#233;thodes pour la
+                      d&#233;termination des mati&#232;res solides totales dans le latex
+                      de plantation, le latex de concentr&#233; de caoutchouc naturel et
+                      le latex de caoutchouc synth&#233;tique. Ces m&#233;thodes ne
+                      conviennent pas n&#233;cessairement au latex d&#8217;origine
+                      naturelle autre que celui de l&#8217;Hevea brasiliensis, au latex
+                      vulcanis&#233;, aux m&#233;langes de latex, ou aux dispersions
+                      artificielles de caoutchouc.
+                    </abstract>
+                    <status>
+                      <stage>90</stage>
+                      <substage>93</substage>
+                    </status>
+                    <copyright>
+                      <from>2014</from>
+                      <owner>
+                        <organization>
+                          <name>ISO</name>
+                        </organization>
+                      </owner>
+                    </copyright>
+                    <relation type='obsoletes'>
+                      <bibitem type='standard'>
+                        <formattedref format='text/plain'>ISO 124:2011</formattedref>
+                      </bibitem>
+                    </relation>
+                    <place>Geneva</place>
+                  </bibitem>
+                </relation>
+                <place>Geneva</place>
+              </bibitem>
+            </relation>
+            <relation type='obsoletes'>
+              <description>replaces</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 5</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='obsoletes'>
+              <description>supersedes</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 6</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='updates'>
+              <description>corrects</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 7</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='isCitedIn'>
+              <description>informatively cited in</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 8</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='cites'>
+              <description>informatively cites</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 9</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='cites'>
+              <description>normatively cites</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 11</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='adoptedFrom'>
+              <description>identical adopted from</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 12</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='adoptedFrom'>
+              <description>modified adopted from</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 13</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='related'>
+              <description>related directive</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 14</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='related'>
+              <description>related mandate</description>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 15</docidentifier>
+              </bibitem>
+            </relation>
+            <ext>
+              <doctype>article</doctype>
+              <editorialgroup>
+                <technical-committee/>
+                <subcommittee/>
+                <workgroup/>
+              </editorialgroup>
+              <stagename>International standard</stagename>
+            </ext>
+          </bibdata>
+          <sections> </sections>
+           </iso-standard>
         OUTPUT
     end
   end

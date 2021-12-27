@@ -146,7 +146,7 @@ module Asciidoctor
       end
 
       def relaton_relations
-        super + %w(obsoletes successor-of manifestation-of related)
+        super + %w(obsoletes successor-of manifestation-of related annotation-of)
       end
 
       def relaton_relation_descriptions
