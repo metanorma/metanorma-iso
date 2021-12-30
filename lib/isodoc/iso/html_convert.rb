@@ -58,8 +58,8 @@ module IsoDoc
       end
 
       def html_toc_entry(level, header)
-        if level == "h1" && header.parent.at(".//h2[not(@class = 'TermNum')]"\
-                                             "[not(@class = 'noTOC')][text()]")
+        if level == "h1" &&
+            header.parent.at(".//h2#{toc_exclude_class}")
           <<~HDR
             <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(header)}</a></li>
             <div class="collapse-button"></div></div>

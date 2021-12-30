@@ -272,6 +272,7 @@ RSpec.describe IsoDoc do
             </note>
             <bibitem id="ISO3696" type="standard">
               <title format="text/plain">Water for analytical laboratory use</title>
+              <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
               <docidentifier type="ISO">ISO 3696</docidentifier>
               <contributor>
                 <role type="publisher"/>
@@ -294,6 +295,7 @@ RSpec.describe IsoDoc do
             </bibitem>
             <bibitem id="ref11">
               <title>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</title>
+              <docidentifier type='metanorma-ordinal'>[2]</docidentifier>
               <docidentifier type="IETF">IETF RFC 10</docidentifier>
             </bibitem>
             <bibitem id="ref12">
@@ -361,7 +363,7 @@ RSpec.describe IsoDoc do
                 <p>
                   <span class="note_label">NOTE</span>&#160; This is another annotation of document ISSN.</p>
               </div>
-              <p class="Biblio" id="ISO3696">[3]&#160; ISO 3696,
+              <p class="Biblio" id="ISO3696">[1]&#160; ISO 3696,
                 <i>Water for analytical laboratory use</i></p>
               <p class="Biblio" id="ref10">[10]&#160; <span style="font-variant:small-caps;">Standard No I.C.C 167</span>
                  .
@@ -369,7 +371,7 @@ RSpec.describe IsoDoc do
                 (see
                 <a href="http://www.icc.or.at">http://www.icc.or.at</a>
                 )</p>
-              <p class="Biblio" id="ref11">[5]&#160; IETF RFC 10,
+              <p class="Biblio" id="ref11">[2]&#160; IETF RFC 10,
                 <i>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</i></p>
               <p class="Biblio" id="ref12">Citn&#160; IETF RFC 20, CitationWorks. 2019.
                 <i>How to cite a reference</i>
