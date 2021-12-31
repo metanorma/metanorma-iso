@@ -58,15 +58,17 @@ module IsoDoc
       end
 
       def html_toc_entry(level, header)
+        content = header.at("./following-sibling::p"\
+                            "[@class = 'variant-title-toc']") || header
         if level == "h1" &&
             header.parent.at(".//h2#{toc_exclude_class}")
           <<~HDR
-            <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(header)}</a></li>
+            <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(content)}</a></li>
             <div class="collapse-button"></div></div>
           HDR
         else
           %(<li class="#{level}"><a href="##{header['id']}">\
-      #{header_strip(header)}</a></li>)
+      #{header_strip(content)}</a></li>)
         end
       end
 
