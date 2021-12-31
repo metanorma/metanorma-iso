@@ -7209,7 +7209,7 @@
 			</td>
 		</xsl:for-each>
 		<td>333</td> <!-- page number, just for fill -->
-	</xsl:template><xsl:template match="*[local-name() = 'variant-title'][@type = 'sub']"/><xsl:template match="*[local-name() = 'variant-title'][@type = 'sub']" mode="subtitle">
+	</xsl:template><xsl:template match="*[local-name() = 'variant-title']"/><xsl:template match="*[local-name() = 'variant-title'][@type = 'sub']" mode="subtitle">
 		<fo:inline padding-right="5mm"> </fo:inline>
 		<fo:inline><xsl:apply-templates/></fo:inline>
 	</xsl:template><xsl:template match="*[local-name() = 'blacksquare']" name="blacksquare">
