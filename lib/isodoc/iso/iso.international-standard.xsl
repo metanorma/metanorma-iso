@@ -5702,6 +5702,53 @@
 		<xsl:value-of select="."/>
 	</xsl:template><xsl:template match="node()" mode="contents">
 		<xsl:apply-templates mode="contents"/>
+	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title']" priority="2" mode="contents">
+		<xsl:variable name="level">
+			<xsl:call-template name="getLevel">
+				<xsl:with-param name="depth" select="@depth"/>
+			</xsl:call-template>
+		</xsl:variable>
+		
+		<xsl:variable name="section">
+			<xsl:value-of select="*[local-name() = 'tab'][1]/preceding-sibling::node()"/>
+		</xsl:variable>
+		
+		<xsl:variable name="type">floating-title</xsl:variable>
+			
+		<xsl:variable name="display">
+			<xsl:choose>
+				<xsl:when test="normalize-space(@id) = ''">false</xsl:when>
+				<xsl:when test="$level &lt;= $toc_level">true</xsl:when>
+				<xsl:otherwise>false</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		
+		<xsl:variable name="skip">false</xsl:variable>
+
+		<xsl:if test="$skip = 'false'">		
+		
+			<xsl:variable name="title">
+				<xsl:choose>
+					<xsl:when test="*[local-name() = 'tab']">
+						<xsl:copy-of select="*[local-name() = 'tab'][1]/following-sibling::node()"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:copy-of select="node()"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			
+			<xsl:variable name="root">
+				<xsl:if test="ancestor-or-self::*[local-name() = 'preface']">preface</xsl:if>
+				<xsl:if test="ancestor-or-self::*[local-name() = 'annex']">annex</xsl:if>
+			</xsl:variable>
+			
+			<item id="{@id}" level="{$level}" section="{$section}" type="{$type}" root="{$root}" display="{$display}">
+				<title>
+					<xsl:apply-templates select="xalan:nodeset($title)" mode="contents_item"/>
+				</title>
+			</item>
+		</xsl:if>
 	</xsl:template><xsl:template match="node()" mode="bookmarks">
 		<xsl:apply-templates mode="bookmarks"/>
 	</xsl:template><xsl:template match="*[local-name() = 'title' or local-name() = 'name']//*[local-name() = 'stem']" mode="contents">
