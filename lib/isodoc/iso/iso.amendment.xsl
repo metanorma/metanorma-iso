@@ -6963,7 +6963,7 @@
 				<xsl:if test="*[local-name() = 'docidentifier']">
 					<xsl:choose>
 						<xsl:when test="*[local-name() = 'docidentifier']/@type = 'metanorma'"/>
-						<xsl:otherwise><xsl:value-of select="*[local-name() = 'docidentifier']"/></xsl:otherwise>
+						<xsl:otherwise><xsl:value-of select="*[local-name()='docidentifier'][not(@type = 'metanorma-ordinal')]"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:if>
 			</xsl:variable>
