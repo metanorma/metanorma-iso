@@ -641,7 +641,7 @@ RSpec.describe Asciidoctor::ISO do
               <substage>60</substage>
             </status>
             <copyright>
-              <from>2021</from>
+              <from>#{Time.new.year}</from>
               <owner>
                 <organization>
                   <name>International Organization for Standardization</name>
@@ -718,7 +718,7 @@ RSpec.describe Asciidoctor::ISO do
               <substage>60</substage>
             </status>
             <copyright>
-              <from>2021</from>
+              <from>#{Time.new.year}</from>
               <owner>
                 <organization>
                   <name>International Organization for Standardization</name>
