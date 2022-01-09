@@ -4,7 +4,7 @@ require "htmlentities"
 require "json"
 require "pathname"
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       PRE_NORMREF_FOOTNOTES = "//preface//fn | "\

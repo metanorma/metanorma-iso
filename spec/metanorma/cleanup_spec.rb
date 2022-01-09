@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Asciidoctor::ISO do
+RSpec.describe Metanorma::ISO do
   it "removes empty text elements" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}

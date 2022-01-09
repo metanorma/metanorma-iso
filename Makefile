@@ -14,7 +14,7 @@ TRANG_JAR := $(TOOLS_DIR)/trang.jar
 XSDVIPATH := $(TOOLS_DIR)/xsdvi.jar
 XSLT_FILE := $(TOOLS_DIR)/xs3pxsl
 XSLT_FILE_MERGE := $(TOOLS_DIR)/xsdmerge.xsl
-RNG_FILE_SRC := lib/asciidoctor/iso/isostandard.rng
+RNG_FILE_SRC := lib/metanorma/iso/isostandard.rng
 XSD_FILE_DEST := ${CURDIR}/xsd_doc/isostandard.xsd
 
 all: $(TXT) $(HTML) $(XML) $(NITS)

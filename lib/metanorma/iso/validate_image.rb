@@ -1,4 +1,4 @@
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       # DRG directives 3.7; but anticipated by standoc

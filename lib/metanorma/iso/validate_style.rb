@@ -2,7 +2,7 @@ require "metanorma-standoc"
 require "nokogiri"
 require "tokenizer"
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       def extract_text(node)

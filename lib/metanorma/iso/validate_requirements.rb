@@ -1,6 +1,6 @@
 require "metanorma-standoc"
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       REQUIREMENT_RE_STR = <<~REGEXP.freeze

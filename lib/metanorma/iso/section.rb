@@ -1,7 +1,7 @@
 require "htmlentities"
 require "uri" if /^2\./.match?(RUBY_VERSION)
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       def clause_parse(attrs, xml, node)

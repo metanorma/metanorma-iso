@@ -8,7 +8,7 @@ require "nokogiri"
 require "jing"
 require "iev"
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       def isosubgroup_validate(root)

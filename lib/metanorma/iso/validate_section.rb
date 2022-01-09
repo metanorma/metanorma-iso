@@ -1,6 +1,6 @@
 require "nokogiri"
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       def section_validate(doc)

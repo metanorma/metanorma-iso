@@ -6,7 +6,7 @@ require "open-uri"
 require "isodoc"
 require "fileutils"
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       XML_ROOT_TAG = "iso-standard".freeze

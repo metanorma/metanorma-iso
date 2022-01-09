@@ -6,7 +6,7 @@ require "pathname"
 require "open-uri"
 require "twitter_cldr"
 
-module Asciidoctor
+module Metanorma
   module ISO
     class Converter < Standoc::Converter
       STAGE_ABBRS = {
