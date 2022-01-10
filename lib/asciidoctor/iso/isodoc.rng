@@ -32,6 +32,19 @@
         <ref name="DocumentType"/>
       </element>
     </define>
+    <define name="bibitem">
+      <element name="bibitem">
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+        <optional>
+          <attribute name="hidden">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <ref name="BibliographicItem"/>
+      </element>
+    </define>
     <define name="section-title">
       <element name="title">
         <zeroOrMore>
@@ -690,6 +703,7 @@
             <ref name="terms"/>
             <ref name="term-clause"/>
             <ref name="definitions"/>
+            <ref name="floating-title"/>
           </choice>
         </oneOrMore>
       </element>
@@ -1680,6 +1694,7 @@
           <ref name="clause-subsection"/>
           <ref name="terms"/>
           <ref name="definitions"/>
+          <ref name="floating-title"/>
         </choice>
       </oneOrMore>
     </choice>
@@ -1722,6 +1737,7 @@
           <ref name="terms"/>
           <ref name="definitions"/>
           <ref name="references"/>
+          <ref name="floating-title"/>
         </choice>
       </zeroOrMore>
     </group>
@@ -2532,6 +2548,19 @@
       <oneOrMore>
         <ref name="BasicBlock"/>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="floating-title">
+    <element name="floating-title">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <attribute name="depth">
+        <data type="int"/>
+      </attribute>
+      <zeroOrMore>
+        <ref name="TextElement"/>
+      </zeroOrMore>
     </element>
   </define>
 </grammar>
