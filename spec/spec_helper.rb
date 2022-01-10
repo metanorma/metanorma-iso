@@ -132,7 +132,7 @@ VALIDATING_BLANK_HDR = <<~"HDR".freeze
 HDR
 
 ASCIIDOCTOR_ISO_DIR = Pathname
-  .new(File.dirname(__FILE__)) / "../lib/asciidoctor/iso"
+  .new(File.dirname(__FILE__)) / "../lib/metanorma/iso"
 
 BOILERPLATE =
   HTMLEntities.new.decode(

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Asciidoctor::ISO do
+RSpec.describe Metanorma::ISO do
   it "processes open blocks" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
