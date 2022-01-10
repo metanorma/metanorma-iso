@@ -2,7 +2,7 @@ require "spec_helper"
 require "relaton_iso"
 require "relaton_ietf"
 
-RSpec.describe Asciidoctor::ISO do
+RSpec.describe Metanorma::ISO do
   it "processes draft ISO reference" do
     mock_fdis
     input = <<~INPUT

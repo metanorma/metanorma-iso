@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Asciidoctor::ISO do
+RSpec.describe Metanorma::ISO do
   it "has a version number" do
     expect(Metanorma::ISO::VERSION).not_to be nil
   end
