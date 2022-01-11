@@ -4219,15 +4219,21 @@
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template><xsl:template match="*[local-name()='add']">
+		<xsl:param name="skip">true</xsl:param>
 		<xsl:choose>
 			<xsl:when test="starts-with(., $ace_tag)"> <!-- examples: ace-tag_A1_start, ace-tag_A2_end, C1_start, AC_start -->
-				<fo:inline>
-					<xsl:call-template name="insertTag">
-						<xsl:with-param name="type" select="substring-after(substring-after(., $ace_tag), '_')"/> <!-- start or end -->
-						<xsl:with-param name="kind" select="substring(substring-before(substring-after(., $ace_tag), '_'), 1, 1)"/> <!-- A or C -->
-						<xsl:with-param name="value" select="substring(substring-before(substring-after(., $ace_tag), '_'), 2)"/> <!-- 1, 2, C -->
-					</xsl:call-template>
-				</fo:inline>
+				<xsl:choose>
+					<xsl:when test="$skip = 'true' and       ((local-name(../..) = 'note' and not(preceding-sibling::node())) or       (local-name(..) = 'title' and preceding-sibling::node()[1][local-name() = 'tab']))      and       ../node()[last()][local-name() = 'add'][starts-with(text(), $ace_tag)]"><!-- start tag displayed in template name="note" and title --></xsl:when>
+					<xsl:otherwise>
+						<fo:inline>
+							<xsl:call-template name="insertTag">
+								<xsl:with-param name="type" select="substring-after(substring-after(., $ace_tag), '_')"/> <!-- start or end -->
+								<xsl:with-param name="kind" select="substring(substring-before(substring-after(., $ace_tag), '_'), 1, 1)"/> <!-- A or C -->
+								<xsl:with-param name="value" select="substring(substring-before(substring-after(., $ace_tag), '_'), 2)"/> <!-- 1, 2, C -->
+							</xsl:call-template>
+						</fo:inline>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:when>
 			<xsl:when test="@amendment">
 				<fo:inline>
@@ -4849,6 +4855,14 @@
 							
 							
 							<fo:inline xsl:use-attribute-sets="note-name-style">
+								
+								
+								<!-- if note contains only one element and first and last childs are `add` ace-tag, then move start ace-tag before NOTE's name-->
+								<xsl:if test="count(*[not(local-name() = 'name')]) = 1 and *[not(local-name() = 'name')]/node()[last()][local-name() = 'add'][starts-with(text(), $ace_tag)]">
+									<xsl:apply-templates select="*[not(local-name() = 'name')]/node()[1][local-name() = 'add'][starts-with(text(), $ace_tag)]">
+										<xsl:with-param name="skip">false</xsl:with-param>
+									</xsl:apply-templates> 
+								</xsl:if>
 								
 								<xsl:apply-templates select="*[local-name() = 'name']" mode="presentation"/>
 							</fo:inline>
