@@ -175,7 +175,7 @@
 	
 	<xsl:template match="/">
 		<xsl:call-template name="namespaceCheck"/>
-		<fo:root font-family="Cambria, Times New Roman, Cambria Math, Source Han Sans" font-size="11pt" xml:lang="{$lang}"> <!--   -->
+		<fo:root xsl:use-attribute-sets="root-style" xml:lang="{$lang}"> <!--   -->
 			<xsl:if test="$lang = 'zh'">
 				<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
 			</xsl:if>
@@ -2198,6 +2198,23 @@
 	</xsl:template><xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable name="linebreak" select="'&#8232;'"/><xsl:attribute-set name="root-style">
 		
 		
+		
+		
+		
+		
+		
+		
+			<xsl:attribute name="font-family">Cambria, Times New Roman, Cambria Math, Source Han Sans</xsl:attribute>
+			<xsl:attribute name="font-size">11pt</xsl:attribute>
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	</xsl:attribute-set><xsl:attribute-set name="link-style">
 		
 		
@@ -2339,7 +2356,62 @@
 				
 	</xsl:attribute-set><xsl:variable name="table-border_">
 		
-	</xsl:variable><xsl:variable name="table-border" select="normalize-space($table-border_)"/><xsl:attribute-set name="table-name-style">
+	</xsl:variable><xsl:variable name="table-border" select="normalize-space($table-border_)"/><xsl:attribute-set name="table-container-style">
+		<xsl:attribute name="margin-left">0mm</xsl:attribute>
+		<xsl:attribute name="margin-right">0mm</xsl:attribute>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<xsl:attribute name="font-size">10pt</xsl:attribute>
+			<xsl:attribute name="margin-top">12pt</xsl:attribute>
+			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+					
+		
+		
+	</xsl:attribute-set><xsl:attribute-set name="table-style">
+		<xsl:attribute name="table-omit-footer-at-break">true</xsl:attribute>
+		<xsl:attribute name="table-layout">fixed</xsl:attribute>
+		<xsl:attribute name="margin-left">0mm</xsl:attribute>
+		<xsl:attribute name="margin-right">0mm</xsl:attribute>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<xsl:attribute name="border">1.5pt solid black</xsl:attribute>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</xsl:attribute-set><xsl:attribute-set name="table-name-style">
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 			
 		
@@ -2770,7 +2842,7 @@
 			<!-- colwidths=<xsl:copy-of select="$colwidths"/> -->
 			
 			
-			<xsl:variable name="margin-left">
+			<xsl:variable name="margin-side">
 				<xsl:choose>
 					<xsl:when test="sum(xalan:nodeset($colwidths)//column) &gt; 75">15</xsl:when>
 					<xsl:otherwise>0</xsl:otherwise>
@@ -2778,25 +2850,12 @@
 			</xsl:variable>
 			
 			
-			<fo:block-container margin-left="-{$margin-left}mm" margin-right="-{$margin-left}mm">			
+			<fo:block-container xsl:use-attribute-sets="table-container-style">
+			
 				
+			
 				
-					<xsl:attribute name="font-size">10pt</xsl:attribute>
-				
-				
-							
-							
-							
-				
-				
-										
-				
-				
-				
-					<xsl:attribute name="margin-top">12pt</xsl:attribute>
-					<xsl:attribute name="margin-left">0mm</xsl:attribute>
-					<xsl:attribute name="margin-right">0mm</xsl:attribute>
-					<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+			
 				
 				
 				
@@ -2805,56 +2864,55 @@
 				
 				
 				
+				
+				
+				
+				<!-- end table block-container attributes -->
 				
 				<!-- display table's name before table for PAS inside block-container (2-columnn layout) -->
 				
 				
+				<xsl:variable name="table_width_default">100%</xsl:variable>
 				<xsl:variable name="table_width">
 					<!-- for centered table always 100% (@width will be set for middle/second cell of outer table) -->
-					100%
-							
-					
+					<xsl:value-of select="$table_width_default"/>
 				</xsl:variable>
+				
 				
 				<xsl:variable name="table_attributes">
-					<attribute name="table-layout">fixed</attribute>
-					<attribute name="width"><xsl:value-of select="normalize-space($table_width)"/></attribute>
-					<attribute name="margin-left"><xsl:value-of select="$margin-left"/>mm</attribute>
-					<attribute name="margin-right"><xsl:value-of select="$margin-left"/>mm</attribute>
-					
-					
-						<attribute name="border">1.5pt solid black</attribute>
-						<xsl:if test="*[local-name()='thead']">
-							<attribute name="border-top">1pt solid black</attribute>
-						</xsl:if>
-					
-					
-					
-						<xsl:if test="ancestor::*[local-name() = 'table']">
-							<!-- for internal table in table cell -->
-							<attribute name="border">0.5pt solid black</attribute>
-						</xsl:if>
-					
-					
-					
-					
-						<attribute name="margin-left">0mm</attribute>
-						<attribute name="margin-right">0mm</attribute>
-					
-									
-									
-									
-					
-									
-					
-					
+				
+					<xsl:element name="table_attributes" use-attribute-sets="table-style">
+						<xsl:attribute name="width"><xsl:value-of select="normalize-space($table_width)"/></xsl:attribute>
+						
+						
+						
+						
+						
+						
+						
+						
+							<xsl:if test="*[local-name()='thead']">
+								<xsl:attribute name="border-top">1pt solid black</xsl:attribute>
+							</xsl:if>
+							<xsl:if test="ancestor::*[local-name() = 'table']">
+								<!-- for internal table in table cell -->
+								<xsl:attribute name="border">0.5pt solid black</xsl:attribute>
+							</xsl:if>
+						
+						
+						
+						
+						
+						
+						
+					</xsl:element>
 				</xsl:variable>
 				
 				
-				<fo:table id="{@id}" table-omit-footer-at-break="true">
+				<fo:table id="{@id}">
 					
-					<xsl:for-each select="xalan:nodeset($table_attributes)/attribute">					
-						<xsl:attribute name="{@name}">
+					<xsl:for-each select="xalan:nodeset($table_attributes)/table_attributes/@*">					
+						<xsl:attribute name="{local-name()}">
 							<xsl:value-of select="."/>
 						</xsl:attribute>
 					</xsl:for-each>
@@ -2863,7 +2921,6 @@
 					<xsl:if test="$isNoteOrFnExist = 'true'">
 						<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute> <!-- set 0pt border, because there is a separete table below for footer  -->
 					</xsl:if>
-					
 					
 					
 					<xsl:choose>
@@ -3186,17 +3243,18 @@
 			</xsl:variable>
 			
 			<fo:table keep-with-previous="always">
-				<xsl:for-each select="xalan:nodeset($table_attributes)/attribute">
+				<xsl:for-each select="xalan:nodeset($table_attributes)/table_attributes/@*">
+					<xsl:variable name="name" select="local-name()"/>
 					<xsl:choose>
-						<xsl:when test="@name = 'border-top'">
-							<xsl:attribute name="{@name}">0pt solid black</xsl:attribute>
+						<xsl:when test="$name = 'border-top'">
+							<xsl:attribute name="{$name}">0pt solid black</xsl:attribute>
 						</xsl:when>
-						<xsl:when test="@name = 'border'">
-							<xsl:attribute name="{@name}"><xsl:value-of select="."/></xsl:attribute>
+						<xsl:when test="$name = 'border'">
+							<xsl:attribute name="{$name}"><xsl:value-of select="."/></xsl:attribute>
 							<xsl:attribute name="border-top">0pt solid black</xsl:attribute>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:attribute name="{@name}"><xsl:value-of select="."/></xsl:attribute>
+							<xsl:attribute name="{$name}"><xsl:value-of select="."/></xsl:attribute>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:for-each>
