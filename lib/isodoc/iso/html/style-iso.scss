@@ -198,7 +198,7 @@ p.Terms {
 
 /* Navigation*/
 
-#toc {
+#toc, #toc > ul > :is(.h1, .h2, .h3, .h4, .h5, .h6) {
     @include toc(null, #f7f7f7, black);
     @include sidebarToc();
 
@@ -213,6 +213,12 @@ p.Terms {
         display: none;
     }
 }
+
+#toc > ul > :is(.h1, .h2, .h3, .h4, .h5, .h6) {
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
 
 nav {
     @include sidebarNav(#f7f7f7, 278px, 20px);
@@ -239,7 +245,7 @@ nav {
         margin-top: 1em;
     }
 
-    ul#toc-list {
+    ul#toc-list, ul#toc-list > :is(.h1, .h2, .h3, .h4, .h5, .h6) {
         padding:0;
         margin:0;
     }
