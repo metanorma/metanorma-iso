@@ -5662,7 +5662,7 @@
 		<xsl:value-of select="."/>
 	</xsl:template><xsl:template match="node()" mode="contents">
 		<xsl:apply-templates mode="contents"/>
-	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title']" priority="2" mode="contents">
+	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title' or @type = 'section-title']" priority="2" mode="contents">
 		<xsl:variable name="level">
 			<xsl:call-template name="getLevel">
 				<xsl:with-param name="depth" select="@depth"/>
@@ -5670,10 +5670,15 @@
 		</xsl:variable>
 		
 		<xsl:variable name="section">
-			<xsl:value-of select="*[local-name() = 'tab'][1]/preceding-sibling::node()"/>
+			<xsl:choose>
+				<xsl:when test="@type = 'section-title'"/>
+				<xsl:otherwise>
+					<xsl:value-of select="*[local-name() = 'tab'][1]/preceding-sibling::node()"/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:variable>
 		
-		<xsl:variable name="type">floating-title</xsl:variable>
+		<xsl:variable name="type"><xsl:value-of select="@type"/></xsl:variable>
 			
 		<xsl:variable name="display">
 			<xsl:choose>
@@ -5690,7 +5695,16 @@
 			<xsl:variable name="title">
 				<xsl:choose>
 					<xsl:when test="*[local-name() = 'tab']">
-						<xsl:copy-of select="*[local-name() = 'tab'][1]/following-sibling::node()"/>
+						<xsl:choose>
+							<xsl:when test="@type = 'section-title'">
+								<xsl:value-of select="*[local-name() = 'tab'][1]/preceding-sibling::node()"/>
+								<xsl:text>: </xsl:text>
+								<xsl:copy-of select="*[local-name() = 'tab'][1]/following-sibling::node()"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:copy-of select="*[local-name() = 'tab'][1]/following-sibling::node()"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:copy-of select="node()"/>
@@ -7268,7 +7282,7 @@
 		</fo:inline>
 	</xsl:template><xsl:template match="@language">
 		<xsl:copy-of select="."/>
-	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title']" priority="4">
+	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title' or @type = 'section-title']" priority="4">
 		<xsl:call-template name="title"/>
 	</xsl:template><xsl:template match="*[local-name() = 'admonition']">
 		
