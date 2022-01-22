@@ -32,6 +32,43 @@
         <ref name="DocumentType"/>
       </element>
     </define>
+    <define name="index">
+      <element name="index">
+        <optional>
+          <attribute name="to">
+            <data type="IDREF"/>
+          </attribute>
+        </optional>
+        <element name="primary">
+          <oneOrMore>
+            <choice>
+              <ref name="PureTextElement"/>
+              <ref name="stem"/>
+            </choice>
+          </oneOrMore>
+        </element>
+        <optional>
+          <element name="secondary">
+            <oneOrMore>
+              <choice>
+                <ref name="PureTextElement"/>
+                <ref name="stem"/>
+              </choice>
+            </oneOrMore>
+          </element>
+        </optional>
+        <optional>
+          <element name="tertiary">
+            <oneOrMore>
+              <choice>
+                <ref name="PureTextElement"/>
+                <ref name="stem"/>
+              </choice>
+            </oneOrMore>
+          </element>
+        </optional>
+      </element>
+    </define>
     <define name="bibitem">
       <element name="bibitem">
         <attribute name="id">
@@ -1023,6 +1060,26 @@
           <choice>
             <ref name="PureTextElement"/>
             <ref name="index"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="sub">
+      <element name="sub">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="stem"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="sup">
+      <element name="sup">
+        <zeroOrMore>
+          <choice>
+            <ref name="PureTextElement"/>
+            <ref name="stem"/>
           </choice>
         </zeroOrMore>
       </element>
@@ -2216,7 +2273,18 @@
           <ref name="MultilingualRenderingType"/>
         </attribute>
       </optional>
-      <ref name="paragraph"/>
+      <oneOrMore>
+        <choice>
+          <ref name="formula"/>
+          <ref name="ul"/>
+          <ref name="ol"/>
+          <ref name="dl"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+          <ref name="paragraph"/>
+          <ref name="figure"/>
+        </choice>
+      </oneOrMore>
     </element>
   </define>
   <define name="termsource">

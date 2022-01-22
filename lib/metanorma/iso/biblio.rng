@@ -401,9 +401,9 @@
       <choice>
         <!-- iso191606 TODO -->
         <group>
-          <oneOrMore>
+          <zeroOrMore>
             <ref name="street"/>
-          </oneOrMore>
+          </zeroOrMore>
           <ref name="city"/>
           <optional>
             <ref name="state"/>

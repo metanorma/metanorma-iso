@@ -675,7 +675,7 @@ RSpec.describe Metanorma::ISO do
         :docfile: test.adoc
         :nodoc:
         :novalid:
-        :amends: ISO 123;ISO 124
+        :amends: ISO 123;ISO 125
         :obsoletes: ABC 1
         :successor-of: ABC 2
         :manifestation-of: ABC 3
@@ -744,16 +744,16 @@ RSpec.describe Metanorma::ISO do
                 <docidentifier>ABC 3</docidentifier>
               </bibitem>
             </relation>
-            <relation type='annotationOf'>
-              <bibitem>
-                <title>--</title>
-                <docidentifier>ABC 3a</docidentifier>
-              </bibitem>
-            </relation>
             <relation type='related'>
               <bibitem>
                 <title>--</title>
                 <docidentifier>ABC 4</docidentifier>
+              </bibitem>
+            </relation>
+            <relation type='annotationOf'>
+              <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 3a</docidentifier>
               </bibitem>
             </relation>
             <relation type='updates'>
@@ -872,128 +872,139 @@ RSpec.describe Metanorma::ISO do
                 <place>Geneva</place>
               </bibitem>
             </relation>
-            <relation type='updates'>
-              <description>amends</description>
-              <bibitem type='standard'>
-                <fetched/>
-                <title type='title-intro' format='text/plain' language='en' script='Latn'>Latex, rubber</title>
-                <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of total solids content</title>
-                <title type='main' format='text/plain' language='en' script='Latn'>Latex, rubber&#8201;&#8212;&#8201;Determination of total solids content</title>
-                <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-                <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination des mati&#232;res solides totales</title>
-                <title type='main' format='text/plain' language='fr' script='Latn'>
-                  Latex de caoutchouc&#8201;&#8212;&#8201;D&#233;termination des
-                  mati&#232;res solides totales
-                </title>
-                <uri type='src'>https://www.iso.org/standard/61884.html</uri>
-                <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
-                <uri type='rss'>https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
-                <docidentifier type='ISO'>ISO 124</docidentifier>
-                <docidentifier type='URN'>urn:iso:std:iso:124:stage-90.93:ed-7:en,fr</docidentifier>
-                <docnumber>124</docnumber>
-                <contributor>
-                  <role type='publisher'/>
-                  <organization>
-                    <name>International Organization for Standardization</name>
-                    <abbreviation>ISO</abbreviation>
-                    <uri>www.iso.org</uri>
-                  </organization>
-                </contributor>
-                <edition>7</edition>
-                <language>en</language>
-                <language>fr</language>
-                <script>Latn</script>
-                <status>
-                  <stage>90</stage>
-                  <substage>93</substage>
-                </status>
-                <copyright>
-                  <from>2014</from>
-                  <owner>
-                    <organization>
-                      <name>ISO</name>
-                    </organization>
-                  </owner>
-                </copyright>
-                <relation type='obsoletes'>
-                  <bibitem type='standard'>
-                    <formattedref format='text/plain'>ISO 124:2011</formattedref>
-                  </bibitem>
-                </relation>
-                <relation type='instance'>
-                  <bibitem type='standard'>
-                    <fetched/>
-                    <title type='title-intro' format='text/plain' language='en' script='Latn'>Latex, rubber</title>
-                    <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of total solids content</title>
-                    <title type='main' format='text/plain' language='en' script='Latn'>Latex, rubber&#8201;&#8212;&#8201;Determination of total solids content</title>
-                    <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-                    <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination des mati&#232;res solides totales</title>
-                    <title type='main' format='text/plain' language='fr' script='Latn'>
-                      Latex de caoutchouc&#8201;&#8212;&#8201;D&#233;termination des
-                      mati&#232;res solides totales
-                    </title>
-                    <uri type='src'>https://www.iso.org/standard/61884.html</uri>
-                    <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
-                    <uri type='rss'>https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
-                    <docidentifier type='ISO'>ISO 124:2014</docidentifier>
-                    <docidentifier type='URN'>urn:iso:std:iso:124:stage-90.93:ed-7:en,fr</docidentifier>
-                    <docnumber>124</docnumber>
-                    <date type='published'>
-                      <on>2014-03</on>
-                    </date>
-                    <contributor>
-                      <role type='publisher'/>
-                      <organization>
-                        <name>International Organization for Standardization</name>
-                        <abbreviation>ISO</abbreviation>
-                        <uri>www.iso.org</uri>
-                      </organization>
-                    </contributor>
-                    <edition>7</edition>
-                    <language>en</language>
-                    <language>fr</language>
-                    <script>Latn</script>
-                    <abstract format='text/plain' language='en' script='Latn'>
-                      ISO 124:2014 specifies methods for the determination of the total
-                      solids content of natural rubber field and concentrated latices
-                      and synthetic rubber latex. These methods are not necessarily
-                      suitable for latex from natural sources other than the Hevea
-                      brasiliensis, for vulcanized latex, for compounded latex, or for
-                      artificial dispersions of rubber.
-                    </abstract>
-                    <abstract format='text/plain' language='fr' script='Latn'>
-                      L&#8217;ISO 124:2014 sp&#233;cifie des m&#233;thodes pour la
-                      d&#233;termination des mati&#232;res solides totales dans le latex
-                      de plantation, le latex de concentr&#233; de caoutchouc naturel et
-                      le latex de caoutchouc synth&#233;tique. Ces m&#233;thodes ne
-                      conviennent pas n&#233;cessairement au latex d&#8217;origine
-                      naturelle autre que celui de l&#8217;Hevea brasiliensis, au latex
-                      vulcanis&#233;, aux m&#233;langes de latex, ou aux dispersions
-                      artificielles de caoutchouc.
-                    </abstract>
-                    <status>
-                      <stage>90</stage>
-                      <substage>93</substage>
-                    </status>
-                    <copyright>
-                      <from>2014</from>
-                      <owner>
-                        <organization>
-                          <name>ISO</name>
-                        </organization>
-                      </owner>
-                    </copyright>
-                    <relation type='obsoletes'>
-                      <bibitem type='standard'>
-                        <formattedref format='text/plain'>ISO 124:2011</formattedref>
-                      </bibitem>
-                    </relation>
-                    <place>Geneva</place>
-                  </bibitem>
-                </relation>
-                <place>Geneva</place>
-              </bibitem>
-            </relation>
+                       <relation type='updates'>
+             <description>amends</description>
+             <bibitem type='standard'>
+               <fetched/>
+               <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
+               <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of alkalinity</title>
+               <title type='main' format='text/plain' language='en' script='Latn'>
+                 Natural rubber latex concentrate&#8201;&#8212;&#8201;Determination of
+                 alkalinity
+               </title>
+               <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex concentr&#233; de caoutchouc naturel</title>
+               <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination de l&#8217;alcalinit&#233;</title>
+               <title type='main' format='text/plain' language='fr' script='Latn'>
+                 Latex concentr&#233; de caoutchouc
+                 naturel&#8201;&#8212;&#8201;D&#233;termination de
+                 l&#8217;alcalinit&#233;
+               </title>
+               <uri type='src'>https://www.iso.org/standard/72849.html</uri>
+               <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
+               <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
+               <docidentifier type='ISO'>ISO 125</docidentifier>
+               <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7:en,fr</docidentifier>
+               <docnumber>125</docnumber>
+               <contributor>
+                 <role type='publisher'/>
+                 <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                   <uri>www.iso.org</uri>
+                 </organization>
+               </contributor>
+               <edition>7</edition>
+               <language>en</language>
+               <language>fr</language>
+               <script>Latn</script>
+               <status>
+                 <stage>60</stage>
+                 <substage>60</substage>
+               </status>
+               <copyright>
+                 <from>2020</from>
+                 <owner>
+                   <organization>
+                     <name>ISO</name>
+                   </organization>
+                 </owner>
+               </copyright>
+               <relation type='obsoletes'>
+                 <bibitem type='standard'>
+                   <formattedref format='text/plain'>ISO 125:2011</formattedref>
+                 </bibitem>
+               </relation>
+               <relation type='instance'>
+                 <bibitem type='standard'>
+                   <fetched/>
+                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
+                   <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of alkalinity</title>
+                   <title type='main' format='text/plain' language='en' script='Latn'>
+                     Natural rubber latex concentrate&#8201;&#8212;&#8201;Determination
+                     of alkalinity
+                   </title>
+                   <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex concentr&#233; de caoutchouc naturel</title>
+                   <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination de l&#8217;alcalinit&#233;</title>
+                   <title type='main' format='text/plain' language='fr' script='Latn'>
+                     Latex concentr&#233; de caoutchouc
+                     naturel&#8201;&#8212;&#8201;D&#233;termination de
+                     l&#8217;alcalinit&#233;
+                   </title>
+                   <uri type='src'>https://www.iso.org/standard/72849.html</uri>
+                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
+                   <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
+                   <docidentifier type='ISO'>ISO 125:2020</docidentifier>
+                   <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7:en,fr</docidentifier>
+                   <docnumber>125</docnumber>
+                   <date type='published'>
+                     <on>2020-02</on>
+                   </date>
+                   <contributor>
+                     <role type='publisher'/>
+                     <organization>
+                       <name>International Organization for Standardization</name>
+                       <abbreviation>ISO</abbreviation>
+                       <uri>www.iso.org</uri>
+                     </organization>
+                   </contributor>
+                   <edition>7</edition>
+                   <language>en</language>
+                   <language>fr</language>
+                   <script>Latn</script>
+                   <abstract format='text/plain' language='en' script='Latn'>
+                     This document specifies a method for the determination of the
+                     alkalinity of natural rubber latex concentrate. The method is not
+                     necessarily suitable for latices from natural sources other than
+                     Hevea brasiliensis or for synthetic rubber latices, compounded
+                     latex, vulcanized latex or artificial dispersions of rubber. NOTE
+                     A method for the determination of the alkalinity of
+                     polychloroprene latex is specified in ISO 13773.
+                   </abstract>
+                   <abstract format='text/plain' language='fr' script='Latn'>
+                     Le pr&#233;sent document sp&#233;cifie une m&#233;thode de
+                     d&#233;termination de l&#8217;alcalinit&#233; du latex
+                     concentr&#233; de caoutchouc naturel. La m&#233;thode ne convient
+                     pas n&#233;cessairement aux latex d&#8217;origine naturelle autres
+                     que l&#8217;Hevea brasiliensis ou aux latex de caoutchouc de
+                     synth&#232;se, aux latex formul&#233;s, aux latex vulcanis&#233;s
+                     ou aux dispersions artificielles de caoutchouc. NOTE Une
+                     m&#233;thode de d&#233;termination de l&#8217;alcalinit&#233; du
+                     latex de polychloropr&#232;ne est sp&#233;cifi&#233;e dans
+                     l&#8217;ISO 13773.
+                   </abstract>
+                   <status>
+                     <stage>60</stage>
+                     <substage>60</substage>
+                   </status>
+                   <copyright>
+                     <from>2020</from>
+                     <owner>
+                       <organization>
+                         <name>ISO</name>
+                       </organization>
+                     </owner>
+                   </copyright>
+                   <relation type='obsoletes'>
+                     <bibitem type='standard'>
+                       <formattedref format='text/plain'>ISO 125:2011</formattedref>
+                     </bibitem>
+                   </relation>
+                   <place>Geneva</place>
+                 </bibitem>
+               </relation>
+               <place>Geneva</place>
+             </bibitem>
+           </relation>
             <relation type='obsoletes'>
               <description>replaces</description>
               <bibitem>
