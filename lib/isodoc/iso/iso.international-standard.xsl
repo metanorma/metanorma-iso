@@ -1983,7 +1983,7 @@
 	</xsl:template>
 
 	
-<xsl:variable name="pageWidth_">
+<xsl:param name="syntax-highlight">false</xsl:param><xsl:variable name="pageWidth_">
 		210
 	</xsl:variable><xsl:variable name="pageWidth" select="normalize-space($pageWidth_)"/><xsl:variable name="pageHeight_">
 		297
@@ -3058,6 +3058,97 @@
 		
 		
 		
+	</xsl:attribute-set><xsl:attribute-set name="hljs-doctag">
+		<xsl:attribute name="color">#d73a49</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-keyword">
+		<xsl:attribute name="color">#d73a49</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-meta_hljs-keyword">
+		<xsl:attribute name="color">#d73a49</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-template-tag">
+		<xsl:attribute name="color">#d73a49</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-template-variable">
+		<xsl:attribute name="color">#d73a49</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-type">
+		<xsl:attribute name="color">#d73a49</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-variable_and_language_">
+		<xsl:attribute name="color">#d73a49</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-title">
+		<xsl:attribute name="color">#6f42c1</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-title_and_class_">
+		<xsl:attribute name="color">#6f42c1</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-title_and_class__and_inherited__">
+		<xsl:attribute name="color">#6f42c1</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-title_and_function_">
+		<xsl:attribute name="color">#6f42c1</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-attr">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-attribute">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-literal">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-meta">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-number">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-operator">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-variable">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-selector-attr">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-selector-class">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-selector-id">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-regexp">
+		<xsl:attribute name="color">#032f62</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-string">
+		<xsl:attribute name="color">#032f62</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-meta_hljs-string">
+		<xsl:attribute name="color">#032f62</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-built_in">
+		<xsl:attribute name="color">#e36209</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-symbol">
+		<xsl:attribute name="color">#e36209</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-comment">
+		<xsl:attribute name="color">#6a737d</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-code">
+		<xsl:attribute name="color">#6a737d</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-formula">
+		<xsl:attribute name="color">#6a737d</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-name">
+		<xsl:attribute name="color">#22863a</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-quote">
+		<xsl:attribute name="color">#22863a</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-selector-tag">
+		<xsl:attribute name="color">#22863a</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-selector-pseudo">
+		<xsl:attribute name="color">#22863a</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-subst">
+		<xsl:attribute name="color">#24292e</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-section">
+		<xsl:attribute name="color">#005cc5</xsl:attribute>
+		<xsl:attribute name="font-weight">bold</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-bullet">
+		<xsl:attribute name="color">#735c0f</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-emphasis">
+		<xsl:attribute name="color">#24292e</xsl:attribute>
+		<xsl:attribute name="font-style">italic</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-strong">
+		<xsl:attribute name="color">#24292e</xsl:attribute>
+		<xsl:attribute name="font-weight">bold</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-addition">
+		<xsl:attribute name="color">#22863a</xsl:attribute>
+		<xsl:attribute name="background-color">#f0fff4</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-deletion">
+		<xsl:attribute name="color">#b31d28</xsl:attribute>
+		<xsl:attribute name="background-color">#ffeef0</xsl:attribute>
+	</xsl:attribute-set><xsl:attribute-set name="hljs-char_and_escape_">
+	</xsl:attribute-set><xsl:attribute-set name="hljs-link">
+	</xsl:attribute-set><xsl:attribute-set name="hljs-params">
+	</xsl:attribute-set><xsl:attribute-set name="hljs-property">
+	</xsl:attribute-set><xsl:attribute-set name="hljs-punctuation">
+	</xsl:attribute-set><xsl:attribute-set name="hljs-tag">
 	</xsl:attribute-set><xsl:variable name="border-block-added">2.5pt solid rgb(0, 176, 80)</xsl:variable><xsl:variable name="border-block-deleted">2.5pt solid rgb(255, 0, 0)</xsl:variable><xsl:variable name="ace_tag">ace-tag_</xsl:variable><xsl:template name="processPrefaceSectionsDefault_Contents">
 		<xsl:for-each select="/*/*[local-name()='preface']/*">
 			<xsl:sort select="@displayorder" data-type="number"/>
@@ -6158,12 +6249,140 @@
 			</fo:block-container>
 		</fo:block-container>
 	</xsl:template><xsl:template match="*[local-name()='sourcecode']/text()" priority="2">
-		<xsl:variable name="text">
+		<xsl:choose>
+			<xsl:when test="normalize-space($syntax-highlight) = 'true' and normalize-space(../@lang) != ''"> <!-- condition for turn on of highlighting -->
+				<xsl:variable name="syntax" select="java:org.metanorma.fop.Util.syntaxHighlight(., ../@lang)"/>
+				<xsl:choose>
+					<xsl:when test="normalize-space($syntax) != ''"><!-- if there is highlighted result -->
+						<xsl:apply-templates select="xalan:nodeset($syntax)" mode="syntax_highlight"/> <!-- process span tags -->
+					</xsl:when>
+					<xsl:otherwise> <!-- if case of non-succesfull syntax highlight (for instance, unknown lang), process without highlighting -->
+						<xsl:call-template name="add_spaces_to_sourcecode"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="add_spaces_to_sourcecode"/>
+			</xsl:otherwise>
+		</xsl:choose>
+		
+	</xsl:template><xsl:template name="add_spaces_to_sourcecode">
+		<xsl:variable name="text_step1">
 			<xsl:call-template name="add-zero-spaces-equal"/>
 		</xsl:variable>
-		<xsl:call-template name="add-zero-spaces-java">
-			<xsl:with-param name="text" select="$text"/>
-		</xsl:call-template>
+		<xsl:variable name="text_step2">
+			<xsl:call-template name="add-zero-spaces-java">
+				<xsl:with-param name="text" select="$text_step1"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:value-of select="$text_step2"/>
+	</xsl:template><xsl:template match="*" mode="syntax_highlight">
+		<xsl:apply-templates mode="syntax_highlight"/>
+	</xsl:template><xsl:variable name="syntax_highlight_styles_">
+		<style class="hljs-addition" xsl:use-attribute-sets="hljs-addition"/>
+		<style class="hljs-attr" xsl:use-attribute-sets="hljs-attr"/>
+		<style class="hljs-attribute" xsl:use-attribute-sets="hljs-attribute"/>
+		<style class="hljs-built_in" xsl:use-attribute-sets="hljs-built_in"/>
+		<style class="hljs-bullet" xsl:use-attribute-sets="hljs-bullet"/>
+		<style class="hljs-char_and_escape_" xsl:use-attribute-sets="hljs-char_and_escape_"/>
+		<style class="hljs-code" xsl:use-attribute-sets="hljs-code"/>
+		<style class="hljs-comment" xsl:use-attribute-sets="hljs-comment"/>
+		<style class="hljs-deletion" xsl:use-attribute-sets="hljs-deletion"/>
+		<style class="hljs-doctag" xsl:use-attribute-sets="hljs-doctag"/>
+		<style class="hljs-emphasis" xsl:use-attribute-sets="hljs-emphasis"/>
+		<style class="hljs-formula" xsl:use-attribute-sets="hljs-formula"/>
+		<style class="hljs-keyword" xsl:use-attribute-sets="hljs-keyword"/>
+		<style class="hljs-link" xsl:use-attribute-sets="hljs-link"/>
+		<style class="hljs-literal" xsl:use-attribute-sets="hljs-literal"/>
+		<style class="hljs-meta" xsl:use-attribute-sets="hljs-meta"/>
+		<style class="hljs-meta_hljs-string" xsl:use-attribute-sets="hljs-meta_hljs-string"/>
+		<style class="hljs-meta_hljs-keyword" xsl:use-attribute-sets="hljs-meta_hljs-keyword"/>
+		<style class="hljs-name" xsl:use-attribute-sets="hljs-name"/>
+		<style class="hljs-number" xsl:use-attribute-sets="hljs-number"/>
+		<style class="hljs-operator" xsl:use-attribute-sets="hljs-operator"/>
+		<style class="hljs-params" xsl:use-attribute-sets="hljs-params"/>
+		<style class="hljs-property" xsl:use-attribute-sets="hljs-property"/>
+		<style class="hljs-punctuation" xsl:use-attribute-sets="hljs-punctuation"/>
+		<style class="hljs-quote" xsl:use-attribute-sets="hljs-quote"/>
+		<style class="hljs-regexp" xsl:use-attribute-sets="hljs-regexp"/>
+		<style class="hljs-section" xsl:use-attribute-sets="hljs-section"/>
+		<style class="hljs-selector-attr" xsl:use-attribute-sets="hljs-selector-attr"/>
+		<style class="hljs-selector-class" xsl:use-attribute-sets="hljs-selector-class"/>
+		<style class="hljs-selector-id" xsl:use-attribute-sets="hljs-selector-id"/>
+		<style class="hljs-selector-pseudo" xsl:use-attribute-sets="hljs-selector-pseudo"/>
+		<style class="hljs-selector-tag" xsl:use-attribute-sets="hljs-selector-tag"/>
+		<style class="hljs-string" xsl:use-attribute-sets="hljs-string"/>
+		<style class="hljs-strong" xsl:use-attribute-sets="hljs-strong"/>
+		<style class="hljs-subst" xsl:use-attribute-sets="hljs-subst"/>
+		<style class="hljs-symbol" xsl:use-attribute-sets="hljs-symbol"/>		
+		<style class="hljs-tag" xsl:use-attribute-sets="hljs-tag"/>
+		<!-- <style class="hljs-tag_hljs-attr" xsl:use-attribute-sets="hljs-tag_hljs-attr"></style> -->
+		<!-- <style class="hljs-tag_hljs-name" xsl:use-attribute-sets="hljs-tag_hljs-name"></style> -->
+		<style class="hljs-template-tag" xsl:use-attribute-sets="hljs-template-tag"/>
+		<style class="hljs-template-variable" xsl:use-attribute-sets="hljs-template-variable"/>
+		<style class="hljs-title" xsl:use-attribute-sets="hljs-title"/>
+		<style class="hljs-title_and_class_" xsl:use-attribute-sets="hljs-title_and_class_"/>
+		<style class="hljs-title_and_class__and_inherited__" xsl:use-attribute-sets="hljs-title_and_class__and_inherited__"/>
+		<style class="hljs-title_and_function_" xsl:use-attribute-sets="hljs-title_and_function_"/>
+		<style class="hljs-type" xsl:use-attribute-sets="hljs-type"/>
+		<style class="hljs-variable" xsl:use-attribute-sets="hljs-variable"/>
+		<style class="hljs-variable_and_language_" xsl:use-attribute-sets="hljs-variable_and_language_"/>
+	</xsl:variable><xsl:variable name="syntax_highlight_styles" select="xalan:nodeset($syntax_highlight_styles_)"/><xsl:template match="span" mode="syntax_highlight" priority="2">
+		<!-- <fo:inline color="green" font-style="italic"><xsl:apply-templates mode="syntax_highlight"/></fo:inline> -->
+		<fo:inline>
+			<xsl:variable name="classes_">
+				<xsl:call-template name="split">
+					<xsl:with-param name="pText" select="@class"/>
+					<xsl:with-param name="sep" select="' '"/>
+				</xsl:call-template>
+				<!-- a few classes together (_and_ suffix) -->
+				<xsl:if test="contains(@class, 'hljs-char') and contains(@class, 'escape_')">
+					<item>hljs-char_and_escape_</item>
+				</xsl:if>
+				<xsl:if test="contains(@class, 'hljs-title') and contains(@class, 'class_')">
+					<item>hljs-title_and_class_</item>
+				</xsl:if>
+				<xsl:if test="contains(@class, 'hljs-title') and contains(@class, 'class_') and contains(@class, 'inherited__')">
+					<item>hljs-title_and_class__and_inherited__</item>
+				</xsl:if>
+				<xsl:if test="contains(@class, 'hljs-title') and contains(@class, 'function_')">
+					<item>hljs-title_and_function_</item>
+				</xsl:if>
+				<xsl:if test="contains(@class, 'hljs-variable') and contains(@class, 'language_')">
+					<item>hljs-variable_and_language_</item>
+				</xsl:if>
+				<!-- with parent classes (_ suffix) -->
+				<xsl:if test="contains(@class, 'hljs-keyword') and contains(ancestor::*/@class, 'hljs-meta')">
+					<item>hljs-meta_hljs-keyword</item>
+				</xsl:if>
+				<xsl:if test="contains(@class, 'hljs-string') and contains(ancestor::*/@class, 'hljs-meta')">
+					<item>hljs-meta_hljs-string</item>
+				</xsl:if>
+			</xsl:variable>
+			<xsl:variable name="classes" select="xalan:nodeset($classes_)"/>
+			
+			<xsl:for-each select="$classes/item">
+				<xsl:variable name="class_name" select="."/>
+				<xsl:for-each select="$syntax_highlight_styles/style[@class = $class_name]/@*[not(local-name() = 'class')]">
+					<xsl:attribute name="{local-name()}"><xsl:value-of select="."/></xsl:attribute>
+				</xsl:for-each>
+			</xsl:for-each>
+			
+			<!-- <xsl:variable name="class_name">
+				<xsl:choose>
+					<xsl:when test="@class = 'hljs-attr' and ancestor::*/@class = 'hljs-tag'">hljs-tag_hljs-attr</xsl:when>
+					<xsl:when test="@class = 'hljs-name' and ancestor::*/@class = 'hljs-tag'">hljs-tag_hljs-name</xsl:when>
+					<xsl:when test="@class = 'hljs-string' and ancestor::*/@class = 'hljs-meta'">hljs-meta_hljs-string</xsl:when>
+					<xsl:otherwise><xsl:value-of select="@class"/></xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:for-each select="$syntax_highlight_styles/style[@class = $class_name]/@*[not(local-name() = 'class')]">
+				<xsl:attribute name="{local-name()}"><xsl:value-of select="."/></xsl:attribute>
+			</xsl:for-each> -->
+			
+		<xsl:apply-templates mode="syntax_highlight"/></fo:inline>
+	</xsl:template><xsl:template match="text()" mode="syntax_highlight" priority="2">
+		<xsl:call-template name="add_spaces_to_sourcecode"/>
 	</xsl:template><xsl:template match="*[local-name() = 'sourcecode']/*[local-name() = 'name']">
 		<xsl:if test="normalize-space() != ''">		
 			<fo:block xsl:use-attribute-sets="sourcecode-name-style">				
