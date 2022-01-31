@@ -7090,17 +7090,20 @@
 		<xsl:copy-of select="@*[not(local-name() = 'level')]"/>
 		<xsl:value-of select="."/>
 	</xsl:template><xsl:template name="getListItemFormat">
+		<!-- Example: for BSI <?list-type loweralpha?> -->
+		<xsl:variable name="processing_instruction_type" select="normalize-space(../preceding-sibling::*[1]/processing-instruction('list-type'))"/>
 		<xsl:choose>
 			<xsl:when test="local-name(..) = 'ul'">
-				<xsl:call-template name="setULLabel"/>
+				<xsl:choose>
+					<xsl:when test="normalize-space($processing_instruction_type) = 'simple'"/>
+					<xsl:otherwise><xsl:call-template name="setULLabel"/></xsl:otherwise>
+				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise> <!-- for ordered lists 'ol' -->
 			
 				<!-- Example: for BSI <?list-start 2?> -->
 				<xsl:variable name="processing_instruction_start" select="normalize-space(../preceding-sibling::*[1]/processing-instruction('list-start'))"/>
-				<!-- Example: for BSI <?list-type loweralpha?> -->
-				<xsl:variable name="processing_instruction_type" select="normalize-space(../preceding-sibling::*[1]/processing-instruction('list-type'))"/>
-			
+
 				<xsl:variable name="start_value">
 					<xsl:choose>
 						<xsl:when test="normalize-space($processing_instruction_start) != ''">
@@ -7193,7 +7196,7 @@
 				
 					
 				
-					<xsl:call-template name="getListItemFormat"/> <!-- this template should be determined in each xslt -->
+					<xsl:call-template name="getListItemFormat"/>
 				</fo:block>
 			</fo:list-item-label>
 			<fo:list-item-body start-indent="body-start()" xsl:use-attribute-sets="list-item-body-style">
