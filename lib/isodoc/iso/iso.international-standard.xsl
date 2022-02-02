@@ -7137,11 +7137,11 @@
 								<xsl:when test="$list_level mod 5 = 0">roman_upper</xsl:when> <!-- level 5 -->
 								<xsl:when test="$list_level mod 4 = 0">alphabet_upper</xsl:when> <!-- level 4 -->
 								<xsl:when test="$list_level mod 3 = 0">roman</xsl:when> <!-- level 3 -->
-								<xsl:when test="$list_level mod 2 = 0 and ../@class = 'steps'">alphabet</xsl:when> <!-- level 2 and @class = 'steps'-->
+								<xsl:when test="$list_level mod 2 = 0 and ancestor::*/@class = 'steps'">alphabet</xsl:when> <!-- level 2 and @class = 'steps'-->
 								<xsl:when test="$list_level mod 2 = 0">arabic</xsl:when> <!-- level 2 -->
 								<xsl:otherwise> <!-- level 1 -->
 									<xsl:choose>
-										<xsl:when test="../@class = 'steps'">arabic</xsl:when>
+										<xsl:when test="ancestor::*/@class = 'steps'">arabic</xsl:when>
 										<xsl:otherwise>alphabet</xsl:otherwise>
 									</xsl:choose>
 								</xsl:otherwise>
