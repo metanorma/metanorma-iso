@@ -7121,24 +7121,56 @@
 				<xsl:variable name="type">
 					<xsl:choose>
 						<xsl:when test="normalize-space($processing_instruction_type) != ''"><xsl:value-of select="$processing_instruction_type"/></xsl:when>
-						<xsl:otherwise><xsl:value-of select="../@type"/></xsl:otherwise>
+						<xsl:when test="normalize-space(../@type) != ''"><xsl:value-of select="../@type"/></xsl:when>
+						
+						<xsl:otherwise> <!-- if no @type or @class = 'steps' -->
+							
+							<xsl:variable name="list_level_" select="count(ancestor::*[local-name() = 'ul']) + count(ancestor::*[local-name() = 'ol'])"/>
+							<xsl:variable name="list_level">
+								<xsl:choose>
+									<xsl:when test="$list_level_ &lt;= 5"><xsl:value-of select="$list_level_"/></xsl:when>
+									<xsl:otherwise><xsl:value-of select="$list_level_ mod 5"/></xsl:otherwise>
+								</xsl:choose>
+							</xsl:variable>
+							
+							<xsl:choose>
+								<xsl:when test="$list_level mod 5 = 0">roman_upper</xsl:when> <!-- level 5 -->
+								<xsl:when test="$list_level mod 4 = 0">alphabet_upper</xsl:when> <!-- level 4 -->
+								<xsl:when test="$list_level mod 3 = 0">roman</xsl:when> <!-- level 3 -->
+								<xsl:when test="$list_level mod 2 = 0 and ../@class = 'steps'">alphabet</xsl:when> <!-- level 2 and @class = 'steps'-->
+								<xsl:when test="$list_level mod 2 = 0">arabic</xsl:when> <!-- level 2 -->
+								<xsl:otherwise> <!-- level 1 -->
+									<xsl:choose>
+										<xsl:when test="../@class = 'steps'">arabic</xsl:when>
+										<xsl:otherwise>alphabet</xsl:otherwise>
+									</xsl:choose>
+								</xsl:otherwise>
+							</xsl:choose>
+							
+						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
 				
 				<xsl:variable name="format">
-					
-							<xsl:choose>
-								<xsl:when test="$type = 'arabic'">1.</xsl:when>
-								<xsl:when test="$type = 'alphabet'">a)</xsl:when>
-								<xsl:when test="$type = 'alphabet_upper'">A.</xsl:when>
-								<xsl:when test="$type = 'roman'">i)</xsl:when>
-								<xsl:when test="$type = 'roman_upper'">I.</xsl:when>
-								<xsl:otherwise>a)</xsl:otherwise>
-							</xsl:choose>
-						
+					<xsl:choose>
+						<xsl:when test="$type = 'arabic'">
+							1.
+						</xsl:when>
+						<xsl:when test="$type = 'alphabet'">
+							a)
+						</xsl:when>
+						<xsl:when test="$type = 'alphabet_upper'">
+							A.
+						</xsl:when>
+						<xsl:when test="$type = 'roman'">
+							i)
+						</xsl:when>
+						<xsl:when test="$type = 'roman_upper'">I.</xsl:when>
+						<xsl:otherwise>1.</xsl:otherwise> <!-- for any case, if $type has non-determined value, not using -->
+					</xsl:choose>
 				</xsl:variable>
 				
-				<xsl:number value="$start_value + $curr_value" format="{$format}" lang="en"/>
+				<xsl:number value="$start_value + $curr_value" format="{normalize-space($format)}" lang="en"/>
 				
 			</xsl:otherwise>
 		</xsl:choose>
