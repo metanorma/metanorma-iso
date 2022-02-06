@@ -173,9 +173,11 @@
           <data type="dateTime"/>
         </attribute>
       </optional>
-      <attribute name="from">
-        <data type="IDREF"/>
-      </attribute>
+      <optional>
+        <attribute name="from">
+          <data type="IDREF"/>
+        </attribute>
+      </optional>
       <optional>
         <attribute name="to">
           <data type="IDREF"/>

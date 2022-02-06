@@ -40,7 +40,8 @@ module Metanorma
       def symbols_validate(root)
         f = root.xpath("//definitions")
         f.empty? && return
-        (f.size == 1) || @log.add("Style", f.first, ONE_SYMBOLS_WARNING)
+        (f.size == 1 || @vocab) or
+          @log.add("Style", f.first, ONE_SYMBOLS_WARNING)
         f.first.elements.each do |e|
           unless %w(title dl).include? e.name
             @log.add("Style", f.first, NON_DL_SYMBOLS_WARNING)
@@ -100,7 +101,7 @@ module Metanorma
 
       def sections_sequence_validate(root)
         names, n = sections_sequence_validate_start(root)
-        if root&.at("//bibdata/ext/subdoctype")&.text == "vocabulary"
+        if @vocab
           names, n = sections_sequence_validate_body_vocab(names, n)
         else
           names, n = sections_sequence_validate_body(names, n)
