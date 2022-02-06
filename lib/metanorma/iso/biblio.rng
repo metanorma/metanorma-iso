@@ -209,9 +209,6 @@
       <zeroOrMore>
         <ref name="contact"/>
       </zeroOrMore>
-      <zeroOrMore>
-        <ref name="uri"/>
-      </zeroOrMore>
     </element>
   </define>
   <define name="fullname">
@@ -827,6 +824,11 @@
       </optional>
       <optional>
         <attribute name="scope"/>
+      </optional>
+      <optional>
+        <attribute name="primary">
+          <data type="boolean"/>
+        </attribute>
       </optional>
       <text/>
     </element>

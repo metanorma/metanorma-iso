@@ -812,8 +812,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     expect(File.read("test.err"))
       .not_to include "Symbols and Abbreviated Terms can only contain "\
-                  "a definition list"
-
+                      "a definition list"
   end
 
   it "Warning if missing foreword" do
@@ -1204,6 +1203,32 @@ RSpec.describe Metanorma::ISO do
       .to include "Only annexes and references can follow terms and clauses"
   end
 
+  it "No warning if there are two Symbols sections in a Vocabulary document" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :docsubtype: vocabulary
+
+      == Scope
+
+      == Terms and definitions
+
+      == A Clause
+
+      [heading=symbols and abbreviated terms]
+      == Terms related to clinical psychology
+
+      [heading=symbols and abbreviated terms]
+      == Symbols related to clinical psychology
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "Only one Symbols and Abbreviated Terms section "\
+                       "in the standard"
+  end
 
   it "Warning if final section is not named Bibliography" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)

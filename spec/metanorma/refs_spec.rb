@@ -364,10 +364,7 @@ RSpec.describe Metanorma::ISO do
 
   def mock_fdis
     expect(RelatonIso::IsoBibliography).to receive(:get)
-      .with("ISO/FDIS 17664-1", nil, code: "ISO/FDIS 17664-1",
-                                     lang: "en", match: anything, ord: anything,
-                                     process: 1, year: nil,
-                                     title: "Title", usrlbl: nil) do
+      .with("ISO/FDIS 17664-1", nil, anything) do
       RelatonIsoBib::XMLParser.from_xml(<<~"OUTPUT")
         <bibitem id="x" type="standard">
           <fetched>#{Date.today}</fetched>
