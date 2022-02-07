@@ -1373,7 +1373,7 @@ RSpec.describe IsoDoc do
             <title depth="1">1
               <tab/>
               Scope</title>
-            <ol id="N">
+            <ol id="N" type="alphabet">
               <li>
                 <p>A</p>
               </li>
@@ -1388,12 +1388,12 @@ RSpec.describe IsoDoc do
               Widgets</title>
             <clause id="widgets1" inline-header="true">
               <title>3.1</title>
-              <ol id="note1">
+              <ol id="note1" type="alphabet">
                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
                           types of kernel.
                         </p>
               </ol>
-              <ol id="note2">
+              <ol id="note2" type="alphabet">
                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different
                           types of kernel.
                         </p>
@@ -1407,7 +1407,7 @@ RSpec.describe IsoDoc do
             <br/>(informative)</title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
-            <ol id="AN">
+            <ol id="AN" type="alphabet">
               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
                         types of kernel.
                       </p>
@@ -1415,12 +1415,12 @@ RSpec.describe IsoDoc do
           </clause>
           <clause id="annex1b" inline-header="true">
             <title>A.2</title>
-            <ol id="Anote1">
+            <ol id="Anote1" type="alphabet">
               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
                         types of kernel.
                       </p>
             </ol>
-            <ol id="Anote2">
+            <ol id="Anote2" type="alphabet">
               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different
                         types of kernel.
                       </p>
@@ -1513,7 +1513,7 @@ RSpec.describe IsoDoc do
         <sections>
           <clause id='scope' type='scope' displayorder='2'>
             <title depth='1'>1<tab/>Scope</title>
-            <ol id='N1'>
+            <ol id='N1' type="alphabet">
               <li id='N'>
                 <p>A</p>
               </li>
@@ -1523,12 +1523,12 @@ RSpec.describe IsoDoc do
           <clause id='widgets' displayorder='4'>
           <title depth='1'>3<tab/>Widgets</title>
             <clause inline-header="true" id='widgets1'><title>3.1</title>
-              <ol id='note1l'>
+              <ol id='note1l' type="alphabet">
                 <li id='note1'>
                   <p>A</p>
                 </li>
               </ol>
-              <ol id='note2l'>
+              <ol id='note2l' type="alphabet">
                 <li id='note2'>
                   <p>A</p>
                 </li>
@@ -1538,19 +1538,19 @@ RSpec.describe IsoDoc do
         </sections>
         <annex id='annex1'  displayorder='5'><title><strong>Annex A</strong><br/>(informative)</title>
           <clause inline-header="true" id='annex1a'><title>A.1</title>
-            <ol id='ANl'>
+            <ol id='ANl' type="alphabet">
               <li id='AN'>
                 <p>A</p>
               </li>
             </ol>
           </clause>
           <clause inline-header="true" id='annex1b'><title>A.2</title>
-            <ol id='Anote1l'>
+            <ol id='Anote1l' type="alphabet">
               <li id='Anote1'>
                 <p>A</p>
               </li>
             </ol>
-            <ol id='Anote2l'>
+            <ol id='Anote2l' type="alphabet">
               <li id='Anote2'>
                 <p>A</p>
               </li>
@@ -1633,22 +1633,22 @@ RSpec.describe IsoDoc do
         <sections>
           <clause id='scope' type='scope' displayorder='2'>
             <title depth='1'>1<tab/>Scope</title>
-            <ol id='N1'>
+            <ol id='N1' type="alphabet">
               <li id='N'>
                 <p>A</p>
-                <ol>
+                <ol type="arabic">
                   <li id='note1'>
                     <p>A</p>
-                    <ol>
+                    <ol type="roman">
                       <li id='note2'>
                         <p>A</p>
-                        <ol>
+                        <ol type="alphabet_upper">
                           <li id='AN'>
                             <p>A</p>
-                            <ol>
+                            <ol type="roman_upper">
                               <li id='Anote1'>
                                 <p>A</p>
-                                <ol>
+                                <ol type="alphabet">
                                   <li id='Anote2'>
                                     <p>A</p>
                                   </li>
