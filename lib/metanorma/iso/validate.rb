@@ -98,7 +98,7 @@ module Metanorma
 
       def script_validate(xmldoc)
         script = xmldoc&.at("//bibdata/script")&.text
-        script == "Latn" or
+        %w(Cyrl Latn).include?(script) or
           @log.add("Document Attributes", nil,
                    "#{script} is not a recognised script")
       end
