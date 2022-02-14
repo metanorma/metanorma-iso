@@ -135,7 +135,7 @@ module Metanorma
       end
 
       def title(node, xml)
-        ["en", "fr"].each do |lang|
+        %w(en ru fr).each do |lang|
           at = { language: lang, format: "text/plain" }
           title_full(node, xml, lang, at)
           title_intro(node, xml, lang, at)
