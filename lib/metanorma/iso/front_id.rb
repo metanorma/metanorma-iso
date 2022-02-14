@@ -106,6 +106,7 @@ module Metanorma
         suffix = case lang
                  when "en" then "(E)"
                  when "fr" then "(F)"
+                 when "ru" then "(R)"
                  else
                    "(X)"
                  end
