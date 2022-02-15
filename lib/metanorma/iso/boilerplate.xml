@@ -3,7 +3,7 @@
     <clause>
       <title>COPYRIGHT PROTECTED DOCUMENT</title>
     <p id="boilerplate-year">
-    &copy; {{ agency }} {{ docyear }}
+    &#xa9; {{ agency }} {{ docyear }}
   </p>
 
   <p id="boilerplate-message">
@@ -19,8 +19,8 @@ at the address below or ISO's member body in the country of the requester.
     ISO copyright office<br/>
     Ch. de Blandonnet 8 &#x2022; CP 401<br/>
     CH-1214 Vernier, Geneva, Switzerland<br/>
-    Tel.&nbsp;&nbsp;+ 41 22 749 01 11<br/>
-    Fax&nbsp;&nbsp;+ 41 22 749 09 47<br/>
+    Tel.&#xa0;&#xa0;+ 41 22 749 01 11<br/>
+    Fax&#xa0;&#xa0;+ 41 22 749 09 47<br/>
     Email: copyright@iso.org<br/>
     Website: www.iso.org
   </p>
