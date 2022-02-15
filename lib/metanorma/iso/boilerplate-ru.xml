@@ -1,7 +1,7 @@
 <boilerplate>
   <copyright-statement>
     <clause>
-      <title>ДОКУМЕНТ C ЗАЩИЩЕННЫМ АВТОРСКИМ ПРАВОМ</title>
+      <title>ДОКУМЕНТ, ОХРАНЯЕМЫЙ АВТОРСКИМ ПРАВОМ</title>
     <p id="boilerplate-year">
     &copy; {{ agency }} {{ docyear }}
   </p>
@@ -17,7 +17,7 @@
     Tel.&nbsp;&nbsp;+ 41 22 749 01 11<br/>
     Fax&nbsp;&nbsp;+ 41 22 749 09 47<br/>
     Электронная почта: copyright@iso.org<br/>
-    Сайт: www.iso.org
+    Сайт: www.iso.org
   </p>
     <p id="boilerplate-place">
     Издано в Швейцарии

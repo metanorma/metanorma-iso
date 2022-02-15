@@ -8,13 +8,34 @@ term_def_boilerplate: |
       <link target="http://www.electropedia.org"/>
       </p> </li> </ul>
 all_rights_reserved: Все права защищены
-reference_number: Справочный номер
-price_based_on: Цена указана за % страниц
+reference_number: Ссылочный номер
+price_based_on: Цена рассчитана на % стр.
 under_preparation: В стадии подготовки. (Стадия на момент публикации %).
-table_of_contents: Оглавление
+table_of_contents: Содержание
 date: Дата
-index: Индекс
+index: Алфавитный указатель
 see: см.
 see_also: см. также
 secretariat: Секретариат
-
+scope: Область применения
+edition: издание
+doctype_dict:
+  international-standard: Международный Стандарт
+  technical-specification: Техническая Спецификация
+  technical-report: Технический Отчет
+  publicly-available-specification: Общедоступная Спецификация
+  international-workshop-agreement: Соглашение о Международном Семинаре
+  guide: Руководство
+  amendment: Поправка
+  technical-corrigendum: Техническое Исправление
+  directive: Директива
+stage_dict:
+  "00": Предварительный рабочий элемент
+  "10": Новое предложение по рабочему элементу
+  "20": Рабочий проект
+  "30": Проект комитета
+  "40": Осадка
+  "50": Окончательный вариант
+  "60": Международный стандарт
+  "90": Обзор
+  "95": Снятие

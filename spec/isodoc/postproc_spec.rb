@@ -875,6 +875,7 @@ RSpec.describe IsoDoc do
         <bibdata type="standard">
           <status>
             <stage language="">30</stage>
+            <stage language='en'>Committee draft</stage>
           </status>
         </bibdata>
         <boilerplate>
