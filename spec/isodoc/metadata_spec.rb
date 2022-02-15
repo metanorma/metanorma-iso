@@ -7,7 +7,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     _ = c.convert_init(<<~"INPUT", "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
-    expect(metadata(c.info(Nokogiri::XML(<<~"INPUT"), nil))).to be_equivalent_to <<~"OUTPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
           <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
@@ -90,6 +90,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
+    output = <<~OUTPUT
       {:accesseddate=>"2012",
       :activateddate=>"2013",
       :agency=>"ISO",
@@ -146,6 +147,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :vote_starteddate=>"XXX",
       :wg=>"WG 3"}
     OUTPUT
+    expect(metadata(c.info(Nokogiri::XML(input),
+                           nil))).to be_equivalent_to output
   end
 
   it "processes IsoXML metadata #2" do
@@ -153,7 +156,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     _ = c.convert_init(<<~"INPUT", "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
-    expect(metadata(c.info(Nokogiri::XML(<<~"INPUT"), nil))).to be_equivalent_to <<~"OUTPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
           <title>
@@ -225,6 +228,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
+    output = <<~OUTPUT
       {:accesseddate=>"XXX",
       :agency=>"ISO/IEC",
       :circulateddate=>"XXX",
@@ -274,6 +278,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :vote_starteddate=>"XXX",
       :wg=>"GHI 3"}
     OUTPUT
+    expect(metadata(c.info(Nokogiri::XML(input),
+                           nil))).to be_equivalent_to output
   end
 
   it "processes IsoXML metadata in French" do
@@ -285,7 +291,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
-    expect(metadata(c.info(Nokogiri::XML(<<~"INPUT"), nil))).to be_equivalent_to <<~"OUTPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
           <title>
@@ -358,6 +364,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
+    output = <<~OUTPUT
       {:accesseddate=>"XXX",
       :agency=>"ISO/IEC",
       :circulateddate=>"XXX",
@@ -407,5 +414,148 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :vote_starteddate=>"XXX",
       :wg=>"GHI 3"}
     OUTPUT
+    expect(metadata(c.info(Nokogiri::XML(input),
+                           nil))).to be_equivalent_to output
+  end
+
+  it "processes IsoXML metadata in Russian" do
+    c = IsoDoc::Iso::HtmlConvert.new({})
+    _ = c.convert_init(<<~"INPUT", "test", false)
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <language>ru</language>
+        </bibdata>
+      </iso-standard>
+    INPUT
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata type="standard">
+          <title>
+            <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
+            <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+            <title type="title-part" language="en" format="text/plain">Rice</title>
+          </title>
+          <title>
+            <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
+            <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
+            <title type="title-part" language="fr" format="text/plain">Riz</title>
+          </title>
+          <title>
+            <title type="title-intro" language="ru" format="text/plain">Зерновые и бобовые</title>
+            <title type="title-main" language="ru" format="text/plain">Технические характеристики и методы испытаний</title>
+            <title type="title-part" language="ru" format="text/plain">Рис</title>
+          </title>
+          <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
+          <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
+          <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
+          <docidentifier type="iso-tc">17301</docidentifier>
+          <contributor>
+            <role type="author"/>
+            <organization>
+              <name>ISO</name>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Electrotechnical Commission</name>
+              <abbreviation>IEC</abbreviation>
+            </organization>
+          </contributor>
+          <language>ru</language>
+          <script>Cyrl</script>
+          <status>
+            <stage abbreviation="IS">60</stage>
+            <substage>92</substage>
+          </status>
+          <copyright>
+            <from>2016</from>
+            <owner>
+              <organization>
+                <name>International Organization for Standardization</name>
+              </organization>
+            </owner>
+          </copyright>
+          <relation type="obsoletes">
+            <locality type="clause"><referenceFrom>3.1</referenceFrom></locality>
+            <docidentifier>IEC 8121</docidentifier>
+          </relation>
+          <ext>
+            <doctype language="">international-standard</doctype>
+            <doctype language="fr">Standard International</doctype>
+            <editorialgroup>
+              <technical-committee number="34" type="ABC">Food products</technical-committee>
+              <subcommittee number="4" type="DEF">Cereals and pulses</subcommittee>
+              <workgroup number="3" type="GHI">Rice Group</workgroup>
+            </editorialgroup>
+            <ics><code>1.2.3</code></ics>
+            <ics><code>1.2.3</code></ics>
+            <structuredidentifier>
+              <project-number part="1" subpart="3">ISO/IEC/CD 17301</project-number>
+            </strucuredidentifier>
+            <stagename>International standard</stagename>
+          </ext>
+        </bibdata>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      {:accesseddate=>"XXX",
+      :agency=>"ISO/IEC",
+      :circulateddate=>"XXX",
+      :confirmeddate=>"XXX",
+      :copieddate=>"XXX",
+      :createddate=>"XXX",
+      :docnumber=>"ISO/IEC/CD 17301-1-3",
+      :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
+      :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
+      :docsubtitle=>"Cereals and pulses&nbsp;&mdash; Specifications and test methods&nbsp;&mdash; Part&nbsp;1&ndash;3: Rice",
+      :docsubtitleintro=>"Cereals and pulses",
+      :docsubtitlemain=>"Specifications and test methods",
+      :docsubtitlepart=>"Rice",
+      :docsubtitlepartlabel=>"Part&nbsp;1&ndash;3",
+      :doctitle=>"&#x417;&#x435;&#x440;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x438; &#x431;&#x43e;&#x431;&#x43e;&#x432;&#x44b;&#x435;&nbsp;&mdash; &#x422;&#x435;&#x445;&#x43d;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43a;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43a;&#x438; &#x438; &#x43c;&#x435;&#x442;&#x43e;&#x434;&#x44b; &#x438;&#x441;&#x43f;&#x44b;&#x442;&#x430;&#x43d;&#x438;&#x439;&nbsp;&mdash; Часть&nbsp;1&ndash;3: &#x420;&#x438;&#x441;",
+      :doctitleintro=>"&#x417;&#x435;&#x440;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x438; &#x431;&#x43e;&#x431;&#x43e;&#x432;&#x44b;&#x435;",
+      :doctitlemain=>"&#x422;&#x435;&#x445;&#x43d;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43a;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43a;&#x438; &#x438; &#x43c;&#x435;&#x442;&#x43e;&#x434;&#x44b; &#x438;&#x441;&#x43f;&#x44b;&#x442;&#x430;&#x43d;&#x438;&#x439;",
+      :doctitlepart=>"&#x420;&#x438;&#x441;",
+      :doctitlepartlabel=>"Часть&nbsp;1&ndash;3",
+      :doctype=>"International Standard",
+      :doctype_display=>"International Standard",
+      :docyear=>"2016",
+      :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
+      :ics=>"1.2.3, 1.2.3",
+      :implementeddate=>"XXX",
+      :issueddate=>"XXX",
+      :lang=>"ru",
+      :obsoleteddate=>"XXX",
+      :obsoletes=>"IEC 8121",
+      :obsoletes_part=>"3.1",
+      :publisheddate=>"XXX",
+      :publisher=>"International Organization for Standardization &#x438; International Electrotechnical Commission",
+      :receiveddate=>"XXX",
+      :sc=>"DEF 4",
+      :script=>"Latn",
+      :secretariat=>"XXX",
+      :stage=>"60",
+      :stage_int=>60,
+      :statusabbr=>"IS",
+      :tc=>"ABC 34",
+      :tc_docnumber=>["17301"],
+      :transmitteddate=>"XXX",
+      :unchangeddate=>"XXX",
+      :unpublished=>false,
+      :updateddate=>"XXX",
+      :vote_endeddate=>"XXX",
+      :vote_starteddate=>"XXX",
+      :wg=>"GHI 3"}
+    OUTPUT
+    expect(metadata(c.info(Nokogiri::XML(input),
+                           nil))).to be_equivalent_to output
   end
 end

@@ -1,0 +1,20 @@
+term_def_boilerplate: |
+  <p>ИСО и МЭК поддерживают терминологические базы данных для использования в стандартизации по следующим адресам:</p>
+
+      <ul>
+      <li> <p>ИСО, Интернет-онлайн-платформа: доступна на 
+        <link target="http://www.iso.org/obp"/></p> </li>
+      <li> <p>МЭК Electropedia: доступна на
+      <link target="http://www.electropedia.org"/>
+      </p> </li> </ul>
+all_rights_reserved: Все права защищены
+reference_number: Справочный номер
+price_based_on: Цена указана за % страниц
+under_preparation: В стадии подготовки. (Стадия на момент публикации %).
+table_of_contents: Оглавление
+date: Дата
+index: Индекс
+see: см.
+see_also: см. также
+secretariat: Секретариат
+

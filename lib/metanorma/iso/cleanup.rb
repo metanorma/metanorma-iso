@@ -125,7 +125,11 @@ module Metanorma
       end
 
       def boilerplate_file(_xmldoc)
-        file = @lang == "fr" ? "boilerplate-fr.xml" : "boilerplate.xml"
+        file = case @lang
+               when "fr" then "boilerplate-fr.xml"
+               when "ru" then "boilerplate-ru.xml"
+               else "boilerplate.xml"
+               end
         File.join(@libdir, file)
       end
 

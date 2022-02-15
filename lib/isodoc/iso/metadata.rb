@@ -72,12 +72,14 @@ module IsoDoc
         case lang
         when "en" then "Part"
         when "fr" then "Partie"
+        when "ru" then "Часть"
         end
       end
 
       def amd_label(lang)
         case lang
         when "en", "fr" then "AMENDMENT"
+        when "ru" then "ПОПРАВКА"
         end
       end
 
@@ -85,6 +87,7 @@ module IsoDoc
         case lang
         when "en" then "TECHNICAL CORRIGENDUM"
         when "fr" then "RECTIFICATIF TECHNIQUE"
+        when "ru" then "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ"
         end
       end
 
@@ -140,7 +143,11 @@ module IsoDoc
       end
 
       def title(isoxml, _out)
-        lang = @lang == "fr" ? "fr" : "en"
+        lang = case @lang
+               when "fr" then "fr"
+               when "ru" then "ru"
+               else "en"
+               end
         intro, main, part, amd = title_parts(isoxml, lang)
         partnumber, subpartnumber, amdnumber, corrnumber = title_nums(isoxml)
 
@@ -159,7 +166,10 @@ module IsoDoc
       end
 
       def subtitle(isoxml, _out)
-        lang = @lang == "fr" ? "en" : "fr"
+        lang = case @lang
+               when "fr", "ru" then "en"
+               else "fr"
+               end
         intro, main, part, amd = title_parts(isoxml, lang)
         partnumber, subpartnumber, amdnumber, corrnumber = title_nums(isoxml)
 
