@@ -15,3 +15,23 @@ index: 索引
 see: 见
 see_also: 另见
 secretariat: 秘书处
+doctype_dict:
+  international-standard: 国际标准
+  technical-specification: 技术规格
+  technical-report: 技术报告
+  publicly-available-specification: 公开可用的规范
+  international-workshop-agreement: 国际研讨会协议
+  guide: 指南
+  amendment: 修正
+  technical-corrigendum: 技术勘误
+  directive: 指令
+stage_dict:
+  "00": 初步工作项
+  "10": 新工作项提案
+  "20": 工作草案
+  "30": 委员会草案
+  "40": 草稿
+  "50": 最终草案
+  "60": 国际标准
+  "90": 回顾
+  "95": 提款

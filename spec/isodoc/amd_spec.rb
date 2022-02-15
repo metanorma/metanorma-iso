@@ -74,6 +74,7 @@ RSpec.describe IsoDoc do
           <bibdata>
             <ext>
               <doctype language="">amendment</doctype>
+              <doctype language='en'>Amendment</doctype>
             </ext>
           </bibdata>
           <preface>
@@ -243,9 +244,9 @@ RSpec.describe IsoDoc do
           <bibdata>
             <ext>
               <doctype language=''>amendment</doctype>
+              <doctype language='en'>Amendment</doctype>
             </ext>
           </bibdata>
-          
           <preface>
             <foreword obligation='informative' displayorder='1'>
               <title>Foreword</title>
@@ -436,6 +437,7 @@ RSpec.describe IsoDoc do
         <bibdata>
           <ext>
             <doctype language="">amendment</doctype>
+            <doctype language='en'>Amendment</doctype>
           </ext>
         </bibdata>
         <boilerplate>
@@ -636,10 +638,13 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, "")).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, 
-true))).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
   end
 
   it "processes IsoXML metadata" do

@@ -17,3 +17,24 @@ index: Index
 see: voir
 see_also: voir aussi
 secretariat: Secrétariat
+edition: édition
+doctype_dict:
+  international-standard: Norme internationale
+  technical-specification: Spécification technique
+  technical-report: Rapport technique
+  publicly-available-specification: Spécification disponible publiquement
+  international-workshop-agreement: Accord internationale d’atelier
+  guide: Guide
+  amendment: Amendement
+  technical-corrigendum: Rectificatif technique
+  directive: Directive
+stage_dict:
+  "00": Élément de travail préliminaire
+  "10": Nouvelle proposition d'élément de travail
+  "20": Brouillon de travail
+  "30": Projet de comité
+  "40": Brouillon
+  "50": Version finale
+  "60": Norme internationale
+  "90": Révision
+  "95": Retrait

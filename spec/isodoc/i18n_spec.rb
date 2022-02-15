@@ -5,7 +5,13 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
+          <status>
+            <stage abbreviation='IS' language=''>60</stage>
+          </status>
           <language>en</language>
+          <ext>
+            <doctype language=''>international-standard</doctype>
+          </ext>
         </bibdata>
         <preface>
           <foreword obligation="informative">
@@ -85,8 +91,16 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <bibdata>
-          <language current="true">en</language>
-        </bibdata>
+           <status>
+             <stage abbreviation='IS' language=''>60</stage>
+             <stage abbreviation='IS' language='en'>International standard</stage>
+           </status>
+           <language current='true'>en</language>
+           <ext>
+             <doctype language=''>international-standard</doctype>
+             <doctype language='en'>International Standard</doctype>
+           </ext>
+         </bibdata>
         <preface>
           <foreword obligation="informative" displayorder='1'>
             <title>Foreword</title>
@@ -263,7 +277,13 @@ RSpec.describe IsoDoc do
       .convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
+            <status>
+            <stage abbreviation='IS' language=''>60</stage>
+          </status>
           <language>tlh</language>
+          <ext>
+            <doctype language=''>international-standard</doctype>
+          </ext>
         </bibdata>
         <preface>
           <foreword obligation="informative">
@@ -344,8 +364,16 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
           <bibdata>
-            <language current="true">tlh</language>
-          </bibdata>
+           <status>
+             <stage abbreviation='IS' language=''>60</stage>
+             <stage abbreviation='IS' language='tlh'>International standard</stage>
+           </status>
+           <language current='true'>tlh</language>
+           <ext>
+             <doctype language=''>international-standard</doctype>
+             <doctype language='tlh'>International Standard</doctype>
+           </ext>
+         </bibdata>
           <preface>
             <foreword obligation="informative" displayorder='1'>
               <title>Foreword</title>
@@ -438,7 +466,13 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
+          <status>
+            <stage abbreviation='IS' language=''>60</stage>
+          </status>
           <language>fr</language>
+          <ext>
+            <doctype language=''>international-standard</doctype>
+          </ext>
         </bibdata>
         <preface>
           <foreword obligation="informative">
@@ -518,8 +552,16 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <bibdata>
-          <language current="true">fr</language>
-        </bibdata>
+           <status>
+             <stage abbreviation='IS' language=''>60</stage>
+             <stage abbreviation='IS' language='fr'>Norme internationale</stage>
+           </status>
+           <language current='true'>fr</language>
+           <ext>
+             <doctype language=''>international-standard</doctype>
+             <doctype language='fr'>Norme internationale</doctype>
+           </ext>
+         </bibdata>
         <preface>
           <foreword obligation="informative" displayorder='1'>
             <title>Foreword</title>
@@ -705,7 +747,13 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
+          <status>
+            <stage abbreviation='IS' language=''>60</stage>
+          </status>
           <language>ru</language>
+          <ext>
+            <doctype language=''>international-standard</doctype>
+          </ext>
         </bibdata>
         <preface>
           <foreword obligation="informative">
@@ -785,8 +833,20 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <bibdata>
-          <language current="true">ru</language>
-        </bibdata>
+           <status>
+             <stage abbreviation='IS' language=''>60</stage>
+             <stage abbreviation='IS' language='ru'>
+               &#x41C;&#x435;&#x436;&#x434;&#x443;&#x43D;&#x430;&#x440;&#x43E;&#x434;&#x43D;&#x44B;&#x439; &#x441;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x442;
+             </stage>
+           </status>
+           <language current='true'>ru</language>
+           <ext>
+             <doctype language=''>international-standard</doctype>
+             <doctype language='ru'>
+               &#x41C;&#x435;&#x436;&#x434;&#x443;&#x43D;&#x430;&#x440;&#x43E;&#x434;&#x43D;&#x44B;&#x439; &#x421;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x442;
+             </doctype>
+           </ext>
+         </bibdata>
         <preface>
           <foreword obligation="informative" displayorder='1'>
             <title>Foreword</title>
@@ -972,8 +1032,14 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
+          <status>
+            <stage abbreviation='IS' language=''>60</stage>
+          </status>
           <language>zh</language>
           <script>Hans</script>
+          <ext>
+            <doctype language=''>international-standard</doctype>
+          </ext>
         </bibdata>
         <preface>
           <foreword obligation="informative">
@@ -1069,9 +1135,17 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <bibdata>
-          <language current="true">zh</language>
-          <script current="true">Hans</script>
-        </bibdata>
+           <status>
+             <stage abbreviation='IS' language=''>60</stage>
+             <stage abbreviation='IS' language='zh'>&#x56FD;&#x9645;&#x6807;&#x51C6;</stage>
+           </status>
+           <language current='true'>zh</language>
+           <script current='true'>Hans</script>
+           <ext>
+             <doctype language=''>international-standard</doctype>
+             <doctype language='zh'>&#x56FD;&#x9645;&#x6807;&#x51C6;</doctype>
+           </ext>
+         </bibdata>
         <preface>
           <foreword obligation="informative" displayorder='1'>
             <title>Foreword</title>
