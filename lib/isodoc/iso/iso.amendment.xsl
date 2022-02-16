@@ -3320,7 +3320,7 @@
 					</xsl:call-template>
 				</xsl:if>
 			</xsl:variable>
-			<!-- colwidths=<xsl:copy-of select="$colwidths"/> -->
+			<!-- DEBUG colwidths=<xsl:copy-of select="$colwidths"/> -->
 			
 			
 			<xsl:variable name="margin-side">
@@ -3590,7 +3590,7 @@
 									<!-- <xsl:with-param name="text" select="translate(td[$curr-col],'- —:', '    ')"/> -->
 									<!-- 2009 thinspace -->
 									<!-- <xsl:with-param name="text" select="translate(normalize-space($td_text),'- —:', '    ')"/> -->
-									<xsl:with-param name="text" select="normalize-space(translate($string_with_added_zerospaces, '​', ' '))"/>
+									<xsl:with-param name="text" select="normalize-space(translate($string_with_added_zerospaces, '​­', '  '))"/> <!-- replace zero-width-space and soft-hyphen to space -->
 								</xsl:call-template>
 							</xsl:variable>
 							<xsl:variable name="max_length">
