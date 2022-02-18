@@ -3169,14 +3169,42 @@
 		
 		
 	</xsl:attribute-set><xsl:variable name="border-block-added">2.5pt solid rgb(0, 176, 80)</xsl:variable><xsl:variable name="border-block-deleted">2.5pt solid rgb(255, 0, 0)</xsl:variable><xsl:variable name="ace_tag">ace-tag_</xsl:variable><xsl:template name="processPrefaceSectionsDefault_Contents">
+		<xsl:variable name="nodes_preface_">
+			<xsl:for-each select="/*/*[local-name()='preface']/*">
+				<node id="{@id}"/>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="nodes_preface" select="xalan:nodeset($nodes_preface_)"/>
+		
 		<xsl:for-each select="/*/*[local-name()='preface']/*">
 			<xsl:sort select="@displayorder" data-type="number"/>
+			
+			<!-- process Section's title -->
+			<xsl:variable name="preceding-sibling_id" select="$nodes_preface/node[@id = current()/@id]/preceding-sibling::node[1]/@id"/>
+			<xsl:if test="$preceding-sibling_id != ''">
+				<xsl:apply-templates select="parent::*/*[@type = 'section-title' and @id = $preceding-sibling_id and not(@displayorder)]" mode="contents_no_displayorder"/>
+			</xsl:if>
+			
 			<xsl:apply-templates select="." mode="contents"/>
 		</xsl:for-each>
 	</xsl:template><xsl:template name="processMainSectionsDefault_Contents">
 	
+		<xsl:variable name="nodes_sections_">
+			<xsl:for-each select="/*/*[local-name()='sections']/*">
+				<node id="{@id}"/>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="nodes_sections" select="xalan:nodeset($nodes_sections_)"/>
+		
 		<xsl:for-each select="/*/*[local-name()='sections']/* | /*/*[local-name()='bibliography']/*[local-name()='references'][@normative='true'] |    /*/*[local-name()='bibliography']/*[local-name()='clause'][*[local-name()='references'][@normative='true']]">
 			<xsl:sort select="@displayorder" data-type="number"/>
+			
+			<!-- process Section's title -->
+			<xsl:variable name="preceding-sibling_id" select="$nodes_sections/node[@id = current()/@id]/preceding-sibling::node[1]/@id"/>
+			<xsl:if test="$preceding-sibling_id != ''">
+				<xsl:apply-templates select="parent::*/*[@type = 'section-title' and @id = $preceding-sibling_id and not(@displayorder)]" mode="contents_no_displayorder"/>
+			</xsl:if>
+			
 			<xsl:apply-templates select="." mode="contents"/>
 		</xsl:for-each>
 		
@@ -5962,7 +5990,9 @@
 		<xsl:value-of select="."/>
 	</xsl:template><xsl:template match="node()" mode="contents">
 		<xsl:apply-templates mode="contents"/>
-	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title' or @type = 'section-title']" priority="2" mode="contents">
+	</xsl:template><xsl:template match="*[local-name() = 'preface' or local-name() = 'sections']/*[local-name() = 'p'][@type = 'section-title' and not(@displayorder)]" priority="3" mode="contents"/><xsl:template match="*[local-name() = 'p'][@type = 'section-title' and not(@displayorder)]" mode="contents_no_displayorder">
+		<xsl:call-template name="contents_section-title"/>
+	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title' or @type = 'section-title']" priority="2" name="contents_section-title" mode="contents">
 		<xsl:variable name="level">
 			<xsl:call-template name="getLevel">
 				<xsl:with-param name="depth" select="@depth"/>
