@@ -5349,7 +5349,7 @@
 		</fo:inline>		
 	</xsl:template><xsl:template match="*[local-name() = 'xref']">
 		<fo:basic-link internal-destination="{@target}" fox:alt-text="{@target}" xsl:use-attribute-sets="xref-style">
-			<xsl:if test="parent::bsi:add">
+			<xsl:if test="parent::*[local-name() = 'add']">
 				<xsl:call-template name="append_add-style"/>
 			</xsl:if>
 			<xsl:apply-templates/>
@@ -5992,7 +5992,9 @@
 		<xsl:apply-templates mode="contents"/>
 	</xsl:template><xsl:template match="*[local-name() = 'preface' or local-name() = 'sections']/*[local-name() = 'p'][@type = 'section-title' and not(@displayorder)]" priority="3" mode="contents"/><xsl:template match="*[local-name() = 'p'][@type = 'section-title' and not(@displayorder)]" mode="contents_no_displayorder">
 		<xsl:call-template name="contents_section-title"/>
-	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'floating-title' or @type = 'section-title']" priority="2" name="contents_section-title" mode="contents">
+	</xsl:template><xsl:template match="*[local-name() = 'p'][@type = 'section-title']" mode="contents_in_clause">
+		<xsl:call-template name="contents_section-title"/>
+	</xsl:template><xsl:template match="*[local-name() = 'clause']/*[local-name() = 'p'][@type = 'section-title' and (@depth != ../*[local-name() = 'title']/@depth or ../*[local-name() = 'title']/@depth = 1)]" priority="3" mode="contents"/><xsl:template match="*[local-name() = 'p'][@type = 'floating-title' or @type = 'section-title']" priority="2" name="contents_section-title" mode="contents">
 		<xsl:variable name="level">
 			<xsl:call-template name="getLevel">
 				<xsl:with-param name="depth" select="@depth"/>
