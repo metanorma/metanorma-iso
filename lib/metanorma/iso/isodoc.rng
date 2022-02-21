@@ -152,9 +152,7 @@
             <data type="boolean"/>
           </attribute>
         </optional>
-        <oneOrMore>
-          <ref name="PureTextElement"/>
-        </oneOrMore>
+        <ref name="XrefBody"/>
       </element>
     </define>
     <define name="erefType">
@@ -187,6 +185,42 @@
       <oneOrMore>
         <ref name="PureTextElement"/>
       </oneOrMore>
+    </define>
+    <define name="localityStack">
+      <element name="localityStack">
+        <optional>
+          <attribute name="connective">
+            <choice>
+              <value>and</value>
+              <value>or</value>
+              <value>from</value>
+              <value>to</value>
+              <value/>
+            </choice>
+          </attribute>
+        </optional>
+        <zeroOrMore>
+          <ref name="locality"/>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="sourceLocalityStack">
+      <element name="sourceLocalityStack">
+        <optional>
+          <attribute name="connective">
+            <choice>
+              <value>and</value>
+              <value>or</value>
+              <value>from</value>
+              <value>to</value>
+              <value/>
+            </choice>
+          </attribute>
+        </optional>
+        <zeroOrMore>
+          <ref name="sourceLocality"/>
+        </zeroOrMore>
+      </element>
     </define>
     <define name="ul">
       <element name="ul">
@@ -1098,6 +1132,16 @@
     </define>
   </include>
   <!-- end overrides -->
+  <define name="image" combine="choice">
+    <element name="svg">
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="AnyElement"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="MultilingualRenderingType">
     <choice>
       <value>common</value>
@@ -2629,6 +2673,32 @@
       <zeroOrMore>
         <ref name="TextElement"/>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="XrefBody">
+    <zeroOrMore>
+      <ref name="XrefTarget"/>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="PureTextElement"/>
+    </oneOrMore>
+  </define>
+  <define name="XrefTarget">
+    <element name="location">
+      <attribute name="target">
+        <data type="string">
+          <param name="pattern">\i\c*|\c+#\c+</param>
+        </data>
+      </attribute>
+      <attribute name="connective">
+        <choice>
+          <value>and</value>
+          <value>or</value>
+          <value>from</value>
+          <value>to</value>
+          <value/>
+        </choice>
+      </attribute>
     </element>
   </define>
 </grammar>
