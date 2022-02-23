@@ -4,6 +4,7 @@ require_relative "./validate_requirements"
 require_relative "./validate_section"
 require_relative "./validate_title"
 require_relative "./validate_image"
+require_relative "./validate_list"
 require "nokogiri"
 require "jing"
 require "iev"
@@ -35,7 +36,7 @@ module Metanorma
             /\b(see| refer to)\s*\Z/mi.match(preceding)
 
           (target = root.at("//*[@id = '#{t['target']}']")) || next
-          if target&.at("./ancestor-or-self::*[@obligation = 'normative']")
+          if target.at("./ancestor-or-self::*[@obligation = 'normative']")
             @log.add("Style", t,
                      "'see #{t['target']}' is pointing to a normative section")
           end
@@ -144,6 +145,8 @@ module Metanorma
         bibdata_validate(doc.root)
         bibitem_validate(doc.root)
         figure_validate(doc.root)
+        listcount_validate(doc)
+        list_punctuation(doc)
       end
 
       def bibitem_validate(xmldoc)

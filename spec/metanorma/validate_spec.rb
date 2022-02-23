@@ -1282,7 +1282,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     expect(File.read("test.err"))
       .not_to include "Only one Symbols and Abbreviated Terms section "\
-                       "in the standard"
+                      "in the standard"
   end
 
   it "Warning if final section is not named Bibliography" do
@@ -1711,12 +1711,7 @@ RSpec.describe Metanorma::ISO do
 
   it "Warn if more than 7 levels of subclause" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :language: fr
+      #{VALIDATING_BLANK_HDR}
 
       == Clause
 
@@ -1744,12 +1739,7 @@ RSpec.describe Metanorma::ISO do
 
   it "Do not warn if not more than 7 levels of subclause" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :language: fr
+      #{VALIDATING_BLANK_HDR}
 
       == Clause
 
@@ -1783,5 +1773,252 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Reference ISO8 does not have an associated footnote "\
                   "indicating unpublished status"
+  end
+
+  it "Warn if no colon or full stop before list" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X
+
+      * A very long
+      * B list
+      * C
+    INPUT
+    expect(File.read("test.err"))
+      .to include "All lists must be preceded by colon or full stop"
+  end
+
+  it "Do not warn if colon or full stop before list" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X.
+
+      * A very long
+      * B list
+      * C
+
+      X:
+
+      . A very long
+      . B list
+      . C
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "All lists must be preceded by colon or full stop"
+  end
+
+  it "Warn of list punctuation after colon" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X:
+
+      * this is;
+      * another broken up;
+      * Sentence.
+
+      X:
+
+      . this is
+      . another broken up;
+      . sentence
+
+      X:
+
+      . sentence.
+
+      X:
+
+      . This is.
+      . Another broken up.
+      . Sentence.
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List entry of broken up sentence must start with lowercase letter: Sentence."
+    expect(File.read("test.err"))
+      .not_to include "List entry of broken up sentence must start with lowercase letter: another broken up;."
+    expect(File.read("test.err"))
+      .to include "List entry of broken up sentence must end with semicolon: this is"
+    expect(File.read("test.err"))
+      .to include "Final list entry of broken up sentence must end with full stop: sentence"
+    expect(File.read("test.err"))
+      .not_to include "Final list entry of broken up sentence must end with full stop: sentence."
+    expect(File.read("test.err"))
+      .not_to include "List entry of broken up sentence must start with lowercase letter: Another broken up."
+    expect(File.read("test.err"))
+      .not_to include "List entry of broken up sentence must end with semicolon: This is."
+  end
+
+  it "Warn of list punctuation after full stop" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X.
+
+      * This is;
+      * Another broken up.
+      * sentence.
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List entry after full stop must end with full stop: This is;"
+    expect(File.read("test.err"))
+      .not_to include "List entry after full stop must end with full stop: Another broken up."
+    expect(File.read("test.err"))
+      .to include "List entry after full stop must start with uppercase letter: sentence."
+  end
+
+  it "Skips punctuation check for short entries in lists" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X.
+
+      * This is
+      * Another
+      * sentence
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "List entry after full stop must end with full stop: This is"
+  end
+
+  it "Skips punctuation check for lists within tables" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      |===
+      | A
+      a|
+      * This is
+      * Another
+      * sentence
+      |===
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "List entry after full stop must end with full stop: This is"
+  end
+
+
+  it "Warn if more than one ordered lists in a clause" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+
+      a
+
+      . A
+      .. B
+
+      a
+
+      . B
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "More than 1 ordered list in a numbered clause"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+
+      === Clause
+      a
+
+      . A
+      .. B
+
+      a
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "More than 1 ordered list in a numbered clause"
+  end
+
+  it "Warn if list more than four levels deep" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+      .... D
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "List more than four levels deep"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+      .... D
+      ..... E
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List more than four levels deep"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      * A
+      ** B
+      *** C
+      **** D
+      ***** E
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List more than four levels deep"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      * A
+      .. B
+      *** C
+      .... D
+      ***** E
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List more than four levels deep"
+
   end
 end
