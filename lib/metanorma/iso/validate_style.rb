@@ -96,6 +96,7 @@ module Metanorma
         style_percent(node, text)
         style_abbrev(node, text)
         style_units(node, text)
+        style_punct(node, text)
       end
 
       # ISO/IEC DIR 2, 9.1
@@ -156,6 +157,12 @@ module Metanorma
           style_regex(/\b(?<num>[0-9][0-9,]*\s+#{k})\b/,
                       "non-standard unit (should be #{v})", node, text)
         end
+      end
+
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-and
+      def style_punct(node, text)
+        style_regex(/\b(?<num>and\/?or)\b/i,
+                    "Use 'either x or y, or both'", node, text)
       end
 
       def style_warning(node, msg, text = nil)

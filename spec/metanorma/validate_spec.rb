@@ -754,6 +754,16 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "non-standard unit"
   end
 
+  it "Style warning if and/or used" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      7 and/or 8
+    INPUT
+    expect(File.read("test.err")).to include "Use 'either x or y, or both'"
+  end
+
   # can't test: our asciidoc template won't allow this to be generated
   # it "Style warning if foreword contains subclauses" do
   # expect { Asciidoctor.convert(<<~"INPUT", *OPTIONS) }
