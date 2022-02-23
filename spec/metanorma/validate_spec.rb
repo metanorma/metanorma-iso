@@ -774,6 +774,41 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "Avoid ampersand in ordinary text"
   end
 
+  it "Style warning if full stop used in title or caption" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause.
+
+      .Table.
+      |===
+      | A |B
+      |===
+
+      === Clause 2.
+
+      .Figure.
+      ....
+      Z
+      ....
+
+      .Other Figure
+      ....
+      A
+      ....
+    INPUT
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Clause."
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Clause 2."
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Table."
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Figure."
+    expect(File.read("test.err"))
+      .not_to include "No full stop at end of title or caption: Other Figure."
+  end
+
   # can't test: our asciidoc template won't allow this to be generated
   # it "Style warning if foreword contains subclauses" do
   # expect { Asciidoctor.convert(<<~"INPUT", *OPTIONS) }

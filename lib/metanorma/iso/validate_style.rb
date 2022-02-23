@@ -70,8 +70,8 @@ module Metanorma
         style(node, extract_text(node))
       end
 
-      def style_regex(regex, warning, n, text)
-        (m = regex.match(text)) && style_warning(n, warning, m[:num])
+      def style_regex(regex, warning, node, text)
+        (m = regex.match(text)) && style_warning(node, warning, m[:num])
       end
 
       # style check with a regex on a token

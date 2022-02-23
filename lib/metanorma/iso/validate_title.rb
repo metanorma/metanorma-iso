@@ -68,7 +68,7 @@ module Metanorma
           title = s&.at("./title")&.text || s.name
           s.xpath("./clause | ./terms | ./references").each do |ss|
             subtitle = ss.at("./title")
-            !subtitle.nil? && !subtitle&.text&.empty? or
+            (!subtitle.nil? && !subtitle&.text&.empty?) or
               @log.add("Style", ss,
                        "#{title}: each first-level subclause must have a title")
           end
@@ -91,6 +91,17 @@ module Metanorma
                    "#{label}: all subclauses must have a title, or none")
       end
 
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-full
+      def title_no_full_stop_validate(root)
+        root.xpath("//preface//title | //sections//title | //annex//title | "\
+                   "//references/title | //preface//name | //sections//name | "\
+                   "//annex//name").each do |t|
+          style_regex(/\A(?<num>.+\.\Z)/i,
+                      "No full stop at end of title or caption",
+                      t, t.text.strip)
+        end
+      end
+
       def title_validate(root)
         title_intro_validate(root)
         title_main_validate(root)
@@ -99,6 +110,7 @@ module Metanorma
         title_names_type_validate(root)
         title_first_level_validate(root)
         title_all_siblings(root.xpath(SECTIONS_XPATH), "(top level)")
+        title_no_full_stop_validate(root)
       end
     end
   end
