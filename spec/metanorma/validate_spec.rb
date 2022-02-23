@@ -764,6 +764,16 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "Use 'either x or y, or both'"
   end
 
+  it "Style warning if & used" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      7 & 8
+    INPUT
+    expect(File.read("test.err")).to include "Avoid ampersand in ordinary text"
+  end
+
   # can't test: our asciidoc template won't allow this to be generated
   # it "Style warning if foreword contains subclauses" do
   # expect { Asciidoctor.convert(<<~"INPUT", *OPTIONS) }

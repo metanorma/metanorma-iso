@@ -160,9 +160,12 @@ module Metanorma
       end
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-and
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-andor
       def style_punct(node, text)
         style_regex(/\b(?<num>and\/?or)\b/i,
                     "Use 'either x or y, or both'", node, text)
+        style_regex(/\s(?<num>&)\s/i,
+                    "Avoid ampersand in ordinary text'", node, text)
       end
 
       def style_warning(node, msg, text = nil)
