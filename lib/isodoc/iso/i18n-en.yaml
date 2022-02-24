@@ -12,6 +12,8 @@ all_rights_reserved: All rights reserved
 reference_number: Reference Number
 price_based_on: Price based on % pages
 under_preparation: Under preparation. (Stage at the time of publication %).
+withdrawn: Withdrawn.
+cancelled_and_replaced: Cancelled and replaced by %.
 table_of_contents: Contents
 date: Date
 index: Index

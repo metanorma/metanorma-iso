@@ -290,70 +290,344 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "sort ISO references in Bibliography" do
-    VCR.use_cassette "sortrefs" do
+    input = <<~INPUT
+      #{ASCIIDOC_BLANK_HDR}
+      [bibliography]
+      == Bibliography
+
+      * [[[iso1,ISO 8000-110]]]
+      * [[[iso2,ISO 8000-61]]]
+      * [[[iso3,ISO 8000-8]]]
+      * [[[iso4,ISO 9]]]
+    INPUT
+    output = <<~OUTPUT
+            #{BLANK_HDR}
+              <sections> </sections>
+        <bibliography>
+          <references id='_' normative='false' obligation='informative'>
+            <title>Bibliography</title>
+            <bibitem id='iso4' type='standard'>
+              <docidentifier>ISO 9</docidentifier>
+              <docnumber>9</docnumber>
+              <contributor>
+                <role type='publisher'/>
+                <organization>
+                  <name>International Organization for Standardization</name>
+                  <abbreviation>ISO</abbreviation>
+                </organization>
+              </contributor>
+            </bibitem>
+            <bibitem id='iso3' type='standard'>
+              <docidentifier>ISO 8000-8</docidentifier>
+              <docnumber>8000-8</docnumber>
+              <contributor>
+                <role type='publisher'/>
+                <organization>
+                  <name>International Organization for Standardization</name>
+                  <abbreviation>ISO</abbreviation>
+                </organization>
+              </contributor>
+            </bibitem>
+            <bibitem id='iso2' type='standard'>
+              <docidentifier>ISO 8000-61</docidentifier>
+              <docnumber>8000-61</docnumber>
+              <contributor>
+                <role type='publisher'/>
+                <organization>
+                  <name>International Organization for Standardization</name>
+                  <abbreviation>ISO</abbreviation>
+                </organization>
+              </contributor>
+            </bibitem>
+            <bibitem id='iso1' type='standard'>
+              <docidentifier>ISO 8000-110</docidentifier>
+              <docnumber>8000-110</docnumber>
+              <contributor>
+                <role type='publisher'/>
+                <organization>
+                  <name>International Organization for Standardization</name>
+                  <abbreviation>ISO</abbreviation>
+                </organization>
+              </contributor>
+            </bibitem>
+          </references>
+        </bibliography>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "renders withdrawn and cancelled ISO references" do
+    VCR.use_cassette "withdrawn_iso" do
       input = <<~INPUT
-        #{ASCIIDOC_BLANK_HDR}
+        #{ISOBIB_BLANK_HDR}
+
+        <<iso1,clause=1>>
+        <<iso2,clause=1>>
+
         [bibliography]
         == Bibliography
 
-        * [[[iso1,ISO 8000-110]]]
-        * [[[iso2,ISO 8000-61]]]
-        * [[[iso3,ISO 8000-8]]]
-        * [[[iso4,ISO 9]]]
+        * [[[iso1,ISO 683-3:2019]]]
+        * [[[iso2,ISO/IEC 27005]]]
       INPUT
       output = <<~OUTPUT
-              #{BLANK_HDR}
-                <sections> </sections>
-          <bibliography>
-            <references id='_' normative='false' obligation='informative'>
-              <title>Bibliography</title>
-              <bibitem id='iso4' type='standard'>
-                <docidentifier>ISO 9</docidentifier>
-                <docnumber>9</docnumber>
-                <contributor>
-                  <role type='publisher'/>
-                  <organization>
-                    <name>International Organization for Standardization</name>
-                    <abbreviation>ISO</abbreviation>
-                  </organization>
-                </contributor>
-              </bibitem>
-              <bibitem id='iso3' type='standard'>
-                <docidentifier>ISO 8000-8</docidentifier>
-                <docnumber>8000-8</docnumber>
-                <contributor>
-                  <role type='publisher'/>
-                  <organization>
-                    <name>International Organization for Standardization</name>
-                    <abbreviation>ISO</abbreviation>
-                  </organization>
-                </contributor>
-              </bibitem>
-              <bibitem id='iso2' type='standard'>
-                <docidentifier>ISO 8000-61</docidentifier>
-                <docnumber>8000-61</docnumber>
-                <contributor>
-                  <role type='publisher'/>
-                  <organization>
-                    <name>International Organization for Standardization</name>
-                    <abbreviation>ISO</abbreviation>
-                  </organization>
-                </contributor>
-              </bibitem>
-              <bibitem id='iso1' type='standard'>
-                <docidentifier>ISO 8000-110</docidentifier>
-                <docnumber>8000-110</docnumber>
-                <contributor>
-                  <role type='publisher'/>
-                  <organization>
-                    <name>International Organization for Standardization</name>
-                    <abbreviation>ISO</abbreviation>
-                  </organization>
-                </contributor>
-              </bibitem>
-            </references>
-          </bibliography>
-        </iso-standard>
+        #{BLANK_HDR}
+                 <preface>
+           <foreword id='_' obligation='informative'>
+             <title>Foreword</title>
+             <p id='_'>
+               <eref type='inline' bibitemid='iso1' citeas='ISO 683-3:2019'>
+                 <localityStack>
+                   <locality type='clause'>
+                     <referenceFrom>1</referenceFrom>
+                   </locality>
+                 </localityStack>
+               </eref>
+               <fn reference='1'>
+                 <p id='_'>Cancelled and replaced by ISO 683-3:2022.</p>
+               </fn>
+               <eref type='inline' bibitemid='iso2' citeas='ISO/IEC 27005'>
+                 <localityStack>
+                   <locality type='clause'>
+                     <referenceFrom>1</referenceFrom>
+                   </locality>
+                 </localityStack>
+               </eref>
+               <fn reference='2'>
+                 <p id='_'>Withdrawn.</p>
+               </fn>
+             </p>
+           </foreword>
+         </preface>
+         <sections> </sections>
+         <bibliography>
+           <references id='_' normative='false' obligation='informative'>
+             <title>Bibliography</title>
+             <bibitem id='iso1' type='standard'>
+               <fetched/>
+               <title type='title-main' format='text/plain' language='en' script='Latn'>Heat-treatable steels, alloy steels and free-cutting steels</title>
+               <title type='title-part' format='text/plain' language='en' script='Latn'>Part 3: Case-hardening steels</title>
+               <title type='main' format='text/plain' language='en' script='Latn'>
+                 Heat-treatable steels, alloy steels and free-cutting steels — Part 3:
+                 Case-hardening steels
+               </title>
+               <uri type='src'>https://www.iso.org/standard/76389.html</uri>
+               <uri type='rss'>https://www.iso.org/contents/data/standard/07/63/76389.detail.rss</uri>
+               <docidentifier type='ISO' primary='true'>ISO 683-3:2019</docidentifier>
+               <docidentifier type='URN'>urn:iso:std:iso:683:-3:stage-95.99:ed-3:en</docidentifier>
+               <docnumber>683</docnumber>
+               <date type='published'>
+                 <on>2019-01</on>
+               </date>
+               <contributor>
+                 <role type='publisher'/>
+                 <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                   <uri>www.iso.org</uri>
+                 </organization>
+               </contributor>
+               <edition>3</edition>
+               <note type='Unpublished-Status'>
+                 <p id='_'>Cancelled and replaced by ISO 683-3:2022.</p>
+               </note>
+               <language>en</language>
+               <script>Latn</script>
+               <abstract format='text/plain' language='en' script='Latn'>
+                 This document specifies the technical delivery requirements for —
+                 semi-finished products, hot formed, e.g. blooms, billets, slabs (see
+                 NOTE 1), — bars (see NOTE 1), — wire rod, — finished flat products,
+                 and — hammer or drop forgings (see NOTE 1) manufactured from the
+                 case-hardening non-alloy or alloy steels listed in Table 3 and
+                 supplied in one of the heat-treatment conditions given for the
+                 different types of products in Table 1 and in one of the surface
+                 conditions given in Table 2. The steels are, in general, intended for
+                 the manufacture of case-hardened machine parts. NOTE 1 Hammer-forged
+                 semi-finished products (blooms, billets, slabs, etc.), seamless rolled
+                 rings and hammer-forged bars are covered under semi-finished products
+                 or bars and not under the term “hammer and drop forgings”. NOTE 2 For
+                 International Standards relating to steels complying with the
+                 requirements for the chemical composition in Table 3, however,
+                 supplied in other product forms or treatment conditions than given
+                 above or intended for special applications, and for other related
+                 International Standards, see the Bibliography. In special cases,
+                 variations in these technical delivery requirements or additions to
+                 them can form the subject of an agreement at the time of enquiry and
+                 order (see 5.2 and Annex A). In addition to this document, the general
+                 technical delivery requirements of ISO 404 are applicable.
+               </abstract>
+               <status>
+                 <stage>95</stage>
+                 <substage>99</substage>
+               </status>
+               <copyright>
+                 <from>2019</from>
+                 <owner>
+                   <organization>
+                     <name>ISO</name>
+                   </organization>
+                 </owner>
+               </copyright>
+               <relation type='obsoletes'>
+                 <bibitem type='standard'>
+                   <formattedref format='text/plain'>ISO 683-3:2016</formattedref>
+                 </bibitem>
+               </relation>
+               <relation type='updates'>
+                 <bibitem type='standard'>
+                   <formattedref format='text/plain'>ISO 683-3:2022</formattedref>
+                   <date type='circulated'>
+                     <on>2022-01-21</on>
+                   </date>
+                 </bibitem>
+               </relation>
+               <place>Geneva</place>
+             </bibitem>
+             <bibitem id='iso2' type='standard'>
+               <fetched/>
+               <title type='title-intro' format='text/plain' language='en' script='Latn'>Information technology</title>
+               <title type='title-main' format='text/plain' language='en' script='Latn'>Security techniques</title>
+               <title type='title-part' format='text/plain' language='en' script='Latn'>Information security risk management</title>
+               <title type='main' format='text/plain' language='en' script='Latn'>
+                 Information technology — Security techniques — Information security
+                 risk management
+               </title>
+               <uri type='src'>https://www.iso.org/standard/75281.html</uri>
+               <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:75281:en</uri>
+               <uri type='rss'>https://www.iso.org/contents/data/standard/07/52/75281.detail.rss</uri>
+               <docidentifier type='ISO' primary='true'>ISO/IEC 27005</docidentifier>
+               <docidentifier type='URN'>urn:iso:std:iso-iec:27005:stage-90.92:ed-3:en</docidentifier>
+               <docnumber>27005</docnumber>
+               <contributor>
+                 <role type='publisher'/>
+                 <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                   <uri>www.iso.org</uri>
+                 </organization>
+               </contributor>
+               <contributor>
+                 <role type='publisher'/>
+                 <organization>
+                   <name>International Electrotechnical Commission</name>
+                   <abbreviation>IEC</abbreviation>
+                   <uri>www.iec.ch</uri>
+                 </organization>
+               </contributor>
+               <edition>3</edition>
+               <note type='Unpublished-Status'>
+                 <p id='_'>Withdrawn.</p>
+               </note>
+               <language>en</language>
+               <script>Latn</script>
+               <status>
+                 <stage>90</stage>
+                 <substage>92</substage>
+               </status>
+               <copyright>
+                 <from>2018</from>
+                 <owner>
+                   <organization>
+                     <name>ISO/IEC</name>
+                   </organization>
+                 </owner>
+               </copyright>
+               <relation type='obsoletes'>
+                 <bibitem type='standard'>
+                   <formattedref format='text/plain'>ISO/IEC 27005:2011</formattedref>
+                 </bibitem>
+               </relation>
+               <relation type='obsoletes'>
+                 <bibitem type='standard'>
+                   <formattedref format='text/plain'>ISO/IEC DIS 27005</formattedref>
+                 </bibitem>
+               </relation>
+               <relation type='instance'>
+                 <bibitem type='standard'>
+                   <fetched/>
+                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Information technology</title>
+                   <title type='title-main' format='text/plain' language='en' script='Latn'>Security techniques</title>
+                   <title type='title-part' format='text/plain' language='en' script='Latn'>Information security risk management</title>
+                   <title type='main' format='text/plain' language='en' script='Latn'>
+                     Information technology — Security techniques — Information
+                     security risk management
+                   </title>
+                   <uri type='src'>https://www.iso.org/standard/75281.html</uri>
+                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:75281:en</uri>
+                   <uri type='rss'>https://www.iso.org/contents/data/standard/07/52/75281.detail.rss</uri>
+                   <docidentifier type='ISO' primary='true'>ISO/IEC 27005:2018</docidentifier>
+                   <docidentifier type='URN'>urn:iso:std:iso-iec:27005:stage-90.92:ed-3:en</docidentifier>
+                   <docnumber>27005</docnumber>
+                   <date type='published'>
+                     <on>2018-07</on>
+                   </date>
+                   <contributor>
+                     <role type='publisher'/>
+                     <organization>
+                       <name>International Organization for Standardization</name>
+                       <abbreviation>ISO</abbreviation>
+                       <uri>www.iso.org</uri>
+                     </organization>
+                   </contributor>
+                   <contributor>
+                     <role type='publisher'/>
+                     <organization>
+                       <name>International Electrotechnical Commission</name>
+                       <abbreviation>IEC</abbreviation>
+                       <uri>www.iec.ch</uri>
+                     </organization>
+                   </contributor>
+                   <edition>3</edition>
+                   <note type='Unpublished-Status'>
+                     <p id='_'>Withdrawn.</p>
+                   </note>
+                   <language>en</language>
+                   <script>Latn</script>
+                   <abstract format='text/plain' language='en' script='Latn'>
+                     This document provides guidelines for information security risk
+                     management. This document supports the general concepts specified
+                     in ISO/IEC 27001 and is designed to assist the satisfactory
+                     implementation of information security based on a risk management
+                     approach. Knowledge of the concepts, models, processes and
+                     terminologies described in ISO/IEC 27001 and ISO/IEC 27002 is
+                     important for a complete understanding of this document. This
+                     document is applicable to all types of organizations (e.g.
+                     commercial enterprises, government agencies, non-profit
+                     organizations) which intend to manage risks that can compromise
+                     the organization’s information security.
+                   </abstract>
+                   <status>
+                     <stage>90</stage>
+                     <substage>92</substage>
+                   </status>
+                   <copyright>
+                     <from>2018</from>
+                     <owner>
+                       <organization>
+                         <name>ISO/IEC</name>
+                       </organization>
+                     </owner>
+                   </copyright>
+                   <relation type='obsoletes'>
+                     <bibitem type='standard'>
+                       <formattedref format='text/plain'>ISO/IEC 27005:2011</formattedref>
+                     </bibitem>
+                   </relation>
+                   <relation type='obsoletes'>
+                     <bibitem type='standard'>
+                       <formattedref format='text/plain'>ISO/IEC DIS 27005</formattedref>
+                     </bibitem>
+                   </relation>
+                   <place>Geneva</place>
+                 </bibitem>
+               </relation>
+               <place>Geneva</place>
+             </bibitem>
+           </references>
+         </bibliography>
+       </iso-standard>
       OUTPUT
       expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to xmlpp(output)
