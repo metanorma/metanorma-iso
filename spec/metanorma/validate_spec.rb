@@ -733,6 +733,17 @@ RSpec.describe Metanorma::ISO do
       .to include "space between number and degrees/minutes/seconds"
   end
 
+  it "Style warning if hyphen instead of minus sign" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      -2
+    INPUT
+    expect(File.read("test.err"))
+      .to include "hyphen instead of minus sign U+2212"
+  end
+
   it "Style warning if no space between number and SI unit" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
