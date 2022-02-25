@@ -76,7 +76,7 @@ module Metanorma
         regex.match(text) && @log.add("Style", elem, "#{term}: #{msg}")
       end
 
-      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-r-ref_itself
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-r-ref_clause3
       def term_xrefs_validate(xmldoc)
         termids = xmldoc
           .xpath("//sections/terms | //sections/clause[.//terms] | "\
