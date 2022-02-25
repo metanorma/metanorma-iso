@@ -4,9 +4,9 @@ term_def_boilerplate: |
 
       <ul>
       <li> <p>ISO Online browsing platform: available at
-        <link target="http://www.iso.org/obp"/></p> </li>
+        <link target="http://www.iso.org/obp"/></p>.</li>
       <li> <p>IEC Electropedia: available at
-      <link target="http://www.electropedia.org"/>
+      <link target="http://www.electropedia.org"/>.
       </p> </li> </ul>
 all_rights_reserved: All rights reserved
 reference_number: Reference Number

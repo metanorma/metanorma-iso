@@ -36,7 +36,8 @@ module Metanorma
          (doc.xpath("//ul") - doc.xpath("//ul//ul | //ol//ul"))).each do |list|
           next if skip_list_punctuation(list)
 
-          list_punctuation1(list, list&.previous_element&.text)
+          prec = list.at("./preceding::text()[normalize-space(.) != ''][1]")
+          list_punctuation1(list, prec&.text)
         end
       end
 
@@ -52,9 +53,10 @@ module Metanorma
       end
 
       def list_punctuation1(list, prectext)
+        prectext ||= ""
         entries = list.xpath(".//li")
-        case prectext&.sub(/^.*?(\S)\s*$/, "\\1")
-        when ":" then list_after_colon_punctuation(list, entries)
+        case prectext.strip.chars.last
+        when ":", "" then list_after_colon_punctuation(list, entries)
         when "." then entries.each { |li| list_full_sentence(li) }
         else style_warning(list, "All lists must be preceded by "\
                                  "colon or full stop", prectext)
@@ -93,11 +95,11 @@ module Metanorma
       def list_full_sentence(elem)
         text = elem.text.strip
         text.match?(/^[^A-Za-z]*[A-Z]/) or
-          style_warning(elem, "List entry after full stop must start with "\
-                              "uppercase letter", text)
+          style_warning(elem, "List entry of separate sentences must start "\
+                              "with uppercase letter", text)
         punct = text.sub(/^.*?(\S)\s*$/, "\\1")
         punct == "." or
-          style_warning(elem, "List entry after full stop must "\
+          style_warning(elem, "List entry of separate sentences must "\
                               "end with full stop", text)
       end
     end

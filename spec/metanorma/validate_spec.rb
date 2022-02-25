@@ -1882,11 +1882,11 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .to include "List entry after full stop must end with full stop: This is;"
+      .to include "List entry of separate sentences must end with full stop: This is;"
     expect(File.read("test.err"))
-      .not_to include "List entry after full stop must end with full stop: Another broken up."
+      .not_to include "List entry of separate sentences must end with full stop: Another broken up."
     expect(File.read("test.err"))
-      .to include "List entry after full stop must start with uppercase letter: sentence."
+      .to include "List entry of separate sentences must start with uppercase letter: sentence."
   end
 
   it "Skips punctuation check for short entries in lists" do
@@ -1924,7 +1924,6 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .not_to include "List entry after full stop must end with full stop: This is"
   end
-
 
   it "Warn if more than one ordered lists in a clause" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
@@ -2030,6 +2029,49 @@ RSpec.describe Metanorma::ISO do
     INPUT
     expect(File.read("test.err"))
       .to include "List more than four levels deep"
+  end
 
+  it "warn if term clause crossreferences non-term reference" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Terms and definitions
+
+      [[b]]
+      === Term 1
+      <<b>>
+      <<c>>
+
+      [[c]]
+      == Clause
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "non-terms clauses cannot cross-reference terms clause (c)"
+    expect(File.read("test.err"))
+      .not_to include "non-terms clauses cannot cross-reference terms clause (b)"
+  end
+
+
+  it "warn if non-term clause crossreferences term reference" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Terms and definitions
+
+      [[b]]
+      === Term 1
+      <<b>>
+      <<c>>
+
+      == Clause
+      <<b>>
+      <<c>>
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "only terms clauses can cross-reference terms clause (b)"
+    expect(File.read("test.err"))
+      .not_to include "only terms clauses can cross-reference terms clause (c)"
   end
 end

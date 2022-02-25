@@ -76,6 +76,30 @@ module Metanorma
         regex.match(text) && @log.add("Style", elem, "#{term}: #{msg}")
       end
 
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-r-ref_itself
+      def term_xrefs_validate(xmldoc)
+        termids = xmldoc
+          .xpath("//sections/terms | //sections/clause[.//terms] | "\
+                 "//annex[.//terms]").each_with_object({}) do |t, m|
+          t.xpath(".//*/@id").each { |a| m[a.text] = true }
+          t.name == "terms" and m[t["id"]] = true
+        end
+        xmldoc.xpath(".//xref").each do |x|
+          term_xrefs_validate1(x, termids)
+        end
+      end
+
+      def term_xrefs_validate1(xref, termids)
+        (termids[xref["target"]] && !termids[xref.parent["id"]]) and
+          @log.add("Style", xref,
+                   "only terms clauses can cross-reference terms clause "\
+                   "(#{xref['target']})")
+        (!termids[xref["target"]] && termids[xref.parent["id"]]) and
+          @log.add("Style", xref,
+                   "non-terms clauses cannot cross-reference terms clause "\
+                   "(#{xref['target']})")
+      end
+
       # ISO/IEC DIR 2, 16.5.6
       def termdef_style(xmldoc)
         xmldoc.xpath("//term").each do |t|
@@ -140,6 +164,7 @@ module Metanorma
         onlychild_clause_validate(doc.root)
         termdef_style(doc.root)
         see_xrefs_validate(doc.root)
+        term_xrefs_validate(doc.root)
         see_erefs_validate(doc.root)
         locality_erefs_validate(doc.root)
         bibdata_validate(doc.root)
