@@ -2,6 +2,7 @@ require "spec_helper"
 require "fileutils"
 
 RSpec.describe Metanorma::ISO do
+=begin
   context "when xref_error.adoc compilation" do
     it "generates error file" do
       FileUtils.rm_f "xref_error.err"
@@ -1294,6 +1295,50 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .not_to include "Only one Symbols and Abbreviated Terms section "\
                       "in the standard"
+  end
+=end
+  it "Warning if single terms section in vocabulary document not named properly" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :docsubtype: vocabulary
+
+      == Scope
+
+      [heading=terms and definitions]
+      == Terms and redefinitions
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "Single terms clause in vocabulary document should have normal Terms and definitions heading"
+    expect(File.read("test.err"))
+      .not_to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
+  end
+
+  it "Warning if multiple terms section in vocabulary document not named properly" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :docsubtype: vocabulary
+
+      == Scope
+
+      == Terms and definitions
+
+      [heading=terms and definitions]
+      == Terms related to fish
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "Single terms clause in vocabulary document should have normal Terms and definitions heading"
+    expect(File.read("test.err"))
+      .to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
   end
 
   it "Warning if final section is not named Bibliography" do

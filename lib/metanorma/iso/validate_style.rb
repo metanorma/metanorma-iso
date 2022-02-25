@@ -178,6 +178,23 @@ module Metanorma
         w += ": #{text}" if text
         @log.add("Style", node, w)
       end
+
+      ASSETS_TO_STYLE =
+        "//termsource | //formula | //termnote | "\
+        "//p[not(ancestor::boilerplate)] | //li[not(p)] | //dt | "\
+        "//dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
+
+      def asset_style(root)
+        root.xpath("//example | //termexample").each { |e| example_style(e) }
+        root.xpath("//definition/verbal-definition").each do |e|
+          definition_style(e)
+        end
+        root.xpath("//note").each { |e| note_style(e) }
+        root.xpath("//fn").each { |e| footnote_style(e) }
+        root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
+        norm_bibitem_style(root)
+        super
+      end
     end
   end
 end

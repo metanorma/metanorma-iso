@@ -197,6 +197,11 @@ module Metanorma
         @vocab and src.empty? and return
         super
       end
+
+      def section_names_terms_cleanup(xml)
+        @vocab and return
+        super
+      end
     end
   end
 end

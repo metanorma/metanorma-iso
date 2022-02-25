@@ -85,13 +85,11 @@ RSpec.describe Metanorma::ISO do
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
-
-                  <link target="http://www.iso.org/obp"/></p>
+                  <link target="http://www.iso.org/obp"/>.</p>
               </li>
               <li>
                 <p id="_">IEC Electropedia: available at
-
-                  <link target="http://www.electropedia.org"/></p>
+                  <link target="http://www.electropedia.org"/>.</p>
               </li>
             </ul>
             <term id="term-term1">
@@ -282,13 +280,11 @@ RSpec.describe Metanorma::ISO do
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
-
-                  <link target="http://www.iso.org/obp"/></p>
+                  <link target="http://www.iso.org/obp"/>.</p>
               </li>
               <li>
                 <p id="_">IEC Electropedia: available at
-
-                  <link target="http://www.electropedia.org"/></p>
+                  <link target="http://www.electropedia.org"/>.</p>
               </li>
             </ul>
             <term id="term-term1">
@@ -332,13 +328,13 @@ RSpec.describe Metanorma::ISO do
               <li>
                 <p id='_'>
                   ISO Online browsing platform: available at
-                  <link target='http://www.iso.org/obp'/>
+                  <link target='http://www.iso.org/obp'/>.
                 </p>
               </li>
               <li>
                 <p id='_'>
                   IEC Electropedia: available at
-                  <link target='http://www.electropedia.org'/>
+                  <link target='http://www.electropedia.org'/>.
                 </p>
               </li>
             </ul>
@@ -381,13 +377,11 @@ RSpec.describe Metanorma::ISO do
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
-
-                  <link target="http://www.iso.org/obp"/></p>
+                  <link target="http://www.iso.org/obp"/>.</p>
               </li>
               <li>
                 <p id="_">IEC Electropedia: available at
-
-                  <link target="http://www.electropedia.org"/></p>
+                  <link target="http://www.electropedia.org"/>.</p>
               </li>
             </ul>
           </terms>
@@ -424,13 +418,13 @@ RSpec.describe Metanorma::ISO do
                <li>
                  <p id='_'>
                    ISO Online browsing platform: available at
-                   <link target='http://www.iso.org/obp'/>
+                   <link target='http://www.iso.org/obp'/>.
                  </p>
                </li>
                <li>
                  <p id='_'>
                    IEC Electropedia: available at
-                   <link target='http://www.electropedia.org'/>
+                   <link target='http://www.electropedia.org'/>.
                  </p>
                </li>
              </ul>
@@ -461,10 +455,11 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR.sub(%r{<doctype>article</doctype>}, "<doctype>article</doctype><subdoctype>vocabulary</subdoctype>")}
+      #{BLANK_HDR.sub(%r{<doctype>article</doctype>},
+                      '<doctype>article</doctype><subdoctype>vocabulary</subdoctype>')}
                <sections>
            <terms id='_' obligation='normative'>
-             <title>Terms and definitions</title>
+             <title>Terms and Definitions</title>
              <p id='_'>No terms and definitions are listed in this document.</p>
              <p id='_'>
                ISO and IEC maintain terminological databases for use in standardization
@@ -474,13 +469,13 @@ RSpec.describe Metanorma::ISO do
                <li>
                  <p id='_'>
                    ISO Online browsing platform: available at
-                   <link target='http://www.iso.org/obp'/>
+                   <link target='http://www.iso.org/obp'/>.
                  </p>
                </li>
                <li>
                  <p id='_'>
                    IEC Electropedia: available at
-                   <link target='http://www.electropedia.org'/>
+                   <link target='http://www.electropedia.org'/>>
                  </p>
                </li>
              </ul>
