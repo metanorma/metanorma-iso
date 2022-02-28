@@ -1102,6 +1102,26 @@ p.Tablebody, li.Tablebody, div.Tablebody
 	mso-ascii-font-family:$bodyfont;
 	mso-fareast-font-family:"SimSun",serif;
 	mso-hansi-font-family:$bodyfont;}
+p.TOCTitle, li.TOCTitle, div.TOCTitle
+        {mso-style-name:"TOC Title";
+        mso-style-unhide:no;
+        margin-top:0in;
+        margin-right:0in;
+        margin-bottom:$normalfontsize;
+        margin-left:0in;
+        text-align:left;
+        page-break-after:avoid;
+        mso-pagination:none;
+        mso-hyphenate:none;
+        mso-layout-grid-align:none;
+        font-size:$normalfontsize;
+        mso-bidi-font-size:10.0pt;
+        font-weight:bold;
+        font-family:$headerfont;
+        mso-fareast-font-family:$headerfont;
+        mso-bidi-font-family:$headerfont;
+        mso-fareast-language:EN-US;}
+
  /* Page Definitions */
 @page
 	{mso-mirror-margins:yes;
