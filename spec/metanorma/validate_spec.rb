@@ -1227,7 +1227,54 @@ RSpec.describe Metanorma::ISO do
     INPUT
     expect(File.read("test.err"))
       .not_to include "Only one Symbols and Abbreviated Terms section "\
-                       "in the standard"
+                      "in the standard"
+  end
+
+  it "Warn if vocabulary document contains Symbols section outside annex" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :docsubtype: vocabulary
+
+      == Scope
+
+      == Terms and definitions
+
+      == A Clause
+
+      [heading=symbols and abbreviated terms]
+      == Terms related to clinical psychology
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "In vocabulary documents, Symbols and Abbreviated Terms are only permitted in annexes"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :docsubtype: vocabulary
+
+      == Scope
+
+      == Terms and definitions
+
+      == A Clause
+
+      [appendix]
+      == {blank}
+
+      [heading=symbols and abbreviated terms]
+      === Terms related to clinical psychology
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "In vocabulary documents, Symbols and Abbreviated Terms are only permitted in annexes"
   end
 
   it "Warning if final section is not named Bibliography" do
