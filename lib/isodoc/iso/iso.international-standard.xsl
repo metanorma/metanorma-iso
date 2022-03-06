@@ -6,8 +6,6 @@
 
 	<xsl:key name="kfn" match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])]" use="@reference"/>
 	
-	<xsl:key name="bibitems" match="*[local-name() = 'bibitem']" use="@id"/> 
-	
 	<xsl:key name="attachments" match="iso:eref[contains(@bibitemid, '.exp')]" use="@bibitemid"/>
 	
 	
@@ -1941,7 +1939,7 @@
 	</xsl:template>
 
 	
-<xsl:param name="svg_images"/><xsl:variable name="images" select="document($svg_images)"/><xsl:param name="basepath"/><xsl:param name="external_index"/><xsl:param name="syntax-highlight">false</xsl:param><xsl:variable name="lang">
+<xsl:param name="svg_images"/><xsl:variable name="images" select="document($svg_images)"/><xsl:param name="basepath"/><xsl:param name="external_index"/><xsl:param name="syntax-highlight">false</xsl:param><xsl:key name="bibitems" match="*[local-name() = 'bibitem']" use="@id"/><xsl:key name="bibitems_hidden" match="*[local-name() = 'bibitem'][@hidden='true'] | *[local-name() = 'references'][@hidden='true']//*[local-name() = 'bibitem']" use="@id"/><xsl:variable name="lang">
 		<xsl:call-template name="getLang"/>
 	</xsl:variable><xsl:variable name="pageWidth_">
 		210
@@ -7092,26 +7090,11 @@
 	</xsl:template><xsl:template match="*[local-name() = 'author']">
 		<xsl:text>— </xsl:text>
 		<xsl:apply-templates/>
-	</xsl:template><xsl:variable name="bibitem_hidden_">
-		<xsl:for-each select="//*[local-name() = 'bibitem'][@hidden='true']">
-			<xsl:copy-of select="."/>
-		</xsl:for-each>
-		<xsl:for-each select="//*[local-name() = 'references'][@hidden='true']/*[local-name() = 'bibitem']">
-			<xsl:copy-of select="."/>
-		</xsl:for-each>
-	</xsl:variable><xsl:variable name="bibitem_hidden" select="xalan:nodeset($bibitem_hidden_)"/><xsl:template match="*[local-name() = 'eref']">
-	
-		<xsl:variable name="bibitemid">
-			<xsl:choose>
-				<!-- <xsl:when test="//*[local-name() = 'bibitem'][@hidden='true' and @id = current()/@bibitemid]"></xsl:when>
-				<xsl:when test="//*[local-name() = 'references'][@hidden='true']/*[local-name() = 'bibitem'][@id = current()/@bibitemid]"></xsl:when> -->
-				<xsl:when test="$bibitem_hidden/*[local-name() = 'bibitem'][@id = current()/@bibitemid]"/>
-				<xsl:otherwise><xsl:value-of select="@bibitemid"/></xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-	
+	</xsl:template><xsl:template match="*[local-name() = 'eref']">
+		<xsl:variable name="current_bibitemid" select="@bibitemid"/>
+		<xsl:variable name="external-destination" select="normalize-space(key('bibitems', $current_bibitemid)/*[local-name() = 'uri'][@type = 'citation'])"/>
 		<xsl:choose>
-			<xsl:when test="normalize-space($bibitemid) != ''"> <!-- if in the bibliography there is the item with @bibitemid (and not hidden), then create link -->
+			<xsl:when test="$external-destination != '' or not(key('bibitems_hidden', $current_bibitemid))"> <!-- if in the bibliography there is the item with @bibitemid (and not hidden), then create link (internal to the bibitem or external) -->
 				<fo:inline xsl:use-attribute-sets="eref-style">
 					<xsl:if test="@type = 'footnote'">
 						<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
@@ -7125,8 +7108,8 @@
 					<xsl:variable name="text" select="normalize-space()"/>
 					
 					
-            
-					<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
+					
+					<fo:basic-link fox:alt-text="{@citeas}">
 						<xsl:if test="normalize-space(@citeas) = ''">
 							<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
 						</xsl:if>
@@ -7136,14 +7119,21 @@
 							
 						</xsl:if>
 						
-						
+						<xsl:choose>
+							<xsl:when test="$external-destination != ''"> <!-- external hyperlink -->
+								<xsl:attribute name="external-destination"><xsl:value-of select="$external-destination"/></xsl:attribute>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:attribute name="internal-destination"><xsl:value-of select="@bibitemid"/></xsl:attribute>
+							</xsl:otherwise>
+						</xsl:choose>
 						
 						<xsl:apply-templates/>
 					</fo:basic-link>
-							
+					
 				</fo:inline>
 			</xsl:when>
-			<xsl:otherwise>
+			<xsl:otherwise> <!-- if there is key('bibitems_hidden', $current_bibitemid) -->
 				<fo:inline><xsl:apply-templates/></fo:inline>
 			</xsl:otherwise>
 		</xsl:choose>
