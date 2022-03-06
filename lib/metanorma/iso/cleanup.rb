@@ -37,13 +37,11 @@ module Metanorma
       end
 
       def get_id_prefix(xmldoc)
-        prefix = []
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
-                     "/organization").each do |x|
+                     "/organization").each_with_object([]) do |x, prefix|
           x1 = x.at("abbreviation")&.text || x.at("name")&.text
           (x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
         end
-        prefix
       end
 
       # ISO as a prefix goes first
@@ -140,8 +138,7 @@ module Metanorma
 
       def unpub_footnotes(xmldoc)
         xmldoc.xpath("//bibitem/note[@type = 'Unpublished-Status']").each do |n|
-          id = n.parent["id"]
-          e = xmldoc.at("//eref[@bibitemid = '#{id}']") or next
+          e = xmldoc.at("//eref[@bibitemid = '#{n.parent['id']}']") or next
           fn = n.children.to_xml
           n&.elements&.first&.name == "p" or fn = "<p>#{fn}</p>"
           e.next = "<fn>#{fn}</fn>"
@@ -154,8 +151,8 @@ module Metanorma
       end
 
       def unpublished_note(xmldoc)
-        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
-          .each do |b|
+        xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]"\
+                     "[not(note[@type = 'Unpublished-Status'])]").each do |b|
           next if pub_class(b) > 2
           next unless (s = b.at("./status/stage")) && (s.text.to_i < 60)
 
