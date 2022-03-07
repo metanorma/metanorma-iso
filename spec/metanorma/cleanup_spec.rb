@@ -137,7 +137,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-_-t90-">
+            <term id="term-t90">
               <preferred>
                 <letter-symbol><name>
                 <stem type="MathML">

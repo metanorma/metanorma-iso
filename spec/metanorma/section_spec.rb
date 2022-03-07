@@ -475,7 +475,7 @@ RSpec.describe Metanorma::ISO do
                <li>
                  <p id='_'>
                    IEC Electropedia: available at
-                   <link target='http://www.electropedia.org'/>>
+                   <link target='http://www.electropedia.org'/>.
                  </p>
                </li>
              </ul>

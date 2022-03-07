@@ -222,7 +222,7 @@ RSpec.describe IsoDoc do
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
 
     expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <div class='WordSection3'>
+      <div class='WordSection3'>
          <p class='zzSTDTitle1'/>
          <div>
            <a name='_terms_and_definitions' id='_terms_and_definitions'/>
@@ -241,9 +241,7 @@ RSpec.describe IsoDoc do
              rice retaining its husk after threshing
            </p>
            <p class='Source'>
-             [SOURCE:
-             <a href='#ISO7301'>ISO 7301:2011, 3.1</a>
-             , modified &#x2013; The term "cargo rice" is shown as deprecated, and Note
+             [SOURCE: ISO 7301:2011, 3.1, modified &#x2013; The term "cargo rice" is shown as deprecated, and Note
              1 to entry is not included here]
            </p>
          </div>

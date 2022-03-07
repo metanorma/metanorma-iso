@@ -1,5 +1,5 @@
 require "vcr"
-  
+
 VCR.configure do |config|
   config.cassette_library_dir = "spec/vcr_cassettes"
   config.hook_into :webmock
@@ -51,7 +51,9 @@ def strip_guid(xml)
 end
 
 def metadata(hash)
-  Hash[hash.sort].delete_if { |_, v| v.nil? || v.respond_to?(:empty?) && v.empty? }
+  hash.sort.to_h.delete_if do |_, v|
+    v.nil? || (v.respond_to?(:empty?) && v.empty?)
+  end
 end
 
 def xmlpp(xml)

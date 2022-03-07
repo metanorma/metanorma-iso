@@ -161,7 +161,7 @@ RSpec.describe IsoDoc do
                 </ul>
               </div>
               <p>[SOURCE:
-                <a href="#ISO7301">ISO 7301:2011, 3.1</a>, modified &#8211;
+                ISO 7301:2011, 3.1, modified &#8211;
                   The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
               <p class="TermNum" id="paddy">1.2</p>
               <p class="Terms" style="text-align:left;"><b>paddy</b></p>
@@ -187,7 +187,7 @@ RSpec.describe IsoDoc do
                   <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
                 </p>
               </div>
-              <p>[SOURCE: <a href="#ISO7301">ISO 7301:2011, 3.1</a>]</p>
+              <p>[SOURCE: ISO 7301:2011, 3.1]</p>
               <p class='TermNum' id='A'>1.3</p>
               <p class='Terms' style='text-align:left;'><b>term1</b></p>
                term1 definition
@@ -213,7 +213,7 @@ RSpec.describe IsoDoc do
           </ul></div>
 
         <p class="Source">[SOURCE:
-          <a href="#ISO7301">ISO 7301:2011, 3.1</a>, modified &#8211;
+          ISO 7301:2011, 3.1, modified &#8211;
             The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
         <p class="TermNum" id="paddy">1.2</p>
         <p class="Terms" style="text-align:left;"><b>paddy</b></p>
@@ -228,7 +228,7 @@ RSpec.describe IsoDoc do
         </div>
         <div id='_671a1994-4783-40d0-bc81-987d06ffb74e' class="Note"><p class="Note">Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></div>
         <div id='_671a1994-4783-40d0-bc81-987d06ffb74f' class="Note"><p class="Note">Note 2 to entry: <ul><li>A</li></ul><p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p></p></div>
-        <p class="Source">[SOURCE: <a href="#ISO7301">ISO 7301:2011, 3.1</a>]</p>
+        <p class="Source">[SOURCE: ISO 7301:2011, 3.1]</p>
         <p class='TermNum' id='A'>1.3</p>
         <p class='Terms' style='text-align:left;'><b>term1</b></p>
          term1 definition
