@@ -437,12 +437,12 @@ RSpec.describe IsoDoc do
             <li><concept><refterm>term6</refterm>
               <renderterm>word</renderterm>
               <eref bibitemid="ISO712" type="inline" citeas="ISO 712">
-              <localityStack>
+              <localityStack connective="and">
                 <locality type='clause'>
                   <referenceFrom>3.1</referenceFrom>
                 </locality>
               </localityStack>
-              <localityStack>
+              <localityStack connective="and">
                 <locality type='figure'>
                   <referenceFrom>b</referenceFrom>
                 </locality>
@@ -452,12 +452,12 @@ RSpec.describe IsoDoc do
             <li><concept><refterm>term7</refterm>
               <renderterm>word</renderterm>
               <eref bibitemid="ISO712" type="inline" citeas="ISO 712">
-              <localityStack>
+              <localityStack connective="and">
                 <locality type='clause'>
                   <referenceFrom>3.1</referenceFrom>
                 </locality>
               </localityStack>
-              <localityStack>
+              <localityStack connective="and">
                 <locality type='figure'>
                   <referenceFrom>b</referenceFrom>
                 </locality>
@@ -537,25 +537,25 @@ RSpec.describe IsoDoc do
             </li>
             <li>
               <em>word</em>
-              (<eref bibitemid="ISO712" type="inline" citeas="ISO 712"><localityStack>
+              (<eref bibitemid="ISO712" type="inline" citeas="ISO 712"><localityStack connective="and">
                 <locality type="clause">
                   <referenceFrom>3.1</referenceFrom>
                 </locality>
-              </localityStack><localityStack>
+              </localityStack><localityStack connective="and">
                 <locality type="figure">
                   <referenceFrom>b</referenceFrom>
                 </locality>
-              </localityStack>ISO 712, 3.1; Figure b</eref>)
+              </localityStack>ISO 712, 3.1 and Figure b</eref>)
             </li>
             <li>
               <em>word</em>
               (<eref bibitemid="ISO712" type="inline" citeas="ISO 712">
-              <localityStack>
+              <localityStack connective="and">
                 <locality type="clause">
                   <referenceFrom>3.1</referenceFrom>
                 </locality>
               </localityStack>
-              <localityStack>
+              <localityStack connective="and">
                 <locality type="figure">
                   <referenceFrom>b</referenceFrom>
                 </locality>
@@ -658,7 +658,7 @@ RSpec.describe IsoDoc do
                    <li>
                      <i>word</i>
                       (
-                     <a href='#ISO712'>ISO 712, 3.1; Figure b</a>
+                     <a href='#ISO712'>ISO 712, 3.1 and Figure b</a>
                      )
                    </li>
                    <li>
@@ -946,5 +946,122 @@ RSpec.describe IsoDoc do
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
+  end
+
+  it "combines locality stacks with connectives, omitting subclauses" do
+    input = <<~INPUT
+      <itu-standard xmlns="https://www.calconnect.org/standards/itu">
+                  <p id='_'>
+              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+                <localityStack connective='from'>
+                  <locality type='clause'>
+                    <referenceFrom>3</referenceFrom>
+                  </locality>
+                </localityStack>
+                <localityStack connective='to'>
+                  <locality type='clause'>
+                    <referenceFrom>5</referenceFrom>
+                  </locality>
+                </localityStack>
+              </eref>
+              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+                <localityStack connective='from'>
+                  <locality type='clause'>
+                    <referenceFrom>3.1</referenceFrom>
+                  </locality>
+                </localityStack>
+                <localityStack connective='to'>
+                  <locality type='clause'>
+                    <referenceFrom>5.1</referenceFrom>
+                  </locality>
+                </localityStack>
+              </eref>
+              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+                <localityStack connective='from'>
+                  <locality type='clause'>
+                    <referenceFrom>3.1</referenceFrom>
+                  </locality>
+                </localityStack>
+                <localityStack connective='to'>
+                  <locality type='clause'>
+                    <referenceFrom>5</referenceFrom>
+                  </locality>
+                </localityStack>
+              </eref>
+              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+                <localityStack connective='from'>
+                  <locality type='clause'>
+                    <referenceFrom>3.1</referenceFrom>
+                  </locality>
+                </localityStack>
+                <localityStack connective='to'>
+                  <locality type='table'>
+                    <referenceFrom>5</referenceFrom>
+                  </locality>
+                </localityStack>
+              </eref>
+            </p>
+            </itu-standard>
+    INPUT
+    output = <<~OUTPUT
+      <itu-standard xmlns='https://www.calconnect.org/standards/itu' type='presentation'>
+        <p id='_'>
+          <eref type='inline' bibitemid='ref1' citeas='XYZ' droploc=''>
+            <localityStack connective='from'>
+              <locality type='clause'>
+                <referenceFrom>3</referenceFrom>
+              </locality>
+            </localityStack>
+            <localityStack connective='to'>
+              <locality type='clause'>
+                <referenceFrom>5</referenceFrom>
+              </locality>
+            </localityStack>
+            XYZ, Clause 3 to 5
+          </eref>
+          <eref type='inline' bibitemid='ref1' citeas='XYZ' droploc=''>
+            <localityStack connective='from'>
+              <locality type='clause'>
+                <referenceFrom>3.1</referenceFrom>
+              </locality>
+            </localityStack>
+            <localityStack connective='to'>
+              <locality type='clause'>
+                <referenceFrom>5.1</referenceFrom>
+              </locality>
+            </localityStack>
+            XYZ, 3.1 to 5.1
+          </eref>
+          <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+            <localityStack connective='from'>
+              <locality type='clause'>
+                <referenceFrom>3.1</referenceFrom>
+              </locality>
+            </localityStack>
+            <localityStack connective='to'>
+              <locality type='clause'>
+                <referenceFrom>5</referenceFrom>
+              </locality>
+            </localityStack>
+            XYZ, 3.1 to Clause 5
+          </eref>
+          <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+            <localityStack connective='from'>
+              <locality type='clause'>
+                <referenceFrom>3.1</referenceFrom>
+              </locality>
+            </localityStack>
+            <localityStack connective='to'>
+              <locality type='table'>
+                <referenceFrom>5</referenceFrom>
+              </locality>
+            </localityStack>
+            XYZ, 3.1 to Table 5
+          </eref>
+        </p>
+      </itu-standard>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 end
