@@ -1296,8 +1296,8 @@ RSpec.describe Metanorma::ISO do
       .not_to include "Only one Symbols and Abbreviated Terms section "\
                       "in the standard"
   end
-=end
-  it "Warning if single terms section in vocabulary document not named properly" do
+
+it "Warn if single terms section in vocabulary document not named properly" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -1307,7 +1307,6 @@ RSpec.describe Metanorma::ISO do
       :docsubtype: vocabulary
 
       == Scope
-
       [heading=terms and definitions]
       == Terms and redefinitions
 
@@ -1318,7 +1317,8 @@ RSpec.describe Metanorma::ISO do
       .not_to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
   end
 
-  it "Warning if multiple terms section in vocabulary document not named properly" do
+
+  it "Warn if vocabulary document contains Symbols section outside annex" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -1331,7 +1331,26 @@ RSpec.describe Metanorma::ISO do
 
       == Terms and definitions
 
-      [heading=terms and definitions]
+      == A Clause
+
+      [heading=symbols and abbreviated terms]
+      == Terms related to clinical psychology
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "In vocabulary documents, Symbols and Abbreviated Terms are only permitted in annexes"
+
+
+  it "Warning if multiple terms section in vocabulary document not named properly" do
+     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :docsubtype: vocabulary
+
+     [heading=terms and definitions]
       == Terms related to fish
 
     INPUT
@@ -1339,7 +1358,6 @@ RSpec.describe Metanorma::ISO do
       .not_to include "Single terms clause in vocabulary document should have normal Terms and definitions heading"
     expect(File.read("test.err"))
       .to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
-  end
 
   it "Warning if final section is not named Bibliography" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)

@@ -47,37 +47,74 @@ module IsoDoc
 
       def eref_delim(delim, type)
         if delim == ";" then ";"
-        else type == "list" ? "" : delim
+        else type == "list" ? " " : delim
         end
       end
 
-      def eref_localities1_zh(target, type, from, upto, node, delim)
-        subsection = from&.text&.match(/\./)
-        ret = eref_delim(delim, type)
-        ret += " 第#{from.text}" if from
-        ret += "&ndash;#{upto.text}" if upto
-        loc = (@i18n.locality[type] || type.sub(/^locality:/, "").capitalize)
-        ret += " #{loc}" unless (subsection && type == "clause") ||
-          type == "list" || target.match(/^IEV$|^IEC 60050-/) ||
-          node["droploc"] == "true"
+      def can_conflate_eref_rendering?(refs)
+        super or return false
+
+        first = subclause?(nil, refs.first.at(ns("./locality/@type"))&.text,
+                           refs.first.at(ns("./locality/referenceFrom"))&.text)
+        refs.all? do |r|
+          subclause?(nil, r.at(ns("./locality/@type"))&.text,
+                     r.at(ns("./locality/referenceFrom"))&.text) == first
+        end
+      end
+
+      def locality_delimiter(loc)
+        loc&.next_element&.attribute("type")&.text == "list" and return " "
+        super
+      end
+
+      def eref_localities_conflated(refs, target, node)
+        droploc = node["droploc"]
+        node["droploc"] = true
+        ret = resolve_eref_connectives(eref_locality_stacks(refs, target,
+                                                            node))
+        node["droploc"] = droploc
+        eref_localities1(target,
+                         prefix_clause(target, refs.first.at(ns("./locality"))),
+                         l10n(ret[1..-1].join), nil, node, @lang)
+      end
+
+      def prefix_clause(target, loc)
+        loc["type"] == "clause" or return loc["type"]
+
+        if subclause?(target, loc["type"], loc&.at(ns("./referenceFrom"))&.text)
+          ""
+        else
+          "clause"
+        end
+      end
+
+      def subclause?(target, type, from)
+        (from&.match?(/\./) && type == "clause") ||
+          type == "list" || target&.match(/^IEV$|^IEC 60050-/)
+      end
+
+      def eref_localities1_zh(target, type, from, upto, node)
+        ret = " 第#{from}" if from
+        ret += "&ndash;#{upto}" if upto
+        if node["droploc"] != "true" && !subclause?(target, type, from)
+          ret += eref_locality_populate(type, node)
+        end
         ret += ")" if type == "list"
         ret
       end
 
-      def eref_localities1(target, type, from, upto, delim, node, lang = "en")
-        return "" if type == "anchor"
+      def eref_localities1(target, type, from, upto, node, lang = "en")
+        return nil if type == "anchor"
 
-        subsection = from&.text&.match(/\./)
         type = type.downcase
         lang == "zh" and
-          return l10n(eref_localities1_zh(target, type, from, upto, node,
-                                          delim))
-        ret = eref_delim(delim, type)
-        ret += eref_locality_populate(type, node) unless (subsection &&
-          type == "clause") || type == "list" ||
-          target.match(/^IEV$|^IEC 60050-/)
-        ret += " #{from.text}" if from
-        ret += "&ndash;#{upto.text}" if upto
+          return l10n(eref_localities1_zh(target, type, from, upto, node))
+        ret = if node["droploc"] != "true" && !subclause?(target, type, from)
+                eref_locality_populate(type, node)
+              else ""
+              end
+        ret += " #{from}" if from
+        ret += "&ndash;#{upto}" if upto
         ret += ")" if type == "list"
         l10n(ret)
       end

@@ -138,9 +138,6 @@ RSpec.describe Metanorma::ISO do
                     </organization>
                   </contributor>
                   <edition>1</edition>
-                  <note type="Unpublished-Status">
-                    <p id="_">Under preparation. (Stage at the time of publication ISO/FDIS 17664-1).</p>
-                  </note>
                   <language>en</language>
                   <language>fr</language>
                   <script>Latn</script>

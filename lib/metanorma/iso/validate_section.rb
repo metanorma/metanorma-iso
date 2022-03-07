@@ -42,11 +42,12 @@ module Metanorma
         f.empty? && return
         (f.size == 1 || @vocab) or
           @log.add("Style", f.first, ONE_SYMBOLS_WARNING)
-        f.first.elements.each do |e|
-          unless %w(title dl).include? e.name
-            @log.add("Style", f.first, NON_DL_SYMBOLS_WARNING)
-            return
-          end
+        f.first.elements.reject { |e| %w(title dl).include? e.name }.empty? or
+          @log.add("Style", f.first, NON_DL_SYMBOLS_WARNING)
+        @vocab and f.each do |f1|
+          f1.at("./ancestor::annex") or
+            @log.add("Style", f1, "In vocabulary documents, Symbols and "\
+                                  "Abbreviated Terms are only permitted in annexes")
         end
       end
 
@@ -199,6 +200,18 @@ module Metanorma
             @log.add("Style", b, "#{NORM_ISO_WARN}: #{b.text}")
           end
         end
+      end
+
+      def asset_style(root)
+        root.xpath("//example | //termexample").each { |e| example_style(e) }
+        root.xpath("//definition/verbal-definition").each do |e|
+          definition_style(e)
+        end
+        root.xpath("//note").each { |e| note_style(e) }
+        root.xpath("//fn").each { |e| footnote_style(e) }
+        root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
+        norm_bibitem_style(root)
+        super
       end
 
       def subclause_validate(root)

@@ -152,8 +152,8 @@ module Metanorma
       end
 
       def unpublished_note(xmldoc)
-        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
-          .each do |b|
+        xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]"\
+                     "[not(note[@type = 'Unpublished-Status'])]").each do |b|
           next if pub_class(b) > 2
           next unless (s = b.at("./status/stage")) && (s.text.to_i < 60)
 

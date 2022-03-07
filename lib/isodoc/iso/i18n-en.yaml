@@ -22,6 +22,8 @@ see_also: see also
 secretariat: Secretariat
 edition: edition
 termsrelated: Terms related to 
+multiple_and: "%1 and %2"
+multiple_or: "%1 or %2"
 doctype_dict:
   international-standard: International Standard
   technical-specification: Technical Specification
