@@ -70,8 +70,8 @@ module Metanorma
         style(node, extract_text(node))
       end
 
-      def style_regex(regex, warning, n, text)
-        (m = regex.match(text)) && style_warning(n, warning, m[:num])
+      def style_regex(regex, warning, node, text)
+        (m = regex.match(text)) && style_warning(node, warning, m[:num])
       end
 
       # style check with a regex on a token
@@ -96,10 +96,12 @@ module Metanorma
         style_percent(node, text)
         style_abbrev(node, text)
         style_units(node, text)
+        style_punct(node, text)
       end
 
       # ISO/IEC DIR 2, 9.1
       # ISO/IEC DIR 2, Table B.1
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-n-numbers
       def style_number(node, text)
         style_two_regex_not_prev(
           node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/,
@@ -110,6 +112,8 @@ module Metanorma
                     "possible decimal point", node, text)
         style_regex(/\b(?<num>billions?)\b/i,
                     "ambiguous number", node, text)
+        style_regex(/(^|\s)(?<num>-[0-9][0-9,.]*)/i,
+                    "hyphen instead of minus sign U+2212", node, text)
       end
 
       # ISO/IEC DIR 2, 9.2.1
@@ -158,12 +162,38 @@ module Metanorma
         end
       end
 
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-and
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-andor
+      def style_punct(node, text)
+        style_regex(/\b(?<num>and\/?or)\b/i,
+                    "Use 'either x or y, or both'", node, text)
+        style_regex(/\s(?<num>&)\s/i,
+                    "Avoid ampersand in ordinary text'", node, text)
+      end
+
       def style_warning(node, msg, text = nil)
         return if @novalid
 
         w = msg
         w += ": #{text}" if text
         @log.add("Style", node, w)
+      end
+
+      ASSETS_TO_STYLE =
+        "//termsource | //formula | //termnote | "\
+        "//p[not(ancestor::boilerplate)] | //li[not(p)] | //dt | "\
+        "//dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
+
+      def asset_style(root)
+        root.xpath("//example | //termexample").each { |e| example_style(e) }
+        root.xpath("//definition/verbal-definition").each do |e|
+          definition_style(e)
+        end
+        root.xpath("//note").each { |e| note_style(e) }
+        root.xpath("//fn").each { |e| footnote_style(e) }
+        root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
+        norm_bibitem_style(root)
+        super
       end
     end
   end

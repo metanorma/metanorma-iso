@@ -45,19 +45,26 @@ module Metanorma
       def output(isodoc_node, inname, outname, format, options={})
         case format
         when :html
-          IsoDoc::Iso::HtmlConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Iso::HtmlConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         when :html_alt
-          IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true)).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true))
+            .convert(inname, isodoc_node, nil, outname)
         when :doc
-          IsoDoc::Iso::WordConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Iso::WordConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         when :pdf
-          IsoDoc::Iso::PdfConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Iso::PdfConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         when :sts
-          IsoDoc::Iso::StsConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Iso::StsConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         when :isosts
-          IsoDoc::Iso::IsoStsConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Iso::IsoStsConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         when :presentation
-          IsoDoc::Iso::PresentationXMLConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Iso::PresentationXMLConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         else
           super
         end

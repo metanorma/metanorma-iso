@@ -148,6 +148,7 @@ module Metanorma
       def bibitem_cleanup(xmldoc)
         super
         unpublished_note(xmldoc)
+        withdrawn_note(xmldoc)
       end
 
       def unpublished_note(xmldoc)
@@ -157,10 +158,34 @@ module Metanorma
           next unless (s = b.at("./status/stage")) && (s.text.to_i < 60)
 
           id = b.at("docidentifier").text
-          b.at("./language | ./script | ./abstract | ./status")
-            .previous = %(<note type="Unpublished-Status">
-                          <p>#{@i18n.under_preparation.sub(/%/, id)}</p></note>)
+          insert_unpub_note(b, @i18n.under_preparation.sub(/%/, id))
         end
+      end
+
+      def withdrawn_note(xmldoc)
+        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
+          .each do |b|
+            next if pub_class(b) > 2
+            next unless (s = b.at("./status/stage")) && (s.text.to_i >= 90)
+
+            if id = replacement_standard(b)
+              insert_unpub_note(b, @i18n.cancelled_and_replaced.sub(/%/, id))
+            else
+              insert_unpub_note(b, @i18n.withdrawn)
+            end
+          end
+      end
+
+      def replacement_standard(biblio)
+        r = biblio.at("./relation[@type = 'updates']/bibitem") or return nil
+        id = r.at("./formattedref | ./docidentifier[@primary = 'true'] | "\
+                  "./docidentifier | ./formattedref") or return nil
+        id.text
+      end
+
+      def insert_unpub_note(biblio, msg)
+        biblio.at("./language | ./script | ./abstract | ./status")
+          .previous = %(<note type="Unpublished-Status"><p>#{msg}</p></note>)
       end
 
       def termdef_boilerplate_insert(xmldoc, isodoc, once = false)
@@ -170,6 +195,11 @@ module Metanorma
 
       def term_defs_boilerplate_cont(src, term, isodoc)
         @vocab and src.empty? and return
+        super
+      end
+
+      def section_names_terms_cleanup(xml)
+        @vocab and return
         super
       end
     end

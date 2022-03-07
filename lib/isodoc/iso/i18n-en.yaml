@@ -4,14 +4,16 @@ term_def_boilerplate: |
 
       <ul>
       <li> <p>ISO Online browsing platform: available at
-        <link target="http://www.iso.org/obp"/></p> </li>
+        <link target="http://www.iso.org/obp"/>.</p></li>
       <li> <p>IEC Electropedia: available at
-      <link target="http://www.electropedia.org"/>
+      <link target="http://www.electropedia.org"/>.
       </p> </li> </ul>
 all_rights_reserved: All rights reserved
 reference_number: Reference Number
 price_based_on: Price based on % pages
 under_preparation: Under preparation. (Stage at the time of publication %).
+withdrawn: Withdrawn.
+cancelled_and_replaced: Cancelled and replaced by %.
 table_of_contents: Contents
 date: Date
 index: Index
@@ -19,6 +21,7 @@ see: see
 see_also: see also
 secretariat: Secretariat
 edition: edition
+termsrelated: Terms related to 
 multiple_and: "%1 and %2"
 multiple_or: "%1 or %2"
 doctype_dict:

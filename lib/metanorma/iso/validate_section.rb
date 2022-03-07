@@ -14,6 +14,7 @@ module Metanorma
         end
         section_style(doc.root)
         subclause_validate(doc.root)
+        @vocab and vocab_terms_titles_validate(doc.root)
         super
       end
 
@@ -33,7 +34,6 @@ module Metanorma
 
       ONE_SYMBOLS_WARNING = "Only one Symbols and Abbreviated "\
                             "Terms section in the standard".freeze
-
       NON_DL_SYMBOLS_WARNING = "Symbols and Abbreviated Terms can "\
                                "only contain a definition list".freeze
 
@@ -73,18 +73,17 @@ module Metanorma
 
       # spec of permissible section sequence
       # we skip normative references, it goes to end of list
-      SEQ =
-        [
-          { msg: "Initial section must be (content) Foreword",
-            val: ["./self::foreword"] },
-          { msg: "Prefatory material must be followed by (clause) Scope",
-            val: ["./self::introduction", "./self::clause[@type = 'scope']"] },
-          { msg: "Prefatory material must be followed by (clause) Scope",
-            val: ["./self::clause[@type = 'scope']"] },
-          { msg: "Normative References must be followed by "\
-                 "Terms and Definitions",
-            val: ["./self::terms | .//terms"] },
-        ].freeze
+      SEQ = [
+        { msg: "Initial section must be (content) Foreword",
+          val: ["./self::foreword"] },
+        { msg: "Prefatory material must be followed by (clause) Scope",
+          val: ["./self::introduction", "./self::clause[@type = 'scope']"] },
+        { msg: "Prefatory material must be followed by (clause) Scope",
+          val: ["./self::clause[@type = 'scope']"] },
+        { msg: "Normative References must be followed by "\
+               "Terms and Definitions",
+          val: ["./self::terms | .//terms"] },
+      ].freeze
 
       SECTIONS_XPATH =
         "//foreword | //introduction | //sections/terms | .//annex | "\
@@ -191,11 +190,6 @@ module Metanorma
         end
       end
 
-      ASSETS_TO_STYLE =
-        "//termsource | //formula | //termnote | "\
-        "//p[not(ancestor::boilerplate)] | //li[not(p)] | //dt | "\
-        "//dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
-
       NORM_BIBITEMS =
         "//references[@normative = 'true']/bibitem".freeze
 
@@ -236,6 +230,24 @@ module Metanorma
           location = c["id"] || "#{c.text[0..60]}..."
           location += ":#{title.text}" if c["id"] && !title.nil?
           @log.add("Style", nil, "#{location}: subclause is only child")
+        end
+      end
+
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-formatting-r-vocabulary
+      def vocab_terms_titles_validate(root)
+        terms = root.xpath("//sections/terms | //sections/clause[.//terms]")
+        if terms.size == 1
+          ((t = terms.first.at("./title")) && (t&.text == @i18n.termsdef)) or
+            @log.add("Style", terms.first,
+                     "Single terms clause in vocabulary document "\
+                     "should have normal Terms and definitions heading")
+        elsif terms.size > 1
+          terms.each do |x|
+            ((t = x.at("./title")) && /^#{@i18n.termsrelated}/.match?(t&.text)) or
+              @log.add("Style", x,
+                       "Multiple terms clauses in vocabulary document "\
+                       "should have 'Terms related to' heading")
+          end
         end
       end
     end

@@ -78,9 +78,9 @@ module Metanorma
         xmldoc.xpath("//image").each do |i|
           next if i["src"].start_with?("data:")
 
-          if /^ISO_\d+_/.match?(File.basename(i["src"]))
-          elsif /^(SL)?#{prefix}fig/.match?(File.basename(i["src"]))
-            image_name_validate1(i, prefix)
+          case File.basename(i["src"])
+          when /^ISO_\d+_/
+          when /^(SL)?#{prefix}fig/ then image_name_validate1(i, prefix)
           else
             @log.add("Style", i,
                      "image name #{i['src']} does not match DRG requirements: expect #{prefix}fig")

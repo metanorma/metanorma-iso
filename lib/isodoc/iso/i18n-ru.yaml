@@ -3,14 +3,16 @@ term_def_boilerplate: |
 
       <ul>
       <li> <p>ИСО, Интернет-онлайн-платформа: доступна на 
-        <link target="http://www.iso.org/obp"/></p> </li>
+        <link target="http://www.iso.org/obp"/>.</p></li>
       <li> <p>МЭК Electropedia: доступна на
-      <link target="http://www.electropedia.org"/>
+      <link target="http://www.electropedia.org"/>.
       </p> </li> </ul>
 all_rights_reserved: Все права защищены
 reference_number: Ссылочный номер
 price_based_on: Цена рассчитана на % стр.
 under_preparation: В стадии подготовки. (Стадия на момент публикации %).
+withdrawn: Отозван.
+cancelled_and_replaced: Отменено и заменено на %.
 table_of_contents: Содержание
 date: Дата
 index: Алфавитный указатель
@@ -19,6 +21,7 @@ see_also: см. также
 secretariat: Секретариат
 scope: Область применения
 edition: издание
+termsrelated: Термины, связанные 
 doctype_dict:
   international-standard: Международный Стандарт
   technical-specification: Техническая Спецификация

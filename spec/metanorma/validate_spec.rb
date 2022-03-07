@@ -2,6 +2,7 @@ require "spec_helper"
 require "fileutils"
 
 RSpec.describe Metanorma::ISO do
+=begin
   context "when xref_error.adoc compilation" do
     it "generates error file" do
       FileUtils.rm_f "xref_error.err"
@@ -733,6 +734,17 @@ RSpec.describe Metanorma::ISO do
       .to include "space between number and degrees/minutes/seconds"
   end
 
+  it "Style warning if hyphen instead of minus sign" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      -2
+    INPUT
+    expect(File.read("test.err"))
+      .to include "hyphen instead of minus sign U+2212"
+  end
+
   it "Style warning if no space between number and SI unit" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -752,6 +764,61 @@ RSpec.describe Metanorma::ISO do
       5 mins
     INPUT
     expect(File.read("test.err")).to include "non-standard unit"
+  end
+
+  it "Style warning if and/or used" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      7 and/or 8
+    INPUT
+    expect(File.read("test.err")).to include "Use 'either x or y, or both'"
+  end
+
+  it "Style warning if & used" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      7 & 8
+    INPUT
+    expect(File.read("test.err")).to include "Avoid ampersand in ordinary text"
+  end
+
+  it "Style warning if full stop used in title or caption" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause.
+
+      .Table.
+      |===
+      | A |B
+      |===
+
+      === Clause 2.
+
+      .Figure.
+      ....
+      Z
+      ....
+
+      .Other Figure
+      ....
+      A
+      ....
+    INPUT
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Clause."
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Clause 2."
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Table."
+    expect(File.read("test.err"))
+      .to include "No full stop at end of title or caption: Figure."
+    expect(File.read("test.err"))
+      .not_to include "No full stop at end of title or caption: Other Figure."
   end
 
   # can't test: our asciidoc template won't allow this to be generated
@@ -1230,6 +1297,27 @@ RSpec.describe Metanorma::ISO do
                       "in the standard"
   end
 
+it "Warn if single terms section in vocabulary document not named properly" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :docsubtype: vocabulary
+
+      == Scope
+      [heading=terms and definitions]
+      == Terms and redefinitions
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "Single terms clause in vocabulary document should have normal Terms and definitions heading"
+    expect(File.read("test.err"))
+      .not_to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
+  end
+
+
   it "Warn if vocabulary document contains Symbols section outside annex" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
@@ -1252,7 +1340,9 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "In vocabulary documents, Symbols and Abbreviated Terms are only permitted in annexes"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+
+  it "Warning if multiple terms section in vocabulary document not named properly" do
+     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1260,22 +1350,14 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
       :docsubtype: vocabulary
 
-      == Scope
-
-      == Terms and definitions
-
-      == A Clause
-
-      [appendix]
-      == {blank}
-
-      [heading=symbols and abbreviated terms]
-      === Terms related to clinical psychology
+     [heading=terms and definitions]
+      == Terms related to fish
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "In vocabulary documents, Symbols and Abbreviated Terms are only permitted in annexes"
-  end
+      .not_to include "Single terms clause in vocabulary document should have normal Terms and definitions heading"
+    expect(File.read("test.err"))
+      .to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
 
   it "Warning if final section is not named Bibliography" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
@@ -1703,12 +1785,7 @@ RSpec.describe Metanorma::ISO do
 
   it "Warn if more than 7 levels of subclause" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :language: fr
+      #{VALIDATING_BLANK_HDR}
 
       == Clause
 
@@ -1736,12 +1813,7 @@ RSpec.describe Metanorma::ISO do
 
   it "Do not warn if not more than 7 levels of subclause" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :language: fr
+      #{VALIDATING_BLANK_HDR}
 
       == Clause
 
@@ -1775,5 +1847,294 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Reference ISO8 does not have an associated footnote "\
                   "indicating unpublished status"
+  end
+
+  it "Warn if no colon or full stop before list" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X
+
+      * A very long
+      * B list
+      * C
+    INPUT
+    expect(File.read("test.err"))
+      .to include "All lists must be preceded by colon or full stop"
+  end
+
+  it "Do not warn if colon or full stop before list" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X.
+
+      * A very long
+      * B list
+      * C
+
+      X:
+
+      . A very long
+      . B list
+      . C
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "All lists must be preceded by colon or full stop"
+  end
+
+  it "Warn of list punctuation after colon" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X:
+
+      * this is;
+      * another broken up;
+      * Sentence.
+
+      X:
+
+      . this is
+      . another broken up;
+      . sentence
+
+      X:
+
+      . sentence.
+
+      X:
+
+      . This is.
+      . Another broken up.
+      . Sentence.
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List entry of broken up sentence must start with lowercase letter: Sentence."
+    expect(File.read("test.err"))
+      .not_to include "List entry of broken up sentence must start with lowercase letter: another broken up;."
+    expect(File.read("test.err"))
+      .to include "List entry of broken up sentence must end with semicolon: this is"
+    expect(File.read("test.err"))
+      .to include "Final list entry of broken up sentence must end with full stop: sentence"
+    expect(File.read("test.err"))
+      .not_to include "Final list entry of broken up sentence must end with full stop: sentence."
+    expect(File.read("test.err"))
+      .not_to include "List entry of broken up sentence must start with lowercase letter: Another broken up."
+    expect(File.read("test.err"))
+      .not_to include "List entry of broken up sentence must end with semicolon: This is."
+  end
+
+  it "Warn of list punctuation after full stop" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X.
+
+      * This is;
+      * Another broken up.
+      * sentence.
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List entry of separate sentences must end with full stop: This is;"
+    expect(File.read("test.err"))
+      .not_to include "List entry of separate sentences must end with full stop: Another broken up."
+    expect(File.read("test.err"))
+      .to include "List entry of separate sentences must start with uppercase letter: sentence."
+  end
+
+  it "Skips punctuation check for short entries in lists" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      X.
+
+      * This is
+      * Another
+      * sentence
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "List entry after full stop must end with full stop: This is"
+  end
+
+  it "Skips punctuation check for lists within tables" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      |===
+      | A
+      a|
+      * This is
+      * Another
+      * sentence
+      |===
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "List entry after full stop must end with full stop: This is"
+  end
+
+  it "Warn if more than one ordered lists in a clause" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+
+      a
+
+      . A
+      .. B
+
+      a
+
+      . B
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "More than 1 ordered list in a numbered clause"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+
+      === Clause
+      a
+
+      . A
+      .. B
+
+      a
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "More than 1 ordered list in a numbered clause"
+  end
+
+  it "Warn if list more than four levels deep" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+      .... D
+
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "List more than four levels deep"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      . A
+      .. B
+      ... C
+      .... D
+      ..... E
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List more than four levels deep"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      * A
+      ** B
+      *** C
+      **** D
+      ***** E
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List more than four levels deep"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      * A
+      .. B
+      *** C
+      .... D
+      ***** E
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "List more than four levels deep"
+  end
+
+  it "warn if term clause crossreferences non-term reference" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Terms and definitions
+
+      [[b]]
+      === Term 1
+      <<b>>
+      <<c>>
+
+      [[c]]
+      == Clause
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "non-terms clauses cannot cross-reference terms clause (c)"
+    expect(File.read("test.err"))
+      .not_to include "non-terms clauses cannot cross-reference terms clause (b)"
+  end
+
+
+  it "warn if non-term clause crossreferences term reference" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Terms and definitions
+
+      [[b]]
+      === Term 1
+      <<b>>
+      <<c>>
+
+      == Clause
+      <<b>>
+      <<c>>
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "only terms clauses can cross-reference terms clause (b)"
+    expect(File.read("test.err"))
+      .not_to include "only terms clauses can cross-reference terms clause (c)"
   end
 end
