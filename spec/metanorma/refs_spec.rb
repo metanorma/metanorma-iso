@@ -356,7 +356,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "renders withdrawn and cancelled ISO references" do
-    VCR.use_cassette "withdrawn_iso" do
+    VCR.use_cassette "withdrawn_iso", match_requests_on: %i[method uri body] do
       input = <<~INPUT
         #{ISOBIB_BLANK_HDR}
 
