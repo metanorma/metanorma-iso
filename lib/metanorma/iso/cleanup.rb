@@ -163,17 +163,17 @@ module Metanorma
       end
 
       def withdrawn_note(xmldoc)
-        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
-          .each do |b|
-            next if pub_class(b) > 2
-            next unless (s = b.at("./status/stage")) && (s.text.to_i >= 90)
+        xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]"\
+                     "[not(note[@type = 'Unpublished-Status'])]").each do |b|
+          next if pub_class(b) > 2
+          next unless (s = b.at("./status/stage")) && (s.text.to_i >= 90)
 
-            if id = replacement_standard(b)
-              insert_unpub_note(b, @i18n.cancelled_and_replaced.sub(/%/, id))
-            else
-              insert_unpub_note(b, @i18n.withdrawn)
-            end
+          if id = replacement_standard(b)
+            insert_unpub_note(b, @i18n.cancelled_and_replaced.sub(/%/, id))
+          else
+            insert_unpub_note(b, @i18n.withdrawn)
           end
+        end
       end
 
       def replacement_standard(biblio)
