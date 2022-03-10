@@ -65,7 +65,7 @@ module Metanorma
 
       # if first list entry starts lowercase, treat as sentence broken up
       def list_after_colon_punctuation(list, entries)
-        lower = list.at(".//li").text.match?(/^[^A-Za-z]*[a-z]/)
+        lower = starts_lowercase?(list.at(".//li").text)
         entries.each_with_index do |li, i|
           if lower
             list_semicolon_phrase(li, i == entries.size - 1)
@@ -77,9 +77,13 @@ module Metanorma
 
       def list_semicolon_phrase(elem, last)
         text = elem.text.strip
-        text.match?(/^[^A-Za-z]*[a-z]/) or
+        starts_lowercase?(text) or
           style_warning(elem, "List entry of broken up sentence must start "\
                               "with lowercase letter", text)
+        list_semicolon_phrase_punct(elem, text, last)
+      end
+
+      def list_semicolon_phrase_punct(elem, text, last)
         punct = text.sub(/^.*?(\S)\s*$/, "\\1")
         if last
           punct == "." or
@@ -94,13 +98,23 @@ module Metanorma
 
       def list_full_sentence(elem)
         text = elem.text.strip
-        text.match?(/^[^A-Za-z]*[A-Z]/) or
+        starts_uppercase(text) or
           style_warning(elem, "List entry of separate sentences must start "\
                               "with uppercase letter", text)
         punct = text.sub(/^.*?(\S)\s*$/, "\\1")
         punct == "." or
           style_warning(elem, "List entry of separate sentences must "\
                               "end with full stop", text)
+      end
+
+      # allow that all-caps word (acronym) is agnostic as to lowercase
+      def starts_lowercase?(text)
+        text.match?(/^[^[[:upper:]][[:lower:]]]*[[:lower:]]/) ||
+          text.match?(/^[^[[:upper:]][[:lower:]]]*[[:upper:]][[:upper:]]+[^[[:alpha:]]]/)
+      end
+
+      def starts_uppercase?(text)
+        text.match?(/^[^[[:upper:]][[:lower:]]]*[[:upper:]]/)
       end
     end
   end
