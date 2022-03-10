@@ -890,7 +890,6 @@ RSpec.describe Metanorma::ISO do
                     </organization>
                   </contributor>
                   <edition>3</edition>
-                  <note type='Unpublished-Status'><p>Withdrawn.</p></note>
                   <language>en</language>
                   <language>fr</language>
                   <script>Latn</script>

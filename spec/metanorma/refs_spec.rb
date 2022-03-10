@@ -367,7 +367,7 @@ RSpec.describe Metanorma::ISO do
         == Bibliography
 
         * [[[iso1,ISO 683-3:2019]]]
-        * [[[iso2,ISO/IEC 27005]]]
+        * [[[iso2,ISO 31-0]]]
       INPUT
       output = <<~OUTPUT
         #{BLANK_HDR}
@@ -385,7 +385,7 @@ RSpec.describe Metanorma::ISO do
                <fn reference='1'>
                  <p id='_'>Cancelled and replaced by ISO 683-3:2022.</p>
                </fn>
-               <eref type='inline' bibitemid='iso2' citeas='ISO/IEC 27005'>
+               <eref type='inline' bibitemid='iso2' citeas='ISO 31-0'>
                  <localityStack>
                    <locality type='clause'>
                      <referenceFrom>1</referenceFrom>
@@ -399,9 +399,90 @@ RSpec.describe Metanorma::ISO do
            </foreword>
          </preface>
          <sections> </sections>
-         <bibliography>
+                  <bibliography>
            <references id='_' normative='false' obligation='informative'>
              <title>Bibliography</title>
+             <bibitem id='iso2' type='standard'>
+               <fetched/>
+               <title type='title-intro' format='text/plain' language='en' script='Latn'>Title missing</title>
+               <title type='title-main' format='text/plain' language='en' script='Latn'>Legacy paper document</title>
+               <title type='main' format='text/plain' language='en' script='Latn'>Title missing — Legacy paper document</title>
+               <uri type='src'>https://www.iso.org/standard/2405.html</uri>
+               <uri type='rss'>https://www.iso.org/contents/data/standard/00/24/2405.detail.rss</uri>
+               <docidentifier type='ISO' primary='true'>ISO 31-0</docidentifier>
+               <docidentifier type='URN'>urn:iso:std:iso:31:-0:stage-95.99:ed-1:en</docidentifier>
+               <docnumber>31</docnumber>
+               <contributor>
+                 <role type='publisher'/>
+                 <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                   <uri>www.iso.org</uri>
+                 </organization>
+               </contributor>
+               <edition>1</edition>
+               <note type='Unpublished-Status'>
+                 <p id='_'>Withdrawn.</p>
+               </note>
+               <language>en</language>
+               <script>Latn</script>
+               <status>
+                 <stage>95</stage>
+                 <substage>99</substage>
+               </status>
+               <copyright>
+                 <from>1974</from>
+                 <owner>
+                   <organization>
+                     <name>ISO</name>
+                   </organization>
+                 </owner>
+               </copyright>
+               <relation type='instance'>
+                 <bibitem type='standard'>
+                   <fetched/>
+                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Title missing</title>
+                   <title type='title-main' format='text/plain' language='en' script='Latn'>Legacy paper document</title>
+                   <title type='main' format='text/plain' language='en' script='Latn'>Title missing — Legacy paper document</title>
+                   <uri type='src'>https://www.iso.org/standard/2405.html</uri>
+                   <uri type='rss'>https://www.iso.org/contents/data/standard/00/24/2405.detail.rss</uri>
+                   <docidentifier type='ISO' primary='true'>ISO 31-0:1974</docidentifier>
+                   <docidentifier type='URN'>urn:iso:std:iso:31:-0:stage-95.99:ed-1:en</docidentifier>
+                   <docnumber>31</docnumber>
+                   <date type='published'>
+                     <on>1974-01</on>
+                   </date>
+                   <contributor>
+                     <role type='publisher'/>
+                     <organization>
+                       <name>International Organization for Standardization</name>
+                       <abbreviation>ISO</abbreviation>
+                       <uri>www.iso.org</uri>
+                     </organization>
+                   </contributor>
+                   <edition>1</edition>
+                   <note type='Unpublished-Status'>
+                     <p id='_'>Withdrawn.</p>
+                   </note>
+                   <language>en</language>
+                   <script>Latn</script>
+                   <status>
+                     <stage>95</stage>
+                     <substage>99</substage>
+                   </status>
+                   <copyright>
+                     <from>1974</from>
+                     <owner>
+                       <organization>
+                         <name>ISO</name>
+                       </organization>
+                     </owner>
+                   </copyright>
+                   <place>Geneva</place>
+                 </bibitem>
+               </relation>
+               <place>Geneva</place>
+             </bibitem>
              <bibitem id='iso1' type='standard'>
                <fetched/>
                <title type='title-main' format='text/plain' language='en' script='Latn'>Heat-treatable steels, alloy steels and free-cutting steels</title>
@@ -478,146 +559,6 @@ RSpec.describe Metanorma::ISO do
                    <date type='circulated'>
                      <on>2022-01-21</on>
                    </date>
-                 </bibitem>
-               </relation>
-               <place>Geneva</place>
-             </bibitem>
-             <bibitem id='iso2' type='standard'>
-               <fetched/>
-               <title type='title-intro' format='text/plain' language='en' script='Latn'>Information technology</title>
-               <title type='title-main' format='text/plain' language='en' script='Latn'>Security techniques</title>
-               <title type='title-part' format='text/plain' language='en' script='Latn'>Information security risk management</title>
-               <title type='main' format='text/plain' language='en' script='Latn'>
-                 Information technology — Security techniques — Information security
-                 risk management
-               </title>
-               <uri type='src'>https://www.iso.org/standard/75281.html</uri>
-               <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:75281:en</uri>
-               <uri type='rss'>https://www.iso.org/contents/data/standard/07/52/75281.detail.rss</uri>
-               <docidentifier type='ISO' primary='true'>ISO/IEC 27005</docidentifier>
-               <docidentifier type='URN'>urn:iso:std:iso-iec:27005:stage-90.92:ed-3:en</docidentifier>
-               <docnumber>27005</docnumber>
-               <contributor>
-                 <role type='publisher'/>
-                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                   <uri>www.iso.org</uri>
-                 </organization>
-               </contributor>
-               <contributor>
-                 <role type='publisher'/>
-                 <organization>
-                   <name>International Electrotechnical Commission</name>
-                   <abbreviation>IEC</abbreviation>
-                   <uri>www.iec.ch</uri>
-                 </organization>
-               </contributor>
-               <edition>3</edition>
-               <note type='Unpublished-Status'>
-                 <p id='_'>Withdrawn.</p>
-               </note>
-               <language>en</language>
-               <script>Latn</script>
-               <status>
-                 <stage>90</stage>
-                 <substage>92</substage>
-               </status>
-               <copyright>
-                 <from>2018</from>
-                 <owner>
-                   <organization>
-                     <name>ISO/IEC</name>
-                   </organization>
-                 </owner>
-               </copyright>
-               <relation type='obsoletes'>
-                 <bibitem type='standard'>
-                   <formattedref format='text/plain'>ISO/IEC 27005:2011</formattedref>
-                 </bibitem>
-               </relation>
-               <relation type='obsoletes'>
-                 <bibitem type='standard'>
-                   <formattedref format='text/plain'>ISO/IEC DIS 27005</formattedref>
-                 </bibitem>
-               </relation>
-               <relation type='instance'>
-                 <bibitem type='standard'>
-                   <fetched/>
-                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Information technology</title>
-                   <title type='title-main' format='text/plain' language='en' script='Latn'>Security techniques</title>
-                   <title type='title-part' format='text/plain' language='en' script='Latn'>Information security risk management</title>
-                   <title type='main' format='text/plain' language='en' script='Latn'>
-                     Information technology — Security techniques — Information
-                     security risk management
-                   </title>
-                   <uri type='src'>https://www.iso.org/standard/75281.html</uri>
-                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:75281:en</uri>
-                   <uri type='rss'>https://www.iso.org/contents/data/standard/07/52/75281.detail.rss</uri>
-                   <docidentifier type='ISO' primary='true'>ISO/IEC 27005:2018</docidentifier>
-                   <docidentifier type='URN'>urn:iso:std:iso-iec:27005:stage-90.92:ed-3:en</docidentifier>
-                   <docnumber>27005</docnumber>
-                   <date type='published'>
-                     <on>2018-07</on>
-                   </date>
-                   <contributor>
-                     <role type='publisher'/>
-                     <organization>
-                       <name>International Organization for Standardization</name>
-                       <abbreviation>ISO</abbreviation>
-                       <uri>www.iso.org</uri>
-                     </organization>
-                   </contributor>
-                   <contributor>
-                     <role type='publisher'/>
-                     <organization>
-                       <name>International Electrotechnical Commission</name>
-                       <abbreviation>IEC</abbreviation>
-                       <uri>www.iec.ch</uri>
-                     </organization>
-                   </contributor>
-                   <edition>3</edition>
-                   <note type='Unpublished-Status'>
-                     <p id='_'>Withdrawn.</p>
-                   </note>
-                   <language>en</language>
-                   <script>Latn</script>
-                   <abstract format='text/plain' language='en' script='Latn'>
-                     This document provides guidelines for information security risk
-                     management. This document supports the general concepts specified
-                     in ISO/IEC 27001 and is designed to assist the satisfactory
-                     implementation of information security based on a risk management
-                     approach. Knowledge of the concepts, models, processes and
-                     terminologies described in ISO/IEC 27001 and ISO/IEC 27002 is
-                     important for a complete understanding of this document. This
-                     document is applicable to all types of organizations (e.g.
-                     commercial enterprises, government agencies, non-profit
-                     organizations) which intend to manage risks that can compromise
-                     the organization’s information security.
-                   </abstract>
-                   <status>
-                     <stage>90</stage>
-                     <substage>92</substage>
-                   </status>
-                   <copyright>
-                     <from>2018</from>
-                     <owner>
-                       <organization>
-                         <name>ISO/IEC</name>
-                       </organization>
-                     </owner>
-                   </copyright>
-                   <relation type='obsoletes'>
-                     <bibitem type='standard'>
-                       <formattedref format='text/plain'>ISO/IEC 27005:2011</formattedref>
-                     </bibitem>
-                   </relation>
-                   <relation type='obsoletes'>
-                     <bibitem type='standard'>
-                       <formattedref format='text/plain'>ISO/IEC DIS 27005</formattedref>
-                     </bibitem>
-                   </relation>
-                   <place>Geneva</place>
                  </bibitem>
                </relation>
                <place>Geneva</place>
