@@ -742,9 +742,9 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	mso-style-unhide:no;
 	mso-style-next:Normal;
 	margin-top:0cm;
-	margin-right:14.2pt;
+	margin-right:0pt;
 	margin-bottom:6.0pt;
-	margin-left:14.2pt;
+	margin-left:0pt;
 	text-align:justify;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
@@ -763,9 +763,9 @@ p.zzCopyright1
         mso-style-unhide:no;
         mso-style-next:Normal;
         margin-top:0cm;
-	margin-right:14.2pt;
+	margin-right:0pt;
 	margin-bottom:6.0pt;
-	margin-left:14.2pt;
+	margin-left:0pt;
         text-align:justify;
         line-height:12.0pt;
         mso-pagination:widow-orphan;
@@ -773,7 +773,7 @@ p.zzCopyright1
         border:none;
         padding:0cm;
         mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
-        font-size:11.0pt;
+        font-size:10.0pt;
         font-family:$bodyfont;
         mso-fareast-font-family:"SimSun",serif;
         mso-bidi-font-family:$bodyfont;
@@ -1161,9 +1161,11 @@ div.coverpage_warning
   font-style: italic;
 }
 
+/*
 .boilerplate-copyright {
   padding: 1em;
 }
+*/
 
 .boilerplate-copyright .boilerplate-name {
   color: #485094;

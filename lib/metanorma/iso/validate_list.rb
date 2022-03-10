@@ -91,7 +91,6 @@ module Metanorma
             style_warning(elem, "Final list entry of broken up "\
                                 "sentence must end with full stop", text)
         else
-          require "debug"; binding.b
           punct == ";" or
             style_warning(elem, "List entry of broken up sentence must "\
                                 "end with semicolon", text)

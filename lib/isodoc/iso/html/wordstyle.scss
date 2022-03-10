@@ -361,7 +361,7 @@ h1.Annex
         font-size:$normalfontsize;
         font-weight: normal ;
 {% else %}
-        font-size:13.0pt;
+        font-size:11.0pt;
         font-weight:bold;
 {% endif %}
         mso-bidi-font-size:$normalfontsize;
@@ -398,7 +398,7 @@ h2
         font-size:$normalfontsize;
         font-weight: normal ;
 {% else %}
-        font-size:13.0pt;
+        font-size:11.0pt;
         font-weight:bold;
 {% endif %}
 	font-family:$headerfont;
@@ -1132,21 +1132,23 @@ p.TOCTitle, li.TOCTitle, div.TOCTitle
 	mso-facing-pages:yes;
 	}
 @page WordSection1
-	{size:595.0pt 842.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;
-	mso-header-margin:35.4pt;
-	mso-footer-margin:35.4pt;
+	{size:595.3pt 841.9pt;
+	margin:39.7pt 36.85pt 14.2pt 42.55pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:0cm;
+	mso-gutter-margin:1.0cm;
 	mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eha;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") ha;
 	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") efa;
+	mso-footer:url("file:///C:/Doc/FILENAME_files/header.html") fa;
 	mso-paper-source:0;}
 div.WordSection1
 	{page:WordSection1;}
 @page WordSection2
         {size:595.3pt 841.9pt;
-        margin:39.7pt 53.85pt 1.0cm 53.85pt;
-        mso-header-margin:35.45pt;
-        mso-footer-margin:14.2pt;
+	margin:39.7pt 36.85pt 14.2pt 42.55pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:0cm;
+	mso-gutter-margin:1.0cm;
         mso-page-numbers:roman-lower;
         mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2;
         mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2;
@@ -1155,9 +1157,10 @@ div.WordSection1
         mso-paper-source:0;}
 @page WordSection2L
         {size:841.9pt 595.3pt;
-        margin:39.7pt 53.85pt 1.0cm 53.85pt;
-        mso-header-margin:35.45pt;
-        mso-footer-margin:14.2pt;
+	margin:39.7pt 36.85pt 14.2pt 42.55pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:0cm;
+	mso-gutter-margin:1.0cm;
         mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2l;
         mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2l;
         mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef2l;
@@ -1165,9 +1168,10 @@ div.WordSection1
         mso-paper-source:0;}
 @page WordSection2P
         {size:595.3pt 841.9pt;
-        margin:39.7pt 53.85pt 1.0cm 53.85pt;
-        mso-header-margin:35.45pt;
-        mso-footer-margin:14.2pt;
+	margin:39.7pt 36.85pt 14.2pt 42.55pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:0cm;
+	mso-gutter-margin:1.0cm;
         mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2;
         mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2;
         mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef2;
@@ -1177,9 +1181,10 @@ div.WordSection2
         {page:WordSection2;}
 @page WordSection3
         {size:595.3pt 841.9pt;
-        margin:39.7pt 53.85pt 1.0cm 53.85pt;
-        mso-header-margin:35.45pt;
-        mso-footer-margin:14.2pt;
+        margin:39.7pt 36.85pt 14.2pt 42.55pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:0cm;
+	mso-gutter-margin:1.0cm;
         mso-page-numbers:1;
         mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2;
         mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2;
@@ -1188,9 +1193,10 @@ div.WordSection2
         mso-paper-source:0;}
 @page WordSection3L
         {size:841.9pt 595.3pt;
-        margin:39.7pt 53.85pt 1.0cm 53.85pt;
-        mso-header-margin:35.45pt;
-        mso-footer-margin:14.2pt;
+        margin:39.7pt 36.85pt 14.2pt 42.55pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:0cm;
+	mso-gutter-margin:1.0cm;
         mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2l;
         mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2l;
         mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef3l;
@@ -1198,9 +1204,10 @@ div.WordSection2
         mso-paper-source:0;}
 @page WordSection3P
         {size:595.3pt 841.9pt;
-        margin:39.7pt 53.85pt 1.0cm 53.85pt;
-        mso-header-margin:35.45pt;
-        mso-footer-margin:14.2pt;
+        margin:39.7pt 36.85pt 14.2pt 42.55pt;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:0cm;
+	mso-gutter-margin:1.0cm;
         mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh2;
         mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h2;
         mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef3;
