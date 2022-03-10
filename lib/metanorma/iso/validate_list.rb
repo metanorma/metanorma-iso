@@ -43,6 +43,7 @@ module Metanorma
 
       def skip_list_punctuation(list)
         return true if list.at("./ancestor::table")
+        return true if list.at("./following-sibling::term") # terms boilerplate
 
         list.xpath(".//li").each do |entry|
           l = entry.dup
@@ -84,12 +85,13 @@ module Metanorma
       end
 
       def list_semicolon_phrase_punct(elem, text, last)
-        punct = text.sub(/^.*?(\S)\s*$/, "\\1")
+        punct = text.strip.sub(/^.*?(\S)$/m, "\\1")
         if last
           punct == "." or
             style_warning(elem, "Final list entry of broken up "\
                                 "sentence must end with full stop", text)
         else
+          require "debug"; binding.b
           punct == ";" or
             style_warning(elem, "List entry of broken up sentence must "\
                                 "end with semicolon", text)
@@ -98,10 +100,10 @@ module Metanorma
 
       def list_full_sentence(elem)
         text = elem.text.strip
-        starts_uppercase(text) or
+        starts_uppercase?(text) or
           style_warning(elem, "List entry of separate sentences must start "\
                               "with uppercase letter", text)
-        punct = text.sub(/^.*?(\S)\s*$/, "\\1")
+        punct = text.strip.sub(/^.*?(\S)$/m, "\\1")
         punct == "." or
           style_warning(elem, "List entry of separate sentences must "\
                               "end with full stop", text)
