@@ -8201,7 +8201,7 @@
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
 			<!-- copy all elements from bibliography except 'Normative references' (moved to 'sections') -->
-			<xsl:for-each select="*[not(@normative='true') and not(*[*[@normative='true']])]">
+			<xsl:for-each select="*[not(@normative='true') and not(*[@normative='true'])]">
 				<xsl:sort select="@displayorder" data-type="number"/>
 				<xsl:apply-templates select="." mode="update_xml_step1"/>
 			</xsl:for-each>
