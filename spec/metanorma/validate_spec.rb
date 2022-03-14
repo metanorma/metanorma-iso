@@ -537,7 +537,8 @@ RSpec.describe Metanorma::ISO do
                   "specific elements"
   end
 
-  it "do not warn that undated reference which is a bibliographic reference has locality" do
+  it "do not warn that undated reference which is a bibliographic reference "\
+     "has locality" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -640,7 +641,8 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "number not broken up in threes"
   end
 
-  it "gives No style warning if number not broken up in threes is ISO reference" do
+  it "gives No style warning if number not broken up in threes is "\
+     "ISO reference" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -857,7 +859,8 @@ RSpec.describe Metanorma::ISO do
                   "in the standard"
   end
 
-  it "Style warning if Symbols and Abbreviated Terms contains extraneous matter" do
+  it "Style warning if Symbols and Abbreviated Terms contains "\
+     "extraneous matter" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -1114,7 +1117,8 @@ RSpec.describe Metanorma::ISO do
       .not_to include "Scope must occur before Terms and Definitions"
   end
 
-  it "Warning if Symbols and Abbreviated Terms does not occur immediately after Terms and Definitions" do
+  it "Warning if Symbols and Abbreviated Terms does not occur immediately "\
+     "after Terms and Definitions" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -1311,11 +1315,12 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .to include "Single terms clause in vocabulary document should have normal Terms and definitions heading"
+      .to include "Single terms clause in vocabulary document should have "\
+                  "normal Terms and definitions heading"
     expect(File.read("test.err"))
-      .not_to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
+      .not_to include "Multiple terms clauses in vocabulary document should "\
+                      "have 'Terms related to' heading"
   end
-
 
   it "Warn if vocabulary document contains Symbols section outside annex" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
@@ -1337,10 +1342,12 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .to include "In vocabulary documents, Symbols and Abbreviated Terms are only permitted in annexes"
+      .to include "In vocabulary documents, Symbols and Abbreviated Terms are "\
+                  "only permitted in annexes"
   end
 
-  it "Warning if multiple terms section in vocabulary document not named properly" do
+  it "Warning if multiple terms section in vocabulary document not named "\
+     "properly" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -1356,9 +1363,11 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "Single terms clause in vocabulary document should have normal Terms and definitions heading"
+      .not_to include "Single terms clause in vocabulary document should have "\
+                      "normal Terms and definitions heading"
     expect(File.read("test.err"))
-      .to include "Multiple terms clauses in vocabulary document should have 'Terms related to' heading"
+      .to include "Multiple terms clauses in vocabulary document should "\
+                  "have 'Terms related to' heading"
   end
 
   it "Warning if final section is not named Bibliography" do
@@ -1918,19 +1927,26 @@ RSpec.describe Metanorma::ISO do
       . Sentence.
     INPUT
     expect(File.read("test.err"))
-      .to include "List entry of broken up sentence must start with lowercase letter: Sentence."
+      .to include "List entry of broken up sentence must start with "\
+                  "lowercase letter: Sentence."
     expect(File.read("test.err"))
-      .not_to include "List entry of broken up sentence must start with lowercase letter: another broken up;."
+      .not_to include "List entry of broken up sentence must start with "\
+                      "lowercase letter: another broken up;."
     expect(File.read("test.err"))
-      .to include "List entry of broken up sentence must end with semicolon: this is"
+      .to include "List entry of broken up sentence must end with semicolon: "\
+                  "this is"
     expect(File.read("test.err"))
-      .to include "Final list entry of broken up sentence must end with full stop: sentence"
+      .to include "Final list entry of broken up sentence must end with "\
+                  "full stop: sentence"
     expect(File.read("test.err"))
-      .not_to include "Final list entry of broken up sentence must end with full stop: sentence."
+      .not_to include "Final list entry of broken up sentence must end with "\
+                      "full stop: sentence."
     expect(File.read("test.err"))
-      .not_to include "List entry of broken up sentence must start with lowercase letter: Another broken up."
+      .not_to include "List entry of broken up sentence must start with "\
+                      "lowercase letter: Another broken up."
     expect(File.read("test.err"))
-      .not_to include "List entry of broken up sentence must end with semicolon: This is."
+      .not_to include "List entry of broken up sentence must end with "\
+                      "semicolon: This is."
   end
 
   it "Warn of list punctuation after full stop" do
@@ -1947,11 +1963,14 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .to include "List entry of separate sentences must end with full stop: This is;"
+      .to include "List entry of separate sentences must end with full stop: "\
+                  "This is;"
     expect(File.read("test.err"))
-      .not_to include "List entry of separate sentences must end with full stop: Another broken up."
+      .not_to include "List entry of separate sentences must end with "\
+                      "full stop: Another broken up."
     expect(File.read("test.err"))
-      .to include "List entry of separate sentences must start with uppercase letter: sentence."
+      .to include "List entry of separate sentences must start with "\
+                  "uppercase letter: sentence."
   end
 
   it "Skips punctuation check for short entries in lists" do
@@ -1968,7 +1987,8 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "List entry after full stop must end with full stop: This is"
+      .not_to include "List entry after full stop must end with full stop: "\
+                      "This is"
   end
 
   it "Skips punctuation check for lists within tables" do
@@ -1987,7 +2007,8 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "List entry after full stop must end with full stop: This is"
+      .not_to include "List entry after full stop must end with full stop: "\
+                      "This is"
   end
 
   it "Warn if more than one ordered lists in a clause" do
@@ -2114,9 +2135,9 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "non-terms clauses cannot cross-reference terms clause (c)"
     expect(File.read("test.err"))
-      .not_to include "non-terms clauses cannot cross-reference terms clause (b)"
+      .not_to include "non-terms clauses cannot cross-reference terms "\
+                      "clause (b)"
   end
-
 
   it "warn if non-term clause crossreferences term reference" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)

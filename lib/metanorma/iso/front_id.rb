@@ -39,7 +39,7 @@ module Metanorma
         ret = STAGE_ABBRS[stage.to_sym]
         ret = "PRF" if stage == "60" && substage == "00"
         ret = "AWI" if stage == "10" && substage == "99"
-        ret = "AWI" if stage == "20" && substage == "20"
+        ret = "AWI" if stage == "20" && substage == "00"
         if %w(amendment technical-corrigendum technical-report
               technical-specification).include?(doctype)
           ret = "D" if stage == "40" && doctype == "amendment"
