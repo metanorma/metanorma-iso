@@ -6577,7 +6577,51 @@
 				<xsl:with-param name="text" select="$text_step1"/>
 			</xsl:call-template>
 		</xsl:variable>
-		<xsl:value-of select="$text_step2"/>
+		
+		<!-- <xsl:value-of select="$text_step2"/> -->
+		
+		<!-- add zero-width space after space -->
+		<xsl:variable name="text_step3" select="java:replaceAll(java:java.lang.String.new($text_step2),' ',' ​')"/>
+		
+		<!-- split text by zero-width space -->
+		<xsl:variable name="text_step4">
+			<xsl:call-template name="split">
+				<xsl:with-param name="pText" select="$text_step3"/>
+				<xsl:with-param name="sep" select="$zero_width_space"/>
+				<xsl:with-param name="normalize-space">false</xsl:with-param>
+				<xsl:with-param name="keep_sep">true</xsl:with-param>
+			</xsl:call-template>
+		</xsl:variable>
+		
+		<xsl:for-each select="xalan:nodeset($text_step4)/item">
+			<xsl:choose>
+				<xsl:when test="string-length() &gt; 30"> <!-- word with length more than 30 will be interspersed with zero-width space -->
+					<xsl:call-template name="interspers">
+						<xsl:with-param name="str" select="."/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="."/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+		
+	</xsl:template><xsl:template name="interspers">
+		<xsl:param name="str"/>
+		<xsl:param name="char" select="$zero_width_space"/>
+		<xsl:if test="$str != ''">
+			<xsl:value-of select="substring($str, 1, 1)"/>
+			
+			<xsl:variable name="next_char" select="substring($str, 2, 1)"/>
+			<xsl:if test="not(contains(concat(' -.:=_— ', $char), $next_char))">
+				<xsl:value-of select="$char"/>
+			</xsl:if>
+			
+			<xsl:call-template name="interspers">
+				<xsl:with-param name="str" select="substring($str, 2)"/>
+				<xsl:with-param name="char" select="$char"/>
+			</xsl:call-template>
+		</xsl:if>
 	</xsl:template><xsl:template match="*" mode="syntax_highlight">
 		<xsl:apply-templates mode="syntax_highlight"/>
 	</xsl:template><xsl:variable name="syntax_highlight_styles_">
@@ -8525,22 +8569,25 @@
 		<xsl:param name="pText" select="."/>
 		<xsl:param name="sep" select="','"/>
 		<xsl:param name="normalize-space" select="'true'"/>
+		<xsl:param name="keep_sep" select="'false'"/>
 		<xsl:if test="string-length($pText) &gt;0">
-		<item>
-			<xsl:choose>
-				<xsl:when test="$normalize-space = 'true'">
-					<xsl:value-of select="normalize-space(substring-before(concat($pText, $sep), $sep))"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="substring-before(concat($pText, $sep), $sep)"/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</item>
-		<xsl:call-template name="split">
-			<xsl:with-param name="pText" select="substring-after($pText, $sep)"/>
-			<xsl:with-param name="sep" select="$sep"/>
-			<xsl:with-param name="normalize-space" select="$normalize-space"/>
-		</xsl:call-template>
+			<item>
+				<xsl:choose>
+					<xsl:when test="$normalize-space = 'true'">
+						<xsl:value-of select="normalize-space(substring-before(concat($pText, $sep), $sep))"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="substring-before(concat($pText, $sep), $sep)"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</item>
+			<xsl:if test="$keep_sep = 'true' and contains($pText, $sep)"><item><xsl:value-of select="$sep"/></item></xsl:if>
+			<xsl:call-template name="split">
+				<xsl:with-param name="pText" select="substring-after($pText, $sep)"/>
+				<xsl:with-param name="sep" select="$sep"/>
+				<xsl:with-param name="normalize-space" select="$normalize-space"/>
+				<xsl:with-param name="keep_sep" select="$keep_sep"/>
+			</xsl:call-template>
 		</xsl:if>
 	</xsl:template><xsl:template name="getDocumentId">		
 		<xsl:call-template name="getLang"/><xsl:value-of select="//*[local-name() = 'p'][1]/@id"/>
