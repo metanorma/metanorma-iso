@@ -1,0 +1,51 @@
+{% if tc_docnumber.size > 0 %}
+{% for num in tc_docnumber %}
+<p class="zzCover"><span lang="EN-GB">Reference number of working document: {{agency}}/{{tc}} {{ num }}</span><span lang="EN-GB"><o:p></o:p></span></p>
+{% endfor %}
+{% endif %}
+
+{% if revdate %}
+<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB">Date: <span style='mso-no-proof:yes'>{{ revdate }}</span></span></p>
+{% endif %}
+
+<p class="zzCover"><span lang="EN-GB">Reference number of project: {{ docnumber_lang }} {{ draftinfo }}</span></p>
+
+<p class="zzCover"><span lang="EN-GB">Committee identification: {{agency}}/{{ editorialgroup | join: "/" }}</span></p>
+
+{% if doctitleamdlabel %}
+<p class="zzCover"><b>{{ doctitleamdlabel }}</b></p>
+{% endif %}
+
+{% if doctitlecorrlabel %}
+<p class="zzCover"><b>{{ doctitlecorrlabel }}</b></p>
+{% endif %}
+
+{% if secretariat %}
+<p class="zzCover"><span lang="EN-GB">Secretariat: <span>{{ secretariat }}</span></span></p>
+{% endif %}
+
+<p class="zzCover">
+<span lang="EN-GB">{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &mdash; {% endif %}{{ doctitlemain }}{% if doctitlemain and doctitlepart %} &mdash; {% endif %}{% if doctitlepart %}{% if doctitlepartlabel %}{{ doctitlepartlabel }}: {% endif %}{{ doctitlepart }}</span>{% endif %}
+</p>
+{% if doctitleamdlabel %}
+<p class="zzCover">{{ doctitleamdlabel }}{% if doctitleamd %}: {{ doctitleamd }}{% endif %}</p>
+{% endif %}
+{% if doctitlecorrlabel %}
+<p class="zzCover">{{ doctitlecorrlabel }}</p>
+{% endif %}
+
+<p class="zzCover">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &mdash; {% endif %}{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &mdash; {% endif %}{% if docsubtitlepart %}{% if docsubtitlepartlabel %}{{ docsubtitlepartlabel }}: {% endif %}{{ docsubtitlepart }}{% endif %}
+</p>
+{% if docsubtitleamdlabel %}
+<p class="zzCover">{{ docsubtitleamdlabel }}{% if docsubtitleamd %}: {{ docsubtitleamd }}{% endif %}</p>
+{% endif %}
+{% if docsubtitlecorrlabel %}
+<p class="zzCover">{{ docsubtitlecorrlabel }}</p>
+{% endif %}
+{% endif %}
+
+</div>
+
+<!--</div>-->
+
+

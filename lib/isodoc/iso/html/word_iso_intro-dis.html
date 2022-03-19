@@ -1,0 +1,7 @@
+{% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
+{% else %}
+
+<p class="zzContents" style='margin-top:0cm'><span lang="EN-GB">{{ labels["table_of_contents"] }}</span></p>
+
+WORDTOC
+{% endif %}
