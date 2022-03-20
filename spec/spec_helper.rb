@@ -218,11 +218,11 @@ TERM_BOILERPLATE = <<~TERM.freeze
   <ul id="_">
     <li>
       <p id="_">ISO Online browsing platform: available at
-        <link target="http://www.iso.org/obp"/></p>
+        <link target="https://www.iso.org/obp"/></p>
     </li>
     <li>
       <p id="_">IEC Electropedia: available at
-        <link target="http://www.electropedia.org"/>
+        <link target="https://www.electropedia.org"/>
       </p>
     </li>
   </ul>
