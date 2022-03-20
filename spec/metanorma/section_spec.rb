@@ -85,11 +85,11 @@ RSpec.describe Metanorma::ISO do
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
-                  <link target="http://www.iso.org/obp"/></p>
+                  <link target="https://www.iso.org/obp"/></p>
               </li>
               <li>
                 <p id="_">IEC Electropedia: available at
-                  <link target="http://www.electropedia.org"/></p>
+                  <link target="https://www.electropedia.org"/></p>
               </li>
             </ul>
             <term id="term-term1">
@@ -280,11 +280,11 @@ RSpec.describe Metanorma::ISO do
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
-                  <link target="http://www.iso.org/obp"/></p>
+                  <link target="https://www.iso.org/obp"/></p>
               </li>
               <li>
                 <p id="_">IEC Electropedia: available at
-                  <link target="http://www.electropedia.org"/></p>
+                  <link target="https://www.electropedia.org"/></p>
               </li>
             </ul>
             <term id="term-term1">
@@ -328,13 +328,13 @@ RSpec.describe Metanorma::ISO do
               <li>
                 <p id='_'>
                   ISO Online browsing platform: available at
-                  <link target='http://www.iso.org/obp'/>
+                  <link target='https://www.iso.org/obp'/>
                 </p>
               </li>
               <li>
                 <p id='_'>
                   IEC Electropedia: available at
-                  <link target='http://www.electropedia.org'/>
+                  <link target='https://www.electropedia.org'/>
                 </p>
               </li>
             </ul>
@@ -377,11 +377,11 @@ RSpec.describe Metanorma::ISO do
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
-                  <link target="http://www.iso.org/obp"/></p>
+                  <link target="https://www.iso.org/obp"/></p>
               </li>
               <li>
                 <p id="_">IEC Electropedia: available at
-                  <link target="http://www.electropedia.org"/></p>
+                  <link target="https://www.electropedia.org"/></p>
               </li>
             </ul>
           </terms>
@@ -418,13 +418,13 @@ RSpec.describe Metanorma::ISO do
                <li>
                  <p id='_'>
                    ISO Online browsing platform: available at
-                   <link target='http://www.iso.org/obp'/>
+                   <link target='https://www.iso.org/obp'/>
                  </p>
                </li>
                <li>
                  <p id='_'>
                    IEC Electropedia: available at
-                   <link target='http://www.electropedia.org'/>
+                   <link target='https://www.electropedia.org'/>
                  </p>
                </li>
              </ul>
@@ -461,21 +461,18 @@ RSpec.describe Metanorma::ISO do
            <terms id='_' obligation='normative'>
              <title>Terms and Definitions</title>
              <p id='_'>No terms and definitions are listed in this document.</p>
-             <p id='_'>
-               ISO and IEC maintain terminological databases for use in standardization
+             <p id='_'>ISO and IEC maintain terminological databases for use in standardization
                at the following addresses:
              </p>
              <ul id='_'>
                <li>
-                 <p id='_'>
-                   ISO Online browsing platform: available at
-                   <link target='http://www.iso.org/obp'/>
+                 <p id='_'>ISO Online browsing platform: available at
+                   <link target='https://www.iso.org/obp'/>
                  </p>
                </li>
                <li>
-                 <p id='_'>
-                   IEC Electropedia: available at
-                   <link target='http://www.electropedia.org'/>
+                 <p id='_'>IEC Electropedia: available at
+                   <link target='https://www.electropedia.org'/>
                  </p>
                </li>
              </ul>
