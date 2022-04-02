@@ -1396,8 +1396,9 @@
 					</fo:block>
 				</xsl:when>
 				<xsl:otherwise>
+					<xsl:value-of select="$linebreak"/>
 					<xsl:value-of select="$part-text"/>
-					<xsl:text> </xsl:text>
+					<xsl:text> </xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
