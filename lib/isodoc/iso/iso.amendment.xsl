@@ -1730,7 +1730,8 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<!-- <xsl:value-of select="translate(., $thin_space, ' ')"/> -->
-				<xsl:value-of select="."/>
+				<!-- <xsl:value-of select="."/> -->
+				<xsl:call-template name="text"/>
 			</xsl:otherwise>
 		</xsl:choose>
 		
@@ -3348,8 +3349,27 @@
 			<xsl:sort select="@displayorder" data-type="number"/>
 			<xsl:apply-templates select="."/>
 		</xsl:for-each>
-	</xsl:template><xsl:template match="text()">
-		<xsl:value-of select="."/>
+	</xsl:template><xsl:variable name="tag_open">###fo:inline###</xsl:variable><xsl:variable name="tag_close">###/fo:inline###</xsl:variable><xsl:template match="text()" name="text">
+		<xsl:variable name="regex_standard_reference">([A-Z]{2,}(/[A-Z]{2,})* \d+(-\d+)*(:\d{4})?)</xsl:variable>
+		<xsl:variable name="text" select="java:replaceAll(java:java.lang.String.new(.),$regex_standard_reference,concat($tag_open,'$1',$tag_close))"/>
+		<xsl:call-template name="replace_fo_inline">
+			<xsl:with-param name="text" select="$text"/>
+		</xsl:call-template>
+	</xsl:template><xsl:template name="replace_fo_inline">
+		<xsl:param name="text"/>
+		<xsl:choose>
+			<xsl:when test="contains($text, $tag_open)">
+				<xsl:value-of select="substring-before($text, $tag_open)"/>
+				<xsl:text disable-output-escaping="yes">&lt;fo:inline keep-together.within-line="always"&gt;</xsl:text>
+				<xsl:variable name="text_after" select="substring-after($text, $tag_open)"/>
+				<xsl:value-of select="substring-before($text_after, $tag_close)"/>
+				<xsl:text disable-output-escaping="yes">&lt;/fo:inline&gt;</xsl:text>
+				<xsl:call-template name="replace_fo_inline">
+					<xsl:with-param name="text" select="substring-after($text_after, $tag_close)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$text"/></xsl:otherwise>
+		</xsl:choose>
 	</xsl:template><xsl:template match="*[local-name()='br']">
 		<xsl:value-of select="$linebreak"/>
 	</xsl:template><xsl:template match="*[local-name()='copyright-statement']">
@@ -7095,7 +7115,8 @@
 		<fo:inline><xsl:apply-templates/></fo:inline>
 	</xsl:template><xsl:template match="*[local-name() = 'modification']/text()">
 		<xsl:if test="normalize-space() != ''">
-			<xsl:value-of select="."/>
+			<!-- <xsl:value-of select="."/> -->
+			<xsl:call-template name="text"/>
 		</xsl:if>
 	</xsl:template><xsl:template match="*[local-name() = 'quote']">		
 		<fo:block-container margin-left="0mm">
