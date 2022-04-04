@@ -179,7 +179,7 @@ h6,
 
 /* override for amendments */
 
-/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT{% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */
+/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT{% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: normal;
@@ -190,7 +190,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     margin-bottom: 1em;
 }
 
-/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT{% endif %}LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */
+/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT/* LIQUID_COMMENT{% endif %}LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */LIQUID_COMMENT */
 
 h2 p, .h2 p {
     display: inline;
