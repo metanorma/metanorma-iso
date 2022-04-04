@@ -56,14 +56,10 @@ module IsoDoc
       end
 
       def docid(isoxml, _out)
-        dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'ISO']"))
-        set(:docnumber, dn&.text)
-        tcdn = isoxml.xpath(ns("//bibdata/docidentifier[@type = 'iso-tc']"))
-        set(:tc_docnumber, tcdn.map(&:text))
-        dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso-with-lang']"))
-        set(:docnumber_lang, dn&.text)
-        dn = isoxml.at(ns("//bibdata/docidentifier[@type = 'iso-reference']"))
-        set(:docnumber_reference, dn&.text)
+        set(:docnumber, isoxml&.at(ns("//bibdata/docidentifier[@type = 'ISO']"))&.text)
+        set(:tc_docnumber, isoxml.xpath(ns("//bibdata/docidentifier[@type = 'iso-tc']")).map(&:text))
+        set(:docnumber_lang, isoxml&.at(ns("//bibdata/docidentifier[@type = 'iso-with-lang']"))&.text)
+        set(:docnumber_reference, isoxml&.at(ns("//bibdata/docidentifier[@type = 'iso-reference']"))&.text)
       end
 
       # we don't leave this to i18n.rb, because we have both English and
@@ -166,10 +162,7 @@ module IsoDoc
       end
 
       def subtitle(isoxml, _out)
-        lang = case @lang
-               when "fr", "ru" then "en"
-               else "fr"
-               end
+        lang = @lang == "en" ? "fr" : "en"
         intro, main, part, amd = title_parts(isoxml, lang)
         partnumber, subpartnumber, amdnumber, corrnumber = title_nums(isoxml)
 

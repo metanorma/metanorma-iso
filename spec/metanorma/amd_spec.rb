@@ -280,7 +280,7 @@ RSpec.describe Metanorma::ISO do
     OUTPUT
   end
 
-  it "processes metadata, amendment" do
+  it "processes metadata, amendment, stage 30" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -350,7 +350,7 @@ RSpec.describe Metanorma::ISO do
     OUTPUT
   end
 
-  it "processes metadata, amendment" do
+  it "processes metadata, amendment, stage 40" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -419,7 +419,7 @@ RSpec.describe Metanorma::ISO do
     OUTPUT
   end
 
-  it "processes metadata, amendment" do
+  it "processes metadata, amendment, published" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -487,7 +487,7 @@ RSpec.describe Metanorma::ISO do
     OUTPUT
   end
 
-  it "processes metadata, corrigendum" do
+  it "processes metadata, corrigendum, stage 30" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -503,7 +503,6 @@ RSpec.describe Metanorma::ISO do
       :corrigendum-number: 3
     INPUT
     expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-      #{'      '}
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/CD Cor.3</docidentifier>
@@ -557,7 +556,7 @@ RSpec.describe Metanorma::ISO do
     OUTPUT
   end
 
-  it "processes metadata, corrigendum" do
+  it "processes metadata, corrigendum, stage 50" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -626,7 +625,7 @@ RSpec.describe Metanorma::ISO do
     OUTPUT
   end
 
-  it "processes metadata, corrigendum" do
+  it "processes metadata, corrigendum, published" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author

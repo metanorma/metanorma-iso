@@ -37,9 +37,8 @@ module IsoDoc
       end
 
       def example_p_parse(node, div)
-        name = node&.at(ns("./name"))&.remove
         div.p do |p|
-          example_span_label(node, p, name)
+          example_span_label(node, p, node&.at(ns("./name"))&.remove)
           insert_tab(p, 1)
           node.first_element_child.children.each { |n| parse(n, p) }
         end
@@ -163,7 +162,8 @@ module IsoDoc
       def clause_etc1(clause, out, num)
         out.div **attr_code(
           id: clause["id"],
-          class: clause.name == "definitions" ? "Symbols" : nil) do |div|
+          class: clause.name == "definitions" ? "Symbols" : nil,
+        ) do |div|
           num = num + 1
           clause_name(num, clause&.at(ns("./title")), div, nil)
           clause.elements.each do |e|
