@@ -1537,15 +1537,14 @@ p.TOCTitle, li.TOCTitle, div.TOCTitle
 
  /* Page Definitions */
 @page
-	{mso-page-border-surround-header:no;
+{mso-mirror-margins:yes;
+	mso-page-border-surround-header:no;
 	mso-page-border-surround-footer:no;
-	mso-mirror-margins:yes;
-	mso-footnote-separator:url("file:///C:/Doc/FILENAME_files/header.html") fs;
-	mso-footnote-continuation-separator:url("file:///C:/Doc/FILENAME_files/header.html") fcs;
-	mso-endnote-separator:url("file:///C:/Doc/FILENAME_files/header.html") es;
-	mso-endnote-continuation-separator:url("file:///C:/Doc/FILENAME_files/header.html") ecs;
-	mso-facing-pages:yes;
-	}
+        mso-endnote-separator:url("file:///C:/Doc/FILENAME_files/header.html") es;
+        mso-endnote-continuation-separator:url("file:///C:/Doc/FILENAME_files/header.html") ecs;
+        mso-footnote-separator:url("file:///C:/Doc/FILENAME_files/header.html") fs;
+        mso-footnote-continuation-separator:url("file:///C:/Doc/FILENAME_files/header.html") fcs;
+	mso-facing-pages:yes;}
 @page WordSection1
 	{size:595.3pt 841.9pt;
 	margin:39.7pt 53.85pt 1.0cm 53.85pt;
