@@ -94,12 +94,14 @@ module IsoDoc
       end
 
       def index_entries_see(entries, label)
-        see_sort = entries&.dig(label) or return ""
+        see_sort = entries&.dig(label) or return nil
 
-        see_sort.each_with_object({}) do |w, v|
+        x = see_sort.each_with_object({}) do |w, v|
           v[sortable(w).downcase] = w
-        end.keys.localize(@lang.to_sym).sort.to_a.map do |k|
-          see_sort[k]
+        end
+        x.keys.localize(@lang.to_sym).sort.to_a.map do |k|
+          #see_sort[k]
+          x[k]
         end.join(", ")
       end
 
