@@ -5124,24 +5124,28 @@
 	</xsl:template><xsl:template name="add-zero-spaces-equal">
 		<xsl:param name="text" select="."/>
 		<xsl:variable name="zero-space-after-equals">==========</xsl:variable>
+		<xsl:variable name="regex_zero-space-after-equals">(==========)</xsl:variable>
 		<xsl:variable name="zero-space-after-equal">=</xsl:variable>
+		<xsl:variable name="regex_zero-space-after-equal">(=)</xsl:variable>
 		<xsl:variable name="zero-space">​</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="contains($text, $zero-space-after-equals)">
-				<xsl:value-of select="substring-before($text, $zero-space-after-equals)"/>
+				<!-- <xsl:value-of select="substring-before($text, $zero-space-after-equals)"/>
 				<xsl:value-of select="$zero-space-after-equals"/>
 				<xsl:value-of select="$zero-space"/>
 				<xsl:call-template name="add-zero-spaces-equal">
 					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-equals)"/>
-				</xsl:call-template>
+				</xsl:call-template> -->
+				<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),$regex_zero-space-after-equals,concat('$1',$zero_width_space))"/>
 			</xsl:when>
 			<xsl:when test="contains($text, $zero-space-after-equal)">
-				<xsl:value-of select="substring-before($text, $zero-space-after-equal)"/>
+				<!-- <xsl:value-of select="substring-before($text, $zero-space-after-equal)"/>
 				<xsl:value-of select="$zero-space-after-equal"/>
 				<xsl:value-of select="$zero-space"/>
 				<xsl:call-template name="add-zero-spaces-equal">
 					<xsl:with-param name="text" select="substring-after($text, $zero-space-after-equal)"/>
-				</xsl:call-template>
+				</xsl:call-template> -->
+				<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),$regex_zero-space-after-equal,concat('$1',$zero_width_space))"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="$text"/>
@@ -6606,17 +6610,15 @@
 		
 		<!-- split text by zero-width space -->
 		<xsl:variable name="text_step4">
-			<xsl:call-template name="split">
+			<xsl:call-template name="split_for_interspers">
 				<xsl:with-param name="pText" select="$text_step3"/>
 				<xsl:with-param name="sep" select="$zero_width_space"/>
-				<xsl:with-param name="normalize-space">false</xsl:with-param>
-				<xsl:with-param name="keep_sep">true</xsl:with-param>
 			</xsl:call-template>
 		</xsl:variable>
 		
-		<xsl:for-each select="xalan:nodeset($text_step4)/item">
+		<xsl:for-each select="xalan:nodeset($text_step4)/node()">
 			<xsl:choose>
-				<xsl:when test="string-length() &gt; 30"> <!-- word with length more than 30 will be interspersed with zero-width space -->
+				<xsl:when test="local-name() = 'interspers'"> <!-- word with length more than 30 will be interspersed with zero-width space -->
 					<xsl:call-template name="interspers">
 						<xsl:with-param name="str" select="."/>
 					</xsl:call-template>
@@ -6627,6 +6629,30 @@
 			</xsl:choose>
 		</xsl:for-each>
 		
+	</xsl:template><xsl:variable name="interspers_tag_open">###interspers123###</xsl:variable><xsl:variable name="interspers_tag_close">###/interspers123###</xsl:variable><xsl:template name="split_for_interspers">
+		<xsl:param name="pText" select="."/>
+		<xsl:param name="sep" select="','"/>
+		<!-- word with length more than 30 will be interspersed with zero-width space -->
+		<xsl:variable name="regex" select="concat('([^', $zero_width_space, ']{31,})')"/> <!-- sequence of characters (more 31), that doesn't contains zero-width space -->
+		<xsl:variable name="text" select="java:replaceAll(java:java.lang.String.new($pText),$regex,concat($interspers_tag_open,'$1',$interspers_tag_close))"/>
+		<xsl:call-template name="replace_tag_interspers">
+			<xsl:with-param name="text" select="$text"/>
+		</xsl:call-template>
+	</xsl:template><xsl:template name="replace_tag_interspers">
+		<xsl:param name="text"/>
+		<xsl:choose>
+			<xsl:when test="contains($text, $interspers_tag_open)">
+				<xsl:value-of select="substring-before($text, $interspers_tag_open)"/>
+				<xsl:variable name="text_after" select="substring-after($text, $interspers_tag_open)"/>
+				<interspers>
+					<xsl:value-of select="substring-before($text_after, $interspers_tag_close)"/>
+				</interspers>
+				<xsl:call-template name="replace_tag_interspers">
+					<xsl:with-param name="text" select="substring-after($text_after, $interspers_tag_close)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$text"/></xsl:otherwise>
+		</xsl:choose>
 	</xsl:template><xsl:template name="interspers">
 		<xsl:param name="str"/>
 		<xsl:param name="char" select="$zero_width_space"/>
