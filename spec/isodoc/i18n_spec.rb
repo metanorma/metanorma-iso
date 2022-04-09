@@ -380,11 +380,7 @@ RSpec.describe IsoDoc do
               <p id="A">This is a preamble</p>
             </foreword>
             <introduction id="B" obligation="informative" displayorder='2'>
-              <title depth="1">
-                0
-                <tab/>
-                Introduction
-              </title>
+              <title depth="1">0<tab/>Introduction</title>
               <clause id="C" inline-header="false" obligation="informative">
                 <title depth="2">0.1<tab/>Introduction Subsection</title>
               </clause>
@@ -1146,40 +1142,31 @@ RSpec.describe IsoDoc do
              <doctype language='zh'>&#x56FD;&#x9645;&#x6807;&#x51C6;</doctype>
            </ext>
          </bibdata>
+
         <preface>
           <foreword obligation="informative" displayorder='1'>
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0
-              <tab/>
-              Introduction</title>
+            <title depth="1">0<tab/>Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
-              <title depth="2">0.1
-                <tab/>
-                Introduction Subsection</title>
+              <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
             <p>This is patent boilerplate</p>
           </introduction>
         </preface>
         <sections>
           <clause id="D" obligation="normative" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
+            <title depth="1">1<tab/>Scope</title>
             <p id="E">
               <eref bibitemid="ISO712" type="inline"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality>ISO 712、第1–1表</eref>
             </p>
           </clause>
           <clause id="H" obligation="normative" displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Terms, definitions, symbols and abbreviated terms</title>
+            <title depth="1">3<tab/>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="I" obligation="normative">
-              <title depth="2">3.1
-                <tab/>
-                Normal Terms</title>
+              <title depth="2">3.1<tab/>Normal Terms</title>
               <term id="J">
                 <name>3.1.1</name>
                 <preferred><strong>Term2</strong></preferred>
@@ -1201,18 +1188,12 @@ RSpec.describe IsoDoc do
             </dl>
           </definitions>
           <clause id="M" inline-header="false" obligation="normative" displayorder='7'>
-            <title depth="1">5
-              <tab/>
-              Clause 4</title>
+            <title depth="1">5<tab/>Clause 4</title>
             <clause id="N" inline-header="false" obligation="normative">
-              <title depth="2">5.1
-                <tab/>
-                Introduction</title>
+              <title depth="2">5.1<tab/>Introduction</title>
             </clause>
             <clause id="O" inline-header="false" obligation="normative">
-              <title depth="2">5.2
-                <tab/>
-                Clause 4.2</title>
+              <title depth="2">5.2<tab/>Clause 4.2</title>
             </clause>
           </clause>
         </sections>
@@ -1224,26 +1205,18 @@ RSpec.describe IsoDoc do
             <br/>
             <strong>Annex</strong></title>
           <clause id="Q" inline-header="false" obligation="normative">
-            <title depth="2">A.1
-              <tab/>
-              Annex A.1</title>
+            <title depth="2">A.1<tab/>Annex A.1</title>
             <clause id="Q1" inline-header="false" obligation="normative">
-              <title depth="3">A.1.1
-                <tab/>
-                Annex A.1a</title>
+              <title depth="3">A.1.1<tab/>Annex A.1a</title>
             </clause>
           </clause>
           <appendix id="Q2" inline-header="false" obligation="normative">
-            <title depth="2">附录1
-              <tab/>
-              An Appendix</title>
+            <title depth="2">附录1<tab/>An Appendix</title>
           </appendix>
         </annex>
         <bibliography>
           <references id="R" normative="true" obligation="informative" displayorder='4'>
-            <title depth="1">2
-              <tab/>
-              Normative References</title>
+            <title depth="1">2<tab/>Normative References</title>
             <bibitem id="ISO712" type="standard">
               <title format="text/plain">Cereals and cereal products</title>
               <docidentifier>ISO 712</docidentifier>
