@@ -14,7 +14,14 @@
 	
 	<xsl:variable name="debug">false</xsl:variable>
 	
-	<xsl:variable name="docidentifierISO" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'] | /iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'ISO']"/>
+	<xsl:variable name="docidentifierISO_undated" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-undated'])"/>
+	<xsl:variable name="docidentifierISO_">
+		<xsl:value-of select="$docidentifierISO_undated"/>
+		<xsl:if test="$docidentifierISO_undated = ''">
+			<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'] | /iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'ISO']"/>
+		</xsl:if>
+	</xsl:variable>
+	<xsl:variable name="docidentifierISO" select="normalize-space($docidentifierISO_)"/>
 
 	<xsl:variable name="all_rights_reserved">
 		<xsl:call-template name="getLocalizedString">
