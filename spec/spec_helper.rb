@@ -62,7 +62,7 @@ def xmlpp(xml)
   f.compact = true
   f.write(REXML::Document.new(xml
     .gsub(%r{<fetched>20[0-9-]+</fetched>}, "<fetched/>")), s)
-  s
+  HTMLEntities.new.decode(s)
 end
 
 ASCIIDOC_BLANK_HDR = <<~"HDR".freeze

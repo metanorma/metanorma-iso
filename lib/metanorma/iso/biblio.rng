@@ -677,6 +677,9 @@
     <zeroOrMore>
       <ref name="extent"/>
     </zeroOrMore>
+    <optional>
+      <ref name="bibliographic_size"/>
+    </optional>
     <zeroOrMore>
       <ref name="accesslocation"/>
     </zeroOrMore>
@@ -922,9 +925,29 @@
       <text/>
     </element>
   </define>
+  <define name="sizevalue">
+    <element name="value">
+      <attribute name="type"/>
+      <text/>
+    </element>
+  </define>
+  <define name="bibliographic_size">
+    <element name="size">
+      <oneOrMore>
+        <ref name="sizevalue"/>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="extent">
     <element name="extent">
-      <ref name="BibItemLocality"/>
+      <choice>
+        <zeroOrMore>
+          <ref name="locality"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="localityStack"/>
+        </zeroOrMore>
+      </choice>
     </element>
   </define>
   <define name="series">
