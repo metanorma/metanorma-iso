@@ -113,7 +113,7 @@ module IsoDoc
       def hierarchical_formula_names(clause, num)
         c = IsoDoc::XrefGen::Counter.new
         clause.xpath(ns(".//formula")).each do |t|
-          next if t["id"].nil? || t["id"].empty?
+          next if blank?(t["id"])
 
           @anchors[t["id"]] = anchor_struct(
             "#{num}#{hiersep}#{c.increment(t).print}", t,
@@ -133,13 +133,12 @@ module IsoDoc
       end
 
       def sequential_figure_names(clause)
-        c = IsoDoc::XrefGen::Counter.new
         j = 0
         clause.xpath(ns(".//figure | .//sourcecode[not(ancestor::example)]"))
-          .each do |t|
+          .each_with_object(IsoDoc::XrefGen::Counter.new) do |t, c|
           j = subfigure_increment(j, c, t)
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          next if t["id"].nil? || t["id"].empty?
+          next if blank?(t["id"])
 
           figure_anchor(t, sublabel, c.print)
         end
@@ -153,7 +152,7 @@ module IsoDoc
           j = subfigure_increment(j, c, t)
           label = "#{num}#{hiersep}#{c.print}"
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          next if t["id"].nil? || t["id"].empty?
+          next if blank?(t["id"])
 
           figure_anchor(t, sublabel, label)
         end

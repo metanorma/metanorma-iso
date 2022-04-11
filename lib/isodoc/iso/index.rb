@@ -100,7 +100,7 @@ module IsoDoc
           v[sortable(w).downcase] = w
         end
         x.keys.localize(@lang.to_sym).sort.to_a.map do |k|
-          #see_sort[k]
+          # see_sort[k]
           x[k]
         end.join(", ")
       end
