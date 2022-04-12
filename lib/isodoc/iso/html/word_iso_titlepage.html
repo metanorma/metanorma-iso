@@ -6,12 +6,12 @@ style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'>
 {% endfor %}
 {% else %}
 <p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
-normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ docnumber_lang }} {{ draftinfo }}</span></b><b
+normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ docnumber_undated }} {{ draftinfo }}</span></b><b
 style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'><o:p></o:p></span></b></p>
 {% endif %}
 
 {% if tc_docnumber.size > 0 %}
-<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>{{ docnumber_lang }} {{ draftinfo }}</span></p>
+<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>{{ docnumber_undated }} {{ draftinfo }}</span></p>
 {% endif %}
 
 {% if doctitleamdlabel %}

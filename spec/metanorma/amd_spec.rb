@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::ISO do
   it "processes amendment sections" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~INPUT
       #{AMD_BLANK_HDR}
       == Foreword
 
@@ -54,6 +54,7 @@ RSpec.describe Metanorma::ISO do
 
       === Bibliography Subsection
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR.sub(%r{<doctype>article</doctype>}, '<doctype>amendment</doctype>')}
         <sections>
           <clause id="_" obligation="normative">
@@ -127,10 +128,12 @@ RSpec.describe Metanorma::ISO do
         </annex>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes default metadata, amendment" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -182,7 +185,7 @@ RSpec.describe Metanorma::ISO do
       :updates-document-type: international-standard
     INPUT
 
-    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part — Mass fraction of
@@ -207,6 +210,7 @@ RSpec.describe Metanorma::ISO do
         de transport
       </title>
           <docidentifier type="ISO">ISO 17301-1:2016/PreNP Amd 1</docidentifier>
+          <docidentifier type='iso-undated'>ISO 17301-1/PreNP Amd 1</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2016/PreNP Amd 1(E)</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2016/PreNP Amd 1:2017(E)</docidentifier>
           <docnumber>17301</docnumber>
@@ -278,10 +282,12 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes metadata, amendment, stage 30" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -295,11 +301,11 @@ RSpec.describe Metanorma::ISO do
       :updates: ISO 17301-1:2030
       :amendment-number: 1
     INPUT
-    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-
+    output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/CD Amd 1</docidentifier>
+          <docidentifier type='iso-undated'>ISO 17301-1/CD Amd 1</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
           <docnumber>17301</docnumber>
@@ -348,10 +354,12 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes metadata, amendment, stage 40" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -365,10 +373,11 @@ RSpec.describe Metanorma::ISO do
       :updates: ISO 17301-1:2030
       :amendment-number: 1
     INPUT
-    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/DAmd 1</docidentifier>
+          <docidentifier type='iso-undated'>ISO 17301-1/DAmd 1</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/DAmd 1(E)</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/DAmd 1(E)</docidentifier>
           <docnumber>17301</docnumber>
@@ -417,10 +426,12 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes metadata, amendment, published" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -433,10 +444,11 @@ RSpec.describe Metanorma::ISO do
       :updates: ISO 17301-1:2030
       :amendment-number: 1
     INPUT
-    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/Amd 1</docidentifier>
+          <docidentifier type='iso-undated'>ISO 17301-1/Amd 1</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/Amd 1(E)</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1(E)</docidentifier>
           <docnumber>17301</docnumber>
@@ -485,10 +497,12 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes metadata, corrigendum, stage 30" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -502,10 +516,11 @@ RSpec.describe Metanorma::ISO do
       :updates: ISO 17301-1:2030
       :corrigendum-number: 3
     INPUT
-    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/CD Cor.3</docidentifier>
+          <docidentifier type='iso-undated'>ISO 17301-1/CD Cor.3</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
           <docnumber>17301</docnumber>
@@ -554,10 +569,12 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes metadata, corrigendum, stage 50" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -571,10 +588,11 @@ RSpec.describe Metanorma::ISO do
       :updates: ISO 17301-1:2030
       :corrigendum-number: 3
     INPUT
-    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    output = <<~OUTPUT
       <iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type='standard'>
           <docidentifier type='ISO'>ISO 17301-1:2030/FDCor.3</docidentifier>
+          <docidentifier type='iso-undated'>ISO 17301-1/FDCor.3</docidentifier>
           <docidentifier type='iso-with-lang'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
           <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
           <docnumber>17301</docnumber>
@@ -623,10 +641,12 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "processes metadata, corrigendum, published" do
-    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -639,10 +659,11 @@ RSpec.describe Metanorma::ISO do
       :updates: ISO 17301-1:2030
       :corrigendum-number: 3
     INPUT
-    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, ""))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/Cor.3</docidentifier>
+          <docidentifier type='iso-undated'>ISO 17301-1/Cor.3</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/Cor.3(E)</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Cor.3(E)</docidentifier>
           <docnumber>17301</docnumber>
@@ -691,5 +712,7 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(output)
   end
 end
