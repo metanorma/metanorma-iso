@@ -73,13 +73,19 @@ module Metanorma
         (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
           return
 
-        dn = iso_id1(node)
-        dn1 = id_stage_prefix(dn, node, false)
-        dn2 = id_stage_prefix(dn, node, true)
-        xml.docidentifier dn1, **attr_code(type: "ISO")
-        xml.docidentifier(id_langsuffix(dn1, node),
+        dn = id_stage_prefix(iso_id1(node), node)
+        dns = [id_year(dn, node, mode: :default),
+               id_year(dn, node, mode: :force),
+               id_year(dn, node, mode: :strip)]
+        iso_id_out(node, xml, dns)
+      end
+
+      def iso_id_out(node, xml, dns)
+        xml.docidentifier dns[0], **attr_code(type: "ISO")
+        xml.docidentifier dns[2], **attr_code(type: "iso-undated")
+        xml.docidentifier(id_langsuffix(dns[0], node),
                           **attr_code(type: "iso-with-lang"))
-        xml.docidentifier(id_langsuffix(dn2, node),
+        xml.docidentifier(id_langsuffix(dns[1], node),
                           **attr_code(type: "iso-reference"))
       end
 
@@ -160,14 +166,14 @@ module Metanorma
       def cover_stage_abbr(node)
         stage = get_stage(node)
         abbr = id_stage_abbr(get_stage(node), get_substage(node), node, true)
-        typeabbr = get_typeabbr(node, true)
+        typeabbr = get_typeabbr(node, amd: true)
         if stage.to_i > 50 || (stage.to_i == 60 && get_substage(node).to_i < 60)
           typeabbr = ""
         end
         "#{abbr}#{typeabbr}".strip
       end
 
-      def id_stage_prefix(docnum, node, force_year)
+      def id_stage_prefix(docnum, node)
         stage = get_stage(node)
         typeabbr = get_typeabbr(node)
         if stage && (stage.to_i < 60)
@@ -175,9 +181,20 @@ module Metanorma
         elsif typeabbr == "DIR " then docnum = "#{typeabbr}#{docnum}"
         elsif typeabbr && !@amd then docnum = "/#{typeabbr}#{docnum}"
         end
-        (force_year || !(stage && (stage.to_i < 60))) and
-          docnum = id_add_year(docnum, node)
         docnum
+      end
+
+      def id_year(docnum, node, mode: :default)
+        case mode
+        when :strip then docnum.sub(/:(19|20)\d\d(?!\d)/, "")
+        when :force then id_add_year(docnum, node)
+        else
+          stage = get_stage(node)
+          if stage && (stage.to_i < 60)
+            docnum
+          else id_add_year(docnum, node)
+          end
+        end
       end
 
       def unpub_stage_prefix(docnum, stage, typeabbr, node)
@@ -213,7 +230,7 @@ module Metanorma
         ret
       end
 
-      def get_typeabbr(node, amd = false)
+      def get_typeabbr(node, amd: false)
         case doctype(node)
         when "directive" then "DIR "
         when "technical-report" then "TR "

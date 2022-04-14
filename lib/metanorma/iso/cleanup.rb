@@ -51,10 +51,10 @@ module Metanorma
         id.content = id_prefix(prefix, id)
         id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") and
           id.content = id_prefix(prefix, id)
-        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso-with-lang']") and
-          id.content = id_prefix(prefix, id)
-        id = xmldoc.at("//bibdata/docidentifier[@type = 'iso-reference']") and
-          id.content = id_prefix(prefix, id)
+        %w(iso-with-lang iso-reference iso-undated).each do |t|
+          id = xmldoc.at("//bibdata/docidentifier[@type = '#{t}']") and
+            id.content = id_prefix(prefix, id)
+        end
       end
 
       def format_ref(ref, type)
@@ -140,7 +140,7 @@ module Metanorma
         xmldoc.xpath("//bibitem/note[@type = 'Unpublished-Status']").each do |n|
           e = xmldoc.at("//eref[@bibitemid = '#{n.parent['id']}']") or next
           fn = n.children.to_xml
-          n&.elements&.first&.name == "p" or fn = "<p>#{fn}</p>"
+          n.elements&.first&.name == "p" or fn = "<p>#{fn}</p>"
           e.next = "<fn>#{fn}</fn>"
         end
       end

@@ -65,6 +65,7 @@ RSpec.describe Metanorma::ISO do
             <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
             <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
             <docidentifier type="ISO">ISO/PreWD3 1000-1</docidentifier>
+            <docidentifier type='iso-undated'>ISO/PreWD3 1000-1</docidentifier>
             <docidentifier type="iso-with-lang">ISO/PreWD3 1000-1(E)</docidentifier>
             <docidentifier type="iso-reference">ISO/PreWD3 1000-1:2000(E)</docidentifier>
             <docnumber>1000</docnumber>
@@ -167,6 +168,7 @@ RSpec.describe Metanorma::ISO do
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
                   <docidentifier type="ISO">ISO/IEC/IETF/TR 1000-1-1:2001</docidentifier>
+                  <docidentifier type='iso-undated'>ISO/IEC/IETF/TR 1000-1-1</docidentifier>
                   <docidentifier type="iso-with-lang">ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
                   <docidentifier type="iso-reference">ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
                   <docidentifier type="iso-tc">2000</docidentifier>
@@ -340,6 +342,7 @@ RSpec.describe Metanorma::ISO do
             <title language='fr' format='text/plain' type='title-main'>Titre Principal</title>
             <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
             <docidentifier type='ISO'>ISO 1000-1:2000</docidentifier>
+            <docidentifier type='iso-undated'>ISO 1000-1</docidentifier>
             <docidentifier type='iso-with-lang'>ISO 1000-1:2000(R)</docidentifier>
             <docidentifier type='iso-reference'>ISO 1000-1:2000(R)</docidentifier>
             <docnumber>1000</docnumber>
@@ -426,6 +429,7 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type='standard'>
             <docidentifier type='ISO'>SD 1000-1-1</docidentifier>
+            <docidentifier type='iso-undated'>SD 1000-1-1</docidentifier>
             <docidentifier type='iso-with-lang'>SD 1000-1-1(X)</docidentifier>
             <docidentifier type='iso-reference'>SD 1000-1-1(X)</docidentifier>
             <docidentifier type='iso-tc'>2000</docidentifier>
@@ -521,6 +525,7 @@ RSpec.describe Metanorma::ISO do
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
                 <docidentifier type='ISO'>ISO/FDIS 1000.2</docidentifier>
+                <docidentifier type='iso-undated'>ISO/FDIS 1000.2</docidentifier>
         <docidentifier type='iso-with-lang'>ISO/FDIS 1000.2(F)</docidentifier>
         <docidentifier type='iso-reference'>ISO/FDIS 1000.2(F)</docidentifier>
                   <docnumber>1000</docnumber>
@@ -589,6 +594,7 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 1000</docidentifier>
+          <docidentifier type='iso-undated'>ISO 1000</docidentifier>
           <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
           <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
           <docnumber>1000</docnumber>
@@ -657,6 +663,7 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type="standard">
             <docidentifier type="ISO">ISO 1000</docidentifier>
+            <docidentifier type='iso-undated'>ISO 1000</docidentifier>
             <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
             <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
             <docnumber>1000</docnumber>
@@ -725,6 +732,7 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type='standard'>
             <docidentifier type='ISO'>ISO DIR 1000</docidentifier>
+            <docidentifier type='iso-undated'>ISO DIR 1000</docidentifier>
             <docidentifier type='iso-with-lang'>ISO DIR 1000(E)</docidentifier>
             <docidentifier type='iso-reference'>ISO DIR 1000(E)</docidentifier>
             <docnumber>1000</docnumber>

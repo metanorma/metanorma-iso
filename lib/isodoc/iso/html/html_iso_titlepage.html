@@ -4,7 +4,7 @@
 <p class="coverpage_docnumber">{{ num }}</p>
     {% endfor %}
     {% else %}
-<p class="coverpage_docnumber">{{ docnumber_lang }} {{ draftinfo }}</p>
+<p class="coverpage_docnumber">{{ docnumber_undated }} {{ draftinfo }}</p>
     {% endif %}
 
 {% if revdate %}
@@ -12,7 +12,7 @@
 {% endif %}
 
 {% if tc_docnumber.size > 0 %}
-<p class="coverpage_docnumber">{{ docnumber_lang }} {{ draftinfo }}</p>
+<p class="coverpage_docnumber">{{ docnumber_undated }} {{ draftinfo }}</p>
 {% endif %}
 
 <p class="coverpage_techcommittee">{{ agency }}/{{ editorialgroup | join: "/" }}</p>

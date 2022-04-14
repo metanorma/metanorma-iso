@@ -133,10 +133,9 @@ module IsoDoc
       end
 
       def sequential_figure_names(clause)
-        c = IsoDoc::XrefGen::Counter.new
         j = 0
         clause.xpath(ns(".//figure | .//sourcecode[not(ancestor::example)]"))
-          .each do |t|
+          .each_with_object(IsoDoc::XrefGen::Counter.new) do |t, c|
           j = subfigure_increment(j, c, t)
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
           next if blank?(t["id"])
