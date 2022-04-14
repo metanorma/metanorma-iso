@@ -27,8 +27,6 @@ module IsoDoc
       end
 
       def figure1(node)
-        return if labelled_ancestor(node) && node.ancestors("figure").empty?
-
         lbl = @xrefs.anchor(node["id"], :label, false) or return
         figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
         connective = node.parent.name == "figure" ? "&nbsp; " : "&nbsp;&mdash; "
