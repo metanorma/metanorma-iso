@@ -28,7 +28,14 @@
 			<xsl:with-param name="key">all_rights_reserved</xsl:with-param>
 		</xsl:call-template>
 	</xsl:variable>	
-	<xsl:variable name="copyrightText" select="concat('© ISO ', /iso:iso-standard/iso:bibdata/iso:copyright/iso:from ,' – ', $all_rights_reserved)"/>
+	<xsl:variable name="copyrightYear" select="/iso:iso-standard/iso:bibdata/iso:copyright/iso:from"/>
+	<xsl:variable name="copyrightAbbr_">
+		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:copyright/iso:owner/iso:organization/iso:abbreviation">
+			<xsl:value-of select="."/><xsl:if test="position() != last()">/</xsl:if>
+		</xsl:for-each>
+	</xsl:variable>
+	<xsl:variable name="copyrightAbbr" select="normalize-space($copyrightAbbr_)"/>
+	<xsl:variable name="copyrightText" select="concat('© ', $copyrightAbbr, ' ', $copyrightYear ,' – ', $all_rights_reserved)"/>
   
 	<xsl:variable name="lang-1st-letter_tmp" select="substring-before(substring-after(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-with-lang'], '('), ')')"/>
 	<xsl:variable name="lang-1st-letter" select="concat('(', $lang-1st-letter_tmp , ')')"/>
@@ -452,7 +459,7 @@
 																	<fo:block>
 																		<xsl:value-of select="$ISOname"/>																		
 																	</fo:block>
-																	<fo:block space-before="28pt"><fo:inline font-size="9pt">©</fo:inline><xsl:value-of select="concat(' ', iso:iso-standard/iso:bibdata/iso:copyright/iso:owner/iso:organization/iso:abbreviation, ' ', iso:iso-standard/iso:bibdata/iso:copyright/iso:from)"/></fo:block>
+																	<fo:block space-before="28pt"><fo:inline font-size="9pt">©</fo:inline><xsl:value-of select="concat(' ', $copyrightAbbr, ' ', $copyrightYear)"/></fo:block>
 																</fo:block>
 															</fo:table-cell>
 														</fo:table-row>
@@ -833,7 +840,7 @@
 												<fo:block><xsl:value-of select="$ISOname"/></fo:block>
 												<fo:block> </fo:block>
 												<fo:block> </fo:block>
-												<fo:block><fo:inline font-size="9pt">©</fo:inline><xsl:value-of select="concat(' ISO ', iso:iso-standard/iso:bibdata/iso:copyright/iso:from)"/></fo:block>
+												<fo:block><fo:inline font-size="9pt">©</fo:inline><xsl:value-of select="concat(' ', $copyrightAbbr, ' ', $copyrightYear)"/></fo:block>
 											</fo:block>
 										</fo:table-cell>
 									</fo:table-row>
