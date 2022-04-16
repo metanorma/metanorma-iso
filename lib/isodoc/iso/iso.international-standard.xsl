@@ -198,10 +198,18 @@
 	
 	<xsl:template match="/">
 		<xsl:call-template name="namespaceCheck"/>
-		<fo:root xsl:use-attribute-sets="root-style" xml:lang="{$lang}"> <!--   -->
-			<xsl:if test="$lang = 'zh'">
-				<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
-			</xsl:if>
+		<fo:root xml:lang="{$lang}">
+			
+			<xsl:variable name="root-style">
+				<root-style xsl:use-attribute-sets="root-style">
+					<xsl:if test="$lang = 'zh'">
+						<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
+					</xsl:if>
+				</root-style>
+			</xsl:variable>
+			<xsl:call-template name="insertRootStyle">
+				<xsl:with-param name="root-style" select="$root-style"/>
+			</xsl:call-template>
 			
 			<fo:layout-master-set>
 				
@@ -2121,7 +2129,30 @@
 		
 		
 		
-	</xsl:attribute-set><xsl:attribute-set name="copyright-statement-style">
+	</xsl:attribute-set><xsl:template name="insertRootStyle">
+		<xsl:param name="root-style"/>
+		<xsl:variable name="root-style_" select="xalan:nodeset($root-style)"/>
+		
+		<xsl:variable name="additional_fonts_">
+			<xsl:for-each select="//*[local-name() = 'misc-container'][1]/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = 'fonts']/*[local-name() = 'value']">
+				<xsl:value-of select="."/><xsl:if test="position() != last()">, </xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="additional_fonts" select="normalize-space($additional_fonts_)"/>
+		
+		<xsl:for-each select="$root-style_/root-style/@*">
+			<xsl:choose>
+				<xsl:when test="local-name() = 'font-family' and $additional_fonts != ''">
+					<xsl:attribute name="{local-name()}">
+						<xsl:value-of select="."/>, <xsl:value-of select="$additional_fonts"/>
+					</xsl:attribute>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:copy-of select="."/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+	</xsl:template><xsl:attribute-set name="copyright-statement-style">
 		
 	</xsl:attribute-set><xsl:attribute-set name="copyright-statement-title-style">
 		
@@ -2670,7 +2701,7 @@
 		
 		
 		
-	</xsl:attribute-set><xsl:attribute-set name="termnote-name-style">		
+	</xsl:attribute-set><xsl:attribute-set name="termnote-name-style">
 		
 				
 		
