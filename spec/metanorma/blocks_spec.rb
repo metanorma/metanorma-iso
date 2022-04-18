@@ -159,7 +159,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-term1">
+            <term id="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
               <termnote id="_">
                 <p id="_">This is a note</p></termnote>
@@ -282,7 +282,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-term1">
+            <term id="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
               <termexample id="_">
                 <p id="_">This is an example</p></termexample>
@@ -532,7 +532,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-term1">
+            <term id="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
           <verbal-definition>
@@ -574,7 +574,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-term1">
+            <term id="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
           <verbal-definition>

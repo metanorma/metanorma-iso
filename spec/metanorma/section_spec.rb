@@ -92,7 +92,7 @@ RSpec.describe Metanorma::ISO do
                   <link target="https://www.electropedia.org"/></p>
               </li>
             </ul>
-            <term id="term-term1">
+            <term id="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>
@@ -100,7 +100,7 @@ RSpec.describe Metanorma::ISO do
             <title>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="_" obligation="normative">
               <title>Normal Terms</title>
-              <term id="term-term2">
+              <term id="term-Term2">
                 <preferred><expression><name>Term2</name></expression></preferred>
               </term>
             </terms>
@@ -287,7 +287,7 @@ RSpec.describe Metanorma::ISO do
                   <link target="https://www.electropedia.org"/></p>
               </li>
             </ul>
-            <term id="term-term1">
+            <term id="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>

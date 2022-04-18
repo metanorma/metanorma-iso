@@ -93,7 +93,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>#{TERM_BOILERPLATE}
 
-            <term id="term-tempus">
+            <term id="term-Tempus">
               <preferred><expression><name>Tempus</name></expression></preferred>
               <domain>relativity</domain>
               <definition><verbal-definition>
@@ -204,7 +204,7 @@ RSpec.describe Metanorma::ISO do
               <li>
                 <p id="_">So am I</p></li>
             </ul>
-            <term id="term-time">
+            <term id="term-Time">
               <preferred><expression><name>Time</name></expression></preferred>
               <definition><verbal-definition>
                 <p id="_">This paragraph is extraneous</p>
@@ -454,7 +454,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-term1">
+            <term id="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
           <verbal-definition>
@@ -1257,7 +1257,7 @@ RSpec.describe Metanorma::ISO do
                 </p>
               </li>
             </ul>
-            <term id='term-term1'>
+            <term id='term-Term1'>
               <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>
@@ -1308,13 +1308,13 @@ RSpec.describe Metanorma::ISO do
               </ul>
               <terms id='_' obligation='normative'>
                 <title>Normal Terms</title>
-                <term id='term-term1'>
+                <term id='term-Term1'>
                   <preferred><expression><name>Term1</name></expression></preferred>
                 </term>
               </terms>
               <terms id='_' obligation='normative'>
                 <title>Abnormal terms</title>
-                <term id='term-term-2'>
+                <term id='term-Term-2'>
                   <preferred><expression><name>Term 2</name></expression></preferred>
                 </term>
               </terms>
@@ -1372,13 +1372,13 @@ RSpec.describe Metanorma::ISO do
                 </ul>
                 <terms id='_' obligation='normative'>
                   <title>Normal Terms</title>
-                  <term id='term-term1'>
+                  <term id='term-Term1'>
                     <preferred><expression><name>Term1</name></expression></preferred>
                   </term>
                 </terms>
                 <terms id='_' obligation='normative'>
                   <title>Abnormal terms</title>
-                  <term id='term-term-2'>
+                  <term id='term-Term-2'>
                     <preferred><expression><name>Term 2</name></expression></preferred>
                   </term>
                 </terms>
@@ -1437,13 +1437,13 @@ RSpec.describe Metanorma::ISO do
                     </p>
                   </li>
                 </ul>
-                <term id='term-term1'>
+                <term id='term-Term1'>
                   <preferred><expression><name>Term1</name></expression></preferred>
                 </term>
               </terms>
               <terms id='_' obligation='normative'>
                 <title>Other Terms</title>
-                <term id='term-term-2'>
+                <term id='term-Term-2'>
                   <preferred><expression><name>Term 2</name></expression></preferred>
                 </term>
               </terms>
@@ -1495,7 +1495,7 @@ RSpec.describe Metanorma::ISO do
                 </p>
               </li>
             </ul>
-            <term id='term-term1'>
+            <term id='term-Term1'>
               <preferred><expression><name>Term1</name></expression></preferred>
             </term>
           </terms>
