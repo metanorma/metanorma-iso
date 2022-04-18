@@ -7165,7 +7165,7 @@
 				</xsl:otherwise>
 			</xsl:choose> -->
 		</fo:block>
-	</xsl:template><xsl:template match="*[local-name() = 'termsource']/text()[starts-with(., '[SOURCE: Adapted from: ')]" priority="2">
+	</xsl:template><xsl:template match="*[local-name() = 'termsource']/text()[starts-with(., '[SOURCE: Adapted from: ') or     starts-with(., '[SOURCE: Quoted from: ') or     starts-with(., '[SOURCE: Modified from: ')]" priority="2">
 		<xsl:text>[</xsl:text><xsl:value-of select="substring-after(., '[SOURCE: ')"/>
 	</xsl:template><xsl:template match="*[local-name() = 'termsource']/text()">
 		<xsl:if test="normalize-space() != ''">
