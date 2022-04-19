@@ -3857,7 +3857,7 @@
 	</xsl:template><xsl:template match="*[(local-name()='strong' or (local-name()='inline' and @font-weight = 'bold'))]/text()[translate(., $express_reference_characters, '') = '']" mode="td_text">
 		
 				<!-- replace underscore, back slash, dot to 'x', just to skip further tokenization -->
-				<xsl:value-of select="translate(., $express_reference_separators, 'xxx')"/><xsl:text>here</xsl:text>
+				<xsl:value-of select="translate(., $express_reference_separators, 'xxx')"/>
 			
 	</xsl:template><xsl:template match="text()" mode="td_text">
 		<xsl:value-of select="translate(., $zero_width_space, ' ')"/><xsl:text> </xsl:text>
