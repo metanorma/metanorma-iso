@@ -1973,7 +1973,7 @@
 	</xsl:template>
 
 	
-<xsl:param name="svg_images"/><xsl:variable name="images" select="document($svg_images)"/><xsl:param name="basepath"/><xsl:param name="external_index"/><xsl:param name="syntax-highlight">false</xsl:param><xsl:variable name="lang">
+<xsl:param name="svg_images"/><xsl:variable name="images" select="document($svg_images)"/><xsl:param name="basepath"/><xsl:param name="external_index"/><xsl:param name="syntax-highlight">false</xsl:param><xsl:param name="add_math_as_text">true</xsl:param><xsl:variable name="lang">
 		<xsl:call-template name="getLang"/>
 	</xsl:variable><xsl:variable name="pageWidth_">
 		210
@@ -5368,6 +5368,9 @@
 		<xsl:variable name="isDeleted" select="@deleted"/>
 		
 		<fo:inline xsl:use-attribute-sets="mathml-style">
+		
+			
+			
 			
 			
 			<xsl:call-template name="setTrackChangesStyles">
@@ -5375,55 +5378,87 @@
 				<xsl:with-param name="isDeleted" select="$isDeleted"/>
 			</xsl:call-template>
 			
+			<xsl:if test="$add_math_as_text = 'true'">
+				<!-- insert helper tag -->
+				<!-- set unique font-size (fiction) -->
+				<xsl:variable name="font-size_sfx"><xsl:number level="any"/></xsl:variable>
+				<fo:inline color="white" font-size="1.{$font-size_sfx}pt" font-style="normal" font-weight="normal"><xsl:value-of select="$zero_width_space"/></fo:inline> <!-- zero width space -->
+			</xsl:if>
 			
-			
-			<xsl:variable name="mathml">
-				<xsl:apply-templates select="." mode="mathml"/>
+			<xsl:variable name="mathml_content">
+				<xsl:apply-templates select="." mode="mathml_actual_text"/>
 			</xsl:variable>
-			<fo:instream-foreign-object fox:alt-text="Math">
 			
+			
+					<xsl:call-template name="mathml_instream_object">
+						<xsl:with-param name="mathml_content" select="$mathml_content"/>
+					</xsl:call-template>
 				
-				
-				<xsl:variable name="comment_text_following" select="following-sibling::node()[1][self::comment()]"/>
-				<xsl:variable name="comment_text_">
-					<xsl:choose>
-						<xsl:when test="normalize-space($comment_text_following) != ''">
-							<xsl:value-of select="$comment_text_following"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="normalize-space(translate(.,' ⁢','  '))"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable> 
-				<xsl:variable name="comment_text" select="java:org.metanorma.fop.Util.unescape($comment_text_)"/>
-				
-				<xsl:if test="normalize-space($comment_text) != ''">
-				<!-- put Mathin Alternate Text -->
-					<xsl:attribute name="fox:alt-text">
-						<xsl:value-of select="java:org.metanorma.fop.Util.unescape($comment_text)"/>
-					</xsl:attribute>
-				</xsl:if>
-				
-				<xsl:variable name="mathml_content">
-					<xsl:apply-templates select="." mode="mathml_actual_text"/>
-				</xsl:variable>
-				<!-- put MathML in Actual Text -->
-				<xsl:attribute name="fox:actual-text">
-					<xsl:value-of select="$mathml_content"/>
-				</xsl:attribute>
-				
-				
-					<xsl:if test="count(ancestor::*[local-name() = 'table']) &gt; 1">
-						<xsl:attribute name="width">95%</xsl:attribute>
-						<xsl:attribute name="content-height">100%</xsl:attribute>
-						<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
-						<xsl:attribute name="scaling">uniform</xsl:attribute>
-					</xsl:if>
-				
-				
-				<xsl:copy-of select="xalan:nodeset($mathml)"/>
-			</fo:instream-foreign-object>			
+			
 		</fo:inline>
+	</xsl:template><xsl:template name="getMathml_comment_text">
+		<xsl:variable name="comment_text_following" select="following-sibling::node()[1][self::comment()]"/>
+		<xsl:variable name="comment_text_">
+			<xsl:choose>
+				<xsl:when test="normalize-space($comment_text_following) != ''">
+					<xsl:value-of select="$comment_text_following"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="normalize-space(translate(.,' ⁢','  '))"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable> 
+		<xsl:variable name="comment_text_2" select="java:org.metanorma.fop.Util.unescape($comment_text_)"/>
+		<xsl:variable name="comment_text" select="java:trim(java:java.lang.String.new($comment_text_2))"/>
+		<xsl:value-of select="$comment_text"/>
+	</xsl:template><xsl:template name="mathml_instream_object">
+		<xsl:param name="comment_text"/>
+		<xsl:param name="mathml_content"/>
+	
+		<xsl:variable name="comment_text_">
+			<xsl:choose>
+				<xsl:when test="normalize-space($comment_text) != ''"><xsl:value-of select="$comment_text"/></xsl:when>
+				<xsl:otherwise><xsl:call-template name="getMathml_comment_text"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+	
+		<xsl:variable name="mathml">
+			<xsl:apply-templates select="." mode="mathml"/>
+		</xsl:variable>
+			
+		<fo:instream-foreign-object fox:alt-text="Math">
+					
+			
+			
+			
+				<xsl:if test="count(ancestor::*[local-name() = 'table']) &gt; 1">
+					<xsl:attribute name="width">95%</xsl:attribute>
+					<xsl:attribute name="content-height">100%</xsl:attribute>
+					<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+					<xsl:attribute name="scaling">uniform</xsl:attribute>
+				</xsl:if>
+			
+			
+			
+			
+			<!-- put MathML in Actual Text -->
+			<!-- DEBUG: mathml_content=<xsl:value-of select="$mathml_content"/> -->
+			<xsl:attribute name="fox:actual-text">
+				<xsl:value-of select="$mathml_content"/>
+			</xsl:attribute>
+			
+			<!-- <xsl:if test="$add_math_as_text = 'true'"> -->
+			<xsl:if test="normalize-space($comment_text_) != ''">
+			<!-- put Mathin Alternate Text -->
+				<xsl:attribute name="fox:alt-text">
+					<xsl:value-of select="$comment_text_"/>
+				</xsl:attribute>
+			</xsl:if>
+			<!-- </xsl:if> -->
+		
+			<xsl:copy-of select="xalan:nodeset($mathml)"/>
+			
+		</fo:instream-foreign-object>
 	</xsl:template><xsl:template match="mathml:*" mode="mathml_actual_text">
 		<!-- <xsl:text>a+b</xsl:text> -->
 		<xsl:text>&lt;</xsl:text>
