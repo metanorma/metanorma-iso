@@ -65,7 +65,7 @@ module IsoDoc
         insert = docxml.at("//div[@id = 'boilerplate-license-destination']")
         auth = docxml&.at("//div[@class = 'boilerplate-license']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzWarning" }
-        auth and insert.children = auth
+        auth and insert and insert.children = auth
         insert = docxml.at("//div[@id = 'boilerplate-copyright-destination']")
         auth = docxml&.at("//div[@class = 'boilerplate-copyright']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each do |p|
@@ -80,7 +80,7 @@ module IsoDoc
         auth&.xpath(".//p[@id = 'boilerplate-place']")&.each do |p|
           p["class"] = "zzCopyright1"
         end
-        auth and insert.children = auth
+        auth and insert and insert.children = auth
       end
 
       def word_cleanup(docxml)
