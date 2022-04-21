@@ -1065,7 +1065,12 @@
 			</xsl:variable>
 			<!-- DEBUG: updated_xml_step2=<xsl:copy-of select="$updated_xml_step2"/> -->
 			
-			<xsl:for-each select="xalan:nodeset($updated_xml_step2)">
+			<xsl:variable name="updated_xml_step3">
+				<xsl:apply-templates select="xalan:nodeset($updated_xml_step2)" mode="update_xml_enclose_keep-together_within-line"/>
+			</xsl:variable>
+			<!-- DEBUG: updated_xml_step3=<xsl:copy-of select="$updated_xml_step3"/> -->
+			
+			<xsl:for-each select="xalan:nodeset($updated_xml_step3)">
 			
 				<fo:page-sequence master-reference="preface{$document-master-reference}" format="i" force-page-count="{$force-page-count-preface}">
 					<xsl:call-template name="insertHeaderFooter">
@@ -3404,22 +3409,24 @@
 			<xsl:sort select="@displayorder" data-type="number"/>
 			<xsl:apply-templates select="."/>
 		</xsl:for-each>
-	</xsl:template><xsl:variable name="tag_open">###fo:inline###</xsl:variable><xsl:variable name="tag_close">###/fo:inline###</xsl:variable><xsl:template match="text()" name="text">
-		<xsl:variable name="regex_standard_reference">([A-Z]{2,}(/[A-Z]{2,})* \d+(-\d+)*(:\d{4})?)</xsl:variable>
-		<xsl:variable name="text" select="java:replaceAll(java:java.lang.String.new(.),$regex_standard_reference,concat($tag_open,'$1',$tag_close))"/>
-		<xsl:call-template name="replace_fo_inline">
-			<xsl:with-param name="text" select="$text"/>
-		</xsl:call-template>
-	</xsl:template><xsl:template name="replace_fo_inline">
+	</xsl:template><xsl:variable name="tag_fo_inline_keep-together_within-line_open">###fo:inline keep-together_within-line###</xsl:variable><xsl:variable name="tag_fo_inline_keep-together_within-line_close">###/fo:inline keep-together_within-line###</xsl:variable><xsl:template match="text()" name="text">
+		<xsl:value-of select="."/>
+	</xsl:template><xsl:template name="replace_fo_inline_tags">
+		<xsl:param name="tag_open"/>
+		<xsl:param name="tag_close"/>
 		<xsl:param name="text"/>
 		<xsl:choose>
 			<xsl:when test="contains($text, $tag_open)">
 				<xsl:value-of select="substring-before($text, $tag_open)"/>
-				<xsl:text disable-output-escaping="yes">&lt;fo:inline keep-together.within-line="always"&gt;</xsl:text>
+				<!-- <xsl:text disable-output-escaping="yes">&lt;fo:inline keep-together.within-line="always"&gt;</xsl:text> -->
 				<xsl:variable name="text_after" select="substring-after($text, $tag_open)"/>
-				<xsl:value-of select="substring-before($text_after, $tag_close)"/>
-				<xsl:text disable-output-escaping="yes">&lt;/fo:inline&gt;</xsl:text>
-				<xsl:call-template name="replace_fo_inline">
+				<fo:inline keep-together.within-line="always">
+					<xsl:value-of select="substring-before($text_after, $tag_close)"/>
+				</fo:inline>
+				<!-- <xsl:text disable-output-escaping="yes">&lt;/fo:inline&gt;</xsl:text> -->
+				<xsl:call-template name="replace_fo_inline_tags">
+					<xsl:with-param name="tag_open" select="$tag_open"/>
+					<xsl:with-param name="tag_close" select="$tag_close"/>
 					<xsl:with-param name="text" select="substring-after($text_after, $tag_close)"/>
 				</xsl:call-template>
 			</xsl:when>
@@ -3427,6 +3434,8 @@
 		</xsl:choose>
 	</xsl:template><xsl:template match="*[local-name()='br']">
 		<xsl:value-of select="$linebreak"/>
+	</xsl:template><xsl:template match="*[local-name() = 'keep-together_within-line']">
+		<fo:inline keep-together.within-line="always"><xsl:apply-templates/></fo:inline>
 	</xsl:template><xsl:template match="*[local-name()='copyright-statement']">
 		<fo:block xsl:use-attribute-sets="copyright-statement-style">
 			<xsl:apply-templates/>
@@ -3506,19 +3515,24 @@
 					<xsl:with-param name="margin" select="$margin"/>
 				</xsl:call-template>
 			
-	</xsl:template><xsl:variable name="express_reference_separators">_.\</xsl:variable><xsl:variable name="express_reference_characters" select="concat($upper,$lower,'1234567890',$express_reference_separators)"/><xsl:template match="*[local-name()='td']//text() | *[local-name()='th']//text() | *[local-name()='dt']//text() | *[local-name()='dd']//text()" priority="1">
-		
-				<xsl:choose>
-					<!-- if EXPRESS reference -->
-					<xsl:when test="parent::*[local-name()='strong'] and translate(., $express_reference_characters, '') = ''">
-						<xsl:value-of select="."/>
-					</xsl:when>
-					<xsl:otherwise>
-						<!-- <xsl:call-template name="add-zero-spaces"/> -->
-						<xsl:call-template name="add-zero-spaces-java"/>
-					</xsl:otherwise>
-				</xsl:choose>
-			
+	</xsl:template><xsl:template match="*[local-name()='td']//text() | *[local-name()='th']//text() | *[local-name()='dt']//text() | *[local-name()='dd']//text()" priority="1">
+		<xsl:choose>
+			<xsl:when test="parent::*[local-name() = 'keep-together_within-line']">
+				<xsl:value-of select="."/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="addZeroWidthSpacesToTextNodes"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template><xsl:template name="addZeroWidthSpacesToTextNodes">
+		<xsl:variable name="text"><text><xsl:call-template name="text"/></text></xsl:variable>
+		<!-- <xsl:copy-of select="$text"/> -->
+		<xsl:for-each select="xalan:nodeset($text)/text/node()">
+			<xsl:choose>
+				<xsl:when test="self::text()"><xsl:call-template name="add-zero-spaces-java"/></xsl:when>
+				<xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise> <!-- copy 'as-is' for <fo:inline keep-together.within-line="always" ...  -->
+			</xsl:choose>
+		</xsl:for-each>
 	</xsl:template><xsl:template match="*[local-name()='table']" name="table">
 	
 		<xsl:variable name="table-preamble">
@@ -3808,6 +3822,7 @@
 										<xsl:with-param name="text" select="$td_text"/>
 									</xsl:call-template>
 								</xsl:variable>
+								<!-- <xsl:message>string_with_added_zerospaces=<xsl:value-of select="$string_with_added_zerospaces"/></xsl:message> -->
 								<xsl:call-template name="tokenize">
 									<!-- <xsl:with-param name="text" select="translate(td[$curr-col],'- —:', '    ')"/> -->
 									<!-- 2009 thinspace -->
@@ -3820,6 +3835,7 @@
 									<xsl:with-param name="words" select="xalan:nodeset($words)"/>
 								</xsl:call-template>
 							</xsl:variable>
+							<!-- <xsl:message>max_length=<xsl:value-of select="$max_length"/></xsl:message> -->
 							<width>
 								<xsl:variable name="divider">
 									<xsl:choose>
@@ -3852,13 +3868,10 @@
 				<xsl:with-param name="table" select="$table"/>
 			</xsl:call-template>
 		</xsl:if>
-	</xsl:template><xsl:template match="*[(local-name()='strong' or (local-name()='inline' and @font-weight = 'bold'))]" mode="td_text">
-		<xsl:apply-templates mode="td_text"/>
-	</xsl:template><xsl:template match="*[(local-name()='strong' or (local-name()='inline' and @font-weight = 'bold'))]/text()[translate(., $express_reference_characters, '') = '']" mode="td_text">
-		
-				<!-- replace underscore, back slash, dot to 'x', just to skip further tokenization -->
-				<xsl:value-of select="translate(., $express_reference_separators, 'xxx')"/>
-			
+	</xsl:template><xsl:template match="*[@keep-together.within-line]/text()" priority="2" mode="td_text">
+		<!-- <xsl:message>DEBUG t1=<xsl:value-of select="."/></xsl:message>
+		<xsl:message>DEBUG t2=<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),'.','X')"/></xsl:message> -->
+		<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),'.','X')"/>
 	</xsl:template><xsl:template match="text()" mode="td_text">
 		<xsl:value-of select="translate(., $zero_width_space, ' ')"/><xsl:text> </xsl:text>
 	</xsl:template><xsl:template match="*[local-name()='termsource']" mode="td_text">
@@ -4684,28 +4697,29 @@
 										<xsl:apply-templates mode="dl"/>
 									</tbody>
 								</xsl:variable>
-								<!-- html-table<xsl:copy-of select="$html-table"/> -->
+								<!-- DEBUG: html-table<xsl:copy-of select="$html-table"/> -->
 								<xsl:variable name="colwidths">
 									<xsl:call-template name="calculate-column-widths">
 										<xsl:with-param name="cols-count" select="2"/>
 										<xsl:with-param name="table" select="$html-table"/>
 									</xsl:call-template>
 								</xsl:variable>
-								<!-- colwidths=<xsl:copy-of select="$colwidths"/> -->
+								<!-- DEBUG: colwidths=<xsl:copy-of select="$colwidths"/> -->
 								<xsl:variable name="maxlength_dt">							
 									<xsl:call-template name="getMaxLength_dt"/>							
 								</xsl:variable>
-								<xsl:variable name="isContainsExpressReference_">
+								<xsl:variable name="isContainsKeepTogetherTag_">
 									
-										 <xsl:value-of select="count(.//*[local-name() = 'strong'][translate(., $express_reference_characters, '') = '']) &gt; 0"/>
+										 <!-- <xsl:value-of select="count(.//*[local-name() = 'strong'][translate(., $express_reference_characters, '') = '']) &gt; 0"/> -->
+										 <xsl:value-of select="count(.//*[local-name() = $element_name_keep-together_within-line]) &gt; 0"/>
 										
 								</xsl:variable>
-								<xsl:variable name="isContainsExpressReference" select="normalize-space($isContainsExpressReference_)"/>
+								<xsl:variable name="isContainsKeepTogetherTag" select="normalize-space($isContainsKeepTogetherTag_)"/>
 								<!-- isContainsExpressReference=<xsl:value-of select="$isContainsExpressReference"/> -->
 								<xsl:call-template name="setColumnWidth_dl">
 									<xsl:with-param name="colwidths" select="$colwidths"/>							
 									<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
-									<xsl:with-param name="isContainsExpressReference" select="$isContainsExpressReference"/>
+									<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
 								</xsl:call-template>
 								<fo:table-body>
 									<xsl:apply-templates>
@@ -4721,7 +4735,7 @@
 	</xsl:template><xsl:template name="setColumnWidth_dl">
 		<xsl:param name="colwidths"/>		
 		<xsl:param name="maxlength_dt"/>
-		<xsl:param name="isContainsExpressReference"/>
+		<xsl:param name="isContainsKeepTogetherTag"/>
 		<xsl:choose>
 			<xsl:when test="ancestor::*[local-name()='dl']"><!-- second level, i.e. inlined table -->
 				<fo:table-column column-width="50%"/>
@@ -4729,7 +4743,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:choose>
-					<xsl:when test="$isContainsExpressReference">
+					<xsl:when test="$isContainsKeepTogetherTag">
 						<xsl:call-template name="insertTableColumnWidth">
 							<xsl:with-param name="colwidths" select="$colwidths"/>
 						</xsl:call-template>
@@ -5087,35 +5101,42 @@
 		<xsl:choose>
 			<xsl:when test="not(contains($text, $separator))">
 				<word>
-					<xsl:variable name="str_no_en_chars" select="normalize-space(translate($text, $en_chars, ''))"/>
-					<xsl:variable name="len_str_no_en_chars" select="string-length($str_no_en_chars)"/>
 					<xsl:variable name="len_str_tmp" select="string-length(normalize-space($text))"/>
-					<xsl:variable name="len_str">
-						<xsl:choose>
-							<xsl:when test="normalize-space(translate($text, $upper, '')) = ''"> <!-- english word in CAPITAL letters -->
-								<xsl:value-of select="$len_str_tmp * 1.5"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="$len_str_tmp"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:variable> 
-					
-					<!-- <xsl:if test="$len_str_no_en_chars div $len_str &gt; 0.8">
-						<xsl:message>
-							div=<xsl:value-of select="$len_str_no_en_chars div $len_str"/>
-							len_str=<xsl:value-of select="$len_str"/>
-							len_str_no_en_chars=<xsl:value-of select="$len_str_no_en_chars"/>
-						</xsl:message>
-					</xsl:if> -->
-					<!-- <len_str_no_en_chars><xsl:value-of select="$len_str_no_en_chars"/></len_str_no_en_chars>
-					<len_str><xsl:value-of select="$len_str"/></len_str> -->
 					<xsl:choose>
-						<xsl:when test="$len_str_no_en_chars div $len_str &gt; 0.8"> <!-- means non-english string -->
-							<xsl:value-of select="$len_str - $len_str_no_en_chars"/>
+						<xsl:when test="normalize-space(translate($text, 'X', '')) = ''"> <!-- special case for keep-together.within-line -->
+							<xsl:value-of select="$len_str_tmp"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="$len_str"/>
+							<xsl:variable name="str_no_en_chars" select="normalize-space(translate($text, $en_chars, ''))"/>
+							<xsl:variable name="len_str_no_en_chars" select="string-length($str_no_en_chars)"/>
+							<xsl:variable name="len_str">
+								<xsl:choose>
+									<xsl:when test="normalize-space(translate($text, $upper, '')) = ''"> <!-- english word in CAPITAL letters -->
+										<xsl:value-of select="$len_str_tmp * 1.5"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="$len_str_tmp"/>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:variable> 
+							
+							<!-- <xsl:if test="$len_str_no_en_chars div $len_str &gt; 0.8">
+								<xsl:message>
+									div=<xsl:value-of select="$len_str_no_en_chars div $len_str"/>
+									len_str=<xsl:value-of select="$len_str"/>
+									len_str_no_en_chars=<xsl:value-of select="$len_str_no_en_chars"/>
+								</xsl:message>
+							</xsl:if> -->
+							<!-- <len_str_no_en_chars><xsl:value-of select="$len_str_no_en_chars"/></len_str_no_en_chars>
+							<len_str><xsl:value-of select="$len_str"/></len_str> -->
+							<xsl:choose>
+								<xsl:when test="$len_str_no_en_chars div $len_str &gt; 0.8"> <!-- means non-english string -->
+									<xsl:value-of select="$len_str - $len_str_no_en_chars"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$len_str"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:otherwise>
 					</xsl:choose>
 				</word>
@@ -6642,6 +6663,8 @@
 			</xsl:when>
 			<xsl:otherwise><xsl:apply-templates mode="contents_item"/></xsl:otherwise>
 		</xsl:choose>
+	</xsl:template><xsl:template match="text()" mode="contents_item">
+		<xsl:call-template name="keep_together_standard_number"/>
 	</xsl:template><xsl:template match="*[local-name()='sourcecode']" name="sourcecode">
 	
 		<fo:block-container xsl:use-attribute-sets="sourcecode-container-style">
@@ -8507,7 +8530,58 @@
 		</xsl:template>
 		
 		<!-- END STEP2: add 'fn' after 'eref' and 'origin', if referenced to bibitem with 'note' = Withdrawn.' or 'Cancelled and replaced...'  -->
-	<xsl:template name="convertDate">
+	<xsl:template match="@*|node()" mode="update_xml_enclose_keep-together_within-line">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" mode="update_xml_enclose_keep-together_within-line"/>
+		</xsl:copy>
+	</xsl:template><xsl:variable name="express_reference_separators">_.\</xsl:variable><xsl:variable name="express_reference_characters" select="concat($upper,$lower,'1234567890',$express_reference_separators)"/><xsl:variable name="element_name_keep-together_within-line">keep-together_within-line</xsl:variable><xsl:template match="text()[not(ancestor::*[local-name() = 'bibdata'] or ancestor::*[local-name() = 'sourcecode'])]" name="keep_together_standard_number" mode="update_xml_enclose_keep-together_within-line">
+	
+		<!-- enclose standard's number into tag 'keep-together_within-line' -->
+		<xsl:variable name="regex_standard_reference">([A-Z]{2,}(/[A-Z]{2,})* \d+(-\d+)*(:\d{4})?)</xsl:variable>
+		<xsl:variable name="tag_keep-together_within-line_open">###<xsl:value-of select="$element_name_keep-together_within-line"/>###</xsl:variable>
+		<xsl:variable name="tag_keep-together_within-line_close">###/<xsl:value-of select="$element_name_keep-together_within-line"/>###</xsl:variable>
+		<xsl:variable name="text_" select="java:replaceAll(java:java.lang.String.new(.),$regex_standard_reference,concat($tag_keep-together_within-line_open,'$1',$tag_keep-together_within-line_close))"/>
+		<xsl:variable name="text"><text><xsl:call-template name="replace_text_tags">
+				<xsl:with-param name="tag_open" select="$tag_keep-together_within-line_open"/>
+				<xsl:with-param name="tag_close" select="$tag_keep-together_within-line_close"/>
+				<xsl:with-param name="text" select="$text_"/>
+			</xsl:call-template></text></xsl:variable>
+		
+		<xsl:variable name="parent" select="local-name(..)"/>
+		
+		<xsl:for-each select="xalan:nodeset($text)/text/node()">
+			
+					<xsl:choose>
+						<!-- if EXPRESS reference -->
+						<xsl:when test="self::text() and $parent = 'strong' and translate(., $express_reference_characters, '') = ''">
+							<xsl:element name="{$element_name_keep-together_within-line}"><xsl:value-of select="."/></xsl:element>
+						</xsl:when>
+						<xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise> <!-- copy 'as-is' for <fo:inline keep-together.within-line="always" ...  -->
+					</xsl:choose>
+				
+		</xsl:for-each>
+	</xsl:template><xsl:template name="replace_text_tags">
+		<xsl:param name="tag_open"/>
+		<xsl:param name="tag_close"/>
+		<xsl:param name="text"/>
+		<xsl:choose>
+			<xsl:when test="contains($text, $tag_open)">
+				<xsl:value-of select="substring-before($text, $tag_open)"/>
+				<xsl:variable name="text_after" select="substring-after($text, $tag_open)"/>
+				
+				<xsl:element name="{substring-before(substring-after($tag_open, '###'),'###')}">
+					<xsl:value-of select="substring-before($text_after, $tag_close)"/>
+				</xsl:element>
+				
+				<xsl:call-template name="replace_text_tags">
+					<xsl:with-param name="tag_open" select="$tag_open"/>
+					<xsl:with-param name="tag_close" select="$tag_close"/>
+					<xsl:with-param name="text" select="substring-after($text_after, $tag_close)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$text"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template><xsl:template name="convertDate">
 		<xsl:param name="date"/>
 		<xsl:param name="format" select="'short'"/>
 		<xsl:variable name="year" select="substring($date, 1, 4)"/>
