@@ -1109,14 +1109,8 @@ RSpec.describe IsoDoc do
           <references id="R" normative="true" obligation="informative">
             <title>Normative References</title>
             <bibitem id="ISO712" type="standard">
-              <title format="text/plain">Cereals and cereal products</title>
+              <formattedref><em>Cereals and cereal products</em>.</formattedref>
               <docidentifier>ISO 712</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
             </bibitem>
           </references>
           <clause id="S" obligation="informative">
@@ -1218,14 +1212,8 @@ RSpec.describe IsoDoc do
           <references id="R" normative="true" obligation="informative" displayorder='4'>
             <title depth="1">2<tab/>Normative References</title>
             <bibitem id="ISO712" type="standard">
-              <title format="text/plain">Cereals and cereal products</title>
+              <formattedref><em>Cereals and cereal products</em>.</formattedref>
               <docidentifier>ISO 712</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
             </bibitem>
           </references>
           <clause id="S" obligation="informative" displayorder='9'>
@@ -1264,7 +1252,7 @@ RSpec.describe IsoDoc do
                <h1>2　Normative References</h1>
                <p id='ISO712' class='NormRef'>
                  ISO 712,
-                 <i>Cereals and cereal products</i>
+                 <i>Cereals and cereal products</i>.
                </p>
              </div>
              <div id='H'>
