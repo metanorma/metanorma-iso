@@ -4598,8 +4598,10 @@
 					 <!-- and  (not(../@class) or ../@class !='pseudocode') -->
 				</xsl:variable>
 				
+				<xsl:variable name="onlyOneComponent" select="normalize-space($parent = 'formula' and count(*[local-name()='dt']) = 1)"/>
+				
 				<xsl:choose>
-					<xsl:when test="$parent = 'formula' and count(*[local-name()='dt']) = 1"> <!-- only one component -->
+					<xsl:when test="$onlyOneComponent = 'true'"> <!-- only one component -->
 						
 								<fo:block margin-bottom="12pt" text-align="left">
 									
@@ -4616,7 +4618,7 @@
 									<xsl:apply-templates select="*[local-name()='dd']/*" mode="inline"/>
 								</fo:block>
 							
-					</xsl:when>
+					</xsl:when> <!-- END: only one component -->
 					<xsl:when test="$parent = 'formula'"> <!-- a few components -->
 						<fo:block margin-bottom="12pt" text-align="left">
 							
@@ -4632,8 +4634,8 @@
 							</xsl:variable>
 							<xsl:value-of select="$title-where"/>
 						</fo:block>
-					</xsl:when>
-					<xsl:when test="$parent = 'figure' and  (not(../@class) or ../@class !='pseudocode')">
+					</xsl:when>  <!-- END: a few components -->
+					<xsl:when test="$parent = 'figure' and  (not(../@class) or ../@class !='pseudocode')"> <!-- definition list in a figure -->
 						<fo:block font-weight="bold" text-align="left" margin-bottom="12pt" keep-with-next="always">
 							
 								<xsl:attribute name="font-size">10pt</xsl:attribute>
@@ -4649,11 +4651,11 @@
 							</xsl:variable>
 							<xsl:value-of select="$title-key"/>
 						</fo:block>
-					</xsl:when>
+					</xsl:when>  <!-- END: definition list in a figure -->
 				</xsl:choose>
 				
 				<!-- a few components -->
-				<xsl:if test="not($parent = 'formula' and count(*[local-name()='dt']) = 1)">
+				<xsl:if test="$onlyOneComponent = 'false'">
 					<fo:block>
 						
 							<xsl:if test="$parent = 'formula'">
@@ -4721,6 +4723,7 @@
 									<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
 									<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
 								</xsl:call-template>
+								
 								<fo:table-body>
 									<xsl:apply-templates>
 										<xsl:with-param name="key_iso" select="normalize-space($key_iso)"/>
@@ -4729,7 +4732,7 @@
 							</fo:table>
 						</fo:block>
 					</fo:block>
-				</xsl:if>
+				</xsl:if> <!-- END: a few components -->
 			</fo:block-container>
 		</fo:block-container>
 	</xsl:template><xsl:template name="setColumnWidth_dl">
@@ -4820,7 +4823,6 @@
 		<xsl:value-of select="$maxLength"/>
 	</xsl:template><xsl:template match="*[local-name()='dl']/*[local-name()='note']" priority="2">
 		<xsl:param name="key_iso"/>
-		
 		<!-- <tr>
 			<td>NOTE</td>
 			<td>
@@ -4828,18 +4830,30 @@
 			</td>
 		</tr>
 		 -->
-		<fo:table-row>
+		<!-- OLD Variant -->
+		<!-- <fo:table-row>
 			<fo:table-cell>
 				<fo:block margin-top="6pt">
 					<xsl:if test="normalize-space($key_iso) = 'true'">
 						<xsl:attribute name="margin-top">0</xsl:attribute>
 					</xsl:if>
-					<xsl:apply-templates select="*[local-name() = 'name']"/>
+					<xsl:apply-templates select="*[local-name() = 'name']" />
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell>
 				<fo:block>
-					<xsl:apply-templates select="node()[not(local-name() = 'name')]"/>
+					<xsl:apply-templates select="node()[not(local-name() = 'name')]" />
+				</fo:block>
+			</fo:table-cell>
+		</fo:table-row> -->
+		<!-- <tr>
+			<td number-columns-spanned="2">NOTE <xsl:apply-templates /> </td>
+		</tr> 
+		-->
+		<fo:table-row>
+			<fo:table-cell number-columns-spanned="2">
+				<fo:block>
+					<xsl:call-template name="note"/>
 				</fo:block>
 			</fo:table-cell>
 		</fo:table-row>
