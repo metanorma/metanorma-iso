@@ -8548,7 +8548,7 @@
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" mode="update_xml_enclose_keep-together_within-line"/>
 		</xsl:copy>
-	</xsl:template><xsl:variable name="express_reference_separators">_.\</xsl:variable><xsl:variable name="express_reference_characters" select="concat($upper,$lower,'1234567890',$express_reference_separators)"/><xsl:variable name="element_name_keep-together_within-line">keep-together_within-line</xsl:variable><xsl:template match="text()[not(ancestor::*[local-name() = 'bibdata'] or ancestor::*[local-name() = 'sourcecode'])]" name="keep_together_standard_number" mode="update_xml_enclose_keep-together_within-line">
+	</xsl:template><xsl:variable name="express_reference_separators">_.\</xsl:variable><xsl:variable name="express_reference_characters" select="concat($upper,$lower,'1234567890',$express_reference_separators)"/><xsl:variable name="element_name_keep-together_within-line">keep-together_within-line</xsl:variable><xsl:template match="text()[not(ancestor::*[local-name() = 'bibdata'] or ancestor::*[local-name() = 'sourcecode'] or ancestor::*[local-name() = 'math'])]" name="keep_together_standard_number" mode="update_xml_enclose_keep-together_within-line">
 	
 		<!-- enclose standard's number into tag 'keep-together_within-line' -->
 		<xsl:variable name="regex_standard_reference">([A-Z]{2,}(/[A-Z]{2,})* \d+(-\d+)*(:\d{4})?)</xsl:variable>
@@ -8563,17 +8563,61 @@
 		
 		<xsl:variable name="parent" select="local-name(..)"/>
 		
-		<xsl:for-each select="xalan:nodeset($text)/text/node()">
-			
+		<xsl:variable name="text2">
+			<text><xsl:for-each select="xalan:nodeset($text)/text/node()">
+					
+							<xsl:choose>
+								<!-- if EXPRESS reference -->
+								<xsl:when test="self::text() and $parent = 'strong' and translate(., $express_reference_characters, '') = ''">
+									<xsl:element name="{$element_name_keep-together_within-line}"><xsl:value-of select="."/></xsl:element>
+								</xsl:when>
+								<xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise> <!-- copy 'as-is' for <fo:inline keep-together.within-line="always" ...  -->
+							</xsl:choose>
+						
+				</xsl:for-each></text>
+		</xsl:variable>
+		
+		<!-- keep-together_within-line for: a/b, aaa/b, a/bbb, /b -->
+		<xsl:variable name="regex_solidus_units">((\b((\S{1,3}\/\S+)|(\S+\/\S{1,3}))\b)|(\/\S{1,3})\b)</xsl:variable>
+		<xsl:variable name="text3">
+			<text><xsl:for-each select="xalan:nodeset($text2)/text/node()">
+				<xsl:choose>
+					<xsl:when test="self::text()">
+						<xsl:variable name="text_units_" select="java:replaceAll(java:java.lang.String.new(.),$regex_solidus_units,concat($tag_keep-together_within-line_open,'$1',$tag_keep-together_within-line_close))"/>
+						<xsl:variable name="text_units"><text><xsl:call-template name="replace_text_tags">
+							<xsl:with-param name="tag_open" select="$tag_keep-together_within-line_open"/>
+							<xsl:with-param name="tag_close" select="$tag_keep-together_within-line_close"/>
+							<xsl:with-param name="text" select="$text_units_"/>
+						</xsl:call-template></text></xsl:variable>
+						<xsl:copy-of select="xalan:nodeset($text_units)/text/node()"/>
+					</xsl:when>
+					<xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise> <!-- copy 'as-is' for <fo:inline keep-together.within-line="always" ...  -->
+				</xsl:choose>
+			</xsl:for-each></text>
+		</xsl:variable>
+		
+		<xsl:choose>
+			<xsl:when test="ancestor::*[local-name() = 'td' or local-name() = 'th']">
+				<!-- keep-together_within-line for: a.b, aaa.b, a.bbb, .b  in table's cell ONLY -->
+				<xsl:variable name="regex_dots_units">((\b((\S{1,3}\.\S+)|(\S+\.\S{1,3}))\b)|(\.\S{1,3})\b)</xsl:variable>
+				<xsl:for-each select="xalan:nodeset($text3)/text/node()">
 					<xsl:choose>
-						<!-- if EXPRESS reference -->
-						<xsl:when test="self::text() and $parent = 'strong' and translate(., $express_reference_characters, '') = ''">
-							<xsl:element name="{$element_name_keep-together_within-line}"><xsl:value-of select="."/></xsl:element>
+						<xsl:when test="self::text()">
+							<xsl:variable name="text_dots_" select="java:replaceAll(java:java.lang.String.new(.),$regex_dots_units,concat($tag_keep-together_within-line_open,'$1',$tag_keep-together_within-line_close))"/>
+							<xsl:variable name="text_dots"><text><xsl:call-template name="replace_text_tags">
+								<xsl:with-param name="tag_open" select="$tag_keep-together_within-line_open"/>
+								<xsl:with-param name="tag_close" select="$tag_keep-together_within-line_close"/>
+								<xsl:with-param name="text" select="$text_dots_"/>
+							</xsl:call-template></text></xsl:variable>
+							<xsl:copy-of select="xalan:nodeset($text_dots)/text/node()"/>
 						</xsl:when>
 						<xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise> <!-- copy 'as-is' for <fo:inline keep-together.within-line="always" ...  -->
 					</xsl:choose>
-				
-		</xsl:for-each>
+				</xsl:for-each>
+			</xsl:when>
+			<xsl:otherwise><xsl:copy-of select="xalan:nodeset($text3)/text/node()"/></xsl:otherwise>
+		</xsl:choose>
+		
 	</xsl:template><xsl:template name="replace_text_tags">
 		<xsl:param name="tag_open"/>
 		<xsl:param name="tag_close"/>
