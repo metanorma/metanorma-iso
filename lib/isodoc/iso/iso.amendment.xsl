@@ -2139,7 +2139,7 @@
 		<xsl:variable name="root-style_" select="xalan:nodeset($root-style)"/>
 		
 		<xsl:variable name="additional_fonts_">
-			<xsl:for-each select="//*[local-name() = 'misc-container'][1]/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = 'fonts']/*[local-name() = 'value']">
+			<xsl:for-each select="//*[contains(local-name(), '-standard')][1]/*[local-name() = 'misc-container']/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = 'fonts']/*[local-name() = 'value'] |       //*[contains(local-name(), '-standard')][1]/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = 'fonts']/*[local-name() = 'value']">
 				<xsl:value-of select="."/><xsl:if test="position() != last()">, </xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
