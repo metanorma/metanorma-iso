@@ -150,7 +150,7 @@ RSpec.describe Metanorma::ISO do
       :language: el
       :script: Grek
       :publisher: IEC;IETF;ISO
-      :copyright-holder: ISO;IETF
+      :copyright-holder: IETF;ISO
       :copyright-year: 2001
       :doctype: technical-report
       :pub-address: 1 Infinity Loop + \
@@ -167,10 +167,10 @@ RSpec.describe Metanorma::ISO do
               <?xml version="1.0" encoding="UTF-8"?>
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
-                  <docidentifier type="ISO">ISO/IEC/IETF/TR 1000-1-1:2001</docidentifier>
-                  <docidentifier type='iso-undated'>ISO/IEC/IETF/TR 1000-1-1</docidentifier>
-                  <docidentifier type="iso-with-lang">ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
-                  <docidentifier type="iso-reference">ISO/IEC/IETF/TR 1000-1-1:2001(X)</docidentifier>
+                  <docidentifier type='ISO'>IEC/IETF/ISO/TR 1000-1-1:2001</docidentifier>
+                  <docidentifier type='iso-undated'>IEC/IETF/ISO/TR 1000-1-1</docidentifier>
+                  <docidentifier type='iso-with-lang'>IEC/IETF/ISO/TR 1000-1-1:2001(X)</docidentifier>
+                  <docidentifier type='iso-reference'>IEC/IETF/ISO/TR 1000-1-1:2001(X)</docidentifier>
                   <docidentifier type="iso-tc">2000</docidentifier>
                   <docidentifier type="iso-tc">2003</docidentifier>
                   <docnumber>1000</docnumber>
@@ -245,8 +245,7 @@ RSpec.describe Metanorma::ISO do
                     <from>2001</from>
                     <owner>
                       <organization>
-                        <name>International Organization for Standardization</name>
-                        <abbreviation>ISO</abbreviation>
+                        <name>IETF</name>
                         <address>
           <formattedAddress>1 Infinity Loop + California</formattedAddress>
         </address>
@@ -257,11 +256,12 @@ RSpec.describe Metanorma::ISO do
                       </organization>
                     </owner>
                   </copyright>
-                  <copyright>
+                                    <copyright>
                     <from>2001</from>
                     <owner>
                       <organization>
-                        <name>IETF</name>
+                        <name>International Organization for Standardization</name>
+                        <abbreviation>ISO</abbreviation>
                         <address>
           <formattedAddress>1 Infinity Loop + California</formattedAddress>
         </address>
@@ -280,7 +280,7 @@ RSpec.describe Metanorma::ISO do
                       <workgroup/>
                     </editorialgroup>
                     <structuredidentifier>
-                      <project-number part="1" subpart="1">ISO/IEC/IETF 1000</project-number>
+                      <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
                     </structuredidentifier>
                     <stagename>International standard</stagename>
                   </ext>

@@ -40,7 +40,8 @@ module Metanorma
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
                      "/organization").each_with_object([]) do |x, prefix|
           x1 = x.at("abbreviation")&.text || x.at("name")&.text
-          (x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
+          #(x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
+          prefix << x1
         end
       end
 
