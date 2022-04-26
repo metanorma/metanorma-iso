@@ -195,13 +195,45 @@
 	</xsl:variable>
 	
 	<xsl:variable name="editorialgroup_">
-		<xsl:variable name="data"><xsl:call-template name="getEditorialGroup"/></xsl:variable>
+		<xsl:variable name="data">
+			<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee[normalize-space(@number) != '']">
+				<xsl:text>/TC </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
+			</xsl:for-each>
+			<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:subcommittee[normalize-space(@number) != '']">
+				<xsl:text>/SC </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
+			</xsl:for-each>
+			<xsl:if test="not($stage-abbreviation = 'DIS' or $stage-abbreviation = 'FDIS')">
+				<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup[normalize-space(@number) != '']">
+					<xsl:text>/WG </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
+				</xsl:for-each>
+			</xsl:if>
+		</xsl:variable>
 		<xsl:if test="normalize-space($data) != ''">
 			<xsl:text>ISO</xsl:text><xsl:copy-of select="$data"/>
 		</xsl:if>
 	</xsl:variable>
 	<xsl:variable name="editorialgroup" select="xalan:nodeset($editorialgroup_)"/>
 	
+	<xsl:variable name="secretariat_">
+		<xsl:variable name="value" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat)"/>
+		<xsl:if test="$value != ''">
+			<xsl:call-template name="getLocalizedString">
+				<xsl:with-param name="key">secretariat</xsl:with-param>
+			</xsl:call-template>
+			<xsl:text>: </xsl:text>
+			<fo:inline font-weight="bold"><xsl:value-of select="$value"/></fo:inline>
+		</xsl:if>
+	</xsl:variable>
+	<xsl:variable name="secretariat" select="xalan:nodeset($secretariat_)"/>
+	
+	<xsl:variable name="ics_">
+		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:ics/iso:code">
+			<xsl:if test="position() = 1"><fo:inline>ICS: </fo:inline></xsl:if>
+			<xsl:value-of select="."/>
+			<xsl:if test="position() != last()"><xsl:text>; </xsl:text></xsl:if>
+		</xsl:for-each>
+	</xsl:variable>
+	<xsl:variable name="ics" select="xalan:nodeset($ics_)"/>
 	
 	<xsl:variable name="XML" select="/"/>
 	
@@ -518,11 +550,8 @@
 													</fo:table-cell>
 													<fo:table-cell>
 														<fo:block>
-															<xsl:call-template name="getLocalizedString">
-																<xsl:with-param name="key">secretariat</xsl:with-param>
-															</xsl:call-template>
-															<xsl:text>: </xsl:text>
-															<fo:inline font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/></fo:inline></fo:block>
+															<xsl:copy-of select="$secretariat"/>
+														</fo:block>
 													</fo:table-cell>
 												</fo:table-row>
 												<fo:table-row>
@@ -608,11 +637,7 @@
 											</fo:block>
 											
 											<fo:block margin-top="10mm">
-												<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:ics/iso:code">
-													<xsl:if test="position() = 1"><fo:inline>ICS: </fo:inline></xsl:if>
-													<xsl:value-of select="."/>
-													<xsl:if test="position() != last()"><xsl:text>; </xsl:text></xsl:if>
-												</xsl:for-each>
+												<xsl:copy-of select="$ics"/>
 											</fo:block>
 											
 										</fo:block-container>
@@ -621,7 +646,7 @@
 									</fo:block-container>
 								</fo:flow>
 							
-							</xsl:when>
+							</xsl:when> <!-- END: $stage-abbreviation = 'DIS' -->
 							<xsl:otherwise>
 						
 								<!-- COVER PAGE  for all documents except DIS -->
@@ -681,13 +706,17 @@
 														</fo:block>
 													</fo:table-cell>
 												</fo:table-row>
-												<fo:table-row height="42mm">
+												<fo:table-row height="25mm">
 													<fo:table-cell number-columns-spanned="3" font-size="10pt" line-height="1.2">
 														<fo:block text-align="right">
 															<xsl:if test="$stage-abbreviation = 'PRF' or                          $stage-abbreviation = 'IS' or                          $stage-abbreviation = 'D' or                          $stage-abbreviation = 'published'">
 																<xsl:call-template name="printEdition"/>
 															</xsl:if>
 															<xsl:choose>
+																<xsl:when test="($stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD') and /iso:iso-standard/iso:bibdata/iso:version/iso:revision-date">
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/>
+																</xsl:when>
 																<xsl:when test="$stage-abbreviation = 'IS' and /iso:iso-standard/iso:bibdata/iso:date[@type = 'published']">
 																	<xsl:value-of select="$linebreak"/>
 																	<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'published']"/>
@@ -716,11 +745,38 @@
 																</fo:block>
 																<fo:block>
 																	<xsl:if test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'updated']">																		
-																	<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'updated']"/>
+																		<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'updated']"/>
 																	</xsl:if>
 																</fo:block>
 															</fo:block>
 														</xsl:if>
+													</fo:table-cell>
+												</fo:table-row>
+												<fo:table-row height="17mm">
+													<fo:table-cell><fo:block/></fo:table-cell>
+													<fo:table-cell number-columns-spanned="2" font-size="10pt" line-height="1.2" display-align="center">
+														<fo:block>
+															<xsl:if test="$stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
+																<fo:table table-layout="fixed" width="100%">
+																	<fo:table-column column-width="50%"/>
+																	<fo:table-column column-width="50%"/>
+																	<fo:table-body>
+																		<fo:table-row>
+																			<fo:table-cell>
+																				<fo:block>
+																					<xsl:copy-of select="$editorialgroup"/>
+																				</fo:block>
+																			</fo:table-cell>
+																			<fo:table-cell>
+																				<fo:block>
+																					<xsl:copy-of select="$secretariat"/>
+																				</fo:block>
+																			</fo:table-cell>
+																		</fo:table-row>
+																	</fo:table-body>
+																</fo:table>
+															</xsl:if>
+														</fo:block>
 													</fo:table-cell>
 												</fo:table-row>
 												
@@ -740,7 +796,7 @@
 																<fo:block-container border="0.5mm solid black" width="51mm">
 																	<fo:block margin="2mm">
 																			<fo:block margin-bottom="8pt"><xsl:copy-of select="$editorialgroup"/></fo:block>
-																			<fo:block margin-bottom="6pt">Secretariat: <xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/></fo:block>
+																			<fo:block margin-bottom="6pt"><xsl:value-of select="$secretariat"/></fo:block>
 																			<fo:block margin-bottom="6pt">Voting begins on:<xsl:value-of select="$linebreak"/>
 																				<fo:inline font-weight="bold">
 																					<xsl:choose>
@@ -811,6 +867,12 @@
 																		
 																	</fo:block>
 																</xsl:for-each>
+																
+																<xsl:if test="$stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
+																	<fo:block margin-top="10mm">
+																		<xsl:copy-of select="$ics"/>
+																	</fo:block>
+																</xsl:if>
 																
 															</fo:block>
 														</fo:block-container>
@@ -978,8 +1040,7 @@
 								
 								<!-- Secretariat: AFNOR  -->
 								<fo:block margin-bottom="100pt">
-									<xsl:text>Secretariat: </xsl:text>
-									<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:secretariat"/>
+									<xsl:value-of select="$secretariat"/>
 									<xsl:text> </xsl:text>
 								</fo:block>
 
@@ -1373,18 +1434,7 @@
 		</fo:block>
 	</xsl:template>
 
-	<xsl:template name="getEditorialGroup">
-		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee[normalize-space(@number) != '']">
-			<xsl:text>/TC </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
-		</xsl:for-each>
-		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:subcommittee[normalize-space(@number) != '']">
-			<xsl:text>/SC </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
-		</xsl:for-each>
-		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup[normalize-space(@number) != '']">
-			<xsl:text>/WG </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
-		</xsl:for-each>
-	</xsl:template>
-
+	
 	<!-- ==================== -->
 	<!-- display titles       -->
 	<!-- ==================== -->
