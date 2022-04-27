@@ -21,8 +21,7 @@ module IsoDoc
           stage = "DTS" if stage == "DIS"
           stage = "FDTS" if stage == "FDIS"
         end
-        %w(PWI NWIP WD CD).include?(stage) && iter and
-          stage += iter
+        %w(PWI NWIP WD CD).include?(stage) && iter and stage += iter
         stage = "Pre#{stage}" if /^0\./.match?(draft)
         stage
       end
@@ -32,9 +31,7 @@ module IsoDoc
         set(:unpublished, false)
         revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
-        if docstatus
-          docstatus1(isoxml, docstatus)
-        end
+        docstatus and docstatus1(isoxml, docstatus)
       end
 
       def docstatus1(isoxml, docstatus)
@@ -164,10 +161,9 @@ module IsoDoc
             @c.encode(tp[:main] ? tp[:main].text : "", :hexadecimal))
         main = compose_title(tp, tn, lang)
         set(:doctitle, main)
-        if tp[:intro]
+        tp[:intro] and
           set(:doctitleintro,
               @c.encode(tp[:intro] ? tp[:intro].text : "", :hexadecimal))
-        end
         set(:doctitlepartlabel, part_prefix(tn, lang))
         set(:doctitlepart, @c.encode(tp[:part].text, :hexadecimal)) if tp[:part]
         set(:doctitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
@@ -184,15 +180,13 @@ module IsoDoc
             @c.encode(tp[:main] ? tp[:main].text : "", :hexadecimal))
         main = compose_title(tp, tn, lang)
         set(:docsubtitle, main)
-        if tp[:intro]
+        tp[:intro] and
           set(:docsubtitleintro,
               @c.encode(tp[:intro] ? tp[:intro].text : "", :hexadecimal))
-        end
         set(:docsubtitlepartlabel, part_prefix(tn, lang))
-        if tp[:part]
+        tp[:part] and
           set(:docsubtitlepart,
               @c.encode(tp[:part].text, :hexadecimal))
-        end
         set(:docsubtitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
         set(:docsubtitleamd, @c.encode(tp[:amd].text, :hexadecimal)) if tp[:amd]
         set(:docsubtitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]

@@ -7,6 +7,10 @@
 <p class="coverpage_docnumber">{{ docnumber_undated }} {{ draftinfo }}</p>
     {% endif %}
 
+{% if edition_display %}
+<p class="coverpage_docnumber">{{ edition_display | capitalize }}</p>
+{% endif %}
+
 {% if revdate %}
 <p class="coverpage_docnumber">{{ labels["date"]}}: {{ revdate }}</p>
 {% endif %}
