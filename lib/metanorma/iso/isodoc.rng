@@ -32,6 +32,43 @@
         <ref name="DocumentType"/>
       </element>
     </define>
+    <define name="admonition">
+      <element name="admonition">
+        <attribute name="type">
+          <ref name="AdmonitionType"/>
+        </attribute>
+        <optional>
+          <attribute name="class"/>
+        </optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+        <optional>
+          <attribute name="uri">
+            <data type="anyURI"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="coverpage">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="notag">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
+          <ref name="tname"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="note"/>
+        </zeroOrMore>
+      </element>
+    </define>
     <define name="index">
       <element name="index">
         <optional>
@@ -849,6 +886,16 @@
         <optional>
           <attribute name="multilingual-rendering">
             <ref name="MultilingualRenderingType"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="coverpage">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="notag">
+            <data type="boolean"/>
           </attribute>
         </optional>
         <oneOrMore>

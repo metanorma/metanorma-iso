@@ -81,6 +81,7 @@ module IsoDoc
           p["class"] = "zzCopyright1"
         end
         auth and insert and insert.children = auth
+        coverpage_note_cleanup(docxml)
       end
 
       def word_cleanup(docxml)
