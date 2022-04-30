@@ -169,7 +169,11 @@ module IsoDoc
         p = n.next_element
         return unless p.name == "p"
 
-        p.children.first.previous = "#{n.remove.children.to_xml} &#x2014; "
+        p.children.first.previous = admonition_name(n.remove.children.to_xml)
+      end
+
+      def admonition_name(xml)
+        "#{xml} &#x2014; "
       end
 
       include Init
