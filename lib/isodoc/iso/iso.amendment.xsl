@@ -5131,7 +5131,7 @@
 		<fo:block break-after="page"/>
 		<fo:block> </fo:block>
 		<fo:block break-after="page"/>
-	</xsl:template><xsl:template name="tokenize">
+	</xsl:template><xsl:template match="*[local-name() = 'span']"/><xsl:template name="tokenize">
 		<xsl:param name="text"/>
 		<xsl:param name="separator" select="' '"/>
 		<xsl:choose>
@@ -6386,9 +6386,9 @@
 		<xsl:apply-templates mode="bookmarks"/>
 	</xsl:template><xsl:template match="*[local-name() = 'title' or local-name() = 'name']//*[local-name() = 'stem']" mode="contents">
 		<xsl:apply-templates select="."/>
-	</xsl:template><xsl:template match="*[local-name() = 'references'][@hidden='true']" mode="contents" priority="3"/><xsl:template match="*[local-name() = 'references']/*[local-name() = 'bibitem']" mode="contents"/><xsl:template match="*[local-name() = 'stem']" mode="bookmarks">
+	</xsl:template><xsl:template match="*[local-name() = 'references'][@hidden='true']" mode="contents" priority="3"/><xsl:template match="*[local-name() = 'references']/*[local-name() = 'bibitem']" mode="contents"/><xsl:template match="*[local-name() = 'span']" mode="contents"/><xsl:template match="*[local-name() = 'stem']" mode="bookmarks">
 		<xsl:apply-templates mode="bookmarks"/>
-	</xsl:template><xsl:template name="addBookmarks">
+	</xsl:template><xsl:template match="*[local-name() = 'span']" mode="bookmarks"/><xsl:template name="addBookmarks">
 		<xsl:param name="contents"/>
 		<xsl:variable name="contents_nodes" select="xalan:nodeset($contents)"/>
 		<xsl:if test="$contents_nodes//item">
@@ -6703,7 +6703,7 @@
 		</xsl:choose>
 	</xsl:template><xsl:template match="text()" mode="contents_item">
 		<xsl:call-template name="keep_together_standard_number"/>
-	</xsl:template><xsl:template match="*[local-name()='sourcecode']" name="sourcecode">
+	</xsl:template><xsl:template match="*[local-name() = 'span']" mode="contents_item"/><xsl:template match="*[local-name()='sourcecode']" name="sourcecode">
 	
 		<fo:block-container xsl:use-attribute-sets="sourcecode-container-style">
 			<xsl:copy-of select="@id"/>
@@ -8523,7 +8523,7 @@
 				<xsl:apply-templates select="." mode="update_xml_step1"/>
 			</xsl:for-each>
 		</xsl:copy>
-	</xsl:template>
+	</xsl:template><xsl:template match="*[local-name() = 'span']" mode="update_xml_step1"/>
 		<!-- STEP2: add 'fn' after 'eref' and 'origin', if referenced to bibitem with 'note' = Withdrawn.' or 'Cancelled and replaced...'  -->
 		<xsl:template match="@*|node()" mode="update_xml_step2">
 			<xsl:copy>
