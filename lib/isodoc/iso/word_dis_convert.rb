@@ -13,6 +13,14 @@ module IsoDoc
         }
       end
 
+      def initialize(options)
+        @libdir ||= File.dirname(__FILE__) # rubocop:disable Lint/DisjunctiveAssignmentInConstructor
+        options.merge!(default_file_locations(options))
+        super
+      end
+
+      def init_dis; end
+
       def style_cleanup(docxml)
         super
         dis_styles(docxml)
@@ -23,11 +31,12 @@ module IsoDoc
         FigureTitle: "Figuretitle",
         TableFootnote: "Tablefootnote",
         formula: "Formula",
+        NormRef: "RefNorm",
       }.freeze
 
       def dis_styles(docxml)
         STYLESMAP.each do |k, v|
-          docxml.xpath("*//[@class = '#{k}']").each do |s|
+          docxml.xpath("//*[@class = '#{k}']").each do |s|
             s["class"] = v
           end
         end

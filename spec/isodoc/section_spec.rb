@@ -563,7 +563,7 @@ RSpec.describe IsoDoc do
            <status>
              <stage abbreviation='IS' language=''>60</stage>
              <stage abbreviation='IS' language='en'>International standard</stage>
-             <substage language=''>60</substage>
+             <substage>60</substage>
            </status>
            <copyright>
              <from>#{Time.new.year}</from>
@@ -575,7 +575,7 @@ RSpec.describe IsoDoc do
              </owner>
            </copyright>
            <ext>
-             <doctype language=''>article</doctype>
+             <doctype>article</doctype>
              <subdoctype>vocabulary</subdoctype>
              <editorialgroup>
                <technical-committee/>

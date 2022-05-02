@@ -14,7 +14,11 @@ module IsoDoc
         @wordToClevels = 3 if @wordToClevels.zero?
         @htmlToClevels = options[:htmltoclevels].to_i
         @htmlToClevels = 3 if @htmlToClevels.zero?
-        @dis = WordDISConvert(options)
+        init_dis
+      end
+
+      def init_dis
+        @dis = ::IsoDoc::Iso::WordDISConvert.new(options)
       end
 
       def font_choice(options)
@@ -47,9 +51,13 @@ module IsoDoc
           olstyle: "l2" }
       end
 
-      def convert1(docxml, filename, dir)
-        if /^[45].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
-          @dis.convert1(docxml, filename, dir)
+      def convert(input_filename, file = nil, debug = false,
+                output_filename = nil)
+        file = File.read(input_filename, encoding: "utf-8") if file.nil?
+        docxml = Nokogiri::XML(file) { |config| config.huge }
+        if @dis &&
+            /^[45].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
+          @dis.convert(input_filename, file, debug, output_filename)
         else
           super
         end
