@@ -2,6 +2,7 @@ require_relative "base_convert"
 require "isodoc"
 require_relative "init"
 require_relative "word_cleanup"
+require_relative "word_dis_convert"
 
 module IsoDoc
   module Iso
@@ -13,6 +14,7 @@ module IsoDoc
         @wordToClevels = 3 if @wordToClevels.zero?
         @htmlToClevels = options[:htmltoclevels].to_i
         @htmlToClevels = 3 if @htmlToClevels.zero?
+        @dis = WordDISConvert(options)
       end
 
       def font_choice(options)
@@ -46,15 +48,11 @@ module IsoDoc
       end
 
       def convert1(docxml, filename, dir)
-        @dis = /^[45].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
-        if @dis
-          @wordstylesheet_name = html_doc_path("wordstyle-dis.scss")
-          @standardstylesheet_name = html_doc_path("isodoc-dis.scss")
-          @wordcoverpage = html_doc_path("word_iso_titlepage-dis.html")
-          @wordintropage = html_doc_path("word_iso_intro-dis.html")
-          @header = html_doc_path("header-dis.html")
+        if /^[45].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
+          @dis.convert1(docxml, filename, dir)
+        else
+          super
         end
-        super
       end
 
       def make_body(xml, docxml)
