@@ -10,36 +10,48 @@ module IsoDoc
         else
           initial_anchor_names1(doc)
         end
-        introduction_names(doc.at(ns("//introduction")))
+        if @parse_settings.empty? || @parse_settings[:clauses]
+          introduction_names(doc.at(ns("//introduction")))
+        end
       end
 
       def initial_anchor_names_amd(doc)
-        doc.xpath(ns("//preface/*")).each do |c|
-          c.element? and preface_names(c)
+        if @parse_settings.empty? || @parse_settings[:clauses]
+          doc.xpath(ns("//preface/*")).each do |c|
+            c.element? and preface_names(c)
+          end
+          doc.xpath(ns("//sections/clause")).each do |c|
+            c.element? and preface_names(c)
+          end
         end
-        sequential_asset_names(doc.xpath(ns("//preface/*")))
-        doc.xpath(ns("//sections/clause")).each do |c|
-          c.element? and preface_names(c)
+        if @parse_settings.empty?
+          sequential_asset_names(doc.xpath(ns("//preface/*")))
+          middle_section_asset_names(doc)
+          termnote_anchor_names(doc)
+          termexample_anchor_names(doc)
         end
-        middle_section_asset_names(doc)
-        termnote_anchor_names(doc)
-        termexample_anchor_names(doc)
       end
 
       def initial_anchor_names1(doc)
-        doc.xpath(ns("//preface/*")).each { |c| c.element? and preface_names(c) }
-        # potentially overridden in middle_section_asset_names()
-        sequential_asset_names(doc.xpath(ns("//preface/*")))
-        n = Counter.new
-        n = section_names(doc.at(ns("//clause[@type = 'scope']")), n, 1)
-        n = section_names(doc.at(ns(@klass.norm_ref_xpath)), n, 1)
-        doc.xpath(ns("//sections/clause[not(@type = 'scope')] | "\
-                     "//sections/terms | //sections/definitions")).each do |c|
-          n = section_names(c, n, 1)
+        if @parse_settings.empty? || @parse_settings[:clauses]
+          doc.xpath(ns("//preface/*")).each do |c|
+            c.element? and preface_names(c)
+          end
+          # potentially overridden in middle_section_asset_names()
+          sequential_asset_names(doc.xpath(ns("//preface/*")))
+          n = Counter.new
+          n = section_names(doc.at(ns("//clause[@type = 'scope']")), n, 1)
+          n = section_names(doc.at(ns(@klass.norm_ref_xpath)), n, 1)
+          doc.xpath(ns("//sections/clause[not(@type = 'scope')] | "\
+                       "//sections/terms | //sections/definitions")).each do |c|
+            n = section_names(c, n, 1)
+          end
         end
-        middle_section_asset_names(doc)
-        termnote_anchor_names(doc)
-        termexample_anchor_names(doc)
+        if @parse_settings.empty?
+          middle_section_asset_names(doc)
+          termnote_anchor_names(doc)
+          termexample_anchor_names(doc)
+        end
       end
 
       # we can reference 0-number clauses in introduction
@@ -166,7 +178,9 @@ module IsoDoc
 
       def back_anchor_names(docxml)
         super
+        if @parse_settings.empty? || @parse_settings[:clauses]
         docxml.xpath(ns("//indexsect")).each { |b| preface_names(b) }
+        end
       end
     end
   end

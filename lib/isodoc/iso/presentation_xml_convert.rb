@@ -1,6 +1,7 @@
 require_relative "init"
 require "isodoc"
 require_relative "index"
+require_relative "../../relaton/render/general"
 
 module IsoDoc
   module Iso
@@ -36,10 +37,8 @@ module IsoDoc
 
       def example1(node)
         n = @xrefs.get[node["id"]]
-        lbl = if n.nil? || n[:label].nil? || n[:label].empty?
-                @i18n.example
-              else
-                l10n("#{@i18n.example} #{n[:label]}")
+        lbl = if n.nil? || blank?(n[:label]) then @i18n.example
+              else l10n("#{@i18n.example} #{n[:label]}")
               end
         prefix_name(node, "&nbsp;&mdash; ", lbl, "name")
       end
@@ -82,8 +81,7 @@ module IsoDoc
 
         if subclause?(target, loc["type"], loc&.at(ns("./referenceFrom"))&.text)
           ""
-        else
-          "clause"
+        else "clause"
         end
       end
 
@@ -95,9 +93,8 @@ module IsoDoc
       def eref_localities1_zh(target, type, from, upto, node)
         ret = " 第#{from}" if from
         ret += "&ndash;#{upto}" if upto
-        if node["droploc"] != "true" && !subclause?(target, type, from)
+        node["droploc"] != "true" && !subclause?(target, type, from) and
           ret += eref_locality_populate(type, node)
-        end
         ret += ")" if type == "list"
         ret
       end
@@ -108,10 +105,9 @@ module IsoDoc
         type = type.downcase
         lang == "zh" and
           return l10n(eref_localities1_zh(target, type, from, upto, node))
-        ret = if node["droploc"] != "true" && !subclause?(target, type, from)
-                eref_locality_populate(type, node)
-              else ""
-              end
+        ret = ""
+        node["droploc"] != "true" && !subclause?(target, type, from) and
+          ret = eref_locality_populate(type, node)
         ret += " #{from}" if from
         ret += "&ndash;#{upto}" if upto
         ret += ")" if type == "list"
@@ -142,8 +138,7 @@ module IsoDoc
       def clause(docxml)
         docxml.xpath(ns("//clause[not(ancestor::annex)] | "\
                         "//terms | //definitions | //references | "\
-                        "//preface/introduction[clause]"))
-          .each do |f|
+                        "//preface/introduction[clause]")).each do |f|
           clause1(f)
         end
       end
@@ -159,9 +154,7 @@ module IsoDoc
       def concept_term(docxml)
         docxml.xpath(ns("//term")).each do |f|
           m = {}
-          f.xpath(ns(".//concept")).each do |c|
-            concept_term1(c, m)
-          end
+          f.xpath(ns(".//concept")).each { |c| concept_term1(c, m) }
         end
       end
 
@@ -178,12 +171,11 @@ module IsoDoc
       end
 
       def concept1_ref_content(ref)
-        if ref.name == "termref"
-          ref.replace(@i18n.term_defined_in.sub(/%/,
-                                                ref.to_xml))
-        else
-          ref.replace("(#{ref.to_xml})")
-        end
+        repl = if ref.name == "termref"
+                 @i18n.term_defined_in.sub(/%/, ref.to_xml)
+               else "(#{ref.to_xml})"
+               end
+        ref.replace(repl)
       end
 
       def concept1(node)
@@ -243,6 +235,18 @@ module IsoDoc
           termexamples_before_termnotes(node)
         end
         super
+      end
+
+      def bibrenderer
+        ::Relaton::Render::Iso::General.new(language: @lang)
+      end
+
+      def bibrender(xml)
+        unless xml.at(ns("./formattedref"))
+          xml.children =
+            "#{bibrenderer.render(xml.to_xml)}"\
+            "#{xml.xpath(ns('./docidentifier | ./uri | ./note')).to_xml}"
+        end
       end
 
       include Init

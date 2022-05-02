@@ -199,7 +199,7 @@ RSpec.describe IsoDoc do
             <title>1<tab/>
               Normative references</title>
             <bibitem id="ISO712" type="standard">
-              <title format="text/plain">Cereals and cereal products</title>
+              <formattedref format="text/plain"><em>Cereals and cereal products</em></formattedref>
               <docidentifier>ISO 712</docidentifier>
               <contributor>
                 <role type="publisher"/>
@@ -381,14 +381,8 @@ RSpec.describe IsoDoc do
               <title depth="1">1<tab/>
                 Normative References</title>
               <bibitem id="ISO712" type="standard">
-                <title format="text/plain">Cereals and cereal products</title>
+                 <formattedref><em>Cereals and cereal products</em></formattedref>
                 <docidentifier>ISO 712</docidentifier>
-                <contributor>
-                  <role type="publisher"/>
-                  <organization>
-                    <abbreviation>ISO</abbreviation>
-                  </organization>
-                </contributor>
               </bibitem>
             </references>
           </bibliography>
@@ -584,15 +578,8 @@ RSpec.describe IsoDoc do
           <bibliography><references id="_normative_references" obligation="informative" normative="true" displayorder="1"><title depth="1">1<tab/>Normative References</title>
           <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
       <bibitem id="ISO712" type="standard">
-        <title format="text/plain">Cereals or cereal products</title>
-        <title type="main" format="text/plain">Cereals and cereal products</title>
+         <formattedref><em>Cereals and cereal products</em></formattedref>
         <docidentifier type="ISO">ISO 712</docidentifier>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-          </organization>
-        </contributor>
       </bibitem>
       </references></bibliography>
           </iso-standard>
