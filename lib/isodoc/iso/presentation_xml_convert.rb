@@ -6,6 +6,7 @@ module IsoDoc
   module Iso
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
       def convert1(docxml, filename, dir)
+        @iso_class = self.class == IsoDoc::Iso::PresentationXMLConvert
         if amd(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
           @suppressheadingnumbers = true
