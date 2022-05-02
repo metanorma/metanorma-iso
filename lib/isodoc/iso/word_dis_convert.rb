@@ -32,14 +32,34 @@ module IsoDoc
         TableFootnote: "Tablefootnote",
         formula: "Formula",
         NormRef: "RefNorm",
+        MsoNormal: "MsoBodyText",
       }.freeze
 
       def dis_styles(docxml)
         STYLESMAP.each do |k, v|
-          docxml.xpath("//*[@class = '#{k}']").each do |s|
-            s["class"] = v
-          end
+          docxml.xpath("//*[@class = '#{k}']").each { |s| s["class"] = v }
         end
+        docxml.xpath("//h1[@class = 'ForewordTitle' or @class = 'IntroTitle']")
+          .each { |h| h.name = "p" }
+        docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
+      end
+
+      def span_parse(node, out)
+        out.span **{ class: node["class"] } do |x|
+          node.children.each { |n| parse(n, x) }
+        end
+      end
+
+      def word_toc_preface(level)
+        <<~TOC.freeze
+          <span lang="EN-GB"><span
+          style='mso-element:field-begin'></span><span
+          style='mso-spacerun:yes'>&#xA0;</span>TOC \\o &quot;2-#{level}&quot; \\h \\z \\u &quot;Heading
+           1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro
+           Title;1;ANNEXN;1;ANNEXZ;1;na2;1;na3;1;na4;1;na5;1;na6;1;Title;1;Base_Heading;1;Box-title;1;Front
+           Head;1;Index Head;1;AMEND Terms Heading;1;AMEND Heading 1 Unnumbered;1&quot;
+           <span style='mso-element:field-separator'></span></span>
+        TOC
       end
     end
   end

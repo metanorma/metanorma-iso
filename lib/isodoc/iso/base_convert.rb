@@ -23,14 +23,9 @@ module IsoDoc
       def error_parse(node, out)
         case node.name
         when "appendix" then clause_parse(node, out)
-        when "span" then span_parse(node, out)
         else
           super
         end
-      end
-
-      def span_parse(node, out)
-        node.children.each { |n| parse(n, div) }
       end
 
       def example_span_label(_node, div, name)
