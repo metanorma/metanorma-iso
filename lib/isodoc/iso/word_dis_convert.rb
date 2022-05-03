@@ -31,6 +31,8 @@ module IsoDoc
         FigureTitle: "Figuretitle",
         TableFootnote: "Tablefootnote",
         formula: "Formula",
+        example: "Example",
+        note: "Note",
         NormRef: "RefNorm",
         MsoNormal: "MsoBodyText",
       }.freeze
@@ -42,6 +44,7 @@ module IsoDoc
         docxml.xpath("//h1[@class = 'ForewordTitle' or @class = 'IntroTitle']")
           .each { |h| h.name = "p" }
         docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
+        code_style(docxml)
       end
 
       def span_parse(node, out)
@@ -66,6 +69,29 @@ module IsoDoc
         ret = super
         ret[:sdo] = std_docid_semantic(ret[:sdo])
         ret
+      end
+
+      def code_style(doc)
+        (doc.xpath("//tt//b") - doc.xpath("//tt//i//b")).each do |b|
+          span_style(b, "ISOCode_bold")
+        end
+        (doc.xpath("//tt//i") - doc.xpath("//tt//b//i")).each do |i|
+          span_style(i, "ISOCode_italic")
+        end
+        (doc.xpath("//b//tt") - doc.xpath("//b//i//tt")).each do |b|
+          span_style(b, "ISOCode_bold")
+        end
+        (doc.xpath("//i//tt") - doc.xpath("//i//b//tt")).each do |i|
+          span_style(i, "ISOCode_italic")
+        end
+        doc.xpath("//tt").each do |t|
+          span_style(t, "ISOCode")
+        end
+      end
+
+      def span_style(elem, style)
+        elem.name = "span"
+        elem["style"] = style
       end
     end
   end

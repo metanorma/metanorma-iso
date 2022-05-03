@@ -271,4 +271,93 @@ RSpec.describe IsoDoc do
     expect(xmlpp(doc.to_xml))
       .to be_equivalent_to xmlpp(word)
   end
+
+  it "formats tt" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <preface>
+        <foreword>
+        <p><tt>A <strong>B</strong> <em>C</em> <strong>D<em>E</em>F</strong> <em>G<strong>H</strong>I</em></tt></p>
+        <p><strong>A <tt>B</tt> <em>C<tt>D</tt>E</em></strong></p>
+        <p><em>A <tt>B</tt> <strong>C<tt>D</tt>E</strong></em></p>
+        </foreword>
+        </preface>
+      </iso-standard>
+    INPUT
+    word = <<~OUTPUT
+           <div class='WordSection2'>
+         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+       border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
+       solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
+       margin-left:5.1pt;margin-right:5.1pt'>
+           <div>
+             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
+           </div>
+         </div>
+         <p class='zzContents' style='margin-top:0cm'>
+           <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
+         </p>
+         <p class='MsoBodyText'>
+           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+         </p>
+         <div>
+           <p class='ForewordTitle'>Foreword</p>
+           <p class='ForewordText'>
+             <span style='ISOCode'>
+               A
+               <span style='ISOCode_bold'>B</span>
+               <span style='ISOCode_italic'>C</span>
+               <span style='ISOCode_bold'>
+                 D
+                 <span style='ISOCode_italic'>E</span>
+                 F
+               </span>
+               <span style='ISOCode_italic'>
+                 G
+                 <b>H</b>
+                 I
+               </span>
+             </span>
+           </p>
+           <p class='ForewordText'>
+             <b>
+               A
+               <span style='ISOCode_bold'>B</span>
+               <i>
+                 C
+                 <span style='ISOCode_italic'>D</span>
+                 E
+               </i>
+             </b>
+           </p>
+           <p class='ForewordText'>
+             <i>
+               A
+               <span style='ISOCode_italic'>B</span>
+               <b>
+                 C
+                 <span style='ISOCode_bold'>D</span>
+                 E
+               </b>
+             </i>
+           </p>
+         </div>
+         <p class='MsoBodyText'> </p>
+       </div>
+    OUTPUT
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    doc = Nokogiri::XML(output)
+      .xpath("//xmlns:p[@class = 'MsoToc1']").each(&:remove)
+      .at("//xmlns:div[@class = 'WordSection2']")
+    expect(xmlpp(doc.to_xml))
+      .to be_equivalent_to xmlpp(word)
+  end
 end
