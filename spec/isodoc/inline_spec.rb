@@ -328,40 +328,40 @@ RSpec.describe IsoDoc do
                 <eref bibitemid="IEV" citeas="IEV" type="inline">
                   <locality type="clause">
                     <referenceFrom>1-2-3</referenceFrom>
-                  </locality>IEV, 1-2-3</eref>
-                <eref bibitemid="ISO712" citeas="ISO 712" type="inline">ISO 712</eref>
+                  </locality>IEV, <span class="citesec">1-2-3</span></eref>
+                <eref bibitemid="ISO712" citeas="ISO 712" type="inline"><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>712</span></eref>
                 <eref bibitemid="ISO712" type="inline">ISO 712</eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
-                  </locality>ISO 712, Table 1</eref>
+                  </locality>ISO 712, <span class="citetbl">Table 1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
                     <referenceTo>1</referenceTo>
-                  </locality>ISO 712, Table 1–1</eref>
+                  </locality>ISO 712, <span class="citetbl">Table 1–1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1</referenceFrom>
                   </locality>
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
-                  </locality>ISO 712, Clause 1, Table 1</eref>
+                  </locality>ISO 712, <span class="citesec">Clause 1</span>, <span class="citetbl">Table 1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1</referenceFrom>
                   </locality>
                   <locality type="list">
                     <referenceFrom>a</referenceFrom>
-                  </locality>ISO 712, Clause 1 a)</eref>
+                  </locality>ISO 712, <span class="citesec">Clause 1</span> a)</eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1</referenceFrom>
-                  </locality>ISO 712, Clause 1</eref>
+                  </locality>ISO 712, <span class="citesec">Clause 1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1.5</referenceFrom>
-                  </locality>ISO 712, 1.5</eref>
+                  </locality>ISO 712, <span class="citesec">1.5</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
@@ -381,7 +381,7 @@ RSpec.describe IsoDoc do
               <title depth="1">1<tab/>
                 Normative References</title>
               <bibitem id="ISO712" type="standard">
-                 <formattedref><em>Cereals and cereal products</em></formattedref>
+                 <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
                 <docidentifier>ISO 712</docidentifier>
               </bibitem>
             </references>
@@ -503,11 +503,11 @@ RSpec.describe IsoDoc do
           <p>
           <ul>
                     <li>
-              (<xref target="clause1">Clause 3</xref>)
+              (<xref target="clause1"><span class='citesec'>Clause 3</span></xref>)
             </li>
             <li>
               <em>term</em>
-              (<xref target="clause1">Clause 3</xref>)
+              (<xref target="clause1"><span class='citesec'>Clause 3</span></xref>)
             </li>
           <li>
               <em>w[o]rd</em>
@@ -515,7 +515,7 @@ RSpec.describe IsoDoc do
             </li>
             <li>
               <em>term</em>
-              (<eref bibitemid="ISO712" type="inline" citeas="ISO 712">ISO 712</eref>)
+              (<eref bibitemid="ISO712" type="inline" citeas="ISO 712"><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>712</span></eref>)
             </li>
             <li>
               <em>word</em>
@@ -527,7 +527,7 @@ RSpec.describe IsoDoc do
                   <referenceFrom>3.1</referenceFrom>
                 </locality><locality type="figure">
                   <referenceFrom>a</referenceFrom>
-                </locality>ISO 712, 3.1, Figure a</eref>)
+                </locality><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></eref>)
             </li>
             <li>
               <em>word</em>
@@ -539,7 +539,7 @@ RSpec.describe IsoDoc do
                 <locality type="figure">
                   <referenceFrom>b</referenceFrom>
                 </locality>
-              </localityStack>ISO 712, 3.1 and Figure b</eref>)
+              </localityStack><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></eref>)
             </li>
             <li>
               <em>word</em>
@@ -578,7 +578,7 @@ RSpec.describe IsoDoc do
           <bibliography><references id="_normative_references" obligation="informative" normative="true" displayorder="1"><title depth="1">1<tab/>Normative References</title>
           <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
       <bibitem id="ISO712" type="standard">
-         <formattedref><em>Cereals and cereal products</em></formattedref>
+         <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
         <docidentifier type="ISO">ISO 712</docidentifier>
       </bibitem>
       </references></bibliography>
@@ -755,7 +755,7 @@ RSpec.describe IsoDoc do
                 <li>
                   <em>term</em>
                    (
-                  <xref target='clause1'>1.2</xref>
+                  <xref target='clause1'><span class='citesec'>1.2</span></xref>
                   )
                 </li>
                 <li> term </li>
@@ -767,7 +767,7 @@ RSpec.describe IsoDoc do
                 <li>
                   <em>term</em>
                    (
-                  <xref target='clause1'>1.2</xref>
+                  <xref target='clause1'><span class='citesec'>1.2</span></xref>
                   )
                 </li>
                 <li> term </li>
@@ -837,15 +837,15 @@ RSpec.describe IsoDoc do
         <ul>
         <li>
             <em>term</em>
-            (<xref target="clause1">Clause 1</xref>)
+            (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)
           </li>
           <li>
             term
-            (<xref target="clause1">Clause 1</xref>)
+            (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)
           </li>
         <li>
             <em>term</em>
-            (<xref target="clause1">Clause 1</xref>)
+            (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)
           </li>
          <li>
             term
@@ -856,10 +856,10 @@ RSpec.describe IsoDoc do
         <li>
             term
           </li>
-        <li><xref target="clause1"><em>term</em></xref> (<xref target="clause1">Clause 1</xref>)</li>
-        <li><xref target="clause1"><em>term</em></xref> (Clause 1)</li>
-        <li><em>term</em> (<xref target="clause1">Clause 1</xref>)</li>
-        <li><em>term</em> (Clause 1)</li>
+        <li><xref target="clause1"><em>term</em></xref> (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)</li>
+        <li><xref target="clause1"><em>term</em></xref> (<span class='citesec'>Clause 1</span>)</li>
+        <li><em>term</em> (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)</li>
+        <li><em>term</em> (<span class='citesec'>Clause 1</span>)</li>
          </ul></p>
          </term>
         </terms>
@@ -1004,7 +1004,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, Clause 3 to 5
+            XYZ, <span class="citesec">Clause <span class="citesec">3</span> to <span class="citesec">5</span></span>
           </eref>
           <eref type='inline' bibitemid='ref1' citeas='XYZ' droploc=''>
             <localityStack connective='from'>
@@ -1017,7 +1017,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5.1</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, 3.1 to 5.1
+            XYZ, <span class="citesec">3.1</span> to <span class="citesec">5.1</span>
           </eref>
           <eref type='inline' bibitemid='ref1' citeas='XYZ'>
             <localityStack connective='from'>
@@ -1030,7 +1030,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, 3.1 to Clause 5
+            XYZ, <span class="citesec">3.1</span> to <span class="citesec">Clause 5</span>
           </eref>
           <eref type='inline' bibitemid='ref1' citeas='XYZ'>
             <localityStack connective='from'>
@@ -1043,7 +1043,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, 3.1 to Table 5
+            XYZ, <span class="citesec">3.1</span> to <span class="citetbl">Table 5</span>
           </eref>
         </p>
       </itu-standard>

@@ -252,21 +252,21 @@ RSpec.describe IsoDoc do
               <title>Foreword</title>
               <p id='A'>
                 This is a preamble 
-                <xref target='C'>0.1</xref>
-                <xref target='C1'>0.2</xref>
-                <xref target='D'>Scope</xref>
+                <xref target='C'><span class='citesec'>0.1</span></xref>
+                <xref target='C1'><span class='citesec'>0.2</span></xref>
+                <xref target='D'><span class='citesec'>Scope</span></xref>
                 <xref target='H'>[H]</xref>
                 <xref target='I'>[I]</xref>
                 <xref target='J'>[J]</xref>
                 <xref target='K'>[K]</xref>
                 <xref target='L'>[L]</xref>
-                <xref target='M'>Clause 4</xref>
-                <xref target='N'>Introduction</xref>
-                <xref target='O'>Clause 4.2</xref>
-                <xref target='P'>Annex A</xref>
-                <xref target='Q'>A.1</xref>
-                <xref target='Q1'>A.1.1</xref>
-                <xref target='Q2'>Annex A, Appendix 1</xref>
+                <xref target='M'><span class='citesec'>Clause 4</span></xref>
+                <xref target='N'><span class='citesec'>Introduction</span></xref>
+                <xref target='O'><span class='citesec'>Clause 4.2</span></xref>
+                <xref target='P'><span class='citeapp'>Annex A</span></xref>
+                <xref target='Q'><span class='citeapp'>A.1</span></xref>
+                <xref target='Q1'><span class='citeapp'>A.1.1</span></xref>
+                <xref target='Q2'><span class='citeapp'>Annex A, Appendix 1</span></xref>
                 <xref target='R'>[R]</xref>
               </p>
             </foreword>

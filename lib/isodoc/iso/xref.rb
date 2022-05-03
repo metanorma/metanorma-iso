@@ -80,6 +80,7 @@ module IsoDoc
           @anchors[c["id"]] = anchor_struct(i.print, nil, @labels["appendix"],
                                             "clause")
           @anchors[c["id"]][:level] = 2
+          @anchors[c["id"]][:subtype] = "annex"
           @anchors[c["id"]][:container] = clause["id"]
           j = Counter.new
           c.xpath(ns("./clause | ./references")).each do |c1|
@@ -90,10 +91,11 @@ module IsoDoc
         end
       end
 
+      # subclauses are not prefixed with "Clause"
+      # retaining sybtupe for the semantics
       def section_names1(clause, num, level)
         @anchors[clause["id"]] =
-          { label: num, level: level, xref: num }
-        # subclauses are not prefixed with "Clause"
+          { label: num, level: level, xref: num, subtype: "clause" }
         i = Counter.new
         clause.xpath(ns("./clause | ./terms | ./term | ./definitions | "\
                         "./references"))
@@ -104,7 +106,8 @@ module IsoDoc
       end
 
       def annex_names1(clause, num, level)
-        @anchors[clause["id"]] = { label: num, xref: num, level: level }
+        @anchors[clause["id"]] = { label: num, xref: num, level: level,
+                                   subtype: "annex" }
         i = Counter.new
         clause.xpath(ns("./clause | ./references")).each do |c|
           i.increment(c)
@@ -179,7 +182,7 @@ module IsoDoc
       def back_anchor_names(docxml)
         super
         if @parse_settings.empty? || @parse_settings[:clauses]
-        docxml.xpath(ns("//indexsect")).each { |b| preface_names(b) }
+          docxml.xpath(ns("//indexsect")).each { |b| preface_names(b) }
         end
       end
     end

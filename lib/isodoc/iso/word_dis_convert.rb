@@ -61,6 +61,12 @@ module IsoDoc
            <span style='mso-element:field-separator'></span></span>
         TOC
       end
+
+      def render_identifier(ident)
+        ret = super
+        ret[:sdo] = std_docid_semantic(ret[:sdo])
+        ret
+      end
     end
   end
 end

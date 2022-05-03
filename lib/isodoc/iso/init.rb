@@ -27,6 +27,15 @@ module IsoDoc
       def clausedelim
         ""
       end
+
+      def std_docid_semantic(id)
+        return nil if id.nil?
+
+        id.sub(/^([^0-9]+)\s/, "<span class='stdpublisher'>\\1</span> ")
+          .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
+          .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
+          .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
+      end
     end
   end
 end

@@ -53,13 +53,37 @@ module IsoDoc
           type == "list" || target&.match(/^IEV$|^IEC 60050-/)
       end
 
+      LOCALITY2SPAN = {
+        annex: "citeapp",
+        dunno: "citebase",
+        dunno2: "citebib",
+        dunno3: "citebox",
+        dunno4: "citeen",
+        dunno5: "citeeq",
+        figure: "citefig",
+        dunno6: "citefn",
+        clause: "citesec",
+        dunno7: "citesection",
+        table: "citetbl",
+        dunno8: "citetfn",
+      }.freeze
+
+      def locality_span_wrap(ret, type)
+        type or return ret
+        m = /^(\s*)(.+?)(\s*)$/.match(ret) or return ret
+        ret = [m[1], m[2], m[3]]
+        spanclass = LOCALITY2SPAN[type.to_sym] and
+          ret[1] = "<span class='#{spanclass}'>#{ret[1]}</span>"
+        ret.join
+      end
+
       def eref_localities1_zh(target, type, from, upto, node)
         ret = " 第#{from}" if from
         ret += "&ndash;#{upto}" if upto
         node["droploc"] != "true" && !subclause?(target, type, from) and
           ret += eref_locality_populate(type, node)
         ret += ")" if type == "list"
-        ret
+        locality_span_wrap(ret, type)
       end
 
       def eref_localities1(target, type, from, upto, node, lang = "en")
@@ -74,12 +98,27 @@ module IsoDoc
         ret += " #{from}" if from
         ret += "&ndash;#{upto}" if upto
         ret += ")" if type == "list"
-        l10n(ret)
+        ret = l10n(ret)
+        locality_span_wrap(ret, type)
       end
 
       def prefix_container(container, linkend, target)
         delim = @xrefs.anchor(target, :type) == "listitem" ? " " : ", "
         l10n(@xrefs.anchor(container, :xref) + delim + linkend)
+      end
+
+      def expand_citeas(text)
+        std_docid_semantic(super)
+      end
+
+      def anchor_value(id)
+        locality_span_wrap(super, @xrefs.anchor(id, :subtype) ||
+                            @xrefs.anchor(id, :type))
+      end
+
+      def anchor_linkend1(node)
+        locality_span_wrap(super, @xrefs.anchor(node["target"], :subtype) ||
+                           @xrefs.anchor(node["target"], :type))
       end
     end
   end

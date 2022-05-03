@@ -215,4 +215,60 @@ RSpec.describe IsoDoc do
     expect(xmlpp(doc.to_xml))
       .to be_equivalent_to xmlpp(word)
   end
+
+  it "formats references" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+                <bibliography>
+          <references id="_normative_references" normative="true" obligation="informative">
+            <title>Normative References</title>
+            <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+            <bibitem id="ISO712" type="standard">
+            <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
+            <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>
+            </bibitem>
+        </references>
+        </bibliography>
+      </iso-standard>
+    INPUT
+    word = <<~OUTPUT
+             <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <h1>Normative References</h1>
+          <p class='MsoBodyText'>
+            The following documents are referred to in the text in such a way that
+            some or all of their content constitutes requirements of this document.
+            For dated references, only the edition cited applies. For undated
+            references, the latest edition of the referenced document (including any
+            amendments) applies.
+          </p>
+          <p class='RefNorm'>
+            <a name='ISO712' id='ISO712'/>
+            <span class='stdpublisher'>ISO/IEC</span> <span class='stddocNumber'>712</span>-<span class='stddocPartNumber'>3</span>:<span class='stdyear'>2022</span>, ALUFFI, Paolo, ed. (2022).
+            <i>
+              <span class='std_class'>
+                Facets of Algebraic Geometry: A Collection in Honor of William
+                Fulton's 80th Birthday
+              </span>
+            </i>
+            , 1st edition. Cambridge, UK: CUP.
+          </p>
+        </div>
+      </div>
+    OUTPUT
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    doc = Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']")
+    expect(xmlpp(doc.to_xml))
+      .to be_equivalent_to xmlpp(word)
+  end
 end
