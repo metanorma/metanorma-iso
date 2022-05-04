@@ -47,7 +47,10 @@ RSpec.configure do |config|
 end
 
 def strip_guid(xml)
-  xml.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
+  xml.gsub(%r{ id="_[^"]+"}, ' id="_"')
+    .gsub(%r{ target="_[^"]+"}, ' target="_"')
+    .gsub(%r{ src="cid:[^.]+.gif"}, ' src="_.gif"')
+    .gsub(%r{ src='cid:[^.]+.gif'}, ' src="_.gif"')
 end
 
 def metadata(hash)

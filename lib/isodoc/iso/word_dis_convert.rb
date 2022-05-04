@@ -35,6 +35,8 @@ module IsoDoc
         note: "Note",
         NormRef: "RefNorm",
         MsoNormal: "MsoBodyText",
+        AnnexTableTitle: "Tabletitle",
+        AnnexFigureTitle: "Figuretitle",
       }.freeze
 
       def dis_styles(docxml)
@@ -43,8 +45,9 @@ module IsoDoc
         end
         docxml.xpath("//h1[@class = 'ForewordTitle' or @class = 'IntroTitle']")
           .each { |h| h.name = "p" }
-        docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
         code_style(docxml)
+        figure_style(docxml)
+        docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
       end
 
       def span_parse(node, out)
@@ -71,6 +74,20 @@ module IsoDoc
         ret
       end
 
+      FIGURE_NESTED_STYLES =
+        { Note: "Figurenote", example: "Figureexample" }.freeze
+
+      def figure_style(docxml)
+        docxml.xpath("//div[@class = 'figure']").each do |f|
+          FIGURE_NESTED_STYLES.each do |k, v|
+            f.xpath(".//*[@class = '#{k}']").each { |n| n["class"] = v }
+          end
+          f.xpath("./img").each do |i|
+            i.replace("<p class='FigureGraphic'>#{i.to_xml}</p>")
+          end
+        end
+      end
+
       def code_style(doc)
         (doc.xpath("//tt//b") - doc.xpath("//tt//i//b")).each do |b|
           span_style(b, "ISOCode_bold")
@@ -92,6 +109,43 @@ module IsoDoc
       def span_style(elem, style)
         elem.name = "span"
         elem["style"] = style
+      end
+
+      def make_tr_attr(cell, row, totalrows, header)
+        super.merge(header: header)
+      end
+
+      def word_cleanup(docxml)
+        word_table_cell_para(docxml)
+        super
+      end
+
+      def word_table_cell_para(docxml)
+        docxml.xpath("//td | //th").each do |t|
+          s = t["header"] == "true" ? "Tableheader" : "Tablebody"
+          t.delete("header")
+          if t.at("./p |./div")
+            t.xpath("./p | ./div").each { |p| p["class"] = s }
+          else
+            t.children = "<div class='#{s}'>#{t.children.to_xml}</div>"
+          end
+        end
+      end
+
+      def toWord(result, filename, dir, header)
+        result = from_xhtml(word_cleanup(to_xhtml(result)))
+          .gsub(/-DOUBLE_HYPHEN_ESCAPE-/, "--")
+        @wordstylesheet = wordstylesheet_update
+        ::Html2Doc::IsoDIS.new(
+          filename: filename,
+          imagedir: @localdir,
+          stylesheet: @wordstylesheet&.path,
+          header_file: header&.path, dir: dir,
+          asciimathdelims: [@openmathdelim, @closemathdelim],
+          liststyles: { ul: @ulstyle, ol: @olstyle }
+        ).process(result)
+        header&.unlink
+        @wordstylesheet.unlink if @wordstylesheet.is_a?(Tempfile)
       end
     end
   end
