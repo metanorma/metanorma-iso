@@ -306,16 +306,16 @@ RSpec.describe IsoDoc do
         <div>
           <p class='ForewordTitle'>Foreword</p>
           <p class='ForewordText'>
-            <span style='ISOCode'>
+            <span class='ISOCode'>
               A
-              <span style='ISOCode_bold'>B</span>
-              <span style='ISOCode_italic'>C</span>
-              <span style='ISOCode_bold'>
+              <span class='ISOCodebold'>B</span>
+              <span class='ISOCodeitalic'>C</span>
+              <span class='ISOCodebold'>
                 D
-                <span style='ISOCode_italic'>E</span>
+                <span class='ISOCodeitalic'>E</span>
                 F
               </span>
-              <span style='ISOCode_italic'>
+              <span class='ISOCodeitalic'>
                 G
                 <b>H</b>
                 I
@@ -325,10 +325,10 @@ RSpec.describe IsoDoc do
           <p class='ForewordText'>
             <b>
               A
-              <span style='ISOCode_bold'>B</span>
+              <span class='ISOCodebold'>B</span>
               <i>
                 C
-                <span style='ISOCode_italic'>D</span>
+                <span class='ISOCodeitalic'>D</span>
                 E
               </i>
             </b>
@@ -336,10 +336,10 @@ RSpec.describe IsoDoc do
           <p class='ForewordText'>
             <i>
               A
-              <span style='ISOCode_italic'>B</span>
+              <span class='ISOCodeitalic'>B</span>
               <b>
                 C
-                <span style='ISOCode_bold'>D</span>
+                <span class='ISOCodebold'>D</span>
                 E
               </b>
             </i>

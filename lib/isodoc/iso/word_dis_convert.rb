@@ -89,26 +89,22 @@ module IsoDoc
       end
 
       def code_style(doc)
-        (doc.xpath("//tt//b") - doc.xpath("//tt//i//b")).each do |b|
-          span_style(b, "ISOCode_bold")
-        end
-        (doc.xpath("//tt//i") - doc.xpath("//tt//b//i")).each do |i|
-          span_style(i, "ISOCode_italic")
-        end
-        (doc.xpath("//b//tt") - doc.xpath("//b//i//tt")).each do |b|
-          span_style(b, "ISOCode_bold")
-        end
-        (doc.xpath("//i//tt") - doc.xpath("//i//b//tt")).each do |i|
-          span_style(i, "ISOCode_italic")
-        end
-        doc.xpath("//tt").each do |t|
-          span_style(t, "ISOCode")
-        end
+        span_style((doc.xpath("//tt//b") - doc.xpath("//tt//i//b")),
+                   "ISOCodebold")
+        span_style((doc.xpath("//tt//i") - doc.xpath("//tt//b//i")),
+                   "ISOCodeitalic")
+        span_style((doc.xpath("//b//tt") - doc.xpath("//b//i//tt")),
+                   "ISOCodebold")
+        span_style((doc.xpath("//i//tt") - doc.xpath("//i//b//tt")),
+                   "ISOCodeitalic")
+        span_style(doc.xpath("//tt"), "ISOCode")
       end
 
-      def span_style(elem, style)
-        elem.name = "span"
-        elem["style"] = style
+      def span_style(xpath, style)
+        xpath.each do |elem|
+          elem.name = "span"
+          elem["class"] = style
+        end
       end
 
       def make_tr_attr(cell, row, totalrows, header)
