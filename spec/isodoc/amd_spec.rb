@@ -128,7 +128,7 @@ RSpec.describe IsoDoc do
           <annex id="annex1" displayorder="5">
             <title>
               <strong>Annex A</strong>
-              <br/>(informative)</title>
+              <br/><span class="obligation">(informative)</span></title>
             <clause id="annex1a" inline-header="true">
               <title>A.1</title>
               <note id="AN">
@@ -297,7 +297,7 @@ RSpec.describe IsoDoc do
             <title>
               <strong>Annex A</strong>
               <br/>
-              (normative)
+              <span class="obligation">(normative)</span>
               <br/>
               <br/>
               <strong>Annex</strong>
@@ -503,7 +503,7 @@ RSpec.describe IsoDoc do
           </clause>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder="10">
-          <title><strong>Annex A</strong><br/>(normative)<br/><br/><strong>Annex</strong></title>
+          <title><strong>Annex A</strong><br/><span class="obligation">(normative)</span><br/><br/><strong>Annex</strong></title>
           <clause id="Q" inline-header="false" obligation="normative">
             <title depth="2">A.1<tab/>Annex A.1</title>
             <clause id="Q1" inline-header="false" obligation="normative">
@@ -511,7 +511,8 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </annex>
-        <annex id="P1" inline-header="false" obligation="normative" displayorder="11"><title><strong>Annex B</strong><br/>(normative)</title></annex>
+        <annex id="P1" inline-header="false" obligation="normative" displayorder="11">
+        <title><strong>Annex B</strong><br/><span class="obligation">(normative)</span></title></annex>
         <bibliography>
           <references id="R" normative="true" obligation="informative" displayorder="7">
             <title depth="1">Normative References</title>

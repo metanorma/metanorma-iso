@@ -177,8 +177,19 @@ module IsoDoc
 
         name&.at(ns("./strong"))&.remove # supplied by CSS list numbering
         div.h1 **{ class: "Annex" } do |t|
-          name.children.each { |c2| parse(c2, t) }
+          annex_name1(name, t)
           clause_parse_subtitle(name, t)
+        end
+      end
+
+      def annex_name1(name, out)
+        name.children.each do |c2|
+          if c2.name == "span" && c2["class"] == "obligation"
+            out.span **{ style: "font-weight:normal;" } do |s|
+              c2.children.each { |c3| parse(c3, s) }
+            end
+          else parse(c2, out)
+          end
         end
       end
 

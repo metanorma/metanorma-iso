@@ -185,6 +185,10 @@ module IsoDoc
           docxml.xpath(ns("//indexsect")).each { |b| preface_names(b) }
         end
       end
+
+      def annex_name_lbl(clause, num)
+        super.sub(%r{<br/>(.*)$}, "<br/><span class='obligation'>\\1</span>")
+      end
     end
   end
 end

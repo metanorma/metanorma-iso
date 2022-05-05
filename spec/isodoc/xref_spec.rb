@@ -121,7 +121,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <note id="AN">
@@ -273,7 +273,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <figure id="AN">
@@ -407,7 +407,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
           </clause>
@@ -546,7 +546,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <example id="AN">
@@ -700,7 +700,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <formula id="AN">
@@ -900,7 +900,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <table id="AN">
@@ -1243,7 +1243,7 @@ RSpec.describe IsoDoc do
           <title>
             <strong>Annex A</strong>
             <br/>
-            (normative)
+            <span class="obligation">(normative)</span>
             <br/>
             <br/>
             <strong>Annex</strong>
@@ -1404,7 +1404,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <ol id="AN" type="alphabet">
@@ -1536,7 +1536,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id='annex1'  displayorder='5'><title><strong>Annex A</strong><br/>(informative)</title>
+        <annex id='annex1'  displayorder='5'><title><strong>Annex A</strong><br/><span class="obligation">(informative)</span></title>
           <clause inline-header="true" id='annex1a'><title>A.1</title>
             <ol id='ANl' type="alphabet">
               <li id='AN'>

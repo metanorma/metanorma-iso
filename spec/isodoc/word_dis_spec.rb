@@ -654,4 +654,107 @@ RSpec.describe IsoDoc do
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
       .to be_equivalent_to xmlpp(word)
   end
+
+  it "deals with examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <example id="B">
+        <p>First example</p>
+        </example>
+        <example id="C">
+        <p>Second example</p>
+        <ul>
+        <li>A</li>
+        </ul>
+        <p>Continuation</p>
+        </example>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div class='Example'>
+            <a name='B' id='B'/>
+            <p class='Example'>
+              <span style='mso-tab-count:1'>  </span>
+              First example
+            </p>
+          </div>
+          <div class='Example'>
+            <a name='C' id='C'/>
+            <p class='Example'>
+              <span style='mso-tab-count:1'>  </span>
+              Second example
+            </p>
+            <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>A</p>
+            <p class='Examplecontinued'>Continuation</p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with annexes" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <annex id="A"><title>Annex</title>
+        <clause id="B"><title>Subannex</title>
+        <clause id="C"><title>Subsubannex</title>
+        </clause>
+        </clause>
+        </annex>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+         <p class='zzSTDTitle1'/>
+         <p class='MsoBodyText'>
+           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+         </p>
+         <div class='Section3'>
+           <a name='A' id='A'/>
+           <p class='ANNEX'>Annex</p>
+           <div>
+             <a name='B' id='B'/>
+             <p class='a2'>Subannex</p>
+             <div>
+               <a name='C' id='C'/>
+               <p class='a3'>Subsubannex</p>
+             </div>
+           </div>
+         </div>
+       </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
 end

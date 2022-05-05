@@ -45,9 +45,38 @@ module IsoDoc
         end
         docxml.xpath("//h1[@class = 'ForewordTitle' or @class = 'IntroTitle']")
           .each { |h| h.name = "p" }
+        dis_styles1(docxml)
+        docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
+      end
+
+      def dis_styles1(docxml)
         code_style(docxml)
         figure_style(docxml)
-        docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
+        example_style(docxml)
+        annex_style(docxml)
+      end
+
+      def example_style(docxml)
+        docxml.xpath("//div[@class = 'Example']").each do |d|
+          d.xpath("./p").each_with_index do |p, i|
+            next if p["class"] && p["class"] != "Example"
+
+            p["class"] = (i.zero? ? "Example" : "Examplecontinued")
+          end
+        end
+      end
+
+      def annex_style(docxml)
+        docxml.xpath("//h1[@class = 'Annex']").each do |h|
+          h.name = "p"
+          h["class"] = "ANNEX"
+        end
+        (2..6).each do |i|
+          docxml.xpath("//*[@class = 'h#{i}Annex']").each do |h|
+            h.name = "p"
+            h["class"] = "a#{i}"
+          end
+        end
       end
 
       def span_parse(node, out)

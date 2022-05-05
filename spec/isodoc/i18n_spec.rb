@@ -156,7 +156,7 @@ RSpec.describe IsoDoc do
         <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
           <title>
             <strong>Annex A</strong>
-            <br/>(normative)
+            <br/><span class='obligation'>(normative)</span>
             <br/>
             <br/>
             <strong>Annex</strong></title>
@@ -263,6 +263,181 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
+    word = <<~WORD
+      <html xmlns:epub='http://www.idpf.org/2007/ops' lang='en'>
+         <head>
+           <style></style>
+           <style></style>
+         </head>
+         <body lang='EN-US' link='blue' vlink='#954F72'>
+           <div class='WordSection1'>
+             <p> </p>
+           </div>
+           <p>
+             <br clear='all' class='section'/>
+           </p>
+           <div class='WordSection2'>
+             <p>
+               <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+             </p>
+             <div>
+               <h1 class='ForewordTitle'>Foreword</h1>
+               <p class='ForewordText' id='A'>This is a preamble</p>
+             </div>
+             <p>
+               <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+             </p>
+             <div class='Section3' id='B'>
+               <h1 class='IntroTitle'>
+                 0
+                 <span style='mso-tab-count:1'>  </span>
+                 Introduction
+               </h1>
+               <div id='C'>
+                 <h2>
+                   0.1
+                   <span style='mso-tab-count:1'>  </span>
+                   Introduction Subsection
+                 </h2>
+               </div>
+               <p>This is patent boilerplate</p>
+             </div>
+             <p> </p>
+           </div>
+           <p>
+             <br clear='all' class='section'/>
+           </p>
+           <div class='WordSection3'>
+             <p class='zzSTDTitle1'/>
+             <div id='D'>
+               <h1>
+                 1
+                 <span style='mso-tab-count:1'>  </span>
+                 Scope
+               </h1>
+               <p id='E'>Text</p>
+             </div>
+             <div>
+               <h1>
+                 2
+                 <span style='mso-tab-count:1'>  </span>
+                 Normative References
+               </h1>
+             </div>
+             <div id='H'>
+               <h1>
+                 3
+                 <span style='mso-tab-count:1'>  </span>
+                 Terms, definitions, symbols and abbreviated terms
+               </h1>
+               <div id='I'>
+                 <h2>
+                   3.1
+                   <span style='mso-tab-count:1'>  </span>
+                   Normal Terms
+                 </h2>
+                 <p class='TermNum' id='J'>3.1.1</p>
+                 <p class='Terms' style='text-align:left;'>
+                   <b>Term2</b>
+                 </p>
+               </div>
+               <div id='K'>
+                 <span class='zzMoveToFollowing'>
+                   <b>
+                     3.2
+                     <span style='mso-tab-count:1'>  </span>
+                   </b>
+                 </span>
+                 <table class='dl'>
+                   <tr>
+                     <td valign='top' align='left'>
+                       <p align='left' style='margin-left:0pt;text-align:left;'>Symbol</p>
+                     </td>
+                     <td valign='top'>Definition</td>
+                   </tr>
+                 </table>
+               </div>
+             </div>
+             <div id='L' class='Symbols'>
+               <h1>4</h1>
+               <table class='dl'>
+                 <tr>
+                   <td valign='top' align='left'>
+                     <p align='left' style='margin-left:0pt;text-align:left;'>Symbol</p>
+                   </td>
+                   <td valign='top'>Definition</td>
+                 </tr>
+               </table>
+             </div>
+             <div id='M'>
+               <h1>
+                 5
+                 <span style='mso-tab-count:1'>  </span>
+                 Clause 4
+               </h1>
+               <div id='N'>
+                 <h2>
+                   5.1
+                   <span style='mso-tab-count:1'>  </span>
+                   Introduction
+                 </h2>
+               </div>
+               <div id='O'>
+                 <h2>
+                   5.2
+                   <span style='mso-tab-count:1'>  </span>
+                   Clause 4.2
+                 </h2>
+               </div>
+             </div>
+             <p>
+               <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+             </p>
+             <div id='P' class='Section3'>
+               <h1 class='Annex'>
+                 <br/>
+                 <span style='font-weight:normal;'>(normative)</span>
+                 <br/>
+                 <br/>
+                 <b>Annex</b>
+               </h1>
+               <div id='Q'>
+                 <h2>
+                   A.1
+                   <span style='mso-tab-count:1'>  </span>
+                   Annex A.1
+                 </h2>
+                 <div id='Q1'>
+                   <h3>
+                     A.1.1
+                     <span style='mso-tab-count:1'>  </span>
+                     Annex A.1a
+                   </h3>
+                 </div>
+               </div>
+               <div id='Q2'>
+                 <h2>
+                   Appendix 1
+                   <span style='mso-tab-count:1'>  </span>
+                   An Appendix
+                 </h2>
+               </div>
+             </div>
+             <p>
+               <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+             </p>
+             <div>
+               <h1 class='BiblioTitle'>Bibliography</h1>
+               <div>
+                 <h2 class='BiblioTitle'>Bibliography Subsection</h2>
+               </div>
+             </div>
+           </div>
+           <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+           <div class='colophon'/>
+         </body>
+       </html>
+    WORD
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
@@ -270,6 +445,9 @@ RSpec.describe IsoDoc do
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
       .to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(word)
   end
 
   it "defaults to English" do
@@ -429,7 +607,7 @@ RSpec.describe IsoDoc do
           <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
             <title>
               <strong>Annex A</strong>
-              <br/>(normative)
+              <br/><span class='obligation'>(normative)</span>
               <br/>
               <br/>
               <strong>Annex</strong></title>
@@ -613,7 +791,7 @@ RSpec.describe IsoDoc do
         <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
           <title>
             <strong>Annexe A</strong>
-            <br/>(normative)
+            <br/><span class='obligation'>(normative)</span>
             <br/>
             <br/>
             <strong>Annex</strong></title>
@@ -898,7 +1076,7 @@ RSpec.describe IsoDoc do
         <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
           <title>
             <strong>&#x414;&#x43E;&#x43F;&#x43E;&#x43B;&#x43D;&#x435;&#x43D;&#x438;&#x435; A</strong>
-            <br/>(&#x43D;&#x43E;&#x440;&#x43C;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x43E;&#x435;)
+            <br/><span class='obligation'>(&#x43D;&#x43E;&#x440;&#x43C;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x43E;&#x435;)</span>
             <br/>
             <br/>
             <strong>Annex</strong></title>
@@ -1194,7 +1372,7 @@ RSpec.describe IsoDoc do
         <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
           <title>
             <strong>附件A</strong>
-            <br/>（规范性附录）
+            <br/><span class='obligation'>（规范性附录）</span>
             <br/>
             <br/>
             <strong>Annex</strong></title>
