@@ -16,7 +16,7 @@ module IsoDoc
       end
 
       def i18n_init(lang, script, i18nyaml = nil)
-        @i18n = I18n.new(lang, script, i18nyaml || @i18nyaml)
+        @i18n = I18n.new(lang, script, i18nyaml: i18nyaml || @i18nyaml)
       end
 
       def amd(docxml)
@@ -31,10 +31,17 @@ module IsoDoc
       def std_docid_semantic(id)
         return nil if id.nil?
 
-        id.sub(/^([^0-9]+)\s/, "<span class='stdpublisher'>\\1</span> ")
-          .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
-          .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
-          .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
+        ids = id.split(/ /)
+        ids.map! do |i|
+          if %w(GUIDE TR TS DIR).include?(i)
+            "<span class='stddocNumber'>#{i}</span>"
+          else
+            i.sub(/^([^0-9]+)(\s|$)/, "<span class='stdpublisher'>\\1</span>\\2")
+              .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
+              .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
+              .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
+          end
+        end.join(" ")
       end
     end
   end

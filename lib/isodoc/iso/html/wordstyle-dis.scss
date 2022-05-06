@@ -352,33 +352,6 @@ p.IntroTitle, li.IntroTitle, div.IntroTitle
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
 
-p.ANNEX, li.ANNEX, div.ANNEX
-	{mso-style-name:ANNEX;
-	mso-style-unhide:no;
-	mso-style-parent:Base_Heading;
-	mso-style-next:Normal;
-	margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:38.0pt;
-	margin-left:0cm;
-	text-align:center;
-	text-indent:0cm;
-	line-height:15.5pt;
-	mso-line-height-rule:exactly;
-	page-break-before:always;
-	mso-pagination:widow-orphan;
-	page-break-after:avoid;
-	mso-outline-level:1;
-	mso-list:l11 level1 lfo4;
-	font-size:14.0pt;
-	mso-bidi-font-size:10.0pt;
-	font-family:$headerfont;
-	mso-fareast-font-family:"MS Mincho";
-	mso-bidi-font-family:"Times New Roman";
-	mso-ansi-language:EN-GB;
-	mso-fareast-language:JA;
-	font-weight:bold;
-	mso-bidi-font-weight:normal;}
 h1.Annex
 	{mso-style-priority:1;
 	mso-style-unhide:no;
@@ -1830,14 +1803,14 @@ div.colophon
         {page:WordSection4;}
 
   /* List Definitions */
-@list l0
+@list l11
 	{mso-list-id:145051656;
-	mso-list-template-ids:2112159680;}
-@list l0:level1
+	mso-list-template-ids:2132838916;}
+@list l11:level1
 	{mso-level-number-format:alpha-upper;
 	mso-level-style-link:ANNEX;
 	mso-level-suffix:none;
-	mso-level-text:"Annex\00A0%1";
+	mso-level-text:"Annex %1";
 	mso-level-tab-stop:none;
 	mso-level-number-position:left;
 	margin-left:0cm;
@@ -1845,85 +1818,85 @@ div.colophon
 	mso-ansi-font-size:14.0pt;
 	mso-bidi-font-size:14.0pt;
 	font-family:$bodyfont;
-	mso-bidi-font-family:$bodyfont;
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
-@list l0:level2
+@list l11:level2
 	{mso-level-style-link:a2;
 	mso-level-text:"%1\.%2";
 	mso-level-tab-stop:18.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
-@list l0:level3
+@list l11:level3
 	{mso-level-style-link:a3;
 	mso-level-text:"%1\.%2\.%3";
 	mso-level-tab-stop:36.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
-@list l0:level4
+@list l11:level4
 	{mso-level-style-link:a4;
 	mso-level-text:"%1\.%2\.%3\.%4";
 	mso-level-tab-stop:54.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
-@list l0:level5
+@list l11:level5
 	{mso-level-style-link:a5;
 	mso-level-text:"%1\.%2\.%3\.%4\.%5";
 	mso-level-tab-stop:54.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
-@list l0:level6
+@list l11:level6
 	{mso-level-style-link:a6;
 	mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6";
 	mso-level-tab-stop:72.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-font-weight:bold;
 	mso-ansi-font-style:normal;}
-@list l0:level7
+@list l11:level7
 	{mso-level-reset-level:level2;
 	mso-level-suffix:space;
-	mso-level-text:"Figure\00A0%1\.%7\00A0—";
+	mso-level-text:"Figure %1\.%7 —";
 	mso-level-tab-stop:none;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;}
-@list l0:level8
+	mso-bidi-font-family:"Times New Roman";}
+@list l11:level8
 	{mso-level-reset-level:level2;
 	mso-level-suffix:space;
-	mso-level-text:"Table\00A0%1\.%8\00A0—";
+	mso-level-text:"Table %1\.%8 —";
 	mso-level-tab-stop:none;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;}
-@list l0:level9
+	mso-bidi-font-family:"Times New Roman";}
+@list l11:level9
 	{mso-level-number-format:roman-lower;
 	mso-level-text:"\(%9\)";
 	mso-level-tab-stop:306.0pt;
 	mso-level-number-position:left;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-bidi-font-family:$bodyfont;}
+	mso-bidi-font-family:"Times New Roman";}
 @list l1
 	{mso-list-id:866942648;
 	mso-list-template-ids:-1756330000;}

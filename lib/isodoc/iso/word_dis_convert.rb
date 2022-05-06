@@ -28,15 +28,13 @@ module IsoDoc
 
       STYLESMAP = {
         AltTerms: "AdmittedTerm",
-        FigureTitle: "Figuretitle",
         TableFootnote: "Tablefootnote",
         formula: "Formula",
-        example: "Example",
         note: "Note",
         NormRef: "RefNorm",
+        biblio: "BiblioEntry",
         MsoNormal: "MsoBodyText",
-        AnnexTableTitle: "Tabletitle",
-        AnnexFigureTitle: "Figuretitle",
+        FigureTitle: "Figuretitle",
       }.freeze
 
       def dis_styles(docxml)
@@ -53,7 +51,6 @@ module IsoDoc
         code_style(docxml)
         figure_style(docxml)
         example_style(docxml)
-        annex_style(docxml)
       end
 
       def example_style(docxml)
@@ -66,16 +63,18 @@ module IsoDoc
         end
       end
 
-      def annex_style(docxml)
-        docxml.xpath("//h1[@class = 'Annex']").each do |h|
-          h.name = "p"
-          h["class"] = "ANNEX"
-        end
-        (2..6).each do |i|
-          docxml.xpath("//*[@class = 'h#{i}Annex']").each do |h|
-            h.name = "p"
-            h["class"] = "a#{i}"
-          end
+      def figure_name_attrs(_node)
+        { class: "FigureTitle", style: "text-align:center;" }
+      end
+
+      def table_title_attrs(_node)
+        { class: "Tabletitle", style: "text-align:center;" }
+      end
+
+      def word_annex_cleanup1(docxml, lvl)
+        docxml.xpath("//h#{lvl}[ancestor::*[@class = 'Section3']]").each do |h2|
+          h2.name = "p"
+          h2["class"] = "a#{lvl}"
         end
       end
 
@@ -89,10 +88,8 @@ module IsoDoc
         <<~TOC.freeze
           <span lang="EN-GB"><span
           style='mso-element:field-begin'></span><span
-          style='mso-spacerun:yes'>&#xA0;</span>TOC \\o &quot;2-#{level}&quot; \\h \\z \\u &quot;Heading
-           1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro
-           Title;1;ANNEXN;1;ANNEXZ;1;na2;1;na3;1;na4;1;na5;1;na6;1;Title;1;Base_Heading;1;Box-title;1;Front
-           Head;1;Index Head;1;AMEND Terms Heading;1;AMEND Heading 1 Unnumbered;1&quot;
+          style='mso-spacerun:yes'>&#xA0;</span>TOC \\o &quot;2-#{level}&quot; \\h \\z \\t
+          &quot;Heading 1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1;ANNEXN;1;ANNEXZ;1;na2;1;na3;1;na4;1;na5;1;na6;1;Title;1;Base_Heading;1;Box-title;1;Front Head;1;Index Head;1;AMEND Terms Heading;1;AMEND Heading 1 Unnumbered;1&quot;
            <span style='mso-element:field-separator'></span></span>
         TOC
       end

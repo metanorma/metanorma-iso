@@ -566,8 +566,8 @@ p.tablefootnote, li.tablefootnote, div.tablefootnote
 	mso-fareast-language:ZH-CN;}
 p.ANNEX, li.ANNEX, div.ANNEX
 	{mso-style-name:ANNEX;
-	mso-style-priority:10;
 	mso-style-unhide:no;
+	mso-style-parent:Base_Heading;
 	mso-style-next:Normal;
 	margin-top:0cm;
 	margin-right:0cm;
@@ -581,13 +581,12 @@ p.ANNEX, li.ANNEX, div.ANNEX
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:1;
-	mso-list:l0 level1 lfo12;
-	tab-stops:20.15pt;
+	mso-list:l11 level1 lfo4;
 	font-size:14.0pt;
-	mso-bidi-font-size:$normalfontsize;
+	mso-bidi-font-size:10.0pt;
 	font-family:$headerfont;
-	mso-fareast-font-family:"SimHei",serif;
-	mso-bidi-font-family:$headerfont;
+	mso-fareast-font-family:"MS Mincho";
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;

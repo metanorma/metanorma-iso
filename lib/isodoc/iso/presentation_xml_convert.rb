@@ -159,7 +159,7 @@ module IsoDoc
       end
 
       def bibrenderer
-        ::Relaton::Render::Iso::General.new(language: @lang)
+        ::Relaton::Render::Iso::General.new(language: @lang, i18nhash: @i18n.get)
       end
 
       def bibrender(xml)

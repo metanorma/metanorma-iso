@@ -297,6 +297,7 @@ RSpec.describe IsoDoc do
                   </locality>
                 </eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
+                <eref bibitemid="ISO712" citeas="ISO/IEC DIR 1" type="inline"/>
               </p>
             </foreword>
           </preface>
@@ -328,7 +329,7 @@ RSpec.describe IsoDoc do
                 <eref bibitemid="IEV" citeas="IEV" type="inline">
                   <locality type="clause">
                     <referenceFrom>1-2-3</referenceFrom>
-                  </locality>IEV, <span class="citesec">1-2-3</span></eref>
+                  </locality><span class='stdpublisher'>IEV</span>, <span class="citesec">1-2-3</span></eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline"><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>712</span></eref>
                 <eref bibitemid="ISO712" type="inline">ISO 712</eref>
                 <eref bibitemid="ISO712" type="inline">
@@ -373,6 +374,11 @@ RSpec.describe IsoDoc do
                     <referenceFrom>7</referenceFrom>
                   </locality>ISO 712, Prelude 7</eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
+                <eref bibitemid='ISO712' citeas='ISO/IEC DIR 1' type='inline'>
+          <span class='stdpublisher'>ISO/IEC</span>
+          <span class='stddocNumber'>DIR</span>
+          <span class='stddocNumber'>1</span>
+        </eref>
               </p>
             </foreword>
           </preface>
@@ -1004,7 +1010,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, <span class="citesec">Clause <span class="citesec">3</span> to <span class="citesec">5</span></span>
+            <span class='stdpublisher'>XYZ</span>, <span class="citesec">Clause <span class="citesec">3</span> to <span class="citesec">5</span></span>
           </eref>
           <eref type='inline' bibitemid='ref1' citeas='XYZ' droploc=''>
             <localityStack connective='from'>
@@ -1017,7 +1023,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5.1</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, <span class="citesec">3.1</span> to <span class="citesec">5.1</span>
+            <span class='stdpublisher'>XYZ</span>, <span class="citesec">3.1</span> to <span class="citesec">5.1</span>
           </eref>
           <eref type='inline' bibitemid='ref1' citeas='XYZ'>
             <localityStack connective='from'>
@@ -1030,7 +1036,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, <span class="citesec">3.1</span> to <span class="citesec">Clause 5</span>
+            <span class='stdpublisher'>XYZ</span>, <span class="citesec">3.1</span> to <span class="citesec">Clause 5</span>
           </eref>
           <eref type='inline' bibitemid='ref1' citeas='XYZ'>
             <localityStack connective='from'>
@@ -1043,7 +1049,7 @@ RSpec.describe IsoDoc do
                 <referenceFrom>5</referenceFrom>
               </locality>
             </localityStack>
-            XYZ, <span class="citesec">3.1</span> to <span class="citetbl">Table 5</span>
+            <span class='stdpublisher'>XYZ</span>, <span class="citesec">3.1</span> to <span class="citetbl">Table 5</span>
           </eref>
         </p>
       </itu-standard>

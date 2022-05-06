@@ -22,6 +22,7 @@ secretariat: Секретариат
 scope: Область применения
 edition: издание
 termsrelated: Термины, связанные 
+availablefrom: Доступна с
 doctype_dict:
   international-standard: Международный Стандарт
   technical-specification: Техническая Спецификация

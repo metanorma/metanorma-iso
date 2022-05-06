@@ -50,7 +50,8 @@ module IsoDoc
 
       def subclause?(target, type, from)
         (from&.match?(/\./) && type == "clause") ||
-          type == "list" || target&.match(/^IEV$|^IEC 60050-/)
+          type == "list" ||
+          target&.gsub(/<[^>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
       end
 
       LOCALITY2SPAN = {

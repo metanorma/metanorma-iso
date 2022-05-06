@@ -340,4 +340,53 @@ RSpec.describe IsoDoc do
       .convert("test", presxml, true)))
       .to be_equivalent_to xmlpp(html)
   end
+
+  it "processes websites" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+              <bibdata>
+                <language>en</language>
+              </bibdata>
+              <references normative="false">
+              <title>Bibliography</title>
+              <bibitem id="ignf" type="website">
+        <fetched>2022-05-06</fetched>
+        <title type="title-main" format="text/plain">IGNF. (IGN France) Registry</title>
+        <title type="main" format="text/plain">IGNF. (IGN France) Registry</title>
+        <uri>https://registre.ign.fr/ign/IGNF/</uri>
+        <docidentifier type="metanorma">2</docidentifier>
+      </bibitem>
+      </references>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+         <bibdata>
+           <language current='true'>en</language>
+         </bibdata>
+
+         <references normative='false'>
+           <title depth='1'>Bibliography</title>
+           <bibitem id='ignf' type='website'>
+             <formattedref>
+               <em>
+                 <span class='stddocTitle'>IGNF. (IGN France) Registry</span>
+               </em>
+                [website]. Available from:
+               <span class='biburl'>
+                 <link target='https://registre.ign.fr/ign/IGNF/'>https://registre.ign.fr/ign/IGNF/</link>
+               </span>
+               .
+             </formattedref>
+             <uri>https://registre.ign.fr/ign/IGNF/</uri>
+             <docidentifier type='metanorma'>2</docidentifier>
+           </bibitem>
+         </references>
+       </iso-standard>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to xmlpp(output)
+  end
 end
