@@ -2,11 +2,14 @@ require_relative "init"
 require "isodoc"
 require_relative "index"
 require_relative "presentation_inline"
+require_relative "presentation_xref"
+require_relative "../../relaton/render/general"
 
 module IsoDoc
   module Iso
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
       def convert1(docxml, filename, dir)
+        @iso_class = instance_of?(IsoDoc::Iso::PresentationXMLConvert)
         if amd(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
           @suppressheadingnumbers = true
@@ -32,10 +35,8 @@ module IsoDoc
 
       def example1(node)
         n = @xrefs.get[node["id"]]
-        lbl = if n.nil? || n[:label].nil? || n[:label].empty?
-                @i18n.example
-              else
-                l10n("#{@i18n.example} #{n[:label]}")
+        lbl = if n.nil? || blank?(n[:label]) then @i18n.example
+              else l10n("#{@i18n.example} #{n[:label]}")
               end
         prefix_name(node, "&nbsp;&mdash; ", lbl, "name")
       end
@@ -59,8 +60,7 @@ module IsoDoc
       def clause(docxml)
         docxml.xpath(ns("//clause[not(ancestor::annex)] | "\
                         "//terms | //definitions | //references | "\
-                        "//preface/introduction[clause]"))
-          .each do |f|
+                        "//preface/introduction[clause]")).each do |f|
           clause1(f)
         end
       end
@@ -76,9 +76,7 @@ module IsoDoc
       def concept_term(docxml)
         docxml.xpath(ns("//term")).each do |f|
           m = {}
-          f.xpath(ns(".//concept")).each do |c|
-            concept_term1(c, m)
-          end
+          f.xpath(ns(".//concept")).each { |c| concept_term1(c, m) }
         end
       end
 
@@ -95,12 +93,11 @@ module IsoDoc
       end
 
       def concept1_ref_content(ref)
-        if ref.name == "termref"
-          ref.replace(@i18n.term_defined_in.sub(/%/,
-                                                ref.to_xml))
-        else
-          ref.replace("(#{ref.to_xml})")
-        end
+        repl = if ref.name == "termref"
+                 @i18n.term_defined_in.sub(/%/, ref.to_xml)
+               else "(#{ref.to_xml})"
+               end
+        ref.replace(repl)
       end
 
       def concept1(node)
@@ -174,6 +171,18 @@ module IsoDoc
 
       def admonition_name(xml)
         "#{xml} &#x2014; "
+      end
+    
+      def bibrenderer
+        ::Relaton::Render::Iso::General.new(language: @lang, i18nhash: @i18n.get)
+      end
+
+      def bibrender(xml)
+        unless xml.at(ns("./formattedref"))
+          xml.children =
+            "#{bibrenderer.render(xml.to_xml)}"\
+            "#{xml.xpath(ns('./docidentifier | ./uri | ./note')).to_xml}"
+        end
       end
 
       include Init

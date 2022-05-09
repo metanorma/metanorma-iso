@@ -566,8 +566,8 @@ p.tablefootnote, li.tablefootnote, div.tablefootnote
 	mso-fareast-language:ZH-CN;}
 p.ANNEX, li.ANNEX, div.ANNEX
 	{mso-style-name:ANNEX;
-	mso-style-priority:10;
 	mso-style-unhide:no;
+	mso-style-parent:Base_Heading;
 	mso-style-next:Normal;
 	margin-top:0cm;
 	margin-right:0cm;
@@ -581,13 +581,12 @@ p.ANNEX, li.ANNEX, div.ANNEX
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	mso-outline-level:1;
-	mso-list:l0 level1 lfo12;
-	tab-stops:20.15pt;
+	mso-list:l11 level1 lfo4;
 	font-size:14.0pt;
-	mso-bidi-font-size:$normalfontsize;
+	mso-bidi-font-size:10.0pt;
 	font-family:$headerfont;
-	mso-fareast-font-family:"SimHei",serif;
-	mso-bidi-font-family:$headerfont;
+	mso-fareast-font-family:"MS Mincho";
+	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;
 	font-weight:bold;
@@ -1036,6 +1035,44 @@ p.Code, li.Code, div.Code
 	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:"Cambria";
 	mso-ansi-language:EN-GB;}
+span.ISOCode
+	{mso-style-name:ISOCode;
+	mso-style-unhide:no;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:$monospacefont;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";
+	font-weight:normal;
+	font-style:normal;
+	mso-no-proof:yes;}
+span.ISOCodeitalic
+	{mso-style-name:ISOCode_italic;
+	mso-style-unhide:no;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:$monospacefont;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";
+	font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;
+	mso-no-proof:yes;}
+span.ISOCodebold
+	{mso-style-name:ISOCode_bold;
+	mso-style-unhide:no;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:$monospacefont;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	font-style:normal;
+	mso-no-proof:yes;}
 p.Formula, li.Formula, div.Formula
 	{mso-style-name:Formula;
 	mso-style-noshow:yes;
@@ -1658,7 +1695,7 @@ div.Example p.MsoListParagraph {
 }
 
 p.Example, li.Example, div.Example, p.example, li.example, div.example
-	{mso-style-name:example;
+	{mso-style-name:Example;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-link:"Example Char";
@@ -1763,7 +1800,7 @@ span.aucollab
 	{mso-style-name:au_collab;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1773,7 +1810,7 @@ span.audeg
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1783,7 +1820,7 @@ span.aufname
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1793,7 +1830,7 @@ span.aurole
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1803,7 +1840,7 @@ span.ausuffix
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1813,7 +1850,7 @@ span.ausurname
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1822,14 +1859,14 @@ span.bibbase
 	{mso-style-name:bib_base;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.bibarticle
 	{mso-style-name:bib_article;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1838,21 +1875,21 @@ span.bibcomment
 	{mso-style-name:bib_comment;
 	mso-style-unhide:no;
 	mso-style-parent:bib_base;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.bibdeg
 	{mso-style-name:bib_deg;
 	mso-style-unhide:no;
 	mso-style-parent:bib_base;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.bibdoi
 	{mso-style-name:bib_doi;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1861,7 +1898,7 @@ span.bibetal
 	{mso-style-name:bib_etal;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1870,7 +1907,7 @@ span.bibfname
 	{mso-style-name:bib_fname;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1879,7 +1916,7 @@ span.bibfpage
 	{mso-style-name:bib_fpage;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1888,7 +1925,7 @@ span.bibissue
 	{mso-style-name:bib_issue;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1897,7 +1934,7 @@ span.bibjournal
 	{mso-style-name:bib_journal;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1906,7 +1943,7 @@ span.biblpage
 	{mso-style-name:bib_lpage;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1915,7 +1952,7 @@ span.bibnumber
 	{mso-style-name:bib_number;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1924,7 +1961,7 @@ span.biborganization
 	{mso-style-name:bib_organization;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1933,14 +1970,14 @@ span.bibsuffix
 	{mso-style-name:bib_suffix;
 	mso-style-unhide:no;
 	mso-style-parent:bib_base;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.bibsuppl
 	{mso-style-name:bib_suppl;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1949,7 +1986,7 @@ span.bibsurname
 	{mso-style-name:bib_surname;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1958,14 +1995,14 @@ span.bibunpubl
 	{mso-style-name:bib_unpubl;
 	mso-style-unhide:no;
 	mso-style-parent:bib_base;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.biburl
 	{mso-style-name:bib_url;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1974,7 +2011,7 @@ span.bibvolume
 	{mso-style-name:bib_volume;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1983,7 +2020,7 @@ span.bibyear
 	{mso-style-name:bib_year;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -1992,14 +2029,14 @@ span.citebase
 	{mso-style-name:cite_base;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.citebib
 	{mso-style-name:cite_bib;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2008,14 +2045,14 @@ span.citebox
 	{mso-style-name:cite_box;
 	mso-style-unhide:no;
 	mso-style-parent:cite_base;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.citeen
 	{mso-style-name:cite_en;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2025,7 +2062,7 @@ span.citefig
 	{mso-style-name:cite_fig;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
@@ -2036,7 +2073,7 @@ span.citefn
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
@@ -2047,7 +2084,7 @@ span.citetbl
 	{mso-style-name:cite_tbl;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
@@ -2057,14 +2094,14 @@ span.stdbase
 	{mso-style-name:std_base;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.bibextlink
 	{mso-style-name:bib_extlink;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2073,7 +2110,7 @@ span.citeeq
 	{mso-style-name:cite_eq;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2082,14 +2119,14 @@ span.bibmedline
 	{mso-style-name:bib_medline;
 	mso-style-unhide:no;
 	mso-style-parent:bib_base;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;}
 span.citetfn
 	{mso-style-name:cite_tfn;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2099,7 +2136,7 @@ span.auprefix
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2108,7 +2145,7 @@ span.citeapp
 	{mso-style-name:cite_app;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2117,7 +2154,7 @@ span.citesec
 	{mso-style-name:cite_sec;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2126,7 +2163,7 @@ span.stddocNumber
 	{mso-style-name:std_docNumber;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2135,7 +2172,7 @@ span.stddocPartNumber
 	{mso-style-name:std_docPartNumber;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2144,7 +2181,7 @@ span.stddocTitle
 	{mso-style-name:std_docTitle;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2156,7 +2193,7 @@ span.aumember
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-ansi-font-size:11.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2165,7 +2202,7 @@ span.stdfootnote
 	{mso-style-name:std_footnote;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2174,7 +2211,7 @@ span.stdpublisher
 	{mso-style-name:std_publisher;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2183,7 +2220,7 @@ span.stdsection
 	{mso-style-name:std_section;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2192,7 +2229,7 @@ span.stdyear
 	{mso-style-name:std_year;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2201,7 +2238,7 @@ span.stddocumentType
 	{mso-style-name:std_documentType;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2211,7 +2248,7 @@ span.bibalt-year
 	mso-style-unhide:no;
 	mso-style-parent:"";
 	mso-bidi-font-size:12.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2220,7 +2257,7 @@ span.bibbook
 	{mso-style-name:bib_book;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2229,7 +2266,7 @@ span.bibchapterno
 	{mso-style-name:bib_chapterno;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2238,7 +2275,7 @@ span.bibchaptertitle
 	{mso-style-name:bib_chaptertitle;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2247,7 +2284,7 @@ span.bibed-etal
 	{mso-style-name:bib_ed-etal;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2256,7 +2293,7 @@ span.bibed-fname
 	{mso-style-name:bib_ed-fname;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2265,7 +2302,7 @@ span.bibeditionno
 	{mso-style-name:bib_editionno;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2274,7 +2311,7 @@ span.bibed-organization
 	{mso-style-name:bib_ed-organization;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2283,7 +2320,7 @@ span.bibed-suffix
 	{mso-style-name:bib_ed-suffix;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2292,7 +2329,7 @@ span.bibed-surname
 	{mso-style-name:bib_ed-surname;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2301,7 +2338,7 @@ span.bibinstitution
 	{mso-style-name:bib_institution;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2310,7 +2347,7 @@ span.bibisbn
 	{mso-style-name:bib_isbn;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	background:#D9D9D9;}
@@ -2318,7 +2355,7 @@ span.biblocation
 	{mso-style-name:bib_location;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2327,7 +2364,7 @@ span.bibpagecount
 	{mso-style-name:bib_pagecount;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2336,7 +2373,7 @@ span.bibpatent
 	{mso-style-name:bib_patent;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2345,7 +2382,7 @@ span.bibpublisher
 	{mso-style-name:bib_publisher;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2354,7 +2391,7 @@ span.bibreportnum
 	{mso-style-name:bib_reportnum;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2363,7 +2400,7 @@ span.bibschool
 	{mso-style-name:bib_school;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2372,7 +2409,7 @@ span.bibseries
 	{mso-style-name:bib_series;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	background:#FFCC99;}
@@ -2380,7 +2417,7 @@ span.bibseriesno
 	{mso-style-name:bib_seriesno;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	background:#FFFF99;}
@@ -2388,7 +2425,7 @@ span.bibtrans
 	{mso-style-name:bib_trans;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	background:#99CC00;}
@@ -2396,7 +2433,7 @@ span.stdsuppl
 	{mso-style-name:std_suppl;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2405,7 +2442,7 @@ span.citesection
 	{mso-style-name:cite_section;
 	mso-style-unhide:no;
 	mso-style-parent:"";
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
@@ -2465,7 +2502,7 @@ p.BodyText-, li.BodyText-, div.BodyText-
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:9.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2484,7 +2521,7 @@ p.BodyTextindent1, li.BodyTextindent1, div.BodyTextindent1
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2504,7 +2541,7 @@ p.BodyTextindent1-, li.BodyTextindent1-, div.BodyTextindent1-
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:9.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2522,7 +2559,7 @@ p.BodyTextIndent21, li.BodyTextIndent21, div.BodyTextIndent21
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:10.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2541,7 +2578,7 @@ p.BodyTextindent2-, li.BodyTextindent2-, div.BodyTextindent2-
 	mso-pagination:widow-orphan;
 	font-size:9.0pt;
 	mso-bidi-font-size:10.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2560,7 +2597,7 @@ p.BodyTextIndent31, li.BodyTextIndent31, div.BodyTextIndent31
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:10.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2579,7 +2616,7 @@ p.BodyTextindent3-, li.BodyTextindent3-, div.BodyTextindent3-
 	mso-pagination:widow-orphan;
 	font-size:9.0pt;
 	mso-bidi-font-size:10.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2598,7 +2635,7 @@ p.BodyTextindent4, li.BodyTextindent4, div.BodyTextindent4
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:10.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2617,7 +2654,7 @@ p.BodyTextindent4-, li.BodyTextindent4-, div.BodyTextindent4-
 	mso-pagination:widow-orphan;
 	font-size:9.0pt;
 	mso-bidi-font-size:10.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2634,7 +2671,7 @@ p.BodyTextCenter, li.BodyTextCenter, div.BodyTextCenter
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2682,7 +2719,7 @@ p.CoverTitleA1, li.CoverTitleA1, div.CoverTitleA1
 	mso-pagination:widow-orphan;
 	font-size:16.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2702,7 +2739,7 @@ p.CoverTitleA2, li.CoverTitleA2, div.CoverTitleA2
 	mso-pagination:widow-orphan;
 	font-size:16.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2722,7 +2759,7 @@ p.CoverTitleA3, li.CoverTitleA3, div.CoverTitleA3
 	mso-pagination:widow-orphan;
 	font-size:16.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2738,7 +2775,7 @@ p.CoverTitleB, li.CoverTitleB, div.CoverTitleB
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:FR;
@@ -2758,7 +2795,7 @@ p.Dimension100, li.Dimension100, div.Dimension100
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2776,7 +2813,7 @@ p.Dimension50, li.Dimension50, div.Dimension50
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2794,7 +2831,7 @@ p.Dimension75, li.Dimension75, div.Dimension75
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2814,7 +2851,7 @@ p.dl, li.dl, div.dl
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2834,7 +2871,7 @@ p.Example0, li.Example0, div.Example0
 	tab-stops:67.7pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2854,7 +2891,7 @@ p.Examplecontinued, li.Examplecontinued, div.Examplecontinued
 	tab-stops:67.7pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2874,7 +2911,7 @@ p.Exampleindent, li.Exampleindent, div.Exampleindent
 	tab-stops:87.85pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2894,7 +2931,7 @@ p.Exampleindentcontinued, li.Exampleindentcontinued, div.Exampleindentcontinued
 	tab-stops:87.85pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2914,7 +2951,7 @@ p.Figureexample, li.Figureexample, div.Figureexample
 	tab-stops:67.7pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2931,7 +2968,7 @@ p.FigureGraphic, li.FigureGraphic, div.FigureGraphic
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2951,7 +2988,7 @@ p.Note0, li.Note0, div.Note0
 	tab-stops:48.25pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2971,7 +3008,7 @@ p.Figurenote, li.Figurenote, div.Figurenote
 	tab-stops:48.25pt;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -2988,7 +3025,7 @@ p.Figuresubtitle, li.Figuresubtitle, div.Figuresubtitle
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3008,7 +3045,7 @@ p.Figuretitle0, li.Figuretitle0, div.Figuretitle0
 	mso-pagination:widow-orphan;
 	mso-hyphenate:none;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3031,7 +3068,7 @@ p.KeyText, li.KeyText, div.KeyText
 	tab-stops:17.3pt;
 	font-size:9.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3051,7 +3088,7 @@ p.KeyTitle, li.KeyTitle, div.KeyTitle
 	tab-stops:17.3pt;
 	font-size:9.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3072,7 +3109,7 @@ p.ListContinue1, li.ListContinue1, div.ListContinue1
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3092,7 +3129,7 @@ p.ListContinue1-, li.ListContinue1-, div.ListContinue1-
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3131,7 +3168,7 @@ p.ListContinue3-, li.ListContinue3-, div.ListContinue3-
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3151,7 +3188,7 @@ p.ListContinue4-, li.ListContinue4-, div.ListContinue4-
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3170,7 +3207,7 @@ p.ListNumber1, li.ListNumber1, div.ListNumber1
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3190,7 +3227,7 @@ p.ListNumber1-, li.ListNumber1-, div.ListNumber1-
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3211,7 +3248,7 @@ p.ListNumber2-, li.ListNumber2-, div.ListNumber2-
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3231,7 +3268,7 @@ p.ListNumber3-, li.ListNumber3-, div.ListNumber3-
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3251,7 +3288,7 @@ p.ListNumber4-, li.ListNumber4-, div.ListNumber4-
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3269,7 +3306,7 @@ p.Tabletitle0, li.Tabletitle0, div.Tabletitle0
 	mso-pagination:widow-orphan;
 	mso-hyphenate:none;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3289,7 +3326,7 @@ p.Tablebody-, li.Tablebody-, div.Tablebody-
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:9.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3307,7 +3344,7 @@ p.Tablebody--, li.Tablebody--, div.Tablebody--
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:8.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3324,7 +3361,7 @@ p.Tablebody0, li.Tablebody0, div.Tablebody0
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3344,7 +3381,7 @@ p.Tablefooter, li.Tablefooter, div.Tablefooter
 	tab-stops:17.3pt;
 	font-size:9.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3362,7 +3399,7 @@ p.Tableheader, li.Tableheader, div.Tableheader
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3380,7 +3417,7 @@ p.Tableheader-, li.Tableheader-, div.Tableheader-
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:9.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3398,7 +3435,7 @@ p.Tableheader--, li.Tableheader--, div.Tableheader--
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:8.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3415,7 +3452,7 @@ p.Tableheader0, li.Tableheader0, div.Tableheader0
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3434,7 +3471,7 @@ p.Notice, li.Notice, div.Notice
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3453,7 +3490,7 @@ p.p2, li.p2, div.p2
 	mso-pagination:widow-orphan;
 	tab-stops:28.1pt;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3472,7 +3509,7 @@ p.p3, li.p3, div.p3
 	mso-pagination:widow-orphan;
 	tab-stops:36.0pt;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3491,7 +3528,7 @@ p.p4, li.p4, div.p4
 	mso-pagination:widow-orphan;
 	tab-stops:54.7pt;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3510,7 +3547,7 @@ p.p5, li.p5, div.p5
 	mso-pagination:widow-orphan;
 	tab-stops:54.7pt;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3529,7 +3566,7 @@ p.p6, li.p6, div.p6
 	mso-pagination:widow-orphan;
 	tab-stops:72.0pt;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3547,7 +3584,7 @@ p.RefNorm, li.RefNorm, div.RefNorm
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3567,7 +3604,7 @@ p.Notecontinued, li.Notecontinued, div.Notecontinued
 	tab-stops:48.25pt;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3587,7 +3624,7 @@ p.Noteindent, li.Noteindent, div.Noteindent
 	tab-stops:68.4pt;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3608,7 +3645,7 @@ p.Noteindentcontinued, li.Noteindentcontinued, div.Noteindentcontinued
 	tab-stops:68.4pt;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3735,7 +3772,7 @@ p.ListNumber5-, li.ListNumber5-, div.ListNumber5-
 	mso-pagination:widow-orphan;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3756,7 +3793,7 @@ p.ListContinue5-, li.ListContinue5-, div.ListContinue5-
 	mso-pagination:widow-orphan;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3776,7 +3813,7 @@ p.BiblioText, li.BiblioText, div.BiblioText
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3793,7 +3830,7 @@ p.FigureImage, li.FigureImage, div.FigureImage
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3815,7 +3852,7 @@ p.Figuredescription, li.Figuredescription, div.Figuredescription
 	mso-pattern:gray-10 auto;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:12.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3838,7 +3875,7 @@ p.Formuladescription, li.Formuladescription, div.Formuladescription
 	mso-pattern:gray-10 auto;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:12.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3860,7 +3897,7 @@ p.Tabledescription, li.Tabledescription, div.Tabledescription
 	mso-pattern:gray-10 auto;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:12.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3881,7 +3918,7 @@ p.Box-begin, li.Box-begin, div.Box-begin
 	background:#D9D9D9;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:12.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3900,7 +3937,7 @@ p.Box-end, li.Box-end, div.Box-end
 	background:#D9D9D9;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:12.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3919,7 +3956,7 @@ p.Box-title, li.Box-title, div.Box-title
 	background:#E6E6E6;
 	font-size:13.0pt;
 	mso-bidi-font-size:12.0pt;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3944,7 +3981,7 @@ p.FrontHead, li.FrontHead, div.FrontHead
 	mso-hyphenate:none;
 	font-size:14.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$headerfont;
+	font-family:$headerfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3965,7 +4002,7 @@ p.IndexHead, li.IndexHead, div.IndexHead
 	mso-pagination:widow-orphan;
 	mso-outline-level:1;
 	font-size:14.0pt;
-	font-size:$headerfont;
+	font-family:$headerfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -3986,7 +4023,7 @@ p.BodyTextIndent22, li.BodyTextIndent22, div.BodyTextIndent22
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:$smallerfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -4005,7 +4042,7 @@ p.BodyTextIndent32, li.BodyTextIndent32, div.BodyTextIndent32
 	mso-pagination:widow-orphan;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:$smallerfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -4025,7 +4062,7 @@ p.Exampleindent2, li.Exampleindent2, div.Exampleindent2
 	tab-stops:67.7pt 87.9pt;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -4045,7 +4082,7 @@ p.Exampleindent2continued, li.Exampleindent2continued, div.Exampleindent2continu
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -4065,7 +4102,7 @@ p.Noteindent2continued, li.Noteindent2continued, div.Noteindent2continued
 	tab-stops:87.9pt;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
@@ -4085,7 +4122,7 @@ p.Noteindent2, li.Noteindent2, div.Noteindent2
 	tab-stops:87.9pt;
 	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-size:$bodyfont;
+	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;

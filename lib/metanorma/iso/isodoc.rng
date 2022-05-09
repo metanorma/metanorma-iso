@@ -1225,6 +1225,7 @@
       <ref name="concept"/>
       <ref name="add"/>
       <ref name="del"/>
+      <ref name="span"/>
     </choice>
   </define>
   <define name="add">
@@ -1249,6 +1250,14 @@
         <ref name="xref"/>
         <ref name="hyperlink"/>
       </choice>
+    </element>
+  </define>
+  <define name="span">
+    <element name="span">
+      <attribute name="class"/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="concept">

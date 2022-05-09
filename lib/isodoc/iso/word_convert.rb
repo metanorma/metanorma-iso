@@ -2,6 +2,7 @@ require_relative "base_convert"
 require "isodoc"
 require_relative "init"
 require_relative "word_cleanup"
+require_relative "word_dis_convert"
 
 module IsoDoc
   module Iso
@@ -13,6 +14,11 @@ module IsoDoc
         @wordToClevels = 3 if @wordToClevels.zero?
         @htmlToClevels = options[:htmltoclevels].to_i
         @htmlToClevels = 3 if @htmlToClevels.zero?
+        init_dis
+      end
+
+      def init_dis
+        @dis = ::IsoDoc::Iso::WordDISConvert.new(options)
       end
 
       def font_choice(options)
@@ -45,16 +51,16 @@ module IsoDoc
           olstyle: "l2" }
       end
 
-      def convert1(docxml, filename, dir)
-        @dis = /^[45].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
-        if @dis
-          @wordstylesheet_name = html_doc_path("wordstyle-dis.scss")
-          @standardstylesheet_name = html_doc_path("isodoc-dis.scss")
-          @wordcoverpage = html_doc_path("word_iso_titlepage-dis.html")
-          @wordintropage = html_doc_path("word_iso_intro-dis.html")
-          @header = html_doc_path("header-dis.html")
+      def convert(input_filename, file = nil, debug = false,
+                output_filename = nil)
+        file = File.read(input_filename, encoding: "utf-8") if file.nil?
+        docxml = Nokogiri::XML(file) { |config| config.huge }
+        if @dis &&
+            /^[45].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
+          @dis.convert(input_filename, file, debug, output_filename)
+        else
+          super
         end
-        super
       end
 
       def make_body(xml, docxml)
@@ -171,8 +177,19 @@ module IsoDoc
 
         name&.at(ns("./strong"))&.remove # supplied by CSS list numbering
         div.h1 **{ class: "Annex" } do |t|
-          name.children.each { |c2| parse(c2, t) }
+          annex_name1(name, t)
           clause_parse_subtitle(name, t)
+        end
+      end
+
+      def annex_name1(name, out)
+        name.children.each do |c2|
+          if c2.name == "span" && c2["class"] == "obligation"
+            out.span **{ style: "font-weight:normal;" } do |s|
+              c2.children.each { |c3| parse(c3, s) }
+            end
+          else parse(c2, out)
+          end
         end
       end
 

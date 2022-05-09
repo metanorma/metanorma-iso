@@ -374,6 +374,7 @@ RSpec.describe IsoDoc do
               </clause>
             </clause>
           </sections>
+          <annex id="AA"><title>Annex A<tab/>Annex First</title></annex>
         </iso-standard>
       INPUT
 
@@ -456,6 +457,30 @@ RSpec.describe IsoDoc do
               </span>
             </span>
           </p>
+          <p class='MsoToc1'>
+           <span class='MsoHyperlink'>
+             <span lang='EN-GB' xml:lang='EN-GB' style='mso-no-proof:yes'>
+               <a href='#_Toc'>
+                 Annex A Annex First
+                 <span lang='EN-GB' xml:lang='EN-GB' class='MsoTocTextSpan'>
+                   <span style='mso-tab-count:1 dotted'>. </span>
+                 </span>
+                 <span lang='EN-GB' xml:lang='EN-GB' class='MsoTocTextSpan'>
+                   <span style='mso-element:field-begin'/>
+                 </span>
+                 <span lang='EN-GB' xml:lang='EN-GB' class='MsoTocTextSpan'> PAGEREF _Toc \h </span>
+                 <span lang='EN-GB' xml:lang='EN-GB' class='MsoTocTextSpan'>
+                   <span style='mso-element:field-separator'/>
+                 </span>
+                 <span lang='EN-GB' xml:lang='EN-GB' class='MsoTocTextSpan'>1</span>
+                 <span lang='EN-GB' xml:lang='EN-GB' class='MsoTocTextSpan'/>
+                 <span lang='EN-GB' xml:lang='EN-GB' class='MsoTocTextSpan'>
+                   <span style='mso-element:field-end'/>
+                 </span>
+               </a>
+             </span>
+           </span>
+         </p>
           <p class="MsoToc1">
             <span lang="EN-GB" xml:lang="EN-GB">
               <span style="mso-element:field-end"/>

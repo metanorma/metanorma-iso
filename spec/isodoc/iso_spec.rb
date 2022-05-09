@@ -157,7 +157,7 @@ RSpec.describe IsoDoc::Iso do
               </relation>
             </bibitem>
             <bibitem id="ISO20483" type="standard">
-              <title format="text/plain">Cereals and pulses</title>
+              <formattedref format="text/plain"><em>Cereals and pulses</em></formattedref>
               <docidentifier>ISO 20483</docidentifier>
               <date type="published">
                 <from>2013</from>

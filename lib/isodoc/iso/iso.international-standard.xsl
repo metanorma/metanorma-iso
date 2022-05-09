@@ -297,17 +297,17 @@
 				<!-- contents pages -->
 				<!-- odd pages -->
 				<fo:simple-page-master master-name="odd" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="19mm" margin-right="19mm"/>
+					<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom + 2}mm" margin-left="19mm" margin-right="19mm"/>
 					<fo:region-before region-name="header-odd" extent="27.4mm"/> <!--   display-align="center" -->
-					<fo:region-after region-name="footer-odd" extent="13mm"/>
+					<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
 					<fo:region-start region-name="left-region" extent="19mm"/>
 					<fo:region-end region-name="right-region" extent="19mm"/>
 				</fo:simple-page-master>
 				<!-- even pages -->
 				<fo:simple-page-master master-name="even" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="27.4mm" margin-bottom="13mm" margin-left="19mm" margin-right="19mm"/>
+					<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom + 2}mm" margin-left="19mm" margin-right="19mm"/>
 					<fo:region-before region-name="header-even" extent="27.4mm"/> <!--   display-align="center" -->
-					<fo:region-after region-name="footer-even" extent="13mm"/>
+					<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
 					<fo:region-start region-name="left-region" extent="19mm"/>
 					<fo:region-end region-name="right-region" extent="19mm"/>
 				</fo:simple-page-master>
@@ -327,7 +327,7 @@
 				
 				<!-- first page -->
 				<fo:simple-page-master master-name="first-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
 					<fo:region-before region-name="header-first" extent="{$marginTop}mm"/> <!--   display-align="center" -->
 					<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
 					<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
@@ -335,7 +335,7 @@
 				</fo:simple-page-master>
 				<!-- odd pages -->
 				<fo:simple-page-master master-name="odd-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
 					<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/> <!--   display-align="center" -->
 					<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
 					<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
@@ -343,14 +343,14 @@
 				</fo:simple-page-master>
 				<!-- even pages -->
 				<fo:simple-page-master master-name="even-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 					<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
 					<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
 					<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
 					<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
 				</fo:simple-page-master>
 				<fo:simple-page-master master-name="blankpage" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+					<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 					<fo:region-before region-name="header" extent="{$marginTop}mm"/>
 					<fo:region-after region-name="footer" extent="{$marginBottom}mm"/>
 					<fo:region-start region-name="left" extent="{$marginLeftRight2}mm"/>
@@ -1216,7 +1216,12 @@
 																	
 																	<fo:inline keep-together.within-line="always">
 																		<fo:leader font-size="9pt" font-weight="normal" leader-pattern="dots"/>
-																		<fo:inline><fo:page-number-citation ref-id="{@id}"/></fo:inline>
+																		<fo:inline>
+																			<xsl:if test="@level = 1 and @type = 'annex'">
+																				<xsl:attribute name="font-weight">bold</xsl:attribute>
+																			</xsl:if>
+																			<fo:page-number-citation ref-id="{@id}"/>
+																		</fo:inline>
 																	</fo:inline>
 																</fo:basic-link>
 															</fo:block>
@@ -2009,28 +2014,6 @@
 		<xsl:text>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</xsl:text>
 	</xsl:variable>
 	
-	<xsl:template name="printEdition">
-		<xsl:variable name="edition" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:edition)"/>
-		<xsl:text> </xsl:text>
-		<xsl:choose>
-			<xsl:when test="number($edition) = $edition">
-				<xsl:call-template name="number-to-words">
-					<xsl:with-param name="number" select="$edition"/>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:when test="$edition != ''">
-				<xsl:value-of select="$edition"/>
-			</xsl:when>
-		</xsl:choose>
-		<xsl:variable name="title-edition">
-			<xsl:call-template name="getLocalizedString">
-				<xsl:with-param name="key">edition</xsl:with-param>
-			</xsl:call-template>
-		</xsl:variable>
-		<xsl:if test="$edition != ''"><xsl:text> </xsl:text><xsl:value-of select="java:toLowerCase(java:java.lang.String.new($title-edition))"/></xsl:if>
-	</xsl:template>
-
-	
 <xsl:param name="svg_images"/><xsl:variable name="images" select="document($svg_images)"/><xsl:param name="basepath"/><xsl:param name="external_index"/><xsl:param name="syntax-highlight">false</xsl:param><xsl:param name="add_math_as_text">true</xsl:param><xsl:variable name="lang">
 		<xsl:call-template name="getLang"/>
 	</xsl:variable><xsl:variable name="pageWidth_">
@@ -2046,20 +2029,7 @@
 	</xsl:variable><xsl:variable name="marginTop" select="normalize-space($marginTop_)"/><xsl:variable name="marginBottom_">
 		13
 	</xsl:variable><xsl:variable name="marginBottom" select="normalize-space($marginBottom_)"/><xsl:variable name="titles_">
-				
-		<title-edition lang="en">
-			
-					<xsl:text>Edition </xsl:text>
-				
-		</title-edition>
 		
-		<title-edition lang="fr">
-			<xsl:text>Édition </xsl:text>
-		</title-edition>
-		
-		<title-edition lang="ru">
-			<xsl:text>Издание </xsl:text>
-		</title-edition>
 		
 		<!-- These titles of Table of contents renders different than determined in localized-strings -->
 		<title-toc lang="en">
@@ -2272,7 +2242,6 @@
 		
 		
 	</xsl:attribute-set><xsl:attribute-set name="sourcecode-container-style">
-		<xsl:attribute name="margin-left">0mm</xsl:attribute>
 		
 	</xsl:attribute-set><xsl:attribute-set name="sourcecode-style">
 		<xsl:attribute name="white-space">pre</xsl:attribute>
@@ -2359,6 +2328,10 @@
 		
 		
 		
+					
+			<xsl:attribute name="margin-left">7mm</xsl:attribute>
+			<xsl:attribute name="margin-right">7mm</xsl:attribute>			
+		
 		
 	</xsl:attribute-set><xsl:attribute-set name="example-name-style">
 		
@@ -2367,6 +2340,7 @@
 		
 			<xsl:attribute name="keep-with-next">always</xsl:attribute>
 			<xsl:attribute name="padding-right">5mm</xsl:attribute>
+			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 		
 		
 		
@@ -5008,13 +4982,15 @@
 					<xsl:choose>
 						<xsl:when test="$font-size = 'inherit'"><xsl:value-of select="$font-size"/></xsl:when>
 						<xsl:when test="contains($font-size, '%')"><xsl:value-of select="$font-size"/></xsl:when>
-						<xsl:when test="ancestor::*[local-name()='note']"><xsl:value-of select="$font-size * 0.91"/>pt</xsl:when>
+						<xsl:when test="ancestor::*[local-name()='note'] or ancestor::*[local-name()='example']"><xsl:value-of select="$font-size * 0.91"/>pt</xsl:when>
 						<xsl:otherwise><xsl:value-of select="$font-size"/>pt</xsl:otherwise>
 					</xsl:choose>
 				</xsl:attribute>
 			</xsl:if>
 			<xsl:apply-templates/>
 		</fo:inline>
+	</xsl:template><xsl:template match="*[local-name()='tt']/text()" priority="2">
+		<xsl:call-template name="add_spaces_to_sourcecode"/>
 	</xsl:template><xsl:template match="*[local-name()='underline']">
 		<fo:inline text-decoration="underline">
 			<xsl:apply-templates/>
@@ -5162,6 +5138,8 @@
 		<fo:block break-after="page"/>
 		<fo:block> </fo:block>
 		<fo:block break-after="page"/>
+	</xsl:template><xsl:template match="*[local-name() = 'span']">
+		<xsl:apply-templates/>
 	</xsl:template><xsl:template name="tokenize">
 		<xsl:param name="text"/>
 		<xsl:param name="separator" select="' '"/>
@@ -6417,7 +6395,11 @@
 		<xsl:apply-templates mode="bookmarks"/>
 	</xsl:template><xsl:template match="*[local-name() = 'title' or local-name() = 'name']//*[local-name() = 'stem']" mode="contents">
 		<xsl:apply-templates select="."/>
-	</xsl:template><xsl:template match="*[local-name() = 'references'][@hidden='true']" mode="contents" priority="3"/><xsl:template match="*[local-name() = 'references']/*[local-name() = 'bibitem']" mode="contents"/><xsl:template match="*[local-name() = 'stem']" mode="bookmarks">
+	</xsl:template><xsl:template match="*[local-name() = 'references'][@hidden='true']" mode="contents" priority="3"/><xsl:template match="*[local-name() = 'references']/*[local-name() = 'bibitem']" mode="contents"/><xsl:template match="*[local-name() = 'span']" mode="contents">
+		<xsl:apply-templates mode="contents"/>
+	</xsl:template><xsl:template match="*[local-name() = 'stem']" mode="bookmarks">
+		<xsl:apply-templates mode="bookmarks"/>
+	</xsl:template><xsl:template match="*[local-name() = 'span']" mode="bookmarks">
 		<xsl:apply-templates mode="bookmarks"/>
 	</xsl:template><xsl:template name="addBookmarks">
 		<xsl:param name="contents"/>
@@ -6734,9 +6716,20 @@
 		</xsl:choose>
 	</xsl:template><xsl:template match="text()" mode="contents_item">
 		<xsl:call-template name="keep_together_standard_number"/>
+	</xsl:template><xsl:template match="*[local-name() = 'span']" mode="contents_item">
+		<xsl:apply-templates mode="contents_item"/>
 	</xsl:template><xsl:template match="*[local-name()='sourcecode']" name="sourcecode">
 	
 		<fo:block-container xsl:use-attribute-sets="sourcecode-container-style">
+		
+			<xsl:if test="not(ancestor::*[local-name() = 'li']) or ancestor::*[local-name() = 'example']">
+				<xsl:attribute name="margin-left">0mm</xsl:attribute>
+			</xsl:if>
+			
+			<xsl:if test="ancestor::*[local-name() = 'example']">
+				<xsl:attribute name="margin-right">0mm</xsl:attribute>
+			</xsl:if>
+			
 			<xsl:copy-of select="@id"/>
 			
 			<xsl:if test="parent::*[local-name() = 'note']">
@@ -7214,39 +7207,67 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template><xsl:template match="*[local-name() = 'example']">
-		<fo:block id="{@id}" xsl:use-attribute-sets="example-style">
+		
+		<fo:block-container id="{@id}" xsl:use-attribute-sets="example-style">
+		
 			
-			
+		
 			<xsl:variable name="fo_element">
-				<xsl:if test=".//*[local-name() = 'table'] or .//*[local-name() = 'dl']">block</xsl:if> 
+				<xsl:if test=".//*[local-name() = 'table'] or .//*[local-name() = 'dl'] or *[not(local-name() = 'name')][1][local-name() = 'sourcecode']">block</xsl:if> 
 				inline
 			</xsl:variable>
 			
-			<!-- display 'EXAMPLE' -->
-			<xsl:apply-templates select="*[local-name()='name']">
-				<xsl:with-param name="fo_element" select="$fo_element"/>
-			</xsl:apply-templates>
+			<fo:block-container margin-left="0mm">
 			
-			<xsl:choose>
-				<xsl:when test="contains(normalize-space($fo_element), 'block')">
-					<fo:block-container xsl:use-attribute-sets="example-body-style">
-						<fo:block-container margin-left="0mm" margin-right="0mm">
-							<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+				<xsl:choose>
+					
+					<xsl:when test="contains(normalize-space($fo_element), 'block')">
+					
+						<!-- display name 'EXAMPLE' in a separate block  -->
+						<fo:block>
+							<xsl:apply-templates select="*[local-name()='name']">
 								<xsl:with-param name="fo_element" select="$fo_element"/>
 							</xsl:apply-templates>
+						</fo:block>
+						
+						<fo:block-container xsl:use-attribute-sets="example-body-style">
+							<fo:block-container margin-left="0mm" margin-right="0mm"> 
+								<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+									<xsl:with-param name="fo_element" select="$fo_element"/>
+								</xsl:apply-templates>
+							</fo:block-container>
 						</fo:block-container>
-					</fo:block-container>
-				</xsl:when>
-				<xsl:otherwise>
-					<fo:inline>
-						<xsl:apply-templates select="node()[not(local-name() = 'name')]">
-							<xsl:with-param name="fo_element" select="$fo_element"/>
-						</xsl:apply-templates>
-					</fo:inline>
-				</xsl:otherwise>
-			</xsl:choose>
-			
-		</fo:block>
+					</xsl:when> <!-- end block -->
+					
+					<xsl:otherwise> <!-- inline -->
+					
+						<!-- display 'EXAMPLE' and first element in the same line -->
+						<fo:block>
+							<xsl:apply-templates select="*[local-name()='name']">
+								<xsl:with-param name="fo_element" select="$fo_element"/>
+							</xsl:apply-templates>
+							<fo:inline>
+								<xsl:apply-templates select="*[not(local-name() = 'name')][1]">
+									<xsl:with-param name="fo_element" select="$fo_element"/>
+								</xsl:apply-templates>
+							</fo:inline>
+						</fo:block> 
+						
+						<xsl:if test="*[not(local-name() = 'name')][position() &gt; 1]">
+							<!-- display further elements in blocks -->
+							<fo:block-container xsl:use-attribute-sets="example-body-style">
+								<fo:block-container margin-left="0mm" margin-right="0mm">
+									<xsl:apply-templates select="*[not(local-name() = 'name')][position() &gt; 1]">
+										<xsl:with-param name="fo_element" select="'block'"/>
+									</xsl:apply-templates>
+								</fo:block-container>
+							</fo:block-container>
+						</xsl:if>
+					</xsl:otherwise> <!-- end inline -->
+					
+				</xsl:choose>
+			</fo:block-container>
+		</fo:block-container>
 	</xsl:template><xsl:template match="*[local-name() = 'example']/*[local-name() = 'name']">
 		<xsl:param name="fo_element">block</xsl:param>
 	
@@ -7283,10 +7304,16 @@
 		</xsl:variable>		
 		<xsl:choose>			
 			<xsl:when test="starts-with(normalize-space($element), 'block')">
-				<fo:block xsl:use-attribute-sets="example-p-style">
-					
-					<xsl:apply-templates/>
-				</fo:block>
+				<fo:block-container>
+					<xsl:if test="ancestor::*[local-name() = 'li'] and contains(normalize-space($fo_element), 'block')">
+						<xsl:attribute name="margin-left">0mm</xsl:attribute>
+						<xsl:attribute name="margin-right">0mm</xsl:attribute>
+					</xsl:if>
+					<fo:block xsl:use-attribute-sets="example-p-style">
+						
+						<xsl:apply-templates/>
+					</fo:block>
+				</fo:block-container>
 			</xsl:when>
 			<xsl:otherwise>
 				<fo:inline xsl:use-attribute-sets="example-p-style">
@@ -7465,7 +7492,16 @@
 				</fo:inline>
 			</xsl:when>
 			<xsl:otherwise> <!-- if there is key('bibitems_hidden', $current_bibitemid) -->
-				<fo:inline><xsl:apply-templates/></fo:inline>
+			
+				<!-- if in bibitem[@hidden='true'] there is url[@type='src'], then create hyperlink  -->
+				<xsl:variable name="uri_src" select="normalize-space($bibitems_hidden/*[local-name() ='bibitem'][@id = $current_bibitemid]/*[local-name() = 'uri'][@type = 'src'])"/>
+				<xsl:choose>
+					<xsl:when test="$uri_src != ''">
+						<fo:basic-link external-destination="{$uri_src}" fox:alt-text="{$uri_src}"><xsl:apply-templates/></fo:basic-link>
+					</xsl:when>
+					<xsl:otherwise><fo:inline><xsl:apply-templates/></fo:inline></xsl:otherwise>
+				</xsl:choose>
+				
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template><xsl:template match="*[local-name() = 'tab']">
@@ -8554,6 +8590,8 @@
 				<xsl:apply-templates select="." mode="update_xml_step1"/>
 			</xsl:for-each>
 		</xsl:copy>
+	</xsl:template><xsl:template match="*[local-name() = 'span']" mode="update_xml_step1">
+		<xsl:apply-templates mode="update_xml_step1"/>
 	</xsl:template>
 		<!-- STEP2: add 'fn' after 'eref' and 'origin', if referenced to bibitem with 'note' = Withdrawn.' or 'Cancelled and replaced...'  -->
 		<xsl:template match="@*|node()" mode="update_xml_step2">
@@ -8710,6 +8748,31 @@
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:otherwise><xsl:value-of select="$text"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template><xsl:template name="printEdition">
+		<xsl:variable name="edition_i18n" select="normalize-space((//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']/*[local-name() = 'edition'][normalize-space(@language) != ''])"/>
+		<xsl:text> </xsl:text>
+		<xsl:choose>
+			<xsl:when test="$edition_i18n != ''">
+				<!-- Example: <edition language="fr">deuxième édition</edition> -->
+				<xsl:call-template name="capitalize">
+					<xsl:with-param name="str" select="$edition_i18n"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:variable name="edition" select="normalize-space((//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']/*[local-name() = 'edition'])"/>
+				<xsl:if test="$edition != ''"> <!-- Example: 1.3 -->
+					<xsl:call-template name="capitalize">
+						<xsl:with-param name="str">
+							<xsl:call-template name="getLocalizedString">
+								<xsl:with-param name="key">edition</xsl:with-param>
+							</xsl:call-template>
+						</xsl:with-param>
+					</xsl:call-template>
+					<xsl:text> </xsl:text>
+					<xsl:value-of select="$edition"/>
+				</xsl:if>
+			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template><xsl:template name="convertDate">
 		<xsl:param name="date"/>

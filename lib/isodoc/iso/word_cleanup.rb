@@ -90,6 +90,19 @@ module IsoDoc
         style_cleanup(docxml)
         docxml
       end
+
+      # supply missing annex title
+      def make_WordToC(docxml, level)
+        toc = ""
+        xpath = (1..level).each.map { |i| "//h#{i}" }.join (" | ")
+        docxml.xpath(xpath).each do |h|
+          x = ""
+          x = @anchor[h.parent["id"]][:xref] if h["class"] == "ANNEX"
+          toc += word_toc_entry(h.name[1].to_i, x + header_strip(h))
+        end
+        toc.sub(/(<p class="MsoToc1">)/,
+                %{\\1#{word_toc_preface(level)}}) + WORD_TOC_SUFFIX1
+      end
     end
   end
 end

@@ -137,7 +137,7 @@ RSpec.describe IsoDoc do
           </clause>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder="8">
-          <title><strong>Annex A</strong><br/>(normative)<br/><br/><strong>Annex</strong></title>
+          <title><strong>Annex A</strong><br/><span class='obligation'>(normative)</span><br/><br/><strong>Annex</strong></title>
           <clause id="Q" inline-header="false" obligation="normative">
             <title depth="2">A.1<tab/>Annex A.1</title>
             <clause id="Q1" inline-header="false" obligation="normative">
@@ -369,7 +369,7 @@ RSpec.describe IsoDoc do
           </p>
           <div class="Section3" id="P">
             <h1 class="Annex">
-              <br/>(normative)
+              <br/><span style='font-weight:normal;'>(normative)</span>
               <br/>
               <br/>
               <b>Annex</b></h1>
@@ -542,10 +542,32 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='presentation' version="#{Metanorma::ISO::VERSION}">
-           <bibdata type='standard'>
-             <contributor>
-               <role type='author'/>
+    <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='presentation' version="#{Metanorma::ISO::VERSION}">
+         <bibdata type='standard'>
+           <contributor>
+             <role type='author'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type='publisher'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <language current='true'>en</language>
+           <script current='true'>Latn</script>
+           <status>
+             <stage abbreviation='IS' language=''>60</stage>
+             <stage abbreviation='IS' language='en'>International standard</stage>
+             <substage>60</substage>
+           </status>
+           <copyright>
+             <from>#{Time.new.year}</from>
+             <owner>
                <organization>
                  <name>International Organization for Standardization</name>
                  <abbreviation>ISO</abbreviation>
