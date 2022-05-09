@@ -1,4 +1,4 @@
 template:
   # skip standardidentifier, it is inserted in front of formattedref within metanorma
-  standard: "<em><span_class='stddocTitle'>{{ title }}</span></em> . {{ extent }}." 
+  standard: "<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}." 
   website: "{{ creatornames }} ({{ role }}) . <em><span_class='stddocTitle'>{{ title }}</span></em> [website]. {{ labels['version'] | capitalize }}_{{ edition_raw }}. {{ place }}: {{ publisher }}. {{date}}. {{ labels['updated'] | capitalize }}:_{{date_updated}}. {{ standardidentifier | first }}. {{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. [{{ labels['viewed'] }}:_{{date_accessed}}]. "

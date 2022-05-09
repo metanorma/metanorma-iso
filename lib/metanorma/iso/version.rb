@@ -1,5 +1,5 @@
 module Metanorma
   module ISO
-    VERSION = "2.0.8.1".freeze
+    VERSION = "2.1.0".freeze
   end
 end
