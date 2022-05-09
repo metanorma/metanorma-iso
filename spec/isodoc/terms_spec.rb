@@ -90,7 +90,7 @@ RSpec.describe IsoDoc do
                 </ul>
               </termexample>
               <termsource status='modified'>[SOURCE:
-                <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'><locality type='clause'><referenceFrom>3.1</referenceFrom></locality>ISO 7301:2011, 3.1</origin>, modified &#x2013; The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
+                <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'><locality type='clause'><referenceFrom>3.1</referenceFrom></locality><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>7301</span>:<span class='stdyear'>2011</span>, <span class='citesec'>3.1</span></origin>, modified &#x2013; The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
               </termsource>
             </term>
             <term id='paddy'><name>1.2</name>
@@ -121,7 +121,7 @@ RSpec.describe IsoDoc do
                 </ul>
               </termexample>
               <termsource status='identical'>[SOURCE:
-                <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'><locality type='clause'><referenceFrom>3.1</referenceFrom></locality>ISO 7301:2011, 3.1</origin>]
+                <origin bibitemid='ISO7301' type='inline' citeas='ISO 7301:2011'><locality type='clause'><referenceFrom>3.1</referenceFrom></locality><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>7301</span>:<span class='stdyear'>2011</span>, <span class='citesec'>3.1</span></origin>]
               </termsource>
             </term>
             <term id='A'>

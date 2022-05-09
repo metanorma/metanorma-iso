@@ -84,7 +84,7 @@ RSpec.describe IsoDoc do
           </references>
           <references id="_bibliography" normative="false" obligation="informative">
             <title>Bibliography</title>
-            <bibitem id="ISBN" type="ISBN">
+            <bibitem id="ISBN" type="book">
               <title format="text/plain">Chemicals for analytical laboratory use</title>
               <docidentifier type="ISBN">ISBN</docidentifier>
               <docidentifier type="metanorma">[1]</docidentifier>
@@ -95,7 +95,7 @@ RSpec.describe IsoDoc do
                 </organization>
               </contributor>
             </bibitem>
-            <bibitem id="ISSN" type="ISSN">
+            <bibitem id="ISSN" type="journal">
               <title format="text/plain">Instruments for analytical laboratory use</title>
               <docidentifier type="ISSN">ISSN</docidentifier>
               <docidentifier type="metanorma">[2]</docidentifier>
@@ -177,49 +177,17 @@ RSpec.describe IsoDoc do
                        amendments) applies.
                      </p>
             <bibitem id="ISO712" type="standard">
-              <title format="text/plain">Cereals or cereal products</title>
-              <title format="text/plain" type="main">Cereals and cereal products</title>
+              <formattedref><em><span class="stddocTitle">Cereals and cereal products</span></em></formattedref>
               <docidentifier type="ISO">ISO 712</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                </organization>
-              </contributor>
             </bibitem>
             <bibitem id="ISO16634" type="standard">
-              <title format="text/plain" language="x">Cereals, pulses, milled cereal products, xxxx, oilseeds and animal
-                         feeding stuffs
-                       </title>
-              <title format="text/plain" language="en">Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</title>
+               <formattedref><em><span class="stddocTitle">Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</span></em></formattedref>
               <docidentifier type="ISO">ISO 16634:-- (all parts)</docidentifier>
-              <date type="published">
-                <on>--</on>
-              </date>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
               <note format="text/plain" reference="1" type="Unpublished-Status">Under preparation. (Stage at the time of publication ISO/DIS 16634)</note>
-              <extent type="part">
-                <referenceFrom>all</referenceFrom>
-              </extent>
             </bibitem>
             <bibitem id="ISO20483" type="standard">
-              <title format="text/plain">Cereals and pulses</title>
+              <formattedref><em><span class="stddocTitle">Cereals and pulses</span></em></formattedref>
               <docidentifier type="ISO">ISO 20483:2013-2014</docidentifier>
-              <date type="published">
-                <from>2013</from>
-                <to>2014</to>
-              </date>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                </organization>
-              </contributor>
             </bibitem>
             <bibitem id="ref1">
               <formattedref format="application/x-isodoc+xml">
@@ -229,8 +197,8 @@ RSpec.describe IsoDoc do
                            for food and animal feeding stuffs according to the Dumas combustion
                            method</em> (see
 
-                <link target="http://www.icc.or.at"/>
-                )</formattedref>
+                <link target="http://www.icc.or.at"/> )
+                </formattedref>
               <docidentifier type="ICC">ICC 167</docidentifier>
             </bibitem>
             <note>
@@ -240,27 +208,15 @@ RSpec.describe IsoDoc do
           </references>
           <references id="_bibliography" normative="false" obligation="informative" displayorder="3">
             <title depth="1">Bibliography</title>
-            <bibitem id="ISBN" type="ISBN">
-              <title format="text/plain">Chemicals for analytical laboratory use</title>
+            <bibitem id="ISBN" type="book">
+              <formattedref><em>Chemicals for analytical laboratory use</em>. ISBN.</formattedref>
               <docidentifier type="ISBN">ISBN</docidentifier>
               <docidentifier type="metanorma">[1]</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISBN</abbreviation>
-                </organization>
-              </contributor>
             </bibitem>
-            <bibitem id="ISSN" type="ISSN">
-              <title format="text/plain">Instruments for analytical laboratory use</title>
+            <bibitem id="ISSN" type="journal">
+              <formattedref><em>Instruments for analytical laboratory use</em>. ISSN.</formattedref>
               <docidentifier type="ISSN">ISSN</docidentifier>
               <docidentifier type="metanorma">[2]</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISSN</abbreviation>
-                </organization>
-              </contributor>
             </bibitem>
             <note>
               <name>NOTE</name>
@@ -271,15 +227,9 @@ RSpec.describe IsoDoc do
               <p>This is another annotation of document ISSN.</p>
             </note>
             <bibitem id="ISO3696" type="standard">
-              <title format="text/plain">Water for analytical laboratory use</title>
+              <formattedref><em><span class='stddocTitle'>Water for analytical laboratory use</span></em></formattedref>
               <docidentifier type='metanorma-ordinal'>[3]</docidentifier>
               <docidentifier type="ISO">ISO 3696</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
             </bibitem>
             <bibitem id="ref10">
               <formattedref format="application/x-isodoc+xml">
@@ -294,15 +244,13 @@ RSpec.describe IsoDoc do
               <docidentifier type="metanorma">[10]</docidentifier>
             </bibitem>
             <bibitem id="ref11">
-              <title>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</title>
+               <formattedref><em>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</em>.</formattedref>
               <docidentifier type='metanorma-ordinal'>[4]</docidentifier>
               <docidentifier type="IETF">IETF RFC 10</docidentifier>
             </bibitem>
             <bibitem id="ref12">
               <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
-
-                <em>How to cite a reference</em>
-                .</formattedref>
+                <em>How to cite a reference</em>.</formattedref>
               <docidentifier type="metanorma">[Citn]</docidentifier>
               <docidentifier type="IETF">IETF RFC 20</docidentifier>
             </bibitem>
@@ -353,8 +301,8 @@ RSpec.describe IsoDoc do
             <br/>
             <div>
               <h1 class="Section3">Bibliography</h1>
-              <p class="Biblio" id="ISBN">[1]&#160; <i>Chemicals for analytical laboratory use</i></p>
-              <p class="Biblio" id="ISSN">[2]&#160; <i>Instruments for analytical laboratory use</i></p>
+              <p class="Biblio" id="ISBN">[1]&#160; <i>Chemicals for analytical laboratory use</i>. ISBN.</p>
+              <p class="Biblio" id="ISSN">[2]&#160; <i>Instruments for analytical laboratory use</i>. ISSN.</p>
               <div class="Note">
                 <p>
                   <span class="note_label">NOTE</span>&#160; This is an annotation of document ISSN.</p>
@@ -372,7 +320,7 @@ RSpec.describe IsoDoc do
                 <a href="http://www.icc.or.at">http://www.icc.or.at</a>
                 )</p>
               <p class="Biblio" id="ref11">[4]&#160; IETF RFC 10,
-                <i>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</i></p>
+                <i>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</i>.</p>
               <p class="Biblio" id="ref12">Citn&#160; IETF RFC 20, CitationWorks. 2019.
                 <i>How to cite a reference</i>
                 .</p>
@@ -391,5 +339,54 @@ RSpec.describe IsoDoc do
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
       .to be_equivalent_to xmlpp(html)
+  end
+
+  it "processes websites" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+              <bibdata>
+                <language>en</language>
+              </bibdata>
+              <references normative="false">
+              <title>Bibliography</title>
+              <bibitem id="ignf" type="website">
+        <fetched>2022-05-06</fetched>
+        <title type="title-main" format="text/plain">IGNF. (IGN France) Registry</title>
+        <title type="main" format="text/plain">IGNF. (IGN France) Registry</title>
+        <uri>https://registre.ign.fr/ign/IGNF/</uri>
+        <docidentifier type="metanorma">2</docidentifier>
+      </bibitem>
+      </references>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+         <bibdata>
+           <language current='true'>en</language>
+         </bibdata>
+
+         <references normative='false'>
+           <title depth='1'>Bibliography</title>
+           <bibitem id='ignf' type='website'>
+             <formattedref>
+               <em>
+                 <span class='stddocTitle'>IGNF. (IGN France) Registry</span>
+               </em>
+                [website]. Available from:
+               <span class='biburl'>
+                 <link target='https://registre.ign.fr/ign/IGNF/'>https://registre.ign.fr/ign/IGNF/</link>
+               </span>
+               .
+             </formattedref>
+             <uri>https://registre.ign.fr/ign/IGNF/</uri>
+             <docidentifier type='metanorma'>2</docidentifier>
+           </bibitem>
+         </references>
+       </iso-standard>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to xmlpp(output)
   end
 end

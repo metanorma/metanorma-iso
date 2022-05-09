@@ -154,7 +154,7 @@ RSpec.describe IsoDoc do
           <title>
             <strong>Annex A</strong>
             <br/>
-            (informative)
+            <span class="obligation">(informative)</span>
             <br/>
             <br/>
             <strong>Annex</strong>
@@ -382,7 +382,7 @@ RSpec.describe IsoDoc do
         <a name='Annex' id='Annex'/>
         <p class='ANNEX'>
           <br/>
-           (informative)
+           <span style='font-weight:normal;'>(informative)</span>
           <br/>
           <br/>
           <b>Annex</b>

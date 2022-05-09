@@ -121,7 +121,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <note id="AN">
@@ -224,12 +224,12 @@ RSpec.describe IsoDoc do
         <preface>
           <foreword id="fwd" displayorder='1'>
             <p>
-              <xref target="N">Figure 1</xref>
-              <xref target="note1">Figure 2</xref>
-              <xref target="note2">Figure 3</xref>
-              <xref target="AN">Figure A.1</xref>
-              <xref target="Anote1">Figure A.2</xref>
-              <xref target="Anote2">Figure A.3</xref>
+              <xref target="N"><span class='citefig'>Figure 1</span></xref>
+              <xref target="note1"><span class='citefig'>Figure 2</span></xref>
+              <xref target="note2"><span class='citefig'>Figure 3</span></xref>
+              <xref target="AN"><span class='citefig'>Figure A.1</span></xref>
+              <xref target="Anote1"><span class='citefig'>Figure A.2</span></xref>
+              <xref target="Anote2"><span class='citefig'>Figure A.3</span></xref>
             </p>
           </foreword>
         </preface>
@@ -243,7 +243,7 @@ RSpec.describe IsoDoc do
               <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
             </figure>
             <p>
-              <xref target="N">Figure 1</xref>
+              <xref target="N"><span class='citefig'>Figure 1</span></xref>
             </p>
           </clause>
           <terms id="terms" displayorder='3'>
@@ -264,8 +264,8 @@ RSpec.describe IsoDoc do
                 <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
               </figure>
               <p>
-                <xref target="note1">Figure 2</xref>
-                <xref target="note2">Figure 3</xref>
+                <xref target="note1"><span class='citefig'>Figure 2</span></xref>
+                <xref target="note2"><span class='citefig'>Figure 3</span></xref>
               </p>
             </clause>
           </clause>
@@ -273,7 +273,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <figure id="AN">
@@ -362,12 +362,12 @@ RSpec.describe IsoDoc do
         <preface>
           <foreword id="fwd" displayorder='1'>
             <p>
-              <xref target="N">Figure 1</xref>
-              <xref target="note1">Figure 1 a)</xref>
-              <xref target="note2">Figure 1 b)</xref>
-              <xref target="AN">Figure A.1</xref>
-              <xref target="Anote1">Figure A.1 a)</xref>
-              <xref target="Anote2">Figure A.1 b)</xref>
+              <xref target="N"><span class='citefig'>Figure 1</span></xref>
+              <xref target="note1"><span class='citefig'>Figure 1 a)</span></xref>
+              <xref target="note2"><span class='citefig'>Figure 1 b)</span></xref>
+              <xref target="AN"><span class='citefig'>Figure A.1</span></xref>
+              <xref target="Anote1"><span class='citefig'>Figure A.1 a)</span></xref>
+              <xref target="Anote2"><span class='citefig'>Figure A.1 b)</span></xref>
             </p>
           </foreword>
         </preface>
@@ -398,8 +398,8 @@ RSpec.describe IsoDoc do
                 </figure>
               </figure>
               <p>
-                <xref target="note1">Figure 1 a)</xref>
-                <xref target="note2">Figure 1 b)</xref>
+                <xref target="note1"><span class='citefig'>Figure 1 a)</span></xref>
+                <xref target="note2"><span class='citefig'>Figure 1 b)</span></xref>
               </p>
             </clause>
           </clause>
@@ -407,7 +407,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
           </clause>
@@ -546,7 +546,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <example id="AN">
@@ -700,7 +700,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <formula id="AN">
@@ -833,12 +833,12 @@ RSpec.describe IsoDoc do
         <preface>
           <foreword displayorder='1'>
             <p>
-              <xref target="N">Table 1</xref>
-              <xref target="note1">Table 2</xref>
-              <xref target="note2">Table 3</xref>
-              <xref target="AN">Table A.1</xref>
-              <xref target="Anote1">Table A.2</xref>
-              <xref target="Anote2">Table A.3</xref>
+              <xref target="N"><span class='citetbl'>Table 1</span></xref>
+              <xref target="note1"><span class='citetbl'>Table 2</span></xref>
+              <xref target="note2"><span class='citetbl'>Table 3</span></xref>
+              <xref target="AN"><span class='citetbl'>Table A.1</span></xref>
+              <xref target="Anote1"><span class='citetbl'>Table A.2</span></xref>
+              <xref target="Anote2"><span class='citetbl'>Table A.3</span></xref>
             </p>
           </foreword>
         </preface>
@@ -858,7 +858,7 @@ RSpec.describe IsoDoc do
               </tbody>
             </table>
             <p>
-              <xref target="N">Table 1</xref>
+              <xref target="N"><span class='citetbl'>Table 1</span></xref>
             </p>
           </clause>
           <terms id="terms" displayorder='3'>
@@ -891,8 +891,8 @@ RSpec.describe IsoDoc do
                 </tbody>
               </table>
               <p>
-                <xref target="note1">Table 2</xref>
-                <xref target="note2">Table 3</xref>
+                <xref target="note1"><span class='citetbl'>Table 2</span></xref>
+                <xref target="note2"><span class='citetbl'>Table 3</span></xref>
               </p>
             </clause>
           </clause>
@@ -900,7 +900,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <table id="AN">
@@ -1138,23 +1138,23 @@ RSpec.describe IsoDoc do
             <title>Foreword</title>
             <p id='A'>
               This is a preamble
-              <xref target='C'>0.1</xref>
-              <xref target='C1'>0.2</xref>
-              <xref target='D'>Clause 1</xref>
-              <xref target='H'>Clause 3</xref>
-              <xref target='I'>3.1</xref>
-              <xref target='J'>3.1.1</xref>
-              <xref target='K'>3.2</xref>
-              <xref target='L'>Clause 4</xref>
-              <xref target='M'>Clause 5</xref>
-              <xref target='N'>5.1</xref>
-              <xref target='O'>5.2</xref>
-              <xref target='P'>Annex A</xref>
-              <xref target='Q'>A.1</xref>
-              <xref target='Q1'>A.1.1</xref>
-              <xref target='Q2'>Annex A, Appendix 1</xref>
+              <xref target='C'><span class='citesec'>0.1</span></xref>
+              <xref target='C1'><span class='citesec'>0.2</span></xref>
+              <xref target='D'><span class='citesec'>Clause 1</span></xref>
+              <xref target='H'><span class='citesec'>Clause 3</span></xref>
+              <xref target='I'><span class='citesec'>3.1</span></xref>
+              <xref target='J'><span class='citesec'>3.1.1</span></xref>
+              <xref target='K'><span class='citesec'>3.2</span></xref>
+              <xref target='L'><span class='citesec'>Clause 4</span></xref>
+              <xref target='M'><span class='citesec'>Clause 5</span></xref>
+              <xref target='N'><span class='citesec'>5.1</span></xref>
+              <xref target='O'><span class='citesec'>5.2</span></xref>
+              <xref target='P'><span class='citeapp'>Annex A</span></xref>
+              <xref target='Q'><span class='citeapp'>A.1</span></xref>
+              <xref target='Q1'><span class='citeapp'>A.1.1</span></xref>
+              <xref target='Q2'><span class='citeapp'>Annex A, Appendix 1</span></xref>
               <xref target='Q3'>Annex A, Appendix 1.1</xref>
-              <xref target='R'>Clause 2</xref>
+              <xref target='R'><span class='citesec'>Clause 2</span></xref>
             </p>
           </foreword>
           <introduction id='B' obligation='informative' displayorder='2'>
@@ -1243,7 +1243,7 @@ RSpec.describe IsoDoc do
           <title>
             <strong>Annex A</strong>
             <br/>
-            (normative)
+            <span class="obligation">(normative)</span>
             <br/>
             <br/>
             <strong>Annex</strong>
@@ -1404,7 +1404,7 @@ RSpec.describe IsoDoc do
         <annex id="annex1" displayorder='5'>
           <title>
             <strong>Annex A</strong>
-            <br/>(informative)</title>
+            <br/><span class="obligation">(informative)</span></title>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <ol id="AN" type="alphabet">
@@ -1536,7 +1536,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id='annex1'  displayorder='5'><title><strong>Annex A</strong><br/>(informative)</title>
+        <annex id='annex1'  displayorder='5'><title><strong>Annex A</strong><br/><span class="obligation">(informative)</span></title>
           <clause inline-header="true" id='annex1a'><title>A.1</title>
             <ol id='ANl' type="alphabet">
               <li id='AN'>

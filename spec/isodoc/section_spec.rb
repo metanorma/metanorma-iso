@@ -137,7 +137,7 @@ RSpec.describe IsoDoc do
           </clause>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder="8">
-          <title><strong>Annex A</strong><br/>(normative)<br/><br/><strong>Annex</strong></title>
+          <title><strong>Annex A</strong><br/><span class='obligation'>(normative)</span><br/><br/><strong>Annex</strong></title>
           <clause id="Q" inline-header="false" obligation="normative">
             <title depth="2">A.1<tab/>Annex A.1</title>
             <clause id="Q1" inline-header="false" obligation="normative">
@@ -369,7 +369,7 @@ RSpec.describe IsoDoc do
           </p>
           <div class="Section3" id="P">
             <h1 class="Annex">
-              <br/>(normative)
+              <br/><span style='font-weight:normal;'>(normative)</span>
               <br/>
               <br/>
               <b>Annex</b></h1>
@@ -563,7 +563,7 @@ RSpec.describe IsoDoc do
            <status>
              <stage abbreviation='IS' language=''>60</stage>
              <stage abbreviation='IS' language='en'>International standard</stage>
-             <substage language=''>60</substage>
+             <substage>60</substage>
            </status>
            <copyright>
              <from>#{Time.new.year}</from>
@@ -575,7 +575,7 @@ RSpec.describe IsoDoc do
              </owner>
            </copyright>
            <ext>
-             <doctype language=''>article</doctype>
+             <doctype>article</doctype>
              <subdoctype>vocabulary</subdoctype>
              <editorialgroup>
                <technical-committee/>
