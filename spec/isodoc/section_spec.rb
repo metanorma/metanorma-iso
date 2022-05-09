@@ -572,72 +572,94 @@ RSpec.describe IsoDoc do
                  <name>International Organization for Standardization</name>
                  <abbreviation>ISO</abbreviation>
                </organization>
-             </owner>
-           </copyright>
-           <ext>
-             <doctype>article</doctype>
-             <subdoctype>vocabulary</subdoctype>
-             <editorialgroup>
-               <technical-committee/>
-               <subcommittee/>
-               <workgroup/>
-             </editorialgroup>
-             <stagename>International standard</stagename>
-           </ext>
-         </bibdata>
-         <sections>
-           <terms id='A' obligation='normative' displayorder='1'>
-             <title depth='1'>
-               1
-               <tab/>
-               Terms and definitions
-             </title>
-             <p id='A1'>No terms and definitions are listed in this document.</p>
-           </terms>
-           <clause id='B' inline-header='false' obligation='normative' displayorder='2'>
-             <title depth='1'>
-               2
-               <tab/>
-               Clause
-             </title>
-           </clause>
-           <terms id='C' obligation='normative' displayorder='3'>
-             <title depth='1'>
-               3
-               <tab/>
-               More terms
-             </title>
-           </terms>
-         </sections>
-       </iso-standard>
+             </contributor>
+             <contributor>
+               <role type='publisher'/>
+               <organization>
+                 <name>International Organization for Standardization</name>
+                 <abbreviation>ISO</abbreviation>
+               </organization>
+             </contributor>
+             <language current='true'>en</language>
+             <script current='true'>Latn</script>
+             <status>
+               <stage abbreviation='IS' language=''>60</stage>
+               <stage abbreviation='IS' language='en'>International standard</stage>
+               <substage>60</substage>
+             </status>
+             <copyright>
+               <from>#{Time.new.year}</from>
+               <owner>
+                 <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                 </organization>
+               </owner>
+             </copyright>
+             <ext>
+               <doctype>article</doctype>
+               <subdoctype>vocabulary</subdoctype>
+               <editorialgroup>
+                 <technical-committee/>
+                 <subcommittee/>
+                 <workgroup/>
+               </editorialgroup>
+               <stagename>International standard</stagename>
+             </ext>
+           </bibdata>
+           <sections>
+             <terms id='A' obligation='normative' displayorder='1'>
+               <title depth='1'>
+                 1
+                 <tab/>
+                 Terms and definitions
+               </title>
+               <p id='A1'>No terms and definitions are listed in this document.</p>
+             </terms>
+             <clause id='B' inline-header='false' obligation='normative' displayorder='2'>
+               <title depth='1'>
+                 2
+                 <tab/>
+                 Clause
+               </title>
+             </clause>
+             <terms id='C' obligation='normative' displayorder='3'>
+               <title depth='1'>
+                 3
+                 <tab/>
+                 More terms
+               </title>
+             </terms>
+           </sections>
+         </iso-standard>
     OUTPUT
     output = <<~OUTPUT
-    <html lang='en'>
-  <head/>
-  <body lang='en'>
-    <div class='title-section'>
-      <p>&#160;</p>
-    </div>
-    <br/>
-    <div class='prefatory-section'>
-      <p>&#160;</p>
-    </div>
-    <br/>
-    <div class='main-section'>
-      <p class='zzSTDTitle1'/>
-      <div id='A'>
-        <h1> 1 &#160; Terms and definitions </h1>
-        <p id='A1'>No terms and definitions are listed in this document.</p>
-      </div>
-      <div id='B'>
-        <h1> 2 &#160; Clause </h1>
-      </div>
-      <div id='C'>
-        <h1> 3 &#160; More terms </h1>
-      </div>
-    </div>
-  </body>
-</html>
+          <html lang='en'>
+        <head/>
+        <body lang='en'>
+          <div class='title-section'>
+            <p>&#160;</p>
+          </div>
+          <br/>
+          <div class='prefatory-section'>
+            <p>&#160;</p>
+          </div>
+          <br/>
+          <div class='main-section'>
+            <p class='zzSTDTitle1'/>
+            <div id='A'>
+              <h1> 1 &#160; Terms and definitions </h1>
+              <p id='A1'>No terms and definitions are listed in this document.</p>
+            </div>
+            <div id='B'>
+              <h1> 2 &#160; Clause </h1>
+            </div>
+            <div id='C'>
+              <h1> 3 &#160; More terms </h1>
+            </div>
+          </div>
+        </body>
+      </html>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
@@ -695,7 +717,8 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(xmlpp(output.sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
+    expect(xmlpp(output.sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m,
+                                                        "</body>")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <body lang="EN-US" link="blue" vlink="#954F72">
           <div class="WordSection1">
@@ -726,7 +749,8 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(xmlpp(output.sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
+    expect(xmlpp(output.sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m,
+                                                        "</body>")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <body lang="EN-US" link="blue" vlink="#954F72">
           <div class="WordSection1">

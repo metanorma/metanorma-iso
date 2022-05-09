@@ -1,6 +1,7 @@
 require_relative "init"
 require "isodoc"
 require_relative "index"
+require_relative "presentation_inline"
 require_relative "presentation_xref"
 require_relative "../../relaton/render/general"
 
@@ -158,6 +159,20 @@ module IsoDoc
         super
       end
 
+      def admonition1(elem)
+        super
+        return unless n = elem.at(ns("./name"))
+
+        p = n.next_element
+        return unless p.name == "p"
+
+        p.children.first.previous = admonition_name(n.remove.children.to_xml)
+      end
+
+      def admonition_name(xml)
+        "#{xml} &#x2014; "
+      end
+    
       def bibrenderer
         ::Relaton::Render::Iso::General.new(language: @lang, i18nhash: @i18n.get)
       end

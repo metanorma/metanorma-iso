@@ -1,6 +1,110 @@
 require "spec_helper"
 
 RSpec.describe IsoDoc do
+  it "processes admonitions" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface><foreword>
+          <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="caution">
+          <name>CAUTION</name>
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f2">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f3">Para 2.</p>
+      </admonition>
+          </foreword></preface>
+          </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
+          <preface><foreword displayorder="1">
+          <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="caution">
+                         <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>
+                 CAUTION — Only use paddy or parboiled rice for the
+                 determination of husked rice yield.
+               </p>
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f3">Para 2.</p>
+      </admonition>
+          </foreword></preface>
+          </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      #{HTML_HDR}
+                   <br/>
+             <div>
+               <h1 class='ForewordTitle'>Foreword</h1>
+               <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='Admonition'>
+                 <p>
+                    CAUTION — Only use paddy or parboiled rice for the
+                   determination of husked rice yield.
+                 </p>
+                 <p id='_e94663cc-2473-4ccc-9a72-983a74d989f3'>Para 2.</p>
+               </div>
+             </div>
+             <p class='zzSTDTitle1'/>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "processes admonitions with titles" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface><foreword>
+          <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="caution">
+          <name>Title</name>
+          <ul>
+          <li>List</li>
+          </ul>
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f2">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+      </admonition>
+          </foreword></preface>
+          </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
+          <preface><foreword displayorder="1">
+          <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="caution">
+          <name>Title</name>
+          <ul>
+          <li>List</li>
+          </ul>
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f2">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+      </admonition>
+          </foreword></preface>
+          </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      #{HTML_HDR}
+                    <br/>
+             <div>
+               <h1 class='ForewordTitle'>Foreword</h1>
+               <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='Admonition'>
+                        <p>Title — </p>
+         <ul>
+           <li>List</li>
+         </ul>
+         <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+               </div>
+             </div>
+             <p class='zzSTDTitle1'/>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
   it "renders figures" do
     input = <<~INPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml'>
@@ -114,78 +218,78 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
     word = <<~OUTPUT
-        <body lang='EN-US' link='blue' vlink='#954F72'>
-          <div class='WordSection1'>
-            <p>&#xA0;</p>
-          </div>
+      <body lang='EN-US' link='blue' vlink='#954F72'>
+        <div class='WordSection1'>
+          <p>&#xA0;</p>
+        </div>
+        <p>
+          <br clear='all' class='section'/>
+        </p>
+        <div class='WordSection2'>
           <p>
-            <br clear='all' class='section'/>
+            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
           </p>
-          <div class='WordSection2'>
-            <p>
-              <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-            </p>
-            <div id='fwd'>
-              <h1 class='ForewordTitle'>Foreword</h1>
-              <p class='ForewordText'> </p>
+          <div id='fwd'>
+            <h1 class='ForewordTitle'>Foreword</h1>
+            <p class='ForewordText'> </p>
+          </div>
+          <p>&#xA0;</p>
+        </div>
+        <p>
+          <br clear='all' class='section'/>
+        </p>
+        <div class='WordSection3'>
+          <p class='zzSTDTitle1'/>
+          <div id='scope'>
+            <h1>Scope</h1>
+            <div id='N' class='figure'>
+              <img src='rice_images/rice_image1.png'/>
+              <p class='FigureTitle' style='text-align:center;'>Figure 1&#xA0;&#x2014; Split-it-right sample divider</p>
             </div>
-            <p>&#xA0;</p>
+            <p> </p>
           </div>
-          <p>
-            <br clear='all' class='section'/>
-          </p>
-          <div class='WordSection3'>
-            <p class='zzSTDTitle1'/>
-            <div id='scope'>
-              <h1>Scope</h1>
-              <div id='N' class='figure'>
+          <div id='terms'>
+            <h1/>
+          </div>
+          <div id='widgets'>
+            <h1>Widgets</h1>
+            <div id='widgets1'>
+              <div id='note1' class='figure'>
                 <img src='rice_images/rice_image1.png'/>
-                <p class='FigureTitle' style='text-align:center;'>Figure 1&#xA0;&#x2014; Split-it-right sample divider</p>
+                <p class='FigureTitle' style='text-align:center;'>Figure 2&#xA0;&#x2014; Split-it-right sample divider</p>
+              </div>
+              <div id='note2' class='figure'>
+                <img src='rice_images/rice_image1.png'/>
+                <p class='FigureTitle' style='text-align:center;'>Figure 3&#xA0;&#x2014; Split-it-right sample divider</p>
               </div>
               <p> </p>
             </div>
-            <div id='terms'>
-              <h1/>
-            </div>
-            <div id='widgets'>
-              <h1>Widgets</h1>
-              <div id='widgets1'>
-                <div id='note1' class='figure'>
-                  <img src='rice_images/rice_image1.png'/>
-                  <p class='FigureTitle' style='text-align:center;'>Figure 2&#xA0;&#x2014; Split-it-right sample divider</p>
-                </div>
-                <div id='note2' class='figure'>
-                  <img src='rice_images/rice_image1.png'/>
-                  <p class='FigureTitle' style='text-align:center;'>Figure 3&#xA0;&#x2014; Split-it-right sample divider</p>
-                </div>
-                <p> </p>
+          </div>
+          <p>
+            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+          </p>
+          <div id='annex1' class='Section3'>
+            <div id='annex1a'>
+              <div id='AN' class='figure'>
+                <img src='rice_images/rice_image1.png'/>
+                <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</p>
               </div>
             </div>
-            <p>
-              <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-            </p>
-            <div id='annex1' class='Section3'>
-              <div id='annex1a'>
-                <div id='AN' class='figure'>
-                  <img src='rice_images/rice_image1.png'/>
-                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</p>
-                </div>
+            <div id='annex1b'>
+              <div id='Anote1' class='figure'>
+                <img src='rice_images/rice_image1.png'/>
+                <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</p>
               </div>
-              <div id='annex1b'>
-                <div id='Anote1' class='figure'>
-                  <img src='rice_images/rice_image1.png'/>
-                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</p>
-                </div>
-                <div id='Anote2' class='figure'>
-                  <img src='rice_images/rice_image1.png'/>
-                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</p>
-                </div>
+              <div id='Anote2' class='figure'>
+                <img src='rice_images/rice_image1.png'/>
+                <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</p>
               </div>
             </div>
           </div>
-          <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
-          <div class='colophon'/>
-        </body>
+        </div>
+        <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+        <div class='colophon'/>
+      </body>
     OUTPUT
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", input, true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
@@ -195,64 +299,65 @@ RSpec.describe IsoDoc do
   end
 
   it "renders subfigures (HTML)" do
-    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
-      <iso-standard xmlns='http://riboseinc.com/isoxml'>
-        <preface>
-          <foreword id='fwd'>
-            <p>
-              <xref target='N'/>
-              <xref target='note1'/>
-              <xref target='note2'/>
-              <xref target='AN'/>
-              <xref target='Anote1'/>
-              <xref target='Anote2'/>
-            </p>
-          </foreword>
-        </preface>
-        <sections>
-          <clause id='scope' type="scope">
-            <title>Scope</title>
-          </clause>
-          <terms id='terms'/>
-          <clause id='widgets'>
-            <title>Widgets</title>
-            <clause id='widgets1'>
-              <figure id='N'>
-                <name>Figure 1</name>
-                <figure id='note1'>
+    output = IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", <<~"INPUT", true)
+        <iso-standard xmlns='http://riboseinc.com/isoxml'>
+          <preface>
+            <foreword id='fwd'>
+              <p>
+                <xref target='N'/>
+                <xref target='note1'/>
+                <xref target='note2'/>
+                <xref target='AN'/>
+                <xref target='Anote1'/>
+                <xref target='Anote2'/>
+              </p>
+            </foreword>
+          </preface>
+          <sections>
+            <clause id='scope' type="scope">
+              <title>Scope</title>
+            </clause>
+            <terms id='terms'/>
+            <clause id='widgets'>
+              <title>Widgets</title>
+              <clause id='widgets1'>
+                <figure id='N'>
+                  <name>Figure 1</name>
+                  <figure id='note1'>
+                    <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
+                    <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+                  </figure>
+                  <figure id='note2'>
+                    <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
+                    <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+                  </figure>
+                </figure>
+                <p>
+                  <xref target='note1'/>
+                  <xref target='note2'/>
+                </p>
+              </clause>
+            </clause>
+          </sections>
+          <annex id='annex1'>
+            <clause id='annex1a'> </clause>
+            <clause id='annex1b'>
+              <figure id='AN'>
+                <name>Figure A.1</name>
+                <figure id='Anote1'>
                   <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
                   <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
                 </figure>
-                <figure id='note2'>
+                <figure id='Anote2'>
                   <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
                   <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
                 </figure>
               </figure>
-              <p>
-                <xref target='note1'/>
-                <xref target='note2'/>
-              </p>
             </clause>
-          </clause>
-        </sections>
-        <annex id='annex1'>
-          <clause id='annex1a'> </clause>
-          <clause id='annex1b'>
-            <figure id='AN'>
-              <name>Figure A.1</name>
-              <figure id='Anote1'>
-                <name>a)&#xA0;&#x2014; Split-it-right sample divider</name>
-                <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
-              </figure>
-              <figure id='Anote2'>
-                <name>b)&#xA0;&#x2014; Split-it-right sample divider</name>
-                <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
-              </figure>
-            </figure>
-          </clause>
-        </annex>
-      </iso-standard>
-    INPUT
+          </annex>
+        </iso-standard>
+      INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
       <html lang='en'>
         <head/>
@@ -450,58 +555,59 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     word = <<~OUTPUT
-            <div>
-              <h1 class='ForewordTitle'>Foreword</h1>
-              <div id='_be9158af-7e93-4ee2-90c5-26d31c181934'><div class='formula'>
-                <p>
-                  <span class='stem'>(#(r = 1 %)#)</span>
-                  <span style='mso-tab-count:1'>&#160; </span>
-                </p>
-              </div>
-              <p>where</p>
-              <table class="formula_dl">
-                <tr>
-                  <td align="left" valign="top">
-                    <p align="left" style="margin-left:0pt;text-align:left;">
-                      <span class="stem">(#(r)#)</span>
-                    </p>
-                  </td>
-                  <td valign="top">
-                    <p class="ForewordText" id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td align="left" valign="top">
-                    <p align="left" style="margin-left:0pt;text-align:left;">
-                      <span class="stem">(#(s_1)#)</span>
-                    </p>
-                  </td>
-                  <td valign="top">
-                    <p class="ForewordText" id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the other repeatability limit.</p>
-                  </td>
-                </tr>
-              </table>
-              <div id='_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0' class='Note'>
-                <p class='Note'>
-                      <span class='note_label'>NOTE</span>
-                  <span style='mso-tab-count:1'>&#160; </span>
-                  [durationUnits] is essentially a duration statement without the "P"
-                  prefix. "P" is unnecessary because between "G" and "U" duration is
-                  always expressed.
-                </p>
-              </div>
-            </div>
-            <div id='_be9158af-7e93-4ee2-90c5-26d31c181935'><div class='formula'>
+          <div>
+            <h1 class='ForewordTitle'>Foreword</h1>
+            <div id='_be9158af-7e93-4ee2-90c5-26d31c181934'><div class='formula'>
               <p>
                 <span class='stem'>(#(r = 1 %)#)</span>
                 <span style='mso-tab-count:1'>&#160; </span>
-                (1)
+              </p>
+            </div>
+            <p>where</p>
+            <table class="formula_dl">
+              <tr>
+                <td align="left" valign="top">
+                  <p align="left" style="margin-left:0pt;text-align:left;">
+                    <span class="stem">(#(r)#)</span>
+                  </p>
+                </td>
+                <td valign="top">
+                  <p class="ForewordText" id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top">
+                  <p align="left" style="margin-left:0pt;text-align:left;">
+                    <span class="stem">(#(s_1)#)</span>
+                  </p>
+                </td>
+                <td valign="top">
+                  <p class="ForewordText" id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the other repeatability limit.</p>
+                </td>
+              </tr>
+            </table>
+            <div id='_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0' class='Note'>
+              <p class='Note'>
+                    <span class='note_label'>NOTE</span>
+                <span style='mso-tab-count:1'>&#160; </span>
+                [durationUnits] is essentially a duration statement without the "P"
+                prefix. "P" is unnecessary because between "G" and "U" duration is
+                always expressed.
               </p>
             </div>
           </div>
+          <div id='_be9158af-7e93-4ee2-90c5-26d31c181935'><div class='formula'>
+            <p>
+              <span class='stem'>(#(r = 1 %)#)</span>
+              <span style='mso-tab-count:1'>&#160; </span>
+              (1)
+            </p>
+          </div>
         </div>
-      OUTPUT
-    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input, true)
+      </div>
+    OUTPUT
+    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input,
+                                                                 true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
@@ -512,32 +618,33 @@ RSpec.describe IsoDoc do
   end
 
   it "processes formulae with single definition list entry" do
-    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword>
-            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
-              <stem type="AsciiMath">r = 1 %</stem>
-              <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
-                <dt>
-                  <stem type="AsciiMath">r</stem>
-                </dt>
-                <dd>
-                  <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
-                </dd>
-              </dl>
-              <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
-                <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot; prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is always expressed.</p>
-              </note>
-            </formula>
-            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
-              <name>1</name>
-              <stem type="AsciiMath">r = 1 %</stem>
-            </formula>
-          </foreword>
-        </preface>
-      </iso-standard>
-    INPUT
+    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test",
+                                                      <<~"INPUT", true)
+                                                        <iso-standard xmlns="http://riboseinc.com/isoxml">
+                                                          <preface>
+                                                            <foreword>
+                                                              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
+                                                                <stem type="AsciiMath">r = 1 %</stem>
+                                                                <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
+                                                                  <dt>
+                                                                    <stem type="AsciiMath">r</stem>
+                                                                  </dt>
+                                                                  <dd>
+                                                                    <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
+                                                                  </dd>
+                                                                </dl>
+                                                                <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
+                                                                  <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot; prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is always expressed.</p>
+                                                                </note>
+                                                              </formula>
+                                                              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
+                                                                <name>1</name>
+                                                                <stem type="AsciiMath">r = 1 %</stem>
+                                                              </formula>
+                                                            </foreword>
+                                                          </preface>
+                                                        </iso-standard>
+                                                      INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{HTML_HDR}
               <br/>
