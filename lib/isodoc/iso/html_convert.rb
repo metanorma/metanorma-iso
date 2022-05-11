@@ -63,8 +63,8 @@ module IsoDoc
         if level == "h1" &&
             header.parent.at(".//h2#{toc_exclude_class}")
           <<~HDR
-            <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(content)}</a></li>
-            <div class="collapse-button"></div></div>
+            <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(content)}</a>
+            <div class="collapse-button"></div></div></li>
           HDR
         else
           %(<li class="#{level}"><a href="##{header['id']}">\

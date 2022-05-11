@@ -88,8 +88,8 @@ module IsoDoc
         <<~TOC.freeze
           <span lang="EN-GB"><span
           style='mso-element:field-begin'></span><span
-          style='mso-spacerun:yes'>&#xA0;</span>TOC \\o &quot;2-#{level}&quot; \\h \\z \\t
-          &quot;Heading 1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1;ANNEXN;1;ANNEXZ;1;na2;1;na3;1;na4;1;na5;1;na6;1;Title;1;Base_Heading;1;Box-title;1;Front Head;1;Index Head;1;AMEND Terms Heading;1;AMEND Heading 1 Unnumbered;1&quot;
+          style='mso-spacerun:yes'>&#xA0;</span>TOC \\o "2-#{level}" \\h \\z \\t
+          "Heading 1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1;ANNEXN;1;ANNEXZ;1;na2;1;na3;1;na4;1;na5;1;na6;1;Title;1;Base_Heading;1;Box-title;1;Front Head;1;Index Head;1;AMEND Terms Heading;1;AMEND Heading 1 Unnumbered;1"
            <span style='mso-element:field-separator'></span></span>
         TOC
       end

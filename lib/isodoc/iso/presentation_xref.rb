@@ -80,7 +80,7 @@ module IsoDoc
 
       def eref_localities1_zh(target, type, from, upto, node)
         ret = " 第#{from}" if from
-        ret += "&ndash;#{upto}" if upto
+        ret += "&#x2013;#{upto}" if upto
         node["droploc"] != "true" && !subclause?(target, type, from) and
           ret += eref_locality_populate(type, node)
         ret += ")" if type == "list"
@@ -97,7 +97,7 @@ module IsoDoc
         node["droploc"] != "true" && !subclause?(target, type, from) and
           ret = eref_locality_populate(type, node)
         ret += " #{from}" if from
-        ret += "&ndash;#{upto}" if upto
+        ret += "&#x2013;#{upto}" if upto
         ret += ")" if type == "list"
         ret = l10n(ret)
         locality_span_wrap(ret, type)

@@ -94,25 +94,25 @@ module IsoDoc
         suffix = @c.encode(part.text, :hexadecimal)
         p = titlenums[:part]
         titlenums[:part] && titlenums[:subpart] and
-          p = "#{titlenums[:part]}&ndash;#{titlenums[:subpart]}"
+          p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
         titlenums[:part] and
-          suffix = "#{part_label(lang)}&nbsp;#{p}: " + suffix
+          suffix = "#{part_label(lang)}&#xa0;#{p}: " + suffix
         suffix
       end
 
       def part_prefix(titlenums, lang)
         p = titlenums[:part]
         titlenums[:part] && titlenums[:subpart] and
-          p = "#{titlenums[:part]}&ndash;#{titlenums[:subpart]}"
-        "#{part_label(lang)}&nbsp;#{p}"
+          p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
+        "#{part_label(lang)}&#xa0;#{p}"
       end
 
       def amd_prefix(titlenums, lang)
-        "#{amd_label(lang)}&nbsp;#{titlenums[:amd]}"
+        "#{amd_label(lang)}&#xa0;#{titlenums[:amd]}"
       end
 
       def corr_prefix(titlenums, lang)
-        "#{corr_label(lang)}&nbsp;#{titlenums[:corr]}"
+        "#{corr_label(lang)}&#xa0;#{titlenums[:corr]}"
       end
 
       def compose_title(tparts, tnums, lang)
@@ -121,10 +121,10 @@ module IsoDoc
           main = @c.encode(tparts[:main].text, :hexadecimal)
         tparts[:intro] &&
           main = "#{@c.encode(tparts[:intro].text,
-                              :hexadecimal)}&nbsp;&mdash; #{main}"
+                              :hexadecimal)}&#xa0;&#x2014; #{main}"
         if tparts[:part]
           suffix = part_title(tparts[:part], tnums, lang)
-          main = "#{main}&nbsp;&mdash; #{suffix}"
+          main = "#{main}&#xa0;&#x2014; #{suffix}"
         end
         main
       end
