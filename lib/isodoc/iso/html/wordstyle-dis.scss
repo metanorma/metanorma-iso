@@ -276,6 +276,7 @@ h1, .h1
 	mso-style-name:"Heading 1";
 	mso-style-link:"Heading 1 Char";
 	mso-style-next:Normal;
+	mso-outline-level:1;
 	margin-top:13.5pt;
 	margin-right:0cm;
 	margin-bottom:12.0pt;
@@ -297,7 +298,6 @@ h1, .h1
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
 h1 {
-	mso-outline-level:1;
 	mso-list:l1 level1 lfo6;
 }
 h1.ForewordTitle {
@@ -305,53 +305,6 @@ h1.ForewordTitle {
         font-style: normal ;
         font-weight: bold;
 }
-p.ForewordTitle, li.ForewordTitle, div.ForewordTitle
-	{mso-style-name:"Foreword Title";
-	mso-style-unhide:no;
-	mso-style-parent:Base_Heading;
-	margin-top:15.5pt;
-	margin-right:0cm;
-	margin-bottom:15.5pt;
-	margin-left:0cm;
-	line-height:15.5pt;
-	page-break-before:always;
-	mso-pagination:widow-orphan;
-	page-break-after:avoid;
-	mso-outline-level:1;
-	mso-hyphenate:none;
-	font-size:14.0pt;
-	mso-bidi-font-size:11.0pt;
-	font-family:$headerfont;
-	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
-	mso-ansi-language:EN-GB;
-	mso-fareast-language:EN-US;
-	font-weight:bold;
-	mso-bidi-font-weight:normal;}
-p.IntroTitle, li.IntroTitle, div.IntroTitle
-	{mso-style-name:"Intro Title";
-	mso-style-unhide:no;
-	mso-style-parent:"Foreword Title";
-	margin-top:15.5pt;
-	margin-right:0cm;
-	margin-bottom:15.5pt;
-	margin-left:0cm;
-	line-height:15.5pt;
-	page-break-before:always;
-	mso-pagination:widow-orphan;
-	page-break-after:avoid;
-	mso-outline-level:1;
-	mso-hyphenate:none;
-	font-size:14.0pt;
-	mso-bidi-font-size:11.0pt;
-	font-family:$headerfont;
-	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
-	mso-ansi-language:EN-GB;
-	mso-fareast-language:EN-US;
-	font-weight:bold;
-	mso-bidi-font-weight:normal;}
-
 h1.Annex
 	{mso-style-priority:1;
 	mso-style-unhide:no;
@@ -368,7 +321,6 @@ h1.Annex
 	mso-pagination:widow-orphan;
 	page-break-after:avoid;
 	font-weight:normal;
-	mso-outline-level:1;
 	mso-list:l1 level1 lfo6;
 	mso-hyphenate:none;
 	tab-stops:20.0pt list 21.6pt left 28.0pt;
@@ -415,6 +367,7 @@ h2, .h2
         mso-style-parent:"Heading 1";
         mso-style-link:"Heading 2 Char";
         mso-style-next:Normal;
+        mso-outline-level:2;
         margin-top:3.0pt;
         margin-right:0cm;
         margin-bottom:12.0pt;
@@ -436,7 +389,6 @@ h2, .h2
         mso-bidi-font-weight:normal;}
 h2
 	{ mso-list:l1 level2 lfo6;
-        mso-outline-level:2;
         }
 .h3Annex
 	{mso-style-priority:3;
@@ -493,7 +445,6 @@ h3, .h3
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
 h3      {mso-list:l1 level3 lfo6;
-	mso-outline-level:3;
         }
 .h4Annex
 	{mso-style-priority:4;
@@ -529,6 +480,7 @@ h4, .h4
 	mso-style-parent:"Heading 3";
 	mso-style-link:"Heading 4 Char";
 	mso-style-next:Normal;
+	mso-outline-level:4;
 	margin-top:3.0pt;
 	margin-right:0cm;
 	margin-bottom:12.0pt;
@@ -548,7 +500,6 @@ h4, .h4
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
 h4      {mso-list:l1 level4 lfo6;
-	mso-outline-level:4;
         }
 .h5Annex
 	{mso-style-priority:5;
@@ -584,6 +535,7 @@ h5, .h5
 	mso-style-parent:"Heading 4";
 	mso-style-link:"Heading 5 Char";
 	mso-style-next:Normal;
+	mso-outline-level:5;
 	margin-top:3.0pt;
 	margin-right:0cm;
 	margin-bottom:6.0pt;
@@ -603,7 +555,6 @@ h5, .h5
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
 h5      {mso-list:l1 level5 lfo6;
-	mso-outline-level:5;
         }
 h6, .h6
 	{mso-style-priority:6;
@@ -613,6 +564,7 @@ h6, .h6
 	mso-style-parent:"Heading 5";
 	mso-style-link:"Heading 6 Char";
 	mso-style-next:Normal;
+	mso-outline-level:6;
 	margin-top:3.0pt;
 	margin-right:0cm;
 	margin-bottom:12.0pt;
@@ -632,7 +584,6 @@ h6, .h6
 	mso-fareast-language:JA;
 	mso-bidi-font-weight:normal;}
 h6      {mso-list:l1 level6 lfo6;
-	mso-outline-level:6;
         }
 p.a2, li.a2, div.a2
 	{mso-style-name:a2;
@@ -839,7 +790,7 @@ p.MsoHeader, li.MsoHeader, div.MsoHeader
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-p.MsoHeaderLandscape, li.MsoHeaderLandscape, div.MsoHeaderLandscape, p.msoheaderlandscape, li.msoheaderlandscape, div.msoheaderlandscape
+p.MsoHeaderLandscape, li.MsoHeaderLandscape, div.MsoHeaderLandscape
         {mso-style-name:msoheaderlandscape;
         mso-style-noshow:yes;
         mso-style-priority:99;
@@ -880,7 +831,7 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;}
-p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape, p.msofooterlandscape, li.msofooterlandscape, div.msofooterlandscape
+p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape
         {mso-style-name:msofooterlandscape;
         mso-style-noshow:yes;
         mso-style-priority:99;

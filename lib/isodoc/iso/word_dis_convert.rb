@@ -31,10 +31,19 @@ module IsoDoc
         TableFootnote: "Tablefootnote",
         formula: "Formula",
         note: "Note",
+        example: "Example",
+        admonition: "Admonition",
+        admonitiontitle: "AdmonitionTitle",
+        sourcetitle: "SourceTitle",
+        tabletitle: "TableTitle",
+        titlepagesbhead: "TablePageSubhead",
         NormRef: "RefNorm",
-        biblio: "BiblioEntry",
+        Biblio: "BiblioEntry",
         MsoNormal: "MsoBodyText",
         FigureTitle: "Figuretitle",
+        zzwarning: "zzWarning",
+        zzwarninghdr: "zzWarningHdr",
+        quoteattribution: "QuoteAttribution",
       }.freeze
 
       def dis_styles(docxml)

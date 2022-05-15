@@ -25,7 +25,7 @@
 {% endif %}
 
 <p class="zzCover">
-<span lang="EN-GB">{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &mdash; {% endif %}{{ doctitlemain }}{% if doctitlemain and doctitlepart %} &mdash; {% endif %}{% if doctitlepart %}{% if doctitlepartlabel %}{{ doctitlepartlabel }}: {% endif %}{{ doctitlepart }}</span>{% endif %}
+<span lang="EN-GB">{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &#x2014; {% endif %}{{ doctitlemain }}{% if doctitlemain and doctitlepart %} &#x2014; {% endif %}{% if doctitlepart %}{% if doctitlepartlabel %}{{ doctitlepartlabel }}: {% endif %}{{ doctitlepart }}</span>{% endif %}
 </p>
 {% if doctitleamdlabel %}
 <p class="zzCover">{{ doctitleamdlabel }}{% if doctitleamd %}: {{ doctitleamd }}{% endif %}</p>
@@ -34,7 +34,7 @@
 <p class="zzCover">{{ doctitlecorrlabel }}</p>
 {% endif %}
 
-<p class="zzCover">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &mdash; {% endif %}{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &mdash; {% endif %}{% if docsubtitlepart %}{% if docsubtitlepartlabel %}{{ docsubtitlepartlabel }}: {% endif %}{{ docsubtitlepart }}{% endif %}
+<p class="zzCover">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &#x2014; {% endif %}{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &#x2014; {% endif %}{% if docsubtitlepart %}{% if docsubtitlepartlabel %}{{ docsubtitlepartlabel }}: {% endif %}{{ docsubtitlepart }}{% endif %}
 </p>
 {% if docsubtitleamdlabel %}
 <p class="zzCover">{{ docsubtitleamdlabel }}{% if docsubtitleamd %}: {{ docsubtitleamd }}{% endif %}</p>
