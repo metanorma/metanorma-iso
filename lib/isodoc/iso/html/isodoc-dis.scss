@@ -971,12 +971,23 @@ p.1, li.1, div.1
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;}
-p.Quote, li.Quote, div.Quote
+p.Quote, li.Quote
 	{mso-style-priority:99;
 	margin-top:0cm;
 	margin-right:36.0pt;
 	margin-bottom:0cm;
 	margin-left:36.0pt;
+	text-align:justify;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:$normalfontsize;
+	font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
+	mso-bidi-font-family:$bodyfont;
+	mso-ansi-language:EN-GB;}
+div.Quote
+	{mso-style-priority:99;
 	text-align:justify;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;

@@ -434,195 +434,195 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~OUTPUT
-           <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
-         <div>
-           <a name='A' id='A'/>
-           <h1/>
-           <p class='MsoBodyText'>
-             <p class='ListNumber1'>
-               a)
-               <span style='mso-tab-count:1'> </span>
-               A
-             </p>
-             <p class='ListNumber1'>
-               b)
-               <span style='mso-tab-count:1'> </span>
-               B
-             </p>
-             <p class='MsoListNumber2'>
-               1)
-               <span style='mso-tab-count:1'> </span>
-               C
-             </p>
-             <p class='MsoListNumber2'>
-               2)
-               <span style='mso-tab-count:1'> </span>
-               D
-             </p>
-             <p class='MsoListNumber3'>
-               i)
-               <span style='mso-tab-count:1'> </span>
-               E
-             </p>
-             <p class='MsoListNumber3'>
-               ii)
-               <span style='mso-tab-count:1'> </span>
-               F
-             </p>
-             <p class='MsoListNumber4'>
-               A)
-               <span style='mso-tab-count:1'> </span>
-               G
-             </p>
-             <p class='MsoListNumber4'>
-               B)
-               <span style='mso-tab-count:1'> </span>
-               H
-             </p>
-             <p class='MsoListNumber5'>
-               I)
-               <span style='mso-tab-count:1'> </span>
-               I
-             </p>
-             <p class='MsoListNumber5'>
-               II)
-               <span style='mso-tab-count:1'> </span>
-               J
-             </p>
-             <p class='MsoListNumber5'>
-               a)
-               <span style='mso-tab-count:1'> </span>
-               K
-             </p>
-             <p class='MsoListNumber5'>
-               b)
-               <span style='mso-tab-count:1'> </span>
-               L
-             </p>
-             <p class='MsoListNumber5'>
-               c)
-               <span style='mso-tab-count:1'> </span>
-               M
-             </p>
-             <p class='MsoListNumber5'>
-               III)
-               <span style='mso-tab-count:1'> </span>
-               N
-             </p>
-             <p class='MsoListNumber4'>
-               C)
-               <span style='mso-tab-count:1'> </span>
-               O
-             </p>
-             <p class='MsoListNumber3'>
-               iii)
-               <span style='mso-tab-count:1'> </span>
-               P
-             </p>
-             <p class='MsoListNumber2'>
-               3)
-               <span style='mso-tab-count:1'> </span>
-               Q
-             </p>
-             <p class='ListNumber1'>
-               c)
-               <span style='mso-tab-count:1'> </span>
-               R
-             </p>
-             <p class='ListContinue1'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               A
-             </p>
-             <p class='ListContinue1'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               B
-             </p>
-             <p class='MsoListContinue2'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               C
-             </p>
-             <p class='MsoListContinue2'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               D
-             </p>
-             <p class='MsoListContinue3'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               E
-             </p>
-             <p class='MsoListContinue3'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               F
-             </p>
-             <p class='MsoListContinue4'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               G
-             </p>
-             <p class='MsoListContinue4'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               H
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               I
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               J
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               K
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               L
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               M
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               N
-             </p>
-             <p class='MsoListContinue4'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               O
-             </p>
-             <p class='MsoListContinue3'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               P
-             </p>
-             <p class='MsoListContinue2'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               Q
-             </p>
-             <p class='ListContinue1'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               R
-             </p>
-           </p>
-         </div>
-       </div>
+          <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <p class='MsoBodyText'>
+            <p class='ListNumber1'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='ListNumber1'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListNumber2'>
+              1)
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListNumber2'>
+              2)
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListNumber3'>
+              i)
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListNumber3'>
+              ii)
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListNumber4'>
+              A)
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListNumber4'>
+              B)
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListNumber5'>
+              I)
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListNumber5'>
+              II)
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListNumber5'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListNumber5'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListNumber5'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListNumber5'>
+              III)
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListNumber4'>
+              C)
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListNumber3'>
+              iii)
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListNumber2'>
+              3)
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='ListNumber1'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+            <p class='ListContinue1'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='ListContinue1'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='ListContinue1'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+          </p>
+        </div>
+      </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
@@ -758,7 +758,7 @@ RSpec.describe IsoDoc do
                 Note
               </p>
             </div>
-            <div class='Example' style='page-break-after:avoid;'>
+            <div style='page-break-after:avoid;'>
               <a name='D' id='D'/>
               <p class='Example'>
                 <span style='mso-tab-count:1'>  </span>
@@ -807,7 +807,7 @@ RSpec.describe IsoDoc do
         <div>
           <a name='A' id='A'/>
           <h1/>
-          <div class='Example'>
+          <div>
             <a name='B' id='B'/>
             <p class='Example'>
             EXAMPLE
@@ -815,7 +815,7 @@ RSpec.describe IsoDoc do
               First example
             </p>
           </div>
-          <div class='Example'>
+          <div>
             <a name='C' id='C'/>
             <p class='Example'>
               <span style='mso-tab-count:1'>  </span>
@@ -859,7 +859,7 @@ RSpec.describe IsoDoc do
         <div>
           <a name='A' id='A'/>
           <h1/>
-          <div class='Note'>
+          <div>
             <a name='B' id='B'/>
             <p class='Note'>
               NOTE
@@ -927,110 +927,110 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-              <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
-         <div>
-           <a name='A' id='A'/>
-           <h1/>
-           <div class='Note'>
-             <a name='B' id='B'/>
-             <p class='Note'>
-               NOTE
-               <span style='mso-tab-count:1'>  </span>
-             </p>
-             <p class='MsoListContinue2'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               A
-             </p>
-             <p class='MsoListContinue2'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               B
-             </p>
-             <p class='MsoListContinue3'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               C
-             </p>
-             <p class='MsoListContinue3'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               D
-             </p>
-             <p class='MsoListContinue4'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               E
-             </p>
-             <p class='MsoListContinue4'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               F
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               G
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               H
-             </p>
-             <p class='MsoListContinue6'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               I
-             </p>
-             <p class='MsoListContinue6'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               J
-             </p>
-             <p class='MsoListContinue6'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               K
-             </p>
-             <p class='MsoListContinue6'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               L
-             </p>
-             <p class='MsoListContinue6'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               M
-             </p>
-             <p class='MsoListContinue6'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               N
-             </p>
-             <p class='MsoListContinue5'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               O
-             </p>
-             <p class='MsoListContinue4'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               P
-             </p>
-             <p class='MsoListContinue3'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               Q
-             </p>
-             <p class='MsoListContinue2'>
-               —
-               <span style='mso-tab-count:1'> </span>
-               R
-             </p>
-           </div>
-         </div>
-       </div>
+             <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div>
+            <a name='B' id='B'/>
+            <p class='Note'>
+              NOTE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+          </div>
+        </div>
+      </div>
     WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
@@ -1089,110 +1089,110 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-           <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
-         <div>
-           <a name='A' id='A'/>
-           <h1/>
-           <div class='Example'>
-             <a name='B' id='B'/>
-             <p class='Example'>
-               EXAMPLE
-               <span style='mso-tab-count:1'>  </span>
-             </p>
-             <p class='MsoListNumber2'>
-               a)
-               <span style='mso-tab-count:1'> </span>
-               A
-             </p>
-             <p class='MsoListNumber2'>
-               b)
-               <span style='mso-tab-count:1'> </span>
-               B
-             </p>
-             <p class='MsoListNumber2'>
-               1)
-               <span style='mso-tab-count:1'> </span>
-               C
-             </p>
-             <p class='MsoListNumber2'>
-               2)
-               <span style='mso-tab-count:1'> </span>
-               D
-             </p>
-             <p class='MsoListNumber3'>
-               i)
-               <span style='mso-tab-count:1'> </span>
-               E
-             </p>
-             <p class='MsoListNumber3'>
-               ii)
-               <span style='mso-tab-count:1'> </span>
-               F
-             </p>
-             <p class='MsoListNumber4'>
-               A)
-               <span style='mso-tab-count:1'> </span>
-               G
-             </p>
-             <p class='MsoListNumber4'>
-               B)
-               <span style='mso-tab-count:1'> </span>
-               H
-             </p>
-             <p class='MsoListNumber5'>
-               I)
-               <span style='mso-tab-count:1'> </span>
-               I
-             </p>
-             <p class='MsoListNumber5'>
-               II)
-               <span style='mso-tab-count:1'> </span>
-               J
-             </p>
-             <p class='MsoListNumber5'>
-               a)
-               <span style='mso-tab-count:1'> </span>
-               K
-             </p>
-             <p class='MsoListNumber5'>
-               b)
-               <span style='mso-tab-count:1'> </span>
-               L
-             </p>
-             <p class='MsoListNumber5'>
-               c)
-               <span style='mso-tab-count:1'> </span>
-               M
-             </p>
-             <p class='MsoListNumber5'>
-               III)
-               <span style='mso-tab-count:1'> </span>
-               N
-             </p>
-             <p class='MsoListNumber4'>
-               C)
-               <span style='mso-tab-count:1'> </span>
-               O
-             </p>
-             <p class='MsoListNumber3'>
-               iii)
-               <span style='mso-tab-count:1'> </span>
-               P
-             </p>
-             <p class='MsoListNumber2'>
-               3)
-               <span style='mso-tab-count:1'> </span>
-               Q
-             </p>
-             <p class='MsoListNumber2'>
-               c)
-               <span style='mso-tab-count:1'> </span>
-               R
-             </p>
-           </div>
-         </div>
-       </div>
+          <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div>
+            <a name='B' id='B'/>
+            <p class='Example'>
+              EXAMPLE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <p class='MsoListNumber2'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='MsoListNumber2'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListNumber2'>
+              1)
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListNumber2'>
+              2)
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListNumber3'>
+              i)
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListNumber3'>
+              ii)
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListNumber4'>
+              A)
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListNumber4'>
+              B)
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListNumber5'>
+              I)
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListNumber5'>
+              II)
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListNumber5'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListNumber5'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListNumber5'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListNumber5'>
+              III)
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListNumber4'>
+              C)
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListNumber3'>
+              iii)
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListNumber2'>
+              3)
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='MsoListNumber2'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+          </div>
+        </div>
+      </div>
     WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
@@ -1234,6 +1234,62 @@ RSpec.describe IsoDoc do
              <div>
                <a name='C' id='C'/>
                <p class='a3'>Subsubannex</p>
+             </div>
+           </div>
+         </div>
+       </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with blockquotes" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+         <sections>
+        <clause id="A">
+        <quote>
+        <p>Normal clause</p>
+        <note><p>Note clause</p></note>
+        <example>
+        <p>Example start</p>
+        <p>Example continued</p>
+        </example>
+        </quote>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+         <p class='zzSTDTitle1'/>
+         <div>
+           <a name='A' id='A'/>
+           <h1/>
+           <div>
+             <p class='BodyTextindent1'>Normal clause</p>
+             <div>
+               <p class='Noteindent'>
+                 <span style='mso-tab-count:1'>  </span>
+                 Note clause
+               </p>
+             </div>
+             <div id=''>
+               <p class='Exampleindent'>
+                 <span style='mso-tab-count:1'>  </span>
+                 Example start
+               </p>
+               <p class='Exampleindentcontinued'>Example continued</p>
              </div>
            </div>
          </div>

@@ -42,7 +42,8 @@ class Html2Doc
     end
 
     def indent_lists(docxml)
-      docxml.xpath("//div[@class = 'Note' or @class = 'Example']").each do |d|
+      docxml.xpath("//div[@class = 'Note' or @class = 'Example' or "\
+                   "@class = 'Quote']").each do |d|
         d.xpath(".//p").each do |p|
           indent_lists1(p)
         end
@@ -104,6 +105,15 @@ class Html2Doc
       when 4, 9 then (64 + idx).chr.to_s
       when 5, 10 then RomanNumerals.to_roman(idx).upcase
       end
+    end
+
+    def cleanup(docxml)
+      super
+      docxml.xpath("//div[@class = 'Quote' or @class = 'Example' or "\
+                   "@class = 'Note']").each do |d|
+        d.delete("class")
+      end
+      docxml
     end
   end
 end

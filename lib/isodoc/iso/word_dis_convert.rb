@@ -61,6 +61,28 @@ module IsoDoc
         code_style(docxml)
         figure_style(docxml)
         example_style(docxml)
+        quote_style(docxml)
+      end
+
+      def quote_style(docxml)
+        docxml.xpath("//div[@class = 'Quote' or @class = 'Note' or "\
+                     "@class = 'Example']").each do |d|
+          d.xpath(".//p[not(@class)]").each do |p|
+            p["class"] = "BodyTextindent1"
+          end
+          if d["class"] != "Example"
+            d.xpath(".//p[@class = 'Example']").each do |p|
+              p["class"] = "Exampleindent"
+            end
+            d.xpath(".//p[@class = 'Examplecontinued']").each do |p|
+              p["class"] = "Exampleindentcontinued"
+            end
+          end
+          d["class"] != "Note" and
+            d.xpath(".//p[@class = 'Note']").each do |p|
+              p["class"] = "Noteindent"
+            end
+        end
       end
 
       def remove_note_label(doc)
