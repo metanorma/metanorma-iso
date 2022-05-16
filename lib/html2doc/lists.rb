@@ -42,12 +42,17 @@ class Html2Doc
     def indent_lists(docxml)
       docxml.xpath("//div[@class = 'Note' or @class = 'Example']").each do |d|
         d.xpath(".//p").each do |p|
-          m = /^(ListContinue|ListNumber|MsoListContinue)(\d)$/
-            .match(p["class"]) or next
-
-          p["class"] = m[1] + (m[2].to_i + 1).to_s
+          indent_lists1(p)
         end
       end
+    end
+
+    def indent_lists1(para)
+      m = /^(ListContinue|ListNumber|MsoListContinue)(\d)$/
+        .match(para["class"]) or return
+      base = m[1]
+      base = "Mso#{base}" unless /^Mso/.match?(base)
+      para["class"] = base + (m[2].to_i + 1).to_s
     end
   end
 end
