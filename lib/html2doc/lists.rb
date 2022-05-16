@@ -33,5 +33,21 @@ class Html2Doc
         end
       end
     end
+
+    def lists(docxml, liststyles)
+      super
+      indent_lists(docxml)
+    end
+
+    def indent_lists(docxml)
+      docxml.xpath("//div[@class = 'Note' or @class = 'Example']").each do |d|
+        d.xpath(".//p").each do |p|
+          m = /^(ListContinue|ListNumber|MsoListContinue)(\d)$/
+            .match(p["class"]) or next
+
+          p["class"] = m[1] + (m[2].to_i + 1).to_s
+        end
+      end
+    end
   end
 end

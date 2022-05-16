@@ -669,9 +669,6 @@ RSpec.describe IsoDoc do
         </example>
         <example id="C">
         <p>Second example</p>
-        <ul>
-        <li>A</li>
-        </ul>
         <p>Continuation</p>
         </example>
         </clause>
@@ -698,7 +695,6 @@ RSpec.describe IsoDoc do
               <span style='mso-tab-count:1'>  </span>
               Second example
             </p>
-            <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>A</p>
             <p class='Examplecontinued'>Continuation</p>
           </div>
         </div>
@@ -744,6 +740,204 @@ RSpec.describe IsoDoc do
               <span style='mso-tab-count:1'>  </span>
               First example
             </p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with unordered lists embedded within notes and examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <note id="B">
+        <name>NOTE</name>
+        <ul>
+        <li><p>A</p></li>
+        <li><p>A</p></li>
+        <li><ul>
+        <li>A</li>
+        <li>A</li>
+        <li><ul>
+        <li>A</li>
+        <li>A</li>
+        <li><ul>
+        <li>A</li>
+        <li>A</li>
+        <li><ul>
+        <li>A</li>
+        <li>A</li>
+        <li><ul>
+        <li>A</li>
+        <li>A</li>
+        <li>A</li>
+        </ul></li>
+        <li>A</li>
+        </ul></li>
+        <li>A</li>
+        </ul></li>
+        <li>A</li>
+        </ul></li>
+        <li>A</li>
+        </ul></li>
+        <li>A</li>
+        </ul>
+        </note>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div class='Note'>
+            <a name='B' id='B'/>
+            <p class='Note'>
+              NOTE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <p style='mso-list:l3 level1 lfo1;' class='ListContinue2'>A</p>
+            <p style='mso-list:l3 level1 lfo1;' class='ListContinue2'>A</p>
+            <p style='mso-list:l3 level1 lfo1;' class='ListContinue2'>
+              <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue3'>A</p>
+              <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue3'>A</p>
+              <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue3'>
+                <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue4'>A</p>
+                <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue4'>A</p>
+                <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue4'>
+                  <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue5'>A</p>
+                  <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue5'>A</p>
+                  <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue5'>
+                    <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue6'>A</p>
+                    <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue6'>A</p>
+                    <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue6'>
+                      <p style='mso-list:l3 level6 lfo1;' class='MsoListContinue6'>A</p>
+                      <p style='mso-list:l3 level6 lfo1;' class='MsoListContinue6'>A</p>
+                      <p style='mso-list:l3 level6 lfo1;' class='MsoListContinue6'>A</p>
+                    </p>
+                    <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue6'>A</p>
+                  </p>
+                  <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue5'>A</p>
+                </p>
+                <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue4'>A</p>
+              </p>
+              <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue3'>A</p>
+            </p>
+            <p style='mso-list:l3 level1 lfo1;' class='ListContinue2'>A</p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with ordered lists embedded within notes and examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <example id="B">
+        <name>EXAMPLE</name>
+                <ol>
+        <li><p>A</p></li>
+        <li><p>A</p></li>
+        <ol>
+        <li>A</li>
+        <li>A</li>
+        <li><ol>
+        <li>A</li>
+        <li>A</li>
+        <li><ol>
+        <li>A</li>
+        <li>A</li>
+        <li><ol>
+        <li>A</li>
+        <li>A</li>
+        <li><ol>
+        <li>A</li>
+        <li>A</li>
+        <li>A</li>
+        </ol></li>
+        <li>A</li>
+        </ol></li>
+        <li>A</li>
+        </ol></li>
+        <li>A</li>
+        </ol></li>
+        <li>A</li>
+        </ol></li>
+        <li>A</li>
+        </ol>
+        </example>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+          <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div class='Example'>
+            <a name='B' id='B'/>
+            <p class='Example'>
+              EXAMPLE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <p style='mso-list:l2 level1 lfo1;' class='ListNumber2'>A</p>
+            <p style='mso-list:l2 level1 lfo1;' class='ListNumber2'>A</p>
+            <p style='mso-list:l2 level1 lfo2;' class='ListNumber2'>A</p>
+            <p style='mso-list:l2 level1 lfo2;' class='ListNumber2'>A</p>
+            <p style='mso-list:l2 level1 lfo2;' class='ListNumber2'>
+              <p style='mso-list:l2 level2 lfo2;' class='MsoListNumber2'>A</p>
+              <p style='mso-list:l2 level2 lfo2;' class='MsoListNumber2'>A</p>
+              <p style='mso-list:l2 level2 lfo2;' class='MsoListNumber2'>
+                <p style='mso-list:l2 level3 lfo2;' class='MsoListNumber3'>A</p>
+                <p style='mso-list:l2 level3 lfo2;' class='MsoListNumber3'>A</p>
+                <p style='mso-list:l2 level3 lfo2;' class='MsoListNumber3'>
+                  <p style='mso-list:l2 level4 lfo2;' class='MsoListNumber4'>A</p>
+                  <p style='mso-list:l2 level4 lfo2;' class='MsoListNumber4'>A</p>
+                  <p style='mso-list:l2 level4 lfo2;' class='MsoListNumber4'>
+                    <p style='mso-list:l2 level5 lfo2;' class='MsoListNumber5'>A</p>
+                    <p style='mso-list:l2 level5 lfo2;' class='MsoListNumber5'>A</p>
+                    <p style='mso-list:l2 level5 lfo2;' class='MsoListNumber5'>A</p>
+                  </p>
+                  <p style='mso-list:l2 level4 lfo2;' class='MsoListNumber4'>A</p>
+                </p>
+                <p style='mso-list:l2 level3 lfo2;' class='MsoListNumber3'>A</p>
+              </p>
+              <p style='mso-list:l2 level2 lfo2;' class='MsoListNumber2'>A</p>
+            </p>
+            <p style='mso-list:l2 level1 lfo2;' class='ListNumber2'>A</p>
+            <li class='MsoNormal'>A</li>
           </div>
         </div>
       </div>
