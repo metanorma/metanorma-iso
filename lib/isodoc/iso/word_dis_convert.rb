@@ -57,9 +57,17 @@ module IsoDoc
       end
 
       def dis_styles1(docxml)
+        remove_note_label(docxml)
         code_style(docxml)
         figure_style(docxml)
         example_style(docxml)
+      end
+
+      def remove_note_label(doc)
+        doc.xpath("//span[@class = 'note_label' or @class = 'example_label']")
+          .each do |s|
+          s.replace(s.children)
+        end
       end
 
       def example_style(docxml)

@@ -1639,23 +1639,6 @@ a.TableFootnoteRef, span.TableFootnoteRef, span.tablefootnoteref
 aside {
           font-size:$footnotefontsize;
 }
-span.notelabel
-	{mso-style-name:note_label;
-	mso-style-unhide:no;
-	mso-ansi-font-size:10.0pt;
-	mso-bidi-font-size:10.0pt;
-	font-family:$bodyfont;
-	mso-ascii-font-family:Cambria;
-	mso-hansi-font-family:Cambria;}
-span.examplelabel
-	{mso-style-name:example_label;
-	mso-style-unhide:no;
-	mso-ansi-font-size:10.0pt;
-	mso-bidi-font-size:10.0pt;
-	font-family:$bodyfont;
-	mso-ascii-font-family:Cambria;
-	mso-hansi-font-family:Cambria;}
-
 
 
 /*
@@ -4401,7 +4384,7 @@ div.Note table.dl  {
   margin-left: 1.0cm;
 }
 
-span.note_label, span.example_label, td.example_label, td.note_label
+td.example_label, td.note_label
 {
 font-size: $smallerfontsize;
 font-family:$bodyfont;

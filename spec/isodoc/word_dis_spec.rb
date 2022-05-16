@@ -606,7 +606,7 @@ RSpec.describe IsoDoc do
         <figure id="B">
         <name>Table1</name>
         <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto"/>
-        <note id="C"><p>Note</p></note>
+        <note id="C"><name>FIGURENOTE</name><p>Note</p></note>
         <example id="D"><p>Example</p></example>
         </figure>
         </clause>
@@ -627,7 +627,7 @@ RSpec.describe IsoDoc do
             <div class='Figurenote'>
               <a name='C' id='C'/>
               <p class='Figurenote'>
-                <span class='note_label'/>
+                FIGURENOTE
                 <span style='mso-tab-count:1'>  </span>
                 Note
               </p>
@@ -664,6 +664,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A">
         <example id="B">
+        <name>EXAMPLE</name>
         <p>First example</p>
         </example>
         <example id="C">
@@ -686,6 +687,7 @@ RSpec.describe IsoDoc do
           <div class='Example'>
             <a name='B' id='B'/>
             <p class='Example'>
+            EXAMPLE
               <span style='mso-tab-count:1'>  </span>
               First example
             </p>
@@ -698,6 +700,50 @@ RSpec.describe IsoDoc do
             </p>
             <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>A</p>
             <p class='Examplecontinued'>Continuation</p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with notes" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <note id="B">
+        <name>NOTE</name>
+        <p>First example</p>
+        </note>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+          <div class='WordSection3'>
+        <p class='zzSTDTitle1'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div class='Note'>
+            <a name='B' id='B'/>
+            <p class='Note'>
+              NOTE
+              <span style='mso-tab-count:1'>  </span>
+              First example
+            </p>
           </div>
         </div>
       </div>
