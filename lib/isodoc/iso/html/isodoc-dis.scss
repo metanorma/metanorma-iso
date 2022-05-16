@@ -1805,7 +1805,8 @@ span.aucollab
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:silver;{% endif %} }
+	{% if unpublished %}background:silver;{% endif %}
+}
 span.audeg
 	{mso-style-name:au_deg;
 	mso-style-unhide:no;
@@ -1815,7 +1816,8 @@ span.audeg
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:yellow;{% endif %} }
+	{% if unpublished %}background:yellow;{% endif %}
+	}
 span.aufname
 	{mso-style-name:au_fname;
 	mso-style-unhide:no;
@@ -1825,7 +1827,8 @@ span.aufname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFCC;{% endif %} }
+	{% if unpublished %}background:#FFFFCC;{% endif %}
+	}
 span.aurole
 	{mso-style-name:au_role;
 	mso-style-unhide:no;
@@ -1835,7 +1838,8 @@ span.aurole
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:olive;{% endif %} }
+	{% if unpublished %}background:olive;{% endif %}
+	}
 span.ausuffix
 	{mso-style-name:au_suffix;
 	mso-style-unhide:no;
@@ -1845,7 +1849,8 @@ span.ausuffix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:fuchsia;{% endif %} }
+	{% if unpublished %}background:fuchsia;{% endif %}
+	}
 span.ausurname
 	{mso-style-name:au_surname;
 	mso-style-unhide:no;
@@ -1855,7 +1860,8 @@ span.ausurname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %} }
+	{% if unpublished %}background:#CCFF99;{% endif %}
+	}
 span.bibbase
 	{mso-style-name:bib_base;
 	mso-style-unhide:no;
@@ -1871,7 +1877,8 @@ span.bibarticle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFFF;{% endif %} }
+	{% if unpublished %}background:#CCFFFF;{% endif %}
+	}
 span.bibcomment
 	{mso-style-name:bib_comment;
 	mso-style-unhide:no;
@@ -1894,7 +1901,8 @@ span.bibdoi
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %} }
+	{% if unpublished %}background:#CCFFCC;{% endif %}
+	}
 span.bibetal
 	{mso-style-name:bib_etal;
 	mso-style-unhide:no;
@@ -1903,7 +1911,8 @@ span.bibetal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %} }
+	{% if unpublished %}background:#CCFF99;{% endif %}
+	}
 span.bibfname
 	{mso-style-name:bib_fname;
 	mso-style-unhide:no;
@@ -1912,7 +1921,8 @@ span.bibfname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFCC;{% endif %} }
+	{% if unpublished %}background:#FFFFCC;{% endif %}
+	}
 span.bibfpage
 	{mso-style-name:bib_fpage;
 	mso-style-unhide:no;
@@ -1921,7 +1931,8 @@ span.bibfpage
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#E6E6E6;{% endif %} }
+	{% if unpublished %}background:#E6E6E6;{% endif %}
+	}
 span.bibissue
 	{mso-style-name:bib_issue;
 	mso-style-unhide:no;
@@ -1930,7 +1941,8 @@ span.bibissue
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFAB;{% endif %} }
+	{% if unpublished %}background:#FFFFAB;{% endif %}
+	}
 span.bibjournal
 	{mso-style-name:bib_journal;
 	mso-style-unhide:no;
@@ -1939,7 +1951,8 @@ span.bibjournal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F9DECF;{% endif %} }
+	{% if unpublished %}background:#F9DECF;{% endif %}
+	}
 span.biblpage
 	{mso-style-name:bib_lpage;
 	mso-style-unhide:no;
@@ -1948,7 +1961,8 @@ span.biblpage
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#D9D9D9;{% endif %} }
+	{% if unpublished %}background:#D9D9D9;{% endif %}
+	}
 span.bibnumber
 	{mso-style-name:bib_number;
 	mso-style-unhide:no;
@@ -1957,7 +1971,8 @@ span.bibnumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCCCFF;{% endif %} }
+	{% if unpublished %}background:#CCCCFF;{% endif %}
+	}
 span.biborganization
 	{mso-style-name:bib_organization;
 	mso-style-unhide:no;
@@ -1966,7 +1981,8 @@ span.biborganization
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %} }
+	{% if unpublished %}background:#CCFF99;{% endif %}
+	}
 span.bibsuffix
 	{mso-style-name:bib_suffix;
 	mso-style-unhide:no;
@@ -1982,7 +1998,8 @@ span.bibsuppl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC66;{% endif %} }
+	{% if unpublished %}background:#FFCC66;{% endif %}
+	}
 span.bibsurname
 	{mso-style-name:bib_surname;
 	mso-style-unhide:no;
@@ -1991,7 +2008,8 @@ span.bibsurname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %} }
+	{% if unpublished %}background:#CCFF99;{% endif %}
+	}
 span.bibunpubl
 	{mso-style-name:bib_unpubl;
 	mso-style-unhide:no;
@@ -2007,7 +2025,8 @@ span.biburl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF66;{% endif %} }
+	{% if unpublished %}background:#CCFF66;{% endif %}
+	}
 span.bibvolume
 	{mso-style-name:bib_volume;
 	mso-style-unhide:no;
@@ -2016,7 +2035,8 @@ span.bibvolume
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCECFF;{% endif %} }
+	{% if unpublished %}background:#CCECFF;{% endif %}
+	}
 span.bibyear
 	{mso-style-name:bib_year;
 	mso-style-unhide:no;
@@ -2025,7 +2045,8 @@ span.bibyear
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCCFF;{% endif %} }
+	{% if unpublished %}background:#FFCCFF;{% endif %}
+	}
 span.citebase
 	{mso-style-name:cite_base;
 	mso-style-unhide:no;
@@ -2041,7 +2062,8 @@ span.citebib
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFFF;{% endif %} }
+	{% if unpublished %}background:#CCFFFF;{% endif %}
+	}
 span.citebox
 	{mso-style-name:cite_box;
 	mso-style-unhide:no;
@@ -2068,7 +2090,8 @@ span.citefig
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %} }
+	{% if unpublished %}background:#CCFFCC;{% endif %}
+	}
 span.citefn
 	{mso-style-name:cite_fn;
 	mso-style-unhide:no;
@@ -2090,7 +2113,8 @@ span.citetbl
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if unpublished %}background:#FF9999;{% endif %} }
+	{% if unpublished %}background:#FF9999;{% endif %}
+	}
 span.stdbase
 	{mso-style-name:std_base;
 	mso-style-unhide:no;
@@ -2106,7 +2130,8 @@ span.bibextlink
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#6CCE9D;{% endif %} }
+	{% if unpublished %}background:#6CCE9D;{% endif %}
+	}
 span.citeeq
 	{mso-style-name:cite_eq;
 	mso-style-unhide:no;
@@ -2115,7 +2140,8 @@ span.citeeq
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFAE37;{% endif %} }
+	{% if unpublished %}background:#FFAE37;{% endif %}
+	}
 span.bibmedline
 	{mso-style-name:bib_medline;
 	mso-style-unhide:no;
@@ -2131,7 +2157,8 @@ span.citetfn
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FBBA79;{% endif %} }
+	{% if unpublished %}background:#FBBA79;{% endif %}
+	}
 span.auprefix
 	{mso-style-name:au_prefix;
 	mso-style-unhide:no;
@@ -2141,7 +2168,8 @@ span.auprefix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC99;{% endif %} }
+	{% if unpublished %}background:#FFCC99;{% endif %}
+	}
 span.citeapp
 	{mso-style-name:cite_app;
 	mso-style-unhide:no;
@@ -2150,7 +2178,8 @@ span.citeapp
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF33;{% endif %} }
+	{% if unpublished %}background:#CCFF33;{% endif %}
+	}
 span.citesec
 	{mso-style-name:cite_sec;
 	mso-style-unhide:no;
@@ -2159,7 +2188,8 @@ span.citesec
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCCCC;{% endif %} }
+	{% if unpublished %}background:#FFCCCC;{% endif %}
+	}
 span.stddocNumber
 	{mso-style-name:std_docNumber;
 	mso-style-unhide:no;
@@ -2168,7 +2198,8 @@ span.stddocNumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F2DBDB;{% endif %} }
+	{% if unpublished %}background:#F2DBDB;{% endif %}
+	}
 span.stddocPartNumber
 	{mso-style-name:std_docPartNumber;
 	mso-style-unhide:no;
@@ -2177,7 +2208,8 @@ span.stddocPartNumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#EAF1DD;{% endif %} }
+	{% if unpublished %}background:#EAF1DD;{% endif %}
+	}
 span.stddocTitle
 	{mso-style-name:std_docTitle;
 	mso-style-unhide:no;
@@ -2198,7 +2230,8 @@ span.aumember
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF99CC;{% endif %} }
+	{% if unpublished %}background:#FF99CC;{% endif %}
+	}
 span.stdfootnote
 	{mso-style-name:std_footnote;
 	mso-style-unhide:no;
@@ -2207,7 +2240,8 @@ span.stdfootnote
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F2F2F2;{% endif %} }
+	{% if unpublished %}background:#F2F2F2;{% endif %}
+	}
 span.stdpublisher
 	{mso-style-name:std_publisher;
 	mso-style-unhide:no;
@@ -2216,7 +2250,8 @@ span.stdpublisher
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#C6D9F1;{% endif %} }
+	{% if unpublished %}background:#C6D9F1;{% endif %}
+	}
 span.stdsection
 	{mso-style-name:std_section;
 	mso-style-unhide:no;
@@ -2225,7 +2260,8 @@ span.stdsection
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#E5DFEC;{% endif %} }
+	{% if unpublished %}background:#E5DFEC;{% endif %}
+	}
 span.stdyear
 	{mso-style-name:std_year;
 	mso-style-unhide:no;
@@ -2234,7 +2270,8 @@ span.stdyear
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#DAEEF3;{% endif %} }
+	{% if unpublished %}background:#DAEEF3;{% endif %}
+	}
 span.stddocumentType
 	{mso-style-name:std_documentType;
 	mso-style-unhide:no;
@@ -2243,7 +2280,8 @@ span.stddocumentType
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#7DE1DF;{% endif %} }
+	{% if unpublished %}background:#7DE1DF;{% endif %}
+	}
 span.bibalt-year
 	{mso-style-name:bib_alt-year;
 	mso-style-unhide:no;
@@ -2253,7 +2291,8 @@ span.bibalt-year
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CC99FF;{% endif %} }
+	{% if unpublished %}background:#CC99FF;{% endif %}
+	}
 span.bibbook
 	{mso-style-name:bib_book;
 	mso-style-unhide:no;
@@ -2262,7 +2301,8 @@ span.bibbook
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#99CCFF;{% endif %} }
+	{% if unpublished %}background:#99CCFF;{% endif %}
+	}
 span.bibchapterno
 	{mso-style-name:bib_chapterno;
 	mso-style-unhide:no;
@@ -2271,7 +2311,8 @@ span.bibchapterno
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#D9D9D9;{% endif %} }
+	{% if unpublished %}background:#D9D9D9;{% endif %}
+	}
 span.bibchaptertitle
 	{mso-style-name:bib_chaptertitle;
 	mso-style-unhide:no;
@@ -2280,7 +2321,8 @@ span.bibchaptertitle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF9D5B;{% endif %} }
+	{% if unpublished %}background:#FF9D5B;{% endif %}
+	}
 span.bibed-etal
 	{mso-style-name:bib_ed-etal;
 	mso-style-unhide:no;
@@ -2289,7 +2331,8 @@ span.bibed-etal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#00F4EE;{% endif %} }
+	{% if unpublished %}background:#00F4EE;{% endif %}
+	}
 span.bibed-fname
 	{mso-style-name:bib_ed-fname;
 	mso-style-unhide:no;
@@ -2298,7 +2341,8 @@ span.bibed-fname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFB7;{% endif %} }
+	{% if unpublished %}background:#FFFFB7;{% endif %}
+	}
 span.bibeditionno
 	{mso-style-name:bib_editionno;
 	mso-style-unhide:no;
@@ -2307,7 +2351,8 @@ span.bibeditionno
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC00;{% endif %} }
+	{% if unpublished %}background:#FFCC00;{% endif %}
+	}
 span.bibed-organization
 	{mso-style-name:bib_ed-organization;
 	mso-style-unhide:no;
@@ -2316,7 +2361,8 @@ span.bibed-organization
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FCAAC3;{% endif %} }
+	{% if unpublished %}background:#FCAAC3;{% endif %}
+	}
 span.bibed-suffix
 	{mso-style-name:bib_ed-suffix;
 	mso-style-unhide:no;
@@ -2325,7 +2371,8 @@ span.bibed-suffix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %} }
+	{% if unpublished %}background:#CCFFCC;{% endif %}
+	}
 span.bibed-surname
 	{mso-style-name:bib_ed-surname;
 	mso-style-unhide:no;
@@ -2334,7 +2381,8 @@ span.bibed-surname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:yellow;{% endif %} }
+	{% if unpublished %}background:yellow;{% endif %}
+	}
 span.bibinstitution
 	{mso-style-name:bib_institution;
 	mso-style-unhide:no;
@@ -2343,7 +2391,8 @@ span.bibinstitution
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %} }
+	{% if unpublished %}background:#CCFFCC;{% endif %}
+	}
 span.bibisbn
 	{mso-style-name:bib_isbn;
 	mso-style-unhide:no;
@@ -2351,7 +2400,8 @@ span.bibisbn
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#D9D9D9;{% endif %} }
+	{% if unpublished %}background:#D9D9D9;{% endif %}
+	}
 span.biblocation
 	{mso-style-name:bib_location;
 	mso-style-unhide:no;
@@ -2360,7 +2410,8 @@ span.biblocation
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCCCC;{% endif %} }
+	{% if unpublished %}background:#FFCCCC;{% endif %}
+	}
 span.bibpagecount
 	{mso-style-name:bib_pagecount;
 	mso-style-unhide:no;
@@ -2369,7 +2420,8 @@ span.bibpagecount
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:lime;{% endif %} }
+	{% if unpublished %}background:lime;{% endif %}
+	}
 span.bibpatent
 	{mso-style-name:bib_patent;
 	mso-style-unhide:no;
@@ -2378,7 +2430,8 @@ span.bibpatent
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#66FFCC;{% endif %} }
+	{% if unpublished %}background:#66FFCC;{% endif %}
+	}
 span.bibpublisher
 	{mso-style-name:bib_publisher;
 	mso-style-unhide:no;
@@ -2387,7 +2440,8 @@ span.bibpublisher
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF99CC;{% endif %} }
+	{% if unpublished %}background:#FF99CC;{% endif %}
+	}
 span.bibreportnum
 	{mso-style-name:bib_reportnum;
 	mso-style-unhide:no;
@@ -2396,7 +2450,8 @@ span.bibreportnum
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCCCFF;{% endif %} }
+	{% if unpublished %}background:#CCCCFF;{% endif %}
+	}
 span.bibschool
 	{mso-style-name:bib_school;
 	mso-style-unhide:no;
@@ -2405,7 +2460,8 @@ span.bibschool
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC66;{% endif %} }
+	{% if unpublished %}background:#FFCC66;{% endif %}
+	}
 span.bibseries
 	{mso-style-name:bib_series;
 	mso-style-unhide:no;
@@ -2413,7 +2469,8 @@ span.bibseries
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#FFCC99;{% endif %} }
+	{% if unpublished %}background:#FFCC99;{% endif %}
+	}
 span.bibseriesno
 	{mso-style-name:bib_seriesno;
 	mso-style-unhide:no;
@@ -2421,7 +2478,8 @@ span.bibseriesno
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#FFFF99;{% endif %} }
+	{% if unpublished %}background:#FFFF99;{% endif %}
+	}
 span.bibtrans
 	{mso-style-name:bib_trans;
 	mso-style-unhide:no;
@@ -2429,7 +2487,8 @@ span.bibtrans
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#99CC00;{% endif %} }
+	{% if unpublished %}background:#99CC00;{% endif %}
+	}
 span.stdsuppl
 	{mso-style-name:std_suppl;
 	mso-style-unhide:no;
@@ -2438,7 +2497,8 @@ span.stdsuppl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F6FBB5;{% endif %} }
+	{% if unpublished %}background:#F6FBB5;{% endif %}
+	}
 span.citesection
 	{mso-style-name:cite_section;
 	mso-style-unhide:no;
@@ -2447,7 +2507,8 @@ span.citesection
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF7C80;{% endif %} }
+	{% if unpublished %}background:#FF7C80;{% endif %}
+	}
 
 p.BaseText, li.BaseText, div.BaseText
 	{mso-style-name:Base_Text;
