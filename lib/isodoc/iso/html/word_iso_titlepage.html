@@ -38,7 +38,7 @@ style='mso-no-proof:yes'>{{ agency }}&#xa0;{{ editorialgroup | join: "/" }}</spa
 {% endif %}
 
 <p class="MsoNormal" align="left" style='text-align:left;line-height:18.0pt;margin-top:100.0pt;margin-bottom:0.0pt;font-size:16.0pt'>
-<span class="title"><b>{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &mdash; {% endif %}</b></span><b><span class="subtitle">{{ doctitlemain }}{% if doctitlemain and doctitlepart %} &mdash;{% endif %}</b></span>
+<span class="title"><b>{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &#x2014; {% endif %}</b></span><b><span class="subtitle">{{ doctitlemain }}{% if doctitlemain and doctitlepart %} &#x2014;{% endif %}</b></span>
   {% if doctitlepart %}
 {% if doctitlepartlabel %}<span class="partlabel">{{ doctitlepartlabel }}: </span><br/>{% endif %}
 <span class="part"><b>{{ doctitlepart }}</b></span>
@@ -55,7 +55,7 @@ style='mso-no-proof:yes'>{{ agency }}&#xa0;{{ editorialgroup | join: "/" }}</spa
 {% else %}
 <br/>
 <p class="MsoNormal" align="left" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;font-size:16.0pt'>
-<span class="title">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &mdash; {% endif %}</span><span class="subtitle">{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &mdash;{% endif %}</span>
+<span class="title">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &#x2014; {% endif %}</span><span class="subtitle">{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &#x2014;{% endif %}</span>
   {% if docsubtitlepart %}
 {% if docsubtitlepartlabel %}<span class="partlabel">{{ docsubtitlepartlabel }}: </span><br/>{% endif %}
 <span class="part">{{ docsubtitlepart }}</span>
@@ -71,7 +71,7 @@ style='mso-no-proof:yes'>{{ agency }}&#xa0;{{ editorialgroup | join: "/" }}</spa
 
 
 
-<p class="MsoNormal" style='margin-top:100.0pt'><span lang="EN-GB"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style='margin-top:100.0pt'><span lang="EN-GB"><o:p>&#xa0;</o:p></span></p>
 
 <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
 mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
@@ -83,7 +83,7 @@ lang="EN-GB" style='font-size:40.0pt'>{% if unpublished %}{{ stageabbr }} stage{
 
 </div>
 
-<p class="MsoNormal" style='margin-bottom:6.0pt'><span lang="EN-GB"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style='margin-bottom:6.0pt'><span lang="EN-GB"><o:p>&#xa0;</o:p></span></p>
 
 {% if unpublished %}
 <!--

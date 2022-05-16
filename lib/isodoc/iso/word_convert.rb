@@ -88,8 +88,8 @@ module IsoDoc
           <span lang="EN-GB"><span
             style='mso-element:field-begin'></span><span
             style='mso-spacerun:yes'>&#xA0;</span>TOC
-            \\o &quot;1-#{level}&quot; \\h \\z \\t &quot;Heading
-            1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1&quot; <span
+            \\o "1-#{level}" \\h \\z \\t "Heading
+            1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1" <span
             style='mso-element:field-separator'></span></span>
         TOC
       end

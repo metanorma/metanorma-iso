@@ -29,7 +29,7 @@ module IsoDoc
       def figure1(node)
         lbl = @xrefs.anchor(node["id"], :label, false) or return
         figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
-        connective = node.parent.name == "figure" ? "&nbsp; " : "&nbsp;&mdash; "
+        connective = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
         prefix_name(node, connective, l10n("#{figname}#{lbl}"), "name")
       end
 
@@ -38,7 +38,7 @@ module IsoDoc
         lbl = if n.nil? || blank?(n[:label]) then @i18n.example
               else l10n("#{@i18n.example} #{n[:label]}")
               end
-        prefix_name(node, "&nbsp;&mdash; ", lbl, "name")
+        prefix_name(node, "&#xa0;&#x2014; ", lbl, "name")
       end
 
       def example_span_label(_node, div, name)

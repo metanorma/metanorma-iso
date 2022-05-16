@@ -9,9 +9,9 @@ module IsoDoc
       def middle_title_main(out)
         out.p(**{ class: "zzSTDTitle1" }) do |p|
           p << @meta.get[:doctitleintro]
-          p << " &mdash; " if @meta.get[:doctitleintro] && @meta.get[:doctitlemain]
+          p << " &#x2014; " if @meta.get[:doctitleintro] && @meta.get[:doctitlemain]
           p << @meta.get[:doctitlemain]
-          p << " &mdash; " if @meta.get[:doctitlemain] && @meta.get[:doctitlepart]
+          p << " &#x2014; " if @meta.get[:doctitlemain] && @meta.get[:doctitlepart]
         end
         a = @meta.get[:doctitlepart] and out.p(**{ class: "zzSTDTitle2" }) do |p|
           b = @meta.get[:doctitlepartlabel] and p << "#{b}: "

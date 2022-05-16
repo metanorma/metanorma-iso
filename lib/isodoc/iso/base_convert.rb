@@ -129,7 +129,7 @@ module IsoDoc
 
       def admonition_name_parse(_node, div, name)
         name.children.each { |n| parse(n, div) }
-        div << " &mdash; "
+        div << " &#x2014; "
       end
 
       def figure_name_parse(_node, div, name)
