@@ -44,6 +44,10 @@ module IsoDoc
         zzwarning: "zzWarning",
         zzwarninghdr: "zzWarningHdr",
         quoteattribution: "QuoteAttribution",
+        Sourcecode: "Code",
+        zzSTDTitle1: "zzSTDTitle",
+        zzSTDTitle2: "zzSTDTitle",
+        zzCopyright1: "zzCopyright",
       }.freeze
 
       def dis_styles(docxml)

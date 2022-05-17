@@ -1,5 +1,5 @@
 p.Sourcecode, li.Sourcecode, div.Sourcecode, pre.Sourcecode
-	{mso-style-name:sourcecode;
+	{mso-style-name:Sourcecode;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
@@ -800,48 +800,30 @@ p.zzContents, li.zzContents, div.zzContents
 	mso-bidi-font-weight:normal;}
 p.zzCopyright, li.zzCopyright, div.zzCopyright
 	{mso-style-name:zzCopyright;
-	mso-style-noshow:yes;
 	mso-style-unhide:no;
 	mso-style-next:Normal;
 	margin-top:0cm;
-	margin-right:0pt;
+	margin-right:14.2pt;
 	margin-bottom:12.0pt;
-	margin-left:0pt;
+	margin-left:14.2pt;
 	text-align:justify;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	tab-stops:20.15pt 25.7pt 481.15pt;
+	tab-stops:25.7pt 481.15pt;
 	border:none;
+	mso-border-alt:solid blue .5pt;
 	padding:0cm;
 	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
-	font-size:10.0pt;
+	font-size:$normalfontsize;
+	mso-bidi-font-size:10.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:"SimSun",serif;
-	mso-bidi-font-family:$bodyfont;
-	mso-ansi-language:EN-GB;}
-p.zzCopyright1
-        {mso-style-name:zzCopyright;
-        mso-style-noshow:yes;
-        mso-style-unhide:no;
-        mso-style-next:Normal;
-        margin-top:0cm;
-	margin-right:0pt;
-	margin-bottom:12.0pt;
-	margin-left:0pt;
-        text-align:justify;
-        line-height:12.0pt;
-        mso-pagination:widow-orphan;
-        tab-stops:20.15pt 25.7pt 481.15pt;
-        border:none;
-        padding:0cm;
-        mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
-        font-size:10.0pt;
-        font-family:$bodyfont;
-        mso-fareast-font-family:"SimSun",serif;
-        mso-bidi-font-family:$bodyfont;
-        mso-ansi-language:EN-GB;}
-p.zzAddress, p.zzaddress, li.zzaddress, div.zzaddress {
-mso-style-name:zzaddress;
+	mso-fareast-font-family:"MS Mincho";
+	mso-bidi-font-family:"Times New Roman";
+	color:blue;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;}
+p.zzAddress {
+mso-style-name:zzAddress;
   margin:0cm;
   margin-bottom:12pt;
   margin-left:20.15pt;
@@ -907,51 +889,9 @@ p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
 	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
+	color:blue;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-p.zzSTDTitle1, li.zzSTDTitle1, div.zzSTDTitle1
-	{mso-style-name:zzSTDTitle;
-	mso-style-noshow:yes;
-	mso-style-unhide:no;
-	mso-style-next:Normal;
-	margin-top:0pt;
-	margin-right:0cm;
-	margin-bottom:18.0pt;
-	margin-left:0cm;
-	line-height:17.5pt;
-	mso-line-height-rule:exactly;
-	mso-pagination:widow-orphan;
-	mso-hyphenate:none;
-	tab-stops:20.15pt;
-	font-size:16.0pt;
-	mso-bidi-font-size:$normalfontsize;
-	font-family:$headerfont;
-	mso-fareast-font-family:"SimHei",serif;
-	mso-bidi-font-family:$headerfont;
-	mso-ansi-language:EN-GB;
-	font-weight:bold;
-	mso-bidi-font-weight:normal;}
-p.zzSTDTitle2, li.zzSTDTitle2, div.zzSTDTitle2
-        {mso-style-name:zzSTDTitle;
-        mso-style-noshow:yes;
-        mso-style-unhide:no;
-        mso-style-next:Normal;
-        margin-top:0pt;
-        margin-right:0cm;
-        margin-bottom:18.0pt;
-        margin-left:0cm;
-        line-height:17.5pt;
-        mso-line-height-rule:exactly;
-        mso-pagination:widow-orphan;
-        mso-hyphenate:none;
-        tab-stops:20.15pt;
-        font-size:16.0pt;
-        mso-bidi-font-size:$normalfontsize;
-        font-family:$headerfont;
-        mso-fareast-font-family:"SimHei",serif;
-        mso-bidi-font-family:$headerfont;
-        mso-ansi-language:EN-GB;
-        mso-bidi-font-weight:normal;}
 p.1, li.1, div.1
 	{mso-style-name:引用1;
 	mso-style-priority:99;
@@ -1695,13 +1635,15 @@ p.Example, li.Example, div.Example
 	mso-style-qformat:yes;
 	mso-style-link:"Example Char";
 	mso-margin-top-alt:auto;
+	margin-top:0cm;
 	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
 	text-align:justify;
-	line-height:12.0pt;
+	line-height:11.0pt;
 	mso-pagination:none;
-	tab-stops:70.9pt;
+	mso-pagination:widow-orphan;
+	tab-stops:67.7pt;
 	font-size:$smallerfontsize;
 	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
@@ -2907,26 +2849,6 @@ p.dl, li.dl, div.dl
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-family:$bodyfont;
-	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
-	mso-ansi-language:EN-GB;
-	mso-fareast-language:EN-US;}
-p.Example0, li.Example0, div.Example0
-	{mso-style-name:Example;
-	mso-style-unhide:no;
-	mso-style-parent:Base_Text;
-	margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:12.0pt;
-	margin-left:0cm;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	line-height:11.0pt;
-	mso-pagination:widow-orphan;
-	tab-stops:67.7pt;
-	font-size:10.0pt;
-	mso-bidi-font-size:$normalfontsize;
 	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";

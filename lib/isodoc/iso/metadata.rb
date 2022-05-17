@@ -130,20 +130,21 @@ module IsoDoc
       end
 
       def title_nums(isoxml)
-        { part: isoxml.at(ns("//bibdata//project-number/@part")),
-          subpart: isoxml.at(ns("//bibdata//project-number/@subpart")),
-          amd: isoxml.at(ns("//bibdata//project-number/@amendment")),
-          corr: isoxml.at(ns("//bibdata//project-number/@corrigendum")) }
+        prefix = "//bibdata/ext/structuredidentifier/project-number"
+        { part: isoxml.at(ns("#{prefix}/@part")),
+          subpart: isoxml.at(ns("#{prefix}/@subpart")),
+          amd: isoxml.at(ns("#{prefix}/@amendment")),
+          corr: isoxml.at(ns("#{prefix}/@corrigendum")) }
       end
 
       def title_parts(isoxml, lang)
-        { intro: isoxml.at(ns("//bibdata//title[@type='title-intro' and "\
+        { intro: isoxml.at(ns("//bibdata/title[@type='title-intro' and "\
                               "@language='#{lang}']")),
-          main: isoxml.at(ns("//bibdata//title[@type='title-main' and "\
+          main: isoxml.at(ns("//bibdata/title[@type='title-main' and "\
                              "@language='#{lang}']")),
-          part: isoxml.at(ns("//bibdata//title[@type='title-part' and "\
+          part: isoxml.at(ns("//bibdata/title[@type='title-part' and "\
                              "@language='#{lang}']")),
-          amd: isoxml.at(ns("//bibdata//title[@type='title-amd' and "\
+          amd: isoxml.at(ns("//bibdata/title[@type='title-amd' and "\
                             "@language='#{lang}']")) }
       end
 
