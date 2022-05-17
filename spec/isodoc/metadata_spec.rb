@@ -159,16 +159,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
-          <title>
             <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
             <title type="title-part" language="en" format="text/plain">Rice</title>
-          </title>
-          <title>
             <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
             <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
             <title type="title-part" language="fr" format="text/plain">Riz</title>
-          </title>
           <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
           <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
@@ -294,16 +290,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
-          <title>
             <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
             <title type="title-part" language="en" format="text/plain">Rice</title>
-          </title>
-          <title>
             <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
             <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
             <title type="title-part" language="fr" format="text/plain">Riz</title>
-          </title>
           <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
           <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
@@ -430,21 +422,15 @@ RSpec.describe IsoDoc::Iso::Metadata do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
-          <title>
             <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
             <title type="title-part" language="en" format="text/plain">Rice</title>
-          </title>
-          <title>
             <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
             <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
             <title type="title-part" language="fr" format="text/plain">Riz</title>
-          </title>
-          <title>
             <title type="title-intro" language="ru" format="text/plain">Зерновые и бобовые</title>
             <title type="title-main" language="ru" format="text/plain">Технические характеристики и методы испытаний</title>
             <title type="title-part" language="ru" format="text/plain">Рис</title>
-          </title>
           <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
           <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
