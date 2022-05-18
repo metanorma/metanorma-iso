@@ -1205,6 +1205,61 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(word)
   end
 
+  it "deals with definition lists embedded within notes and examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <example id="B">
+        <name>EXAMPLE</name>
+        <dl>
+        <dt>A</dt><dd>B</dd>
+        </dl>
+        </example>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+        <p class='zzSTDTitle'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div>
+            <a name='B' id='B'/>
+            <p class='Example'>
+              EXAMPLE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <table class='dl' style='margin-left: 1cm;'>
+              <tr>
+                <td valign='top' align='left'>
+                  <p align='left' style='margin-left:0pt;text-align:left;' class='Tablebody'>A</p>
+                </td>
+                <td valign='top'>
+                  <div class='Tablebody'>B</div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "deals with annexes" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -1338,27 +1393,27 @@ RSpec.describe IsoDoc do
         </div>
     WORD
     title = <<~WORD
-       <div class='WordSection1'>
-         <p class='zzCover'>
-           <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
-         </p>
-         <p class='zzCover'>
-           <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
-         </p>
-         <p class='zzCover'>
-           <span lang='EN-GB' xml:lang='EN-GB'>
-             Secretariat:
-             <span>XXX</span>
-           </span>
-         </p>
-         <p class='zzCover'>
-           <span lang='EN-GB' xml:lang='EN-GB'>
-             Date and time — Representations for information interchange
-             — Part 1: Basic rules
-           </span>
-         </p>
-         <p class='zzCover'> </p>
-       </div>
+      <div class='WordSection1'>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
+        </p>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
+        </p>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>
+            Secretariat:
+            <span>XXX</span>
+          </span>
+        </p>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>
+            Date and time — Representations for information interchange
+            — Part 1: Basic rules
+          </span>
+        </p>
+        <p class='zzCover'> </p>
+      </div>
     WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)

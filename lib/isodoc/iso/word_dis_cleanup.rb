@@ -81,6 +81,9 @@ module IsoDoc
           div.xpath(".//p[@class = 'Note']").each do |p|
             p["class"] = "Noteindent"
           end
+        div.xpath(".//table[@class = 'dl']").each do |t|
+          t["style"] = "margin-left: 1cm;"
+        end
       end
 
       def remove_note_label(doc)
