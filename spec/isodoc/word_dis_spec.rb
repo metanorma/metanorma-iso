@@ -1310,8 +1310,14 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
+        <title language="en" format="text/plain" type="title-intro">Date and time</title>
+          <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
+        <title language="en" format="text/plain" type="title-part">Basic rules</title>
+        <title language="en" format="text/plain" type="title-amd">Technical corrections</title>
           <status><stage>50</stage></status>
-          <ext><doctype>amendment</doctype></ext>
+          <ext><doctype>amendment</doctype>
+          <structuredidentifier><project-number part="1" amendment="1" origyr="2022-03-10">8601</project-number></structuredidentifier>
+          </ext>
         </bibdata>
         <preface>
         <foreword id="F"><title>Foreword</title></foreword>
@@ -1323,13 +1329,18 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-       <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
-         <div>
-           <a name='A' id='A'/>
-           <p style='font-style:italic;page-break-after:avoid;' class='MsoBodyText'>First clause</p>
-         </div>
-       </div>
+      <div class='WordSection3'>
+                 <p class='zzSTDTitle'>
+          Date and time — Representations for information interchange —
+          Part 1:
+          <b>Basic rules</b>
+           AMENDMENT 1: Technical corrections
+        </p>
+        <div>
+          <a name='A' id='A'/>
+          <p style='font-style:italic;page-break-after:avoid;' class='MsoBodyText'>First clause</p>
+        </div>
+      </div>
     WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
