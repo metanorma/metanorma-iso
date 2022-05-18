@@ -62,31 +62,45 @@ module IsoDoc
 
       def dis_styles1(docxml)
         remove_note_label(docxml)
+        amd_style(docxml)
         code_style(docxml)
         figure_style(docxml)
         example_style(docxml)
         quote_style(docxml)
       end
 
+      def amd_style(docxml)
+        return unless @meta.get[:doctype] == "Amendment"
+
+        docxml.xpath("//div[@class = 'WordSection3']//h1").each do |h|
+          h.name = "p"
+          h["style"] = "font-style:italic;page-break-after:avoid;"
+        end
+      end
+
       def quote_style(docxml)
         docxml.xpath("//div[@class = 'Quote' or @class = 'Note' or "\
                      "@class = 'Example']").each do |d|
-          d.xpath(".//p[not(@class)]").each do |p|
-            p["class"] = "BodyTextindent1"
-          end
-          if d["class"] != "Example"
-            d.xpath(".//p[@class = 'Example']").each do |p|
-              p["class"] = "Exampleindent"
-            end
-            d.xpath(".//p[@class = 'Examplecontinued']").each do |p|
-              p["class"] = "Exampleindentcontinued"
-            end
-          end
-          d["class"] != "Note" and
-            d.xpath(".//p[@class = 'Note']").each do |p|
-              p["class"] = "Noteindent"
-            end
+                       quote_style1(d)
+                     end
+      end
+
+      def quote_style1(div)
+        div.xpath(".//p[not(@class)]").each do |p|
+          p["class"] = "BodyTextindent1"
         end
+        if div["class"] != "Example"
+          div.xpath(".//p[@class = 'Example']").each do |p|
+            p["class"] = "Exampleindent"
+          end
+          div.xpath(".//p[@class = 'Examplecontinued']").each do |p|
+            p["class"] = "Exampleindentcontinued"
+          end
+        end
+        div["class"] != "Note" and
+          div.xpath(".//p[@class = 'Note']").each do |p|
+            p["class"] = "Noteindent"
+          end
       end
 
       def remove_note_label(doc)

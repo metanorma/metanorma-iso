@@ -1305,4 +1305,40 @@ RSpec.describe IsoDoc do
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
       .to be_equivalent_to xmlpp(word)
   end
+
+  it "deals with amendments" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+          <ext><doctype>amendment</doctype></ext>
+        </bibdata>
+        <preface>
+        <foreword id="F"><title>Foreword</title></foreword>
+        </preface>
+         <sections>
+        <clause id="A"><title>First clause</title>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+       <div class='WordSection3'>
+         <p class='zzSTDTitle'/>
+         <div>
+           <a name='A' id='A'/>
+           <p style='font-style:italic;page-break-after:avoid;' class='MsoBodyText'>First clause</p>
+         </div>
+       </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
 end
