@@ -4,14 +4,25 @@
 {% endfor %}
 {% endif %}
 
-{% if revdate %}
-<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB">Date: <span style='mso-no-proof:yes'>{{ revdate }}</span></span></p>
+{% if revdate and revdate != "XXX" %}
+{% assign doc_date = revdate %}
+{% elsif publisheddate and publisheddate != "XXX" %}
+{% assign doc_date = publisheddate %}
+{% elsif issueddate and issueddate != "XXX" %}
+{% assign doc_date = issueddate %}
+{% elsif createddate and createddate != "XXX" %}
+{% assign doc_date = createddate %}
+{% endif %}
+
+{% if doc_date %}
+<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB">Date: <span style='mso-no-proof:yes'>{{ doc_date }}</span></span></p>
 {% endif %}
 
 <p class="zzCover"><span lang="EN-GB">Reference number of project: {{ docnumber_undated }} {{ draftinfo }}</span></p>
 
 <p class="zzCover"><span lang="EN-GB">Committee identification: {{agency}}/{{ editorialgroup | join: "/" }}</span></p>
 
+<!--
 {% if doctitleamdlabel %}
 <p class="zzCover"><b>{{ doctitleamdlabel }}</b></p>
 {% endif %}
@@ -19,6 +30,7 @@
 {% if doctitlecorrlabel %}
 <p class="zzCover"><b>{{ doctitlecorrlabel }}</b></p>
 {% endif %}
+-->
 
 {% if secretariat %}
 <p class="zzCover"><span lang="EN-GB">Secretariat: <span>{{ secretariat }}</span></span></p>
