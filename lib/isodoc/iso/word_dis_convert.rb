@@ -93,7 +93,6 @@ module IsoDoc
 
       def middle_title_dis_amd(para)
         para.span(**{ style: "font-weight:normal" }) do |p|
-          a = @meta.get[:doctitlepart] and p << ": #{a}"
           if a = @meta.get[:doctitleamdlabel]
             p << " #{a}"
             a = @meta.get[:doctitleamd] and p << ": #{a}"

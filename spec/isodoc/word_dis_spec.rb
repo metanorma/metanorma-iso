@@ -1376,7 +1376,7 @@ RSpec.describe IsoDoc do
                        Date and time — Representations for information interchange —
       <span style='font-weight:normal'>Part 1</span>
        Basic rules
-      <span style='font-weight:normal'>: Basic rules AMENDMENT 1: Technical corrections</span>
+      <span style='font-weight:normal'> AMENDMENT 1: Technical corrections</span>
           </p>
           <div>
             <a name='A' id='A'/>
