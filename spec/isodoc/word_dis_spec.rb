@@ -90,7 +90,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection3'>
-        <p class='zzSTDTitle1'/>
+        <p class='zzSTDTitle'/>
         <div id='A'>
           <h1/>
           <p>
@@ -1306,6 +1306,48 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(word)
   end
 
+  it "deals with title" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+        <title language="en" format="text/plain" type="title-intro">Date and time</title>
+          <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
+        <title language="en" format="text/plain" type="title-part">Basic rules</title>
+          <status><stage>50</stage></status>
+          <ext><doctype>international-standard</doctype>
+          <structuredidentifier><project-number part="1" origyr="2022-03-10">8601</project-number></structuredidentifier>
+          </ext>
+        </bibdata>
+        <sections>
+        <clause id="A"><title>First clause</title>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+        <div class='WordSection3'>
+                   <p class='zzSTDTitle'>
+                 Date and time — Representations for information interchange —
+      <span style='font-weight:normal'>Part 1</span>
+       Basic rules
+          </p>
+          <div>
+            <a name='A' id='A'/>
+            <h1>First clause</h1>
+          </div>
+        </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "deals with amendments" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -1329,18 +1371,18 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-      <div class='WordSection3'>
-                 <p class='zzSTDTitle'>
-          Date and time — Representations for information interchange —
-          Part 1:
-          <b>Basic rules</b>
-           AMENDMENT 1: Technical corrections
-        </p>
-        <div>
-          <a name='A' id='A'/>
-          <p style='font-style:italic;page-break-after:avoid;' class='MsoBodyText'>First clause</p>
+        <div class='WordSection3'>
+                   <p class='zzSTDTitle'>
+                       Date and time — Representations for information interchange —
+      <span style='font-weight:normal'>Part 1</span>
+       Basic rules
+      <span style='font-weight:normal'>: Basic rules AMENDMENT 1: Technical corrections</span>
+          </p>
+          <div>
+            <a name='A' id='A'/>
+            <p style='font-style:italic;page-break-after:avoid;' class='MsoBodyText'>First clause</p>
+          </div>
         </div>
-      </div>
     WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)

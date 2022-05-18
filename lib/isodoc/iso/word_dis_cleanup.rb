@@ -100,7 +100,7 @@ module IsoDoc
         end
       end
 
-            FIGURE_NESTED_STYLES =
+      FIGURE_NESTED_STYLES =
         { Note: "Figurenote", example: "Figureexample" }.freeze
 
       def figure_style(docxml)

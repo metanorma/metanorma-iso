@@ -71,22 +71,29 @@ module IsoDoc
         @wordstylesheet.unlink if @wordstylesheet.is_a?(Tempfile)
       end
 
-      def middle_title(isoxml, out)
-        if ["Amendment", "Technical Corrigendum"].include?(@meta.get[:doctype])
-          middle_title_dis(out)
-        else
-          super
-        end
+      def middle_title(_isoxml, out)
+        middle_title_dis(out)
       end
 
       def middle_title_dis(out)
         out.p(**{ class: "zzSTDTitle" }) do |p|
           p << @meta.get[:doctitleintro]
-          p << " &#x2014; " if @meta.get[:doctitleintro] && @meta.get[:doctitlemain]
+          @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and p << " &#x2014; "
           p << @meta.get[:doctitlemain]
-          p << " &#x2014; " if @meta.get[:doctitlemain] && @meta.get[:doctitlepart]
-          b = @meta.get[:doctitlepartlabel] and p << b.to_s
-          a = @meta.get[:doctitlepart] and p << ": <b>#{a}</b>"
+          @meta.get[:doctitlemain] && @meta.get[:doctitlepart] and p << " &#x2014; "
+          if @meta.get[:doctitlepart]
+            b = @meta.get[:doctitlepartlabel] and
+              p << "<span style='font-weight:normal'>#{b}</span> "
+            p << " #{@meta.get[:doctitlepart]}"
+          end
+          @meta.get[:doctitleamdlabel] || @meta.get[:doctitleamd] ||
+            @meta.get[:doctitlecorrlabel] and middle_title_dis_amd(p)
+        end
+      end
+
+      def middle_title_dis_amd(para)
+        para.span(**{ style: "font-weight:normal" }) do |p|
+          a = @meta.get[:doctitlepart] and p << ": #{a}"
           if a = @meta.get[:doctitleamdlabel]
             p << " #{a}"
             a = @meta.get[:doctitleamd] and p << ": #{a}"
