@@ -1337,6 +1337,29 @@ RSpec.describe IsoDoc do
           </div>
         </div>
     WORD
+    title = <<~WORD
+       <div class='WordSection1'>
+         <p class='zzCover'>
+           <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
+         </p>
+         <p class='zzCover'>
+           <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
+         </p>
+         <p class='zzCover'>
+           <span lang='EN-GB' xml:lang='EN-GB'>
+             Secretariat:
+             <span>XXX</span>
+           </span>
+         </p>
+         <p class='zzCover'>
+           <span lang='EN-GB' xml:lang='EN-GB'>
+             Date and time — Representations for information interchange
+             — Part 1: Basic rules
+           </span>
+         </p>
+         <p class='zzCover'> </p>
+       </div>
+    WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
     expect(File.exist?("test.doc")).to be true
@@ -1346,6 +1369,9 @@ RSpec.describe IsoDoc do
     expect(strip_guid(xmlpp(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
       .to be_equivalent_to xmlpp(word)
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection1']").to_xml)))
+      .to be_equivalent_to xmlpp(title)
   end
 
   it "deals with amendments" do
