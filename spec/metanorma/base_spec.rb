@@ -290,6 +290,77 @@ RSpec.describe Metanorma::ISO do
       OUTPUT
   end
 
+  it "processes tech specification identifier" do
+    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+      :partnumber: 1-1
+      :copyright-year: 2001
+      :doctype: technical-specification
+      :docstage: 50
+      :docsubstage:
+    INPUT
+    expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+           <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='semantic' version='2.1.1'>
+         <bibdata type='standard'>
+           <docidentifier type='ISO'>ISO/FDTS 1000-1-1</docidentifier>
+           <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>
+           <docidentifier type='iso-with-lang'>ISO/FDTS 1000-1-1(E)</docidentifier>
+           <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(E)</docidentifier>
+           <docnumber>1000</docnumber>
+           <contributor>
+             <role type='author'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type='publisher'/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <language>en</language>
+           <script>Latn</script>
+           <status>
+             <stage abbreviation='FDTS TS'>50</stage>
+             <substage>00</substage>
+           </status>
+           <copyright>
+             <from>2001</from>
+             <owner>
+               <organization>
+                 <name>International Organization for Standardization</name>
+                 <abbreviation>ISO</abbreviation>
+               </organization>
+             </owner>
+           </copyright>
+           <ext>
+             <doctype>technical-specification</doctype>
+             <editorialgroup>
+               <technical-committee/>
+               <subcommittee/>
+               <workgroup/>
+             </editorialgroup>
+             <structuredidentifier>
+               <project-number part='1' subpart='1'>ISO 1000</project-number>
+             </structuredidentifier>
+             <stagename>Final draft</stagename>
+           </ext>
+         </bibdata>
+         <sections> </sections>
+       </iso-standard>
+    OUTPUT
+  end
+
   it "processes Russian titles" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
