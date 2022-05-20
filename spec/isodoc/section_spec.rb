@@ -561,8 +561,7 @@ RSpec.describe IsoDoc do
            <language current='true'>en</language>
            <script current='true'>Latn</script>
            <status>
-             <stage abbreviation='IS' language=''>60</stage>
-             <stage abbreviation='IS' language='en'>International standard</stage>
+             <stage abbreviation='IS'>60</stage>
              <substage>60</substage>
            </status>
              <copyright>

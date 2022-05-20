@@ -37,8 +37,32 @@ stage_dict:
   "10": Nouvelle proposition d'élément de travail
   "20": Brouillon de travail
   "30": Projet de comité
-  "40": Brouillon
-  "50": Version finale
-  "60": Norme internationale
+  "40": 
+    international-standard: Brouillon de la norme internationale
+    technical-specification: Brouillon de la spécification technique
+    technical-report: Brouillon du rapport technique
+    publicly-available-specification: Brouillon de la spécification disponible publiquement
+    international-workshop-agreement: Brouillon de l’accord internationale d’atelier
+    guide: Brouillon du guide
+    amendment: Brouillon de l’amendement
+    technical-corrigendum: Brouillon du rectificatif technique
+  "50": 
+    international-standard: Version finale de la norme internationale
+    technical-specification: Version finale de la spécification technique
+    technical-report: Version finale du rapport technique
+    publicly-available-specification: Version finale de la spécification disponible publiquement
+    international-workshop-agreement: Version finale de l’accord internationale d’atelier
+    guide: Version finale du guide
+    amendment: Version finale de l’amendement
+    technical-corrigendum: Version finale du rectificatif technique
+  "60": 
+    international-standard: Norme internationale
+    technical-specification: Spécification technique
+    technical-report: Rapport technique
+    publicly-available-specification: Spécification disponible publiquement
+    international-workshop-agreement: Accord internationale d’atelier
+    guide: Guide
+    amendment: Amendement
+    technical-corrigendum: Rectificatif technique
   "90": Révision
   "95": Retrait

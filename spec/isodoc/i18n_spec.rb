@@ -93,7 +93,7 @@ RSpec.describe IsoDoc do
         <bibdata>
            <status>
              <stage abbreviation='IS' language=''>60</stage>
-             <stage abbreviation='IS' language='en'>International standard</stage>
+             <stage abbreviation='IS' language='en'>International Standard</stage>
            </status>
            <language current='true'>en</language>
            <ext>
@@ -544,7 +544,7 @@ RSpec.describe IsoDoc do
           <bibdata>
            <status>
              <stage abbreviation='IS' language=''>60</stage>
-             <stage abbreviation='IS' language='tlh'>International standard</stage>
+             <stage abbreviation='IS' language='tlh'>International Standard</stage>
            </status>
            <language current='true'>tlh</language>
            <ext>
@@ -1010,14 +1010,14 @@ RSpec.describe IsoDoc do
            <status>
              <stage abbreviation='IS' language=''>60</stage>
              <stage abbreviation='IS' language='ru'>
-               &#x41C;&#x435;&#x436;&#x434;&#x443;&#x43D;&#x430;&#x440;&#x43E;&#x434;&#x43D;&#x44B;&#x439; &#x441;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x442;
+               Международный Стандарт
              </stage>
            </status>
            <language current='true'>ru</language>
            <ext>
              <doctype language=''>international-standard</doctype>
              <doctype language='ru'>
-               &#x41C;&#x435;&#x436;&#x434;&#x443;&#x43D;&#x430;&#x440;&#x43E;&#x434;&#x43D;&#x44B;&#x439; &#x421;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x442;
+               Международный Стандарт
              </doctype>
            </ext>
          </bibdata>
