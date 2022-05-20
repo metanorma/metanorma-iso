@@ -465,11 +465,21 @@
 										</fo:table-cell>
 										<fo:table-cell>
 											<xsl:if test="$stage-abbreviation = 'DIS'">
-												<fo:block-container margin-top="-15mm" margin-bottom="7mm" margin-left="1mm">
-													<fo:block font-size="9pt" border="0.5pt solid black" fox:border-radius="5pt" padding-left="2mm" padding-top="2mm" padding-bottom="2mm">
-														<xsl:text>This document is circulated as received from the committee secretariat.</xsl:text>
-													</fo:block>
-												</fo:block-container>
+												<xsl:variable name="text">
+													<xsl:for-each select="/iso:iso-standard/iso:preface/iso:note[@coverpage='true']/iso:p">
+														<fo:block>
+															<xsl:apply-templates/>
+														</fo:block>
+													</xsl:for-each>
+												</xsl:variable>
+												<xsl:if test="normalize-space($text) != ''">
+													<fo:block-container margin-top="-15mm" margin-bottom="7mm" margin-left="1mm">
+														<fo:block font-size="9pt" border="0.5pt solid black" fox:border-radius="5pt" padding-left="2mm" padding-top="2mm" padding-bottom="2mm">
+															<!-- <xsl:text>This document is circulated as received from the committee secretariat.</xsl:text> -->
+															<xsl:copy-of select="xalan:nodeset($text)/node()"/>
+														</fo:block>
+													</fo:block-container>
+												</xsl:if>
 											</xsl:if>
 											<fo:block>
 												<xsl:call-template name="insertTripleLine"/>
@@ -3428,7 +3438,7 @@
 			</xsl:for-each>
 		</figures>
 	</xsl:template><xsl:template name="processPrefaceSectionsDefault">
-		<xsl:for-each select="/*/*[local-name()='preface']/*">
+		<xsl:for-each select="/*/*[local-name()='preface']/*[not(local-name() = 'note' or local-name() = 'admonition')]">
 			<xsl:sort select="@displayorder" data-type="number"/>
 			<xsl:apply-templates select="."/>
 		</xsl:for-each>
@@ -9052,26 +9062,23 @@
 				<xsl:if test=".//*[local-name() = 'fn']">
 					<xsl:attribute name="line-height-shift-adjustment">disregard-shifts</xsl:attribute>
 				</xsl:if>
+				
+				<!-- display document identifier, not number [1] -->
 				<xsl:variable name="docidentifier">
 					<xsl:choose>
 						<xsl:when test="*[local-name() = 'docidentifier']/@type = 'metanorma'"/>
 						<xsl:otherwise><xsl:value-of select="*[local-name() = 'docidentifier'][not(@type = 'metanorma-ordinal')]"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
-				<fo:inline><xsl:value-of select="$docidentifier"/></fo:inline>
+				<xsl:value-of select="$docidentifier"/>
+				
 				<xsl:apply-templates select="*[local-name() = 'note']"/>
-				<xsl:if test="normalize-space($docidentifier) != ''">, </xsl:if>
-				<xsl:choose>
-					<xsl:when test="*[local-name() = 'title'][@type = 'main' and @language = $lang]">
-						<xsl:apply-templates select="*[local-name() = 'title'][@type = 'main' and @language = $lang]"/>
-					</xsl:when>
-					<xsl:when test="*[local-name() = 'title'][@type = 'main' and @language = 'en']">
-						<xsl:apply-templates select="*[local-name() = 'title'][@type = 'main' and @language = 'en']"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:apply-templates select="*[local-name() = 'title']"/>
-					</xsl:otherwise>
-				</xsl:choose>
+				
+				<xsl:if test="normalize-space($docidentifier) != '' and *[local-name() = 'formattedref']">
+					<xsl:text>,</xsl:text>
+					<xsl:text> </xsl:text>
+				</xsl:if>
+				
 				<xsl:apply-templates select="*[local-name() = 'formattedref']"/>
 				<!-- end bibitem processing -->
 			
