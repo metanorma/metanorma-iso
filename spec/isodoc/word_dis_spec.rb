@@ -122,10 +122,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection2'>
-         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-      border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
-      solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
-      margin-left:5.1pt;margin-right:5.1pt'>
+         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt'>
            <div>
              <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
            </div>
@@ -175,13 +172,8 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection2'>
-         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-      border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
-      solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
-      margin-left:5.1pt;margin-right:5.1pt'>
            <div>
              <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
-           </div>
          </div>
          <p class='zzContents'>
            <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
@@ -289,14 +281,9 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
           <div class='WordSection2'>
-        <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-      border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
-      solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
-      margin-left:5.1pt;margin-right:5.1pt'>
           <div>
             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
           </div>
-        </div>
         <p class='zzContents'>
           <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
         </p>
@@ -1439,7 +1426,8 @@ RSpec.describe IsoDoc do
         <title language="en" format="text/plain" type="title-amd">Technical corrections</title>
           <status><stage>50</stage></status>
           <ext><doctype>amendment</doctype>
-          <structuredidentifier><project-number part="1" amendment="1" origyr="2022-03-10">8601</project-number></structuredidentifier>
+          <structuredidentifier><project-number part="1" amendment="1" origyr="2022-03-10">8601</project-number>
+          </structuredidentifier>
           </ext>
         </bibdata>
         <preface>
@@ -1474,5 +1462,90 @@ RSpec.describe IsoDoc do
     expect(strip_guid(xmlpp(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
       .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with copyright boilerplate" do
+    presxml = <<~OUTPUT
+      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
+        <bibdata type="standard">
+          <status>
+            <stage language="">50</stage>
+          </status>
+        </bibdata>
+        <boilerplate>
+          <copyright-statement>
+            <clause inline-header="true">
+              <p id="boilerplate-year">© ISO 2019, Published in Switzerland
+               </p>
+              <p id="boilerplate-message">I am the Walrus.
+               </p>
+              <p id="boilerplate-name">ISO copyright office</p>
+              <p align="left" id="boilerplate-address">ISO copyright office
+                <br/>
+                Ch. de Blandonnet 8 ?~@? CP 401
+                <br/>
+                CH-1214 Vernier, Geneva, Switzerland
+                <br/>
+                Tel. + 41 22 749 01 11
+                <br/>
+                Fax + 41 22 749 09 47
+                <br/>
+                copyright@iso.org
+                <br/>
+                www.iso.org</p>
+            </clause>
+          </copyright-statement>
+          <license-statement>
+            <clause>
+              <title depth="1">Warning for Stuff</title>
+              <p>This document is not an ISO International Standard. It is distributed for review and
+             comment. It is subject to change without notice and may not be referred to as
+             an International Standard.</p>
+              <p>Recipients
+             of this draft are invited to submit, with their comments, notification of any
+             relevant patent rights of which they are aware and to provide supporting
+             documentation.</p>
+            </clause>
+          </license-statement>
+        </boilerplate>
+      </iso-standard>
+    OUTPUT
+
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new(wordstylesheet: "spec/assets/word.css")
+      .convert("test", presxml, false)
+    word = File.read("test.doc", encoding: "UTF-8")
+    expect(xmlpp(word
+      .sub(%r{^.*<div class="boilerplate-copyright">}m,
+           '<div class="boilerplate-copyright">')
+      .sub(%r{</div>.*$}m, "</div></div>")))
+      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+             <div class='boilerplate-copyright'>
+         <div>
+           <p class='zzCopyright'>
+             <a name='boilerplate-year' id='boilerplate-year'/>
+             © ISO 2019, Published in Switzerland
+           </p>
+           <p class='zzCopyright'>
+             <a name='boilerplate-message' id='boilerplate-message'/>
+             I am the Walrus.
+           </p>
+           <p class='zzCopyright'>
+             <a name='boilerplate-name' id='boilerplate-name'/>
+             ISO copyright office
+           </p>
+           <p style='text-align:left;' align='left' class='zzCopyright'>
+             <a name='boilerplate-address' id='boilerplate-address'/>
+             ISO copyright office
+           </p>
+           <p class='zzCopyright'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
+           <p class='zzCopyright'> CH-1214 Vernier, Geneva, Switzerland </p>
+           <p class='zzCopyright'> Tel. + 41 22 749 01 11 </p>
+           <p class='zzCopyright'> Fax + 41 22 749 09 47 </p>
+           <p class='zzCopyright'> copyright@iso.org </p>
+           <p class='zzCopyright'> www.iso.org</p>
+         </div>
+       </div>
+      OUTPUT
   end
 end

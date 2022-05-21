@@ -150,6 +150,17 @@ module IsoDoc
         docxml
       end
 
+      def authority_cleanup(docxml)
+        super
+        docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
+          p["class"] = "zzCopyright"
+          p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
+        end
+        docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
+          p["class"] = "zzCopyright"
+        end
+      end
+
       def word_section_end_empty_para(docxml)
         docxml.at("//div[@class='WordSection1']/p[last()]").remove
       end
