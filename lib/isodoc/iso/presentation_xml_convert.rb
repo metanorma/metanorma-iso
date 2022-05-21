@@ -172,9 +172,10 @@ module IsoDoc
       def admonition_name(xml)
         "#{xml} &#x2014; "
       end
-    
+
       def bibrenderer
-        ::Relaton::Render::Iso::General.new(language: @lang, i18nhash: @i18n.get)
+        ::Relaton::Render::Iso::General.new(language: @lang,
+                                            i18nhash: @i18n.get)
       end
 
       def bibrender(xml)
@@ -183,6 +184,22 @@ module IsoDoc
             "#{bibrenderer.render(xml.to_xml)}"\
             "#{xml.xpath(ns('./docidentifier | ./uri | ./note')).to_xml}"
         end
+      end
+
+      def bibdata_i18n(bib)
+        hash_translate(bib, @i18n.get["doctype_dict"], "./ext/doctype")
+        bibdata_i18n_stage(bib, bib.at(ns("./status/stage")),
+                           bib.at(ns("./ext/doctype")))
+        hash_translate(bib, @i18n.get["substage_dict"], "./status/substage")
+        edition_translate(bib)
+      end
+
+      def bibdata_i18n_stage(bib, stage, type)
+        @i18n.get["stage_dict"][stage&.text].is_a?(Hash) or
+          return hash_translate(bib, @i18n.get["stage_dict"], "./status/stage")
+        @i18n.get["stage_dict"][stage&.text][type&.text] and
+          tag_translate(stage, @lang,
+                        @i18n.get["stage_dict"][stage&.text][type&.text])
       end
 
       include Init

@@ -151,7 +151,8 @@ BOILERPLATE =
     File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate.xml", encoding: "utf-8")
       .gsub(/\{\{ agency \}\}/, "ISO")
   .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
-      .gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "")
+      .gsub(/\{% if unpublished %\}.*?\{% endif %\}/m, "")
+      .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% endif %\}/m, "\\1")
       .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
   )
 
@@ -160,7 +161,8 @@ BOILERPLATE_FR =
     File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-fr.xml", encoding: "utf-8")
     .gsub(/\{\{ agency \}\}/, "ISO")
     .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
-    .gsub(/\{% if unpublished %\}.*\{% endif %\}/m, "")
+    .gsub(/\{% if unpublished %\}.*?\{% endif %\}/m, "")
+      .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% endif %\}/m, "\\1")
     .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
   )
 

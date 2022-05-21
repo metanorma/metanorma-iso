@@ -1,16 +1,16 @@
+require_relative "word_dis_cleanup"
+
 module IsoDoc
   module Iso
     class WordDISConvert < WordConvert
       def default_file_locations(_options)
-        {
-          wordstylesheet: html_doc_path("wordstyle-dis.scss"),
+        { wordstylesheet: html_doc_path("wordstyle-dis.scss"),
           standardstylesheet: html_doc_path("isodoc-dis.scss"),
           header: html_doc_path("header-dis.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage-dis.html"),
           wordintropage: html_doc_path("word_iso_intro-dis.html"),
           ulstyle: "l3",
-          olstyle: "l2",
-        }
+          olstyle: "l2" }
       end
 
       def initialize(options)
@@ -21,70 +21,12 @@ module IsoDoc
 
       def init_dis; end
 
-      def style_cleanup(docxml)
-        super
-        dis_styles(docxml)
-      end
-
-      STYLESMAP = {
-        AltTerms: "AdmittedTerm",
-        TableFootnote: "Tablefootnote",
-        formula: "Formula",
-        note: "Note",
-        example: "Example",
-        admonition: "Admonition",
-        admonitiontitle: "AdmonitionTitle",
-        sourcetitle: "SourceTitle",
-        tabletitle: "TableTitle",
-        titlepagesbhead: "TablePageSubhead",
-        NormRef: "RefNorm",
-        Biblio: "BiblioEntry",
-        MsoNormal: "MsoBodyText",
-        FigureTitle: "Figuretitle",
-        zzwarning: "zzWarning",
-        zzwarninghdr: "zzWarningHdr",
-        quoteattribution: "QuoteAttribution",
-      }.freeze
-
-      def dis_styles(docxml)
-        STYLESMAP.each do |k, v|
-          docxml.xpath("//*[@class = '#{k}']").each { |s| s["class"] = v }
-        end
-        docxml.xpath("//h1[@class = 'ForewordTitle' or @class = 'IntroTitle']")
-          .each { |h| h.name = "p" }
-        dis_styles1(docxml)
-        docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
-      end
-
-      def dis_styles1(docxml)
-        code_style(docxml)
-        figure_style(docxml)
-        example_style(docxml)
-      end
-
-      def example_style(docxml)
-        docxml.xpath("//div[@class = 'Example']").each do |d|
-          d.xpath("./p").each_with_index do |p, i|
-            next if p["class"] && p["class"] != "Example"
-
-            p["class"] = (i.zero? ? "Example" : "Examplecontinued")
-          end
-        end
-      end
-
       def figure_name_attrs(_node)
         { class: "FigureTitle", style: "text-align:center;" }
       end
 
       def table_title_attrs(_node)
         { class: "Tabletitle", style: "text-align:center;" }
-      end
-
-      def word_annex_cleanup1(docxml, lvl)
-        docxml.xpath("//h#{lvl}[ancestor::*[@class = 'Section3']]").each do |h2|
-          h2.name = "p"
-          h2["class"] = "a#{lvl}"
-        end
       end
 
       def span_parse(node, out)
@@ -109,58 +51,8 @@ module IsoDoc
         ret
       end
 
-      FIGURE_NESTED_STYLES =
-        { Note: "Figurenote", example: "Figureexample" }.freeze
-
-      def figure_style(docxml)
-        docxml.xpath("//div[@class = 'figure']").each do |f|
-          FIGURE_NESTED_STYLES.each do |k, v|
-            f.xpath(".//*[@class = '#{k}']").each { |n| n["class"] = v }
-          end
-          f.xpath("./img").each do |i|
-            i.replace("<p class='FigureGraphic'>#{i.to_xml}</p>")
-          end
-        end
-      end
-
-      def code_style(doc)
-        span_style((doc.xpath("//tt//b") - doc.xpath("//tt//i//b")),
-                   "ISOCodebold")
-        span_style((doc.xpath("//tt//i") - doc.xpath("//tt//b//i")),
-                   "ISOCodeitalic")
-        span_style((doc.xpath("//b//tt") - doc.xpath("//b//i//tt")),
-                   "ISOCodebold")
-        span_style((doc.xpath("//i//tt") - doc.xpath("//i//b//tt")),
-                   "ISOCodeitalic")
-        span_style(doc.xpath("//tt"), "ISOCode")
-      end
-
-      def span_style(xpath, style)
-        xpath.each do |elem|
-          elem.name = "span"
-          elem["class"] = style
-        end
-      end
-
       def make_tr_attr(cell, row, totalrows, header)
         super.merge(header: header)
-      end
-
-      def word_cleanup(docxml)
-        word_table_cell_para(docxml)
-        super
-      end
-
-      def word_table_cell_para(docxml)
-        docxml.xpath("//td | //th").each do |t|
-          s = t["header"] == "true" ? "Tableheader" : "Tablebody"
-          t.delete("header")
-          if t.at("./p |./div")
-            t.xpath("./p | ./div").each { |p| p["class"] = s }
-          else
-            t.children = "<div class='#{s}'>#{t.children.to_xml}</div>"
-          end
-        end
       end
 
       def toWord(result, filename, dir, header)
@@ -177,6 +69,38 @@ module IsoDoc
         ).process(result)
         header&.unlink
         @wordstylesheet.unlink if @wordstylesheet.is_a?(Tempfile)
+      end
+
+      def middle_title(_isoxml, out)
+        middle_title_dis(out)
+      end
+
+      def middle_title_dis(out)
+        out.p(**{ class: "zzSTDTitle" }) do |p|
+          p << @meta.get[:doctitleintro]
+          @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and p << " &#x2014; "
+          p << @meta.get[:doctitlemain]
+          @meta.get[:doctitlemain] && @meta.get[:doctitlepart] and p << " &#x2014; "
+          if @meta.get[:doctitlepart]
+            b = @meta.get[:doctitlepartlabel] and
+              p << "<span style='font-weight:normal'>#{b}</span> "
+            p << " #{@meta.get[:doctitlepart]}"
+          end
+          @meta.get[:doctitleamdlabel] || @meta.get[:doctitleamd] ||
+            @meta.get[:doctitlecorrlabel] and middle_title_dis_amd(p)
+        end
+      end
+
+      def middle_title_dis_amd(para)
+        para.span(**{ style: "font-weight:normal" }) do |p|
+          if a = @meta.get[:doctitleamdlabel]
+            p << " #{a}"
+            a = @meta.get[:doctitleamd] and p << ": #{a}"
+          end
+          if a = @meta.get[:doctitlecorrlabel]
+            p << " #{a}"
+          end
+        end
       end
     end
   end

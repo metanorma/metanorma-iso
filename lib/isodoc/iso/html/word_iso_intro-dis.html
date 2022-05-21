@@ -1,14 +1,9 @@
 {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
 {% else %}
 
-<div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
-solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
-margin-left:5.1pt;margin-right:5.1pt'>
 <div id="boilerplate-copyright-destination"/>
-</div>
 
-<p class="zzContents" style='margin-top:0cm'><span lang="EN-GB">{{ labels["table_of_contents"] }}</span></p>
+<p class="zzContents"><span lang="EN-GB">{{ labels["table_of_contents"] }}</span></p>
 
 WORDTOC
 {% endif %}

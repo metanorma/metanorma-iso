@@ -1,6 +1,9 @@
 <boilerplate>
   <copyright-statement>
     <clause>
+      {% if stage_int >= 40 %}
+      <title>ДОКУМЕНТ, ОХРАНЯЕМЫЙ АВТОРСКИМ ПРАВОМ</title>
+      {% endif %}
       <p id="boilerplate-year">&#xa9; <span class="std_publisher">{{ agency }}</span> <span class="std_docNumber">{{ docyear }}</span></p>
 
   <p id="boilerplate-message">

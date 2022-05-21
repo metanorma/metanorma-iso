@@ -561,8 +561,7 @@ RSpec.describe IsoDoc do
            <language current='true'>en</language>
            <script current='true'>Latn</script>
            <status>
-             <stage abbreviation='IS' language=''>60</stage>
-             <stage abbreviation='IS' language='en'>International standard</stage>
+             <stage abbreviation='IS'>60</stage>
              <substage>60</substage>
            </status>
              <copyright>
@@ -708,7 +707,7 @@ RSpec.describe IsoDoc do
           </div>
           <p><br clear="all" class="section"/></p>
           <div class="WordSection3">
-            <p class="zzSTDTitle1"/>
+            <p class="zzSTDTitle"/>
           </div>
           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
           <div class="colophon"/>

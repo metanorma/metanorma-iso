@@ -38,9 +38,35 @@ stage_dict:
   "10": Предложение нового рабочего элемента
   "20": Рабочий проект
   "30": Проект комитета
-  "40": Проект Международного стандарта
-  "50": Окончательный проект Международного стандарта
-  "60": Международный стандарт
+  "40": 
+    international-standard: Проект Международного стандарта
+    technical-specification: Проект Технической Спецификации
+    technical-report: Проект Технического Отчета
+    publicly-available-specification: Проект Общедоступной Спецификации
+    international-workshop-agreement: Проект Соглашения Международного Семинара
+    guide: Проект Руководства
+    amendment: Проект Поправки
+    technical-corrigendum: Проект Технического Исправления
+    directive: Проект Директивы
+  "50": 
+    international-standard: Окончательный проект Международного стандарта
+    technical-specification: Окончательный проект Технической Спецификации
+    technical-report: Окончательный проект Технического Отчета
+    publicly-available-specification: Окончательный проект Общедоступной Спецификации
+    international-workshop-agreement: Окончательный проект Соглашения Международного Семинара
+    guide: Окончательный проект Руководства
+    amendment: Окончательный проект Поправки
+    technical-corrigendum: Окончательный проект Технического Исправления
+    directive: Окончательный проект Директивы
+  "60": 
+    international-standard: Международный Стандарт
+    technical-specification: Техническая Спецификация
+    technical-report: Технический Отчет
+    publicly-available-specification: Общедоступная Спецификация
+    international-workshop-agreement: Соглашение Международного Семинара
+    guide: Руководство
+    amendment: Поправка
+    technical-corrigendum: Техническое Исправление
+    directive: Директива
   "90": Пересмотр
   "95": Отмена
-

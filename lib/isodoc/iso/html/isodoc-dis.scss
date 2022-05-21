@@ -1,5 +1,5 @@
 p.Sourcecode, li.Sourcecode, div.Sourcecode, pre.Sourcecode
-	{mso-style-name:sourcecode;
+	{mso-style-name:Sourcecode;
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
@@ -800,48 +800,30 @@ p.zzContents, li.zzContents, div.zzContents
 	mso-bidi-font-weight:normal;}
 p.zzCopyright, li.zzCopyright, div.zzCopyright
 	{mso-style-name:zzCopyright;
-	mso-style-noshow:yes;
 	mso-style-unhide:no;
 	mso-style-next:Normal;
 	margin-top:0cm;
-	margin-right:0pt;
+	margin-right:14.2pt;
 	margin-bottom:12.0pt;
-	margin-left:0pt;
+	margin-left:14.2pt;
 	text-align:justify;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	tab-stops:20.15pt 25.7pt 481.15pt;
+	tab-stops:25.7pt 481.15pt;
 	border:none;
+	mso-border-alt:solid blue .5pt;
 	padding:0cm;
 	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
-	font-size:10.0pt;
+	font-size:$normalfontsize;
+	mso-bidi-font-size:10.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:"SimSun",serif;
-	mso-bidi-font-family:$bodyfont;
-	mso-ansi-language:EN-GB;}
-p.zzCopyright1
-        {mso-style-name:zzCopyright;
-        mso-style-noshow:yes;
-        mso-style-unhide:no;
-        mso-style-next:Normal;
-        margin-top:0cm;
-	margin-right:0pt;
-	margin-bottom:12.0pt;
-	margin-left:0pt;
-        text-align:justify;
-        line-height:12.0pt;
-        mso-pagination:widow-orphan;
-        tab-stops:20.15pt 25.7pt 481.15pt;
-        border:none;
-        padding:0cm;
-        mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
-        font-size:10.0pt;
-        font-family:$bodyfont;
-        mso-fareast-font-family:"SimSun",serif;
-        mso-bidi-font-family:$bodyfont;
-        mso-ansi-language:EN-GB;}
-p.zzAddress, p.zzaddress, li.zzaddress, div.zzaddress {
-mso-style-name:zzaddress;
+	mso-fareast-font-family:"MS Mincho";
+	mso-bidi-font-family:"Times New Roman";
+	color:blue;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;}
+p.zzAddress {
+mso-style-name:zzAddress;
   margin:0cm;
   margin-bottom:12pt;
   margin-left:20.15pt;
@@ -850,6 +832,7 @@ mso-layout-grid-align:none;
 text-autospace:none;
 padding:0cm;
 mso-padding-alt:0cm 4.0pt 0cm 4.0pt;
+color:blue;
 font-size:10.0pt;
 font-family:$bodyfont;
 }
@@ -907,51 +890,9 @@ p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle
 	mso-fareast-font-family:"SimHei",serif;
 	mso-bidi-font-family:$headerfont;
 	mso-ansi-language:EN-GB;
+	color:blue;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
-p.zzSTDTitle1, li.zzSTDTitle1, div.zzSTDTitle1
-	{mso-style-name:zzSTDTitle;
-	mso-style-noshow:yes;
-	mso-style-unhide:no;
-	mso-style-next:Normal;
-	margin-top:0pt;
-	margin-right:0cm;
-	margin-bottom:18.0pt;
-	margin-left:0cm;
-	line-height:17.5pt;
-	mso-line-height-rule:exactly;
-	mso-pagination:widow-orphan;
-	mso-hyphenate:none;
-	tab-stops:20.15pt;
-	font-size:16.0pt;
-	mso-bidi-font-size:$normalfontsize;
-	font-family:$headerfont;
-	mso-fareast-font-family:"SimHei",serif;
-	mso-bidi-font-family:$headerfont;
-	mso-ansi-language:EN-GB;
-	font-weight:bold;
-	mso-bidi-font-weight:normal;}
-p.zzSTDTitle2, li.zzSTDTitle2, div.zzSTDTitle2
-        {mso-style-name:zzSTDTitle;
-        mso-style-noshow:yes;
-        mso-style-unhide:no;
-        mso-style-next:Normal;
-        margin-top:0pt;
-        margin-right:0cm;
-        margin-bottom:18.0pt;
-        margin-left:0cm;
-        line-height:17.5pt;
-        mso-line-height-rule:exactly;
-        mso-pagination:widow-orphan;
-        mso-hyphenate:none;
-        tab-stops:20.15pt;
-        font-size:16.0pt;
-        mso-bidi-font-size:$normalfontsize;
-        font-family:$headerfont;
-        mso-fareast-font-family:"SimHei",serif;
-        mso-bidi-font-family:$headerfont;
-        mso-ansi-language:EN-GB;
-        mso-bidi-font-weight:normal;}
 p.1, li.1, div.1
 	{mso-style-name:引用1;
 	mso-style-priority:99;
@@ -971,12 +912,23 @@ p.1, li.1, div.1
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;}
-p.Quote, li.Quote, div.Quote
+p.Quote, li.Quote
 	{mso-style-priority:99;
 	margin-top:0cm;
 	margin-right:36.0pt;
 	margin-bottom:0cm;
 	margin-left:36.0pt;
+	text-align:justify;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:20.15pt;
+	font-size:$normalfontsize;
+	font-family:$bodyfont;
+	mso-fareast-font-family:"SimSun",serif;
+	mso-bidi-font-family:$bodyfont;
+	mso-ansi-language:EN-GB;}
+div.Quote
+	{mso-style-priority:99;
 	text-align:justify;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
@@ -1433,50 +1385,6 @@ div.doctitle
     text-align:left;
     font-size:16.0pt;}
 
-p.boilerplate-copyright, li.boilerplate-copyright, div.boilerplate-copyright
-	{mso-style-name:boilerplate-copyright;
-	mso-style-unhide:no;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;
-	mso-fareast-font-family:DengXian;
-	mso-fareast-theme-font:minor-fareast;
-	mso-ansi-language:EN-HK;
-	mso-fareast-language:JA;}
-
-p.boilerplate-name, li.boilerplate-name, div.boilerplate-name
-	{mso-style-name:boilerplate-name;
-	mso-style-unhide:no;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;
-	mso-fareast-font-family:DengXian;
-	mso-fareast-theme-font:minor-fareast;
-	mso-ansi-language:EN-HK;
-	mso-fareast-language:JA;}
-p.boilerplate-address, li.boilerplate-address, div.boilerplate-address
-	{mso-style-name:boilerplate-address;
-	mso-style-unhide:no;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;
-	mso-fareast-font-family:DengXian;
-	mso-fareast-theme-font:minor-fareast;
-	mso-ansi-language:EN-HK;
-	mso-fareast-language:JA;}
-
 div.rule {
   width: 100%;
   height: 1px;
@@ -1639,23 +1547,6 @@ a.TableFootnoteRef, span.TableFootnoteRef, span.tablefootnoteref
 aside {
           font-size:$footnotefontsize;
 }
-span.notelabel
-	{mso-style-name:note_label;
-	mso-style-unhide:no;
-	mso-ansi-font-size:10.0pt;
-	mso-bidi-font-size:10.0pt;
-	font-family:$bodyfont;
-	mso-ascii-font-family:Cambria;
-	mso-hansi-font-family:Cambria;}
-span.examplelabel
-	{mso-style-name:example_label;
-	mso-style-unhide:no;
-	mso-ansi-font-size:10.0pt;
-	mso-bidi-font-size:10.0pt;
-	font-family:$bodyfont;
-	mso-ascii-font-family:Cambria;
-	mso-hansi-font-family:Cambria;}
-
 
 
 /*
@@ -1701,13 +1592,15 @@ p.Example, li.Example, div.Example
 	mso-style-qformat:yes;
 	mso-style-link:"Example Char";
 	mso-margin-top-alt:auto;
+	margin-top:0cm;
 	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
+	margin-bottom:12.0pt;
 	margin-left:0cm;
 	text-align:justify;
-	line-height:12.0pt;
+	line-height:11.0pt;
 	mso-pagination:none;
-	tab-stops:70.9pt;
+	mso-pagination:widow-orphan;
+	tab-stops:67.7pt;
 	font-size:$smallerfontsize;
 	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
@@ -1805,7 +1698,7 @@ span.aucollab
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:silver;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:silver;{% endif %}
 }
 span.audeg
 	{mso-style-name:au_deg;
@@ -1816,7 +1709,7 @@ span.audeg
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:yellow;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:yellow;{% endif %}
 	}
 span.aufname
 	{mso-style-name:au_fname;
@@ -1827,7 +1720,7 @@ span.aufname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFCC;{% endif %}
 	}
 span.aurole
 	{mso-style-name:au_role;
@@ -1838,7 +1731,7 @@ span.aurole
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:olive;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:olive;{% endif %}
 	}
 span.ausuffix
 	{mso-style-name:au_suffix;
@@ -1849,7 +1742,7 @@ span.ausuffix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:fuchsia;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:fuchsia;{% endif %}
 	}
 span.ausurname
 	{mso-style-name:au_surname;
@@ -1860,7 +1753,7 @@ span.ausurname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
 	}
 span.bibbase
 	{mso-style-name:bib_base;
@@ -1877,7 +1770,7 @@ span.bibarticle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFFF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFFF;{% endif %}
 	}
 span.bibcomment
 	{mso-style-name:bib_comment;
@@ -1901,7 +1794,7 @@ span.bibdoi
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
 	}
 span.bibetal
 	{mso-style-name:bib_etal;
@@ -1911,7 +1804,7 @@ span.bibetal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
 	}
 span.bibfname
 	{mso-style-name:bib_fname;
@@ -1921,7 +1814,7 @@ span.bibfname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFCC;{% endif %}
 	}
 span.bibfpage
 	{mso-style-name:bib_fpage;
@@ -1931,7 +1824,7 @@ span.bibfpage
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#E6E6E6;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#E6E6E6;{% endif %}
 	}
 span.bibissue
 	{mso-style-name:bib_issue;
@@ -1941,7 +1834,7 @@ span.bibissue
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFAB;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFAB;{% endif %}
 	}
 span.bibjournal
 	{mso-style-name:bib_journal;
@@ -1951,7 +1844,7 @@ span.bibjournal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F9DECF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#F9DECF;{% endif %}
 	}
 span.biblpage
 	{mso-style-name:bib_lpage;
@@ -1961,7 +1854,7 @@ span.biblpage
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#D9D9D9;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#D9D9D9;{% endif %}
 	}
 span.bibnumber
 	{mso-style-name:bib_number;
@@ -1971,7 +1864,7 @@ span.bibnumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCCCFF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCCCFF;{% endif %}
 	}
 span.biborganization
 	{mso-style-name:bib_organization;
@@ -1981,7 +1874,7 @@ span.biborganization
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
 	}
 span.bibsuffix
 	{mso-style-name:bib_suffix;
@@ -1998,7 +1891,7 @@ span.bibsuppl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC66;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC66;{% endif %}
 	}
 span.bibsurname
 	{mso-style-name:bib_surname;
@@ -2008,7 +1901,7 @@ span.bibsurname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF99;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
 	}
 span.bibunpubl
 	{mso-style-name:bib_unpubl;
@@ -2025,7 +1918,7 @@ span.biburl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF66;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF66;{% endif %}
 	}
 span.bibvolume
 	{mso-style-name:bib_volume;
@@ -2035,7 +1928,7 @@ span.bibvolume
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCECFF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCECFF;{% endif %}
 	}
 span.bibyear
 	{mso-style-name:bib_year;
@@ -2045,7 +1938,7 @@ span.bibyear
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCCFF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCCFF;{% endif %}
 	}
 span.citebase
 	{mso-style-name:cite_base;
@@ -2062,7 +1955,7 @@ span.citebib
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFFF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFFF;{% endif %}
 	}
 span.citebox
 	{mso-style-name:cite_box;
@@ -2079,7 +1972,7 @@ span.citeen
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFF99;{% endif %} 
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFF99;{% endif %} 
 	vertical-align:super;}
 span.citefig
 	{mso-style-name:cite_fig;
@@ -2090,7 +1983,7 @@ span.citefig
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
 	}
 span.citefn
 	{mso-style-name:cite_fn;
@@ -2102,7 +1995,7 @@ span.citefn
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if unpublished %}background:#FF99CC;{% endif %} 
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FF99CC;{% endif %} 
 	vertical-align:baseline;}
 span.citetbl
 	{mso-style-name:cite_tbl;
@@ -2113,7 +2006,7 @@ span.citetbl
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if unpublished %}background:#FF9999;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FF9999;{% endif %}
 	}
 span.stdbase
 	{mso-style-name:std_base;
@@ -2130,7 +2023,7 @@ span.bibextlink
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#6CCE9D;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#6CCE9D;{% endif %}
 	}
 span.citeeq
 	{mso-style-name:cite_eq;
@@ -2140,7 +2033,7 @@ span.citeeq
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFAE37;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFAE37;{% endif %}
 	}
 span.bibmedline
 	{mso-style-name:bib_medline;
@@ -2157,7 +2050,7 @@ span.citetfn
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FBBA79;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FBBA79;{% endif %}
 	}
 span.auprefix
 	{mso-style-name:au_prefix;
@@ -2168,7 +2061,7 @@ span.auprefix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC99;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC99;{% endif %}
 	}
 span.citeapp
 	{mso-style-name:cite_app;
@@ -2178,7 +2071,7 @@ span.citeapp
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFF33;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF33;{% endif %}
 	}
 span.citesec
 	{mso-style-name:cite_sec;
@@ -2188,7 +2081,7 @@ span.citesec
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCCCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCCCC;{% endif %}
 	}
 span.stddocNumber
 	{mso-style-name:std_docNumber;
@@ -2198,7 +2091,7 @@ span.stddocNumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F2DBDB;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#F2DBDB;{% endif %}
 	}
 span.stddocPartNumber
 	{mso-style-name:std_docPartNumber;
@@ -2208,7 +2101,7 @@ span.stddocPartNumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#EAF1DD;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#EAF1DD;{% endif %}
 	}
 span.stddocTitle
 	{mso-style-name:std_docTitle;
@@ -2218,7 +2111,7 @@ span.stddocTitle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FDE9D9;{% endif %} 
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FDE9D9;{% endif %} 
 	font-style:italic;
 	mso-bidi-font-style:normal;}
 span.aumember
@@ -2230,7 +2123,7 @@ span.aumember
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF99CC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FF99CC;{% endif %}
 	}
 span.stdfootnote
 	{mso-style-name:std_footnote;
@@ -2240,7 +2133,7 @@ span.stdfootnote
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F2F2F2;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#F2F2F2;{% endif %}
 	}
 span.stdpublisher
 	{mso-style-name:std_publisher;
@@ -2250,7 +2143,7 @@ span.stdpublisher
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#C6D9F1;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#C6D9F1;{% endif %}
 	}
 span.stdsection
 	{mso-style-name:std_section;
@@ -2260,7 +2153,7 @@ span.stdsection
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#E5DFEC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#E5DFEC;{% endif %}
 	}
 span.stdyear
 	{mso-style-name:std_year;
@@ -2270,7 +2163,7 @@ span.stdyear
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#DAEEF3;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#DAEEF3;{% endif %}
 	}
 span.stddocumentType
 	{mso-style-name:std_documentType;
@@ -2280,7 +2173,7 @@ span.stddocumentType
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#7DE1DF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#7DE1DF;{% endif %}
 	}
 span.bibalt-year
 	{mso-style-name:bib_alt-year;
@@ -2291,7 +2184,7 @@ span.bibalt-year
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CC99FF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CC99FF;{% endif %}
 	}
 span.bibbook
 	{mso-style-name:bib_book;
@@ -2301,7 +2194,7 @@ span.bibbook
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#99CCFF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#99CCFF;{% endif %}
 	}
 span.bibchapterno
 	{mso-style-name:bib_chapterno;
@@ -2311,7 +2204,7 @@ span.bibchapterno
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#D9D9D9;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#D9D9D9;{% endif %}
 	}
 span.bibchaptertitle
 	{mso-style-name:bib_chaptertitle;
@@ -2321,7 +2214,7 @@ span.bibchaptertitle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF9D5B;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FF9D5B;{% endif %}
 	}
 span.bibed-etal
 	{mso-style-name:bib_ed-etal;
@@ -2331,7 +2224,7 @@ span.bibed-etal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#00F4EE;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#00F4EE;{% endif %}
 	}
 span.bibed-fname
 	{mso-style-name:bib_ed-fname;
@@ -2341,7 +2234,7 @@ span.bibed-fname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFFFB7;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFB7;{% endif %}
 	}
 span.bibeditionno
 	{mso-style-name:bib_editionno;
@@ -2351,7 +2244,7 @@ span.bibeditionno
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC00;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC00;{% endif %}
 	}
 span.bibed-organization
 	{mso-style-name:bib_ed-organization;
@@ -2361,7 +2254,7 @@ span.bibed-organization
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FCAAC3;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FCAAC3;{% endif %}
 	}
 span.bibed-suffix
 	{mso-style-name:bib_ed-suffix;
@@ -2371,7 +2264,7 @@ span.bibed-suffix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
 	}
 span.bibed-surname
 	{mso-style-name:bib_ed-surname;
@@ -2381,7 +2274,7 @@ span.bibed-surname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:yellow;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:yellow;{% endif %}
 	}
 span.bibinstitution
 	{mso-style-name:bib_institution;
@@ -2391,7 +2284,7 @@ span.bibinstitution
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCFFCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
 	}
 span.bibisbn
 	{mso-style-name:bib_isbn;
@@ -2400,7 +2293,7 @@ span.bibisbn
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#D9D9D9;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#D9D9D9;{% endif %}
 	}
 span.biblocation
 	{mso-style-name:bib_location;
@@ -2410,7 +2303,7 @@ span.biblocation
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCCCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCCCC;{% endif %}
 	}
 span.bibpagecount
 	{mso-style-name:bib_pagecount;
@@ -2420,7 +2313,7 @@ span.bibpagecount
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:lime;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:lime;{% endif %}
 	}
 span.bibpatent
 	{mso-style-name:bib_patent;
@@ -2430,7 +2323,7 @@ span.bibpatent
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#66FFCC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#66FFCC;{% endif %}
 	}
 span.bibpublisher
 	{mso-style-name:bib_publisher;
@@ -2440,7 +2333,7 @@ span.bibpublisher
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF99CC;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FF99CC;{% endif %}
 	}
 span.bibreportnum
 	{mso-style-name:bib_reportnum;
@@ -2450,7 +2343,7 @@ span.bibreportnum
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#CCCCFF;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#CCCCFF;{% endif %}
 	}
 span.bibschool
 	{mso-style-name:bib_school;
@@ -2460,7 +2353,7 @@ span.bibschool
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FFCC66;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC66;{% endif %}
 	}
 span.bibseries
 	{mso-style-name:bib_series;
@@ -2469,7 +2362,7 @@ span.bibseries
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#FFCC99;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC99;{% endif %}
 	}
 span.bibseriesno
 	{mso-style-name:bib_seriesno;
@@ -2478,7 +2371,7 @@ span.bibseriesno
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#FFFF99;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFF99;{% endif %}
 	}
 span.bibtrans
 	{mso-style-name:bib_trans;
@@ -2487,7 +2380,7 @@ span.bibtrans
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if unpublished %}background:#99CC00;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#99CC00;{% endif %}
 	}
 span.stdsuppl
 	{mso-style-name:std_suppl;
@@ -2497,7 +2390,7 @@ span.stdsuppl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#F6FBB5;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#F6FBB5;{% endif %}
 	}
 span.citesection
 	{mso-style-name:cite_section;
@@ -2507,7 +2400,7 @@ span.citesection
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if unpublished %}background:#FF7C80;{% endif %}
+	{% if stage_int >= 40 and stage_int < 60 %}background:#FF7C80;{% endif %}
 	}
 
 p.BaseText, li.BaseText, div.BaseText
@@ -2913,26 +2806,6 @@ p.dl, li.dl, div.dl
 	mso-pagination:widow-orphan;
 	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
 	font-size:$normalfontsize;
-	font-family:$bodyfont;
-	mso-fareast-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
-	mso-ansi-language:EN-GB;
-	mso-fareast-language:EN-US;}
-p.Example0, li.Example0, div.Example0
-	{mso-style-name:Example;
-	mso-style-unhide:no;
-	mso-style-parent:Base_Text;
-	margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:12.0pt;
-	margin-left:0cm;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	line-height:11.0pt;
-	mso-pagination:widow-orphan;
-	tab-stops:67.7pt;
-	font-size:10.0pt;
-	mso-bidi-font-size:$normalfontsize;
 	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
@@ -4401,7 +4274,7 @@ div.Note table.dl  {
   margin-left: 1.0cm;
 }
 
-span.note_label, span.example_label, td.example_label, td.note_label
+td.example_label, td.note_label
 {
 font-size: $smallerfontsize;
 font-family:$bodyfont;

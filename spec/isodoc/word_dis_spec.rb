@@ -90,7 +90,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection3'>
-        <p class='zzSTDTitle1'/>
+        <p class='zzSTDTitle'/>
         <div id='A'>
           <h1/>
           <p>
@@ -122,10 +122,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection2'>
-         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-      border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
-      solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
-      margin-left:5.1pt;margin-right:5.1pt'>
+         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt'>
            <div>
              <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
            </div>
@@ -175,15 +172,10 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection2'>
-         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-      border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
-      solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
-      margin-left:5.1pt;margin-right:5.1pt'>
            <div>
              <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
-           </div>
          </div>
-         <p class='zzContents' style='margin-top:0cm'>
+         <p class='zzContents'>
            <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
          </p>
          <p class='MsoBodyText'>
@@ -236,7 +228,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
              <div class='WordSection3'>
-        <p class='zzSTDTitle1'/>
+        <p class='zzSTDTitle'/>
         <div>
           <h1>Normative References</h1>
           <p class='MsoBodyText'>
@@ -289,15 +281,10 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
           <div class='WordSection2'>
-        <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-      border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
-      solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt;
-      margin-left:5.1pt;margin-right:5.1pt'>
           <div>
             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
           </div>
-        </div>
-        <p class='zzContents' style='margin-top:0cm'>
+        <p class='zzContents'>
           <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
         </p>
         <p class='MsoBodyText'>
@@ -371,132 +358,258 @@ RSpec.describe IsoDoc do
         <clause id="A"><p>
         <ol>
         <li><p>A</p></li>
-        <li><p>A</p></li>
-        <ol>
-        <li>A</li>
-        <li>A</li>
+        <li><p>B</p></li>
         <li><ol>
-        <li>A</li>
-        <li>A</li>
+        <li>C</li>
+        <li>D</li>
         <li><ol>
-        <li>A</li>
-        <li>A</li>
+        <li>E</li>
+        <li>F</li>
         <li><ol>
-        <li>A</li>
-        <li>A</li>
+        <li>G</li>
+        <li>H</li>
         <li><ol>
-        <li>A</li>
-        <li>A</li>
-        <li>A</li>
+        <li>I</li>
+        <li>J</li>
+        <li><ol>
+        <li>K</li>
+        <li>L</li>
+        <li>M</li>
         </ol></li>
-        <li>A</li>
+        <li>N</li>
         </ol></li>
-        <li>A</li>
+        <li>O</li>
         </ol></li>
-        <li>A</li>
+        <li>P</li>
         </ol></li>
-        <li>A</li>
+        <li>Q</li>
         </ol></li>
-        <li>A</li>
+        <li>R</li>
         </ol>
         <ul>
         <li><p>A</p></li>
-        <li><p>A</p></li>
+        <li><p>B</p></li>
         <li><ul>
-        <li>A</li>
-        <li>A</li>
+        <li>C</li>
+        <li>D</li>
         <li><ul>
-        <li>A</li>
-        <li>A</li>
+        <li>E</li>
+        <li>F</li>
         <li><ul>
-        <li>A</li>
-        <li>A</li>
+        <li>G</li>
+        <li>H</li>
         <li><ul>
-        <li>A</li>
-        <li>A</li>
+        <li>I</li>
+        <li>J</li>
         <li><ul>
-        <li>A</li>
-        <li>A</li>
-        <li>A</li>
+        <li>K</li>
+        <li>L</li>
+        <li>M</li>
         </ul></li>
-        <li>A</li>
+        <li>N</li>
         </ul></li>
-        <li>A</li>
+        <li>O</li>
         </ul></li>
-        <li>A</li>
+        <li>P</li>
         </ul></li>
-        <li>A</li>
+        <li>Q</li>
         </ul></li>
-        <li>A</li>
+        <li>R</li>
         </ul>
         </p></clause>
         </sections>
       </iso-standard>
     INPUT
     word = <<~OUTPUT
-      <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
-         <div>
-           <a name='A' id='A'/>
-           <h1/>
-           <p class='MsoBodyText'>
-             <p style='mso-list:l2 level1 lfo2;' class='ListNumber1'>A</p>
-             <p style='mso-list:l2 level1 lfo2;' class='ListNumber1'>A</p>
-             <p style='mso-list:l2 level1 lfo3;' class='ListNumber1'>A</p>
-             <p style='mso-list:l2 level1 lfo3;' class='ListNumber1'>A</p>
-             <p style='mso-list:l2 level1 lfo3;' class='ListNumber1'>
-               <p style='mso-list:l2 level2 lfo3;' class='MsoListNumber2'>A</p>
-               <p style='mso-list:l2 level2 lfo3;' class='MsoListNumber2'>A</p>
-               <p style='mso-list:l2 level2 lfo3;' class='MsoListNumber2'>
-                 <p style='mso-list:l2 level3 lfo3;' class='MsoListNumber3'>A</p>
-                 <p style='mso-list:l2 level3 lfo3;' class='MsoListNumber3'>A</p>
-                 <p style='mso-list:l2 level3 lfo3;' class='MsoListNumber3'>
-                   <p style='mso-list:l2 level4 lfo3;' class='MsoListNumber4'>A</p>
-                   <p style='mso-list:l2 level4 lfo3;' class='MsoListNumber4'>A</p>
-                   <p style='mso-list:l2 level4 lfo3;' class='MsoListNumber4'>
-                     <p style='mso-list:l2 level5 lfo3;' class='MsoListNumber5'>A</p>
-                     <p style='mso-list:l2 level5 lfo3;' class='MsoListNumber5'>A</p>
-                     <p style='mso-list:l2 level5 lfo3;' class='MsoListNumber5'>A</p>
-                   </p>
-                   <p style='mso-list:l2 level4 lfo3;' class='MsoListNumber4'>A</p>
-                 </p>
-                 <p style='mso-list:l2 level3 lfo3;' class='MsoListNumber3'>A</p>
-               </p>
-               <p style='mso-list:l2 level2 lfo3;' class='MsoListNumber2'>A</p>
-             </p>
-             <p style='mso-list:l2 level1 lfo3;' class='ListNumber1'>A</p>
-             <li class='MsoNormal'>A</li>
-           </p>
-           <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>A</p>
-           <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>A</p>
-           <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>
-             <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue2'>A</p>
-             <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue2'>A</p>
-             <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue2'>
-               <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue3'>A</p>
-               <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue3'>A</p>
-               <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue3'>
-                 <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue4'>A</p>
-                 <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue4'>A</p>
-                 <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue4'>
-                   <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue5'>A</p>
-                   <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue5'>A</p>
-                   <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue5'>
-                     <p style='mso-list:l3 level6 lfo1;' class='MsoListContinue5'>A</p>
-                     <p style='mso-list:l3 level6 lfo1;' class='MsoListContinue5'>A</p>
-                     <p style='mso-list:l3 level6 lfo1;' class='MsoListContinue5'>A</p>
-                   </p>
-                   <p style='mso-list:l3 level5 lfo1;' class='MsoListContinue5'>A</p>
-                 </p>
-                 <p style='mso-list:l3 level4 lfo1;' class='MsoListContinue4'>A</p>
-               </p>
-               <p style='mso-list:l3 level3 lfo1;' class='MsoListContinue3'>A</p>
-             </p>
-             <p style='mso-list:l3 level2 lfo1;' class='MsoListContinue2'>A</p>
-           </p>
-           <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>A</p>
-         </div>
-       </div>
+          <div class='WordSection3'>
+        <p class='zzSTDTitle'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <p class='MsoBodyText'>
+            <p class='ListNumber1'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='ListNumber1'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListNumber2'>
+              1)
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListNumber2'>
+              2)
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListNumber3'>
+              i)
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListNumber3'>
+              ii)
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListNumber4'>
+              A)
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListNumber4'>
+              B)
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListNumber5'>
+              I)
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListNumber5'>
+              II)
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListNumber5'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListNumber5'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListNumber5'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListNumber5'>
+              III)
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListNumber4'>
+              C)
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListNumber3'>
+              iii)
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListNumber2'>
+              3)
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='ListNumber1'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+            <p class='ListContinue1'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='ListContinue1'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='ListContinue1'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+          </p>
+        </div>
+      </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
@@ -541,7 +654,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
+         <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
            <h1/>
@@ -606,7 +719,7 @@ RSpec.describe IsoDoc do
         <figure id="B">
         <name>Table1</name>
         <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto"/>
-        <note id="C"><p>Note</p></note>
+        <note id="C"><name>FIGURENOTE</name><p>Note</p></note>
         <example id="D"><p>Example</p></example>
         </figure>
         </clause>
@@ -615,7 +728,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-        <p class='zzSTDTitle1'/>
+        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1/>
@@ -627,12 +740,12 @@ RSpec.describe IsoDoc do
             <div class='Figurenote'>
               <a name='C' id='C'/>
               <p class='Figurenote'>
-                <span class='note_label'/>
+                FIGURENOTE
                 <span style='mso-tab-count:1'>  </span>
                 Note
               </p>
             </div>
-            <div class='Example' style='page-break-after:avoid;'>
+            <div style='page-break-after:avoid;'>
               <a name='D' id='D'/>
               <p class='Example'>
                 <span style='mso-tab-count:1'>  </span>
@@ -664,13 +777,11 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A">
         <example id="B">
+        <name>EXAMPLE</name>
         <p>First example</p>
         </example>
         <example id="C">
         <p>Second example</p>
-        <ul>
-        <li>A</li>
-        </ul>
         <p>Continuation</p>
         </example>
         </clause>
@@ -679,25 +790,448 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-        <p class='zzSTDTitle1'/>
+        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1/>
-          <div class='Example'>
+          <div>
             <a name='B' id='B'/>
             <p class='Example'>
+            EXAMPLE
               <span style='mso-tab-count:1'>  </span>
               First example
             </p>
           </div>
-          <div class='Example'>
+          <div>
             <a name='C' id='C'/>
             <p class='Example'>
               <span style='mso-tab-count:1'>  </span>
               Second example
             </p>
-            <p style='mso-list:l3 level1 lfo1;' class='ListContinue1'>A</p>
             <p class='Examplecontinued'>Continuation</p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with notes" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <note id="B">
+        <name>NOTE</name>
+        <p>First example</p>
+        </note>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+          <div class='WordSection3'>
+        <p class='zzSTDTitle'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div>
+            <a name='B' id='B'/>
+            <p class='Note'>
+              NOTE
+              <span style='mso-tab-count:1'>  </span>
+              First example
+            </p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with unordered lists embedded within notes and examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <note id="B">
+        <name>NOTE</name>
+        <ul>
+        <li><p>A</p></li>
+        <li><p>B</p></li>
+        <li><ul>
+        <li>C</li>
+        <li>D</li>
+        <li><ul>
+        <li>E</li>
+        <li>F</li>
+        <li><ul>
+        <li>G</li>
+        <li>H</li>
+        <li><ul>
+        <li>I</li>
+        <li>J</li>
+        <li><ul>
+        <li>K</li>
+        <li>L</li>
+        <li>M</li>
+        </ul></li>
+        <li>N</li>
+        </ul></li>
+        <li>O</li>
+        </ul></li>
+        <li>P</li>
+        </ul></li>
+        <li>Q</li>
+        </ul></li>
+        <li>R</li>
+        </ul>
+        </note>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+             <div class='WordSection3'>
+        <p class='zzSTDTitle'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div>
+            <a name='B' id='B'/>
+            <p class='Note'>
+              NOTE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListContinue6'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListContinue5'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListContinue4'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListContinue3'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='MsoListContinue2'>
+              —
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with ordered lists embedded within notes and examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <example id="B">
+        <name>EXAMPLE</name>
+                <ol>
+        <li><p>A</p></li>
+        <li><p>B</p></li>
+        <li><ol>
+        <li>C</li>
+        <li>D</li>
+        <li><ol>
+        <li>E</li>
+        <li>F</li>
+        <li><ol>
+        <li>G</li>
+        <li>H</li>
+        <li><ol>
+        <li>I</li>
+        <li>J</li>
+        <li><ol>
+        <li>K</li>
+        <li>L</li>
+        <li>M</li>
+        </ol></li>
+        <li>N</li>
+        </ol></li>
+        <li>O</li>
+        </ol></li>
+        <li>P</li>
+        </ol></li>
+        <li>Q</li>
+        </ol></li>
+        <li>R</li>
+        </ol>
+        </example>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+          <div class='WordSection3'>
+        <p class='zzSTDTitle'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div>
+            <a name='B' id='B'/>
+            <p class='Example'>
+              EXAMPLE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <p class='MsoListNumber2'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              A
+            </p>
+            <p class='MsoListNumber2'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              B
+            </p>
+            <p class='MsoListNumber2'>
+              1)
+              <span style='mso-tab-count:1'> </span>
+              C
+            </p>
+            <p class='MsoListNumber2'>
+              2)
+              <span style='mso-tab-count:1'> </span>
+              D
+            </p>
+            <p class='MsoListNumber3'>
+              i)
+              <span style='mso-tab-count:1'> </span>
+              E
+            </p>
+            <p class='MsoListNumber3'>
+              ii)
+              <span style='mso-tab-count:1'> </span>
+              F
+            </p>
+            <p class='MsoListNumber4'>
+              A)
+              <span style='mso-tab-count:1'> </span>
+              G
+            </p>
+            <p class='MsoListNumber4'>
+              B)
+              <span style='mso-tab-count:1'> </span>
+              H
+            </p>
+            <p class='MsoListNumber5'>
+              I)
+              <span style='mso-tab-count:1'> </span>
+              I
+            </p>
+            <p class='MsoListNumber5'>
+              II)
+              <span style='mso-tab-count:1'> </span>
+              J
+            </p>
+            <p class='MsoListNumber5'>
+              a)
+              <span style='mso-tab-count:1'> </span>
+              K
+            </p>
+            <p class='MsoListNumber5'>
+              b)
+              <span style='mso-tab-count:1'> </span>
+              L
+            </p>
+            <p class='MsoListNumber5'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              M
+            </p>
+            <p class='MsoListNumber5'>
+              III)
+              <span style='mso-tab-count:1'> </span>
+              N
+            </p>
+            <p class='MsoListNumber4'>
+              C)
+              <span style='mso-tab-count:1'> </span>
+              O
+            </p>
+            <p class='MsoListNumber3'>
+              iii)
+              <span style='mso-tab-count:1'> </span>
+              P
+            </p>
+            <p class='MsoListNumber2'>
+              3)
+              <span style='mso-tab-count:1'> </span>
+              Q
+            </p>
+            <p class='MsoListNumber2'>
+              c)
+              <span style='mso-tab-count:1'> </span>
+              R
+            </p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with definition lists embedded within notes and examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <example id="B">
+        <name>EXAMPLE</name>
+        <dl>
+        <dt>A</dt><dd>B</dd>
+        </dl>
+        </example>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+        <p class='zzSTDTitle'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1/>
+          <div>
+            <a name='B' id='B'/>
+            <p class='Example'>
+              EXAMPLE
+              <span style='mso-tab-count:1'>  </span>
+            </p>
+            <table class='dl' style='margin-left: 1cm;'>
+              <tr>
+                <td valign='top' align='left'>
+                  <p align='left' style='margin-left:0pt;text-align:left;' class='Tablebody'>A</p>
+                </td>
+                <td valign='top'>
+                  <div class='Tablebody'>B</div>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
@@ -729,7 +1263,7 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
+         <p class='zzSTDTitle'/>
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
@@ -756,5 +1290,262 @@ RSpec.describe IsoDoc do
     expect(strip_guid(xmlpp(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
       .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with blockquotes" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+         <sections>
+        <clause id="A">
+        <quote>
+        <p>Normal clause</p>
+        <note><p>Note clause</p></note>
+        <example>
+        <p>Example start</p>
+        <p>Example continued</p>
+        </example>
+        </quote>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+         <p class='zzSTDTitle'/>
+         <div>
+           <a name='A' id='A'/>
+           <h1/>
+           <div>
+             <p class='BodyTextindent1'>Normal clause</p>
+             <div>
+               <p class='Noteindent'>
+                 <span style='mso-tab-count:1'>  </span>
+                 Note clause
+               </p>
+             </div>
+             <div id=''>
+               <p class='Exampleindent'>
+                 <span style='mso-tab-count:1'>  </span>
+                 Example start
+               </p>
+               <p class='Exampleindentcontinued'>Example continued</p>
+             </div>
+           </div>
+         </div>
+       </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with title" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+        <title language="en" format="text/plain" type="title-intro">Date and time</title>
+          <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
+        <title language="en" format="text/plain" type="title-part">Basic rules</title>
+          <status><stage>50</stage></status>
+          <ext><doctype>international-standard</doctype>
+          <structuredidentifier><project-number part="1" origyr="2022-03-10">8601</project-number></structuredidentifier>
+          </ext>
+        </bibdata>
+        <sections>
+        <clause id="A"><title>First clause</title>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+        <div class='WordSection3'>
+                   <p class='zzSTDTitle'>
+                 Date and time — Representations for information interchange —
+      <span style='font-weight:normal'>Part 1</span>
+       Basic rules
+          </p>
+          <div>
+            <a name='A' id='A'/>
+            <h1>First clause</h1>
+          </div>
+        </div>
+    WORD
+    title = <<~WORD
+      <div class='WordSection1'>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
+        </p>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
+        </p>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>
+            Secretariat:
+            <span>XXX</span>
+          </span>
+        </p>
+        <p class='zzCover'>
+          <span lang='EN-GB' xml:lang='EN-GB'>
+            Date and time — Representations for information interchange
+            — Part 1: Basic rules
+          </span>
+        </p>
+        <p class='zzCover'> </p>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection1']").to_xml)))
+      .to be_equivalent_to xmlpp(title)
+  end
+
+  it "deals with amendments" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+        <title language="en" format="text/plain" type="title-intro">Date and time</title>
+          <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
+        <title language="en" format="text/plain" type="title-part">Basic rules</title>
+        <title language="en" format="text/plain" type="title-amd">Technical corrections</title>
+          <status><stage>50</stage></status>
+          <ext><doctype>amendment</doctype>
+          <structuredidentifier><project-number part="1" amendment="1" origyr="2022-03-10">8601</project-number>
+          </structuredidentifier>
+          </ext>
+        </bibdata>
+        <preface>
+        <foreword id="F"><title>Foreword</title></foreword>
+        </preface>
+         <sections>
+        <clause id="A"><title>First clause</title>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+        <div class='WordSection3'>
+                   <p class='zzSTDTitle'>
+                       Date and time — Representations for information interchange —
+      <span style='font-weight:normal'>Part 1</span>
+       Basic rules
+      <span style='font-weight:normal'> AMENDMENT 1: Technical corrections</span>
+          </p>
+          <div>
+            <a name='A' id='A'/>
+            <p style='font-style:italic;page-break-after:avoid;' class='MsoBodyText'>First clause</p>
+          </div>
+        </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with copyright boilerplate" do
+    presxml = <<~OUTPUT
+      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
+        <bibdata type="standard">
+          <status>
+            <stage language="">50</stage>
+          </status>
+        </bibdata>
+        <boilerplate>
+          <copyright-statement>
+            <clause inline-header="true">
+              <p id="boilerplate-year">© ISO 2019, Published in Switzerland
+               </p>
+              <p id="boilerplate-message">I am the Walrus.
+               </p>
+              <p id="boilerplate-name">ISO copyright office</p>
+              <p align="left" id="boilerplate-address">ISO copyright office
+                <br/>
+                Ch. de Blandonnet 8 ?~@? CP 401
+                <br/>
+                CH-1214 Vernier, Geneva, Switzerland
+                <br/>
+                Tel. + 41 22 749 01 11
+                <br/>
+                Fax + 41 22 749 09 47
+                <br/>
+                copyright@iso.org
+                <br/>
+                www.iso.org</p>
+            </clause>
+          </copyright-statement>
+          <license-statement>
+            <clause>
+              <title depth="1">Warning for Stuff</title>
+              <p>This document is not an ISO International Standard. It is distributed for review and
+             comment. It is subject to change without notice and may not be referred to as
+             an International Standard.</p>
+              <p>Recipients
+             of this draft are invited to submit, with their comments, notification of any
+             relevant patent rights of which they are aware and to provide supporting
+             documentation.</p>
+            </clause>
+          </license-statement>
+        </boilerplate>
+      </iso-standard>
+    OUTPUT
+
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new(wordstylesheet: "spec/assets/word.css")
+      .convert("test", presxml, false)
+    word = File.read("test.doc", encoding: "UTF-8")
+    expect(xmlpp(word
+      .sub(%r{^.*<div class="boilerplate-copyright">}m,
+           '<div class="boilerplate-copyright">')
+      .sub(%r{</div>.*$}m, "</div></div>")))
+      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+             <div class='boilerplate-copyright'>
+         <div>
+           <p class='zzCopyright'>
+             <a name='boilerplate-year' id='boilerplate-year'/>
+             © ISO 2019, Published in Switzerland
+           </p>
+           <p class='zzCopyright'>
+             <a name='boilerplate-message' id='boilerplate-message'/>
+             I am the Walrus.
+           </p>
+           <p class='zzCopyright'>
+             <a name='boilerplate-name' id='boilerplate-name'/>
+             ISO copyright office
+           </p>
+           <p style='text-align:left;' align='left' class='zzCopyright'>
+             <a name='boilerplate-address' id='boilerplate-address'/>
+             ISO copyright office
+           </p>
+           <p class='zzCopyright'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
+           <p class='zzCopyright'> CH-1214 Vernier, Geneva, Switzerland </p>
+           <p class='zzCopyright'> Tel. + 41 22 749 01 11 </p>
+           <p class='zzCopyright'> Fax + 41 22 749 09 47 </p>
+           <p class='zzCopyright'> copyright@iso.org </p>
+           <p class='zzCopyright'> www.iso.org</p>
+         </div>
+       </div>
+      OUTPUT
   end
 end

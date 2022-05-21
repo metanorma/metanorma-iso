@@ -202,6 +202,8 @@ module Metanorma
         %w(40 50).include?(stage) && i = node.attr("iteration") and
           itersuffix = ".#{i}"
         return docnum if abbr.nil? || abbr.empty? # prefixes added in cleanup
+
+        typeabbr = "" if %w(DTS FDTS).include?(abbr.sub(/\s+$/, ""))
         return "/#{abbr}#{typeabbr} #{docnum}#{itersuffix}" unless @amd
 
         a = docnum.split(%r{/})

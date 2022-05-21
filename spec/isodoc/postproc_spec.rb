@@ -30,11 +30,9 @@ RSpec.describe IsoDoc do
       .convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
-            <title>
               <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
               <title format="text/plain" language="en" type="title-main">Specifications and test methods</title>
               <title format="text/plain" language="en" type="title-part">Rice</title>
-            </title>
           </bibdata>
           <preface>
             <foreword>
@@ -59,11 +57,9 @@ RSpec.describe IsoDoc do
       .convert("test", <<~"INPUT", false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
-            <title>
               <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
               <title format="text/plain" language="en" type="title-main">Specifications and test methods</title>
               <title format="text/plain" language="en" type="title-part">Rice</title>
-            </title>
           </bibdata>
           <preface>
             <foreword>

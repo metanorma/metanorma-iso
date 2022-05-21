@@ -56,7 +56,7 @@ module IsoDoc
         file = File.read(input_filename, encoding: "utf-8") if file.nil?
         docxml = Nokogiri::XML(file) { |config| config.huge }
         if @dis &&
-            /^[45].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
+            /^[4569].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
           @dis.convert(input_filename, file, debug, output_filename)
         else
           super
