@@ -308,7 +308,7 @@ RSpec.describe IsoDoc do
              <br clear='all' class='section'/>
            </p>
            <div class='WordSection3'>
-             <p class='zzSTDTitle1'/>
+             <p class='zzSTDTitle'/>
              <div id='D'>
                <h1>
                  1

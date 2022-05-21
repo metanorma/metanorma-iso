@@ -707,7 +707,7 @@ RSpec.describe IsoDoc do
           </div>
           <p><br clear="all" class="section"/></p>
           <div class="WordSection3">
-            <p class="zzSTDTitle1"/>
+            <p class="zzSTDTitle"/>
           </div>
           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
           <div class="colophon"/>
