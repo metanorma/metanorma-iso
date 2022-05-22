@@ -76,14 +76,15 @@ style='mso-no-proof:yes'>{{ agency }}&#xa0;{{ editorialgroup | join: "/" }}</spa
 <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
 mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
 margin-left:4.25pt;margin-right:4.25pt'>
-{% endif %}
 
 <p class="MsoNormal" align="center" style='text-align:center;border:none;
 mso-border-alt:solid windowtext .5pt;padding:0cm;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><span
-lang="EN-GB" style='font-size:40.0pt'>{% if unpublished %}{{ stageabbr }} stage{% endif %}<o:p></o:p></span></p>
+lang="EN-GB" style='font-size:40.0pt'>{{ stageabbr }} stage<o:p></o:p></span></p>
 
-{% if unpublished %}
 </div>
+{% else %}
+<p class="MsoNormal" align="center" style='text-align:center;border:none;'><span
+lang="EN-GB" style='font-size:40.0pt'><o:p></o:p></span></p>
 {% endif %}
 
 <p class="MsoNormal" style='margin-bottom:6.0pt'><span lang="EN-GB"><o:p>&#xa0;</o:p></span></p>
