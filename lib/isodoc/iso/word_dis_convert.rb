@@ -21,6 +21,21 @@ module IsoDoc
 
       def init_dis; end
 
+      def convert1(docxml, filename, dir)
+        update_coverpage(docxml)
+        super
+      end
+
+      def update_coverpage(docxml)
+        stage = docxml.at(ns("//bibdata/status/stage"))&.text
+        substage = docxml.at(ns("//bibdata/status/substage"))&.text
+        if /^9/.match?(stage) || (stage == "60" && substage == "60")
+          @wordcoverpage = html_doc_path("word_iso_titlepage.html")
+        elsif stage == "60" && substage == "00"
+          @wordcoverpage = html_doc_path("word_iso_titlepage-prf.html")
+        end
+      end
+
       def figure_name_attrs(_node)
         { class: "FigureTitle", style: "text-align:center;" }
       end

@@ -37,13 +37,14 @@ module IsoDoc
       def docstatus1(isoxml, docstatus)
         set(:stage, docstatus.text)
         set(:stage_int, docstatus.text.to_i)
+        set(:substage_int, isoxml.at(ns("//bibdata/status/substage"))&.text)
         set(:unpublished, unpublished(docstatus.text))
         set(:statusabbr,
             status_abbrev(docstatus["abbreviation"] || "??",
-                          isoxml&.at(ns("//bibdata/status/substage"))&.text,
-                          isoxml&.at(ns("//bibdata/status/iteration"))&.text,
-                          isoxml&.at(ns("//bibdata/version/draft"))&.text,
-                          isoxml&.at(ns("//bibdata/ext/doctype"))&.text))
+                          isoxml.at(ns("//bibdata/status/substage"))&.text,
+                          isoxml.at(ns("//bibdata/status/iteration"))&.text,
+                          isoxml.at(ns("//bibdata/version/draft"))&.text,
+                          isoxml.at(ns("//bibdata/ext/doctype"))&.text))
         unpublished(docstatus.text) and
           set(:stageabbr, docstatus["abbreviation"])
       end

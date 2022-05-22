@@ -152,12 +152,33 @@ module IsoDoc
 
       def authority_cleanup(docxml)
         super
+        if @meta.get[:stage_int].to_s[0] == "9" ||
+            @meta.get[:stage_int].to_s[0] == "6"
+          copyright_prf(docxml)
+        else
+          copyright_dis(docxml)
+        end
+      end
+
+      def copyright_prf(docxml)
+        docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
+          p["class"] = "zzCopyright"
+          p["style"] = "text-indent:20.15pt;"
+          p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' "\
+                                             "style='text-indent:20.15pt;'>"))
+        end
+        docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
+          p["class"] = "zzCopyright"
+        end
+      end
+
+      def copyright_dis(docxml)
         docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
           p["class"] = "zzCopyright"
           p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
-          p["class"] = "zzCopyright"
+          p.remove
         end
       end
 
