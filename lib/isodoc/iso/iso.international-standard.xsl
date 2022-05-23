@@ -8696,7 +8696,7 @@
 				<xsl:variable name="format">
 					<xsl:choose>
 						<xsl:when test="$type = 'arabic'">
-							1.
+							1)
 						</xsl:when>
 						<xsl:when test="$type = 'alphabet'">
 							a)
