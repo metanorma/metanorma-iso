@@ -785,6 +785,7 @@ RSpec.describe IsoDoc do
         </example>
         <example id="C">
         <p>Second example</p>
+        <sourcecode>Code</sourcecode>
         <p>Continuation</p>
         </example>
         </clause>
@@ -811,6 +812,7 @@ RSpec.describe IsoDoc do
               <span style='mso-tab-count:1'>  </span>
               Second example
             </p>
+            <p class='Code' style='margin-bottom:12pt;'>Code</p>
             <p class='Examplecontinued'>Continuation</p>
           </div>
         </div>

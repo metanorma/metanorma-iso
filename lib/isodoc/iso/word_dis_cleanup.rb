@@ -47,6 +47,15 @@ module IsoDoc
         figure_style(docxml)
         example_style(docxml)
         quote_style(docxml)
+        dis_style_interactions(docxml)
+      end
+
+      def dis_style_interactions(docxml)
+        docxml.xpath("//p[@class = 'Code']"\
+                     "[following::p[@class = 'Examplecontinued']]").each do |p|
+          p["style"] ||= ""
+          p["style"] = "margin-bottom:12pt;#{p['style']}"
+        end
       end
 
       def amd_style(docxml)
@@ -94,6 +103,10 @@ module IsoDoc
       end
 
       def example_style(docxml)
+        example_continued_style(docxml)
+      end
+
+      def example_continued_style(docxml)
         docxml.xpath("//div[@class = 'Example']").each do |d|
           d.xpath("./p").each_with_index do |p, i|
             next if p["class"] && p["class"] != "Example"
