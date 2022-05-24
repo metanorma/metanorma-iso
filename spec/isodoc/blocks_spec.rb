@@ -674,4 +674,66 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
   end
+
+  it "processes ordered lists with start" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <preface><foreword>
+      <ol start="4">
+      <li>List</li>
+      </ol>
+      </foreword></preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
+         <preface>
+           <foreword displayorder='1'>
+             <ol start='4' type='alphabet'>
+               <li>List</li>
+             </ol>
+           </foreword>
+         </preface>
+       </iso-standard>
+    INPUT
+    html = <<~OUTPUT
+      #{HTML_HDR}
+                    <br/>
+             <div>
+               <h1 class='ForewordTitle'>Foreword</h1>
+               <ol type='a' start='4'>
+                 <li>List</li>
+               </ol>
+             </div>
+             <p class='zzSTDTitle1'/>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+    word = <<~OUTPUT
+      <div class='WordSection2'>
+        <p>
+          <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+        </p>
+        <div>
+          <h1 class='ForewordTitle'>Foreword</h1>
+          <ol type='a' start='4'>
+            <li>List</li>
+          </ol>
+        </div>
+        <p> </p>
+      </div>
+    OUTPUT
+
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true))
+      .at("//div[@class = 'WordSection2']").to_xml))
+      .to be_equivalent_to xmlpp(word)
+  end
 end

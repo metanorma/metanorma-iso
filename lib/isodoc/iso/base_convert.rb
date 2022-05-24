@@ -177,6 +177,10 @@ module IsoDoc
           clause_parse(i, out)
         end
       end
+
+      def ol_attrs(node)
+        super.merge(start: node["start"]).compact
+      end
     end
   end
 end

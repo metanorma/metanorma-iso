@@ -49,7 +49,8 @@ module Metanorma
 
       def ol_attrs(node)
         attr_code(keep_attrs(node)
-                  .merge(id: ::Metanorma::Utils::anchor_or_uuid(node)))
+                  .merge(id: ::Metanorma::Utils::anchor_or_uuid(node),
+                         start: node.attr("start")))
       end
 
       def outputs(node, ret)
