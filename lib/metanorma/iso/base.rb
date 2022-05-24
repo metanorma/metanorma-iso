@@ -53,6 +53,14 @@ module Metanorma
                          start: node.attr("start")))
       end
 
+      def admonition_name(node)
+        name = super
+        a = node.attr("type") and ["editorial"].each do |t|
+          name = t if a.casecmp(t).zero?
+        end
+        name
+      end
+
       def outputs(node, ret)
         File.open("#{@filename}.xml", "w:UTF-8") { |f| f.write(ret) }
         presentation_xml_converter(node).convert("#{@filename}.xml")

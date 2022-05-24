@@ -696,8 +696,16 @@ span.keyword {
 }
 
 .Admonition p,
-.admonition p {
+.admonition p,
+.zzHelp p {
     margin: 0;
+}
+
+div.zzHelp {
+  color: green;
+  padding: 0.5em;
+  margin: 1.5em 0 1.5em 0;
+  text-align: left;
 }
 
 /* Collapse TOC */

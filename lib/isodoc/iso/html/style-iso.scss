@@ -569,8 +569,15 @@ pre {
     text-align: left;
 }
 
-.Admonition p {
+.Admonition p, .zzHelp p {
     margin: 0;
+}
+
+div.zzHelp {
+  color: green;
+  padding: 0.5em;
+  margin: 1.5em 0 1.5em 0;
+  text-align: left;
 }
 
 
