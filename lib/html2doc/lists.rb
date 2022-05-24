@@ -106,12 +106,16 @@ class Html2Doc
       xpath.each do |l|
         l["seen"] = true if level == 1
         l["id"] ||= UUIDTools::UUID.random_create
-        i = 0
-        (l.xpath(".//li") - l.xpath(".//ol//li | .//ul//li")).each do |li|
-          i = style_list_iso(li, level, listtype, i)
-          list_add1(li, liststyles, listtype, level)
-        end
+        list_add_number(l, liststyles, listtype, level)
         list_add_tail(l, liststyles, listtype, level)
+      end
+    end
+
+    def list_add_number(list, liststyles, listtype, level)
+      i = list["start"] ? list["start"].to_i - 1 : 0
+      (list.xpath(".//li") - list.xpath(".//ol//li | .//ul//li")).each do |li|
+        i = style_list_iso(li, level, listtype, i)
+        list_add1(li, liststyles, listtype, level)
       end
     end
 

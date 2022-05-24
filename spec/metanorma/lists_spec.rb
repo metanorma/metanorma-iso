@@ -73,7 +73,7 @@ RSpec.describe Metanorma::ISO do
       [loweralpha]
       . First
       . Second
-      [upperalpha]
+      [upperalpha,start=4]
       .. Third
       .. Fourth
       . Fifth
@@ -117,7 +117,7 @@ RSpec.describe Metanorma::ISO do
             </li>
             <li>
               <p id="_">Second</p>
-              <ol id="_">
+              <ol id='_' start='4'>
                 <li>
                   <p id="_">Third</p>
                 </li>
