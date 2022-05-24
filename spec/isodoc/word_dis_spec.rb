@@ -1570,7 +1570,6 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <div class='boilerplate-copyright'>
           <div>
-           <p class='zzCopyright'>COPYRIGHT PROTECTED DOCUMENT</p>
             <p class='zzCopyright'>
               <a name='boilerplate-year' id='boilerplate-year'/>
               © ISO 2019, Published in Switzerland

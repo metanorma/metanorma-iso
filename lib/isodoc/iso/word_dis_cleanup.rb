@@ -181,7 +181,8 @@ module IsoDoc
                                              "style='text-indent:20.15pt;'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
-          p["class"] = "zzCopyright"
+          # p["class"] = "zzCopyright"
+          p.remove
         end
       end
 
