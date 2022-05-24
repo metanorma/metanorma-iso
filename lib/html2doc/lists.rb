@@ -4,19 +4,42 @@ class Html2Doc
       return if list.xpath("./li").empty?
 
       list.xpath("./li").each do |l|
-        level = l["level"]
-        l.delete("level")
-        l.name = "p"
-        if level
-          l["class"] = list2para_style(list.name, level)
-          l.xpath("./p").each do |p|
-            p["class"] = list2para_style(list.name, level)
-          end
-        end
-        p = l.at("./p") and p.replace(p.children)
-        p = l.at("./ul | ./ol") and l.replace(p)
+        list2para_level(l, list)
       end
-      list.replace(list.children)
+    end
+
+    def list2para_level(item, list)
+      level = item["level"]
+      item.delete("level")
+      item.name = "p"
+      list2para_nest(item, level, list) if level
+    end
+
+    def list2para_nest(item, level, list)
+      item["class"] = list2para_style(list.name, level)
+      item.xpath("./p").each do |p|
+        p["class"] = list2para_style(list.name, level)
+      end
+      p1 = item.at("./p") or return
+      prev = p1.xpath("./preceding-sibling::* | ./preceding-sibling::text()")
+      if prev[-1].name == "span" && prev[-1]["style"] == "mso-tab-count:1" &&
+          prev.size == 2
+        p1.children.first.previous = prev[1]
+        p1.children.first.previous = prev[0]
+      end
+    end
+
+    def list2para_unnest_para(para, first_p, last_p)
+      return if last_p.xpath("./following-sibling::* | ./following-sibling::text()")
+        .any? do |x|
+                  !x.text.strip.empty?
+                end
+
+      prev = first_p.xpath("./preceding-sibling::* | ./preceding-sibling::text()")
+      # bullet, tab, paragraph: ignore bullet, tab
+      return if prev.any? { |x| !x.text.strip.empty? }
+
+      para.replace(para.children)
     end
 
     def list2para_style(listtype, depth)
@@ -38,7 +61,28 @@ class Html2Doc
 
     def lists(docxml, liststyles)
       super
+      docxml.xpath("//p[ol | ul]").each do |p|
+        list2para_unnest_para(p, p.at("./ol | ./ul"),
+                              p.at("./*[name() = 'ul' or name() = 'ol'][last()]"))
+      end
+      docxml.xpath("//ol | //ul").each do |u|
+        u.replace(u.children)
+      end
+      unnest_list_paras(docxml)
       indent_lists(docxml)
+    end
+
+    def unnest_list_paras(docxml)
+      docxml.xpath("//p[@class = 'ListContinue1' or @class = 'ListNumber1']"\
+                   "[.//p]").each do |p|
+                     p.at("./p") and
+                       list2para_unnest_para(p, p.at("./p"),
+                                             p.at("./p[last()]"))
+                     p.xpath(".//p[p]").each do |p1|
+                       list2para_unnest_para(p1, p1.at("./p"),
+                                             p1.at("./p[last()]"))
+                     end
+                   end
     end
 
     def indent_lists(docxml)
@@ -80,7 +124,7 @@ class Html2Doc
     end
 
     def style_list_iso(elem, level, listtype, idx)
-      return idx if elem.at(".//ol | .//ul")
+      return idx if elem.at(".//ol | .//ul") && !elem.at("./p")
 
       idx += 1
       label = listlabel(listtype, idx, level)

@@ -4192,23 +4192,28 @@ p.dlnoindent, li.dlnoindent, div.dlnoindent
 p.zzCover, li.zzCover, div.zzCover
 	{mso-style-name:zzCover;
 	mso-style-unhide:no;
-	mso-style-parent:"Body Text";
 	mso-style-link:"zzCover Char";
 	margin-top:0cm;
 	margin-right:0cm;
-	margin-bottom:6.0pt;
+	margin-bottom:11.0pt;
 	margin-left:0cm;
 	text-align:right;
-	line-height:11.5pt;
+	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	tab-stops:19.85pt 39.7pt 59.55pt 79.4pt 99.25pt 119.05pt 138.9pt 158.75pt 178.6pt 7.0cm;
-	font-size:$normalfontsize;
-	mso-bidi-font-size:12.0pt;
+        {% if stage_int >= 40 and stage_int < 60 %}
+	font-size:13.0pt;
+        {% else %}
+	font-size:12.0pt;
+        {% endif %}
+	mso-bidi-font-size:10.0pt;
 	font-family:$bodyfont;
-	mso-fareast-font-family:SimSun;
+	mso-fareast-font-family:"MS Mincho";
 	mso-bidi-font-family:"Times New Roman";
+	color:black;
 	mso-ansi-language:EN-GB;
-	mso-fareast-language:EN-US;}
+	mso-fareast-language:JA;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
 span.zzCoverChar
 	{mso-style-name:"zzCover Char";
 	mso-style-unhide:no;

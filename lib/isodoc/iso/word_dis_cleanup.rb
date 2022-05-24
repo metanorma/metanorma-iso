@@ -47,6 +47,15 @@ module IsoDoc
         figure_style(docxml)
         example_style(docxml)
         quote_style(docxml)
+        dis_style_interactions(docxml)
+      end
+
+      def dis_style_interactions(docxml)
+        docxml.xpath("//p[@class = 'Code']"\
+                     "[following::p[@class = 'Examplecontinued']]").each do |p|
+          p["style"] ||= ""
+          p["style"] = "margin-bottom:12pt;#{p['style']}"
+        end
       end
 
       def amd_style(docxml)
@@ -94,6 +103,10 @@ module IsoDoc
       end
 
       def example_style(docxml)
+        example_continued_style(docxml)
+      end
+
+      def example_continued_style(docxml)
         docxml.xpath("//div[@class = 'Example']").each do |d|
           d.xpath("./p").each_with_index do |p, i|
             next if p["class"] && p["class"] != "Example"
@@ -152,12 +165,34 @@ module IsoDoc
 
       def authority_cleanup(docxml)
         super
+        if @meta.get[:stage_int].to_s[0] == "9" ||
+            @meta.get[:stage_int].to_s[0] == "6"
+          copyright_prf(docxml)
+        else
+          copyright_dis(docxml)
+        end
+      end
+
+      def copyright_prf(docxml)
+        docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
+          p["class"] = "zzCopyright"
+          p["style"] = "text-indent:20.15pt;"
+          p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' "\
+                                             "style='text-indent:20.15pt;'>"))
+        end
+        docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
+          # p["class"] = "zzCopyright"
+          p.remove
+        end
+      end
+
+      def copyright_dis(docxml)
         docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
           p["class"] = "zzCopyright"
           p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
-          p["class"] = "zzCopyright"
+          p.remove
         end
       end
 

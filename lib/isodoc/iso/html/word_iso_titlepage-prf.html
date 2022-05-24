@@ -1,8 +1,4 @@
-{% if tc_docnumber.size > 0 %}
-{% for num in tc_docnumber %}
-<p class="zzCover"><span lang="EN-GB">Reference number of working document: {{agency}}/{{tc}} {{ num }}</span><span lang="EN-GB"><o:p></o:p></span></p>
-{% endfor %}
-{% endif %}
+<p class="zzCover" align="right" style='text-align:right'><span lang="EN-GB"><span style='mso-no-proof:yes'><b>{{ docnumber_reference }}</b></span></span></p>
 
 {% if revdate and revdate != "XXX" %}
 {% assign doc_date = revdate %}
@@ -15,12 +11,10 @@
 {% endif %}
 
 {% if doc_date %}
-<p class="zzCover" align="right" style='text-align:right;font-weight:normal;'><span lang="EN-GB">Date: <span style='mso-no-proof:yes'>{{ doc_date }}</span></span></p>
+<p class="zzCover" align="right" style='text-align:right'><span lang="EN-GB">Date: <span style='mso-no-proof:yes'><b>{{ doc_date }}</b></span></span></p>
 {% endif %}
 
-<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Reference number of project: {{ docnumber_undated }} {{ draftinfo }}</span></p>
-
-<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Committee identification: {{agency}}/{{ editorialgroup | join: "/" }}</span></p>
+<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">{{agency}}/{{ editorialgroup | join: "/" }}</span></p>
 
 <!--
 {% if doctitleamdlabel %}

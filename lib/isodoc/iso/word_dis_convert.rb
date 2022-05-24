@@ -21,6 +21,21 @@ module IsoDoc
 
       def init_dis; end
 
+      def convert1(docxml, filename, dir)
+        update_coverpage(docxml)
+        super
+      end
+
+      def update_coverpage(docxml)
+        stage = docxml.at(ns("//bibdata/status/stage"))&.text
+        substage = docxml.at(ns("//bibdata/status/substage"))&.text
+        if /^9/.match?(stage) || (stage == "60" && substage == "60")
+          @wordcoverpage = html_doc_path("word_iso_titlepage.html")
+        elsif stage == "60" && substage == "00"
+          @wordcoverpage = html_doc_path("word_iso_titlepage-prf.html")
+        end
+      end
+
       def figure_name_attrs(_node)
         { class: "FigureTitle", style: "text-align:center;" }
       end
@@ -40,7 +55,7 @@ module IsoDoc
           <span lang="EN-GB"><span
           style='mso-element:field-begin'></span><span
           style='mso-spacerun:yes'>&#xA0;</span>TOC \\o "2-#{level}" \\h \\z \\t
-          "Heading 1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1;ANNEXN;1;ANNEXZ;1;na2;1;na3;1;na4;1;na5;1;na6;1;Title;1;Base_Heading;1;Box-title;1;Front Head;1;Index Head;1;AMEND Terms Heading;1;AMEND Heading 1 Unnumbered;1"
+          "Heading 1,1,ANNEX,1,Biblio Title,1,Foreword Title,1,Intro Title,1,ANNEXN,1,ANNEXZ,1,na2,1,na3,1,na4,1,na5,1,na6,1,Title,1,Base_Heading,1,Box-title,1,Front Head,1,Index Head,1,AMEND Terms Heading,1,AMEND Heading 1 Unnumbered,1"
            <span style='mso-element:field-separator'></span></span>
         TOC
       end

@@ -389,7 +389,7 @@ RSpec.describe IsoDoc do
         <ul>
         <li><p>A</p></li>
         <li><p>B</p></li>
-        <li><ul>
+        <li><p>B1</p><ul>
         <li>C</li>
         <li>D</li>
         <li><ul>
@@ -421,195 +421,198 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~OUTPUT
-          <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
-        <div>
-          <a name='A' id='A'/>
-          <h1/>
-          <p class='MsoBodyText'>
-            <p class='ListNumber1'>
-              a)
-              <span style='mso-tab-count:1'> </span>
-              A
-            </p>
-            <p class='ListNumber1'>
-              b)
-              <span style='mso-tab-count:1'> </span>
-              B
-            </p>
-            <p class='MsoListNumber2'>
-              1)
-              <span style='mso-tab-count:1'> </span>
-              C
-            </p>
-            <p class='MsoListNumber2'>
-              2)
-              <span style='mso-tab-count:1'> </span>
-              D
-            </p>
-            <p class='MsoListNumber3'>
-              i)
-              <span style='mso-tab-count:1'> </span>
-              E
-            </p>
-            <p class='MsoListNumber3'>
-              ii)
-              <span style='mso-tab-count:1'> </span>
-              F
-            </p>
-            <p class='MsoListNumber4'>
-              A)
-              <span style='mso-tab-count:1'> </span>
-              G
-            </p>
-            <p class='MsoListNumber4'>
-              B)
-              <span style='mso-tab-count:1'> </span>
-              H
-            </p>
-            <p class='MsoListNumber5'>
-              I)
-              <span style='mso-tab-count:1'> </span>
-              I
-            </p>
-            <p class='MsoListNumber5'>
-              II)
-              <span style='mso-tab-count:1'> </span>
-              J
-            </p>
-            <p class='MsoListNumber5'>
-              a)
-              <span style='mso-tab-count:1'> </span>
-              K
-            </p>
-            <p class='MsoListNumber5'>
-              b)
-              <span style='mso-tab-count:1'> </span>
-              L
-            </p>
-            <p class='MsoListNumber5'>
-              c)
-              <span style='mso-tab-count:1'> </span>
-              M
-            </p>
-            <p class='MsoListNumber5'>
-              III)
-              <span style='mso-tab-count:1'> </span>
-              N
-            </p>
-            <p class='MsoListNumber4'>
-              C)
-              <span style='mso-tab-count:1'> </span>
-              O
-            </p>
-            <p class='MsoListNumber3'>
-              iii)
-              <span style='mso-tab-count:1'> </span>
-              P
-            </p>
-            <p class='MsoListNumber2'>
-              3)
-              <span style='mso-tab-count:1'> </span>
-              Q
-            </p>
-            <p class='ListNumber1'>
-              c)
-              <span style='mso-tab-count:1'> </span>
-              R
-            </p>
-            <p class='ListContinue1'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              A
-            </p>
-            <p class='ListContinue1'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              B
-            </p>
-            <p class='MsoListContinue2'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              C
-            </p>
-            <p class='MsoListContinue2'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              D
-            </p>
-            <p class='MsoListContinue3'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              E
-            </p>
-            <p class='MsoListContinue3'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              F
-            </p>
-            <p class='MsoListContinue4'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              G
-            </p>
-            <p class='MsoListContinue4'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              H
-            </p>
-            <p class='MsoListContinue5'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              I
-            </p>
-            <p class='MsoListContinue5'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              J
-            </p>
-            <p class='MsoListContinue5'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              K
-            </p>
-            <p class='MsoListContinue5'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              L
-            </p>
-            <p class='MsoListContinue5'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              M
-            </p>
-            <p class='MsoListContinue5'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              N
-            </p>
-            <p class='MsoListContinue4'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              O
-            </p>
-            <p class='MsoListContinue3'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              P
-            </p>
-            <p class='MsoListContinue2'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              Q
-            </p>
-            <p class='ListContinue1'>
-              —
-              <span style='mso-tab-count:1'> </span>
-              R
-            </p>
-          </p>
-        </div>
-      </div>
+           <div class='WordSection3'>
+         <p class='zzSTDTitle'/>
+         <div>
+           <a name='A' id='A'/>
+           <h1/>
+           <p class='ListNumber1'>
+             a)
+             <span style='mso-tab-count:1'> </span>
+             A
+           </p>
+           <p class='ListNumber1'>
+             b)
+             <span style='mso-tab-count:1'> </span>
+             B
+           </p>
+           <p class='MsoListNumber2'>
+             1)
+             <span style='mso-tab-count:1'> </span>
+             C
+           </p>
+           <p class='MsoListNumber2'>
+             2)
+             <span style='mso-tab-count:1'> </span>
+             D
+           </p>
+           <p class='MsoListNumber3'>
+             i)
+             <span style='mso-tab-count:1'> </span>
+             E
+           </p>
+           <p class='MsoListNumber3'>
+             ii)
+             <span style='mso-tab-count:1'> </span>
+             F
+           </p>
+           <p class='MsoListNumber4'>
+             A)
+             <span style='mso-tab-count:1'> </span>
+             G
+           </p>
+           <p class='MsoListNumber4'>
+             B)
+             <span style='mso-tab-count:1'> </span>
+             H
+           </p>
+           <p class='MsoListNumber5'>
+             I)
+             <span style='mso-tab-count:1'> </span>
+             I
+           </p>
+           <p class='MsoListNumber5'>
+             II)
+             <span style='mso-tab-count:1'> </span>
+             J
+           </p>
+           <p class='MsoListNumber5'>
+             a)
+             <span style='mso-tab-count:1'> </span>
+             K
+           </p>
+           <p class='MsoListNumber5'>
+             b)
+             <span style='mso-tab-count:1'> </span>
+             L
+           </p>
+           <p class='MsoListNumber5'>
+             c)
+             <span style='mso-tab-count:1'> </span>
+             M
+           </p>
+           <p class='MsoListNumber5'>
+             III)
+             <span style='mso-tab-count:1'> </span>
+             N
+           </p>
+           <p class='MsoListNumber4'>
+             C)
+             <span style='mso-tab-count:1'> </span>
+             O
+           </p>
+           <p class='MsoListNumber3'>
+             iii)
+             <span style='mso-tab-count:1'> </span>
+             P
+           </p>
+           <p class='MsoListNumber2'>
+             3)
+             <span style='mso-tab-count:1'> </span>
+             Q
+           </p>
+           <p class='ListNumber1'>
+             c)
+             <span style='mso-tab-count:1'> </span>
+             R
+           </p>
+           <p class='ListContinue1'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             A
+           </p>
+           <p class='ListContinue1'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             B
+           </p>
+           <p class='ListContinue1'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             B1
+           </p>
+           <p class='MsoListContinue2'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             C
+           </p>
+           <p class='MsoListContinue2'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             D
+           </p>
+           <p class='MsoListContinue3'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             E
+           </p>
+           <p class='MsoListContinue3'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             F
+           </p>
+           <p class='MsoListContinue4'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             G
+           </p>
+           <p class='MsoListContinue4'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             H
+           </p>
+           <p class='MsoListContinue5'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             I
+           </p>
+           <p class='MsoListContinue5'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             J
+           </p>
+           <p class='MsoListContinue5'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             K
+           </p>
+           <p class='MsoListContinue5'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             L
+           </p>
+           <p class='MsoListContinue5'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             M
+           </p>
+           <p class='MsoListContinue5'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             N
+           </p>
+           <p class='MsoListContinue4'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             O
+           </p>
+           <p class='MsoListContinue3'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             P
+           </p>
+           <p class='MsoListContinue2'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             Q
+           </p>
+           <p class='ListContinue1'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             R
+           </p>
+         </div>
+       </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
@@ -782,6 +785,7 @@ RSpec.describe IsoDoc do
         </example>
         <example id="C">
         <p>Second example</p>
+        <sourcecode>Code</sourcecode>
         <p>Continuation</p>
         </example>
         </clause>
@@ -808,6 +812,7 @@ RSpec.describe IsoDoc do
               <span style='mso-tab-count:1'>  </span>
               Second example
             </p>
+            <p class='Code' style='margin-bottom:12pt;'>Code</p>
             <p class='Examplecontinued'>Continuation</p>
           </div>
         </div>
@@ -1381,25 +1386,29 @@ RSpec.describe IsoDoc do
     WORD
     title = <<~WORD
       <div class='WordSection1'>
-        <p class='zzCover'>
-          <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
-        </p>
-        <p class='zzCover'>
-          <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
-        </p>
-        <p class='zzCover'>
-          <span lang='EN-GB' xml:lang='EN-GB'>
-            Secretariat:
-            <span>XXX</span>
-          </span>
-        </p>
-        <p class='zzCover'>
-          <span lang='EN-GB' xml:lang='EN-GB'>
-            Date and time — Representations for information interchange
-            — Part 1: Basic rules
-          </span>
-        </p>
-        <p class='zzCover'> </p>
+        <p class='zzCover' style='font-weight:normal;'>
+           <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
+         </p>
+         <p class='zzCover' style='font-weight:normal;'>
+           <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
+         </p>
+         <p class='zzCover' style='font-weight:normal;'>
+           <span lang='EN-GB' xml:lang='EN-GB'>
+             Secretariat:
+             <span>XXX</span>
+           </span>
+         </p>
+         <p class='zzCover'>
+           <span lang='EN-GB' xml:lang='EN-GB'>
+             <b>
+               Date and time — Representations for information interchange
+               — Part 1: Basic rules
+             </b>
+           </span>
+         </p>
+         <p class='zzCover' style='font-weight:normal;'>
+           <i/>
+         </p>
       </div>
     WORD
     FileUtils.rm_f "test.doc"
@@ -1474,7 +1483,7 @@ RSpec.describe IsoDoc do
         </bibdata>
         <boilerplate>
           <copyright-statement>
-            <clause inline-header="true">
+            <clause><title>COPYRIGHT PROTECTED DOCUMENT</title>
               <p id="boilerplate-year">© ISO 2019, Published in Switzerland
                </p>
               <p id="boilerplate-message">I am the Walrus.
@@ -1520,32 +1529,71 @@ RSpec.describe IsoDoc do
            '<div class="boilerplate-copyright">')
       .sub(%r{</div>.*$}m, "</div></div>")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
-             <div class='boilerplate-copyright'>
-         <div>
-           <p class='zzCopyright'>
-             <a name='boilerplate-year' id='boilerplate-year'/>
-             © ISO 2019, Published in Switzerland
-           </p>
-           <p class='zzCopyright'>
-             <a name='boilerplate-message' id='boilerplate-message'/>
-             I am the Walrus.
-           </p>
-           <p class='zzCopyright'>
-             <a name='boilerplate-name' id='boilerplate-name'/>
-             ISO copyright office
-           </p>
-           <p style='text-align:left;' align='left' class='zzCopyright'>
-             <a name='boilerplate-address' id='boilerplate-address'/>
-             ISO copyright office
-           </p>
-           <p class='zzCopyright'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
-           <p class='zzCopyright'> CH-1214 Vernier, Geneva, Switzerland </p>
-           <p class='zzCopyright'> Tel. + 41 22 749 01 11 </p>
-           <p class='zzCopyright'> Fax + 41 22 749 09 47 </p>
-           <p class='zzCopyright'> copyright@iso.org </p>
-           <p class='zzCopyright'> www.iso.org</p>
-         </div>
-       </div>
+        <div class='boilerplate-copyright'>
+          <div>
+            <p class='zzCopyright'>
+              <a name='boilerplate-year' id='boilerplate-year'/>
+              © ISO 2019, Published in Switzerland
+            </p>
+            <p class='zzCopyright'>
+              <a name='boilerplate-message' id='boilerplate-message'/>
+              I am the Walrus.
+            </p>
+            <p class='zzCopyright'>
+              <a name='boilerplate-name' id='boilerplate-name'/>
+              ISO copyright office
+            </p>
+            <p style='text-align:left;' align='left' class='zzCopyright'>
+              <a name='boilerplate-address' id='boilerplate-address'/>
+              ISO copyright office
+            </p>
+            <p class='zzCopyright'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
+            <p class='zzCopyright'> CH-1214 Vernier, Geneva, Switzerland </p>
+            <p class='zzCopyright'> Tel. + 41 22 749 01 11 </p>
+            <p class='zzCopyright'> Fax + 41 22 749 09 47 </p>
+            <p class='zzCopyright'> copyright@iso.org </p>
+            <p class='zzCopyright'> www.iso.org</p>
+          </div>
+        </div>
+      OUTPUT
+
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new(wordstylesheet: "spec/assets/word.css")
+      .convert("test",
+               presxml.sub(%r{<stage language="">50</stage>},
+                           "<stage>60</stage><substage>00</substage>"), false)
+    word = File.read("test.doc", encoding: "UTF-8")
+    expect(xmlpp(word
+      .sub(%r{^.*<div class="boilerplate-copyright">}m,
+           '<div class="boilerplate-copyright">')
+      .sub(%r{</div>.*$}m, "</div></div>")))
+      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+        <div class='boilerplate-copyright'>
+          <div>
+            <p class='zzCopyright'>
+              <a name='boilerplate-year' id='boilerplate-year'/>
+              © ISO 2019, Published in Switzerland
+            </p>
+            <p class='zzCopyright'>
+              <a name='boilerplate-message' id='boilerplate-message'/>
+              I am the Walrus.
+            </p>
+            <p class='zzCopyright'>
+              <a name='boilerplate-name' id='boilerplate-name'/>
+              ISO copyright office
+            </p>
+            <p style='text-indent:20.15pt;' align='left' class='zzCopyright'>
+              <a name='boilerplate-address' id='boilerplate-address'/>
+              ISO copyright office
+            </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> CH-1214 Vernier, Geneva, Switzerland </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> Tel. + 41 22 749 01 11 </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> Fax + 41 22 749 09 47 </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> copyright@iso.org </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> www.iso.org</p>
+          </div>
+        </div>
       OUTPUT
   end
 end
