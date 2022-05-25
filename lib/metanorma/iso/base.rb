@@ -5,10 +5,16 @@ require "pathname"
 require "open-uri"
 require "isodoc"
 require "fileutils"
+require_relative "macros"
 
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
+      Asciidoctor::Extensions.register do
+        block Metanorma::ISO::EditorAdmonitionBlock
+        treeprocessor Metanorma::ISO::EditorInlineAdmonitionBlock
+      end
+
       XML_ROOT_TAG = "iso-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/iso".freeze
 
