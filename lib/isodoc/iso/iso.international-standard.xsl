@@ -9389,12 +9389,12 @@
 						<xsl:attribute name="color">green</xsl:attribute>
 						<xsl:attribute name="font-weight">normal</xsl:attribute>
 						
-						<xsl:variable name="note-style">
-							<style xsl:use-attribute-sets="note-style"/>
+						<!-- <xsl:variable name="note-style">
+							<style xsl:use-attribute-sets="note-style"></style>
 						</xsl:variable>
 						<xsl:for-each select="xalan:nodeset($note-style)//style/@*">
 							<xsl:attribute name="{local-name()}"><xsl:value-of select="."/></xsl:attribute>
-						</xsl:for-each>
+						</xsl:for-each> -->
 					</xsl:if>
 					
 					
