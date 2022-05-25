@@ -160,6 +160,7 @@ RSpec.describe IsoDoc do
         </div>
       </div>
       <p> </p>
+      </div>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)))
