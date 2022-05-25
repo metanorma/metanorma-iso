@@ -69,7 +69,7 @@ module IsoDoc
 
       def quote_style(docxml)
         docxml.xpath("//div[@class = 'Quote' or @class = 'Note' or "\
-                     "@class = 'Example']").each do |d|
+                     "@class = 'Example' or @class = 'Admonition']").each do |d|
                        quote_style1(d)
                      end
       end

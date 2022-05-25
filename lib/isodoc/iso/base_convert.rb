@@ -112,6 +112,12 @@ module IsoDoc
         end
       end
 
+      def admonition_class(node)
+        if node["type"] == "editorial" then "zzHelp"
+        else super
+        end
+      end
+
       def admonition_parse1(node, div, name)
         div.p do |p|
           admonition_name_parse(node, p, name) if name

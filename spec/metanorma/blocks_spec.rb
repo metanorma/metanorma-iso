@@ -228,6 +228,27 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(output)
   end
 
+  it "processes editorial notes" do
+    input = <<~INPUT
+      #{ASCIIDOC_BLANK_HDR}
+      [IMPORTANT,type=editorial]
+      ====
+      Editorial note
+      ====
+    INPUT
+    output = <<~OUTPUT
+      #{BLANK_HDR}
+        <sections>
+          <admonition id="_" type="editorial">
+            <p id="_">Editorial note</p>
+          </admonition>
+        </sections>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
+  end
+
   it "processes complex admonitions with non-Asciidoc names" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
@@ -600,4 +621,37 @@ RSpec.describe Metanorma::ISO do
     expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to xmlpp(output)
   end
+
+  it "processes the macro for editorial notes" do
+    input = <<~INPUT
+      #{ASCIIDOC_BLANK_HDR}
+      EDITOR: Note1
+
+      [EDITOR]
+      ====
+      Note2
+      ====
+
+      [EDITOR]
+      Note3
+    INPUT
+    output = <<~OUTPUT
+      #{BLANK_HDR}
+         <sections>
+           <admonition id='_' type='editorial'>
+             <p id='_'/>
+           </admonition>
+           <admonition id='_' type='editorial'>
+             <p id='_'>Note2</p>
+           </admonition>
+           <admonition id='_' type='editorial'>
+             <p id='_'>Note3</p>
+           </admonition>
+         </sections>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
+  end
+
 end

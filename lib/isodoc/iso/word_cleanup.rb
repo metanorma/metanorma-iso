@@ -44,6 +44,9 @@ module IsoDoc
         docxml.xpath("//*[@class = 'example']").each do |p|
           p["class"] = "Example"
         end
+        docxml.xpath("//*[@class = 'zzHelp']/p[not(@class)]").each do |p|
+          p["class"] = "zzHelp"
+        end
       end
 
       def authority_hdr_cleanup(docxml)

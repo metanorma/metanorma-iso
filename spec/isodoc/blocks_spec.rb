@@ -105,6 +105,75 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(output)
   end
 
+  it "processes editorial notes" do
+    input = <<~INPUT
+       <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface><foreword>
+          <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f2">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f3">Para 2.</p>
+      </admonition>
+          </foreword></preface>
+          </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
+          <preface><foreword displayorder="1">
+          <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
+                         <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>
+                 Only use paddy or parboiled rice for the
+                 determination of husked rice yield.
+               </p>
+        <p id="_e94663cc-2473-4ccc-9a72-983a74d989f3">Para 2.</p>
+      </admonition>
+          </foreword></preface>
+          </iso-standard>
+    INPUT
+    html = <<~OUTPUT
+      #{HTML_HDR}
+                   <br/>
+             <div>
+               <h1 class='ForewordTitle'>Foreword</h1>
+               <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='zzHelp'>
+                 <p>
+                    Only use paddy or parboiled rice for the
+                   determination of husked rice yield.
+                 </p>
+                 <p id='_e94663cc-2473-4ccc-9a72-983a74d989f3'>Para 2.</p>
+               </div>
+             </div>
+             <p class='zzSTDTitle1'/>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+    word = <<~OUTPUT
+        <div class='WordSection2'>
+      <p>
+        <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+      </p>
+      <div>
+        <h1 class='ForewordTitle'>Foreword</h1>
+        <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='zzHelp'>
+          <p> Only use paddy or parboiled rice for the determination of husked rice yield. </p>
+          <p class='ForewordText' id='_e94663cc-2473-4ccc-9a72-983a74d989f3'>Para 2.</p>
+        </div>
+      </div>
+      <p> </p>
+      </div>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true))
+      .at("//div[@class = 'WordSection2']").to_xml))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "renders figures" do
     input = <<~INPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml'>

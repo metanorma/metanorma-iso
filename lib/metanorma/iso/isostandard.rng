@@ -249,6 +249,7 @@
         <value>warning</value>
         <value>important</value>
         <value>safety precautions</value>
+        <value>editorial</value>
       </choice>
     </define>
     <define name="preface">
