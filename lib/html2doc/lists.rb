@@ -95,11 +95,12 @@ class Html2Doc
     end
 
     def indent_lists1(para)
-      m = /^(ListContinue|ListNumber|MsoListContinue)(\d)$/
+      m = /^(ListContinue|ListNumber|MsoListContinue|MsoListNumber)(\d)$/
         .match(para["class"]) or return
-      base = m[1]
-      base = "Mso#{base}" unless /^Mso/.match?(base)
-      para["class"] = base + (m[2].to_i + 1).to_s
+      base = m[1].sub(/^Mso/, "")
+      level = m[2].to_i + 1
+      level = 5 if level > 5
+      para["class"] = "#{base}#{level}-"
     end
 
     def list_add(xpath, liststyles, listtype, level)
