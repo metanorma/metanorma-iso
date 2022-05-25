@@ -524,7 +524,7 @@ span.AnnexFigureTitleChar
 	mso-ansi-language:EN-GB;
 	font-weight:bold;}
 p.Note, div.Note, li.Note
-	{mso-style-name:Note;
+	{
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
@@ -536,12 +536,15 @@ p.Note, div.Note, li.Note
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
-	font-size:$smallerfontsize;
 	mso-bidi-font-size:$normalfontsize;
-	font-family:$bodyfont;
 	mso-fareast-font-family:"SimSun",serif;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
+p.Note, div.Note, li.Note {
+        mso-style-name:Note;
+	font-size:$smallerfontsize;
+	font-family:$bodyfont;
+        }
 	/* may need to be revised */
 p.tablefootnote, li.tablefootnote, div.tablefootnote
 	{mso-style-name:tablefootnote;
@@ -774,6 +777,24 @@ p.TermNum, li.TermNum, div.TermNum
 	mso-ansi-language:EN-GB;
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
+p.zzHelp, li.zzHelp, div.zzHelp
+	{mso-style-name:zzHelp;
+	mso-style-unhide:no;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:12.0pt;
+	mso-pagination:widow-orphan;
+	font-size:$normalfontsize;
+	mso-bidi-font-size:10.0pt;
+	font-family:$bodyfont;
+	mso-fareast-font-family:"MS Mincho";
+	mso-bidi-font-family:"Times New Roman";
+	color:green;
+	mso-ansi-language:EN-GB;
+	mso-fareast-language:JA;}
 p.zzContents, li.zzContents, div.zzContents
 	{mso-style-name:zzContents;
 	mso-style-noshow:yes;
@@ -954,15 +975,13 @@ p.QuoteAttribution
 	mso-ansi-language:EN-HK;
 	mso-fareast-language:JA;}
 p.Admonition, li.Admonition, div.Admonition
-	{mso-style-name:admonition;
+	{
 	mso-style-priority:99;
 	mso-margin-top-alt:auto;
 	margin-right:0cm;
 	mso-margin-bottom-alt:auto;
 	margin-left:0cm;
 	mso-pagination:widow-orphan;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;
 	mso-ascii-font-family:$bodyfont;
 	mso-ascii-theme-font:minor-latin;
 	mso-fareast-font-family:"SimSun",serif;
@@ -971,8 +990,13 @@ p.Admonition, li.Admonition, div.Admonition
 	mso-hansi-theme-font:minor-latin;
 	mso-bidi-font-family:$bodyfont;
 	mso-bidi-theme-font:minor-bidi;
-        font-weight:bold;
 	mso-ansi-language:EN-AU;}
+p.Admonition, li.Admonition {
+        mso-style-name:admonition;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+        font-weight:bold;
+        }
 p.Code, li.Code, div.Code
 	{mso-style-name:Code;
 	mso-style-priority:16;
@@ -1570,6 +1594,11 @@ div.example {
 p.Example, li.Example, div.Example, td.Example
 	{	
     tab-stops:70.9pt;
+  }
+
+p.Example, li.Example, td.Example {
+  mso-style-name:Example;
+	mso-style-link:"Example Char";
 	font-size:$smallerfontsize;
 	font-family:$bodyfont;}
 
@@ -1587,10 +1616,9 @@ div.Example p.MsoListParagraph {
 }
 
 p.Example, li.Example, div.Example
-	{mso-style-name:Example;
+	{
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
-	mso-style-link:"Example Char";
 	mso-margin-top-alt:auto;
 	margin-top:0cm;
 	margin-right:0cm;
@@ -1601,8 +1629,6 @@ p.Example, li.Example, div.Example
 	mso-pagination:none;
 	mso-pagination:widow-orphan;
 	tab-stops:67.7pt;
-	font-size:$smallerfontsize;
-	font-family:$bodyfont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;

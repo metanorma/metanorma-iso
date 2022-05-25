@@ -377,7 +377,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*An empty word intro page\./m, "")
       .sub(%r{</div>.*$}m, "</div>")
-    .gsub(/<o:p>&#xA0;<\/o:p>/, "")
+      .gsub(/<o:p>&#xA0;<\/o:p>/, "")
 
     expect(xmlpp("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}"))
       .to be_equivalent_to xmlpp(<<~'OUTPUT')
@@ -841,6 +841,46 @@ RSpec.describe IsoDoc do
           </div>
         </div>
       </div>
+    OUTPUT
+  end
+
+  it "processes editorial notes (Word)" do
+    IsoDoc::Iso::WordConvert
+      .new(WORD_HTML_CSS.dup)
+      .convert("test", <<~"INPUT", false)
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+            <annex id="P" inline-header="false" obligation="normative">
+            <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
+                           <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>
+                   Only use paddy or parboiled rice for the
+                   determination of husked rice yield.
+                 </p>
+          <p id="_e94663cc-2473-4ccc-9a72-983a74d989f3">Para 2.</p>
+        </admonition>
+            </annex>
+          </iso-standard>
+      INPUT
+    word = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
+      .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
+    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+           <div class='WordSection3'>
+         <p class='zzSTDTitle1'/>
+         <p class='MsoNormal'>
+           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+         </p>
+         <div class='Section3'>
+           <a name='P' id='P'/>
+           <div class='zzHelp'>
+             <a name='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a'/>
+             <p class='zzHelp'> Only use paddy or parboiled rice for the determination of husked rice yield. </p>
+             <p class='zzHelp'>
+               <a name='_e94663cc-2473-4ccc-9a72-983a74d989f3' id='_e94663cc-2473-4ccc-9a72-983a74d989f3'/>
+               Para 2.
+             </p>
+           </div>
+         </div>
+       </div>
     OUTPUT
   end
 

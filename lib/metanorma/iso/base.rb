@@ -5,10 +5,16 @@ require "pathname"
 require "open-uri"
 require "isodoc"
 require "fileutils"
+require_relative "macros"
 
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
+      Asciidoctor::Extensions.register do
+        block Metanorma::ISO::EditorAdmonitionBlock
+        treeprocessor Metanorma::ISO::EditorInlineAdmonitionBlock
+      end
+
       XML_ROOT_TAG = "iso-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/iso".freeze
 
@@ -51,6 +57,14 @@ module Metanorma
         attr_code(keep_attrs(node)
                   .merge(id: ::Metanorma::Utils::anchor_or_uuid(node),
                          start: node.attr("start")))
+      end
+
+      def admonition_name(node)
+        name = super
+        a = node.attr("type") and ["editorial"].each do |t|
+          name = t if a.casecmp(t).zero?
+        end
+        name
       end
 
       def outputs(node, ret)

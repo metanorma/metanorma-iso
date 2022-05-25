@@ -614,12 +614,12 @@
     <optional>
       <ref name="fetched"/>
     </optional>
-    <choice>
-      <oneOrMore>
-        <ref name="btitle"/>
-      </oneOrMore>
+    <optional>
       <ref name="formattedref"/>
-    </choice>
+    </optional>
+    <oneOrMore>
+      <ref name="btitle"/>
+    </oneOrMore>
     <zeroOrMore>
       <ref name="bsource"/>
     </zeroOrMore>
@@ -986,36 +986,34 @@
           <ref name="SeriesType"/>
         </attribute>
       </optional>
-      <choice>
+      <optional>
         <ref name="formattedref"/>
-        <group>
-          <ref name="btitle"/>
-          <optional>
-            <ref name="bplace"/>
-          </optional>
-          <optional>
-            <ref name="seriesorganization"/>
-          </optional>
-          <optional>
-            <ref name="abbreviation"/>
-          </optional>
-          <optional>
-            <ref name="seriesfrom"/>
-          </optional>
-          <optional>
-            <ref name="seriesto"/>
-          </optional>
-          <optional>
-            <ref name="seriesnumber"/>
-          </optional>
-          <optional>
-            <ref name="seriespartnumber"/>
-          </optional>
-          <optional>
-            <ref name="seriesrun"/>
-          </optional>
-        </group>
-      </choice>
+      </optional>
+      <ref name="btitle"/>
+      <optional>
+        <ref name="bplace"/>
+      </optional>
+      <optional>
+        <ref name="seriesorganization"/>
+      </optional>
+      <optional>
+        <ref name="abbreviation"/>
+      </optional>
+      <optional>
+        <ref name="seriesfrom"/>
+      </optional>
+      <optional>
+        <ref name="seriesto"/>
+      </optional>
+      <optional>
+        <ref name="seriesnumber"/>
+      </optional>
+      <optional>
+        <ref name="seriespartnumber"/>
+      </optional>
+      <optional>
+        <ref name="seriesrun"/>
+      </optional>
     </element>
   </define>
   <define name="SeriesType">
