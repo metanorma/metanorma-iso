@@ -293,25 +293,25 @@
 				</fo:simple-page-master>
 				
 				<fo:simple-page-master master-name="cover-page-published" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="78mm" margin-right="18.5mm"/>
+					<fo:region-body margin-top="12.7mm" margin-bottom="75mm" margin-left="78mm" margin-right="18.5mm"/>
 					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
-					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
+					<fo:region-after region-name="cover-page-footer" extent="75mm" display-align="after"/>
 					<fo:region-start region-name="cover-left-region" extent="78mm"/>
 					<fo:region-end region-name="cover-right-region" extent="18.5mm"/>
 				</fo:simple-page-master>
 				
 				
 				<fo:simple-page-master master-name="cover-page-publishedISO-odd" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+					<fo:region-body margin-top="12.7mm" margin-bottom="75mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
 					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
-					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
+					<fo:region-after region-name="cover-page-footer" extent="75mm" display-align="after"/>
 					<fo:region-start region-name="cover-left-region" extent="{$marginLeftRight1}mm"/>
 					<fo:region-end region-name="cover-right-region" extent="{$marginLeftRight2}mm"/>
 				</fo:simple-page-master>
 				<fo:simple-page-master master-name="cover-page-publishedISO-even" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-					<fo:region-body margin-top="12.7mm" margin-bottom="40mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+					<fo:region-body margin-top="12.7mm" margin-bottom="75mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 					<fo:region-before region-name="cover-page-header" extent="12.7mm"/>
-					<fo:region-after region-name="cover-page-footer" extent="40mm" display-align="after"/>
+					<fo:region-after region-name="cover-page-footer" extent="75mm" display-align="after"/>
 					<fo:region-start region-name="cover-left-region" extent="{$marginLeftRight2}mm"/>
 					<fo:region-end region-name="cover-right-region" extent="{$marginLeftRight1}mm"/>
 				</fo:simple-page-master>
@@ -460,9 +460,9 @@
 								<fo:table-column column-width="112.5mm"/>
 								<fo:table-body>
 									<fo:table-row>
-										<fo:table-cell font-size="6.5pt" text-align="justify" display-align="after" padding-bottom="8mm"><!-- before -->
+										<fo:table-cell font-size="6.5pt" text-align="justify" display-align="after" padding-bottom="8mm">
 											<!-- margin-top="-30mm"  -->
-											<fo:block margin-top="-100mm">
+											<fo:block> <!-- margin-top="-100mm" -->
 												<xsl:if test="$stage-abbreviation = 'DIS' or                       $stage-abbreviation = 'NWIP' or                       $stage-abbreviation = 'NP' or                       $stage-abbreviation = 'PWI' or                       $stage-abbreviation = 'AWI' or                       $stage-abbreviation = 'WD' or                       $stage-abbreviation = 'CD'">
 													<fo:block margin-bottom="1.5mm">
 														<xsl:text>THIS DOCUMENT IS A DRAFT CIRCULATED FOR COMMENT AND APPROVAL. IT IS THEREFORE SUBJECT TO CHANGE AND MAY NOT BE REFERRED TO AS AN INTERNATIONAL STANDARD UNTIL PUBLISHED AS SUCH.</xsl:text>
@@ -492,27 +492,50 @@
 										<fo:table-cell>
 											<fo:block> </fo:block>
 										</fo:table-cell>
-										<fo:table-cell>
-											<xsl:if test="$stage-abbreviation = 'DIS'">
-												<xsl:variable name="text">
-													<xsl:for-each select="/iso:iso-standard/iso:preface/iso:note[@coverpage='true']/iso:p">
-														<fo:block>
-															<xsl:apply-templates/>
-														</fo:block>
-													</xsl:for-each>
-												</xsl:variable>
-												<xsl:if test="normalize-space($text) != ''">
-													<fo:block-container margin-top="-15mm" margin-bottom="7mm" margin-left="1mm">
-														<fo:block font-size="9pt" border="0.5pt solid black" fox:border-radius="5pt" padding-left="2mm" padding-top="2mm" padding-bottom="2mm">
-															<!-- <xsl:text>This document is circulated as received from the committee secretariat.</xsl:text> -->
-															<xsl:copy-of select="xalan:nodeset($text)/node()"/>
-														</fo:block>
-													</fo:block-container>
+										<fo:table-cell display-align="after" padding-bottom="3mm">
+											<fo:block-container height="22.5mm" display-align="center">
+											
+												<xsl:variable name="iso-fast-track">false</xsl:variable>
+												
+												<xsl:if test="normalize-space($iso-fast-track) = 'true'">
+													<xsl:attribute name="height">28mm</xsl:attribute>
 												</xsl:if>
-											</xsl:if>
+												
+												<fo:block>
+													<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'DIS' or $stage-abbreviation = 'FDIS'">
+														<xsl:variable name="text">
+															<xsl:for-each select="/iso:iso-standard/iso:preface/iso:note[@coverpage='true']/iso:p">
+																<fo:block>
+																	<xsl:apply-templates/>
+																</fo:block>
+															</xsl:for-each>
+														</xsl:variable>
+														<xsl:if test="normalize-space($text) != ''">
+															<fo:block-container margin-left="1mm"> <!-- margin-bottom="7mm" margin-top="-15mm" -->
+																<fo:block font-size="9pt" border="0.5pt solid black" fox:border-radius="5pt" padding-left="2mm" padding-top="2mm" padding-bottom="2mm">
+																	<!-- <xsl:text>This document is circulated as received from the committee secretariat.</xsl:text> -->
+																	<xsl:copy-of select="xalan:nodeset($text)/node()"/>
+																</fo:block>
+															</fo:block-container>
+														</xsl:if>
+														
+														<xsl:if test="normalize-space($iso-fast-track) = 'true'">
+															<fo:block-container space-before="2mm">
+																<fo:block background-color="rgb(77,77,77)" color="white" fox:border-radius="5pt" text-align="center" display-align="center" font-size="19pt" font-weight="bold">
+																	<fo:block-container height="13.2mm">
+																		<fo:block>
+																			<xsl:text>FAST TRACK PROCEDURE</xsl:text>
+																		</fo:block>
+																	</fo:block-container>
+																</fo:block>
+															</fo:block-container>
+														</xsl:if>
+													</xsl:if>
+												</fo:block>
+											</fo:block-container>
 											<fo:block>
 												<xsl:call-template name="insertTripleLine"/>
-												<fo:table table-layout="fixed" width="100%" margin-bottom="3mm">
+												<fo:table table-layout="fixed" width="100%"> <!-- margin-bottom="3mm" -->
 													<fo:table-column column-width="50%"/>
 													<fo:table-column column-width="50%"/>
 													<fo:table-body>
@@ -752,7 +775,7 @@
 																<xsl:call-template name="printEdition"/>
 															</xsl:if>
 															<xsl:choose>
-																<xsl:when test="($stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD') and /iso:iso-standard/iso:bibdata/iso:version/iso:revision-date">
+																<xsl:when test="($stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS') and /iso:iso-standard/iso:bibdata/iso:version/iso:revision-date">
 																	<xsl:value-of select="$linebreak"/>
 																	<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/>
 																</xsl:when>
@@ -795,7 +818,7 @@
 													<fo:table-cell><fo:block/></fo:table-cell>
 													<fo:table-cell number-columns-spanned="2" font-size="10pt" line-height="1.2" display-align="center">
 														<fo:block>
-															<xsl:if test="$stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
+															<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS'">
 																<fo:table table-layout="fixed" width="100%">
 																	<fo:table-column column-width="50%"/>
 																	<fo:table-column column-width="50%"/>
@@ -907,7 +930,7 @@
 																	</fo:block>
 																</xsl:for-each>
 																
-																<xsl:if test="$stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
+																<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS'">
 																	<fo:block margin-top="10mm">
 																		<xsl:copy-of select="$ics"/>
 																	</fo:block>
