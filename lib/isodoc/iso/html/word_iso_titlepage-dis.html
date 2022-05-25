@@ -1,6 +1,6 @@
 {% if tc_docnumber.size > 0 %}
 {% for num in tc_docnumber %}
-<p class="zzCover"><span lang="EN-GB">Reference number of working document: {{agency}}/{{tc}} {{ num }}</span><span lang="EN-GB"><o:p></o:p></span></p>
+<p class="zzCover"><span lang="EN-GB">Reference number of working document: {{ num }}</span><span lang="EN-GB"><o:p></o:p></span></p>
 {% endfor %}
 {% endif %}
 
@@ -20,7 +20,7 @@
 
 <p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Reference number of project: {{ docnumber_undated }} {{ draftinfo }}</span></p>
 
-<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Committee identification: {{agency}}/{{ editorialgroup | join: "/" }}</span></p>
+<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Committee identification: {{approvalgroup}}</span></p>
 
 <!--
 {% if doctitleamdlabel %}

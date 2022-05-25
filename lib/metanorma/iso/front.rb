@@ -85,8 +85,22 @@ module Metanorma
           committee_component("technical-committee", node, a)
           committee_component("subcommittee", node, a)
           committee_component("workgroup", node, a)
-          node.attr("secretariat") && a.secretariat(node.attr("secretariat"))
+          approval_group(node, a)
+          node.attr("secretariat") and a.secretariat(node.attr("secretariat"))
         end
+      end
+
+      def approval_group(node, xml)
+        node.attr("approval-group-id") and
+          return xml.approvalgroup(node.attr("approval-group-id"))
+        return unless node.attr("technical-committee-number")
+
+        tc = node.attr("technical-committee-type") || "TC"
+        sc = node.attr("subcommittee-type") || "SC"
+        num = "ISO/#{tc} #{node.attr('technical-committee-number')}"
+        node.attr("subcommittee-number") and
+          num += "/#{sc} #{node.attr('subcommittee-number')}"
+        xml.approvalgroup(num)
       end
 
       def title_intro(node, xml, lang, at)
@@ -146,7 +160,8 @@ module Metanorma
       end
 
       def relaton_relations
-        super + %w(obsoletes successor-of manifestation-of related annotation-of)
+        super + %w(obsoletes successor-of manifestation-of related
+                   annotation-of)
       end
 
       def relaton_relation_descriptions
@@ -162,7 +177,7 @@ module Metanorma
           "identical-adopted-from" => "adoptedFrom",
           "modified-adopted-from" => "adoptedFrom",
           "related-directive" => "related",
-          "related-mandate" => "related",
+          "related-mandate" => "related"
         )
       end
     end
