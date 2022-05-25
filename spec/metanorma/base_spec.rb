@@ -36,6 +36,7 @@ RSpec.describe Metanorma::ISO do
       :workgroup_2: WG1
       :workgroup-number_2: 31
       :workgroup-type_2: C1
+      :approval-group-id: ISO/TC 9/SC 7
       :secretariat: SECRETARIAT
       :docstage: 20
       :docsubstage: 20
@@ -114,6 +115,7 @@ RSpec.describe Metanorma::ISO do
                 <subcommittee number="21" type="B1">SC1</subcommittee>
                 <workgroup number="3" type="C">WG</workgroup>
                 <workgroup number="31" type="C1">WG1</workgroup>
+                <approvalgroup>ISO/TC 9/SC 7</approvalgroup>
                 <secretariat>SECRETARIAT</secretariat>
               </editorialgroup>
               <ics>

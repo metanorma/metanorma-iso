@@ -318,6 +318,9 @@
         <zeroOrMore>
           <ref name="workgroup"/>
         </zeroOrMore>
+        <zeroOrMore>
+          <ref name="approvalgroup"/>
+        </zeroOrMore>
         <optional>
           <ref name="secretariat"/>
         </optional>
@@ -427,6 +430,11 @@
   <define name="tc-documentnumber">
     <element name="tc-document-number">
       <data type="int"/>
+    </element>
+  </define>
+  <define name="approvalgroup">
+    <element name="approvalgroup">
+      <ref name="IsoWorkgroup"/>
     </element>
   </define>
   <define name="subcommittee">
