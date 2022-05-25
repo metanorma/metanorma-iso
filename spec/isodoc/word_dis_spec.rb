@@ -1542,7 +1542,7 @@ RSpec.describe IsoDoc do
            <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
          </p>
          <p class='zzCover' style='font-weight:normal;'>
-           <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
+           <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: </span>
          </p>
          <p class='zzCover' style='font-weight:normal;'>
            <span lang='EN-GB' xml:lang='EN-GB'>

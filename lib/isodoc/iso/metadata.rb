@@ -199,6 +199,7 @@ module IsoDoc
         tc(xml)
         sc(xml)
         wg(xml)
+        approvalgroup(xml)
         secretariat(xml)
       end
 
@@ -232,6 +233,13 @@ module IsoDoc
           wgid = "#{wg_type} #{wg_num.text}"
           set(:wg, wgid)
           set(:editorialgroup, get[:editorialgroup] << wgid)
+        end
+      end
+
+      def approvalgroup(xml)
+        ag = xml.at(ns("//bibdata/ext/editorialgroup/approvalgroup"))
+        if ag
+          set(:approvalgroup, ag.text)
         end
       end
 

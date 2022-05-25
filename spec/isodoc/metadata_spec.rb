@@ -80,6 +80,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <technical-committee number="34">Food products</technical-committee>
               <subcommittee number="4">Cereals and pulses</subcommittee>
               <workgroup number="3">Rice Group</workgroup>
+              <approvalgroup>APPRGRP</workgroup>
               <secretariat>GB</secretariat>
             </editorialgroup>
             <structuredidentifier>
@@ -94,6 +95,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       {:accesseddate=>"2012",
       :activateddate=>"2013",
       :agency=>"ISO",
+      :approvalgroup=>"APPRGRP",
       :circulateddate=>"XXX",
       :confirmeddate=>"XXX",
       :copieddate=>"XXX",
