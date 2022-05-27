@@ -194,12 +194,15 @@ module IsoDoc
         edition_translate(bib)
       end
 
-      def bibdata_i18n_stage(bib, stage, type)
-        @i18n.get["stage_dict"][stage&.text].is_a?(Hash) or
-          return hash_translate(bib, @i18n.get["stage_dict"], "./status/stage")
-        @i18n.get["stage_dict"][stage&.text][type&.text] and
-          tag_translate(stage, @lang,
-                        @i18n.get["stage_dict"][stage&.text][type&.text])
+      def bibdata_i18n_stage(bib, stage, type, lang = @lang)
+        return unless stage
+
+        @i18n.get["stage_dict"][stage.text].is_a?(Hash) or
+          return hash_translate(bib, @i18n.get["stage_dict"],
+                                "./status/stage", lang)
+        @i18n.get["stage_dict"][stage.text][type&.text] and
+          tag_translate(stage, lang,
+                        @i18n.get["stage_dict"][stage.text][type&.text])
       end
 
       include Init
