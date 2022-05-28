@@ -81,26 +81,29 @@ module Metanorma
       end
 
       def metadata_committee(node, xml)
+        metadata_editorial_committee(node, xml)
+        metadata_approval_committee(node, xml)
+      end
+
+      def metadata_editorial_committee(node, xml)
         xml.editorialgroup do |a|
-          committee_component("technical-committee", node, a)
-          committee_component("subcommittee", node, a)
-          committee_component("workgroup", node, a)
-          approval_group(node, a)
+          %w(technical-committee subcommittee workgroup).each do |v|
+            committee_component(v, node, a)
+          end
           node.attr("secretariat") and a.secretariat(node.attr("secretariat"))
         end
       end
 
-      def approval_group(node, xml)
-        node.attr("approval-group-id") and
-          return xml.approvalgroup(node.attr("approval-group-id"))
-        return unless node.attr("technical-committee-number")
-
-        tc = node.attr("technical-committee-type") || "TC"
-        sc = node.attr("subcommittee-type") || "SC"
-        num = "ISO/#{tc} #{node.attr('technical-committee-number')}"
-        node.attr("subcommittee-number") and
-          num += "/#{sc} #{node.attr('subcommittee-number')}"
-        xml.approvalgroup(num)
+      def metadata_approval_committee(node, xml)
+        types = %w(technical-committee subcommittee workgroup)
+        node.attr("approval-technical-committee-number") and
+          types = %w(approval-technical-committee approval-subcommittee
+                     approval-workgroup)
+        xml.approvalgroup do |a|
+          types.each do |v|
+            committee_component(v, node, a)
+          end
+        end
       end
 
       def title_intro(node, xml, lang, at)

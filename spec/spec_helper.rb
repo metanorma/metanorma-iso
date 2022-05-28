@@ -206,6 +206,11 @@ BLANK_HDR1 = <<~"HDR".freeze
           <subcommittee/>
           <workgroup/>
         </editorialgroup>
+        <approvalgroup>
+          <technical-committee/>
+          <subcommittee/>
+          <workgroup/>
+        </approvalgroup>
         <stagename>International standard</stagename>
       </ext>
     </bibdata>

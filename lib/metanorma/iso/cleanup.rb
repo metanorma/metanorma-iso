@@ -40,7 +40,7 @@ module Metanorma
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
                      "/organization").each_with_object([]) do |x, prefix|
           x1 = x.at("abbreviation")&.text || x.at("name")&.text
-          #(x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
+          # (x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
           prefix << x1
         end
       end
@@ -208,6 +208,15 @@ module Metanorma
       def section_names_terms_cleanup(xml)
         @vocab and return
         super
+      end
+
+      def bibdata_cleanup(xmldoc)
+        super
+        %w(technical-committee subcommittee workgroup).each do |v|
+          xmldoc.xpath("//bibdata//approval-#{v}").each do |a|
+            a.name = v
+          end
+        end
       end
     end
   end
