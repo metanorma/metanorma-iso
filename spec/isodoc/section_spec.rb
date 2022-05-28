@@ -581,6 +581,11 @@ RSpec.describe IsoDoc do
                  <subcommittee/>
                  <workgroup/>
                </editorialgroup>
+               <approvalgroup>
+                 <technical-committee/>
+                 <subcommittee/>
+                 <workgroup/>
+               </approvalgroup>
                <stagename>International standard</stagename>
              </ext>
            </bibdata>
