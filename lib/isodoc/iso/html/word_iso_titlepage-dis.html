@@ -20,7 +20,7 @@
 
 <p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Reference number of project: {{ docnumber_undated }} {{ draftinfo }}</span></p>
 
-<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Committee identification: {{approvalgroup}}</span></p>
+<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Committee identification: {{ agency }}/{{ approvalgroup | join: "/" }}</span></p>
 
 <!--
 {% if doctitleamdlabel %}

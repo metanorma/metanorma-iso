@@ -99,7 +99,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       {:accesseddate=>"2012",
       :activateddate=>"2013",
       :agency=>"ISO",
-      :approvalgroup=>"TC 34a/SC 4a/WG 3a",
+      :approvalgroup=>["TC 34a", "SC 4a", "WG 3a"],
       :circulateddate=>"XXX",
       :confirmeddate=>"XXX",
       :copieddate=>"XXX",
@@ -239,7 +239,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     output = <<~OUTPUT
       {:accesseddate=>"XXX",
       :agency=>"ISO/IEC",
-      :approvalgroup=>"ABC 34/DEF 4/GHI 3",
+      :approvalgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :circulateddate=>"XXX",
       :confirmeddate=>"XXX",
       :copieddate=>"XXX",

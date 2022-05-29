@@ -230,9 +230,10 @@ module IsoDoc
 
       def approvalgroup(xml)
         ag = tc_base(xml, "approvalgroup") or return
-        sc = sc_base(xml, "approvalgroup") and ag += "/#{sc}"
-        wg = wg_base(xml, "approvalgroup") and ag += "/#{wg}"
-        ag.empty? or set(:approvalgroup, ag)
+        ret = [ag]
+        ret << sc_base(xml, "approvalgroup")
+        ret << wg_base(xml, "approvalgroup")
+        set(:approvalgroup, ret)
       end
 
       def secretariat(xml)
