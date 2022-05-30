@@ -80,9 +80,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <technical-committee number="34">Food products</technical-committee>
               <subcommittee number="4">Cereals and pulses</subcommittee>
               <workgroup number="3">Rice Group</workgroup>
-              <approvalgroup>APPRGRP</workgroup>
               <secretariat>GB</secretariat>
             </editorialgroup>
+            <approvalgroup>
+              <technical-committee number="34a">Food products A</technical-committee>
+              <subcommittee number="4a">Cereals and pulses A</subcommittee>
+              <workgroup number="3a">Rice Group A</workgroup>
+            </approvalgroup>
             <structuredidentifier>
               <project-number part="1">ISO/PreCD3 17301</project-number>
             </structuredidentifier>
@@ -95,7 +99,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       {:accesseddate=>"2012",
       :activateddate=>"2013",
       :agency=>"ISO",
-      :approvalgroup=>"APPRGRP",
+      :approvalgroup=>["TC 34a", "SC 4a", "WG 3a"],
       :circulateddate=>"XXX",
       :confirmeddate=>"XXX",
       :copieddate=>"XXX",
@@ -217,6 +221,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <subcommittee number="4" type="DEF">Cereals and pulses</subcommittee>
               <workgroup number="3" type="GHI">Rice Group</workgroup>
             </editorialgroup>
+            <approvalgroup>
+              <technical-committee number="34" type="ABC">Food products</technical-committee>
+              <subcommittee number="4" type="DEF">Cereals and pulses</subcommittee>
+              <workgroup number="3" type="GHI">Rice Group</workgroup>
+            </approvalgroup>
             <ics><code>1.2.3</code></ics>
             <ics><code>1.2.3</code></ics>
             <structuredidentifier>
@@ -230,6 +239,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     output = <<~OUTPUT
       {:accesseddate=>"XXX",
       :agency=>"ISO/IEC",
+      :approvalgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :circulateddate=>"XXX",
       :confirmeddate=>"XXX",
       :copieddate=>"XXX",
