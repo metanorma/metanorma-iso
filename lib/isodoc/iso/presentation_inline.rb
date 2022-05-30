@@ -72,7 +72,6 @@ module IsoDoc
           return l10n(eref_localities1_zh(target, type, from, upto, node))
         ret = if node["droploc"] != "true" && !subclause?(target, type,
                                                           from)
-          require  'debug'; binding.b
                 eref_locality_populate(type, node)
               else ""
               end
