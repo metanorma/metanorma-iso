@@ -67,3 +67,5 @@ stage_dict:
     directive: 指令
   "90": 回顾
   "95": 提款
+locality:
+  appendix: 附录

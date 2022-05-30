@@ -453,90 +453,90 @@ RSpec.describe IsoDoc do
   it "defaults to English" do
     output = IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", <<~"INPUT", true)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <bibdata>
-            <status>
-            <stage abbreviation='IS' language=''>60</stage>
-          </status>
-          <language>tlh</language>
-          <ext>
-            <doctype language=''>international-standard</doctype>
-          </ext>
-        </bibdata>
-        <preface>
-          <foreword obligation="informative">
-            <title>Foreword</title>
-            <p id="A">This is a preamble</p>
-          </foreword>
-          <introduction id="B" obligation="informative">
-            <title>Introduction</title>
-            <clause id="C" inline-header="false" obligation="informative">
-              <title>Introduction Subsection</title>
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata>
+              <status>
+              <stage abbreviation='IS' language=''>60</stage>
+            </status>
+            <language>tlh</language>
+            <ext>
+              <doctype language=''>international-standard</doctype>
+            </ext>
+          </bibdata>
+          <preface>
+            <foreword obligation="informative">
+              <title>Foreword</title>
+              <p id="A">This is a preamble</p>
+            </foreword>
+            <introduction id="B" obligation="informative">
+              <title>Introduction</title>
+              <clause id="C" inline-header="false" obligation="informative">
+                <title>Introduction Subsection</title>
+              </clause>
+              <p>This is patent boilerplate</p>
+            </introduction>
+          </preface>
+          <sections>
+            <clause id="D" obligation="normative" type="scope">
+              <title>Scope</title>
+              <p id="E">Text</p>
             </clause>
-            <p>This is patent boilerplate</p>
-          </introduction>
-        </preface>
-        <sections>
-          <clause id="D" obligation="normative" type="scope">
-            <title>Scope</title>
-            <p id="E">Text</p>
-          </clause>
-          <clause id="H" obligation="normative">
-            <title>Terms, definitions, symbols and abbreviated terms</title>
-            <terms id="I" obligation="normative">
-              <title>Normal Terms</title>
-              <term id="J">
-                <preferred><expression><name>Term2</name></expression></preferred>
-              </term>
-            </terms>
-            <definitions id="K">
+            <clause id="H" obligation="normative">
+              <title>Terms, definitions, symbols and abbreviated terms</title>
+              <terms id="I" obligation="normative">
+                <title>Normal Terms</title>
+                <term id="J">
+                  <preferred><expression><name>Term2</name></expression></preferred>
+                </term>
+              </terms>
+              <definitions id="K">
+                <dl>
+                  <dt>Symbol</dt>
+                  <dd>Definition</dd>
+                </dl>
+              </definitions>
+            </clause>
+            <definitions id="L">
               <dl>
                 <dt>Symbol</dt>
                 <dd>Definition</dd>
               </dl>
             </definitions>
-          </clause>
-          <definitions id="L">
-            <dl>
-              <dt>Symbol</dt>
-              <dd>Definition</dd>
-            </dl>
-          </definitions>
-          <clause id="M" inline-header="false" obligation="normative">
-            <title>Clause 4</title>
-            <clause id="N" inline-header="false" obligation="normative">
-              <title>Introduction</title>
+            <clause id="M" inline-header="false" obligation="normative">
+              <title>Clause 4</title>
+              <clause id="N" inline-header="false" obligation="normative">
+                <title>Introduction</title>
+              </clause>
+              <clause id="O" inline-header="false" obligation="normative">
+                <title>Clause 4.2</title>
+              </clause>
             </clause>
-            <clause id="O" inline-header="false" obligation="normative">
-              <title>Clause 4.2</title>
+          </sections>
+          <annex id="P" inline-header="false" obligation="normative">
+            <title>Annex</title>
+            <clause id="Q" inline-header="false" obligation="normative">
+              <title>Annex A.1</title>
+              <clause id="Q1" inline-header="false" obligation="normative">
+                <title>Annex A.1a</title>
+              </clause>
             </clause>
-          </clause>
-        </sections>
-        <annex id="P" inline-header="false" obligation="normative">
-          <title>Annex</title>
-          <clause id="Q" inline-header="false" obligation="normative">
-            <title>Annex A.1</title>
-            <clause id="Q1" inline-header="false" obligation="normative">
-              <title>Annex A.1a</title>
-            </clause>
-          </clause>
-          <appendix id="Q2" inline-header="false" obligation="normative">
-            <title>An Appendix</title>
-          </appendix>
-        </annex>
-        <bibliography>
-          <references id="R" normative="true" obligation="informative">
-            <title>Normative References</title>
-          </references>
-          <clause id="S" obligation="informative">
-            <title>Bibliography</title>
-            <references id="T" normative="false" obligation="informative">
-              <title>Bibliography Subsection</title>
+            <appendix id="Q2" inline-header="false" obligation="normative">
+              <title>An Appendix</title>
+            </appendix>
+          </annex>
+          <bibliography>
+            <references id="R" normative="true" obligation="informative">
+              <title>Normative References</title>
             </references>
-          </clause>
-        </bibliography>
-      </iso-standard>
-    INPUT
+            <clause id="S" obligation="informative">
+              <title>Bibliography</title>
+              <references id="T" normative="false" obligation="informative">
+                <title>Bibliography Subsection</title>
+              </references>
+            </clause>
+          </bibliography>
+        </iso-standard>
+      INPUT
     expect(xmlpp(output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -1510,5 +1510,70 @@ RSpec.describe IsoDoc do
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
       .to be_equivalent_to xmlpp(html)
+  end
+
+  it "internationalises locality" do
+    input = <<~"INPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+      <language>fr</language>
+      <script>Latn</script>
+      <status>
+      <stage>published</stage>
+      <substage>withdrawn</substage>
+      </status>
+      <edition>2</edition>
+      <ext>
+      <doctype>brochure</doctype>
+      </ext>
+      </bibdata>
+      <preface>
+      <foreword obligation="informative">
+         <title>Foreword</title>
+         <p id="A"><eref type="inline" bibitemid="ISO712"><locality type="locality:appendix"><referenceFrom>7</referenceFrom></locality></eref></p>
+         <p id="B"><eref type="inline" bibitemid="ISO712"><locality type="annex"><referenceFrom>7</referenceFrom></locality></eref></p>
+       </foreword>
+       </preface>
+       <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
+      <bibitem id="ISO712" type="standard">
+        <title format="text/plain">Cereals and cereal products</title>
+        <docidentifier>ISO 712</docidentifier>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+      </bibitem>
+          </references>
+          </bibliography>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <foreword obligation='informative' displayorder='1'>
+              <title>Foreword</title>
+              <p id='A'>
+                <eref type='inline' bibitemid='ISO712'>
+                  <locality type='locality:appendix'>
+                    <referenceFrom>7</referenceFrom>
+                  </locality>
+                  ISO 712, Appendice 7
+                </eref>
+              </p>
+              <p id='B'>
+          <eref type='inline' bibitemid='ISO712'>
+            <locality type='annex'>
+              <referenceFrom>7</referenceFrom>
+            </locality>
+            ISO 712,
+            <span class='citeapp'>Annexe 7</span>
+          </eref>
+        </p>
+      </foreword>
+    OUTPUT
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new({}).convert("test", input, true))
+      .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to xmlpp(presxml)
   end
 end

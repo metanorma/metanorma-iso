@@ -70,3 +70,5 @@ stage_dict:
     directive: Директива
   "90": Пересмотр
   "95": Отмена
+locality:
+  appendix: Приложение
