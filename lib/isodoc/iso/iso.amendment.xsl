@@ -195,51 +195,47 @@
 	</xsl:variable>
 	
 	<xsl:variable name="editorialgroup_">
-		<xsl:variable name="data">
-			<!-- <xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:technical-committee[normalize-space(@number) != '']">
-				<xsl:text>/TC </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
-			</xsl:for-each>
-			<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:subcommittee[normalize-space(@number) != '']">
-				<xsl:text>/SC </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
-			</xsl:for-each>
-			<xsl:if test="not($stage-abbreviation = 'DIS' or $stage-abbreviation = 'FDIS')">
-				<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:workgroup[normalize-space(@number) != '']">
-					<xsl:text>/WG </xsl:text><fo:inline font-weight="bold"><xsl:value-of select="@number"/></fo:inline>
-				</xsl:for-each>
-			</xsl:if> -->
-			
-			<!-- Example: ISO/TC 46/SC 2 -->
-			<xsl:variable name="parts_">
-				<xsl:call-template name="split">
-					<xsl:with-param name="pText" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:approvalgroup"/>
-					<xsl:with-param name="sep" select="' '"/>
-					<xsl:with-param name="normalize-space">false</xsl:with-param>
-					<xsl:with-param name="keep_sep">true</xsl:with-param>
-				</xsl:call-template>
-			</xsl:variable>
-			<xsl:variable name="parts">
-				<xsl:for-each select="xalan:nodeset($parts_)//item">
+		<!-- Example: ISO/TC 46/SC 2 -->
+		<!-- ISO/SG SMART/SG TS/AG 1 -->
+		<xsl:variable name="parts_by_slash">
+			<xsl:call-template name="split">
+				<xsl:with-param name="pText" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:editorialgroup/iso:approvalgroup"/>
+				<xsl:with-param name="sep" select="'/'"/>
+				<xsl:with-param name="normalize-space">false</xsl:with-param>
+				<xsl:with-param name="keep_sep">true</xsl:with-param>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="parts_with_subparts">
+			<xsl:for-each select="xalan:nodeset($parts_by_slash)//item">
+				<subitem>
 					<xsl:call-template name="split">
 						<xsl:with-param name="pText" select="."/>
-						<xsl:with-param name="sep" select="'/'"/>
+						<xsl:with-param name="sep" select="' '"/>
 						<xsl:with-param name="normalize-space">false</xsl:with-param>
 						<xsl:with-param name="keep_sep">true</xsl:with-param>
 					</xsl:call-template>
-				</xsl:for-each>
-			</xsl:variable>
-			<xsl:for-each select="xalan:nodeset($parts)//item">
-				<xsl:choose>
-					<xsl:when test="translate(., '1234567890', '') = ''">
-						<fo:inline font-weight="bold"><xsl:value-of select="."/></fo:inline>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="."/>
-					</xsl:otherwise>
-				</xsl:choose>
+				</subitem>
 			</xsl:for-each>
 		</xsl:variable>
-		<!-- <xsl:text>ISO</xsl:text> -->
-		<xsl:copy-of select="$data"/>
+		<xsl:for-each select="xalan:nodeset($parts_with_subparts)//subitem">
+			<xsl:choose>
+				<xsl:when test="position() = 1">
+					<xsl:value-of select="."/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:for-each select="item">
+						<xsl:choose>
+							<xsl:when test="position() = last()">
+								<fo:inline font-weight="bold"><xsl:value-of select="."/></fo:inline>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="."/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:for-each>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
 	</xsl:variable>
 	<xsl:variable name="editorialgroup" select="xalan:nodeset($editorialgroup_)"/>
 	
@@ -5223,6 +5219,11 @@
 						
 						
 						
+						
+						
+						<xsl:if test="ancestor::*[local-name() = 'dd' or local-name() = 'td']">
+							<xsl:attribute name="margin-top">0</xsl:attribute>
+						</xsl:if>
 						
 						<fo:block>
 							

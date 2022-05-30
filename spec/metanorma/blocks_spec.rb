@@ -639,7 +639,7 @@ RSpec.describe Metanorma::ISO do
       #{BLANK_HDR}
          <sections>
            <admonition id='_' type='editorial'>
-             <p id='_'/>
+             <p id='_'>Note1</p>
            </admonition>
            <admonition id='_' type='editorial'>
              <p id='_'>Note2</p>
