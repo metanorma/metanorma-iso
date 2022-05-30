@@ -576,12 +576,12 @@ RSpec.describe IsoDoc do
              <ext>
                <doctype>article</doctype>
                <subdoctype>vocabulary</subdoctype>
-               <editorialgroup>
+               <editorialgroup identifier='ISO/ / / '>
                  <technical-committee/>
                  <subcommittee/>
                  <workgroup/>
                </editorialgroup>
-               <approvalgroup>
+               <approvalgroup identifier='ISO/ / / '>
                  <technical-committee/>
                  <subcommittee/>
                  <workgroup/>
