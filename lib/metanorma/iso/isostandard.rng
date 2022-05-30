@@ -359,6 +359,9 @@
   </include>
   <!-- end overrides -->
   <define name="ISOProjectGroup">
+    <zeroOrMore>
+      <ref name="agency"/>
+    </zeroOrMore>
     <oneOrMore>
       <ref name="technical-committee"/>
     </oneOrMore>
@@ -375,6 +378,11 @@
   <define name="approvalgroup">
     <element name="approvalgroup">
       <ref name="ISOProjectGroup"/>
+    </element>
+  </define>
+  <define name="agency">
+    <element name="agency">
+      <text/>
     </element>
   </define>
   <!--

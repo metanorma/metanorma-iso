@@ -200,12 +200,13 @@ module IsoDoc
       end
 
       def editorialgroup_identifier1(group)
+        agency = group.xpath(ns("./agency"))&.map(&:text)
         ret = %w(technical-committee subcommittee workgroup)
           .each_with_object([]) do |v, m|
           a = group.at(ns("./#{v}")) or next
           m << "#{a['type']} #{a['number']}"
         end
-        group["identifier"] = "ISO/#{ret.join('/')}"
+        group["identifier"] = (agency + ret).join("/")
       end
 
       def bibdata_i18n(bib)

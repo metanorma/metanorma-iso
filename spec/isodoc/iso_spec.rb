@@ -203,12 +203,15 @@ RSpec.describe IsoDoc::Iso do
             <doctype>international-standard</doctype>
             <horizontal>true</horizontal>
             <editorialgroup>
+              <agency>ISO</agency>
+              <agency>IEC</agency>
               <technical-committee type="A" number="34">Food products</technical-committee>
               <subcommittee type="B" number="4">Cereals and pulses</subcommittee>
               <workgroup type="C" number="3">Rice Group</workgroup>
               <secretariat>GB</secretariat>
             </editorialgroup>
             <approvalgroup>
+              <agency>ISO</agency>
               <technical-committee type="D" number="34a">Food products A</technical-committee>
               <subcommittee type="E" number="4a">Cereals and pulses A</subcommittee>
               <workgroup type="F" number="3a">Rice Group A</workgroup>
@@ -224,13 +227,16 @@ RSpec.describe IsoDoc::Iso do
           <doctype language=''>international-standard</doctype>
           <doctype language='en'>International Standard</doctype>
           <horizontal>true</horizontal>
-          <editorialgroup identifier='ISO/A 34/B 4/C 3'>
+          <editorialgroup identifier='ISO/IEC/A 34/B 4/C 3'>
+              <agency>ISO</agency>
+              <agency>IEC</agency>
             <technical-committee type='A' number='34'>Food products</technical-committee>
             <subcommittee type='B' number='4'>Cereals and pulses</subcommittee>
             <workgroup type='C' number='3'>Rice Group</workgroup>
             <secretariat>GB</secretariat>
           </editorialgroup>
           <approvalgroup identifier='ISO/D 34a/E 4a/F 3a'>
+              <agency>ISO</agency>
             <technical-committee type='D' number='34a'>Food products A</technical-committee>
             <subcommittee type='E' number='4a'>Cereals and pulses A</subcommittee>
             <workgroup type='F' number='3a'>Rice Group A</workgroup>

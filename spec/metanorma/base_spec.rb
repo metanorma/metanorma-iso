@@ -55,6 +55,7 @@ RSpec.describe Metanorma::ISO do
       :approval-workgroup_2: WG1a
       :approval-workgroup-number_2: 31a
       :approval-workgroup-type_2: C1a
+      :approval-agency: ISO/IEC
       :docstage: 20
       :docsubstage: 20
       :iteration: 3
@@ -126,6 +127,7 @@ RSpec.describe Metanorma::ISO do
               <doctype>article</doctype>
               <horizontal>true</horizontal>
               <editorialgroup>
+               <agency>ISO</agency>
                 <technical-committee number="1" type="A">TC</technical-committee>
                 <technical-committee number="11" type="A1">TC1</technical-committee>
                 <subcommittee number="2" type="B">SC</subcommittee>
@@ -135,6 +137,8 @@ RSpec.describe Metanorma::ISO do
                 <secretariat>SECRETARIAT</secretariat>
               </editorialgroup>
               <approvalgroup>
+                <agency>ISO</agency>
+                <agency>IEC</agency>
                 <technical-committee number="1a" type="Aa">TCa</technical-committee>
                 <technical-committee number="11a" type="A1a">TC1a</technical-committee>
                 <subcommittee number="2a" type="Ba">SCa</subcommittee>
@@ -310,11 +314,15 @@ RSpec.describe Metanorma::ISO do
                   <ext>
                     <doctype>technical-report</doctype>
              <editorialgroup>
+              <agency>IEC</agency>
+              <agency>IETF</agency>
+              <agency>ISO</agency>
                <technical-committee number='1' type='A'>TC</technical-committee>
                <subcommittee number='2' type='B'>SC</subcommittee>
                <workgroup number='3' type='C'>WG</workgroup>
              </editorialgroup>
              <approvalgroup>
+              <agency>ISO</agency>
                <technical-committee number='1' type='A'>TC</technical-committee>
                <subcommittee number='2' type='B'>SC</subcommittee>
                <workgroup number='3' type='C'>WG</workgroup>
@@ -386,11 +394,13 @@ RSpec.describe Metanorma::ISO do
            <ext>
              <doctype>technical-specification</doctype>
              <editorialgroup>
+              <agency>ISO</agency>
                <technical-committee/>
                <subcommittee/>
                <workgroup/>
              </editorialgroup>
              <approvalgroup>
+              <agency>ISO</agency>
                <technical-committee/>
                <subcommittee/>
                <workgroup/>
@@ -500,11 +510,13 @@ RSpec.describe Metanorma::ISO do
               <doctype>article</doctype>
               <horizontal>true</horizontal>
               <editorialgroup>
+               <agency>ISO</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
               </editorialgroup>
               <approvalgroup>
+               <agency>ISO</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
@@ -612,11 +624,13 @@ RSpec.describe Metanorma::ISO do
             <ext>
               <doctype>this-is-a-doctype</doctype>
               <editorialgroup>
+               <agency>SD</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
               </editorialgroup>
               <approvalgroup>
+               <agency>ISO</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
@@ -688,11 +702,13 @@ RSpec.describe Metanorma::ISO do
                   <ext>
                     <doctype>international-standard</doctype>
                     <editorialgroup>
+                     <agency>ISO</agency>
                       <technical-committee/>
                       <subcommittee/>
                       <workgroup/>
                     </editorialgroup>
                     <approvalgroup>
+                     <agency>ISO</agency>
                       <technical-committee/>
                       <subcommittee/>
                       <workgroup/>
@@ -762,11 +778,13 @@ RSpec.describe Metanorma::ISO do
           <ext>
             <doctype>article</doctype>
             <editorialgroup>
+             <agency>ISO</agency>
               <technical-committee/>
               <subcommittee/>
               <workgroup/>
             </editorialgroup>
             <approvalgroup>
+             <agency>ISO</agency>
               <technical-committee/>
               <subcommittee/>
               <workgroup/>
@@ -836,11 +854,13 @@ RSpec.describe Metanorma::ISO do
             <ext>
               <doctype>article</doctype>
               <editorialgroup>
+               <agency>ISO</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
               </editorialgroup>
               <approvalgroup>
+               <agency>ISO</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
@@ -909,11 +929,13 @@ RSpec.describe Metanorma::ISO do
             <ext>
               <doctype>directive</doctype>
               <editorialgroup>
+               <agency>ISO</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
               </editorialgroup>
               <approvalgroup>
+               <agency>ISO</agency>
                 <technical-committee/>
                 <subcommittee/>
                 <workgroup/>
@@ -1290,11 +1312,13 @@ RSpec.describe Metanorma::ISO do
               <ext>
                 <doctype>article</doctype>
                 <editorialgroup>
+                 <agency>ISO</agency>
                   <technical-committee/>
                   <subcommittee/>
                   <workgroup/>
                 </editorialgroup>
                 <approvalgroup>
+                 <agency>ISO</agency>
                   <technical-committee/>
                   <subcommittee/>
                   <workgroup/>

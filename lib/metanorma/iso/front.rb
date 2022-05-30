@@ -100,9 +100,16 @@ module Metanorma
           types = %w(approval-technical-committee approval-subcommittee
                      approval-workgroup)
         xml.approvalgroup do |a|
-          types.each do |v|
-            committee_component(v, node, a)
-          end
+          metadata_approval_agency(a, node.attr("approval-agency")
+            &.split(%r{[/,;]}))
+          types.each { |v| committee_component(v, node, a) }
+        end
+      end
+
+      def metadata_approval_agency(xml, list)
+        list = ["ISO"] if list.nil? || list.empty?
+        list.each do |v|
+          xml.agency v
         end
       end
 
