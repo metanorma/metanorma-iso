@@ -805,4 +805,41 @@ RSpec.describe IsoDoc do
       .at("//div[@class = 'WordSection2']").to_xml))
       .to be_equivalent_to xmlpp(word)
   end
+
+  it "ignores intervening ul in numbering ol" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <preface><foreword>
+      <ul>
+      <li>A</li>
+      <li>
+      <ol>
+      <li>List</li>
+      </ol>
+      </li>
+      </ul>
+      </foreword></preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+      <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+         <preface>
+           <foreword displayorder='1'>
+             <ul>
+               <li>A</li>
+               <li>
+                 <ol type='alphabet'>
+                   <li>List</li>
+                 </ol>
+               </li>
+             </ul>
+           </foreword>
+         </preface>
+       </iso-standard>
+    INPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(presxml)
+
+  end
 end
