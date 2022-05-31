@@ -1,6 +1,183 @@
 require "spec_helper"
 
 RSpec.describe IsoDoc do
+  it "processes examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <example id="samplecode">
+              <name>Title</name>
+              <p>Hello</p>
+            </example>
+          </foreword>
+        </preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <?xml version='1.0'?>
+      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword displayorder="1">
+            <example id="samplecode">
+              <name>EXAMPLE — Title</name>
+              <p>Hello</p>
+            </example>
+          </foreword>
+        </preface>
+      </iso-standard>
+    OUTPUT
+
+    html = <<~OUTPUT
+      #{HTML_HDR}
+            <br/>
+            <div>
+              <h1 class="ForewordTitle">Foreword</h1>
+              <div id="samplecode" class="example">
+                <p><span class="example_label">EXAMPLE&#160;&#8212; Title</span>&#160; Hello</p>
+              </div>
+            </div>
+            <p class="zzSTDTitle1"/>
+          </div>
+        </body>
+      </html>
+    OUTPUT
+
+    word = <<~OUTPUT
+          <body lang="EN-US" link="blue" vlink="#954F72">
+        <div class="WordSection1">
+          <p>&#160;</p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection2">
+          <p>
+            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+          </p>
+          <div>
+            <h1 class="ForewordTitle">Foreword</h1>
+            <div id="samplecode" class="example">
+              <p><span class="example_label">EXAMPLE&#160;&#8212; Title</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
+            </div>
+          </div>
+          <p>&#160;</p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection3">
+          <p class="zzSTDTitle1"/>
+        </div>
+        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+        <div class="colophon"/>
+      </body>
+    OUTPUT
+    expect(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)).to be_equivalent_to xmlpp(presxml)
+    expect(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)).to be_equivalent_to xmlpp(html)
+    output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
+    expect(xmlpp(output
+      .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "processes sequences of examples" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <example id="samplecode">
+              <quote>Hello</quote>
+            </example>
+            <example id="samplecode2">
+              <name>Title</name>
+              <p>Hello</p>
+            </example>
+          </foreword>
+        </preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <?xml version='1.0'?>
+      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword displayorder="1">
+            <example id="samplecode">
+              <name>EXAMPLE 1</name>
+              <quote>Hello</quote>
+            </example>
+            <example id="samplecode2">
+              <name>EXAMPLE 2 — Title</name>
+              <p>Hello</p>
+            </example>
+          </foreword>
+        </preface>
+      </iso-standard>
+    OUTPUT
+    html = <<~OUTPUT
+      #{HTML_HDR}
+            <br/>
+            <div>
+              <h1 class="ForewordTitle">Foreword</h1>
+              <div id="samplecode" class="example">
+                <p><span class="example_label">EXAMPLE  1</span>&#160; </p>
+                 <div class="Quote">Hello</div>
+              </div>
+              <div id="samplecode2" class="example">
+                <p><span class="example_label">EXAMPLE  2&#160;&#8212; Title</span>&#160; Hello</p>
+              </div>
+            </div>
+            <p class="zzSTDTitle1"/>
+          </div>
+        </body>
+      </html>
+    OUTPUT
+    word = <<~OUTPUT
+          <body lang="EN-US" link="blue" vlink="#954F72">
+        <div class="WordSection1">
+          <p>&#160;</p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection2">
+          <p>
+            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+          </p>
+          <div>
+            <h1 class="ForewordTitle">Foreword</h1>
+            <div id="samplecode" class="example">
+              <p><span class="example_label">EXAMPLE  1</span><span style="mso-tab-count:1">&#160; </span></p>
+              <div class="Quote">Hello</div>
+            </div>
+            <div id="samplecode2" class="example">
+              <p><span class="example_label">EXAMPLE  2&#160;&#8212; Title</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
+            </div>
+          </div>
+          <p>&#160;</p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection3">
+          <p class="zzSTDTitle1"/>
+        </div>
+        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+        <div class="colophon"/>
+      </body>
+    OUTPUT
+    expect(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)).to be_equivalent_to xmlpp(presxml)
+    expect(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)).to be_equivalent_to xmlpp(html)
+    output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
+    expect(xmlpp(output
+      .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "processes admonitions" do
     input = <<~INPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml">

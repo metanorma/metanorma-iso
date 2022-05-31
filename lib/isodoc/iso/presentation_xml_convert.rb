@@ -186,6 +186,29 @@ module IsoDoc
         end
       end
 
+      def bibdata(docxml)
+        super
+        editorialgroup_identifier(docxml)
+      end
+
+      def editorialgroup_identifier(docxml)
+        %w(editorialgroup approvalgroup).each do |v|
+          docxml.xpath(ns("//bibdata/ext/#{v}")).each do |a|
+            editorialgroup_identifier1(a)
+          end
+        end
+      end
+
+      def editorialgroup_identifier1(group)
+        agency = group.xpath(ns("./agency"))&.map(&:text)
+        ret = %w(technical-committee subcommittee workgroup)
+          .each_with_object([]) do |v, m|
+          a = group.at(ns("./#{v}")) or next
+          m << "#{a['type']} #{a['number']}"
+        end
+        group["identifier"] = (agency + ret).join("/")
+      end
+
       def bibdata_i18n(bib)
         hash_translate(bib, @i18n.get["doctype_dict"], "./ext/doctype")
         bibdata_i18n_stage(bib, bib.at(ns("./status/stage")),

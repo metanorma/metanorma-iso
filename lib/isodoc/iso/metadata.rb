@@ -66,28 +66,11 @@ module IsoDoc
 
       # we don't leave this to i18n.rb, because we have both English and
       # French titles in the same document
-      def part_label(lang)
-        case lang
-        when "en" then "Part"
-        when "fr" then "Partie"
-        when "ru" then "Часть"
-        end
-      end
-
-      def amd_label(lang)
-        case lang
-        when "en", "fr" then "AMENDMENT"
-        when "ru" then "ПОПРАВКА"
-        end
-      end
-
-      def corr_label(lang)
-        case lang
-        when "en" then "TECHNICAL CORRIGENDUM"
-        when "fr" then "RECTIFICATIF TECHNIQUE"
-        when "ru" then "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ"
-        end
-      end
+      PART_LABEL = { en: "Part", fr: "Partie", ru: "Часть" }.freeze
+      AMD_LABEL = { en: "AMENDMENT", fr: "AMENDMENT", ru: "ПОПРАВКА" }.freeze
+      CORR_LABEL = { en: "TECHNICAL CORRIGENDUM",
+                     fr: "RECTIFICATIF TECHNIQUE",
+                     ru: "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ" }.freeze
 
       def part_title(part, titlenums, lang)
         return "" unless part
@@ -97,7 +80,7 @@ module IsoDoc
         titlenums[:part] && titlenums[:subpart] and
           p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
         titlenums[:part] and
-          suffix = "#{part_label(lang)}&#xa0;#{p}: " + suffix
+          suffix = "#{PART_LABEL[lang.to_sym]}&#xa0;#{p}: " + suffix
         suffix
       end
 
@@ -105,15 +88,15 @@ module IsoDoc
         p = titlenums[:part]
         titlenums[:part] && titlenums[:subpart] and
           p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
-        "#{part_label(lang)}&#xa0;#{p}"
+        "#{PART_LABEL[lang.to_sym]}&#xa0;#{p}"
       end
 
       def amd_prefix(titlenums, lang)
-        "#{amd_label(lang)}&#xa0;#{titlenums[:amd]}"
+        "#{AMD_LABEL[lang.to_sym]}&#xa0;#{titlenums[:amd]}"
       end
 
       def corr_prefix(titlenums, lang)
-        "#{corr_label(lang)}&#xa0;#{titlenums[:corr]}"
+        "#{CORR_LABEL[lang.to_sym]}&#xa0;#{titlenums[:corr]}"
       end
 
       def compose_title(tparts, tnums, lang)
@@ -204,43 +187,53 @@ module IsoDoc
       end
 
       def tc(xml)
-        tc_type = xml.at(ns("//bibdata/ext/editorialgroup/technical-committee/"\
+        tcid = tc_base(xml, "editorialgroup") or return
+        set(:tc, tcid)
+        set(:editorialgroup, get[:editorialgroup] << tcid)
+      end
+
+      def tc_base(xml, grouptype)
+        tc_num = xml.at(ns("//bibdata/ext/#{grouptype}/"\
+                           "technical-committee/@number")) or return nil
+        tc_type = xml.at(ns("//bibdata/ext/#{grouptype}/technical-committee/"\
                             "@type"))&.text || "TC"
-        if tc_num = xml.at(ns("//bibdata/ext/editorialgroup/"\
-                              "technical-committee/@number"))
-          tcid = "#{tc_type} #{tc_num.text}"
-          set(:tc,  tcid)
-          set(:editorialgroup, get[:editorialgroup] << tcid)
-        end
+        "#{tc_type} #{tc_num.text}"
       end
 
       def sc(xml)
-        sc_num = xml.at(ns("//bibdata/ext/editorialgroup/subcommittee/@number"))
-        sc_type = xml.at(ns("//bibdata/ext/editorialgroup/subcommittee/"\
+        scid = sc_base(xml, "editorialgroup") or return
+        set(:sc, scid)
+        set(:editorialgroup, get[:editorialgroup] << scid)
+      end
+
+      def sc_base(xml, grouptype)
+        sc_num = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/"\
+                           "@number")) or return nil
+        sc_type = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/"\
                             "@type"))&.text || "SC"
-        if sc_num
-          scid = "#{sc_type} #{sc_num.text}"
-          set(:sc, scid)
-          set(:editorialgroup, get[:editorialgroup] << scid)
-        end
+        "#{sc_type} #{sc_num.text}"
       end
 
       def wg(xml)
-        wg_num = xml.at(ns("//bibdata/ext/editorialgroup/workgroup/@number"))
-        wg_type = xml.at(ns("//bibdata/ext/editorialgroup/workgroup/"\
+        wgid = wg_base(xml, "editorialgroup") or return
+        set(:wg, wgid)
+        set(:editorialgroup, get[:editorialgroup] << wgid)
+      end
+
+      def wg_base(xml, grouptype)
+        wg_num = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/"\
+                           "@number")) or return
+        wg_type = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/"\
                             "@type"))&.text || "WG"
-        if wg_num
-          wgid = "#{wg_type} #{wg_num.text}"
-          set(:wg, wgid)
-          set(:editorialgroup, get[:editorialgroup] << wgid)
-        end
+        "#{wg_type} #{wg_num.text}"
       end
 
       def approvalgroup(xml)
-        ag = xml.at(ns("//bibdata/ext/editorialgroup/approvalgroup"))
-        if ag
-          set(:approvalgroup, ag.text)
-        end
+        ag = tc_base(xml, "approvalgroup") or return
+        ret = [ag]
+        ret << sc_base(xml, "approvalgroup")
+        ret << wg_base(xml, "approvalgroup")
+        set(:approvalgroup, ret)
       end
 
       def secretariat(xml)
