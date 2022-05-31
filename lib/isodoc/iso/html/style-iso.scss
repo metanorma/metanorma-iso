@@ -410,34 +410,34 @@ ul, ol {
 
 /* https://github.com/metanorma/metanorma-iso/issues/319 : force a) parentheses for ordered lists */
 
-ol[type="a"] {
+ol[class="alphabet"] {
   counter-reset: alphabet;
 }
-ol[type="1"] {
+ol[class="arabic"] {
   counter-reset: arabic;
 }
-ol[type="i"] {
+ol[class="roman"] {
   counter-reset: roman;
 }
-ol[type="A"] {
+ol[class="alphabet_upper"] {
   counter-reset: alphabet_upper;
 }
-ol[type="I"] {
+ol[class="roman_upper"] {
   counter-reset: roman_upper;
 }
-ol[type="a"] ol[type="a"] {
+ol[class="alphabet"] ol[class="alphabet"] {
   counter-reset: alphabet2;
 }
-ol[type="1"] ol[type="1"] {
+ol[class="arabic"] ol[class="arabic"] {
   counter-reset: arabic2;
 }
-ol[type="i"] ol[type="i"] {
+ol[class="roman"] ol[class="roman"] {
   counter-reset: roman2;
 }
-ol[type="A"] ol[type="A"] {
+ol[class="alphabet_upper"] ol[class="alphabet_upper"] {
   counter-reset: alphabet_upper2;
 }
-ol[type="I"] ol[type="I"] {
+ol[class="roman_upper"] ol[class="roman_upper"] {
   counter-reset: roman_upper2;
 }
 ol {
@@ -452,29 +452,29 @@ ol > li:before {
   position: absolute;
   left: -1.4em;
 }
-ol[type="i"] > li:before {
+ol[class="roman"] > li:before {
   left: -2.0em;
 }
-ol[type="I"] > li:before {
+ol[class="roman_upper"] > li:before {
   left: -2.3em;
 }
-ol[type="a"] > li:before {
+ol[class="alphabet"] > li:before {
   counter-increment: alphabet;
   content: counter(alphabet, lower-alpha)") "
 }
-ol[type="1"] > li:before {
+ol[class="arabic"] > li:before {
   counter-increment: arabic;
   content: counter(arabic, decimal)") "
 }
-ol[type="i"] > li:before {
+ol[class="roman"] > li:before {
   counter-increment: roman;
   content: counter(roman, lower-roman)") "
 }
-ol[type="A"] > li:before {
+ol[class="alphabet_upper"] > li:before {
   counter-increment: alphabet_upper;
   content: counter(alphabet_upper, upper-alpha)") "
 }
-ol[type="I"] > li:before {
+ol[class="roman_upper"] > li:before {
   counter-increment: roman_upper;
   content: counter(roman_upper, upper-roman)") "
 }
@@ -482,23 +482,23 @@ ol > li:before {
   counter-increment: alphabet;
   content: counter(alphabet, lower-alpha)") "
 }
-ol[type="a"] ol[type="a"] > li:before {
+ol[class="alphabet"] ol[class="alphabet"] > li:before {
   counter-increment: alphabet2;
   content: counter(alphabet2, lower-alpha)") "
 }
-ol[type="1"] ol[type="1"] > li:before {
+ol[class="arabic"] ol[class="arabic"] > li:before {
   counter-increment: arabic2;
   content: counter(arabic2, decimal)") "
 }
-ol[type="i"] ol[type="i"] > li:before {
+ol[class="roman"] ol[class="roman"] > li:before {
   counter-increment: roman2;
   content: counter(roman2, lower-roman)") "
 }
-ol[type="A"] ol[type="A"] > li:before {
+ol[class="alphabet_upper"] ol[class="alphabet_upper"] > li:before {
   counter-increment: alphabet_upper2;
   content: counter(alphabet_upper2, upper-alpha)") "
 }
-ol[type="I"] ol[type="I"] > li:before {
+ol[class="roman_upper"] ol[class="roman_upper"] > li:before {
   counter-increment: roman_upper2;
   content: counter(roman_upper2, upper-roman)") "
 }
