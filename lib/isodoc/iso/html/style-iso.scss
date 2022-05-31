@@ -410,34 +410,34 @@ ul, ol {
 
 /* https://github.com/metanorma/metanorma-iso/issues/319 : force a) parentheses for ordered lists */
 
-ol[type="alphabet"] {
+ol[type="a"] {
   counter-reset: alphabet;
 }
-ol[type="arabic"] {
+ol[type="1"] {
   counter-reset: arabic;
 }
-ol[type="roman"] {
+ol[type="i"] {
   counter-reset: roman;
 }
-ol[type="alphabet_upper"] {
+ol[type="A"] {
   counter-reset: alphabet_upper;
 }
-ol[type="roman_upper"] {
+ol[type="I"] {
   counter-reset: roman_upper;
 }
-ol[type="alphabet"] ol[type="alphabet"] {
+ol[type="a"] ol[type="a"] {
   counter-reset: alphabet2;
 }
-ol[type="arabic"] ol[type="arabic"] {
+ol[type="1"] ol[type="1"] {
   counter-reset: arabic2;
 }
-ol[type="roman"] ol[type="roman"] {
+ol[type="i"] ol[type="i"] {
   counter-reset: roman2;
 }
-ol[type="alphabet_upper"] ol[type="alphabet_upper"] {
+ol[type="A"] ol[type="A"] {
   counter-reset: alphabet_upper2;
 }
-ol[type="roman_upper"] ol[type="roman_upper"] {
+ol[type="I"] ol[type="I"] {
   counter-reset: roman_upper2;
 }
 ol {
@@ -452,29 +452,29 @@ ol > li:before {
   position: absolute;
   left: -1.4em;
 }
-ol[type="roman"] > li:before {
+ol[type="i"] > li:before {
   left: -2.0em;
 }
-ol[type="roman_upper"] > li:before {
+ol[type="I"] > li:before {
   left: -2.3em;
 }
-ol[type="alphabet"] > li:before {
+ol[type="a"] > li:before {
   counter-increment: alphabet;
   content: counter(alphabet, lower-alpha)") "
 }
-ol[type="arabic"] > li:before {
+ol[type="1"] > li:before {
   counter-increment: arabic;
   content: counter(arabic, decimal)") "
 }
-ol[type="roman"] > li:before {
+ol[type="i"] > li:before {
   counter-increment: roman;
   content: counter(roman, lower-roman)") "
 }
-ol[type="alphabet_upper"] > li:before {
+ol[type="A"] > li:before {
   counter-increment: alphabet_upper;
   content: counter(alphabet_upper, upper-alpha)") "
 }
-ol[type="roman_upper"] > li:before {
+ol[type="I"] > li:before {
   counter-increment: roman_upper;
   content: counter(roman_upper, upper-roman)") "
 }
@@ -482,23 +482,23 @@ ol > li:before {
   counter-increment: alphabet;
   content: counter(alphabet, lower-alpha)") "
 }
-ol[type="alphabet"] ol[type="alphabet"] > li:before {
+ol[type="a"] ol[type="a"] > li:before {
   counter-increment: alphabet2;
   content: counter(alphabet2, lower-alpha)") "
 }
-ol[type="arabic"] ol[type="arabic"] > li:before {
+ol[type="1"] ol[type="1"] > li:before {
   counter-increment: arabic2;
   content: counter(arabic2, decimal)") "
 }
-ol[type="roman"] ol[type="roman"] > li:before {
+ol[type="i"] ol[type="i"] > li:before {
   counter-increment: roman2;
   content: counter(roman2, lower-roman)") "
 }
-ol[type="alphabet_upper"] ol[type="alphabet_upper"] > li:before {
+ol[type="A"] ol[type="A"] > li:before {
   counter-increment: alphabet_upper2;
   content: counter(alphabet_upper2, upper-alpha)") "
 }
-ol[type="roman_upper"] ol[type="roman_upper"] > li:before {
+ol[type="I"] ol[type="I"] > li:before {
   counter-increment: roman_upper2;
   content: counter(roman_upper2, upper-roman)") "
 }
