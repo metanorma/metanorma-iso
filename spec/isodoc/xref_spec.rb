@@ -153,7 +153,7 @@ RSpec.describe IsoDoc do
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
-  it "cross-references figures (Presentation XML)" do
+  it "cross-references figures" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
@@ -299,7 +299,7 @@ RSpec.describe IsoDoc do
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
-  it "cross-references subfigures (Presentation XML)" do
+  it "cross-references subfigures" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
@@ -1501,7 +1501,7 @@ RSpec.describe IsoDoc do
         <preface>
           <foreword displayorder='1'>
             <p>
-              <xref target='N'>Clause 1 a)</xref>
+              <xref target='N'>1 a)</xref>
               <xref target='note1'>3.1 List 1 a)</xref>
               <xref target='note2'>3.1 List 2 a)</xref>
               <xref target='AN'>A.1 a)</xref>
@@ -1621,12 +1621,12 @@ RSpec.describe IsoDoc do
         <preface>
           <foreword displayorder='1'>
             <p>
-              <xref target='N'>Clause 1 a)</xref>
-              <xref target='note1'>Clause 1 a.1)</xref>
-              <xref target='note2'>Clause 1 a.1.i)</xref>
-              <xref target='AN'>Clause 1 a.1.i.A)</xref>
-              <xref target='Anote1'>Clause 1 a.1.i.A.I)</xref>
-              <xref target='Anote2'>Clause 1 a.1.i.A.I.a)</xref>
+              <xref target='N'>1 a)</xref>
+              <xref target='note1'>1 a) 1)</xref>
+              <xref target='note2'>1 a) 1) i)</xref>
+              <xref target='AN'>1 a) 1) i) A)</xref>
+              <xref target='Anote1'>1 a) 1) i) A) I)</xref>
+              <xref target='Anote2'>1 a) 1) i) A) I) a)</xref>
             </p>
           </foreword>
         </preface>
