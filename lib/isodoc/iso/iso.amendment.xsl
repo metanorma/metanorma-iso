@@ -2089,10 +2089,30 @@
 			
 	</xsl:variable><xsl:variable name="isGenerateTableIF" select="normalize-space($isGenerateTableIF_)"/><xsl:variable name="lang">
 		<xsl:call-template name="getLang"/>
-	</xsl:variable><xsl:variable name="pageWidth_">
-		210
+	</xsl:variable><xsl:variable name="papersize" select="java:toLowerCase(java:java.lang.String.new(normalize-space(//*[contains(local-name(), '-standard')]/*[local-name() = 'misc-container']/*[local-name() = 'presentation-metadata']/*[local-name() = 'papersize'])))"/><xsl:variable name="papersize_width_">
+		<xsl:choose>
+			<xsl:when test="$papersize = 'letter'">215.9</xsl:when>
+			<xsl:when test="$papersize = 'a4'">210</xsl:when>
+		</xsl:choose>
+	</xsl:variable><xsl:variable name="papersize_width" select="normalize-space($papersize_width_)"/><xsl:variable name="papersize_height_">
+		<xsl:choose>
+			<xsl:when test="$papersize = 'letter'">279.4</xsl:when>
+			<xsl:when test="$papersize = 'a4'">297</xsl:when>
+		</xsl:choose>
+	</xsl:variable><xsl:variable name="papersize_height" select="normalize-space($papersize_height_)"/><xsl:variable name="pageWidth_">
+		<xsl:choose>
+			<xsl:when test="$papersize_width != ''"><xsl:value-of select="$papersize_width"/></xsl:when>
+			<xsl:otherwise>
+				210
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:variable><xsl:variable name="pageWidth" select="normalize-space($pageWidth_)"/><xsl:variable name="pageHeight_">
-		297
+		<xsl:choose>
+			<xsl:when test="$papersize_height != ''"><xsl:value-of select="$papersize_height"/></xsl:when>
+			<xsl:otherwise>
+				297
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:variable><xsl:variable name="pageHeight" select="normalize-space($pageHeight_)"/><xsl:variable name="marginLeftRight1_">
 		25
 	</xsl:variable><xsl:variable name="marginLeftRight1" select="normalize-space($marginLeftRight1_)"/><xsl:variable name="marginLeftRight2_">
