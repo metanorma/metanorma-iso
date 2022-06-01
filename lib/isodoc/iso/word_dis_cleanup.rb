@@ -41,17 +41,18 @@ module IsoDoc
       end
 
       def dis_styles1(docxml)
-        remove_note_label(docxml)
         amd_style(docxml)
         code_style(docxml)
         figure_style(docxml)
+        note_style(docxml)
         example_style(docxml)
         quote_style(docxml)
         dis_style_interactions(docxml)
       end
 
       def dis_style_interactions(docxml)
-        docxml.xpath("//p[@class = 'Code']"\
+        docxml.xpath("//p[@class = 'Code' or @class = 'Code-' or "\
+                     "@class = 'Code--']"\
                      "[following::p[@class = 'Examplecontinued']]").each do |p|
           p["style"] ||= ""
           p["style"] = "margin-bottom:12pt;#{p['style']}"
@@ -74,22 +75,25 @@ module IsoDoc
                      end
       end
 
+      def para_style_change(div, class1, class2)
+        s = class1 ? "@class = '#{class1}'" : "not(@class)"
+        div.xpath(".//p[#{s}]").each do |p|
+          p["class"] = class2
+        end
+      end
+
       def quote_style1(div)
-        div.xpath(".//p[not(@class)]").each do |p|
-          p["class"] = "BodyTextindent1"
-        end
+        para_style_change(div, nil, "BodyTextindent1")
+        para_style_change(div, "Code-", "Code--")
+        para_style_change(div, "Code", "Code-")
         if div["class"] != "Example"
-          div.xpath(".//p[@class = 'Example']").each do |p|
-            p["class"] = "Exampleindent"
-          end
-          div.xpath(".//p[@class = 'Examplecontinued']").each do |p|
-            p["class"] = "Exampleindentcontinued"
-          end
+          para_style_change(div, "Example", "Exampleindent")
+          para_style_change(div, "Examplecontinued", "Exampleindentcontinued")
         end
-        div["class"] != "Note" and
-          div.xpath(".//p[@class = 'Note']").each do |p|
-            p["class"] = "Noteindent"
-          end
+        if div["class"] != "Note"
+          para_style_change(div, "Note", "Noteindent")
+          para_style_change(div, "Notecontinued", "Noteindentcontinued")
+        end
         div.xpath(".//table[@class = 'dl']").each do |t|
           t["style"] = "margin-left: 1cm;"
         end
@@ -102,6 +106,11 @@ module IsoDoc
         end
       end
 
+      def note_style(docxml)
+        remove_note_label(docxml)
+        note_continued_style(docxml)
+      end
+
       def example_style(docxml)
         example_continued_style(docxml)
       end
@@ -112,6 +121,16 @@ module IsoDoc
             next if p["class"] && p["class"] != "Example"
 
             p["class"] = (i.zero? ? "Example" : "Examplecontinued")
+          end
+        end
+      end
+
+      def note_continued_style(docxml)
+        docxml.xpath("//div[@class = 'Note']").each do |d|
+          d.xpath("./p").each_with_index do |p, i|
+            next if p["class"] && p["class"] != "Note"
+
+            p["class"] = (i.zero? ? "Note" : "Notecontinued")
           end
         end
       end
