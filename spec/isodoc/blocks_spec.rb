@@ -864,8 +864,8 @@ RSpec.describe IsoDoc do
   end
 
   it "processes formulae with single definition list entry" do
-    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test",
-                                                      <<~"INPUT", true)
+    output = IsoDoc::Iso::HtmlConvert.new({})
+.convert("test", <<~"INPUT", true)
                                                         <iso-standard xmlns="http://riboseinc.com/isoxml">
                                                           <preface>
                                                             <foreword>
@@ -921,6 +921,158 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
+  it "adds ordered list classes for HTML" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <preface><foreword>
+        <ol>
+        <li><p>A</p></li>
+        <li><p>B</p></li>
+        <li><ol>
+        <li>C</li>
+        <li>D</li>
+        <li><ol>
+        <li>E</li>
+        <li>F</li>
+        <li><ol>
+        <li>G</li>
+        <li>H</li>
+        <li><ol>
+        <li>I</li>
+        <li>J</li>
+        <li><ol>
+        <li>K</li>
+        <li>L</li>
+        <li>M</li>
+        </ol></li>
+        <li>N</li>
+        </ol></li>
+        <li>O</li>
+        </ol></li>
+        <li>P</li>
+        </ol></li>
+        <li>Q</li>
+        </ol></li>
+        <li>R</li>
+        </ol>
+      </foreword></preface>
+      </iso-standard>
+    INPUT
+        presxml = <<~INPUT
+               <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+         <preface>
+           <foreword displayorder='1'>
+             <ol type='alphabet'>
+               <li>
+                 <p>A</p>
+               </li>
+               <li>
+                 <p>B</p>
+               </li>
+               <li>
+                 <ol type='arabic'>
+                   <li>C</li>
+                   <li>D</li>
+                   <li>
+                     <ol type='roman'>
+                       <li>E</li>
+                       <li>F</li>
+                       <li>
+                         <ol type='alphabet_upper'>
+                           <li>G</li>
+                           <li>H</li>
+                           <li>
+                             <ol type='roman_upper'>
+                               <li>I</li>
+                               <li>J</li>
+                               <li>
+                                 <ol type='alphabet'>
+                                   <li>K</li>
+                                   <li>L</li>
+                                   <li>M</li>
+                                 </ol>
+                               </li>
+                               <li>N</li>
+                             </ol>
+                           </li>
+                           <li>O</li>
+                         </ol>
+                       </li>
+                       <li>P</li>
+                     </ol>
+                   </li>
+                   <li>Q</li>
+                 </ol>
+               </li>
+               <li>R</li>
+             </ol>
+           </foreword>
+         </preface>
+       </iso-standard>
+    INPUT
+    html = <<~OUTPUT
+      #{HTML_HDR}
+                    <br/>
+             <div>
+               <h1 class='ForewordTitle'>Foreword</h1>
+                              <ol type='a' class='alphabet'>
+                 <li>
+                   <p>A</p>
+                 </li>
+                 <li>
+                   <p>B</p>
+                 </li>
+                 <li>
+                   <ol type='1' class='arabic'>
+                     <li>C</li>
+                     <li>D</li>
+                     <li>
+                       <ol type='i' class='roman'>
+                         <li>E</li>
+                         <li>F</li>
+                         <li>
+                           <ol type='A' class='alphabet_upper'>
+                             <li>G</li>
+                             <li>H</li>
+                             <li>
+                               <ol type='I' class='roman_upper'>
+                                 <li>I</li>
+                                 <li>J</li>
+                                 <li>
+                                   <ol type='a' class='alphabet'>
+                                     <li>K</li>
+                                     <li>L</li>
+                                     <li>M</li>
+                                   </ol>
+                                 </li>
+                                 <li>N</li>
+                               </ol>
+                             </li>
+                             <li>O</li>
+                           </ol>
+                         </li>
+                         <li>P</li>
+                       </ol>
+                     </li>
+                     <li>Q</li>
+                   </ol>
+                 </li>
+                 <li>R</li>
+               </ol>
+             </div>
+             <p class='zzSTDTitle1'/>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
+  end
+
   it "processes ordered lists with start" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -947,7 +1099,7 @@ RSpec.describe IsoDoc do
                     <br/>
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
-               <ol type='a' start='4'>
+               <ol type='a' start='4'  class='alphabet'>
                  <li>List</li>
                </ol>
              </div>
