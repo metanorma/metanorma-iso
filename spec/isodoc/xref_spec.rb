@@ -1670,4 +1670,78 @@ RSpec.describe IsoDoc do
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
+
+  it "conflates cross-references to a split list" do
+    input = <<~INPUT
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <p><xref target="Na"/></p>
+          </foreword>
+        </preface>
+        <sections>
+          <clause id="scope" type="scope">
+            <title>Scope</title>
+            <ol id="N1">
+              <li id="Na"><p>A</p></li>
+              <li id="Na1"><p>A</p></li>
+            </ol>
+            <ol id="N2" start="3">
+              <li id="Nb"><p>A</p></li>
+              <li id="Nb1"><p>A</p></li>
+            </ol>
+            <ol id="N3" start="5">
+              <li id="Nc"><p>A</p></li>
+              <li id="Nc1"><p>A</p></li>
+            </ol>
+          </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <foreword displayorder='1'>
+        <p><xref target='Na'>Clause 1 a)</xref></p>
+      </foreword>
+    OUTPUT
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    .convert("test", input, true))
+    .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to xmlpp(output)
+
+    input = <<~INPUT
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <p><xref target="Na"/></p>
+          </foreword>
+        </preface>
+        <sections>
+          <clause id="scope" type="scope">
+            <title>Scope</title>
+            <ol id="N1">
+              <li id="Na"><p>A</p></li>
+              <li id="Na1"><p>A</p></li>
+            </ol>
+            <ol id="N2" start="3">
+              <li id="Nb"><p>A</p></li>
+              <li id="Nb1"><p>A</p></li>
+            </ol>
+            <ol id="N3" start="6">
+              <li id="Nc"><p>A</p></li>
+              <li id="Nc1"><p>A</p></li>
+            </ol>
+          </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <foreword displayorder='1'>
+        <p><xref target='Na'>Clause 1 List 1 a)</xref></p>
+      </foreword>
+    OUTPUT
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    .convert("test", input, true))
+    .at("//xmlns:foreword").to_xml))
+      .to be_equivalent_to xmlpp(output)
+  end
 end

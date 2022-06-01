@@ -77,11 +77,10 @@ module IsoDoc
         i = Counter.new
         clause.xpath(ns("./appendix")).each do |c|
           i.increment(c)
-          @anchors[c["id"]] = anchor_struct(i.print, nil, @labels["appendix"],
-                                            "clause")
-          @anchors[c["id"]][:level] = 2
-          @anchors[c["id"]][:subtype] = "annex"
-          @anchors[c["id"]][:container] = clause["id"]
+          @anchors[c["id"]] =
+            anchor_struct(i.print, nil, @labels["appendix"],
+                          "clause").merge(level: 2, subtype: "annex",
+                                          container: clause["id"])
           j = Counter.new
           c.xpath(ns("./clause | ./references")).each do |c1|
             j.increment(c1)
@@ -188,6 +187,35 @@ module IsoDoc
 
       def annex_name_lbl(clause, num)
         super.sub(%r{<br/>(.*)$}, "<br/><span class='obligation'>\\1</span>")
+      end
+
+      def list_anchor_names(sections)
+        sections.each do |s|
+          notes = s.xpath(ns(".//ol")) - s.xpath(ns(".//clause//ol")) -
+            s.xpath(ns(".//appendix//ol")) - s.xpath(ns(".//ol//ol"))
+          c = Counter.new
+          notes.reject { |n| blank?(n["id"]) }.each do |n|
+            @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
+                                              @labels["list"], "list", false)
+            list_item_anchor_names(n, @anchors[n["id"]], 1, "",
+                                   !single_ol_for_xrefs?(notes))
+          end
+          list_anchor_names(s.xpath(ns(CHILD_SECTIONS)))
+        end
+      end
+
+      # all li in the ol in lists are consecutively numbered through @start
+      def single_ol_for_xrefs?(lists)
+        return true if lists.size == 1
+
+        start = 0
+        lists.each_with_index do |l, i|
+          next if i.zero?
+
+          start += lists[i - 1].xpath(ns("./li")).size
+          return false unless l["start"]&.to_i == start + 1
+        end
+        true
       end
     end
   end
