@@ -132,7 +132,8 @@ class Html2Doc
       return idx if elem.at(".//ol | .//ul") && !elem.at("./p")
 
       idx += 1
-      label = listlabel(listtype, idx, level)
+      ol = elem.xpath("./ancestor::ol")&.last
+      label = listlabel(listtype, idx, ol ? ol["type"] : nil)
       elem.children.first.previous =
         "#{label}<span style='mso-tab-count:1'>&#xa0;</span>"
       elem["level"] = level
@@ -148,11 +149,11 @@ class Html2Doc
 
     def listidx(idx, level)
       case level
-      when 1, 6 then (96 + idx).chr.to_s
-      when 2, 7 then idx.to_s
-      when 3, 8 then RomanNumerals.to_roman(idx).downcase
-      when 4, 9 then (64 + idx).chr.to_s
-      when 5, 10 then RomanNumerals.to_roman(idx).upcase
+      when "a" then (96 + idx).chr.to_s
+      when "1" then idx.to_s
+      when "i" then RomanNumerals.to_roman(idx).downcase
+      when "A" then (64 + idx).chr.to_s
+      when "I" then RomanNumerals.to_roman(idx).upcase
       end
     end
 

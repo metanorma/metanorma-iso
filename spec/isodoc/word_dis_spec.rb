@@ -425,7 +425,7 @@ RSpec.describe IsoDoc do
          <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
-           <h1/>
+           <h1>1</h1>
            <p class='ListNumber1'>
              a)
              <span style='mso-tab-count:1'> </span>
@@ -615,7 +615,9 @@ RSpec.describe IsoDoc do
        </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
-    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
@@ -668,106 +670,108 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~OUTPUT
-           <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
-         <div>
-           <a name='A' id='A'/>
-           <h1/>
-           <p class='ListNumber1'>
-             c)
-             <span style='mso-tab-count:1'> </span>
-             A
-           </p>
-           <p class='ListNumber1'>
-             d)
-             <span style='mso-tab-count:1'> </span>
-             B
-           </p>
-           <p class='MsoListNumber2'>
-             3)
-             <span style='mso-tab-count:1'> </span>
-             C
-           </p>
-           <p class='MsoListNumber2'>
-             4)
-             <span style='mso-tab-count:1'> </span>
-             D
-           </p>
-           <p class='MsoListNumber3'>
-             iii)
-             <span style='mso-tab-count:1'> </span>
-             E
-           </p>
-           <p class='MsoListNumber3'>
-             iv)
-             <span style='mso-tab-count:1'> </span>
-             F
-           </p>
-           <p class='MsoListNumber4'>
-             C)
-             <span style='mso-tab-count:1'> </span>
-             G
-           </p>
-           <p class='MsoListNumber4'>
-             D)
-             <span style='mso-tab-count:1'> </span>
-             H
-           </p>
-           <p class='MsoListNumber5'>
-             III)
-             <span style='mso-tab-count:1'> </span>
-             I
-           </p>
-           <p class='MsoListNumber5'>
-             IV)
-             <span style='mso-tab-count:1'> </span>
-             J
-           </p>
-           <p class='MsoListNumber5'>
-             c)
-             <span style='mso-tab-count:1'> </span>
-             K
-           </p>
-           <p class='MsoListNumber5'>
-             d)
-             <span style='mso-tab-count:1'> </span>
-             L
-           </p>
-           <p class='MsoListNumber5'>
-             e)
-             <span style='mso-tab-count:1'> </span>
-             M
-           </p>
-           <p class='MsoListNumber5'>
-             V)
-             <span style='mso-tab-count:1'> </span>
-             N
-           </p>
-           <p class='MsoListNumber4'>
-             E)
-             <span style='mso-tab-count:1'> </span>
-             O
-           </p>
-           <p class='MsoListNumber3'>
-             v)
-             <span style='mso-tab-count:1'> </span>
-             P
-           </p>
-           <p class='MsoListNumber2'>
-             5)
-             <span style='mso-tab-count:1'> </span>
-             Q
-           </p>
-           <p class='ListNumber1'>
-             e)
-             <span style='mso-tab-count:1'> </span>
-             R
-           </p>
-         </div>
-       </div>
+          <div class='WordSection3'>
+        <p class='zzSTDTitle'/>
+        <div>
+          <a name='A' id='A'/>
+          <h1>1</h1>
+          <p class='ListNumber1'>
+            c)
+            <span style='mso-tab-count:1'> </span>
+            A
+          </p>
+          <p class='ListNumber1'>
+            d)
+            <span style='mso-tab-count:1'> </span>
+            B
+          </p>
+          <p class='MsoListNumber2'>
+            3)
+            <span style='mso-tab-count:1'> </span>
+            C
+          </p>
+          <p class='MsoListNumber2'>
+            4)
+            <span style='mso-tab-count:1'> </span>
+            D
+          </p>
+          <p class='MsoListNumber3'>
+            iii)
+            <span style='mso-tab-count:1'> </span>
+            E
+          </p>
+          <p class='MsoListNumber3'>
+            iv)
+            <span style='mso-tab-count:1'> </span>
+            F
+          </p>
+          <p class='MsoListNumber4'>
+            C)
+            <span style='mso-tab-count:1'> </span>
+            G
+          </p>
+          <p class='MsoListNumber4'>
+            D)
+            <span style='mso-tab-count:1'> </span>
+            H
+          </p>
+          <p class='MsoListNumber5'>
+            III)
+            <span style='mso-tab-count:1'> </span>
+            I
+          </p>
+          <p class='MsoListNumber5'>
+            IV)
+            <span style='mso-tab-count:1'> </span>
+            J
+          </p>
+          <p class='MsoListNumber5'>
+            c)
+            <span style='mso-tab-count:1'> </span>
+            K
+          </p>
+          <p class='MsoListNumber5'>
+            d)
+            <span style='mso-tab-count:1'> </span>
+            L
+          </p>
+          <p class='MsoListNumber5'>
+            e)
+            <span style='mso-tab-count:1'> </span>
+            M
+          </p>
+          <p class='MsoListNumber5'>
+            V)
+            <span style='mso-tab-count:1'> </span>
+            N
+          </p>
+          <p class='MsoListNumber4'>
+            E)
+            <span style='mso-tab-count:1'> </span>
+            O
+          </p>
+          <p class='MsoListNumber3'>
+            v)
+            <span style='mso-tab-count:1'> </span>
+            P
+          </p>
+          <p class='MsoListNumber2'>
+            5)
+            <span style='mso-tab-count:1'> </span>
+            Q
+          </p>
+          <p class='ListNumber1'>
+            e)
+            <span style='mso-tab-count:1'> </span>
+            R
+          </p>
+        </div>
+      </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
-    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
@@ -1034,7 +1038,6 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A">
         <note id="B">
-        <name>NOTE</name>
         <ul>
         <li><p>A</p></li>
         <li><p>B</p></li>
@@ -1075,7 +1078,7 @@ RSpec.describe IsoDoc do
         <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
-          <h1/>
+          <h1>1</h1>
           <div>
             <a name='B' id='B'/>
             <p class='Note'>
@@ -1177,7 +1180,9 @@ RSpec.describe IsoDoc do
       </div>
     WORD
     FileUtils.rm_f "test.doc"
-    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
@@ -1196,7 +1201,6 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A">
         <example id="B">
-        <name>EXAMPLE</name>
                 <ol>
         <li><p>A</p></li>
         <li><p>B</p></li>
@@ -1233,11 +1237,11 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-           <div class='WordSection3'>
+      <div class='WordSection3'>
          <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
-           <h1/>
+           <h1>1</h1>
            <div>
              <a name='B' id='B'/>
              <p class='Example'>
@@ -1339,7 +1343,80 @@ RSpec.describe IsoDoc do
        </div>
     WORD
     FileUtils.rm_f "test.doc"
-    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "ignores intervening ul in numbering ol" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+      <ul>
+      <li>A</li>
+      <li>
+      <ol>
+      <li>List</li>
+      <li>
+      <ul>
+      <li>B</li>
+      <li>
+      <ol>
+      <li>List 2</li>
+      </ol>
+      </li>
+      </ul>
+      </li>
+      </ol>
+      </li>
+      </ul>
+      </clause></sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+      <div class='WordSection3'>
+         <p class='zzSTDTitle'/>
+         <div>
+           <a name='A' id='A'/>
+           <h1>1</h1>
+           <p class='ListContinue1'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             A
+           </p>
+           <p class='MsoListNumber2'>
+             a)
+             <span style='mso-tab-count:1'> </span>
+             List
+           </p>
+           <p class='MsoListContinue3'>
+             —
+             <span style='mso-tab-count:1'> </span>
+             B
+           </p>
+           <p class='MsoListNumber4'>
+             1)
+             <span style='mso-tab-count:1'> </span>
+             List 2
+           </p>
+         </div>
+       </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
