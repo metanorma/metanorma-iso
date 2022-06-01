@@ -968,7 +968,7 @@ RSpec.describe IsoDoc do
               <span style='mso-tab-count:1'>  </span>
               Second example
             </p>
-            <p class='Code' style='margin-bottom:12pt;'>Code</p>
+            <p class='Code-' style='margin-bottom:12pt;'>Code</p>
             <p class='Examplecontinued'>Continuation</p>
           </div>
         </div>
@@ -997,6 +997,11 @@ RSpec.describe IsoDoc do
         <name>NOTE</name>
         <p>First example</p>
         </note>
+        <note id="C">
+        <p>Second example</p>
+        <sourcecode>Code</sourcecode>
+        <p>Continuation</p>
+        </note>
         </clause>
         </sections>
       </iso-standard>
@@ -1015,6 +1020,15 @@ RSpec.describe IsoDoc do
               First example
             </p>
           </div>
+          <div>
+             <a name='C' id='C'/>
+             <p class='Note'>
+               <span style='mso-tab-count:1'>  </span>
+               Second example
+             </p>
+             <p class='Code-'>Code</p>
+             <p class='Notecontinued'>Continuation</p>
+         </div>
         </div>
       </div>
     WORD
@@ -1539,8 +1553,10 @@ RSpec.describe IsoDoc do
         <note><p>Note clause</p></note>
         <example>
         <p>Example start</p>
+        <sourcecode>X</sourcecode>
         <p>Example continued</p>
         </example>
+        <sourcecode>X</sourcecode>
         </quote>
         </clause>
         </sections>
@@ -1565,8 +1581,10 @@ RSpec.describe IsoDoc do
                  <span style='mso-tab-count:1'>  </span>
                  Example start
                </p>
+              <p class='Code--'>X</p>
                <p class='Exampleindentcontinued'>Example continued</p>
              </div>
+              <p class='Code-'>X</p>
            </div>
          </div>
        </div>
