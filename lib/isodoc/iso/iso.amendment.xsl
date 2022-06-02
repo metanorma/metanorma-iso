@@ -3480,13 +3480,13 @@
 		
 	</xsl:attribute-set><xsl:variable name="border-block-added">2.5pt solid rgb(0, 176, 80)</xsl:variable><xsl:variable name="border-block-deleted">2.5pt solid rgb(255, 0, 0)</xsl:variable><xsl:variable name="ace_tag">ace-tag_</xsl:variable><xsl:template name="processPrefaceSectionsDefault_Contents">
 		<xsl:variable name="nodes_preface_">
-			<xsl:for-each select="/*/*[local-name()='preface']/*">
+			<xsl:for-each select="/*/*[local-name()='preface']/*[not(local-name() = 'note' or local-name() = 'admonition')]">
 				<node id="{@id}"/>
 			</xsl:for-each>
 		</xsl:variable>
 		<xsl:variable name="nodes_preface" select="xalan:nodeset($nodes_preface_)"/>
 		
-		<xsl:for-each select="/*/*[local-name()='preface']/*">
+		<xsl:for-each select="/*/*[local-name()='preface']/*[not(local-name() = 'note' or local-name() = 'admonition')]">
 			<xsl:sort select="@displayorder" data-type="number"/>
 			
 			<!-- process Section's title -->
