@@ -7834,7 +7834,7 @@
 		<xsl:for-each select="xalan:nodeset($text_step4)/node()">
 			<xsl:choose>
 				<xsl:when test="local-name() = 'interspers'"> <!-- word with length more than 30 will be interspersed with zero-width space -->
-					<xsl:call-template name="interspers">
+					<xsl:call-template name="interspers-java">
 						<xsl:with-param name="str" select="."/>
 					</xsl:call-template>
 				</xsl:when>
@@ -7884,6 +7884,10 @@
 				<xsl:with-param name="char" select="$char"/>
 			</xsl:call-template>
 		</xsl:if>
+	</xsl:template><xsl:template name="interspers-java">
+		<xsl:param name="str"/>
+		<xsl:param name="char" select="$zero_width_space"/>
+		<xsl:value-of select="java:replaceAll(java:java.lang.String.new($str),'([^ -.:=_—])',concat('$1', $char))"/> <!-- insert $char after each char excep space, - . : = _ etc. -->
 	</xsl:template><xsl:template match="*" mode="syntax_highlight">
 		<xsl:apply-templates mode="syntax_highlight"/>
 	</xsl:template><xsl:variable name="syntax_highlight_styles_">
