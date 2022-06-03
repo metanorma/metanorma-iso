@@ -13,6 +13,8 @@ module IsoDoc
         ret = ""
         docxml.at(ns("//bibdata/ext//secretariat")) or
           ret += "<p>Secretariat is missing.</p>"
+        docxml.at(ns("//bibdata/ext//editorialgroup")) or
+          ret += "<p>Editorial groups are missing.</p>"
         docxml.at(ns("//bibdata/date[@type = 'published' or @type = 'issued' "\
                      "or @type = 'created']")) ||
           docxml.at(ns("//bibdata/version/revision-date")) or

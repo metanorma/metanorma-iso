@@ -544,8 +544,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
-      .to_xml
-      .gsub(/'/, '"'))))
+      .to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -591,8 +590,52 @@ RSpec.describe IsoDoc::Iso::Metadata do
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
-      .to_xml
-      .gsub(/'/, '"'))))
+      .to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "warns of missing editorial groups" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata type="standard">
+              <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+              <status><stage abbreviation="CD">30</stage></status>
+              <date type="published">2000</date>
+              <ext>
+                <secretariat>BSI</secretariat>
+              </ext>
+          </bibdata>
+          <sections>
+            <clause>
+              <title>Clause 1</title>
+            </clause>
+          </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+        <clause displayorder="1">
+          <title depth="1">
+            <review date="2022-06-03" reviewer="Metanorma" id="_">
+              <p>
+                <strong>
+                  Metadata warnings:
+                  <strong/>
+                  <p>Editorial groups are missing.</p>
+                </strong>
+              </p>
+            </review>
+            Clause 1
+          </title>
+        </clause>
+      </sections>
+    OUTPUT
+    expect(strip_guid(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true),
+    )
+  .at("//xmlns:sections")
+      .to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
