@@ -158,9 +158,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
             <title type="title-part" language="en" format="text/plain">Rice</title>
-            <title type="title-intro" language="fr" format="text/plain">Céréales et légumineuses</title>
-            <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
-            <title type="title-part" language="fr" format="text/plain">Riz</title>
           <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
           <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
@@ -231,10 +228,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
       :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
-      :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&#xa0;&#x2014; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&#xa0;&#x2014; Partie&#xa0;1&#x2013;3: Riz",
-      :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses",
-      :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai",
-      :docsubtitlepart=>"Riz",
       :docsubtitlepartlabel=>"Partie&#xa0;1&#x2013;3",
       :doctitle=>"Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
       :doctitleintro=>"Cereals and pulses",
@@ -525,7 +518,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       <sections>
         <clause displayorder="1">
           <title depth="1">
-            <review date="2022-06-03" reviewer="Metanorma" id="_">
+            <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
                   Metadata warnings:
@@ -539,12 +532,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </clause>
       </sections>
     OUTPUT
-    expect(strip_guid(xmlpp(Nokogiri::XML(
+    expect(xmlpp(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true),
     )
-  .at("//xmlns:sections")
-      .to_xml)))
+      .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -571,7 +563,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       <sections>
         <clause displayorder="1">
           <title depth="1">
-            <review date="2022-06-03" reviewer="Metanorma" id="_">
+            <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
                   Metadata warnings:
@@ -590,7 +582,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
-      .to_xml)))
+      .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -616,7 +608,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       <sections>
         <clause displayorder="1">
           <title depth="1">
-            <review date="2022-06-03" reviewer="Metanorma" id="_">
+            <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
                   Metadata warnings:
@@ -635,7 +627,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
-      .to_xml)))
+      .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 

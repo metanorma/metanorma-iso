@@ -14,10 +14,11 @@ module IsoDoc
         @wordToClevels = 3 if @wordToClevels.zero?
         @htmlToClevels = options[:htmltoclevels].to_i
         @htmlToClevels = 3 if @htmlToClevels.zero?
-        init_dis
+        init_dis(options)
       end
 
-      def init_dis
+      def init_dis(options)
+        @wordtemplate = options[:isowordtemplate]
         @dis = ::IsoDoc::Iso::WordDISConvert.new(options)
       end
 
@@ -55,8 +56,10 @@ module IsoDoc
                 output_filename = nil)
         file = File.read(input_filename, encoding: "utf-8") if file.nil?
         docxml = Nokogiri::XML(file) { |config| config.huge }
+        stage = docxml&.at(ns("//bibdata/status/stage"))&.text
         if @dis &&
-            /^[4569].$/.match?(docxml&.at(ns("//bibdata/status/stage"))&.text)
+            ((/^[4569].$/.match?(stage) && @wordtemplate != "simple") ||
+            (/^[0-3].$/.match?(stage) && @wordtemplate == "dis"))
           @dis.convert(input_filename, file, debug, output_filename)
         else
           super
