@@ -100,9 +100,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :activateddate=>"2013",
       :agency=>"ISO",
       :approvalgroup=>["TC 34a", "SC 4a", "WG 3a"],
-      :circulateddate=>"XXX",
-      :confirmeddate=>"XXX",
-      :copieddate=>"XXX",
       :createddate=>"2010&#x2013;2011",
       :docnumber=>"ISO/PreCD3 17301-1",
       :docnumber_lang=>"ISO/PreCD3 17301-1 (E)",
@@ -126,14 +123,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :edition=>"2",
       :editorialgroup=>["TC 34", "SC 4", "WG 3"],
       :horizontal=>"true",
-      :implementeddate=>"XXX",
-      :issueddate=>"XXX",
       :keywords=>["kw2", "kw1"],
       :lang=>"en",
       :obsoleteddate=>"2014",
       :publisheddate=>"2011",
       :publisher=>"International Organization for Standardization",
-      :receiveddate=>"XXX",
       :revdate=>"2016-05-01",
       :revdate_monthyear=>"May 2016",
       :sc=>"SC 4",
@@ -146,12 +140,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :substage_int=>"92",
       :tc=>"TC 34",
       :tc_docnumber=>["17301", "17302"],
-      :transmitteddate=>"XXX",
-      :unchangeddate=>"XXX",
       :unpublished=>true,
-      :updateddate=>"XXX",
-      :vote_endeddate=>"XXX",
-      :vote_starteddate=>"XXX",
       :wg=>"WG 3"}
     OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
@@ -237,13 +226,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      {:accesseddate=>"XXX",
-      :agency=>"ISO/IEC",
+      {:agency=>"ISO/IEC",
       :approvalgroup=>["ABC 34", "DEF 4", "GHI 3"],
-      :circulateddate=>"XXX",
-      :confirmeddate=>"XXX",
-      :copieddate=>"XXX",
-      :createddate=>"XXX",
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
       :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -262,30 +246,19 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :docyear=>"2016",
       :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :ics=>"1.2.3, 1.2.3",
-      :implementeddate=>"XXX",
-      :issueddate=>"XXX",
       :lang=>"en",
-      :obsoleteddate=>"XXX",
       :obsoletes=>"IEC 8121",
       :obsoletes_part=>"3.1",
-      :publisheddate=>"XXX",
       :publisher=>"International Organization for Standardization and International Electrotechnical Commission",
-      :receiveddate=>"XXX",
       :sc=>"DEF 4",
       :script=>"Latn",
-      :secretariat=>"XXX",
       :stage=>"60",
       :stage_int=>60,
       :statusabbr=>"IS",
       :substage_int=>"92",
       :tc=>"ABC 34",
       :tc_docnumber=>["17301"],
-      :transmitteddate=>"XXX",
-      :unchangeddate=>"XXX",
       :unpublished=>false,
-      :updateddate=>"XXX",
-      :vote_endeddate=>"XXX",
-      :vote_starteddate=>"XXX",
       :wg=>"GHI 3"}
     OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
@@ -371,12 +344,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      {:accesseddate=>"XXX",
-      :agency=>"ISO/IEC",
-      :circulateddate=>"XXX",
-      :confirmeddate=>"XXX",
-      :copieddate=>"XXX",
-      :createddate=>"XXX",
+      {:agency=>"ISO/IEC",
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
       :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -395,30 +363,19 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :docyear=>"2016",
       :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :ics=>"1.2.3, 1.2.3",
-      :implementeddate=>"XXX",
-      :issueddate=>"XXX",
       :lang=>"fr",
-      :obsoleteddate=>"XXX",
       :obsoletes=>"IEC 8121",
       :obsoletes_part=>"3.1",
-      :publisheddate=>"XXX",
       :publisher=>"International Organization for Standardization et International Electrotechnical Commission",
-      :receiveddate=>"XXX",
       :sc=>"DEF 4",
       :script=>"Latn",
-      :secretariat=>"XXX",
       :stage=>"60",
       :stage_int=>60,
       :statusabbr=>"IS",
       :substage_int=>"92",
       :tc=>"ABC 34",
       :tc_docnumber=>["17301"],
-      :transmitteddate=>"XXX",
-      :unchangeddate=>"XXX",
       :unpublished=>false,
-      :updateddate=>"XXX",
-      :vote_endeddate=>"XXX",
-      :vote_starteddate=>"XXX",
       :wg=>"GHI 3"}
     OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
@@ -507,12 +464,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      {:accesseddate=>"XXX",
-      :agency=>"ISO/IEC",
-      :circulateddate=>"XXX",
-      :confirmeddate=>"XXX",
-      :copieddate=>"XXX",
-      :createddate=>"XXX",
+      {:agency=>"ISO/IEC",
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
       :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -531,33 +483,228 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :docyear=>"2016",
       :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :ics=>"1.2.3, 1.2.3",
-      :implementeddate=>"XXX",
-      :issueddate=>"XXX",
       :lang=>"ru",
-      :obsoleteddate=>"XXX",
       :obsoletes=>"IEC 8121",
       :obsoletes_part=>"3.1",
-      :publisheddate=>"XXX",
       :publisher=>"International Organization for Standardization &#x438; International Electrotechnical Commission",
-      :receiveddate=>"XXX",
       :sc=>"DEF 4",
       :script=>"Latn",
-      :secretariat=>"XXX",
       :stage=>"60",
       :stage_int=>60,
       :statusabbr=>"IS",
       :substage_int=>"92",
       :tc=>"ABC 34",
       :tc_docnumber=>["17301"],
-      :transmitteddate=>"XXX",
-      :unchangeddate=>"XXX",
       :unpublished=>false,
-      :updateddate=>"XXX",
-      :vote_endeddate=>"XXX",
-      :vote_starteddate=>"XXX",
       :wg=>"GHI 3"}
     OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
+  end
+
+  it "warns of missing Secretariat" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata type="standard">
+              <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+              <status><stage abbreviation="CD">30</stage></status>
+              <date type="published">2000</date>
+              <ext>
+                <editorialgroup>
+                </editorialgroup>
+              </ext>
+          </bibdata>
+          <sections>
+            <clause>
+              <title>Clause 1</title>
+            </clause>
+          </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+        <clause displayorder="1">
+          <title depth="1">
+            <review date="2022-06-03" reviewer="Metanorma" id="_">
+              <p>
+                <strong>
+                  Metadata warnings:
+                  <strong/>
+                  <p>Secretariat is missing.</p>
+                </strong>
+              </p>
+            </review>
+            Clause 1
+          </title>
+        </clause>
+      </sections>
+    OUTPUT
+    expect(strip_guid(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true),
+    )
+  .at("//xmlns:sections")
+      .to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "warns of missing publication date" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata type="standard">
+              <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+              <status><stage abbreviation="CD">30</stage></status>
+              <ext>
+                <editorialgroup>
+                </editorialgroup>
+                <secretariat>BSI</secretariat>
+              </ext>
+          </bibdata>
+          <sections>
+            <clause>
+              <title>Clause 1</title>
+            </clause>
+          </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+        <clause displayorder="1">
+          <title depth="1">
+            <review date="2022-06-03" reviewer="Metanorma" id="_">
+              <p>
+                <strong>
+                  Metadata warnings:
+                  <strong/>
+                  <p>Document date is missing.</p>
+                </strong>
+              </p>
+            </review>
+            Clause 1
+          </title>
+        </clause>
+      </sections>
+    OUTPUT
+    expect(strip_guid(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true),
+    )
+  .at("//xmlns:sections")
+      .to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "warns of missing editorial groups" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata type="standard">
+              <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+              <status><stage abbreviation="CD">30</stage></status>
+              <date type="published">2000</date>
+              <ext>
+                <secretariat>BSI</secretariat>
+              </ext>
+          </bibdata>
+          <sections>
+            <clause>
+              <title>Clause 1</title>
+            </clause>
+          </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+        <clause displayorder="1">
+          <title depth="1">
+            <review date="2022-06-03" reviewer="Metanorma" id="_">
+              <p>
+                <strong>
+                  Metadata warnings:
+                  <strong/>
+                  <p>Editorial groups are missing.</p>
+                </strong>
+              </p>
+            </review>
+            Clause 1
+          </title>
+        </clause>
+      </sections>
+    OUTPUT
+    expect(strip_guid(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true),
+    )
+  .at("//xmlns:sections")
+      .to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "does not warn of missing metadata in compliant document" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata type="standard">
+              <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+              <status><stage abbreviation="CD">30</stage></status>
+              <date type="published">2000</date>
+              <ext>
+                <editorialgroup>
+                </editorialgroup>
+                <secretariat>BSI</secretariat>
+                </ext>
+          </bibdata>
+          <sections>
+            <clause>
+              <title>Clause 1</title>
+            </clause>
+          </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+        <clause displayorder='1'>
+          <title depth='1'>Clause 1</title>
+        </clause>
+      </sections>
+    OUTPUT
+    expect(strip_guid(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true),
+    )
+      .at("//xmlns:sections").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "does not warn of missing metadata in published document" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata type="standard">
+              <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+              <status><stage abbreviation="CD">90</stage></status>
+              <ext>
+                <editorialgroup>
+                </editorialgroup>
+                <secretariat>BSI</secretariat>
+              </ext>
+          </bibdata>
+          <sections>
+            <clause>
+              <title>Clause 1</title>
+            </clause>
+          </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <sections>
+        <clause displayorder='1'>
+          <title depth='1'>Clause 1</title>
+        </clause>
+      </sections>
+    OUTPUT
+    expect(strip_guid(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true),
+    )
+  .at("//xmlns:sections").to_xml)))
+      .to be_equivalent_to xmlpp(output)
   end
 end

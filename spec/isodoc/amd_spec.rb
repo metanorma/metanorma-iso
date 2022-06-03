@@ -745,11 +745,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      {:accesseddate=>"XXX",
-      :agency=>"ISO",
-      :circulateddate=>"XXX",
-      :confirmeddate=>"XXX",
-      :copieddate=>"XXX",
+      {:agency=>"ISO",
       :createddate=>"2016-05-01",
       :docnumber=>"ISO/PreNWIP3 17301-1:2016/Amd.1",
       :docnumber_lang=>"ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
@@ -779,13 +775,8 @@ RSpec.describe IsoDoc do
       :edition=>"2",
       :editorialgroup=>["A 1", "B 2", "C 3"],
       :ics=>"1, 2, 3",
-      :implementeddate=>"XXX",
-      :issueddate=>"XXX",
       :lang=>"en",
-      :obsoleteddate=>"XXX",
-      :publisheddate=>"XXX",
       :publisher=>"International Organization for Standardization",
-      :receiveddate=>"XXX",
       :revdate=>"2000-01-01",
       :revdate_monthyear=>"January 2000",
       :sc=>"B 2",
@@ -797,12 +788,7 @@ RSpec.describe IsoDoc do
       :statusabbr=>"PreNWIP3",
       :substage_int=>"20",
       :tc=>"A 1",
-      :transmitteddate=>"XXX",
-      :unchangeddate=>"XXX",
       :unpublished=>true,
-      :updateddate=>"XXX",
-      :vote_endeddate=>"XXX",
-      :vote_starteddate=>"XXX",
       :wg=>"C 3"}
     OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
@@ -911,11 +897,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      {:accesseddate=>"XXX",
-      :agency=>"ISO",
-      :circulateddate=>"XXX",
-      :confirmeddate=>"XXX",
-      :copieddate=>"XXX",
+      {:agency=>"ISO",
       :createddate=>"2016-05-01",
       :docnumber=>"ISO/PreNWIP3 17301-1:2016/Amd.1",
       :docnumber_lang=>"ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
@@ -945,13 +927,8 @@ RSpec.describe IsoDoc do
       :edition=>"2",
       :editorialgroup=>["A 1", "B 2", "C 3"],
       :ics=>"1, 2, 3",
-      :implementeddate=>"XXX",
-      :issueddate=>"XXX",
       :lang=>"fr",
-      :obsoleteddate=>"XXX",
-      :publisheddate=>"XXX",
       :publisher=>"International Organization for Standardization",
-      :receiveddate=>"XXX",
       :revdate=>"2000-01-01",
       :revdate_monthyear=>"Janvier 2000",
       :sc=>"B 2",
@@ -963,12 +940,7 @@ RSpec.describe IsoDoc do
       :statusabbr=>"PreNWIP3",
       :substage_int=>"20",
       :tc=>"A 1",
-      :transmitteddate=>"XXX",
-      :unchangeddate=>"XXX",
       :unpublished=>true,
-      :updateddate=>"XXX",
-      :vote_endeddate=>"XXX",
-      :vote_starteddate=>"XXX",
       :wg=>"C 3"}
     OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input), nil)))

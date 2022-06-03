@@ -1,12 +1,12 @@
 <p class="zzCover" align="right" style='text-align:right'><span lang="EN-GB"><span style='mso-no-proof:yes'><b>{{ docnumber_reference }}</b></span></span></p>
 
-{% if revdate and revdate != "XXX" %}
+{% if revdate %}
 {% assign doc_date = revdate %}
-{% elsif publisheddate and publisheddate != "XXX" %}
+{% elsif publisheddate %}
 {% assign doc_date = publisheddate %}
-{% elsif issueddate and issueddate != "XXX" %}
+{% elsif issueddate %}
 {% assign doc_date = issueddate %}
-{% elsif createddate and createddate != "XXX" %}
+{% elsif createddate %}
 {% assign doc_date = createddate %}
 {% endif %}
 
@@ -27,7 +27,7 @@
 -->
 
 {% if secretariat %}
-<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Secretariat: <span>{{ secretariat }}</span></span></p>
+<p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">{{ labels["secretariat"] }}: <span>{{ secretariat }}</span></span></p>
 {% endif %}
 
 <p class="zzCover">

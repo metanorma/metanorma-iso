@@ -3,6 +3,7 @@ require "isodoc"
 require_relative "index"
 require_relative "presentation_inline"
 require_relative "presentation_xref"
+require_relative "presentation_bibdata"
 require_relative "../../relaton/render/general"
 
 module IsoDoc
@@ -186,57 +187,15 @@ module IsoDoc
         end
       end
 
-      def bibdata(docxml)
-        super
-        editorialgroup_identifier(docxml)
+      def ol_depth(node)
+        depth = node.ancestors(@iso_class ? "ol" : "ul, ol").size + 1
+        type = :alphabet
+        type = :arabic if [2, 7].include? depth
+        type = :roman if [3, 8].include? depth
+        type = :alphabet_upper if [4, 9].include? depth
+        type = :roman_upper if [5, 10].include? depth
+        type
       end
-
-      def editorialgroup_identifier(docxml)
-        %w(editorialgroup approvalgroup).each do |v|
-          docxml.xpath(ns("//bibdata/ext/#{v}")).each do |a|
-            editorialgroup_identifier1(a)
-          end
-        end
-      end
-
-      def editorialgroup_identifier1(group)
-        agency = group.xpath(ns("./agency"))&.map(&:text)
-        ret = %w(technical-committee subcommittee workgroup)
-          .each_with_object([]) do |v, m|
-          a = group.at(ns("./#{v}")) or next
-          m << "#{a['type']} #{a['number']}"
-        end
-        group["identifier"] = (agency + ret).join("/")
-      end
-
-      def bibdata_i18n(bib)
-        hash_translate(bib, @i18n.get["doctype_dict"], "./ext/doctype")
-        bibdata_i18n_stage(bib, bib.at(ns("./status/stage")),
-                           bib.at(ns("./ext/doctype")))
-        hash_translate(bib, @i18n.get["substage_dict"], "./status/substage")
-        edition_translate(bib)
-      end
-
-      def bibdata_i18n_stage(bib, stage, type, lang: @lang, i18n: @i18n)
-        return unless stage
-
-        i18n.get["stage_dict"][stage.text].is_a?(Hash) or
-          return hash_translate(bib, i18n.get["stage_dict"],
-                                "./status/stage", lang)
-        i18n.get["stage_dict"][stage.text][type&.text] and
-          tag_translate(stage, lang,
-                        i18n.get["stage_dict"][stage.text][type&.text])
-      end
-
-    def ol_depth(node)
-      depth = node.ancestors(@iso_class ? "ol" : "ul, ol").size + 1
-      type = :alphabet
-      type = :arabic if [2, 7].include? depth
-      type = :roman if [3, 8].include? depth
-      type = :alphabet_upper if [4, 9].include? depth
-      type = :roman_upper if [5, 10].include? depth
-      type
-    end
 
       include Init
     end

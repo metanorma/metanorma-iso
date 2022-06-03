@@ -5,11 +5,8 @@ module IsoDoc
     class Metadata < IsoDoc::Metadata
       def initialize(lang, script, i18n)
         super
-        set(:tc, "XXXX")
-        set(:sc, "XXXX")
-        set(:wg, "XXXX")
+        DATETYPES.each { |w| @metadata["#{w.gsub(/-/, '_')}date".to_sym] = nil }
         set(:editorialgroup, [])
-        set(:secretariat, "XXX")
         set(:obsoletes, nil)
         set(:obsoletes_part, nil)
       end
