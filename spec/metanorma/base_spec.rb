@@ -355,7 +355,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='semantic' version='2.1.1'>
+           <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='semantic' version="#{Metanorma::ISO::VERSION}">
          <bibdata type='standard'>
            <docidentifier type='ISO'>ISO/FDTS 1000-1-1</docidentifier>
            <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>

@@ -31,6 +31,10 @@ module Metanorma
         IsoDoc::Iso::WordConvert.new(doc_extract_attributes(node))
       end
 
+      def doc_extract_attributes(node)
+        super.merge(isowordtemplate: node.attr("iso-word-template"))
+      end
+
       def pdf_converter(node)
         return nil if node.attr("no-pdf")
 

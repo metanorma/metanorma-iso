@@ -48,6 +48,52 @@ RSpec.describe IsoDoc do
     html = File.read("test.doc", encoding: "UTF-8")
     expect(html).not_to include 'class="AltTerms"'
     expect(html).to include 'class="AdmittedTerm"'
+
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert
+      .new({ isowordtemplate: "simple" })
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata>
+            <status><stage>50</stage></status>
+          </bibdata>
+          <sections>
+          <terms id="A">
+            <term id="B">
+            <preferred><expression><name>First</name></expression></preferred>
+            <admitted><expression><name>Second</name></expression></admitted>
+            </term>
+          </terms>
+          </sections>
+        </iso-standard>
+    INPUT
+    expect(File.exist?("test.doc")).to be true
+    html = File.read("test.doc", encoding: "UTF-8")
+    expect(html).to include 'class="AltTerms"'
+    expect(html).not_to include 'class="AdmittedTerm"'
+
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert
+      .new({ isowordtemplate: "dis" })
+      .convert("test", <<~"INPUT", false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata>
+            <status><stage>30</stage></status>
+          </bibdata>
+          <sections>
+          <terms id="A">
+            <term id="B">
+            <preferred><expression><name>First</name></expression></preferred>
+            <admitted><expression><name>Second</name></expression></admitted>
+            </term>
+          </terms>
+          </sections>
+        </iso-standard>
+    INPUT
+    expect(File.exist?("test.doc")).to be true
+    html = File.read("test.doc", encoding: "UTF-8")
+    expect(html).not_to include 'class="AltTerms"'
+    expect(html).to include 'class="AdmittedTerm"'
   end
 
   it "deals with span" do

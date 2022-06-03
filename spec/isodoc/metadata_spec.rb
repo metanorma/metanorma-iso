@@ -518,7 +518,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       <sections>
         <clause displayorder="1">
           <title depth="1">
-            <review date="2022-06-03" reviewer="Metanorma" id="_">
+            <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
                   Metadata warnings:
@@ -532,12 +532,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </clause>
       </sections>
     OUTPUT
-    expect(strip_guid(xmlpp(Nokogiri::XML(
+    expect(xmlpp(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true),
     )
-  .at("//xmlns:sections")
-      .to_xml)))
+      .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -564,7 +563,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       <sections>
         <clause displayorder="1">
           <title depth="1">
-            <review date="2022-06-03" reviewer="Metanorma" id="_">
+            <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
                   Metadata warnings:
@@ -583,7 +582,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
-      .to_xml)))
+      .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -609,7 +608,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       <sections>
         <clause displayorder="1">
           <title depth="1">
-            <review date="2022-06-03" reviewer="Metanorma" id="_">
+            <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
                   Metadata warnings:
@@ -628,7 +627,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
-      .to_xml)))
+      .at("//xmlns:sections").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 

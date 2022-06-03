@@ -19,7 +19,7 @@ module IsoDoc
         super
       end
 
-      def init_dis; end
+      def init_dis(options); end
 
       def convert1(docxml, filename, dir)
         update_coverpage(docxml)
