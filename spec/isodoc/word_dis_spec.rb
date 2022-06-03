@@ -1639,12 +1639,6 @@ RSpec.describe IsoDoc do
          <p class='zzCover' style='font-weight:normal;'>
            <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: /</span>
          </p>
-         <p class='zzCover' style='font-weight:normal;'>
-           <span lang='EN-GB' xml:lang='EN-GB'>
-             Secretariat:
-             <span>XXX</span>
-           </span>
-         </p>
          <p class='zzCover'>
            <span lang='EN-GB' xml:lang='EN-GB'>
              <b>
