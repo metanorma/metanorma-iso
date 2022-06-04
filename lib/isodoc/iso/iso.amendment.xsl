@@ -9515,8 +9515,9 @@
 					
 					
 						<xsl:if test="@type != 'editorial'">
-							<xsl:call-template name="displayAdmonitionName"/>
-							<xsl:text> — </xsl:text>
+							<xsl:call-template name="displayAdmonitionName">
+								<xsl:with-param name="sep"> — </xsl:with-param>
+							</xsl:call-template>
 						</xsl:if>
 					
 					
@@ -9526,25 +9527,32 @@
 				</fo:block>
 			
 	</xsl:template><xsl:template name="displayAdmonitionName">
-		
+		<xsl:param name="sep"/> <!-- Example: ' - ' -->
+		<!-- <xsl:choose>
+			<xsl:when test="$namespace = 'nist-cswp' or $namespace = 'nist-sp'">
+				<xsl:choose>
+					<xsl:when test="@type='important'"><xsl:apply-templates select="@type"/></xsl:when>
+					<xsl:otherwise>
+						<xsl:apply-templates select="*[local-name() = 'name']"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
 				<xsl:apply-templates select="*[local-name() = 'name']"/>
 				<xsl:if test="not(*[local-name() = 'name'])">
 					<xsl:apply-templates select="@type"/>
 				</xsl:if>
-			
+			</xsl:otherwise>
+		</xsl:choose> -->
+		<xsl:variable name="name">
+			<xsl:apply-templates select="*[local-name() = 'name']"/>
+		</xsl:variable>
+		<xsl:copy-of select="$name"/>
+		<xsl:if test="normalize-space($name) != ''">
+			<xsl:value-of select="$sep"/>
+		</xsl:if>
 	</xsl:template><xsl:template match="*[local-name() = 'admonition']/*[local-name() = 'name']">
 		<xsl:apply-templates/>
-	</xsl:template><xsl:template match="*[local-name() = 'admonition']/@type">
-		<xsl:variable name="admonition_type_">
-			<xsl:call-template name="getLocalizedString">
-				<xsl:with-param name="key">admonition.<xsl:value-of select="."/></xsl:with-param>
-			</xsl:call-template>
-		</xsl:variable>
-		<xsl:variable name="admonition_type" select="normalize-space(java:toUpperCase(java:java.lang.String.new($admonition_type_)))"/>
-		<xsl:value-of select="$admonition_type"/>
-		<xsl:if test="$admonition_type = ''">
-			<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(.))"/>
-		</xsl:if>
 	</xsl:template><xsl:template match="*[local-name() = 'admonition']/*[local-name() = 'p']">
 		 <!-- processing for admonition/p found in the template for 'p' -->
 				<xsl:call-template name="paragraph"/>
