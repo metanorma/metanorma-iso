@@ -504,6 +504,7 @@ pre {
 
 @include admonitionBlock();
 @include recommendationBlock();
+@include listBlock();
 
 .figure-title,
 .FigureTitle,

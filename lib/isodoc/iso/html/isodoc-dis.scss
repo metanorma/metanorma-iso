@@ -382,6 +382,27 @@ p.SourceTitle
         mso-fareast-font-family:"SimSun",serif;
         mso-bidi-font-family:$bodyfont;
         mso-ansi-language:EN-GB;}
+p.ListTitle
+        {mso-style-name:"List title";
+        mso-style-unhide:no;
+        mso-style-qformat:yes;
+        mso-style-parent:"Figure title";
+        margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:6.0pt;
+        margin-left:0.0pt;
+        text-align:center;
+        line-height:12.0pt;
+        page-break-after:avoid;
+        line-height:12.0pt;
+        mso-pagination:widow-orphan;
+        tab-stops:20.15pt;
+        font-size:$normalfontsize;
+        font-weight:bold;
+        font-family:$bodyfont;
+        mso-fareast-font-family:"SimSun",serif;
+        mso-bidi-font-family:$bodyfont;
+        mso-ansi-language:EN-GB;}
 p.Tabletitle, li.Tabletitle, div.Tabletitle
 	{mso-style-name:"Table title";
 	mso-style-unhide:no;

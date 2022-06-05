@@ -282,6 +282,9 @@
             <ref name="MultilingualRenderingType"/>
           </attribute>
         </optional>
+        <optional>
+          <ref name="tname"/>
+        </optional>
         <oneOrMore>
           <ref name="ul_li"/>
         </oneOrMore>
@@ -324,6 +327,9 @@
             </choice>
           </attribute>
         </optional>
+        <optional>
+          <ref name="tname"/>
+        </optional>
         <oneOrMore>
           <ref name="li"/>
         </oneOrMore>
@@ -359,6 +365,9 @@
           <attribute name="multilingual-rendering">
             <ref name="MultilingualRenderingType"/>
           </attribute>
+        </optional>
+        <optional>
+          <ref name="tname"/>
         </optional>
         <oneOrMore>
           <ref name="dt"/>
