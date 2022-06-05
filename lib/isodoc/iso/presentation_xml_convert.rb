@@ -1,7 +1,6 @@
 require_relative "init"
 require "isodoc"
 require_relative "index"
-require_relative "presentation_inline"
 require_relative "presentation_xref"
 require_relative "presentation_bibdata"
 require_relative "../../relaton/render/general"

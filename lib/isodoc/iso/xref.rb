@@ -91,7 +91,7 @@ module IsoDoc
       end
 
       # subclauses are not prefixed with "Clause"
-      # retaining sybtupe for the semantics
+      # retaining subtype for the semantics
       def section_names1(clause, num, level)
         @anchors[clause["id"]] =
           { label: num, level: level, xref: num, subtype: "clause" }

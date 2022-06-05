@@ -104,8 +104,13 @@ module IsoDoc
       end
 
       def prefix_container(container, linkend, target)
-        delim = @xrefs.anchor(target, :type) == "listitem" ? " " : ", "
-        l10n(@xrefs.anchor(container, :xref) + delim + linkend)
+        delim = ", "
+        type = :xref
+        if @xrefs.anchor(target, :type) == "listitem"
+          delim = " "
+          type = :label # 7 a) not Clause 7 a)
+        end
+        l10n(@xrefs.anchor(container, type) + delim + linkend)
       end
 
       def expand_citeas(text)
