@@ -13,7 +13,7 @@ module IsoDoc
               load_file("i18n-zh-Hans.yaml")
             else load_file("i18n-en.yaml")
             end
-        super.merge(y)
+        super.deep_merge(y)
       end
     end
   end

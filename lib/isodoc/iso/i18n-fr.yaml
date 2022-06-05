@@ -66,3 +66,5 @@ stage_dict:
     technical-corrigendum: Rectificatif technique
   "90": Révision
   "95": Retrait
+locality:
+  appendix: Appendice
