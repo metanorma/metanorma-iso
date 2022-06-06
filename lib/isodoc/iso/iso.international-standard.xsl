@@ -269,9 +269,9 @@
 			
 			<xsl:variable name="root-style">
 				<root-style xsl:use-attribute-sets="root-style">
-					<xsl:if test="$lang = 'zh'">
+					<!-- <xsl:if test="$lang = 'zh'">
 						<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
-					</xsl:if>
+					</xsl:if> -->
 				</root-style>
 			</xsl:variable>
 			<xsl:call-template name="insertRootStyle">
@@ -2230,7 +2230,7 @@
 				<xsl:value-of select="$titles/*[local-name() = $name][@lang = 'en']"/>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template><xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:attribute-set name="root-style">
+	</xsl:template><xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable><xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable><xsl:variable name="en_chars" select="concat($lower,$upper,',.`1234567890-=~!@#$%^*()_+[]{}\|?/')"/><xsl:variable name="font_noto_sans">Noto Sans, Noto Sans HK, Noto Sans JP, Noto Sans KR, Noto Sans SC, Noto Sans TC</xsl:variable><xsl:variable name="font_noto_sans_mono">Noto Sans Mono, Noto Sans Mono CJK HK, Noto Sans Mono CJK JP, Noto Sans Mono CJK KR, Noto Sans Mono CJK SC, Noto Sans Mono CJK TC</xsl:variable><xsl:variable name="font_noto_serif">Noto Serif, Noto Serif HK, Noto Serif JP, Noto Serif KR, Noto Serif SC, Noto Serif TC</xsl:variable><xsl:attribute-set name="root-style">
 		
 		
 		
@@ -2239,7 +2239,8 @@
 		
 		
 		
-			<xsl:attribute name="font-family">Cambria, Times New Roman, Cambria Math, Source Han Sans</xsl:attribute>
+			<xsl:attribute name="font-family">Cambria, Times New Roman, Cambria Math, <xsl:value-of select="$font_noto_serif"/></xsl:attribute>
+			<xsl:attribute name="font-family-generic">Serif</xsl:attribute>
 			<xsl:attribute name="font-size">11pt</xsl:attribute>
 		
 		
@@ -2261,9 +2262,52 @@
 		</xsl:variable>
 		<xsl:variable name="additional_fonts" select="normalize-space($additional_fonts_)"/>
 		
+		<xsl:variable name="font_family_generic" select="$root-style_/root-style/@font-family-generic"/>
+		
 		<xsl:for-each select="$root-style_/root-style/@*">
+		
 			<xsl:choose>
-				<xsl:when test="local-name() = 'font-family' and $additional_fonts != ''">
+				<xsl:when test="local-name() = 'font-family-generic'"><!-- skip, it's using for determine 'sans' or 'serif' --></xsl:when>
+				<xsl:when test="local-name() = 'font-family'">
+				
+					<xsl:variable name="font_regional_prefix">
+						<xsl:choose>
+							<xsl:when test="$font_family_generic = 'Sans'">Noto Sans</xsl:when>
+							<xsl:otherwise>Noto Serif</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+				
+					<xsl:attribute name="{local-name()}">
+					
+						<xsl:variable name="font_extended">
+							<xsl:choose>
+								<xsl:when test="$lang = 'zh'"><xsl:value-of select="$font_regional_prefix"/> SC</xsl:when>
+								<xsl:when test="$lang = 'hk'"><xsl:value-of select="$font_regional_prefix"/> HK</xsl:when>
+								<xsl:when test="$lang = 'jp'"><xsl:value-of select="$font_regional_prefix"/> JP</xsl:when>
+								<xsl:when test="$lang = 'kr'"><xsl:value-of select="$font_regional_prefix"/> KR</xsl:when>
+								<xsl:when test="$lang = 'sc'"><xsl:value-of select="$font_regional_prefix"/> SC</xsl:when>
+								<xsl:when test="$lang = 'tc'"><xsl:value-of select="$font_regional_prefix"/> TC</xsl:when>
+							</xsl:choose>
+						</xsl:variable>
+						<xsl:if test="normalize-space($font_extended) != ''">
+							<xsl:value-of select="$font_regional_prefix"/><xsl:text>, </xsl:text>
+							<xsl:value-of select="$font_extended"/><xsl:text>, </xsl:text>
+						</xsl:if>
+					
+						<xsl:value-of select="."/>
+						
+						<xsl:if test="$additional_fonts != ''">
+							<xsl:text>, </xsl:text><xsl:value-of select="$additional_fonts"/>
+						</xsl:if>
+					</xsl:attribute>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:copy-of select="."/>
+				</xsl:otherwise>
+			</xsl:choose>
+		
+			<!-- <xsl:choose>
+				<xsl:when test="local-name() = 'font-family'">
 					<xsl:attribute name="{local-name()}">
 						<xsl:value-of select="."/>, <xsl:value-of select="$additional_fonts"/>
 					</xsl:attribute>
@@ -2271,7 +2315,7 @@
 				<xsl:otherwise>
 					<xsl:copy-of select="."/>
 				</xsl:otherwise>
-			</xsl:choose>
+			</xsl:choose> -->
 		</xsl:for-each>
 	</xsl:template><xsl:attribute-set name="copyright-statement-style">
 		
@@ -2348,7 +2392,7 @@
 		
 		
 		
-			<xsl:attribute name="font-family">Courier New</xsl:attribute>			
+			<xsl:attribute name="font-family">Courier New, <xsl:value-of select="$font_noto_sans_mono"/></xsl:attribute>			
 			<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
 		
 		
@@ -2981,7 +3025,7 @@
 	</xsl:attribute-set><xsl:attribute-set name="tt-style">
 		
 		
-			<xsl:attribute name="font-family">Courier New</xsl:attribute>			
+			<xsl:attribute name="font-family">Courier New, <xsl:value-of select="$font_noto_sans_mono"/></xsl:attribute>			
 		
 		
 	</xsl:attribute-set><xsl:attribute-set name="sourcecode-name-style">
