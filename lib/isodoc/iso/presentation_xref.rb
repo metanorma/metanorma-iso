@@ -106,9 +106,10 @@ module IsoDoc
       def prefix_container(container, linkend, target)
         delim = ", "
         type = :xref
-        if @xrefs.anchor(target, :type) == "listitem"
+        if @xrefs.anchor(target, :type) == "listitem" &&
+            !@xrefs.anchor(target, :refer_list)
           delim = " "
-          type = :label # 7 a) not Clause 7 a)
+          type = :label # 7 a) not Clause 7 a), but Clause 7 List 1 a)
         end
         l10n(@xrefs.anchor(container, type) + delim + linkend)
       end
