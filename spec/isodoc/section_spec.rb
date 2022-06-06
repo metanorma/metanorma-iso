@@ -526,7 +526,7 @@ RSpec.describe IsoDoc do
 
   it "processes multiple terms & definitions sections" do
     input = <<~INPUT
-      #{BLANK_HDR.sub(%r{<doctype>article</doctype>}, '<doctype>article</doctype><subdoctype>vocabulary</subdoctype>')}
+      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>standard</doctype><subdoctype>vocabulary</subdoctype>')}
                <sections>
            <terms id='A' obligation='normative'>
              <title>Terms and definitions</title>
@@ -574,7 +574,7 @@ RSpec.describe IsoDoc do
                </owner>
              </copyright>
              <ext>
-               <doctype>article</doctype>
+               <doctype>standard</doctype>
                <subdoctype>vocabulary</subdoctype>
                <editorialgroup identifier='ISO/ / / '>
                <agency>ISO</agency>

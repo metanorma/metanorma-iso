@@ -1502,11 +1502,11 @@ RSpec.describe IsoDoc do
           <foreword displayorder='1'>
             <p>
               <xref target='N'>1 a)</xref>
-              <xref target='note1'>3.1 List 1 a)</xref>
-              <xref target='note2'>3.1 List 2 a)</xref>
+              <xref target='note1'>3.1, List 1 a)</xref>
+              <xref target='note2'>3.1, List 2 a)</xref>
               <xref target='AN'>A.1 a)</xref>
-              <xref target='Anote1'>A.2 List 1 a)</xref>
-              <xref target='Anote2'>A.2 List 2 a)</xref>
+              <xref target='Anote1'>A.2, List 1 a)</xref>
+              <xref target='Anote2'>A.2, List 2 a)</xref>
             </p>
           </foreword>
         </preface>
@@ -1700,7 +1700,7 @@ RSpec.describe IsoDoc do
     INPUT
     output = <<~OUTPUT
       <foreword displayorder='1'>
-        <p><xref target='Na'>Clause 1 a)</xref></p>
+        <p><xref target='Na'>1 a)</xref></p>
       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
@@ -1736,7 +1736,7 @@ RSpec.describe IsoDoc do
     INPUT
     output = <<~OUTPUT
       <foreword displayorder='1'>
-        <p><xref target='Na'>Clause 1 List 1 a)</xref></p>
+        <p><xref target='Na'>Clause 1, List 1 a)</xref></p>
       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})

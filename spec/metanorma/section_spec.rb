@@ -455,8 +455,8 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR.sub(%r{<doctype>article</doctype>},
-                      '<doctype>article</doctype><subdoctype>vocabulary</subdoctype>')}
+      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>},
+                      '<doctype>standard</doctype><subdoctype>vocabulary</subdoctype>')}
                <sections>
            <terms id='_' obligation='normative'>
              <title>Terms and Definitions</title>

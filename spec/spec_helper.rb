@@ -200,7 +200,7 @@ BLANK_HDR1 = <<~"HDR".freeze
         </owner>
       </copyright>
       <ext>
-        <doctype>article</doctype>
+        <doctype>standard</doctype>
         <editorialgroup>
           <agency>ISO</agency>
           <technical-committee/>

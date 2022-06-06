@@ -55,7 +55,7 @@ RSpec.describe Metanorma::ISO do
       === Bibliography Subsection
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR.sub(%r{<doctype>article</doctype>}, '<doctype>amendment</doctype>')}
+      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>')}
         <sections>
           <clause id="_" obligation="normative">
             <title>Foreword</title>

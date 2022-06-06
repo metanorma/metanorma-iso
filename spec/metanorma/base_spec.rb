@@ -124,7 +124,7 @@ RSpec.describe Metanorma::ISO do
               </owner>
             </copyright>
             <ext>
-              <doctype>article</doctype>
+              <doctype>standard</doctype>
               <horizontal>true</horizontal>
               <editorialgroup>
                <agency>ISO</agency>
@@ -507,7 +507,7 @@ RSpec.describe Metanorma::ISO do
               </owner>
             </copyright>
             <ext>
-              <doctype>article</doctype>
+              <doctype>standard</doctype>
               <horizontal>true</horizontal>
               <editorialgroup>
                <agency>ISO</agency>
@@ -776,7 +776,7 @@ RSpec.describe Metanorma::ISO do
             </owner>
           </copyright>
           <ext>
-            <doctype>article</doctype>
+            <doctype>standard</doctype>
             <editorialgroup>
              <agency>ISO</agency>
               <technical-committee/>
@@ -852,7 +852,7 @@ RSpec.describe Metanorma::ISO do
               </owner>
             </copyright>
             <ext>
-              <doctype>article</doctype>
+              <doctype>standard</doctype>
               <editorialgroup>
                <agency>ISO</agency>
                 <technical-committee/>
@@ -1310,7 +1310,7 @@ RSpec.describe Metanorma::ISO do
                 </bibitem>
               </relation>
               <ext>
-                <doctype>article</doctype>
+                <doctype>standard</doctype>
                 <editorialgroup>
                  <agency>ISO</agency>
                   <technical-committee/>
