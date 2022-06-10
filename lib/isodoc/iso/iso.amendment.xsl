@@ -9737,6 +9737,23 @@
 		</xsl:template>
 		
 		<!-- END STEP2: add 'fn' after 'eref' and 'origin', if referenced to bibitem with 'note' = Withdrawn.' or 'Cancelled and replaced...'  -->
+		
+		
+		<!-- enclose sequence of 'char x' + 'combining char y' to <lang_none>xy</lang_none> -->
+		<xsl:variable name="regex_combining_chars">(.[̀-ͯ])</xsl:variable>
+		<xsl:variable name="element_name_lang_none">lang_none</xsl:variable>
+		<xsl:variable name="tag_element_name_lang_none_open">###<xsl:value-of select="$element_name_lang_none"/>###</xsl:variable>
+		<xsl:variable name="tag_element_name_lang_none_close">###/<xsl:value-of select="$element_name_lang_none"/>###</xsl:variable>
+
+		<xsl:template match="text()" mode="update_xml_step2">
+			<xsl:variable name="text_" select="java:replaceAll(java:java.lang.String.new(.), $regex_combining_chars, concat($tag_element_name_lang_none_open,'$1',$tag_element_name_lang_none_close))"/>
+			<xsl:call-template name="replace_text_tags">
+				<xsl:with-param name="tag_open" select="$tag_element_name_lang_none_open"/>
+				<xsl:with-param name="tag_close" select="$tag_element_name_lang_none_close"/>
+				<xsl:with-param name="text" select="$text_"/>
+			</xsl:call-template>
+		</xsl:template>
+		
 	<xsl:template match="@*|node()" mode="update_xml_enclose_keep-together_within-line">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" mode="update_xml_enclose_keep-together_within-line"/>
@@ -9832,6 +9849,8 @@
 			</xsl:when>
 			<xsl:otherwise><xsl:value-of select="$text"/></xsl:otherwise>
 		</xsl:choose>
+	</xsl:template><xsl:template match="*[local-name() = 'lang_none']">
+		<fo:inline xml:lang="none"><xsl:value-of select="."/></fo:inline>
 	</xsl:template><xsl:template name="printEdition">
 		<xsl:variable name="edition_i18n" select="normalize-space((//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']/*[local-name() = 'edition'][normalize-space(@language) != ''])"/>
 		<xsl:text> </xsl:text>
