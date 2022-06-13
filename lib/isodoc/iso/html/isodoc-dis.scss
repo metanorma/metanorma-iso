@@ -3148,9 +3148,10 @@ p.ListContinue2-, li.ListContinue2-, div.ListContinue2-
 	line-height:10.5pt;
 	mso-pagination:widow-orphan;
 	tab-stops:40.3pt;
-	font-size:9.0pt;
+	font-size:10.0pt;
 	mso-bidi-font-size:$normalfontsize;
-	font-family:"Arial",sans-serif;
+	font-family:$bodyfont;
+	/*font-family:"Arial",sans-serif;*/
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Times New Roman";
 	mso-ansi-language:EN-GB;
