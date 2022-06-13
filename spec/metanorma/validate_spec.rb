@@ -1699,6 +1699,7 @@ RSpec.describe Metanorma::ISO do
       :docfile: test.adoc
       :nodoc:
       :technical-committee-type: X
+      :technical-committee-number: X
       :no-isobib:
 
     INPUT
@@ -1712,19 +1713,7 @@ RSpec.describe Metanorma::ISO do
       :docfile: test.adoc
       :nodoc:
       :subcommittee-type: X
-      :no-isobib:
-
-    INPUT
-    expect(File.read("test.err")).to include "invalid subcommittee type"
-  end
-
-  it "Warning if invalid subcommittee type" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :subcommittee-type: X
+      :subcommittee-number: X
       :no-isobib:
 
     INPUT
