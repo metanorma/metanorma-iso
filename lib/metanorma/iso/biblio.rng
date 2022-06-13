@@ -638,9 +638,9 @@
     <optional>
       <ref name="edition"/>
     </optional>
-    <optional>
+    <zeroOrMore>
       <ref name="version"/>
-    </optional>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="biblionote"/>
     </zeroOrMore>
@@ -1197,9 +1197,9 @@
       <optional>
         <ref name="revision-date"/>
       </optional>
-      <zeroOrMore>
+      <optional>
         <ref name="draft"/>
-      </zeroOrMore>
+      </optional>
     </element>
   </define>
   <define name="vedition">
