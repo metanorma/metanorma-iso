@@ -193,13 +193,16 @@ RSpec.describe Metanorma::ISO do
       :docsubstage:
       :technical-committee: TC
       :technical-committee-number: 1
-      :technical-committee-type: A
       :subcommittee: SC
       :subcommittee-number: 2
-      :subcommittee-type: B
       :workgroup: WG
       :workgroup-number: 3
-      :workgroup-type: C
+      :approval-technical-committee: TC
+      :approval-technical-committee-number: 1
+      :approval-subcommittee: SC
+      :approval-subcommittee-number: 2
+      :approval-workgroup: WG
+      :approval-workgroup-number: 3
     INPUT
     expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -317,15 +320,15 @@ RSpec.describe Metanorma::ISO do
               <agency>IEC</agency>
               <agency>IETF</agency>
               <agency>ISO</agency>
-               <technical-committee number='1' type='A'>TC</technical-committee>
-               <subcommittee number='2' type='B'>SC</subcommittee>
-               <workgroup number='3' type='C'>WG</workgroup>
+               <technical-committee number='1' type='TC'>TC</technical-committee>
+               <subcommittee number='2' type='SC'>SC</subcommittee>
+               <workgroup number='3' type='WG'>WG</workgroup>
              </editorialgroup>
              <approvalgroup>
               <agency>ISO</agency>
-               <technical-committee number='1' type='A'>TC</technical-committee>
-               <subcommittee number='2' type='B'>SC</subcommittee>
-               <workgroup number='3' type='C'>WG</workgroup>
+               <technical-committee number='1' type='TC'>TC</technical-committee>
+               <subcommittee number='2' type='SC'>SC</subcommittee>
+               <workgroup number='3' type='WG'>WG</workgroup>
              </approvalgroup>
                     <structuredidentifier>
                       <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
@@ -393,18 +396,12 @@ RSpec.describe Metanorma::ISO do
            </copyright>
            <ext>
              <doctype>technical-specification</doctype>
-             <editorialgroup>
-              <agency>ISO</agency>
-               <technical-committee/>
-               <subcommittee/>
-               <workgroup/>
-             </editorialgroup>
-             <approvalgroup>
-              <agency>ISO</agency>
-               <technical-committee/>
-               <subcommittee/>
-               <workgroup/>
-             </approvalgroup>
+                         <editorialgroup>
+             <agency>ISO</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
              <structuredidentifier>
                <project-number part='1' subpart='1'>ISO 1000</project-number>
              </structuredidentifier>
@@ -509,18 +506,12 @@ RSpec.describe Metanorma::ISO do
             <ext>
               <doctype>standard</doctype>
               <horizontal>true</horizontal>
-              <editorialgroup>
-               <agency>ISO</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </editorialgroup>
-              <approvalgroup>
-               <agency>ISO</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </approvalgroup>
+                          <editorialgroup>
+             <agency>ISO</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
               <structuredidentifier>
                 <project-number part='1'>ISO 1000</project-number>
               </structuredidentifier>
@@ -623,18 +614,12 @@ RSpec.describe Metanorma::ISO do
             </copyright>
             <ext>
               <doctype>this-is-a-doctype</doctype>
-              <editorialgroup>
-               <agency>SD</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </editorialgroup>
-              <approvalgroup>
-               <agency>ISO</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </approvalgroup>
+                          <editorialgroup>
+             <agency>SD</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
               <structuredidentifier>
                 <project-number part="1" subpart="1">SD 1000</project-number>
               </structuredidentifier>
@@ -701,18 +686,12 @@ RSpec.describe Metanorma::ISO do
                   </copyright>
                   <ext>
                     <doctype>international-standard</doctype>
-                    <editorialgroup>
-                     <agency>ISO</agency>
-                      <technical-committee/>
-                      <subcommittee/>
-                      <workgroup/>
-                    </editorialgroup>
-                    <approvalgroup>
-                     <agency>ISO</agency>
-                      <technical-committee/>
-                      <subcommittee/>
-                      <workgroup/>
-                    </approvalgroup>
+                                <editorialgroup>
+             <agency>ISO</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
                     <structuredidentifier>
                       <project-number>ISO 1000</project-number>
                     </structuredidentifier>
@@ -777,17 +756,11 @@ RSpec.describe Metanorma::ISO do
           </copyright>
           <ext>
             <doctype>standard</doctype>
-            <editorialgroup>
+                        <editorialgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </editorialgroup>
             <approvalgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </approvalgroup>
             <structuredidentifier>
               <project-number>ISO 1000</project-number>
@@ -853,18 +826,12 @@ RSpec.describe Metanorma::ISO do
             </copyright>
             <ext>
               <doctype>standard</doctype>
-              <editorialgroup>
-               <agency>ISO</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </editorialgroup>
-              <approvalgroup>
-               <agency>ISO</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </approvalgroup>
+                          <editorialgroup>
+             <agency>ISO</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
               <structuredidentifier>
                 <project-number>ISO 1000</project-number>
               </structuredidentifier>
@@ -928,18 +895,12 @@ RSpec.describe Metanorma::ISO do
             </copyright>
             <ext>
               <doctype>directive</doctype>
-              <editorialgroup>
-               <agency>ISO</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </editorialgroup>
-              <approvalgroup>
-               <agency>ISO</agency>
-                <technical-committee/>
-                <subcommittee/>
-                <workgroup/>
-              </approvalgroup>
+                          <editorialgroup>
+             <agency>ISO</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
               <structuredidentifier>
                 <project-number>ISO 1000</project-number>
               </structuredidentifier>
@@ -1311,18 +1272,12 @@ RSpec.describe Metanorma::ISO do
               </relation>
               <ext>
                 <doctype>standard</doctype>
-                <editorialgroup>
-                 <agency>ISO</agency>
-                  <technical-committee/>
-                  <subcommittee/>
-                  <workgroup/>
-                </editorialgroup>
-                <approvalgroup>
-                 <agency>ISO</agency>
-                  <technical-committee/>
-                  <subcommittee/>
-                  <workgroup/>
-                </approvalgroup>
+                            <editorialgroup>
+             <agency>ISO</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
                 <stagename>International standard</stagename>
               </ext>
             </bibdata>

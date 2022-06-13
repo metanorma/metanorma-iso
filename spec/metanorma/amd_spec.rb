@@ -352,15 +352,9 @@ RSpec.describe Metanorma::ISO do
             <doctype>amendment</doctype>
             <editorialgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </editorialgroup>
             <approvalgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </approvalgroup>
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
@@ -431,15 +425,9 @@ RSpec.describe Metanorma::ISO do
             <doctype>amendment</doctype>
             <editorialgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </editorialgroup>
             <approvalgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </approvalgroup>
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
@@ -507,17 +495,11 @@ RSpec.describe Metanorma::ISO do
           </copyright>
           <ext>
             <doctype>amendment</doctype>
-            <editorialgroup>
+             <editorialgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </editorialgroup>
             <approvalgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </approvalgroup>
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
@@ -586,17 +568,11 @@ RSpec.describe Metanorma::ISO do
           </copyright>
           <ext>
             <doctype>technical-corrigendum</doctype>
-            <editorialgroup>
+             <editorialgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </editorialgroup>
             <approvalgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </approvalgroup>
             <structuredidentifier>
               <project-number corrigendum="3" part="1">17301</project-number>
@@ -665,17 +641,11 @@ RSpec.describe Metanorma::ISO do
           </copyright>
           <ext>
             <doctype>technical-corrigendum</doctype>
-            <editorialgroup>
+                        <editorialgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </editorialgroup>
             <approvalgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </approvalgroup>
             <structuredidentifier>
               <project-number part='1' corrigendum='3'>17301</project-number>
@@ -743,17 +713,11 @@ RSpec.describe Metanorma::ISO do
           </copyright>
           <ext>
             <doctype>technical-corrigendum</doctype>
-            <editorialgroup>
+                        <editorialgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </editorialgroup>
             <approvalgroup>
              <agency>ISO</agency>
-              <technical-committee/>
-              <subcommittee/>
-              <workgroup/>
             </approvalgroup>
             <structuredidentifier>
               <project-number corrigendum="3" part="1">17301</project-number>

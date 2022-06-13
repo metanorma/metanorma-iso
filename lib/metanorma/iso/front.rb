@@ -88,22 +88,29 @@ module Metanorma
       def metadata_editorial_committee(node, xml)
         xml.editorialgroup do |a|
           %w(technical-committee subcommittee workgroup).each do |v|
-            committee_component(v, node, a)
+            node.attr("#{v}-number") and committee_component(v, node, a)
           end
           node.attr("secretariat") and a.secretariat(node.attr("secretariat"))
         end
       end
 
       def metadata_approval_committee(node, xml)
+        types = metadata_approval_committee_types(node)
+        xml.approvalgroup do |a|
+          metadata_approval_agency(a, node.attr("approval-agency")
+            &.split(%r{[/,;]}))
+          types.each do |v|
+            node.attr("#{v}-number") and committee_component(v, node, a)
+          end
+        end
+      end
+
+      def metadata_approval_committee_types(node)
         types = %w(technical-committee subcommittee workgroup)
         node.attr("approval-technical-committee-number") and
           types = %w(approval-technical-committee approval-subcommittee
                      approval-workgroup)
-        xml.approvalgroup do |a|
-          metadata_approval_agency(a, node.attr("approval-agency")
-            &.split(%r{[/,;]}))
-          types.each { |v| committee_component(v, node, a) }
-        end
+        types
       end
 
       def metadata_approval_agency(xml, list)

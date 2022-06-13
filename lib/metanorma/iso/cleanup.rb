@@ -1,8 +1,5 @@
 require "date"
-require "nokogiri"
 require "htmlentities"
-require "json"
-require "pathname"
 
 module Metanorma
   module ISO
@@ -214,6 +211,7 @@ module Metanorma
         super
         approval_groups_rename(xmldoc)
         editorial_groups_agency(xmldoc)
+        editorial_group_types(xmldoc)
       end
 
       def approval_groups_rename(xmldoc)
@@ -225,14 +223,33 @@ module Metanorma
       end
 
       def editorial_groups_agency(xmldoc)
-        pubs = xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']/"\
-                            "organization").each_with_object([]) do |p, m|
+        pubs = extract_publishers(xmldoc)
+        xmldoc.xpath("//bibdata/ext/editorialgroup").each do |e|
+          pubs.reverse.each do |p|
+            if e.children.empty? then e << "<agency>#{p}</agency>"
+            else e.children.first.previous = "<agency>#{p}</agency>"
+            end
+          end
+        end
+      end
+
+      def extract_publishers(xmldoc)
+        xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']/"\
+                     "organization").each_with_object([]) do |p, m|
           x = p.at("./abbreviation") || p.at("./name") or next
           m << x.text
         end
-        xmldoc.xpath("//bibdata/ext/editorialgroup").each do |e|
-          pubs.reverse.each do |p|
-            e.children.first.previous = "<agency>#{p}</agency>"
+      end
+
+      DEFAULT_EDGROUP_TYPE = { "technical-committee": "TC",
+                               subcommittee: "SC", workgroup: "WG" }.freeze
+
+      def editorial_group_types(xmldoc)
+        %w(technical-committee subcommittee workgroup).each do |v|
+          xmldoc.xpath("//bibdata//#{v} | //bibdata//approval-#{v}").each do |g|
+            next if g["type"]
+
+            g["type"] = DEFAULT_EDGROUP_TYPE[v.to_sym]
           end
         end
       end
