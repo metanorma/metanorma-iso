@@ -2059,6 +2059,7 @@
       <value>compare</value>
       <value>contrast</value>
       <value>see</value>
+      <value>seealso</value>
     </choice>
   </define>
   <define name="deprecates">

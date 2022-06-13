@@ -673,6 +673,66 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(word)
   end
 
+  it "deals with lists and paragraphs" do
+    input = <<~INPUT
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+        <status><stage>50</stage></status>
+      </bibdata>
+      <sections>
+      <clause id="A">
+      <p id="_eb2fd8cd-5cbe-1f1f-7bdb-282868a25828">ISO and IEC maintain terminological databases for use in
+      standardization at the following addresses:</p>
+
+      <ul id="_6f8dbb84-61d9-f774-264e-b7e249cf44d1">
+      <li> <p id="_9f56356a-3a58-64c4-e59e-a23ca3da7e88">ISO Online browsing platform: available at
+        <link target="https://www.iso.org/obp"/></p></li>
+      <li> <p id="_5dc6886f-a99c-e420-a29d-2aa6ca9f376e">IEC Electropedia: available at
+      <link target="https://www.electropedia.org"/>
+      </p> </li> </ul>
+      </clause>
+      </sections>
+      </iso-standard>
+    INPUT
+    word = <<~OUTPUT
+      <div class='WordSection3'>
+         <p class='zzSTDTitle'/>
+         <div>
+           <a name='A' id='A'/>
+           <h1>1</h1>
+           <p class='MsoBodyText'>
+             <a name='_eb2fd8cd-5cbe-1f1f-7bdb-282868a25828' id='_eb2fd8cd-5cbe-1f1f-7bdb-282868a25828'/>
+             ISO and IEC maintain terminological databases for use in standardization
+             at the following addresses:
+           </p>
+           <p class='ListContinue1'>
+             —
+             <span style='mso-tab-count:1'> </span>
+               ISO Online browsing platform: available at
+               <a href='https://www.iso.org/obp'>https://www.iso.org/obp</a>
+           </p>
+           <p class='ListContinue1'>
+             —
+             <span style='mso-tab-count:1'> </span>
+               IEC Electropedia: available at
+               <a href='https://www.electropedia.org'>https://www.electropedia.org</a>
+           </p>
+         </div>
+       </div>
+    OUTPUT
+    FileUtils.rm_f "test.doc"
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "deals with ordered list start" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">

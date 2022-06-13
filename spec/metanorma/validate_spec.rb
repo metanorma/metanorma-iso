@@ -150,7 +150,7 @@ RSpec.describe Metanorma::ISO do
       expect(File.read("test.err")).to include "Scope clause missing"
     end
 
-    it "Scope clause not missing 1" do
+    it "Scope clause not missing if supplied" do
       Asciidoctor.convert(<<~"INPUT", *OPTIONS)
         = Document title
         Author
@@ -164,7 +164,7 @@ RSpec.describe Metanorma::ISO do
       expect(File.read("test.err")).not_to include "Scope clause missing"
     end
 
-    it "Scope clause not missing 2" do
+    it "Scope clause not missing in amendments" do
       FileUtils.rm_f "test.err"
       Asciidoctor.convert(<<~"INPUT", *OPTIONS)
         = Document title
@@ -196,7 +196,7 @@ RSpec.describe Metanorma::ISO do
       expect(File.read("test.err")).to include "Normative references missing"
     end
 
-    it "Normative references not missing 1" do
+    it "Normative references not missing if supplied" do
       Asciidoctor.convert(<<~"INPUT", *OPTIONS)
         = Document title
         Author
@@ -212,7 +212,7 @@ RSpec.describe Metanorma::ISO do
         .not_to include "Normative references missing"
     end
 
-    it "Normative references not missing 2" do
+    it "Normative references not missing in amendments" do
       Asciidoctor.convert(<<~"INPUT", *OPTIONS)
         = Document title
         Author
@@ -243,7 +243,7 @@ RSpec.describe Metanorma::ISO do
       expect(File.read("test.err")).to include "Terms & definitions missing"
     end
 
-    it "Terms & definitions not missing 1" do
+    it "Terms & definitions not missing if supplied" do
       Asciidoctor.convert(<<~"INPUT", *OPTIONS)
         = Document title
         Author
@@ -258,7 +258,7 @@ RSpec.describe Metanorma::ISO do
       expect(File.read("test.err")).not_to include "Terms & definitions missing"
     end
 
-    it "Terms & definitions not missing 2" do
+    it "Terms & definitions not missing in amendment" do
       Asciidoctor.convert(<<~"INPUT", *OPTIONS)
         = Document title
         Author

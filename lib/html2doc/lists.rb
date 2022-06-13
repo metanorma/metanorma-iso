@@ -35,11 +35,14 @@ class Html2Doc
                   !x.text.strip.empty?
                 end
 
-      prev = first_p.xpath("./preceding-sibling::* | ./preceding-sibling::text()")
+      prev = first_p.xpath("./preceding-sibling::* | "\
+                           "./preceding-sibling::text()[normalize-space()]")
       # bullet, tab, paragraph: ignore bullet, tab
-      return if prev.any? { |x| !x.text.strip.empty? }
-
-      para.replace(para.children)
+      if prev.empty? then para.replace(para.children)
+      elsif prev.size == 2 && prev[-1].name == "span" &&
+          prev[-1]["style"] == "mso-tab-count:1"
+        first_p.replace(first_p.children)
+      end
     end
 
     def list2para_style(listtype, depth)
