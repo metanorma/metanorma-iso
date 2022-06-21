@@ -12,8 +12,7 @@ module Metanorma
 
       POST_NORMREF_FOOTNOTES =
         "//sections//clause[not(@type = 'scope')]//fn | "\
-        "//annex//fn | "\
-        "//references[@normative = 'false']//fn".freeze
+        "//annex//fn | //references[@normative = 'false']//fn".freeze
 
       def other_footnote_renumber(xmldoc)
         seen = {}
@@ -115,9 +114,7 @@ module Metanorma
         super
         return unless @amd
 
-        xml.xpath("//*[@inline-header]").each do |h|
-          h.delete("inline-header")
-        end
+        xml.xpath("//*[@inline-header]").each { |h| h.delete("inline-header") }
       end
 
       def boilerplate_file(_xmldoc)
@@ -167,8 +164,7 @@ module Metanorma
 
             if id = replacement_standard(b)
               insert_unpub_note(b, @i18n.cancelled_and_replaced.sub(/%/, id))
-            else
-              insert_unpub_note(b, @i18n.withdrawn)
+            else insert_unpub_note(b, @i18n.withdrawn)
             end
           end
       end
@@ -216,9 +212,7 @@ module Metanorma
 
       def approval_groups_rename(xmldoc)
         %w(technical-committee subcommittee workgroup).each do |v|
-          xmldoc.xpath("//bibdata//approval-#{v}").each do |a|
-            a.name = v
-          end
+          xmldoc.xpath("//bibdata//approval-#{v}").each { |a| a.name = v }
         end
       end
 

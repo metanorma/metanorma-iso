@@ -623,6 +623,97 @@
     <zeroOrMore>
       <ref name="bsource"/>
     </zeroOrMore>
+    <oneOrMore>
+      <ref name="docidentifier"/>
+    </oneOrMore>
+    <optional>
+      <ref name="docnumber"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="bdate"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="contributor"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="edition"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="version"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="biblionote"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="language"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="script"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="bibabstract"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="status"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="copyright"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="docrelation"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="series"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="medium"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="bplace"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="bprice"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="extent"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="bibliographic_size"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="accesslocation"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="license"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="bclassification"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="bkeyword"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="validity"/>
+    </optional>
+  </define>
+  <define name="ReducedBibliographicItem">
+    <optional>
+      <attribute name="type">
+        <ref name="BibItemType"/>
+      </attribute>
+    </optional>
+    <optional>
+      <ref name="fetched"/>
+    </optional>
+    <optional>
+      <ref name="formattedref"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="btitle"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="bsource"/>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="docidentifier"/>
     </zeroOrMore>
@@ -832,6 +923,12 @@
         <attribute name="primary">
           <data type="boolean"/>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
       </optional>
       <text/>
     </element>
@@ -1172,7 +1269,7 @@
         </element>
       </optional>
       <element name="bibitem">
-        <ref name="BibliographicItem"/>
+        <ref name="ReducedBibliographicItem"/>
       </element>
       <choice>
         <zeroOrMore>

@@ -38,7 +38,7 @@ module IsoDoc
         lbl = if n.nil? || blank?(n[:label]) then @i18n.example
               else l10n("#{@i18n.example} #{n[:label]}")
               end
-        prefix_name(node, "&#xa0;&#x2014; ", lbl, "name")
+        prefix_name(node, block_delim, lbl, "name")
       end
 
       def example_span_label(_node, div, name)
