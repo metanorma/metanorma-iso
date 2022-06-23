@@ -209,7 +209,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
             </editorialgroup>
             <approvalgroup>
               <technical-committee number="34" type="ABC">Food products</technical-committee>
-              <subcommittee number="4" type="DEF">Cereals and pulses</subcommittee>
               <workgroup number="3" type="GHI">Rice Group</workgroup>
             </approvalgroup>
             <ics><code>1.2.3</code></ics>
@@ -224,7 +223,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       {:agency=>"ISO/IEC",
-      :approvalgroup=>["ABC 34", "DEF 4", "GHI 3"],
+      :approvalgroup=>["ABC 34", "GHI 3"],
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
       :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",

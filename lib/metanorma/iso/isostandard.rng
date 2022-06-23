@@ -45,7 +45,9 @@
         <ref name="horizontal"/>
       </optional>
       <ref name="editorialgroup"/>
-      <ref name="approvalgroup"/>
+      <optional>
+        <ref name="approvalgroup"/>
+      </optional>
       <zeroOrMore>
         <ref name="ics"/>
       </zeroOrMore>

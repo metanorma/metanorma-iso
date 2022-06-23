@@ -230,7 +230,7 @@ module IsoDoc
         ret = [ag]
         ret << sc_base(xml, "approvalgroup")
         ret << wg_base(xml, "approvalgroup")
-        set(:approvalgroup, ret)
+        set(:approvalgroup, ret.compact)
       end
 
       def secretariat(xml)
