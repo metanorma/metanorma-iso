@@ -10213,7 +10213,7 @@
 					<dc:description>
 						<xsl:variable name="abstract">
 							
-									<xsl:copy-of select="//*[contains(local-name(), '-standard')]/*[local-name() = 'preface']/*[local-name() = 'abstract']//text()"/>									
+									<xsl:copy-of select="//*[contains(local-name(), '-standard')]/*[local-name() = 'preface']/*[local-name() = 'abstract']//text()[not(ancestor::*[local-name() = 'title'])]"/>									
 								
 						</xsl:variable>
 						<xsl:value-of select="normalize-space($abstract)"/>
