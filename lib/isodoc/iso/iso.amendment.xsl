@@ -2469,7 +2469,17 @@
 		
 	</xsl:attribute-set><xsl:attribute-set name="requirement-style">
 		
+			<xsl:attribute name="margin-top">6pt</xsl:attribute>
+			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+		
+		
 	</xsl:attribute-set><xsl:attribute-set name="requirement-name-style">
+		<xsl:attribute name="keep-with-next">always</xsl:attribute>
+		
+			<xsl:attribute name="font-weight">bold</xsl:attribute>
+			<xsl:attribute name="text-align">center</xsl:attribute>			
+			<xsl:attribute name="margin-bottom">4pt</xsl:attribute>
+		
 		
 	</xsl:attribute-set><xsl:attribute-set name="requirement-label-style">
 		
@@ -8215,6 +8225,8 @@
 			<fo:block xsl:use-attribute-sets="requirement-name-style">
 				
 				<xsl:apply-templates/>
+				
+					<xsl:text>:</xsl:text>
 				
 			</fo:block>
 		</xsl:if>
