@@ -2469,7 +2469,17 @@
 		
 	</xsl:attribute-set><xsl:attribute-set name="requirement-style">
 		
+			<xsl:attribute name="margin-top">6pt</xsl:attribute>
+			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+		
+		
 	</xsl:attribute-set><xsl:attribute-set name="requirement-name-style">
+		<xsl:attribute name="keep-with-next">always</xsl:attribute>
+		
+			<xsl:attribute name="font-weight">bold</xsl:attribute>
+			<xsl:attribute name="text-align">center</xsl:attribute>			
+			<xsl:attribute name="margin-bottom">4pt</xsl:attribute>
+		
 		
 	</xsl:attribute-set><xsl:attribute-set name="requirement-label-style">
 		
@@ -2581,6 +2591,7 @@
 		
 		
 			<xsl:attribute name="padding-right">5mm</xsl:attribute>
+		
 		
 				
 				
@@ -2941,7 +2952,8 @@
 		
 		
 		
-				
+		
+		
 		
 					
 			<xsl:attribute name="margin-top">8pt</xsl:attribute>
@@ -2957,6 +2969,7 @@
 	</xsl:attribute-set><xsl:attribute-set name="termnote-style">
 		
 		
+				
 		
 		
 			<xsl:attribute name="font-size">10pt</xsl:attribute>
@@ -3394,7 +3407,10 @@
 		
 		
 		
-		
+		<!-- <xsl:if test="$namespace = 'ieee'">
+			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+			<xsl:attribute name="provisional-distance-between-starts">9.5mm</xsl:attribute>
+		</xsl:if> -->
 		
 		
 			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
@@ -4611,80 +4627,88 @@
 				</xsl:choose>
 			</xsl:variable>
 			
-			<fo:table keep-with-previous="always">
-				<xsl:for-each select="xalan:nodeset($table_attributes)/table_attributes/@*">
-					<xsl:variable name="name" select="local-name()"/>
+			
+			<xsl:variable name="tableWithNotesAndFootnotes">
+			
+				<fo:table keep-with-previous="always">
+					<xsl:for-each select="xalan:nodeset($table_attributes)/table_attributes/@*">
+						<xsl:variable name="name" select="local-name()"/>
+						<xsl:choose>
+							<xsl:when test="$name = 'border-top'">
+								<xsl:attribute name="{$name}">0pt solid black</xsl:attribute>
+							</xsl:when>
+							<xsl:when test="$name = 'border'">
+								<xsl:attribute name="{$name}"><xsl:value-of select="."/></xsl:attribute>
+								<xsl:attribute name="border-top">0pt solid black</xsl:attribute>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:attribute name="{$name}"><xsl:value-of select="."/></xsl:attribute>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:for-each>
+					
+					
+					
 					<xsl:choose>
-						<xsl:when test="$name = 'border-top'">
-							<xsl:attribute name="{$name}">0pt solid black</xsl:attribute>
-						</xsl:when>
-						<xsl:when test="$name = 'border'">
-							<xsl:attribute name="{$name}"><xsl:value-of select="."/></xsl:attribute>
-							<xsl:attribute name="border-top">0pt solid black</xsl:attribute>
+						<xsl:when test="xalan:nodeset($colgroup)//*[local-name()='col']">
+							<xsl:for-each select="xalan:nodeset($colgroup)//*[local-name()='col']">
+								<fo:table-column column-width="{@width}"/>
+							</xsl:for-each>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:attribute name="{$name}"><xsl:value-of select="."/></xsl:attribute>
+							<!-- $colwidths=<xsl:copy-of select="$colwidths"/> -->
+							<xsl:call-template name="insertTableColumnWidth">
+								<xsl:with-param name="colwidths" select="$colwidths"/>
+							</xsl:call-template>
 						</xsl:otherwise>
 					</xsl:choose>
-				</xsl:for-each>
-				
-				
-				
-				<xsl:choose>
-					<xsl:when test="xalan:nodeset($colgroup)//*[local-name()='col']">
-						<xsl:for-each select="xalan:nodeset($colgroup)//*[local-name()='col']">
-							<fo:table-column column-width="{@width}"/>
-						</xsl:for-each>
-					</xsl:when>
-					<xsl:otherwise>
-						<!-- $colwidths=<xsl:copy-of select="$colwidths"/> -->
-						<xsl:call-template name="insertTableColumnWidth">
-							<xsl:with-param name="colwidths" select="$colwidths"/>
-						</xsl:call-template>
-					</xsl:otherwise>
-				</xsl:choose>
-				
-				<fo:table-body>
-					<fo:table-row>
-						<fo:table-cell xsl:use-attribute-sets="table-footer-cell-style" number-columns-spanned="{$cols-count}">
-							
-							
+					
+					<fo:table-body>
+						<fo:table-row>
+							<fo:table-cell xsl:use-attribute-sets="table-footer-cell-style" number-columns-spanned="{$cols-count}">
+								
+								
 
-							
-							
-							<!-- fn will be processed inside 'note' processing -->
-							
-							
-							
-							
-							
-							
-							<!-- for BSI (not PAS) display Notes before footnotes -->
-							
-							
-							<!-- except gb and bsi  -->
-							
-									<xsl:apply-templates select="../*[local-name()='note']"/>
 								
-							
-							
-							<!-- horizontal row separator -->
-							
-							
-							<!-- fn processing -->
-							
-									<xsl:call-template name="table_fn_display"/>
 								
-							
-							
-							<!-- for PAS display Notes after footnotes -->
-							
-							
-						</fo:table-cell>
-					</fo:table-row>
-				</fo:table-body>
-				
-			</fo:table>
+								<!-- fn will be processed inside 'note' processing -->
+								
+								
+								
+								
+								
+								
+								<!-- for BSI (not PAS) display Notes before footnotes -->
+								
+								
+								<!-- except gb and bsi  -->
+								
+										<xsl:apply-templates select="../*[local-name()='note']"/>
+									
+								
+								
+								<!-- horizontal row separator -->
+								
+								
+								<!-- fn processing -->
+								
+										<xsl:call-template name="table_fn_display"/>
+									
+								
+								
+								<!-- for PAS display Notes after footnotes -->
+								
+								
+							</fo:table-cell>
+						</fo:table-row>
+					</fo:table-body>
+					
+				</fo:table>
+			</xsl:variable>
+			
+			<xsl:if test="normalize-space($tableWithNotesAndFootnotes) != ''">
+				<xsl:copy-of select="$tableWithNotesAndFootnotes"/>
+			</xsl:if>
 			
 			
 			
@@ -5040,6 +5064,7 @@
 		<xsl:variable name="footnote_inline">
 			<fo:inline xsl:use-attribute-sets="fn-num-style">
 				
+				
 				<fo:basic-link internal-destination="{$ref_id}" fox:alt-text="footnote {$current_fn_number}">
 					<xsl:value-of select="$current_fn_number_text"/>
 				</fo:basic-link>
@@ -5061,7 +5086,11 @@
 							<fo:block xsl:use-attribute-sets="fn-body-style">
 								
 								
+								
 								<fo:inline id="{$ref_id}" xsl:use-attribute-sets="fn-body-num-style">
+									
+									
+									
 									
 									<xsl:value-of select="$current_fn_number_text"/>
 								</fo:inline>
@@ -6777,6 +6806,8 @@
 			
 			
 			
+			
+			
 			<xsl:choose>
 				<xsl:when test="$target_text = ''">
 					<xsl:apply-templates/>
@@ -6984,6 +7015,7 @@
 				
 
 				
+				
 				<!-- if 'p' contains all text in 'add' first and last elements in first p are 'add' -->
 				<!-- <xsl:if test="*[not(local-name()='name')][1][node()[normalize-space() != ''][1][local-name() = 'add'] and node()[normalize-space() != ''][last()][local-name() = 'add']]"> -->
 				<xsl:if test="*[not(local-name()='name')][1][count(node()[normalize-space() != '']) = 1 and *[local-name() = 'add']]">
@@ -7006,6 +7038,7 @@
 				<xsl:otherwise>
 					
 					
+					
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -7021,6 +7054,7 @@
 					<xsl:value-of select="$sfx"/>					
 				</xsl:when>
 				<xsl:otherwise>
+					
 					
 						<xsl:text>:</xsl:text>
 					
@@ -7802,6 +7836,9 @@
 			<fo:block xsl:use-attribute-sets="figure-name-style">
 				
 				
+				
+				
+				
 				<xsl:apply-templates/>
 			</fo:block>
 		</xsl:if>
@@ -8216,6 +8253,8 @@
 				
 				<xsl:apply-templates/>
 				
+					<xsl:text>:</xsl:text>
+				
 			</fo:block>
 		</xsl:if>
 	</xsl:template><xsl:template match="*[local-name() = 'requirement']/*[local-name() = 'label']">
@@ -8382,10 +8421,14 @@
 	</xsl:template><xsl:template match="*[local-name() = 'termexample']/*[local-name() = 'p']">
 		<xsl:variable name="element">inline
 			
+			
 		</xsl:variable>		
 		<xsl:choose>			
 			<xsl:when test="contains($element, 'block')">
 				<fo:block xsl:use-attribute-sets="example-p-style">
+				
+					
+						
 					<xsl:apply-templates/>
 				</fo:block>
 			</xsl:when>
@@ -8497,6 +8540,7 @@
 						<xsl:attribute name="margin-right">0mm</xsl:attribute>
 					</xsl:if>
 					<fo:block xsl:use-attribute-sets="example-p-style">
+						
 						
 						<xsl:apply-templates/>
 					</fo:block>
@@ -8651,6 +8695,8 @@
 					
 					<xsl:variable name="citeas" select="java:replaceAll(java:java.lang.String.new(@citeas),'^\[?(.+?)\]?$','$1')"/> <!-- remove leading and trailing brackets -->
 					<xsl:variable name="text" select="normalize-space()"/>
+					
+					
 					
 					
 					
@@ -9070,6 +9116,8 @@
 				
 					
 				
+					
+				
 					<!-- if 'p' contains all text in 'add' first and last elements in first p are 'add' -->
 					<xsl:if test="*[1][count(node()[normalize-space() != '']) = 1 and *[local-name() = 'add']]">
 						<xsl:call-template name="append_add-style"/>
@@ -9327,7 +9375,7 @@
 				</fo:block>
 			
 
-	</xsl:template><xsl:template match="*[local-name() = 'references'][not(@normative='true')]/*[local-name() = 'bibitem']" priority="2">
+	</xsl:template><xsl:template match="*[local-name() = 'references'][not(@normative='true')]/*[local-name() = 'bibitem']" name="bibitem_non_normative" priority="2">
 		
 		 <!-- $namespace = 'csd' or $namespace = 'gb' or $namespace = 'iec' or $namespace = 'ieee' or $namespace = 'iso' or $namespace = 'jcgm' or $namespace = 'm3d' or 
 			$namespace = 'mpfd' or $namespace = 'ogc' or $namespace = 'ogc-white-paper' -->
@@ -9340,9 +9388,7 @@
 									
 											<xsl:value-of select="*[local-name()='docidentifier'][@type = 'metanorma-ordinal']"/>
 											<xsl:if test="not(*[local-name()='docidentifier'][@type = 'metanorma-ordinal'])">
-												
-														<xsl:number format="[1]" count="*[local-name()='bibitem'][not(@hidden = 'true')]"/>
-													
+												<xsl:number format="[1]" count="*[local-name()='bibitem'][not(@hidden = 'true')]"/>
 											</xsl:if>
 										
 								</fo:inline>
