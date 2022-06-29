@@ -3407,7 +3407,10 @@
 		
 		
 		
-		
+		<!-- <xsl:if test="$namespace = 'ieee'">
+			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+			<xsl:attribute name="provisional-distance-between-starts">9.5mm</xsl:attribute>
+		</xsl:if> -->
 		
 		
 			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
@@ -9372,7 +9375,7 @@
 				</fo:block>
 			
 
-	</xsl:template><xsl:template match="*[local-name() = 'references'][not(@normative='true')]/*[local-name() = 'bibitem']" priority="2">
+	</xsl:template><xsl:template match="*[local-name() = 'references'][not(@normative='true')]/*[local-name() = 'bibitem']" name="bibitem_non_normative" priority="2">
 		
 		 <!-- $namespace = 'csd' or $namespace = 'gb' or $namespace = 'iec' or $namespace = 'ieee' or $namespace = 'iso' or $namespace = 'jcgm' or $namespace = 'm3d' or 
 			$namespace = 'mpfd' or $namespace = 'ogc' or $namespace = 'ogc-white-paper' -->
@@ -9385,9 +9388,7 @@
 									
 											<xsl:value-of select="*[local-name()='docidentifier'][@type = 'metanorma-ordinal']"/>
 											<xsl:if test="not(*[local-name()='docidentifier'][@type = 'metanorma-ordinal'])">
-												
-														<xsl:number format="[1]" count="*[local-name()='bibitem'][not(@hidden = 'true')]"/>
-													
+												<xsl:number format="[1]" count="*[local-name()='bibitem'][not(@hidden = 'true')]"/>
 											</xsl:if>
 										
 								</fo:inline>
