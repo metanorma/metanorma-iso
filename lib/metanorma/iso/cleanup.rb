@@ -98,7 +98,8 @@ module Metanorma
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
         num = bib&.at("./docnumber")&.text
-        id = bib&.at("./docidentifier[not(#{OTHERIDS})]")
+        id = bib&.at("./docidentifier[@primary]") ||
+          bib&.at("./docidentifier[not(#{OTHERIDS})]")
         metaid = bib&.at("./docidentifier[@type = 'metanorma']")&.text
         abbrid = metaid unless /^\[\d+\]$/.match?(metaid)
         /\d-(?<partid>\d+)/ =~ id&.text
