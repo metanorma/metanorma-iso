@@ -297,7 +297,7 @@ RSpec.describe IsoDoc do
           <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
           <preface><foreword displayorder="1">
           <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
-                         <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>
+                         <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>EDITORIAL NOTE — 
                  Only use paddy or parboiled rice for the
                  determination of husked rice yield.
                </p>
@@ -312,7 +312,7 @@ RSpec.describe IsoDoc do
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='zzHelp'>
-                 <p>
+                 <p>EDITORIAL NOTE — 
                     Only use paddy or parboiled rice for the
                    determination of husked rice yield.
                  </p>
@@ -332,7 +332,7 @@ RSpec.describe IsoDoc do
       <div>
         <h1 class='ForewordTitle'>Foreword</h1>
         <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='zzHelp'>
-          <p> Only use paddy or parboiled rice for the determination of husked rice yield. </p>
+          <p>EDITORIAL NOTE — Only use paddy or parboiled rice for the determination of husked rice yield. </p>
           <p class='ForewordText' id='_e94663cc-2473-4ccc-9a72-983a74d989f3'>Para 2.</p>
         </div>
       </div>

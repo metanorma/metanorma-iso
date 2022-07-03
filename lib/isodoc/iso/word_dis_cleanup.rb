@@ -230,6 +230,14 @@ module IsoDoc
           end
         end
       end
+
+      def make_FigureWordToC(docxml)
+        super.sub(/FigureTitle,figuretitle/, "Figure title,Annex Figure Title")
+      end
+
+      def make_TableWordToC(docxml)
+        super.sub(/TableTitle,tabletitle/, "Table title,Annex Table Title")
+      end
     end
   end
 end
