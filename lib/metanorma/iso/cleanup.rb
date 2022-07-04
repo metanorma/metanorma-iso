@@ -76,7 +76,8 @@ module Metanorma
         return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
         return 2 if bib.at("#{PUBLISHER}[name = 'International "\
                            "Electrotechnical Commission']")
-        return 3 if bib.at("./docidentifier[@type][not(#{OTHERIDS})]")
+        return 3 if bib.at("./docidentifier[@type][not(#{OTHERIDS})]") ||
+          bib.at("./docidentifier[not(@type)]")
 
         4
       end
