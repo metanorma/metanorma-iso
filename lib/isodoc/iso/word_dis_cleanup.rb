@@ -1,11 +1,6 @@
 module IsoDoc
   module Iso
     class WordDISConvert < WordConvert
-      def style_cleanup(docxml)
-        super
-        dis_styles(docxml)
-      end
-
       STYLESMAP = {
         AltTerms: "AdmittedTerm",
         TableFootnote: "Tablefootnote",
@@ -30,7 +25,7 @@ module IsoDoc
         zzCopyright1: "zzCopyright",
       }.freeze
 
-      def dis_styles(docxml)
+      def new_styles(docxml)
         STYLESMAP.each do |k, v|
           docxml.xpath("//*[@class = '#{k}']").each { |s| s["class"] = v }
         end

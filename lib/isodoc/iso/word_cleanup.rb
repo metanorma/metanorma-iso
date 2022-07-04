@@ -37,12 +37,24 @@ module IsoDoc
 
       def style_cleanup(docxml)
         word_annex_cleanup_h1(docxml)
-        style_cleanup1(docxml)
+        new_styles(docxml)
       end
 
-      def style_cleanup1(docxml)
-        docxml.xpath("//*[@class = 'example']").each do |p|
-          p["class"] = "Example"
+      STYLESMAP = {
+        example: "Example",
+        note: "Note",
+        Sourcecode: "Code",
+        tabletitle: "Tabletitle",
+        Biblio: "MsoNormal",
+      }.freeze
+
+      def new_styles(docxml)
+        STYLESMAP.each do |k, v|
+          docxml.xpath("//*[@class = '#{k}']").each { |s| s["class"] = v }
+        end
+        docxml.xpath("//div[@class = 'Section3']//p[@class = 'Tabletitle']")
+          .each do |t|
+          t["class"] = "AnnexTableTitle"
         end
         docxml.xpath("//*[@class = 'zzHelp']/p[not(@class)]").each do |p|
           p["class"] = "zzHelp"

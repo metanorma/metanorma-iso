@@ -1943,4 +1943,111 @@ RSpec.describe IsoDoc do
         </div>
       OUTPUT
   end
+
+  it "deals with Simple Template styles" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>20</stage></status>
+        </bibdata>
+         <sections>
+        <clause id="A">
+        <note id="B">Note</note>
+        <example id="C">Example</example>
+        <figure id="D"><name>Figure Title</name></figure>
+        <sourcecode id="E">XYZ</sourcecode>
+        <table id="F"><name>Table</name></table>
+        </clause>
+        </sections>
+        <annex id="G">
+        <table id="H"><name>Annex Table</name></table>
+        </annex>
+        <bibliography>
+        <references id="_normative_references" normative="false" obligation="informative">
+            <title>Bibliography</title>
+            <bibitem id="ISO712" type="standard">
+            <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
+            <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>
+            </bibitem>
+        </references>
+        </bibliography>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+              <div class='WordSection3'>
+         <p class='zzSTDTitle1'/>
+         <div>
+           <a name='A' id='A'/>
+           <h1/>
+           <div class='Note'>
+             <a name='B' id='B'/>
+             <p class='Note'>
+               <span class='note_label'/>
+               <span style='mso-tab-count:1'>  </span>
+             </p>
+             Note
+           </div>
+           <div class='Example'>
+             <a name='C' id='C'/>
+             <p class='Example'>
+               <span style='mso-tab-count:1'>  </span>
+             </p>
+             Example
+           </div>
+           <div class='figure'>
+             <a name='D' id='D'/>
+             <p class='FigureTitle' style='text-align:center;'>Figure Title</p>
+           </div>
+           <p class='Code'>
+             <a name='E' id='E'/>
+             XYZ
+           </p>
+           <p class='Tabletitle' style='text-align:center;'>Table</p>
+           <div align='center' class='table_container'>
+             <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>
+               <a name='F' id='F'/>
+             </table>
+           </div>
+         </div>
+         <p class='MsoNormal'>
+           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+         </p>
+         <div class='Section3'>
+           <a name='G' id='G'/>
+           <p class='AnnexTableTitle' style='text-align:center;'>Annex Table</p>
+           <div align='center' class='table_container'>
+             <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>
+               <a name='H' id='H'/>
+             </table>
+           </div>
+         </div>
+         <p class='MsoNormal'>
+           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+         </p>
+         <div>
+           <p class='BiblioTitle'>Bibliography</p>
+           <p class='MsoNormal'>
+             <a name='ISO712' id='ISO712'/>
+             [1]
+             <span style='mso-tab-count:1'>  </span>
+             ISO/IEC 712-3:2022, ALUFFI, Paolo, ed. (2022). 
+             <i>
+               Facets of Algebraic Geometry: A Collection in Honor of William Fulton's
+               80th Birthday
+             </i>
+             , 1st edition. Cambridge, UK: CUP.
+           </p>
+         </div>
+       </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
 end

@@ -358,7 +358,8 @@ p.SourceTitle
         mso-bidi-font-family:$bodyfont;
         mso-ansi-language:EN-GB;}
 p.Tabletitle, li.Tabletitle, div.Tabletitle, p.ListTitle
-	{mso-style-unhide:no;
+	{mso-style-name:"Table title";
+        mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
 	margin-top:0cm;
@@ -485,6 +486,7 @@ span.AnnexFigureTitleChar
 	font-weight:bold;}
 p.Note, div.Note, li.Note, p.TableFootnote, div.TableFootnote, li.TableFootnote
 	{mso-style-unhide:no;
+        mso-style-name:"Note";
 	mso-style-qformat:yes;
 	mso-style-parent:"";
 	margin-top:0cm;
@@ -1234,7 +1236,7 @@ aside {
 }
 
 /*
-div.example {
+div.Example {
 	border:solid black .25pt;
 	mso-border-alt:solid black .25pt;
 	padding:10pt;
@@ -1246,7 +1248,7 @@ div.example {
 
 
 /*
-div.example {
+div.Example {
   margin-left:70.9pt;
   text-indent:-70.9pt;
 }
