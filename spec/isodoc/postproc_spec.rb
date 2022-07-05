@@ -126,66 +126,6 @@ RSpec.describe IsoDoc do
     expect(File.exist?("spec/assets/iso.pdf")).to be true
   end
 
-  it "converts annex subheadings to h2Annex class for Word" do
-    IsoDoc::Iso::WordConvert
-      .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <annex id="P" inline-header="false" obligation="normative">
-            <title>Annex</title>
-            <clause id="Q" inline-header="false" obligation="normative">
-              <title>A.1
-                <tab/>
-                Annex A.1</title>
-            </clause>
-            <appendix id="Q2" inline-header="false" obligation="normative">
-              <title>Appendix 1
-                <tab/>
-                An Appendix</title>
-            </appendix>
-          </annex>
-          <bibliography>
-            <references id="R" normative="false"><title>Bibliography</title></references>
-          </bibliography>
-        </iso-standard>
-      INPUT
-
-    word = File.read("test.doc", encoding: "UTF-8")
-      .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
-      .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
-      <div class="WordSection3">
-        <p class="zzSTDTitle1"/>
-        <p class="MsoNormal">
-          <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-        </p>
-        <div class="Section3">
-          <a id="P" name="P"/>
-          <p class="ANNEX">Annex</p>
-          <div>
-            <a id="Q" name="Q"/>
-            <p class="h2Annex">A.1
-              <span style="mso-tab-count:1">  </span>
-              Annex A.1</p>
-          </div>
-          <div>
-            <a id="Q2" name="Q2"/>
-            <p class="h2Annex">Appendix 1
-              <span style="mso-tab-count:1">  </span>
-              An Appendix</p>
-          </div>
-        </div>
-        <p class='MsoNormal'>
-          <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-        </p>
-        <div>
-          <p class='BiblioTitle'>Bibliography</p>
-        </div>
-      </div>
-    OUTPUT
-  end
-
   it "populates Word template with terms reference labels" do
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS.dup)
@@ -817,7 +757,7 @@ RSpec.describe IsoDoc do
         </p>
         <div class="Section3">
           <a id="P" name="P"/>
-          <div class="figure">
+          <div class="MsoNormal" style='text-align:center;'>
             <a id="samplecode" name="samplecode"/>
             <p class="MsoNormal">Hello</p>
             <p class="MsoNormal">Key</p>
@@ -864,7 +804,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
     expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <div class='WordSection3'>
+      <div class='WordSection3'>
          <p class='zzSTDTitle1'/>
          <p class='MsoNormal'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>

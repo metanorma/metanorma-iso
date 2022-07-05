@@ -1010,9 +1010,9 @@ RSpec.describe IsoDoc do
                 Note
               </p>
             </div>
-            <div style='page-break-after:avoid;'>
+            <div class="Figureexample" style='page-break-after:avoid;'>
               <a name='D' id='D'/>
-              <p class='Example'>
+              <p class='Figureexample'>
                 <span style='mso-tab-count:1'>  </span>
                 Example
               </p>
@@ -1687,7 +1687,7 @@ RSpec.describe IsoDoc do
                  <span style='mso-tab-count:1'>  </span>
                  Example start
                </p>
-              <p class='Code--'>X</p>
+              <p class='Code--' style='margin-bottom:12pt;'>X</p>
                <p class='Exampleindentcontinued'>Example continued</p>
              </div>
               <p class='Code-'>X</p>
@@ -1951,16 +1951,23 @@ RSpec.describe IsoDoc do
           <status><stage>20</stage></status>
         </bibdata>
          <sections>
-        <clause id="A">
-        <note id="B">Note</note>
-        <example id="C">Example</example>
+        <clause id="A"><title>Clause Title</title>
+        <ul><li>List</li></ul>
+        <note id="B"><p>Note</p>
+        <ul><li>Note List</li></ul>
+        </note>
+        <example id="C"><p>Example</p>
+        <ul><li>Example List</li></ul>
+        </example>
         <figure id="D"><name>Figure Title</name></figure>
         <sourcecode id="E">XYZ</sourcecode>
         <table id="F"><name>Table</name></table>
         </clause>
         </sections>
-        <annex id="G">
+        <annex id="G"><title>Annex Title</title>
         <table id="H"><name>Annex Table</name></table>
+        <clause id="I"><title>Annex Clause Title</title>
+        </clause>
         </annex>
         <bibliography>
         <references id="_normative_references" normative="false" obligation="informative">
@@ -1974,27 +1981,30 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-              <div class='WordSection3'>
+       <div class='WordSection3'>
          <p class='zzSTDTitle1'/>
          <div>
            <a name='A' id='A'/>
-           <h1/>
+           <h1>Clause Title</h1>
+           <p style='mso-list:l3 level1 lfo1;' class='MsoListParagraphCxSpFirst'>List</p>
            <div class='Note'>
              <a name='B' id='B'/>
              <p class='Note'>
                <span class='note_label'/>
                <span style='mso-tab-count:1'>  </span>
+               Note
              </p>
-             Note
+             <p style='font-size:10.0pt;;mso-list:l3 level1 lfo2;' class='MsoListParagraphCxSpFirst'>Note List</p>
            </div>
            <div class='Example'>
              <a name='C' id='C'/>
              <p class='Example'>
                <span style='mso-tab-count:1'>  </span>
-             </p>
              Example
+             </p>
+             <p style='font-size:10.0pt;;mso-list:l3 level1 lfo3;' class='MsoListParagraphCxSpFirst'>Example List</p>
            </div>
-           <div class='figure'>
+           <div class='MsoNormal'  style='text-align:center;'>
              <a name='D' id='D'/>
              <p class='FigureTitle' style='text-align:center;'>Figure Title</p>
            </div>
@@ -2014,11 +2024,16 @@ RSpec.describe IsoDoc do
          </p>
          <div class='Section3'>
            <a name='G' id='G'/>
+           <p class='ANNEX'>Annex Title</p>
            <p class='AnnexTableTitle' style='text-align:center;'>Annex Table</p>
            <div align='center' class='table_container'>
              <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>
                <a name='H' id='H'/>
              </table>
+           </div>
+           <div>
+             <a name='I' id='I'/>
+             <p class='a2'>Annex Clause Title</p>
            </div>
          </div>
          <p class='MsoNormal'>

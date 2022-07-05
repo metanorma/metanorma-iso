@@ -1269,14 +1269,6 @@ div.Example, td.Example {
    margin-bottom:6.0pt;
 }
 
-td.Example p.MsoListParagraph {
-  font-size: $smallerfontsize;
-}
-
-div.Example p.MsoListParagraph {
-  font-size: $smallerfontsize;
-}
-
 p.Example, li.Example, div.Example
 	{
 	mso-style-unhide:no;
@@ -1301,10 +1293,6 @@ span.ExampleChar
 	mso-ansi-language:EN-GB;}
 
 
-
-div.Note p.MsoListParagraph {
-  font-size: $smallerfontsize;
-}
 
 div.Note span.stem {
   font-size: $smallerfontsize; }
