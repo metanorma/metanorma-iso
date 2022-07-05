@@ -71,7 +71,7 @@ p.NormRef, li.NormRef, div.NormRef
         mso-bidi-font-family:$bodyfont;
         mso-ansi-language:EN-GB;}
 p.FigureTitle, li.FigureTitle, div.FigureTitle
-	{mso-style-name:figuretitle;
+	{mso-style-name:"Figure Title";
 	mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
@@ -1624,14 +1624,6 @@ p.Example, li.Example, td.Example {
 div.Example, td.Example {
    margin:0in;
    margin-bottom:6.0pt;
-}
-
-td.Example p.MsoListParagraph {
-  font-size: $smallerfontsize;
-}
-
-div.Example p.MsoListParagraph {
-  font-size: $smallerfontsize;
 }
 
 p.Example, li.Example, div.Example
@@ -4307,10 +4299,6 @@ span.SpellE
 	{mso-style-name:"";
 	mso-spl-e:yes;}
 
-
-div.Note p.MsoListParagraph {
-  font-size: $smallerfontsize;
-}
 
 div.Note span.stem {
   font-size: $smallerfontsize; }

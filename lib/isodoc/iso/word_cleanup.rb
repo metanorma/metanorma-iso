@@ -11,11 +11,10 @@ module IsoDoc
         end
       end
 
-      # force Annex h2 down to be p.h2Annex, so it is not picked up by ToC
       def word_annex_cleanup1(docxml, lvl)
         docxml.xpath("//h#{lvl}[ancestor::*[@class = 'Section3']]").each do |h2|
           h2.name = "p"
-          h2["class"] = "h#{lvl}Annex"
+          h2["class"] = "a#{lvl}"
         end
       end
 
@@ -37,16 +36,51 @@ module IsoDoc
 
       def style_cleanup(docxml)
         word_annex_cleanup_h1(docxml)
-        style_cleanup1(docxml)
+        figure_style(docxml)
+        new_styles(docxml)
       end
 
-      def style_cleanup1(docxml)
-        docxml.xpath("//*[@class = 'example']").each do |p|
-          p["class"] = "Example"
+      def figure_style(docxml)
+        docxml.xpath("//div[@class = 'figure']").each do |f|
+          f["style"] ||= ""
+          f["style"] += "text-align:center;"
         end
+      end
+
+      def quote_style(docxml)
+        docxml.xpath("//div[@class = 'Quote' or @class = 'Note' or "\
+                     "@class = 'Example' or @class = 'Admonition']").each do |d|
+                       quote_style1(d)
+                     end
+      end
+
+      def quote_style1(div)
+        div.xpath(".//li").each do |p|
+          p["style"] ||= ""
+          p["style"] += "font-size:#{default_fonts({})[:smallerfontsize]};"
+        end
+      end
+
+      STYLESMAP = {
+        example: "Example",
+        note: "Note",
+        Sourcecode: "Code",
+        tabletitle: "Tabletitle",
+        Biblio: "MsoNormal",
+        figure: "MsoNormal",
+        SourceTitle: "FigureTitle",
+      }.freeze
+
+      def new_styles(docxml)
+        STYLESMAP.each do |k, v|
+          docxml.xpath("//*[@class = '#{k}']").each { |s| s["class"] = v }
+        end
+        docxml.xpath("//div[@class = 'Section3']//p[@class = 'Tabletitle']")
+          .each { |t| t["class"] = "AnnexTableTitle" }
         docxml.xpath("//*[@class = 'zzHelp']/p[not(@class)]").each do |p|
           p["class"] = "zzHelp"
         end
+        quote_style(docxml)
       end
 
       def authority_hdr_cleanup(docxml)

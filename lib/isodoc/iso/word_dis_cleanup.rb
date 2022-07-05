@@ -1,11 +1,6 @@
 module IsoDoc
   module Iso
     class WordDISConvert < WordConvert
-      def style_cleanup(docxml)
-        super
-        dis_styles(docxml)
-      end
-
       STYLESMAP = {
         AltTerms: "AdmittedTerm",
         TableFootnote: "Tablefootnote",
@@ -30,7 +25,7 @@ module IsoDoc
         zzCopyright1: "zzCopyright",
       }.freeze
 
-      def dis_styles(docxml)
+      def new_styles(docxml)
         STYLESMAP.each do |k, v|
           docxml.xpath("//*[@class = '#{k}']").each { |s| s["class"] = v }
         end
@@ -46,8 +41,8 @@ module IsoDoc
         figure_style(docxml)
         note_style(docxml)
         example_style(docxml)
-        quote_style(docxml)
         dis_style_interactions(docxml)
+        quote_style(docxml)
       end
 
       def dis_style_interactions(docxml)
@@ -66,13 +61,6 @@ module IsoDoc
           h.name = "p"
           h["style"] = "font-style:italic;page-break-after:avoid;"
         end
-      end
-
-      def quote_style(docxml)
-        docxml.xpath("//div[@class = 'Quote' or @class = 'Note' or "\
-                     "@class = 'Example' or @class = 'Admonition']").each do |d|
-                       quote_style1(d)
-                     end
       end
 
       def para_style_change(div, class1, class2)
