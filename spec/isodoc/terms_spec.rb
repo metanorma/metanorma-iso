@@ -249,4 +249,66 @@ RSpec.describe IsoDoc do
       .sub(%r{</div>\s*<br.*$}m, "")))
       .to be_equivalent_to xmlpp(word)
   end
+
+  it "processes related terms" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <sections>
+      <terms id='A' obligation='normative'>
+            <title>Terms and definitions</title>
+            <term id='second'>
+        <preferred>
+          <expression>
+            <name>Second Term</name>
+          </expression>
+        <field-of-application>Field</field-of-application>
+        <usage-info>Usage Info 1</usage-info>
+        </preferred>
+        <definition><verbal-definition>Definition 1</verbal-definition></definition>
+      </term>
+      <term id="C">
+      <preferred language='fr' script='Latn' type='prefix'>
+                <expression>
+                  <name>First Designation</name>
+                  </expression></preferred>
+        <related type='contrast'>
+          <preferred>
+            <expression>
+              <name>Fifth Designation</name>
+              <grammar>
+                <gender>neuter</gender>
+              </grammar>
+            </expression>
+          </preferred>
+          <xref target='second'/>
+        </related>
+        <definition><verbal-definition>Definition 2</verbal-definition></definition>
+      </term>
+          </terms>
+        </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+       <?xml version='1.0'?>
+          <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+        <sections>
+          <terms id='A' obligation='normative' displayorder='1'>
+            <title depth='1'>1<tab/>Terms and definitions</title>
+            <term id='second'>
+              <name>1.1</name>
+              <preferred><strong>Second Term</strong>, &#x3c;Field, Usage Info 1&#x3e;</preferred>
+              <definition>Definition 1</definition>
+            </term>
+            <term id='C'>
+              <name>1.2</name>
+              <preferred language='fr' script='Latn' type='prefix'><strong>First Designation</strong></preferred>
+              <definition>Definition 2</definition>
+            </term>
+          </terms>
+        </sections>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+  end
 end
