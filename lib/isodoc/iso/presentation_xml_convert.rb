@@ -196,6 +196,10 @@ module IsoDoc
         type
       end
 
+      def related1(node)
+        node.remove
+      end
+
       include Init
     end
   end

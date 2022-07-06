@@ -410,7 +410,7 @@ RSpec.describe Metanorma::ISO do
                <uri type='src'>https://www.iso.org/standard/2405.html</uri>
                <uri type='rss'>https://www.iso.org/contents/data/standard/00/24/2405.detail.rss</uri>
                <docidentifier type='ISO' primary='true'>ISO 31-0</docidentifier>
-               <docidentifier type='URN'>urn:iso:std:iso:31:-0:stage-95.99:ed-1:en</docidentifier>
+               <docidentifier type='URN'>urn:iso:std:iso:31:-0:stage-95.99:ed-1</docidentifier>
                <docnumber>31</docnumber>
                <contributor>
                  <role type='publisher'/>
@@ -447,7 +447,7 @@ RSpec.describe Metanorma::ISO do
                    <uri type='src'>https://www.iso.org/standard/2405.html</uri>
                    <uri type='rss'>https://www.iso.org/contents/data/standard/00/24/2405.detail.rss</uri>
                    <docidentifier type='ISO' primary='true'>ISO 31-0:1974</docidentifier>
-                   <docidentifier type='URN'>urn:iso:std:iso:31:-0:stage-95.99:ed-1:en</docidentifier>
+                   <docidentifier type='URN'>urn:iso:std:iso:31:-0:stage-95.99:ed-1</docidentifier>
                    <docnumber>31</docnumber>
                    <date type='published'>
                      <on>1974-01</on>
@@ -494,7 +494,7 @@ RSpec.describe Metanorma::ISO do
                <uri type='src'>https://www.iso.org/standard/76389.html</uri>
                <uri type='rss'>https://www.iso.org/contents/data/standard/07/63/76389.detail.rss</uri>
                <docidentifier type='ISO' primary='true'>ISO 683-3:2019</docidentifier>
-               <docidentifier type='URN'>urn:iso:std:iso:683:-3:stage-95.99:ed-3:en</docidentifier>
+               <docidentifier type='URN'>urn:iso:std:iso:683:-3:stage-95.99:ed-3</docidentifier>
                <docnumber>683</docnumber>
                <date type='published'>
                  <on>2019-01</on>
@@ -551,11 +551,13 @@ RSpec.describe Metanorma::ISO do
                <relation type='obsoletes'>
                  <bibitem type='standard'>
                    <formattedref format='text/plain'>ISO 683-3:2016</formattedref>
+                   <docidentifier type='ISO' primary='true'>ISO 683-3:2016</docidentifier>
                  </bibitem>
                </relation>
                <relation type='updates'>
                  <bibitem type='standard'>
                    <formattedref format='text/plain'>ISO 683-3:2022</formattedref>
+                   <docidentifier type='ISO' primary='true'>ISO 683-3:2022</docidentifier>
                    <date type='circulated'>
                      <on>2022-01-21</on>
                    </date>
