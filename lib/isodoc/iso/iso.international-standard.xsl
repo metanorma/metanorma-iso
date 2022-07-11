@@ -4088,6 +4088,14 @@
 				
 				
 				
+				<xsl:if test="*[local-name()='bookmark']"> <!-- special case: table/bookmark -->
+					<fo:block keep-with-previous="always" line-height="0.1">
+						<xsl:for-each select="*[local-name()='bookmark']">
+							<xsl:call-template name="bookmark"/>
+						</xsl:for-each>
+					</fo:block>
+				</xsl:if>
+				
 			</fo:block-container>
 		</xsl:variable>
 		
@@ -9307,7 +9315,7 @@
 	</xsl:template><xsl:template match="*[local-name() = 'indexsect']//*[local-name() = 'li']/text()">
 		<!-- to split by '_' and other chars -->
 		<xsl:call-template name="add-zero-spaces-java"/>
-	</xsl:template><xsl:template match="*[local-name() = 'bookmark']" name="bookmark">
+	</xsl:template><xsl:template match="*[local-name() = 'table']/*[local-name() = 'bookmark']" priority="2"/><xsl:template match="*[local-name() = 'bookmark']" name="bookmark">
 		<!-- <fo:inline id="{@id}" font-size="1pt"/> -->
 		<fo:inline id="{@id}" font-size="1pt"><xsl:value-of select="$hair_space"/></fo:inline>
 		<!-- we need to add zero-width space, otherwise this fo:inline is missing in IF xml -->
