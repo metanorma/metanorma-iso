@@ -31,17 +31,26 @@ module IsoDoc
       def std_docid_semantic(id)
         return nil if id.nil?
 
-        ids = id.split(/ /)
-        ids.map! do |i|
-          if %w(GUIDE TR TS DIR).include?(i)
-            "<span class='stddocNumber'>#{i}</span>"
-          else
-            i.sub(/^([^0-9]+)(\s|$)/, "<span class='stdpublisher'>\\1</span>\\2")
-              .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
-              .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
-              .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
-          end
+        iso = id.split(/(\s\/)/).any? { |i| /^(IEC|ISO|BSI)/.match?(i) }
+        id.split(/ /).map.with_index do |x, i|
+          iso ? std_docis_iso_parse(x) : std_docis_sdo_parse(x, i)
         end.join(" ")
+      end
+
+      def std_docis_iso_parse(ident)
+        %w(GUIDE TR TS DIR).include?(ident) and
+          return "<span class='stddocNumber'>#{ident}</span>"
+        ident.sub(/^([^0-9]+)(\s|$)/, "<span class='stdpublisher'>\\1</span>\\2")
+          .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
+          .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
+          .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
+      end
+
+      def std_docis_sdo_parse(ident, idx)
+        idx.zero? and return "<span class='stdpublisher'>#{ident}</span>"
+        ident
+          .sub(/([:-])((19|20)[0-9]{2})$/, "\\1<span class='stdyear'>\\2</span>")
+          .sub(/^(.*?)([:-]<|$)/, "<span class='stddocNumber'>\\1</span>\\2")
       end
     end
   end

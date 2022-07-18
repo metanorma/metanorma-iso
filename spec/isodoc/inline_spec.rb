@@ -245,6 +245,8 @@ RSpec.describe IsoDoc do
                     <referenceFrom>1-2-3</referenceFrom>
                   </locality>
                 </eref>
+                <eref bibitemid="OGC02-009" citeas="OGC 02-009:2000" type="inline"/>
+                <eref bibitemid="W3Cxlink11" citeas="W3C xmlink11" type="inline"/>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline"/>
                 <eref bibitemid="ISO712" type="inline"/>
                 <eref bibitemid="ISO712" type="inline">
@@ -330,6 +332,15 @@ RSpec.describe IsoDoc do
                   <locality type="clause">
                     <referenceFrom>1-2-3</referenceFrom>
                   </locality><span class='stdpublisher'>IEV</span>, <span class="citesec">1-2-3</span></eref>
+                <eref bibitemid='OGC02-009' citeas='OGC 02-009:2000' type='inline'>
+          <span class='stdpublisher'>OGC</span>
+          <span class='stddocNumber'>02-009</span>:
+          <span class='stdyear'>2000</span>
+        </eref>
+        <eref bibitemid='W3Cxlink11' citeas='W3C xmlink11' type='inline'>
+          <span class='stdpublisher'>W3C</span>
+          <span class='stddocNumber'>xmlink11</span>
+        </eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline"><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>712</span></eref>
                 <eref bibitemid="ISO712" type="inline">ISO 712</eref>
                 <eref bibitemid="ISO712" type="inline">
