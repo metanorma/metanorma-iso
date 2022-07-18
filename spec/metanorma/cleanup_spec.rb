@@ -1240,7 +1240,7 @@ RSpec.describe Metanorma::ISO do
             <title>Terms and definitions</title>
             <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
             <p id='_'>
-              ISO and IEC maintain terminological databases for use in standardization
+              ISO and IEC maintain terminology databases for use in standardization
               at the following addresses:
             </p>
             <ul id='_'>
@@ -1289,7 +1289,7 @@ RSpec.describe Metanorma::ISO do
               <title>Terms and definitions</title>
               <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
               <p id='_'>
-                ISO and IEC maintain terminological databases for use in standardization
+                ISO and IEC maintain terminology databases for use in standardization
                 at the following addresses:
               </p>
               <ul id='_'>
@@ -1353,7 +1353,7 @@ RSpec.describe Metanorma::ISO do
                 <title>Terms and definitions</title>
                 <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
                 <p id='_'>
-                  ISO and IEC maintain terminological databases for use in
+                  ISO and IEC maintain terminology databases for use in
                   standardization at the following addresses:
                 </p>
                 <ul id='_'>
@@ -1420,7 +1420,7 @@ RSpec.describe Metanorma::ISO do
                 <title>Terms and definitions</title>
                 <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
                 <p id='_'>
-                  ISO and IEC maintain terminological databases for use in
+                  ISO and IEC maintain terminology databases for use in
                   standardization at the following addresses:
                 </p>
                 <ul id='_'>
@@ -1478,7 +1478,7 @@ RSpec.describe Metanorma::ISO do
           <terms id='_' obligation='normative'>
             <title>Terms and definitions</title>
             <p id='_'>
-              ISO and IEC maintain terminological databases for use in standardization
+              ISO and IEC maintain terminology databases for use in standardization
               at the following addresses:
             </p>
             <ul id='_'>

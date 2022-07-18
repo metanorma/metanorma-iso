@@ -2505,6 +2505,16 @@
         </element>
       </optional>
       <optional>
+        <element name="amendment">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="corrigendum">
+          <text/>
+        </element>
+      </optional>
+      <optional>
         <element name="language">
           <text/>
         </element>

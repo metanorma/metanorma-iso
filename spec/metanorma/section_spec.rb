@@ -81,7 +81,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
-            <p id="_">ISO and IEC maintain terminological databases for use in standardization at the following addresses:</p>
+            <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
@@ -275,7 +275,7 @@ RSpec.describe Metanorma::ISO do
               given in <eref bibitemid="iso1234"/>
               and <eref bibitemid="iso5678"/>
               and the following apply.</p>
-            <p id="_">ISO and IEC maintain terminological databases for use in
+            <p id="_">ISO and IEC maintain terminology databases for use in
         standardization at the following addresses:</p>
             <ul id="_">
               <li>
@@ -321,7 +321,7 @@ RSpec.describe Metanorma::ISO do
             <title>Terms and definitions</title>
             <p id='_'>No terms and definitions are listed in this document.</p>
             <p id='_'>
-              ISO and IEC maintain terminological databases for use in standardization
+              ISO and IEC maintain terminology databases for use in standardization
               at the following addresses:
             </p>
             <ul id='_'>
@@ -373,7 +373,7 @@ RSpec.describe Metanorma::ISO do
               and <eref bibitemid="iso5678"/>
               apply.
             </p>
-            <p id="_">ISO and IEC maintain terminological databases for use in standardization at the following addresses:</p>
+            <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
             <ul id="_">
               <li>
                 <p id="_">ISO Online browsing platform: available at
@@ -411,7 +411,7 @@ RSpec.describe Metanorma::ISO do
              <title>Terms and definitions</title>
              <p id='_'>No terms and definitions are listed in this document.</p>
              <p id='_'>
-               ISO and IEC maintain terminological databases for use in standardization
+               ISO and IEC maintain terminology databases for use in standardization
                at the following addresses:
              </p>
              <ul id='_'>
@@ -461,7 +461,7 @@ RSpec.describe Metanorma::ISO do
            <terms id='_' obligation='normative'>
              <title>Terms and Definitions</title>
              <p id='_'>No terms and definitions are listed in this document.</p>
-             <p id='_'>ISO and IEC maintain terminological databases for use in standardization
+             <p id='_'>ISO and IEC maintain terminology databases for use in standardization
                at the following addresses:
              </p>
              <ul id='_'>
