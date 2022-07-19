@@ -78,8 +78,7 @@ l&#8217;adresse ci-apr&#232;s ou au comit&#233; membre de l&#8217;ISO dans le pa
     ISO copyright office<br/>
     Ch. de Blandonnet 8 &#8226; CP 401<br/>
     CH-1214 Vernier, Geneva, Switzerland<br/>
-    Tel.&#160;&#160;+ 41 22 749 01 11<br/>
-    Fax&#160;&#160;+ 41 22 749 09 47<br/>
+    Phone: +41 22 749 01 11<br/>
     Email: copyright@iso.org<br/>
     Website: www.iso.org
   </p>
