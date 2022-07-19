@@ -1728,7 +1728,7 @@ RSpec.describe IsoDoc do
         <div class='WordSection3'>
                    <p class='zzSTDTitle'>
                  Date and time — Representations for information interchange —
-      <span style='font-weight:normal'>Part 1</span>
+      <span style='font-weight:normal'>Part 1:</span>
        Basic rules
           </p>
           <div>
@@ -1799,7 +1799,7 @@ RSpec.describe IsoDoc do
         <div class='WordSection3'>
                    <p class='zzSTDTitle'>
                        Date and time — Representations for information interchange —
-      <span style='font-weight:normal'>Part 1</span>
+      <span style='font-weight:normal'>Part 1:</span>
        Basic rules
       <span style='font-weight:normal'> AMENDMENT 1: Technical corrections</span>
           </p>

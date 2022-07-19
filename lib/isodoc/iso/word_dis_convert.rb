@@ -98,7 +98,7 @@ module IsoDoc
           @meta.get[:doctitlemain] && @meta.get[:doctitlepart] and p << " &#x2014; "
           if @meta.get[:doctitlepart]
             b = @meta.get[:doctitlepartlabel] and
-              p << "<span style='font-weight:normal'>#{b}</span> "
+              p << "<span style='font-weight:normal'>#{b}:</span> "
             p << " #{@meta.get[:doctitlepart]}"
           end
           @meta.get[:doctitleamdlabel] || @meta.get[:doctitleamd] ||
