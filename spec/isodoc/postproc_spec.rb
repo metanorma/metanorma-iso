@@ -844,11 +844,9 @@ RSpec.describe IsoDoc do
                 <br/>
                 CH-1214 Vernier, Geneva, Switzerland
                 <br/>
-                Tel. + 41 22 749 01 11
+                Phone: +41 22 749 01 11
                 <br/>
-                Fax + 41 22 749 09 47
-                <br/>
-                copyright@iso.org
+                Email: copyright@iso.org
                 <br/>
                 www.iso.org</p>
             </clause>
@@ -891,11 +889,9 @@ RSpec.describe IsoDoc do
                 <br/>
                 CH-1214 Vernier, Geneva, Switzerland
                 <br/>
-                Tel. + 41 22 749 01 11
+                Phone: +41 22 749 01 11
                 <br/>
-                Fax + 41 22 749 09 47
-                <br/>
-                copyright@iso.org
+                Email: copyright@iso.org
                 <br/>
                 www.iso.org</p>
             </clause>
@@ -955,13 +951,10 @@ RSpec.describe IsoDoc do
               CH-1214 Vernier, Geneva, Switzerland
 
               <br/>
-              Tel. + 41 22 749 01 11
+              Phone: +41 22 749 01 11
 
               <br/>
-              Fax + 41 22 749 09 47
-
-              <br/>
-              copyright@iso.org
+              Email: copyright@iso.org
 
               <br/>
               www.iso.org#{' '}</p>

@@ -1842,11 +1842,9 @@ RSpec.describe IsoDoc do
                 <br/>
                 CH-1214 Vernier, Geneva, Switzerland
                 <br/>
-                Tel. + 41 22 749 01 11
+                Phone: +41 22 749 01 11
                 <br/>
-                Fax + 41 22 749 09 47
-                <br/>
-                copyright@iso.org
+                Email: copyright@iso.org
                 <br/>
                 www.iso.org</p>
             </clause>
@@ -1896,9 +1894,8 @@ RSpec.describe IsoDoc do
             </p>
             <p class='zzCopyright'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
             <p class='zzCopyright'> CH-1214 Vernier, Geneva, Switzerland </p>
-            <p class='zzCopyright'> Tel. + 41 22 749 01 11 </p>
-            <p class='zzCopyright'> Fax + 41 22 749 09 47 </p>
-            <p class='zzCopyright'> copyright@iso.org </p>
+            <p class='zzCopyright'> Phone: +41 22 749 01 11 </p>
+            <p class='zzCopyright'> Email: copyright@iso.org </p>
             <p class='zzCopyright'> www.iso.org</p>
           </div>
         </div>
@@ -1935,9 +1932,8 @@ RSpec.describe IsoDoc do
             </p>
             <p class='zzCopyright' style='text-indent:20.15pt;'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
             <p class='zzCopyright' style='text-indent:20.15pt;'> CH-1214 Vernier, Geneva, Switzerland </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> Tel. + 41 22 749 01 11 </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> Fax + 41 22 749 09 47 </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> copyright@iso.org </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> Phone: +41 22 749 01 11 </p>
+            <p class='zzCopyright' style='text-indent:20.15pt;'> Email: copyright@iso.org </p>
             <p class='zzCopyright' style='text-indent:20.15pt;'> www.iso.org</p>
           </div>
         </div>
@@ -2045,7 +2041,7 @@ RSpec.describe IsoDoc do
              <a name='ISO712' id='ISO712'/>
              [1]
              <span style='mso-tab-count:1'>  </span>
-             ISO/IEC 712-3:2022, ALUFFI, Paolo, ed. (2022). 
+             ISO/IEC 712-3:2022, ALUFFI, Paolo, ed. (2022).
              <i>
                Facets of Algebraic Geometry: A Collection in Honor of William Fulton's
                80th Birthday
