@@ -10203,6 +10203,7 @@
 		</xsl:call-template>
 	</xsl:template><xsl:template name="insertKeywords">
 		<xsl:param name="sorting" select="'true'"/>
+		<xsl:param name="meta" select="'false'"/>
 		<xsl:param name="charAtEnd" select="'.'"/>
 		<xsl:param name="charDelim" select="', '"/>
 		<xsl:choose>
@@ -10210,6 +10211,7 @@
 				<xsl:for-each select="//*[contains(local-name(), '-standard')]/*[local-name() = 'bibdata']//*[local-name() = 'keyword']">
 					<xsl:sort data-type="text" order="ascending"/>
 					<xsl:call-template name="insertKeyword">
+						<xsl:with-param name="meta" select="$meta"/>
 						<xsl:with-param name="charAtEnd" select="$charAtEnd"/>
 						<xsl:with-param name="charDelim" select="$charDelim"/>
 					</xsl:call-template>
@@ -10218,6 +10220,7 @@
 			<xsl:otherwise>
 				<xsl:for-each select="//*[contains(local-name(), '-standard')]/*[local-name() = 'bibdata']//*[local-name() = 'keyword']">
 					<xsl:call-template name="insertKeyword">
+						<xsl:with-param name="meta" select="$meta"/>
 						<xsl:with-param name="charAtEnd" select="$charAtEnd"/>
 						<xsl:with-param name="charDelim" select="$charDelim"/>
 					</xsl:call-template>
@@ -10227,7 +10230,15 @@
 	</xsl:template><xsl:template name="insertKeyword">
 		<xsl:param name="charAtEnd"/>
 		<xsl:param name="charDelim"/>
-		<xsl:apply-templates/>
+		<xsl:param name="meta"/>
+		<xsl:choose>
+			<xsl:when test="$meta = 'true'">
+				<xsl:value-of select="."/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates/>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="position() != last()"><xsl:value-of select="$charDelim"/></xsl:when>
 			<xsl:otherwise><xsl:value-of select="$charAtEnd"/></xsl:otherwise>
@@ -10278,7 +10289,9 @@
 						<xsl:value-of select="normalize-space($abstract)"/>
 					</dc:description>
 					<pdf:Keywords>
-						<xsl:call-template name="insertKeywords"/>
+						<xsl:call-template name="insertKeywords">
+							<xsl:with-param name="meta">true</xsl:with-param>
+						</xsl:call-template>
 					</pdf:Keywords>
 				</rdf:Description>
 				<rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" rdf:about="">
