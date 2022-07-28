@@ -1285,7 +1285,12 @@
   </define>
   <define name="span">
     <element name="span">
-      <attribute name="class"/>
+      <optional>
+        <attribute name="class"/>
+      </optional>
+      <optional>
+        <attribute name="style"/>
+      </optional>
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>

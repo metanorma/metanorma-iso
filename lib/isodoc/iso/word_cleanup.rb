@@ -84,27 +84,24 @@ module IsoDoc
       end
 
       def authority_hdr_cleanup(docxml)
-        docxml&.xpath("//div[@class = 'boilerplate-license']")&.each do |d|
-          d.xpath(".//h1").each do |p|
-            p.name = "p"
-            p["class"] = "zzWarningHdr"
+        { "boilerplate-license": "zzWarningHdr",
+          "boilerplate-copyright": "zzCopyrightHdr" }.each do |k, v|
+            docxml.xpath("//div[@class = '#{k}']").each do |d|
+              d.xpath(".//h1").each do |p|
+                p.name = "p"
+                p["class"] = v
+              end
+            end
           end
-        end
-        docxml&.xpath("//div[@class = 'boilerplate-copyright']")&.each do |d|
-          d.xpath(".//h1").each do |p|
-            p.name = "p"
-            p["class"] = "zzCopyrightHdr"
-          end
-        end
       end
 
       def authority_cleanup(docxml)
         insert = docxml.at("//div[@id = 'boilerplate-license-destination']")
-        auth = docxml&.at("//div[@class = 'boilerplate-license']")&.remove
+        auth = docxml.at("//div[@class = 'boilerplate-license']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzWarning" }
         auth and insert and insert.children = auth
         insert = docxml.at("//div[@id = 'boilerplate-copyright-destination']")
-        auth = docxml&.at("//div[@class = 'boilerplate-copyright']")&.remove
+        auth = docxml.at("//div[@class = 'boilerplate-copyright']")&.remove
         auth&.xpath(".//p[not(@class)]")&.each do |p|
           p["class"] = "zzCopyright"
         end
