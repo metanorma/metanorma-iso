@@ -1008,9 +1008,6 @@ RSpec.describe Metanorma::ISO do
                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
                   <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
                   <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
-                  <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-                  <title type='title-main' format='text/plain' language='fr' script='Latn'>&#201;chantillonnage</title>
-                  <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc&#8201;&#8212;&#8201;&#201;chantillonnage</title>
                   <uri type='src'>https://www.iso.org/standard/23281.html</uri>
                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
                   <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
@@ -1028,7 +1025,6 @@ RSpec.describe Metanorma::ISO do
                   </contributor>
                   <edition>3</edition>
                   <language>en</language>
-                  <language>fr</language>
                   <script>Latn</script>
           <abstract format='text/plain' language='en' script='Latn'>
             This International Standard specifies procedures for sampling natural
@@ -1036,16 +1032,6 @@ RSpec.describe Metanorma::ISO do
             artificial latices. It is also suitable for sampling rubber latex
             contained in drums, tank cars or tanks. The procedures may also be
             used for sampling plastics dispersions.
-          </abstract>
-          <abstract format='text/plain' language='fr' script='Latn'>
-            La pr&#233;sente Norme internationale sp&#233;cifie des m&#233;thodes
-            d&#8217;&#233;chantillonnage pour des concentr&#233;s de latex de
-            caoutchouc naturel et pour &#233;chantillonner des latex de caoutchouc
-            synth&#233;tique et des latex artificiels. Elle s&#8217;applique
-            &#233;galement &#224; l&#8217;&#233;chantillonnage de latex de
-            caoutchouc contenus dans des f&#251;ts, citernes routi&#232;res ou de
-            stockage. Le mode op&#233;ratoire peut aussi &#234;tre utilis&#233;
-            pour l&#8217;&#233;chantillonnage de dispersions de plastiques.
           </abstract>
                   <status>
                     <stage>90</stage>

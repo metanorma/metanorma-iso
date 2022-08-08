@@ -108,7 +108,7 @@
     </element>
   </define>
   <define name="label">
-    <element name="label">
+    <element name="identifier">
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>

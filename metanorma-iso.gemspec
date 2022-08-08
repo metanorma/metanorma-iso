@@ -29,11 +29,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
 
-  spec.add_dependency "metanorma-standoc", "~> 2.1.0"
+  spec.add_dependency "metanorma-standoc", "~> 2.2.0"
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "ruby-jing"
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "twitter_cldr"
+  spec.add_dependency "pubid-iso"
 
   spec.add_development_dependency "debug"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
