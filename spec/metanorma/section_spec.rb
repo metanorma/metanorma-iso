@@ -12,11 +12,11 @@ RSpec.describe Metanorma::ISO do
 
       === Introduction Subsection
 
+      == Acknowledgements
+
       == Scope
 
       Text
-
-      == Acknowledgements
 
       == Normative References
 

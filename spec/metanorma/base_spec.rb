@@ -940,8 +940,8 @@ RSpec.describe Metanorma::ISO do
       INPUT
       expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
         .to be_equivalent_to xmlpp(<<~"OUTPUT")
-                  <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
-                           <bibdata type='standard'>
+          <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
+              <bibdata type='standard'>
               <contributor>
                 <role type='author'/>
                 <organization>
@@ -1008,6 +1008,9 @@ RSpec.describe Metanorma::ISO do
                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
                   <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
                   <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
+                  <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
+                  <title type='title-main' format='text/plain' language='fr' script='Latn'>Échantillonnage</title>
+                  <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc — Échantillonnage</title>
                   <uri type='src'>https://www.iso.org/standard/23281.html</uri>
                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
                   <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
@@ -1025,6 +1028,7 @@ RSpec.describe Metanorma::ISO do
                   </contributor>
                   <edition>3</edition>
                   <language>en</language>
+                  <language>fr</language>
                   <script>Latn</script>
           <abstract format='text/plain' language='en' script='Latn'>
             This International Standard specifies procedures for sampling natural
@@ -1033,6 +1037,15 @@ RSpec.describe Metanorma::ISO do
             contained in drums, tank cars or tanks. The procedures may also be
             used for sampling plastics dispersions.
           </abstract>
+                  <abstract format='text/plain' language='fr' script='Latn'>
+          La présente Norme internationale spécifie des méthodes
+          d’échantillonnage pour des concentrés de latex de caoutchouc naturel
+          et pour échantillonner des latex de caoutchouc synthétique et des
+          latex artificiels. Elle s’applique également à l’échantillonnage de
+          latex de caoutchouc contenus dans des fûts, citernes routières ou de
+          stockage. Le mode opératoire peut aussi être utilisé pour
+          l’échantillonnage de dispersions de plastiques.
+        </abstract>
                   <status>
                     <stage>90</stage>
                     <substage>93</substage>

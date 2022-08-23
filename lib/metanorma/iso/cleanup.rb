@@ -88,7 +88,6 @@ module Metanorma
         end
       end
 
-      # TODO sort by authors
       # sort by: doc class (ISO, IEC, other standard (not DOI &c), other
       # then standard class (docid class other than DOI &c)
       # then docnumber if present, numeric sort

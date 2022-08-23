@@ -178,12 +178,10 @@ module IsoDoc
                                             i18nhash: @i18n.get)
       end
 
-      def bibrender(xml)
-        unless xml.at(ns("./formattedref"))
-          xml.children =
-            "#{bibrenderer.render(xml.to_xml)}"\
-            "#{xml.xpath(ns('./docidentifier | ./uri | ./note')).to_xml}"
-        end
+      def bibrender_formattedref(formattedref, xml)
+        return if %w(techreport standard).include? xml["type"]
+
+        super
       end
 
       def ol_depth(node)

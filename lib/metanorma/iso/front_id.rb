@@ -7,33 +7,6 @@ require "open-uri"
 require "twitter_cldr"
 require "pubid-iso"
 
- # @param stage [String] stage, eg. "WD", "CD", "DIS"
-    # @param urn_stage [Float] numeric stage for URN rendering
-    # @param iteration [Integer] document iteration, eg. "1", "2", "3"
-    # @param joint_document [Identifier] joint document
-    # @param supplement [Supplement] supplement
-    # @param tctype [String] Technical Committee type, eg. "TC", "JTC"
-    # @param sctype [String] TC subsommittee, eg. "SC"
-    # @param wgtype [String] TC working group type, eg. "AG", "AHG"
-    # @param tcnumber [Integer] Technical Committee number, eg. "1", "2"
-    # @param scnumber [Integer] Subsommittee number, eg. "1", "2"
-    # @param wgnumber [Integer] Working group number, eg. "1", "2"
-    # @param dir [Boolean] Directives document
-    # @param dirtype [String] Directives document type, eg. "JTC"
-    # @see Supplement
-    # @see Identifier
-    # @see Pubid::Core::Identifier
-    # @see Parser
-    #
-=begin
-    def initialize(number: nil, stage: nil, iteration: nil, supplement: nil,
-                   joint_document: nil, urn_stage: nil,
-                   tctype: nil, sctype: nil, wgtype: nil, tcnumber: nil,
-                   scnumber: nil, wgnumber:nil,
-                   dir: nil, dirtype: nil, **opts)
-      super(**opts.merge(number: number))
-=end
-
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
@@ -100,13 +73,31 @@ module Metanorma
       def iso_id(node, xml)
         (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
           return
-
         dn = id_stage_prefix(iso_id1(node), node)
         dns = [id_year(dn, node, mode: :default),
                id_year(dn, node, mode: :force),
                id_year(dn, node, mode: :strip)]
         iso_id_out(node, xml, dns)
       end
+
+=begin
+      def iso_id(node, _xml)
+        (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
+          return
+        params = {
+          number: (@amd ? node.attr("updates") : node.attr("docnumber")),
+          part: node.attr("partnumber"),
+          amendment_number: node.attr("amendment-number"),
+          corrigendum_number: node.attr("corrigendum-number"),
+          language: node.attr("language") || "en",
+          urn_stage: "#{get_stage(node)}.#{get_substage(node)}",
+          stage: id_stage_abbr(get_stage(node), get_substage(node), node, true),
+          type: doctype(node),
+          year: node.attr("copyright-year") || node.attr("updated-date")&.sub(/-.*$/, ""),
+          copublisher: node.attr("agency"),
+        }
+      end
+=end
 
       def iso_id_out(node, xml, dns)
         xml.docidentifier dns[0], **attr_code(type: "ISO")
