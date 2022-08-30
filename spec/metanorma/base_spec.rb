@@ -66,7 +66,6 @@ RSpec.describe Metanorma::ISO do
       :title-intro-fr: Introduction Française
       :title-main-fr: Titre Principal
       :title-part-fr: Part du Titre
-      :library-ics: 1,2,3
       :copyright-year: 2000
       :horizontal: true
     INPUT
@@ -146,15 +145,6 @@ RSpec.describe Metanorma::ISO do
                 <workgroup number="3a" type="Ca">WGa</workgroup>
                 <workgroup number="31a" type="C1a">WG1a</workgroup>
               </approvalgroup>
-              <ics>
-                <code>1</code>
-              </ics>
-              <ics>
-                <code>2</code>
-              </ics>
-              <ics>
-                <code>3</code>
-              </ics>
               <structuredidentifier>
                 <project-number part="1">ISO 1000</project-number>
               </structuredidentifier>

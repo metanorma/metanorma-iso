@@ -80,25 +80,6 @@ module Metanorma
         iso_id_out(node, xml, dns)
       end
 
-=begin
-      def iso_id(node, _xml)
-        (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
-          return
-        params = {
-          number: (@amd ? node.attr("updates") : node.attr("docnumber")),
-          part: node.attr("partnumber"),
-          amendment_number: node.attr("amendment-number"),
-          corrigendum_number: node.attr("corrigendum-number"),
-          language: node.attr("language") || "en",
-          urn_stage: "#{get_stage(node)}.#{get_substage(node)}",
-          stage: id_stage_abbr(get_stage(node), get_substage(node), node, true),
-          type: doctype(node),
-          year: node.attr("copyright-year") || node.attr("updated-date")&.sub(/-.*$/, ""),
-          copublisher: node.attr("agency"),
-        }
-      end
-=end
-
       def iso_id_out(node, xml, dns)
         xml.docidentifier dns[0], **attr_code(type: "ISO")
         xml.docidentifier dns[2], **attr_code(type: "iso-undated")
@@ -107,6 +88,69 @@ module Metanorma
         xml.docidentifier(id_langsuffix(dns[1], node),
                           **attr_code(type: "iso-reference"))
       end
+
+            def get_typeabbr(node, amd: false)
+        case doctype(node)
+        when "directive" then "DIR "
+        when "technical-report" then "TR "
+        when "technical-specification" then "TS "
+        when "amendment" then (amd ? "Amd " : "")
+        when "technical-corrigendum" then (amd ? "Cor " : "")
+        end
+      end
+
+=begin
+def get_typeabbr(node, amd: false)
+        case doctype(node)
+        when "directive" then "DIR"
+        when "technical-report" then "TR"
+        when "technical-specification" then "TS"
+        else nil
+        end
+      end
+
+      def iso_id(node, xml)
+        (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
+          return
+        stage = id_stage_abbr(get_stage(node), get_substage(node), node, true)&.strip
+        stage = nil if %w{IS (Review) (Withdrwal)}.include?(stage.strip)
+          urn_stage = "#{get_stage(node)}.#{get_substage(node)}"
+pub =  (node.attr("publisher") || "ISO").split(/[;,]/)
+        params = {
+          number: node.attr("docnumber"), # (@amd ? node.attr("updates") : node.attr("docnumber")),
+          part: node.attr("partnumber"),
+          language: node.attr("language") || "en",
+          type: get_typeabbr(node),
+          year: node.attr("copyright-year") || node.attr("updated-date")&.sub(/-.*$/, ""),
+          publisher: pub[0],
+          copublisher: pub[1..-1],
+        }.compact
+        if a = node.attr("amendment-number")
+          params[:amendments] = { number: a, stage: stage }
+          elsif a = node.attr("corrigendum-number")
+          params[:corrigendums] = { number: a, stage: stage }
+          else
+            params.merge!( { stage: stage, urn_stage: urn_stage }.compact )
+          end
+        iso_id_out(xml, params)
+      end
+
+      def iso_id_out(xml, params)
+        params_nolang = params.dup.tap { |hs| hs.delete(:language) }
+        unpub = /^[0-5]/.match?(params[:urn_stage])
+        params1 = unpub ? params_nolang.dup.tap { |hs| hs.delete(:year) } : params_nolang
+        xml.docidentifier Pubid::Iso::Identifier.new(**params1), **attr_code(type: "ISO")
+        params2 = params_nolang.dup.tap { |hs| hs.delete(:year) }
+        xml.docidentifier Pubid::Iso::Identifier.new(**params2), **attr_code(type: "iso-undated")
+        params1 = unpub ? params.dup.tap { |hs| hs.delete(:year) } : params
+        xml.docidentifier(Pubid::Iso::Identifier.new(**params1),
+                          **attr_code(type: "iso-with-lang"))
+        warn params
+        warn "Generated: #{Pubid::Iso::Identifier.new(**params).to_s}"
+        xml.docidentifier(Pubid::Iso::Identifier.new(**params),
+                          **attr_code(type: "iso-reference"))
+      end
+=end
 
       def iso_id1(node)
         if @amd
@@ -249,16 +293,6 @@ module Metanorma
         ret = node.attr("docsubstage")
         ret = (stage == "60" ? "60" : "00") if ret.nil? || ret.empty?
         ret
-      end
-
-      def get_typeabbr(node, amd: false)
-        case doctype(node)
-        when "directive" then "DIR "
-        when "technical-report" then "TR "
-        when "technical-specification" then "TS "
-        when "amendment" then (amd ? "Amd " : "")
-        when "technical-corrigendum" then (amd ? "Cor " : "")
-        end
       end
     end
   end

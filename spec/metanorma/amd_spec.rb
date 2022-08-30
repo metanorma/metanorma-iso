@@ -174,7 +174,6 @@ RSpec.describe Metanorma::ISO do
       :title-intro-fr: Introduction Française
       :title-main-fr: Titre Principal
       :title-part-fr: Part du Titre
-      :library-ics: 1,2,3
       :copyright-year: 2017
       :updates: ISO 17301-1:2016
       :created-date: 2016-05-01
@@ -273,15 +272,6 @@ RSpec.describe Metanorma::ISO do
               <workgroup number="3" type="C">WG</workgroup>
               <workgroup number="31" type="C1">WG1</workgroup>
             </approvalgroup>
-            <ics>
-              <code>1</code>
-            </ics>
-            <ics>
-              <code>2</code>
-            </ics>
-            <ics>
-              <code>3</code>
-            </ics>
             <structuredidentifier>
               <project-number amendment="1" origyr="2016-05-01" part="1">17301</project-number>
             </structuredidentifier>
