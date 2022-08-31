@@ -13,8 +13,10 @@ module IsoDoc
         super
       end
 
-      def requirements_processor
-        ::Metanorma::Iso::Requirements
+      def convert(input_filename, file = nil, debug = false,
+                output_filename = nil)
+        require "debug"; binding.b
+        super
       end
 
       def implicit_reference(bib)

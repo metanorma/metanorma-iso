@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::Iso::Requirements::Modspec do
+RSpec.describe Metanorma::Requirements::Iso::Modspec do
   it "processes permissions" do
     input = <<~INPUT
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
@@ -178,9 +178,10 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
                 <bibliography><references id="_bibliography" obligation="informative" normative="false" displayorder="2">
             <title depth="1">Bibliography</title>
             <bibitem id="rfc2616" type="standard">
-              <formattedref>R. FIELDING, J. GETTYS, J. MOGUL, H. FRYSTYK, L. MASINTER, P. LEACH and T. BERNERS-LEE.
-               <em>Hypertext Transfer Protocol&#x2009;&#x2014;&#x2009;HTTP/1.1</em>.
-              In: RFC. June 1999. Fremont, CA. <link target='https://www.rfc-editor.org/info/rfc2616'>https://www.rfc-editor.org/info/rfc2616</link>.</formattedref>
+              <formattedref>         <em>
+           <span class='stddocTitle'>Hypertext Transfer Protocol — HTTP/1.1</span>
+         </em>
+         </formattedref>
                         <uri type='xml'>https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2616.xml</uri>
                 <uri type='src'>https://www.rfc-editor.org/info/rfc2616</uri>
                 <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
@@ -192,7 +193,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
                 </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -336,7 +337,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
   .gsub(%r{</body>.*}m, "</body>")))
@@ -424,7 +425,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
           </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
               .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
   .gsub(%r{</body>.*}m, "</body>")))
@@ -545,7 +546,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
             .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -707,7 +708,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -871,7 +872,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
          </preface>
        </ogc-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
        .convert("test", input, true)
       .gsub(%r{<localized-strings>.*</localized-strings>}m, "")
        .gsub(%r{^.*<body}m, "<body")
@@ -993,7 +994,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1087,7 +1088,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1210,7 +1211,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1333,7 +1334,7 @@ RSpec.describe Metanorma::Iso::Requirements::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
