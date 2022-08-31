@@ -204,6 +204,11 @@ module Metanorma
         super
       end
 
+      def term_children_cleanup(xmldoc)
+        @vocab and return
+        super
+      end
+
       def bibdata_cleanup(xmldoc)
         super
         approval_groups_rename(xmldoc)

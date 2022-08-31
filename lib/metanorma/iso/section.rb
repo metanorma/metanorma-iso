@@ -44,6 +44,11 @@ module Metanorma
           return term_def_subclause_parse1(attrs, xml, node)
         super
       end
+
+      def term_contains_subclauses(node)
+        @vocab and return false # treat this as a term
+        super
+      end
     end
   end
 end
