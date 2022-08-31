@@ -13,12 +13,6 @@ module IsoDoc
         super
       end
 
-      def convert(input_filename, file = nil, debug = false,
-                output_filename = nil)
-        require "debug"; binding.b
-        super
-      end
-
       def implicit_reference(bib)
         return true if bib&.at(ns("./docidentifier"))&.text == "IEV"
 

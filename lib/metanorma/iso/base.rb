@@ -13,7 +13,7 @@ module Metanorma
       XML_NAMESPACE = "https://www.metanorma.org/ns/iso".freeze
 
       def requirements_processor
-        ::Metanorma::Iso::Requirements
+        ::Metanorma::Requirements::Iso
       end
 
       def html_converter(node)

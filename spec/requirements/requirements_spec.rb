@@ -1,6 +1,69 @@
 require "spec_helper"
 
 RSpec.describe Metanorma::Requirements::Iso::Modspec do
+  it "treates Modspec requirements as tables for cross-referencing" do
+    input = <<~INPUT
+      <ogc-standard xmlns="https://standards.opengeospatial.org/document">
+          <preface><foreword id="A"><title>Preface</title>
+          <table id="A0"/>
+          <permission model="ogc" id="A1">
+        <identifier>/ogc/recommendation/wfs/2</identifier>
+        </permission>
+          <table id="A2"/>
+        </foreword>
+        <introduction id="B"><title>Introduction</title>
+        <p><xref target="A0"/><xref target="A1"/><xref target="A2"/></p>
+        </introduction>
+        </preface>
+        </ogc-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
+        <preface>
+          <foreword id='A' displayorder='1'>
+            <title>Preface</title>
+            <table id='A0'>
+              <name>Table 1</name>
+            </table>
+            <table id='A1' class='modspec' type='recommend'>
+              <name>Table 2 — Permission 1</name>
+              <tbody>
+                <tr>
+                  <td>Identifier</td>
+                  <td>
+                    <tt>/ogc/recommendation/wfs/2</tt>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table id='A2'>
+              <name>Table 3</name>
+            </table>
+          </foreword>
+          <introduction id='B' displayorder='2'>
+            <title>Introduction</title>
+            <p>
+              <xref target='A0'>
+                <span class='citetbl'>Table 1</span>
+              </xref>
+              <xref target='A1'>
+                <span class='citetbl'>Table 2</span>
+              </xref>
+              <xref target='A2'>
+                <span class='citetbl'>Table 3</span>
+              </xref>
+            </p>
+          </introduction>
+        </preface>
+      </ogc-standard>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+      .gsub(%r{^.*<body}m, "<body")
+      .gsub(%r{</body>.*}m, "</body>")))
+      .to be_equivalent_to xmlpp(presxml)
+  end
+
   it "processes permissions" do
     input = <<~INPUT
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
@@ -70,7 +133,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
                 <preface><foreword id="A" displayorder="1"><title>Preface</title>
                 <table id="A1" class="modspec" type="recommend">
-            <thead><tr><th scope="colgroup" colspan="2"><p class="RecommendationTitle">Permission 1</p></th></tr></thead>
+            <name>Table 1 — Permission 1</name>
             <tbody>
               <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
               <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Dependency</td><td><eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></td></tr>
@@ -259,13 +322,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendtest'>
-               <thead>
-                 <tr>
-                   <th scope='colgroup' colspan='2'>
-                     <p class='RecommendationTestTitle'>Permission test 1</p>
-                   </th>
-                 </tr>
-               </thead>
+               <name>Table 1 — Permission test 1</name>
                <tbody>
                  <tr>
                 <td>Identifier</td>
@@ -401,7 +458,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface>
               <foreword id="A" displayorder="1"><title>Preface</title>
           <table id="A1" type="recommendtest" class="modspec">
-      <thead><tr><th scope="colgroup" colspan="2"><p class="RecommendationTestTitle">Abstract test 1</p></th></tr></thead>
+          <name>Table 1 — Abstract test 1</name>
         <tbody>
           <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
         <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Control-class</td><td>Technical</td></tr><tr><td>Priority</td><td>P0</td></tr><tr><td>Family</td><td>System and Communications Protection</td></tr><tr><td>Family</td><td>System and Communications Protocols</td></tr>
@@ -464,13 +521,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='A1' keep-with-next='true' keep-lines-together='true' class='modspec' type='recommendclass'>
-              <thead>
-                <tr>
-                  <th scope='colgroup' colspan='2'>
-                    <p class='RecommendationTitle'>Permissions class 1</p>
-                  </th>
-                </tr>
-              </thead>
+              <name>Table 1 — Permissions class 1</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -518,13 +569,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               </tbody>
             </table>
             <table id='B1' class='modspec' type='recommend'>
-              <thead>
-                <tr>
-                  <th scope='colgroup' colspan='2'>
-                    <p class='RecommendationTitle'>Permission 1</p>
-                  </th>
-                </tr>
-              </thead>
+              <name>Table 2 — Permission 1</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -591,13 +636,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <thead>
-                 <tr>
-                   <th scope='colgroup' colspan='2'>
-                     <p class='RecommendationTitle'>Conformance class 1</p>
-                   </th>
-                 </tr>
-               </thead>
+               <name>Table 1 — Conformance class 1</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -665,13 +704,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B' class='modspec' type='recommendclass'>
-               <thead>
-                 <tr>
-                   <th scope='colgroup' colspan='2'>
-                     <p class='RecommendationTitle'>Conformance class 2</p>
-                   </th>
-                 </tr>
-               </thead>
+               <name>Table 2 — Conformance class 2</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -680,13 +713,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B2' class='modspec' type='recommend'>
-        <thead>
-          <tr>
-            <th scope='colgroup' colspan='2'>
-              <p class='RecommendationTitle'>Permission 1</p>
-            </th>
-          </tr>
-        </thead>
+             <name>Table 3 — Permission 1</name>
         <tbody>
           <tr>
             <td>Identifier</td>
@@ -756,13 +783,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <thead>
-                 <tr>
-                   <th scope='colgroup' colspan='2'>
-                     <p class='RecommendationTitle'>Classe de confirmit&#xE9; 1</p>
-                   </th>
-                 </tr>
-               </thead>
+               <name>Tableau 1 — Classe de confirmité 1</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -830,13 +851,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B' class='modspec' type='recommendclass'>
-               <thead>
-                 <tr>
-                   <th scope='colgroup' colspan='2'>
-                     <p class='RecommendationTitle'>Classe de confirmit&#xE9; 2</p>
-                   </th>
-                 </tr>
-               </thead>
+             <name>Tableau 2 — Classe de confirmité 2</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -845,13 +860,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B2' class='modspec' type='recommend'>
-        <thead>
-          <tr>
-            <th scope='colgroup' colspan='2'>
-              <p class='RecommendationTitle'>Autorisation 1</p>
-            </th>
-          </tr>
-        </thead>
+             <name>Tableau 3 — Autorisation 1</name>
         <tbody>
           <tr>
             <td>Identifiant</td>
@@ -912,13 +921,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <thead>
-                 <tr>
-                   <th scope='colgroup' colspan='2'>
-                     <p class='RecommendationTitle'>Requirements class 1</p>
-                   </th>
-                 </tr>
-               </thead>
+               <name>Table 1 — Requirements class 1</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -966,13 +969,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='A5' class='modspec' type='recommend'>
-               <thead>
-                 <tr>
-                   <th scope='colgroup' colspan='2'>
-                     <p class='RecommendationTitle'>Permission 1</p>
-                   </th>
-                 </tr>
-               </thead>
+                <name>Table 2 — Permission 1</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -1030,13 +1027,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='A1' class='modspec' type='recommendclass'>
-              <thead>
-                <tr>
-                  <th scope='colgroup' colspan='2'>
-                    <p class='RecommendationTitle'>Recommendations class 1</p>
-                  </th>
-                </tr>
-              </thead>
+            <name>Table 1 — Recommendations class 1</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -1152,13 +1143,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A0' displayorder='1'>
             <title>Preface</title>
             <table id='A' unnumbered='true' class='modspec' type='recommend'>
-              <thead>
-                <tr>
-                  <th scope='colgroup' colspan='2'>
-                    <p class='RecommendationTitle'>Requirement: A New Requirement</p>
-                  </th>
-                </tr>
-              </thead>
+            <name>Table — Requirement: A New Requirement</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -1275,13 +1260,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='_' class='modspec' type='recommend'>
-              <thead>
-                <tr>
-                  <th scope='colgroup' colspan='2'>
-                    <p class='RecommendationTitle'>Recommendation 1</p>
-                  </th>
-                </tr>
-              </thead>
+              <name>Table 1 — Recommendation 1</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>

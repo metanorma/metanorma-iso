@@ -17,6 +17,23 @@ module IsoDoc
         super
       end
 
+      def block(docxml)
+        amend docxml
+        figure docxml
+        sourcecode docxml
+        formula docxml
+        example docxml
+        note docxml
+        admonition docxml
+        ol docxml
+        permission docxml
+        requirement docxml
+        recommendation docxml
+        requirement_render docxml
+        @xrefs.parse docxml
+        table docxml # have table include requirements newly converted to tables
+      end
+
       def annex(isoxml)
         amd(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
         super
