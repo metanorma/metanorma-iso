@@ -13,6 +13,10 @@ module IsoDoc
         super
       end
 
+      def requirements_processor
+        ::Metanorma::Iso::Requirements
+      end
+
       def implicit_reference(bib)
         return true if bib&.at(ns("./docidentifier"))&.text == "IEV"
 
