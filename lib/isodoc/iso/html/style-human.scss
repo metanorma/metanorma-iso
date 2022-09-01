@@ -578,7 +578,6 @@ pre {
 
 table {
     @include table(1px solid black);
-    text-align: center;
 }
 
 td > p:first-child, th > p:first-child {
