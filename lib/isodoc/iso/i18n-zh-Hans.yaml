@@ -69,3 +69,8 @@ stage_dict:
   "95": 提款
 locality:
   appendix: 附录
+requirements:
+  modspec:
+    description: 描述
+    provisions: 条件
+

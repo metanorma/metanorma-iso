@@ -68,3 +68,8 @@ stage_dict:
   "95": Retrait
 locality:
   appendix: Appendice
+requirements:
+  modspec:
+    description: Description
+    provisions: Dispositions
+

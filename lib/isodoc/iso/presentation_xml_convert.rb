@@ -22,8 +22,6 @@ module IsoDoc
         figure docxml
         sourcecode docxml
         formula docxml
-        example docxml
-        note docxml
         admonition docxml
         ol docxml
         permission docxml
@@ -32,6 +30,8 @@ module IsoDoc
         requirement_render docxml
         @xrefs.parse docxml
         table docxml # have table include requirements newly converted to tables
+        example docxml
+        note docxml
       end
 
       def annex(isoxml)

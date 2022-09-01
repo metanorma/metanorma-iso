@@ -154,7 +154,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <td>System and Communications Protocols</td>
       </tr>
       <tr>
-        <td colspan='2'>
+        <td>Description</td><td>
           <p id='_'>
             I recommend
             <em>this</em>
@@ -163,13 +163,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </td>
       </tr>
       <tr>
-        <td>A</td>
-        <td>B</td>
-      </tr>
-      <tr>
-        <td>C</td>
-        <td>D</td>
-      </tr>
+      <td>Description</td>
+            <td>
+              <dl>
+                <dt>A</dt>
+                <dd>B</dd>
+                <dt>C</dt>
+                <dd>D</dd>
+              </dl>
+            </td>
+            </tr>
       <tr>
         <td colspan='2'>
           <p id='_'>The measurement target shall be measured as:</p>
@@ -353,22 +356,25 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>System and Communications Protocols</td>
                  </tr>
                  <tr>
-                   <td colspan='2'>
+                    <td>Description</td><td>
                      <p id='_'>
-                       I recommend#{' '}
+                       I recommend
                        <em>this</em>
                        .
                      </p>
                    </td>
                  </tr>
                  <tr>
-                   <td>A</td>
-                   <td>B</td>
-                 </tr>
-                 <tr>
-                   <td>C</td>
-                   <td>D</td>
-                 </tr>
+                 <td>Description</td>
+            <td>
+              <dl>
+                <dt>A</dt>
+                <dd>B</dd>
+                <dt>C</dt>
+                <dd>D</dd>
+              </dl>
+            </td>
+            </tr>
                  <tr>
                    <td colspan='2'>
                      <p id='_'>The measurement target shall be measured as:</p>
@@ -454,7 +460,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-          <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
               <foreword id="A" displayorder="1"><title>Preface</title>
           <table id="A1" type="recommendtest" class="modspec">
@@ -463,9 +469,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
         <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Control-class</td><td>Technical</td></tr><tr><td>Priority</td><td>P0</td></tr><tr><td>Family</td><td>System and Communications Protection</td></tr><tr><td>Family</td><td>System and Communications Protocols</td></tr>
 
-        <tr><td colspan="2">
+        <tr><td>Description</td><td>
           <p id="_">I recommend <em>this</em>.</p>
-        </td></tr><tr><td>A</td><td>B</td></tr><tr><td>C</td><td>D</td></tr><tr><td colspan="2">
+        </td></tr>
+        <tr><td>Description</td>
+            <td>
+              <dl>
+                <dt>A</dt>
+                <dd>B</dd>
+                <dt>C</dt>
+                <dd>D</dd>
+              </dl>
+            </td>
+            </tr>
+            <tr> <td colspan='2'>
           <p id="_">The measurement target shall be measured as:</p>
           <formula id="_"><name>1</name>
             <stem type="AsciiMath">r/1 = 0</stem>
@@ -539,33 +556,25 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>Dependency</td>
                   <td>/ss/584/2015/level/2</td>
                 </tr>
-                <tr>
-                  <td>Permission</td>
-                  <td>
-                    <xref target='B1'>
-                      Permission 1:
-                      <tt>/ogc/recommendation/wfs/10</tt>
-                    </xref>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Requirement</td>
-                  <td>
-                    <xref target='A3'>
-                      Requirement 1-1:
-                      <tt>Requirement 1</tt>
-                    </xref>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Recommendation</td>
-                  <td>
-                    <xref target='A4'>
-                      Recommendation 1-1:
-                      <tt>Recommendation 1</tt>
-                    </xref>
-                  </td>
-                </tr>
+                                 <tr>
+                   <td>Provisions</td>
+                   <td>
+                     <xref target='B1'>
+                       Permission 1:
+                       <tt>/ogc/recommendation/wfs/10</tt>
+                     </xref>
+                     <br/>
+                     <xref target='A3'>
+                       Requirement 1-1:
+                       <tt>Requirement 1</tt>
+                     </xref>
+                     <br/>
+                     <xref target='A4'>
+                       Recommendation 1-1:
+                       <tt>Recommendation 1</tt>
+                     </xref>
+                   </td>
+                 </tr>
               </tbody>
             </table>
             <table id='B1' class='modspec' type='recommend'>
@@ -675,26 +684,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <td>Permission</td>
+                   <td>Provisions</td>
                    <td>
                      <xref target='B2'>
                        Permission 1:
                        <tt>Permission 1</tt>
                      </xref>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Requirement</td>
-                   <td>
+                     <br/>
                      <xref target='A3'>
                        Requirement 1-1:
                        <tt>Requirement 1</tt>
                      </xref>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Recommendation</td>
-                   <td>
+                     <br/>
                      <xref target='A4'>
                        Recommendation 1-1:
                        <tt>Recommendation 1</tt>
@@ -821,27 +822,19 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                      <xref target='B'>ABC</xref>
                    </td>
                  </tr>
-                 <tr>
-                   <td>Autorisation</td>
+                                  <tr>
+                   <td>Dispositions</td>
                    <td>
                      <xref target='B2'>
                        Autorisation 1:
                        <tt>Permission 1</tt>
                      </xref>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Exigence</td>
-                   <td>
+                     <br/>
                      <xref target='A3'>
                        Exigence 1-1:
                        <tt>Requirement 1</tt>
                      </xref>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Recommandation</td>
-                   <td>
+                     <br/>
                      <xref target='A4'>
                        Recommandation 1-1:
                        <tt>Recommendation 1</tt>
@@ -940,32 +933,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>/ss/584/2015/level/2</td>
                  </tr>
                  <tr>
-                   <td>Permission</td>
-                   <td>
-                     <xref target='A5'>
-                       Permission 1:
-                       <tt>Permission 1</tt>
-                     </xref>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Requirement</td>
-                   <td>
-                     <xref target='A3'>
-                       Requirement 1-1:
-                       <tt>Requirement 1</tt>
-                     </xref>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Recommendation</td>
-                   <td>
-                     <xref target='A4'>
-                       Recommendation 1-1:
-                       <tt>Recommendation 1</tt>
-                     </xref>
-                   </td>
-                 </tr>
+                 <td>Provisions</td>
+                 <td>
+            <xref target='A5'>
+              Permission 1:
+              <tt>Permission 1</tt>
+            </xref>
+            <br/>
+            <xref target='A3'>
+              Requirement 1-1:
+              <tt>Requirement 1</tt>
+            </xref>
+            <br/>
+            <xref target='A4'>
+              Recommendation 1-1:
+              <tt>Recommendation 1</tt>
+            </xref>
+            </td>
+          </tr>
                </tbody>
              </table>
              <table id='A5' class='modspec' type='recommend'>
@@ -1046,32 +1031,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>/ss/584/2015/level/2</td>
                 </tr>
                 <tr>
-                  <td>Permission</td>
-                  <td>
-                    <xref target='A2'>
-                      Permission 1-1:
-                      <tt>Permission 1</tt>
-                    </xref>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Requirement</td>
-                  <td>
-                    <xref target='A3'>
-                      Requirement 1-1:
-                      <tt>Requirement 1</tt>
-                    </xref>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Recommendation</td>
-                  <td>
-                    <xref target='A4'>
-                      Recommendation 1-1:
-                      <tt>Recommendation 1</tt>
-                    </xref>
-                  </td>
-                </tr>
+                   <td>Provisions</td>
+                   <td>
+                   <xref target='A2'>
+                     Permission 1-1:
+                     <tt>Permission 1</tt>
+                   </xref>
+                   <br/>
+                   <xref target='A3'>
+                     Requirement 1-1:
+                     <tt>Requirement 1</tt>
+                   </xref>
+                   <br/>
+                   <xref target='A4'>
+                     Recommendation 1-1:
+                     <tt>Recommendation 1</tt>
+                   </xref>
+                   </td>
+                 </tr>
               </tbody>
             </table>
           </foreword>
@@ -1158,7 +1135,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>
-                  <td colspan='2'>
+                  <td>Description</td><td>
                     <p id='_'>
                       I recommend
                       <em>this</em>
@@ -1167,7 +1144,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   </td>
                 </tr>
                 <tr>
-                  <td colspan='2'>
+                  <td>Description</td><td>
                     <p id='_'>As for the measurement targets,</p>
                   </td>
                 </tr>
@@ -1275,7 +1252,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>
-                  <td colspan='2'>
+                  <td>Description</td><td>
                     <p id='_'>
                       I recommend
                       <em>this</em>
@@ -1284,7 +1261,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   </td>
                 </tr>
                 <tr>
-                  <td colspan='2'>
+                  <td>Description</td><td>
                     <p id='_'>As for the measurement targets,</p>
                   </td>
                 </tr>
