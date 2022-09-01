@@ -578,7 +578,6 @@ pre {
 
 table {
     @include table(1px solid black);
-    text-align: center;
 }
 
 td > p:first-child, th > p:first-child {
@@ -604,6 +603,7 @@ p.TableTitle {
     text-align: left !important;
 }
 
+/*
 table.modspec {
   @include table($border: none !important);
   text-align: left;
@@ -629,6 +629,7 @@ table.modspec {
     font-weight: 400;
   }
 }
+*/
 
 /*
 3.10 Footnotes
