@@ -74,3 +74,24 @@ stage_dict:
   "95": Withdrawal
 locality:
   appendix: Appendix
+extent:
+  page:
+    sg: "p. %"
+    pl: "pp. %"
+  volume:
+    sg: "%"
+    pl: "%"
+  issue:
+    sg: "no. %"
+    pl: "nos. %"
+size:
+  page: 
+    sg: "% p"
+    pl: "% pp"
+  volume:
+    sg: "% vol"
+    pl: "% vols"
+  issue:
+    sg: "% no"
+    pl: "% nos"
+

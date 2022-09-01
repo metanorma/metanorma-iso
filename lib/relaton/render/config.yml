@@ -1,4 +1,18 @@
+extenttemplate:
+  book: "<strong>{{ volume }}</strong> {{ page }}"
+  booklet: book
+  proceedings: book
+  journal: book
+  standard: book
+  techreport: book
+  inbook: "{{ volume }}: {{ page }}"
+  misc: "{{ volume }} {{issue}} , {{ page }}, {{ duration }}"
 template:
   # skip standardidentifier, it is inserted in front of formattedref within metanorma
   standard: "<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}." 
   website: "{{ creatornames }} ({{ role }}) . <em><span_class='stddocTitle'>{{ title }}</span></em> [website]. {{ labels['version'] | capitalize }}_{{ edition_raw }}. {{ place }}: {{ publisher }}. {{date}}. {{ labels['updated'] | capitalize }}:_{{date_updated}}. {{ standardidentifier | first }}. {{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. [{{ labels['viewed'] }}:_{{date_accessed}}]. "
+  book: "<smallcap>{{ creatornames }}</smallcap> ({{role}}) . <em>{{ title }}</em> . {{ edition | capitalize_first }}. ({{ series }}). {{ standardidentifier | first }}. {{publisher}}, {% if place %}{{place}}{%else%}{{ labels['no_place']}}{%endif%}, {{date}}, {{size}}, {{extent}}. {{ uri }}. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."
+  booklet: book
+  manual: book
+  proceedings: book
+
