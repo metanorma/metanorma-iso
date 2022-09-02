@@ -28,6 +28,7 @@ module IsoDoc
         requirement docxml
         recommendation docxml
         requirement_render docxml
+        @xrefs.anchors_previous = @xrefs.anchors.dup # store old xrefs of reqts
         @xrefs.parse docxml
         table docxml # have table include requirements newly converted to tables
         example docxml

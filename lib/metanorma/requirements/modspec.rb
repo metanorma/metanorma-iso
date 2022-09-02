@@ -29,7 +29,9 @@ module Metanorma
 
         def requirement_component_parse(node, out)
           if node["exclude"] != "true" && node.name == "description"
-            out << "<tr><td>#{@labels['modspec']['description']}</td>"\
+            lbl = "statement"
+            lbl = "declaration" if recommend_class(node) == "recommendclass"
+            out << "<tr><td>#{@labels['modspec'][lbl]}</td>"\
                    "<td>#{node.children.to_xml}</td></tr>"
           else
             super

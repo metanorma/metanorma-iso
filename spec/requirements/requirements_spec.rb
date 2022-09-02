@@ -154,7 +154,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <td>System and Communications Protocols</td>
       </tr>
       <tr>
-        <td>Description</td><td>
+        <td>Statement</td><td>
           <p id='_'>
             I recommend
             <em>this</em>
@@ -163,7 +163,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </td>
       </tr>
       <tr>
-      <td>Description</td>
+      <td>Statement</td>
             <td>
               <dl>
                 <dt>A</dt>
@@ -356,7 +356,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>System and Communications Protocols</td>
                  </tr>
                  <tr>
-                    <td>Description</td><td>
+                    <td>Statement</td><td>
                      <p id='_'>
                        I recommend
                        <em>this</em>
@@ -365,7 +365,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                 <td>Description</td>
+                 <td>Statement</td>
             <td>
               <dl>
                 <dt>A</dt>
@@ -469,10 +469,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
         <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Control-class</td><td>Technical</td></tr><tr><td>Priority</td><td>P0</td></tr><tr><td>Family</td><td>System and Communications Protection</td></tr><tr><td>Family</td><td>System and Communications Protocols</td></tr>
 
-        <tr><td>Description</td><td>
+        <tr><td>Statement</td><td>
           <p id="_">I recommend <em>this</em>.</p>
         </td></tr>
-        <tr><td>Description</td>
+        <tr><td>Statement</td>
             <td>
               <dl>
                 <dt>A</dt>
@@ -658,7 +658,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Requirements class</td>
                    <td>
-                     <xref target='B'>ABC</xref>
+                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
                    </td>
                  </tr>
                  <tr>
@@ -668,7 +668,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Dependency</td>
                    <td>
-                     <xref target='B'>ABC</xref>
+                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
                    </td>
                  </tr>
                  <tr>
@@ -680,7 +680,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Indirect Dependency</td>
                    <td>
-                     <xref target='B'>ABC</xref>
+                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
                    </td>
                  </tr>
                  <tr>
@@ -797,7 +797,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Classe d&#x2019;exigences</td>
                    <td>
-                     <xref target='B'>ABC</xref>
+                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
                    </td>
                  </tr>
                  <tr>
@@ -807,7 +807,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance</td>
                    <td>
-                     <xref target='B'>ABC</xref>
+                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
                    </td>
                  </tr>
                  <tr>
@@ -819,7 +819,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance indirecte</td>
                    <td>
-                     <xref target='B'>ABC</xref>
+                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
                    </td>
                  </tr>
                                   <tr>
@@ -1135,7 +1135,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>
-                  <td>Description</td><td>
+                  <td>Statement</td><td>
                     <p id='_'>
                       I recommend
                       <em>this</em>
@@ -1144,7 +1144,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   </td>
                 </tr>
                 <tr>
-                  <td>Description</td><td>
+                  <td>Statement</td><td>
                     <p id='_'>As for the measurement targets,</p>
                   </td>
                 </tr>
@@ -1252,7 +1252,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>
-                  <td>Description</td><td>
+                  <td>Statement</td><td>
                     <p id='_'>
                       I recommend
                       <em>this</em>
@@ -1261,7 +1261,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   </td>
                 </tr>
                 <tr>
-                  <td>Description</td><td>
+                  <td>Statement</td><td>
                     <p id='_'>As for the measurement targets,</p>
                   </td>
                 </tr>
