@@ -1505,5 +1505,141 @@ RSpec.describe Metanorma::ISO do
       expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to xmlpp(output)
     end
+
+    it "does not allows subterms outside of vocabulary document" do
+      input = <<~INPUT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :novalid:
+        :no-isobib:
+
+        == Terms and definitions
+
+        === Term1
+
+        === Term2
+
+        ==== Term2a
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR}
+        <sections>
+           <clause id='_' obligation='normative'>
+             <title>Terms and definitions</title>
+             <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
+             <p id='_'>
+               ISO and IEC maintain terminology databases for use in standardization at
+               the following addresses:
+             </p>
+             <ul id='_'>
+               <li>
+                 <p id='_'>
+                   ISO Online browsing platform: available at
+                   <link target='https://www.iso.org/obp'/>
+                 </p>
+               </li>
+               <li>
+                 <p id='_'>
+                   IEC Electropedia: available at
+                   <link target='https://www.electropedia.org'/>
+                 </p>
+               </li>
+             </ul>
+             <term id='term-Term1'>
+               <preferred>
+                 <expression>
+                   <name>Term1</name>
+                 </expression>
+               </preferred>
+             </term>
+             <terms id='_' obligation='normative'>
+               <title>Term2</title>
+               <term id='term-Term2a'>
+                 <preferred>
+                   <expression>
+                     <name>Term2a</name>
+                   </expression>
+                 </preferred>
+               </term>
+             </terms>
+           </clause>
+         </sections>
+       </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+    
+    it "allows subterms in vocabulary document" do
+      input = <<~INPUT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :novalid:
+        :no-isobib:
+        :docsubtype: vocabulary
+
+        == Terms and definitions
+
+        === Term1
+
+        === Term2
+
+        ==== Term2a
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR.sub(%r{</doctype>}, '</doctype><subdoctype>vocabulary</subdoctype>')}
+                 <sections>
+           <terms id='_' obligation='normative'>
+             <title>Terms and definitions</title>
+             <p id='_'>
+               ISO and IEC maintain terminology databases for use in standardization at
+               the following addresses:
+             </p>
+             <ul id='_'>
+               <li>
+                 <p id='_'>
+                   ISO Online browsing platform: available at 
+                   <link target='https://www.iso.org/obp'/>
+                 </p>
+               </li>
+               <li>
+                 <p id='_'>
+                   IEC Electropedia: available at 
+                   <link target='https://www.electropedia.org'/>
+                 </p>
+               </li>
+             </ul>
+             <term id='term-Term1'>
+               <preferred>
+                 <expression>
+                   <name>Term1</name>
+                 </expression>
+               </preferred>
+             </term>
+             <term id='term-Term2'>
+               <preferred>
+                 <expression>
+                   <name>Term2</name>
+                 </expression>
+               </preferred>
+               <term id='term-Term2a'>
+                 <preferred>
+                   <expression>
+                     <name>Term2a</name>
+                   </expression>
+                 </preferred>
+               </term>
+             </term>
+           </terms>
+         </sections>
+         </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
   end
 end
