@@ -72,3 +72,7 @@ stage_dict:
   "95": Отмена
 locality:
   appendix: Приложение
+requirements:
+  modspec:
+    description: Описание
+    provisions: Условия
