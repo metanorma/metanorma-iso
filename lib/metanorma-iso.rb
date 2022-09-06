@@ -11,7 +11,7 @@ require_relative "isodoc/iso/presentation_xml_convert"
 require_relative "html2doc/lists"
 require "asciidoctor/extensions"
 
-if defined? Metanorma
+if defined? Metanorma::Registry
   require_relative "metanorma/iso"
   Metanorma::Registry.instance.register(Metanorma::Iso::Processor)
 end

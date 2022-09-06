@@ -66,18 +66,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Requirement 1</xref>
-          <xref target='N2'>Preparatory, Requirement (??)</xref>
-          <xref target='N'>Clause 1, Requirement 2</xref>
-          <xref target='note1'>Clause 3.1, Requirement 3</xref>
-          <xref target='note2'>Clause 3.1, Requirement 4</xref>
-          <xref target='AN'>Requirement A.1</xref>
-          <xref target='Anote1'>Requirement (??)</xref>
-          <xref target='Anote2'>Requirement A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Requirement 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Requirement (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Requirement 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Requirement 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Requirement 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Requirement A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Requirement (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Requirement A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -158,42 +174,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-              <p>
-                   <xref target='N1'>
-           Introduction, Requirement 1:
-           <tt>/ogc/req1</tt>
-         </xref>
-         <xref target='N2'>
-           Preparatory, Requirement (??):
-           <tt>/ogc/req2</tt>
-         </xref>
-         <xref target='N'>
-           Clause 1, Requirement 2:
-           <tt>/ogc/req3</tt>
-         </xref>
-         <xref target='note1'>
-           Clause 3.1, Requirement 3:
-           <tt>/ogc/req4</tt>
-         </xref>
-         <xref target='note2'>
-           Clause 3.1, Requirement 4:
-           <tt>/ogc/req5</tt>
-         </xref>
-         <xref target='AN'>
-           Requirement A.1:
-           <tt>/ogc/req6</tt>
-         </xref>
-         <xref target='Anote1'>
-           Requirement (??):
-           <tt>/ogc/req7</tt>
-         </xref>
-         <xref target='Anote2'>
-           Requirement A.2:
-           <tt>/ogc/req8</tt>
-         </xref>
-              </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Requirement 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Requirement (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Requirement 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Requirement 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Requirement 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Requirement A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Requirement (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Requirement A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -291,25 +299,25 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
     output = <<~OUTPUT
       <foreword displayorder='1'>
-        <p>
-          <xref target='N1a'>Introduction, Requirement 1 A</xref>
-          <xref target='N1b'>Introduction, Requirement 1 B</xref>
-          <xref target='N2a'>Preparatory, Requirement A</xref>
-          <xref target='N2b'>Preparatory, Requirement B</xref>
-          <xref target='Na'>Clause 1, Requirement 2 A</xref>
-          <xref target='Nb'>Clause 1, Requirement 2 B</xref>
-          <xref target='note1a'>Clause 3.1, Requirement 3 A</xref>
-          <xref target='note1b'>Clause 3.1, Requirement 3 B</xref>
-          <xref target='note2a'>Clause 3.1, Requirement 4 A</xref>
-          <xref target='note2b'>Clause 3.1, Requirement 4 B</xref>
-          <xref target='ANa'>Requirement A.1 A</xref>
-          <xref target='ANb'>Requirement A.1 B</xref>
-          <xref target='Anote1a'>Requirement A. A</xref>
-          <xref target='Anote1b'>Requirement A. B</xref>
-          <xref target='Anote2a'>Requirement A.2 A</xref>
-          <xref target='Anote2b'>Requirement A.2 B</xref>
-        </p>
-      </foreword>
+         <p>
+           <xref target='N1a'>Table 1, Table 1, Requirement 1 A</xref>
+           <xref target='N1b'>Table 1, Table 1, Requirement 1 B</xref>
+           <xref target='N2a'>Table (??), Table (??), Requirement A</xref>
+           <xref target='N2b'>Table (??), Table (??), Requirement B</xref>
+           <xref target='Na'>Table 2, Requirement 2 A</xref>
+           <xref target='Nb'>Table 2, Requirement 2 B</xref>
+           <xref target='note1a'>Table 3, Requirement 3 A</xref>
+           <xref target='note1b'>Table 3, Requirement 3 B</xref>
+           <xref target='note2a'>Table 4, Requirement 4 A</xref>
+           <xref target='note2b'>Table 4, Requirement 4 B</xref>
+           <xref target='ANa'>Table A.1, Requirement A.1 A</xref>
+           <xref target='ANb'>Table A.1, Requirement A.1 B</xref>
+           <xref target='Anote1a'>Table (??), Requirement A. A</xref>
+           <xref target='Anote1b'>Table (??), Requirement A. B</xref>
+           <xref target='Anote2a'>Table A.2, Requirement A.2 A</xref>
+           <xref target='Anote2b'>Table A.2, Requirement A.2 B</xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -382,18 +390,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Requirement test 1</xref>
-          <xref target='N2'>Preparatory, Requirement test (??)</xref>
-          <xref target='N'>Clause 1, Requirement test 2</xref>
-          <xref target='note1'>Clause 3.1, Requirement test 3</xref>
-          <xref target='note2'>Clause 3.1, Requirement test 4</xref>
-          <xref target='AN'>Requirement test A.1</xref>
-          <xref target='Anote1'>Requirement test (??)</xref>
-          <xref target='Anote2'>Requirement test A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Requirement test 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Requirement test (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Requirement test 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Requirement test 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Requirement test 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Requirement test A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Requirement test (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Requirement test A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -469,14 +493,30 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
       <foreword displayorder='1'>
          <p>
-           <xref target='N1'>Introduction, Test d&#x2019;exigence 1</xref>
-           <xref target='N2'>Preparatory, Test d&#x2019;exigence (??)</xref>
-           <xref target='N'>Article 1, Test d&#x2019;exigence 2</xref>
-           <xref target='note1'>Article 3.1, Test d&#x2019;exigence 3</xref>
-           <xref target='note2'>Article 3.1, Test d&#x2019;exigence 4</xref>
-           <xref target='AN'>Test d&#x2019;exigence A.1</xref>
-           <xref target='Anote1'>Test d&#x2019;exigence (??)</xref>
-           <xref target='Anote2'>Test d&#x2019;exigence A.2</xref>
+           <xref target='N1'>
+             <span class='citetbl'>Tableau 1, Test d’exigence 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Tableau (??), Test d’exigence (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Tableau 2, Test d’exigence 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Tableau 3, Test d’exigence 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Tableau 4, Test d’exigence 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Tableau A.1, Test d’exigence A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Tableau (??), Test d’exigence (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Tableau A.2, Test d’exigence A.2</span>
+           </xref>
          </p>
        </foreword>
     OUTPUT
@@ -551,18 +591,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Recommendation 1</xref>
-          <xref target='N2'>Preparatory, Recommendation (??)</xref>
-          <xref target='N'>Clause 1, Recommendation 2</xref>
-          <xref target='note1'>Clause 3.1, Recommendation 3</xref>
-          <xref target='note2'>Clause 3.1, Recommendation 4</xref>
-          <xref target='AN'>Recommendation A.1</xref>
-          <xref target='Anote1'>Recommendation (??)</xref>
-          <xref target='Anote2'>Recommendation A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Recommendation 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Recommendation (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Recommendation 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Recommendation 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Recommendation 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Recommendation A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Recommendation (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Recommendation A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -635,18 +691,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Recommendation test 1</xref>
-          <xref target='N2'>Preparatory, Recommendation test (??)</xref>
-          <xref target='N'>Clause 1, Recommendation test 2</xref>
-          <xref target='note1'>Clause 3.1, Recommendation test 3</xref>
-          <xref target='note2'>Clause 3.1, Recommendation test 4</xref>
-          <xref target='AN'>Recommendation test A.1</xref>
-          <xref target='Anote1'>Recommendation test (??)</xref>
-          <xref target='Anote2'>Recommendation test A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Recommendation test 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Recommendation test (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Recommendation test 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Recommendation test 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Recommendation test 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Recommendation test A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Recommendation test (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Recommendation test A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -719,18 +791,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Permission 1</xref>
-          <xref target='N2'>Preparatory, Permission (??)</xref>
-          <xref target='N'>Clause 1, Permission 2</xref>
-          <xref target='note1'>Clause 3.1, Permission 3</xref>
-          <xref target='note2'>Clause 3.1, Permission 4</xref>
-          <xref target='AN'>Permission A.1</xref>
-          <xref target='Anote1'>Permission (??)</xref>
-          <xref target='Anote2'>Permission A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Permission 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Permission (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Permission 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Permission 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Permission 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Permission A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Permission (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Permission A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -803,18 +891,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Permission test 1</xref>
-          <xref target='N2'>Preparatory, Permission test (??)</xref>
-          <xref target='N'>Clause 1, Permission test 2</xref>
-          <xref target='note1'>Clause 3.1, Permission test 3</xref>
-          <xref target='note2'>Clause 3.1, Permission test 4</xref>
-          <xref target='AN'>Permission test A.1</xref>
-          <xref target='Anote1'>Permission test (??)</xref>
-          <xref target='Anote2'>Permission test A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Permission test 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Permission test (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Permission test 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Permission test 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Permission test 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Permission test A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Permission test (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Permission test A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -874,20 +978,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Clause 1, Permission 1</xref>
-          <xref target='N2'>Clause 1, Permission test 1-1</xref>
-          <xref target='N'>Clause 1, Permission 1-1-1</xref>
-          <xref target='Q1'>Clause 1, Requirement 1-1</xref>
-          <xref target='R1'>Clause 1, Recommendation 1-1</xref>
-          <xref target='AN1'>Permission test A.1</xref>
-          <xref target='AN2'>Permission A.1-1</xref>
-          <xref target='AN'>Permission test A.1-1-1</xref>
-          <xref target='AQ1'>Requirement A.1-1</xref>
-          <xref target='AR1'>Recommendation A.1-1</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Permission 1</span>
+           </xref>
+           <xref target='N2'>Table 1, Permission test 1-1</xref>
+           <xref target='N'>Table 1, Permission 1-1-1</xref>
+           <xref target='Q1'>Table 1, Requirement 1-1</xref>
+           <xref target='R1'>Table 1, Recommendation 1-1</xref>
+           <xref target='AN1'>
+             <span class='citetbl'>Table A.1, Permission test A.1</span>
+           </xref>
+           <xref target='AN2'>Table A.1, Permission A.1-1</xref>
+           <xref target='AN'>Table A.1, Permission test A.1-1-1</xref>
+           <xref target='AQ1'>Table A.1, Requirement A.1-1</xref>
+           <xref target='AR1'>Table A.1, Recommendation A.1-1</xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -960,18 +1068,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Abstract test 1</xref>
-          <xref target='N2'>Preparatory, Abstract test (??)</xref>
-          <xref target='N'>Clause 1, Abstract test 2</xref>
-          <xref target='note1'>Clause 3.1, Abstract test 3</xref>
-          <xref target='note2'>Clause 3.1, Abstract test 4</xref>
-          <xref target='AN'>Abstract test A.1</xref>
-          <xref target='Anote1'>Abstract test (??)</xref>
-          <xref target='Anote2'>Abstract test A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Abstract test 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Abstract test (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Abstract test 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Abstract test 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Abstract test 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Abstract test A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Abstract test (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Abstract test A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
@@ -1044,18 +1168,34 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="1">
-        <p>
-          <xref target='N1'>Introduction, Conformance class 1</xref>
-          <xref target='N2'>Preparatory, Conformance class (??)</xref>
-          <xref target='N'>Clause 1, Conformance class 2</xref>
-          <xref target='note1'>Clause 3.1, Conformance class 3</xref>
-          <xref target='note2'>Clause 3.1, Conformance class 4</xref>
-          <xref target='AN'>Conformance class A.1</xref>
-          <xref target='Anote1'>Conformance class (??)</xref>
-          <xref target='Anote2'>Conformance class A.2</xref>
-        </p>
-      </foreword>
+      <foreword displayorder='1'>
+         <p>
+           <xref target='N1'>
+             <span class='citetbl'>Table 1, Conformance class 1</span>
+           </xref>
+           <xref target='N2'>
+             <span class='citetbl'>Table (??), Conformance class (??)</span>
+           </xref>
+           <xref target='N'>
+             <span class='citetbl'>Table 2, Conformance class 2</span>
+           </xref>
+           <xref target='note1'>
+             <span class='citetbl'>Table 3, Conformance class 3</span>
+           </xref>
+           <xref target='note2'>
+             <span class='citetbl'>Table 4, Conformance class 4</span>
+           </xref>
+           <xref target='AN'>
+             <span class='citetbl'>Table A.1, Conformance class A.1</span>
+           </xref>
+           <xref target='Anote1'>
+             <span class='citetbl'>Table (??), Conformance class (??)</span>
+           </xref>
+           <xref target='Anote2'>
+             <span class='citetbl'>Table A.2, Conformance class A.2</span>
+           </xref>
+         </p>
+       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
