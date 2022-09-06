@@ -4266,12 +4266,19 @@
 
 		<parent_element><xsl:value-of select="local-name(..)"/></parent_element>
 
+		<ancestor_tree>
+			<xsl:for-each select="ancestor::*">
+				<ancestor><xsl:value-of select="local-name()"/></ancestor>
+			</xsl:for-each>
+		</ancestor_tree>
+
 		<xsl:variable name="parent_table_page-width_">
 			<xsl:if test="$parent_table_id != ''">
 				<!-- determine column number in the parent table -->
 				<xsl:variable name="parent_table_column_number">
 					<xsl:choose>
-						<xsl:when test="parent::*[local-name() = 'dd']">2</xsl:when>
+						<!-- <xsl:when test="parent::*[local-name() = 'dd']">2</xsl:when> -->
+						<xsl:when test="(ancestor::*[local-name() = 'dd' or local-name() = 'table' or local-name() = 'dl'])[last()][local-name() = 'dd' or local-name() = 'dl']">2</xsl:when>
 						<xsl:otherwise> <!-- parent is table -->
 							<xsl:value-of select="count(ancestor::*[local-name() = 'td'][1]/preceding-sibling::*[local-name() = 'td']) + 1"/>
 						</xsl:otherwise>
@@ -4285,7 +4292,7 @@
 					<xsl:value-of select="$parent_table_column/@divider"/>
 					<xsl:if test="not($parent_table_column/@divider)">1</xsl:if>
 				</xsl:variable> -->
-				<xsl:value-of select="$parent_table_column/text() * 10"/>
+				<xsl:value-of select="$parent_table_column/text()"/> <!--  * 10 -->
 			</xsl:if>
 		</xsl:variable>
 		<xsl:variable name="parent_table_page-width" select="normalize-space($parent_table_page-width_)"/>
@@ -8604,15 +8611,12 @@
 
 	<xsl:template match="*[local-name()='tr']" mode="requirement">
 		<fo:table-row height="7mm" border-bottom="0.5pt solid grey">
-			<xsl:if test="parent::*[local-name()='thead']"> <!-- and not(ancestor::*[local-name() = 'table'][@class = 'recommendation' or @class='requirement' or @class='permission']) -->
-				<xsl:attribute name="background-color">rgb(33, 55, 92)</xsl:attribute>
+
+			<xsl:if test="parent::*[local-name()='thead'] or starts-with(*[local-name()='td' or local-name()='th'][1], 'Requirement ') or starts-with(*[local-name()='td' or local-name()='th'][1], 'Recommendation ')">
+				<xsl:attribute name="font-weight">bold</xsl:attribute>
+
 			</xsl:if>
-			<xsl:if test="starts-with(*[local-name()='td'][1], 'Requirement ')">
-				<xsl:attribute name="background-color">rgb(252, 246, 222)</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="starts-with(*[local-name()='td'][1], 'Recommendation ')">
-				<xsl:attribute name="background-color">rgb(233, 235, 239)</xsl:attribute>
-			</xsl:if>
+
 			<xsl:apply-templates mode="requirement"/>
 		</fo:table-row>
 	</xsl:template>
