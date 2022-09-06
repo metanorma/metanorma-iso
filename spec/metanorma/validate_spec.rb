@@ -2136,12 +2136,12 @@ RSpec.describe Metanorma::ISO do
 
       [[b]]
       === Term 1
-      <<b>>
-      <<c>>
+      _<<b>>_
+      _<<c>>_
 
       == Clause
-      <<b>>
-      <<c>>
+      _<<b>>_
+      _<<c>>_
 
     INPUT
     expect(File.read("test.err"))

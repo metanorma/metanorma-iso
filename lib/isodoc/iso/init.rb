@@ -28,6 +28,10 @@ module IsoDoc
         ""
       end
 
+      def requirements_processor
+        ::Metanorma::Requirements::Iso
+      end
+
       def std_docid_semantic(id)
         return nil if id.nil?
 

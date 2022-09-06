@@ -618,6 +618,14 @@ th {
     padding: 1em !important;
 }
 
+td > p:first-child, th > p:first-child {
+  margin-top: 0em;
+}
+td > p:last-child, th > p:last-child {
+  margin-bottom: 0em;
+}
+
+
 p.TableTitle {
     text-align: center;
     margin-top: 2.5em;
