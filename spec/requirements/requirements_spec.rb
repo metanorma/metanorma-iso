@@ -47,7 +47,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <span class='citetbl'>Table 1</span>
               </xref>
               <xref target='A1'>
-                <span class='citetbl'>Table 2</span>
+                <span class='citetbl'>Table 2, Permission 1</span>
               </xref>
               <xref target='A2'>
                 <span class='citetbl'>Table 3</span>

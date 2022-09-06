@@ -1,8 +1,7 @@
 require "spec_helper"
-    
+
 RSpec.describe Metanorma::Standoc do
-    it "processes embed macro with document in a different flavour" do
-    require "metanorma-iso"
+  it "processes embed macro with document in a different flavour" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
 
@@ -94,7 +93,7 @@ RSpec.describe Metanorma::Standoc do
       </standard-document>
     OUTPUT
     expect(xmlpp(strip_guid(Asciidoctor
-      .convert(input, backend: :iso, header_footer: true))))
+      .convert(input, backend: :standoc, header_footer: true))))
       .to be_equivalent_to xmlpp(output)
   end
 end

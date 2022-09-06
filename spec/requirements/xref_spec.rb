@@ -300,10 +300,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
       <foreword displayorder='1'>
          <p>
-           <xref target='N1a'>Table 1, Table 1, Requirement 1 A</xref>
-           <xref target='N1b'>Table 1, Table 1, Requirement 1 B</xref>
-           <xref target='N2a'>Table (??), Table (??), Requirement A</xref>
-           <xref target='N2b'>Table (??), Table (??), Requirement B</xref>
+           <xref target='N1a'>Table 1, Requirement 1 A</xref>
+           <xref target='N1b'>Table 1, Requirement 1 B</xref>
+           <xref target='N2a'>Table (??), Requirement A</xref>
+           <xref target='N2b'>Table (??), Requirement B</xref>
            <xref target='Na'>Table 2, Requirement 2 A</xref>
            <xref target='Nb'>Table 2, Requirement 2 B</xref>
            <xref target='note1a'>Table 3, Requirement 3 A</xref>

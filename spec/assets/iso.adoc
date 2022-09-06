@@ -1,0 +1,10 @@
+= X
+A
+:mn-document-class: iso
+:title-main-en: Medical devices — Quality management systems — Requirements for regulatory purposes
+:title-main-fr: Dispositifs médicaux — Systèmes de management de la qualité — Exigences à des fins réglementaires
+
+== Clause 1
+
+X
+
