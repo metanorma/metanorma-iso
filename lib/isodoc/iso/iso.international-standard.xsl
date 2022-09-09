@@ -4,7 +4,7 @@
 
 	<xsl:key name="kfn" match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])]" use="@reference"/>
 
-	<xsl:key name="attachments" match="iso:eref[contains(@bibitemid, '.exp')]" use="@bibitemid"/>
+	<xsl:key name="attachments" match="iso:eref[java:endsWith(java:java.lang.String.new(@bibitemid),'.exp')]" use="@bibitemid"/>
 
 	<xsl:variable name="namespace_full">https://www.metanorma.org/ns/iso</xsl:variable>
 
@@ -1920,7 +1920,7 @@
 	</xsl:template>
 
 	<!-- For express listings PDF attachments -->
-	<xsl:template match="*[local-name() = 'eref'][contains(@bibitemid, '.exp')]" priority="2">
+	<xsl:template match="*[local-name() = 'eref'][java:endsWith(java:java.lang.String.new(@bibitemid),'.exp')]" priority="2">
 		<fo:inline xsl:use-attribute-sets="eref-style">
 			<xsl:variable name="url" select="concat('url(embedded-file:', @bibitemid, ')')"/>
 			<fo:basic-link external-destination="{$url}" fox:alt-text="{@citeas}">
