@@ -7,6 +7,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface><foreword id="A"><title>Preface</title>
           <table id="A0"/>
           <permission model="ogc" id="A1">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         </permission>
           <table id="A2"/>
@@ -26,7 +27,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <name>Table 1</name>
             </table>
             <table id='A1' class='modspec' type='recommend'>
-              <name>Table 2 — Permission 1</name>
+              <name>Table 2 — Permission 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -69,6 +70,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit><eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></inherit>
@@ -133,7 +135,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
                 <preface><foreword id="A" displayorder="1"><title>Preface</title>
                 <table id="A1" class="modspec" type="recommend">
-            <name>Table 1 — Permission 1</name>
+            <name>Table 1 — Permission 1: First</name>
             <tbody>
               <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
               <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Dependency</td><td><eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></td></tr>
@@ -260,7 +262,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     OUTPUT
 
     html = <<~OUTPUT
-           <body lang='en'>
+      <body lang='en'>
          <div class='title-section'>
            <p> </p>
          </div>
@@ -273,7 +275,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <br/>
            <div id='A'>
              <h1 class='ForewordTitle'>Preface</h1>
-             <p class='TableTitle' style='text-align:center;'>Table 1 — Permission 1</p>
+             <p class='TableTitle' style='text-align:center;'>Table 1 — Permission 1: First</p>
              <table id='A1' class='modspec' style='border-width:1px;border-spacing:0;'>
                <tbody>
                  <tr>
@@ -430,7 +432,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     OUTPUT
 
     doc = <<~OUTPUT
-           <body lang='EN-US' link='blue' vlink='#954F72'>
+      <body lang='EN-US' link='blue' vlink='#954F72'>
          <div class='WordSection1'>
            <p> </p>
          </div>
@@ -443,7 +445,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            </p>
            <div id='A'>
              <h1 class='ForewordTitle'>Preface</h1>
-             <p class='Tabletitle' style='text-align:center;'>Table 1 — Permission 1</p>
+             <p class='Tabletitle' style='text-align:center;'>Table 1 — Permission 1: First</p>
              <div align='center' class='table_container'>
                <table id='A1' class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;' width='100%'>
                  <tbody>
@@ -637,6 +639,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface>
               <foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="verification">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <subject>user</subject>
@@ -690,7 +693,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendtest'>
-               <name>Table 1 — Permission test 1</name>
+               <name>Table 1 — Permission test 1: First</name>
                <tbody>
                  <tr>
                 <td>Identifier</td>
@@ -778,6 +781,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface>
               <foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="abstracttest">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <subject>user</subject>
@@ -829,7 +833,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface>
               <foreword id="A" displayorder="1"><title>Preface</title>
           <table id="A1" type="recommendtest" class="modspec">
-          <name>Table 1 — Abstract test 1</name>
+          <name>Table 1 — Abstract test 1: First</name>
         <tbody>
           <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
         <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Control-class</td><td>Technical</td></tr><tr><td>Priority</td><td>P0</td></tr><tr><td>Family</td><td>System and Communications Protection</td></tr><tr><td>Family</td><td>System and Communications Protocols</td></tr>
@@ -876,21 +880,26 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="class" keep-with-next="true" keep-lines-together="true">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>/ss/584/2015/level/2</inherit>
         <subject>user</subject>
         <permission model="ogc" id="A2">
+          <title>First #1</title>
         <identifier>/ogc/recommendation/wfs/10</identifier>
         </permission>
         <requirement model="ogc" id="A3">
+          <title>First #2</title>
         <identifier>Requirement 1</identifier>
         </requirement>
         <recommendation model="ogc" id="A4">
+          <title>First #3</title>
         <identifier>Recommendation 1</identifier>
         </recommendation>
       </permission>
       <permission model="ogc" id="B1">
+          <title>Second</title>
         <identifier>/ogc/recommendation/wfs/10</identifier>
       </permission>
           </foreword></preface>
@@ -903,7 +912,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='A1' keep-with-next='true' keep-lines-together='true' class='modspec' type='recommendclass'>
-              <name>Table 1 — Permissions class 1</name>
+              <name>Table 1 — Permissions class 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -926,24 +935,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='B1'>
                        Permission 1:
-                       <tt>/ogc/recommendation/wfs/10</tt>
+                       Second
                      </xref>
                      <br/>
                      <xref target='A3'>
                        Requirement 1-1:
-                       <tt>Requirement 1</tt>
+                       First #2
                      </xref>
                      <br/>
                      <xref target='A4'>
                        Recommendation 1-1:
-                       <tt>Recommendation 1</tt>
+                       First #3
                      </xref>
                    </td>
                  </tr>
               </tbody>
             </table>
             <table id='B1' class='modspec' type='recommend'>
-              <name>Table 2 — Permission 1</name>
+              <name>Table 2 — Permission 1: Second</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -952,10 +961,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <tr>
                   <td>Included in</td>
                   <td>
-                    <xref target='A1'>
-                      Permissions class 1:
-                      <tt>/ogc/recommendation/wfs/2</tt>
-                    </xref>
+                    <xref target='A1'>Permissions class 1: First</xref>
                   </td>
                 </tr>
               </tbody>
@@ -977,6 +983,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="conformanceclass">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>ABC</inherit>
@@ -995,9 +1002,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </recommendation>
       </permission>
           <permission model="ogc" id="B" type="conformanceclass">
+          <title>Second</title>
           <identifier>ABC</identifier>
           </permission>
           <permission model="ogc" id="B2">
+          <title>Third</title>
         <identifier>Permission 1</identifier>
         </permission>
           </foreword></preface>
@@ -1010,7 +1019,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <name>Table 1 — Conformance class 1</name>
+               <name>Table 1 — Conformance class 1: First</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -1023,7 +1032,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Requirements class</td>
                    <td>
-                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -1033,7 +1042,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Dependency</td>
                    <td>
-                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -1045,7 +1054,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Indirect Dependency</td>
                    <td>
-                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -1053,24 +1062,22 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='B2'>
                        Permission 1:
-                       <tt>Permission 1</tt>
+                       Third
                      </xref>
                      <br/>
                      <xref target='A3'>
-                       Requirement 1-1:
-                       <tt>Requirement 1</tt>
+                       Requirement 1-1
                      </xref>
                      <br/>
                      <xref target='A4'>
-                       Recommendation 1-1:
-                       <tt>Recommendation 1</tt>
+                       Recommendation 1-1
                      </xref>
                    </td>
                  </tr>
                </tbody>
              </table>
              <table id='B' class='modspec' type='recommendclass'>
-               <name>Table 2 — Conformance class 2</name>
+               <name>Table 2 — Conformance class 2: Second</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -1079,7 +1086,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B2' class='modspec' type='recommend'>
-             <name>Table 3 — Permission 1</name>
+             <name>Table 3 — Permission 1: Third</name>
         <tbody>
           <tr>
             <td>Identifier</td>
@@ -1090,7 +1097,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <td>
               <xref target='A1'>
                 Conformance class 1:
-                <tt>/ogc/recommendation/wfs/2</tt>
+                First
               </xref>
             </td>
           </tr>
@@ -1114,6 +1121,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <bibdata><language>fr</language></bibdata>
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="conformanceclass">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>ABC</inherit>
@@ -1132,9 +1140,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </recommendation>
       </permission>
           <permission model="ogc" id="B" type="conformanceclass">
+          <title>Second</title>
           <identifier>ABC</identifier>
           </permission>
           <permission model="ogc" id="B2">
+          <title>Third</title>
         <identifier>Permission 1</identifier>
         </permission>
           </foreword></preface>
@@ -1149,7 +1159,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <name>Tableau 1 — Classe de confirmité 1</name>
+               <name>Tableau 1 — Classe de confirmité 1: First</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -1162,7 +1172,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Classe d&#x2019;exigences</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Classe de confirmité 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -1172,7 +1182,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Classe de confirmité 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -1184,7 +1194,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance indirecte</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Classe de confirmité 2: Second</xref>
                    </td>
                  </tr>
                                   <tr>
@@ -1192,24 +1202,22 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='B2'>
                        Autorisation 1:
-                       <tt>Permission 1</tt>
+                       Third
                      </xref>
                      <br/>
                      <xref target='A3'>
-                       Exigence 1-1:
-                       <tt>Requirement 1</tt>
+                       Exigence 1-1
                      </xref>
                      <br/>
                      <xref target='A4'>
-                       Recommandation 1-1:
-                       <tt>Recommendation 1</tt>
+                       Recommandation 1-1
                      </xref>
                    </td>
                  </tr>
                </tbody>
              </table>
              <table id='B' class='modspec' type='recommendclass'>
-             <name>Tableau 2 — Classe de confirmité 2</name>
+             <name>Tableau 2 — Classe de confirmité 2: Second</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -1218,7 +1226,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B2' class='modspec' type='recommend'>
-             <name>Tableau 3 — Autorisation 1</name>
+             <name>Tableau 3 — Autorisation 1: Third</name>
         <tbody>
           <tr>
             <td>Identifiant</td>
@@ -1229,7 +1237,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <td>
               <xref target='A1'>
                  Classe de confirmit&#xE9; 1:
-                <tt>/ogc/recommendation/wfs/2</tt>
+                 First
               </xref>
             </td>
           </tr>
@@ -1252,21 +1260,26 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <requirement model="ogc" id="A1" type="class">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>/ss/584/2015/level/2</inherit>
         <subject>user</subject>
         <permission model="ogc" id="A2">
+          <title>First #1</title>
         <identifier>Permission 1</identifier>
         </permission>
         <requirement model="ogc" id="A3">
+          <title>First #2</title>
         <identifier>Requirement 1</identifier>
         </requirement>
         <recommendation model="ogc" id="A4">
+          <title>First #3</title>
         <identifier>Recommendation 1</identifier>
         </recommendation>
       </requirement>
       <permission model="ogc" id="A5">
+          <title>Second</title>
         <identifier>Permission 1</identifier>
         </permission>
           </foreword></preface>
@@ -1279,7 +1292,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <name>Table 1 — Requirements class 1</name>
+               <name>Table 1 — Requirements class 1: First</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -1302,24 +1315,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <td>
             <xref target='A5'>
               Permission 1:
-              <tt>Permission 1</tt>
+              Second
             </xref>
             <br/>
             <xref target='A3'>
               Requirement 1-1:
-              <tt>Requirement 1</tt>
+              First #2
             </xref>
             <br/>
             <xref target='A4'>
               Recommendation 1-1:
-              <tt>Recommendation 1</tt>
+              First #3
             </xref>
             </td>
           </tr>
                </tbody>
              </table>
              <table id='A5' class='modspec' type='recommend'>
-                <name>Table 2 — Permission 1</name>
+                <name>Table 2 — Permission 1: Second</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -1330,7 +1343,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='A1'>
                        Requirements class 1:
-                       <tt>/ogc/recommendation/wfs/2</tt>
+                       First
                      </xref>
                    </td>
                  </tr>
@@ -1353,17 +1366,21 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <recommendation model="ogc" id="A1" type="class">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>/ss/584/2015/level/2</inherit>
         <subject>user</subject>
         <permission model="ogc" id="A2">
+          <title>First #1</title>
         <identifier>Permission 1</identifier>
         </permission>
         <requirement model="ogc" id="A3">
+          <title>First #2</title>
         <identifier>Requirement 1</identifier>
         </requirement>
         <recommendation model="ogc" id="A4">
+          <title>First #3</title>
         <identifier>Recommendation 1</identifier>
         </recommendation>
       </recommendation>
@@ -1377,7 +1394,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='A1' class='modspec' type='recommendclass'>
-            <name>Table 1 — Recommendations class 1</name>
+            <name>Table 1 — Recommendations class 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -1398,19 +1415,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <tr>
                    <td>Provisions</td>
                    <td>
-                   <xref target='A2'>
-                     Permission 1-1:
-                     <tt>Permission 1</tt>
+                   <xref target='A2'>Permission 1-1:
+                     First #1
                    </xref>
                    <br/>
                    <xref target='A3'>
                      Requirement 1-1:
-                     <tt>Requirement 1</tt>
+                     First #2
                    </xref>
                    <br/>
                    <xref target='A4'>
                      Recommendation 1-1:
-                     <tt>Recommendation 1</tt>
+                     First #3
                    </xref>
                    </td>
                  </tr>
@@ -1550,6 +1566,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <recommendation model="ogc" id="_">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <subject>user</subject>
@@ -1602,7 +1619,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='_' class='modspec' type='recommend'>
-              <name>Table 1 — Recommendation 1</name>
+              <name>Table 1 — Recommendation 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>

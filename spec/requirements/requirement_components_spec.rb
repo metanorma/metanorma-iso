@@ -30,7 +30,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
+      <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
@@ -470,16 +470,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <preface>
           <foreword id="A"><title>Preface</title>
               <requirement model="ogc" id='A1' type="general">
+              <title>First</title>
               <identifier>/ogc/recommendation/wfs/1</identifier>
               </requirement>
               <requirement model="ogc" id='A2' type="verification">
+              <title>Second</title>
               <identifier>/ogc/recommendation/wfs/2</identifier>
               <classification><tag>target</tag><value>/ogc/recommendation/wfs/1</value></classification>
               </requirement>
               <requirement model="ogc" id='A3' type="class">
+              <title>Third</title>
               <identifier>/ogc/recommendation/wfs/3</identifier>
               </requirement>
               <requirement model="ogc" id='A4' type="conformanceclass">
+              <title>Fourth</title>
               <identifier>/ogc/recommendation/wfs/4</identifier>
               <classification><tag>target</tag><value>/ogc/recommendation/wfs/3</value></classification>
               </requirement>
@@ -487,12 +491,12 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     INPUT
     presxml = <<~PRESXML
-           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
+      <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommend'>
-               <name>Table 1 — Requirement 1</name>
+               <name>Table 1 — Requirement 1: First</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -505,14 +509,14 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='A2'>
                        Requirement test 1:
-                       <tt>/ogc/recommendation/wfs/2</tt>
+                       Second
                      </xref>
                    </td>
                  </tr>
                </tbody>
              </table>
              <table id='A2' class='modspec' type='recommendtest'>
-               <name>Table 2 — Requirement test 1</name>
+               <name>Table 2 — Requirement test 1: Second</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -525,14 +529,14 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='A1'>
                        Requirement 1:
-                       <tt>/ogc/recommendation/wfs/1</tt>
+                       First
                      </xref>
                    </td>
                  </tr>
                </tbody>
              </table>
              <table id='A3' class='modspec' type='recommendclass'>
-               <name>Table 3 — Requirements class 1</name>
+               <name>Table 3 — Requirements class 1: Third</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -545,14 +549,14 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='A4'>
                        Conformance class 1:
-                       <tt>/ogc/recommendation/wfs/4</tt>
+                       Fourth
                      </xref>
                    </td>
                  </tr>
                </tbody>
              </table>
              <table id='A4' class='modspec' type='recommendclass'>
-               <name>Table 4 — Conformance class 1</name>
+               <name>Table 4 — Conformance class 1: Fourth</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -565,7 +569,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='A3'>
                        Requirements class 1:
-                       <tt>/ogc/recommendation/wfs/3</tt>
+                       Third
                      </xref>
                    </td>
                  </tr>
