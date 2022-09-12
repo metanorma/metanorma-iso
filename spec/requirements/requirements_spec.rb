@@ -259,11 +259,376 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 </ogc-standard>
     OUTPUT
 
+    html = <<~OUTPUT
+           <body lang='en'>
+         <div class='title-section'>
+           <p> </p>
+         </div>
+         <br/>
+         <div class='prefatory-section'>
+           <p> </p>
+         </div>
+         <br/>
+         <div class='main-section'>
+           <br/>
+           <div id='A'>
+             <h1 class='ForewordTitle'>Preface</h1>
+             <p class='TableTitle' style='text-align:center;'>Table 1 — Permission 1</p>
+             <table id='A1' class='modspec' style='border-width:1px;border-spacing:0;'>
+               <tbody>
+                 <tr>
+                   <td style='border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>Identifier</td>
+                   <td style='border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>
+                     <tt>/ogc/recommendation/wfs/2</tt>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Subject</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>user</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Dependency</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>/ss/584/2015/level/1</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Dependency</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <a href='#rfc2616'>RFC 2616 (HTTP/1.1)</a>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Control-class</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Technical</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Priority</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>P0</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Family</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>System and Communications Protection</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Family</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>System and Communications Protocols</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Statement</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p id='_'>
+                        I recommend
+                       <i>this</i>
+                        .
+                     </p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Statement</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <dl>
+                       <dt>
+                         <p>A</p>
+                       </dt>
+                       <dd>B</dd>
+                       <dt>
+                         <p>C</p>
+                       </dt>
+                       <dd>D</dd>
+                     </dl>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td colspan='2' style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p id='_'>The measurement target shall be measured as:</p>
+                     <div id='_'>
+                       <div class='formula'>
+                         <p>
+                           <span class='stem'>(#(r/1 = 0)#)</span>
+                             (1)
+                         </p>
+                       </div>
+                     </div>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td colspan='2' style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p id='_'>The following code will be run for verification:</p>
+                     <pre id='_' class='prettyprint '>
+                       <br/>
+                             CoreRoot(success): HttpResponse
+                       if (success)
+                       <br/>
+                             recommendation(label:
+                       success-response) end
+                       <br/>
+                          
+                     </pre>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Test purpose</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>TEST PURPOSE</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Test method</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>TEST METHOD</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Conditions</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>CONDITIONS</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>A</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>FIRST PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>B</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>SECOND PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>C</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>THIRD PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Reference</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>REFERENCE PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.5pt;'>Panda GHz express</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.5pt;'>
+                     <p>PANDA PART</p>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+           <p class='zzSTDTitle1'/>
+           <br/>
+           <div>
+             <h1 class='Section3'>Bibliography</h1>
+             <p id='rfc2616' class='Biblio'>
+               [1]  IETF RFC 2616,
+               <i> Hypertext Transfer Protocol — HTTP/1.1 </i>
+             </p>
+           </div>
+         </div>
+       </body>
+    OUTPUT
+
+    doc = <<~OUTPUT
+           <body lang='EN-US' link='blue' vlink='#954F72'>
+         <div class='WordSection1'>
+           <p> </p>
+         </div>
+         <p>
+           <br clear='all' class='section'/>
+         </p>
+         <div class='WordSection2'>
+           <p>
+             <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+           </p>
+           <div id='A'>
+             <h1 class='ForewordTitle'>Preface</h1>
+             <p class='Tabletitle' style='text-align:center;'>Table 1 — Permission 1</p>
+             <div align='center' class='table_container'>
+               <table id='A1' class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;' width='100%'>
+                 <tbody>
+                   <tr>
+                     <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Identifier</td>
+                     <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <tt>/ogc/recommendation/wfs/2</tt>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Subject</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>user</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependency</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>/ss/584/2015/level/1</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependency</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <a href='#rfc2616'>RFC 2616 (HTTP/1.1)</a>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Control-class</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Technical</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Priority</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>P0</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Family</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>System and Communications Protection</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Family</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>System and Communications Protocols</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statement</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText' id='_'>
+                          I recommend
+                         <i>this</i>
+                          .
+                       </p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statement</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <dl>
+                         <dt>
+                           <p align='left' style='margin-left:0pt;text-align:left;'>A</p>
+                         </dt>
+                         <dd>B</dd>
+                         <dt>
+                           <p align='left' style='margin-left:0pt;text-align:left;'>C</p>
+                         </dt>
+                         <dd>D</dd>
+                       </dl>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td colspan='2' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText' id='_'>The measurement target shall be measured as:</p>
+                       <div id='_'>
+                         <div class='formula'>
+                           <p>
+                             <span class='stem'>(#(r/1 = 0)#)</span>
+                             <span style='mso-tab-count:1'>  </span>
+                             (1)
+                           </p>
+                         </div>
+                       </div>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td colspan='2' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText' id='_'>The following code will be run for verification:</p>
+                       <p id='_' class='Sourcecode'>
+                         <br/>
+                               CoreRoot(success): HttpResponse
+                         if (success)
+                         <br/>
+                               recommendation(label:
+                         success-response) end
+                         <br/>
+                            
+                       </p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Test purpose</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>TEST PURPOSE</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Test method</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>TEST METHOD</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Conditions</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>CONDITIONS</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>A</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>FIRST PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>B</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>SECOND PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>C</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>THIRD PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Reference</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>REFERENCE PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>Panda GHz express</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                       <p class='ForewordText'>PANDA PART</p>
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+           <p> </p>
+         </div>
+         <p>
+           <br clear='all' class='section'/>
+         </p>
+         <div class='WordSection3'>
+           <p class='zzSTDTitle1'/>
+           <p>
+             <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+           </p>
+           <div>
+             <h1 class='BiblioTitle'>Bibliography</h1>
+             <p id='rfc2616' class='Biblio'>
+               [1]
+               <span style='mso-tab-count:1'>  </span>
+               IETF RFC 2616,
+               <i> Hypertext Transfer Protocol — HTTP/1.1 </i>
+             </p>
+           </div>
+         </div>
+         <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+         <div class='colophon'/>
+       </body>
+    OUTPUT
+
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
       .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)
+      .gsub(%r{^.*<body}m, "<body")
+      .gsub(%r{</body>.*}m, "</body>")))
+      .to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true)
+      .gsub(%r{^.*<body}m, "<body")
+      .gsub(%r{</body>.*}m, "</body>")))
+      .to be_equivalent_to xmlpp(doc)
   end
 
   it "processes permission verifications" do
