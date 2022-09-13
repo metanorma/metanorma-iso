@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Metanorma::Requirements::Iso::Modspec do
   it "processes requirement components" do
     input = <<~INPUT
-              <ogc-standard xmlns="https://standards.opengeospatial.org/document">
+      <ogc-standard xmlns="https://standards.opengeospatial.org/document">
         <preface><foreword id="A"><title>Preface</title>
         <recommendation model="ogc" id="_">
       <identifier>/ogc/recommendation/wfs/2</identifier>
@@ -12,6 +12,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <description><p id="_">I recommend <em>1</em>.</p></description>
       <component class="test-purpose" id="A1"><p>TEST PURPOSE</p></component>
       <description><p id="_">I recommend <em>2</em>.</p></description>
+      <component class="guidance" id="A7"><p>GUIDANCE #1</p></component>
+      <description><p id="_">I recommend <em>2a</em>.</p></description>
       <component class="conditions" id="A2"><p>CONDITIONS</p></component>
       <description><p id="_">I recommend <em>3</em>.</p></description>
       <component class="part" id="A3"><p>FIRST PART</p></component>
@@ -22,6 +24,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <description><p id="_">I recommend <em>6</em>.</p></description>
       <component class="part" id="A6"><p>THIRD PART</p></component>
       <description><p id="_">I recommend <em>7</em>.</p></description>
+      <component class="guidance" id="A8"><p>GUIDANCE #2</p></component>
+      <description><p id="_">I recommend <em>7a</em>.</p></description>
       <component class="panda GHz express" id="A7"><p>PANDA PART</p></component>
       <description><p id="_">I recommend <em>8</em>.</p></description>
       </recommendation>
@@ -30,7 +34,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-      <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
+           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
@@ -73,6 +77,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                      <p id='_'>
                        I recommend
                        <em>2</em>
+                       .
+                     </p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td>Statement</td>
+                   <td>
+                     <p id='_'>
+                       I recommend
+                       <em>2a</em>
                        .
                      </p>
                    </td>
@@ -157,6 +171,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                      </p>
                    </td>
                  </tr>
+                 <tr>
+                   <td>Statement</td>
+                   <td>
+                     <p id='_'>
+                       I recommend
+                       <em>7a</em>
+                       .
+                     </p>
+                   </td>
+                 </tr>
                  <tr id='A7'>
                    <td>Panda GHz express</td>
                    <td>
@@ -171,6 +195,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                        <em>8</em>
                        .
                      </p>
+                   </td>
+                 </tr>
+                 <tr id='A7'>
+                   <td>Guidance</td>
+                   <td>
+                     <p>GUIDANCE #1</p>
+                   </td>
+                 </tr>
+                 <tr id='A8'>
+                   <td>Guidance</td>
+                   <td>
+                     <p>GUIDANCE #2</p>
                    </td>
                  </tr>
                </tbody>
