@@ -7,6 +7,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface><foreword id="A"><title>Preface</title>
           <table id="A0"/>
           <permission model="ogc" id="A1">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         </permission>
           <table id="A2"/>
@@ -26,7 +27,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <name>Table 1</name>
             </table>
             <table id='A1' class='modspec' type='recommend'>
-              <name>Table 2 — Permission 1</name>
+              <name>Table 2 — Permission 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -69,6 +70,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit><eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></inherit>
@@ -133,7 +135,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
                 <preface><foreword id="A" displayorder="1"><title>Preface</title>
                 <table id="A1" class="modspec" type="recommend">
-            <name>Table 1 — Permission 1</name>
+            <name>Table 1 — Permission 1: First</name>
             <tbody>
               <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
               <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Dependency</td><td><eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></td></tr>
@@ -259,11 +261,376 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 </ogc-standard>
     OUTPUT
 
+    html = <<~OUTPUT
+      <body lang='en'>
+         <div class='title-section'>
+           <p> </p>
+         </div>
+         <br/>
+         <div class='prefatory-section'>
+           <p> </p>
+         </div>
+         <br/>
+         <div class='main-section'>
+           <br/>
+           <div id='A'>
+             <h1 class='ForewordTitle'>Preface</h1>
+             <p class='TableTitle' style='text-align:center;'>Table 1 — Permission 1: First</p>
+             <table id='A1' class='modspec' style='border-width:1px;border-spacing:0;'>
+               <tbody>
+                 <tr>
+                   <td style='border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>Identifier</td>
+                   <td style='border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>
+                     <tt>/ogc/recommendation/wfs/2</tt>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Subject</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>user</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Dependency</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>/ss/584/2015/level/1</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Dependency</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <a href='#rfc2616'>RFC 2616 (HTTP/1.1)</a>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Control-class</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Technical</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Priority</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>P0</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Family</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>System and Communications Protection</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Family</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>System and Communications Protocols</td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Statement</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p id='_'>
+                        I recommend
+                       <i>this</i>
+                        .
+                     </p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Statement</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <dl>
+                       <dt>
+                         <p>A</p>
+                       </dt>
+                       <dd>B</dd>
+                       <dt>
+                         <p>C</p>
+                       </dt>
+                       <dd>D</dd>
+                     </dl>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td colspan='2' style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p id='_'>The measurement target shall be measured as:</p>
+                     <div id='_'>
+                       <div class='formula'>
+                         <p>
+                           <span class='stem'>(#(r/1 = 0)#)</span>
+                             (1)
+                         </p>
+                       </div>
+                     </div>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td colspan='2' style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p id='_'>The following code will be run for verification:</p>
+                     <pre id='_' class='prettyprint '>
+                       <br/>
+                             CoreRoot(success): HttpResponse
+                       if (success)
+                       <br/>
+                             recommendation(label:
+                       success-response) end
+                       <br/>
+                          
+                     </pre>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Test purpose</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>TEST PURPOSE</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Test method</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>TEST METHOD</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Conditions</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>CONDITIONS</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>A</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>FIRST PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>B</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>SECOND PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>C</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>THIRD PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Reference</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <p>REFERENCE PART</p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.5pt;'>Panda GHz express</td>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.5pt;'>
+                     <p>PANDA PART</p>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+           <p class='zzSTDTitle1'/>
+           <br/>
+           <div>
+             <h1 class='Section3'>Bibliography</h1>
+             <p id='rfc2616' class='Biblio'>
+               [1]  IETF RFC 2616,
+               <i> Hypertext Transfer Protocol — HTTP/1.1 </i>
+             </p>
+           </div>
+         </div>
+       </body>
+    OUTPUT
+
+    doc = <<~OUTPUT
+      <body lang='EN-US' link='blue' vlink='#954F72'>
+         <div class='WordSection1'>
+           <p> </p>
+         </div>
+         <p>
+           <br clear='all' class='section'/>
+         </p>
+         <div class='WordSection2'>
+           <p>
+             <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+           </p>
+           <div id='A'>
+             <h1 class='ForewordTitle'>Preface</h1>
+             <p class='Tabletitle' style='text-align:center;'>Table 1 — Permission 1: First</p>
+             <div align='center' class='table_container'>
+               <table id='A1' class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;' width='100%'>
+                 <tbody>
+                   <tr>
+                     <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Identifier</td>
+                     <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <tt>/ogc/recommendation/wfs/2</tt>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Subject</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>user</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependency</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>/ss/584/2015/level/1</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependency</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <a href='#rfc2616'>RFC 2616 (HTTP/1.1)</a>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Control-class</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Technical</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Priority</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>P0</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Family</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>System and Communications Protection</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Family</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>System and Communications Protocols</td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statement</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText' id='_'>
+                          I recommend
+                         <i>this</i>
+                          .
+                       </p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statement</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <dl>
+                         <dt>
+                           <p align='left' style='margin-left:0pt;text-align:left;'>A</p>
+                         </dt>
+                         <dd>B</dd>
+                         <dt>
+                           <p align='left' style='margin-left:0pt;text-align:left;'>C</p>
+                         </dt>
+                         <dd>D</dd>
+                       </dl>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td colspan='2' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText' id='_'>The measurement target shall be measured as:</p>
+                       <div id='_'>
+                         <div class='formula'>
+                           <p>
+                             <span class='stem'>(#(r/1 = 0)#)</span>
+                             <span style='mso-tab-count:1'>  </span>
+                             (1)
+                           </p>
+                         </div>
+                       </div>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td colspan='2' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText' id='_'>The following code will be run for verification:</p>
+                       <p id='_' class='Sourcecode'>
+                         <br/>
+                               CoreRoot(success): HttpResponse
+                         if (success)
+                         <br/>
+                               recommendation(label:
+                         success-response) end
+                         <br/>
+                            
+                       </p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Test purpose</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>TEST PURPOSE</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Test method</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>TEST METHOD</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Conditions</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>CONDITIONS</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>A</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>FIRST PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>B</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>SECOND PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>C</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>THIRD PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Reference</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText'>REFERENCE PART</p>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>Panda GHz express</td>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                       <p class='ForewordText'>PANDA PART</p>
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+           <p> </p>
+         </div>
+         <p>
+           <br clear='all' class='section'/>
+         </p>
+         <div class='WordSection3'>
+           <p class='zzSTDTitle1'/>
+           <p>
+             <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+           </p>
+           <div>
+             <h1 class='BiblioTitle'>Bibliography</h1>
+             <p id='rfc2616' class='Biblio'>
+               [1]
+               <span style='mso-tab-count:1'>  </span>
+               IETF RFC 2616,
+               <i> Hypertext Transfer Protocol — HTTP/1.1 </i>
+             </p>
+           </div>
+         </div>
+         <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+         <div class='colophon'/>
+       </body>
+    OUTPUT
+
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
       .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)
+      .gsub(%r{^.*<body}m, "<body")
+      .gsub(%r{</body>.*}m, "</body>")))
+      .to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true)
+      .gsub(%r{^.*<body}m, "<body")
+      .gsub(%r{</body>.*}m, "</body>")))
+      .to be_equivalent_to xmlpp(doc)
   end
 
   it "processes permission verifications" do
@@ -272,6 +639,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface>
               <foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="verification">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <subject>user</subject>
@@ -325,7 +693,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendtest'>
-               <name>Table 1 — Permission test 1</name>
+               <name>Table 1 — Permission test 1: First</name>
                <tbody>
                  <tr>
                 <td>Identifier</td>
@@ -413,6 +781,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface>
               <foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="abstracttest">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <subject>user</subject>
@@ -464,7 +833,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <preface>
               <foreword id="A" displayorder="1"><title>Preface</title>
           <table id="A1" type="recommendtest" class="modspec">
-          <name>Table 1 — Abstract test 1</name>
+          <name>Table 1 — Abstract test 1: First</name>
         <tbody>
           <tr><td>Identifier</td><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
         <tr><td>Subject</td><td>user</td></tr><tr><td>Dependency</td><td>/ss/584/2015/level/1</td></tr><tr><td>Control-class</td><td>Technical</td></tr><tr><td>Priority</td><td>P0</td></tr><tr><td>Family</td><td>System and Communications Protection</td></tr><tr><td>Family</td><td>System and Communications Protocols</td></tr>
@@ -511,21 +880,26 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="class" keep-with-next="true" keep-lines-together="true">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>/ss/584/2015/level/2</inherit>
         <subject>user</subject>
         <permission model="ogc" id="A2">
+          <title>First #1</title>
         <identifier>/ogc/recommendation/wfs/10</identifier>
         </permission>
         <requirement model="ogc" id="A3">
+          <title>First #2</title>
         <identifier>Requirement 1</identifier>
         </requirement>
         <recommendation model="ogc" id="A4">
+          <title>First #3</title>
         <identifier>Recommendation 1</identifier>
         </recommendation>
       </permission>
       <permission model="ogc" id="B1">
+          <title>Second</title>
         <identifier>/ogc/recommendation/wfs/10</identifier>
       </permission>
           </foreword></preface>
@@ -538,7 +912,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='A1' keep-with-next='true' keep-lines-together='true' class='modspec' type='recommendclass'>
-              <name>Table 1 — Permissions class 1</name>
+              <name>Table 1 — Permissions class 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -561,24 +935,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='B1'>
                        Permission 1:
-                       <tt>/ogc/recommendation/wfs/10</tt>
+                       Second
                      </xref>
                      <br/>
                      <xref target='A3'>
                        Requirement 1-1:
-                       <tt>Requirement 1</tt>
+                       First #2
                      </xref>
                      <br/>
                      <xref target='A4'>
                        Recommendation 1-1:
-                       <tt>Recommendation 1</tt>
+                       First #3
                      </xref>
                    </td>
                  </tr>
               </tbody>
             </table>
             <table id='B1' class='modspec' type='recommend'>
-              <name>Table 2 — Permission 1</name>
+              <name>Table 2 — Permission 1: Second</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -587,10 +961,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <tr>
                   <td>Included in</td>
                   <td>
-                    <xref target='A1'>
-                      Permissions class 1:
-                      <tt>/ogc/recommendation/wfs/2</tt>
-                    </xref>
+                    <xref target='A1'>Permissions class 1: First</xref>
                   </td>
                 </tr>
               </tbody>
@@ -612,6 +983,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="conformanceclass">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>ABC</inherit>
@@ -630,9 +1002,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </recommendation>
       </permission>
           <permission model="ogc" id="B" type="conformanceclass">
+          <title>Second</title>
           <identifier>ABC</identifier>
           </permission>
           <permission model="ogc" id="B2">
+          <title>Third</title>
         <identifier>Permission 1</identifier>
         </permission>
           </foreword></preface>
@@ -645,7 +1019,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <name>Table 1 — Conformance class 1</name>
+               <name>Table 1 — Conformance class 1: First</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -658,7 +1032,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Requirements class</td>
                    <td>
-                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -668,7 +1042,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Dependency</td>
                    <td>
-                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -680,7 +1054,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Indirect Dependency</td>
                    <td>
-                     <xref target='B'>Conformance class 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -688,24 +1062,22 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='B2'>
                        Permission 1:
-                       <tt>Permission 1</tt>
+                       Third
                      </xref>
                      <br/>
                      <xref target='A3'>
-                       Requirement 1-1:
-                       <tt>Requirement 1</tt>
+                       Requirement 1-1
                      </xref>
                      <br/>
                      <xref target='A4'>
-                       Recommendation 1-1:
-                       <tt>Recommendation 1</tt>
+                       Recommendation 1-1
                      </xref>
                    </td>
                  </tr>
                </tbody>
              </table>
              <table id='B' class='modspec' type='recommendclass'>
-               <name>Table 2 — Conformance class 2</name>
+               <name>Table 2 — Conformance class 2: Second</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -714,7 +1086,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B2' class='modspec' type='recommend'>
-             <name>Table 3 — Permission 1</name>
+             <name>Table 3 — Permission 1: Third</name>
         <tbody>
           <tr>
             <td>Identifier</td>
@@ -725,7 +1097,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <td>
               <xref target='A1'>
                 Conformance class 1:
-                <tt>/ogc/recommendation/wfs/2</tt>
+                First
               </xref>
             </td>
           </tr>
@@ -749,6 +1121,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <bibdata><language>fr</language></bibdata>
           <preface><foreword id="A"><title>Preface</title>
           <permission model="ogc" id="A1" type="conformanceclass">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>ABC</inherit>
@@ -767,9 +1140,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </recommendation>
       </permission>
           <permission model="ogc" id="B" type="conformanceclass">
+          <title>Second</title>
           <identifier>ABC</identifier>
           </permission>
           <permission model="ogc" id="B2">
+          <title>Third</title>
         <identifier>Permission 1</identifier>
         </permission>
           </foreword></preface>
@@ -784,7 +1159,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <name>Tableau 1 — Classe de confirmité 1</name>
+               <name>Tableau 1 — Classe de confirmité 1: First</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -797,7 +1172,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Classe d&#x2019;exigences</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Classe de confirmité 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -807,7 +1182,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Classe de confirmité 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -819,7 +1194,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance indirecte</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: <tt>ABC</tt></xref>
+                     <xref target='B'>Classe de confirmité 2: Second</xref>
                    </td>
                  </tr>
                                   <tr>
@@ -827,24 +1202,22 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='B2'>
                        Autorisation 1:
-                       <tt>Permission 1</tt>
+                       Third
                      </xref>
                      <br/>
                      <xref target='A3'>
-                       Exigence 1-1:
-                       <tt>Requirement 1</tt>
+                       Exigence 1-1
                      </xref>
                      <br/>
                      <xref target='A4'>
-                       Recommandation 1-1:
-                       <tt>Recommendation 1</tt>
+                       Recommandation 1-1
                      </xref>
                    </td>
                  </tr>
                </tbody>
              </table>
              <table id='B' class='modspec' type='recommendclass'>
-             <name>Tableau 2 — Classe de confirmité 2</name>
+             <name>Tableau 2 — Classe de confirmité 2: Second</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -853,7 +1226,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B2' class='modspec' type='recommend'>
-             <name>Tableau 3 — Autorisation 1</name>
+             <name>Tableau 3 — Autorisation 1: Third</name>
         <tbody>
           <tr>
             <td>Identifiant</td>
@@ -864,7 +1237,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <td>
               <xref target='A1'>
                  Classe de confirmit&#xE9; 1:
-                <tt>/ogc/recommendation/wfs/2</tt>
+                 First
               </xref>
             </td>
           </tr>
@@ -887,21 +1260,26 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <requirement model="ogc" id="A1" type="class">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>/ss/584/2015/level/2</inherit>
         <subject>user</subject>
         <permission model="ogc" id="A2">
+          <title>First #1</title>
         <identifier>Permission 1</identifier>
         </permission>
         <requirement model="ogc" id="A3">
+          <title>First #2</title>
         <identifier>Requirement 1</identifier>
         </requirement>
         <recommendation model="ogc" id="A4">
+          <title>First #3</title>
         <identifier>Recommendation 1</identifier>
         </recommendation>
       </requirement>
       <permission model="ogc" id="A5">
+          <title>Second</title>
         <identifier>Permission 1</identifier>
         </permission>
           </foreword></preface>
@@ -914,7 +1292,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <name>Table 1 — Requirements class 1</name>
+               <name>Table 1 — Requirements class 1: First</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -937,24 +1315,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <td>
             <xref target='A5'>
               Permission 1:
-              <tt>Permission 1</tt>
+              Second
             </xref>
             <br/>
             <xref target='A3'>
               Requirement 1-1:
-              <tt>Requirement 1</tt>
+              First #2
             </xref>
             <br/>
             <xref target='A4'>
               Recommendation 1-1:
-              <tt>Recommendation 1</tt>
+              First #3
             </xref>
             </td>
           </tr>
                </tbody>
              </table>
              <table id='A5' class='modspec' type='recommend'>
-                <name>Table 2 — Permission 1</name>
+                <name>Table 2 — Permission 1: Second</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
@@ -965,7 +1343,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>
                      <xref target='A1'>
                        Requirements class 1:
-                       <tt>/ogc/recommendation/wfs/2</tt>
+                       First
                      </xref>
                    </td>
                  </tr>
@@ -988,17 +1366,21 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <recommendation model="ogc" id="A1" type="class">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <inherit>/ss/584/2015/level/2</inherit>
         <subject>user</subject>
         <permission model="ogc" id="A2">
+          <title>First #1</title>
         <identifier>Permission 1</identifier>
         </permission>
         <requirement model="ogc" id="A3">
+          <title>First #2</title>
         <identifier>Requirement 1</identifier>
         </requirement>
         <recommendation model="ogc" id="A4">
+          <title>First #3</title>
         <identifier>Recommendation 1</identifier>
         </recommendation>
       </recommendation>
@@ -1012,7 +1394,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='A1' class='modspec' type='recommendclass'>
-            <name>Table 1 — Recommendations class 1</name>
+            <name>Table 1 — Recommendations class 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>
@@ -1033,19 +1415,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <tr>
                    <td>Provisions</td>
                    <td>
-                   <xref target='A2'>
-                     Permission 1-1:
-                     <tt>Permission 1</tt>
+                   <xref target='A2'>Permission 1-1:
+                     First #1
                    </xref>
                    <br/>
                    <xref target='A3'>
                      Requirement 1-1:
-                     <tt>Requirement 1</tt>
+                     First #2
                    </xref>
                    <br/>
                    <xref target='A4'>
                      Recommendation 1-1:
-                     <tt>Recommendation 1</tt>
+                     First #3
                    </xref>
                    </td>
                  </tr>
@@ -1185,6 +1566,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <ogc-standard xmlns="https://standards.opengeospatial.org/document">
           <preface><foreword id="A"><title>Preface</title>
           <recommendation model="ogc" id="_">
+          <title>First</title>
         <identifier>/ogc/recommendation/wfs/2</identifier>
         <inherit>/ss/584/2015/level/1</inherit>
         <subject>user</subject>
@@ -1237,7 +1619,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <foreword id='A' displayorder='1'>
             <title>Preface</title>
             <table id='_' class='modspec' type='recommend'>
-              <name>Table 1 — Recommendation 1</name>
+              <name>Table 1 — Recommendation 1: First</name>
               <tbody>
                 <tr>
                   <td>Identifier</td>

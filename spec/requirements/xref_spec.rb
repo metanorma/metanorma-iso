@@ -31,6 +31,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <sections>
           <clause id="scope" type="scope"><title>Scope</title>
           <requirement model="ogc" id="N">
+          <title>First</title>
         <stem type="AsciiMath">r = 1 %</stem>
         </requirement>
         <p><xref target="N"/></p>
@@ -39,6 +40,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <clause id="widgets"><title>Widgets</title>
           <clause id="widgets1">
           <requirement model="ogc" id="note1">
+          <title>Second</title>
         <stem type="AsciiMath">r = 1 %</stem>
         </requirement>
           <requirement model="ogc" id="note2">
@@ -51,6 +53,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <annex id="annex1">
           <clause id="annex1a">
           <requirement model="ogc" id="AN">
+          <title>Third</title>
         <stem type="AsciiMath">r = 1 %</stem>
         </requirement>
           </clause>
@@ -133,6 +136,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <sections>
           <clause id="scope" type="scope"><title>Scope</title>
           <requirement model="ogc" id="N">
+          <title>First</title>
           <identifier>/ogc/req3</identifier>
         <stem type="AsciiMath">r = 1 %</stem>
         </requirement>
@@ -142,6 +146,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <clause id="widgets"><title>Widgets</title>
           <clause id="widgets1">
           <requirement model="ogc" id="note1">
+          <title>Second</title>
           <identifier>/ogc/req4</identifier>
         <stem type="AsciiMath">r = 1 %</stem>
         </requirement>
@@ -156,6 +161,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <annex id="annex1">
           <clause id="annex1a">
           <requirement model="ogc" id="AN">
+          <title>Third</title>
           <identifier>/ogc/req6</identifier>
         <stem type="AsciiMath">r = 1 %</stem>
         </requirement>
