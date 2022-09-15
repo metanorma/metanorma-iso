@@ -82,8 +82,8 @@ extent:
     sg: "%"
     pl: "%"
   issue:
-    sg: "no. %"
-    pl: "nos. %"
+    sg: "%"
+    pl: "%"
 size:
   page: 
     sg: "% p"

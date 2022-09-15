@@ -80,8 +80,8 @@ extent:
     sg: "%"
     pl: "%"
   issue:
-    sg: "шт. %"
-    pl: "шт. %"
+    sg: "%"
+    pl: "%"
 size:
   page:
     sg: "% стр"
