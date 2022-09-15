@@ -162,7 +162,7 @@ RSpec.describe IsoDoc do
               <eref bibitemid="ISSN">[2]</eref>
               <eref bibitemid="ISO16634">ISO 16634:--</eref>
               <eref bibitemid="ref1">ICC 167</eref>
-              <eref bibitemid="ref10">[10]</eref>
+              <eref bibitemid="ref10">[4]</eref>
               <eref bibitemid="ref12">Citn</eref>
             </p>
           </foreword>
@@ -210,13 +210,13 @@ RSpec.describe IsoDoc do
             <title depth="1">Bibliography</title>
             <bibitem id="ISBN" type="book">
               <formattedref><em>Chemicals for analytical laboratory use</em>. n.p.: n.d. ISBN.</formattedref>
+              <docidentifier type="metanorma-ordinal">[1]</docidentifier>
               <docidentifier type="ISBN">ISBN</docidentifier>
-              <docidentifier type="metanorma">[1]</docidentifier>
             </bibitem>
             <bibitem id="ISSN" type="journal">
               <formattedref><em>Instruments for analytical laboratory use</em>. n.d. ISSN.</formattedref>
+              <docidentifier type="metanorma-ordinal">[2]</docidentifier>
               <docidentifier type="ISSN">ISSN</docidentifier>
-              <docidentifier type="metanorma">[2]</docidentifier>
             </bibitem>
             <note>
               <name>NOTE</name>
@@ -241,11 +241,11 @@ RSpec.describe IsoDoc do
 
                 <link target="http://www.icc.or.at"/>
                 )</formattedref>
-              <docidentifier type="metanorma">[10]</docidentifier>
+              <docidentifier type="metanorma-ordinal">[4]</docidentifier>
             </bibitem>
             <bibitem id="ref11">
                <formattedref><em><span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span></em></formattedref>
-              <docidentifier type='metanorma-ordinal'>[4]</docidentifier>
+              <docidentifier type='metanorma-ordinal'>[5]</docidentifier>
               <docidentifier type="IETF">IETF RFC 10</docidentifier>
             </bibitem>
             <bibitem id="ref12">
@@ -270,7 +270,7 @@ RSpec.describe IsoDoc do
                  <a href='#ISSN'>[2]</a>
                  <a href='#ISO16634'>ISO 16634:--</a>
                  <a href='#ref1'>ICC 167</a>
-                 <a href='#ref10'>[10]</a>
+                 <a href='#ref10'>[4]</a>
                  <a href='#ref12'>Citn</a>
                </p>
              </div>
@@ -350,7 +350,7 @@ RSpec.describe IsoDoc do
                  <i>Water for analytical laboratory use</i>
                </p>
                <p id='ref10' class='Biblio'>
-                 [10]  
+                 [4]  
                  <span style='font-variant:small-caps;'>Standard No I.C.C 167</span>
                   . 
                  <i>
@@ -363,7 +363,7 @@ RSpec.describe IsoDoc do
                   )
                </p>
                <p id='ref11' class='Biblio'>
-                 [4]  IETF RFC 10, 
+                 [5]  IETF RFC 10, 
                  <i>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</i>
                </p>
                <p id='ref12' class='Biblio'>
@@ -426,7 +426,7 @@ RSpec.describe IsoDoc do
                .
              </formattedref>
              <uri>https://registre.ign.fr/ign/IGNF/</uri>
-             <docidentifier type='metanorma'>2</docidentifier>
+             <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
            </bibitem>
          </references>
        </iso-standard>

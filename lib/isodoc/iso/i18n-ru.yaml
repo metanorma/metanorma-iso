@@ -92,4 +92,7 @@ size:
   issue:
     sg: "% шт"
     pl: "% шт"
-
+requirements:
+  modspec:
+    description: Описание
+    provisions: Условия

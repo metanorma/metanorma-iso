@@ -35,102 +35,103 @@ RSpec.describe Metanorma::ISO do
       :partnumber: 1
       :edition: 2
       :amendment-number: 3
+      :data-uri-image: false
 
       .Split-it-right sample divider
-      image::spec/examples/rice_images/rice_image1.png[]
-      image::spec/examples/rice_images/SL1000-1_ed2amd3fig1.png[]
-      image::spec/examples/rice_images/1001_ed2amd3fig1.png[]
-      image::spec/examples/rice_images/ISO_1213_1.png[]
-      image::spec/examples/rice_images/1000-1_ed2amd3figA.png[]
+      image::spec/examples/rice_img/rice_image1.png[]
+      image::spec/examples/rice_img/SL1000-1_ed2amd3fig1.png[]
+      image::spec/examples/rice_img/1001_ed2amd3fig1.png[]
+      image::spec/examples/rice_img/ISO_1213_1.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3figA.png[]
 
       |===
       |a |b
 
-      a|image::spec/examples/rice_images/1000-1_ed2amd3figTab1.png[]#{' '}
-      a|image::spec/examples/rice_images/1000-1_ed2amd3fig2.png[]
+      a|image::spec/examples/rice_img/1000-1_ed2amd3figTab1.png[]
+      a|image::spec/examples/rice_img/1000-1_ed2amd3fig2.png[]
       |===
 
-      image::spec/examples/rice_images/1000-1_ed2amd3figTab2.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3figTab2.png[]
 
-      image::spec/examples/rice_images/1000-1_ed2amd3figA1.png[]
-      image::spec/examples/rice_images/1000-1_ed2amd3fig1a.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3figA1.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3fig1a.png[]
 
       .Stages of gelatinization
       ====
-      image::spec/examples/rice_images/1000-1_ed2amd3fig1b.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3fig1b.png[]
 
-      image::spec/examples/rice_images/1000-1_ed2amd3fig4.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3fig4.png[]
       ====
 
-      image::spec/examples/rice_images/1000-1_ed2amd3fig5_f.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3fig5_f.png[]
 
       [appendix]
       == Annex
-      image::spec/examples/rice_images/1000-1_ed2amd3figA2.png[]
-      image::spec/examples/rice_images/1000-1_ed2amd3fig3.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3figA2.png[]
+      image::spec/examples/rice_img/1000-1_ed2amd3fig3.png[]
 
     INPUT
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/rice_image1.png does not match "\
+      "image name spec/examples/rice_img/rice_image1.png does not match "\
       "DRG requirements: expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1001_ed2amd3fig1.png does not "\
+      "image name spec/examples/rice_img/1001_ed2amd3fig1.png does not "\
       "match DRG requirements: " \
       "expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/SL1000-1_ed2amd3fig1.png does not "\
+      "image name spec/examples/rice_img/SL1000-1_ed2amd3fig1.png does not "\
       "match DRG requirements: " \
       "expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/ISO_1213_1.png does not match DRG "\
+      "image name spec/examples/rice_img/ISO_1213_1.png does not match DRG "\
       "requirements: expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figA.png does not "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA.png does not "\
       "match DRG requirements"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figTab1.png does "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png does "\
       "not match DRG requirements"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figTab1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png is "\
       "under a table but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig2.png is under "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig2.png is under "\
       "a table but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figTab2.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab2.png is "\
       "labelled as under a table but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is "\
       "labelled as under a table but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figA2.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA2.png is "\
       "under an annex but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig3.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig3.png is "\
       "under an annex but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3figA1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA1.png is "\
       "labelled as under an annex but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is "\
       "labelled as under an annex but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1b.png has a "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1b.png has a "\
       "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig4.png does not "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig4.png does not "\
       "have a subfigure letter but is a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1a.png has a "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1a.png has a "\
       "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png has a "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png has a "\
       "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig5_f.png expected "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig5_f.png expected "\
       "to have suffix _e"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_images/1000-1_ed2amd3fig1.png expected "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png expected "\
       "to have suffix _e"
   end
 
@@ -487,7 +488,7 @@ RSpec.describe Metanorma::ISO do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
-      image::spec/examples/rice_images/rice_image1.png[]
+      image::spec/examples/rice_img/rice_image1.png[]
     INPUT
     expect(File.read("test.err")).to include "Figure should have title"
   end
@@ -2136,12 +2137,12 @@ RSpec.describe Metanorma::ISO do
 
       [[b]]
       === Term 1
-      <<b>>
-      <<c>>
+      _<<b>>_
+      _<<c>>_
 
       == Clause
-      <<b>>
-      <<c>>
+      _<<b>>_
+      _<<c>>_
 
     INPUT
     expect(File.read("test.err"))

@@ -4,11 +4,11 @@ module IsoDoc
     end
 
     class Xref < IsoDoc::Xref
+      attr_accessor :anchors_previous, :anchors
+
       def initial_anchor_names(doc)
-        if @klass.amd(doc)
-          initial_anchor_names_amd(doc)
-        else
-          initial_anchor_names1(doc)
+        if @klass.amd(doc) then initial_anchor_names_amd(doc)
+        else initial_anchor_names1(doc)
         end
         if @parse_settings.empty? || @parse_settings[:clauses]
           introduction_names(doc.at(ns("//introduction")))
@@ -216,6 +216,37 @@ module IsoDoc
           return false unless l["start"]&.to_i == start + 1
         end
         true
+      end
+
+      def sequential_table_names(clause)
+        super
+        modspec_table_xrefs(clause) if @anchors_previous
+      end
+
+      def modspec_table_xrefs(clause)
+        clause.xpath(ns(".//table[@class = 'modspec']")).noblank.each do |t|
+          (@anchors[t["id"]] && !@anchors[t["id"]][:modspec]) or next
+          n = @anchors[t["id"]][:xref]
+          @anchors[t["id"]][:modspec] = true
+          @anchors[t["id"]][:xref] =
+            l10n("#{n}, #{@anchors_previous[t['id']][:xref_bare]}")
+          modspec_table_components_xrefs(t, n)
+        end
+      end
+
+      def modspec_table_components_xrefs(table, table_label)
+        table.xpath(ns(".//tr[@id]")).each do |tr|
+          (@anchors[tr["id"]] && !@anchors[tr["id"]][:modspec]) or next
+          @anchors[tr["id"]][:modspec] = true
+          @anchors[tr["id"]][:xref] =
+            l10n("#{table_label}, #{@anchors_previous[tr['id']][:xref]}")
+          @anchors[tr["id"]].delete(:container)
+        end
+      end
+
+      def hierarchical_table_names(clause, _num)
+        super
+        modspec_table_xrefs(clause) if @anchors_previous
       end
     end
   end

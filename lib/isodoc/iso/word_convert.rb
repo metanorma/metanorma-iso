@@ -196,6 +196,12 @@ module IsoDoc
         end
       end
 
+      def table_attrs(node)
+        ret = super
+        node["class"] == "modspec" and ret[:width] = "100%"
+        ret
+      end
+
       include BaseConvert
       include Init
     end

@@ -94,4 +94,7 @@ size:
   issue:
     sg: "% no"
     pl: "% nos"
-
+requirements:
+  modspec:
+    description: Description
+    provisions: Provisions

@@ -12,6 +12,10 @@ module Metanorma
       XML_ROOT_TAG = "iso-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/iso".freeze
 
+      def requirements_processor
+        ::Metanorma::Requirements::Iso
+      end
+
       def html_converter(node)
         IsoDoc::Iso::HtmlConvert.new(html_extract_attributes(node))
       end
