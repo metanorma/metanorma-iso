@@ -68,26 +68,6 @@ stage_dict:
   "95": Retrait
 locality:
   appendix: Appendice
-extent:
-  page:
-    sg: "p. %"
-    pl: "p. %"
-  volume:
-    sg: "%"
-    pl: "%"
-  issue:
-    sg: "%"
-    pl: "%"
-size:
-  page: 
-    sg: "% p"
-    pl: "% p"
-  volume:
-    sg: "% vol"
-    pl: "% vol"
-  issue:
-    sg: "% nᵒ"
-    pl: "% nᵒˢ"
 requirements:
   modspec:
     description: Description

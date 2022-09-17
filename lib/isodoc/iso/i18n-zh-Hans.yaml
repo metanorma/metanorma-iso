@@ -73,24 +73,3 @@ requirements:
   modspec:
     description: 描述
     provisions: 条件
-extent:
-  page:
-    sg: "第%页"
-    pl: "第%页"
-  volume:
-    sg: "第%卷"
-    pl: "第%卷"
-  issue:
-    sg: "第%期"
-    pl: "第%期"
-size:
-  page: 
-    sg: "%页"
-    pl: "%页"
-  volume:
-    sg: "%卷"
-    pl: "%卷"
-  issue:
-    sg: "%期"
-    pl: "%期"
-

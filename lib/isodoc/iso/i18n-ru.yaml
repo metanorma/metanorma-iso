@@ -72,26 +72,6 @@ stage_dict:
   "95": Отмена
 locality:
   appendix: Приложение
-extent: 
-  page: 
-    sg: "стр. %"
-    pl: "стр. %"
-  volume:
-    sg: "%"
-    pl: "%"
-  issue:
-    sg: "%"
-    pl: "%"
-size:
-  page:
-    sg: "% стр"
-    pl: "% стр"
-  volume:
-    sg: "% т"
-    pl: "% тт"
-  issue:
-    sg: "% шт"
-    pl: "% шт"
 requirements:
   modspec:
     description: Описание

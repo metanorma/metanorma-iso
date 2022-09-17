@@ -57,7 +57,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge University Press, Cambridge, UK, 2022, 1 vol</formattedref>
+      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge, UK: Cambridge University Press. 2022. 1 vol.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -121,8 +121,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge University Press, n.p., 2022, 1 vol</formattedref>
-
+      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). n.p.: Cambridge University Press. 2022. 1 vol.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -185,7 +184,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge University Press, Cambridge, Cambridgeshire, UK, 2022, 1 vol</formattedref>
+      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge, Cambridgeshire, UK: Cambridge University Press. 2022. 1 vol.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -262,7 +261,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Ramsey J. K., &#x26; McGrew W. C.</smallcap>. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini A.D., &#x26; Smith P.K.). Third edition. Guilford Press, New York, NY, 2005, pp. 89–112. [viewed: September 3, 2019].</formattedref>
+      <formattedref><smallcap>Ramsey J. K., &#x26; McGrew W. C.</smallcap>. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini A.D., &#x26; Smith P.K.). Third edition. New York, NY: Guilford Press. 2005. pp. 89–112. [viewed: September 3, 2019].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -277,7 +276,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><em>Nature</em>. 2005&#x2013;2009</formattedref>
+      <formattedref><em>Nature</em>. 2005–2009.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -348,7 +347,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, <strong>1</strong> (7) pp. 89–112.</formattedref>
+      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, vol. 1 no. 7 pp. 89–112.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -488,7 +487,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref>Liberman M., &#x26; Pullum G. <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania, 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019].</formattedref>
+      <formattedref><smallcap>Liberman M., &#x26; Pullum G.</smallcap> <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania. 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
