@@ -54,6 +54,7 @@ module IsoDoc
           target&.gsub(/<[^>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
       end
 
+      # ISO has not bothered to communicate to us what most of these span classes mean
       LOCALITY2SPAN = {
         annex: "citeapp",
         dunno: "citebase",
