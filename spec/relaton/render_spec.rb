@@ -487,7 +487,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Liberman M., &#x26; Pullum G.</smallcap> <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania. 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019].</formattedref>
+    <formattedref><smallcap>Liberman M., &#x26; Pullum G.</smallcap>. <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania. 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
