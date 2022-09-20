@@ -82,10 +82,10 @@ RSpec.describe Metanorma::ISO do
             <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
             <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
             <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
-            <docidentifier type="ISO">ISO/PreWD3 1000-1</docidentifier>
-            <docidentifier type='iso-undated'>ISO/PreWD3 1000-1</docidentifier>
-            <docidentifier type="iso-with-lang">ISO/PreWD3 1000-1(E)</docidentifier>
-            <docidentifier type="iso-reference">ISO/PreWD3 1000-1:2000(E)</docidentifier>
+            <docidentifier type="ISO">ISO/WD 1000-1.3</docidentifier>
+            <docidentifier type="iso-reference">ISO/WD 1000-1.3:2000(E)</docidentifier>
+            <docidentifier type='iso-undated'>ISO/WD 1000-1.3</docidentifier>
+            <docidentifier type="iso-with-lang">ISO/WD 1000-1.3(E)</docidentifier>
             <docnumber>1000</docnumber>
             <contributor>
               <role type="author"/>
@@ -200,9 +200,9 @@ RSpec.describe Metanorma::ISO do
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
                   <docidentifier type='ISO'>IEC/IETF/ISO/TR 1000-1-1:2001</docidentifier>
+                  <docidentifier type='iso-reference'>IEC/IETF/ISO/TR 1000-1-1:2001()</docidentifier>
                   <docidentifier type='iso-undated'>IEC/IETF/ISO/TR 1000-1-1</docidentifier>
-                  <docidentifier type='iso-with-lang'>IEC/IETF/ISO/TR 1000-1-1:2001(X)</docidentifier>
-                  <docidentifier type='iso-reference'>IEC/IETF/ISO/TR 1000-1-1:2001(X)</docidentifier>
+                  <docidentifier type='iso-with-lang'>IEC/IETF/ISO/TR 1000-1-1:2001()</docidentifier>
                   <docidentifier type="iso-tc">2000</docidentifier>
                   <docidentifier type="iso-tc">2003</docidentifier>
                   <docnumber>1000</docnumber>
@@ -348,59 +348,59 @@ RSpec.describe Metanorma::ISO do
     INPUT
     expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
-           <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='semantic' version="#{Metanorma::ISO::VERSION}">
-         <bibdata type='standard'>
-           <docidentifier type='ISO'>ISO/FDTS 1000-1-1</docidentifier>
-           <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>
-           <docidentifier type='iso-with-lang'>ISO/FDTS 1000-1-1(E)</docidentifier>
-           <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(E)</docidentifier>
-           <docnumber>1000</docnumber>
-           <contributor>
-             <role type='author'/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type='publisher'/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <language>en</language>
-           <script>Latn</script>
-           <status>
-             <stage abbreviation='FDTS TS'>50</stage>
-             <substage>00</substage>
-           </status>
-           <copyright>
-             <from>2001</from>
-             <owner>
-               <organization>
-                 <name>International Organization for Standardization</name>
-                 <abbreviation>ISO</abbreviation>
-               </organization>
-             </owner>
-           </copyright>
-           <ext>
-             <doctype>technical-specification</doctype>
-                         <editorialgroup>
-             <agency>ISO</agency>
-            </editorialgroup>
-            <approvalgroup>
-             <agency>ISO</agency>
-            </approvalgroup>
-             <structuredidentifier>
-               <project-number part='1' subpart='1'>ISO 1000</project-number>
-             </structuredidentifier>
-             <stagename>Final draft</stagename>
-           </ext>
-         </bibdata>
-         <sections> </sections>
-       </iso-standard>
-    OUTPUT
+            <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='semantic' version="#{Metanorma::ISO::VERSION}">
+          <bibdata type='standard'>
+            <docidentifier type='ISO'>ISO/FDTS 1000-1-1</docidentifier>
+            <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(E)</docidentifier>
+            <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>
+            <docidentifier type='iso-with-lang'>ISO/FDTS 1000-1-1(E)</docidentifier>
+            <docnumber>1000</docnumber>
+            <contributor>
+              <role type='author'/>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
+            <contributor>
+              <role type='publisher'/>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
+            <language>en</language>
+            <script>Latn</script>
+            <status>
+              <stage abbreviation='FDTS TS'>50</stage>
+              <substage>00</substage>
+            </status>
+            <copyright>
+              <from>2001</from>
+              <owner>
+                <organization>
+                  <name>International Organization for Standardization</name>
+                  <abbreviation>ISO</abbreviation>
+                </organization>
+              </owner>
+            </copyright>
+            <ext>
+              <doctype>technical-specification</doctype>
+                          <editorialgroup>
+              <agency>ISO</agency>
+             </editorialgroup>
+             <approvalgroup>
+              <agency>ISO</agency>
+             </approvalgroup>
+              <structuredidentifier>
+                <project-number part='1' subpart='1'>ISO 1000</project-number>
+              </structuredidentifier>
+              <stagename>Final draft</stagename>
+            </ext>
+          </bibdata>
+          <sections> </sections>
+        </iso-standard>
+      OUTPUT
   end
 
   it "processes Russian titles" do
@@ -455,9 +455,9 @@ RSpec.describe Metanorma::ISO do
             <title language='fr' format='text/plain' type='title-main'>Titre Principal</title>
             <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
             <docidentifier type='ISO'>ISO 1000-1:2000</docidentifier>
+            <docidentifier type='iso-reference'>ISO 1000-1:2000(R)</docidentifier>
             <docidentifier type='iso-undated'>ISO 1000-1</docidentifier>
             <docidentifier type='iso-with-lang'>ISO 1000-1:2000(R)</docidentifier>
-            <docidentifier type='iso-reference'>ISO 1000-1:2000(R)</docidentifier>
             <docnumber>1000</docnumber>
             <contributor>
               <role type='author'/>
@@ -542,10 +542,10 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type='standard'>
-            <docidentifier type='ISO'>SD 1000-1-1</docidentifier>
-            <docidentifier type='iso-undated'>SD 1000-1-1</docidentifier>
-            <docidentifier type='iso-with-lang'>SD 1000-1-1(X)</docidentifier>
-            <docidentifier type='iso-reference'>SD 1000-1-1(X)</docidentifier>
+            <docidentifier type='ISO'>ISO 1000-1-1</docidentifier>
+            <docidentifier type='iso-reference'>ISO 1000-1-1()</docidentifier>
+            <docidentifier type='iso-undated'>ISO 1000-1-1</docidentifier>
+            <docidentifier type='iso-with-lang'>ISO 1000-1-1()</docidentifier>
             <docidentifier type='iso-tc'>2000</docidentifier>
             <docnumber>1000</docnumber>
             <date type='published'>
@@ -640,9 +640,9 @@ RSpec.describe Metanorma::ISO do
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
                 <docidentifier type='ISO'>ISO/FDIS 1000.2</docidentifier>
+        <docidentifier type='iso-reference'>ISO/FDIS 1000.2(F)</docidentifier>
                 <docidentifier type='iso-undated'>ISO/FDIS 1000.2</docidentifier>
         <docidentifier type='iso-with-lang'>ISO/FDIS 1000.2(F)</docidentifier>
-        <docidentifier type='iso-reference'>ISO/FDIS 1000.2(F)</docidentifier>
                   <docnumber>1000</docnumber>
                   <contributor>
                     <role type="author"/>
@@ -710,9 +710,9 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 1000</docidentifier>
+          <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
           <docidentifier type='iso-undated'>ISO 1000</docidentifier>
           <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
-          <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
           <docnumber>1000</docnumber>
           <contributor>
             <role type="author"/>
@@ -780,9 +780,9 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type="standard">
             <docidentifier type="ISO">ISO 1000</docidentifier>
+            <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
             <docidentifier type='iso-undated'>ISO 1000</docidentifier>
             <docidentifier type='iso-with-lang'>ISO 1000(E)</docidentifier>
-            <docidentifier type='iso-reference'>ISO 1000(E)</docidentifier>
             <docnumber>1000</docnumber>
             <contributor>
               <role type="author"/>
@@ -850,9 +850,9 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type='standard'>
             <docidentifier type='ISO'>ISO DIR 1000</docidentifier>
+            <docidentifier type='iso-reference'>ISO DIR 1000(E)</docidentifier>
             <docidentifier type='iso-undated'>ISO DIR 1000</docidentifier>
             <docidentifier type='iso-with-lang'>ISO DIR 1000(E)</docidentifier>
-            <docidentifier type='iso-reference'>ISO DIR 1000(E)</docidentifier>
             <docnumber>1000</docnumber>
             <contributor>
               <role type='author'/>
@@ -930,351 +930,351 @@ RSpec.describe Metanorma::ISO do
       INPUT
       expect(xmlpp(output.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
         .to be_equivalent_to xmlpp(<<~"OUTPUT")
-          <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
-              <bibdata type='standard'>
-              <contributor>
-                <role type='author'/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
-              <contributor>
-                <role type='publisher'/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
-              <language>en</language>
-              <script>Latn</script>
-              <status>
-                <stage abbreviation='IS'>60</stage>
-                <substage>60</substage>
-              </status>
-              <copyright>
-                <from>#{Time.new.year}</from>
-                <owner>
+            <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
+                <bibdata type='standard'>
+                <contributor>
+                  <role type='author'/>
                   <organization>
                     <name>International Organization for Standardization</name>
                     <abbreviation>ISO</abbreviation>
                   </organization>
-                </owner>
-              </copyright>
-              <relation type='obsoletes'>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 1</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='successorOf'>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 2</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='manifestationOf'>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 3</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='related'>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 4</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='annotationOf'>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 3a</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='updates'>
-                <description>amends</description>
-                <bibitem type='standard'>
-                  <fetched/>
-                  <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
-                  <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
-                  <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
-                  <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
-                  <title type='title-main' format='text/plain' language='fr' script='Latn'>Échantillonnage</title>
-                  <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc — Échantillonnage</title>
-                  <uri type='src'>https://www.iso.org/standard/23281.html</uri>
-                  <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
-                  <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
-                  <docidentifier type='ISO' primary="true">ISO 123:2001</docidentifier>
-                  <docidentifier type='URN'>urn:iso:std:iso:123:stage-90.93:ed-3</docidentifier>
-                  <docnumber>123</docnumber>
-                  <date type='published'><on>2001-05</on></date>
-                  <contributor>
-                    <role type='publisher'/>
+                </contributor>
+                <contributor>
+                  <role type='publisher'/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                  </organization>
+                </contributor>
+                <language>en</language>
+                <script>Latn</script>
+                <status>
+                  <stage abbreviation='IS'>60</stage>
+                  <substage>60</substage>
+                </status>
+                <copyright>
+                  <from>#{Time.new.year}</from>
+                  <owner>
                     <organization>
                       <name>International Organization for Standardization</name>
                       <abbreviation>ISO</abbreviation>
-                      <uri>www.iso.org</uri>
                     </organization>
-                  </contributor>
-                  <edition>3</edition>
-                  <language>en</language>
-                  <language>fr</language>
-                  <script>Latn</script>
-          <abstract format='text/plain' language='en' script='Latn'>
-            This International Standard specifies procedures for sampling natural
-            rubber latex concentrate and for sampling synthetic rubber latices and
-            artificial latices. It is also suitable for sampling rubber latex
-            contained in drums, tank cars or tanks. The procedures may also be
-            used for sampling plastics dispersions.
-          </abstract>
-                  <abstract format='text/plain' language='fr' script='Latn'>
-          La présente Norme internationale spécifie des méthodes
-          d’échantillonnage pour des concentrés de latex de caoutchouc naturel
-          et pour échantillonner des latex de caoutchouc synthétique et des
-          latex artificiels. Elle s’applique également à l’échantillonnage de
-          latex de caoutchouc contenus dans des fûts, citernes routières ou de
-          stockage. Le mode opératoire peut aussi être utilisé pour
-          l’échantillonnage de dispersions de plastiques.
-        </abstract>
-                  <status>
-                    <stage>90</stage>
-                    <substage>93</substage>
-                  </status>
-                  <copyright>
-                    <from>2001</from>
-                    <owner>
+                  </owner>
+                </copyright>
+                <relation type='obsoletes'>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 1</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='successorOf'>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 2</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='manifestationOf'>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 3</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='related'>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 4</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='annotationOf'>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 3a</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='updates'>
+                  <description>amends</description>
+                  <bibitem type='standard'>
+                    <fetched/>
+                    <title type='title-intro' format='text/plain' language='en' script='Latn'>Rubber latex</title>
+                    <title type='title-main' format='text/plain' language='en' script='Latn'>Sampling</title>
+                    <title type='main' format='text/plain' language='en' script='Latn'>Rubber latex&#8201;&#8212;&#8201;Sampling</title>
+                    <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc</title>
+                    <title type='title-main' format='text/plain' language='fr' script='Latn'>Échantillonnage</title>
+                    <title type='main' format='text/plain' language='fr' script='Latn'>Latex de caoutchouc — Échantillonnage</title>
+                    <uri type='src'>https://www.iso.org/standard/23281.html</uri>
+                    <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
+                    <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
+                    <docidentifier type='ISO' primary="true">ISO 123:2001</docidentifier>
+                    <docidentifier type='URN'>urn:iso:std:iso:123:stage-90.93:ed-3</docidentifier>
+                    <docnumber>123</docnumber>
+                    <date type='published'><on>2001-05</on></date>
+                    <contributor>
+                      <role type='publisher'/>
                       <organization>
-                        <name>ISO</name>
+                        <name>International Organization for Standardization</name>
+                        <abbreviation>ISO</abbreviation>
+                        <uri>www.iso.org</uri>
                       </organization>
-                    </owner>
-                  </copyright>
-                  <relation type='obsoletes'>
-                    <bibitem type='standard'>
-                      <formattedref format='text/plain'>ISO 123:1985</formattedref>
-                      <docidentifier type='ISO' primary='true'>ISO 123:1985</docidentifier>
-                    </bibitem>
-                  </relation>
-                  <place>Geneva</place>
-                </bibitem>
-              </relation>
-                         <relation type='updates'>
-               <description>amends</description>
-               <bibitem type='standard'>
-                 <fetched/>
-                 <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
-                 <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of alkalinity</title>
-                 <title type='main' format='text/plain' language='en' script='Latn'>
-                   Natural rubber latex concentrate&#8201;&#8212;&#8201;Determination of
-                   alkalinity
-                 </title>
-                 <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex concentr&#233; de caoutchouc naturel</title>
-                 <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination de l&#8217;alcalinit&#233;</title>
-                 <title type='main' format='text/plain' language='fr' script='Latn'>
-                   Latex concentr&#233; de caoutchouc
-                   naturel&#8201;&#8212;&#8201;D&#233;termination de
-                   l&#8217;alcalinit&#233;
-                 </title>
-                 <uri type='src'>https://www.iso.org/standard/72849.html</uri>
-                 <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
-                 <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
-                 <docidentifier type='ISO' primary="true">ISO 125</docidentifier>
-                 <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7</docidentifier>
-                 <docnumber>125</docnumber>
-                 <contributor>
-                   <role type='publisher'/>
-                   <organization>
-                     <name>International Organization for Standardization</name>
-                     <abbreviation>ISO</abbreviation>
-                     <uri>www.iso.org</uri>
-                   </organization>
-                 </contributor>
-                 <edition>7</edition>
-                 <language>en</language>
-                 <language>fr</language>
-                 <script>Latn</script>
-                 <status>
-                   <stage>60</stage>
-                   <substage>60</substage>
-                 </status>
-                 <copyright>
-                   <from>2020</from>
-                   <owner>
+                    </contributor>
+                    <edition>3</edition>
+                    <language>en</language>
+                    <language>fr</language>
+                    <script>Latn</script>
+            <abstract format='text/plain' language='en' script='Latn'>
+              This International Standard specifies procedures for sampling natural
+              rubber latex concentrate and for sampling synthetic rubber latices and
+              artificial latices. It is also suitable for sampling rubber latex
+              contained in drums, tank cars or tanks. The procedures may also be
+              used for sampling plastics dispersions.
+            </abstract>
+                    <abstract format='text/plain' language='fr' script='Latn'>
+            La présente Norme internationale spécifie des méthodes
+            d’échantillonnage pour des concentrés de latex de caoutchouc naturel
+            et pour échantillonner des latex de caoutchouc synthétique et des
+            latex artificiels. Elle s’applique également à l’échantillonnage de
+            latex de caoutchouc contenus dans des fûts, citernes routières ou de
+            stockage. Le mode opératoire peut aussi être utilisé pour
+            l’échantillonnage de dispersions de plastiques.
+          </abstract>
+                    <status>
+                      <stage>90</stage>
+                      <substage>93</substage>
+                    </status>
+                    <copyright>
+                      <from>2001</from>
+                      <owner>
+                        <organization>
+                          <name>ISO</name>
+                        </organization>
+                      </owner>
+                    </copyright>
+                    <relation type='obsoletes'>
+                      <bibitem type='standard'>
+                        <formattedref format='text/plain'>ISO 123:1985</formattedref>
+                        <docidentifier type='ISO' primary='true'>ISO 123:1985</docidentifier>
+                      </bibitem>
+                    </relation>
+                    <place>Geneva</place>
+                  </bibitem>
+                </relation>
+                           <relation type='updates'>
+                 <description>amends</description>
+                 <bibitem type='standard'>
+                   <fetched/>
+                   <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
+                   <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of alkalinity</title>
+                   <title type='main' format='text/plain' language='en' script='Latn'>
+                     Natural rubber latex concentrate&#8201;&#8212;&#8201;Determination of
+                     alkalinity
+                   </title>
+                   <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex concentr&#233; de caoutchouc naturel</title>
+                   <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination de l&#8217;alcalinit&#233;</title>
+                   <title type='main' format='text/plain' language='fr' script='Latn'>
+                     Latex concentr&#233; de caoutchouc
+                     naturel&#8201;&#8212;&#8201;D&#233;termination de
+                     l&#8217;alcalinit&#233;
+                   </title>
+                   <uri type='src'>https://www.iso.org/standard/72849.html</uri>
+                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
+                   <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
+                   <docidentifier type='ISO' primary="true">ISO 125</docidentifier>
+                   <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7</docidentifier>
+                   <docnumber>125</docnumber>
+                   <contributor>
+                     <role type='publisher'/>
                      <organization>
-                       <name>ISO</name>
+                       <name>International Organization for Standardization</name>
+                       <abbreviation>ISO</abbreviation>
+                       <uri>www.iso.org</uri>
                      </organization>
-                   </owner>
-                 </copyright>
-                 <relation type='obsoletes'>
-                   <bibitem type='standard'>
-                     <formattedref format='text/plain'>ISO 125:2011</formattedref>
-                     <docidentifier type='ISO' primary='true'>ISO 125:2011</docidentifier>
-                   </bibitem>
-                 </relation>
-                 <relation type='instance'>
-                   <bibitem type='standard'>
-                     <fetched/>
-                     <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
-                     <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of alkalinity</title>
-                     <title type='main' format='text/plain' language='en' script='Latn'>
-                       Natural rubber latex concentrate&#8201;&#8212;&#8201;Determination
-                       of alkalinity
-                     </title>
-                     <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex concentr&#233; de caoutchouc naturel</title>
-                     <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination de l&#8217;alcalinit&#233;</title>
-                     <title type='main' format='text/plain' language='fr' script='Latn'>
-                       Latex concentr&#233; de caoutchouc
-                       naturel&#8201;&#8212;&#8201;D&#233;termination de
-                       l&#8217;alcalinit&#233;
-                     </title>
-                     <uri type='src'>https://www.iso.org/standard/72849.html</uri>
-                     <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
-                     <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
-                     <docidentifier type='ISO' primary="true">ISO 125:2020</docidentifier>
-                     <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7</docidentifier>
-                     <docnumber>125</docnumber>
-                     <date type='published'>
-                       <on>2020-02</on>
-                     </date>
-                     <contributor>
-                       <role type='publisher'/>
+                   </contributor>
+                   <edition>7</edition>
+                   <language>en</language>
+                   <language>fr</language>
+                   <script>Latn</script>
+                   <status>
+                     <stage>60</stage>
+                     <substage>60</substage>
+                   </status>
+                   <copyright>
+                     <from>2020</from>
+                     <owner>
                        <organization>
-                         <name>International Organization for Standardization</name>
-                         <abbreviation>ISO</abbreviation>
-                         <uri>www.iso.org</uri>
+                         <name>ISO</name>
                        </organization>
-                     </contributor>
-                     <edition>7</edition>
-                     <language>en</language>
-                     <language>fr</language>
-                     <script>Latn</script>
-                     <abstract format='text/plain' language='en' script='Latn'>
-                       This document specifies a method for the determination of the
-                       alkalinity of natural rubber latex concentrate. The method is not
-                       necessarily suitable for latices from natural sources other than
-                       Hevea brasiliensis or for synthetic rubber latices, compounded
-                       latex, vulcanized latex or artificial dispersions of rubber. NOTE
-                       A method for the determination of the alkalinity of
-                       polychloroprene latex is specified in ISO 13773.
-                     </abstract>
-                     <abstract format='text/plain' language='fr' script='Latn'>
-                       Le pr&#233;sent document sp&#233;cifie une m&#233;thode de
-                       d&#233;termination de l&#8217;alcalinit&#233; du latex
-                       concentr&#233; de caoutchouc naturel. La m&#233;thode ne convient
-                       pas n&#233;cessairement aux latex d&#8217;origine naturelle autres
-                       que l&#8217;Hevea brasiliensis ou aux latex de caoutchouc de
-                       synth&#232;se, aux latex formul&#233;s, aux latex vulcanis&#233;s
-                       ou aux dispersions artificielles de caoutchouc. NOTE Une
-                       m&#233;thode de d&#233;termination de l&#8217;alcalinit&#233; du
-                       latex de polychloropr&#232;ne est sp&#233;cifi&#233;e dans
-                       l&#8217;ISO 13773.
-                     </abstract>
-                     <status>
-                       <stage>60</stage>
-                       <substage>60</substage>
-                     </status>
-                     <copyright>
-                       <from>2020</from>
-                       <owner>
+                     </owner>
+                   </copyright>
+                   <relation type='obsoletes'>
+                     <bibitem type='standard'>
+                       <formattedref format='text/plain'>ISO 125:2011</formattedref>
+                       <docidentifier type='ISO' primary='true'>ISO 125:2011</docidentifier>
+                     </bibitem>
+                   </relation>
+                   <relation type='instance'>
+                     <bibitem type='standard'>
+                       <fetched/>
+                       <title type='title-intro' format='text/plain' language='en' script='Latn'>Natural rubber latex concentrate</title>
+                       <title type='title-main' format='text/plain' language='en' script='Latn'>Determination of alkalinity</title>
+                       <title type='main' format='text/plain' language='en' script='Latn'>
+                         Natural rubber latex concentrate&#8201;&#8212;&#8201;Determination
+                         of alkalinity
+                       </title>
+                       <title type='title-intro' format='text/plain' language='fr' script='Latn'>Latex concentr&#233; de caoutchouc naturel</title>
+                       <title type='title-main' format='text/plain' language='fr' script='Latn'>D&#233;termination de l&#8217;alcalinit&#233;</title>
+                       <title type='main' format='text/plain' language='fr' script='Latn'>
+                         Latex concentr&#233; de caoutchouc
+                         naturel&#8201;&#8212;&#8201;D&#233;termination de
+                         l&#8217;alcalinit&#233;
+                       </title>
+                       <uri type='src'>https://www.iso.org/standard/72849.html</uri>
+                       <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
+                       <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
+                       <docidentifier type='ISO' primary="true">ISO 125:2020</docidentifier>
+                       <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7</docidentifier>
+                       <docnumber>125</docnumber>
+                       <date type='published'>
+                         <on>2020-02</on>
+                       </date>
+                       <contributor>
+                         <role type='publisher'/>
                          <organization>
-                           <name>ISO</name>
+                           <name>International Organization for Standardization</name>
+                           <abbreviation>ISO</abbreviation>
+                           <uri>www.iso.org</uri>
                          </organization>
-                       </owner>
-                     </copyright>
-                     <relation type='obsoletes'>
-                       <bibitem type='standard'>
-                         <formattedref format='text/plain'>ISO 125:2011</formattedref>
-                         <docidentifier type='ISO' primary='true'>ISO 125:2011</docidentifier>
-                       </bibitem>
-                     </relation>
-                     <place>Geneva</place>
-                   </bibitem>
-                 </relation>
-                 <place>Geneva</place>
-               </bibitem>
-             </relation>
-              <relation type='obsoletes'>
-                <description>replaces</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 5</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='obsoletes'>
-                <description>supersedes</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 6</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='updates'>
-                <description>corrects</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 7</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='isCitedIn'>
-                <description>informatively cited in</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 8</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='cites'>
-                <description>informatively cites</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 9</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='cites'>
-                <description>normatively cites</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 11</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='adoptedFrom'>
-                <description>identical adopted from</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 12</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='adoptedFrom'>
-                <description>modified adopted from</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 13</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='related'>
-                <description>related directive</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 14</docidentifier>
-                </bibitem>
-              </relation>
-              <relation type='related'>
-                <description>related mandate</description>
-                <bibitem>
-                  <title>--</title>
-                  <docidentifier>ABC 15</docidentifier>
-                </bibitem>
-              </relation>
-              <ext>
-                <doctype>standard</doctype>
-                            <editorialgroup>
-             <agency>ISO</agency>
-            </editorialgroup>
-            <approvalgroup>
-             <agency>ISO</agency>
-            </approvalgroup>
-                <stagename>International standard</stagename>
-              </ext>
-            </bibdata>
-            <sections> </sections>
-             </iso-standard>
+                       </contributor>
+                       <edition>7</edition>
+                       <language>en</language>
+                       <language>fr</language>
+                       <script>Latn</script>
+                       <abstract format='text/plain' language='en' script='Latn'>
+                         This document specifies a method for the determination of the
+                         alkalinity of natural rubber latex concentrate. The method is not
+                         necessarily suitable for latices from natural sources other than
+                         Hevea brasiliensis or for synthetic rubber latices, compounded
+                         latex, vulcanized latex or artificial dispersions of rubber. NOTE
+                         A method for the determination of the alkalinity of
+                         polychloroprene latex is specified in ISO 13773.
+                       </abstract>
+                       <abstract format='text/plain' language='fr' script='Latn'>
+                         Le pr&#233;sent document sp&#233;cifie une m&#233;thode de
+                         d&#233;termination de l&#8217;alcalinit&#233; du latex
+                         concentr&#233; de caoutchouc naturel. La m&#233;thode ne convient
+                         pas n&#233;cessairement aux latex d&#8217;origine naturelle autres
+                         que l&#8217;Hevea brasiliensis ou aux latex de caoutchouc de
+                         synth&#232;se, aux latex formul&#233;s, aux latex vulcanis&#233;s
+                         ou aux dispersions artificielles de caoutchouc. NOTE Une
+                         m&#233;thode de d&#233;termination de l&#8217;alcalinit&#233; du
+                         latex de polychloropr&#232;ne est sp&#233;cifi&#233;e dans
+                         l&#8217;ISO 13773.
+                       </abstract>
+                       <status>
+                         <stage>60</stage>
+                         <substage>60</substage>
+                       </status>
+                       <copyright>
+                         <from>2020</from>
+                         <owner>
+                           <organization>
+                             <name>ISO</name>
+                           </organization>
+                         </owner>
+                       </copyright>
+                       <relation type='obsoletes'>
+                         <bibitem type='standard'>
+                           <formattedref format='text/plain'>ISO 125:2011</formattedref>
+                           <docidentifier type='ISO' primary='true'>ISO 125:2011</docidentifier>
+                         </bibitem>
+                       </relation>
+                       <place>Geneva</place>
+                     </bibitem>
+                   </relation>
+                   <place>Geneva</place>
+                 </bibitem>
+               </relation>
+                <relation type='obsoletes'>
+                  <description>replaces</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 5</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='obsoletes'>
+                  <description>supersedes</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 6</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='updates'>
+                  <description>corrects</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 7</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='isCitedIn'>
+                  <description>informatively cited in</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 8</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='cites'>
+                  <description>informatively cites</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 9</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='cites'>
+                  <description>normatively cites</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 11</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='adoptedFrom'>
+                  <description>identical adopted from</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 12</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='adoptedFrom'>
+                  <description>modified adopted from</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 13</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='related'>
+                  <description>related directive</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 14</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type='related'>
+                  <description>related mandate</description>
+                  <bibitem>
+                    <title>--</title>
+                    <docidentifier>ABC 15</docidentifier>
+                  </bibitem>
+                </relation>
+                <ext>
+                  <doctype>standard</doctype>
+                              <editorialgroup>
+               <agency>ISO</agency>
+              </editorialgroup>
+              <approvalgroup>
+               <agency>ISO</agency>
+              </approvalgroup>
+                  <stagename>International standard</stagename>
+                </ext>
+              </bibdata>
+              <sections> </sections>
+               </iso-standard>
         OUTPUT
     end
   end

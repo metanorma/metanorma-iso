@@ -74,10 +74,17 @@ module Metanorma
         stage = get_stage(node)
         substage = get_substage(node)
         xml.status do |s|
-          s.stage stage, **attr_code(abbreviation: cover_stage_abbr(node))
+          s.stage stage, **attr_code(abbreviation: metadata_stage_abbr(node))
           s.substage substage
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end
+      end
+
+      def metadata_stage_abbr(node)
+        id = iso_id_reference(iso_id_params(node))
+        id.amendments and return id.amendments.first.stage&.abbr
+        id.corrigendums and return id.corrigendums.first.stage&.abbr
+        id.stage&.abbr
       end
 
       def metadata_committee(node, xml)

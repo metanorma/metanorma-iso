@@ -44,14 +44,18 @@ module Metanorma
       # ISO as a prefix goes first
       def docidentifier_cleanup(xmldoc)
         prefix = get_id_prefix(xmldoc)
+=begin
         id = xmldoc.at("//bibdata/docidentifier[@type = 'ISO']") or return
         id.content = id_prefix(prefix, id)
+=end
         id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") and
           id.content = id_prefix(prefix, id)
+=begin
         %w(iso-with-lang iso-reference iso-undated).each do |t|
           id = xmldoc.at("//bibdata/docidentifier[@type = '#{t}']") and
             id.content = id_prefix(prefix, id)
         end
+=end
       end
 
       def format_ref(ref, type)
