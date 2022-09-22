@@ -95,14 +95,14 @@ module Metanorma
 
       def iso_id_params_core(node)
         pub = (node.attr("publisher") || "ISO").split(/[;,]/)
-        {
-          number: node.attr("docnumber"),
-          part: node.attr("partnumber"),
-          language: node.attr("language") || "en",
-          type: get_typeabbr(node),
-          publisher: pub[0],
-          copublisher: pub[1..-1],
-        }.compact
+        ret = { number: node.attr("docnumber"),
+                part: node.attr("partnumber"),
+                language: node.attr("language") || "en",
+                type: get_typeabbr(node),
+                publisher: pub[0],
+                copublisher: pub[1..-1] }.compact
+        ret[:copublisher].empty? and ret.delete(:copublisher)
+        ret
       end
 
       def iso_id_params_add(node)
@@ -136,14 +136,14 @@ module Metanorma
       def iso_id_out(xml, params)
         xml.docidentifier iso_id_default(params), **attr_code(type: "ISO")
         xml.docidentifier iso_id_reference(params)
-          .to_s(with_language_code: :single),
+          .to_s(format: :ref_num_long),
                           **attr_code(type: "iso-reference")
         return if @amd
 
         xml.docidentifier iso_id_undated(params),
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
-          .to_s(with_language_code: :single),
+          .to_s(format: :ref_num_short),
                           **attr_code(type: "iso-with-lang")
       end
 
