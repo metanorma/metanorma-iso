@@ -1414,7 +1414,23 @@
 				</fo:page-sequence>
 
 				<!-- Index -->
-				<xsl:apply-templates select="//iso:indexsect" mode="index"/>
+				<xsl:variable name="docid">
+					<xsl:call-template name="getDocumentId"/>
+				</xsl:variable>
+
+				<xsl:variable name="current_document_index_id">
+					<xsl:apply-templates select="//iso:indexsect" mode="index_add_id">
+						<xsl:with-param name="docid" select="$docid"/>
+					</xsl:apply-templates>
+
+				</xsl:variable>
+
+				<xsl:variable name="current_document_index">
+					<xsl:apply-templates select="xalan:nodeset($current_document_index_id)" mode="index_update"/>
+				</xsl:variable>
+
+				<!-- <xsl:apply-templates select="//iso:indexsect" mode="index"/> -->
+				<xsl:apply-templates select="xalan:nodeset($current_document_index)" mode="index"/>
 
 				<xsl:if test="$isPublished = 'true'">
 					<fo:page-sequence master-reference="last-page" force-page-count="no-force">
@@ -9527,21 +9543,29 @@
 	</xsl:variable>
 
 	<xsl:template match="@*|node()" mode="index_add_id">
+		<xsl:param name="docid"/>
 		<xsl:copy>
-				<xsl:apply-templates select="@*|node()" mode="index_add_id"/>
+			<xsl:apply-templates select="@*|node()" mode="index_add_id">
+				<xsl:with-param name="docid" select="$docid"/>
+			</xsl:apply-templates>
 		</xsl:copy>
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'xref']" mode="index_add_id">
+		<xsl:param name="docid"/>
 		<xsl:variable name="id">
-			<xsl:call-template name="generateIndexXrefId"/>
+			<xsl:call-template name="generateIndexXrefId">
+				<xsl:with-param name="docid" select="$docid"/>
+			</xsl:call-template>
 		</xsl:variable>
 		<xsl:copy> <!-- add id to xref -->
 			<xsl:apply-templates select="@*" mode="index_add_id"/>
 			<xsl:attribute name="id">
 				<xsl:value-of select="$id"/>
 			</xsl:attribute>
-			<xsl:apply-templates mode="index_add_id"/>
+			<xsl:apply-templates mode="index_add_id">
+				<xsl:with-param name="docid" select="$docid"/>
+			</xsl:apply-templates>
 		</xsl:copy>
 		<!-- split <xref target="bm1" to="End" pagenumber="true"> to two xref:
 		<xref target="bm1" pagenumber="true"> and <xref target="End" pagenumber="true"> -->
@@ -9553,7 +9577,9 @@
 				<xsl:attribute name="id">
 					<xsl:value-of select="$id"/><xsl:text>_to</xsl:text>
 				</xsl:attribute>
-				<xsl:apply-templates mode="index_add_id"/>
+				<xsl:apply-templates mode="index_add_id">
+					<xsl:with-param name="docid" select="$docid"/>
+				</xsl:apply-templates>
 			</xsl:copy>
 		</xsl:if>
 	</xsl:template>
@@ -9590,12 +9616,33 @@
 			</xsl:when>
 			<xsl:when test="self::* and local-name(.) = 'xref'">
 				<xsl:variable name="id" select="@id"/>
-				<xsl:variable name="page" select="$index//item[@id = $id]"/>
-				<xsl:variable name="id_next" select="following-sibling::*[local-name() = 'xref'][1]/@id"/>
-				<xsl:variable name="page_next" select="$index//item[@id = $id_next]"/>
 
+				<xsl:variable name="id_next" select="following-sibling::*[local-name() = 'xref'][1]/@id"/>
 				<xsl:variable name="id_prev" select="preceding-sibling::*[local-name() = 'xref'][1]/@id"/>
-				<xsl:variable name="page_prev" select="$index//item[@id = $id_prev]"/>
+
+				<xsl:variable name="pages_">
+					<xsl:for-each select="$index/index/item[@id = $id or @id = $id_next or @id = $id_prev]">
+						<xsl:choose>
+							<xsl:when test="@id = $id">
+								<page><xsl:value-of select="."/></page>
+							</xsl:when>
+							<xsl:when test="@id = $id_next">
+								<page_next><xsl:value-of select="."/></page_next>
+							</xsl:when>
+							<xsl:when test="@id = $id_prev">
+								<page_prev><xsl:value-of select="."/></page_prev>
+							</xsl:when>
+						</xsl:choose>
+					</xsl:for-each>
+				</xsl:variable>
+				<xsl:variable name="pages" select="xalan:nodeset($pages_)"/>
+
+				<!-- <xsl:variable name="page" select="$index/index/item[@id = $id]"/> -->
+				<xsl:variable name="page" select="$pages/page"/>
+				<!-- <xsl:variable name="page_next" select="$index/index/item[@id = $id_next]"/> -->
+				<xsl:variable name="page_next" select="$pages/page_next"/>
+				<!-- <xsl:variable name="page_prev" select="$index/index/item[@id = $id_prev]"/> -->
+				<xsl:variable name="page_prev" select="$pages/page_prev"/>
 
 				<xsl:choose>
 					<!-- 2nd pass -->
@@ -9655,16 +9702,20 @@
 	</xsl:template>
 
 	<xsl:template name="generateIndexXrefId">
+		<xsl:param name="docid"/>
+
 		<xsl:variable name="level" select="count(ancestor::*[local-name() = 'ul'])"/>
 
-		<xsl:variable name="docid">
-			<xsl:call-template name="getDocumentId"/>
+		<xsl:variable name="docid_curr">
+			<xsl:value-of select="$docid"/>
+			<xsl:if test="normalize-space($docid) = ''"><xsl:call-template name="getDocumentId"/></xsl:if>
 		</xsl:variable>
+
 		<xsl:variable name="item_number">
 			<xsl:number count="*[local-name() = 'li'][ancestor::*[local-name() = 'indexsect']]" level="any"/>
 		</xsl:variable>
 		<xsl:variable name="xref_number"><xsl:number count="*[local-name() = 'xref']"/></xsl:variable>
-		<xsl:value-of select="concat($docid, '_', $item_number, '_', $xref_number)"/> <!-- $level, '_',  -->
+		<xsl:value-of select="concat($docid_curr, '_', $item_number, '_', $xref_number)"/> <!-- $level, '_',  -->
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'indexsect']/*[local-name() = 'title']" priority="4">
