@@ -3,7 +3,7 @@ module Metanorma
     class Modspec
       # Don't want to inherit from Metanorma::Requirements::Modspec
       class Iso < ::Metanorma::Requirements::Modspec
-        def recommendation_label_xref(elem, label, xrefs)
+        def recommendation_label_xref(elem, label, xrefs, _type)
           id = @reqtlabels[label]
           number = xrefs.anchor(id, :xref_reqt2reqt, false)
           number.nil? and return type
