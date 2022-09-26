@@ -24,12 +24,12 @@ module IsoDoc
             c.element? and preface_names(c)
           end
         end
-        if @parse_settings.empty?
-          sequential_asset_names(doc.xpath(ns("//preface/*")))
-          middle_section_asset_names(doc)
-          termnote_anchor_names(doc)
-          termexample_anchor_names(doc)
-        end
+      end
+
+      def asset_anchor_names(doc)
+        super
+        @parse_settings.empty? or return
+        sequential_asset_names(doc.xpath(ns("//preface/*")))
       end
 
       def initial_anchor_names1(doc)
@@ -46,11 +46,6 @@ module IsoDoc
                        "//sections/terms | //sections/definitions")).each do |c|
             n = section_names(c, n, 1)
           end
-        end
-        if @parse_settings.empty?
-          middle_section_asset_names(doc)
-          termnote_anchor_names(doc)
-          termexample_anchor_names(doc)
         end
       end
 

@@ -1332,7 +1332,7 @@ RSpec.describe IsoDoc do
           <clause id="D" obligation="normative" type="scope" displayorder='3'>
             <title depth="1">1<tab/>Scope</title>
             <p id="E">
-              <eref bibitemid="ISO712" type="inline"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality>ISO 712, <span class='citetbl'>第1–1表</span></eref>
+              <eref bibitemid="ISO712" type="inline"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality>ISO 712， <span class='citetbl'>第1–1表</span></eref>
             </p>
           </clause>
           <clause id="H" obligation="normative" displayorder='5'>
@@ -1423,7 +1423,7 @@ RSpec.describe IsoDoc do
              <div id='D'>
                <h1>1　Scope</h1>
                <p id='E'>
-                 <a href='#ISO712'>ISO 712, 第1–1表</a>
+                 <a href='#ISO712'>ISO 712， 第1–1表</a>
                </p>
              </div>
              <div>
