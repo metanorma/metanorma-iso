@@ -1159,7 +1159,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
-               <name>Tableau 1 — Classe de confirmité 1: First</name>
+               <name>Tableau 1 — Classe de confirmité 1&#xa0;: First</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -1172,7 +1172,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>Classe d&#x2019;exigences</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: Second</xref>
+                     <xref target='B'>Classe de confirmité 2&#xa0;: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -1182,7 +1182,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: Second</xref>
+                     <xref target='B'>Classe de confirmité 2&#xa0;: Second</xref>
                    </td>
                  </tr>
                  <tr>
@@ -1194,14 +1194,14 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <tr>
                    <td>D&#xE9;pendance indirecte</td>
                    <td>
-                     <xref target='B'>Classe de confirmité 2: Second</xref>
+                     <xref target='B'>Classe de confirmité 2&#xa0;: Second</xref>
                    </td>
                  </tr>
                                   <tr>
                    <td>Dispositions</td>
                    <td>
                      <xref target='B2'>
-                       Autorisation 1:
+                       Autorisation 1&#xa0;:
                        Third
                      </xref>
                      <br/>
@@ -1217,7 +1217,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B' class='modspec' type='recommendclass'>
-             <name>Tableau 2 — Classe de confirmité 2: Second</name>
+             <name>Tableau 2 — Classe de confirmité 2&#xa0;: Second</name>
                <tbody>
                  <tr>
                    <td>Identifiant</td>
@@ -1226,7 +1226,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='B2' class='modspec' type='recommend'>
-             <name>Tableau 3 — Autorisation 1: Third</name>
+             <name>Tableau 3 — Autorisation 1&#xa0;: Third</name>
         <tbody>
           <tr>
             <td>Identifiant</td>
@@ -1236,7 +1236,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <td>Inclus dans</td>
             <td>
               <xref target='A1'>
-                 Classe de confirmit&#xE9; 1:
+                 Classe de confirmit&#xE9; 1&#xa0;:
                  First
               </xref>
             </td>
