@@ -215,11 +215,11 @@ pub =  (node.attr("publisher") || "ISO").split(/[;,]/)
 
       def id_stage_abbr1(stage, substage, node, bare)
         if bare
-          IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+          IsoDoc::Iso::Metadata.new("en", "Latn", nil, @i18n)
             .status_abbrev(stage_abbr(stage, substage, doctype(node)),
                            substage, nil, nil, doctype(node))
         else
-          IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
+          IsoDoc::Iso::Metadata.new("en", "Latn", nil, @i18n)
             .status_abbrev(stage_abbr(stage, substage, doctype(node)),
                            substage, node.attr("iteration"),
                            node.attr("draft"), doctype(node))

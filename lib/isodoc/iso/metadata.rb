@@ -3,7 +3,7 @@ require "isodoc"
 module IsoDoc
   module Iso
     class Metadata < IsoDoc::Metadata
-      def initialize(lang, script, i18n)
+      def initialize(lang, script, locale, i18n)
         super
         DATETYPES.each { |w| @metadata["#{w.gsub(/-/, '_')}date".to_sym] = nil }
         set(:editorialgroup, [])
