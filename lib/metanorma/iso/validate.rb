@@ -27,7 +27,7 @@ module Metanorma
         end
       end
 
-      # ISO/IEC DIR 2, 15.5.3
+      # ISO/IEC DIR 2, 15.5.3, 20.2
       # does not deal with preceding text marked up
       def see_xrefs_validate(root)
         root.xpath("//xref").each do |t|
