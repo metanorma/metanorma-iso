@@ -138,13 +138,13 @@ module Metanorma
         xml.docidentifier iso_id_reference(params)
           .to_s(format: :ref_num_long),
                           **attr_code(type: "iso-reference")
+        xml.docidentifier iso_id_reference(params).urn, **attr_code(type: "URN")
         return if @amd
 
         xml.docidentifier iso_id_undated(params),
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
-          .to_s(format: :ref_num_short),
-                          **attr_code(type: "iso-with-lang")
+          .to_s(format: :ref_num_short), **attr_code(type: "iso-with-lang")
       end
 
       def iso_id_default(params)
