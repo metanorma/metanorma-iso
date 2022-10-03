@@ -132,10 +132,10 @@ module IsoDoc
         end
       end
 
-      def figure_anchor(elem, sublabel, label)
+      def figure_anchor(elem, sublabel, label, klass)
         @anchors[elem["id"]] = anchor_struct(
           (sublabel ? "#{label} #{sublabel}" : label),
-          nil, @labels["figure"], "figure", elem["unnumbered"]
+          nil, @labels[klass] || klass.capitalize, klass, elem["unnumbered"]
         )
         sublabel && elem["unnumbered"] != "true" and
           @anchors[elem["id"]][:label] = sublabel
@@ -143,27 +143,49 @@ module IsoDoc
 
       def sequential_figure_names(clause)
         j = 0
-        clause.xpath(ns(".//figure | .//sourcecode[not(ancestor::example)]"))
+        clause.xpath(ns(FIGURE_NO_CLASS)).noblank
           .each_with_object(IsoDoc::XrefGen::Counter.new) do |t, c|
           j = subfigure_increment(j, c, t)
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          next if blank?(t["id"])
+          figure_anchor(t, sublabel, c.print, "figure")
+        end
+        sequential_figure_class_names(clause)
+      end
 
-          figure_anchor(t, sublabel, c.print)
+      def sequential_figure_class_names(clause)
+        c = {}
+        j = 0
+        clause.xpath(ns(".//figure[@class][not(@class = 'pseudocode')]"))
+          .each do |t|
+          c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
+          j = subfigure_increment(j, c[t["class"]], t)
+          sublabel = j.zero? ? nil : "#{(j + 96).chr})"
+          figure_anchor(t, sublabel, c.print, t["class"])
         end
       end
 
       def hierarchical_figure_names(clause, num)
         c = IsoDoc::XrefGen::Counter.new
         j = 0
-        clause.xpath(ns(".//figure |  .//sourcecode[not(ancestor::example)]"))
-          .each do |t|
+        clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
           j = subfigure_increment(j, c, t)
           label = "#{num}#{hiersep}#{c.print}"
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          next if blank?(t["id"])
+          figure_anchor(t, sublabel, label, "figure")
+        end
+        hierarchical_figure_class_names(clause, num)
+      end
 
-          figure_anchor(t, sublabel, label)
+      def hierarchical_figure_class_names(clause, num)
+        c = {}
+        j = 0
+        clause.xpath(ns(".//figure[@class][not(@class = 'pseudocode')]"))
+          .noblank.each do |t|
+          c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
+          j = subfigure_increment(j, c[t["class"]], t)
+          label = "#{num}#{hiersep}#{c.print}"
+          sublabel = j.zero? ? nil : "#{(j + 96).chr})"
+          figure_anchor(t, sublabel, label, t["class"])
         end
       end
 
