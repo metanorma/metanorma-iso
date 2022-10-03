@@ -73,8 +73,14 @@
       <text/>
     </element>
   </define>
-  <define name="script">
+  <define name="locale">
     <a:documentation>ISO-639</a:documentation>
+    <element name="locale">
+      <text/>
+    </element>
+  </define>
+  <define name="script">
+    <a:documentation>ISO-3166</a:documentation>
     <element name="script">
       <text/>
     </element>
@@ -92,6 +98,9 @@
     <optional>
       <!-- multiple languages and scripts possible: comma delimit them if so -->
       <attribute name="language"/>
+    </optional>
+    <optional>
+      <attribute name="locale"/>
     </optional>
     <optional>
       <attribute name="script"/>
@@ -135,6 +144,9 @@
     <optional>
       <!-- multiple languages and scripts possible: comma delimit them if so -->
       <attribute name="language"/>
+    </optional>
+    <optional>
+      <attribute name="locale"/>
     </optional>
     <optional>
       <attribute name="script"/>
@@ -651,6 +663,9 @@
       <ref name="language"/>
     </zeroOrMore>
     <zeroOrMore>
+      <ref name="locale"/>
+    </zeroOrMore>
+    <zeroOrMore>
       <ref name="script"/>
     </zeroOrMore>
     <zeroOrMore>
@@ -740,6 +755,9 @@
     </zeroOrMore>
     <zeroOrMore>
       <ref name="language"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="locale"/>
     </zeroOrMore>
     <zeroOrMore>
       <ref name="script"/>
@@ -854,6 +872,15 @@
     <optional>
       <attribute name="type"/>
     </optional>
+    <optional>
+      <attribute name="language"/>
+    </optional>
+    <optional>
+      <attribute name="locale"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
     <data type="anyURI"/>
   </define>
   <define name="DateType">
@@ -882,6 +909,7 @@
       <value>vote-started</value>
       <value>vote-ended</value>
       <value>announced</value>
+      <value>stable-until</value>
     </choice>
   </define>
   <define name="bdate">
@@ -929,6 +957,9 @@
       </optional>
       <optional>
         <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="locale"/>
       </optional>
       <optional>
         <attribute name="script"/>

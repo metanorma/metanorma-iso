@@ -64,7 +64,7 @@ module Metanorma
 
       def metadata_id(node, xml)
         iso_id(node, xml)
-        node&.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
+        node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
           xml.docidentifier(n, **attr_code(type: "iso-tc"))
         end
         xml.docnumber node&.attr("docnumber")

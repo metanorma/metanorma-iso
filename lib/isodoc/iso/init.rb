@@ -6,8 +6,8 @@ require_relative "i18n"
 module IsoDoc
   module Iso
     module Init
-      def metadata_init(lang, script, i18n)
-        @meta = Metadata.new(lang, script, i18n)
+      def metadata_init(lang, script, locale, i18n)
+        @meta = Metadata.new(lang, script, locale, i18n)
       end
 
       def xref_init(lang, script, _klass, i18n, options)
@@ -15,12 +15,13 @@ module IsoDoc
         @xrefs = Xref.new(lang, script, html, i18n, options)
       end
 
-      def i18n_init(lang, script, i18nyaml = nil)
-        @i18n = I18n.new(lang, script, i18nyaml: i18nyaml || @i18nyaml)
+      def i18n_init(lang, script, locale, i18nyaml = nil)
+        @i18n = I18n.new(lang, script, locale: locale,
+                                       i18nyaml: i18nyaml || @i18nyaml)
       end
 
       def amd(docxml)
-        doctype = docxml&.at(ns("//bibdata/ext/doctype"))&.text
+        doctype = docxml.at(ns("//bibdata/ext/doctype"))&.text
         %w(amendment technical-corrigendum).include? doctype
       end
 
@@ -39,13 +40,17 @@ module IsoDoc
         ids.map! do |i|
           if %w(GUIDE TR TS DIR).include?(i)
             "<span class='stddocNumber'>#{i}</span>"
-          else
-            i.sub(/^([^0-9]+)(\s|$)/, "<span class='stdpublisher'>\\1</span>\\2")
-              .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
-              .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
-              .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
+          else std_docid_semantic_full(i)
           end
         end.join(" ")
+      end
+
+      def std_docid_semantic_full(ident)
+        ident
+          .sub(/^([^0-9]+)(\s|$)/, "<span class='stdpublisher'>\\1</span>\\2")
+          .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
+          .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
+          .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
       end
     end
   end

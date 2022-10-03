@@ -563,6 +563,6 @@ RSpec.describe Relaton::Render::Iso do
     Relaton::Render::Iso::General
       .new("language" => "en", "script" => "Latn",
            "i18nhash" => IsoDoc::Iso::PresentationXMLConvert.new({})
-      .i18n_init("en", "Latn").get)
+      .i18n_init("en", "Latn", nil).get)
   end
 end

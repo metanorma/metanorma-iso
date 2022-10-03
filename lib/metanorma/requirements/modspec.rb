@@ -18,9 +18,9 @@ module Metanorma
           return lbl unless title &&
             elem.ancestors("requirement, recommendation, permission").empty?
 
-          lbl += l10n(": ") if lbl
+          lbl += ": " if lbl
           lbl += title.children.to_xml
-          lbl
+          l10n(lbl)
         end
 
         # ISO labels modspec reqt as table, with reqt label as title
@@ -67,8 +67,8 @@ module Metanorma
           super
           anchor[:xref_reqt2reqt] = anchor[:xref_bare]
           if l = block.at(ns("./title"))
-            anchor[:xref_reqt2reqt] +=
-              l10n(": ") + l.children.to_xml.strip
+            anchor[:xref_reqt2reqt] =
+              l10n("#{anchor[:xref_reqt2reqt]}: #{l.children.to_xml.strip}")
           end
           anchor
         end
