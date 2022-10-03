@@ -5,6 +5,7 @@
 	<xsl:key name="kfn" match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])]" use="@reference"/>
 
 	<xsl:key name="attachments" match="iso:eref[java:endsWith(java:java.lang.String.new(@bibitemid),'.exp')]" use="@bibitemid"/>
+	<xsl:key name="attachments2" match="iso:eref[contains(@bibitemid,'.exp_')]" use="@bibitemid"/>
 
 	<xsl:variable name="namespace_full">https://www.metanorma.org/ns/iso</xsl:variable>
 
@@ -434,6 +435,15 @@
 				<xsl:for-each select="//*[local-name() = 'eref'][generate-id(.)=generate-id(key('attachments',@bibitemid)[1])]">
 					<xsl:variable name="url" select="concat('url(file:',$basepath, @bibitemid, ')')"/>
 					<pdf:embedded-file src="{$url}" filename="{@bibitemid}"/>
+				</xsl:for-each>
+				<xsl:for-each select="//*[local-name() = 'eref'][generate-id(.)=generate-id(key('attachments2',@bibitemid)[1])]">
+					<xsl:variable name="bibitemid" select="@bibitemid"/>
+					<xsl:variable name="uri" select="normalize-space($bibitems/*[local-name() ='bibitem'][@hidden = 'true'][@id = $bibitemid][1]/*[local-name() = 'uri'][@type='citation'])"/>
+					<xsl:if test="$uri != ''">
+						<xsl:variable name="url" select="concat('url(file:',$basepath, $uri, ')')"/>
+						<xsl:variable name="filename" select="concat(substring-before($bibitemid, '.exp_'), '.exp')"/>
+						<pdf:embedded-file src="{$url}" filename="{$filename}"/>
+					</xsl:if>
 				</xsl:for-each>
 			</fo:declarations>
 
@@ -1946,6 +1956,28 @@
 				<xsl:apply-templates/>
 			</fo:basic-link>
 		</fo:inline>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'eref'][contains(@bibitemid,'.exp_')]" priority="2">
+		<xsl:variable name="bibitemid" select="@bibitemid"/>
+		<xsl:variable name="uri" select="normalize-space($bibitems/*[local-name() ='bibitem'][@hidden = 'true'][@id = $bibitemid][1]/*[local-name() = 'uri'][@type='citation'])"/>
+		<xsl:choose>
+			<xsl:when test="$uri != ''">
+				<xsl:variable name="filename" select="concat(substring-before($bibitemid, '.exp_'), '.exp')"/>
+				<fo:inline xsl:use-attribute-sets="eref-style">
+					<xsl:variable name="url" select="concat('url(embedded-file:', $filename, ')')"/>
+					<fo:basic-link external-destination="{$url}" fox:alt-text="{@citeas}">
+						<xsl:if test="normalize-space(@citeas) = ''">
+							<xsl:attribute name="fox:alt-text"><xsl:value-of select="."/></xsl:attribute>
+						</xsl:if>
+						<xsl:apply-templates/>
+					</fo:basic-link>
+				</fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="eref"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<!-- =================== -->
@@ -9049,7 +9081,7 @@
 	<!-- ====== -->
 	<!-- eref -->
 	<!-- ====== -->
-	<xsl:template match="*[local-name() = 'eref']">
+	<xsl:template match="*[local-name() = 'eref']" name="eref">
 		<xsl:variable name="current_bibitemid" select="@bibitemid"/>
 		<!-- <xsl:variable name="external-destination" select="normalize-space(key('bibitems', $current_bibitemid)/*[local-name() = 'uri'][@type = 'citation'])"/> -->
 		<xsl:variable name="external-destination" select="normalize-space($bibitems/*[local-name() ='bibitem'][@id = $current_bibitemid]/*[local-name() = 'uri'][@type = 'citation'])"/>
