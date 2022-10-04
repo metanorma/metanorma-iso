@@ -37,6 +37,7 @@ RSpec.describe Metanorma::ISO do
       :amendment-number: 3
       :data-uri-image: false
       :updates: ISO 1000:2007
+      :doctype: amendment
 
       .Split-it-right sample divider
       image::spec/examples/rice_img/rice_image1.png[]

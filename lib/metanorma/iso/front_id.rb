@@ -34,19 +34,13 @@ module Metanorma
         "95": "Withdrawal",
       }.freeze
 
-      def stage_abbr(stage, substage, doctype, type_specific: false)
+      def stage_abbr(stage, substage, _doctype)
         return nil if stage.to_i > 60
 
         ret = STAGE_ABBRS[stage.to_sym]
         ret = "PRF" if stage == "60" && substage == "00"
         ret = "AWI" if stage == "10" && substage == "99"
         ret = "AWI" if stage == "20" && substage == "00"
-        if type_specific && %w(amendment technical-corrigendum technical-report
-                               technical-specification).include?(doctype)
-          ret = "D" if stage == "40" && doctype == "amendment"
-          ret = "FD" if stage == "50" && %w(amendment technical-corrigendum)
-            .include?(doctype)
-        end
         ret
       end
 
@@ -88,8 +82,10 @@ module Metanorma
       def iso_id_params(node)
         params = iso_id_params_core(node)
         params2 = iso_id_params_add(node)
-        node.attr("updates") and
+        if node.attr("updates")
           orig_id = Pubid::Iso::Identifier.parse(node.attr("updates"))
+          orig_id.edition ||= 1
+        end
         iso_id_params_resolve(params, params2, node, orig_id)
       end
 
@@ -106,9 +102,7 @@ module Metanorma
       end
 
       def iso_id_params_add(node)
-        stage = id_stage_abbr(get_stage(node), get_substage(node), node,
-                              bare: true, type_specific: false)&.strip
-        stage = nil if %w{IS PRF (Review) (Withdrawal)}.include?(stage)
+        stage = stage_abbr(get_stage(node), get_substage(node), doctype(node))
         { number: node.attr("amendment-number") ||
           node.attr("corrigendum-number"),
           stage: stage, year: iso_id_year(node),
@@ -122,11 +116,13 @@ module Metanorma
       end
 
       def iso_id_params_resolve(params, params2, node, orig_id)
-        if node.attr("amendment-number")
-          params[:year] = orig_id&.year
-          params[:amendments] = [params2]
+        if orig_id && (node.attr("amendment-number") ||
+            node.attr("corrigendum-number"))
+          params[:year] = orig_id.year
+          params[:edition] = orig_id.edition
+        end
+        if node.attr("amendment-number") then params[:amendments] = [params2]
         elsif node.attr("corrigendum-number")
-          params[:year] = orig_id&.year
           params[:corrigendums] = [params2]
         else params.merge!(params2)
         end
@@ -136,8 +132,7 @@ module Metanorma
       def iso_id_out(xml, params)
         xml.docidentifier iso_id_default(params), **attr_code(type: "ISO")
         xml.docidentifier iso_id_reference(params)
-          .to_s(format: :ref_num_long),
-                          **attr_code(type: "iso-reference")
+          .to_s(format: :ref_num_long), **attr_code(type: "iso-reference")
         xml.docidentifier iso_id_reference(params).urn, **attr_code(type: "URN")
         return if @amd
 
@@ -188,28 +183,6 @@ module Metanorma
             origyr: node.attr("created-date")
           ))
         end
-      end
-
-      def id_stage_abbr(stage, substage, node, bare: false, type_specific: false)
-        ret = id_stage_abbr1(stage, substage, node, bare: bare,
-                                                    type_specific: type_specific)
-        if %w(amendment technical-corrigendum technical-report
-              technical-specification).include?(doctype(node)) &&
-            !%w(D FD).include?(ret)
-          ret = "#{ret} "
-        end
-        ret
-      end
-
-      def id_stage_abbr1(stage, substage, node, bare: false, type_specific: false)
-        type_specific or return stage_abbr(stage, substage, doctype(node))
-        bare and return IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
-            .status_abbrev(stage_abbr(stage, substage, doctype(node)),
-                           substage, nil, nil, doctype(node))
-        IsoDoc::Iso::Metadata.new("en", "Latn", @i18n)
-          .status_abbrev(stage_abbr(stage, substage, doctype(node)),
-                         substage, node.attr("iteration"),
-                         node.attr("draft"), doctype(node))
       end
 
       def id_add_year(docnum, node)

@@ -200,11 +200,11 @@ RSpec.describe Metanorma::ISO do
               <?xml version="1.0" encoding="UTF-8"?>
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
-                  <docidentifier type='ISO'>IEC/IETF/ISO/TR 1000-1-1:2001</docidentifier>
-                  <docidentifier type='iso-reference'>IEC/IETF/ISO/TR 1000-1-1:2001(el)</docidentifier>
-                  <docidentifier type='URN'>urn:iso:std:iec-ietf-iso:tr:1000:-1-1:el</docidentifier>
-                  <docidentifier type='iso-undated'>IEC/IETF/ISO/TR 1000-1-1</docidentifier>
-                  <docidentifier type='iso-with-lang'>IEC/IETF/ISO/TR 1000-1-1:2001()</docidentifier>
+                  <docidentifier type='ISO'>IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
+                  <docidentifier type='iso-reference'>IEC/IETF/ISO TR 1000-1-1:2001(el)</docidentifier>
+                  <docidentifier type='URN'>urn:iso:std:iec-ietf-iso:tr:1000:-1-1:stage-60.60:el</docidentifier>
+                  <docidentifier type='iso-undated'>IEC/IETF/ISO TR 1000-1-1</docidentifier>
+                  <docidentifier type='iso-with-lang'>IEC/IETF/ISO TR 1000-1-1:2001()</docidentifier>
                   <docidentifier type="iso-tc">2000</docidentifier>
                   <docidentifier type="iso-tc">2003</docidentifier>
                   <docnumber>1000</docnumber>
@@ -272,7 +272,7 @@ RSpec.describe Metanorma::ISO do
                   <language>el</language>
                   <script>Grek</script>
                   <status>
-                    <stage abbreviation="IS">60</stage>
+                    <stage abbreviation='TR'>60</stage>
                     <substage>60</substage>
                   </status>
                   <copyright>
@@ -375,7 +375,7 @@ RSpec.describe Metanorma::ISO do
             <language>en</language>
             <script>Latn</script>
             <status>
-              <stage abbreviation='FDTS TS'>50</stage>
+              <stage abbreviation='FDTS'>50</stage>
               <substage>00</substage>
             </status>
             <copyright>
@@ -459,7 +459,7 @@ RSpec.describe Metanorma::ISO do
             <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
             <docidentifier type='ISO'>ISO 1000-1:2000</docidentifier>
             <docidentifier type='iso-reference'>ISO 1000-1:2000(ru)</docidentifier>
-            <docidentifier type='URN'>urn:iso:std:iso:1000:-1:ru</docidentifier>
+            <docidentifier type='URN'>urn:iso:std:iso:1000:-1:stage-60.60:ru</docidentifier>
             <docidentifier type='iso-undated'>ISO 1000-1</docidentifier>
             <docidentifier type='iso-with-lang'>ISO 1000-1:2000(R)</docidentifier>
             <docnumber>1000</docnumber>
@@ -485,7 +485,7 @@ RSpec.describe Metanorma::ISO do
             <language>ru</language>
             <script>Cyrl</script>
             <status>
-              <stage abbreviation='IS'>60</stage>
+              <stage>60</stage>
               <substage>60</substage>
             </status>
             <copyright>
@@ -546,11 +546,11 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type='standard'>
-            <docidentifier type='ISO'>ISO 1000-1-1</docidentifier>
-            <docidentifier type='iso-reference'>ISO 1000-1-1(el)</docidentifier>
-            <docidentifier type='URN'>urn:iso:std:iso:1000:-1-1:el</docidentifier>
+            <docidentifier type='ISO'>ISO 1000-1-1:2022</docidentifier>
+            <docidentifier type='iso-reference'>ISO 1000-1-1:2022(el)</docidentifier>
+            <docidentifier type='URN'>urn:iso:std:iso:1000:-1-1:stage-60.60:el</docidentifier>
             <docidentifier type='iso-undated'>ISO 1000-1-1</docidentifier>
-            <docidentifier type='iso-with-lang'>ISO 1000-1-1()</docidentifier>
+            <docidentifier type='iso-with-lang'>ISO 1000-1-1:2022()</docidentifier>
             <docidentifier type='iso-tc'>2000</docidentifier>
             <docnumber>1000</docnumber>
             <date type='published'>
@@ -585,7 +585,7 @@ RSpec.describe Metanorma::ISO do
             <language>el</language>
             <script>Grek</script>
             <status>
-              <stage abbreviation='IS'>60</stage>
+              <stage>60</stage>
               <substage>60</substage>
             </status>
             <copyright>
@@ -645,7 +645,7 @@ RSpec.describe Metanorma::ISO do
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
                 <docidentifier type='ISO'>ISO/FDIS 1000.2</docidentifier>
-        <docidentifier type='iso-reference'>ISO/FDIS 1000.2(F)</docidentifier>
+        <docidentifier type='iso-reference'>ISO/FDIS 1000.2:2022(fr)</docidentifier>
                <docidentifier type='URN'>urn:iso:std:iso:1000:stage-50.00.v2:fr</docidentifier>
                 <docidentifier type='iso-undated'>ISO/FDIS 1000.2</docidentifier>
         <docidentifier type='iso-with-lang'>ISO/FDIS 1000.2(F)</docidentifier>
@@ -716,8 +716,8 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 1000:2022</docidentifier>
-          <docidentifier type='iso-reference'>ISO 1000:2022(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:1000:en</docidentifier>
+          <docidentifier type='iso-reference'>ISO 1000:2022(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
           <docidentifier type='iso-undated'>ISO 1000</docidentifier>
           <docidentifier type='iso-with-lang'>ISO 1000:2022(E)</docidentifier>
           <docnumber>1000</docnumber>
@@ -739,7 +739,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="IS">60</stage>
+            <stage>60</stage>
             <substage>60</substage>
           </status>
           <copyright>
@@ -787,8 +787,8 @@ RSpec.describe Metanorma::ISO do
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type="standard">
             <docidentifier type="ISO">ISO 1000:2022</docidentifier>
-            <docidentifier type='iso-reference'>ISO 1000:2022(E)</docidentifier>
-             <docidentifier type='URN'>urn:iso:std:iso:1000:en</docidentifier>
+            <docidentifier type='iso-reference'>ISO 1000:2022(en)</docidentifier>
+            <docidentifier type='URN'>urn:iso:std:iso:1000:stage-60.00:en</docidentifier>
             <docidentifier type='iso-undated'>ISO 1000</docidentifier>
             <docidentifier type='iso-with-lang'>ISO 1000:2022(E)</docidentifier>
             <docnumber>1000</docnumber>
@@ -880,7 +880,7 @@ RSpec.describe Metanorma::ISO do
             <language>en</language>
             <script>Latn</script>
             <status>
-              <stage abbreviation='IS'>60</stage>
+              <stage abbreviation="DIR">60</stage>
               <substage>60</substage>
             </status>
             <copyright>
@@ -958,7 +958,7 @@ RSpec.describe Metanorma::ISO do
                 <language>en</language>
                 <script>Latn</script>
                 <status>
-                  <stage abbreviation='IS'>60</stage>
+                  <stage>60</stage>
                   <substage>60</substage>
                 </status>
                 <copyright>

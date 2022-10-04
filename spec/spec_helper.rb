@@ -187,7 +187,7 @@ BLANK_HDR1 = <<~"HDR".freeze
       <language>en</language>
       <script>Latn</script>
       <status>
-        <stage abbreviation="IS">60</stage>
+        <stage>60</stage>
         <substage>60</substage>
       </status>
       <copyright>

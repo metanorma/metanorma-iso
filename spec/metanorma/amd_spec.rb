@@ -209,7 +209,8 @@ RSpec.describe Metanorma::ISO do
         de transport
       </title>
           <docidentifier type="ISO">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(E)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-10.00:amd:2017:v1.3:en</docidentifier>
           <docnumber>17301</docnumber>
           <date type="created">
             <on>2016-05-01</on>
@@ -303,7 +304,8 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/CD Amd 1</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:2022:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -374,7 +376,8 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/DAmd 1</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/DAmd 1(E)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/DAmd 1(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-40.00:amd:2022:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -444,7 +447,8 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/Amd 1</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1(E)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:amd:2022:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -463,7 +467,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="IS">60</stage>
+            <stage>60</stage>
             <substage>60</substage>
           </status>
           <copyright>
@@ -514,8 +518,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/CD Cor 3</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/CD Cor 3:2022</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3:2022(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:cor:2022:v3:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -585,8 +590,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type='standard'>
-          <docidentifier type='ISO'>ISO 17301-1:2030/FDCor 3</docidentifier>
-          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCor 3(E)</docidentifier>
+          <docidentifier type='ISO'>ISO 17301-1:2030/FDCor 3:2022</docidentifier>
+          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCor 3:2022(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-50.00:cor:2022:v3:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type='author'/>
@@ -655,8 +661,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/Cor 3</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/Cor 3:2022</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:2022(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:cor:2022:v3:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -675,7 +682,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="IS">60</stage>
+            <stage>60</stage>
             <substage>60</substage>
           </status>
           <copyright>
