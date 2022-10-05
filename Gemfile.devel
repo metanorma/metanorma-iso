@@ -1,1 +1,2 @@
 gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
+gem "mn-requirements", git: "https://github.com/metanorma/mn-requirements", branch: "main"
