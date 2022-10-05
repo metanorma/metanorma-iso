@@ -693,7 +693,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendtest'>
-               <name>Table 1 — Permission test 1: First</name>
+               <name>Table 1 — Conformance test 1: First</name>
                <tbody>
                  <tr>
                 <td>Identifier</td>
@@ -1058,7 +1058,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <td>Provisions</td>
+                   <td>Conformance tests</td>
                    <td>
                      <xref target='B2'>
                        Permission 1:
@@ -1198,7 +1198,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                                   <tr>
-                   <td>Dispositions</td>
+                   <td>Tests de conformité</td>
                    <td>
                      <xref target='B2'>
                        Autorisation 1&#xa0;:

@@ -399,28 +399,28 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <foreword displayorder='1'>
          <p>
            <xref target='N1'>
-             <span class='citetbl'>Table 1, Requirement test 1</span>
+             <span class='citetbl'>Table 1, Conformance test 1</span>
            </xref>
            <xref target='N2'>
-             <span class='citetbl'>Table (??), Requirement test (??)</span>
+             <span class='citetbl'>Table (??), Conformance test (??)</span>
            </xref>
            <xref target='N'>
-             <span class='citetbl'>Table 2, Requirement test 2</span>
+             <span class='citetbl'>Table 2, Conformance test 2</span>
            </xref>
            <xref target='note1'>
-             <span class='citetbl'>Table 3, Requirement test 3</span>
+             <span class='citetbl'>Table 3, Conformance test 3</span>
            </xref>
            <xref target='note2'>
-             <span class='citetbl'>Table 4, Requirement test 4</span>
+             <span class='citetbl'>Table 4, Conformance test 4</span>
            </xref>
            <xref target='AN'>
-             <span class='citetbl'>Table A.1, Requirement test A.1</span>
+             <span class='citetbl'>Table A.1, Conformance test A.1</span>
            </xref>
            <xref target='Anote1'>
-             <span class='citetbl'>Table (??), Requirement test (??)</span>
+             <span class='citetbl'>Table (??), Conformance test (??)</span>
            </xref>
            <xref target='Anote2'>
-             <span class='citetbl'>Table A.2, Requirement test A.2</span>
+             <span class='citetbl'>Table A.2, Conformance test A.2</span>
            </xref>
          </p>
        </foreword>
@@ -500,28 +500,28 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <foreword displayorder='1'>
          <p>
            <xref target='N1'>
-             <span class='citetbl'>Tableau 1, Test d’exigence 1</span>
+             <span class='citetbl'>Tableau 1, Test de conformité 1</span>
            </xref>
            <xref target='N2'>
-             <span class='citetbl'>Tableau (??), Test d’exigence (??)</span>
+             <span class='citetbl'>Tableau (??), Test de conformité (??)</span>
            </xref>
            <xref target='N'>
-             <span class='citetbl'>Tableau 2, Test d’exigence 2</span>
+             <span class='citetbl'>Tableau 2, Test de conformité 2</span>
            </xref>
            <xref target='note1'>
-             <span class='citetbl'>Tableau 3, Test d’exigence 3</span>
+             <span class='citetbl'>Tableau 3, Test de conformité 3</span>
            </xref>
            <xref target='note2'>
-             <span class='citetbl'>Tableau 4, Test d’exigence 4</span>
+             <span class='citetbl'>Tableau 4, Test de conformité 4</span>
            </xref>
            <xref target='AN'>
-             <span class='citetbl'>Tableau A.1, Test d’exigence A.1</span>
+             <span class='citetbl'>Tableau A.1, Test de conformité A.1</span>
            </xref>
            <xref target='Anote1'>
-             <span class='citetbl'>Tableau (??), Test d’exigence (??)</span>
+             <span class='citetbl'>Tableau (??), Test de conformité (??)</span>
            </xref>
            <xref target='Anote2'>
-             <span class='citetbl'>Tableau A.2, Test d’exigence A.2</span>
+             <span class='citetbl'>Tableau A.2, Test de conformité A.2</span>
            </xref>
          </p>
        </foreword>
@@ -700,28 +700,28 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <foreword displayorder='1'>
          <p>
            <xref target='N1'>
-             <span class='citetbl'>Table 1, Recommendation test 1</span>
+             <span class='citetbl'>Table 1, Conformance test 1</span>
            </xref>
            <xref target='N2'>
-             <span class='citetbl'>Table (??), Recommendation test (??)</span>
+             <span class='citetbl'>Table (??), Conformance test (??)</span>
            </xref>
            <xref target='N'>
-             <span class='citetbl'>Table 2, Recommendation test 2</span>
+             <span class='citetbl'>Table 2, Conformance test 2</span>
            </xref>
            <xref target='note1'>
-             <span class='citetbl'>Table 3, Recommendation test 3</span>
+             <span class='citetbl'>Table 3, Conformance test 3</span>
            </xref>
            <xref target='note2'>
-             <span class='citetbl'>Table 4, Recommendation test 4</span>
+             <span class='citetbl'>Table 4, Conformance test 4</span>
            </xref>
            <xref target='AN'>
-             <span class='citetbl'>Table A.1, Recommendation test A.1</span>
+             <span class='citetbl'>Table A.1, Conformance test A.1</span>
            </xref>
            <xref target='Anote1'>
-             <span class='citetbl'>Table (??), Recommendation test (??)</span>
+             <span class='citetbl'>Table (??), Conformance test (??)</span>
            </xref>
            <xref target='Anote2'>
-             <span class='citetbl'>Table A.2, Recommendation test A.2</span>
+             <span class='citetbl'>Table A.2, Conformance test A.2</span>
            </xref>
          </p>
        </foreword>
@@ -900,28 +900,28 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <foreword displayorder='1'>
          <p>
            <xref target='N1'>
-             <span class='citetbl'>Table 1, Permission test 1</span>
+             <span class='citetbl'>Table 1, Conformance test 1</span>
            </xref>
            <xref target='N2'>
-             <span class='citetbl'>Table (??), Permission test (??)</span>
+             <span class='citetbl'>Table (??), Conformance test (??)</span>
            </xref>
            <xref target='N'>
-             <span class='citetbl'>Table 2, Permission test 2</span>
+             <span class='citetbl'>Table 2, Conformance test 2</span>
            </xref>
            <xref target='note1'>
-             <span class='citetbl'>Table 3, Permission test 3</span>
+             <span class='citetbl'>Table 3, Conformance test 3</span>
            </xref>
            <xref target='note2'>
-             <span class='citetbl'>Table 4, Permission test 4</span>
+             <span class='citetbl'>Table 4, Conformance test 4</span>
            </xref>
            <xref target='AN'>
-             <span class='citetbl'>Table A.1, Permission test A.1</span>
+             <span class='citetbl'>Table A.1, Conformance test A.1</span>
            </xref>
            <xref target='Anote1'>
-             <span class='citetbl'>Table (??), Permission test (??)</span>
+             <span class='citetbl'>Table (??), Conformance test (??)</span>
            </xref>
            <xref target='Anote2'>
-             <span class='citetbl'>Table A.2, Permission test A.2</span>
+             <span class='citetbl'>Table A.2, Conformance test A.2</span>
            </xref>
          </p>
        </foreword>
@@ -989,15 +989,15 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <xref target='N1'>
              <span class='citetbl'>Table 1, Permission 1</span>
            </xref>
-           <xref target='N2'>Table 1, Permission test 1-1</xref>
+           <xref target='N2'>Table 1, Conformance test 1-1</xref>
            <xref target='N'>Table 1, Permission 1-1-1</xref>
            <xref target='Q1'>Table 1, Requirement 1-1</xref>
            <xref target='R1'>Table 1, Recommendation 1-1</xref>
            <xref target='AN1'>
-             <span class='citetbl'>Table A.1, Permission test A.1</span>
+             <span class='citetbl'>Table A.1, Conformance test A.1</span>
            </xref>
            <xref target='AN2'>Table A.1, Permission A.1-1</xref>
-           <xref target='AN'>Table A.1, Permission test A.1-1-1</xref>
+           <xref target='AN'>Table A.1, Conformance test A.1-1-1</xref>
            <xref target='AQ1'>Table A.1, Requirement A.1-1</xref>
            <xref target='AR1'>Table A.1, Recommendation A.1-1</xref>
          </p>
