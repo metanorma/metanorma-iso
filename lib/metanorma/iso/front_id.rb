@@ -44,19 +44,17 @@ module Metanorma
         ret
       end
 
-=begin
-      def stage_name(stage, substage, _doctype, iteration = nil)
-        return "Proof" if stage == "60" && substage == "00"
-
-        ret = STAGE_NAMES[stage.to_sym]
-        if iteration && %w(20 30).include?(stage)
-          prefix = iteration.to_i.localize(@lang.to_sym)
-            .to_rbnf_s("SpelloutRules", "spellout-ordinal")
-          ret = "#{prefix.capitalize} #{ret.downcase}"
-        end
-        ret
-      end
-=end
+      #       def stage_name(stage, substage, _doctype, iteration = nil)
+      #         return "Proof" if stage == "60" && substage == "00"
+      #
+      #         ret = STAGE_NAMES[stage.to_sym]
+      #         if iteration && %w(20 30).include?(stage)
+      #           prefix = iteration.to_i.localize(@lang.to_sym)
+      #             .to_rbnf_s("SpelloutRules", "spellout-ordinal")
+      #           ret = "#{prefix.capitalize} #{ret.downcase}"
+      #         end
+      #         ret
+      #       end
       def metadata_id(node, xml)
         iso_id(node, xml)
         node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
@@ -90,6 +88,7 @@ module Metanorma
         iso_id_params_resolve(params, params2, node, orig_id)
       end
 
+      # unpublished is for internal use
       def iso_id_params_core(node)
         pub = (node.attr("publisher") || "ISO").split(/[;,]/)
         ret = { number: node.attr("docnumber"),
@@ -97,18 +96,29 @@ module Metanorma
                 language: node.attr("language") || "en",
                 type: get_typeabbr(node),
                 publisher: pub[0],
+                unpublished: /^[0-5]/.match?(get_stage(node)),
                 copublisher: pub[1..-1] }.compact
         ret[:copublisher].empty? and ret.delete(:copublisher)
         ret
       end
 
       def iso_id_params_add(node)
-        stage = stage_abbr(get_stage(node), get_substage(node), doctype(node))
-        { number: node.attr("amendment-number") ||
+        stage = iso_id_stage(node)
+
+        ret = { number: node.attr("amendment-number") ||
           node.attr("corrigendum-number"),
-          stage: stage, year: iso_id_year(node),
-          urn_stage: "#{get_stage(node)}.#{get_substage(node)}",
-          iteration: node.attr("iteration") }.compact
+                year: iso_id_year(node),
+                iteration: node.attr("iteration") }.compact
+        stage and ret[:stage] = Pubid::Iso::Stage.new(**stage)
+        ret
+      end
+
+      def iso_id_stage(node)
+        stage = stage_abbr(get_stage(node), get_substage(node),
+                           doctype(node)) or return nil
+        harmonised = "#{get_stage(node)}.#{get_substage(node)}"
+        harmonised = nil unless /^\d\d\.\d\d/.match?(harmonised)
+        { abbr: stage.to_sym, harmonized_code: harmonised }
       end
 
       def iso_id_year(node)
@@ -121,12 +131,12 @@ module Metanorma
             node.attr("corrigendum-number"))
           params[:year] = orig_id.year
           params[:edition] = orig_id.edition
+          params.delete(:unpublished)
         end
         if node.attr("amendment-number") then params[:amendments] = [params2]
         elsif node.attr("corrigendum-number")
           params[:corrigendums] = [params2]
-        else params.merge!(params2)
-        end
+        else params.merge!(params2) end
         params
       end
 
@@ -141,36 +151,44 @@ module Metanorma
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
           .to_s(format: :ref_num_short), **attr_code(type: "iso-with-lang")
-      rescue e
+      rescue StandardError => e
         clean_abort("Document identifier: #{e}", xml)
       end
 
       def iso_id_default(params)
         params_nolang = params.dup.tap { |hs| hs.delete(:language) }
-        unpub = /^[0-5]/.match?(params[:urn_stage])
-        params1 = if unpub
+        params1 = if params[:unpublished]
                     params_nolang.dup.tap do |hs|
                       hs.delete(:year)
                     end
                   else params_nolang
                   end
+        params1.delete(:unpublished)
         Pubid::Iso::Identifier.new(**params1)
       end
 
       def iso_id_undated(params)
         params_nolang = params.dup.tap { |hs| hs.delete(:language) }
-        params2 = params_nolang.dup.tap { |hs| hs.delete(:year) }
+        params2 = params_nolang.dup.tap do |hs|
+          hs.delete(:year)
+          hs.delete(:unpublished)
+        end
         Pubid::Iso::Identifier.new(**params2)
       end
 
       def iso_id_with_lang(params)
-        unpub = /^[0-5]/.match?(params[:urn_stage])
-        params1 = unpub ? params.dup.tap { |hs| hs.delete(:year) } : params
+        params1 = if params[:unpublished]
+                    params.dup.tap do |hs|
+                      hs.delete(:year)
+                    end
+                  else params end
+        params1.delete(:unpublished)
         Pubid::Iso::Identifier.new(**params1)
       end
 
       def iso_id_reference(params)
-        Pubid::Iso::Identifier.new(**params)
+        params1 = params.dup.tap { |hs| hs.delete(:unpublished) }
+        Pubid::Iso::Identifier.new(**params1)
       end
 
       def structured_id(node, xml)
