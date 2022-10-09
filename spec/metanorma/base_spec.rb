@@ -149,7 +149,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part="1">ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>Working draft</stagename>
+              <stagename abbreviation="WD">Working Draft</stagename>
             </ext>
           </bibdata>
           <sections/>
@@ -272,7 +272,7 @@ RSpec.describe Metanorma::ISO do
                   <language>el</language>
                   <script>Grek</script>
                   <status>
-                    <stage abbreviation='TR'>60</stage>
+                    <stage abbreviation='IS'>60</stage>
                     <substage>60</substage>
                   </status>
                   <copyright>
@@ -325,7 +325,7 @@ RSpec.describe Metanorma::ISO do
                     <structuredidentifier>
                       <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
                     </structuredidentifier>
-                    <stagename>International Standard Technical Report</stagename>
+                    <stagename abbreviation="TR">International Standard Technical Report</stagename>
                   </ext>
                 </bibdata>
                 <sections/>
@@ -375,7 +375,7 @@ RSpec.describe Metanorma::ISO do
             <language>en</language>
             <script>Latn</script>
             <status>
-              <stage abbreviation='FDTS'>50</stage>
+              <stage abbreviation='FDIS'>50</stage>
               <substage>00</substage>
             </status>
             <copyright>
@@ -398,7 +398,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part='1' subpart='1'>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>Final Draft Technical Specification</stagename>
+              <stagename abbreviation="FDTS">Final Draft Technical Specification</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -485,7 +485,7 @@ RSpec.describe Metanorma::ISO do
             <language>ru</language>
             <script>Cyrl</script>
             <status>
-              <stage>60</stage>
+              <stage abbreviation='IS'>60</stage>
               <substage>60</substage>
             </status>
             <copyright>
@@ -585,7 +585,7 @@ RSpec.describe Metanorma::ISO do
             <language>el</language>
             <script>Grek</script>
             <status>
-              <stage>60</stage>
+              <stage abbreviation='IS'>60</stage>
               <substage>60</substage>
             </status>
             <copyright>
@@ -691,7 +691,7 @@ RSpec.describe Metanorma::ISO do
                     <structuredidentifier>
                       <project-number>ISO 1000</project-number>
                     </structuredidentifier>
-                    <stagename>Final Draft International Standard</stagename>
+                    <stagename abbreviation="FDIS">Final Draft International Standard</stagename>
                   </ext>
                 </bibdata>
                 <sections/>
@@ -739,7 +739,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage>60</stage>
+            <stage abbreviation='IS'>60</stage>
             <substage>60</substage>
           </status>
           <copyright>
@@ -880,7 +880,7 @@ RSpec.describe Metanorma::ISO do
             <language>en</language>
             <script>Latn</script>
             <status>
-              <stage abbreviation="DIR">60</stage>
+              <stage abbreviation="IS">60</stage>
               <substage>60</substage>
             </status>
             <copyright>
@@ -903,7 +903,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>International Standard</stagename>
+              <stagename abbreviation="DIR">International Standard</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -958,7 +958,7 @@ RSpec.describe Metanorma::ISO do
                 <language>en</language>
                 <script>Latn</script>
                 <status>
-                  <stage>60</stage>
+                  <stage abbreviation='IS'>60</stage>
                   <substage>60</substage>
                 </status>
                 <copyright>

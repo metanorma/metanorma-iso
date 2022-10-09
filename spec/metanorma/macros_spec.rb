@@ -60,7 +60,7 @@ RSpec.describe Metanorma::Standoc do
                <language>en</language>
                <script>Latn</script>
                <status>
-                 <stage>60</stage>
+                 <stage abbreviation="IS">60</stage>
                  <substage>60</substage>
                </status>
                <copyright>

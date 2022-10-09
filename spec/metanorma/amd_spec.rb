@@ -303,9 +303,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/CD Amd 1</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1(en)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:2022:v1:en</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:#{Date.today.year}:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -375,8 +375,8 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/DAmd 1</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/DAmd 1(en)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/DAmd 1:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/DAmd 1:#{Date.today.year}(en)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-40.00:amd:2022:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>

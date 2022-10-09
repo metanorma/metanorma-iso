@@ -12,13 +12,14 @@ module Metanorma
       def metadata_ext(node, xml)
         super
         structured_id(node, xml)
-        xml.stagename metadata_stagename(node)
+        id = iso_id_default(iso_id_params(node))
+        xml.stagename metadata_stagename(id),
+                      **attr_code(abbreviation: id.typed_stage_abbrev)
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
       end
 
-      def metadata_stagename(node)
-        id = iso_id_default(iso_id_params(node))
+      def metadata_stagename(id)
         if @amd
           id.amendments&.first&.stage&.name ||
             id.corrigendums&.first&.stage&.name
@@ -86,7 +87,7 @@ module Metanorma
       def metadata_status(node, xml)
         stage = get_stage(node)
         substage = get_substage(node)
-        abbrev = iso_id_default(iso_id_params(node)).typed_stage_abbrev
+        abbrev = iso_id_default(iso_id_params(node)).stage&.abbr
         xml.status do |s|
           s.stage stage, **attr_code(abbreviation: abbrev)
           s.substage substage
