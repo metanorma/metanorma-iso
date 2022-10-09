@@ -78,3 +78,5 @@ requirements:
   modspec:
     description: Description
     provisions: Provisions
+    conformancetests: Conformance tests
+    # pending proper handling of inflection

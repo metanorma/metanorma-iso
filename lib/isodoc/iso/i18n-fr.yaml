@@ -72,3 +72,4 @@ requirements:
   modspec:
     description: Description
     provisions: Dispositions
+    conformancetests: Tests de conformité

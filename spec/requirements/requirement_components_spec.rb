@@ -544,7 +544,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>Conformance test</td>
                    <td>
                      <xref target='A2'>
-                       Requirement test 1:
+                       Conformance test 1:
                        Second
                      </xref>
                    </td>
@@ -552,7 +552,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                </tbody>
              </table>
              <table id='A2' class='modspec' type='recommendtest'>
-               <name>Table 2 — Requirement test 1: Second</name>
+               <name>Table 2 — Conformance test 1: Second</name>
                <tbody>
                  <tr>
                    <td>Identifier</td>
