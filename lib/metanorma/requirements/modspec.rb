@@ -38,7 +38,8 @@ module Metanorma
         def requirement_component_parse(node, out)
           if node["exclude"] != "true" && node.name == "description"
             lbl = "statement"
-            lbl = "description" if recommend_class(node.parent) == "recommendclass"
+            recommend_class(node.parent) == "recommendclass" and
+              lbl = "description"
             out << "<tr><td>#{@labels['modspec'][lbl]}</td>"\
                    "<td>#{node.children.to_xml}</td></tr>"
           else
@@ -46,11 +47,13 @@ module Metanorma
           end
         end
 
-        def requirement_table_cleanup(table)
+        def requirement_table_cleanup(node, table)
           return table unless table["type"] == "recommendclass"
 
+          label = if node["type"] == "conformanceclass" then "conformancetests"
+                  else "provisions" end
           ins = table.at(ns("./tbody/tr[td/table]")) or return table
-          ins.replace("<tr><td>#{@labels['modspec']['provisions']}</td>" +
+          ins.replace("<tr><td>#{@labels['modspec'][label]}</td>" +
                       "<td>#{nested_tables_names(table)}</td></tr>")
           table.xpath(ns("./tbody/tr[td/table]")).each(&:remove)
           table
