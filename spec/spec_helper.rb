@@ -207,7 +207,7 @@ BLANK_HDR1 = <<~"HDR".freeze
         <approvalgroup>
           <agency>ISO</agency>
         </approvalgroup>
-        <stagename>International standard</stagename>
+        <stagename>International Standard</stagename>
       </ext>
     </bibdata>
 HDR

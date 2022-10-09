@@ -149,7 +149,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part="1">ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>Third working draft</stagename>
+              <stagename>Working draft</stagename>
             </ext>
           </bibdata>
           <sections/>
@@ -325,7 +325,7 @@ RSpec.describe Metanorma::ISO do
                     <structuredidentifier>
                       <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
                     </structuredidentifier>
-                    <stagename>International standard</stagename>
+                    <stagename>International Standard Technical Report</stagename>
                   </ext>
                 </bibdata>
                 <sections/>
@@ -398,7 +398,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part='1' subpart='1'>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>Final draft</stagename>
+              <stagename>Final Draft Technical Specification</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -509,7 +509,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part='1'>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>International standard</stagename>
+              <stagename>International Standard</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -618,7 +618,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part="1" subpart="1">SD 1000</project-number>
               </structuredidentifier>
-              <stagename>International standard</stagename>
+              <stagename>International Standard</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -691,7 +691,7 @@ RSpec.describe Metanorma::ISO do
                     <structuredidentifier>
                       <project-number>ISO 1000</project-number>
                     </structuredidentifier>
-                    <stagename>Final draft</stagename>
+                    <stagename>Final Draft International Standard</stagename>
                   </ext>
                 </bibdata>
                 <sections/>
@@ -762,7 +762,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number>ISO 1000</project-number>
             </structuredidentifier>
-            <stagename>International standard</stagename>
+            <stagename>International Standard</stagename>
           </ext>
         </bibdata>
         <sections/>
@@ -833,7 +833,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>Proof</stagename>
+              <stagename>Proof of a new International Standard</stagename>
             </ext>
           </bibdata>
           <sections/>
@@ -903,7 +903,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename>International standard</stagename>
+              <stagename>International Standard</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -1279,7 +1279,7 @@ RSpec.describe Metanorma::ISO do
               <approvalgroup>
                <agency>ISO</agency>
               </approvalgroup>
-                  <stagename>International standard</stagename>
+                  <stagename>International Standard</stagename>
                 </ext>
               </bibdata>
               <sections> </sections>

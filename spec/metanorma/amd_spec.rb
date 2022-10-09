@@ -274,7 +274,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" origyr="2016-05-01" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>New work item proposal</stagename>
+            <stagename>New Proposal</stagename>
             <updates-document-type>international-standard</updates-document-type>
           </ext>
         </bibdata>
@@ -347,7 +347,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>Committee draft</stagename>
+            <stagename>Committee Draft</stagename>
           </ext>
         </bibdata>
         <sections/>
@@ -419,7 +419,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>Draft</stagename>
+            <stagename>Draft International Standard</stagename>
           </ext>
         </bibdata>
         <sections/>
@@ -446,8 +446,8 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/Amd 1</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1(en)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/Amd 1:2022</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1:2022(en)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:amd:2022:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
@@ -490,7 +490,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>International standard</stagename>
+            <stagename>International Standard</stagename>
           </ext>
         </bibdata>
         <sections/>
@@ -562,7 +562,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number corrigendum="3" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>Committee draft</stagename>
+            <stagename>Committee Draft</stagename>
           </ext>
         </bibdata>
         <sections/>
@@ -634,7 +634,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number part='1' corrigendum='3'>17301</project-number>
             </structuredidentifier>
-            <stagename>Final draft</stagename>
+            <stagename>Final Draft International Standard</stagename>
           </ext>
         </bibdata>
         <sections/>
@@ -705,7 +705,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number corrigendum="3" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>International standard</stagename>
+            <stagename>International Standard</stagename>
           </ext>
         </bibdata>
         <sections/>

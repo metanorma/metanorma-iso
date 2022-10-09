@@ -80,7 +80,7 @@ RSpec.describe Metanorma::Standoc do
                  <approvalgroup>
            <agency>ISO</agency>
          </approvalgroup>
-                 <stagename>International standard</stagename>
+                 <stagename>International Standard</stagename>
                </ext>
              </bibitem>
            </relation>

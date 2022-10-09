@@ -336,19 +336,25 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warns of illegal iteration" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :status: 60
-      :iteration: pizza
+    begin
+      input = <<~INPUT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :status: 60
+        :iteration: pizza
 
-      text
-    INPUT
+        text
+      INPUT
+      expect do
+        Asciidoctor.convert(input, *OPTIONS)
+      end.to raise_error(StandardError)
+    rescue StandardError
+    end
     expect(File.read("test.err"))
-      .to include "pizza is not a recognised iteration"
+      .to include "IS stage document cannot have iteration"
   end
 
   it "Warns of illegal script" do

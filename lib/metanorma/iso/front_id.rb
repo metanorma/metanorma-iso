@@ -44,6 +44,7 @@ module Metanorma
         ret
       end
 
+=begin
       def stage_name(stage, substage, _doctype, iteration = nil)
         return "Proof" if stage == "60" && substage == "00"
 
@@ -55,7 +56,7 @@ module Metanorma
         end
         ret
       end
-
+=end
       def metadata_id(node, xml)
         iso_id(node, xml)
         node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
@@ -140,6 +141,8 @@ module Metanorma
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
           .to_s(format: :ref_num_short), **attr_code(type: "iso-with-lang")
+      rescue e
+        clean_abort("Document identifier: #{e}", xml)
       end
 
       def iso_id_default(params)
@@ -149,8 +152,7 @@ module Metanorma
                     params_nolang.dup.tap do |hs|
                       hs.delete(:year)
                     end
-                  else
-                    params_nolang
+                  else params_nolang
                   end
         Pubid::Iso::Identifier.new(**params1)
       end
