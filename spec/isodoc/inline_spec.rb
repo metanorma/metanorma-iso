@@ -118,7 +118,7 @@ RSpec.describe IsoDoc do
 
   it "processes AsciiMath and MathML" do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" xmlns:m="http://www.w3.org/1998/Math/MathML">
         <preface>
           <foreword>
             <p>

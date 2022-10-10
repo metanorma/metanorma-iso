@@ -48,7 +48,7 @@ module IsoDoc
       end
 
       def foreword(isoxml, out)
-        f = isoxml.at(ns("//foreword")) || return
+        f = isoxml.at(ns("//foreword")) or return
         @foreword = true
         page_break(out)
         out.div **attr_code(id: f["id"]) do |s|
