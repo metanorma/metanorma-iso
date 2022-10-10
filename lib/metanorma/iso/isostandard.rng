@@ -508,6 +508,9 @@
   </define>
   <define name="stagename">
     <element name="stagename">
+      <optional>
+        <attribute name="abbreviation"/>
+      </optional>
       <text/>
     </element>
   </define>

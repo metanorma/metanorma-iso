@@ -1005,7 +1005,7 @@ RSpec.describe Metanorma::ISO do
                   <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
                   <uri type='rss'>https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
                   <docidentifier type='ISO' primary="true">ISO 123:2001</docidentifier>
-                  <docidentifier type='URN'>urn:iso:std:iso:123:stage-90.93:ed-3</docidentifier>
+                  <docidentifier type='URN'>urn:iso:std:iso:123:ed-3</docidentifier>
                   <docnumber>123</docnumber>
                   <date type='published'><on>2001-05</on></date>
                   <contributor>
@@ -1078,7 +1078,7 @@ RSpec.describe Metanorma::ISO do
                  <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
                  <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
                  <docidentifier type='ISO' primary="true">ISO 125</docidentifier>
-                 <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7</docidentifier>
+                 <docidentifier type='URN'>urn:iso:std:iso:125:ed-7</docidentifier>
                  <docnumber>125</docnumber>
                  <contributor>
                    <role type='publisher'/>
@@ -1130,7 +1130,7 @@ RSpec.describe Metanorma::ISO do
                      <uri type='obp'>https://www.iso.org/obp/ui/#!iso:std:72849:en</uri>
                      <uri type='rss'>https://www.iso.org/contents/data/standard/07/28/72849.detail.rss</uri>
                      <docidentifier type='ISO' primary="true">ISO 125:2020</docidentifier>
-                     <docidentifier type='URN'>urn:iso:std:iso:125:stage-60.60:ed-7</docidentifier>
+                     <docidentifier type='URN'>urn:iso:std:iso:125:ed-7</docidentifier>
                      <docnumber>125</docnumber>
                      <date type='published'>
                        <on>2020-02</on>

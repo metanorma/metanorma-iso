@@ -205,6 +205,15 @@
             <data type="boolean"/>
           </attribute>
         </optional>
+        <optional>
+          <attribute name="style">
+            <choice>
+              <value>basic</value>
+              <value>full</value>
+              <value>short</value>
+            </choice>
+          </attribute>
+        </optional>
         <ref name="XrefBody"/>
       </element>
     </define>
