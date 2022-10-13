@@ -77,6 +77,12 @@ locality:
 requirements:
   modspec:
     description: Description
-    provisions: Provisions
-    conformancetests: Conformance tests
-    # pending proper handling of inflection
+    provision: Provision
+    conformancetest: Conformance test
+inflection:
+  Provision:
+    sg: Provision
+    pl: Provisions
+  Conformance test:
+    sg: Conformance test
+    pl: Conformance tests

@@ -1269,14 +1269,6 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <title>First #1</title>
         <identifier>Permission 1</identifier>
         </permission>
-        <requirement model="ogc" id="A3">
-          <title>First #2</title>
-        <identifier>Requirement 1</identifier>
-        </requirement>
-        <recommendation model="ogc" id="A4">
-          <title>First #3</title>
-        <identifier>Recommendation 1</identifier>
-        </recommendation>
       </requirement>
       <permission model="ogc" id="A5">
           <title>Second</title>
@@ -1311,21 +1303,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>/ss/584/2015/level/2</td>
                  </tr>
                  <tr>
-                 <th>Provisions</th>
+                 <th>Provision</th>
                  <td>
             <xref target='A5'>
               Permission 1:
               Second
-            </xref>
-            <br/>
-            <xref target='A3'>
-              Requirement 1-1:
-              First #2
-            </xref>
-            <br/>
-            <xref target='A4'>
-              Recommendation 1-1:
-              First #3
             </xref>
             </td>
           </tr>

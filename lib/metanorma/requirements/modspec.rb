@@ -48,22 +48,27 @@ module Metanorma
         end
 
         def requirement_table_cleanup(node, table)
-          return table unless table["type"] == "recommendclass"
-
-          label = if node["type"] == "conformanceclass" then "conformancetests"
-                  else "provisions" end
+          table["type"] == "recommendclass" or return table
           ins = table.at(ns("./tbody/tr[td/table]")) or return table
-          ins.replace("<tr><th>#{@labels['modspec'][label]}</th>" +
-                      "<td>#{nested_tables_names(table)}</td></tr>")
+          ins.replace(requirement_table_cleanup_replacement(node, table))
           table.xpath(ns("./tbody/tr[td/table]")).each(&:remove)
           table
+        end
+
+        def requirement_table_cleanup_replacement(node, table)
+          label = "provision"
+          node["type"] == "conformanceclass" and label = "conformancetest"
+          n = nested_tables_names(table)
+          hdr = @i18n.inflect(@labels["modspec"][label],
+                              number: n.size == 1 ? "sg" : "pl")
+          "<tr><th>#{hdr}</th><td>#{n.join('<br/>')}</td></tr>"
         end
 
         def nested_tables_names(table)
           table.xpath(ns("./tbody/tr/td/table"))
             .each_with_object([]) do |t, m|
               m << t.at(ns("./name")).children.to_xml
-            end.join("<br/>")
+            end
         end
 
         def postprocess_anchor_struct(block, anchor)

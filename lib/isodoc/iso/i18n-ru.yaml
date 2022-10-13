@@ -75,4 +75,12 @@ locality:
 requirements:
   modspec:
     description: Описание
-    provisions: Условия
+    provision: Условие
+    conformancetest: Тест на соответствие
+inflection:
+  Условие:
+    sg: Условие
+    pl: Условия
+  Тест на соответствие:
+    sg: Тест на соответствие
+    pl: Тесты на соответствие
