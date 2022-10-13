@@ -31,7 +31,7 @@ module Metanorma
 
         def recommend_title(node, out)
           label = node.at(ns("./identifier")) or return
-          out.add_child("<tr><td>#{@labels['modspec']['identifier']}</td>"\
+          out.add_child("<tr><th>#{@labels['modspec']['identifier']}</th>" \
                         "<td><tt>#{label.children.to_xml}</tt></td>")
         end
 
@@ -40,7 +40,7 @@ module Metanorma
             lbl = "statement"
             recommend_class(node.parent) == "recommendclass" and
               lbl = "description"
-            out << "<tr><td>#{@labels['modspec'][lbl]}</td>"\
+            out << "<tr><th>#{@labels['modspec'][lbl]}</th>" \
                    "<td>#{node.children.to_xml}</td></tr>"
           else
             super
@@ -53,7 +53,7 @@ module Metanorma
           label = if node["type"] == "conformanceclass" then "conformancetests"
                   else "provisions" end
           ins = table.at(ns("./tbody/tr[td/table]")) or return table
-          ins.replace("<tr><td>#{@labels['modspec'][label]}</td>" +
+          ins.replace("<tr><th>#{@labels['modspec'][label]}</th>" +
                       "<td>#{nested_tables_names(table)}</td></tr>")
           table.xpath(ns("./tbody/tr[td/table]")).each(&:remove)
           table

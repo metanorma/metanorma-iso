@@ -627,6 +627,9 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="schema-version"/>
+    </optional>
+    <optional>
       <ref name="fetched"/>
     </optional>
     <optional>
@@ -719,6 +722,9 @@
       <attribute name="type">
         <ref name="BibItemType"/>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="schema-version"/>
     </optional>
     <optional>
       <ref name="fetched"/>
