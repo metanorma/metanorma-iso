@@ -83,9 +83,9 @@ inflection:
   Déclaration:
     sg: Déclaration
     pl: Déclarations
-  Dépendance:
-    sg: Dépendance
-    pl: Dépendances
+  Prérequis:
+    sg: Prérequis
+    pl: Prérequis
   Dépendance indirecte:
-    sg: Dépendance indirecte
-    pl: Dépendances indirectes
+    sg: Prérequis indirect
+    pl: Prérequis indirects

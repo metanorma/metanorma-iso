@@ -139,7 +139,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <tbody>
               <tr><th>Identifier</th><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
               <tr><th>Subject</th><td>user</td></tr>
-            <tr><th>Dependencies</th><td>/ss/584/2015/level/1<br/>
+            <tr><th>Prerequisites</th><td>/ss/584/2015/level/1<br/>
             <eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></td></tr>
             <tr>
         <th>Control-class</th>
@@ -284,7 +284,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>user</td>
                  </tr>
                  <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Dependencies</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Prerequisites</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      /ss/584/2015/level/1
                      <br/>
@@ -449,7 +449,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                      <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>user</td>
                    </tr>
                    <tr>
-                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependencies</th>
+                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Prerequisites</th>
                      <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
                        /ss/584/2015/level/1
                        <br/>
@@ -687,7 +687,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>user</td>
                  </tr>
                  <tr>
-                   <th>Dependency</th>
+                   <th>Prerequisite</th>
                    <td>/ss/584/2015/level/1</td>
                  </tr>
                  <tr>
@@ -813,7 +813,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <tbody>
           <tr><th>Identifier</th><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
         <tr><th>Subject</th><td>user</td></tr>
-        <tr><th>Dependency</th><td>/ss/584/2015/level/1</td></tr><tr><th>Control-class</th><td>Technical</td></tr><tr><th>Priority</th><td>P0</td></tr>
+        <tr><th>Prerequisite</th><td>/ss/584/2015/level/1</td></tr><tr><th>Control-class</th><td>Technical</td></tr><tr><th>Priority</th><td>P0</td></tr>
         <tr><th>Family</th><td>System and Communications Protection<br/>
         System and Communications Protocols</td></tr>
 
@@ -900,7 +900,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>user</td>
                 </tr>
                 <tr>
-                  <th>Dependencies</th>
+                  <th>Prerequisites</th>
                   <td>/ss/584/2015/level/1<br/>
                   /ss/584/2015/level/2</td>
                 </tr>
@@ -1010,13 +1010,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>Dependencies</th>
+                   <th>Prerequisites</th>
                    <td>/ss/584/2015/level/1<br/>
                      <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
-                   <th>Indirect Dependencies</th>
+                   <th>Indirect prerequisite</th>
                    <td>
                      <link target='http://www.example.com/'/>
                    <br/>
@@ -1142,20 +1142,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>D&#xE9;pendances</th>
+                   <th>Prérequis</th>
                    <td>/ss/584/2015/level/1<br/>
                      <xref target='B'>Classe de confirmité 2&#xa0;: Second</xref>
                    </td>
                  </tr>
                  <tr>
-                   <th>D&#xE9;pendances indirectes</th>
+                   <th>Prérequis indirect</th>
                    <td>
                      <link target='http://www.example.com/'/>
                    <br/>
                      <xref target='B'>Classe de confirmité 2&#xa0;: Second</xref>
                    </td>
                  </tr>
-                                  <tr>
+                   <tr>
                    <th>Tests de conformité</th>
                    <td>
                      <xref target='B2'>
@@ -1253,7 +1253,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>user</td>
                  </tr>
                  <tr>
-                   <th>Dependencies</th>
+                   <th>Prerequisites</th>
                    <td>/ss/584/2015/level/1<br/>
                    /ss/584/2015/level/2</td>
                  </tr>
@@ -1342,7 +1342,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>user</td>
                 </tr>
                 <tr>
-                  <th>Dependencies</th>
+                  <th>Prerequisites</th>
                   <td>/ss/584/2015/level/1<br/>
                   /ss/584/2015/level/2</td>
                 </tr>
@@ -1446,7 +1446,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>user</td>
                 </tr>
                 <tr>
-                  <th>Dependency</th>
+                  <th>Prerequisite</th>
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>
@@ -1561,7 +1561,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>user</td>
                 </tr>
                 <tr>
-                  <th>Dependency</th>
+                  <th>Prerequisite</th>
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>

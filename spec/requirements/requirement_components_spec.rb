@@ -52,7 +52,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>user</td>
                  </tr>
                  <tr>
-                   <th>Dependency</th>
+                   <th>Prerequisite</th>
                    <td>/ss/584/2015/level/1</td>
                  </tr>
                  <tr>
@@ -258,7 +258,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>user</td>
                  </tr>
                  <tr>
-                   <th>Dependency</th>
+                   <th>Prerequisite</th>
                    <td>/ss/584/2015/level/1</td>
                  </tr>
                  <tr>
@@ -569,7 +569,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>Conformance test</th>
+                   <th>Conformance class</th>
                    <td>
                      <xref target='A4'>
                        Conformance class 1:
