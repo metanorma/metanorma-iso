@@ -86,3 +86,12 @@ inflection:
   Conformance test:
     sg: Conformance test
     pl: Conformance tests
+  Statement:
+    sg: Statement
+    pl: Statements
+  Dependency:
+    sg: Dependency
+    pl: Dependencies
+  Indirect Dependency:
+    sg: Indirect Dependency
+    pl: Indirect Dependencies

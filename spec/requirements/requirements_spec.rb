@@ -138,7 +138,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <name>Table 1 — Permission 1: First</name>
             <tbody>
               <tr><th>Identifier</th><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
-              <tr><th>Subject</th><td>user</td></tr><tr><th>Dependency</th><td>/ss/584/2015/level/1</td></tr><tr><th>Dependency</th><td><eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></td></tr>
+              <tr><th>Subject</th><td>user</td></tr>
+            <tr><th>Dependencies</th><td>/ss/584/2015/level/1<br/>
+            <eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></td></tr>
             <tr>
         <th>Control-class</th>
         <td>Technical</td>
@@ -149,24 +151,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </tr>
       <tr>
         <th>Family</th>
-        <td>System and Communications Protection</td>
+        <td>System and Communications Protection<br/>
+        System and Communications Protocols</td>
       </tr>
       <tr>
-        <th>Family</th>
-        <td>System and Communications Protocols</td>
-      </tr>
-      <tr>
-        <th>Statement</th><td>
+        <th>Statements</th><td>
           <p id='_'>
             I recommend
             <em>this</em>
             .
           </p>
-        </td>
-      </tr>
-      <tr>
-      <th>Statement</th>
-            <td>
+            <br/>
               <dl>
                 <dt>A</dt>
                 <dd>B</dd>
@@ -262,7 +257,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     OUTPUT
 
     html = <<~OUTPUT
-      <body lang='en'>
+           <body lang='en'>
          <div class='title-section'>
            <p> </p>
          </div>
@@ -279,54 +274,48 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
              <table id='A1' class='modspec' style='border-width:1px;border-spacing:0;'>
                <tbody>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>Identifier</th>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;' scope='row'>Identifier</th>
                    <td style='border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>
                      <tt>/ogc/recommendation/wfs/2</tt>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Subject</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Subject</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>user</td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Dependency</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>/ss/584/2015/level/1</td>
-                 </tr>
-                 <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Dependency</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Dependencies</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     /ss/584/2015/level/1
+                     <br/>
                      <a href='#rfc2616'>RFC 2616 (HTTP/1.1)</a>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Control-class</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Control-class</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Technical</td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Priority</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Priority</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>P0</td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Family</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>System and Communications Protection</td>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Family</th>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     System and Communications Protection
+                     <br/>
+                      System and Communications Protocols
+                   </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Family</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>System and Communications Protocols</td>
-                 </tr>
-                 <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Statement</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Statements</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p id='_'>
                         I recommend
                        <i>this</i>
                         .
                      </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Statement</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
+                     <br/>
                      <dl>
                        <dt>
                          <p>A</p>
@@ -368,49 +357,49 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Test purpose</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Test purpose</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p>TEST PURPOSE</p>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Test method</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Test method</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p>TEST METHOD</p>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Conditions</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Conditions</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p>CONDITIONS</p>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>A</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>A</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p>FIRST PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>B</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>B</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p>SECOND PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>C</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>C</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p>THIRD PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;'>Reference</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Reference</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p>REFERENCE PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <th scope='row' style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.5pt;'>Panda GHz express</th>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.5pt;' scope='row'>Panda GHz express</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.5pt;'>
                      <p>PANDA PART</p>
                    </td>
@@ -432,7 +421,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     OUTPUT
 
     doc = <<~OUTPUT
-       <body lang='EN-US' link='blue' vlink='#954F72'>
+           <body lang='EN-US' link='blue' vlink='#954F72'>
          <div class='WordSection1'>
            <p> </p>
          </div>
@@ -460,12 +449,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                      <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>user</td>
                    </tr>
                    <tr>
-                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependency</th>
-                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>/ss/584/2015/level/1</td>
-                   </tr>
-                   <tr>
-                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependency</th>
+                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Dependencies</th>
                      <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       /ss/584/2015/level/1
+                       <br/>
                        <a href='#rfc2616'>RFC 2616 (HTTP/1.1)</a>
                      </td>
                    </tr>
@@ -479,25 +466,21 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </tr>
                    <tr>
                      <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Family</th>
-                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>System and Communications Protection</td>
-                   </tr>
-                   <tr>
-                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Family</th>
-                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>System and Communications Protocols</td>
-                   </tr>
-                   <tr>
-                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statement</th>
                      <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
-                       <p class='ForewordText' id='_'>
-                          I recommend 
-                         <i>this</i>
-                          . 
-                       </p>
+                       System and Communications Protection
+                       <br/>
+                        System and Communications Protocols
                      </td>
                    </tr>
                    <tr>
-                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statement</th>
+                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statements</th>
                      <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
+                       <p class='ForewordText' id='_'>
+                          I recommend
+                         <i>this</i>
+                          .
+                       </p>
+                       <br/>
                        <dl>
                          <dt>
                            <p align='left' style='margin-left:0pt;text-align:left;'>A</p>
@@ -535,7 +518,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                recommendation(label:
                          success-response) end
                          <br/>
-                             
+                            
                        </p>
                      </td>
                    </tr>
@@ -606,7 +589,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
              <p id='rfc2616' class='Biblio'>
                [1]
                <span style='mso-tab-count:1'>  </span>
-               IETF RFC 2616, 
+               IETF RFC 2616,
                <i> Hypertext Transfer Protocol — HTTP/1.1 </i>
              </p>
            </div>
@@ -717,24 +700,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  </tr>
                  <tr>
                    <th>Family</th>
-                   <td>System and Communications Protection</td>
+                   <td>System and Communications Protection<br/>
+                   System and Communications Protocols</td>
                  </tr>
                  <tr>
-                   <th>Family</th>
-                   <td>System and Communications Protocols</td>
-                 </tr>
-                 <tr>
-                    <th>Statement</th><td>
+                    <th>Statements</th><td>
                      <p id='_'>
                        I recommend
                        <em>this</em>
                        .
                      </p>
-                   </td>
-                 </tr>
-                 <tr>
-                 <th>Statement</th>
-            <td>
+                     <br/>
               <dl>
                 <dt>A</dt>
                 <dd>B</dd>
@@ -836,13 +812,14 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <name>Table 1 — Abstract test 1: First</name>
         <tbody>
           <tr><th>Identifier</th><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
-        <tr><th>Subject</th><td>user</td></tr><tr><th>Dependency</th><td>/ss/584/2015/level/1</td></tr><tr><th>Control-class</th><td>Technical</td></tr><tr><th>Priority</th><td>P0</td></tr><tr><th>Family</th><td>System and Communications Protection</td></tr><tr><th>Family</th><td>System and Communications Protocols</td></tr>
+        <tr><th>Subject</th><td>user</td></tr>
+        <tr><th>Dependency</th><td>/ss/584/2015/level/1</td></tr><tr><th>Control-class</th><td>Technical</td></tr><tr><th>Priority</th><td>P0</td></tr>
+        <tr><th>Family</th><td>System and Communications Protection<br/>
+        System and Communications Protocols</td></tr>
 
-        <tr><th>Statement</th><td>
+        <tr><th>Statements</th><td>
           <p id="_">I recommend <em>this</em>.</p>
-        </td></tr>
-        <tr><th>Statement</th>
-            <td>
+            <br/>
               <dl>
                 <dt>A</dt>
                 <dd>B</dd>
@@ -923,12 +900,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>user</td>
                 </tr>
                 <tr>
-                  <th>Dependency</th>
-                  <td>/ss/584/2015/level/1</td>
-                </tr>
-                <tr>
-                  <th>Dependency</th>
-                  <td>/ss/584/2015/level/2</td>
+                  <th>Dependencies</th>
+                  <td>/ss/584/2015/level/1<br/>
+                  /ss/584/2015/level/2</td>
                 </tr>
                                  <tr>
                    <th>Provisions</th>
@@ -1036,24 +1010,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>Dependency</th>
-                   <td>/ss/584/2015/level/1</td>
-                 </tr>
-                 <tr>
-                   <th>Dependency</th>
-                   <td>
+                   <th>Dependencies</th>
+                   <td>/ss/584/2015/level/1<br/>
                      <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
                  <tr>
-                   <th>Indirect Dependency</th>
+                   <th>Indirect Dependencies</th>
                    <td>
                      <link target='http://www.example.com/'/>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th>Indirect Dependency</th>
-                   <td>
+                   <br/>
                      <xref target='B'>Conformance class 2: Second</xref>
                    </td>
                  </tr>
@@ -1176,24 +1142,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>D&#xE9;pendance</th>
-                   <td>/ss/584/2015/level/1</td>
-                 </tr>
-                 <tr>
-                   <th>D&#xE9;pendance</th>
-                   <td>
+                   <th>D&#xE9;pendances</th>
+                   <td>/ss/584/2015/level/1<br/>
                      <xref target='B'>Classe de confirmité 2&#xa0;: Second</xref>
                    </td>
                  </tr>
                  <tr>
-                   <th>D&#xE9;pendance indirecte</th>
+                   <th>D&#xE9;pendances indirectes</th>
                    <td>
                      <link target='http://www.example.com/'/>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th>D&#xE9;pendance indirecte</th>
-                   <td>
+                   <br/>
                      <xref target='B'>Classe de confirmité 2&#xa0;: Second</xref>
                    </td>
                  </tr>
@@ -1295,12 +1253,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>user</td>
                  </tr>
                  <tr>
-                   <th>Dependency</th>
-                   <td>/ss/584/2015/level/1</td>
-                 </tr>
-                 <tr>
-                   <th>Dependency</th>
-                   <td>/ss/584/2015/level/2</td>
+                   <th>Dependencies</th>
+                   <td>/ss/584/2015/level/1<br/>
+                   /ss/584/2015/level/2</td>
                  </tr>
                  <tr>
                  <th>Provision</th>
@@ -1387,12 +1342,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>user</td>
                 </tr>
                 <tr>
-                  <th>Dependency</th>
-                  <td>/ss/584/2015/level/1</td>
-                </tr>
-                <tr>
-                  <th>Dependency</th>
-                  <td>/ss/584/2015/level/2</td>
+                  <th>Dependencies</th>
+                  <td>/ss/584/2015/level/1<br/>
+                  /ss/584/2015/level/2</td>
                 </tr>
                 <tr>
                    <th>Provisions</th>
@@ -1498,16 +1450,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>
-                  <th>Statement</th><td>
+                  <th>Statements</th><td>
                     <p id='_'>
                       I recommend
                       <em>this</em>
                       .
                     </p>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Statement</th><td>
+                    <br/>
                     <p id='_'>As for the measurement targets,</p>
                   </td>
                 </tr>
@@ -1616,16 +1565,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td>/ss/584/2015/level/1</td>
                 </tr>
                 <tr>
-                  <th>Statement</th><td>
+                  <th>Statements</th><td>
                     <p id='_'>
                       I recommend
                       <em>this</em>
                       .
                     </p>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Statement</th><td>
+                  <br/>
                     <p id='_'>As for the measurement targets,</p>
                   </td>
                 </tr>

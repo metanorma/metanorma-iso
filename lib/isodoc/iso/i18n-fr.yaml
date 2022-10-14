@@ -80,3 +80,12 @@ inflection:
   Test de conformité:
     sg: Tests de conformité
     pl: Tests de conformité
+  Déclaration:
+    sg: Déclaration
+    pl: Déclarations
+  Dépendance:
+    sg: Dépendance
+    pl: Dépendances
+  Dépendance indirecte:
+    sg: Dépendance indirecte
+    pl: Dépendances indirectes

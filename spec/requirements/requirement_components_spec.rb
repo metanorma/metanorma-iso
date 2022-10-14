@@ -72,18 +72,14 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>Statement</th>
+                   <th>Statements</th>
                    <td>
                      <p id='_'>
                        I recommend
                        <em>2</em>
                        .
                      </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th>Statement</th>
-                   <td>
+                     <br/>
                      <p id='_'>
                        I recommend
                        <em>2a</em>
@@ -162,18 +158,14 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>Statement</th>
+                   <th>Statements</th>
                    <td>
                      <p id='_'>
                        I recommend
                        <em>7</em>
                        .
                      </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th>Statement</th>
-                   <td>
+                   <br/>
                      <p id='_'>
                        I recommend
                        <em>7a</em>
@@ -201,11 +193,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <th>Guidance</th>
                    <td>
                      <p>GUIDANCE #1</p>
-                   </td>
-                 </tr>
-                 <tr id='A8'>
-                   <th>Guidance</th>
-                   <td>
+                   <br/>
                      <p>GUIDANCE #2</p>
                    </td>
                  </tr>
