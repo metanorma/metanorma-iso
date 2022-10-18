@@ -1016,7 +1016,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr>
-                   <th>Indirect prerequisite</th>
+                   <th>Indirect prerequisites</th>
                    <td>
                      <link target='http://www.example.com/'/>
                    <br/>

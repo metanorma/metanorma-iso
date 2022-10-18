@@ -77,15 +77,6 @@ inflection:
   Disposition:
     sg: Disposition
     pl: Dispositions
-  Test de conformité:
-    sg: Tests de conformité
-    pl: Tests de conformité
   Déclaration:
     sg: Déclaration
     pl: Déclarations
-  Prérequis:
-    sg: Prérequis
-    pl: Prérequis
-  Dépendance indirecte:
-    sg: Prérequis indirect
-    pl: Prérequis indirects

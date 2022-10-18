@@ -83,15 +83,6 @@ inflection:
   Provision:
     sg: Provision
     pl: Provisions
-  Conformance test:
-    sg: Conformance test
-    pl: Conformance tests
   Statement:
     sg: Statement
     pl: Statements
-  Prerequisite:
-    sg: Prerequisite
-    pl: Prerequisites
-  Indirect Prerequisite:
-    sg: Indirect Prerequisite
-    pl: Indirect Prerequisites
