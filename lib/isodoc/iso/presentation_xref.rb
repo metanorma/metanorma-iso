@@ -104,15 +104,18 @@ module IsoDoc
         locality_span_wrap(ret, type)
       end
 
-      def prefix_container(container, linkend, target)
+      def prefix_container(container, linkend, node, target)
         delim = ", "
-        type = :xref
-        if @xrefs.anchor(target, :type) == "listitem" &&
+        ref = if @xrefs.anchor(target, :type) == "listitem" &&
             !@xrefs.anchor(target, :refer_list)
-          delim = " "
-          type = :label # 7 a) not Clause 7 a), but Clause 7 List 1 a)
-        end
-        l10n(@xrefs.anchor(container, type) + delim + linkend)
+                delim = " "
+                @xrefs.anchor(container, :label)
+                # 7 a) : Clause 7 a), but Clause 7 List 1 a)
+              else
+                anchor_xref(node, container)
+              end
+
+        l10n(ref + delim + linkend)
       end
 
       def expand_citeas(text)
