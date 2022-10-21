@@ -74,7 +74,6 @@ locality:
   appendix: Приложение
 requirements:
   modspec:
-    description: Описание
     provision: Условие
     conformancetest: Тест на соответствие
 inflection:

@@ -76,7 +76,6 @@ locality:
   appendix: Appendix
 requirements:
   modspec:
-    description: Description
     provision: Provision
     conformancetest: Conformance test
 inflection:

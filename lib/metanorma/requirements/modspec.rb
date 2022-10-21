@@ -29,24 +29,6 @@ module Metanorma
           out
         end
 
-        def recommend_title(node, out)
-          label = node.at(ns("./identifier")) or return
-          out.add_child("<tr><th>#{@labels['modspec']['identifier']}</th>" \
-                        "<td><tt>#{label.children.to_xml}</tt></td>")
-        end
-
-        def requirement_component_parse(node, out)
-          if node["exclude"] != "true" && node.name == "description"
-            lbl = "statement"
-            recommend_class(node.parent) == "recommendclass" and
-              lbl = "description"
-            out << "<tr><th>#{@labels['modspec'][lbl]}</th>" \
-                   "<td>#{node.children.to_xml}</td></tr>"
-          else
-            super
-          end
-        end
-
         def requirement_table_nested_cleanup(node, table)
           table["type"] == "recommendclass" or return table
           ins = table.at(ns("./tbody/tr[td/table]")) or return table

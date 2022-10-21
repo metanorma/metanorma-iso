@@ -154,22 +154,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <td>System and Communications Protection<br/>
         System and Communications Protocols</td>
       </tr>
-      <tr>
-        <th>Statements</th><td>
-          <p id='_'>
-            I recommend
-            <em>this</em>
-            .
-          </p>
-            <br/>
-              <dl>
-                <dt>A</dt>
-                <dd>B</dd>
-                <dt>C</dt>
-                <dd>D</dd>
-              </dl>
+      <tr><th>Statement</th><td>
+          <p id="_">I recommend <em>this</em>.</p>
             </td>
             </tr>
+            <tr>
+            <th>A</th>
+            <td>B</td>
+          </tr>
+          <tr>
+            <th>C</th>
+            <td>D</td>
+          </tr>
       <tr>
         <td colspan='2'>
           <p id='_'>The measurement target shall be measured as:</p>
@@ -257,7 +253,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     OUTPUT
 
     html = <<~OUTPUT
-           <body lang='en'>
+      <body lang='en'>
          <div class='title-section'>
            <p> </p>
          </div>
@@ -307,26 +303,23 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       System and Communications Protocols
                    </td>
                  </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Statements</th>
+                                  <tr>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Statement</th>
                    <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
                      <p id='_'>
-                        I recommend
+                       I recommend
                        <i>this</i>
-                        .
+                       .
                      </p>
-                     <br/>
-                     <dl>
-                       <dt>
-                         <p>A</p>
-                       </dt>
-                       <dd>B</dd>
-                       <dt>
-                         <p>C</p>
-                       </dt>
-                       <dd>D</dd>
-                     </dl>
                    </td>
+                 </tr>
+                 <tr>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>A</th>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>B</td>
+                 </tr>
+                 <tr>
+                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>C</th>
+                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>D</td>
                  </tr>
                  <tr>
                    <td colspan='2' style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
@@ -421,7 +414,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     OUTPUT
 
     doc = <<~OUTPUT
-           <body lang='EN-US' link='blue' vlink='#954F72'>
+      <body lang='EN-US' link='blue' vlink='#954F72'>
          <div class='WordSection1'>
            <p> </p>
          </div>
@@ -472,26 +465,23 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                         System and Communications Protocols
                      </td>
                    </tr>
-                   <tr>
-                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statements</th>
+                                      <tr>
+                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>Statement</th>
                      <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
                        <p class='ForewordText' id='_'>
-                          I recommend
+                         I recommend
                          <i>this</i>
-                          .
+                         .
                        </p>
-                       <br/>
-                       <dl>
-                         <dt>
-                           <p align='left' style='margin-left:0pt;text-align:left;'>A</p>
-                         </dt>
-                         <dd>B</dd>
-                         <dt>
-                           <p align='left' style='margin-left:0pt;text-align:left;'>C</p>
-                         </dt>
-                         <dd>D</dd>
-                       </dl>
                      </td>
+                   </tr>
+                   <tr>
+                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>A</th>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>B</td>
+                   </tr>
+                   <tr>
+                     <th style='font-weight:bold;border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>C</th>
+                     <td style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>D</td>
                    </tr>
                    <tr>
                      <td colspan='2' style='border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;'>
@@ -703,22 +693,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>System and Communications Protection<br/>
                    System and Communications Protocols</td>
                  </tr>
-                 <tr>
-                    <th>Statements</th><td>
-                     <p id='_'>
-                       I recommend
-                       <em>this</em>
-                       .
-                     </p>
-                     <br/>
-              <dl>
-                <dt>A</dt>
-                <dd>B</dd>
-                <dt>C</dt>
-                <dd>D</dd>
-              </dl>
+                         <tr><th>Statement</th><td>
+          <p id="_">I recommend <em>this</em>.</p>
             </td>
             </tr>
+            <tr>
+            <th>A</th>
+            <td>B</td>
+          </tr>
+          <tr>
+            <th>C</th>
+            <td>D</td>
+          </tr>
                  <tr>
                    <td colspan='2'>
                      <p id='_'>The measurement target shall be measured as:</p>
@@ -817,17 +803,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <tr><th>Family</th><td>System and Communications Protection<br/>
         System and Communications Protocols</td></tr>
 
-        <tr><th>Statements</th><td>
+        <tr><th>Statement</th><td>
           <p id="_">I recommend <em>this</em>.</p>
-            <br/>
-              <dl>
-                <dt>A</dt>
-                <dd>B</dd>
-                <dt>C</dt>
-                <dd>D</dd>
-              </dl>
             </td>
             </tr>
+            <tr>
+            <th>A</th>
+            <td>B</td>
+          </tr>
+          <tr>
+            <th>C</th>
+            <td>D</td>
+          </tr>
             <tr> <td colspan='2'>
           <p id="_">The measurement target shall be measured as:</p>
           <formula id="_"><name>1</name>
