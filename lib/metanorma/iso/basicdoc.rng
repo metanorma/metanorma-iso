@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <include href="biblio.rng">
-    <start>
-      <ref name="document"/>
-    </start>
-  </include>
   <define name="document">
     <element name="document">
       <optional>
@@ -1124,27 +1119,5 @@
         <ref name="paragraph-with-footnote"/>
       </zeroOrMore>
     </element>
-  </define>
-  <define name="ext">
-    <element name="ext">
-      <ref name="BibDataExtensionType"/>
-    </element>
-  </define>
-  <define name="BibDataExtensionType">
-    <ref name="doctype"/>
-  </define>
-  <define name="doctype">
-    <element name="doctype">
-      <ref name="DocumentType"/>
-    </element>
-  </define>
-  <define name="DocumentType">
-    <value>document</value>
-  </define>
-  <define name="BibData">
-    <ref name="BibliographicItem"/>
-    <optional>
-      <ref name="ext"/>
-    </optional>
   </define>
 </grammar>

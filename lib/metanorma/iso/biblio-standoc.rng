@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Add-ons to biblio.rnc for standoc model: defines the extension point BibDataExtensionType
+    of relaton
+    
+    Specialisations as for biblio.rnc. Extension point can be redefined completely for a flavour of standoc
+    (SDO); but other elements in Bibdata can only be extended (more specialised vocabularies for Bibdata)
+  -->
+  <include href="biblio.rng">
+    <define name="BibData">
+      <ref name="BibliographicItem"/>
+      <optional>
+        <ref name="ext"/>
+      </optional>
+    </define>
+  </include>
+  <define name="ext">
+    <element name="ext">
+      <ref name="BibDataExtensionType"/>
+    </element>
+  </define>
+  <define name="BibDataExtensionType">
+    <optional>
+      <attribute name="schema-version"/>
+    </optional>
+    <ref name="doctype"/>
+    <optional>
+      <ref name="docsubtype"/>
+    </optional>
+    <optional>
+      <ref name="editorialgroup"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="ics"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="structuredidentifier"/>
+    </zeroOrMore>
+  </define>
+  <define name="doctype">
+    <element name="doctype">
+      <optional>
+        <attribute name="abbreviation"/>
+      </optional>
+      <ref name="DocumentType"/>
+    </element>
+  </define>
+  <define name="DocumentType">
+    <value>document</value>
+  </define>
+  <define name="docsubtype">
+    <element name="subdoctype">
+      <ref name="DocumentSubtype"/>
+    </element>
+  </define>
+  <define name="DocumentSubtype">
+    <text/>
+  </define>
+  <define name="editorialgroup">
+    <element name="editorialgroup">
+      <oneOrMore>
+        <ref name="technical-committee"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="technical-committee">
+    <element name="technical-committee">
+      <ref name="IsoWorkgroup"/>
+    </element>
+  </define>
+  <define name="IsoWorkgroup">
+    <optional>
+      <attribute name="number"/>
+    </optional>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="identifier"/>
+    </optional>
+    <optional>
+      <attribute name="prefix"/>
+    </optional>
+    <text/>
+  </define>
+  <define name="ics">
+    <element name="ics">
+      <element name="code">
+        <text/>
+      </element>
+      <optional>
+        <element name="text">
+          <text/>
+        </element>
+      </optional>
+    </element>
+  </define>
+  <define name="structuredidentifier">
+    <element name="structuredidentifier">
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <oneOrMore>
+        <element name="agency">
+          <text/>
+        </element>
+      </oneOrMore>
+      <optional>
+        <element name="class">
+          <text/>
+        </element>
+      </optional>
+      <element name="docnumber">
+        <text/>
+      </element>
+      <optional>
+        <element name="partnumber">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="edition">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="version">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="supplementtype">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="supplementnumber">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="amendment">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="corrigendum">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="language">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="year">
+          <text/>
+        </element>
+      </optional>
+    </element>
+  </define>
+</grammar>

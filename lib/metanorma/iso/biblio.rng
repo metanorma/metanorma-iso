@@ -33,9 +33,10 @@
       <param name="pattern">([\+\-]?\d{4})((-?)((0[1-9]|1[0-2])((-?)([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6]))))?</param>
     </data>
   </define>
-  <start>
-    <ref name="bibitem"/>
-  </start>
+  <!-- start = bibitem -->
+  <define name="BibData">
+    <ref name="BibliographicItem"/>
+  </define>
   <define name="status">
     <element name="status">
       <ref name="stage"/>
@@ -170,27 +171,25 @@
   </define>
   <define name="contributor">
     <element name="contributor">
-      <zeroOrMore>
+      <oneOrMore>
         <ref name="role"/>
-      </zeroOrMore>
+      </oneOrMore>
       <ref name="ContributorInfo"/>
     </element>
   </define>
   <define name="role">
     <element name="role">
-      <optional>
-        <attribute name="type">
-          <choice>
-            <value>author</value>
-            <value>performer</value>
-            <value>publisher</value>
-            <value>editor</value>
-            <value>adapter</value>
-            <value>translator</value>
-            <value>distributor</value>
-          </choice>
-        </attribute>
-      </optional>
+      <attribute name="type">
+        <choice>
+          <value>author</value>
+          <value>performer</value>
+          <value>publisher</value>
+          <value>editor</value>
+          <value>adapter</value>
+          <value>translator</value>
+          <value>distributor</value>
+        </choice>
+      </attribute>
       <zeroOrMore>
         <ref name="roledescription"/>
       </zeroOrMore>
@@ -512,6 +511,17 @@
   </define>
   <define name="localityStack">
     <element name="localityStack">
+      <optional>
+        <attribute name="connective">
+          <choice>
+            <value>and</value>
+            <value>or</value>
+            <value>from</value>
+            <value>to</value>
+            <value/>
+          </choice>
+        </attribute>
+      </optional>
       <zeroOrMore>
         <ref name="locality"/>
       </zeroOrMore>
@@ -524,6 +534,17 @@
   </define>
   <define name="sourceLocalityStack">
     <element name="sourceLocalityStack">
+      <optional>
+        <attribute name="connective">
+          <choice>
+            <value>and</value>
+            <value>or</value>
+            <value>from</value>
+            <value>to</value>
+            <value/>
+          </choice>
+        </attribute>
+      </optional>
       <zeroOrMore>
         <ref name="sourceLocality"/>
       </zeroOrMore>

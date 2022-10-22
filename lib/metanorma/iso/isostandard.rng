@@ -1,93 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar ns="https://www.metanorma.org/ns/iso" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <!-- default namespace isostandard = "https://www.metanorma.com/ns/iso" -->
+  <include href="relaton-iso.rng"/>
   <include href="isodoc.rng">
     <start>
       <ref name="iso-standard"/>
     </start>
-    <define name="organization">
-      <element name="organization">
-        <oneOrMore>
-          <ref name="orgname"/>
-        </oneOrMore>
-        <optional>
-          <ref name="abbreviation"/>
-        </optional>
-        <optional>
-          <ref name="uri"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="org-identifier"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="contact"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="technical-committee"/>
-        </optional>
-        <optional>
-          <ref name="subcommittee"/>
-        </optional>
-        <optional>
-          <ref name="workgroup"/>
-        </optional>
-        <optional>
-          <ref name="secretariat"/>
-        </optional>
-      </element>
-    </define>
-    <define name="BibDataExtensionType">
-      <optional>
-        <attribute name="schema-version"/>
-      </optional>
-      <ref name="doctype"/>
-      <optional>
-        <ref name="docsubtype"/>
-      </optional>
-      <optional>
-        <ref name="horizontal"/>
-      </optional>
-      <ref name="editorialgroup"/>
-      <optional>
-        <ref name="approvalgroup"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="ics"/>
-      </zeroOrMore>
-      <ref name="structuredidentifier"/>
-      <optional>
-        <ref name="stagename"/>
-      </optional>
-    </define>
-    <define name="bdate">
-      <element name="date">
-        <attribute name="type">
-          <choice>
-            <ref name="BibliographicDateType"/>
-            <text/>
-          </choice>
-        </attribute>
-        <choice>
-          <group>
-            <element name="from">
-              <ref name="ISO8601Date"/>
-            </element>
-            <optional>
-              <element name="to">
-                <ref name="ISO8601Date"/>
-              </element>
-            </optional>
-          </group>
-          <element name="on">
-            <choice>
-              <ref name="ISO8601Date"/>
-              <value>--</value>
-              <value>–</value>
-            </choice>
-          </element>
-        </choice>
-      </element>
-    </define>
     <define name="sections">
       <element name="sections">
         <zeroOrMore>
@@ -269,40 +187,6 @@
         </optional>
       </element>
     </define>
-    <define name="DocumentType">
-      <choice>
-        <value>international-standard</value>
-        <value>technical-specification</value>
-        <value>technical-report</value>
-        <value>publicly-available-specification</value>
-        <value>international-workshop-agreement</value>
-        <value>guide</value>
-        <value>amendment</value>
-        <value>technical-corrigendum</value>
-        <value>directive</value>
-      </choice>
-    </define>
-    <define name="DocumentSubtype">
-      <choice>
-        <value>specification</value>
-        <value>method-of-test</value>
-        <value>vocabulary</value>
-        <value>code-of-practice</value>
-      </choice>
-    </define>
-    <define name="structuredidentifier">
-      <element name="structuredidentifier">
-        <optional>
-          <attribute name="type"/>
-        </optional>
-        <group>
-          <ref name="documentnumber"/>
-          <optional>
-            <ref name="tc-documentnumber"/>
-          </optional>
-        </group>
-      </element>
-    </define>
     <define name="foreword">
       <element name="foreword">
         <ref name="Basic-Section"/>
@@ -311,11 +195,6 @@
     <define name="introduction">
       <element name="introduction">
         <ref name="Content-Section"/>
-      </element>
-    </define>
-    <define name="editorialgroup">
-      <element name="editorialgroup">
-        <ref name="ISOProjectGroup"/>
       </element>
     </define>
     <define name="Content-Section">
@@ -363,33 +242,6 @@
     </define>
   </include>
   <!-- end overrides -->
-  <define name="ISOProjectGroup">
-    <zeroOrMore>
-      <ref name="agency"/>
-    </zeroOrMore>
-    <oneOrMore>
-      <ref name="technical-committee"/>
-    </oneOrMore>
-    <zeroOrMore>
-      <ref name="subcommittee"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="workgroup"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="secretariat"/>
-    </optional>
-  </define>
-  <define name="approvalgroup">
-    <element name="approvalgroup">
-      <ref name="ISOProjectGroup"/>
-    </element>
-  </define>
-  <define name="agency">
-    <element name="agency">
-      <text/>
-    </element>
-  </define>
   <!--
     We display the Normative References between scope and terms; but to keep the
     grammar simple, we keep the references together
@@ -424,46 +276,6 @@
       <zeroOrMore>
         <ref name="indexsect"/>
       </zeroOrMore>
-    </element>
-  </define>
-  <define name="horizontal">
-    <element name="horizontal">
-      <data type="boolean"/>
-    </element>
-  </define>
-  <define name="documentnumber">
-    <element name="project-number">
-      <optional>
-        <attribute name="part">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="subpart">
-          <data type="int"/>
-        </attribute>
-      </optional>
-      <text/>
-    </element>
-  </define>
-  <define name="tc-documentnumber">
-    <element name="tc-document-number">
-      <data type="int"/>
-    </element>
-  </define>
-  <define name="subcommittee">
-    <element name="subcommittee">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="workgroup">
-    <element name="workgroup">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="secretariat">
-    <element name="secretariat">
-      <text/>
     </element>
   </define>
   <define name="clause-hanging-paragraph-with-footnote">
@@ -507,14 +319,6 @@
   <define name="annex-appendix">
     <element name="appendix">
       <ref name="Clause-Section"/>
-    </element>
-  </define>
-  <define name="stagename">
-    <element name="stagename">
-      <optional>
-        <attribute name="abbreviation"/>
-      </optional>
-      <text/>
     </element>
   </define>
 </grammar>
