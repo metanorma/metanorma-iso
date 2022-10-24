@@ -72,66 +72,66 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/rice_image1.png does not match "\
+      "image name spec/examples/rice_img/rice_image1.png does not match " \
       "DRG requirements: expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1001_ed2amd3fig1.png does not "\
+      "image name spec/examples/rice_img/1001_ed2amd3fig1.png does not " \
       "match DRG requirements: " \
       "expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/SL1000-1_ed2amd3fig1.png does not "\
+      "image name spec/examples/rice_img/SL1000-1_ed2amd3fig1.png does not " \
       "match DRG requirements: " \
       "expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/ISO_1213_1.png does not match DRG "\
+      "image name spec/examples/rice_img/ISO_1213_1.png does not match DRG " \
       "requirements: expect 1000-1_ed2amd3fig"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figA.png does not "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA.png does not " \
       "match DRG requirements"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png does "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png does " \
       "not match DRG requirements"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png is " \
       "under a table but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig2.png is under "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig2.png is under " \
       "a table but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figTab2.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab2.png is " \
       "labelled as under a table but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
       "labelled as under a table but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figA2.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA2.png is " \
       "under an annex but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig3.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig3.png is " \
       "under an annex but is not so labelled"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figA1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA1.png is " \
       "labelled as under an annex but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
       "labelled as under an annex but is not"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1b.png has a "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1b.png has a " \
       "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig4.png does not "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig4.png does not " \
       "have a subfigure letter but is a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1a.png has a "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1a.png has a " \
       "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png has a "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png has a " \
       "subfigure letter but is not a subfigure"
     expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig5_f.png expected "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig5_f.png expected " \
       "to have suffix _e"
     expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png expected "\
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png expected " \
       "to have suffix _e"
   end
 
@@ -518,7 +518,7 @@ RSpec.describe Metanorma::ISO do
       <<iso123>>
     INPUT
     expect(File.read("test.err"))
-      .to include "iso123 does not have a corresponding anchor ID "\
+      .to include "iso123 does not have a corresponding anchor ID " \
                   "in the bibliography"
   end
 
@@ -534,11 +534,11 @@ RSpec.describe Metanorma::ISO do
       * [[[iso123,ISO 123]]] _Standard_
     INPUT
     expect(File.read("test.err"))
-      .to include "undated reference ISO 123 should not contain "\
+      .to include "undated reference ISO 123 should not contain " \
                   "specific elements"
   end
 
-  it "do not warn that undated reference which is a bibliographic reference "\
+  it "do not warn that undated reference which is a bibliographic reference " \
      "has locality" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -551,7 +551,7 @@ RSpec.describe Metanorma::ISO do
       * [[[iso123,1]]] _Standard_
     INPUT
     expect(File.read("test.err"))
-      .not_to include "undated reference [1] should not contain specific "\
+      .not_to include "undated reference [1] should not contain specific " \
                       "elements"
   end
 
@@ -567,7 +567,7 @@ RSpec.describe Metanorma::ISO do
       * [[[iev,IEV]]] _Standard_
     INPUT
     expect(File.read("test.err"))
-      .not_to include "undated reference IEV should not contain specific "\
+      .not_to include "undated reference IEV should not contain specific " \
                       "elements"
   end
 
@@ -583,7 +583,7 @@ RSpec.describe Metanorma::ISO do
       * [[[iev,ISO 123:--]]] _Standard_
     INPUT
     expect(File.read("test.err"))
-      .not_to include "undated reference ISO 123 should not contain specific "\
+      .not_to include "undated reference ISO 123 should not contain specific " \
                       "elements"
   end
 
@@ -642,7 +642,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "number not broken up in threes"
   end
 
-  it "gives No style warning if number not broken up in threes is "\
+  it "gives No style warning if number not broken up in threes is " \
      "ISO reference" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -856,11 +856,11 @@ RSpec.describe Metanorma::ISO do
       == Symbols and Abbreviated Terms
     INPUT
     expect(File.read("test.err"))
-      .to include "Only one Symbols and Abbreviated Terms section "\
+      .to include "Only one Symbols and Abbreviated Terms section " \
                   "in the standard"
   end
 
-  it "Style warning if Symbols and Abbreviated Terms contains "\
+  it "Style warning if Symbols and Abbreviated Terms contains " \
      "extraneous matter" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -870,7 +870,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err"))
-      .to include "Symbols and Abbreviated Terms can only contain "\
+      .to include "Symbols and Abbreviated Terms can only contain " \
                   "a definition list"
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
@@ -881,7 +881,7 @@ RSpec.describe Metanorma::ISO do
       A:: B
     INPUT
     expect(File.read("test.err"))
-      .not_to include "Symbols and Abbreviated Terms can only contain "\
+      .not_to include "Symbols and Abbreviated Terms can only contain " \
                       "a definition list"
   end
 
@@ -996,7 +996,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err"))
-      .to include "Normative References must be followed by "\
+      .to include "Normative References must be followed by " \
                   "Terms and Definitions"
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
@@ -1020,7 +1020,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err"))
-      .not_to include "Normative References must be followed by "\
+      .not_to include "Normative References must be followed by " \
                       "Terms and Definitions"
   end
 
@@ -1118,7 +1118,7 @@ RSpec.describe Metanorma::ISO do
       .not_to include "Scope must occur before Terms and Definitions"
   end
 
-  it "Warning if Symbols and Abbreviated Terms does not occur immediately "\
+  it "Warning if Symbols and Abbreviated Terms does not occur immediately " \
      "after Terms and Definitions" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1297,7 +1297,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "Only one Symbols and Abbreviated Terms section "\
+      .not_to include "Only one Symbols and Abbreviated Terms section " \
                       "in the standard"
   end
 
@@ -1316,10 +1316,10 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .to include "Single terms clause in vocabulary document should have "\
+      .to include "Single terms clause in vocabulary document should have " \
                   "normal Terms and definitions heading"
     expect(File.read("test.err"))
-      .not_to include "Multiple terms clauses in vocabulary document should "\
+      .not_to include "Multiple terms clauses in vocabulary document should " \
                       "have 'Terms related to' heading"
   end
 
@@ -1343,11 +1343,11 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .to include "In vocabulary documents, Symbols and Abbreviated Terms are "\
+      .to include "In vocabulary documents, Symbols and Abbreviated Terms are " \
                   "only permitted in annexes"
   end
 
-  it "Warning if multiple terms section in vocabulary document not named "\
+  it "Warning if multiple terms section in vocabulary document not named " \
      "properly" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
@@ -1364,10 +1364,10 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "Single terms clause in vocabulary document should have "\
+      .not_to include "Single terms clause in vocabulary document should have " \
                       "normal Terms and definitions heading"
     expect(File.read("test.err"))
-      .to include "Multiple terms clauses in vocabulary document should "\
+      .to include "Multiple terms clauses in vocabulary document should " \
                   "have 'Terms related to' heading"
   end
 
@@ -1846,7 +1846,7 @@ RSpec.describe Metanorma::ISO do
       * [[[ISO8,ISO 8:--]]], _Title_
     INPUT
     expect(File.read("test.err"))
-      .to include "Reference ISO8 does not have an associated footnote "\
+      .to include "Reference ISO8 does not have an associated footnote " \
                   "indicating unpublished status"
   end
 
@@ -1917,25 +1917,25 @@ RSpec.describe Metanorma::ISO do
       . Sentence.
     INPUT
     expect(File.read("test.err"))
-      .to include "List entry of broken up sentence must start with "\
+      .to include "List entry of broken up sentence must start with " \
                   "lowercase letter: Sentence."
     expect(File.read("test.err"))
-      .not_to include "List entry of broken up sentence must start with "\
+      .not_to include "List entry of broken up sentence must start with " \
                       "lowercase letter: another broken up;."
     expect(File.read("test.err"))
-      .to include "List entry of broken up sentence must end with semicolon: "\
+      .to include "List entry of broken up sentence must end with semicolon: " \
                   "this is"
     expect(File.read("test.err"))
-      .to include "Final list entry of broken up sentence must end with "\
+      .to include "Final list entry of broken up sentence must end with " \
                   "full stop: sentence"
     expect(File.read("test.err"))
-      .not_to include "Final list entry of broken up sentence must end with "\
+      .not_to include "Final list entry of broken up sentence must end with " \
                       "full stop: sentence."
     expect(File.read("test.err"))
-      .not_to include "List entry of broken up sentence must start with "\
+      .not_to include "List entry of broken up sentence must start with " \
                       "lowercase letter: Another broken up."
     expect(File.read("test.err"))
-      .not_to include "List entry of broken up sentence must end with "\
+      .not_to include "List entry of broken up sentence must end with " \
                       "semicolon: This is."
   end
 
@@ -1953,13 +1953,13 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .to include "List entry of separate sentences must end with full stop: "\
+      .to include "List entry of separate sentences must end with full stop: " \
                   "This is;"
     expect(File.read("test.err"))
-      .not_to include "List entry of separate sentences must end with "\
+      .not_to include "List entry of separate sentences must end with " \
                       "full stop: Another broken up."
     expect(File.read("test.err"))
-      .to include "List entry of separate sentences must start with "\
+      .to include "List entry of separate sentences must start with " \
                   "uppercase letter: sentence."
   end
 
@@ -1977,7 +1977,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "List entry after full stop must end with full stop: "\
+      .not_to include "List entry after full stop must end with full stop: " \
                       "This is"
   end
 
@@ -1997,7 +1997,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err"))
-      .not_to include "List entry after full stop must end with full stop: "\
+      .not_to include "List entry after full stop must end with full stop: " \
                       "This is"
   end
 
@@ -2125,7 +2125,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "non-terms clauses cannot cross-reference terms clause (c)"
     expect(File.read("test.err"))
-      .not_to include "non-terms clauses cannot cross-reference terms "\
+      .not_to include "non-terms clauses cannot cross-reference terms " \
                       "clause (b)"
   end
 
