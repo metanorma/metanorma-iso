@@ -17,9 +17,11 @@ module IsoDoc
         init_dis(options)
       end
 
-      def init_dis(options)
-        @wordtemplate = options[:isowordtemplate]
-        @dis = ::IsoDoc::Iso::WordDISConvert.new(options)
+      def init_dis(opt)
+        @wordtemplate = opt[:isowordtemplate]
+        opt[:isowordbgstripcolor] ||= "true"
+        @dis = ::IsoDoc::Iso::WordDISConvert.new(opt)
+        @dis.bgstripcolor = opt[:isowordbgstripcolor]
       end
 
       def font_choice(options)
@@ -80,7 +82,7 @@ module IsoDoc
         stage = @meta.get[:stage_int]
         return if !stage.nil? && stage < 60
 
-        body.br **{ clear: "all", style: "page-break-before:left;"\
+        body.br **{ clear: "all", style: "page-break-before:left;" \
                                          "mso-break-type:section-break" }
         body.div **{ class: "colophon" } do |div|
         end

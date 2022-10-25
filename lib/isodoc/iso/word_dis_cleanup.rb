@@ -43,11 +43,32 @@ module IsoDoc
         example_style(docxml)
         dis_style_interactions(docxml)
         quote_style(docxml)
+        stripbgcolor(docxml)
+      end
+
+      def stripbgcolor(docxml)
+        @bgstripcolor == "true" or return
+        %w(aucollab audeg aufname aurole ausuffix ausurname bibarticle bibetal
+           bibfname bibfpage bibissue bibjournal biblpage bibnumber
+           biborganization bibsuppl bibsurname biburl bibvolume bibyear
+           citebib citeen citefig citefn citetbl bibextlink citeeq citetfn
+           auprefix citeapp citesec stddocNumber stddocPartNumber
+           stddocTitle aumember stdfootnote stdpublisher stdsection stdyear
+           stddocumentType bibalt-year bibbook bbichapterno bibchaptertitle
+           bibed-etal bibed-fname bibeditionno bibed-organization bibed-suffix
+           bibed-surname bibinstitution bibisbn biblocation bibpagecount
+           bibpatent bibpublisher bibreportnum bibschool bibseries bibseriesno
+           bibtrans stdsuppl citesection).each do |t|
+          docxml.xpath("//span[@class = '#{t}']").each do |s|
+            s["style"] ||= ""
+            s["style"] = "mso-pattern:none;#{s['style']}"
+          end
+        end
       end
 
       def dis_style_interactions(docxml)
-        docxml.xpath("//p[@class = 'Code' or @class = 'Code-' or "\
-                     "@class = 'Code--']"\
+        docxml.xpath("//p[@class = 'Code' or @class = 'Code-' or " \
+                     "@class = 'Code--']" \
                      "[following::p[@class = 'Examplecontinued']]").each do |p|
           p["style"] ||= ""
           p["style"] = "margin-bottom:12pt;#{p['style']}"
@@ -184,7 +205,7 @@ module IsoDoc
         docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
           p["class"] = "zzCopyright"
           p["style"] = "text-indent:20.15pt;"
-          p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' "\
+          p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' " \
                                              "style='text-indent:20.15pt;'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
