@@ -1735,7 +1735,7 @@ span.aucollab
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:silver;{% endif %}
+	background:silver;
 }
 span.audeg
 	{mso-style-name:au_deg;
@@ -1746,7 +1746,7 @@ span.audeg
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:yellow;{% endif %}
+	background:yellow;
 	}
 span.aufname
 	{mso-style-name:au_fname;
@@ -1757,7 +1757,7 @@ span.aufname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFCC;{% endif %}
+	background:#FFFFCC;
 	}
 span.aurole
 	{mso-style-name:au_role;
@@ -1768,7 +1768,7 @@ span.aurole
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:olive;{% endif %}
+	background:olive;
 	}
 span.ausuffix
 	{mso-style-name:au_suffix;
@@ -1779,7 +1779,7 @@ span.ausuffix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:fuchsia;{% endif %}
+	background:fuchsia;
 	}
 span.ausurname
 	{mso-style-name:au_surname;
@@ -1790,7 +1790,7 @@ span.ausurname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
+	background:#CCFF99;
 	}
 span.bibbase
 	{mso-style-name:bib_base;
@@ -1807,7 +1807,7 @@ span.bibarticle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFFF;{% endif %}
+	background:#CCFFFF;
 	}
 span.bibcomment
 	{mso-style-name:bib_comment;
@@ -1831,7 +1831,7 @@ span.bibdoi
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
+	background:#CCFFCC;
 	}
 span.bibetal
 	{mso-style-name:bib_etal;
@@ -1841,7 +1841,7 @@ span.bibetal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
+	background:#CCFF99;
 	}
 span.bibfname
 	{mso-style-name:bib_fname;
@@ -1851,7 +1851,7 @@ span.bibfname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFCC;{% endif %}
+	background:#FFFFCC;
 	}
 span.bibfpage
 	{mso-style-name:bib_fpage;
@@ -1861,7 +1861,7 @@ span.bibfpage
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#E6E6E6;{% endif %}
+	background:#E6E6E6;
 	}
 span.bibissue
 	{mso-style-name:bib_issue;
@@ -1871,7 +1871,7 @@ span.bibissue
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFAB;{% endif %}
+	background:#FFFFAB;
 	}
 span.bibjournal
 	{mso-style-name:bib_journal;
@@ -1881,7 +1881,7 @@ span.bibjournal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#F9DECF;{% endif %}
+	background:#F9DECF;
 	}
 span.biblpage
 	{mso-style-name:bib_lpage;
@@ -1891,7 +1891,7 @@ span.biblpage
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#D9D9D9;{% endif %}
+	background:#D9D9D9;
 	}
 span.bibnumber
 	{mso-style-name:bib_number;
@@ -1901,7 +1901,7 @@ span.bibnumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCCCFF;{% endif %}
+	background:#CCCCFF;
 	}
 span.biborganization
 	{mso-style-name:bib_organization;
@@ -1911,7 +1911,7 @@ span.biborganization
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
+	background:#CCFF99;
 	}
 span.bibsuffix
 	{mso-style-name:bib_suffix;
@@ -1928,7 +1928,7 @@ span.bibsuppl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC66;{% endif %}
+	background:#FFCC66;
 	}
 span.bibsurname
 	{mso-style-name:bib_surname;
@@ -1938,7 +1938,7 @@ span.bibsurname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF99;{% endif %}
+	background:#CCFF99;
 	}
 span.bibunpubl
 	{mso-style-name:bib_unpubl;
@@ -1955,7 +1955,7 @@ span.biburl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF66;{% endif %}
+	background:#CCFF66;
 	}
 span.bibvolume
 	{mso-style-name:bib_volume;
@@ -1965,7 +1965,7 @@ span.bibvolume
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCECFF;{% endif %}
+	background:#CCECFF;
 	}
 span.bibyear
 	{mso-style-name:bib_year;
@@ -1975,7 +1975,7 @@ span.bibyear
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCCFF;{% endif %}
+	background:#FFCCFF;
 	}
 span.citebase
 	{mso-style-name:cite_base;
@@ -1992,7 +1992,7 @@ span.citebib
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFFF;{% endif %}
+	background:#CCFFFF;
 	}
 span.citebox
 	{mso-style-name:cite_box;
@@ -2009,7 +2009,7 @@ span.citeen
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFF99;{% endif %} 
+	background:#FFFF99; 
 	vertical-align:super;}
 span.citefig
 	{mso-style-name:cite_fig;
@@ -2020,7 +2020,7 @@ span.citefig
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
+	background:#CCFFCC;
 	}
 span.citefn
 	{mso-style-name:cite_fn;
@@ -2032,7 +2032,7 @@ span.citefn
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FF99CC;{% endif %} 
+	background:#FF99CC; 
 	vertical-align:baseline;}
 span.citetbl
 	{mso-style-name:cite_tbl;
@@ -2043,7 +2043,7 @@ span.citetbl
 	mso-hansi-font-family:Cambria;
 	color:windowtext;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FF9999;{% endif %}
+	background:#FF9999;
 	}
 span.stdbase
 	{mso-style-name:std_base;
@@ -2060,7 +2060,7 @@ span.bibextlink
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#6CCE9D;{% endif %}
+	background:#6CCE9D;
 	}
 span.citeeq
 	{mso-style-name:cite_eq;
@@ -2070,7 +2070,7 @@ span.citeeq
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFAE37;{% endif %}
+	background:#FFAE37;
 	}
 span.bibmedline
 	{mso-style-name:bib_medline;
@@ -2087,7 +2087,7 @@ span.citetfn
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FBBA79;{% endif %}
+	background:#FBBA79;
 	}
 span.auprefix
 	{mso-style-name:au_prefix;
@@ -2098,7 +2098,7 @@ span.auprefix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC99;{% endif %}
+	background:#FFCC99;
 	}
 span.citeapp
 	{mso-style-name:cite_app;
@@ -2108,7 +2108,7 @@ span.citeapp
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFF33;{% endif %}
+	background:#CCFF33;
 	}
 span.citesec
 	{mso-style-name:cite_sec;
@@ -2118,7 +2118,7 @@ span.citesec
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCCCC;{% endif %}
+	background:#FFCCCC;
 	}
 span.stddocNumber
 	{mso-style-name:std_docNumber;
@@ -2128,7 +2128,7 @@ span.stddocNumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#F2DBDB;{% endif %}
+	background:#F2DBDB;
 	}
 span.stddocPartNumber
 	{mso-style-name:std_docPartNumber;
@@ -2138,7 +2138,7 @@ span.stddocPartNumber
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#EAF1DD;{% endif %}
+	background:#EAF1DD;
 	}
 span.stddocTitle
 	{mso-style-name:std_docTitle;
@@ -2148,7 +2148,7 @@ span.stddocTitle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FDE9D9;{% endif %} 
+	background:#FDE9D9; 
 	font-style:italic;
 	mso-bidi-font-style:normal;}
 span.aumember
@@ -2160,7 +2160,7 @@ span.aumember
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FF99CC;{% endif %}
+	background:#FF99CC;
 	}
 span.stdfootnote
 	{mso-style-name:std_footnote;
@@ -2170,7 +2170,7 @@ span.stdfootnote
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#F2F2F2;{% endif %}
+	background:#F2F2F2;
 	}
 span.stdpublisher
 	{mso-style-name:std_publisher;
@@ -2180,7 +2180,8 @@ span.stdpublisher
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#C6D9F1;{% endif %}
+        background:#C6D9F1;
+	background:#C6D9F1;
 	}
 span.stdsection
 	{mso-style-name:std_section;
@@ -2190,7 +2191,7 @@ span.stdsection
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#E5DFEC;{% endif %}
+	background:#E5DFEC;
 	}
 span.stdyear
 	{mso-style-name:std_year;
@@ -2200,7 +2201,7 @@ span.stdyear
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#DAEEF3;{% endif %}
+	background:#DAEEF3;
 	}
 span.stddocumentType
 	{mso-style-name:std_documentType;
@@ -2210,7 +2211,7 @@ span.stddocumentType
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#7DE1DF;{% endif %}
+	background:#7DE1DF;
 	}
 span.bibalt-year
 	{mso-style-name:bib_alt-year;
@@ -2221,7 +2222,7 @@ span.bibalt-year
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CC99FF;{% endif %}
+	background:#CC99FF;
 	}
 span.bibbook
 	{mso-style-name:bib_book;
@@ -2231,7 +2232,7 @@ span.bibbook
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#99CCFF;{% endif %}
+	background:#99CCFF;
 	}
 span.bibchapterno
 	{mso-style-name:bib_chapterno;
@@ -2241,7 +2242,7 @@ span.bibchapterno
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#D9D9D9;{% endif %}
+	background:#D9D9D9;
 	}
 span.bibchaptertitle
 	{mso-style-name:bib_chaptertitle;
@@ -2251,7 +2252,7 @@ span.bibchaptertitle
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FF9D5B;{% endif %}
+	background:#FF9D5B;
 	}
 span.bibed-etal
 	{mso-style-name:bib_ed-etal;
@@ -2261,7 +2262,7 @@ span.bibed-etal
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#00F4EE;{% endif %}
+	background:#00F4EE;
 	}
 span.bibed-fname
 	{mso-style-name:bib_ed-fname;
@@ -2271,7 +2272,7 @@ span.bibed-fname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFFB7;{% endif %}
+	background:#FFFFB7;
 	}
 span.bibeditionno
 	{mso-style-name:bib_editionno;
@@ -2281,7 +2282,7 @@ span.bibeditionno
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC00;{% endif %}
+	background:#FFCC00;
 	}
 span.bibed-organization
 	{mso-style-name:bib_ed-organization;
@@ -2291,7 +2292,7 @@ span.bibed-organization
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FCAAC3;{% endif %}
+	background:#FCAAC3;
 	}
 span.bibed-suffix
 	{mso-style-name:bib_ed-suffix;
@@ -2301,7 +2302,7 @@ span.bibed-suffix
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
+	background:#CCFFCC;
 	}
 span.bibed-surname
 	{mso-style-name:bib_ed-surname;
@@ -2311,7 +2312,7 @@ span.bibed-surname
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:yellow;{% endif %}
+	background:yellow;
 	}
 span.bibinstitution
 	{mso-style-name:bib_institution;
@@ -2321,7 +2322,7 @@ span.bibinstitution
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCFFCC;{% endif %}
+	background:#CCFFCC;
 	}
 span.bibisbn
 	{mso-style-name:bib_isbn;
@@ -2330,7 +2331,7 @@ span.bibisbn
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#D9D9D9;{% endif %}
+	background:#D9D9D9;
 	}
 span.biblocation
 	{mso-style-name:bib_location;
@@ -2340,7 +2341,7 @@ span.biblocation
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCCCC;{% endif %}
+	background:#FFCCCC;
 	}
 span.bibpagecount
 	{mso-style-name:bib_pagecount;
@@ -2350,7 +2351,7 @@ span.bibpagecount
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:lime;{% endif %}
+	background:lime;
 	}
 span.bibpatent
 	{mso-style-name:bib_patent;
@@ -2360,7 +2361,7 @@ span.bibpatent
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#66FFCC;{% endif %}
+	background:#66FFCC;
 	}
 span.bibpublisher
 	{mso-style-name:bib_publisher;
@@ -2370,7 +2371,7 @@ span.bibpublisher
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FF99CC;{% endif %}
+	background:#FF99CC;
 	}
 span.bibreportnum
 	{mso-style-name:bib_reportnum;
@@ -2380,7 +2381,7 @@ span.bibreportnum
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#CCCCFF;{% endif %}
+	background:#CCCCFF;
 	}
 span.bibschool
 	{mso-style-name:bib_school;
@@ -2390,7 +2391,7 @@ span.bibschool
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC66;{% endif %}
+	background:#FFCC66;
 	}
 span.bibseries
 	{mso-style-name:bib_series;
@@ -2399,7 +2400,7 @@ span.bibseries
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFCC99;{% endif %}
+	background:#FFCC99;
 	}
 span.bibseriesno
 	{mso-style-name:bib_seriesno;
@@ -2408,7 +2409,7 @@ span.bibseriesno
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FFFF99;{% endif %}
+	background:#FFFF99;
 	}
 span.bibtrans
 	{mso-style-name:bib_trans;
@@ -2417,7 +2418,7 @@ span.bibtrans
 	font-family:$bodyfont;
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#99CC00;{% endif %}
+	background:#99CC00;
 	}
 span.stdsuppl
 	{mso-style-name:std_suppl;
@@ -2427,7 +2428,7 @@ span.stdsuppl
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#F6FBB5;{% endif %}
+	background:#F6FBB5;
 	}
 span.citesection
 	{mso-style-name:cite_section;
@@ -2437,7 +2438,7 @@ span.citesection
 	mso-ascii-font-family:Cambria;
 	mso-hansi-font-family:Cambria;
 	border:none;
-	{% if stage_int >= 40 and stage_int < 60 %}background:#FF7C80;{% endif %}
+	background:#FF7C80;
 	}
 
 p.BaseText, li.BaseText, div.BaseText

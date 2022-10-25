@@ -286,7 +286,7 @@ RSpec.describe IsoDoc do
           </p>
           <p class='RefNorm'>
             <a name='ISO712' id='ISO712'/>
-            <span class='stdpublisher'>ISO/IEC</span> <span class='stddocNumber'>712</span>-<span class='stddocPartNumber'>3</span>:<span class='stdyear'>2022</span>, ALUFFI, Paolo, ed. (2022).
+            <span class='stdpublisher' style='mso-pattern:none;'>ISO/IEC</span> <span class='stddocNumber' style='mso-pattern:none;'>712</span>-<span class='stddocPartNumber' style='mso-pattern:none;'>3</span>:<span class='stdyear' style='mso-pattern:none;'>2022</span>, ALUFFI, Paolo, ed. (2022).
             <i>
               <span class='std_class'>
                 Facets of Algebraic Geometry: A Collection in Honor of William

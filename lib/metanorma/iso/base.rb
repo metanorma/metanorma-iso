@@ -30,7 +30,8 @@ module Metanorma
       end
 
       def doc_extract_attributes(node)
-        super.merge(isowordtemplate: node.attr("iso-word-template"))
+        super.merge(isowordtemplate: node.attr("iso-word-template"),
+                    isowordbgstripcolor: node.attr("iso-word-bg-strip-color"))
       end
 
       def pdf_converter(node)
