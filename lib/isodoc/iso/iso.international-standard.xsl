@@ -121,8 +121,8 @@
 
 	<xsl:variable name="stagename-header-coverpage">
 		<xsl:choose>
-			<xsl:when test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM'">DRAFT</xsl:when>
-			<xsl:when test="$stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM'">FINAL DRAFT</xsl:when>
+			<xsl:when test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or starts-with($stage-abbreviation, 'DTS') or starts-with($stage-abbreviation, 'DTR')">DRAFT</xsl:when>
+			<xsl:when test="$stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or starts-with($stage-abbreviation, 'FDTS') or starts-with($stage-abbreviation, 'FDTR')">FINAL DRAFT</xsl:when>
 			<xsl:when test="$stage-abbreviation = 'PRF'"/>
 			<xsl:when test="$stage-abbreviation = 'IS'"/>
 			<xsl:otherwise>
