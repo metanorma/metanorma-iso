@@ -3,6 +3,8 @@ require_relative "word_dis_cleanup"
 module IsoDoc
   module Iso
     class WordDISConvert < WordConvert
+      attr_accessor :bgstripcolor 
+
       def default_file_locations(_options)
         { wordstylesheet: html_doc_path("wordstyle-dis.scss"),
           standardstylesheet: html_doc_path("isodoc-dis.scss"),
@@ -19,7 +21,8 @@ module IsoDoc
         super
       end
 
-      def init_dis(options); end
+      def init_dis(opt)
+      end
 
       def convert1(docxml, filename, dir)
         update_coverpage(docxml)
