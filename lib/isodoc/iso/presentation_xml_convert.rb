@@ -76,9 +76,11 @@ module IsoDoc
       end
 
       def clause(docxml)
-        docxml.xpath(ns("//clause[not(ancestor::annex)] | "\
-                        "//terms | //definitions | //references | "\
+        docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
+                        "//terms | //definitions | //references | " \
                         "//preface/introduction[clause]")).each do |f|
+          f.parent.name == "annex" &&
+            @xrefs.klass.single_term_clause?(f.parent) and next
           clause1(f)
         end
       end
@@ -133,7 +135,7 @@ module IsoDoc
         i = display_order_at(docxml, "//clause[@type = 'scope']", i)
         i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
         i = display_order_xpath(docxml,
-                                "//sections/clause[not(@type = 'scope')] | "\
+                                "//sections/clause[not(@type = 'scope')] | " \
                                 "//sections/terms | //sections/definitions", i)
         i = display_order_xpath(docxml, "//annex", i)
         i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
