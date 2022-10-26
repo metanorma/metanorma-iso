@@ -10,23 +10,28 @@ module IsoDoc
       def warning_for_missing_metadata(docxml)
         return unless @meta.get[:unpublished]
 
+        ret = warning_for_missing_metadata_create(docxml)
+        return if ret.empty?
+
+        warning_for_missing_metadata_post(docxml, ret)
+      end
+
+      def warning_for_missing_metadata_create(docxml)
         ret = ""
         docxml.at(ns("//bibdata/ext//secretariat")) or
           ret += "<p>Secretariat is missing.</p>"
         docxml.at(ns("//bibdata/ext//editorialgroup")) or
           ret += "<p>Editorial groups are missing.</p>"
-        docxml.at(ns("//bibdata/date[@type = 'published' or @type = 'issued' "\
+        docxml.at(ns("//bibdata/date[@type = 'published' or @type = 'issued' " \
                      "or @type = 'created']")) ||
           docxml.at(ns("//bibdata/version/revision-date")) or
           ret += "<p>Document date is missing.</p>"
-        return if ret.empty?
-
-        warning_for_missing_metadata1(docxml, ret)
+        ret
       end
 
       def warning_for_missing_metadata1(docxml, ret)
         id = UUIDTools::UUID.random_create
-        ret = "<review date='#{Date.today}' reviewer='Metanorma' id='_#{id}'>"\
+        ret = "<review date='#{Date.today}' reviewer='Metanorma' id='_#{id}'>" \
               "<p><strong>Metadata warnings:<strong></p> #{ret}</review>"
         ins = docxml.at(ns("//sections//title")) or return
         ins.children.first.previous = ret
@@ -65,9 +70,8 @@ module IsoDoc
         i18n.get["stage_dict"][stage.text].is_a?(Hash) or
           return hash_translate(bib, i18n.get["stage_dict"],
                                 "./status/stage", lang)
-        i18n.get["stage_dict"][stage.text][type&.text] and
-          tag_translate(stage, lang,
-                        i18n.get["stage_dict"][stage.text][type&.text])
+        stagetype = i18n.get["stage_dict"][stage.text][type&.text] and
+          tag_translate(stage, lang, stagetype)
       end
     end
   end
