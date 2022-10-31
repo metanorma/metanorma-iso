@@ -188,6 +188,11 @@
           <value>adapter</value>
           <value>translator</value>
           <value>distributor</value>
+          <value>realizer</value>
+          <value>owner</value>
+          <value>authorizer</value>
+          <value>enabler</value>
+          <value>subject</value>
         </choice>
       </attribute>
       <zeroOrMore>

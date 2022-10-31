@@ -177,11 +177,7 @@
         </optional>
         <optional>
           <attribute name="style">
-            <choice>
-              <value>basic</value>
-              <value>full</value>
-              <value>short</value>
-            </choice>
+            <ref name="XrefStyleType"/>
           </attribute>
         </optional>
         <ref name="XrefBody"/>
@@ -2637,6 +2633,14 @@
         </choice>
       </attribute>
     </element>
+  </define>
+  <define name="XrefStyleType">
+    <choice>
+      <value>basic</value>
+      <value>full</value>
+      <value>short</value>
+      <value>id</value>
+    </choice>
   </define>
   <start>
     <ref name="standard-document"/>
