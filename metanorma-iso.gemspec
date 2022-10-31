@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = "bin"
   spec.require_paths = ["lib"]
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features|.github)/}) \
+    f.match(%r{^(test|spec|features|bin|.github)/}) \
     || f.match(%r{Rakefile|bin/rspec})
   end
   spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
