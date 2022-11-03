@@ -6737,6 +6737,9 @@
 		<xsl:value-of select="substring($str, 2)"/>
 	</xsl:template>
 
+	<!-- ======================================= -->
+	<!-- math -->
+	<!-- ======================================= -->
 	<xsl:template match="mathml:math">
 		<xsl:variable name="isAdded" select="@added"/>
 		<xsl:variable name="isDeleted" select="@deleted"/>
@@ -6787,14 +6790,57 @@
 		<xsl:value-of select="$comment_text"/>
 	</xsl:template>
 
+	<xsl:template match="*[local-name() = 'asciimath']">
+		<xsl:param name="process" select="'false'"/>
+		<xsl:if test="$process = 'true'">
+			<xsl:apply-templates/>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'latexmath']"/>
+
+	<xsl:template name="getMathml_asciimath_text">
+		<xsl:variable name="asciimath" select="../*[local-name() = 'asciimath']"/>
+		<xsl:variable name="latexmath">
+
+		</xsl:variable>
+		<xsl:variable name="asciimath_text_following">
+			<xsl:choose>
+				<xsl:when test="normalize-space($latexmath) != ''">
+					<xsl:value-of select="$latexmath"/>
+				</xsl:when>
+				<xsl:when test="normalize-space($asciimath) != ''">
+					<xsl:value-of select="$asciimath"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="following-sibling::node()[1][self::comment()]"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="asciimath_text_">
+			<xsl:choose>
+				<xsl:when test="normalize-space($asciimath_text_following) != ''">
+					<xsl:value-of select="$asciimath_text_following"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="normalize-space(translate(.,' ⁢','  '))"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="asciimath_text_2" select="java:org.metanorma.fop.Util.unescape($asciimath_text_)"/>
+		<xsl:variable name="asciimath_text" select="java:trim(java:java.lang.String.new($asciimath_text_2))"/>
+		<xsl:value-of select="$asciimath_text"/>
+	</xsl:template>
+
 	<xsl:template name="mathml_instream_object">
-		<xsl:param name="comment_text"/>
+		<xsl:param name="asciimath_text"/>
 		<xsl:param name="mathml_content"/>
 
-		<xsl:variable name="comment_text_">
+		<xsl:variable name="asciimath_text_">
 			<xsl:choose>
-				<xsl:when test="normalize-space($comment_text) != ''"><xsl:value-of select="$comment_text"/></xsl:when>
-				<xsl:otherwise><xsl:call-template name="getMathml_comment_text"/></xsl:otherwise>
+				<xsl:when test="normalize-space($asciimath_text) != ''"><xsl:value-of select="$asciimath_text"/></xsl:when>
+				<!-- <xsl:otherwise><xsl:call-template name="getMathml_comment_text"/></xsl:otherwise> -->
+				<xsl:otherwise><xsl:call-template name="getMathml_asciimath_text"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 
@@ -6818,10 +6864,10 @@
 			</xsl:attribute>
 
 			<!-- <xsl:if test="$add_math_as_text = 'true'"> -->
-			<xsl:if test="normalize-space($comment_text_) != ''">
+			<xsl:if test="normalize-space($asciimath_text_) != ''">
 			<!-- put Mathin Alternate Text -->
 				<xsl:attribute name="fox:alt-text">
-					<xsl:value-of select="$comment_text_"/>
+					<xsl:value-of select="$asciimath_text_"/>
 				</xsl:attribute>
 			</xsl:if>
 			<!-- </xsl:if> -->
@@ -6893,6 +6939,29 @@
 	<xsl:template match="mathml:mtd/mathml:mo/text()[. = '/']" mode="mathml">
 		<xsl:value-of select="."/><xsl:value-of select="$zero_width_space"/>
 	</xsl:template>
+
+	<!-- Examples: 
+		<stem type="AsciiMath">x = 1</stem> 
+		<stem type="AsciiMath"><asciimath>x = 1</asciimath></stem>
+		<stem type="AsciiMath"><asciimath>x = 1</asciimath><latexmath>x = 1</latexmath></stem>
+	-->
+	<xsl:template match="*[local-name() = 'stem'][@type = 'AsciiMath'][count(*) = 0]/text() | *[local-name() = 'stem'][@type = 'AsciiMath'][*[local-name() = 'asciimath']]" priority="3">
+		<fo:inline xsl:use-attribute-sets="mathml-style">
+
+			<xsl:choose>
+				<xsl:when test="self::text()"><xsl:value-of select="."/></xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates>
+						<xsl:with-param name="process">true</xsl:with-param>
+					</xsl:apply-templates>
+				</xsl:otherwise>
+			</xsl:choose>
+
+		</fo:inline>
+	</xsl:template>
+	<!-- ======================================= -->
+	<!-- END: math -->
+	<!-- ======================================= -->
 
 	<xsl:template match="*[local-name()='localityStack']"/>
 
