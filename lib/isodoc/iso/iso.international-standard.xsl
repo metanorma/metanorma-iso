@@ -1924,8 +1924,19 @@
 			<xsl:if test="starts-with(ancestor::*[local-name() = 'table'][1]/@type, 'recommend') and not(following-sibling::*[local-name() = 'p'])">
 				<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="parent::*[local-name() = 'td' or local-name() = 'th'] and not(following-sibling::*)">
-				<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+			<xsl:if test="parent::*[local-name() = 'td' or local-name() = 'th']">
+				<xsl:choose>
+					<xsl:when test="not(following-sibling::*)"> <!-- last paragraph in table cell -->
+						<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:attribute name="margin-bottom">5pt</xsl:attribute>
+					</xsl:otherwise>
+				</xsl:choose>
+				<!-- Special case: if paragraph in 'strong', i.e. it's sub-header, then keeps with next -->
+				<xsl:if test="count(node()) = count(*[local-name() = 'strong']) and following-sibling::*">
+					<xsl:attribute name="keep-with-next">always</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 			<xsl:if test="@id">
 				<xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
