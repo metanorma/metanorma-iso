@@ -29,7 +29,7 @@ module IsoDoc
         ret
       end
 
-      def warning_for_missing_metadata1(docxml, ret)
+      def warning_for_missing_metadata_post(docxml, ret)
         id = UUIDTools::UUID.random_create
         ret = "<review date='#{Date.today}' reviewer='Metanorma' id='_#{id}'>" \
               "<p><strong>Metadata warnings:<strong></p> #{ret}</review>"

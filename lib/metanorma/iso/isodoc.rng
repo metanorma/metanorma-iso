@@ -1027,6 +1027,7 @@
             <ref name="stem"/>
             <ref name="index"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
             <ref name="xref"/>
             <ref name="hyperlink"/>
           </choice>
@@ -1041,6 +1042,7 @@
             <ref name="stem"/>
             <ref name="index"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
             <ref name="xref"/>
             <ref name="hyperlink"/>
           </choice>
@@ -1054,6 +1056,7 @@
             <ref name="PureTextElement"/>
             <ref name="index"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
             <ref name="xref"/>
             <ref name="hyperlink"/>
           </choice>
@@ -1191,6 +1194,7 @@
       <ref name="add"/>
       <ref name="del"/>
       <ref name="span"/>
+      <ref name="erefstack"/>
     </choice>
   </define>
   <define name="add">
@@ -1198,6 +1202,7 @@
       <choice>
         <ref name="PureTextElement"/>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="stem"/>
         <ref name="keyword"/>
         <ref name="xref"/>
@@ -1210,6 +1215,7 @@
       <choice>
         <ref name="PureTextElement"/>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="stem"/>
         <ref name="keyword"/>
         <ref name="xref"/>
@@ -1274,6 +1280,7 @@
       </optional>
       <choice>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="xref"/>
         <ref name="termref"/>
       </choice>
@@ -1966,6 +1973,7 @@
       </element>
       <choice>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="xref"/>
         <ref name="termref"/>
       </choice>
@@ -2521,6 +2529,7 @@
             <ref name="xref"/>
             <ref name="hyperlink"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
           </choice>
           <oneOrMore>
             <element name="coords">
@@ -2568,6 +2577,7 @@
             <ref name="xref"/>
             <ref name="hyperlink"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
           </choice>
         </element>
       </zeroOrMore>
@@ -2616,6 +2626,15 @@
       <ref name="PureTextElement"/>
     </oneOrMore>
   </define>
+  <define name="XrefConnectiveType">
+    <choice>
+      <value>and</value>
+      <value>or</value>
+      <value>from</value>
+      <value>to</value>
+      <value/>
+    </choice>
+  </define>
   <define name="XrefTarget">
     <element name="location">
       <attribute name="target">
@@ -2624,13 +2643,7 @@
         </data>
       </attribute>
       <attribute name="connective">
-        <choice>
-          <value>and</value>
-          <value>or</value>
-          <value>from</value>
-          <value>to</value>
-          <value/>
-        </choice>
+        <ref name="XrefConnectiveType"/>
       </attribute>
     </element>
   </define>
@@ -2641,6 +2654,23 @@
       <value>short</value>
       <value>id</value>
     </choice>
+  </define>
+  <define name="erefTypeWithConnective">
+    <optional>
+      <attribute name="connective">
+        <ref name="XrefConnectiveType"/>
+      </attribute>
+    </optional>
+    <ref name="erefType"/>
+  </define>
+  <define name="erefstack">
+    <element name="erefstack">
+      <oneOrMore>
+        <element name="eref">
+          <ref name="erefTypeWithConnective"/>
+        </element>
+      </oneOrMore>
+    </element>
   </define>
   <start>
     <ref name="standard-document"/>
