@@ -34,7 +34,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-t90">
+            <term id="term-t90t_90">
               <preferred>
                 <letter-symbol><name>
                 <stem type="MathML">
@@ -47,6 +47,7 @@ RSpec.describe Metanorma::ISO do
                       </mrow>
                     </msub>
                   </math>
+                  <asciimath>t_90</asciimath>
                 </stem>
                 </name></letter-symbol>
               </preferred>
@@ -63,6 +64,7 @@ RSpec.describe Metanorma::ISO do
                       </mrow>
                     </msub>
                   </math>
+                  <asciimath>t_91</asciimath>
                 </stem>
                 </name></letter-symbol>
               </admitted>
@@ -137,7 +139,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-t90">
+            <term id="term-t90t_90">
               <preferred>
                 <letter-symbol><name>
                 <stem type="MathML">
@@ -150,6 +152,7 @@ RSpec.describe Metanorma::ISO do
                       </mrow>
                     </msub>
                   </math>
+                  <asciimath>t_90</asciimath>
                 </stem>
                 </name></letter-symbol>
               </preferred>
@@ -167,6 +170,7 @@ RSpec.describe Metanorma::ISO do
                         </mrow>
                       </msub>
                     </math>
+                    <asciimath>t_A</asciimath>
                   </stem>
                 </formula>
                 <p id="_">This paragraph is extraneous</p></verbal-definition>
@@ -246,6 +250,7 @@ RSpec.describe Metanorma::ISO do
                 <mn>1</mn>
                 <mo>%</mo>
               </math>
+              <asciimath>r = 1 % r = 1 %</asciimath>
             </stem>
             <note id="_">
               <p id="_">That formula does not do much</p>
@@ -745,6 +750,7 @@ RSpec.describe Metanorma::ISO do
                 <mi>l</mi>
                 <mi>a</mi>
               </math>
+              <asciimath>Formula</asciimath>
             </stem>
             <dl id="_" key="true">
               <dt>a</dt>
