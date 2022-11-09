@@ -36,10 +36,10 @@ module Metanorma
             /\b(see| refer to)\s*\Z/mi.match(preceding)
 
           (target = root.at("//*[@id = '#{t['target']}']")) || next
-          if target.at("./ancestor-or-self::*[@obligation = 'normative']")
+          target.at("./ancestor-or-self::*[@obligation = 'normative']") &&
+            !target.at("./ancestor::sections") and
             @log.add("Style", t,
                      "'see #{t['target']}' is pointing to a normative section")
-          end
         end
       end
 
