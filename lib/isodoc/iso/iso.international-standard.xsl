@@ -4745,7 +4745,7 @@
 	<xsl:template match="*[local-name()='tr']">
 		<fo:table-row xsl:use-attribute-sets="table-body-row-style">
 
-			<xsl:if test="*[local-name() = 'th']">
+			<xsl:if test="count(*) = count(*[local-name() = 'th'])"> <!-- row contains 'th' only -->
 				<xsl:attribute name="keep-with-next">always</xsl:attribute>
 			</xsl:if>
 
