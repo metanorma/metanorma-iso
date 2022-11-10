@@ -1721,7 +1721,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "invalid subcommittee type"
   end
 
-  it "Warning if 'see' crossreference points to normative section" do
+  it "Do not warn if 'see' crossreference points to normative section" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
       [[terms]]
@@ -1731,7 +1731,7 @@ RSpec.describe Metanorma::ISO do
       See <<terms>>
     INPUT
     expect(File.read("test.err"))
-      .to include "'see terms' is pointing to a normative section"
+      .not_to include "'see terms' is pointing to a normative section"
   end
 
   it "Warning if 'see' reference points to normative reference" do
