@@ -1152,7 +1152,7 @@
           <data type="boolean"/>
         </attribute>
       </optional>
-      <ref name="BibliographicItem"/>
+      <ref name="ReducedBibliographicItem"/>
     </element>
   </define>
   <define name="image" combine="choice">

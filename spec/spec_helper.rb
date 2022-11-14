@@ -67,12 +67,9 @@ def xmlpp(xml)
     else n
     end
   end.join
-  s = ""
-  f = REXML::Formatters::Pretty.new(2)
-  f.compact = true
-  f.write(REXML::Document.new(xml
-    .gsub(%r{<fetched>20[0-9-]+</fetched>}, "<fetched/>")), s)
-  HTMLEntities.new.decode(s)
+  ret = Nokogiri::XML(xml).to_xml(indent: 2, encoding: "UTF-8")
+    .gsub(%r{<fetched>20[0-9-]+</fetched>}, "<fetched/>")
+  HTMLEntities.new.decode(ret)
 end
 
 ASCIIDOC_BLANK_HDR = <<~"HDR".freeze
