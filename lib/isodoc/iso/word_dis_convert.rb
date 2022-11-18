@@ -44,7 +44,7 @@ module IsoDoc
       end
 
       def table_title_attrs(_node)
-        { class: "Tabletitle", style: "text-align:center;" }
+        { class: "TableTitle", style: "text-align:center;" }
       end
 
       def span_parse(node, out)
