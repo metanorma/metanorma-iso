@@ -10,7 +10,7 @@ module IsoDoc
         admonition: "Admonition",
         admonitiontitle: "AdmonitionTitle",
         sourcetitle: "SourceTitle",
-        tabletitle: "TableTitle",
+        TableTitle: "Tabletitle",
         titlepagesbhead: "TablePageSubhead",
         NormRef: "RefNorm",
         Biblio: "BiblioEntry",
@@ -240,12 +240,13 @@ module IsoDoc
         end
       end
 
-      def make_FigureWordToC(docxml)
-        super.sub(/FigureTitle,figuretitle/, "Figure title,Annex Figure Title")
+      def table_toc_class
+        ["Table title", "Tabletitle", "Annex Table Title", "AnnexTableTitle"] +
+          super
       end
 
-      def make_TableWordToC(docxml)
-        super.sub(/TableTitle,tabletitle/, "Table title,Annex Table Title")
+      def figure_toc_class
+        ["Figure Title", "Annex Figure Title", "AnnexFigureTitle"] + super
       end
     end
   end
