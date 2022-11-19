@@ -5815,13 +5815,61 @@
 				<xsl:copy-of select="node()"/>
 			</td>
 			<td>
-				<xsl:copy-of select="following-sibling::*[local-name()='dd'][1]/node()[not(local-name() = 'dl')]"/>
+				<!-- <xsl:copy-of select="following-sibling::*[local-name()='dd'][1]/node()[not(local-name() = 'dl')]"/> -->
+				<xsl:apply-templates select="following-sibling::*[local-name()='dd'][1]/node()[not(local-name() = 'dl')]" mode="dl_if"/>
 				<!-- get paragraphs from nested 'dl' -->
 				<xsl:apply-templates select="following-sibling::*[local-name()='dd'][1]/*[local-name() = 'dl']" mode="dl_if_nested"/>
 			</td>
 		</tr>
 	</xsl:template>
 	<xsl:template match="*[local-name()='dd']" mode="dl_if"/>
+
+	<xsl:template match="*" mode="dl_if">
+		<xsl:copy-of select="."/>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'p']" mode="dl_if">
+		<xsl:param name="indent"/>
+		<p>
+			<xsl:copy-of select="@*"/>
+			<xsl:value-of select="$indent"/>
+			<xsl:copy-of select="node()"/>
+		</p>
+
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'ul' or local-name() = 'ol']" mode="dl_if">
+		<xsl:variable name="list_rendered_">
+			<xsl:apply-templates select="."/>
+		</xsl:variable>
+		<xsl:variable name="list_rendered" select="xalan:nodeset($list_rendered_)"/>
+
+		<xsl:variable name="indent">
+			<xsl:for-each select="($list_rendered//fo:block[not(.//fo:block)])[1]">
+				<xsl:apply-templates select="ancestor::*[@provisional-distance-between-starts]/@provisional-distance-between-starts" mode="dl_if"/>
+			</xsl:for-each>
+		</xsl:variable>
+
+		<xsl:apply-templates mode="dl_if">
+			<xsl:with-param name="indent" select="$indent"/>
+		</xsl:apply-templates>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'li']" mode="dl_if">
+		<xsl:param name="indent"/>
+		<xsl:apply-templates mode="dl_if">
+			<xsl:with-param name="indent" select="$indent"/>
+		</xsl:apply-templates>
+	</xsl:template>
+
+	<xsl:template match="@provisional-distance-between-starts" mode="dl_if">
+		<xsl:variable name="value" select="round(substring-before(.,'mm'))"/>
+		<!-- emulate left indent for list item -->
+		<xsl:call-template name="repeat">
+			<xsl:with-param name="char" select="'x'"/>
+			<xsl:with-param name="count" select="$value"/>
+		</xsl:call-template>
+	</xsl:template>
 
 	<xsl:template match="*[local-name()='dl']" mode="dl_if_nested">
 		<xsl:for-each select="*[local-name() = 'dt']">
