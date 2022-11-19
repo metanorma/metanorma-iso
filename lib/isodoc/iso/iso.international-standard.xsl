@@ -2832,7 +2832,7 @@
 		<xsl:attribute name="margin-right">0mm</xsl:attribute>
 
 			<xsl:attribute name="font-size">10pt</xsl:attribute>
-			<xsl:attribute name="margin-top">12pt</xsl:attribute>
+			<!-- <xsl:attribute name="margin-top">12pt</xsl:attribute> -->
 			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 
 	</xsl:attribute-set> <!-- table-container-style -->
@@ -2851,7 +2851,7 @@
 			<xsl:attribute name="font-size">11pt</xsl:attribute>
 			<xsl:attribute name="font-weight">bold</xsl:attribute>
 			<xsl:attribute name="text-align">center</xsl:attribute>
-			<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
+			<xsl:attribute name="margin-bottom">-12pt</xsl:attribute>
 
 	</xsl:attribute-set> <!-- table-name-style -->
 
@@ -2887,7 +2887,7 @@
 		<xsl:attribute name="padding-right">1mm</xsl:attribute>
 		<xsl:attribute name="display-align">center</xsl:attribute>
 
-			<xsl:attribute name="padding-top">1mm</xsl:attribute>
+			<xsl:attribute name="padding-top">0.5mm</xsl:attribute>
 			<xsl:attribute name="border-left"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 			<xsl:attribute name="border-right"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 
@@ -3919,6 +3919,8 @@
 			<!-- Display table's name before table as standalone block -->
 			<!-- $namespace = 'iso' or  -->
 
+					<xsl:apply-templates select="*[local-name()='name']"/> <!-- table's title rendered before table -->
+
 			<xsl:variable name="cols-count" select="count(xalan:nodeset($simple-table)/*/tr[1]/td)"/>
 
 			<xsl:variable name="colwidths">
@@ -3954,6 +3956,10 @@
 			</xsl:variable>
 
 			<fo:block-container xsl:use-attribute-sets="table-container-style">
+
+					<xsl:if test="not(*[local-name() = 'name'])">
+						<xsl:attribute name="margin-top">12pt</xsl:attribute>
+					</xsl:if>
 
 				<!-- end table block-container attributes -->
 
@@ -4134,16 +4140,28 @@
 
 					<fo:block xsl:use-attribute-sets="table-name-style">
 
+							<xsl:if test="$continued = 'true'">
+								<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+							</xsl:if>
+
 						<xsl:choose>
 							<xsl:when test="$continued = 'true'">
-
-									<xsl:apply-templates/>
 
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:apply-templates/>
 							</xsl:otherwise>
 						</xsl:choose>
+
+							<xsl:if test="$continued = 'true'">
+								<fo:inline font-weight="bold" font-style="normal">
+									<fo:retrieve-table-marker retrieve-class-name="table_number"/>
+								</fo:inline>
+								<fo:inline font-weight="normal" font-style="italic">
+									<xsl:text> </xsl:text>
+									<fo:retrieve-table-marker retrieve-class-name="table_continued"/>
+								</fo:inline>
+							</xsl:if>
 
 					</fo:block>
 
@@ -4530,11 +4548,6 @@
 								<xsl:call-template name="table_name_fn_display"/>
 							</xsl:for-each>
 
-							<fo:block text-align="right" font-style="italic">
-								<xsl:text> </xsl:text>
-								<fo:retrieve-table-marker retrieve-class-name="table_continued"/>
-							</fo:block>
-
 			</fo:table-cell>
 		</fo:table-row>
 	</xsl:template> <!-- table-header-title -->
@@ -4702,6 +4715,7 @@
 				<fo:table-row height="0" keep-with-next.within-page="always">
 					<fo:table-cell>
 
+							<fo:marker marker-class-name="table_number"/>
 							<fo:marker marker-class-name="table_continued"/>
 
 						<fo:block/>
@@ -4709,6 +4723,8 @@
 				</fo:table-row>
 				<fo:table-row height="0" keep-with-next.within-page="always">
 					<fo:table-cell>
+
+							<fo:marker marker-class-name="table_number"><xsl:value-of select="normalize-space(translate($table_number, ' ', ' '))"/></fo:marker>
 
 						<fo:marker marker-class-name="table_continued">
 							<xsl:value-of select="$title_continued"/>
