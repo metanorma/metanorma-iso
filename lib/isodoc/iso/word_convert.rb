@@ -101,7 +101,7 @@ module IsoDoc
 
       def footnote_reference_format(link)
         link.children =
-          "<span class='MsoFootnoteReference'>#{link.children.to_xml}</span>)"
+          "<span class='MsoFootnoteReference'>#{to_xml(link.children)}</span>)"
       end
 
       def bibliography_attrs
