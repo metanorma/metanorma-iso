@@ -47,7 +47,7 @@
     </element>
   </define>
   <define name="DocumentType">
-    <value>document</value>
+    <text/>
   </define>
   <define name="docsubtype">
     <element name="subdoctype">
