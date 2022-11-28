@@ -693,7 +693,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td>System and Communications Protection<br/>
                    System and Communications Protocols</td>
                  </tr>
-                         <tr><th>Statement</th><td>
+                         <tr><th>Description</th><td>
           <p id="_">I recommend <em>this</em>.</p>
             </td>
             </tr>
@@ -803,7 +803,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <tr><th>Family</th><td>System and Communications Protection<br/>
         System and Communications Protocols</td></tr>
 
-        <tr><th>Statement</th><td>
+        <tr><th>Description</th><td>
           <p id="_">I recommend <em>this</em>.</p>
             </td>
             </tr>
