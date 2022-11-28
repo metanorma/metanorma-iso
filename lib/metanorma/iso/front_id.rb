@@ -63,11 +63,14 @@ module Metanorma
         xml.docnumber node&.attr("docnumber")
       end
 
+      # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type] document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
       def get_typeabbr(node, amd: false)
         case doctype(node)
-        when "directive" then "DIR"
-        when "technical-report" then "TR"
-        when "technical-specification" then "TS"
+        when "directive" then :dir
+        when "technical-report" then :tr
+        when "technical-specification" then :ts
+        when "guide" then :guide
+        else nil
         end
       end
 
@@ -82,7 +85,7 @@ module Metanorma
         params = iso_id_params_core(node)
         params2 = iso_id_params_add(node)
         if node.attr("updates")
-          orig_id = Pubid::Iso::Identifier.parse(node.attr("updates"))
+          orig_id = Pubid::Iso::Identifier::Base.parse(node.attr("updates"))
           orig_id.edition ||= 1
         end
         iso_id_params_resolve(params, params2, node, orig_id)
@@ -109,7 +112,7 @@ module Metanorma
           node.attr("corrigendum-number"),
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }.compact
-        stage and ret[:stage] = Pubid::Iso::Stage.new(**stage)
+        stage and ret[:stage] = stage
         ret
       end
 
@@ -119,6 +122,7 @@ module Metanorma
         harmonised = "#{get_stage(node)}.#{get_substage(node)}"
         harmonised = nil unless /^\d\d\.\d\d/.match?(harmonised)
         { abbr: stage.to_sym, harmonized_code: harmonised }
+        stage.to_sym
       end
 
       def iso_id_year(node)
@@ -164,7 +168,8 @@ module Metanorma
                   else params_nolang
                   end
         params1.delete(:unpublished)
-        Pubid::Iso::Identifier.new(**params1)
+        require "debug"; binding.b
+        Pubid::Iso::Identifier::Base.new(**params1)
       end
 
       def iso_id_undated(params)
@@ -173,7 +178,7 @@ module Metanorma
           hs.delete(:year)
           hs.delete(:unpublished)
         end
-        Pubid::Iso::Identifier.new(**params2)
+        Pubid::Iso::Identifier::Base.new(**params2)
       end
 
       def iso_id_with_lang(params)
@@ -183,12 +188,12 @@ module Metanorma
                     end
                   else params end
         params1.delete(:unpublished)
-        Pubid::Iso::Identifier.new(**params1)
+        Pubid::Iso::Identifier::Base.new(**params1)
       end
 
       def iso_id_reference(params)
         params1 = params.dup.tap { |hs| hs.delete(:unpublished) }
-        Pubid::Iso::Identifier.new(**params1)
+        Pubid::Iso::Identifier::Base.new(**params1)
       end
 
       def structured_id(node, xml)
