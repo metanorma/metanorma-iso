@@ -163,6 +163,7 @@ RSpec.describe Metanorma::ISO do
                         </mrow>
                       </msub>
                     </math>
+                    <asciimath>w_max</asciimath>
                   </stem>
                 </th>
               </tr>

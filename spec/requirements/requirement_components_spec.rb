@@ -34,7 +34,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
+      <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
            <foreword id='A' displayorder='1'>
              <title>Preface</title>
@@ -42,21 +42,21 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                <name>Table 1 — Recommendation 1</name>
                <tbody>
                  <tr>
-                   <td>Identifier</td>
+                   <th>Identifier</th>
                    <td>
                      <tt>/ogc/recommendation/wfs/2</tt>
                    </td>
                  </tr>
                  <tr>
-                   <td>Subject</td>
+                   <th>Subject</th>
                    <td>user</td>
                  </tr>
                  <tr>
-                   <td>Dependency</td>
+                   <th>Prerequisite</th>
                    <td>/ss/584/2015/level/1</td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statement</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -66,24 +66,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A1'>
-                   <td>Test purpose</td>
+                   <th>Test purpose</th>
                    <td>
                      <p>TEST PURPOSE</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statements</th>
                    <td>
                      <p id='_'>
                        I recommend
                        <em>2</em>
                        .
                      </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Statement</td>
-                   <td>
+                     <br/>
                      <p id='_'>
                        I recommend
                        <em>2a</em>
@@ -92,13 +88,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A2'>
-                   <td>Conditions</td>
+                   <th>Conditions</th>
                    <td>
                      <p>CONDITIONS</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statement</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -108,13 +104,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A3'>
-                   <td>A</td>
+                   <th>A</th>
                    <td>
                      <p>FIRST PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statement</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -124,13 +120,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A4'>
-                   <td>B</td>
+                   <th>B</th>
                    <td>
                      <p>SECOND PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statement</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -140,13 +136,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A5'>
-                   <td>Test method</td>
+                   <th>Test method</th>
                    <td>
                      <p>TEST METHOD</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statement</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -156,24 +152,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A6'>
-                   <td>C</td>
+                   <th>C</th>
                    <td>
                      <p>THIRD PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statements</th>
                    <td>
                      <p id='_'>
                        I recommend
                        <em>7</em>
                        .
                      </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td>Statement</td>
-                   <td>
+                   <br/>
                      <p id='_'>
                        I recommend
                        <em>7a</em>
@@ -182,13 +174,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A7'>
-                   <td>Panda GHz express</td>
+                   <th>Panda GHz express</th>
                    <td>
                      <p>PANDA PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Statement</td>
+                   <th>Statement</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -198,14 +190,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A7'>
-                   <td>Guidance</td>
+                   <th>Guidance</th>
                    <td>
                      <p>GUIDANCE #1</p>
-                   </td>
-                 </tr>
-                 <tr id='A8'>
-                   <td>Guidance</td>
-                   <td>
+                   <br/>
                      <p>GUIDANCE #2</p>
                    </td>
                  </tr>
@@ -260,21 +248,21 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                <name>Table 1 — Recommendations class 1</name>
                <tbody>
                  <tr>
-                   <td>Identifier</td>
+                   <th>Identifier</th>
                    <td>
                      <tt>/ogc/recommendation/wfs/2</tt>
                    </td>
                  </tr>
                  <tr>
-                   <td>Target type</td>
+                   <th>Target type</th>
                    <td>user</td>
                  </tr>
                  <tr>
-                   <td>Dependency</td>
+                   <th>Prerequisite</th>
                    <td>/ss/584/2015/level/1</td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -284,13 +272,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A1'>
-                   <td>Test purpose</td>
+                   <th>Test purpose</th>
                    <td>
                      <p>TEST PURPOSE</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -300,13 +288,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A2'>
-                   <td>Conditions</td>
+                   <th>Conditions</th>
                    <td>
                      <p>CONDITIONS</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -316,13 +304,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A3'>
-                   <td>A</td>
+                   <th>A</th>
                    <td>
                      <p>FIRST PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -332,13 +320,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A4'>
-                   <td>B</td>
+                   <th>B</th>
                    <td>
                      <p>SECOND PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -348,13 +336,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A5'>
-                   <td>Test method</td>
+                   <th>Test method</th>
                    <td>
                      <p>TEST METHOD</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -364,13 +352,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A6'>
-                   <td>C</td>
+                   <th>C</th>
                    <td>
                      <p>THIRD PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -380,13 +368,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    </td>
                  </tr>
                  <tr id='A7'>
-                   <td>Panda GHz express</td>
+                   <th>Panda GHz express</th>
                    <td>
                      <p>PANDA PART</p>
                    </td>
                  </tr>
                  <tr>
-                   <td>Description</td>
+                   <th>Description</th>
                    <td>
                      <p id='_'>
                        I recommend
@@ -453,13 +441,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <name>Table 1 — Requirement 1</name>
               <tbody>
                 <tr>
-                  <td>Test method type</td>
+                  <th>Test method type</th>
                   <td>
                     <p id='_'>Manual Inspection</p>
                   </td>
                 </tr>
                 <tr>
-                  <td>Test method</td>
+                  <th>Test method</th>
                   <td>
                     <p id='1'>
                       <ol class="steps">
@@ -535,13 +523,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                <name>Table 1 — Requirement 1: First</name>
                <tbody>
                  <tr>
-                   <td>Identifier</td>
+                   <th>Identifier</th>
                    <td>
                      <tt>/ogc/recommendation/wfs/1</tt>
                    </td>
                  </tr>
                  <tr>
-                   <td>Conformance test</td>
+                   <th>Conformance test</th>
                    <td>
                      <xref target='A2'>
                        Conformance test 1:
@@ -555,13 +543,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                <name>Table 2 — Conformance test 1: Second</name>
                <tbody>
                  <tr>
-                   <td>Identifier</td>
+                   <th>Identifier</th>
                    <td>
                      <tt>/ogc/recommendation/wfs/2</tt>
                    </td>
                  </tr>
                  <tr>
-                   <td>Requirement</td>
+                   <th>Requirement</th>
                    <td>
                      <xref target='A1'>
                        Requirement 1:
@@ -575,13 +563,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                <name>Table 3 — Requirements class 1: Third</name>
                <tbody>
                  <tr>
-                   <td>Identifier</td>
+                   <th>Identifier</th>
                    <td>
                      <tt>/ogc/recommendation/wfs/3</tt>
                    </td>
                  </tr>
                  <tr>
-                   <td>Conformance test</td>
+                   <th>Conformance class</th>
                    <td>
                      <xref target='A4'>
                        Conformance class 1:
@@ -595,13 +583,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                <name>Table 4 — Conformance class 1: Fourth</name>
                <tbody>
                  <tr>
-                   <td>Identifier</td>
+                   <th>Identifier</th>
                    <td>
                      <tt>/ogc/recommendation/wfs/4</tt>
                    </td>
                  </tr>
                  <tr>
-                   <td>Requirements class</td>
+                   <th>Requirements class</th>
                    <td>
                      <xref target='A3'>
                        Requirements class 1:

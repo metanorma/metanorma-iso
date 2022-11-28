@@ -29,41 +29,28 @@ module Metanorma
           out
         end
 
-        def recommend_title(node, out)
-          label = node.at(ns("./identifier")) or return
-          out.add_child("<tr><td>#{@labels['modspec']['identifier']}</td>"\
-                        "<td><tt>#{label.children.to_xml}</tt></td>")
-        end
-
-        def requirement_component_parse(node, out)
-          if node["exclude"] != "true" && node.name == "description"
-            lbl = "statement"
-            recommend_class(node.parent) == "recommendclass" and
-              lbl = "description"
-            out << "<tr><td>#{@labels['modspec'][lbl]}</td>"\
-                   "<td>#{node.children.to_xml}</td></tr>"
-          else
-            super
-          end
-        end
-
-        def requirement_table_cleanup(node, table)
-          return table unless table["type"] == "recommendclass"
-
-          label = if node["type"] == "conformanceclass" then "conformancetests"
-                  else "provisions" end
+        def requirement_table_nested_cleanup(node, table)
+          table["type"] == "recommendclass" or return table
           ins = table.at(ns("./tbody/tr[td/table]")) or return table
-          ins.replace("<tr><td>#{@labels['modspec'][label]}</td>" +
-                      "<td>#{nested_tables_names(table)}</td></tr>")
+          ins.replace(requirement_table_cleanup_nested_replacement(node, table))
           table.xpath(ns("./tbody/tr[td/table]")).each(&:remove)
           table
+        end
+
+        def requirement_table_cleanup_nested_replacement(node, table)
+          label = "provision"
+          node["type"] == "conformanceclass" and label = "conformancetest"
+          n = nested_tables_names(table)
+          hdr = @i18n.inflect(@labels["modspec"][label],
+                              number: n.size == 1 ? "sg" : "pl")
+          "<tr><th>#{hdr}</th><td>#{n.join('<br/>')}</td></tr>"
         end
 
         def nested_tables_names(table)
           table.xpath(ns("./tbody/tr/td/table"))
             .each_with_object([]) do |t, m|
               m << t.at(ns("./name")).children.to_xml
-            end.join("<br/>")
+            end
         end
 
         def postprocess_anchor_struct(block, anchor)
@@ -86,20 +73,17 @@ module Metanorma
             end
         end
 
-        def reqt_links_test(docxml)
-          docxml.xpath(ns("//requirement | //recommendation | //permission"))
-            .each_with_object({}) do |r, m|
-              next unless %w(conformanceclass
-                             verification).include?(r["type"])
+        def reqt_links_test1(reqt, acc)
+          return unless %w(conformanceclass
+                           verification).include?(reqt["type"])
 
-              subj = r.at(ns("./classification[tag = 'target']/value"))
-              id = r.at(ns("./identifier")) or next
-              lbl = @xrefs.anchor(@reqt_ids[id.text.strip][:id], :xref_reqt2reqt,
-                                  false)
-              next unless subj
+          subj = reqt_extract_target(reqt)
+          id = reqt.at(ns("./identifier")) or return
+          lbl = @xrefs.anchor(@reqt_ids[id.text.strip][:id], :xref_reqt2reqt,
+                              false)
+          return unless subj
 
-              m[subj.text] = { lbl: lbl, id: r["id"] }
-            end
+          acc[subj.text] = { lbl: lbl, id: reqt["id"] }
         end
 
         def reqt_links_class(docxml)

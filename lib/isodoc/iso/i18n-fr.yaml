@@ -70,6 +70,12 @@ locality:
   appendix: Appendice
 requirements:
   modspec:
-    description: Description
-    provisions: Dispositions
-    conformancetests: Tests de conformité
+    provision: Disposition
+    conformancetest: Test de conformité
+inflection:
+  Disposition:
+    sg: Disposition
+    pl: Dispositions
+  Déclaration:
+    sg: Déclaration
+    pl: Déclarations

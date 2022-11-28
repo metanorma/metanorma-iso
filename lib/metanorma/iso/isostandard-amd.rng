@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar ns="https://www.metanorma.org/ns/iso" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar ns="https://www.metanorma.org/ns/iso" xmlns="http://relaxng.org/ns/structure/1.0">
   <!-- default namespace isostandard = "https://www.metanorma.com/ns/iso" -->
+  <include href="relaton-iso.rng"/>
   <include href="isostandard.rng">
     <start>
       <ref name="iso-standard"/>
@@ -51,58 +52,6 @@
         </oneOrMore>
       </element>
     </define>
-    <define name="documentnumber">
-      <element name="project-number">
-        <optional>
-          <attribute name="part">
-            <data type="int"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="subpart">
-            <data type="int"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="amendment">
-            <data type="int"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="corrigendum">
-            <data type="int"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="origyr">
-            <ref name="ISO8601Date"/>
-          </attribute>
-        </optional>
-        <text/>
-      </element>
-    </define>
-    <define name="BibDataExtensionType">
-      <ref name="doctype"/>
-      <optional>
-        <ref name="docsubtype"/>
-      </optional>
-      <ref name="editorialgroup"/>
-      <zeroOrMore>
-        <ref name="ics"/>
-      </zeroOrMore>
-      <ref name="structuredidentifier"/>
-      <optional>
-        <ref name="stagename"/>
-      </optional>
-      <optional>
-        <ref name="updates_document_type"/>
-      </optional>
-    </define>
   </include>
-  <!-- end overrides -->
-  <define name="updates_document_type">
-    <element name="updates-document-type">
-      <ref name="DocumentType"/>
-    </element>
-  </define>
 </grammar>
+<!-- end overrides -->

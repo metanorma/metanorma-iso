@@ -73,10 +73,10 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(IsoDoc::Iso::PresentationXMLConvert.new({})
-      .convert("test", input, true)).to be_equivalent_to xmlpp(presxml)
-    expect(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
     expect(xmlpp(output
       .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
@@ -168,10 +168,10 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(IsoDoc::Iso::PresentationXMLConvert.new({})
-      .convert("test", input, true)).to be_equivalent_to xmlpp(presxml)
-    expect(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
     expect(xmlpp(output
       .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))

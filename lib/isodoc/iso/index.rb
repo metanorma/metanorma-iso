@@ -127,7 +127,7 @@ module IsoDoc
         terms.each_with_object(val) do |t, v|
           term, term2, term3 = extract_indexterms_init(t)
           term_hash_init(v, term, term2, term3, label)
-          v[term][term2][term3][label] << t&.at(ns("./target"))&.children&.to_xml
+          v[term][term2][term3][label] << to_xml(t.at(ns("./target"))&.children)
           t.remove
         end
       end
@@ -154,7 +154,7 @@ module IsoDoc
 
       def extract_indexterms_init(term)
         %w(primary secondary tertiary).each_with_object([]) do |x, m|
-          m << term&.at(ns("./#{x}"))&.children&.to_xml
+          m << to_xml(term.at(ns("./#{x}"))&.children)
         end
       end
 

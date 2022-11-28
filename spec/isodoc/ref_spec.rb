@@ -197,7 +197,7 @@ RSpec.describe IsoDoc do
                            for food and animal feeding stuffs according to the Dumas combustion
                            method</em> (see
 
-                <link target="http://www.icc.or.at"/> ) [ICC 167]
+                <link target="http://www.icc.or.at"/> )
                 </formattedref>
               <docidentifier type="ICC">ICC 167</docidentifier>
             </bibitem>
@@ -250,7 +250,7 @@ RSpec.describe IsoDoc do
             </bibitem>
             <bibitem id="ref12">
               <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
-                <em>How to cite a reference</em>. [IETF RFC 20]</formattedref>
+                <em>How to cite a reference</em>.</formattedref>
               <docidentifier type="metanorma">[Citn]</docidentifier>
               <docidentifier type="IETF">IETF RFC 20</docidentifier>
             </bibitem>
@@ -311,7 +311,7 @@ RSpec.describe IsoDoc do
                  </i>
                   (see 
                  <a href='http://www.icc.or.at'>http://www.icc.or.at</a>
-                  ) [ICC 167] 
+                  )
                </p>
                <div class='Note'>
                  <p>
@@ -369,7 +369,7 @@ RSpec.describe IsoDoc do
                <p id='ref12' class='Biblio'>
                  Citn  IETF RFC 20, CitationWorks. 2019. 
                  <i>How to cite a reference</i>
-                 . [IETF RFC 20]
+                 .
                </p>
              </div>
              <aside id='fn:1' class='footnote'>

@@ -19,19 +19,7 @@
 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
-  <!-- include "biblio.rnc" { } -->
   <include href="basicdoc.rng">
-    <start>
-      <ref name="standard-document"/>
-    </start>
-    <define name="doctype">
-      <element name="doctype">
-        <optional>
-          <attribute name="abbreviation"/>
-        </optional>
-        <ref name="DocumentType"/>
-      </element>
-    </define>
     <define name="admonition">
       <element name="admonition">
         <attribute name="type">
@@ -117,24 +105,6 @@
         </optional>
       </element>
     </define>
-    <define name="bibitem">
-      <element name="bibitem">
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-        <optional>
-          <attribute name="hidden">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="suppress_identifier">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <ref name="BibliographicItem"/>
-      </element>
-    </define>
     <define name="section-title">
       <element name="title">
         <zeroOrMore>
@@ -205,6 +175,11 @@
             <data type="boolean"/>
           </attribute>
         </optional>
+        <optional>
+          <attribute name="style">
+            <ref name="XrefStyleType"/>
+          </attribute>
+        </optional>
         <ref name="XrefBody"/>
       </element>
     </define>
@@ -238,42 +213,6 @@
       <oneOrMore>
         <ref name="PureTextElement"/>
       </oneOrMore>
-    </define>
-    <define name="localityStack">
-      <element name="localityStack">
-        <optional>
-          <attribute name="connective">
-            <choice>
-              <value>and</value>
-              <value>or</value>
-              <value>from</value>
-              <value>to</value>
-              <value/>
-            </choice>
-          </attribute>
-        </optional>
-        <zeroOrMore>
-          <ref name="locality"/>
-        </zeroOrMore>
-      </element>
-    </define>
-    <define name="sourceLocalityStack">
-      <element name="sourceLocalityStack">
-        <optional>
-          <attribute name="connective">
-            <choice>
-              <value>and</value>
-              <value>or</value>
-              <value>from</value>
-              <value>to</value>
-              <value/>
-            </choice>
-          </attribute>
-        </optional>
-        <zeroOrMore>
-          <ref name="sourceLocality"/>
-        </zeroOrMore>
-      </element>
     </define>
     <define name="ul">
       <element name="ul">
@@ -818,21 +757,6 @@
         </zeroOrMore>
       </element>
     </define>
-    <define name="BibDataExtensionType">
-      <ref name="doctype"/>
-      <optional>
-        <ref name="docsubtype"/>
-      </optional>
-      <optional>
-        <ref name="editorialgroup"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="ics"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="structuredidentifier"/>
-      </zeroOrMore>
-    </define>
     <!-- TitleType = text -->
     <define name="sections">
       <element name="sections">
@@ -872,7 +796,7 @@
           <ref name="BasicBlock"/>
         </zeroOrMore>
         <zeroOrMore>
-          <ref name="bibitem"/>
+          <ref name="doc_bibitem"/>
           <zeroOrMore>
             <ref name="note"/>
           </zeroOrMore>
@@ -1103,6 +1027,7 @@
             <ref name="stem"/>
             <ref name="index"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
             <ref name="xref"/>
             <ref name="hyperlink"/>
           </choice>
@@ -1117,6 +1042,7 @@
             <ref name="stem"/>
             <ref name="index"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
             <ref name="xref"/>
             <ref name="hyperlink"/>
           </choice>
@@ -1130,6 +1056,7 @@
             <ref name="PureTextElement"/>
             <ref name="index"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
             <ref name="xref"/>
             <ref name="hyperlink"/>
           </choice>
@@ -1210,6 +1137,24 @@
     </define>
   </include>
   <!-- end overrides -->
+  <define name="doc_bibitem">
+    <element name="bibitem">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="hidden">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="suppress_identifier">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <ref name="ReducedBibliographicItem"/>
+    </element>
+  </define>
   <define name="image" combine="choice">
     <element name="svg">
       <oneOrMore>
@@ -1227,14 +1172,6 @@
       <value>parallel</value>
       <value>tag</value>
     </choice>
-  </define>
-  <define name="docsubtype">
-    <element name="subdoctype">
-      <ref name="DocumentSubtype"/>
-    </element>
-  </define>
-  <define name="DocumentSubtype">
-    <text/>
   </define>
   <define name="colgroup">
     <element name="colgroup">
@@ -1257,6 +1194,7 @@
       <ref name="add"/>
       <ref name="del"/>
       <ref name="span"/>
+      <ref name="erefstack"/>
     </choice>
   </define>
   <define name="add">
@@ -1264,6 +1202,7 @@
       <choice>
         <ref name="PureTextElement"/>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="stem"/>
         <ref name="keyword"/>
         <ref name="xref"/>
@@ -1276,6 +1215,7 @@
       <choice>
         <ref name="PureTextElement"/>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="stem"/>
         <ref name="keyword"/>
         <ref name="xref"/>
@@ -1340,6 +1280,7 @@
       </optional>
       <choice>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="xref"/>
         <ref name="termref"/>
       </choice>
@@ -1595,45 +1536,6 @@
           <ref name="references"/>
         </zeroOrMore>
       </choice>
-    </element>
-  </define>
-  <define name="editorialgroup">
-    <element name="editorialgroup">
-      <oneOrMore>
-        <ref name="technical-committee"/>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="technical-committee">
-    <element name="technical-committee">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="IsoWorkgroup">
-    <optional>
-      <attribute name="number"/>
-    </optional>
-    <optional>
-      <attribute name="type"/>
-    </optional>
-    <optional>
-      <attribute name="identifier"/>
-    </optional>
-    <optional>
-      <attribute name="prefix"/>
-    </optional>
-    <text/>
-  </define>
-  <define name="ics">
-    <element name="ics">
-      <element name="code">
-        <text/>
-      </element>
-      <optional>
-        <element name="text">
-          <text/>
-        </element>
-      </optional>
     </element>
   </define>
   <define name="standard-document">
@@ -2071,6 +1973,7 @@
       </element>
       <choice>
         <ref name="eref"/>
+        <ref name="erefstack"/>
         <ref name="xref"/>
         <ref name="termref"/>
       </choice>
@@ -2466,71 +2369,6 @@
       </optional>
     </element>
   </define>
-  <define name="structuredidentifier">
-    <element name="structuredidentifier">
-      <optional>
-        <attribute name="type"/>
-      </optional>
-      <oneOrMore>
-        <element name="agency">
-          <text/>
-        </element>
-      </oneOrMore>
-      <optional>
-        <element name="class">
-          <text/>
-        </element>
-      </optional>
-      <element name="docnumber">
-        <text/>
-      </element>
-      <optional>
-        <element name="partnumber">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="edition">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="version">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="supplementtype">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="supplementnumber">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="amendment">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="corrigendum">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="language">
-          <text/>
-        </element>
-      </optional>
-      <optional>
-        <element name="year">
-          <text/>
-        </element>
-      </optional>
-    </element>
-  </define>
   <define name="term-clause">
     <element name="clause">
       <optional>
@@ -2691,6 +2529,7 @@
             <ref name="xref"/>
             <ref name="hyperlink"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
           </choice>
           <oneOrMore>
             <element name="coords">
@@ -2738,6 +2577,7 @@
             <ref name="xref"/>
             <ref name="hyperlink"/>
             <ref name="eref"/>
+            <ref name="erefstack"/>
           </choice>
         </element>
       </zeroOrMore>
@@ -2786,6 +2626,15 @@
       <ref name="PureTextElement"/>
     </oneOrMore>
   </define>
+  <define name="XrefConnectiveType">
+    <choice>
+      <value>and</value>
+      <value>or</value>
+      <value>from</value>
+      <value>to</value>
+      <value/>
+    </choice>
+  </define>
   <define name="XrefTarget">
     <element name="location">
       <attribute name="target">
@@ -2794,14 +2643,36 @@
         </data>
       </attribute>
       <attribute name="connective">
-        <choice>
-          <value>and</value>
-          <value>or</value>
-          <value>from</value>
-          <value>to</value>
-          <value/>
-        </choice>
+        <ref name="XrefConnectiveType"/>
       </attribute>
     </element>
   </define>
+  <define name="XrefStyleType">
+    <choice>
+      <value>basic</value>
+      <value>full</value>
+      <value>short</value>
+      <value>id</value>
+    </choice>
+  </define>
+  <define name="erefTypeWithConnective">
+    <optional>
+      <attribute name="connective">
+        <ref name="XrefConnectiveType"/>
+      </attribute>
+    </optional>
+    <ref name="erefType"/>
+  </define>
+  <define name="erefstack">
+    <element name="erefstack">
+      <oneOrMore>
+        <element name="eref">
+          <ref name="erefTypeWithConnective"/>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <start>
+    <ref name="standard-document"/>
+  </start>
 </grammar>

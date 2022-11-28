@@ -71,5 +71,4 @@ locality:
   appendix: 附录
 requirements:
   modspec:
-    description: 描述
-    provisions: 条件
+    provision: 条件

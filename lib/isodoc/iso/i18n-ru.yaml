@@ -74,5 +74,12 @@ locality:
   appendix: Приложение
 requirements:
   modspec:
-    description: Описание
-    provisions: Условия
+    provision: Условие
+    conformancetest: Тест на соответствие
+inflection:
+  Условие:
+    sg: Условие
+    pl: Условия
+  Утверждение:
+    sg: Утверждение
+    pl: Утверждения

@@ -33,9 +33,10 @@ module IsoDoc
         ret = resolve_eref_connectives(eref_locality_stacks(refs, target,
                                                             node))
         node["droploc"] = droploc
-        eref_localities1(target,
-                         prefix_clause(target, refs.first.at(ns("./locality"))),
-                         l10n(ret[1..-1].join), nil, node, @lang)
+        eref_localities1({ target: target, number: "pl",
+                           type: prefix_clause(target, refs.first.at(ns("./locality"))),
+                           from: l10n(ret[1..-1].join),
+                           node: node, lang: @lang })
       end
 
       def prefix_clause(target, loc)
@@ -79,40 +80,44 @@ module IsoDoc
         ret.join
       end
 
-      def eref_localities1_zh(target, type, from, upto, node)
-        ret = " 第#{from}" if from
-        ret += "&#x2013;#{upto}" if upto
-        node["droploc"] != "true" && !subclause?(target, type, from) and
-          ret += eref_locality_populate(type, node)
-        ret += ")" if type == "list"
-        locality_span_wrap(ret, type)
+      def eref_localities1_zh(opt)
+        ret = " 第#{opt[:from]}" if opt[:from]
+        ret += "&#x2013;#{opt[:upto]}" if opt[:upto]
+        opt[:node]["droploc"] != "true" &&
+          !subclause?(opt[:target], opt[:type], opt[:from]) and
+          ret += eref_locality_populate(opt[:type], opt[:node], "sg")
+        ret += ")" if opt[:type] == "list"
+        locality_span_wrap(ret, opt[:type])
       end
 
-      def eref_localities1(target, type, from, upto, node, lang = "en")
-        return nil if type == "anchor"
+      def eref_localities1(opt)
+        return nil if opt[:type] == "anchor"
 
-        type = type.downcase
-        lang == "zh" and
-          return l10n(eref_localities1_zh(target, type, from, upto, node))
+        opt[:type] = opt[:type].downcase
+        opt[:lang] == "zh" and return l10n(eref_localities1_zh(opt))
         ret = ""
-        node["droploc"] != "true" && !subclause?(target, type, from) and
-          ret = eref_locality_populate(type, node)
-        ret += " #{from}" if from
-        ret += "&#x2013;#{upto}" if upto
-        ret += ")" if type == "list"
+        opt[:node]["droploc"] != "true" &&
+          !subclause?(opt[:target], opt[:type], opt[:from]) and
+          ret = eref_locality_populate(opt[:type], opt[:node], opt[:number])
+        ret += " #{opt[:from]}" if opt[:from]
+        ret += "&#x2013;#{opt[:upto]}" if opt[:upto]
+        ret += ")" if opt[:type] == "list"
         ret = l10n(ret)
-        locality_span_wrap(ret, type)
+        locality_span_wrap(ret, opt[:type])
       end
 
-      def prefix_container(container, linkend, target)
+      def prefix_container(container, linkend, node, target)
         delim = ", "
-        type = :xref
-        if @xrefs.anchor(target, :type) == "listitem" &&
+        ref = if @xrefs.anchor(target, :type) == "listitem" &&
             !@xrefs.anchor(target, :refer_list)
-          delim = " "
-          type = :label # 7 a) not Clause 7 a), but Clause 7 List 1 a)
-        end
-        l10n(@xrefs.anchor(container, type) + delim + linkend)
+                delim = " "
+                @xrefs.anchor(container, :label)
+                # 7 a) : Clause 7 a), but Clause 7 List 1 a)
+              else
+                anchor_xref(node, container)
+              end
+
+        l10n(ref + delim + linkend)
       end
 
       def expand_citeas(text)

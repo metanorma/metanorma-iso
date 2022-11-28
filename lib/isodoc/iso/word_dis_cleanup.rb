@@ -10,7 +10,7 @@ module IsoDoc
         admonition: "Admonition",
         admonitiontitle: "AdmonitionTitle",
         sourcetitle: "SourceTitle",
-        tabletitle: "TableTitle",
+        TableTitle: "Tabletitle",
         titlepagesbhead: "TablePageSubhead",
         NormRef: "RefNorm",
         Biblio: "BiblioEntry",
@@ -43,11 +43,32 @@ module IsoDoc
         example_style(docxml)
         dis_style_interactions(docxml)
         quote_style(docxml)
+        stripbgcolor(docxml)
+      end
+
+      def stripbgcolor(docxml)
+        @bgstripcolor == "true" or return
+        %w(aucollab audeg aufname aurole ausuffix ausurname bibarticle bibetal
+           bibfname bibfpage bibissue bibjournal biblpage bibnumber
+           biborganization bibsuppl bibsurname biburl bibvolume bibyear
+           citebib citeen citefig citefn citetbl bibextlink citeeq citetfn
+           auprefix citeapp citesec stddocNumber stddocPartNumber
+           stddocTitle aumember stdfootnote stdpublisher stdsection stdyear
+           stddocumentType bibalt-year bibbook bbichapterno bibchaptertitle
+           bibed-etal bibed-fname bibeditionno bibed-organization bibed-suffix
+           bibed-surname bibinstitution bibisbn biblocation bibpagecount
+           bibpatent bibpublisher bibreportnum bibschool bibseries bibseriesno
+           bibtrans stdsuppl citesection).each do |t|
+          docxml.xpath("//span[@class = '#{t}']").each do |s|
+            s["style"] ||= ""
+            s["style"] = "mso-pattern:none;#{s['style']}"
+          end
+        end
       end
 
       def dis_style_interactions(docxml)
-        docxml.xpath("//p[@class = 'Code' or @class = 'Code-' or "\
-                     "@class = 'Code--']"\
+        docxml.xpath("//p[@class = 'Code' or @class = 'Code-' or " \
+                     "@class = 'Code--']" \
                      "[following::p[@class = 'Examplecontinued']]").each do |p|
           p["style"] ||= ""
           p["style"] = "margin-bottom:12pt;#{p['style']}"
@@ -184,7 +205,7 @@ module IsoDoc
         docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
           p["class"] = "zzCopyright"
           p["style"] = "text-indent:20.15pt;"
-          p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' "\
+          p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' " \
                                              "style='text-indent:20.15pt;'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
@@ -196,7 +217,7 @@ module IsoDoc
       def copyright_dis(docxml)
         docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
           p["class"] = "zzCopyright"
-          p.replace(p.to_xml.gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
+          p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
           p.remove
@@ -214,17 +235,18 @@ module IsoDoc
           if t.at("./p |./div")
             t.xpath("./p | ./div").each { |p| p["class"] = s }
           else
-            t.children = "<div class='#{s}'>#{t.children.to_xml}</div>"
+            t.children = "<div class='#{s}'>#{to_xml(t.children)}</div>"
           end
         end
       end
 
-      def make_FigureWordToC(docxml)
-        super.sub(/FigureTitle,figuretitle/, "Figure title,Annex Figure Title")
+      def table_toc_class
+        ["Table title", "Tabletitle", "Annex Table Title", "AnnexTableTitle"] +
+          super
       end
 
-      def make_TableWordToC(docxml)
-        super.sub(/TableTitle,tabletitle/, "Table title,Annex Table Title")
+      def figure_toc_class
+        ["Figure Title", "Annex Figure Title", "AnnexFigureTitle"] + super
       end
     end
   end

@@ -36,10 +36,10 @@ module Metanorma
             /\b(see| refer to)\s*\Z/mi.match(preceding)
 
           (target = root.at("//*[@id = '#{t['target']}']")) || next
-          if target.at("./ancestor-or-self::*[@obligation = 'normative']")
+          target.at("./ancestor-or-self::*[@obligation = 'normative']") &&
+            !target.at("./ancestor::sections") and
             @log.add("Style", t,
                      "'see #{t['target']}' is pointing to a normative section")
-          end
         end
       end
 
@@ -66,7 +66,7 @@ module Metanorma
           if /^(ISO|IEC)/.match?(t["citeas"]) &&
               !/: ?(\d+{4}|–)$/.match?(t["citeas"])
             @log.add("Style", t,
-                     "undated reference #{t['citeas']} should not contain "\
+                     "undated reference #{t['citeas']} should not contain " \
                      "specific elements")
           end
         end
@@ -79,7 +79,7 @@ module Metanorma
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-r-ref_clause3
       def term_xrefs_validate(xmldoc)
         termids = xmldoc
-          .xpath("//sections/terms | //sections/clause[.//terms] | "\
+          .xpath("//sections/terms | //sections/clause[.//terms] | " \
                  "//annex[.//terms]").each_with_object({}) do |t, m|
           t.xpath(".//*/@id").each { |a| m[a.text] = true }
           t.name == "terms" and m[t["id"]] = true
@@ -93,11 +93,11 @@ module Metanorma
         closest_id = xref.xpath("./ancestor::*[@id]")&.last or return
         (termids[xref["target"]] && !termids[closest_id["id"]]) and
           @log.add("Style", xref,
-                   "only terms clauses can cross-reference terms clause "\
+                   "only terms clauses can cross-reference terms clause " \
                    "(#{xref['target']})")
         (!termids[xref["target"]] && termids[closest_id["id"]]) and
           @log.add("Style", xref,
-                   "non-terms clauses cannot cross-reference terms clause "\
+                   "non-terms clauses cannot cross-reference terms clause " \
                    "(#{xref['target']})")
       end
 
@@ -179,7 +179,7 @@ module Metanorma
         xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
           b.at("./note[@type = 'Unpublished-Status']") or
             @log.add("Style", b,
-                     "Reference #{b&.at('./@id')&.text} does not have an "\
+                     "Reference #{b&.at('./@id')&.text} does not have an " \
                      "associated footnote indicating unpublished status")
         end
       end
@@ -191,7 +191,7 @@ module Metanorma
                  when "amendment", "technical-corrigendum" # @amd
                    "isostandard-amd.rng"
                  else
-                   "isostandard.rng"
+                   "isostandard-compile.rng"
                  end
         schema_validate(formattedstr_strip(doc.dup),
                         File.join(File.dirname(__FILE__), schema))

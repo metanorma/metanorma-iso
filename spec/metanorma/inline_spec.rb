@@ -4,15 +4,6 @@ RSpec.describe Metanorma::ISO do
   it "processes inline_quoted formatting" do
     expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
-      _emphasis_
-      *strong*
-      `monospace`
-      "double quote"
-      'single quote'
-      super^script^
-      sub~script~
-      stem:[a_90]
-      stem:[<mml:math><mml:msub xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">F</mml:mi> </mml:mrow> </mml:mrow> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">&#x391;</mml:mi> </mml:mrow> </mml:mrow> </mml:msub> </mml:math>]
       [alt]#alt#
       [deprecated]#deprecated#
       [domain]#domain#
@@ -21,41 +12,6 @@ RSpec.describe Metanorma::ISO do
     INPUT
       #{BLANK_HDR}
         <sections>
-          <em>emphasis</em>
-          <strong>strong</strong>
-          <tt>monospace</tt>“double quote”
-               ‘single quote’
-               super
-          <sup>script</sup>
-          sub
-          <sub>script</sub>
-          <stem type="MathML">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <msub>
-                <mrow>
-                  <mi>a</mi></mrow>
-                <mrow>
-                  <mn>90</mn>
-                </mrow>
-              </msub>
-            </math>
-          </stem>
-          <stem type="MathML">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <msub>
-                <mrow>
-                  <mrow>
-                    <mi mathvariant="bold-italic">F</mi>
-                  </mrow>
-                </mrow>
-                <mrow>
-                  <mrow>
-                    <mi mathvariant="bold-italic">Α</mi>
-                  </mrow>
-                </mrow>
-              </msub>
-            </math>
-          </stem>
           <admitted>
             <expression>
               <name>alt</name>

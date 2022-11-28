@@ -76,9 +76,11 @@ module IsoDoc
       end
 
       def clause(docxml)
-        docxml.xpath(ns("//clause[not(ancestor::annex)] | "\
-                        "//terms | //definitions | //references | "\
+        docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
+                        "//terms | //definitions | //references | " \
                         "//preface/introduction[clause]")).each do |f|
+          f.parent.name == "annex" &&
+            @xrefs.klass.single_term_clause?(f.parent) and next
           clause1(f)
         end
       end
@@ -99,7 +101,7 @@ module IsoDoc
       end
 
       def concept_term1(node, seen)
-        term = node&.at(ns("./refterm"))&.to_xml
+        term = to_xml(node.at(ns("./refterm")))
         if term && seen[term]
           concept_render(node, ital: "false", ref: "false",
                                linkref: "true", linkmention: "false")
@@ -112,8 +114,8 @@ module IsoDoc
 
       def concept1_ref_content(ref)
         repl = if ref.name == "termref"
-                 @i18n.term_defined_in.sub(/%/, ref.to_xml)
-               else "(#{ref.to_xml})"
+                 @i18n.term_defined_in.sub(/%/, to_xml(ref))
+               else "(#{to_xml(ref)})"
                end
         ref.replace(repl)
       end
@@ -133,7 +135,7 @@ module IsoDoc
         i = display_order_at(docxml, "//clause[@type = 'scope']", i)
         i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
         i = display_order_xpath(docxml,
-                                "//sections/clause[not(@type = 'scope')] | "\
+                                "//sections/clause[not(@type = 'scope')] | " \
                                 "//sections/terms | //sections/definitions", i)
         i = display_order_xpath(docxml, "//annex", i)
         i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
@@ -150,7 +152,7 @@ module IsoDoc
           (v = elem.at(ns("./definition/verbal-definition"))) &&
           v.elements.first.name == "p") or return
         v.elements.first.children.first.previous =
-          "&#x3c;#{d.remove.children.to_xml}&#x3e; "
+          "&#x3c;#{to_xml(d.remove.children)}&#x3e; "
       end
 
       def insertall_after_here(node, insert, name)
@@ -184,7 +186,7 @@ module IsoDoc
         p = n.next_element
         return unless p.name == "p"
 
-        p.children.first.previous = admonition_name(n.remove.children.to_xml)
+        p.children.first.previous = admonition_name(to_xml(n.remove.children))
       end
 
       def admonition_name(xml)

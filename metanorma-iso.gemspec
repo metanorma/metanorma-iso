@@ -25,9 +25,12 @@ Gem::Specification.new do |spec|
 
   spec.bindir        = "bin"
   spec.require_paths = ["lib"]
-  spec.files         = `git ls-files`.split("\n")
+  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features|bin|.github)/}) \
+    || f.match(%r{Rakefile|bin/rspec})
+  end
   spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
   spec.add_dependency "metanorma-standoc", "~> 2.2.4"
   spec.add_dependency "mnconvert", "~> 1.14"

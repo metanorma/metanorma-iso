@@ -78,7 +78,7 @@ RSpec.describe Metanorma::ISO do
               <uri type="src">https://www.iso.org/standard/81720.html</uri>
               <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
               <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-              <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:stage-50.00:ed-1:fr</docidentifier>
+              <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
               <docnumber>17664</docnumber>
               <contributor>
                 <role type="publisher"/>
@@ -127,7 +127,7 @@ RSpec.describe Metanorma::ISO do
                   <uri type="src">https://www.iso.org/standard/81720.html</uri>
                   <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
                   <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-                  <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:stage-50.00:ed-1:fr</docidentifier>
+                  <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
                   <docnumber>17664</docnumber>
                   <contributor>
                     <role type="publisher"/>
@@ -589,7 +589,7 @@ RSpec.describe Metanorma::ISO do
           <uri type="src">https://www.iso.org/standard/81720.html</uri>
           <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
           <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-          <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:stage-50.00:ed-1:fr</docidentifier>
+          <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
           <docnumber>17664</docnumber>
           <contributor>
             <role type="publisher"/>
@@ -630,7 +630,7 @@ RSpec.describe Metanorma::ISO do
               <uri type="src">https://www.iso.org/standard/81720.html</uri>
               <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
               <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-              <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:stage-50.00:ed-1:fr</docidentifier>
+              <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
               <docnumber>17664</docnumber>
               <contributor>
                 <role type="publisher"/>

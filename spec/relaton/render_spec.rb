@@ -261,7 +261,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Ramsey J. K., &#x26; McGrew W. C.</smallcap>. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini A.D., &#x26; Smith P.K.). Third edition. New York, NY: Guilford Press. 2005. pp. 89–112. [viewed: September 3, 2019].</formattedref>
+    <formattedref><smallcap>Ramsey J.K., &#x26; McGrew W.C.</smallcap>. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini A.D., &#x26; Smith P.K.). Third edition. New York, NY: Guilford Press. 2005. pp. 89–112. [viewed: September 3, 2019].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
