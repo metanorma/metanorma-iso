@@ -6268,11 +6268,8 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template match="text()[preceding-sibling::*[1][local-name() = 'span'][@class = 'stdpublisher' or @class = 'stddocNumber' or @class = 'stddocPartNumber' or @class = 'stdyear'] and   following-sibling::*[1][local-name() = 'span'][@class = 'stdpublisher' or @class = 'stddocNumber' or @class = 'stddocPartNumber' or @class = 'stdyear']]" priority="2">
-		<xsl:choose>
-			<xsl:when test="ancestor::*[local-name() = 'table']"><xsl:value-of select="."/></xsl:when>
-			<xsl:otherwise><fo:inline keep-with-next.within-line="always"><xsl:value-of select="."/></fo:inline></xsl:otherwise>
-		</xsl:choose>
+	<xsl:template match="text()[not(ancestor::*[local-name() = 'table']) and preceding-sibling::*[1][local-name() = 'span'][@class = 'stdpublisher' or @class = 'stddocNumber' or @class = 'stddocPartNumber' or @class = 'stdyear'] and   following-sibling::*[1][local-name() = 'span'][@class = 'stdpublisher' or @class = 'stddocNumber' or @class = 'stddocPartNumber' or @class = 'stdyear']]" priority="2">
+		<fo:inline keep-with-next.within-line="always"><xsl:value-of select="."/></fo:inline>
 	</xsl:template>
 
 	<!-- ========================= -->
@@ -7444,12 +7441,6 @@
 				</xsl:if>
 
 			<fo:block-container margin-left="0mm">
-
-				<!-- <xsl:if test="$namespace = 'iho'">
-					<xsl:if test="ancestor::iho:td">
-						<xsl:attribute name="font-size">12pt</xsl:attribute>
-					</xsl:if>
-				</xsl:if> -->
 
 						<fo:block>
 
