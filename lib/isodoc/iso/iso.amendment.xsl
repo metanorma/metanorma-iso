@@ -5011,6 +5011,10 @@
 		<xsl:variable name="footnote_inline">
 			<fo:inline xsl:use-attribute-sets="fn-num-style">
 
+				<xsl:if test="following-sibling::*[1][local-name() = 'fn']">
+					<xsl:attribute name="padding-right">0.5mm</xsl:attribute>
+				</xsl:if>
+
 				<fo:basic-link internal-destination="{$ref_id}" fox:alt-text="footnote {$current_fn_number}">
 					<xsl:value-of select="$current_fn_number_text"/>
 				</fo:basic-link>
