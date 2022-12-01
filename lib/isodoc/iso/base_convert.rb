@@ -88,9 +88,9 @@ module IsoDoc
 
       def formula_where(dlist, out)
         return if dlist.nil?
-        return super unless dlist&.xpath(ns("./dt"))&.size == 1 &&
-          dlist&.at(ns("./dd"))&.elements&.size == 1 &&
-          dlist&.at(ns("./dd/p"))
+        return super unless dlist.xpath(ns("./dt"))&.size == 1 &&
+          dlist.at(ns("./dd"))&.elements&.size == 1 &&
+          dlist.at(ns("./dd/p"))
 
         out.span **{ class: "zzMoveToFollowing" } do |s|
           s << "#{@i18n.where} "
