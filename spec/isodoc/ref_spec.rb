@@ -179,15 +179,18 @@ RSpec.describe IsoDoc do
             <bibitem id="ISO712" type="standard">
               <formattedref><em><span class="stddocTitle">Cereals and cereal products</span></em></formattedref>
               <docidentifier type="ISO">ISO 712</docidentifier>
+              <biblio-tag>ISO 712, </biblio-tag>
             </bibitem>
             <bibitem id="ISO16634" type="standard">
                <formattedref><em><span class="stddocTitle">Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</span></em></formattedref>
               <docidentifier type="ISO">ISO 16634:-- (all parts)</docidentifier>
               <note format="text/plain" reference="1" type="Unpublished-Status">Under preparation. (Stage at the time of publication ISO/DIS 16634)</note>
+              <biblio-tag>ISO 16634:-- (all parts)<fn reference="1"><p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p></fn>, </biblio-tag>
             </bibitem>
             <bibitem id="ISO20483" type="standard">
               <formattedref><em><span class="stddocTitle">Cereals and pulses</span></em></formattedref>
               <docidentifier type="ISO">ISO 20483:2013-2014</docidentifier>
+              <biblio-tag>ISO 20483:2013-2014, </biblio-tag>
             </bibitem>
             <bibitem id="ref1">
               <formattedref format="application/x-isodoc+xml">
@@ -200,6 +203,7 @@ RSpec.describe IsoDoc do
                 <link target="http://www.icc.or.at"/> )
                 </formattedref>
               <docidentifier type="ICC">ICC 167</docidentifier>
+              <biblio-tag>ICC 167, </biblio-tag>
             </bibitem>
             <note>
               <name>NOTE</name>
@@ -212,11 +216,13 @@ RSpec.describe IsoDoc do
               <formattedref><em>Chemicals for analytical laboratory use</em>. n.p.: n.d. </formattedref>
               <docidentifier type="metanorma-ordinal">[1]</docidentifier>
               <docidentifier type="ISBN">ISBN</docidentifier>
+              <biblio-tag>[1]<tab/></biblio-tag>
             </bibitem>
             <bibitem id="ISSN" type="journal">
               <formattedref><em>Instruments for analytical laboratory use</em>. n.d.</formattedref>
               <docidentifier type="metanorma-ordinal">[2]</docidentifier>
               <docidentifier type="ISSN">ISSN</docidentifier>
+              <biblio-tag>[2]<tab/></biblio-tag>
             </bibitem>
             <note>
               <name>NOTE</name>
@@ -230,6 +236,7 @@ RSpec.describe IsoDoc do
               <formattedref><em><span class='stddocTitle'>Water for analytical laboratory use</span></em></formattedref>
               <docidentifier type='metanorma-ordinal'>[3]</docidentifier>
               <docidentifier type="ISO">ISO 3696</docidentifier>
+              <biblio-tag>[3]<tab/>ISO 3696, </biblio-tag>
             </bibitem>
             <bibitem id="ref10">
               <formattedref format="application/x-isodoc+xml">
@@ -242,17 +249,20 @@ RSpec.describe IsoDoc do
                 <link target="http://www.icc.or.at"/>
                 )</formattedref>
               <docidentifier type="metanorma-ordinal">[4]</docidentifier>
+              <biblio-tag>[4]<tab/></biblio-tag>
             </bibitem>
             <bibitem id="ref11">
                <formattedref><em><span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span></em></formattedref>
               <docidentifier type='metanorma-ordinal'>[5]</docidentifier>
               <docidentifier type="IETF">IETF RFC 10</docidentifier>
+              <biblio-tag>[5]<tab/>IETF RFC 10, </biblio-tag>
             </bibitem>
             <bibitem id="ref12">
               <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
                 <em>How to cite a reference</em>.</formattedref>
               <docidentifier type="metanorma">[Citn]</docidentifier>
               <docidentifier type="IETF">IETF RFC 20</docidentifier>
+              <biblio-tag>Citn<tab/>IETF RFC 20, </biblio-tag>
             </bibitem>
           </references>
         </bibliography>
@@ -381,7 +391,8 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")
+      .gsub(/reference="[^"]+"/, 'reference="1"'))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
@@ -427,6 +438,7 @@ RSpec.describe IsoDoc do
              </formattedref>
              <uri>https://registre.ign.fr/ign/IGNF/</uri>
              <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
+             <biblio-tag>[1]<tab/></biblio-tag>
            </bibitem>
          </references>
        </iso-standard>

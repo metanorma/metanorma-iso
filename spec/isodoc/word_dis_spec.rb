@@ -267,6 +267,7 @@ RSpec.describe IsoDoc do
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
             <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>
+            <biblio-tag><span class="stdpublisher" style="mso-pattern:none;">ISO/IEC</span><span class="stddocNumber" style="mso-pattern:none;">712</span>-<span class="stddocPartNumber" style="mso-pattern:none;">3</span>:<span class="stdyear" style="mso-pattern:none;">2022</span>, </biblio-tag>
             </bibitem>
         </references>
         </bibliography>
@@ -1971,13 +1972,14 @@ RSpec.describe IsoDoc do
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
             <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>
+            <biblio-tag>[1]<tab/>ISO/IEC 712-3:2022, </biblio-tag>
             </bibitem>
         </references>
         </bibliography>
       </iso-standard>
     INPUT
     word = <<~WORD
-       <div class='WordSection3'>
+      <div class='WordSection3'>
          <p class='zzSTDTitle1'/>
          <div>
            <a name='A' id='A'/>
