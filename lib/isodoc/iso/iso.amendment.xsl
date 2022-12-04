@@ -6667,7 +6667,7 @@
 		<xsl:choose>
 			<xsl:when test="@colspan">
 				<xsl:variable name="td">
-					<xsl:element name="td">
+					<xsl:element name="{local-name()}">
 						<xsl:attribute name="divide"><xsl:value-of select="@colspan"/></xsl:attribute>
 						<xsl:if test="local-name()='th'">
 							<xsl:attribute name="font-weight">bold</xsl:attribute>
@@ -6682,7 +6682,7 @@
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:element name="td">
+				<xsl:element name="{local-name()}">
 					<xsl:apply-templates select="@*" mode="simple-table-colspan"/>
 					<xsl:if test="local-name()='th'">
 						<xsl:attribute name="font-weight">bold</xsl:attribute>
@@ -6749,7 +6749,7 @@
 		<xsl:variable name="currentRow" select="."/>
 
 		<xsl:variable name="normalizedTDs">
-				<xsl:for-each select="xalan:nodeset($previousRow)//td">
+				<xsl:for-each select="xalan:nodeset($previousRow)//*[self::td or self::th]">
 						<xsl:choose>
 								<xsl:when test="@rowspan &gt; 1">
 										<xsl:copy>
@@ -6761,7 +6761,7 @@
 										</xsl:copy>
 								</xsl:when>
 								<xsl:otherwise>
-										<xsl:copy-of select="$currentRow/td[1 + count(current()/preceding-sibling::td[not(@rowspan) or (@rowspan = 1)])]"/>
+										<xsl:copy-of select="$currentRow/*[self::td or self::th][1 + count(current()/preceding-sibling::*[self::td or self::th][not(@rowspan) or (@rowspan = 1)])]"/>
 								</xsl:otherwise>
 						</xsl:choose>
 				</xsl:for-each>
