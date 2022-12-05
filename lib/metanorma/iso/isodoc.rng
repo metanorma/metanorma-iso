@@ -2653,6 +2653,7 @@
       <value>full</value>
       <value>short</value>
       <value>id</value>
+      <value>modspec</value>
     </choice>
   </define>
   <define name="erefTypeWithConnective">

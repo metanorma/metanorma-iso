@@ -3,15 +3,6 @@ module Metanorma
     class Modspec
       # Don't want to inherit from Metanorma::Requirements::Modspec
       class Iso < ::Metanorma::Requirements::Modspec
-        def recommendation_label_xref(elem, label, xrefs, _type)
-          id = @reqtlabels[label]
-          number = xrefs.anchor(id, :xref_reqt2reqt, false)
-          number.nil? and return type
-          elem.ancestors("requirement, recommendation, permission").empty? and
-            return number
-          "<xref target='#{id}'>#{number}</xref>"
-        end
-
         def recommendation_label(elem, type, xrefs)
           lbl = super
           title = elem.at(ns("./title"))
@@ -55,54 +46,12 @@ module Metanorma
 
         def postprocess_anchor_struct(block, anchor)
           super
-          anchor[:xref_reqt2reqt] = anchor[:xref_bare]
+          anchor[:modspec] = anchor[:xref_bare]
           if l = block.at(ns("./title"))
-            anchor[:xref_reqt2reqt] =
-              l10n("#{anchor[:xref_reqt2reqt]}: #{l.children.to_xml.strip}")
+            anchor[:modspec] =
+              l10n("#{anchor[:modspec]}: #{l.children.to_xml.strip}")
           end
           anchor
-        end
-
-        def reqt_ids(docxml)
-          docxml.xpath(ns("//requirement | //recommendation | //permission"))
-            .each_with_object({}) do |r, m|
-              id = r.at(ns("./identifier")) or next
-              m[id.text] =
-                { id: r["id"],
-                  lbl: @xrefs.anchor(r["id"], :xref_reqt2reqt, false) }
-            end
-        end
-
-        def reqt_links_test1(reqt, acc)
-          return unless %w(conformanceclass
-                           verification).include?(reqt["type"])
-
-          subj = reqt_extract_target(reqt)
-          id = reqt.at(ns("./identifier")) or return
-          lbl = @xrefs.anchor(@reqt_ids[id.text.strip][:id], :xref_reqt2reqt,
-                              false)
-          return unless subj
-
-          acc[subj.text] = { lbl: lbl, id: reqt["id"] }
-        end
-
-        def reqt_links_class(docxml)
-          docxml.xpath(ns("//requirement | //recommendation | //permission"))
-            .each_with_object({}) do |r, m|
-              next unless %w(class
-                             conformanceclass).include?(r["type"])
-
-              id = r.at(ns("./identifier")) or next
-              r.xpath(ns("./requirement | ./recommendation | ./permission"))
-                .each do |r1|
-                id1 = r1.at(ns("./identifier")) or next
-                lbl = @xrefs.anchor(@reqt_ids[id.text.strip][:id],
-                                    :xref_reqt2reqt, false)
-                next unless lbl
-
-                m[id1.text] = { lbl: lbl, id: r["id"] }
-              end
-            end
         end
       end
     end
