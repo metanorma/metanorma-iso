@@ -1239,6 +1239,11 @@
   <define name="concept">
     <element name="concept">
       <optional>
+        <attribute name="bold">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
         <attribute name="ital">
           <data type="boolean"/>
         </attribute>
@@ -2653,7 +2658,7 @@
       <value>full</value>
       <value>short</value>
       <value>id</value>
-      <value>modspec</value>
+      <text/>
     </choice>
   </define>
   <define name="erefTypeWithConnective">

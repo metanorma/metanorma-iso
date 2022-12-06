@@ -209,9 +209,9 @@ p.AnnexTableTitle, li.AnnexTableTitle, div.AnnexTableTitle
 	text-align:center;
 	text-indent:0cm;
 	line-height:12.0pt;
-	page-break-before:always;
+	/*page-break-before:always;*/
 	mso-pagination:widow-orphan;
-	/*page-break-after:avoid;*/
+	page-break-after:avoid;
 	/* mso-list:l4 level1 lfo15; */
 	tab-stops:list 0cm left 20.15pt;
 	font-size:$normalfontsize;
@@ -234,9 +234,9 @@ p.AnnexTableTitleCxSpFirst, li.AnnexTableTitleCxSpFirst, div.AnnexTableTitleCxSp
 	text-align:center;
 	text-indent:0cm;
 	line-height:12.0pt;
-	page-break-before:always;
+	/*page-break-before:always;*/
 	mso-pagination:widow-orphan;
-	/*page-break-after:avoid;*/
+	page-break-after:avoid;
 	/* mso-list:l4 level1 lfo15; */
 	tab-stops:list 0cm left 20.15pt;
 	font-size:$normalfontsize;
@@ -259,9 +259,9 @@ p.AnnexTableTitleCxSpMiddle, li.AnnexTableTitleCxSpMiddle, div.AnnexTableTitleCx
 	text-align:center;
 	text-indent:0cm;
 	line-height:12.0pt;
-	page-break-before:always;
+	/*page-break-before:always;*/
 	mso-pagination:widow-orphan;
-	/*page-break-after:avoid;*/
+	page-break-after:avoid;
 	/* mso-list:l4 level1 lfo15; */
 	tab-stops:list 0cm left 20.15pt;
 	font-size:$normalfontsize;
@@ -287,9 +287,9 @@ p.AnnexTableTitleCxSpLast, li.AnnexTableTitleCxSpLast, div.AnnexTableTitleCxSpLa
 	text-align:center;
 	text-indent:0cm;
 	line-height:12.0pt;
-	page-break-before:always;
+	/*page-break-before:always;*/
 	mso-pagination:widow-orphan;
-	/*page-break-after:avoid;*/
+	page-break-after:avoid;
 	/* mso-list:l4 level1 lfo15; */
 	tab-stops:list 0cm left 20.15pt;
 	font-size:$normalfontsize;
