@@ -299,6 +299,7 @@ RSpec.describe IsoDoc do
                 </eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
                 <eref bibitemid="ISO712" citeas="ISO/IEC DIR 1" type="inline"/>
+                <eref type="inline" bibitemid="ISO_10303_32" citeas="[ISO 10303-32&lt;fn reference=&quot;1&quot;&gt;&lt;p&gt;To be published.&lt;/p&gt;&#10;&lt;/fn&gt;]"/>
               </p>
             </foreword>
           </preface>
@@ -319,10 +320,9 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)
+    expect(xmlpp(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
       .sub(%r{<i18nyaml>.*</i18nyaml>}m, ""))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
-        <?xml version='1.0'?>
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
           <preface>
             <foreword displayorder="1">
@@ -380,6 +380,7 @@ RSpec.describe IsoDoc do
           <span class='stddocNumber'>DIR</span>
           <span class='stddocNumber'>1</span>
         </eref>
+        <eref type="inline" bibitemid="ISO_10303_32" citeas>[ISO 10303-32<fn reference="1"><p>To be published.</p></fn>]</eref>
               </p>
             </foreword>
           </preface>
@@ -948,7 +949,7 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <itu-standard xmlns="https://www.calconnect.org/standards/itu">
                   <p id='_'>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3</referenceFrom>
@@ -960,7 +961,7 @@ RSpec.describe IsoDoc do
                   </locality>
                 </localityStack>
               </eref>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3.1</referenceFrom>
@@ -972,7 +973,7 @@ RSpec.describe IsoDoc do
                   </locality>
                 </localityStack>
               </eref>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3.1</referenceFrom>
@@ -984,7 +985,7 @@ RSpec.describe IsoDoc do
                   </locality>
                 </localityStack>
               </eref>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3.1</referenceFrom>
@@ -1002,10 +1003,10 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
            <itu-standard xmlns="https://www.calconnect.org/standards/itu" type="presentation">
          <p id="_">
-           <eref type="inline" bibitemid="ref1" citeas="XYZ" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,  <span class="citesec">Clauses  <span class="citesec">3</span> to  <span class="citesec">5</span></span></eref>
-           <eref type="inline" bibitemid="ref1" citeas="XYZ" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5.1</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,    <span class="citesec">3.1</span> to  <span class="citesec">5.1</span></eref>
-           <eref type="inline" bibitemid="ref1" citeas="XYZ"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,  <span class="citesec">3.1</span> to  <span class="citesec">Clause 5</span></eref>
-           <eref type="inline" bibitemid="ref1" citeas="XYZ"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="table"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,  <span class="citesec">3.1</span> to  <span class="citetbl">Table 5</span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">Clauses  <span class="citesec">3</span> to  <span class="citesec">5</span></span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5.1</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,    <span class="citesec">3.1</span> to  <span class="citesec">5.1</span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> to  <span class="citesec">Clause 5</span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="table"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> to  <span class="citetbl">Table 5</span></eref>
          </p>
        </itu-standard>
     OUTPUT
