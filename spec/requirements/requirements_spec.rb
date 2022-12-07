@@ -247,6 +247,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <docidentifier type='IETF'>IETF RFC 2616</docidentifier>
                 <docidentifier type='IETF' scope='anchor'>IETF RFC2616</docidentifier>
                 <docidentifier type='DOI'>DOI 10.17487/RFC2616</docidentifier>
+                <biblio-tag>[1]<tab/>IETF RFC 2616, </biblio-tag>
           </bibitem>
             </references></bibliography>
                 </ogc-standard>
@@ -265,152 +266,128 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          <div class='main-section'>
            <br/>
            <div id='A'>
-             <h1 class='ForewordTitle'>Preface</h1>
-             <p class='TableTitle' style='text-align:center;'>Table 1 — Permission 1: First</p>
-             <table id='A1' class='modspec' style='border-width:1px;border-spacing:0;'>
-               <tbody>
-                 <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;' scope='row'>Identifier</th>
-                   <td style='border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;'>
-                     <tt>/ogc/recommendation/wfs/2</tt>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Subject</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>user</td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Prerequisites</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     /ss/584/2015/level/1
-                     <br/>
-                     <a href='#rfc2616'>RFC 2616 (HTTP/1.1)</a>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Control-class</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>Technical</td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Priority</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>P0</td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Family</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     System and Communications Protection
-                     <br/>
-                      System and Communications Protocols
-                   </td>
-                 </tr>
-                                  <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Statement</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p id='_'>
-                       I recommend
-                       <i>this</i>
-                       .
-                     </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>A</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>B</td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>C</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>D</td>
-                 </tr>
-                 <tr>
-                   <td colspan='2' style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p id='_'>The measurement target shall be measured as:</p>
-                     <div id='_'>
-                       <div class='formula'>
-                         <p>
-                           <span class='stem'>(#(r/1 = 0)#)</span>
-                             (1)
-                         </p>
-                       </div>
-                     </div>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td colspan='2' style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p id='_'>The following code will be run for verification:</p>
-                     <pre id='_' class='prettyprint '>
-                       <br/>
-                             CoreRoot(success): HttpResponse
-                       if (success)
-                       <br/>
-                             recommendation(label:
-                       success-response) end
-                       <br/>
-                          
-                     </pre>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Test purpose</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p>TEST PURPOSE</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Test method</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p>TEST METHOD</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Conditions</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p>CONDITIONS</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>A</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p>FIRST PART</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>B</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p>SECOND PART</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>C</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p>THIRD PART</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;' scope='row'>Reference</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.0pt;'>
-                     <p>REFERENCE PART</p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <th style='font-weight:bold;border-top:none;border-bottom:solid windowtext 1.5pt;' scope='row'>Panda GHz express</th>
-                   <td style='border-top:none;border-bottom:solid windowtext 1.5pt;'>
-                     <p>PANDA PART</p>
-                   </td>
-                 </tr>
-               </tbody>
-             </table>
-           </div>
-           <p class='zzSTDTitle1'/>
-           <br/>
-           <div>
-             <h1 class='Section3'>Bibliography</h1>
-             <p id='rfc2616' class='Biblio'>
-               [1]  IETF RFC 2616,
-               <i> Hypertext Transfer Protocol — HTTP/1.1 </i>
-             </p>
-           </div>
-         </div>
-       </body>
+                         <h1 class="ForewordTitle">Preface</h1>
+              <p class="TableTitle" style="text-align:center;">Table 1 — Permission 1: First</p>
+              <table id="A1" class="modspec" style="border-width:1px;border-spacing:0;">
+                <tbody>
+                  <tr>
+                    <th style="font-weight:bold;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;" scope="row">Identifier</th>
+                    <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;">
+                      <tt>/ogc/recommendation/wfs/2</tt>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Subject</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">user</td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Prerequisites</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">/ss/584/2015/level/1<br/><a href="#rfc2616">RFC 2616 (HTTP/1.1)</a></td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Control-class</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">Technical</td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Priority</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">P0</td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Family</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">System and Communications Protection<br/>
+          System and Communications Protocols</td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Statement</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p id="_">I recommend <i>this</i>.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">A</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">B</td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">C</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">D</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p id="_">The measurement target shall be measured as:</p>
+                      <div id="_">
+                        <div class="formula">
+                          <p><span class="stem">(#(r/1 = 0)#)</span>  (1)</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p id="_">The following code will be run for verification:</p>
+                      <pre id="_" class="prettyprint "><br/>      CoreRoot(success): HttpResponse if (success)<br/>      recommendation(label: success-response) end<br/>    </pre>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Test purpose</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p>TEST PURPOSE</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Test method</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p>TEST METHOD</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Conditions</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p>CONDITIONS</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">A</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p>FIRST PART</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">B</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p>SECOND PART</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">C</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p>THIRD PART</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.0pt;" scope="row">Reference</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.0pt;">
+                      <p>REFERENCE PART</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight:bold;border-top:none;border-bottom:solid windowtext 1.5pt;" scope="row">Panda GHz express</th>
+                    <td style="border-top:none;border-bottom:solid windowtext 1.5pt;">
+                      <p>PANDA PART</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="zzSTDTitle1"/>
+            <br/>
+            <div>
+              <h1 class="Section3">Bibliography</h1>
+                   <p id="rfc2616" class="Biblio">[1]  IETF RFC 2616,          <i>
+                  Hypertext Transfer Protocol — HTTP/1.1
+              </i></p>
+            </div>
+          </div>
+        </body>
     OUTPUT
 
     doc = <<~OUTPUT
@@ -576,12 +553,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            </p>
            <div>
              <h1 class='BiblioTitle'>Bibliography</h1>
-             <p id='rfc2616' class='Biblio'>
-               [1]
-               <span style='mso-tab-count:1'>  </span>
-               IETF RFC 2616,
-               <i> Hypertext Transfer Protocol — HTTP/1.1 </i>
-             </p>
+             <p id="rfc2616" class="Biblio">[1]<span style="mso-tab-count:1">  </span>IETF RFC 2616,          <i>
+                Hypertext Transfer Protocol — HTTP/1.1
+            </i></p>
            </div>
          </div>
          <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>

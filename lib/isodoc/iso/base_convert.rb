@@ -187,6 +187,12 @@ module IsoDoc
       def ol_attrs(node)
         super.merge(start: node["start"]).compact
       end
+
+      def render_identifier(ident)
+        ret = super
+        ret[:sdo] = std_docid_semantic(ret[:sdo])
+        ret
+      end
     end
   end
 end

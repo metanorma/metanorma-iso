@@ -169,6 +169,7 @@ RSpec.describe IsoDoc::Iso do
                   <name>International Organization for Standardization</name>
                 </organization>
               </contributor>
+              <biblio-tag>ISO 20483,</biblio-tag>
             </bibitem>
           </references>
         </bibliography>

@@ -1392,6 +1392,7 @@ RSpec.describe IsoDoc do
             <bibitem id="ISO712" type="standard">
               <formattedref><em>Cereals and cereal products</em>.</formattedref>
               <docidentifier>ISO 712</docidentifier>
+              <biblio-tag>ISO 712,</biblio-tag>
             </bibitem>
           </references>
           <clause id="S" obligation="informative" displayorder='9'>
