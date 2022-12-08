@@ -4544,6 +4544,10 @@
 							<xsl:with-param name="continued">true</xsl:with-param>
 						</xsl:apply-templates>
 
+						<xsl:if test="not(ancestor::*[local-name()='table']/*[local-name()='name'])"> <!-- to prevent empty fo:table-cell in case of missing table's name -->
+							<fo:block/>
+						</xsl:if>
+
 							<xsl:for-each select="ancestor::*[local-name()='table'][1]">
 								<xsl:call-template name="table_name_fn_display"/>
 							</xsl:for-each>
@@ -4831,7 +4835,7 @@
 				<xsl:attribute name="keep-with-next">always</xsl:attribute>
 			</xsl:if>
 
-				<xsl:if test="position() = 1 and not(ancestor::*[local-name() = 'table']/*[local-name() = 'thead'])">
+				<xsl:if test="position() = 1 and not(ancestor::*[local-name() = 'table']/*[local-name() = 'thead']) and ancestor::*[local-name() = 'table']/*[local-name() = 'name']">
 					<xsl:attribute name="border-top"><xsl:value-of select="$table-border"/></xsl:attribute>
 				</xsl:if>
 
@@ -8601,7 +8605,13 @@
 	</xsl:template>
 
 	<xsl:template match="text()" mode="contents_item">
-		<xsl:call-template name="keep_together_standard_number"/>
+		<xsl:variable name="text">
+			<!-- to split by '_' and other chars -->
+			<text><xsl:call-template name="add-zero-spaces-java"/></text>
+		</xsl:variable>
+		<xsl:for-each select="xalan:nodeset($text)/text/text()">
+			<xsl:call-template name="keep_together_standard_number"/>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!-- Note: to enable the addition of character span markup with semantic styling for DIS Word output -->
