@@ -34,9 +34,20 @@ module IsoDoc
       end
 
       def std_docid_semantic(id)
-        return nil if id.nil?
+        id.nil? and return nil
+        ret = Nokogiri::XML.fragment(id)
+        ret.traverse do |x|
+          x.text? or next
+          x.replace(std_docid_semantic1(x.text))
+        end
+        to_xml(ret)
+      end
 
+      def std_docid_semantic1(id)
         ids = id.split(/ /)
+        %w(ISO IEC ITU IETF NIST OGC IEEE BIPM BSI IANA UN W3C IEV)
+          .include?(ids[0].sub(/\/.*$/, "")) or
+          return id
         ids.map! do |i|
           if %w(GUIDE TR TS DIR).include?(i)
             "<span class='stddocNumber'>#{i}</span>"
