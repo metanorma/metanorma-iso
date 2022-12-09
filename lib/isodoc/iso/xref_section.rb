@@ -3,10 +3,9 @@ module IsoDoc
     class Xref < IsoDoc::Xref
       # we can reference 0-number clauses in introduction
       def introduction_names(clause)
-        return if clause.nil?
-
+        clause.nil? and return
         clause.at(ns("./clause")) and
-          @anchors[clause["id"]] = { label: "0", level: 1, type: "clause",
+          @anchors[clause["id"]] = { label: nil, level: 1, type: "clause",
                                      xref: clause.at(ns("./title"))&.text }
         i = Counter.new
         clause.xpath(ns("./clause")).each do |c|
@@ -43,7 +42,7 @@ module IsoDoc
         @anchors[clause["id"]] =
           { label: num, level: level, xref: num, subtype: "clause" }
         i = Counter.new
-        clause.xpath(ns("./clause | ./terms | ./term | ./definitions | "\
+        clause.xpath(ns("./clause | ./terms | ./term | ./definitions | " \
                         "./references"))
           .each do |c|
           i.increment(c)
