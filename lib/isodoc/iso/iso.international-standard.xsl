@@ -5949,7 +5949,7 @@
 
 			<xsl:variable name="_font-size">
 
-				inherit <!-- 10 -->
+				9 <!-- inherit -->
 
 			</xsl:variable>
 			<xsl:variable name="font-size" select="normalize-space($_font-size)"/>
@@ -8628,7 +8628,7 @@
 			<xsl:element name="sourcecode_attributes" use-attribute-sets="sourcecode-style">
 				<xsl:variable name="_font-size">
 
-					inherit<!-- 9 -->
+					9<!-- inherit -->
 
 					<!-- <xsl:if test="$namespace = 'ieee'">							
 						<xsl:if test="$current_template = 'standard'">8</xsl:if>
