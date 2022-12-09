@@ -1158,11 +1158,7 @@ RSpec.describe IsoDoc do
             </p>
           </foreword>
           <introduction id='B' obligation='informative' displayorder='2'>
-            <title depth='1'>
-              0
-              <tab/>
-              Introduction
-            </title>
+            <title depth='1'>Introduction</title>
             <clause id='C' inline-header='false' obligation='informative'>
               <title depth='2'>
                 0.1

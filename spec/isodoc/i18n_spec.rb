@@ -107,7 +107,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -193,7 +193,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="B">
-              <h1 class="IntroTitle">0&#160; Introduction</h1>
+              <h1 class="IntroTitle">Introduction</h1>
               <div id="C">
                 <h2>0.1&#160; Introduction Subsection</h2>
               </div>
@@ -289,8 +289,6 @@ RSpec.describe IsoDoc do
              </p>
              <div class='Section3' id='B'>
                <h1 class='IntroTitle'>
-                 0
-                 <span style='mso-tab-count:1'>  </span>
                  Introduction
                </h1>
                <div id='C'>
@@ -558,7 +556,7 @@ RSpec.describe IsoDoc do
               <p id="A">This is a preamble</p>
             </foreword>
             <introduction id="B" obligation="informative" displayorder='2'>
-              <title depth="1">0<tab/>Introduction</title>
+              <title depth="1">Introduction</title>
               <clause id="C" inline-header="false" obligation="informative">
                 <title depth="2">0.1<tab/>Introduction Subsection</title>
               </clause>
@@ -742,7 +740,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -828,7 +826,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="B">
-              <h1 class="IntroTitle">0&#160; Introduction</h1>
+              <h1 class="IntroTitle">Introduction</h1>
               <div id="C">
                 <h2>0.1&#160; Introduction Subsection</h2>
               </div>
@@ -1027,7 +1025,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -1113,7 +1111,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="B">
-              <h1 class="IntroTitle">0&#160; Introduction</h1>
+              <h1 class="IntroTitle">Introduction</h1>
               <div id="C">
                 <h2>0.1&#160; Introduction Subsection</h2>
               </div>
@@ -1321,7 +1319,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -1414,7 +1412,7 @@ RSpec.describe IsoDoc do
              </div>
              <br/>
              <div class='Section3' id='B'>
-               <h1 class='IntroTitle'>0　Introduction</h1>
+               <h1 class='IntroTitle'>Introduction</h1>
                <div id='C'>
                  <h2>0.1　Introduction Subsection</h2>
                </div>
