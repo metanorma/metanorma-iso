@@ -188,6 +188,7 @@ module IsoDoc
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
         @anchors[id][:xref] = l10n("#{table_label}, #{x}")
         @anchors[id][:modspec] = @anchors_previous[id][:modspec]
+        @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
         true
       end
 

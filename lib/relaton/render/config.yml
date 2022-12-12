@@ -23,6 +23,7 @@ template:
   book: "<smallcap>{{ creatornames }}</smallcap> ({{role}}) . <em>{{ title }}</em> . {{ edition | capitalize_first }}. ({{ series }}). {% if place %}{{place}}{%else%}{{ labels['no_place']}}{%endif%}: {{publisher}}. {{date}}. {{size}}. {{extent}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."
   booklet: book
   manual: book
+  techreport: book
   proceedings: book
   inbook: "<smallcap>{{ creatornames }}</smallcap> ({{role}}) . {{ title }} . <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames}}). {{ edition | capitalize_first }}. ({{ series }}). {% if place %}{{place}}{%else%}{{ labels['no_place']}}{%endif%}: {{publisher}}. {{date}}. {{size}}. {{extent}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."
   inproceedings: inbook
