@@ -5013,7 +5013,22 @@
 
 		<xsl:variable name="ref_id" select="concat('footnote_', $lang, '_', $reference, '_', $current_fn_number)"/>
 		<xsl:variable name="footnote_inline">
-			<fo:inline xsl:use-attribute-sets="fn-num-style">
+			<fo:inline>
+
+				<xsl:variable name="fn_styles">
+					<xsl:choose>
+						<xsl:when test="ancestor::*[local-name() = 'bibitem']">
+							<fn_styles xsl:use-attribute-sets="bibitem-note-fn-style"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<fn_styles xsl:use-attribute-sets="fn-num-style"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+
+				<xsl:for-each select="xalan:nodeset($fn_styles)/fn_styles/@*">
+					<xsl:copy-of select="."/>
+				</xsl:for-each>
 
 				<xsl:if test="following-sibling::*[1][local-name() = 'fn']">
 					<xsl:attribute name="padding-right">0.5mm</xsl:attribute>
@@ -5077,7 +5092,10 @@
 				</xsl:for-each>
 				<xsl:for-each select="ancestor::*[contains(local-name(), '-standard')]/*[local-name()='boilerplate']/* |       ancestor::*[contains(local-name(), '-standard')]/*[local-name()='preface']/* |      ancestor::*[contains(local-name(), '-standard')]/*[local-name()='sections']/* |       ancestor::*[contains(local-name(), '-standard')]/*[local-name()='annex'] |      ancestor::*[contains(local-name(), '-standard')]/*[local-name()='bibliography']/*">
 					<xsl:sort select="@displayorder" data-type="number"/>
-					<xsl:for-each select=".//*[local-name() = 'bibitem'][ancestor::*[local-name() = 'references']]/*[local-name() = 'note'] |      .//*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])][generate-id(.)=generate-id(key('kfn',@reference)[1])]">
+					<!-- commented:
+					 .//*[local-name() = 'bibitem'][ancestor::*[local-name() = 'references']]/*[local-name() = 'note'] |
+					 because 'fn' there is in biblio-tag -->
+					<xsl:for-each select=".//*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])][generate-id(.)=generate-id(key('kfn',@reference)[1])]">
 						<!-- copy unique fn -->
 						<fn gen_id="{generate-id(.)}">
 							<xsl:copy-of select="@*"/>
@@ -6974,6 +6992,33 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:value-of select="//*[local-name()='bibdata']//*[local-name()='language']"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<xsl:choose>
+			<xsl:when test="$language = 'English'">en</xsl:when>
+			<xsl:otherwise><xsl:value-of select="$language"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="getLang_fromCurrentNode">
+		<xsl:variable name="language_current" select="normalize-space(.//*[local-name()='bibdata']//*[local-name()='language'][@current = 'true'])"/>
+		<xsl:variable name="language">
+			<xsl:choose>
+				<xsl:when test="$language_current != ''">
+					<xsl:value-of select="$language_current"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:variable name="language_current_2" select="normalize-space(xalan:nodeset($bibdata)//*[local-name()='bibdata']//*[local-name()='language'][@current = 'true'])"/>
+					<xsl:choose>
+						<xsl:when test="$language_current_2 != ''">
+							<xsl:value-of select="$language_current_2"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select=".//*[local-name()='bibdata']//*[local-name()='language']"/>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:otherwise>
@@ -10409,17 +10454,17 @@
 							<fo:block>
 								<fo:inline>
 
-											<xsl:value-of select="*[local-name()='docidentifier'][@type = 'metanorma-ordinal']"/>
-											<xsl:if test="not(*[local-name()='docidentifier'][@type = 'metanorma-ordinal'])">
-												<xsl:number format="[1]" count="*[local-name()='bibitem'][not(@hidden = 'true')]"/>
-											</xsl:if>
-
+									<xsl:apply-templates select="*[local-name() = 'biblio-tag']">
+										<xsl:with-param name="biblio_tag_part">first</xsl:with-param>
+									</xsl:apply-templates>
 								</fo:inline>
 							</fo:block>
 						</fo:list-item-label>
 						<fo:list-item-body start-indent="body-start()">
 							<fo:block xsl:use-attribute-sets="bibitem-non-normative-list-body-style">
-								<xsl:call-template name="processBibitem"/>
+								<xsl:call-template name="processBibitem">
+									<xsl:with-param name="biblio_tag_part">last</xsl:with-param>
+								</xsl:call-template>
 							</fo:block>
 						</fo:list-item-body>
 					</fo:list-item>
@@ -10428,178 +10473,51 @@
 	</xsl:template> <!-- references[not(@normative='true')]/bibitem -->
 
 	<xsl:template name="processBibitem">
+		<xsl:param name="biblio_tag_part">both</xsl:param>
 
 				<!-- start bibitem processing -->
 				<xsl:if test=".//*[local-name() = 'fn']">
 					<xsl:attribute name="line-height-shift-adjustment">disregard-shifts</xsl:attribute>
 				</xsl:if>
 
-				<!-- display document identifier, not number [1] -->
-				<xsl:variable name="docidentifier">
-					<xsl:choose>
-						<xsl:when test="*[local-name() = 'docidentifier']/@type = 'metanorma'"/>
-						<xsl:otherwise><xsl:value-of select="*[local-name() = 'docidentifier'][not(@type = 'metanorma-ordinal')]"/></xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable>
-				<xsl:value-of select="$docidentifier"/>
-
-				<xsl:apply-templates select="*[local-name() = 'note']"/>
-
-				<xsl:if test="normalize-space($docidentifier) != '' and *[local-name() = 'formattedref']">
-					<xsl:text>,</xsl:text>
-					<xsl:text> </xsl:text>
-				</xsl:if>
-
+				<xsl:apply-templates select="*[local-name() = 'biblio-tag']">
+					<xsl:with-param name="biblio_tag_part" select="$biblio_tag_part"/>
+				</xsl:apply-templates>
 				<xsl:apply-templates select="*[local-name() = 'formattedref']"/>
 				<!-- end bibitem processing -->
 
 	</xsl:template> <!-- processBibitem (bibitem) -->
 
-	<xsl:template name="processBibitemDocId">
-		<xsl:variable name="_doc_ident" select="*[local-name() = 'docidentifier'][not(@type = 'DOI' or @type = 'metanorma' or @type = 'metanorma-ordinal' or @type = 'ISSN' or @type = 'ISBN' or @type = 'rfc-anchor')]"/>
-		<xsl:choose>
-			<xsl:when test="normalize-space($_doc_ident) != ''">
-				<!-- <xsl:variable name="type" select="*[local-name() = 'docidentifier'][not(@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or @type = 'ISBN' or @type = 'rfc-anchor')]/@type"/>
-				<xsl:if test="$type != '' and not(contains($_doc_ident, $type))">
-					<xsl:value-of select="$type"/><xsl:text> </xsl:text>
-				</xsl:if> -->
-				<xsl:value-of select="$_doc_ident"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<!-- <xsl:variable name="type" select="*[local-name() = 'docidentifier'][not(@type = 'metanorma')]/@type"/>
-				<xsl:if test="$type != ''">
-					<xsl:value-of select="$type"/><xsl:text> </xsl:text>
-				</xsl:if> -->
-				<xsl:value-of select="*[local-name() = 'docidentifier'][not(@type = 'metanorma') and not(@type = 'metanorma-ordinal')]"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template> <!-- processBibitemDocId -->
-
-	<xsl:template name="processPersonalAuthor">
-		<xsl:choose>
-			<xsl:when test="*[local-name() = 'name']/*[local-name() = 'completename']">
-				<author>
-					<xsl:apply-templates select="*[local-name() = 'name']/*[local-name() = 'completename']"/>
-				</author>
-			</xsl:when>
-			<xsl:when test="*[local-name() = 'name']/*[local-name() = 'surname'] and *[local-name() = 'name']/*[local-name() = 'initial']">
-				<author>
-					<xsl:apply-templates select="*[local-name() = 'name']/*[local-name() = 'surname']"/>
-					<xsl:text> </xsl:text>
-					<xsl:apply-templates select="*[local-name() = 'name']/*[local-name() = 'initial']" mode="strip"/>
-				</author>
-			</xsl:when>
-			<xsl:when test="*[local-name() = 'name']/*[local-name() = 'surname'] and *[local-name() = 'name']/*[local-name() = 'forename']">
-				<author>
-					<xsl:apply-templates select="*[local-name() = 'name']/*[local-name() = 'surname']"/>
-					<xsl:text> </xsl:text>
-					<xsl:apply-templates select="*[local-name() = 'name']/*[local-name() = 'forename']" mode="strip"/>
-				</author>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:apply-templates/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template> <!-- processPersonalAuthor -->
-
-	<xsl:template name="renderDate">
-			<xsl:if test="normalize-space(*[local-name() = 'on']) != ''">
-				<xsl:value-of select="*[local-name() = 'on']"/>
-			</xsl:if>
-			<xsl:if test="normalize-space(*[local-name() = 'from']) != ''">
-				<xsl:value-of select="concat(*[local-name() = 'from'], '–', *[local-name() = 'to'])"/>
-			</xsl:if>
-	</xsl:template>
-
-	<xsl:template match="*[local-name() = 'name']/*[local-name() = 'initial']/text()" mode="strip">
-		<xsl:value-of select="translate(.,'. ','')"/>
-	</xsl:template>
-
-	<xsl:template match="*[local-name() = 'name']/*[local-name() = 'forename']/text()" mode="strip">
-		<xsl:value-of select="substring(.,1,1)"/>
-	</xsl:template>
-
 	<xsl:template match="*[local-name() = 'title']" mode="title">
 		<fo:inline><xsl:apply-templates/></fo:inline>
-	</xsl:template>
-
-	<xsl:template match="*[local-name() = 'bibitem']/*[local-name() = 'title']" priority="2">
-		<!-- <fo:inline><xsl:apply-templates /></fo:inline> -->
-		<fo:inline font-style="italic"> <!-- BIPM BSI CSD CSA GB IEC IHO ISO ITU JCGM -->
-			<xsl:apply-templates/>
-		</fo:inline>
-	</xsl:template>
-
-	<!-- bibitem/note renders as footnote -->
-	<xsl:template match="*[local-name() = 'bibitem']/*[local-name() = 'note']" priority="2">
-
-		<!-- list of footnotes to calculate actual footnotes number -->
-		<xsl:variable name="p_fn_">
-			<xsl:call-template name="get_fn_list"/>
-		</xsl:variable>
-		<xsl:variable name="p_fn" select="xalan:nodeset($p_fn_)"/>
-		<xsl:variable name="gen_id" select="generate-id(.)"/>
-		<xsl:variable name="lang" select="ancestor::*[contains(local-name(), '-standard')]/*[local-name()='bibdata']//*[local-name()='language'][@current = 'true']"/>
-		<!-- fn sequence number in document -->
-		<xsl:variable name="current_fn_number">
-			<xsl:choose>
-				<xsl:when test="@current_fn_number"><xsl:value-of select="@current_fn_number"/></xsl:when> <!-- for BSI -->
-				<xsl:otherwise>
-					<!-- <xsl:value-of select="count($p_fn//fn[@reference = $reference]/preceding-sibling::fn) + 1" /> -->
-					<xsl:value-of select="count($p_fn//fn[@gen_id = $gen_id]/preceding-sibling::fn) + 1"/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-		<fo:footnote>
-			<xsl:variable name="number">
-
-						<xsl:value-of select="$current_fn_number"/>
-
-			</xsl:variable>
-
-			<xsl:variable name="current_fn_number_text">
-				<xsl:value-of select="$number"/>
-
-						<xsl:text>)</xsl:text>
-
-			</xsl:variable>
-
-			<fo:inline xsl:use-attribute-sets="bibitem-note-fn-style">
-				<fo:basic-link internal-destination="{$gen_id}" fox:alt-text="footnote {$number}">
-					<xsl:value-of select="$current_fn_number_text"/>
-				</fo:basic-link>
-			</fo:inline>
-			<fo:footnote-body>
-				<fo:block xsl:use-attribute-sets="bibitem-note-fn-body-style">
-					<fo:inline id="{$gen_id}" xsl:use-attribute-sets="bibitem-note-fn-number-style">
-						<xsl:value-of select="$current_fn_number_text"/>
-					</fo:inline>
-					<xsl:apply-templates/>
-				</fo:block>
-			</fo:footnote-body>
-		</fo:footnote>
-	</xsl:template>
-
-	<xsl:template match="*[local-name() = 'bibitem']/*[local-name() = 'edition']"> <!-- for iho -->
-		<xsl:text> edition </xsl:text>
-		<xsl:value-of select="."/>
-	</xsl:template>
-
-	<xsl:template match="*[local-name() = 'bibitem']/*[local-name() = 'uri']"> <!-- for iho -->
-		<xsl:text> (</xsl:text>
-		<fo:inline xsl:use-attribute-sets="link-style">
-			<fo:basic-link external-destination="." fox:alt-text=".">
-				<xsl:value-of select="."/>
-			</fo:basic-link>
-		</fo:inline>
-		<xsl:text>)</xsl:text>
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'bibitem']/*[local-name() = 'docidentifier']"/>
 
 	<xsl:template match="*[local-name() = 'formattedref']">
-
+		<!-- <xsl:if test="$namespace = 'unece' or $namespace = 'unece-rec'">
+			<xsl:text>, </xsl:text>
+		</xsl:if> -->
 		<xsl:apply-templates/>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'biblio-tag']">
+		<xsl:param name="biblio_tag_part">both</xsl:param>
+		<xsl:choose>
+			<xsl:when test="$biblio_tag_part = 'first' and *[local-name() = 'tab']">
+				<xsl:apply-templates select="./*[local-name() = 'tab'][1]/preceding-sibling::node()"/>
+			</xsl:when>
+			<xsl:when test="$biblio_tag_part = 'last'">
+				<xsl:apply-templates select="./*[local-name() = 'tab'][1]/following-sibling::node()"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'biblio-tag']/*[local-name() = 'tab']" priority="2">
+		<xsl:text> </xsl:text>
 	</xsl:template>
 
 	<!-- ======================= -->
@@ -11105,17 +11023,17 @@
 		</xsl:template>
 
 		<!-- add @reference for bibitem/note, similar to fn/reference -->
-		<xsl:template match="*[local-name() = 'bibitem']/*[local-name() = 'note']" mode="update_xml_step2">
+		<!-- <xsl:template match="*[local-name() = 'bibitem']/*[local-name() = 'note']" mode="update_xml_step2">
 			<xsl:copy>
 				<xsl:apply-templates select="@*" mode="update_xml_step2"/>
-
+				
 				<xsl:attribute name="reference">
 					<xsl:value-of select="concat('bibitem_', ../@id, '_', count(preceding-sibling::*[local-name() = 'note']))"/>
 				</xsl:attribute>
-
+				
 				<xsl:apply-templates select="node()" mode="update_xml_step2"/>
 			</xsl:copy>
-		</xsl:template>
+		</xsl:template> -->
 
 		<!-- enclose sequence of 'char x' + 'combining char y' to <lang_none>xy</lang_none> -->
 		<xsl:variable name="regex_combining_chars">(.[̀-ͯ])</xsl:variable>
@@ -11618,6 +11536,10 @@
 
 	<xsl:template name="getDocumentId">
 		<xsl:call-template name="getLang"/><xsl:value-of select="//*[local-name() = 'p'][1]/@id"/>
+	</xsl:template>
+
+	<xsl:template name="getDocumentId_fromCurrentNode">
+		<xsl:call-template name="getLang_fromCurrentNode"/><xsl:value-of select=".//*[local-name() = 'p'][1]/@id"/>
 	</xsl:template>
 
 	<xsl:template name="namespaceCheck">
