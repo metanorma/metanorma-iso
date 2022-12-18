@@ -326,31 +326,31 @@
 					<!-- contents pages -->
 					<!-- odd pages -->
 					<fo:simple-page-master master-name="odd" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom + 2}mm" margin-left="19mm" margin-right="19mm"/>
+						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom}mm" margin-left="19mm" margin-right="19mm"/>
 						<fo:region-before region-name="header-odd" extent="27.4mm"/> <!--   display-align="center" -->
-						<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-odd" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="19mm"/>
 						<fo:region-end region-name="right-region" extent="19mm"/>
 					</fo:simple-page-master>
 					<fo:simple-page-master master-name="odd-landscape" page-width="{$pageHeight}mm" page-height="{$pageWidth}mm">
-						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom + 2}mm" margin-left="19mm" margin-right="19mm"/>
+						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom}mm" margin-left="19mm" margin-right="19mm"/>
 						<fo:region-before region-name="header-odd" extent="27.4mm"/>
-						<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-odd" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="19mm"/>
 						<fo:region-end region-name="right-region" extent="19mm"/>
 					</fo:simple-page-master>
 					<!-- even pages -->
 					<fo:simple-page-master master-name="even" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom + 2}mm" margin-left="19mm" margin-right="19mm"/>
+						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom}mm" margin-left="19mm" margin-right="19mm"/>
 						<fo:region-before region-name="header-even" extent="27.4mm"/> <!--   display-align="center" -->
-						<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-even" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="19mm"/>
 						<fo:region-end region-name="right-region" extent="19mm"/>
 					</fo:simple-page-master>
 					<fo:simple-page-master master-name="even-landscape" page-width="{$pageHeight}mm" page-height="{$pageWidth}mm">
-						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom + 2}mm" margin-left="19mm" margin-right="19mm"/>
+						<fo:region-body margin-top="27.4mm" margin-bottom="{$marginBottom}mm" margin-left="19mm" margin-right="19mm"/>
 						<fo:region-before region-name="header-even" extent="27.4mm"/> <!--   display-align="center" -->
-						<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-even" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="19mm"/>
 						<fo:region-end region-name="right-region" extent="19mm"/>
 					</fo:simple-page-master>
@@ -381,46 +381,46 @@
 
 					<!-- first page -->
 					<fo:simple-page-master master-name="first-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
 						<fo:region-before region-name="header-first" extent="{$marginTop}mm"/> <!--   display-align="center" -->
-						<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-odd" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 					</fo:simple-page-master>
 					<!-- odd pages -->
 					<fo:simple-page-master master-name="odd-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
 						<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/> <!--   display-align="center" -->
-						<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-odd" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 					</fo:simple-page-master>
 					<fo:simple-page-master master-name="odd-publishedISO-landscape" page-width="{$pageHeight}mm" page-height="{$pageWidth}mm">
-						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
+						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm"/>
 						<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/> <!--   display-align="center" -->
-						<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-odd" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 					</fo:simple-page-master>
 					<!-- even pages -->
 					<fo:simple-page-master master-name="even-publishedISO" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 						<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
-						<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-even" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
 					</fo:simple-page-master>
 					<fo:simple-page-master master-name="even-publishedISO-landscape" page-width="{$pageHeight}mm" page-height="{$pageWidth}mm">
-						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 						<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
-						<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-even" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
 					</fo:simple-page-master>
 					<fo:simple-page-master master-name="blankpage" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
-						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom + 2}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
+						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 						<fo:region-before region-name="header" extent="{$marginTop}mm"/>
-						<fo:region-after region-name="footer" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left" extent="{$marginLeftRight2}mm"/>
 						<fo:region-end region-name="right" extent="{$marginLeftRight1}mm"/>
 					</fo:simple-page-master>
@@ -457,7 +457,7 @@
 					<fo:simple-page-master master-name="last-page" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm"/>
 						<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
-						<fo:region-after region-name="last-page-footer" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="last-page-footer" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
 					</fo:simple-page-master>
@@ -466,14 +466,14 @@
 					<fo:simple-page-master master-name="index-odd" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight1}mm" margin-right="{$marginLeftRight2}mm" column-count="2" column-gap="10mm"/>
 						<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/>
-						<fo:region-after region-name="footer-odd" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-odd" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight1}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 					</fo:simple-page-master>
 					<fo:simple-page-master master-name="index-even" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="{$marginLeftRight1}mm" column-count="2" column-gap="10mm"/>
 						<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
-						<fo:region-after region-name="footer-even" extent="{$marginBottom}mm"/>
+						<fo:region-after region-name="footer-even" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight1}mm"/>
 					</fo:simple-page-master>
@@ -2390,7 +2390,7 @@
 	<xsl:variable name="marginTop" select="normalize-space($marginTop_)"/>
 
 	<xsl:variable name="marginBottom_">
-		13
+		15
 	</xsl:variable>
 	<xsl:variable name="marginBottom" select="normalize-space($marginBottom_)"/>
 
@@ -3110,6 +3110,12 @@
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
 	</xsl:attribute-set>
 
+	<xsl:attribute-set name="figure-block-style">
+
+			<xsl:attribute name="space-after">12pt</xsl:attribute>
+
+	</xsl:attribute-set>
+
 	<xsl:attribute-set name="figure-style">
 
 	</xsl:attribute-set>
@@ -3119,7 +3125,7 @@
 			<xsl:attribute name="font-weight">bold</xsl:attribute>
 			<xsl:attribute name="text-align">center</xsl:attribute>
 			<xsl:attribute name="margin-top">12pt</xsl:attribute>
-			<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
+			<xsl:attribute name="space-after">12pt</xsl:attribute>
 			<xsl:attribute name="keep-with-previous">always</xsl:attribute>
 
 	</xsl:attribute-set>
@@ -7664,7 +7670,7 @@
 	<xsl:template match="*[local-name() = 'figure']" name="figure">
 		<xsl:variable name="isAdded" select="@added"/>
 		<xsl:variable name="isDeleted" select="@deleted"/>
-		<fo:block-container id="{@id}">
+		<fo:block-container id="{@id}" xsl:use-attribute-sets="figure-block-style">
 
 			<xsl:call-template name="setTrackChangesStyles">
 				<xsl:with-param name="isAdded" select="$isAdded"/>
