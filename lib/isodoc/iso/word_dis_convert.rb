@@ -63,7 +63,7 @@ module IsoDoc
         TOC
       end
 
-      def make_tr_attr(cell, row, totalrows, header)
+      def make_tr_attr(cell, row, totalrows, header, bordered)
         super.merge(header: header)
       end
 

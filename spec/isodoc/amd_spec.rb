@@ -611,7 +611,7 @@ RSpec.describe IsoDoc do
             <div class="Section3" id="P">
               <h1 class="Annex">
                 <b>Annex A</b>
-                <br/>(normative)
+                <br/><span class="obligation">(normative)</span>
                 <br/>
                 <br/>
                 <b>Annex</b></h1>
@@ -626,7 +626,7 @@ RSpec.describe IsoDoc do
             <div class="Section3" id="P1">
               <h1 class="Annex">
                 <b>Annex B</b>
-                <br/>(normative)</h1>
+                <br/><span class="obligation">(normative)</span></h1>
             </div>
             <br/>
             <div>

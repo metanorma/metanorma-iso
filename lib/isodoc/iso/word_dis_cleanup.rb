@@ -35,6 +35,10 @@ module IsoDoc
         docxml.xpath("//p[not(@class)]").each { |p| p["class"] = "MsoBodyText" }
       end
 
+      def sourcecode_style
+        "Code"
+      end
+
       def dis_styles1(docxml)
         amd_style(docxml)
         code_style(docxml)

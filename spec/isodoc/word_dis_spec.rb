@@ -113,8 +113,7 @@ RSpec.describe IsoDoc do
         <div id='A'>
           <h1/>
           <p>
-            <i>H</i>
-             I
+            <span class="C"><i>H</i> I</span>
           </p>
         </div>
       </div>
@@ -930,30 +929,30 @@ RSpec.describe IsoDoc do
                <a name='B' id='B'/>
                <thead>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' align='center' valign='middle'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;' align='center' valign='middle'>
                      <div class='Tableheader'>A</div>
                    </th>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' align='center' valign='middle'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;' align='center' valign='middle'>
                      <p class='Tableheader' style='text-align: center'>B</p>
                    </th>
                  </tr>
                </thead>
                <tbody>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <div class='Tablebody'>C</div>
                    </th>
-                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <p class='Tablebody'>D</p>
                    </td>
                  </tr>
                </tbody>
                <tfoot>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <div class='Tablebody'>E</div>
                    </th>
-                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <p class='Tablebody'>F</p>
                    </td>
                  </tr>
@@ -2044,10 +2043,7 @@ RSpec.describe IsoDoc do
              [1]
              <span style='mso-tab-count:1'>  </span>
              ISO/IEC 712-3:2022, ALUFFI, Paolo, ed. (2022).
-             <i>
-               Facets of Algebraic Geometry: A Collection in Honor of William Fulton's
-               80th Birthday
-             </i>
+             <i><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></i>
              , 1st edition. Cambridge, UK: CUP.
            </p>
          </div>

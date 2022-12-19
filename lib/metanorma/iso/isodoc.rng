@@ -572,6 +572,11 @@
           </attribute>
         </optional>
         <optional>
+          <attribute name="linenums">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
           <ref name="tname"/>
         </optional>
         <oneOrMore>

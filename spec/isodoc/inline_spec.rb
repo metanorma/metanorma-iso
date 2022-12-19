@@ -596,82 +596,54 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = <<~OUTPUT
       #{HTML_HDR}
-             <p class='zzSTDTitle1'/>
+                   <p class="zzSTDTitle1"/>
              <div>
-               <h1>1&#160; Normative References</h1>
-               <p>
-                 The following documents are referred to in the text in such a way that
-                 some or all of their content constitutes requirements of this
-                 document. For dated references, only the edition cited applies. For
-                 undated references, the latest edition of the referenced document
-                 (including any amendments) applies.
-               </p>
-               <p id='ISO712' class='NormRef'>
-                 ISO 712,
-                 <i>Cereals and cereal products</i>
-               </p>
+               <h1>1  Normative References</h1>
+               <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+               <p id="ISO712" class="NormRef">ISO 712,<i><span class="stddocTitle">Cereals and cereal products</span></i></p>
              </div>
-             <div id='Terms'>
+             <div id="Terms">
                <h1>2</h1>
-        <p class='TermNum' id='B'>2.1</p>
-        <p class='Terms' style='text-align:left;'><b>B</b></p>
+               <p class="TermNum" id="B">2.1</p>
+               <p class="Terms" style="text-align:left;">
+                 <b>B</b>
+               </p>
                <p>
                  <ul>
                    <li>
-                      (
-                     <a href='#clause1'>Clause 3</a>
-                     )
-                   </li>
-                   <li>
-                     <i>term</i>
-                      (
-                     <a href='#clause1'>Clause 3</a>
-                     )
-                   </li>
-                   <li>
-                     <i>w[o]rd</i>
-                      (
-                     <a href='#clause1'>Clause #1</a>
-                     )
-                   </li>
-                   <li>
-                     <i>term</i>
-                      (
-                     <a href='#ISO712'>ISO 712</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'>The Aforementioned Citation</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'>ISO 712, 3.1, Figure a</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'>ISO 712, 3.1 and Figure b</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'> The Aforementioned Citation </a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      [term defined in Termbase IEV, term ID 135-13-13]
-                   </li>
-                   <li>
-                     <i>word</i>
-                      [term defined in The IEV database]
-                   </li>
+               (<a href="#clause1"><span class="citesec">Clause 3</span></a>)
+             </li>
+                   <li><i>term</i>
+               (<a href="#clause1"><span class="citesec">Clause 3</span></a>)
+             </li>
+                   <li><i>w[o]rd</i>
+               (<a href="#clause1">Clause #1</a>)
+             </li>
+                   <li><i>term</i>
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span></a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712">The Aforementioned Citation</a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712">
+
+
+               The Aforementioned Citation
+               </a>)
+             </li>
+                   <li><i>word</i>
+               [term defined in Termbase IEV, term ID 135-13-13]
+             </li>
+                   <li><i>word</i>
+               [term defined in The IEV database]
+             </li>
                    <li>
                      <i>word</i>
                      <b>error!</b>
@@ -679,8 +651,8 @@ RSpec.describe IsoDoc do
                  </ul>
                </p>
              </div>
-             <div id='clause1'>
-               <h1>3&#160; Clause 1</h1>
+             <div id="clause1">
+               <h1>3  Clause 1</h1>
              </div>
            </div>
          </body>
@@ -879,65 +851,46 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
          #{HTML_HDR}
             <p class='zzSTDTitle1'/>
-            <div id='clause1'>
-              <h1>1&#160; Clause 1</h1>
-            </div>
-            <div id='A'>
-              <h1>2</h1>
-              <p class='TermNum' id='B'>2.1</p>
-            <p class='Terms' style='text-align:left;'><b>B</b></p>
-              <p>
-                               <ul>
-                        <li>
-                          <i>term</i>
-                           (
-                          <a href='#clause1'>Clause 1</a>
-                          )
-                        </li>
-                        <li>
-                           term (
-                          <a href='#clause1'>Clause 1</a>
-                          )
-                        </li>
-                        <li>
-                          <i>term</i>
-                           (
-                          <a href='#clause1'>Clause 1</a>
-                          )
-                        </li>
-                        <li> term </li>
-                        <li> term </li>
-                        <li> term </li>
-                                    <li>
-              <a href='#clause1'>
-                <i>term</i>
-              </a>
-               (
-              <a href='#clause1'>Clause 1</a>
-              )
-            </li>
-            <li>
-              <a href='#clause1'>
-                <i>term</i>
-              </a>
-               (Clause 1)
-            </li>
-            <li>
-              <i>term</i>
-               (
-              <a href='#clause1'>Clause 1</a>
-              )
-            </li>
-            <li>
-              <i>term</i>
-               (Clause 1)
-            </li>
-                      </ul>
-              </p>
-            </div>
-          </div>
-        </body>
-      </html>
+             <div id="clause1">
+               <h1>1  Clause 1</h1>
+             </div>
+             <div id="A">
+               <h1>2</h1>
+               <p class="TermNum" id="B">2.1</p>
+               <p class="Terms" style="text-align:left;">
+                 <b>B</b>
+               </p>
+               <p>
+                 <ul>
+                   <li><i>term</i>
+             (<a href="#clause1"><span class="citesec">Clause 1</span></a>)
+           </li>
+                   <li>
+             term
+             (<a href="#clause1"><span class="citesec">Clause 1</span></a>)
+           </li>
+                   <li><i>term</i>
+             (<a href="#clause1"><span class="citesec">Clause 1</span></a>)
+           </li>
+                   <li>
+             term
+           </li>
+                   <li>
+             term
+           </li>
+                   <li>
+             term
+           </li>
+                   <li><a href="#clause1"><i>term</i></a> (<a href="#clause1"><span class="citesec">Clause 1</span></a>)</li>
+                   <li><a href="#clause1"><i>term</i></a> (<span class="citesec">Clause 1</span>)</li>
+                   <li><i>term</i> (<a href="#clause1"><span class="citesec">Clause 1</span></a>)</li>
+                   <li><i>term</i> (<span class="citesec">Clause 1</span>)</li>
+                 </ul>
+               </p>
+             </div>
+           </div>
+         </body>
+       </html>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)

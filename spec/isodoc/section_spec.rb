@@ -232,7 +232,7 @@ RSpec.describe IsoDoc do
             <div class="Section3" id="P">
               <h1 class="Annex">
                 <b>Annex A</b>
-                <br/>(normative)
+                <br/><span class="obligation">(normative)</span>
                 <br/>
                 <br/>
                 <b>Annex</b></h1>
