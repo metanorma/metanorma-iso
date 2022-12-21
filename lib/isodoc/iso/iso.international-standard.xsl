@@ -2,7 +2,7 @@
 
 	<xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
-	<xsl:key name="kfn" match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])]" use="@reference"/>
+	<xsl:key name="kfn" match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure' or local-name() = 'localized-strings')] and not(ancestor::*[local-name() = 'name']))]" use="@reference"/>
 
 	<xsl:key name="attachments" match="iso:eref[java:endsWith(java:java.lang.String.new(@bibitemid),'.exp')]" use="@bibitemid"/>
 	<xsl:key name="attachments2" match="iso:eref[contains(@bibitemid,'.exp_')]" use="@bibitemid"/>
@@ -4986,7 +4986,7 @@
 		</fn>
 	-->
 	<!-- footnotes in text (title, bibliography, main body, table's, figure's names), not for tables, figures -->
-	<xsl:template match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])]" priority="2" name="fn">
+	<xsl:template match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure')] and not(ancestor::*[local-name() = 'name']))]" priority="2" name="fn">
 
 		<!-- list of footnotes to calculate actual footnotes number -->
 		<xsl:variable name="p_fn_">
@@ -5045,8 +5045,7 @@
 				</fo:basic-link>
 			</fo:inline>
 		</xsl:variable>
-		<!-- DEBUG: p_fn=<xsl:copy-of select="$p_fn"/>
-		gen_id=<xsl:value-of select="$gen_id"/> -->
+
 		<xsl:choose>
 			<xsl:when test="normalize-space(@skip_footnote_body) = 'true'">
 				<xsl:copy-of select="$footnote_inline"/>
@@ -5101,7 +5100,7 @@
 					<!-- commented:
 					 .//*[local-name() = 'bibitem'][ancestor::*[local-name() = 'references']]/*[local-name() = 'note'] |
 					 because 'fn' there is in biblio-tag -->
-					<xsl:for-each select=".//*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure') and not(ancestor::*[local-name() = 'name'])])][generate-id(.)=generate-id(key('kfn',@reference)[1])]">
+					<xsl:for-each select=".//*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure')] and not(ancestor::*[local-name() = 'name']))][generate-id(.)=generate-id(key('kfn',@reference)[1])]">
 						<!-- copy unique fn -->
 						<fn gen_id="{generate-id(.)}">
 							<xsl:copy-of select="@*"/>
