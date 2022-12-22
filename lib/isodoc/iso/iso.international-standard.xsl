@@ -7747,7 +7747,9 @@
 
 									<xsl:variable name="scale" select="java:org.metanorma.fop.Util.getImageScale($img_src, $width_effective, $height_effective)"/>
 									<xsl:if test="number($scale) &lt; 100">
-										<xsl:attribute name="content-width"><xsl:value-of select="$scale"/>%</xsl:attribute>
+
+												<xsl:attribute name="content-width"><xsl:value-of select="$scale"/>%</xsl:attribute>
+
 									</xsl:if>
 
 								</xsl:if>
