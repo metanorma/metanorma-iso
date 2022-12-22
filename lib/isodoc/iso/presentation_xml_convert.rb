@@ -62,7 +62,7 @@ module IsoDoc
       def example_span_label(_node, div, name)
         return if name.nil?
 
-        div.span **{ class: "example_label" } do |_p|
+        div.span class: "example_label" do |_p|
           name.children.each { |n| parse(n, div) }
         end
       end

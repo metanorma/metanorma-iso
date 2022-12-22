@@ -45,7 +45,7 @@ RSpec.describe IsoDoc do
               <contributor>
                 <role type="publisher"/>
                 <organization>
-                  <abbreviation>ISO</abbreviation>
+                  <name>ISO</name>
                 </organization>
               </contributor>
               <note format="text/plain" reference="1" type="Unpublished-Status">Under preparation. (Stage at the time of publication ISO/DIS 16634)</note>
@@ -118,7 +118,7 @@ RSpec.describe IsoDoc do
               <contributor>
                 <role type="publisher"/>
                 <organization>
-                  <abbreviation>ISO</abbreviation>
+                  <name>ISO</name>
                 </organization>
               </contributor>
             </bibitem>
@@ -252,7 +252,7 @@ RSpec.describe IsoDoc do
               <biblio-tag>[4]<tab/></biblio-tag>
             </bibitem>
             <bibitem id="ref11">
-               <formattedref><em><span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span></em></formattedref>
+               <formattedref><em><span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span></em>.</formattedref>
               <docidentifier type='metanorma-ordinal'>[5]</docidentifier>
               <docidentifier type="IETF">IETF RFC 10</docidentifier>
               <biblio-tag>[5]<tab/>IETF RFC 10, </biblio-tag>
@@ -271,9 +271,9 @@ RSpec.describe IsoDoc do
 
     html = <<~OUTPUT
       #{HTML_HDR}
-                  <br/>
-                               <div>
-               <h1 class="ForewordTitle">Foreword</h1>
+        <br/>
+        <div>
+          <h1 class="ForewordTitle">Foreword</h1>
                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
                  <a href="#ISO712">ISO 712</a>
                  <a href="#ISBN">[1]</a>
@@ -330,7 +330,7 @@ RSpec.describe IsoDoc do
 
                  <a href="http://www.icc.or.at">http://www.icc.or.at</a>
                  )</p>
-               <p id="ref11" class="Biblio">[5]  IETF RFC 10, <i><span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span></i></p>
+               <p id="ref11" class="Biblio">[5]  IETF RFC 10, <i><span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span></i>.</p>
                <p id="ref12" class="Biblio">Citn  IETF RFC 20, CitationWorks. 2019.
                  <i>How to cite a reference</i>.</p>
              </div>
