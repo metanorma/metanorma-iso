@@ -1091,6 +1091,45 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(word)
   end
 
+  it "deals with formulas" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <formula id="B"><name>A.1</name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+          <div class="WordSection3">
+        <p class="zzSTDTitle"/>
+        <div>
+          <a name="A" id="A"/>
+          <h1/>
+          <div>
+            <a name="B" id="B"/>
+            <div class="Formula">
+              <p class="Formula"><span class="stem"><m:oMath><m:sSub><m:e><m:r><m:t>S</m:t></m:r></m:e><m:sub><m:r><m:t>sl,max</m:t></m:r></m:sub></m:sSub><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>=</m:t></m:r></span><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>⌊</m:t></m:r></span><m:f><m:fPr><m:type m:val="bar"/></m:fPr><m:num><m:sSub><m:e><m:r><m:t>L</m:t></m:r></m:e><m:sub><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>max</m:t></m:r></span></m:sub></m:sSub><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>×</m:t></m:r></span><m:sSub><m:e><m:r><m:t>N</m:t></m:r></m:e><m:sub><m:r><m:t>bpp</m:t></m:r></m:sub></m:sSub></m:num><m:den><m:r><m:t>8</m:t></m:r></m:den></m:f><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t> </m:t></m:r></span><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>⌋</m:t></m:r></span></m:oMath></span><span style="mso-tab-count:1">  </span>(A.1)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "deals with notes" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
