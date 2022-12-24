@@ -43,6 +43,7 @@ module IsoDoc
         amd_style(docxml)
         code_style(docxml)
         figure_style(docxml)
+        formula_style(docxml)
         note_style(docxml)
         example_style(docxml)
         dis_style_interactions(docxml)
@@ -162,6 +163,14 @@ module IsoDoc
         end
       end
 
+      def formula_style(docxml)
+        docxml.xpath("//div[@class = 'Formula']").each do |f|
+          f.xpath(".//p[not(@class)]").each do |p|
+            p["class"] = "Formula"
+          end
+        end
+      end
+
       def code_style(doc)
         span_style((doc.xpath("//tt//b") - doc.xpath("//tt//i//b")),
                    "ISOCodebold")
@@ -210,7 +219,7 @@ module IsoDoc
           p["class"] = "zzCopyright"
           p["style"] = "text-indent:20.15pt;"
           p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' " \
-                                             "style='text-indent:20.15pt;'>"))
+                                              "style='text-indent:20.15pt;'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
           # p["class"] = "zzCopyright"
