@@ -113,11 +113,11 @@ module IsoDoc
                 delim = " "
                 @xrefs.anchor(container, :label)
                 # 7 a) : Clause 7 a), but Clause 7 List 1 a)
-              else
-                anchor_xref(node, container)
+              else anchor_xref(node, container)
               end
 
-        l10n(ref + delim + linkend)
+        ref and linkend = ref + delim + linkend
+        l10n(linkend)
       end
 
       def expand_citeas(text)
