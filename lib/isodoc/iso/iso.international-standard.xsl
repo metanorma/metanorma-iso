@@ -1974,12 +1974,16 @@
 			<xsl:attribute name="text-align">
 				<xsl:choose>
 					<!-- <xsl:when test="ancestor::iso:preface">justify</xsl:when> -->
-					<xsl:when test="@align"><xsl:value-of select="@align"/></xsl:when>
+					<xsl:when test="@align = 'justified'">justify</xsl:when>
+					<xsl:when test="@align and not(@align = 'indent')"><xsl:value-of select="@align"/></xsl:when>
 					<xsl:when test="ancestor::iso:td/@align"><xsl:value-of select="ancestor::iso:td/@align"/></xsl:when>
 					<xsl:when test="ancestor::iso:th/@align"><xsl:value-of select="ancestor::iso:th/@align"/></xsl:when>
 					<xsl:otherwise>justify</xsl:otherwise><!-- left -->
 				</xsl:choose>
 			</xsl:attribute>
+			<xsl:if test="@align = 'indent'">
+				<xsl:attribute name="margin-left">7mm</xsl:attribute>
+			</xsl:if>
 			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 			<xsl:if test="count(ancestor::iso:li) = 1 and not(ancestor::iso:li[1]/following-sibling::iso:li) and not(following-sibling::iso:p)">
 				<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
@@ -3966,6 +3970,9 @@
 					<xsl:if test="not(*[local-name() = 'name'])">
 						<xsl:attribute name="margin-top">12pt</xsl:attribute>
 					</xsl:if>
+					<xsl:if test="starts-with(@id, 'array_')">
+						<xsl:attribute name="margin-top">6pt</xsl:attribute>
+					</xsl:if>
 
 				<!-- end table block-container attributes -->
 
@@ -3995,6 +4002,8 @@
 								<!-- for internal table in table cell -->
 								<xsl:attribute name="border"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 							</xsl:if>
+
+						<xsl:call-template name="setBordersTableArray"/>
 
 					</xsl:element>
 				</xsl:variable>
@@ -4137,6 +4146,15 @@
 				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
+
+	</xsl:template>
+
+	<xsl:template name="setBordersTableArray">
+
+			<xsl:if test="starts-with(@id, 'array_') or starts-with(ancestor::*[local-name() = 'table'][1]/@id, 'array_')">
+				<!-- array - table without borders -->
+				<xsl:attribute name="border">none</xsl:attribute>
+			</xsl:if>
 
 	</xsl:template>
 
@@ -4642,6 +4660,8 @@
 						<fo:table-row>
 							<fo:table-cell xsl:use-attribute-sets="table-footer-cell-style" number-columns-spanned="{$cols-count}">
 
+								<xsl:call-template name="setBordersTableArray"/>
+
 								<!-- fn will be processed inside 'note' processing -->
 
 								<!-- for BSI (not PAS) display Notes before footnotes -->
@@ -4818,6 +4838,8 @@
 					</xsl:when>
 				</xsl:choose>
 
+			<xsl:call-template name="setBordersTableArray"/>
+
 			<xsl:call-template name="setTableRowAttributes"/>
 
 			<xsl:apply-templates/>
@@ -4845,6 +4867,8 @@
 					<xsl:attribute name="border-top"><xsl:value-of select="$table-border"/></xsl:attribute>
 				</xsl:if>
 
+			<xsl:call-template name="setBordersTableArray"/>
+
 			<xsl:call-template name="setTableRowAttributes"/>
 			<xsl:apply-templates/>
 		</fo:table-row>
@@ -4868,6 +4892,8 @@
 					<xsl:attribute name="border-top"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 					<xsl:attribute name="border-bottom"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 				</xsl:if>
+
+			<xsl:call-template name="setBordersTableArray"/>
 
 			<xsl:if test="$lang = 'ar'">
 				<xsl:attribute name="padding-right">1mm</xsl:attribute>
@@ -4931,6 +4957,8 @@
 					<xsl:attribute name="border-top">0pt solid black</xsl:attribute>
 				</xsl:if>
 				<!-- <xsl:attribute name="page-break-inside">avoid</xsl:attribute> -->
+
+			<xsl:call-template name="setBordersTableArray"/>
 
 			<xsl:if test=".//*[local-name() = 'table']"> <!-- if there is nested table -->
 				<xsl:attribute name="padding-right">1mm</xsl:attribute>
@@ -11846,6 +11874,7 @@
 			<xsl:choose>
 				<xsl:when test="$lang = 'ar' and $align = 'left'">start</xsl:when>
 				<xsl:when test="$lang = 'ar' and $align = 'right'">end</xsl:when>
+				<xsl:when test="$align = 'justified'">justify</xsl:when>
 				<xsl:when test="$align != '' and not($align = 'indent')"><xsl:value-of select="$align"/></xsl:when>
 				<xsl:when test="ancestor::*[local-name() = 'td']/@align"><xsl:value-of select="ancestor::*[local-name() = 'td']/@align"/></xsl:when>
 				<xsl:when test="ancestor::*[local-name() = 'th']/@align"><xsl:value-of select="ancestor::*[local-name() = 'th']/@align"/></xsl:when>
