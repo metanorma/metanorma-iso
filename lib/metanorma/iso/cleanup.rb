@@ -4,14 +4,14 @@ require "htmlentities"
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
-      PRE_NORMREF_FOOTNOTES = "//preface//fn | "\
+      PRE_NORMREF_FOOTNOTES = "//preface//fn | " \
                               "//clause[@type = 'scope']//fn".freeze
 
       NORMREF_FOOTNOTES =
         "//references[@normative = 'true']//fn".freeze
 
       POST_NORMREF_FOOTNOTES =
-        "//sections//clause[not(@type = 'scope')]//fn | "\
+        "//sections//clause[not(@type = 'scope')]//fn | " \
         "//annex//fn | //references[@normative = 'false']//fn".freeze
 
       def other_footnote_renumber(xmldoc)
@@ -33,7 +33,7 @@ module Metanorma
       end
 
       def get_id_prefix(xmldoc)
-        xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']"\
+        xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']" \
                      "/organization").each_with_object([]) do |x, prefix|
           x1 = x.at("abbreviation")&.text || x.at("name")&.text
           # (x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
@@ -60,21 +60,22 @@ module Metanorma
       end
 
       TERM_CLAUSE =
-        "//sections//terms | "\
+        "//sections//terms | " \
         "//sections//clause[descendant::terms][not(descendant::definitions)]"
           .freeze
 
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
 
-      OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or "\
-                 "@type = 'ISBN'".freeze
+      OTHERIDS = "@type = 'DOI' or @type = 'metanorma' or @type = 'ISSN' or " \
+                 "@type = 'ISBN' or starts-with(@type, 'ISSN.') or " \
+                 "starts-with(@type, 'ISBN.')".freeze
 
       def pub_class(bib)
         return 1 if bib.at("#{PUBLISHER}[abbreviation = 'ISO']")
-        return 1 if bib.at("#{PUBLISHER}[name = 'International Organization "\
+        return 1 if bib.at("#{PUBLISHER}[name = 'International Organization " \
                            "for Standardization']")
         return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
-        return 2 if bib.at("#{PUBLISHER}[name = 'International "\
+        return 2 if bib.at("#{PUBLISHER}[name = 'International " \
                            "Electrotechnical Commission']")
         return 3 if bib.at("./docidentifier[@type][not(#{OTHERIDS})]") ||
           bib.at("./docidentifier[not(@type)]")
@@ -106,8 +107,8 @@ module Metanorma
         type = id["type"] if id
         title = bib&.at("./title[@type = 'main']")&.text ||
           bib&.at("./title")&.text || bib&.at("./formattedref")&.text
-        "#{pubclass} :: #{type} :: "\
-          "#{num.nil? ? abbrid : sprintf('%09d', num.to_i)} :: "\
+        "#{pubclass} :: #{type} :: " \
+          "#{num.nil? ? abbrid : sprintf('%09d', num.to_i)} :: " \
           "#{sprintf('%09d', partid.to_i)} :: #{id&.text} :: #{title}"
       end
 
@@ -148,7 +149,7 @@ module Metanorma
       end
 
       def unpublished_note(xmldoc)
-        xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]"\
+        xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]" \
                      "[not(note[@type = 'Unpublished-Status'])]").each do |b|
           next if pub_class(b) > 2
           next unless (s = b.at("./status/stage")) && (s.text.to_i < 60)
@@ -179,7 +180,7 @@ module Metanorma
 
       def replacement_standard(biblio)
         r = biblio.at("./relation[@type = 'updates']/bibitem") or return nil
-        id = r.at("./formattedref | ./docidentifier[@primary = 'true'] | "\
+        id = r.at("./formattedref | ./docidentifier[@primary = 'true'] | " \
                   "./docidentifier | ./formattedref") or return nil
         id.text
       end
@@ -234,7 +235,7 @@ module Metanorma
       end
 
       def extract_publishers(xmldoc)
-        xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']/"\
+        xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']/" \
                      "organization").each_with_object([]) do |p, m|
           x = p.at("./abbreviation") || p.at("./name") or next
           m << x.text
