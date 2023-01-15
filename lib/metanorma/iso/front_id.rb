@@ -39,6 +39,7 @@ module Metanorma
 
         ret = STAGE_ABBRS[stage.to_sym]
         ret = "PRF" if stage == "60" && substage == "00"
+        ret = nil if stage == "60" && substage != "00"
         ret = "AWI" if stage == "10" && substage == "99"
         ret = "AWI" if stage == "20" && substage == "00"
         ret
@@ -63,8 +64,11 @@ module Metanorma
         xml.docnumber node&.attr("docnumber")
       end
 
-      # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type] document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
+      # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type] 
+      # document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
       def get_typeabbr(node, amd: false)
+        node.attr("amendment-number") and return :amd
+        node.attr("corrigendum-number") and return :cor
         case doctype(node)
         when "directive" then :dir
         when "technical-report" then :tr
@@ -117,12 +121,14 @@ module Metanorma
       end
 
       def iso_id_stage(node)
+        #require "debug"; binding.b
         stage = stage_abbr(get_stage(node), get_substage(node),
                            doctype(node)) or return nil
         harmonised = "#{get_stage(node)}.#{get_substage(node)}"
         harmonised = nil unless /^\d\d\.\d\d/.match?(harmonised)
         { abbr: stage.to_sym, harmonized_code: harmonised }
-        stage.to_sym
+        #stage.to_sym
+        harmonised || stage.to_sym
       end
 
       def iso_id_year(node)
@@ -133,14 +139,16 @@ module Metanorma
       def iso_id_params_resolve(params, params2, node, orig_id)
         if orig_id && (node.attr("amendment-number") ||
             node.attr("corrigendum-number"))
-          params[:year] = orig_id.year
-          params[:edition] = orig_id.edition
           params.delete(:unpublished)
+          params.delete(:part)
+          params2[:base] = orig_id
         end
-        if node.attr("amendment-number") then params[:amendments] = [params2]
-        elsif node.attr("corrigendum-number")
-          params[:corrigendums] = [params2]
-        else params.merge!(params2) end
+        #if node.attr("amendment-number") then params[:amendments] = [params2]
+        #elsif node.attr("corrigendum-number")
+         # params[:corrigendums] = [params2]
+        #else 
+          params.merge!(params2) 
+      #end
         params
       end
 
@@ -168,8 +176,8 @@ module Metanorma
                   else params_nolang
                   end
         params1.delete(:unpublished)
-        require "debug"; binding.b
-        Pubid::Iso::Identifier::Base.new(**params1)
+        #require "debug"; binding.b
+        Pubid::Iso::Identifier.create(**params1)
       end
 
       def iso_id_undated(params)
@@ -178,7 +186,7 @@ module Metanorma
           hs.delete(:year)
           hs.delete(:unpublished)
         end
-        Pubid::Iso::Identifier::Base.new(**params2)
+        Pubid::Iso::Identifier.create(**params2)
       end
 
       def iso_id_with_lang(params)
@@ -188,12 +196,12 @@ module Metanorma
                     end
                   else params end
         params1.delete(:unpublished)
-        Pubid::Iso::Identifier::Base.new(**params1)
+        Pubid::Iso::Identifier.create(**params1)
       end
 
       def iso_id_reference(params)
         params1 = params.dup.tap { |hs| hs.delete(:unpublished) }
-        Pubid::Iso::Identifier::Base.new(**params1)
+        Pubid::Iso::Identifier.create(**params1)
       end
 
       def structured_id(node, xml)

@@ -13,8 +13,9 @@ module Metanorma
         super
         structured_id(node, xml)
         id = iso_id_default(iso_id_params(node))
-        xml.stagename metadata_stagename(id),
-                      **attr_code(abbreviation: id.typed_stage_abbrev)
+        id.stage and
+          xml.stagename metadata_stagename(id),
+                        **attr_code(abbreviation: id.typed_stage_abbrev)
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
       end
@@ -46,7 +47,7 @@ module Metanorma
         publishers = node.attr("publisher") || "ISO"
         csv_split(publishers).each do |p|
           xml.contributor do |c|
-            c.role **{ type: "author" }
+            c.role type: "author"
             c.organization do |a|
               organization(a, p, false, node, !node.attr("publisher"))
             end
@@ -58,7 +59,7 @@ module Metanorma
         publishers = node.attr("publisher") || "ISO"
         csv_split(publishers).each do |p|
           xml.contributor do |c|
-            c.role **{ type: "publisher" }
+            c.role type: "publisher"
             c.organization do |a|
               organization(a, p, true, node, !node.attr("publisher"))
             end
