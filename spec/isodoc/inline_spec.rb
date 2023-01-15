@@ -207,6 +207,7 @@ RSpec.describe IsoDoc do
                   <abbreviation>ISO</abbreviation>
                 </organization>
               </contributor>
+              <biblio-tag>ISO 712,</biblio-tag>
             </bibitem>
           </references>
         </bibliography>
@@ -298,6 +299,7 @@ RSpec.describe IsoDoc do
                 </eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
                 <eref bibitemid="ISO712" citeas="ISO/IEC DIR 1" type="inline"/>
+                <eref type="inline" bibitemid="ISO_10303_32" citeas="[ISO 10303-32&lt;fn reference=&quot;1&quot;&gt;&lt;p&gt;To be published.&lt;/p&gt;&#10;&lt;/fn&gt;]"/>
               </p>
             </foreword>
           </preface>
@@ -310,7 +312,7 @@ RSpec.describe IsoDoc do
                 <contributor>
                   <role type="publisher"/>
                   <organization>
-                    <abbreviation>ISO</abbreviation>
+                    <name>ISO</name>
                   </organization>
                 </contributor>
               </bibitem>
@@ -318,10 +320,9 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)
+    expect(xmlpp(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
       .sub(%r{<i18nyaml>.*</i18nyaml>}m, ""))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
-        <?xml version='1.0'?>
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
           <preface>
             <foreword displayorder="1">
@@ -379,6 +380,7 @@ RSpec.describe IsoDoc do
           <span class='stddocNumber'>DIR</span>
           <span class='stddocNumber'>1</span>
         </eref>
+        <eref type="inline" bibitemid="ISO_10303_32" citeas>[ISO 10303-32<fn reference="1"><p>To be published.</p></fn>]</eref>
               </p>
             </foreword>
           </preface>
@@ -389,6 +391,7 @@ RSpec.describe IsoDoc do
               <bibitem id="ISO712" type="standard">
                  <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
                 <docidentifier>ISO 712</docidentifier>
+                <biblio-tag>ISO 712,</biblio-tag>
               </bibitem>
             </references>
           </bibliography>
@@ -586,88 +589,61 @@ RSpec.describe IsoDoc do
       <bibitem id="ISO712" type="standard">
          <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
         <docidentifier type="ISO">ISO 712</docidentifier>
+        <biblio-tag>ISO 712,</biblio-tag>
       </bibitem>
       </references></bibliography>
           </iso-standard>
     OUTPUT
     output = <<~OUTPUT
       #{HTML_HDR}
-             <p class='zzSTDTitle1'/>
+                   <p class="zzSTDTitle1"/>
              <div>
-               <h1>1&#160; Normative References</h1>
-               <p>
-                 The following documents are referred to in the text in such a way that
-                 some or all of their content constitutes requirements of this
-                 document. For dated references, only the edition cited applies. For
-                 undated references, the latest edition of the referenced document
-                 (including any amendments) applies.
-               </p>
-               <p id='ISO712' class='NormRef'>
-                 ISO 712,
-                 <i>Cereals and cereal products</i>
-               </p>
+               <h1>1  Normative References</h1>
+               <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+               <p id="ISO712" class="NormRef">ISO 712,<i><span class="stddocTitle">Cereals and cereal products</span></i></p>
              </div>
-             <div id='Terms'>
+             <div id="Terms">
                <h1>2</h1>
-        <p class='TermNum' id='B'>2.1</p>
-        <p class='Terms' style='text-align:left;'><b>B</b></p>
+               <p class="TermNum" id="B">2.1</p>
+               <p class="Terms" style="text-align:left;">
+                 <b>B</b>
+               </p>
                <p>
                  <ul>
                    <li>
-                      (
-                     <a href='#clause1'>Clause 3</a>
-                     )
-                   </li>
-                   <li>
-                     <i>term</i>
-                      (
-                     <a href='#clause1'>Clause 3</a>
-                     )
-                   </li>
-                   <li>
-                     <i>w[o]rd</i>
-                      (
-                     <a href='#clause1'>Clause #1</a>
-                     )
-                   </li>
-                   <li>
-                     <i>term</i>
-                      (
-                     <a href='#ISO712'>ISO 712</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'>The Aforementioned Citation</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'>ISO 712, 3.1, Figure a</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'>ISO 712, 3.1 and Figure b</a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      (
-                     <a href='#ISO712'> The Aforementioned Citation </a>
-                     )
-                   </li>
-                   <li>
-                     <i>word</i>
-                      [term defined in Termbase IEV, term ID 135-13-13]
-                   </li>
-                   <li>
-                     <i>word</i>
-                      [term defined in The IEV database]
-                   </li>
+               (<a href="#clause1"><span class="citesec">Clause 3</span></a>)
+             </li>
+                   <li><i>term</i>
+               (<a href="#clause1"><span class="citesec">Clause 3</span></a>)
+             </li>
+                   <li><i>w[o]rd</i>
+               (<a href="#clause1">Clause #1</a>)
+             </li>
+                   <li><i>term</i>
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span></a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712">The Aforementioned Citation</a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></a>)
+             </li>
+                   <li><i>word</i>
+               (<a href="#ISO712">
+
+
+               The Aforementioned Citation
+               </a>)
+             </li>
+                   <li><i>word</i>
+               [term defined in Termbase IEV, term ID 135-13-13]
+             </li>
+                   <li><i>word</i>
+               [term defined in The IEV database]
+             </li>
                    <li>
                      <i>word</i>
                      <b>error!</b>
@@ -675,8 +651,8 @@ RSpec.describe IsoDoc do
                  </ul>
                </p>
              </div>
-             <div id='clause1'>
-               <h1>3&#160; Clause 1</h1>
+             <div id="clause1">
+               <h1>3  Clause 1</h1>
              </div>
            </div>
          </body>
@@ -875,65 +851,46 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
          #{HTML_HDR}
             <p class='zzSTDTitle1'/>
-            <div id='clause1'>
-              <h1>1&#160; Clause 1</h1>
-            </div>
-            <div id='A'>
-              <h1>2</h1>
-              <p class='TermNum' id='B'>2.1</p>
-            <p class='Terms' style='text-align:left;'><b>B</b></p>
-              <p>
-                               <ul>
-                        <li>
-                          <i>term</i>
-                           (
-                          <a href='#clause1'>Clause 1</a>
-                          )
-                        </li>
-                        <li>
-                           term (
-                          <a href='#clause1'>Clause 1</a>
-                          )
-                        </li>
-                        <li>
-                          <i>term</i>
-                           (
-                          <a href='#clause1'>Clause 1</a>
-                          )
-                        </li>
-                        <li> term </li>
-                        <li> term </li>
-                        <li> term </li>
-                                    <li>
-              <a href='#clause1'>
-                <i>term</i>
-              </a>
-               (
-              <a href='#clause1'>Clause 1</a>
-              )
-            </li>
-            <li>
-              <a href='#clause1'>
-                <i>term</i>
-              </a>
-               (Clause 1)
-            </li>
-            <li>
-              <i>term</i>
-               (
-              <a href='#clause1'>Clause 1</a>
-              )
-            </li>
-            <li>
-              <i>term</i>
-               (Clause 1)
-            </li>
-                      </ul>
-              </p>
-            </div>
-          </div>
-        </body>
-      </html>
+             <div id="clause1">
+               <h1>1  Clause 1</h1>
+             </div>
+             <div id="A">
+               <h1>2</h1>
+               <p class="TermNum" id="B">2.1</p>
+               <p class="Terms" style="text-align:left;">
+                 <b>B</b>
+               </p>
+               <p>
+                 <ul>
+                   <li><i>term</i>
+             (<a href="#clause1"><span class="citesec">Clause 1</span></a>)
+           </li>
+                   <li>
+             term
+             (<a href="#clause1"><span class="citesec">Clause 1</span></a>)
+           </li>
+                   <li><i>term</i>
+             (<a href="#clause1"><span class="citesec">Clause 1</span></a>)
+           </li>
+                   <li>
+             term
+           </li>
+                   <li>
+             term
+           </li>
+                   <li>
+             term
+           </li>
+                   <li><a href="#clause1"><i>term</i></a> (<a href="#clause1"><span class="citesec">Clause 1</span></a>)</li>
+                   <li><a href="#clause1"><i>term</i></a> (<span class="citesec">Clause 1</span>)</li>
+                   <li><i>term</i> (<a href="#clause1"><span class="citesec">Clause 1</span></a>)</li>
+                   <li><i>term</i> (<span class="citesec">Clause 1</span>)</li>
+                 </ul>
+               </p>
+             </div>
+           </div>
+         </body>
+       </html>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
@@ -945,7 +902,7 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <itu-standard xmlns="https://www.calconnect.org/standards/itu">
                   <p id='_'>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3</referenceFrom>
@@ -957,7 +914,7 @@ RSpec.describe IsoDoc do
                   </locality>
                 </localityStack>
               </eref>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3.1</referenceFrom>
@@ -969,7 +926,7 @@ RSpec.describe IsoDoc do
                   </locality>
                 </localityStack>
               </eref>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3.1</referenceFrom>
@@ -981,7 +938,7 @@ RSpec.describe IsoDoc do
                   </locality>
                 </localityStack>
               </eref>
-              <eref type='inline' bibitemid='ref1' citeas='XYZ'>
+              <eref type='inline' bibitemid='ref1' citeas='ITU'>
                 <localityStack connective='from'>
                   <locality type='clause'>
                     <referenceFrom>3.1</referenceFrom>
@@ -999,10 +956,10 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
            <itu-standard xmlns="https://www.calconnect.org/standards/itu" type="presentation">
          <p id="_">
-           <eref type="inline" bibitemid="ref1" citeas="XYZ" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,  <span class="citesec">Clauses  <span class="citesec">3</span> to  <span class="citesec">5</span></span></eref>
-           <eref type="inline" bibitemid="ref1" citeas="XYZ" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5.1</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,    <span class="citesec">3.1</span> to  <span class="citesec">5.1</span></eref>
-           <eref type="inline" bibitemid="ref1" citeas="XYZ"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,  <span class="citesec">3.1</span> to  <span class="citesec">Clause 5</span></eref>
-           <eref type="inline" bibitemid="ref1" citeas="XYZ"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="table"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">XYZ</span>,  <span class="citesec">3.1</span> to  <span class="citetbl">Table 5</span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">Clauses  <span class="citesec">3</span> to  <span class="citesec">5</span></span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5.1</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,    <span class="citesec">3.1</span> to  <span class="citesec">5.1</span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> to  <span class="citesec">Clause 5</span></eref>
+           <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="table"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> to  <span class="citetbl">Table 5</span></eref>
          </p>
        </itu-standard>
     OUTPUT

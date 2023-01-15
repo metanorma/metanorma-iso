@@ -107,7 +107,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -193,7 +193,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="B">
-              <h1 class="IntroTitle">0&#160; Introduction</h1>
+              <h1 class="IntroTitle">Introduction</h1>
               <div id="C">
                 <h2>0.1&#160; Introduction Subsection</h2>
               </div>
@@ -242,7 +242,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div id="P" class="Section3">
-              <h1 class="Annex"><b>Annex A</b><br/>(normative)<br/><br/><b>Annex</b></h1>
+              <h1 class="Annex"><b>Annex A</b><br/><span class="obligation">(normative)</span><br/><br/><b>Annex</b></h1>
               <div id="Q"><h2>A.1&#160; Annex A.1</h2>
                 <div id="Q1">
                   <h3>A.1.1&#160; Annex A.1a</h3>
@@ -289,8 +289,6 @@ RSpec.describe IsoDoc do
              </p>
              <div class='Section3' id='B'>
                <h1 class='IntroTitle'>
-                 0
-                 <span style='mso-tab-count:1'>  </span>
                  Introduction
                </h1>
                <div id='C'>
@@ -558,7 +556,7 @@ RSpec.describe IsoDoc do
               <p id="A">This is a preamble</p>
             </foreword>
             <introduction id="B" obligation="informative" displayorder='2'>
-              <title depth="1">0<tab/>Introduction</title>
+              <title depth="1">Introduction</title>
               <clause id="C" inline-header="false" obligation="informative">
                 <title depth="2">0.1<tab/>Introduction Subsection</title>
               </clause>
@@ -742,7 +740,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -828,7 +826,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="B">
-              <h1 class="IntroTitle">0&#160; Introduction</h1>
+              <h1 class="IntroTitle">Introduction</h1>
               <div id="C">
                 <h2>0.1&#160; Introduction Subsection</h2>
               </div>
@@ -883,7 +881,7 @@ RSpec.describe IsoDoc do
             <div class="Section3" id="P">
               <h1 class="Annex">
                 <b>Annexe A</b>
-                <br/>(normative)
+                <br/><span class="obligation">(normative)</span>
                 <br/>
                 <br/>
                 <b>Annex</b></h1>
@@ -1027,7 +1025,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -1113,7 +1111,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="B">
-              <h1 class="IntroTitle">0&#160; Introduction</h1>
+              <h1 class="IntroTitle">Introduction</h1>
               <div id="C">
                 <h2>0.1&#160; Introduction Subsection</h2>
               </div>
@@ -1168,7 +1166,7 @@ RSpec.describe IsoDoc do
             <div class="Section3" id="P">
               <h1 class="Annex">
                 <b>&#1044;&#1086;&#1087;&#1086;&#1083;&#1085;&#1077;&#1085;&#1080;&#1077; A</b>
-                <br/>(&#1085;&#1086;&#1088;&#1084;&#1072;&#1090;&#1080;&#1074;&#1085;&#1086;&#1077;)
+                <br/><span class="obligation">(&#1085;&#1086;&#1088;&#1084;&#1072;&#1090;&#1080;&#1074;&#1085;&#1086;&#1077;)</span>
                 <br/>
                 <br/>
                 <b>Annex</b></h1>
@@ -1321,7 +1319,7 @@ RSpec.describe IsoDoc do
             <p id="A">This is a preamble</p>
           </foreword>
           <introduction id="B" obligation="informative" displayorder='2'>
-            <title depth="1">0<tab/>Introduction</title>
+            <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
             </clause>
@@ -1392,6 +1390,7 @@ RSpec.describe IsoDoc do
             <bibitem id="ISO712" type="standard">
               <formattedref><em>Cereals and cereal products</em>.</formattedref>
               <docidentifier>ISO 712</docidentifier>
+              <biblio-tag>ISO 712,</biblio-tag>
             </bibitem>
           </references>
           <clause id="S" obligation="informative" displayorder='9'>
@@ -1408,42 +1407,39 @@ RSpec.describe IsoDoc do
       #{HTML_HDR.gsub(/"en"/, '"zh"')}
                    <br/>
              <div>
-               <h1 class='ForewordTitle'>Foreword</h1>
-               <p id='A'>This is a preamble</p>
+               <h1 class="ForewordTitle">Foreword</h1>
+               <p id="A">This is a preamble</p>
              </div>
              <br/>
-             <div class='Section3' id='B'>
-               <h1 class='IntroTitle'>0　Introduction</h1>
-               <div id='C'>
+             <div class="Section3" id="B">
+               <h1 class="IntroTitle">Introduction</h1>
+               <div id="C">
                  <h2>0.1　Introduction Subsection</h2>
                </div>
                <p>This is patent boilerplate</p>
              </div>
-             <p class='zzSTDTitle1'/>
-             <div id='D'>
+             <p class="zzSTDTitle1"/>
+             <div id="D">
                <h1>1　Scope</h1>
-               <p id='E'>
-                 <a href='#ISO712'>ISO 712， 第1～1表</a>
+               <p id="E">
+                 <a href="#ISO712">ISO 712， <span class="citetbl">第1～1表</span></a>
                </p>
              </div>
              <div>
                <h1>2　Normative References</h1>
-               <p id='ISO712' class='NormRef'>
-                 ISO 712,
-                 <i>Cereals and cereal products</i>.
-               </p>
+               <p id="ISO712" class="NormRef">ISO 712,<i>Cereals and cereal products</i>.</p>
              </div>
-             <div id='H'>
+             <div id="H">
                <h1>3　Terms, definitions, symbols and abbreviated terms</h1>
-               <div id='I'>
+               <div id="I">
                  <h2>3.1　Normal Terms</h2>
-                 <p class='TermNum' id='J'>3.1.1</p>
-                 <p class='Terms' style='text-align:left;'>
+                 <p class="TermNum" id="J">3.1.1</p>
+                 <p class="Terms" style="text-align:left;">
                    <b>Term2</b>
                  </p>
                </div>
-               <div id='K'>
-                 <span class='zzMoveToFollowing'>
+               <div id="K">
+                 <span class="zzMoveToFollowing">
                    <b>3.2　</b>
                  </span>
                  <dl>
@@ -1454,7 +1450,7 @@ RSpec.describe IsoDoc do
                  </dl>
                </div>
              </div>
-             <div id='L' class='Symbols'>
+             <div id="L" class="Symbols">
                <h1>4</h1>
                <dl>
                  <dt>
@@ -1463,40 +1459,40 @@ RSpec.describe IsoDoc do
                  <dd>Definition</dd>
                </dl>
              </div>
-             <div id='M'>
+             <div id="M">
                <h1>5　Clause 4</h1>
-               <div id='N'>
+               <div id="N">
                  <h2>5.1　Introduction</h2>
                </div>
-               <div id='O'>
+               <div id="O">
                  <h2>5.2　Clause 4.2</h2>
                </div>
              </div>
              <br/>
-             <div id='P' class='Section3'>
-               <h1 class='Annex'>
+             <div id="P" class="Section3">
+               <h1 class="Annex">
                  <b>附件A</b>
                  <br/>
-                 （规范性附录）
+                 <span class="obligation">（规范性附录）</span>
                  <br/>
                  <br/>
                  <b>Annex</b>
                </h1>
-               <div id='Q'>
+               <div id="Q">
                  <h2>A.1　Annex A.1</h2>
-                 <div id='Q1'>
+                 <div id="Q1">
                    <h3>A.1.1　Annex A.1a</h3>
                  </div>
                </div>
-               <div id='Q2'>
+               <div id="Q2">
                  <h2>附录1　An Appendix</h2>
                </div>
              </div>
              <br/>
              <div>
-               <h1 class='Section3'>Bibliography</h1>
+               <h1 class="Section3">Bibliography</h1>
                <div>
-                 <h2 class='Section3'>Bibliography Subsection</h2>
+                 <h2 class="Section3">Bibliography Subsection</h2>
                </div>
              </div>
            </div>

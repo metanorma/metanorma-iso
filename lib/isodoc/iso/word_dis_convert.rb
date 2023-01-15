@@ -63,13 +63,7 @@ module IsoDoc
         TOC
       end
 
-      def render_identifier(ident)
-        ret = super
-        ret[:sdo] = std_docid_semantic(ret[:sdo])
-        ret
-      end
-
-      def make_tr_attr(cell, row, totalrows, header)
+      def make_tr_attr(cell, row, totalrows, header, bordered)
         super.merge(header: header)
       end
 

@@ -572,6 +572,11 @@
           </attribute>
         </optional>
         <optional>
+          <attribute name="linenums">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
           <ref name="tname"/>
         </optional>
         <oneOrMore>
@@ -1238,6 +1243,11 @@
   </define>
   <define name="concept">
     <element name="concept">
+      <optional>
+        <attribute name="bold">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
       <optional>
         <attribute name="ital">
           <data type="boolean"/>
@@ -2653,6 +2663,7 @@
       <value>full</value>
       <value>short</value>
       <value>id</value>
+      <text/>
     </choice>
   </define>
   <define name="erefTypeWithConnective">

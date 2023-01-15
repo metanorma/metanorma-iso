@@ -113,8 +113,7 @@ RSpec.describe IsoDoc do
         <div id='A'>
           <h1/>
           <p>
-            <i>H</i>
-             I
+            <span class="C"><i>H</i> I</span>
           </p>
         </div>
       </div>
@@ -267,6 +266,7 @@ RSpec.describe IsoDoc do
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
             <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>
+            <biblio-tag><span class="stdpublisher" style="mso-pattern:none;">ISO/IEC</span><span class="stddocNumber" style="mso-pattern:none;">712</span>-<span class="stddocPartNumber" style="mso-pattern:none;">3</span>:<span class="stdyear" style="mso-pattern:none;">2022</span>, </biblio-tag>
             </bibitem>
         </references>
         </bibliography>
@@ -929,30 +929,30 @@ RSpec.describe IsoDoc do
                <a name='B' id='B'/>
                <thead>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' align='center' valign='middle'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;' align='center' valign='middle'>
                      <div class='Tableheader'>A</div>
                    </th>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;' align='center' valign='middle'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;' align='center' valign='middle'>
                      <p class='Tableheader' style='text-align: center'>B</p>
                    </th>
                  </tr>
                </thead>
                <tbody>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <div class='Tablebody'>C</div>
                    </th>
-                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <p class='Tablebody'>D</p>
                    </td>
                  </tr>
                </tbody>
                <tfoot>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <div class='Tablebody'>E</div>
                    </th>
-                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;'>
+                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
                      <p class='Tablebody'>F</p>
                    </td>
                  </tr>
@@ -1076,6 +1076,45 @@ RSpec.describe IsoDoc do
             </p>
             <p class='Code-' style='margin-bottom:12pt;'>Code</p>
             <p class='Examplecontinued'>Continuation</p>
+          </div>
+        </div>
+      </div>
+    WORD
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "deals with formulas" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A">
+        <formula id="B"><name>A.1</name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
+        </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~WORD
+          <div class="WordSection3">
+        <p class="zzSTDTitle"/>
+        <div>
+          <a name="A" id="A"/>
+          <h1/>
+          <div>
+            <a name="B" id="B"/>
+            <div class="Formula">
+              <p class="Formula"><span class="stem"><m:oMath><m:sSub><m:e><m:r><m:t>S</m:t></m:r></m:e><m:sub><m:r><m:t>sl,max</m:t></m:r></m:sub></m:sSub><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>=</m:t></m:r></span><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>⌊</m:t></m:r></span><m:f><m:fPr><m:type m:val="bar"/></m:fPr><m:num><m:sSub><m:e><m:r><m:t>L</m:t></m:r></m:e><m:sub><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>max</m:t></m:r></span></m:sub></m:sSub><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>×</m:t></m:r></span><m:sSub><m:e><m:r><m:t>N</m:t></m:r></m:e><m:sub><m:r><m:t>bpp</m:t></m:r></m:sub></m:sSub></m:num><m:den><m:r><m:t>8</m:t></m:r></m:den></m:f><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t> </m:t></m:r></span><span style="font-style:normal;"><m:r><m:rPr><m:sty m:val="p"/></m:rPr><m:t>⌋</m:t></m:r></span></m:oMath></span><span style="mso-tab-count:1">  </span>(A.1)</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1971,13 +2010,14 @@ RSpec.describe IsoDoc do
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
             <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>
+            <biblio-tag>[1]<tab/>ISO/IEC 712-3:2022, </biblio-tag>
             </bibitem>
         </references>
         </bibliography>
       </iso-standard>
     INPUT
     word = <<~WORD
-       <div class='WordSection3'>
+      <div class='WordSection3'>
          <p class='zzSTDTitle1'/>
          <div>
            <a name='A' id='A'/>
@@ -2042,10 +2082,7 @@ RSpec.describe IsoDoc do
              [1]
              <span style='mso-tab-count:1'>  </span>
              ISO/IEC 712-3:2022, ALUFFI, Paolo, ed. (2022).
-             <i>
-               Facets of Algebraic Geometry: A Collection in Honor of William Fulton's
-               80th Birthday
-             </i>
+             <i><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></i>
              , 1st edition. Cambridge, UK: CUP.
            </p>
          </div>

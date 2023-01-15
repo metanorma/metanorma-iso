@@ -75,9 +75,10 @@ def xmlpp(xml)
       </xsl:template>
     </xsl:stylesheet>
   XSL
-  ret = Nokogiri::XSLT(xsl).transform(Nokogiri::XML(xml))
+  ret = Nokogiri::XSLT(xsl).transform(Nokogiri::XML(xml, &:noblanks))
     .to_xml(indent: 2, encoding: "UTF-8")
     .gsub(%r{<fetched>20[0-9-]+</fetched>}, "<fetched/>")
+    .gsub(%r{ schema-version="[^"]+"}, "")
   HTMLEntities.new.decode(ret)
 end
 

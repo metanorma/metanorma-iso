@@ -43,7 +43,7 @@ module IsoDoc
           n = Counter.new
           n = section_names(doc.at(ns("//clause[@type = 'scope']")), n, 1)
           n = section_names(doc.at(ns(@klass.norm_ref_xpath)), n, 1)
-          doc.xpath(ns("//sections/clause[not(@type = 'scope')] | "\
+          doc.xpath(ns("//sections/clause[not(@type = 'scope')] | " \
                        "//sections/terms | //sections/definitions")).each do |c|
             n = section_names(c, n, 1)
           end
@@ -169,23 +169,27 @@ module IsoDoc
 
       def modspec_table_xrefs(clause)
         clause.xpath(ns(".//table[@class = 'modspec']")).noblank.each do |t|
-          (@anchors[t["id"]] && !@anchors[t["id"]][:modspec]) or next
           n = @anchors[t["id"]][:xref]
-          @anchors[t["id"]][:modspec] = true
-          @anchors[t["id"]][:xref] =
-            l10n("#{n}, #{@anchors_previous[t['id']][:xref_bare]}")
+          xref_to_modspec(t["id"], n) or next
           modspec_table_components_xrefs(t, n)
         end
       end
 
       def modspec_table_components_xrefs(table, table_label)
         table.xpath(ns(".//tr[@id]")).each do |tr|
-          (@anchors[tr["id"]] && !@anchors[tr["id"]][:modspec]) or next
-          @anchors[tr["id"]][:modspec] = true
-          @anchors[tr["id"]][:xref] =
-            l10n("#{table_label}, #{@anchors_previous[tr['id']][:xref]}")
+          xref_to_modspec(tr["id"], table_label) or next
           @anchors[tr["id"]].delete(:container)
         end
+      end
+
+      def xref_to_modspec(id, table_label)
+        (@anchors[id] && !@anchors[id][:has_modspec]) or return
+        @anchors[id][:has_modspec] = true
+        x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
+        @anchors[id][:xref] = l10n("#{table_label}, #{x}")
+        @anchors[id][:modspec] = @anchors_previous[id][:modspec]
+        @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
+        true
       end
 
       def hierarchical_table_names(clause, _num)

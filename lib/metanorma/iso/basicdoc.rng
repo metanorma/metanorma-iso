@@ -683,6 +683,9 @@
   </define>
   <define name="underline">
     <element name="underline">
+      <optional>
+        <attribute name="style"/>
+      </optional>
       <zeroOrMore>
         <ref name="PureTextElement"/>
       </zeroOrMore>

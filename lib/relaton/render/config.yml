@@ -18,11 +18,12 @@ seriestemplate: "{% if series_formatted %}{{ series_formatted }}{%else%}{% if se
 journaltemplate: "<em>{% if series_abbr %}{{series_abbr}}{% else %}{{series_title}}{% endif %}</em> ({{series_run}}) {{ labels['volume'] }}_{{series_num}} {{ labels['part'] }}_{{series_partnumber}}"
 template:
   # skip standardidentifier, it is inserted in front of formattedref within metanorma
-  standard: "<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}." 
+  standard: "{% if home_standard %}<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}{% else %}<smallcap>{{ creatornames }}</smallcap>. <em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }} .  {{ labels['version'] | capitalize }}_{{ edition_raw }}. {{labels['updated'] | capitalize }}_{{date_updated}}. {{status | capitalize}}. {{ authorizer }}. {{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>.{% endif %}" 
   website: "<smallcap>{{ creatornames }}</smallcap> ({{ role }}) . <em><span_class='stddocTitle'>{{ title }}</span></em> [website]. {{ labels['version'] | capitalize }}_{{ edition_raw }}. {{place}}: {{ publisher }}. {{date}}. {{ labels['updated'] | capitalize }}:_{{date_updated}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. [{{ labels['viewed'] }}:_{{date_accessed}}]. "
   book: "<smallcap>{{ creatornames }}</smallcap> ({{role}}) . <em>{{ title }}</em> . {{ edition | capitalize_first }}. ({{ series }}). {% if place %}{{place}}{%else%}{{ labels['no_place']}}{%endif%}: {{publisher}}. {{date}}. {{size}}. {{extent}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."
   booklet: book
   manual: book
+  techreport: book
   proceedings: book
   inbook: "<smallcap>{{ creatornames }}</smallcap> ({{role}}) . {{ title }} . <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames}}). {{ edition | capitalize_first }}. ({{ series }}). {% if place %}{{place}}{%else%}{{ labels['no_place']}}{%endif%}: {{publisher}}. {{date}}. {{size}}. {{extent}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."
   inproceedings: inbook

@@ -58,7 +58,7 @@ module IsoDoc
       end
 
       def html_toc_entry(level, header)
-        content = header.at("./following-sibling::p"\
+        content = header.at("./following-sibling::p" \
                             "[@class = 'variant-title-toc']") || header
         if level == "h1" &&
             header.parent.at(".//h2#{toc_exclude_class}")

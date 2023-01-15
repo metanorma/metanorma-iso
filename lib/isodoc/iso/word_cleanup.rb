@@ -61,6 +61,10 @@ module IsoDoc
         end
       end
 
+      def sourcecode_style
+        "Code"
+      end
+
       STYLESMAP = {
         example: "Example",
         note: "Note",
