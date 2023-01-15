@@ -20,7 +20,7 @@ RSpec.describe Metanorma::Standoc do
            <stage>published</stage>
          </status>
          <copyright>
-           <from>2022</from>
+           <from>#{Date.today.year}</from>
          </copyright>
          <ext>
            <doctype>standard</doctype>
@@ -64,7 +64,7 @@ RSpec.describe Metanorma::Standoc do
                  <substage>60</substage>
                </status>
                <copyright>
-                 <from>2022</from>
+                 <from>#{Date.today.year}</from>
                  <owner>
                    <organization>
                      <name>International Organization for Standardization</name>
