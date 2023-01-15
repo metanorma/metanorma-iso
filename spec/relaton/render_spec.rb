@@ -376,7 +376,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Ribose Inc.</smallcap>. <em>metanorma-standoc</em>. Version 1.3.1. September 4, 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>.</formattedref>
+      <formattedref><smallcap>Ribose Inc.</smallcap>. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -618,7 +618,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Portes A., &#x26; Rumbaut R.G.</smallcap>. <em>Children of Immigrants. Longitudinal Sudy (CILS) 1991–2006 ICPSR20520</em>. Version 2. Dataset. January 23, 2012. Available from: <span class='biburl'><link target='https://doi.org/10.3886/ICPSR20520.v2'>https://doi.org/10.3886/ICPSR20520.v2</link></span>. 501 GB. [viewed: May 6, 2018].</formattedref>
+      <formattedref><smallcap>Portes A., &#x26; Rumbaut R.G.</smallcap>. <em>Children of Immigrants. Longitudinal Sudy (CILS) 1991–2006 ICPSR20520</em>. Version 2. Dataset. 2012. Available from: <span class='biburl'><link target='https://doi.org/10.3886/ICPSR20520.v2'>https://doi.org/10.3886/ICPSR20520.v2</link></span>. 501 GB. [viewed: May 6, 2018].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -716,7 +716,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Jenkins, &#x26; Ruostekoski J.</smallcap>. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. June 2020. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 2020].</formattedref>
+      <formattedref><smallcap>Jenkins, &#x26; Ruostekoski J.</smallcap>. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2020. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 2020].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
