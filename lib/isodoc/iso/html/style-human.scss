@@ -591,6 +591,10 @@ th {
     padding: 1em !important;
 }
 
+table.rouge-line-table td, table.rouge-line-table th {
+    padding: 0em !important;
+}
+
 p.TableTitle {
     text-align: center;
     margin-top: 2.5em;
