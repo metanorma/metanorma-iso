@@ -14,8 +14,8 @@ module Metanorma
         structured_id(node, xml)
         id = iso_id_default(iso_id_params(node))
         id.stage and
-          xml.stagename metadata_stagename(id),
-                        **attr_code(abbreviation: id.typed_stage_abbrev)
+          xml.stagename metadata_stagename(id)&.strip,
+                        **attr_code(abbreviation: id.typed_stage_abbrev&.strip)
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
       end

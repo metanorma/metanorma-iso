@@ -45,17 +45,6 @@ module Metanorma
         ret
       end
 
-      #       def stage_name(stage, substage, _doctype, iteration = nil)
-      #         return "Proof" if stage == "60" && substage == "00"
-      #
-      #         ret = STAGE_NAMES[stage.to_sym]
-      #         if iteration && %w(20 30).include?(stage)
-      #           prefix = iteration.to_i.localize(@lang.to_sym)
-      #             .to_rbnf_s("SpelloutRules", "spellout-ordinal")
-      #           ret = "#{prefix.capitalize} #{ret.downcase}"
-      #         end
-      #         ret
-      #       end
       def metadata_id(node, xml)
         iso_id(node, xml)
         node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
@@ -64,7 +53,7 @@ module Metanorma
         xml.docnumber node&.attr("docnumber")
       end
 
-      # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type] 
+      # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type]
       # document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
       def get_typeabbr(node, amd: false)
         node.attr("amendment-number") and return :amd
@@ -74,7 +63,6 @@ module Metanorma
         when "technical-report" then :tr
         when "technical-specification" then :ts
         when "guide" then :guide
-        else nil
         end
       end
 
@@ -82,7 +70,7 @@ module Metanorma
         (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
           return
         params = iso_id_params(node)
-        iso_id_out(xml, params)
+        iso_id_out(xml, params, true)
       end
 
       def iso_id_params(node)
@@ -117,18 +105,17 @@ module Metanorma
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }.compact
         stage and ret[:stage] = stage
+        ret[:stage] == "60.00" and ret[:stage] = :PRF
         ret
       end
 
       def iso_id_stage(node)
-        #require "debug"; binding.b
         stage = stage_abbr(get_stage(node), get_substage(node),
-                           doctype(node)) or return nil
+                           doctype(node))
         harmonised = "#{get_stage(node)}.#{get_substage(node)}"
         harmonised = nil unless /^\d\d\.\d\d/.match?(harmonised)
-        { abbr: stage.to_sym, harmonized_code: harmonised }
-        #stage.to_sym
-        harmonised || stage.to_sym
+        { abbr: stage&.to_sym, harmonized_code: harmonised }
+        harmonised || stage&.to_sym
       end
 
       def iso_id_year(node)
@@ -143,26 +130,25 @@ module Metanorma
           params.delete(:part)
           params2[:base] = orig_id
         end
-        #if node.attr("amendment-number") then params[:amendments] = [params2]
-        #elsif node.attr("corrigendum-number")
-         # params[:corrigendums] = [params2]
-        #else 
-          params.merge!(params2) 
-      #end
+        params.merge!(params2)
+        warn params
         params
       end
 
-      def iso_id_out(xml, params)
-        xml.docidentifier iso_id_default(params), **attr_code(type: "ISO")
+      def iso_id_out(xml, params, with_prf)
+        xml.docidentifier iso_id_default(params).to_s(with_prf: with_prf),
+                          **attr_code(type: "ISO")
         xml.docidentifier iso_id_reference(params)
-          .to_s(format: :ref_num_long), **attr_code(type: "iso-reference")
+          .to_s(format: :ref_num_long, with_prf: with_prf),
+                          **attr_code(type: "iso-reference")
         xml.docidentifier iso_id_reference(params).urn, **attr_code(type: "URN")
         return if @amd
 
-        xml.docidentifier iso_id_undated(params),
+        xml.docidentifier iso_id_undated(params).to_s(with_prf: with_prf),
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
-          .to_s(format: :ref_num_short), **attr_code(type: "iso-with-lang")
+          .to_s(format: :ref_num_short, with_prf: with_prf),
+                          **attr_code(type: "iso-with-lang")
       rescue StandardError => e
         clean_abort("Document identifier: #{e}", xml)
       end
@@ -176,7 +162,6 @@ module Metanorma
                   else params_nolang
                   end
         params1.delete(:unpublished)
-        #require "debug"; binding.b
         Pubid::Iso::Identifier.create(**params1)
       end
 
