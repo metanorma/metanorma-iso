@@ -45,8 +45,8 @@ RSpec.describe IsoDoc do
     INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
-    expect(html).to include "<title>Cereals and pulses&#xA0;&#x2014; "\
-                            "Specifications and test methods&#xA0;&#x2014; Rice</title>"
+    expect(html).to include "<title>Cereals and pulses — Specifications " \
+                            "and test methods — Rice</title>"
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
@@ -72,8 +72,8 @@ RSpec.describe IsoDoc do
       INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
-    expect(html).to include "title>Cereals and pulses&#xA0;&#x2014; "\
-                            "Specifications and test methods&#xA0;&#x2014; Rice</title>"
+    expect(html).to include "<title>Cereals and pulses — Specifications " \
+                            "and test methods — Rice</title>"
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
@@ -961,7 +961,7 @@ RSpec.describe IsoDoc do
           </div>
         </div>
       OUTPUT
-    expect(word).to include '<p class="zzWarning">This document is not '\
+    expect(word).to include '<p class="zzWarning">This document is not ' \
                             "an ISO International Standard"
   end
 

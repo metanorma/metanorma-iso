@@ -913,50 +913,86 @@ RSpec.describe IsoDoc do
         </tr>
         </tfoot>
         </table>
+        <table class="rouge-line-table"><tbody><tr id="line-1" class="lineno"><td class="rouge-gutter gl" style="-moz-user-select: none;-ms-user-select: none;-webkit-user-select: none;user-select: none;"><pre>1</pre></td><td class="rouge-code"><sourcecode><span class="p">{</span></sourcecode></td></tr><tr id="line-2" class="lineno"><td class="rouge-gutter gl" style="-moz-user-select: none;-ms-user-select: none;-webkit-user-select: none;user-select: none;"><pre>2</pre></td><td class="rouge-code"><sourcecode><span class="w">  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://json-schema.org/draft/2019-09/schema"</span><span class="p">,</span></sourcecode></td></tr></table>
         </clause>
         </sections>
       </iso-standard>
     INPUT
     word = <<~WORD
-      <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
+           <div class="WordSection3">
+         <p class="zzSTDTitle"/>
          <div>
-           <a name='A' id='A'/>
+           <a name="A" id="A"/>
            <h1/>
-           <p class='Tabletitle' style='text-align:center;'>Table1</p>
-           <div align='center' class='table_container'>
-             <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>
-               <a name='B' id='B'/>
+           <p class="Tabletitle" style="text-align:center;">Table1</p>
+           <div align="center" class="table_container">
+             <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
+               <a name="B" id="B"/>
                <thead>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;' align='center' valign='middle'>
-                     <div class='Tableheader'>A</div>
+                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;" align="center" valign="middle">
+                     <div class="Tableheader" style="page-break-after:avoid">A</div>
                    </th>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;' align='center' valign='middle'>
-                     <p class='Tableheader' style='text-align: center'>B</p>
+                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;" align="center" valign="middle">
+                     <p class="Tableheader" style="text-align: center;page-break-after:avoid">B</p>
                    </th>
                  </tr>
                </thead>
                <tbody>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
-                     <div class='Tablebody'>C</div>
+                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                     <div class="Tablebody" style="page-break-after:auto">C</div>
                    </th>
-                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
-                     <p class='Tablebody'>D</p>
+                   <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                     <p class="Tablebody" style="page-break-after:auto">D</p>
                    </td>
                  </tr>
                </tbody>
                <tfoot>
                  <tr>
-                   <th style='font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
-                     <div class='Tablebody'>E</div>
+                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                     <div class="Tablebody" style="page-break-after:auto">E</div>
                    </th>
-                   <td style='border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;'>
-                     <p class='Tablebody'>F</p>
+                   <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                     <p class="Tablebody" style="page-break-after:auto">F</p>
                    </td>
                  </tr>
                </tfoot>
+             </table>
+           </div>
+           <div align="center" class="table_container">
+             <table class="rouge-line-table" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;">
+               <tbody>
+                 <tr>
+                   <td style="page-break-after:avoid;" class="rouge-gutter gl">
+                     <div class="Tablebody" style="page-break-after:avoid">
+                       <pre style="page-break-after:avoid">1</pre>
+                     </div>
+                   </td>
+                   <td style="page-break-after:avoid;" class="rouge-code">
+                     <p class="Code" style="page-break-after:avoid">
+                       <span class="p">{</span>
+                     </p>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style="page-break-after:auto;" class="rouge-gutter gl">
+                     <div class="Tablebody" style="page-break-after:auto">
+                       <pre style="page-break-after:auto">2</pre>
+                     </div>
+                   </td>
+                   <td style="page-break-after:auto;" class="rouge-code">
+                     <p class="Code" style="page-break-after:auto">
+                       <span class="w">  </span>
+                       <span class="nl">"$schema"</span>
+                       <span class="p">:</span>
+                       <span class="w"/>
+                       <span class="s2">"http://json-schema.org/draft/2019-09/schema"</span>
+                       <span class="p">,</span>
+                     </p>
+                   </td>
+                 </tr>
+               </tbody>
              </table>
            </div>
          </div>

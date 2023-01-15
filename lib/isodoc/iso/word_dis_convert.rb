@@ -3,7 +3,7 @@ require_relative "word_dis_cleanup"
 module IsoDoc
   module Iso
     class WordDISConvert < WordConvert
-      attr_accessor :bgstripcolor 
+      attr_accessor :bgstripcolor
 
       def default_file_locations(_options)
         { wordstylesheet: html_doc_path("wordstyle-dis.scss"),
@@ -21,8 +21,7 @@ module IsoDoc
         super
       end
 
-      def init_dis(opt)
-      end
+      def init_dis(opt); end
 
       def convert1(docxml, filename, dir)
         update_coverpage(docxml)
@@ -48,7 +47,7 @@ module IsoDoc
       end
 
       def span_parse(node, out)
-        out.span **{ class: node["class"] } do |x|
+        out.span class: node["class"] do |x|
           node.children.each { |n| parse(n, x) }
         end
       end
@@ -88,7 +87,7 @@ module IsoDoc
       end
 
       def middle_title_dis(out)
-        out.p(**{ class: "zzSTDTitle" }) do |p|
+        out.p(class: "zzSTDTitle") do |p|
           p << @meta.get[:doctitleintro]
           @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and p << " &#x2014; "
           p << @meta.get[:doctitlemain]
@@ -104,7 +103,7 @@ module IsoDoc
       end
 
       def middle_title_dis_amd(para)
-        para.span(**{ style: "font-weight:normal" }) do |p|
+        para.span(style: "font-weight:normal") do |p|
           if a = @meta.get[:doctitleamdlabel]
             p << " #{a}"
             a = @meta.get[:doctitleamd] and p << ": #{a}"
@@ -113,6 +112,34 @@ module IsoDoc
             p << " #{a}"
           end
         end
+      end
+
+      def authority_cleanup(docxml)
+        super
+        if @meta.get[:stage_int].to_s[0] == "9" ||
+            @meta.get[:stage_int].to_s[0] == "6"
+          copyright_prf(docxml)
+        else
+          copyright_dis(docxml)
+        end
+      end
+
+      def copyright_prf(docxml)
+        docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
+          p["class"] = "zzCopyright"
+          p["style"] = "text-indent:20.15pt;"
+          p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' " \
+                                              "style='text-indent:20.15pt;'>"))
+        end
+        docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each(&:remove)
+      end
+
+      def copyright_dis(docxml)
+        docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
+          p["class"] = "zzCopyright"
+          p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
+        end
+        docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each(&:remove)
       end
     end
   end
