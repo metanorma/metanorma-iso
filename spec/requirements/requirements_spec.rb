@@ -321,7 +321,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <tr>
                     <td colspan="2" style="border-top:none;border-bottom:solid windowtext 1.0pt;">
                       <p id="_">The following code will be run for verification:</p>
-                      <pre id="_" class="sourcecode"><br/>      CoreRoot(success): HttpResponse if (success)<br/>      recommendation(label: success-response) end<br/>    </pre>
+                      <pre id="_" class="sourcecode">
+             CoreRoot(success): HttpResponse if (success)
+             recommendation(label: success-response) end
+           </pre>
                     </td>
                   </tr>
                   <tr>
@@ -379,8 +382,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <br/>
             <div>
               <h1 class="Section3">Bibliography</h1>
-                   <p id="rfc2616" class="Biblio">[1]  IETF RFC 2616,
-                  <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>. Available from: <span class="biburl"><a href="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</a></span>.</p>
+              <p id="rfc2616" class="Biblio">[1]  IETF RFC 2616, <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>. Available from: <span class="biburl"><a href="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</a></span>.</p>
             </div>
           </div>
         </body>
