@@ -661,7 +661,7 @@ RSpec.describe IsoDoc do
        </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
-    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
@@ -721,7 +721,7 @@ RSpec.describe IsoDoc do
        </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
-    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
@@ -875,7 +875,7 @@ RSpec.describe IsoDoc do
       </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
-    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
@@ -1375,7 +1375,7 @@ RSpec.describe IsoDoc do
       </div>
     WORD
     FileUtils.rm_f "test.doc"
-    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
@@ -1538,7 +1538,7 @@ RSpec.describe IsoDoc do
        </div>
     WORD
     FileUtils.rm_f "test.doc"
-    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
@@ -1609,7 +1609,7 @@ RSpec.describe IsoDoc do
        </div>
     WORD
     FileUtils.rm_f "test.doc"
-    presxml = IsoDoc::Iso::PresentationXMLConvert.new({})
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true

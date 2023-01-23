@@ -534,7 +534,7 @@ RSpec.describe Metanorma::ISO do
       * [[[iso123,ISO 123]]] _Standard_
     INPUT
     expect(File.read("test.err"))
-      .to include "undated reference ISO 123 should not contain " \
+      .to include "undated reference ISO 123 should not contain " \
                   "specific elements"
   end
 

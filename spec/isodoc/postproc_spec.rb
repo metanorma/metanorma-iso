@@ -912,7 +912,8 @@ RSpec.describe IsoDoc do
       </iso-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(WORD_HTML_CSS.dup)
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(WORD_HTML_CSS.dup
+      .merge(presxml_options))
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)

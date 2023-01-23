@@ -305,7 +305,7 @@ RSpec.describe Metanorma::ISO do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="iso216" citeas="ISO 216:2001" type="inline"/>
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216:2001" type="inline"/>
             </p>
           </foreword>
         </preface>
@@ -353,7 +353,7 @@ RSpec.describe Metanorma::ISO do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="iso216" citeas="ISO 216" type="inline">
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216" type="inline">
                 <localityStack>
                   <locality type="whole"/>
                   <locality type="clause">
@@ -412,7 +412,7 @@ RSpec.describe Metanorma::ISO do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="iso216" citeas="ISO 216" type="inline"/>
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216" type="inline"/>
             </p>
           </foreword>
         </preface>
@@ -1033,18 +1033,18 @@ RSpec.describe Metanorma::ISO do
            <clause id='_' inline-header='false' obligation='normative'>
              <title>Clause 1</title>
              <p id='_'>
-               <eref type='inline' bibitemid='ref1' citeas='ISO 123'/>
-               <eref type='inline' bibitemid='ref1a' citeas='ISO 123-100'/>
-               <eref type='inline' bibitemid='ref1b' citeas='ISO/TS 123-1'/>
-               <eref type='inline' bibitemid='ref2' citeas='ISO/IEC 123'/>
-               <eref type='inline' bibitemid='ref3' citeas='IEC 123'/>
-               <eref type='inline' bibitemid='ref4' citeas='GB 123'/>
+               <eref type='inline' bibitemid='ref1' citeas='ISO&#xa0;123'/>
+               <eref type='inline' bibitemid='ref1a' citeas='ISO&#xa0;123-100'/>
+               <eref type='inline' bibitemid='ref1b' citeas='ISO/TS&#xa0;123-1'/>
+               <eref type='inline' bibitemid='ref2' citeas='ISO/IEC&#xa0;123'/>
+               <eref type='inline' bibitemid='ref3' citeas='IEC&#xa0;123'/>
+               <eref type='inline' bibitemid='ref4' citeas='GB&#xa0;123'/>
                <eref type='inline' bibitemid='ref5' citeas='[7]'/>
                <eref type='inline' bibitemid='ref6' citeas='[B]'/>
                <eref type='inline' bibitemid='ref7' citeas='[A]'/>
                <xref target='ref8'/>
                <xref target='ref9'/>
-               <eref type='inline' bibitemid='ref10' citeas='ISO/IEC 123'/>
+               <eref type='inline' bibitemid='ref10' citeas='ISO/IEC&#xa0;123'/>
              </p>
            </clause>
          </sections>

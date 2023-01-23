@@ -58,7 +58,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </preface>
       </ogc-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -241,10 +241,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                         <uri type='xml'>https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2616.xml</uri>
                 <uri type='src'>https://www.rfc-editor.org/info/rfc2616</uri>
                 <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
-                <docidentifier type='IETF'>IETF RFC 2616</docidentifier>
-                <docidentifier type='IETF' scope='anchor'>IETF RFC2616</docidentifier>
+                <docidentifier type='IETF'>IETF&#xa0;RFC&#xa0;2616</docidentifier>
+                <docidentifier type='IETF' scope='anchor'>IETF&#xa0;RFC2616</docidentifier>
                 <docidentifier type='DOI'>DOI 10.17487/RFC2616</docidentifier>
-                <biblio-tag>[1]<tab/>IETF RFC 2616, </biblio-tag>
+                <biblio-tag>[1]<tab/>IETF&#xa0;RFC&#xa0;2616, </biblio-tag>
           </bibitem>
             </references></bibliography>
                 </ogc-standard>
@@ -321,9 +321,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <tr>
                     <td colspan="2" style="border-top:none;border-bottom:solid windowtext 1.0pt;">
                       <p id="_">The following code will be run for verification:</p>
-                      <pre id="_" class="sourcecode">
-             CoreRoot(success): HttpResponse if (success)
-             recommendation(label: success-response) end
+                      <pre id="_" class="sourcecode"><br/>
+             CoreRoot(success): HttpResponse if (success)<br/>
+             recommendation(label: success-response) end<br/>
            </pre>
                     </td>
                   </tr>
@@ -382,7 +382,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             <br/>
             <div>
               <h1 class="Section3">Bibliography</h1>
-              <p id="rfc2616" class="Biblio">[1]  IETF RFC 2616, <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>. Available from: <span class="biburl"><a href="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</a></span>.</p>
+              <p id="rfc2616" class="Biblio">[1]  IETF&#xa0;RFC&#xa0;2616, <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>. Available from: <span class="biburl"><a href="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</a></span>.</p>
             </div>
           </div>
         </body>
@@ -527,7 +527,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </p>
           <div>
             <h1 class="BiblioTitle">Bibliography</h1>
-            <p id="rfc2616" class="Biblio">[1]<span style="mso-tab-count:1">  </span>IETF RFC 2616, <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>. Available from: <span class="biburl"><a href="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</a></span>.</p>
+            <p id="rfc2616" class="Biblio">[1]<span style="mso-tab-count:1">  </span>IETF&#xa0;RFC&#xa0;2616, <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>. Available from: <span class="biburl"><a href="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</a></span>.</p>
           </div>
         </div>
         <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
@@ -535,7 +535,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </body>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -676,7 +676,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
   .gsub(%r{</body>.*}m, "</body>")))
@@ -778,7 +778,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
               .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
   .gsub(%r{</body>.*}m, "</body>")))
@@ -878,7 +878,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
             .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1007,7 +1007,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1138,7 +1138,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </preface>
        </ogc-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
        .convert("test", input, true)
       .gsub(%r{<localized-strings>.*</localized-strings>}m, "")
        .gsub(%r{^.*<body}m, "<body")
@@ -1224,7 +1224,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1304,7 +1304,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1418,7 +1418,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
@@ -1533,7 +1533,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))

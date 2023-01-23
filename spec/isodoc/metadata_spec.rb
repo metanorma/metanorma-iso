@@ -532,7 +532,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </sections>
     OUTPUT
     expect(xmlpp(strip_guid(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new({})
+      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
       .at("//xmlns:sections").to_xml)))
@@ -577,7 +577,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </sections>
     OUTPUT
     expect(strip_guid(xmlpp(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new({})
+      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
@@ -622,7 +622,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </sections>
     OUTPUT
     expect(strip_guid(xmlpp(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new({})
+      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
@@ -658,7 +658,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </sections>
     OUTPUT
     expect(strip_guid(xmlpp(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new({})
+      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
       .at("//xmlns:sections").to_xml)))
@@ -692,7 +692,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </sections>
     OUTPUT
     expect(strip_guid(xmlpp(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new({})
+      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
   .at("//xmlns:sections").to_xml)))

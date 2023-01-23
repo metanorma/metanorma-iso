@@ -26,16 +26,16 @@ RSpec.describe Metanorma::ISO do
           <clause id="_" inline-header="false" obligation="normative">
             <title>Clause</title>
             <p id="_">
-              <eref bibitemid="iso123" citeas="ISO 123:--" type="inline"/>
+              <eref bibitemid="iso123" citeas="ISO&#xa0;123:--" type="inline"/>
               <fn reference="1"><p id="_">The standard is in press</p></fn>
-              <eref bibitemid="iso123" citeas="ISO 123:--" type="inline"/>A.
+              <eref bibitemid="iso123" citeas="ISO&#xa0;123:--" type="inline"/>A.
               <fn reference="2">
                 <p id="_">a footnote</p></fn>
-              <eref bibitemid="fdis" citeas="ISO/FDIS 17664-1" type="inline"/>
+              <eref bibitemid="fdis" citeas="ISO/FDIS&#xa0;17664-1" type="inline"/>
               <fn reference="3">
                 <p id="_">Under preparation. (Stage at the time of publication ISO/FDIS 17664-1).</p>
               </fn>
-              <eref bibitemid="fdis" citeas="ISO/FDIS 17664-1" type="inline"/>
+              <eref bibitemid="fdis" citeas="ISO/FDIS&#xa0;17664-1" type="inline"/>
             </p>
           </clause>
         </sections>
@@ -190,7 +190,7 @@ RSpec.describe Metanorma::ISO do
           <clause id="_" inline-header="false" obligation="normative">
             <title>Clause</title>
             <p id="_">
-              <eref bibitemid="iso123" citeas="ISO 123:1066" type="inline"/>
+              <eref bibitemid="iso123" citeas="ISO&#xa0;123:1066" type="inline"/>
             </p>
           </clause>
         </sections>
@@ -375,7 +375,7 @@ RSpec.describe Metanorma::ISO do
            <foreword id='_' obligation='informative'>
              <title>Foreword</title>
              <p id='_'>
-               <eref type='inline' bibitemid='iso1' citeas='ISO 683-3:2019'>
+               <eref type='inline' bibitemid='iso1' citeas='ISO&#xa0;683-3:2019'>
                  <localityStack>
                    <locality type='clause'>
                      <referenceFrom>1</referenceFrom>
@@ -385,7 +385,7 @@ RSpec.describe Metanorma::ISO do
                <fn reference='1'>
                  <p id='_'>Cancelled and replaced by ISO 683-3:2022.</p>
                </fn>
-               <eref type='inline' bibitemid='iso2' citeas='ISO 31-0'>
+               <eref type='inline' bibitemid='iso2' citeas='ISO&#xa0;31-0'>
                  <localityStack>
                    <locality type='clause'>
                      <referenceFrom>1</referenceFrom>
