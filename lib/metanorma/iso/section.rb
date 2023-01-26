@@ -50,8 +50,8 @@ module Metanorma
       # or it is labelled as "grouping"
       def term_contains_subclauses(node)
         if @vocab
-          node.content.strip.empty? and return false
-          return !(node.sections? && node.level == node.blocks[0].level) ||
+          !node.sections? and return false
+          return node.level != node.blocks[0].level ||
               node.role == "grouping"
         end
         super
