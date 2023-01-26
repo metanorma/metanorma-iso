@@ -709,6 +709,30 @@ RSpec.describe IsoDoc do
         </concept></li>
         </ul>
         </term>
+             <term id="clause3">
+       <ul>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+        </ul>
+        <term id="clause4">
+               <ul>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+        </ul>
+        </term>
+        </term>
       </terms>
       </sections>
       </iso-standard>
@@ -755,6 +779,24 @@ RSpec.describe IsoDoc do
                 <li> term </li>
               </ul>
             </term>
+            <term id="clause3">
+               <name>1.4</name>
+               <ul>
+                 <li><em>term</em>
+           (<xref target="clause1"><span class="citesec">1.2</span></xref>)
+         </li>
+                 <li>term</li>
+               </ul>
+               <term id="clause4">
+                 <name>1.4.1</name>
+                 <ul>
+                   <li><em>term</em>
+           (<xref target="clause1"><span class="citesec">1.2</span></xref>)
+         </li>
+                   <li>term</li>
+                 </ul>
+               </term>
+             </term>
           </terms>
         </sections>
       </iso-standard>
