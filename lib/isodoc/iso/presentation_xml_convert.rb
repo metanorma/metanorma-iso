@@ -95,7 +95,6 @@ module IsoDoc
 
       def concept_term(docxml)
         docxml.xpath(ns("//term")).each do |f|
-          require 'debug'; binding.b
           m = {}
           (f.xpath(ns(".//concept")) - f.xpath(ns(".//term//concept")))
             .each { |c| concept_term1(c, m) }
