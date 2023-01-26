@@ -51,9 +51,8 @@ module Metanorma
       def term_contains_subclauses(node)
         if @vocab
           node.content.strip.empty? and return false
-          return !((!node.content.strip.start_with?("<term ") &&
-              /<term /.match?(node.content.strip)) ||
-              node.role == "grouping")
+          return !(node.sections? && node.level == node.blocks[0].level) ||
+              node.role == "grouping"
         end
         super
       end

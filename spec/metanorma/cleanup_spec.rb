@@ -1663,17 +1663,9 @@ RSpec.describe Metanorma::ISO do
                  </preferred>
                </term>
              </terms>
-             <term id="term-Term4-Hierarchical">
-               <preferred>
-                 <expression>
-                   <name>Term4-Hierarchical</name>
-                 </expression>
-               </preferred>
-               <definition>
-                 <verbal-definition>
-                   <p id="_">Definition</p>
-                 </verbal-definition>
-               </definition>
+             <terms id="_" obligation="normative">
+               <title>Term4-Hierarchical</title>
+               <p id="_">Definition</p>
                <term id="term-Term4a">
                  <preferred>
                    <expression>
@@ -1681,7 +1673,7 @@ RSpec.describe Metanorma::ISO do
                    </expression>
                  </preferred>
                </term>
-             </term>
+             </terms>
            </terms>
          </sections>
        </iso-standard>
