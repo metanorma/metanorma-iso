@@ -131,7 +131,6 @@ module Metanorma
           params2[:base] = orig_id
         end
         params.merge!(params2)
-        warn params
         params
       end
 
