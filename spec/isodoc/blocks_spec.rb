@@ -73,7 +73,7 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
@@ -168,7 +168,7 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
@@ -221,7 +221,7 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -274,7 +274,7 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -339,7 +339,7 @@ RSpec.describe IsoDoc do
       <p> </p>
       </div>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -852,7 +852,7 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    output = IsoDoc::Iso::PresentationXMLConvert.new({}).convert("test", input,
+    output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options).convert("test", input,
                                                                  true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)
@@ -1065,7 +1065,7 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -1123,7 +1123,7 @@ RSpec.describe IsoDoc do
       </div>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -1166,7 +1166,7 @@ RSpec.describe IsoDoc do
          </preface>
        </iso-standard>
     INPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
 

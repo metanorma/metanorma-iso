@@ -1580,7 +1580,7 @@
     </element>
   </define>
   <define name="misccontainer">
-    <element name="misc-container">
+    <element name="metanorma-extension">
       <oneOrMore>
         <ref name="AnyElement"/>
       </oneOrMore>

@@ -436,7 +436,7 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     WORD
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)
@@ -449,7 +449,7 @@ RSpec.describe IsoDoc do
   end
 
   it "defaults to English" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({})
+    output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", <<~"INPUT", true)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
@@ -906,7 +906,7 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)
@@ -1191,7 +1191,7 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)
@@ -1330,7 +1330,7 @@ RSpec.describe IsoDoc do
           <clause id="D" obligation="normative" type="scope" displayorder='3'>
             <title depth="1">1<tab/>Scope</title>
             <p id="E">
-              <eref bibitemid="ISO712" type="inline"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality>ISO 712， <span class='citetbl'>第1～1表</span></eref>
+              <eref bibitemid="ISO712" type="inline"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality>ISO&#xa0;712， <span class='citetbl'>第1～1表</span></eref>
             </p>
           </clause>
           <clause id="H" obligation="normative" displayorder='5'>
@@ -1389,8 +1389,8 @@ RSpec.describe IsoDoc do
             <title depth="1">2<tab/>Normative References</title>
             <bibitem id="ISO712" type="standard">
               <formattedref><em>Cereals and cereal products</em>.</formattedref>
-              <docidentifier>ISO 712</docidentifier>
-              <biblio-tag>ISO 712,</biblio-tag>
+              <docidentifier>ISO&#xa0;712</docidentifier>
+              <biblio-tag>ISO&#xa0;712,</biblio-tag>
             </bibitem>
           </references>
           <clause id="S" obligation="informative" displayorder='9'>
@@ -1422,12 +1422,12 @@ RSpec.describe IsoDoc do
              <div id="D">
                <h1>1　Scope</h1>
                <p id="E">
-                 <a href="#ISO712">ISO 712， <span class="citetbl">第1～1表</span></a>
+                 <a href="#ISO712">ISO&#xa0;712， <span class="citetbl">第1～1表</span></a>
                </p>
              </div>
              <div>
                <h1>2　Normative References</h1>
-               <p id="ISO712" class="NormRef">ISO 712,<i>Cereals and cereal products</i>.</p>
+               <p id="ISO712" class="NormRef">ISO&#xa0;712,<i>Cereals and cereal products</i>.</p>
              </div>
              <div id="H">
                <h1>3　Terms, definitions, symbols and abbreviated terms</h1>
@@ -1499,7 +1499,7 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)
@@ -1553,7 +1553,7 @@ RSpec.describe IsoDoc do
                   <locality type='locality:appendix'>
                     <referenceFrom>7</referenceFrom>
                   </locality>
-                  ISO 712, Appendice 7
+                  ISO&#xa0;712, Appendice 7
                 </eref>
               </p>
               <p id='B'>
@@ -1561,7 +1561,7 @@ RSpec.describe IsoDoc do
             <locality type='annex'>
               <referenceFrom>7</referenceFrom>
             </locality>
-            ISO 712,
+            ISO&#xa0;712,
             <span class='citeapp'>Annexe 7</span>
           </eref>
         </p>

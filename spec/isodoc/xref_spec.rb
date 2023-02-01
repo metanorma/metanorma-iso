@@ -149,7 +149,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -295,7 +295,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -428,7 +428,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -568,7 +568,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -722,7 +722,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -940,7 +940,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1030,7 +1030,7 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1290,12 +1290,12 @@ RSpec.describe IsoDoc do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references lists" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({})
+    output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", <<~"INPUT", true)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>
@@ -1555,7 +1555,7 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1663,7 +1663,7 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1699,7 +1699,7 @@ RSpec.describe IsoDoc do
         <p><xref target='Na'>1 a)</xref></p>
       </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
     .convert("test", input, true))
     .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to xmlpp(output)
@@ -1735,7 +1735,7 @@ RSpec.describe IsoDoc do
         <p><xref target='Na'>Clause 1, List 1 a)</xref></p>
       </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
     .convert("test", input, true))
     .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to xmlpp(output)

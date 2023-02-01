@@ -204,46 +204,13 @@ module IsoDoc
         docxml
       end
 
-      def authority_cleanup(docxml)
-        super
-        if @meta.get[:stage_int].to_s[0] == "9" ||
-            @meta.get[:stage_int].to_s[0] == "6"
-          copyright_prf(docxml)
-        else
-          copyright_dis(docxml)
-        end
-      end
-
-      def copyright_prf(docxml)
-        docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
-          p["class"] = "zzCopyright"
-          p["style"] = "text-indent:20.15pt;"
-          p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright' " \
-                                              "style='text-indent:20.15pt;'>"))
-        end
-        docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
-          # p["class"] = "zzCopyright"
-          p.remove
-        end
-      end
-
-      def copyright_dis(docxml)
-        docxml.xpath("//p[@id = 'boilerplate-address']")&.each do |p|
-          p["class"] = "zzCopyright"
-          p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
-        end
-        docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each do |p|
-          p.remove
-        end
-      end
-
       def word_section_end_empty_para(docxml)
         docxml.at("//div[@class='WordSection1']/p[last()]").remove
       end
 
       def word_table_cell_para(docxml)
         docxml.xpath("//td | //th").each do |t|
-          s = t["header"] == "true" ? "Tableheader" : "Tablebody"
+          s = word_table_cell_para_style(t)
           t.delete("header")
           if t.at("./p |./div")
             t.xpath("./p | ./div").each { |p| p["class"] = s }
@@ -251,6 +218,12 @@ module IsoDoc
             t.children = "<div class='#{s}'>#{to_xml(t.children)}</div>"
           end
         end
+      end
+
+      def word_table_cell_para_style(cell)
+        ret = cell["header"] == "true" ? "Tableheader" : "Tablebody"
+        cell["class"] == "rouge-code" and ret = "Code"
+        ret
       end
 
       def table_toc_class

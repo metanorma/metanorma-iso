@@ -172,7 +172,7 @@ RSpec.describe IsoDoc do
            term2 definition
        </div>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -243,7 +243,7 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
        .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 end

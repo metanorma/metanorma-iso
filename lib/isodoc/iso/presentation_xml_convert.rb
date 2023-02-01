@@ -96,7 +96,8 @@ module IsoDoc
       def concept_term(docxml)
         docxml.xpath(ns("//term")).each do |f|
           m = {}
-          f.xpath(ns(".//concept")).each { |c| concept_term1(c, m) }
+          (f.xpath(ns(".//concept")) - f.xpath(ns(".//term//concept")))
+            .each { |c| concept_term1(c, m) }
         end
       end
 
@@ -128,7 +129,6 @@ module IsoDoc
 
       # we're assuming terms and clauses in the right place for display,
       # to cope with multiple terms sections
-
       def display_order(docxml)
         i = 0
         i = display_order_xpath(docxml, "//preface/*", i)
@@ -157,8 +157,7 @@ module IsoDoc
 
       def insertall_after_here(node, insert, name)
         node.children.each do |n|
-          next unless n.name == name
-
+          n.name == name or next
           insert.next = n.remove
           insert = n
         end
@@ -166,8 +165,7 @@ module IsoDoc
       end
 
       def termexamples_before_termnotes(node)
-        return unless insert = node.at(ns("./definition"))
-
+        insert = node.at(ns("./definition")) or return
         insert = insertall_after_here(node, insert, "termexample")
         insertall_after_here(node, insert, "termnote")
       end
@@ -181,11 +179,9 @@ module IsoDoc
 
       def admonition1(elem)
         super
-        return unless n = elem.at(ns("./name"))
-
+        n = elem.at(ns("./name")) or return
         p = n.next_element
-        return unless p.name == "p"
-
+        p.name == "p" or return
         p.children.first.previous = admonition_name(to_xml(n.remove.children))
       end
 
@@ -199,8 +195,7 @@ module IsoDoc
       end
 
       def bibrender_formattedref(formattedref, xml)
-        return if %w(techreport standard).include? xml["type"]
-
+        %w(techreport standard).include? xml["type"] and return
         super
       end
 

@@ -100,7 +100,7 @@ module IsoDoc
         main = ""
         tparts[:main].nil? or
           main = @c.encode(tparts[:main].text, :hexadecimal)
-        tparts[:intro] &&
+        tparts[:intro] and
           main = "#{@c.encode(tparts[:intro].text,
                               :hexadecimal)}&#xa0;&#x2014; #{main}"
         if tparts[:part]
@@ -119,20 +119,19 @@ module IsoDoc
       end
 
       def title_parts(isoxml, lang)
-        { intro: isoxml.at(ns("//bibdata/title[@type='title-intro' and "\
+        { intro: isoxml.at(ns("//bibdata/title[@type='title-intro' and " \
                               "@language='#{lang}']")),
-          main: isoxml.at(ns("//bibdata/title[@type='title-main' and "\
+          main: isoxml.at(ns("//bibdata/title[@type='title-main' and " \
                              "@language='#{lang}']")),
-          part: isoxml.at(ns("//bibdata/title[@type='title-part' and "\
+          part: isoxml.at(ns("//bibdata/title[@type='title-part' and " \
                              "@language='#{lang}']")),
-          amd: isoxml.at(ns("//bibdata/title[@type='title-amd' and "\
+          amd: isoxml.at(ns("//bibdata/title[@type='title-amd' and " \
                             "@language='#{lang}']")) }
       end
 
       def title(isoxml, _out)
         lang = case @lang
-               when "fr" then "fr"
-               when "ru" then "ru"
+               when "fr", "ru" then @lang
                else "en"
                end
         # intro, main, part, amd = title_parts(isoxml, lang)
@@ -190,9 +189,9 @@ module IsoDoc
       end
 
       def tc_base(xml, grouptype)
-        tc_num = xml.at(ns("//bibdata/ext/#{grouptype}/"\
+        tc_num = xml.at(ns("//bibdata/ext/#{grouptype}/" \
                            "technical-committee/@number")) or return nil
-        tc_type = xml.at(ns("//bibdata/ext/#{grouptype}/technical-committee/"\
+        tc_type = xml.at(ns("//bibdata/ext/#{grouptype}/technical-committee/" \
                             "@type"))&.text || "TC"
         "#{tc_type} #{tc_num.text}"
       end
@@ -204,9 +203,9 @@ module IsoDoc
       end
 
       def sc_base(xml, grouptype)
-        sc_num = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/"\
+        sc_num = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/" \
                            "@number")) or return nil
-        sc_type = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/"\
+        sc_type = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/" \
                             "@type"))&.text || "SC"
         "#{sc_type} #{sc_num.text}"
       end
@@ -218,9 +217,9 @@ module IsoDoc
       end
 
       def wg_base(xml, grouptype)
-        wg_num = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/"\
+        wg_num = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/" \
                            "@number")) or return
-        wg_type = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/"\
+        wg_type = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/" \
                             "@type"))&.text || "WG"
         "#{wg_type} #{wg_num.text}"
       end

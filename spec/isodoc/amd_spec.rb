@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "cross-references notes in amendments" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({})
+    output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", <<~"INPUT", true)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
@@ -159,7 +159,7 @@ RSpec.describe IsoDoc do
   end
 
   it "cross-references sections" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({})
+    output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
@@ -639,7 +639,7 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)

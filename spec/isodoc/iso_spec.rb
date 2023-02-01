@@ -247,7 +247,7 @@ RSpec.describe IsoDoc::Iso do
       </bibdata>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new({})
+      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
       .at("//xmlns:bibdata").to_xml))

@@ -1316,7 +1316,7 @@
       <value>commentaryOf</value>
       <value>hasCommentary</value>
       <value>related</value>
-      <value>complements</value>
+      <value>hasComplement</value>
       <value>complementOf</value>
       <value>obsoletes</value>
       <value>obsoletedBy</value>

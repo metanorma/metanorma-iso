@@ -305,7 +305,7 @@ RSpec.describe Metanorma::ISO do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="iso216" citeas="ISO 216:2001" type="inline"/>
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216:2001" type="inline"/>
             </p>
           </foreword>
         </preface>
@@ -353,7 +353,7 @@ RSpec.describe Metanorma::ISO do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="iso216" citeas="ISO 216" type="inline">
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216" type="inline">
                 <localityStack>
                   <locality type="whole"/>
                   <locality type="clause">
@@ -412,7 +412,7 @@ RSpec.describe Metanorma::ISO do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="iso216" citeas="ISO 216" type="inline"/>
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216" type="inline"/>
             </p>
           </foreword>
         </preface>
@@ -1033,18 +1033,18 @@ RSpec.describe Metanorma::ISO do
            <clause id='_' inline-header='false' obligation='normative'>
              <title>Clause 1</title>
              <p id='_'>
-               <eref type='inline' bibitemid='ref1' citeas='ISO 123'/>
-               <eref type='inline' bibitemid='ref1a' citeas='ISO 123-100'/>
-               <eref type='inline' bibitemid='ref1b' citeas='ISO/TS 123-1'/>
-               <eref type='inline' bibitemid='ref2' citeas='ISO/IEC 123'/>
-               <eref type='inline' bibitemid='ref3' citeas='IEC 123'/>
-               <eref type='inline' bibitemid='ref4' citeas='GB 123'/>
+               <eref type='inline' bibitemid='ref1' citeas='ISO&#xa0;123'/>
+               <eref type='inline' bibitemid='ref1a' citeas='ISO&#xa0;123-100'/>
+               <eref type='inline' bibitemid='ref1b' citeas='ISO/TS&#xa0;123-1'/>
+               <eref type='inline' bibitemid='ref2' citeas='ISO/IEC&#xa0;123'/>
+               <eref type='inline' bibitemid='ref3' citeas='IEC&#xa0;123'/>
+               <eref type='inline' bibitemid='ref4' citeas='GB&#xa0;123'/>
                <eref type='inline' bibitemid='ref5' citeas='[7]'/>
                <eref type='inline' bibitemid='ref6' citeas='[B]'/>
                <eref type='inline' bibitemid='ref7' citeas='[A]'/>
                <xref target='ref8'/>
                <xref target='ref9'/>
-               <eref type='inline' bibitemid='ref10' citeas='ISO/IEC 123'/>
+               <eref type='inline' bibitemid='ref10' citeas='ISO/IEC&#xa0;123'/>
              </p>
            </clause>
          </sections>
@@ -1530,54 +1530,54 @@ RSpec.describe Metanorma::ISO do
         ==== Term2a
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
-        <sections>
-           <clause id='_' obligation='normative'>
-             <title>Terms and definitions</title>
-             <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
-             <p id='_'>
-               ISO and IEC maintain terminology databases for use in standardization at
-               the following addresses:
-             </p>
-             <ul id='_'>
-               <li>
-                 <p id='_'>
-                   ISO Online browsing platform: available at
-                   <link target='https://www.iso.org/obp'/>
-                 </p>
-               </li>
-               <li>
-                 <p id='_'>
-                   IEC Electropedia: available at
-                   <link target='https://www.electropedia.org'/>
-                 </p>
-               </li>
-             </ul>
-             <term id='term-Term1'>
-               <preferred>
-                 <expression>
-                   <name>Term1</name>
-                 </expression>
-               </preferred>
-             </term>
-             <terms id='_' obligation='normative'>
-               <title>Term2</title>
-               <term id='term-Term2a'>
-                 <preferred>
-                   <expression>
-                     <name>Term2a</name>
-                   </expression>
-                 </preferred>
-               </term>
-             </terms>
-           </clause>
-         </sections>
-       </iso-standard>
+         #{BLANK_HDR}
+         <sections>
+            <clause id='_' obligation='normative'>
+              <title>Terms and definitions</title>
+              <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
+              <p id='_'>
+                ISO and IEC maintain terminology databases for use in standardization at
+                the following addresses:
+              </p>
+              <ul id='_'>
+                <li>
+                  <p id='_'>
+                    ISO Online browsing platform: available at
+                    <link target='https://www.iso.org/obp'/>
+                  </p>
+                </li>
+                <li>
+                  <p id='_'>
+                    IEC Electropedia: available at
+                    <link target='https://www.electropedia.org'/>
+                  </p>
+                </li>
+              </ul>
+              <term id='term-Term1'>
+                <preferred>
+                  <expression>
+                    <name>Term1</name>
+                  </expression>
+                </preferred>
+              </term>
+              <terms id='_' obligation='normative'>
+                <title>Term2</title>
+                <term id='term-Term2a'>
+                  <preferred>
+                    <expression>
+                      <name>Term2a</name>
+                    </expression>
+                  </preferred>
+                </term>
+              </terms>
+            </clause>
+          </sections>
+        </iso-standard>
       OUTPUT
       expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to xmlpp(output)
     end
-    
+
     it "allows subterms in vocabulary document" do
       input = <<~INPUT
         = Document title
@@ -1592,47 +1592,60 @@ RSpec.describe Metanorma::ISO do
 
         === Term1
 
-        === Term2
+        === Term2-Hierarchical
+
+        Definition
 
         ==== Term2a
+
+        === Term3-Grouping
+
+        ==== Term3a
+
+        [.grouping]
+        === Term4-Hierarchical
+
+        Definition
+
+        ==== Term4a
+
       INPUT
       output = <<~OUTPUT
         #{BLANK_HDR.sub(%r{</doctype>}, '</doctype><subdoctype>vocabulary</subdoctype>')}
                  <sections>
-           <terms id='_' obligation='normative'>
+           <terms id="_" obligation="normative">
              <title>Terms and definitions</title>
-             <p id='_'>
-               ISO and IEC maintain terminology databases for use in standardization at
-               the following addresses:
-             </p>
-             <ul id='_'>
+             <p id="_">ISO and IEC maintain terminology databases for use in
+       standardization at the following addresses:</p>
+             <ul id="_">
                <li>
-                 <p id='_'>
-                   ISO Online browsing platform: available at 
-                   <link target='https://www.iso.org/obp'/>
-                 </p>
+                 <p id="_">ISO Online browsing platform: available at
+         <link target="https://www.iso.org/obp"/></p>
                </li>
                <li>
-                 <p id='_'>
-                   IEC Electropedia: available at 
-                   <link target='https://www.electropedia.org'/>
-                 </p>
+                 <p id="_">IEC Electropedia: available at
+       <link target="https://www.electropedia.org"/></p>
                </li>
              </ul>
-             <term id='term-Term1'>
+             <term id="term-Term1">
                <preferred>
                  <expression>
                    <name>Term1</name>
                  </expression>
                </preferred>
              </term>
-             <term id='term-Term2'>
+             <term id="term-Term2-Hierarchical">
                <preferred>
                  <expression>
-                   <name>Term2</name>
+                   <name>Term2-Hierarchical</name>
                  </expression>
                </preferred>
-               <term id='term-Term2a'>
+               <definition>
+                 <verbal-definition>
+                   <p id="_">Definition</p>
+                 </verbal-definition>
+               </definition>
+               <term id="term-Term2a">
                  <preferred>
                    <expression>
                      <name>Term2a</name>
@@ -1640,9 +1653,30 @@ RSpec.describe Metanorma::ISO do
                  </preferred>
                </term>
              </term>
+             <terms id="_" obligation="normative">
+               <title>Term3-Grouping</title>
+               <term id="term-Term3a">
+                 <preferred>
+                   <expression>
+                     <name>Term3a</name>
+                   </expression>
+                 </preferred>
+               </term>
+             </terms>
+             <terms id="_" obligation="normative">
+               <title>Term4-Hierarchical</title>
+               <p id="_">Definition</p>
+               <term id="term-Term4a">
+                 <preferred>
+                   <expression>
+                     <name>Term4a</name>
+                   </expression>
+                 </preferred>
+               </term>
+             </terms>
            </terms>
          </sections>
-         </iso-standard>
+       </iso-standard>
       OUTPUT
       expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to xmlpp(output)

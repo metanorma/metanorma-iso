@@ -617,6 +617,10 @@ th {
     padding: 1em !important;
 }
 
+table.rouge-line-table td, table.rouge-line-table th {
+    padding: 0em !important;
+}
+
 td > p:first-child, th > p:first-child {
   margin-top: 0em;
 }

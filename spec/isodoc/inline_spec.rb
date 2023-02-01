@@ -235,7 +235,7 @@ RSpec.describe IsoDoc do
   end
 
   it "processes eref content" do
-    output = IsoDoc::Iso::PresentationXMLConvert.new({})
+    output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", <<~"INPUT", true)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>
@@ -332,48 +332,48 @@ RSpec.describe IsoDoc do
                     <referenceFrom>1-2-3</referenceFrom>
                   </locality><span class='stdpublisher'>IEV</span>, <span class="citesec">1-2-3</span></eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline"><span class='stdpublisher'>ISO</span> <span class='stddocNumber'>712</span></eref>
-                <eref bibitemid="ISO712" type="inline">ISO 712</eref>
+                <eref bibitemid="ISO712" type="inline">ISO&#xa0;712</eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
-                  </locality>ISO 712, <span class="citetbl">Table 1</span></eref>
+                  </locality>ISO&#xa0;712, <span class="citetbl">Table 1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
                     <referenceTo>1</referenceTo>
-                  </locality>ISO 712, <span class="citetbl">Table 1–1</span></eref>
+                  </locality>ISO&#xa0;712, <span class="citetbl">Table 1–1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1</referenceFrom>
                   </locality>
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
-                  </locality>ISO 712, <span class="citesec">Clause 1</span>, <span class="citetbl">Table 1</span></eref>
+                  </locality>ISO&#xa0;712, <span class="citesec">Clause 1</span>, <span class="citetbl">Table 1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1</referenceFrom>
                   </locality>
                   <locality type="list">
                     <referenceFrom>a</referenceFrom>
-                  </locality>ISO 712, <span class="citesec">Clause 1</span> a)</eref>
+                  </locality>ISO&#xa0;712, <span class="citesec">Clause 1</span> a)</eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1</referenceFrom>
-                  </locality>ISO 712, <span class="citesec">Clause 1</span></eref>
+                  </locality>ISO&#xa0;712, <span class="citesec">Clause 1</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="clause">
                     <referenceFrom>1.5</referenceFrom>
-                  </locality>ISO 712, <span class="citesec">1.5</span></eref>
+                  </locality>ISO&#xa0;712, <span class="citesec">1.5</span></eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="table">
                     <referenceFrom>1</referenceFrom>
                   </locality>A</eref>
                 <eref bibitemid="ISO712" type="inline">
-                  <locality type="whole"/>ISO 712, Whole of text</eref>
+                  <locality type="whole"/>ISO&#xa0;712, Whole of text</eref>
                 <eref bibitemid="ISO712" type="inline">
                   <locality type="locality:prelude">
                     <referenceFrom>7</referenceFrom>
-                  </locality>ISO 712, Prelude 7</eref>
+                  </locality>ISO&#xa0;712, Prelude 7</eref>
                 <eref bibitemid="ISO712" citeas="ISO 712" type="inline">A</eref>
                 <eref bibitemid='ISO712' citeas='ISO/IEC DIR 1' type='inline'>
           <span class='stdpublisher'>ISO/IEC</span>
@@ -390,8 +390,8 @@ RSpec.describe IsoDoc do
                 Normative References</title>
               <bibitem id="ISO712" type="standard">
                  <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
-                <docidentifier>ISO 712</docidentifier>
-                <biblio-tag>ISO 712,</biblio-tag>
+                <docidentifier>ISO&#xa0;712</docidentifier>
+                <biblio-tag>ISO&#xa0;712,</biblio-tag>
               </bibitem>
             </references>
           </bibliography>
@@ -588,8 +588,8 @@ RSpec.describe IsoDoc do
           <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
       <bibitem id="ISO712" type="standard">
          <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
-        <docidentifier type="ISO">ISO 712</docidentifier>
-        <biblio-tag>ISO 712,</biblio-tag>
+        <docidentifier type="ISO">ISO&#xa0;712</docidentifier>
+        <biblio-tag>ISO&#xa0;712,</biblio-tag>
       </bibitem>
       </references></bibliography>
           </iso-standard>
@@ -600,7 +600,7 @@ RSpec.describe IsoDoc do
              <div>
                <h1>1  Normative References</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-               <p id="ISO712" class="NormRef">ISO 712,<i><span class="stddocTitle">Cereals and cereal products</span></i></p>
+               <p id="ISO712" class="NormRef">ISO&#xa0;712,<i><span class="stddocTitle">Cereals and cereal products</span></i></p>
              </div>
              <div id="Terms">
                <h1>2</h1>
@@ -658,7 +658,7 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
@@ -709,6 +709,30 @@ RSpec.describe IsoDoc do
         </concept></li>
         </ul>
         </term>
+             <term id="clause3">
+       <ul>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+        </ul>
+        <term id="clause4">
+               <ul>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+        </ul>
+        </term>
+        </term>
       </terms>
       </sections>
       </iso-standard>
@@ -755,11 +779,29 @@ RSpec.describe IsoDoc do
                 <li> term </li>
               </ul>
             </term>
+            <term id="clause3">
+               <name>1.4</name>
+               <ul>
+                 <li><em>term</em>
+           (<xref target="clause1"><span class="citesec">1.2</span></xref>)
+         </li>
+                 <li>term</li>
+               </ul>
+               <term id="clause4">
+                 <name>1.4.1</name>
+                 <ul>
+                   <li><em>term</em>
+           (<xref target="clause1"><span class="citesec">1.2</span></xref>)
+         </li>
+                   <li>term</li>
+                 </ul>
+               </term>
+             </term>
           </terms>
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
        .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
   end
 
@@ -892,7 +934,7 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
@@ -963,7 +1005,7 @@ RSpec.describe IsoDoc do
          </p>
        </itu-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 end
