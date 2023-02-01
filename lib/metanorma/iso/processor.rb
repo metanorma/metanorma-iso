@@ -37,7 +37,7 @@ module Metanorma
       end
 
       def use_presentation_xml(ext)
-        return true if ext == :html_alt
+        return true if [:html_alt, :sts, :isosts].include?(ext)
 
         super
       end
