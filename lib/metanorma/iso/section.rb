@@ -45,16 +45,13 @@ module Metanorma
         super
       end
 
-      # in vocabulary documents, term has subterm, unless
+      # in ISO, term has subterm, unless
       # there is no definition to the term (subclauses start immediately),
       # or it is labelled as "grouping"
       def term_contains_subclauses(node)
-        if @vocab
-          !node.sections? and return false
-          return node.level != node.blocks[0].level ||
-              node.role == "grouping"
-        end
-        super
+        !node.sections? and return false
+        node.level != node.blocks[0].level ||
+          node.role == "grouping"
       end
     end
   end

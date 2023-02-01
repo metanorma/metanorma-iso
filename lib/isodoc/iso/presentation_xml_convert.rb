@@ -114,11 +114,13 @@ module IsoDoc
       end
 
       def concept1_ref_content(ref)
-        repl = if ref.name == "termref"
-                 @i18n.term_defined_in.sub(/%/, to_xml(ref))
-               else "(#{to_xml(ref)})"
-               end
-        ref.replace(repl)
+        prev = "("
+        foll = ")"
+        if ref.name == "termref"
+          prev, foll = @i18n.term_defined_in.split("%")
+        end
+        ref.previous = prev
+        ref.next = foll
       end
 
       def concept1(node)
