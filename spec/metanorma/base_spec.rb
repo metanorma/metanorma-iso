@@ -148,7 +148,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part="1">ISO 1000</project-number>
               </structuredidentifier>
-              <stagename abbreviation="WD IS">Working Draft International Standard</stagename>
+              <stagename abbreviation="WD">Working Draft International Standard</stagename>
             </ext>
           </bibdata>
           <sections/>
@@ -351,11 +351,11 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
             <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='semantic' version="#{Metanorma::ISO::VERSION}">
           <bibdata type='standard'>
-            <docidentifier type='ISO'>ISO/PRF TS 1000-1-1</docidentifier>
-            <docidentifier type='iso-reference'>ISO/PRF TS 1000-1-1:2001(en)</docidentifier>
+            <docidentifier type='ISO'>ISO/FDTS 1000-1-1</docidentifier>
+            <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(en)</docidentifier>
             <docidentifier type='URN'>urn:iso:std:iso:ts:1000:-1-1:stage-50.00:en</docidentifier>
-            <docidentifier type='iso-undated'>ISO/PRF TS 1000-1-1</docidentifier>
-            <docidentifier type='iso-with-lang'>ISO/PRF TS 1000-1-1(E)</docidentifier>
+            <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>
+            <docidentifier type='iso-with-lang'>ISO/FDTS 1000-1-1(E)</docidentifier>
             <docnumber>1000</docnumber>
             <contributor>
               <role type='author'/>
@@ -397,7 +397,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part='1' subpart='1'>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename abbreviation="PRF TS">Proof of a new International Standard Technical Specification</stagename>
+              <stagename abbreviation="FDTS">Final Draft Technical Specification</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -508,7 +508,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part='1'>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename abbreviation="IS">International Standard</stagename>
+              <stagename>International Standard</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -617,7 +617,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number part="1" subpart="1">SD 1000</project-number>
               </structuredidentifier>
-              <stagename abbreviation="IS">International Standard</stagename>
+              <stagename>International Standard</stagename>
             </ext>
           </bibdata>
           <sections> </sections>
@@ -643,11 +643,11 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
               <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
                 <bibdata type="standard">
-                <docidentifier type='ISO'>ISO/PRF 1000.2</docidentifier>
-        <docidentifier type='iso-reference'>ISO/PRF 1000.2:#{Date.today.year}(fr)</docidentifier>
+                <docidentifier type='ISO'>ISO/FDIS 1000.2</docidentifier>
+        <docidentifier type='iso-reference'>ISO/FDIS 1000.2:#{Date.today.year}(fr)</docidentifier>
                <docidentifier type='URN'>urn:iso:std:iso:1000:stage-50.00.v2:fr</docidentifier>
-                <docidentifier type='iso-undated'>ISO/PRF 1000.2</docidentifier>
-        <docidentifier type='iso-with-lang'>ISO/PRF 1000.2(F)</docidentifier>
+                <docidentifier type='iso-undated'>ISO/FDIS 1000.2</docidentifier>
+        <docidentifier type='iso-with-lang'>ISO/FDIS 1000.2(F)</docidentifier>
                   <docnumber>1000</docnumber>
                   <contributor>
                     <role type="author"/>
@@ -690,7 +690,7 @@ RSpec.describe Metanorma::ISO do
                     <structuredidentifier>
                       <project-number>ISO 1000</project-number>
                     </structuredidentifier>
-                    <stagename abbreviation="PRF IS">Proof of a new International Standard International Standard</stagename>
+                    <stagename abbreviation="FDIS">Final Draft International Standard</stagename>
                   </ext>
                 </bibdata>
                 <sections/>
@@ -761,7 +761,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number>ISO 1000</project-number>
             </structuredidentifier>
-            <stagename abbreviation="IS">International Standard</stagename>
+            <stagename>International Standard</stagename>
           </ext>
         </bibdata>
         <sections/>
@@ -832,7 +832,7 @@ RSpec.describe Metanorma::ISO do
               <structuredidentifier>
                 <project-number>ISO 1000</project-number>
               </structuredidentifier>
-              <stagename abbreviation="PRF IS">Proof of a new International Standard International Standard</stagename>
+              <stagename abbreviation="PRF">Proof of a new International Standard</stagename>
             </ext>
           </bibdata>
           <sections/>
@@ -957,7 +957,7 @@ RSpec.describe Metanorma::ISO do
                       <language>en</language>
                       <script>Latn</script>
                       <status>
-                        <stage abbreviation='IS'>60</stage>
+                        <stage>60</stage>
                         <substage>60</substage>
                       </status>
                       <copyright>
@@ -1240,7 +1240,7 @@ RSpec.describe Metanorma::ISO do
                    <approvalgroup>
                      <agency>ISO</agency>
                    </approvalgroup>
-                   <stagename>International standard</stagename>
+                   <stagename>International Standard</stagename>
                  </ext>
                </bibdata>
                <sections/>

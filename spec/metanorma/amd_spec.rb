@@ -590,8 +590,8 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type='standard'>
-          <docidentifier type='ISO'>ISO 17301-1:2030/FDCor 3:#{Date.today.year}</docidentifier>
-          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCor 3:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='ISO'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}</docidentifier>
+          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}(en)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-50.00:cor:#{Date.today.year}:v3</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
@@ -634,7 +634,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number part='1' corrigendum='3'>17301</project-number>
             </structuredidentifier>
-            <stagename abbreviation="PRF COR"/>
+            <stagename abbreviation="FDCOR"/>
           </ext>
         </bibdata>
         <sections/>
