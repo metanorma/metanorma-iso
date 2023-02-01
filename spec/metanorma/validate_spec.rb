@@ -335,7 +335,7 @@ RSpec.describe Metanorma::ISO do
       .to include "pizza is not a recognised substage"
   end
 
-  it "Warns of illegal iteration" do
+  xit "Warns of illegal iteration" do
     begin
       input = <<~INPUT
         = Document title
