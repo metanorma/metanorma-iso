@@ -66,6 +66,7 @@
         <value>caution</value>
         <value>statement</value>
         <value>editorial</value>
+        <value>box</value>
       </choice>
     </define>
     <define name="index">

@@ -522,7 +522,6 @@
       <value>tip</value>
       <value>important</value>
       <value>caution</value>
-      <value>statement</value>
     </choice>
   </define>
   <define name="figure">
