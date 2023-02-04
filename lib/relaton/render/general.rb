@@ -1,4 +1,5 @@
 require "relaton-render"
+require "isodoc"
 require_relative "parse"
 
 module Relaton
