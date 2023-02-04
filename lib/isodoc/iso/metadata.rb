@@ -6,7 +6,6 @@ module IsoDoc
       def initialize(lang, script, locale, i18n)
         super
         DATETYPES.each { |w| @metadata["#{w.gsub(/-/, '_')}date".to_sym] = nil }
-        set(:editorialgroup, [])
         set(:obsoletes, nil)
         set(:obsoletes_part, nil)
       end
@@ -178,14 +177,13 @@ module IsoDoc
         tc(xml)
         sc(xml)
         wg(xml)
-        approvalgroup(xml)
+        editorialgroup(xml)
         secretariat(xml)
       end
 
       def tc(xml)
         tcid = tc_base(xml, "editorialgroup") or return
         set(:tc, tcid)
-        set(:editorialgroup, get[:editorialgroup] << tcid)
       end
 
       def tc_base(xml, grouptype)
@@ -193,13 +191,13 @@ module IsoDoc
                            "technical-committee/@number")) or return nil
         tc_type = xml.at(ns("//bibdata/ext/#{grouptype}/technical-committee/" \
                             "@type"))&.text || "TC"
-        "#{tc_type} #{tc_num.text}"
+        tc_type == "Other" and tc_type = ""
+        "#{tc_type} #{tc_num.text}".strip
       end
 
       def sc(xml)
         scid = sc_base(xml, "editorialgroup") or return
         set(:sc, scid)
-        set(:editorialgroup, get[:editorialgroup] << scid)
       end
 
       def sc_base(xml, grouptype)
@@ -207,13 +205,13 @@ module IsoDoc
                            "@number")) or return nil
         sc_type = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/" \
                             "@type"))&.text || "SC"
+        sc_type == "Other" and sc_type = ""
         "#{sc_type} #{sc_num.text}"
       end
 
       def wg(xml)
         wgid = wg_base(xml, "editorialgroup") or return
         set(:wg, wgid)
-        set(:editorialgroup, get[:editorialgroup] << wgid)
       end
 
       def wg_base(xml, grouptype)
@@ -221,15 +219,15 @@ module IsoDoc
                            "@number")) or return
         wg_type = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/" \
                             "@type"))&.text || "WG"
+        wg_type == "Other" and wg_type = ""
         "#{wg_type} #{wg_num.text}"
       end
 
-      def approvalgroup(xml)
-        ag = tc_base(xml, "approvalgroup") or return
-        ret = [ag]
-        ret << sc_base(xml, "approvalgroup")
-        ret << wg_base(xml, "approvalgroup")
-        set(:approvalgroup, ret.compact)
+      def editorialgroup(xml)
+        a = xml.at(ns("//bibdata/ext/editorialgroup/@identifier")) and
+          set(:editorialgroup, a.text)
+        a = xml.at(ns("//bibdata/ext/approvalgroup/@identifier")) and
+          set(:approvalgroup, a.text)
       end
 
       def secretariat(xml)

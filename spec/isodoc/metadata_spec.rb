@@ -76,13 +76,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
           <ext>
             <doctype>international-standard</doctype>
             <horizontal>true</horizontal>
-            <editorialgroup>
+            <editorialgroup identifier="DEF">
               <technical-committee number="34">Food products</technical-committee>
               <subcommittee number="4">Cereals and pulses</subcommittee>
               <workgroup number="3">Rice Group</workgroup>
               <secretariat>GB</secretariat>
             </editorialgroup>
-            <approvalgroup>
+            <approvalgroup identifier="ABC">
               <technical-committee number="34a">Food products A</technical-committee>
               <subcommittee number="4a">Cereals and pulses A</subcommittee>
               <workgroup number="3a">Rice Group A</workgroup>
@@ -99,7 +99,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       {:accesseddate=>"2012",
       :activateddate=>"2013",
       :agency=>"ISO",
-      :approvalgroup=>["TC 34a", "SC 4a", "WG 3a"],
+      :approvalgroup=>"ABC",
       :createddate=>"2010&#x2013;2011",
       :docnumber=>"ISO/PreCD3 17301-1",
       :docnumber_lang=>"ISO/PreCD3 17301-1 (E)",
@@ -121,7 +121,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :draft=>"0.4",
       :draftinfo=>" (draft 0.4, 2016-05-01)",
       :edition=>"2",
-      :editorialgroup=>["TC 34", "SC 4", "WG 3"],
+      :editorialgroup=>"DEF",
       :horizontal=>"true",
       :keywords=>["kw2", "kw1"],
       :lang=>"en",
@@ -223,7 +223,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       {:agency=>"ISO/IEC",
-      :approvalgroup=>["ABC 34", "GHI 3"],
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
       :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -236,7 +235,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :doctype=>"International Standard",
       :doctype_display=>"International Standard",
       :docyear=>"2016",
-      :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :ics=>"1.2.3, 1.2.3",
       :lang=>"en",
       :obsoletes=>"IEC 8121",
@@ -353,7 +351,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :doctype=>"International Standard",
       :doctype_display=>"Standard International",
       :docyear=>"2016",
-      :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :ics=>"1.2.3, 1.2.3",
       :lang=>"fr",
       :obsoletes=>"IEC 8121",
@@ -473,7 +470,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :doctype=>"International Standard",
       :doctype_display=>"International Standard",
       :docyear=>"2016",
-      :editorialgroup=>["ABC 34", "DEF 4", "GHI 3"],
       :ics=>"1.2.3, 1.2.3",
       :lang=>"ru",
       :obsoletes=>"IEC 8121",
