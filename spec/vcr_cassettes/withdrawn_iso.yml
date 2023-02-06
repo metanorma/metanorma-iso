@@ -120,7 +120,7 @@ http_interactions:
   recorded_at: Mon, 06 Feb 2023 02:18:43 GMT
 - request:
     method: get
-    uri: https://www.iso.org/contents/data/standard/00/24/2405.html
+    uri: https://www.iso.org/contents/data/standard/07/63/76389.html
     body:
       encoding: US-ASCII
       string: ''
@@ -149,7 +149,7 @@ http_interactions:
         Secure
       - JSESSIONID=C140E8DA776B6A67487B652A9E226BEF; Path=/; Secure; HttpOnly
       Location:
-      - "/standard/2405.html"
+      - "/standard/76389.html"
       Content-Length:
       - '0'
       Date:
@@ -162,7 +162,7 @@ http_interactions:
   recorded_at: Mon, 06 Feb 2023 02:18:45 GMT
 - request:
     method: get
-    uri: https://www.iso.org/contents/data/standard/07/63/76389.html
+    uri: https://www.iso.org/contents/data/standard/00/24/2405.html
     body:
       encoding: US-ASCII
       string: ''
@@ -187,11 +187,11 @@ http_interactions:
       Pragma:
       - no-cache
       Set-Cookie:
-      - BIGipServerpool_prod_iso_www-jahia=730354058.36895.0000; path=/; Httponly;
+      - BIGipServerpool_prod_iso_www-jahia=713576842.36895.0000; path=/; Httponly;
         Secure
       - JSESSIONID=C2FC4E9B3659D374A78420477722ABC6; Path=/; Secure; HttpOnly
       Location:
-      - "/standard/76389.html"
+      - "/standard/2405.html"
       Content-Length:
       - '0'
       Date:
@@ -204,7 +204,7 @@ http_interactions:
   recorded_at: Mon, 06 Feb 2023 02:18:46 GMT
 - request:
     method: get
-    uri: https://www.iso.org/standard/2405.html
+    uri: https://www.iso.org/standard/76389.html
     body:
       encoding: US-ASCII
       string: ''
@@ -249,7 +249,7 @@ http_interactions:
   recorded_at: Mon, 06 Feb 2023 02:18:49 GMT
 - request:
     method: get
-    uri: https://www.iso.org/standard/76389.html
+    uri: https://www.iso.org/standard/2405.html
     body:
       encoding: US-ASCII
       string: ''
@@ -274,7 +274,7 @@ http_interactions:
       Pragma:
       - no-cache
       Set-Cookie:
-      - BIGipServerpool_prod_iso_www-jahia=713576842.36895.0000; path=/; Httponly;
+      - BIGipServerpool_prod_iso_www-jahia=747131274.36895.0000; path=/; Httponly;
         Secure
       - JSESSIONID=85B990CD403A9B769CADD9DA6707199E; Path=/; Secure; HttpOnly
       Vary:

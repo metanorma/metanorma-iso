@@ -49,10 +49,16 @@ module IsoDoc
         agency = group.xpath(ns("./agency"))&.map(&:text)
         ret = %w(technical-committee subcommittee workgroup)
           .each_with_object([]) do |v, m|
-          a = group.at(ns("./#{v}")) or next
-          m << "#{a['type']} #{a['number']}"
+          m << editorialgroup_identifier2(group, v)
         end
-        group["identifier"] = (agency + ret).join("/")
+        group["identifier"] = (agency + ret.compact).join("/")
+      end
+
+      def editorialgroup_identifier2(group, level)
+        a = group.at(ns("./#{level}")) or return nil
+        type = a["type"]
+        type.casecmp("other").zero? and type = ""
+        "#{type} #{a['number']}".strip
       end
 
       def bibdata_i18n(bib)

@@ -773,7 +773,6 @@ RSpec.describe IsoDoc do
       :draft=>"0.3.4",
       :draftinfo=>" (draft 0.3.4, 2000-01-01)",
       :edition=>"2",
-      :editorialgroup=>["A 1", "B 2", "C 3"],
       :ics=>"1, 2, 3",
       :lang=>"en",
       :publisher=>"International Organization for Standardization",
@@ -868,7 +867,7 @@ RSpec.describe IsoDoc do
           <ext>
             <doctype language="">amendment</doctype>
             <doctype language="fr">Amendment</doctype>
-            <editorialgroup>
+            <editorialgroup identifier="ABC">
               <technical-committee number="1" type="A">TC</technical-committee>
               <technical-committee number="11" type="A1">TC1</technical-committee>
               <subcommittee number="2" type="B">SC</subcommittee>
@@ -925,7 +924,7 @@ RSpec.describe IsoDoc do
       :draft=>"0.3.4",
       :draftinfo=>" (brouillon 0.3.4, 2000-01-01)",
       :edition=>"2",
-      :editorialgroup=>["A 1", "B 2", "C 3"],
+      :editorialgroup=>"ABC",
       :ics=>"1, 2, 3",
       :lang=>"fr",
       :publisher=>"International Organization for Standardization",

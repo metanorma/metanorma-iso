@@ -213,7 +213,7 @@ RSpec.describe IsoDoc::Iso do
             </editorialgroup>
             <approvalgroup>
               <agency>ISO</agency>
-              <technical-committee type="D" number="34a">Food products A</technical-committee>
+              <technical-committee type="Other" number="34a">Food products A</technical-committee>
               <subcommittee type="E" number="4a">Cereals and pulses A</subcommittee>
               <workgroup type="F" number="3a">Rice Group A</workgroup>
             </approvalgroup>
@@ -236,9 +236,9 @@ RSpec.describe IsoDoc::Iso do
             <workgroup type='C' number='3'>Rice Group</workgroup>
             <secretariat>GB</secretariat>
           </editorialgroup>
-          <approvalgroup identifier='ISO/D 34a/E 4a/F 3a'>
+          <approvalgroup identifier='ISO/34a/E 4a/F 3a'>
               <agency>ISO</agency>
-            <technical-committee type='D' number='34a'>Food products A</technical-committee>
+            <technical-committee type='Other' number='34a'>Food products A</technical-committee>
             <subcommittee type='E' number='4a'>Cereals and pulses A</subcommittee>
             <workgroup type='F' number='3a'>Rice Group A</workgroup>
           </approvalgroup>
