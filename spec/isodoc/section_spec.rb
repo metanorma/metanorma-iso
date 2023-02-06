@@ -560,7 +560,7 @@ RSpec.describe IsoDoc do
            <language current='true'>en</language>
            <script current='true'>Latn</script>
            <status>
-             <stage abbreviation='IS'>60</stage>
+             <stage>60</stage>
              <substage>60</substage>
            </status>
              <copyright>
@@ -581,7 +581,7 @@ RSpec.describe IsoDoc do
                <approvalgroup identifier='ISO'>
                <agency>ISO</agency>
                </approvalgroup>
-               <stagename>International standard</stagename>
+               <stagename>International Standard</stagename>
              </ext>
            </bibdata>
            <sections>

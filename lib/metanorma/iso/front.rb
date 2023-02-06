@@ -12,10 +12,25 @@ module Metanorma
       def metadata_ext(node, xml)
         super
         structured_id(node, xml)
-        xml.stagename stage_name(get_stage(node), get_substage(node),
-                                 doctype(node), node.attr("iteration"))
+        id = iso_id_default(iso_id_params(node))
+        id.stage and
+          xml.stagename metadata_stagename(id)&.strip,
+                        **attr_code(abbreviation: id.typed_stage_abbrev&.strip)
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
+      end
+
+      def metadata_stagename(id)
+        if @amd
+          id.amendments&.first&.stage&.name ||
+            id.corrigendums&.first&.stage&.name
+        else
+          begin
+            id.typed_stage_name
+          rescue StandardError
+            id.stage&.name
+          end
+        end
       end
 
       def metadata_subdoctype(node, xml)
@@ -32,7 +47,7 @@ module Metanorma
         publishers = node.attr("publisher") || "ISO"
         csv_split(publishers).each do |p|
           xml.contributor do |c|
-            c.role **{ type: "author" }
+            c.role type: "author"
             c.organization do |a|
               organization(a, p, false, node, !node.attr("publisher"))
             end
@@ -44,7 +59,7 @@ module Metanorma
         publishers = node.attr("publisher") || "ISO"
         csv_split(publishers).each do |p|
           xml.contributor do |c|
-            c.role **{ type: "publisher" }
+            c.role type: "publisher"
             c.organization do |a|
               organization(a, p, true, node, !node.attr("publisher"))
             end
@@ -73,8 +88,9 @@ module Metanorma
       def metadata_status(node, xml)
         stage = get_stage(node)
         substage = get_substage(node)
+        abbrev = iso_id_default(iso_id_params(node)).stage&.abbr
         xml.status do |s|
-          s.stage stage, **attr_code(abbreviation: cover_stage_abbr(node))
+          s.stage stage, **attr_code(abbreviation: abbrev)
           s.substage substage
           node.attr("iteration") && (s.iteration node.attr("iteration"))
         end

@@ -55,7 +55,7 @@ RSpec.describe Metanorma::ISO do
       === Bibliography Subsection
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>')}
+      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename>International Standard</stagename>}, "<stagename/>")}
         <sections>
           <clause id="_" obligation="normative">
             <title>Foreword</title>
@@ -208,10 +208,9 @@ RSpec.describe Metanorma::ISO do
         d’échantillon et recommandations relatives aux conditions d’entreposage et
         de transport
       </title>
-          <docidentifier type="ISO">ISO 17301-1:2016/PreNP Amd 1</docidentifier>
-          <docidentifier type='iso-undated'>ISO 17301-1/PreNP Amd 1</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 17301-1:2016/PreNP Amd 1(E)</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2016/PreNP Amd 1:2017(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-10.20:amd:2017:v1</docidentifier>
           <docnumber>17301</docnumber>
           <date type="created">
             <on>2016-05-01</on>
@@ -238,7 +237,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="NP Amd">10</stage>
+            <stage abbreviation="NP">10</stage>
             <substage>20</substage>
             <iteration>3</iteration>
           </status>
@@ -275,7 +274,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" origyr="2016-05-01" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>New work item proposal</stagename>
+            <stagename abbreviation="NP AMD"/>
             <updates-document-type>international-standard</updates-document-type>
           </ext>
         </bibdata>
@@ -304,10 +303,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/CD Amd 1</docidentifier>
-          <docidentifier type='iso-undated'>ISO 17301-1/CD Amd 1</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:#{Date.today.year}:v1</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -326,7 +324,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="CD Amd">30</stage>
+            <stage abbreviation="CD">30</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -349,7 +347,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>Committee draft</stagename>
+            <stagename  abbreviation="CD AMD"/>
           </ext>
         </bibdata>
         <sections/>
@@ -377,10 +375,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/DAmd 1</docidentifier>
-          <docidentifier type='iso-undated'>ISO 17301-1/DAmd 1</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 17301-1:2030/DAmd 1(E)</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/DAmd 1(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/DAM 1:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/DAM 1:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-40.00:amd:#{Date.today.year}:v1</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -399,7 +396,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="DAmd">40</stage>
+            <stage>40</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -422,7 +419,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>Draft</stagename>
+            <stagename abbreviation="DAM"/>
           </ext>
         </bibdata>
         <sections/>
@@ -449,10 +446,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/Amd 1</docidentifier>
-          <docidentifier type='iso-undated'>ISO 17301-1/Amd 1</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 17301-1:2030/Amd 1(E)</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/Amd 1:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:amd:#{Date.today.year}:v1</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -471,7 +467,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="IS">60</stage>
+            <stage>60</stage>
             <substage>60</substage>
           </status>
           <copyright>
@@ -494,7 +490,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number amendment="1" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>International standard</stagename>
+            <stagename abbreviation="AMD"/>
           </ext>
         </bibdata>
         <sections/>
@@ -522,10 +518,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/CD Cor.3</docidentifier>
-          <docidentifier type='iso-undated'>ISO 17301-1/CD Cor.3</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor.3(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:cor:#{Date.today.year}:v3</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -544,7 +539,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="CD Cor">30</stage>
+            <stage abbreviation="CD">30</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -567,7 +562,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number corrigendum="3" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>Committee draft</stagename>
+            <stagename abbreviation="CD COR"/>
           </ext>
         </bibdata>
         <sections/>
@@ -595,10 +590,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type='standard'>
-          <docidentifier type='ISO'>ISO 17301-1:2030/FDCor.3</docidentifier>
-          <docidentifier type='iso-undated'>ISO 17301-1/FDCor.3</docidentifier>
-          <docidentifier type='iso-with-lang'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
-          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCor.3(E)</docidentifier>
+          <docidentifier type='ISO'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}</docidentifier>
+          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-50.00:cor:#{Date.today.year}:v3</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type='author'/>
@@ -617,7 +611,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation='FDCor'>50</stage>
+            <stage abbreviation='PRF'>50</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -640,7 +634,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number part='1' corrigendum='3'>17301</project-number>
             </structuredidentifier>
-            <stagename>Final draft</stagename>
+            <stagename abbreviation="FDCOR"/>
           </ext>
         </bibdata>
         <sections/>
@@ -667,10 +661,9 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 17301-1:2030/Cor.3</docidentifier>
-          <docidentifier type='iso-undated'>ISO 17301-1/Cor.3</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 17301-1:2030/Cor.3(E)</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/Cor.3(E)</docidentifier>
+          <docidentifier type="ISO">ISO 17301-1:2030/Cor 3:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:cor:#{Date.today.year}:v3</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -689,7 +682,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="IS">60</stage>
+            <stage>60</stage>
             <substage>60</substage>
           </status>
           <copyright>
@@ -712,7 +705,7 @@ RSpec.describe Metanorma::ISO do
             <structuredidentifier>
               <project-number corrigendum="3" part="1">17301</project-number>
             </structuredidentifier>
-            <stagename>International standard</stagename>
+            <stagename abbreviation="COR"/>
           </ext>
         </bibdata>
         <sections/>
