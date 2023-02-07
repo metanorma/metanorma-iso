@@ -180,6 +180,7 @@ module IsoDoc
 
       def indexsect(isoxml, out)
         isoxml.xpath(ns("//indexsect")).each do |i|
+          page_break(out)
           clause_parse(i, out)
         end
       end

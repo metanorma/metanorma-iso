@@ -541,74 +541,74 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-    <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='presentation' version="#{Metanorma::ISO::VERSION}">
-         <bibdata type='standard'>
-           <contributor>
-             <role type='author'/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type='publisher'/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <language current='true'>en</language>
-           <script current='true'>Latn</script>
-           <status>
-             <stage>60</stage>
-             <substage>60</substage>
-           </status>
-             <copyright>
-               <from>#{Time.new.year}</from>
-               <owner>
-                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                 </organization>
-               </owner>
-             </copyright>
-             <ext>
-               <doctype>standard</doctype>
-               <subdoctype>vocabulary</subdoctype>
-               <editorialgroup identifier='ISO'>
-               <agency>ISO</agency>
-               </editorialgroup>
-               <approvalgroup identifier='ISO'>
-               <agency>ISO</agency>
-               </approvalgroup>
-               <stagename>International Standard</stagename>
-             </ext>
-           </bibdata>
-           <sections>
-             <terms id='A' obligation='normative' displayorder='1'>
-               <title depth='1'>
-                 1
-                 <tab/>
-                 Terms and definitions
-               </title>
-               <p id='A1'>No terms and definitions are listed in this document.</p>
-             </terms>
-             <clause id='B' inline-header='false' obligation='normative' displayorder='2'>
-               <title depth='1'>
-                 2
-                 <tab/>
-                 Clause
-               </title>
-             </clause>
-             <terms id='C' obligation='normative' displayorder='3'>
-               <title depth='1'>
-                 3
-                 <tab/>
-                 More terms
-               </title>
-             </terms>
-           </sections>
-         </iso-standard>
+      <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='presentation' version="#{Metanorma::ISO::VERSION}">
+           <bibdata type='standard'>
+             <contributor>
+               <role type='author'/>
+               <organization>
+                 <name>International Organization for Standardization</name>
+                 <abbreviation>ISO</abbreviation>
+               </organization>
+             </contributor>
+             <contributor>
+               <role type='publisher'/>
+               <organization>
+                 <name>International Organization for Standardization</name>
+                 <abbreviation>ISO</abbreviation>
+               </organization>
+             </contributor>
+             <language current='true'>en</language>
+             <script current='true'>Latn</script>
+             <status>
+               <stage>60</stage>
+               <substage>60</substage>
+             </status>
+               <copyright>
+                 <from>#{Time.new.year}</from>
+                 <owner>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </owner>
+               </copyright>
+               <ext>
+                 <doctype>standard</doctype>
+                 <subdoctype>vocabulary</subdoctype>
+                 <editorialgroup identifier='ISO'>
+                 <agency>ISO</agency>
+                 </editorialgroup>
+                 <approvalgroup identifier='ISO'>
+                 <agency>ISO</agency>
+                 </approvalgroup>
+                 <stagename>International Standard</stagename>
+               </ext>
+             </bibdata>
+             <sections>
+               <terms id='A' obligation='normative' displayorder='1'>
+                 <title depth='1'>
+                   1
+                   <tab/>
+                   Terms and definitions
+                 </title>
+                 <p id='A1'>No terms and definitions are listed in this document.</p>
+               </terms>
+               <clause id='B' inline-header='false' obligation='normative' displayorder='2'>
+                 <title depth='1'>
+                   2
+                   <tab/>
+                   Clause
+                 </title>
+               </clause>
+               <terms id='C' obligation='normative' displayorder='3'>
+                 <title depth='1'>
+                   3
+                   <tab/>
+                   More terms
+                 </title>
+               </terms>
+             </sections>
+           </iso-standard>
     OUTPUT
     output = <<~OUTPUT
           <html lang='en'>
@@ -921,6 +921,7 @@ RSpec.describe IsoDoc do
                 <a id='_'/>
               </div>
             </div>
+            <br/>
             <div id='_'>
               <h1>Index</h1>
               <ul>
@@ -987,11 +988,94 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
+    doc = <<~DOC
+      <body lang="EN-US" link="blue" vlink="#954F72">
+        <div class="WordSection1">
+          <p> </p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection2">
+          <p> </p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection3">
+          <p class="zzSTDTitle1"/>
+          <div id="A">
+            <h1>1</h1>
+            <a id="_"/>
+            <a id="_"/>
+            <a id="_"/>
+            <a id="_"/>
+            <a id="_"/>
+            <div id="B">
+              <span class="zzMoveToFollowing">
+                <b>1.1<span style="mso-tab-count:1">  </span></b>
+              </span>
+              <a id="_"/>
+              <a id="_"/>
+              <a id="_"/>
+              <a id="_"/>
+            </div>
+          </div>
+          <p>
+            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+          </p>
+          <div id="_">
+            <h1>Index</h1>
+            <ul>
+              <li><i>Dasein</i>
+            , see
+            <i>Eman</i>
+            cipation, être
+          </li>
+              <li>
+            élongé,
+            <a href="#_">Clause 1</a></li>
+              <li><i>Eman</i>
+            cipation,
+            <a href="#_">Clause 1</a>
+            ,
+            <a href="#_">1.1</a><ul><li>
+                dans la France,
+                <a href="#_">Clause 1</a><ul><li>
+                    à Paris,
+                    <a href="#_">1.1</a></li><li>
+                    en Bretagne,
+                    <a href="#_">Clause 1</a></li></ul></li><li>
+                dans les États-Unis,
+                <a href="#_">1.1</a></li></ul></li>
+              <li>
+            être
+            <ul><li>
+                Husserl, see zebra, see also
+                <i>Eman</i>
+                cipation, zebra
+                <ul><li>
+                    en allemand,
+                    <a href="#_">Clause 1</a></li></ul></li></ul></li>
+              <li>
+            zebra,
+            <a href="#_">1.1</a></li>
+            </ul>
+          </div>
+        </div>
+        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+        <div class="colophon"/>
+      </body>
+    DOC
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{<localized-strings>.*</localized-strings>}m, ""))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true)
+                .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
+      .to be_equivalent_to xmlpp(doc)
   end
 end
