@@ -57,7 +57,7 @@ module IsoDoc
       def editorialgroup_identifier2(group, level)
         a = group.at(ns("./#{level}")) or return nil
         type = a["type"]
-        type.casecmp("other").zero? and type = ""
+        type&.casecmp("other")&.zero? and type = ""
         "#{type} #{a['number']}".strip
       end
 
