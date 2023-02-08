@@ -281,6 +281,13 @@ div.figure {
     @include figureBlock();
 }
 
+table div.figure {
+  padding: 0;
+  margin: 0;
+}
+
+
+
 /*
     Document types + stages
 */
