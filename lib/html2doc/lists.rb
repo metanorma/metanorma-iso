@@ -35,7 +35,7 @@ class Html2Doc
                   !x.text.strip.empty?
                 end
 
-      prev = first_p.xpath("./preceding-sibling::* | "\
+      prev = first_p.xpath("./preceding-sibling::* | " \
                            "./preceding-sibling::text()[normalize-space()]")
       # bullet, tab, paragraph: ignore bullet, tab
       if prev.empty? then para.replace(para.children)
@@ -76,7 +76,7 @@ class Html2Doc
     end
 
     def unnest_list_paras(docxml)
-      docxml.xpath("//p[@class = 'ListContinue1' or @class = 'ListNumber1']"\
+      docxml.xpath("//p[@class = 'ListContinue1' or @class = 'ListNumber1']" \
                    "[.//p]").each do |p|
                      p.at("./p") and
                        list2para_unnest_para(p, p.at("./p"),
@@ -89,7 +89,7 @@ class Html2Doc
     end
 
     def indent_lists(docxml)
-      docxml.xpath("//div[@class = 'Note' or @class = 'Example' or "\
+      docxml.xpath("//div[@class = 'Note' or @class = 'Example' or " \
                    "@class = 'Quote']").each do |d|
         d.xpath(".//p").each do |p|
           indent_lists1(p)
@@ -124,7 +124,7 @@ class Html2Doc
     end
 
     def list_add_tail(list, liststyles, listtype, level)
-      list.xpath(".//ul[not(ancestor::li/ancestor::*/@id = '#{list['id']}')] | "\
+      list.xpath(".//ul[not(ancestor::li/ancestor::*/@id = '#{list['id']}')] | " \
                  ".//ol[not(ancestor::li/ancestor::*/@id = '#{list['id']}')]")
         .each do |li|
         list_add1(li.parent, liststyles, listtype, level - 1)
@@ -137,8 +137,10 @@ class Html2Doc
       idx += 1
       ol = elem.xpath("./ancestor::ol")&.last
       label = listlabel(listtype, idx, ol ? ol["type"] : nil)
-      elem.children.first.previous =
-        "#{label}<span style='mso-tab-count:1'>&#xa0;</span>"
+      unless elem.at("./ancestor::div[@class = 'index']") # indexsect
+        elem.children.first.previous =
+          "#{label}<span style='mso-tab-count:1'>&#xa0;</span>"
+      end
       elem["level"] = level
       idx
     end
@@ -162,7 +164,7 @@ class Html2Doc
 
     def cleanup(docxml)
       super
-      docxml.xpath("//div[@class = 'Quote' or @class = 'Example' or "\
+      docxml.xpath("//div[@class = 'Quote' or @class = 'Example' or " \
                    "@class = 'Note']").each do |d|
         d.delete("class")
       end

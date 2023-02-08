@@ -31,7 +31,7 @@ module IsoDoc
       def example_span_label(_node, div, name)
         return if name.nil?
 
-        div.span **{ class: "example_label" } do |p|
+        div.span class: "example_label" do |p|
           name.children.each { |n| parse(n, p) }
         end
       end
@@ -64,7 +64,7 @@ module IsoDoc
       end
 
       def example_parse(node, out)
-        out.div **{ id: node["id"], class: "example" } do |div|
+        out.div id: node["id"], class: "example" do |div|
           if node_begins_with_para(node)
             example_p_parse(node, div)
           else
@@ -92,7 +92,7 @@ module IsoDoc
           dlist.at(ns("./dd"))&.elements&.size == 1 &&
           dlist.at(ns("./dd/p"))
 
-        out.span **{ class: "zzMoveToFollowing" } do |s|
+        out.span class: "zzMoveToFollowing" do |s|
           s << "#{@i18n.where} "
           dlist.at(ns("./dt")).children.each { |n| parse(n, s) }
           s << " "
@@ -103,7 +103,7 @@ module IsoDoc
       def admonition_parse(node, out)
         type = node["type"]
         name = admonition_name(node, type)
-        out.div **{ id: node["id"], class: admonition_class(node) } do |div|
+        out.div id: node["id"], class: admonition_class(node) do |div|
           if node.first_element_child.name == "p"
             admonition_p_parse(node, div, name)
           else
@@ -139,7 +139,7 @@ module IsoDoc
       end
 
       def figure_name_parse(_node, div, name)
-        div.p **{ class: "FigureTitle", style: "text-align:center;" } do |p|
+        div.p class: "FigureTitle", style: "text-align:center;" do |p|
           name&.children&.each { |n| parse(n, p) }
         end
       end
@@ -149,16 +149,13 @@ module IsoDoc
         middle_admonitions(isoxml, out)
         i = scope isoxml, out, 0
         i = norm_ref isoxml, out, i
-        # i = terms_defs isoxml, out, i
-        # symbols_abbrevs isoxml, out, i
         clause_etc isoxml, out, i
         annex isoxml, out
         bibliography isoxml, out
-        indexsect isoxml, out
       end
 
       def clause_etc(isoxml, out, num)
-        isoxml.xpath(ns("//sections/clause[not(@type = 'scope')] | "\
+        isoxml.xpath(ns("//sections/clause[not(@type = 'scope')] | " \
                         "//sections/terms | //sections/definitions"))
           .each do |f|
             clause_etc1(f, out, num)
@@ -180,7 +177,6 @@ module IsoDoc
 
       def indexsect(isoxml, out)
         isoxml.xpath(ns("//indexsect")).each do |i|
-          page_break(out)
           clause_parse(i, out)
         end
       end
