@@ -74,17 +74,41 @@ module IsoDoc
           make_body1(body, docxml)
           make_body2(body, docxml)
           make_body3(body, docxml)
+          indexsect(docxml, body)
           colophon(body, docxml)
         end
+      end
+
+      def br(out, pagebreak)
+        out.br clear: "all", style: "page-break-before:#{pagebreak};" \
+                                    "mso-break-type:section-break"
       end
 
       def colophon(body, _docxml)
         stage = @meta.get[:stage_int]
         return if !stage.nil? && stage < 60
 
-        body.br **{ clear: "all", style: "page-break-before:left;" \
-                                         "mso-break-type:section-break" }
-        body.div **{ class: "colophon" } do |div|
+        br(body, "left")
+        body.div class: "colophon" do |div|
+        end
+      end
+
+      def indexsect(isoxml, out)
+        isoxml.xpath(ns("//indexsect")).each do |i|
+          indexsect_title(i, out)
+          br(out, "auto")
+          out.div class: "index" do |div|
+            i.children.each do |e|
+              parse(e, div) unless e.name == "title"
+            end
+          end
+        end
+      end
+
+      def indexsect_title(clause, out)
+        br(out, "always")
+        out.div class: "WordSection3" do |div|
+          clause_name(nil, clause.at(ns("./title")), div, nil)
         end
       end
 
@@ -181,7 +205,7 @@ module IsoDoc
         return if name.nil?
 
         name&.at(ns("./strong"))&.remove # supplied by CSS list numbering
-        div.h1 **{ class: "Annex" } do |t|
+        div.h1 class: "Annex" do |t|
           annex_name1(name, t)
           clause_parse_subtitle(name, t)
         end
@@ -190,7 +214,7 @@ module IsoDoc
       def annex_name1(name, out)
         name.children.each do |c2|
           if c2.name == "span" && c2["class"] == "obligation"
-            out.span **{ style: "font-weight:normal;" } do |s|
+            out.span style: "font-weight:normal;" do |s|
               c2.children.each { |c3| parse(c3, s) }
             end
           else parse(c2, out)

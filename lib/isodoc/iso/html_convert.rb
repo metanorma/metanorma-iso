@@ -80,6 +80,18 @@ module IsoDoc
         docxml
       end
 
+      def middle(isoxml, out)
+        middle_title(isoxml, out)
+        middle_admonitions(isoxml, out)
+        i = scope isoxml, out, 0
+        i = norm_ref isoxml, out, i
+        clause_etc isoxml, out, i
+        annex isoxml, out
+        bibliography isoxml, out
+        indexsect isoxml, out
+      end
+
+
       def html_toc1(ulist)
         u2 = nil
         ulist.xpath("./li").each do |l|

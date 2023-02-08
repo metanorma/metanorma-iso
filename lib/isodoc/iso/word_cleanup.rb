@@ -5,7 +5,7 @@ module IsoDoc
         super
         xml.xpath("//div[@class = 'figure']//table[@class = 'dl']").each do |t|
           t["class"] = "figdl"
-          d = t.add_previous_sibling("<div class='figdl' "\
+          d = t.add_previous_sibling("<div class='figdl' " \
                                      "style='page-break-after:avoid;'/>")
           t.parent = d.first
         end
@@ -38,6 +38,16 @@ module IsoDoc
         word_annex_cleanup_h1(docxml)
         figure_style(docxml)
         new_styles(docxml)
+        index_cleanup(docxml)
+      end
+
+      def index_cleanup(docxml)
+        docxml.xpath("//div[@class = 'index']").each do |i|
+          i.xpath(".//p | .//li").each do |p|
+            p["style"] ||= ""
+            p["style"] += "margin-bottom:0px;"
+          end
+        end
       end
 
       def figure_style(docxml)
@@ -48,7 +58,7 @@ module IsoDoc
       end
 
       def quote_style(docxml)
-        docxml.xpath("//div[@class = 'Quote' or @class = 'Note' or "\
+        docxml.xpath("//div[@class = 'Quote' or @class = 'Note' or " \
                      "@class = 'Example' or @class = 'Admonition']").each do |d|
                        quote_style1(d)
                      end

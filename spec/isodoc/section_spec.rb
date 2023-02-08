@@ -783,12 +783,14 @@ RSpec.describe IsoDoc do
         </bibdata>
         <sections>
           <clause id="A">
+            <p>A</p>
             <index><primary>&#xE9;long&#xE9;</primary></index>
             <index><primary>&#xEA;tre</primary><secondary>Husserl</secondary><tertiary>en allemand</tertiary></index>
             <index><primary><em>Eman</em>cipation</primary></index>
             <index><primary><em>Eman</em>cipation</primary><secondary>dans la France</secondary></index>
             <index><primary><em>Eman</em>cipation</primary><secondary>dans la France</secondary><tertiary>en Bretagne</tertiary></index>
             <clause id="B">
+              <p>B</p>
               <index><primary><em>Eman</em>cipation</primary></index>
               <index><primary>zebra</primary></index>
               <index><primary><em>Eman</em>cipation</primary><secondary>dans les &#xC9;tats-Unis</secondary></index>
@@ -812,6 +814,7 @@ RSpec.describe IsoDoc do
         <sections>
           <clause id='A' displayorder="1">
             <title>1</title>
+            <p>A</p>
             <bookmark id='_'/>
             <bookmark id='_'/>
             <bookmark id='_'/>
@@ -819,6 +822,7 @@ RSpec.describe IsoDoc do
             <bookmark id='_'/>
             <clause id='B' inline-header='true'>
               <title>1.1</title>
+              <p>B</p>
               <bookmark id='_'/>
               <bookmark id='_'/>
               <bookmark id='_'/>
@@ -906,6 +910,7 @@ RSpec.describe IsoDoc do
             <p class='zzSTDTitle1'/>
             <div id='A'>
               <h1>1</h1>
+              <p>A</p>
               <a id='_'/>
               <a id='_'/>
               <a id='_'/>
@@ -915,13 +920,13 @@ RSpec.describe IsoDoc do
                 <span class='zzMoveToFollowing'>
                   <b>1.1&#160; </b>
                 </span>
+                <p>B</p>
                 <a id='_'/>
                 <a id='_'/>
                 <a id='_'/>
                 <a id='_'/>
               </div>
             </div>
-            <br/>
             <div id='_'>
               <h1>Index</h1>
               <ul>
@@ -989,93 +994,77 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
     doc = <<~DOC
-      <body lang="EN-US" link="blue" vlink="#954F72">
-        <div class="WordSection1">
-          <p> </p>
-        </div>
-        <p>
+          <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US">
+        <p class="MsoNormal">
           <br clear="all" class="section"/>
         </p>
-        <div class="WordSection2">
-          <p> </p>
-        </div>
-        <p>
+        <p class="MsoNormal">
           <br clear="all" class="section"/>
         </p>
+        <br clear="all" style="page-break-before:always;mso-break-type:section-break"/>
         <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
-          <div id="A">
-            <h1>1</h1>
-            <a id="_"/>
-            <a id="_"/>
-            <a id="_"/>
-            <a id="_"/>
-            <a id="_"/>
-            <div id="B">
-              <span class="zzMoveToFollowing">
-                <b>1.1<span style="mso-tab-count:1">  </span></b>
-              </span>
-              <a id="_"/>
-              <a id="_"/>
-              <a id="_"/>
-              <a id="_"/>
-            </div>
-          </div>
-          <p>
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-          </p>
-          <div id="_">
-            <h1>Index</h1>
-            <ul>
-              <li><i>Dasein</i>
-            , see
-            <i>Eman</i>
-            cipation, être
-          </li>
-              <li>
-            élongé,
-            <a href="#_">Clause 1</a></li>
-              <li><i>Eman</i>
-            cipation,
-            <a href="#_">Clause 1</a>
-            ,
-            <a href="#_">1.1</a><ul><li>
-                dans la France,
-                <a href="#_">Clause 1</a><ul><li>
-                    à Paris,
-                    <a href="#_">1.1</a></li><li>
-                    en Bretagne,
-                    <a href="#_">Clause 1</a></li></ul></li><li>
-                dans les États-Unis,
-                <a href="#_">1.1</a></li></ul></li>
-              <li>
-            être
-            <ul><li>
-                Husserl, see zebra, see also
-                <i>Eman</i>
-                cipation, zebra
-                <ul><li>
-                    en allemand,
-                    <a href="#_">Clause 1</a></li></ul></li></ul></li>
-              <li>
-            zebra,
-            <a href="#_">1.1</a></li>
-            </ul>
-          </div>
+          <h1>Index</h1>
+        </div>
+        <br clear="all" style="page-break-before:auto;mso-break-type:section-break"/>
+        <div class="index">
+          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpFirst"><i>Dasein</i>
+              , see
+              <i>Eman</i>
+              cipation, être
+            </p>
+          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
+              élongé,
+              <a href="#_">Clause 1</a></p>
+          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle"><i>Eman</i>
+              cipation,
+              <a href="#_">Clause 1</a>
+              ,
+              <a href="#_">1.1</a><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
+                  dans la France,
+                  <a href="#_">Clause 1</a><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
+                      à Paris,
+                      <a href="#_">1.1</a></p><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpLast">
+                      en Bretagne,
+                      <a href="#_">Clause 1</a></p></p><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpLast">
+                  dans les États-Unis,
+                  <a href="#_">1.1</a></p></p>
+          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
+              être
+
+                <p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
+                  Husserl, see zebra, see also
+                  <i>Eman</i>
+                  cipation, zebra
+
+                    <p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
+                      en allemand,
+                      <a href="#_">Clause 1</a></p></p></p>
+          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpLast">
+              zebra,
+              <a href="#_">1.1</a></p>
         </div>
         <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
         <div class="colophon"/>
+        <div style="mso-element:footnote-list"/>
       </body>
     DOC
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{<localized-strings>.*</localized-strings>}m, ""))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
-    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
-      .convert("test", presxml, true)
-                .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
+    FileUtils.rm_f("test.doc")
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
+    expect(File.exist?("test.doc")).to be true
+    word = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")
+    wordxml = Nokogiri::XML(word)
+    wordxml.at("//div[@class = 'WordSection1']").remove
+    wordxml.at("//div[@class = 'WordSection2']").remove
+    wordxml.at("//div[@class = 'WordSection3']").remove
+    expect(xmlpp(wordxml.to_xml))
       .to be_equivalent_to xmlpp(doc)
   end
 end
