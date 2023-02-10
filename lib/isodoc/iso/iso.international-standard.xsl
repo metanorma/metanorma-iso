@@ -6485,7 +6485,9 @@
 		<xsl:value-of select="java:replaceAll(java:java.lang.String.new($text), $regex_url_start, '$1')"/> <!-- http://. https:// or www. -->
 		<xsl:variable name="url_continue" select="java:replaceAll(java:java.lang.String.new($text), $regex_url_start, '$2')"/>
 		<!-- add zero-width space (#x200B) after characters: dash, dot, colon, equal, underscore, em dash, thin space  -->
-		<xsl:value-of select="java:replaceAll(java:java.lang.String.new($url_continue),'(-|\.|:|=|_|—| |,|/)','$1​')"/>
+		<xsl:variable name="url" select="java:replaceAll(java:java.lang.String.new($url_continue),'(-|\.|:|=|_|—| |,|/)','$1​')"/>
+		<!-- remove zero-width space at the end -->
+		<xsl:value-of select="java:replaceAll(java:java.lang.String.new($url), '​$', '')"/>
 	</xsl:template>
 
 	<!-- add zero space after dash character (for table's entries) -->
