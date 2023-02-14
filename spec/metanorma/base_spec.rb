@@ -516,7 +516,7 @@ RSpec.describe Metanorma::ISO do
       OUTPUT
   end
 
-  it "processes subdivisions" do
+  it "processes subdivisions; override docidentifier" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -525,6 +525,7 @@ RSpec.describe Metanorma::ISO do
       :novalid:
       :revdate: 2000-01
       :published-date: 1000-01
+      :docidentifier: OVERRIDE
       :docnumber: 1000
       :partnumber: 1-1
       :tc-docnumber: 2000
@@ -545,11 +546,7 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type='standard'>
-            <docidentifier type='ISO'>ISO 1000-1-1:#{Date.today.year}</docidentifier>
-            <docidentifier type='iso-reference'>ISO 1000-1-1:#{Date.today.year}(el)</docidentifier>
-            <docidentifier type='URN'>urn:iso:std:iso:1000:-1-1:stage-60.60:el</docidentifier>
-            <docidentifier type='iso-undated'>ISO 1000-1-1</docidentifier>
-            <docidentifier type='iso-with-lang'>ISO 1000-1-1:#{Date.today.year}()</docidentifier>
+            <docidentifier type='ISO'>OVERRIDE</docidentifier>
             <docidentifier type='iso-tc'>2000</docidentifier>
             <docnumber>1000</docnumber>
             <date type='published'>
