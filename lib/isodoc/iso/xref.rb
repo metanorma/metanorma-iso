@@ -196,6 +196,16 @@ module IsoDoc
         super
         modspec_table_xrefs(clause) if @anchors_previous
       end
+
+      def note_anchor_names1(notes, counter)
+        notes.each do |n|
+          next if @anchors[n["id"]] || blank?(n["id"]) || n["type"] == "units"
+
+          @anchors[n["id"]] =
+            anchor_struct(increment_label(notes, n, counter), n,
+                          @labels["note_xref"], "note", false)
+        end
+      end
     end
   end
 end

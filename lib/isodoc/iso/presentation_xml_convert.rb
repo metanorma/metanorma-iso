@@ -215,6 +215,11 @@ module IsoDoc
         node.remove
       end
 
+      def note1(elem)
+        elem["type"] == "units" and return
+        super
+      end
+
       include Init
     end
   end
