@@ -720,12 +720,12 @@ RSpec.describe IsoDoc do
             <p class="zzSTDTitle1"/>
             <div id="widgets">
               <h1>1  Widgets</h1>
-              <p align="right">
+              <div align="right">
                 <b>Units in mm</b>
-              </p>
-              <p align="right">
+              </div>
+              <div align="right">
                 <b>Other units in sec</b>
-              </p>
+              </div>
               <div id="N" class="figure">
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
                 <div id="A" class="Note"><p><span class="note_label">NOTE  1</span>  </p>Note 1</div>
@@ -755,12 +755,12 @@ RSpec.describe IsoDoc do
           <p class="zzSTDTitle1"/>
           <div id="widgets">
             <h1>1<span style="mso-tab-count:1">  </span>Widgets</h1>
-            <p align="right">
+            <div align="right">
               <b>Units in mm</b>
-            </p>
-            <p align="right">
+            </div>
+            <div align="right">
               <b>Other units in sec</b>
-            </p>
+            </div>
             <div id="N" class="figure">
               <img src="rice_images/rice_image1.png"/>
               <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>

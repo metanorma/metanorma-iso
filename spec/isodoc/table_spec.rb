@@ -480,12 +480,12 @@ RSpec.describe IsoDoc do
               <p class="TableTitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of
                  <i>husked</i>
                  rice yield</p>
-              <p align="right">
+              <div align="right">
                 <b>Units in mm</b>
-              </p>
-              <p align="right">
+              </div>
+              <div align="right">
                 <b>Other units in sec</b>
-              </p>
+              </div>
               <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
                 <thead>
                   <tr>
@@ -535,12 +535,12 @@ RSpec.describe IsoDoc do
             <p class="Tabletitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of
                <i>husked</i>
                rice yield</p>
-            <p align="right">
+            <div align="right">
               <b>Units in mm</b>
-            </p>
-            <p align="right">
+            </div>
+            <div align="right">
               <b>Other units in sec</b>
-            </p>
+            </div>
             <div align="center" class="table_container">
               <table id="tableD-1" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
                 <thead>
