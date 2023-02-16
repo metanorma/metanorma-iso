@@ -141,7 +141,7 @@ module Metanorma
         xml.docidentifier iso_id_default(params).to_s(with_prf: with_prf),
                           **attr_code(type: "ISO")
         xml.docidentifier iso_id_reference(params)
-          .to_s(format: :ref_num_long, with_prf: with_prf),
+          .to_s(format: :ref_num_short, with_prf: with_prf),
                           **attr_code(type: "iso-reference")
         xml.docidentifier iso_id_reference(params).urn, **attr_code(type: "URN")
         return if @amd
@@ -149,7 +149,7 @@ module Metanorma
         xml.docidentifier iso_id_undated(params).to_s(with_prf: with_prf),
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
-          .to_s(format: :ref_num_short, with_prf: with_prf),
+          .to_s(format: :ref_num_long, with_prf: with_prf),
                           **attr_code(type: "iso-with-lang")
       rescue StandardError => e
         clean_abort("Document identifier: #{e}", xml)

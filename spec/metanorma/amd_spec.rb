@@ -209,7 +209,7 @@ RSpec.describe Metanorma::ISO do
         de transport
       </title>
           <docidentifier type="ISO">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(en)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-10.20:amd:2017:v1</docidentifier>
           <docnumber>17301</docnumber>
           <date type="created">
@@ -304,7 +304,7 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:#{Date.today.year}:v1</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
@@ -376,7 +376,7 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/DAM 1:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/DAM 1:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/DAM 1:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-40.00:amd:#{Date.today.year}:v1</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
@@ -447,7 +447,7 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/Amd 1:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:amd:#{Date.today.year}:v1</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
@@ -519,7 +519,7 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:cor:#{Date.today.year}:v3</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
@@ -591,7 +591,7 @@ RSpec.describe Metanorma::ISO do
       <iso-standard xmlns='https://www.metanorma.org/ns/iso'  type="semantic" version="#{Metanorma::ISO::VERSION}">
         <bibdata type='standard'>
           <docidentifier type='ISO'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}</docidentifier>
-          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-50.00:cor:#{Date.today.year}:v3</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
@@ -662,7 +662,7 @@ RSpec.describe Metanorma::ISO do
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <docidentifier type="ISO">ISO 17301-1:2030/Cor 3:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:#{Date.today.year}(en)</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:cor:#{Date.today.year}:v3</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
