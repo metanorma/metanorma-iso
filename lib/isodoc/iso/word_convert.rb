@@ -228,6 +228,21 @@ module IsoDoc
         ret
       end
 
+      def table_parse(node, out)
+        @in_table = true
+        table_title_parse(node, out)
+        measurement_units(node, out)
+        out.div align: "center", class: "table_container" do |div|
+          div.table **table_attrs(node) do |t|
+            table_parse_core(node, t)
+            (dl = node.at(ns("./dl"))) && parse(dl, div)
+            node.xpath(ns("./note[not(@type = 'units')]"))
+              .each { |n| parse(n, div) }
+          end
+        end
+        @in_table = false
+      end
+
       include BaseConvert
       include Init
     end

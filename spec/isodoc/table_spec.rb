@@ -396,4 +396,198 @@ RSpec.describe IsoDoc do
       .sub(%r{</div>\s*<br[^>]+>\s*<div class="colophon".*$}m, "")
     expect(xmlpp(out)).to be_equivalent_to xmlpp(doc2)
   end
+
+  it "processes units statements in tables" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <table id="tableD-1">
+              <name>Repeatability and reproducibility of
+                <em>husked</em>
+                rice yield</name>
+              <thead>
+                <tr>
+                  <td>Description</td>
+                  <td>Rice sample</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th align="left">Number of laboratories retained after eliminating outliers</th>
+                  <td align="center">13</td>
+                </tr>
+                <tr>
+                  <td align="left">Mean value, g/100 g</td>
+                  <td align="center">81,2</td>
+                </tr>
+              </tbody>
+              <dl>
+                <dt>Drago</dt>
+                <dd>A type of rice</dd>
+              </dl>
+              <note id="A">Note 1</note>
+              <note id="B" type="units">Units in mm</note>
+              <note id="C">Note 2</note>
+              <note id="D" type="units">Other units in sec</note>
+            </table>
+          </foreword>
+        </preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+           <foreword displayorder="1">
+             <table id="tableD-1">
+               <name>Table 1 — Repeatability and reproducibility of
+                 <em>husked</em>
+                 rice yield</name>
+               <thead>
+                 <tr>
+                   <td>Description</td>
+                   <td>Rice sample</td>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr>
+                   <th align="left">Number of laboratories retained after eliminating outliers</th>
+                   <td align="center">13</td>
+                 </tr>
+                 <tr>
+                   <td align="left">Mean value, g/100 g</td>
+                   <td align="center">81,2</td>
+                 </tr>
+               </tbody>
+               <dl>
+                 <dt>Drago</dt>
+                 <dd>A type of rice</dd>
+               </dl>
+               <note id="A"><name>NOTE  1</name>Note 1</note>
+               <note id="B" type="units">Units in mm</note>
+               <note id="C"><name>NOTE  2</name>Note 2</note>
+               <note id="D" type="units">Other units in sec</note>
+             </table>
+           </foreword>
+         </preface>
+       </iso-standard>
+    OUTPUT
+    html = <<~OUTPUT
+          #{HTML_HDR}
+            <br/>
+            <div>
+              <h1 class="ForewordTitle">Foreword</h1>
+              <p class="TableTitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of
+                 <i>husked</i>
+                 rice yield</p>
+              <div align="right">
+                <b>Units in mm</b>
+              </div>
+              <div align="right">
+                <b>Other units in sec</b>
+              </div>
+              <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
+                <thead>
+                  <tr>
+                    <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;" scope="col">Description</td>
+                    <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;" scope="col">Rice sample</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th style="font-weight:bold;text-align:left;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;" scope="row">Number of laboratories retained after eliminating outliers</th>
+                    <td style="text-align:center;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;">13</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;border-top:none;border-bottom:solid windowtext 1.5pt;">Mean value, g/100 g</td>
+                    <td style="text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;">81,2</td>
+                  </tr>
+                </tbody>
+                <dl>
+                  <dt>
+                    <p>Drago</p>
+                  </dt>
+                  <dd>A type of rice</dd>
+                </dl>
+                <div id="A" class="Note"><p><span class="note_label">NOTE  1</span>  </p>Note 1</div>
+                <div id="C" class="Note"><p><span class="note_label">NOTE  2</span>  </p>Note 2</div>
+              </table>
+            </div>
+            <p class="zzSTDTitle1"/>
+          </div>
+        </body>
+      </html>
+    OUTPUT
+    doc = <<~OUTPUT
+      <body lang="EN-US" link="blue" vlink="#954F72">
+        <div class="WordSection1">
+          <p> </p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection2">
+          <p>
+            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+          </p>
+          <div>
+            <h1 class="ForewordTitle">Foreword</h1>
+            <p class="Tabletitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of
+               <i>husked</i>
+               rice yield</p>
+            <div align="right">
+              <b>Units in mm</b>
+            </div>
+            <div align="right">
+              <b>Other units in sec</b>
+            </div>
+            <div align="center" class="table_container">
+              <table id="tableD-1" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
+                <thead>
+                  <tr>
+                    <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;">Description</td>
+                    <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;">Rice sample</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th align="left" style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;page-break-after:avoid;">Number of laboratories retained after eliminating outliers</th>
+                    <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext 1.0pt;page-break-after:avoid;">13</td>
+                  </tr>
+                  <tr>
+                    <td align="left" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">Mean value, g/100 g</td>
+                    <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">81,2</td>
+                  </tr>
+                </tbody>
+                <dl>
+                  <dt>
+                    <p align="left" style="margin-left:0pt;text-align:left;">Drago</p>
+                  </dt>
+                  <dd>A type of rice</dd>
+                </dl>
+                <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>
+                <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2</span><span style="mso-tab-count:1">  </span></p>Note 2</div>
+              </table>
+            </div>
+          </div>
+          <p> </p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection3">
+          <p class="zzSTDTitle1"/>
+        </div>
+        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+        <div class="colophon"/>
+      </body>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+      .convert("test", presxml, true))
+      .at("//body").to_xml)).to be_equivalent_to xmlpp(doc)
+  end
 end

@@ -190,6 +190,42 @@ module IsoDoc
         ret[:sdo] = std_docid_semantic(ret[:sdo])
         ret
       end
+
+      def table_parse(node, out)
+        @in_table = true
+        table_title_parse(node, out)
+        measurement_units(node, out)
+        out.table **table_attrs(node) do |t|
+          table_parse_core(node, t)
+          (dl = node.at(ns("./dl"))) && parse(dl, out)
+          node.xpath(ns("./note[not(@type = 'units')]"))
+            .each { |n| parse(n, out) }
+        end
+        @in_table = false
+      end
+
+      def figure_parse1(node, out)
+        measurement_units(node, out)
+        out.div **figure_attrs(node) do |div|
+          node.children.each do |n|
+            figure_key(out) if n.name == "dl"
+            next if n.name == "note" && n["type"] == "units"
+
+            parse(n, div) unless n.name == "name"
+          end
+          figure_name_parse(node, div, node.at(ns("./name")))
+        end
+      end
+
+      def measurement_units(node, out)
+        node.xpath(ns("./note[@type = 'units']")).each do |n|
+          out.div align: "right" do |p|
+            p.b do |b|
+              n.children.each { |e| parse(e, b) }
+            end
+          end
+        end
+      end
     end
   end
 end

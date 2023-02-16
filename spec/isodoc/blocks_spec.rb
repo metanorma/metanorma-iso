@@ -297,7 +297,7 @@ RSpec.describe IsoDoc do
           <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
           <preface><foreword displayorder="1">
           <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
-                         <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>EDITORIAL NOTE — 
+                         <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>EDITORIAL NOTE —
                  Only use paddy or parboiled rice for the
                  determination of husked rice yield.
                </p>
@@ -312,7 +312,7 @@ RSpec.describe IsoDoc do
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='zzHelp'>
-                 <p>EDITORIAL NOTE — 
+                 <p>EDITORIAL NOTE —
                     Only use paddy or parboiled rice for the
                    determination of husked rice yield.
                  </p>
@@ -680,6 +680,110 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
+  it "processes units statements in figures" do
+    input = <<~INPUT
+      <iso-standard xmlns='http://riboseinc.com/isoxml'>
+          <sections>
+            <clause id='widgets'>
+              <title>Widgets</title>
+                <figure id='N'>
+                  <name>Figure 1</name>
+                    <image src='rice_images/rice_image1.png' id='_8357ede4-6d44-4672-bac4-9a85e82ab7f0' mimetype='image/png'/>
+                    <note id="A">Note 1</note>
+                    <note id="B" type="units">Units in mm</note>
+                    <note id="C">Note 2</note>
+                    <note id="D" type="units">Other units in sec</note>
+                </figure>
+            </clause>
+          </sections>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <sections>
+          <clause id="widgets" displayorder="1">
+            <title depth="1">1<tab/>Widgets</title>
+            <figure id="N">
+              <name>Figure 1 — Figure 1</name>
+              <image src="rice_images/rice_image1.png" id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png"/>
+              <note id="A"><name>NOTE  1</name>Note 1</note>
+              <note id="B" type="units">Units in mm</note>
+              <note id="C"><name>NOTE  2</name>Note 2</note>
+              <note id="D" type="units">Other units in sec</note>
+            </figure>
+          </clause>
+        </sections>
+      </iso-standard>
+    OUTPUT
+    html = <<~OUTPUT
+          #{HTML_HDR}
+            <p class="zzSTDTitle1"/>
+            <div id="widgets">
+              <h1>1  Widgets</h1>
+              <div align="right">
+                <b>Units in mm</b>
+              </div>
+              <div align="right">
+                <b>Other units in sec</b>
+              </div>
+              <div id="N" class="figure">
+                <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+                <div id="A" class="Note"><p><span class="note_label">NOTE  1</span>  </p>Note 1</div>
+                <div id="C" class="Note"><p><span class="note_label">NOTE  2</span>  </p>Note 2</div>
+                <p class="FigureTitle" style="text-align:center;">Figure 1 — Figure 1</p>
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    OUTPUT
+    word = <<~OUTPUT
+      <body lang="EN-US" link="blue" vlink="#954F72">
+        <div class="WordSection1">
+          <p> </p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection2">
+          <p> </p>
+        </div>
+        <p>
+          <br clear="all" class="section"/>
+        </p>
+        <div class="WordSection3">
+          <p class="zzSTDTitle1"/>
+          <div id="widgets">
+            <h1>1<span style="mso-tab-count:1">  </span>Widgets</h1>
+            <div align="right">
+              <b>Units in mm</b>
+            </div>
+            <div align="right">
+              <b>Other units in sec</b>
+            </div>
+            <div id="N" class="figure">
+              <img src="rice_images/rice_image1.png"/>
+              <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>
+              <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2</span><span style="mso-tab-count:1">  </span></p>Note 2</div>
+              <p class="FigureTitle" style="text-align:center;">Figure 1 — Figure 1</p>
+            </div>
+          </div>
+        </div>
+        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+        <div class="colophon"/>
+      </body>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))
+      .to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)))
+      .to be_equivalent_to xmlpp(html)
+    output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
+    expect(xmlpp(Nokogiri::XML(output).at("//body").to_xml))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "processes formulae" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -853,7 +957,7 @@ RSpec.describe IsoDoc do
       </div>
     OUTPUT
     output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options).convert("test", input,
-                                                                 true)
+                                                                              true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
@@ -865,32 +969,32 @@ RSpec.describe IsoDoc do
 
   it "processes formulae with single definition list entry" do
     output = IsoDoc::Iso::HtmlConvert.new({})
-.convert("test", <<~"INPUT", true)
-                                                        <iso-standard xmlns="http://riboseinc.com/isoxml">
-                                                          <preface>
-                                                            <foreword>
-                                                              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
-                                                                <stem type="AsciiMath">r = 1 %</stem>
-                                                                <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
-                                                                  <dt>
-                                                                    <stem type="AsciiMath">r</stem>
-                                                                  </dt>
-                                                                  <dd>
-                                                                    <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
-                                                                  </dd>
-                                                                </dl>
-                                                                <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
-                                                                  <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot; prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is always expressed.</p>
-                                                                </note>
-                                                              </formula>
-                                                              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
-                                                                <name>1</name>
-                                                                <stem type="AsciiMath">r = 1 %</stem>
-                                                              </formula>
-                                                            </foreword>
-                                                          </preface>
-                                                        </iso-standard>
-                                                      INPUT
+      .convert("test", <<~"INPUT", true)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface>
+            <foreword>
+              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
+                <stem type="AsciiMath">r = 1 %</stem>
+                <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
+                  <dt>
+                    <stem type="AsciiMath">r</stem>
+                  </dt>
+                  <dd>
+                    <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
+                  </dd>
+                </dl>
+                <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
+                  <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot; prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is always expressed.</p>
+                </note>
+              </formula>
+              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
+                <name>1</name>
+                <stem type="AsciiMath">r = 1 %</stem>
+              </formula>
+            </foreword>
+          </preface>
+        </iso-standard>
+      INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{HTML_HDR}
               <br/>
@@ -958,57 +1062,57 @@ RSpec.describe IsoDoc do
       </foreword></preface>
       </iso-standard>
     INPUT
-        presxml = <<~INPUT
-               <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-         <preface>
-           <foreword displayorder='1'>
-             <ol type='alphabet'>
-               <li>
-                 <p>A</p>
-               </li>
-               <li>
-                 <p>B</p>
-               </li>
-               <li>
-                 <ol type='arabic'>
-                   <li>C</li>
-                   <li>D</li>
-                   <li>
-                     <ol type='roman'>
-                       <li>E</li>
-                       <li>F</li>
-                       <li>
-                         <ol type='alphabet_upper'>
-                           <li>G</li>
-                           <li>H</li>
-                           <li>
-                             <ol type='roman_upper'>
-                               <li>I</li>
-                               <li>J</li>
-                               <li>
-                                 <ol type='alphabet'>
-                                   <li>K</li>
-                                   <li>L</li>
-                                   <li>M</li>
-                                 </ol>
-                               </li>
-                               <li>N</li>
-                             </ol>
-                           </li>
-                           <li>O</li>
-                         </ol>
-                       </li>
-                       <li>P</li>
-                     </ol>
-                   </li>
-                   <li>Q</li>
-                 </ol>
-               </li>
-               <li>R</li>
-             </ol>
-           </foreword>
-         </preface>
-       </iso-standard>
+    presxml = <<~INPUT
+              <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+        <preface>
+          <foreword displayorder='1'>
+            <ol type='alphabet'>
+              <li>
+                <p>A</p>
+              </li>
+              <li>
+                <p>B</p>
+              </li>
+              <li>
+                <ol type='arabic'>
+                  <li>C</li>
+                  <li>D</li>
+                  <li>
+                    <ol type='roman'>
+                      <li>E</li>
+                      <li>F</li>
+                      <li>
+                        <ol type='alphabet_upper'>
+                          <li>G</li>
+                          <li>H</li>
+                          <li>
+                            <ol type='roman_upper'>
+                              <li>I</li>
+                              <li>J</li>
+                              <li>
+                                <ol type='alphabet'>
+                                  <li>K</li>
+                                  <li>L</li>
+                                  <li>M</li>
+                                </ol>
+                              </li>
+                              <li>N</li>
+                            </ol>
+                          </li>
+                          <li>O</li>
+                        </ol>
+                      </li>
+                      <li>P</li>
+                    </ol>
+                  </li>
+                  <li>Q</li>
+                </ol>
+              </li>
+              <li>R</li>
+            </ol>
+          </foreword>
+        </preface>
+      </iso-standard>
     INPUT
     html = <<~OUTPUT
       #{HTML_HDR}
@@ -1169,6 +1273,5 @@ RSpec.describe IsoDoc do
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
-
   end
 end
