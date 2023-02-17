@@ -10924,7 +10924,6 @@
 					<xsl:if test="@type = 'editorial'">
 						<xsl:attribute name="color">green</xsl:attribute>
 						<xsl:attribute name="font-weight">normal</xsl:attribute>
-
 						<!-- <xsl:variable name="note-style">
 							<style xsl:use-attribute-sets="note-style"></style>
 						</xsl:variable>
