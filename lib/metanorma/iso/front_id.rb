@@ -65,6 +65,7 @@ module Metanorma
         when "directive" then :dir
         when "technical-report" then :tr
         when "technical-specification" then :ts
+        when "publicly-available-specification" then :pas
         when "guide" then :guide
         end
       end
