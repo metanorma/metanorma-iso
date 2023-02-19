@@ -217,6 +217,9 @@
         <ref name="fullname"/>
       </optional>
       <zeroOrMore>
+        <ref name="credential"/>
+      </zeroOrMore>
+      <zeroOrMore>
         <ref name="affiliation"/>
       </zeroOrMore>
       <zeroOrMore>
@@ -230,6 +233,11 @@
   <define name="fullname">
     <element name="name">
       <ref name="FullNameType"/>
+    </element>
+  </define>
+  <define name="credential">
+    <element name="credential">
+      <text/>
     </element>
   </define>
   <define name="FullNameType">
@@ -305,7 +313,9 @@
       <zeroOrMore>
         <ref name="affiliationdescription"/>
       </zeroOrMore>
-      <ref name="organization"/>
+      <optional>
+        <ref name="organization"/>
+      </optional>
     </element>
   </define>
   <define name="affiliationname">

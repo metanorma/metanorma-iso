@@ -2158,4 +2158,25 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .not_to include "only terms clauses can cross-reference terms clause (c)"
   end
+
+  it "warns of explicit style set on ordered list" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      [arabic]
+      . A
+    INPUT
+    expect(File.read("test.err"))
+      .to include "Style override set for ordered list"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      . A
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "Style override set for ordered list"
+  end
 end

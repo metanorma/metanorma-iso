@@ -1578,6 +1578,9 @@
       <zeroOrMore>
         <ref name="indexsect"/>
       </zeroOrMore>
+      <optional>
+        <ref name="colophon"/>
+      </optional>
     </element>
   </define>
   <define name="misccontainer">
@@ -1597,6 +1600,13 @@
           <ref name="introduction"/>
           <ref name="acknowledgements"/>
         </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="colophon">
+    <element name="colophon">
+      <oneOrMore>
+        <ref name="content"/>
       </oneOrMore>
     </element>
   </define>

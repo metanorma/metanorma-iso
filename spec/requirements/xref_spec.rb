@@ -1,7 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Metanorma::Requirements::Iso::Modspec do
-=begin
   it "cross-references requirements" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -329,7 +328,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to xmlpp(output)
   end
-=end
+
   it "cross-references requirement parts" do
     input = <<~INPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml">
