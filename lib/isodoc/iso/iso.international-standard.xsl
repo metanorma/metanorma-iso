@@ -5363,7 +5363,7 @@
 
 				<xsl:variable name="key_iso">
 
-						<xsl:if test="$parent = 'figure' or $parent = 'formula'">true</xsl:if>
+						<xsl:if test="$parent = 'figure' or $parent = 'formula' or ../@key = 'true'">true</xsl:if>
 					 <!-- and  (not(../@class) or ../@class !='pseudocode') -->
 				</xsl:variable>
 
@@ -7967,24 +7967,47 @@
 
 			</xsl:when>
 			<xsl:otherwise>
-				<fo:block xsl:use-attribute-sets="image-style">
-					<fo:instream-foreign-object fox:alt-text="{$alt-text}">
-						<xsl:attribute name="width">100%</xsl:attribute>
-						<xsl:attribute name="content-height">100%</xsl:attribute>
-						<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
-						<xsl:variable name="svg_width" select="xalan:nodeset($svg_content)/*/@width"/>
-						<xsl:variable name="svg_height" select="xalan:nodeset($svg_content)/*/@height"/>
-						<!-- effective height 297 - 27.4 - 13 =  256.6 -->
-						<!-- effective width 210 - 12.5 - 25 = 172.5 -->
-						<!-- effective height / width = 1.48, 1.4 - with title -->
-						<xsl:if test="$svg_height &gt; ($svg_width * 1.4)"> <!-- for images with big height -->
-							<xsl:variable name="width" select="(($svg_width * 1.4) div $svg_height) * 100"/>
-							<xsl:attribute name="width"><xsl:value-of select="$width"/>%</xsl:attribute>
-						</xsl:if>
-						<xsl:attribute name="scaling">uniform</xsl:attribute>
-						<xsl:copy-of select="$svg_content"/>
-					</fo:instream-foreign-object>
-				</fo:block>
+
+				<xsl:variable name="element">
+					<xsl:choose>
+						<xsl:when test="ancestor::*[local-name() = 'tr'] and $isGenerateTableIF = 'true'">
+							<fo:inline xsl:use-attribute-sets="image-style" text-align="left"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<fo:block xsl:use-attribute-sets="image-style">
+								<xsl:if test="ancestor::*[local-name() = 'dt']">
+									<xsl:attribute name="text-align">left</xsl:attribute>
+								</xsl:if>
+							</fo:block>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+
+				<xsl:for-each select="xalan:nodeset($element)/*">
+					<xsl:copy>
+						<xsl:copy-of select="@*"/>
+					<!-- <fo:block xsl:use-attribute-sets="image-style"> -->
+						<fo:instream-foreign-object fox:alt-text="{$alt-text}">
+							<xsl:if test="$isGenerateTableIF = 'false'">
+								<xsl:attribute name="width">100%</xsl:attribute>
+							</xsl:if>
+							<xsl:attribute name="content-height">100%</xsl:attribute>
+							<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+							<xsl:variable name="svg_width" select="xalan:nodeset($svg_content)/*/@width"/>
+							<xsl:variable name="svg_height" select="xalan:nodeset($svg_content)/*/@height"/>
+							<!-- effective height 297 - 27.4 - 13 =  256.6 -->
+							<!-- effective width 210 - 12.5 - 25 = 172.5 -->
+							<!-- effective height / width = 1.48, 1.4 - with title -->
+							<xsl:if test="$svg_height &gt; ($svg_width * 1.4)"> <!-- for images with big height -->
+								<xsl:variable name="width" select="(($svg_width * 1.4) div $svg_height) * 100"/>
+								<xsl:attribute name="width"><xsl:value-of select="$width"/>%</xsl:attribute>
+							</xsl:if>
+							<xsl:attribute name="scaling">uniform</xsl:attribute>
+							<xsl:copy-of select="$svg_content"/>
+						</fo:instream-foreign-object>
+					<!-- </fo:block> -->
+					</xsl:copy>
+				</xsl:for-each>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -10924,7 +10947,6 @@
 					<xsl:if test="@type = 'editorial'">
 						<xsl:attribute name="color">green</xsl:attribute>
 						<xsl:attribute name="font-weight">normal</xsl:attribute>
-
 						<!-- <xsl:variable name="note-style">
 							<style xsl:use-attribute-sets="note-style"></style>
 						</xsl:variable>
