@@ -6490,18 +6490,20 @@
 
 	<xsl:template name="add-zero-spaces-java">
 		<xsl:param name="text" select="."/>
-		<!-- add zero-width space (#x200B) after characters: dash, dot, colon, equal, underscore, em dash, thin space, arrow right   -->
-		<xsl:variable name="text1" select="java:replaceAll(java:java.lang.String.new($text),'(-|\.|:|=|_|—| |→)','$1​')"/>
+		<!-- add zero-width space (#x200B) after characters: dash, dot, equal, underscore, em dash, thin space, arrow right   -->
+		<xsl:variable name="text1" select="java:replaceAll(java:java.lang.String.new($text),'(-|\.|=|_|—| |→)','$1​')"/>
+		<!-- add zero-width space (#x200B) after characters: colon, if there aren't digits after -->
+		<xsl:variable name="text2" select="java:replaceAll(java:java.lang.String.new($text1),'(:)(\D)','$1​$2')"/>
 		<!-- add zero-width space (#x200B) after characters: 'great than' -->
-		<xsl:variable name="text2" select="java:replaceAll(java:java.lang.String.new($text1), '(\u003e)(?!\u003e)', '$1​')"/><!-- negative lookahead: 'great than' not followed by 'great than' -->
+		<xsl:variable name="text3" select="java:replaceAll(java:java.lang.String.new($text2), '(\u003e)(?!\u003e)', '$1​')"/><!-- negative lookahead: 'great than' not followed by 'great than' -->
 		<!-- add zero-width space (#x200B) before characters: 'less than' -->
-		<xsl:variable name="text3" select="java:replaceAll(java:java.lang.String.new($text2), '(?&lt;!\u003c)(\u003c)', '​$1')"/> <!-- (?<!\u003c)(\u003c) --> <!-- negative lookbehind: 'less than' not preceeded by 'less than' -->
+		<xsl:variable name="text4" select="java:replaceAll(java:java.lang.String.new($text3), '(?&lt;!\u003c)(\u003c)', '​$1')"/> <!-- (?<!\u003c)(\u003c) --> <!-- negative lookbehind: 'less than' not preceeded by 'less than' -->
 		<!-- add zero-width space (#x200B) before character: { -->
-		<xsl:variable name="text4" select="java:replaceAll(java:java.lang.String.new($text3), '(?&lt;!\W)(\{)', '​$1')"/> <!-- negative lookbehind: '{' not preceeded by 'punctuation char' -->
+		<xsl:variable name="text5" select="java:replaceAll(java:java.lang.String.new($text4), '(?&lt;!\W)(\{)', '​$1')"/> <!-- negative lookbehind: '{' not preceeded by 'punctuation char' -->
 		<!-- add zero-width space (#x200B) after character: , -->
-		<xsl:variable name="text5" select="java:replaceAll(java:java.lang.String.new($text4), '(\,)(?!\d)', '$1​')"/> <!-- negative lookahead: ',' not followed by digit -->
+		<xsl:variable name="text6" select="java:replaceAll(java:java.lang.String.new($text5), '(\,)(?!\d)', '$1​')"/> <!-- negative lookahead: ',' not followed by digit -->
 
-		<xsl:value-of select="$text5"/>
+		<xsl:value-of select="$text6"/>
 	</xsl:template>
 
 	<xsl:template name="add-zero-spaces-link-java">
@@ -7549,7 +7551,7 @@
 					<xsl:attribute name="font-size">inherit</xsl:attribute>
 				</xsl:if>
 
-			<fo:block-container margin-left="0mm">
+			<fo:block-container margin-left="0mm" margin-right="0mm">
 
 						<fo:block>
 
@@ -7731,11 +7733,14 @@
 				<xsl:with-param name="isDeleted" select="$isDeleted"/>
 			</xsl:call-template>
 
+			<!-- Example: Dimensions in millimeters -->
+			<xsl:apply-templates select="*[local-name() = 'note'][@type = 'units']"/>
+
 			<fo:block xsl:use-attribute-sets="figure-style">
-				<xsl:apply-templates select="node()[not(local-name() = 'name')]"/>
+				<xsl:apply-templates select="node()[not(local-name() = 'name') and not(local-name() = 'note' and @type = 'units')]"/>
 			</fo:block>
 			<xsl:call-template name="fn_display_figure"/>
-			<xsl:for-each select="*[local-name() = 'note']">
+			<xsl:for-each select="*[local-name() = 'note'][not(@type = 'units')]">
 				<xsl:call-template name="note"/>
 			</xsl:for-each>
 
@@ -8121,6 +8126,13 @@
 			<xsl:call-template name="image_svg">
 				<xsl:with-param name="name" select="$name"/>
 			</xsl:call-template>
+		</xsl:for-each>
+	</xsl:template>
+
+	<!-- For the structures like: <dt><image src="" mimetype="image/svg+xml" height="" width=""><svg xmlns="http://www.w3.org/2000/svg" ... -->
+	<xsl:template match="*[local-name() != 'figure']/*[local-name() = 'image'][*[local-name() = 'svg']]" priority="3">
+		<xsl:for-each select="*[local-name() = 'svg']">
+			<xsl:call-template name="image_svg"/>
 		</xsl:for-each>
 	</xsl:template>
 
@@ -8594,6 +8606,12 @@
 
 	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'fn']" priority="2"/>
 	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'note']"/>
+
+	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'note'][@type = 'units'] |         *[local-name() = 'image']/*[local-name() = 'note'][@type = 'units']" priority="2">
+		<fo:block text-align="right" keep-with-next="always">
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
 
 	<!-- ====== -->
 	<!-- ====== -->
