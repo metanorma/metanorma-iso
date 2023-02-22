@@ -4103,7 +4103,7 @@
 		<xsl:variable name="isDeleted" select="@deleted"/>
 
 		<xsl:choose>
-			<xsl:when test="@width">
+			<xsl:when test="@width and @width != 'full-page-width' and @width != 'text-width'">
 
 				<!-- centered table when table name is centered (see table-name-style) -->
 
