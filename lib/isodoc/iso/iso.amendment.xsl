@@ -6247,48 +6247,53 @@
 			<xsl:if test="contains($isLast, 'false')">
 
 				<xsl:variable name="orientation" select="normalize-space(@orientation)"/>
-				<xsl:variable name="tree">
+				<xsl:variable name="tree_">
 					<xsl:for-each select="ancestor::*[ancestor::fo:flow]">
 						<element pos="{position()}">
 							<xsl:value-of select="name()"/>
 						</element>
 					</xsl:for-each>
 				</xsl:variable>
+				<xsl:variable name="tree" select="xalan:nodeset($tree_)"/>
 
-				<!-- close fo:page-sequence (closing preceding fo elements) -->
-				<xsl:for-each select="xalan:nodeset($tree)//element">
-					<xsl:sort data-type="number" order="descending" select="@pos"/>
-					<xsl:text disable-output-escaping="yes">&lt;/</xsl:text>
-						<xsl:value-of select="."/>
-					<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-				</xsl:for-each>
-				<xsl:text disable-output-escaping="yes">&lt;/fo:flow&gt;</xsl:text>
-				<xsl:text disable-output-escaping="yes">&lt;/fo:page-sequence&gt;</xsl:text>
-
-				<!-- <pagebreak/> -->
-				<!-- create a new fo:page-sequence (opening fo elements) -->
-
-				<xsl:text disable-output-escaping="yes">&lt;fo:page-sequence master-reference="document</xsl:text><xsl:if test="$orientation != ''">-<xsl:value-of select="$orientation"/></xsl:if><xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
-				<fo:static-content flow-name="xsl-footnote-separator">
-					<fo:block>
-						<fo:leader leader-pattern="rule" leader-length="30%"/>
-					</fo:block>
-				</fo:static-content>
-				<xsl:call-template name="insertHeaderFooter"/>
-				<xsl:text disable-output-escaping="yes">&lt;fo:flow flow-name="xsl-region-body"&gt;</xsl:text>
-
-				<xsl:for-each select="xalan:nodeset($tree)//element">
-					<xsl:text disable-output-escaping="yes">&lt;</xsl:text>
-						<xsl:value-of select="."/>
-						<xsl:for-each select="@*[local-name() != 'pos']">
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="local-name()"/>
-							<xsl:text>="</xsl:text>
-							<xsl:value-of select="."/>
-							<xsl:text>"</xsl:text>
+				<xsl:choose>
+					<xsl:when test="$table_if = 'true' and count($tree//element) = 1 and $tree//element = 'fo:block-container'"><!-- skip --></xsl:when>
+					<xsl:otherwise>
+						<!-- close fo:page-sequence (closing preceding fo elements) -->
+						<xsl:for-each select="$tree//element">
+							<xsl:sort data-type="number" order="descending" select="@pos"/>
+							<xsl:text disable-output-escaping="yes">&lt;/</xsl:text>
+								<xsl:value-of select="."/>
+							<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 						</xsl:for-each>
-					<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-				</xsl:for-each>
+						<xsl:text disable-output-escaping="yes">&lt;/fo:flow&gt;</xsl:text>
+						<xsl:text disable-output-escaping="yes">&lt;/fo:page-sequence&gt;</xsl:text>
+
+						<!-- <pagebreak/> -->
+						<!-- create a new fo:page-sequence (opening fo elements) -->
+						<xsl:text disable-output-escaping="yes">&lt;fo:page-sequence master-reference="document</xsl:text><xsl:if test="$orientation != ''">-<xsl:value-of select="$orientation"/></xsl:if><xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
+						<fo:static-content flow-name="xsl-footnote-separator">
+							<fo:block>
+								<fo:leader leader-pattern="rule" leader-length="30%"/>
+							</fo:block>
+						</fo:static-content>
+						<xsl:call-template name="insertHeaderFooter"/>
+						<xsl:text disable-output-escaping="yes">&lt;fo:flow flow-name="xsl-region-body"&gt;</xsl:text>
+
+						<xsl:for-each select="$tree//element">
+							<xsl:text disable-output-escaping="yes">&lt;</xsl:text>
+								<xsl:value-of select="."/>
+								<xsl:for-each select="@*[local-name() != 'pos']">
+									<xsl:text> </xsl:text>
+									<xsl:value-of select="local-name()"/>
+									<xsl:text>="</xsl:text>
+									<xsl:value-of select="."/>
+									<xsl:text>"</xsl:text>
+								</xsl:for-each>
+							<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+						</xsl:for-each>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:if>
 		</xsl:template>
 		<!-- ================================================================ -->
@@ -8274,6 +8279,8 @@
 		<xsl:value-of select="."/>
 	</xsl:template>
 
+	<xsl:template match="*[local-name() = 'add'][starts-with(., $ace_tag)]/text()" mode="bookmarks" priority="3"/>
+
 	<xsl:template match="node()" mode="contents">
 		<xsl:apply-templates mode="contents"/>
 	</xsl:template>
@@ -8581,7 +8588,15 @@
 							<xsl:value-of select="@section"/>
 							<xsl:text> </xsl:text>
 						</xsl:if>
-						<xsl:value-of select="normalize-space(title)"/>
+						<xsl:variable name="title">
+							<xsl:for-each select="title/node()">
+								<xsl:choose>
+									<xsl:when test="local-name() = 'add' and starts-with(., $ace_tag)"><!-- skip --></xsl:when>
+									<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+								</xsl:choose>
+							</xsl:for-each>
+						</xsl:variable>
+						<xsl:value-of select="normalize-space($title)"/>
 					</fo:bookmark-title>
 					<xsl:apply-templates mode="bookmark"/>
 				</fo:bookmark>
@@ -8760,6 +8775,10 @@
 		<xsl:for-each select="xalan:nodeset($text)/text/text()">
 			<xsl:call-template name="keep_together_standard_number"/>
 		</xsl:for-each>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'add'][starts-with(., $ace_tag)]/text()" mode="contents_item" priority="2">
+		<xsl:value-of select="."/>
 	</xsl:template>
 
 	<!-- Note: to enable the addition of character span markup with semantic styling for DIS Word output -->
