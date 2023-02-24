@@ -4447,6 +4447,7 @@
 			This makes columns with large differences between minimum and maximum widths wider than columns with smaller differences. -->
 			<xsl:when test="(@width_max &gt; $page_width and @width_min &lt; $page_width) or (@width_min &gt;= $page_width)">
 				<!-- difference between the available space and the minimum table width -->
+				<_width_min><xsl:value-of select="@width_min"/></_width_min>
 				<xsl:variable name="W" select="$page_width - @width_min"/>
 				<W><xsl:value-of select="$W"/></W>
 				<!-- difference between maximum and minimum width of the table -->
@@ -6235,7 +6236,7 @@
 			</xsl:copy>
 		</xsl:template>
 
-		<xsl:template match="*[local-name() = 'pagebreak']" mode="landscape_portrait">
+		<xsl:template match="*[local-name() = 'pagebreak'][not(following-sibling::*[1][local-name() = 'pagebreak'])]" mode="landscape_portrait">
 
 			<!-- determine pagebreak is last element before </fo:flow> or not -->
 			<xsl:variable name="isLast">
@@ -6247,6 +6248,7 @@
 			<xsl:if test="contains($isLast, 'false')">
 
 				<xsl:variable name="orientation" select="normalize-space(@orientation)"/>
+
 				<xsl:variable name="tree_">
 					<xsl:for-each select="ancestor::*[ancestor::fo:flow]">
 						<element pos="{position()}">
@@ -6256,44 +6258,40 @@
 				</xsl:variable>
 				<xsl:variable name="tree" select="xalan:nodeset($tree_)"/>
 
-				<xsl:choose>
-					<xsl:when test="$table_if = 'true' and count($tree//element) = 1 and $tree//element = 'fo:block-container'"><!-- skip --></xsl:when>
-					<xsl:otherwise>
-						<!-- close fo:page-sequence (closing preceding fo elements) -->
-						<xsl:for-each select="$tree//element">
-							<xsl:sort data-type="number" order="descending" select="@pos"/>
-							<xsl:text disable-output-escaping="yes">&lt;/</xsl:text>
-								<xsl:value-of select="."/>
-							<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-						</xsl:for-each>
-						<xsl:text disable-output-escaping="yes">&lt;/fo:flow&gt;</xsl:text>
-						<xsl:text disable-output-escaping="yes">&lt;/fo:page-sequence&gt;</xsl:text>
+				<!-- close fo:page-sequence (closing preceding fo elements) -->
+				<xsl:for-each select="$tree//element">
+					<xsl:sort data-type="number" order="descending" select="@pos"/>
+					<xsl:text disable-output-escaping="yes">&lt;/</xsl:text>
+						<xsl:value-of select="."/>
+					<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+				</xsl:for-each>
+				<xsl:text disable-output-escaping="yes">&lt;/fo:flow&gt;</xsl:text>
+				<xsl:text disable-output-escaping="yes">&lt;/fo:page-sequence&gt;</xsl:text>
 
-						<!-- <pagebreak/> -->
-						<!-- create a new fo:page-sequence (opening fo elements) -->
-						<xsl:text disable-output-escaping="yes">&lt;fo:page-sequence master-reference="document</xsl:text><xsl:if test="$orientation != ''">-<xsl:value-of select="$orientation"/></xsl:if><xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
-						<fo:static-content flow-name="xsl-footnote-separator">
-							<fo:block>
-								<fo:leader leader-pattern="rule" leader-length="30%"/>
-							</fo:block>
-						</fo:static-content>
-						<xsl:call-template name="insertHeaderFooter"/>
-						<xsl:text disable-output-escaping="yes">&lt;fo:flow flow-name="xsl-region-body"&gt;</xsl:text>
+				<!-- <pagebreak/> -->
+				<!-- create a new fo:page-sequence (opening fo elements) -->
+				<xsl:text disable-output-escaping="yes">&lt;fo:page-sequence master-reference="document</xsl:text><xsl:if test="$orientation != ''">-<xsl:value-of select="$orientation"/></xsl:if><xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
+				<fo:static-content flow-name="xsl-footnote-separator">
+					<fo:block>
+						<fo:leader leader-pattern="rule" leader-length="30%"/>
+					</fo:block>
+				</fo:static-content>
+				<xsl:call-template name="insertHeaderFooter"/>
+				<xsl:text disable-output-escaping="yes">&lt;fo:flow flow-name="xsl-region-body"&gt;</xsl:text>
 
-						<xsl:for-each select="$tree//element">
-							<xsl:text disable-output-escaping="yes">&lt;</xsl:text>
-								<xsl:value-of select="."/>
-								<xsl:for-each select="@*[local-name() != 'pos']">
-									<xsl:text> </xsl:text>
-									<xsl:value-of select="local-name()"/>
-									<xsl:text>="</xsl:text>
-									<xsl:value-of select="."/>
-									<xsl:text>"</xsl:text>
-								</xsl:for-each>
-							<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+				<xsl:for-each select="$tree//element">
+					<xsl:text disable-output-escaping="yes">&lt;</xsl:text>
+						<xsl:value-of select="."/>
+						<xsl:for-each select="@*[local-name() != 'pos']">
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="local-name()"/>
+							<xsl:text>="</xsl:text>
+							<xsl:value-of select="."/>
+							<xsl:text>"</xsl:text>
 						</xsl:for-each>
-					</xsl:otherwise>
-				</xsl:choose>
+					<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+				</xsl:for-each>
+
 			</xsl:if>
 		</xsl:template>
 		<!-- ================================================================ -->
@@ -6656,7 +6654,7 @@
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="*[local-name()='th' or local-name() = 'td'][not(*[local-name()='br']) and not(*[local-name()='p']) and not(*[local-name()='sourcecode'])]" mode="table-without-br">
+	<xsl:template match="*[local-name()='th' or local-name() = 'td'][not(*[local-name()='br']) and not(*[local-name()='p']) and not(*[local-name()='sourcecode']) and not(*[local-name()='ul']) and not(*[local-name()='ol'])]" mode="table-without-br">
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
 			<p>
@@ -6730,6 +6728,14 @@
 	<xsl:template match="text()[not(ancestor::*[local-name() = 'sourcecode'])]" mode="table-without-br">
 		<xsl:variable name="text" select="translate(.,'&#9;&#10;&#13;','')"/>
 		<xsl:value-of select="java:replaceAll(java:java.lang.String.new($text),' {2,}',' ')"/>
+	</xsl:template>
+
+	<xsl:template match="*[local-name()='th' or local-name()='td']//*[local-name() = 'ol' or local-name() = 'ul']" mode="table-without-br">
+		<xsl:apply-templates mode="table-without-br"/>
+	</xsl:template>
+
+	<xsl:template match="*[local-name()='th' or local-name()='td']//*[local-name() = 'li']" mode="table-without-br">
+		<xsl:apply-templates mode="table-without-br"/>
 	</xsl:template>
 
 	<!-- mode="table-without-br" -->
