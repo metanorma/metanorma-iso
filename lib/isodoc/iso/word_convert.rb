@@ -10,11 +10,11 @@ module IsoDoc
       def initialize(options)
         @libdir = File.dirname(__FILE__)
         super
-        @wordToClevels = options[:doctoclevels].to_i
-        @wordToClevels = 3 if @wordToClevels.zero?
-        @htmlToClevels = options[:htmltoclevels].to_i
-        @htmlToClevels = 3 if @htmlToClevels.zero?
         init_dis(options)
+      end
+
+      def toc_default
+        { word_levels: 3, html_levels: 3 }
       end
 
       def init_dis(opt)
