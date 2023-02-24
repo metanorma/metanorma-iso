@@ -65,11 +65,16 @@ module IsoDoc
 
       def figure_anchor(elem, sublabel, label, klass)
         @anchors[elem["id"]] = anchor_struct(
-          (sublabel ? "#{label} #{sublabel}" : label),
+          "#{label}#{sublabel}",
           nil, @labels[klass] || klass.capitalize, klass, elem["unnumbered"]
         )
-        sublabel && elem["unnumbered"] != "true" and
+        !sublabel.empty? && elem["unnumbered"] != "true" and
           @anchors[elem["id"]][:label] = sublabel
+      end
+
+      def subfigure_label(subfignum)
+        subfignum.zero? and return ""
+        " #{(subfignum + 96).chr})"
       end
 
       def sequential_figure_names(clause)
@@ -77,7 +82,7 @@ module IsoDoc
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank
           .each_with_object(IsoDoc::XrefGen::Counter.new) do |t, c|
           j = subfigure_increment(j, c, t)
-          sublabel = j.zero? ? nil : "#{(j + 96).chr})"
+          sublabel = subfigure_label(j)
           figure_anchor(t, sublabel, c.print, "figure")
         end
         sequential_figure_class_names(clause)
@@ -101,7 +106,7 @@ module IsoDoc
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
           j = subfigure_increment(j, c, t)
           label = "#{num}#{hiersep}#{c.print}"
-          sublabel = j.zero? ? nil : "#{(j + 96).chr})"
+          sublabel = subfigure_label(j)
           figure_anchor(t, sublabel, label, "figure")
         end
         hierarchical_figure_class_names(clause, num)
