@@ -202,12 +202,15 @@ module IsoDoc
         modspec_table_xrefs(clause) if @anchors_previous
       end
 
-      def note_anchor_names1(notes, counter)
-        notes.each do |n|
-          next if @anchors[n["id"]] || blank?(n["id"]) || n["type"] == "units"
+      def uncountable_note?(note)
+        @anchors[note["id"]] || blank?(note["id"]) || note["type"] == "units"
+      end
 
+      def note_anchor_names1(notes, counter)
+        countable = notes.reject { |n| uncountable_note?(n) }
+        countable.each do |n|
           @anchors[n["id"]] =
-            anchor_struct(increment_label(notes, n, counter), n,
+            anchor_struct(increment_label(countable, n, counter), n,
                           @labels["note_xref"], "note", false)
         end
       end

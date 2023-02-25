@@ -153,6 +153,127 @@ RSpec.describe IsoDoc do
       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
+  it "cross-references notes, skipping units notes" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <p>
+              <xref target="note1"/>
+              <xref target="note2"/>
+            </p>
+          </foreword>
+        </preface>
+        <sections>
+          <clause id="widgets">
+            <title>Widgets</title>
+            <clause id="widgets1">
+              <note id="note1" type="units">
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+              <note id="note2">
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+            </clause>
+          </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+           <foreword displayorder="1">
+             <p>
+               <xref target="note1">[note1]</xref>
+               <xref target="note2">1.1, Note</xref>
+             </p>
+           </foreword>
+         </preface>
+         <sections>
+           <clause id="widgets" displayorder="2">
+             <title depth="1">1<tab/>Widgets</title>
+             <clause id="widgets1" inline-header="true">
+               <title>1.1</title>
+               <note id="note1" type="units">
+                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+               </note>
+               <note id="note2">
+                 <name>NOTE</name>
+                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+               </note>
+             </clause>
+           </clause>
+         </sections>
+       </iso-standard>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+        .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <p>
+              <xref target="note1"/>
+              <xref target="note2"/>
+              <xref target="note3"/>
+            </p>
+          </foreword>
+        </preface>
+        <sections>
+          <clause id="widgets">
+            <title>Widgets</title>
+            <clause id="widgets1">
+              <note id="note1" type="units">
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+              <note id="note2">
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+              <note id="note3">
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83b">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+            </clause>
+          </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+           <foreword displayorder="1">
+             <p>
+               <xref target="note1">[note1]</xref>
+               <xref target="note2">1.1, Note  1</xref>
+               <xref target="note3">1.1, Note  2</xref>
+             </p>
+           </foreword>
+         </preface>
+         <sections>
+           <clause id="widgets" displayorder="2">
+             <title depth="1">1<tab/>Widgets</title>
+             <clause id="widgets1" inline-header="true">
+               <title>1.1</title>
+               <note id="note1" type="units">
+                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+               </note>
+               <note id="note2">
+                 <name>NOTE  1</name>
+                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+               </note>
+               <note id="note3">
+                 <name>NOTE  2</name>
+                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83b">These results are based on a study carried out on three different types of kernel.</p>
+               </note>
+             </clause>
+           </clause>
+         </sections>
+       </iso-standard>
+    OUTPUT
+    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+        .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+  end
+
   it "cross-references figures" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
