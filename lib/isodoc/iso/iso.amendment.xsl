@@ -6493,20 +6493,23 @@
 
 	<xsl:template name="add-zero-spaces-java">
 		<xsl:param name="text" select="."/>
-		<!-- add zero-width space (#x200B) after characters: dash, dot, equal, underscore, em dash, thin space, arrow right   -->
-		<xsl:variable name="text1" select="java:replaceAll(java:java.lang.String.new($text),'(-|\.|=|_|—| |→)','$1​')"/>
-		<!-- add zero-width space (#x200B) after characters: colon, if there aren't digits after -->
-		<xsl:variable name="text2" select="java:replaceAll(java:java.lang.String.new($text1),'(:)(\D)','$1​$2')"/>
-		<!-- add zero-width space (#x200B) after characters: 'great than' -->
-		<xsl:variable name="text3" select="java:replaceAll(java:java.lang.String.new($text2), '(\u003e)(?!\u003e)', '$1​')"/><!-- negative lookahead: 'great than' not followed by 'great than' -->
-		<!-- add zero-width space (#x200B) before characters: 'less than' -->
-		<xsl:variable name="text4" select="java:replaceAll(java:java.lang.String.new($text3), '(?&lt;!\u003c)(\u003c)', '​$1')"/> <!-- (?<!\u003c)(\u003c) --> <!-- negative lookbehind: 'less than' not preceeded by 'less than' -->
-		<!-- add zero-width space (#x200B) before character: { -->
-		<xsl:variable name="text5" select="java:replaceAll(java:java.lang.String.new($text4), '(?&lt;!\W)(\{)', '​$1')"/> <!-- negative lookbehind: '{' not preceeded by 'punctuation char' -->
-		<!-- add zero-width space (#x200B) after character: , -->
-		<xsl:variable name="text6" select="java:replaceAll(java:java.lang.String.new($text5), '(\,)(?!\d)', '$1​')"/> <!-- negative lookahead: ',' not followed by digit -->
 
-		<xsl:value-of select="$text6"/>
+		<!-- add zero-width space (#x200B) after dot with next non-digit -->
+		<xsl:variable name="text1" select="java:replaceAll(java:java.lang.String.new($text),'(\.)([^\d\s])','$1​$2')"/>
+		<!-- add zero-width space (#x200B) after characters: dash, equal, underscore, em dash, thin space, arrow right   -->
+		<xsl:variable name="text2" select="java:replaceAll(java:java.lang.String.new($text1),'(-|=|_|—| |→)','$1​')"/>
+		<!-- add zero-width space (#x200B) after characters: colon, if there aren't digits after -->
+		<xsl:variable name="text3" select="java:replaceAll(java:java.lang.String.new($text2),'(:)(\D)','$1​$2')"/>
+		<!-- add zero-width space (#x200B) after characters: 'great than' -->
+		<xsl:variable name="text4" select="java:replaceAll(java:java.lang.String.new($text3), '(\u003e)(?!\u003e)', '$1​')"/><!-- negative lookahead: 'great than' not followed by 'great than' -->
+		<!-- add zero-width space (#x200B) before characters: 'less than' -->
+		<xsl:variable name="text5" select="java:replaceAll(java:java.lang.String.new($text4), '(?&lt;!\u003c)(\u003c)', '​$1')"/> <!-- (?<!\u003c)(\u003c) --> <!-- negative lookbehind: 'less than' not preceeded by 'less than' -->
+		<!-- add zero-width space (#x200B) before character: { -->
+		<xsl:variable name="text6" select="java:replaceAll(java:java.lang.String.new($text5), '(?&lt;!\W)(\{)', '​$1')"/> <!-- negative lookbehind: '{' not preceeded by 'punctuation char' -->
+		<!-- add zero-width space (#x200B) after character: , -->
+		<xsl:variable name="text7" select="java:replaceAll(java:java.lang.String.new($text6), '(\,)(?!\d)', '$1​')"/> <!-- negative lookahead: ',' not followed by digit -->
+
+		<xsl:value-of select="$text7"/>
 	</xsl:template>
 
 	<xsl:template name="add-zero-spaces-link-java">
