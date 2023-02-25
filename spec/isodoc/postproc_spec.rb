@@ -283,7 +283,21 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS_WORDINTRO.dup)
       .convert("test", <<~"INPUT", false)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
+<iso-standard xmlns="http://riboseinc.com/isoxml">
+  <metanorma-extension>
+    <presentation-metadata>
+      <name>TOC Heading Levels</name>
+      <value>3</value>
+    </presentation-metadata>
+    <presentation-metadata>
+      <name>HTML TOC Heading Levels</name>
+      <value>2</value>
+    </presentation-metadata>
+    <presentation-metadata>
+      <name>DOC TOC Heading Levels</name>
+      <value>3</value>
+    </presentation-metadata>
+  </metanorma-extension>
           <sections>
             <clause id="A" inline-header="false" obligation="normative">
               <title>1
