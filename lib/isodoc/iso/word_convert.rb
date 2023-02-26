@@ -13,10 +13,6 @@ module IsoDoc
         init_dis(options)
       end
 
-      def toc_default
-        { word_levels: 3, html_levels: 3 }
-      end
-
       def init_dis(opt)
         @wordtemplate = opt[:isowordtemplate]
         opt[:isowordbgstripcolor] ||= "true"

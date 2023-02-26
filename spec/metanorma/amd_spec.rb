@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::ISO do
   it "processes amendment sections" do
-    input = <<~INPUT
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{AMD_BLANK_HDR}
       == Foreword
 
@@ -128,7 +128,8 @@ RSpec.describe Metanorma::ISO do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+    xml = Nokogiri::XML(input)
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -281,7 +282,10 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -353,7 +357,10 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -425,7 +432,10 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -496,7 +506,10 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -568,7 +581,10 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -640,7 +656,10 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -711,7 +730,10 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(input.sub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 end

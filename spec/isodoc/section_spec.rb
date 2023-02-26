@@ -638,10 +638,12 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true)
-      .gsub(%r{<localized-strings>.*</localized-strings>}m, "")
-      .gsub(%r{<boilerplate>.*</boilerplate>}m, "")))
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))
+    xml.at("//xmlns:localized-strings")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    xml.at("//xmlns:metanorma-extension")&.remove
+    expect(xml.to_xml)
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)

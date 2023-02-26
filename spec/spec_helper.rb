@@ -221,6 +221,20 @@ BLANK_HDR1 = <<~"HDR".freeze
         <stagename>International Standard</stagename>
       </ext>
     </bibdata>
+        <metanorma-extension>
+    <presentation-metadata>
+      <name>TOC Heading Levels</name>
+      <value>3</value>
+    </presentation-metadata>
+    <presentation-metadata>
+      <name>HTML TOC Heading Levels</name>
+      <value>2</value>
+    </presentation-metadata>
+    <presentation-metadata>
+      <name>DOC TOC Heading Levels</name>
+      <value>3</value>
+    </presentation-metadata>
+  </metanorma-extension>
 HDR
 
 BLANK_HDR = <<~"HDR".freeze

@@ -56,6 +56,10 @@ module Metanorma
         @vocab = node.attr("docsubtype") == "vocabulary"
       end
 
+      def toc_default
+        { word_levels: 3, html_levels: 2 }
+      end
+
       def ol_attrs(node)
         attr_code(keep_attrs(node)
                   .merge(id: ::Metanorma::Utils::anchor_or_uuid(node),

@@ -90,10 +90,12 @@ RSpec.describe Metanorma::Standoc do
                   <title>Clause 1</title>
                 </clause>
               </sections>
-      </standard-document>
+      </standard-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor
-      .convert(input, backend: :standoc, header_footer: true))))
+    xml = Nokogiri::XML(Asciidoctor
+      .convert(input, backend: :standoc, header_footer: true))
+    xml.at("//xmlns:metanorma-extension")&.remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
 end
