@@ -8,11 +8,13 @@ module Metanorma
                               "//clause[@type = 'scope']//fn".freeze
 
       NORMREF_FOOTNOTES =
-        "//references[@normative = 'true']//fn".freeze
+        "//references[@normative = 'true']//fn | " \
+        "//clause[.//references[@normative = 'true']]//fn".freeze
 
       POST_NORMREF_FOOTNOTES =
         "//sections//clause[not(@type = 'scope')]//fn | " \
-        "//annex//fn | //references[@normative = 'false']//fn".freeze
+        "//annex//fn | //references[@normative = 'false']//fn | " \
+        "//clause[.//references[@normative = 'false']]//fn".freeze
 
       def other_footnote_renumber(xmldoc)
         seen = {}
@@ -27,8 +29,7 @@ module Metanorma
 
       def id_prefix(prefix, id)
         # we're just inheriting the prefixes from parent doc
-        return id.text if @amd
-
+        @amd and return id.text
         prefix.join("/") + (id.text.match?(%{^/}) ? "" : " ") + id.text
       end
 
@@ -105,8 +106,7 @@ module Metanorma
 
       def sections_cleanup(xml)
         super
-        return unless @amd
-
+        @amd or return
         xml.xpath("//*[@inline-header]").each { |h| h.delete("inline-header") }
       end
 
@@ -153,8 +153,7 @@ module Metanorma
       def withdrawn_note(xmldoc)
         xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
           .each do |b|
-            next unless withdrawn_ref?(b)
-
+            withdrawn_ref?(b) or next
             if id = replacement_standard(b)
               insert_unpub_note(b, @i18n.cancelled_and_replaced.sub(/%/, id))
             else insert_unpub_note(b, @i18n.withdrawn)
@@ -163,8 +162,7 @@ module Metanorma
       end
 
       def withdrawn_ref?(biblio)
-        return false if pub_class(biblio) > 2
-
+        pub_class(biblio) > 2 and return false
         (s = biblio.at("./status/stage")) && (s.text.to_i == 95) &&
           (t = biblio.at("./status/substage")) && (t.text.to_i == 99)
       end

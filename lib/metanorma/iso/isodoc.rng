@@ -1908,7 +1908,10 @@
       </zeroOrMore>
       <choice>
         <oneOrMore>
-          <ref name="term"/>
+          <choice>
+            <ref name="term"/>
+            <ref name="terms"/>
+          </choice>
         </oneOrMore>
         <group>
           <zeroOrMore>
