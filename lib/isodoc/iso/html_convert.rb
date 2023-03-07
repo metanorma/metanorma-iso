@@ -61,6 +61,7 @@ module IsoDoc
         content = header.at("./following-sibling::p" \
                             "[@class = 'variant-title-toc']") || header
         if level == "h1" &&
+            !%w(sections preface).include?(header.parent.name) &&
             header.parent.at(".//h2#{toc_exclude_class}")
           <<~HDR
             <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(content)}</a>
@@ -83,9 +84,9 @@ module IsoDoc
       def middle(isoxml, out)
         middle_title(isoxml, out)
         middle_admonitions(isoxml, out)
-        i = scope isoxml, out, 0
-        i = norm_ref isoxml, out, i
-        clause_etc isoxml, out, i
+        scope isoxml, out, 0
+        norm_ref isoxml, out, 0
+        clause_etc isoxml, out, 0
         annex isoxml, out
         bibliography isoxml, out
         indexsect isoxml, out
