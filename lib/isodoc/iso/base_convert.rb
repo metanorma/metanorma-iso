@@ -168,7 +168,7 @@ module IsoDoc
           class: clause.name == "definitions" ? "Symbols" : nil,
         ) do |div|
           num = num + 1
-          clause_name(num, clause&.at(ns("./title")), div, nil)
+          clause_name(clause, clause&.at(ns("./title")), div, nil)
           clause.elements.each do |e|
             parse(e, div) unless %w{title source}.include? e.name
           end
