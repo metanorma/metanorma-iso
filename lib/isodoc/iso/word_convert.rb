@@ -104,7 +104,7 @@ module IsoDoc
       def indexsect_title(clause, out)
         br(out, "always")
         out.div class: "WordSection3" do |div|
-          clause_name(nil, clause.at(ns("./title")), div, nil)
+          clause_name(clause, clause.at(ns("./title")), div, nil)
         end
       end
 
