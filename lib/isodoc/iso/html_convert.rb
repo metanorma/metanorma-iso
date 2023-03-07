@@ -61,7 +61,7 @@ module IsoDoc
         content = header.at("./following-sibling::p" \
                             "[@class = 'variant-title-toc']") || header
         if level == "h1" &&
-            !%w(sections preface).include?(header.parent.name) &&
+            header.parent.name != "main" &&
             header.parent.at(".//h2#{toc_exclude_class}")
           <<~HDR
             <li class="#{level}"><div class="collapse-group"><a href="##{header['id']}">#{header_strip(content)}</a>
