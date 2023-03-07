@@ -2887,11 +2887,11 @@
 
 	<xsl:attribute-set name="table-header-cell-style">
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
-		<xsl:attribute name="border">solid black 1pt</xsl:attribute>
 		<xsl:attribute name="padding-left">1mm</xsl:attribute>
 		<xsl:attribute name="padding-right">1mm</xsl:attribute>
 		<xsl:attribute name="display-align">center</xsl:attribute>
 
+			<xsl:attribute name="border">solid black 1pt</xsl:attribute>
 			<xsl:attribute name="padding-top">0.5mm</xsl:attribute>
 			<xsl:attribute name="border-left"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 			<xsl:attribute name="border-right"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
@@ -2900,7 +2900,6 @@
 
 	<xsl:attribute-set name="table-cell-style">
 		<xsl:attribute name="display-align">center</xsl:attribute>
-		<xsl:attribute name="border">solid black 1pt</xsl:attribute>
 		<xsl:attribute name="padding-left">1mm</xsl:attribute>
 		<xsl:attribute name="padding-right">1mm</xsl:attribute>
 
@@ -4625,6 +4624,10 @@
 				</xsl:choose>
 			</xsl:variable>
 
+			<xsl:variable name="table_fn_block">
+				<xsl:call-template name="table_fn_display"/>
+			</xsl:variable>
+
 			<xsl:variable name="tableWithNotesAndFootnotes">
 
 				<fo:table keep-with-previous="always">
@@ -4672,11 +4675,25 @@
 
 										<xsl:apply-templates select="../*[local-name()='note']"/>
 
+								<xsl:variable name="isDisplayRowSeparator">
+
+								</xsl:variable>
+
 								<!-- horizontal row separator -->
+								<xsl:if test="normalize-space($isDisplayRowSeparator) = 'true'">
+									<xsl:if test="../*[local-name()='note'] and normalize-space($table_fn_block) != ''">
+										<fo:block-container border-top="0.5pt solid black" padding-left="1mm" padding-right="1mm">
+
+											<xsl:call-template name="setBordersTableArray"/>
+											<fo:block font-size="1pt"> </fo:block>
+										</fo:block-container>
+									</xsl:if>
+								</xsl:if>
 
 								<!-- fn processing -->
 
-										<xsl:call-template name="table_fn_display"/>
+										<!-- <xsl:call-template name="table_fn_display" /> -->
+										<xsl:copy-of select="$table_fn_block"/>
 
 								<!-- for PAS display Notes after footnotes -->
 
@@ -4846,6 +4863,28 @@
 
 			<xsl:apply-templates/>
 		</fo:table-row>
+	</xsl:template>
+
+	<xsl:template name="setBorderUnderRow">
+		<xsl:variable name="border_under_row_" select="normalize-space(ancestor::*[local-name() = 'table'][1]/@border-under-row)"/>
+		<xsl:choose>
+			<xsl:when test="$border_under_row_ != ''">
+				<xsl:variable name="table_id" select="ancestor::*[local-name() = 'table'][1]/@id"/>
+				<xsl:variable name="row_num_"><xsl:number level="any" count="*[local-name() = 'table'][@id = $table_id]//*[local-name() = 'tr']"/></xsl:variable>
+				<xsl:variable name="row_num" select="number($row_num_) - 1"/> <!-- because values in border-under-row start with 0 -->
+				<xsl:variable name="border_under_row">
+					<xsl:call-template name="split">
+						<xsl:with-param name="pText" select="$border_under_row_"/>
+					</xsl:call-template>
+				</xsl:variable>
+				<xsl:if test="xalan:nodeset($border_under_row)/item[. = normalize-space($row_num)]">
+					<xsl:attribute name="border-bottom"><xsl:value-of select="$table-border"/></xsl:attribute>
+				</xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:attribute name="border-bottom"><xsl:value-of select="$table-border"/></xsl:attribute>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<!-- row in table footer (tfoot) -->
@@ -5198,8 +5237,16 @@
 	<!-- figure's footnotes rendering -->
 	<xsl:template name="fn_display_figure">
 
+		<!-- current figure id -->
+		<xsl:variable name="figure_id_">
+			<xsl:value-of select="@id"/>
+			<xsl:if test="not(@id)"><xsl:value-of select="generate-id()"/></xsl:if>
+		</xsl:variable>
+		<xsl:variable name="figure_id" select="normalize-space($figure_id_)"/>
+
+		<!-- all footnotes relates to the current figure -->
 		<xsl:variable name="references">
-			<xsl:for-each select=".//*[local-name()='fn'][not(parent::*[local-name()='name'])]">
+			<xsl:for-each select=".//*[local-name()='fn'][not(parent::*[local-name()='name'])][ancestor::*[local-name() = 'figure'][1][@id = $figure_id]]">
 				<fn reference="{@reference}" id="{@reference}_{ancestor::*[@id][1]/@id}">
 					<xsl:apply-templates/>
 				</fn>
@@ -5212,91 +5259,93 @@
 				true
 			</xsl:variable>
 
-			<!-- current hierarchy is 'figure' element -->
-			<xsl:variable name="following_dl_colwidths">
-				<xsl:if test="*[local-name() = 'dl']"><!-- if there is a 'dl', then set the same columns width as for 'dl' -->
-					<xsl:variable name="simple-table">
-						<!-- <xsl:variable name="doc_ns">
-							<xsl:if test="$namespace = 'bipm'">bipm</xsl:if>
+			<fo:block>
+
+						<!-- current hierarchy is 'figure' element -->
+						<xsl:variable name="following_dl_colwidths">
+							<xsl:if test="*[local-name() = 'dl']"><!-- if there is a 'dl', then set the same columns width as for 'dl' -->
+								<xsl:variable name="simple-table">
+									<!-- <xsl:variable name="doc_ns">
+										<xsl:if test="$namespace = 'bipm'">bipm</xsl:if>
+									</xsl:variable>
+									<xsl:variable name="ns">
+										<xsl:choose>
+											<xsl:when test="normalize-space($doc_ns)  != ''">
+												<xsl:value-of select="normalize-space($doc_ns)"/>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:value-of select="substring-before(name(/*), '-')"/>
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:variable> -->
+
+									<xsl:for-each select="*[local-name() = 'dl'][1]">
+										<tbody>
+											<xsl:apply-templates mode="dl"/>
+										</tbody>
+									</xsl:for-each>
+								</xsl:variable>
+
+								<xsl:call-template name="calculate-column-widths">
+									<xsl:with-param name="cols-count" select="2"/>
+									<xsl:with-param name="table" select="$simple-table"/>
+								</xsl:call-template>
+
+							</xsl:if>
 						</xsl:variable>
-						<xsl:variable name="ns">
+
+						<xsl:variable name="maxlength_dt">
+							<xsl:for-each select="*[local-name() = 'dl'][1]">
+								<xsl:call-template name="getMaxLength_dt"/>
+							</xsl:for-each>
+						</xsl:variable>
+
+						<fo:table width="95%" table-layout="fixed">
+							<xsl:if test="normalize-space($key_iso) = 'true'">
+								<xsl:attribute name="font-size">10pt</xsl:attribute>
+
+							</xsl:if>
 							<xsl:choose>
-								<xsl:when test="normalize-space($doc_ns)  != ''">
-									<xsl:value-of select="normalize-space($doc_ns)"/>
+								<!-- if there 'dl', then set same columns width -->
+								<xsl:when test="xalan:nodeset($following_dl_colwidths)//column">
+									<xsl:call-template name="setColumnWidth_dl">
+										<xsl:with-param name="colwidths" select="$following_dl_colwidths"/>
+										<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
+									</xsl:call-template>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:value-of select="substring-before(name(/*), '-')"/>
+									<fo:table-column column-width="5%"/>
+									<fo:table-column column-width="95%"/>
 								</xsl:otherwise>
 							</xsl:choose>
-						</xsl:variable> -->
+							<fo:table-body>
+								<xsl:for-each select="xalan:nodeset($references)//fn">
+									<xsl:variable name="reference" select="@reference"/>
+									<xsl:if test="not(preceding-sibling::*[@reference = $reference])"> <!-- only unique reference puts in note-->
+										<fo:table-row>
+											<fo:table-cell>
+												<fo:block>
+													<fo:inline id="{@id}" xsl:use-attribute-sets="figure-fn-number-style">
+														<xsl:value-of select="@reference"/>
+													</fo:inline>
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell>
+												<fo:block xsl:use-attribute-sets="figure-fn-body-style">
+													<xsl:if test="normalize-space($key_iso) = 'true'">
 
-						<xsl:for-each select="*[local-name() = 'dl'][1]">
-							<tbody>
-								<xsl:apply-templates mode="dl"/>
-							</tbody>
-						</xsl:for-each>
-					</xsl:variable>
+																<xsl:attribute name="margin-bottom">0</xsl:attribute>
 
-					<xsl:call-template name="calculate-column-widths">
-						<xsl:with-param name="cols-count" select="2"/>
-						<xsl:with-param name="table" select="$simple-table"/>
-					</xsl:call-template>
+													</xsl:if>
+													<xsl:copy-of select="./node()"/>
+												</fo:block>
+											</fo:table-cell>
+										</fo:table-row>
+									</xsl:if>
+								</xsl:for-each>
+							</fo:table-body>
+						</fo:table>
 
-				</xsl:if>
-			</xsl:variable>
-
-			<xsl:variable name="maxlength_dt">
-				<xsl:for-each select="*[local-name() = 'dl'][1]">
-					<xsl:call-template name="getMaxLength_dt"/>
-				</xsl:for-each>
-			</xsl:variable>
-
-			<fo:block>
-				<fo:table width="95%" table-layout="fixed">
-					<xsl:if test="normalize-space($key_iso) = 'true'">
-						<xsl:attribute name="font-size">10pt</xsl:attribute>
-
-					</xsl:if>
-					<xsl:choose>
-						<!-- if there 'dl', then set same columns width -->
-						<xsl:when test="xalan:nodeset($following_dl_colwidths)//column">
-							<xsl:call-template name="setColumnWidth_dl">
-								<xsl:with-param name="colwidths" select="$following_dl_colwidths"/>
-								<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
-							</xsl:call-template>
-						</xsl:when>
-						<xsl:otherwise>
-							<fo:table-column column-width="15%"/>
-							<fo:table-column column-width="85%"/>
-						</xsl:otherwise>
-					</xsl:choose>
-					<fo:table-body>
-						<xsl:for-each select="xalan:nodeset($references)//fn">
-							<xsl:variable name="reference" select="@reference"/>
-							<xsl:if test="not(preceding-sibling::*[@reference = $reference])"> <!-- only unique reference puts in note-->
-								<fo:table-row>
-									<fo:table-cell>
-										<fo:block>
-											<fo:inline id="{@id}" xsl:use-attribute-sets="figure-fn-number-style">
-												<xsl:value-of select="@reference"/>
-											</fo:inline>
-										</fo:block>
-									</fo:table-cell>
-									<fo:table-cell>
-										<fo:block xsl:use-attribute-sets="figure-fn-body-style">
-											<xsl:if test="normalize-space($key_iso) = 'true'">
-
-														<xsl:attribute name="margin-bottom">0</xsl:attribute>
-
-											</xsl:if>
-											<xsl:copy-of select="./node()"/>
-										</fo:block>
-									</fo:table-cell>
-								</fo:table-row>
-							</xsl:if>
-						</xsl:for-each>
-					</fo:table-body>
-				</fo:table>
 			</fo:block>
 		</xsl:if>
 
@@ -7753,10 +7802,10 @@
 			<fo:block xsl:use-attribute-sets="figure-style">
 				<xsl:apply-templates select="node()[not(local-name() = 'name') and not(local-name() = 'note' and @type = 'units')]"/>
 			</fo:block>
-			<xsl:call-template name="fn_display_figure"/>
 			<xsl:for-each select="*[local-name() = 'note'][not(@type = 'units')]">
 				<xsl:call-template name="note"/>
 			</xsl:for-each>
+			<xsl:call-template name="fn_display_figure"/>
 
 					<xsl:apply-templates select="*[local-name() = 'name']"/> <!-- show figure's name AFTER image -->
 
