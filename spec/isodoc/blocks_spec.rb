@@ -817,13 +817,13 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <foreword displayorder="1">
             <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
-              <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
+              <p keep-with-next="true">where</p>
+              <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d" class="formula_dl">
                 <dt>
                   <stem type="AsciiMath">r</stem>
                 </dt>
@@ -865,7 +865,7 @@ RSpec.describe IsoDoc do
                         <span class='stem'>(#(r = 1 %)#)</span>
                       </p>
                     </div>
-                    <p style='page-break-after:avoid;'>where</p>
+                    <p style='page-break-after: avoid;'>where</p>
                     <dl id='_e4fe94fe-1cde-49d9-b1ad-743293b7e21d' class='formula_dl'>
                       <dt>
                         <span class='stem'>(#(r)#)</span>
@@ -913,7 +913,7 @@ RSpec.describe IsoDoc do
                 <span style='mso-tab-count:1'>&#160; </span>
               </p>
             </div>
-            <p>where</p>
+            <p class="ForewordText" style="page-break-after: avoid;">where</p>
             <table class="formula_dl">
               <tr>
                 <td align="left" valign="top">
@@ -956,8 +956,8 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options).convert("test", input,
-                                                                              true)
+    output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options).convert("test", input, true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
@@ -968,61 +968,88 @@ RSpec.describe IsoDoc do
   end
 
   it "processes formulae with single definition list entry" do
-    output = IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", <<~"INPUT", true)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <preface>
-            <foreword>
-              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
-                <stem type="AsciiMath">r = 1 %</stem>
-                <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
-                  <dt>
-                    <stem type="AsciiMath">r</stem>
-                  </dt>
-                  <dd>
-                    <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
-                  </dd>
-                </dl>
-                <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
-                  <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot; prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is always expressed.</p>
-                </note>
-              </formula>
-              <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
-                <name>1</name>
-                <stem type="AsciiMath">r = 1 %</stem>
-              </formula>
-            </foreword>
-          </preface>
-        </iso-standard>
-      INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    input = <<~"INPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword>
+            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
+              <stem type="AsciiMath">r = 1 %</stem>
+              <dl id="_e4fe94fe-1cde-49d9-b1ad-743293b7e21d">
+                <dt>
+                  <stem type="AsciiMath">r</stem>
+                </dt>
+                <dd>
+                  <p id="_1b99995d-ff03-40f5-8f2e-ab9665a69b77">is the repeatability limit.</p>
+                </dd>
+              </dl>
+              <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
+                <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the &quot;P&quot; prefix. &quot;P&quot; is unnecessary because between &quot;G&quot; and &quot;U&quot; duration is always expressed.</p>
+              </note>
+            </formula>
+            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
+              <stem type="AsciiMath">r = 1 %</stem>
+            </formula>
+          </foreword>
+        </preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <preface>
+          <foreword displayorder="1">
+            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
+              <stem type="AsciiMath">r = 1 %</stem>
+              <p>where
+                  <stem type="AsciiMath">r</stem>
+                 is the repeatability limit.</p>
+              <note id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0">
+                <name>NOTE</name>
+                <p id="_511aaa98-4116-42af-8e5b-c87cdf5bfdc8">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+              </note>
+            </formula>
+            <formula id="_be9158af-7e93-4ee2-90c5-26d31c181935">
+              <name>1</name>
+              <stem type="AsciiMath">r = 1 %</stem>
+            </formula>
+          </foreword>
+        </preface>
+      </iso-standard>
+    OUTPUT
+    html = <<~"OUTPUT"
       #{HTML_HDR}
               <br/>
               <div>
                 <h1 class="ForewordTitle">Foreword</h1>
                 <div id="_be9158af-7e93-4ee2-90c5-26d31c181934">
-                  <div class="formula">
-                    <p><span class="stem">(#(r = 1 %)#)</span></p>
-                  </div>
-                  <span class='zzMoveToFollowing'>
-                    where <span class='stem'>(#(r)#)</span>
-                  </span>
-                  <p id='_1b99995d-ff03-40f5-8f2e-ab9665a69b77'>is the repeatability limit.</p>
-                  <div id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0" class="Note">
-                    <p>&#160; [durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
-                  </div>
-                </div>
-                <div id="_be9158af-7e93-4ee2-90c5-26d31c181935">
-                  <div class="formula">
-                    <p><span class="stem">(#(r = 1 %)#)</span>&#160; (1)</p>
-                  </div>
-                </div>
-              </div>
-            <p class="zzSTDTitle1"/>
-          </div>
-        </body>
-      </html>
+                                 <div class="formula">
+                   <p>
+                     <span class="stem">(#(r = 1 %)#)</span>
+                   </p>
+                 </div>
+                 <p>where
+                   <span class="stem">(#(r)#)</span>
+                  is the repeatability limit.</p>
+                 <div id="_83083c7a-6c85-43db-a9fa-4d8edd0c9fc0" class="Note">
+                   <p><span class="note_label">NOTE</span>  [durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+                 </div>
+               </div>
+               <div id="_be9158af-7e93-4ee2-90c5-26d31c181935">
+                 <div class="formula">
+                   <p><span class="stem">(#(r = 1 %)#)</span>  (1)</p>
+                 </div>
+               </div>
+             </div>
+             <p class="zzSTDTitle1"/>
+           </div>
+         </body>
+       </html>
     OUTPUT
+    output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options).convert("test", input, true)
+    expect(xmlpp(output)).to be_equivalent_to xmlpp(presxml)
+    output = IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)
+    expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
   end
 
   it "adds ordered list classes for HTML" do

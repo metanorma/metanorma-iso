@@ -86,20 +86,6 @@ module IsoDoc
         end
       end
 
-      def formula_where(dlist, out)
-        return if dlist.nil?
-        return super unless dlist.xpath(ns("./dt"))&.size == 1 &&
-          dlist.at(ns("./dd"))&.elements&.size == 1 &&
-          dlist.at(ns("./dd/p"))
-
-        out.span class: "zzMoveToFollowing" do |s|
-          s << "#{@i18n.where} "
-          dlist.at(ns("./dt")).children.each { |n| parse(n, s) }
-          s << " "
-        end
-        parse(dlist.at(ns("./dd/p")), out)
-      end
-
       def admonition_parse(node, out)
         type = node["type"]
         name = admonition_name(node, type)
