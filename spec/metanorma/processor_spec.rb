@@ -132,15 +132,15 @@ RSpec.describe Metanorma::Iso::Processor do
     FileUtils.rm_f "test.xml"
     FileUtils.rm_f "test.html"
     processor.output(inputxml, "test.xml", "test.html", :html)
-    expect(xmlpp(File.read("test.html", encoding: "utf-8")
+    expect(xmlpp(strip_guid(File.read("test.html", encoding: "utf-8")
       .gsub(%r{^.*<main}m, "<main")
-      .gsub(%r{</main>.*}m, "</main>")))
+      .gsub(%r{</main>.*}m, "</main>"))))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <main class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div class='authority'> </div>
           <p class='zzSTDTitle1'>French</p>
-          <div id="H"><h1 id="toc0">1&#xA0; Terms, Definitions, Symbols and Abbreviated Terms</h1>
+          <div id="H"><h1 id="_">1&#xA0; Terms, Definitions, Symbols and Abbreviated Terms</h1>
             <h2 class="TermNum" id="J">1.1</h2>
             <p class="Terms" style="text-align:left;">Term2</p>
           </div>

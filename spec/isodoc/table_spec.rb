@@ -174,7 +174,7 @@ RSpec.describe IsoDoc do
         <button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>
         <br/>
         <div>
-          <h1 class='ForewordTitle' id="toc0">Foreword</h1>
+          <h1 class='ForewordTitle' id="_">Foreword</h1>
           <p class='TableTitle' style='text-align:center;'>
             Table 1&#xA0;&#x2014; Repeatability and reproducibility of
             <i>husked</i>
@@ -242,7 +242,7 @@ RSpec.describe IsoDoc do
                   </div>
                   <div class='TableFootnote'>
                     <div id='fn:tableD-1a'>
-                      <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55' class='TableFootnote'>
+                      <p id='_' class='TableFootnote'>
                         <span>
                           <span id='tableD-1a' class='TableFootnoteRef'>a</span>
                           &#xA0;
@@ -265,7 +265,7 @@ RSpec.describe IsoDoc do
         <p class='zzSTDTitle1'/>
         <br/>
         <div id='Annex' class='Section3'>
-          <h1 class='Annex' id='toc1'>
+          <h1 class='Annex' id='_'>
             <b>Annex A</b>
             <br/>
              <span class="obligation">(informative)</span>
@@ -384,7 +384,7 @@ RSpec.describe IsoDoc do
     out = File.read("test.html")
       .sub(/^.*<main /m, "<main ")
       .sub(%r{</main>.*$}m, "</main>")
-    expect(xmlpp(out)).to be_equivalent_to xmlpp(html)
+    expect(xmlpp(strip_guid(out))).to be_equivalent_to xmlpp(html)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     out = File.read("test.doc")

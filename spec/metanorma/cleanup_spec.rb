@@ -1532,7 +1532,7 @@ RSpec.describe Metanorma::ISO do
       output = <<~OUTPUT
          #{BLANK_HDR}
          <sections>
-            <clause id='_' obligation='normative'>
+            <terms id='_' obligation='normative'>
               <title>Terms and definitions</title>
               <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
               <p id='_'>
@@ -1570,7 +1570,7 @@ RSpec.describe Metanorma::ISO do
                   </preferred>
                 </term>
               </terms>
-            </clause>
+            </terms>
           </sections>
         </iso-standard>
       OUTPUT
@@ -1612,7 +1612,7 @@ RSpec.describe Metanorma::ISO do
       output = <<~OUTPUT
          #{BLANK_HDR}
                   <sections>
-            <clause id="_" obligation="normative">
+            <terms id="_" obligation="normative">
               <title>Terms and definitions</title>
                  <p id="_">For the purposes of this document,
             the following terms and definitions apply.</p>
@@ -1675,7 +1675,7 @@ RSpec.describe Metanorma::ISO do
                   </preferred>
                 </term>
               </terms>
-            </clause>
+            </terms>
           </sections>
         </iso-standard>
       OUTPUT

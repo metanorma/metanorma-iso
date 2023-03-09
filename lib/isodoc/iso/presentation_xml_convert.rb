@@ -220,6 +220,22 @@ module IsoDoc
         super
       end
 
+      def formula_where(dlist)
+        dlist.nil? and return
+        return super unless dlist.xpath(ns("./dt")).size == 1 &&
+          dlist.at(ns("./dd"))&.elements&.size == 1 &&
+          dlist.at(ns("./dd/p"))
+
+        formula_where_one(dlist)
+      end
+
+      def formula_where_one(dlist)
+        dt = to_xml(dlist.at(ns("./dt")).children)
+        dd = to_xml(dlist.at(ns("./dd/p")).children)
+        dlist.previous = "<p>#{@i18n.where_one} #{dt} #{dd}</p>"
+        dlist.remove
+      end
+
       include Init
     end
   end

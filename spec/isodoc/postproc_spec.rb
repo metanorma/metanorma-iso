@@ -242,40 +242,50 @@ RSpec.describe IsoDoc do
     html = Nokogiri::XML(File.read("test.html", encoding: "UTF-8"))
       .at("//div[@id = 'toc']").to_xml
 
-    expect(xmlpp(html))
+    expect(xmlpp(strip_guid(html)))
       .to be_equivalent_to xmlpp(<<~'OUTPUT')
-        <div id='toc'>
-          <ul>
-            <li class='h1'>
-              <div class='collapse-group'>
-                <a href='#toc0'>1 &#xA0; Clause 4</a>
-                <div class='collapse-button'/>
-              </div>
-              <ul class='content collapse'>
-                <li class='h2'>
-                  <a href='#toc1'> 1.1 &#xA0; Introduction to this </a>
-                </li>
-                <li class='h2'>
-                  <a href='#toc2'> 1.2 &#xA0; Clause 4.2</a>
-                </li>
-              </ul>
-            </li>
-            <li class='h1'>
-              <div class='collapse-group'>
-                <a href='#toc3'>2&#xA0; Clause 5</a>
-                <div class='collapse-button'/>
-              </div>
-              <ul class='content collapse'>
-                <li class='h2'>
-                  <a href='#toc4'> 2.1&#xA0; Clause 5.1</a>
-                </li>
-              </ul>
-            </li>
-            <li class='h1'>
-              <a href='#toc5'> 3&#xA0; Clause 6</a>
-            </li>
-          </ul>
-        </div>
+           <div id="toc">
+         <ul>
+           <li class="h1">
+             <div class="collapse-group">
+               <a href="#_">1
+                
+               Clause 4</a>
+               <div class="collapse-button"/>
+             </div>
+             <ul class="content collapse">
+               <li class="h2">
+                 <a href="#_">      1.1
+                  
+                 Introduction
+
+                 to this
+
+               </a>
+               </li>
+               <li class="h2">
+                 <a href="#_">      1.2
+                  
+                 Clause 4.2</a>
+               </li>
+             </ul>
+           </li>
+           <li class="h1">
+             <div class="collapse-group">
+               <a href="#_">2  Clause 5</a>
+               <div class="collapse-button"/>
+             </div>
+           </li>
+           <li class="h1">
+             <a href="#_">      3  Clause 6</a>
+             <ul class="content collapse">
+               <li class="h2">
+                 <a href="#_">      2.1  Clause 5.1</a>
+               </li>
+             </ul>
+           </li>
+         </ul>
+       </div>
       OUTPUT
   end
 
@@ -484,23 +494,23 @@ RSpec.describe IsoDoc do
            '<main xmlns:epub="epub" class="main-section">')
       .sub(%r{</main>.*$}m, "</main>")
 
-    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(html))).to be_equivalent_to xmlpp(<<~"OUTPUT")
       <main class="main-section" xmlns:epub="epub">
         <button id="myBtn" onclick="topFunction()" title="Go to top">Top</button>
         <p class="zzSTDTitle1"/>
         <div id="A">
-          <h1 id="toc0">1 &#xA0; Clause 4</h1>
+          <h1 id="_">1 &#xA0; Clause 4</h1>
           <a class="FootnoteRef" href="#fn:3" id="fnref:1">
             <sup>1)</sup>
           </a>
           <div id="N">
-            <h2 id="toc1">1.1 &#xA0; Introduction to this
+            <h2 id="_">1.1 &#xA0; Introduction to this
               <a class="FootnoteRef" href="#fn:2" id="fnref:2">
                 <sup>2)</sup></a>
             </h2>
           </div>
           <div id="O">
-            <h2 id="toc2">1.2 &#xA0; Clause 4.2</h2>
+            <h2 id="_">1.2 &#xA0; Clause 4.2</h2>
             <p>A
               <a class="FootnoteRef" href="#fn:2">
                 <sup>2)</sup></a>
@@ -508,14 +518,14 @@ RSpec.describe IsoDoc do
           </div>
         </div>
         <aside class="footnote" id="fn:3">
-          <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">
+          <p id="_">
             <a class="FootnoteRef" href="#fn:3">
               <sup>1)</sup>
             </a>This is a footnote.</p>
           <a href="#fnref:1">↩</a>
         </aside>
         <aside class="footnote" id="fn:2">
-          <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">
+          <p id="_">
             <a class="FootnoteRef" href="#fn:2">
               <sup>2)</sup>
             </a>Formerly denoted as 15 % (m/m).</p>
