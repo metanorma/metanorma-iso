@@ -6929,9 +6929,28 @@
 		</xsl:variable>
 		<xsl:copy-of select="$newRow"/>
 
-		<xsl:apply-templates select="following-sibling::tr[1]" mode="simple-table-rowspan">
-				<xsl:with-param name="previousRow" select="$newRow"/>
-		</xsl:apply-templates>
+		<!-- optimize to prevent StackOverflowError, just copy next 'tr' -->
+		<xsl:variable name="currrow_num" select="count(preceding-sibling::tr) + 1"/>
+		<xsl:variable name="nextrow_without_rowspan_" select="count(following-sibling::tr[*[@rowspan and @rowspan != 1]][1]/preceding-sibling::tr) + 1"/>
+		<xsl:variable name="nextrow_without_rowspan" select="$nextrow_without_rowspan_ - $currrow_num"/>
+		<xsl:choose>
+			<xsl:when test="not(xalan:nodeset($newRow)/*/*[@rowspan and @rowspan != 1]) and $nextrow_without_rowspan &lt;= 0">
+				<xsl:copy-of select="following-sibling::tr"/>
+			</xsl:when>
+			<!-- <xsl:when test="xalan:nodeset($newRow)/*[not(@rowspan) or (@rowspan = 1)] and $nextrow_without_rowspan &gt; 0">
+				<xsl:copy-of select="following-sibling::tr[position() &lt;= $nextrow_without_rowspan]"/>
+				
+				<xsl:copy-of select="following-sibling::tr[$nextrow_without_rowspan + 1]"/>
+				<xsl:apply-templates select="following-sibling::tr[$nextrow_without_rowspan + 2]" mode="simple-table-rowspan">
+						<xsl:with-param name="previousRow" select="following-sibling::tr[$nextrow_without_rowspan + 1]"/>
+				</xsl:apply-templates>
+			</xsl:when> -->
+			<xsl:otherwise>
+				<xsl:apply-templates select="following-sibling::tr[1]" mode="simple-table-rowspan">
+						<xsl:with-param name="previousRow" select="$newRow"/>
+				</xsl:apply-templates>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<!-- End mode simple-table-rowspan  -->
 
