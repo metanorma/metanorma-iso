@@ -6564,8 +6564,19 @@
 		<xsl:variable name="text6" select="java:replaceAll(java:java.lang.String.new($text5), '(?&lt;!\W)(\{)', '​$1')"/> <!-- negative lookbehind: '{' not preceeded by 'punctuation char' -->
 		<!-- add zero-width space (#x200B) after character: , -->
 		<xsl:variable name="text7" select="java:replaceAll(java:java.lang.String.new($text6), '(\,)(?!\d)', '$1​')"/> <!-- negative lookahead: ',' not followed by digit -->
+		<!-- add zero-width space (#x200B) after character: '/' -->
+		<xsl:variable name="text8" select="java:replaceAll(java:java.lang.String.new($text7), '(\u002f)(?!\u002f)', '$1​')"/><!-- negative lookahead: '/' not followed by '/' -->
 
-		<xsl:value-of select="$text7"/>
+		<xsl:variable name="text9">
+			<xsl:choose>
+				<xsl:when test="$isGenerateTableIF = 'true'">
+					<xsl:value-of select="java:replaceAll(java:java.lang.String.new($text8), '([\u3000-\u9FFF])', '$1​')"/> <!-- 3000 - CJK Symbols and Punctuation ... 9FFF CJK Unified Ideographs-->
+				</xsl:when>
+				<xsl:otherwise><xsl:value-of select="$text8"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<xsl:value-of select="$text9"/>
 	</xsl:template>
 
 	<xsl:template name="add-zero-spaces-link-java">
@@ -10397,6 +10408,44 @@
 
 		<fo:list-block xsl:use-attribute-sets="list-style">
 
+			<xsl:variable name="provisional_distance_between_starts_">
+				<attributes xsl:use-attribute-sets="list-style">
+
+				</attributes>
+			</xsl:variable>
+			<xsl:variable name="provisional_distance_between_starts" select="normalize-space(xalan:nodeset($provisional_distance_between_starts_)/attributes/@provisional-distance-between-starts)"/>
+			<xsl:if test="$provisional_distance_between_starts != ''">
+				<xsl:attribute name="provisional-distance-between-starts"><xsl:value-of select="$provisional_distance_between_starts"/></xsl:attribute>
+			</xsl:if>
+			<xsl:variable name="provisional_distance_between_starts_value" select="substring-before($provisional_distance_between_starts, 'mm')"/>
+
+			<!-- increase provisional-distance-between-starts for long lists -->
+			<xsl:if test="local-name() = 'ol'">
+				<!-- Examples: xiii), xviii), xxviii) -->
+				<xsl:variable name="item_numbers">
+					<xsl:for-each select="*[local-name() = 'li']">
+						<item><xsl:call-template name="getListItemFormat"/></item>
+					</xsl:for-each>
+				</xsl:variable>
+
+				<xsl:variable name="max_length">
+					<xsl:for-each select="xalan:nodeset($item_numbers)/item">
+						<xsl:sort select="string-length(.)" data-type="number" order="descending"/>
+						<xsl:if test="position() = 1"><xsl:value-of select="string-length(.)"/></xsl:if>
+					</xsl:for-each>
+				</xsl:variable>
+
+				<!-- base width (provisional-distance-between-starts) for 4 chars -->
+				<xsl:variable name="addon" select="$max_length - 4"/>
+				<xsl:if test="$addon &gt; 0">
+					<xsl:attribute name="provisional-distance-between-starts"><xsl:value-of select="$provisional_distance_between_starts_value + $addon * 2"/>mm</xsl:attribute>
+				</xsl:if>
+				<!-- DEBUG -->
+				<!-- <xsl:copy-of select="$item_numbers"/>
+				<max_length><xsl:value-of select="$max_length"/></max_length>
+				<addon><xsl:value-of select="$addon"/></addon> -->
+			</xsl:if>
+
 				<xsl:if test="not(ancestor::*[local-name() = 'ul' or local-name() = 'ol'])">
 					<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 				</xsl:if>
@@ -11465,7 +11514,7 @@
 		<!-- \S matches any non-whitespace character (equivalent to [^\r\n\t\f\v ]) -->
 		<!-- <xsl:variable name="regex_solidus_units">((\b((\S{1,3}\/\S+)|(\S+\/\S{1,3}))\b)|(\/\S{1,3})\b)</xsl:variable> -->
 		<!-- add &lt; and &gt; to \S -->
-		<xsl:variable name="regex_S">[^\r\n\t\f\v \&lt;&gt;]</xsl:variable>
+		<xsl:variable name="regex_S">[^\r\n\t\f\v \&lt;&gt;\u3000-\u9FFF]</xsl:variable>
 		<xsl:variable name="regex_solidus_units">((\b((<xsl:value-of select="$regex_S"/>{1,3}\/<xsl:value-of select="$regex_S"/>+)|(<xsl:value-of select="$regex_S"/>+\/<xsl:value-of select="$regex_S"/>{1,3}))\b)|(\/<xsl:value-of select="$regex_S"/>{1,3})\b)</xsl:variable>
 		<xsl:variable name="text3">
 			<text><xsl:for-each select="xalan:nodeset($text2)/text/node()">
@@ -11487,7 +11536,8 @@
 		<xsl:choose>
 			<xsl:when test="ancestor::*[local-name() = 'td' or local-name() = 'th']">
 				<!-- keep-together_within-line for: a.b, aaa.b, a.bbb, .b  in table's cell ONLY -->
-				<xsl:variable name="regex_dots_units">((\b((\S{1,3}\.\S+)|(\S+\.\S{1,3}))\b)|(\.\S{1,3})\b)</xsl:variable>
+				<xsl:variable name="non_white_space">[^\s\u3000-\u9FFF]</xsl:variable>
+				<xsl:variable name="regex_dots_units">((\b((<xsl:value-of select="$non_white_space"/>{1,3}\.<xsl:value-of select="$non_white_space"/>+)|(<xsl:value-of select="$non_white_space"/>+\.<xsl:value-of select="$non_white_space"/>{1,3}))\b)|(\.<xsl:value-of select="$non_white_space"/>{1,3})\b)</xsl:variable>
 				<xsl:for-each select="xalan:nodeset($text3)/text/node()">
 					<xsl:choose>
 						<xsl:when test="self::text()">
