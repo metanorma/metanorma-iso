@@ -220,24 +220,7 @@
         <attribute name="id">
           <data type="ID"/>
         </attribute>
-        <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <ref name="tname"/>
         </optional>
@@ -254,24 +237,7 @@
         <attribute name="id">
           <data type="ID"/>
         </attribute>
-        <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <attribute name="type">
             <choice>
@@ -299,27 +265,10 @@
         <attribute name="id">
           <data type="ID"/>
         </attribute>
-        <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <attribute name="key">
             <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
           </attribute>
         </optional>
         <optional>
@@ -362,24 +311,7 @@
         <optional>
           <attribute name="number"/>
         </optional>
-        <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <ref name="tname"/>
         </optional>
@@ -428,26 +360,9 @@
           </attribute>
         </optional>
         <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
           <attribute name="width"/>
         </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <ref name="colgroup"/>
         </optional>
@@ -486,26 +401,9 @@
           <attribute name="subsequence"/>
         </optional>
         <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
           <attribute name="class"/>
         </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <ref name="source"/>
         </optional>
@@ -552,26 +450,9 @@
           <attribute name="subsequence"/>
         </optional>
         <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
           <attribute name="lang"/>
         </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <attribute name="linenums">
             <data type="boolean"/>
@@ -611,28 +492,11 @@
           <attribute name="subsequence"/>
         </optional>
         <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
           <attribute name="inequality">
             <data type="boolean"/>
           </attribute>
         </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <ref name="stem"/>
         <optional>
           <ref name="dl"/>
@@ -651,27 +515,7 @@
           <ref name="Alignments"/>
         </attribute>
       </optional>
-      <optional>
-        <attribute name="keep-with-next">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="keep-lines-together">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="type"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <zeroOrMore>
         <ref name="TextElement"/>
       </zeroOrMore>
@@ -690,26 +534,9 @@
           </attribute>
         </optional>
         <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
           <attribute name="type"/>
         </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <zeroOrMore>
           <choice>
             <ref name="TextElement"/>
@@ -731,24 +558,7 @@
             <ref name="Alignments"/>
           </attribute>
         </optional>
-        <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <optional>
           <ref name="quote-source"/>
         </optional>
@@ -829,25 +639,7 @@
           <attribute name="subsequence"/>
         </optional>
         <optional>
-          <attribute name="keep-with-next">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="keep-lines-together">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
           <attribute name="type"/>
-        </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
         </optional>
         <optional>
           <attribute name="coverpage">
@@ -859,6 +651,7 @@
             <data type="boolean"/>
           </attribute>
         </optional>
+        <ref name="BlockAttributes"/>
         <oneOrMore>
           <choice>
             <ref name="paragraph"/>
@@ -1332,14 +1125,7 @@
       <optional>
         <attribute name="class"/>
       </optional>
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <zeroOrMore>
         <choice>
           <ref name="TextElement"/>
@@ -1937,14 +1723,7 @@
       <optional>
         <attribute name="script"/>
       </optional>
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <oneOrMore>
         <ref name="preferred"/>
       </oneOrMore>
@@ -2285,24 +2064,7 @@
       <optional>
         <attribute name="subsequence"/>
       </optional>
-      <optional>
-        <attribute name="keep-with-next">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="keep-lines-together">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <oneOrMore>
         <choice>
           <ref name="paragraph"/>
@@ -2319,24 +2081,7 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
-      <optional>
-        <attribute name="keep-with-next">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="keep-lines-together">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <oneOrMore>
         <choice>
           <ref name="formula"/>
@@ -2463,14 +2208,7 @@
       <optional>
         <attribute name="title"/>
       </optional>
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <optional>
         <element name="location">
           <zeroOrMore>
@@ -2530,14 +2268,7 @@
   </define>
   <define name="imagemap">
     <element name="imagemap">
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <ref name="figure"/>
       <zeroOrMore>
         <element name="area">
@@ -2583,14 +2314,7 @@
   </define>
   <define name="svgmap">
     <element name="svgmap">
-      <optional>
-        <attribute name="tag"/>
-      </optional>
-      <optional>
-        <attribute name="multilingual-rendering">
-          <ref name="MultilingualRenderingType"/>
-        </attribute>
-      </optional>
+      <ref name="BlockAttributes"/>
       <ref name="figure"/>
       <zeroOrMore>
         <element name="target">
@@ -2696,6 +2420,29 @@
         </element>
       </oneOrMore>
     </element>
+  </define>
+  <define name="BlockAttributes">
+    <optional>
+      <attribute name="keep-with-next">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="keep-lines-together">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="tag"/>
+    </optional>
+    <optional>
+      <attribute name="multilingual-rendering">
+        <ref name="MultilingualRenderingType"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columns"/>
+    </optional>
   </define>
   <start>
     <ref name="standard-document"/>

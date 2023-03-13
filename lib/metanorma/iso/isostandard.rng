@@ -88,14 +88,7 @@
         <optional>
           <attribute name="script"/>
         </optional>
-        <optional>
-          <attribute name="tag"/>
-        </optional>
-        <optional>
-          <attribute name="multilingual-rendering">
-            <ref name="MultilingualRenderingType"/>
-          </attribute>
-        </optional>
+        <ref name="BlockAttributes"/>
         <ref name="preferred"/>
         <zeroOrMore>
           <ref name="admitted"/>
