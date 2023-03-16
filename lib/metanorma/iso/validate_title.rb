@@ -42,8 +42,8 @@ module Metanorma
       def title_subpart_validate(root)
         docid = root.at("//bibdata/docidentifier[@type = 'ISO']")
         subpart = /-\d+-\d+/.match docid
-        iec = root.at("//bibdata/contributor[role/@type = 'publisher']/"\
-                      "organization[abbreviation = 'IEC' or "\
+        iec = root.at("//bibdata/contributor[role/@type = 'publisher']/" \
+                      "organization[abbreviation = 'IEC' or " \
                       "name = 'International Electrotechnical Commission']")
         subpart && !iec and
           @log.add("Style", docid, "Subpart defined on non-IEC document!")
@@ -51,6 +51,7 @@ module Metanorma
 
       # ISO/IEC DIR 2, 11.5.2
       def title_names_type_validate(root)
+        @lang == "en" or return
         doctypes = /International\sStandard | Technical\sSpecification |
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
         title_main_en = title_lang_part(root, "main", "en")
@@ -93,8 +94,8 @@ module Metanorma
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-full
       def title_no_full_stop_validate(root)
-        root.xpath("//preface//title | //sections//title | //annex//title | "\
-                   "//references/title | //preface//name | //sections//name | "\
+        root.xpath("//preface//title | //sections//title | //annex//title | " \
+                   "//references/title | //preface//name | //sections//name | " \
                    "//annex//name").each do |t|
           style_regex(/\A(?<num>.+\.\Z)/i,
                       "No full stop at end of title or caption",

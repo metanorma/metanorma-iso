@@ -110,8 +110,8 @@ module Metanorma
         )
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
                     "possible decimal point", node, text)
-        style_regex(/\b(?<num>billions?)\b/i,
-                    "ambiguous number", node, text)
+        @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
+                                      "ambiguous number", node, text)
         style_regex(/(^|\s)(?<num>-[0-9][0-9,.]*)/i,
                     "hyphen instead of minus sign U+2212", node, text)
       end
@@ -135,8 +135,8 @@ module Metanorma
       end
 
       # leaving out as problematic: N J K C S T H h d B o E
-      SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|"\
-                "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|"\
+      SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|" \
+                "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|" \
                 "bit|kB|MB|Hart|nat|Sh|var)".freeze
 
       # ISO/IEC DIR 2, 9.3
@@ -165,8 +165,8 @@ module Metanorma
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-and
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-andor
       def style_punct(node, text)
-        style_regex(/\b(?<num>and\/?or)\b/i,
-                    "Use 'either x or y, or both'", node, text)
+        @lang == "en" and style_regex(/\b(?<num>and\/?or)\b/i,
+                                      "Use 'either x or y, or both'", node, text)
         style_regex(/\s(?<num>&)\s/i,
                     "Avoid ampersand in ordinary text'", node, text)
       end
@@ -180,8 +180,8 @@ module Metanorma
       end
 
       ASSETS_TO_STYLE =
-        "//termsource | //formula | //termnote | "\
-        "//p[not(ancestor::boilerplate)] | //li[not(p)] | //dt | "\
+        "//termsource | //formula | //termnote | " \
+        "//p[not(ancestor::boilerplate)] | //li[not(p)] | //dt | " \
         "//dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
 
       def asset_style(root)

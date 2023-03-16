@@ -106,10 +106,11 @@ module Metanorma
         xmldoc.xpath("//term").each do |t|
           para = t.at("./definition/verbal-definition") || return
           term = t.at("./preferred//name").text
-          termdef_warn(para.text, /\A(the|a)\b/i, t, term,
-                       "term definition starts with article")
-          termdef_warn(para.text, /\.\Z/i, t, term,
-                       "term definition ends with period")
+          @lang == "en" and termdef_warn(para.text, /\A(the|a)\b/i, t, term,
+                                         "term definition starts with article")
+          %(Cyrl Latn).include?(@script) and
+            termdef_warn(para.text, /\.\Z/i, t, term,
+                         "term definition ends with period")
         end
       end
 

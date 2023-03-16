@@ -56,7 +56,8 @@ module Metanorma
       def list_punctuation1(list, prectext)
         prectext ||= ""
         entries = list.xpath(".//li")
-        case prectext.strip.chars.last
+        %w(Cyrl Latn Grek).include?(@script) or return
+        case prectext.strip[-1]
         when ":", "" then list_after_colon_punctuation(list, entries)
         when "." then entries.each { |li| list_full_sentence(li) }
         else style_warning(list, "All lists must be preceded by "\
@@ -98,6 +99,7 @@ module Metanorma
       end
 
       def list_full_sentence(elem)
+        %w(Cyrl Latn Grek).include?(@script) or return
         text = elem.text.strip
         starts_uppercase?(text) or
           style_warning(elem, "List entry of separate sentences must start "\

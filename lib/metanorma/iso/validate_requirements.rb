@@ -99,6 +99,7 @@ module Metanorma
       end
 
       def style_no_guidance(node, text, docpart)
+        @lang == "en" or return
         r = requirement_check(text)
         style_warning(node, "#{docpart} may contain requirement", r) if r
         r = permission_check(text)

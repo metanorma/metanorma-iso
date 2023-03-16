@@ -32,9 +32,9 @@ module Metanorma
           @log.add("Style", f, "normative references contains subclauses")
       end
 
-      ONE_SYMBOLS_WARNING = "Only one Symbols and Abbreviated "\
+      ONE_SYMBOLS_WARNING = "Only one Symbols and Abbreviated " \
                             "Terms section in the standard".freeze
-      NON_DL_SYMBOLS_WARNING = "Symbols and Abbreviated Terms can "\
+      NON_DL_SYMBOLS_WARNING = "Symbols and Abbreviated Terms can " \
                                "only contain a definition list".freeze
 
       def symbols_validate(root)
@@ -46,7 +46,7 @@ module Metanorma
           @log.add("Style", f.first, NON_DL_SYMBOLS_WARNING)
         @vocab and f.each do |f1|
           f1.at("./ancestor::annex") or
-            @log.add("Style", f1, "In vocabulary documents, Symbols and "\
+            @log.add("Style", f1, "In vocabulary documents, Symbols and " \
                                   "Abbreviated Terms are only permitted in annexes")
         end
       end
@@ -80,15 +80,15 @@ module Metanorma
           val: ["./self::introduction", "./self::clause[@type = 'scope']"] },
         { msg: "Prefatory material must be followed by (clause) Scope",
           val: ["./self::clause[@type = 'scope']"] },
-        { msg: "Normative References must be followed by "\
+        { msg: "Normative References must be followed by " \
                "Terms and Definitions",
           val: ["./self::terms | .//terms"] },
       ].freeze
 
       SECTIONS_XPATH =
-        "//foreword | //introduction | //sections/terms | .//annex | "\
-        "//sections/definitions | //sections/clause | "\
-        "//references[not(parent::clause)] | "\
+        "//foreword | //introduction | //sections/terms | .//annex | " \
+        "//sections/definitions | //sections/clause | " \
+        "//references[not(parent::clause)] | " \
         "//clause[descendant::references][not(parent::clause)]".freeze
 
       def sections_sequence_validate(root)
@@ -119,7 +119,7 @@ module Metanorma
           @log.add("Style", elem, "Document must contain at least one clause")
         end
         elem&.at("./self::clause") ||
-          @log.add("Style", elem, "Document must contain clause after "\
+          @log.add("Style", elem, "Document must contain clause after " \
                                   "Terms and Definitions")
         elem&.at("./self::clause[@type = 'scope']") &&
           @log.add("Style", elem,
@@ -151,12 +151,12 @@ module Metanorma
         while elem&.name == "annex"
           elem = names.shift
           if elem.nil?
-            @log.add("Style", nil, "Document must include (references) "\
+            @log.add("Style", nil, "Document must include (references) " \
                                    "Normative References")
           end
         end
         elem&.at("./self::references[@normative = 'true']") ||
-          @log.add("Style", nil, "Document must include (references) "\
+          @log.add("Style", nil, "Document must include (references) " \
                                  "Normative References")
         elem = names&.shift
         elem&.at("./self::references[@normative = 'false']") ||
@@ -227,13 +227,13 @@ module Metanorma
         if terms.size == 1
           ((t = terms.first.at("./title")) && (t&.text == @i18n.termsdef)) or
             @log.add("Style", terms.first,
-                     "Single terms clause in vocabulary document "\
+                     "Single terms clause in vocabulary document " \
                      "should have normal Terms and definitions heading")
         elsif terms.size > 1
           terms.each do |x|
             ((t = x.at("./title")) && /^#{@i18n.termsrelated}/.match?(t&.text)) or
               @log.add("Style", x,
-                       "Multiple terms clauses in vocabulary document "\
+                       "Multiple terms clauses in vocabulary document " \
                        "should have 'Terms related to' heading")
           end
         end
