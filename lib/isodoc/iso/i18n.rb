@@ -2,7 +2,8 @@ module IsoDoc
   module Iso
     class I18n < IsoDoc::I18n
       def load_file(fname)
-        YAML.load_file(File.join(File.dirname(__FILE__), fname))
+        YAML.load_file(File.join(File.dirname(__FILE__), fname)) ||
+          {}
       end
 
       # all gems inheriting from ISO need to be represented here,
