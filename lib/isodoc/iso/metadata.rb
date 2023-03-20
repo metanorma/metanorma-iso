@@ -84,15 +84,15 @@ module IsoDoc
         p = titlenums[:part]
         titlenums[:part] && titlenums[:subpart] and
           p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
-        "#{PART_LABEL[lang.to_sym]}&#xa0;#{p}"
+        "#{self.class::PART_LABEL[lang.to_sym]}&#xa0;#{p}"
       end
 
       def amd_prefix(titlenums, lang)
-        "#{AMD_LABEL[lang.to_sym]}&#xa0;#{titlenums[:amd]}"
+        "#{self.class::AMD_LABEL[lang.to_sym]}&#xa0;#{titlenums[:amd]}"
       end
 
       def corr_prefix(titlenums, lang)
-        "#{CORR_LABEL[lang.to_sym]}&#xa0;#{titlenums[:corr]}"
+        "#{self.class::CORR_LABEL[lang.to_sym]}&#xa0;#{titlenums[:corr]}"
       end
 
       def compose_title(tparts, tnums, lang)
