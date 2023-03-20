@@ -476,7 +476,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :obsoletes_part=>"3.1",
       :publisher=>"International Organization for Standardization &#x438; International Electrotechnical Commission",
       :sc=>"DEF 4",
-      :script=>"Latn",
+      :script=>"Cyrl",
       :stage=>"60",
       :stage_int=>60,
       :statusabbr=>"IS",
