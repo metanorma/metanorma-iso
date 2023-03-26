@@ -2824,6 +2824,7 @@
 	<xsl:variable name="table-border_">
 
 		1pt solid black
+
 	</xsl:variable>
 	<xsl:variable name="table-border" select="normalize-space($table-border_)"/>
 
@@ -3112,6 +3113,7 @@
 	<xsl:attribute-set name="term-name-style">
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
+
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="figure-block-style">
@@ -4069,7 +4071,7 @@
 									<xsl:apply-templates select="*[local-name()='thead']" mode="process_tbody"/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:apply-templates select="node()[not(local-name() = 'name') and not(local-name() = 'note')          and not(local-name() = 'thead') and not(local-name() = 'tfoot')]"/> <!-- process all table' elements, except name, header, footer and note that renders separaterely -->
+									<xsl:apply-templates select="node()[not(local-name() = 'name') and not(local-name() = 'note') and not(local-name() = 'dl')          and not(local-name() = 'thead') and not(local-name() = 'tfoot')]"/> <!-- process all table' elements, except name, header, footer, note and dl which render separaterely -->
 								</xsl:otherwise>
 							</xsl:choose>
 
@@ -4605,7 +4607,7 @@
 		<xsl:param name="colwidths"/>
 		<xsl:param name="colgroup"/>
 
-		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'] or ..//*[local-name()='fn'][local-name(..) != 'name']"/>
+		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'] or ../*[local-name()='dl'] or ..//*[local-name()='fn'][local-name(..) != 'name']"/>
 
 		<xsl:variable name="isNoteOrFnExistShowAfterTable">
 
@@ -4673,6 +4675,7 @@
 
 								<!-- except gb and bsi  -->
 
+										<xsl:apply-templates select="../*[local-name()='dl']"/>
 										<xsl:apply-templates select="../*[local-name()='note']"/>
 
 								<xsl:variable name="isDisplayRowSeparator">
@@ -7560,6 +7563,7 @@
 		<xsl:variable name="annotation-id" select="@id"/>
 		<xsl:variable name="callout" select="//*[@target = $annotation-id]/text()"/>
 		<fo:block id="{$annotation-id}" white-space="nowrap">
+
 			<fo:inline>
 				<xsl:apply-templates>
 					<xsl:with-param name="callout" select="concat('&lt;', $callout, '&gt; ')"/>
@@ -9735,6 +9739,35 @@
 						</fo:block-container>
 					</xsl:when> <!-- end block -->
 
+					<xsl:when test="contains(normalize-space($fo_element), 'list')">
+
+						<xsl:variable name="provisional_distance_between_starts">
+							7
+						</xsl:variable>
+						<xsl:variable name="indent">
+							0
+						</xsl:variable>
+
+						<fo:list-block provisional-distance-between-starts="{$provisional_distance_between_starts}mm">
+							<fo:list-item>
+								<fo:list-item-label start-indent="{$indent}mm" end-indent="label-end()">
+									<fo:block>
+										<xsl:apply-templates select="*[local-name()='name']">
+											<xsl:with-param name="fo_element">block</xsl:with-param>
+										</xsl:apply-templates>
+									</fo:block>
+								</fo:list-item-label>
+								<fo:list-item-body start-indent="body-start()">
+									<fo:block>
+										<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+											<xsl:with-param name="fo_element" select="$fo_element"/>
+										</xsl:apply-templates>
+									</fo:block>
+								</fo:list-item-body>
+							</fo:list-item>
+						</fo:list-block>
+					</xsl:when> <!-- end list -->
+
 					<xsl:otherwise> <!-- inline -->
 
 						<!-- display 'EXAMPLE' and first element in the same line -->
@@ -9814,6 +9847,11 @@
 						<xsl:apply-templates/>
 					</fo:block>
 				</fo:block-container>
+			</xsl:when>
+			<xsl:when test="starts-with(normalize-space($element), 'list')">
+				<fo:block xsl:use-attribute-sets="example-p-style">
+					<xsl:apply-templates/>
+				</fo:block>
 			</xsl:when>
 			<xsl:otherwise>
 				<fo:inline xsl:use-attribute-sets="example-p-style">
@@ -11627,6 +11665,194 @@
 	</xsl:template>
 	<!-- ===================================== -->
 	<!-- END XML UPDATE STEP: enclose standard's name into tag 'keep-together_within-line'  -->
+	<!-- ===================================== -->
+
+	<!-- ===================================== -->
+	<!-- ===================================== -->
+	<!-- Make linear XML (need for landscape orientation) -->
+	<!-- ===================================== -->
+	<!-- ===================================== -->
+	<xsl:template match="@*|node()" mode="linear_xml">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" mode="linear_xml"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="processing-instruction()" mode="linear_xml">
+		<xsl:copy-of select="."/>
+	</xsl:template>
+
+	<!-- From:
+		<clause>
+			<title>...</title>
+			<p>...</p>
+		</clause>
+		To:
+			<clause/>
+			<title>...</title>
+			<p>...</p>
+		-->
+	<xsl:template match="*[local-name() = 'foreword'] |            *[local-name() = 'foreword']//*[local-name() = 'clause'] |            *[local-name() = 'preface']//*[local-name() = 'clause'][not(@type = 'corrigenda') and not(@type = 'policy') and not(@type = 'related-refs')] |            *[local-name() = 'introduction'] |            *[local-name() = 'introduction']//*[local-name() = 'clause'] |            *[local-name() = 'sections']//*[local-name() = 'clause'] |             *[local-name() = 'annex'] |             *[local-name() = 'annex']//*[local-name() = 'clause'] |             *[local-name() = 'references'][not(@hidden = 'true')] |            *[local-name() = 'bibliography']/*[local-name() = 'clause'] |             *[local-name() = 'colophon'] |             *[local-name() = 'colophon']//*[local-name() = 'clause'] |             *[local-name()='sections']//*[local-name()='terms'] |             *[local-name()='sections']//*[local-name()='definitions'] |            *[local-name()='annex']//*[local-name()='definitions']" mode="linear_xml" name="clause_linear">
+
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+
+			<xsl:attribute name="keep-with-next">always</xsl:attribute>
+
+			<xsl:if test="local-name() = 'foreword' or local-name() = 'introduction' or    local-name(..) = 'preface' or local-name(..) = 'sections' or     (local-name() = 'references' and parent::*[local-name() = 'bibliography']) or    (local-name() = 'clause' and parent::*[local-name() = 'bibliography']) or    local-name() = 'annex' or     local-name(..) = 'annex' or    local-name(..) = 'colophon'">
+				<xsl:attribute name="mainsection">true</xsl:attribute>
+			</xsl:if>
+		</xsl:copy>
+
+		<xsl:apply-templates mode="linear_xml"/>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'term']" mode="linear_xml" priority="2">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+			<xsl:attribute name="keep-with-next">always</xsl:attribute>
+			<xsl:variable name="level">
+				<xsl:call-template name="getLevel"/>
+			</xsl:variable>
+			<xsl:attribute name="depth"><xsl:value-of select="$level"/></xsl:attribute>
+			<xsl:attribute name="ancestor">sections</xsl:attribute>
+			<xsl:apply-templates select="node()[not(local-name() = 'term')]" mode="linear_xml"/>
+		</xsl:copy>
+		<xsl:apply-templates select="*[local-name() = 'term']" mode="linear_xml"/>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'introduction']//*[local-name() = 'title'] |     *[local-name() = 'foreword']//*[local-name() = 'title'] |     *[local-name() = 'sections']//*[local-name() = 'title'] |     *[local-name() = 'annex']//*[local-name() = 'title'] |     *[local-name() = 'bibliography']/*[local-name() = 'clause']/*[local-name() = 'title'] |     *[local-name() = 'references']/*[local-name() = 'title'] |     *[local-name() = 'colophon']//*[local-name() = 'title']" mode="linear_xml" priority="2">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+
+			<xsl:attribute name="keep-with-next">always</xsl:attribute>
+
+			<xsl:variable name="level">
+				<xsl:call-template name="getLevel"/>
+			</xsl:variable>
+			<xsl:attribute name="depth"><xsl:value-of select="$level"/></xsl:attribute>
+
+			<xsl:if test="parent::*[local-name() = 'annex']">
+				<xsl:attribute name="depth">1</xsl:attribute>
+			</xsl:if>
+
+			<xsl:if test="../@inline-header = 'true' and following-sibling::*[1][local-name() = 'p']">
+				<xsl:copy-of select="../@inline-header"/>
+			</xsl:if>
+
+			<xsl:attribute name="ancestor">
+				<xsl:choose>
+					<xsl:when test="ancestor::*[local-name() = 'foreword']">foreword</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'introduction']">introduction</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'sections']">sections</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'annex']">annex</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'bibliography']">bibliography</xsl:when>
+				</xsl:choose>
+			</xsl:attribute>
+
+			<xsl:apply-templates mode="linear_xml"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- add @to = figure, table, clause -->
+	<!-- add @depth = from  -->
+	<xsl:template match="*[local-name() = 'xref']" mode="linear_xml">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+			<xsl:variable name="target" select="@target"/>
+			<xsl:attribute name="to">
+				<xsl:value-of select="local-name(//*[@id = current()/@target][1])"/>
+			</xsl:attribute>
+			<xsl:attribute name="depth">
+				<xsl:value-of select="//*[@id = current()/@target][1]/*[local-name() = 'title']/@depth"/>
+			</xsl:attribute>
+			<xsl:apply-templates select="node()" mode="linear_xml"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[not(ancestor::*[local-name() = 'sourcecode'])]/*[local-name() = 'p' or local-name() = 'strong' or local-name() = 'em']/text()" mode="linear_xml">
+		<xsl:choose>
+			<xsl:when test="contains(., $non_breaking_hyphen)">
+				<xsl:call-template name="replaceChar">
+					<xsl:with-param name="text" select="."/>
+					<xsl:with-param name="replace" select="$non_breaking_hyphen"/>
+					<xsl:with-param name="by" select="'-'"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="replaceChar">
+		<xsl:param name="text"/>
+		<xsl:param name="replace"/>
+		<xsl:param name="by"/>
+		<xsl:choose>
+			<xsl:when test="$text = '' or $replace = '' or not($replace)">
+				<xsl:value-of select="$text"/>
+			</xsl:when>
+			<xsl:when test="contains($text, $replace)">
+				<xsl:value-of select="substring-before($text,$replace)"/>
+				<xsl:element name="inlineChar" namespace="https://www.metanorma.org/ns/jis"><xsl:value-of select="$by"/></xsl:element>
+				<xsl:call-template name="replaceChar">
+						<xsl:with-param name="text" select="substring-after($text,$replace)"/>
+						<xsl:with-param name="replace" select="$replace"/>
+						<xsl:with-param name="by" select="$by"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$text"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'inlineChar']">
+		<fo:inline><xsl:value-of select="."/></fo:inline>
+	</xsl:template>
+
+	<!-- change @reference to actual value, and add skip_footnote_body="true" for repeatable (2nd, 3rd, ...) -->
+	<!--
+	<fn reference="1">
+			<p id="_8e5cf917-f75a-4a49-b0aa-1714cb6cf954">Formerly denoted as 15 % (m/m).</p>
+		</fn>
+	-->
+	<xsl:template match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure')] and not(ancestor::*[local-name() = 'name']))]" mode="linear_xml" name="linear_xml_fn">
+		<xsl:variable name="p_fn_">
+			<xsl:call-template name="get_fn_list"/>
+		</xsl:variable>
+		<xsl:variable name="p_fn" select="xalan:nodeset($p_fn_)"/>
+		<xsl:variable name="gen_id" select="generate-id(.)"/>
+		<xsl:variable name="lang" select="ancestor::*[contains(local-name(), '-standard')]/*[local-name()='bibdata']//*[local-name()='language'][@current = 'true']"/>
+		<xsl:variable name="reference" select="@reference"/>
+		<!-- fn sequence number in document -->
+		<xsl:variable name="current_fn_number" select="count($p_fn//fn[@reference = $reference]/preceding-sibling::fn) + 1"/>
+
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+			<!-- put actual reference number -->
+			<xsl:attribute name="current_fn_number">
+				<xsl:value-of select="$current_fn_number"/>
+			</xsl:attribute>
+			<xsl:attribute name="skip_footnote_body"> <!-- false for repeatable footnote -->
+				<xsl:value-of select="not($p_fn//fn[@gen_id = $gen_id] and (1 = 1))"/>
+			</xsl:attribute>
+			<xsl:apply-templates select="node()" mode="linear_xml"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'p'][@type = 'section-title']" priority="3" mode="linear_xml">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+			<xsl:if test="@depth = '1'">
+				<xsl:attribute name="mainsection">true</xsl:attribute>
+			</xsl:if>
+			<xsl:apply-templates select="node()" mode="linear_xml"/>
+		</xsl:copy>
+	</xsl:template>
+	<!-- ===================================== -->
+	<!-- ===================================== -->
+	<!-- END: Make linear XML (need for landscape orientation) -->
+	<!-- ===================================== -->
 	<!-- ===================================== -->
 
 	<!-- for correct rendering combining chars -->
