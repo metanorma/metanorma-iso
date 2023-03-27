@@ -86,7 +86,7 @@ module IsoDoc
       }.freeze
 
       def new_styles(docxml)
-        STYLESMAP.each do |k, v|
+        self.class::STYLESMAP.each do |k, v|
           docxml.xpath("//*[@class = '#{k}']").each { |s| s["class"] = v }
         end
         docxml.xpath("//div[@class = 'Section3']//p[@class = 'Tabletitle']")

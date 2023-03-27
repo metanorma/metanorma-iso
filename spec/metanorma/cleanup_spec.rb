@@ -34,47 +34,50 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-t90t_90">
-              <preferred>
-                <letter-symbol><name>
-                <stem type="MathML">
-                  <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <msub>
-                      <mrow>
-                        <mi>t</mi></mrow>
-                      <mrow>
-                        <mn>90</mn>
-                      </mrow>
-                    </msub>
-                  </math>
-                  <asciimath>t_90</asciimath>
-                </stem>
-                </name></letter-symbol>
-              </preferred>
-              <admitted>
-                <letter-symbol><name>
-                <stem type="MathML">
-                  <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <msub>
-                      <mrow>
-                        <mi>t</mi>
-                      </mrow>
-                      <mrow>
-                        <mn>91</mn>
-                      </mrow>
-                    </msub>
-                  </math>
-                  <asciimath>t_91</asciimath>
-                </stem>
-                </name></letter-symbol>
-              </admitted>
-              <definition><verbal-definition>
-                <p id="_">Time</p>
-              </verbal-definition></definition>
-            </term>
-          </terms>
-        </sections>
-      </iso-standard>
+                         <term id="term-t-90-t_90">
+               <preferred>
+                 <letter-symbol>
+                   <name>
+                     <stem type="MathML">
+                       <math xmlns="http://www.w3.org/1998/Math/MathML">
+                         <mstyle displaystyle="true">
+                           <msub>
+                             <mi>t</mi>
+                             <mn>90</mn>
+                           </msub>
+                         </mstyle>
+                       </math>
+                       <asciimath>t_90</asciimath>
+                     </stem>
+                   </name>
+                 </letter-symbol>
+               </preferred>
+               <admitted>
+                 <letter-symbol>
+                   <name>
+                     <stem type="MathML">
+                       <math xmlns="http://www.w3.org/1998/Math/MathML">
+                         <mstyle displaystyle="true">
+                           <msub>
+                             <mi>t</mi>
+                             <mn>91</mn>
+                           </msub>
+                         </mstyle>
+                       </math>
+                       <asciimath>t_91</asciimath>
+                     </stem>
+                   </name>
+                 </letter-symbol>
+               </admitted>
+               <definition>
+                 <verbal-definition>
+                   <p id="_">Time</p>
+                 </verbal-definition>
+               </definition>
+             </term>
+           </terms>
+         </sections>
+       </iso-standard>
     OUTPUT
     expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to xmlpp(output)
@@ -139,47 +142,48 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-t90t_90">
-              <preferred>
-                <letter-symbol><name>
-                <stem type="MathML">
-                  <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <msub>
-                      <mrow>
-                        <mi>t</mi></mrow>
-                      <mrow>
-                        <mn>90</mn>
-                      </mrow>
-                    </msub>
-                  </math>
-                  <asciimath>t_90</asciimath>
-                </stem>
-                </name></letter-symbol>
-              </preferred>
-              <definition>
-                <verbal-definition>
-                <formula id="_">
-                  <stem type="MathML">
-                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                      <msub>
-                        <mrow>
-                          <mi>t</mi>
-                        </mrow>
-                        <mrow>
-                          <mi>A</mi>
-                        </mrow>
-                      </msub>
-                    </math>
-                    <asciimath>t_A</asciimath>
-                  </stem>
-                </formula>
-                <p id="_">This paragraph is extraneous</p></verbal-definition>
-              </definition>
-            </term>
-          </terms>
-        </sections>
+                         <term id="term-t-90-t_90">
+               <preferred>
+                 <letter-symbol>
+                   <name>
+                     <stem type="MathML">
+                       <math xmlns="http://www.w3.org/1998/Math/MathML">
+                         <mstyle displaystyle="true">
+                           <msub>
+                             <mi>t</mi>
+                             <mn>90</mn>
+                           </msub>
+                         </mstyle>
+                       </math>
+                       <asciimath>t_90</asciimath>
+                     </stem>
+                   </name>
+                 </letter-symbol>
+               </preferred>
+               <definition>
+                 <verbal-definition>
+                   <formula id="_">
+                     <stem type="MathML">
+                       <math xmlns="http://www.w3.org/1998/Math/MathML">
+                         <mstyle displaystyle="true">
+                           <msub>
+                             <mi>t</mi>
+                             <mi>A</mi>
+                           </msub>
+                         </mstyle>
+                       </math>
+                       <asciimath>t_A</asciimath>
+                     </stem>
+                   </formula>
+                   <p id="_">This paragraph is extraneous</p>
+                 </verbal-definition>
+               </definition>
+             </term>
+           </terms>
+         </sections>
        </iso-standard>
     OUTPUT
+
     expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to xmlpp(output)
   end
@@ -241,16 +245,19 @@ RSpec.describe Metanorma::ISO do
           <formula id="_">
             <stem type="MathML">
               <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mstyle displaystyle="true">
                 <mi>r</mi>
                 <mo>=</mo>
                 <mn>1</mn>
-                <mo>%</mo>
+                <mi>%</mi>
                 <mi>r</mi>
                 <mo>=</mo>
                 <mn>1</mn>
-                <mo>%</mo>
+                <mi>%</mi>
+                </mstyle>
               </math>
-              <asciimath>r = 1 % r = 1 %</asciimath>
+              <asciimath>r = 1 %
+              r = 1 %</asciimath>
             </stem>
             <note id="_">
               <p id="_">That formula does not do much</p>
@@ -744,11 +751,16 @@ RSpec.describe Metanorma::ISO do
           <formula id="_">
             <stem type="MathML">
               <math xmlns="http://www.w3.org/1998/Math/MathML">
-                <mi>F</mi>
-                <mi>or</mi>
-                <mi>μ</mi>
-                <mi>l</mi>
-                <mi>a</mi>
+                <mstyle displaystyle="true">
+                   <mi>F</mi>
+                   <mi>o</mi>
+                   <mstyle mathvariant="normal">
+                     <munder>
+                       <mi>a</mi>
+                       <mo>¯</mo>
+                     </munder>
+                   </mstyle>
+                 </mstyle>
               </math>
               <asciimath>Formula</asciimath>
             </stem>
