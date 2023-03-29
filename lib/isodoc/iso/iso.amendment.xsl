@@ -3671,7 +3671,7 @@
 
 	<xsl:template name="processTables_Contents">
 		<tables>
-			<xsl:for-each select="//*[local-name() = 'table'][@id and *[local-name() = 'name'] and normalize-space(@id) != '']">
+			<xsl:for-each select="//*[local-name() = 'table'][not(ancestor::*[local-name() = 'metanorma-extension'])][@id and *[local-name() = 'name'] and normalize-space(@id) != '']">
 				<table id="{@id}" alt-text="{*[local-name() = 'name']}">
 					<xsl:copy-of select="*[local-name() = 'name']"/>
 				</table>
