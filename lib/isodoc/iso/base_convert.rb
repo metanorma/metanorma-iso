@@ -188,6 +188,14 @@ module IsoDoc
         @in_table = false
       end
 
+      def table_parse_tail(node, out)
+        (dl = node.at(ns("./dl"))) && parse(dl, out)
+        node.xpath(ns("./source")).each { |n| parse(n, out) }
+        node.xpath(ns("./note[not(@type = 'units')]")).each do |n|
+          parse(n, out)
+        end
+      end
+
       def figure_parse1(node, out)
         measurement_units(node, out)
         out.div **figure_attrs(node) do |div|
