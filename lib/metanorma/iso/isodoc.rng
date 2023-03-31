@@ -382,6 +382,9 @@
         <optional>
           <ref name="dl"/>
         </optional>
+        <optional>
+          <ref name="source"/>
+        </optional>
       </element>
     </define>
     <define name="figure">
@@ -404,9 +407,6 @@
           <attribute name="class"/>
         </optional>
         <ref name="BlockAttributes"/>
-        <optional>
-          <ref name="source"/>
-        </optional>
         <optional>
           <ref name="tname"/>
         </optional>
@@ -431,6 +431,20 @@
         <zeroOrMore>
           <ref name="note"/>
         </zeroOrMore>
+        <optional>
+          <ref name="source"/>
+        </optional>
+      </element>
+    </define>
+    <define name="source">
+      <element name="source">
+        <attribute name="status">
+          <ref name="SourceStatusType"/>
+        </attribute>
+        <ref name="origin"/>
+        <optional>
+          <ref name="modification"/>
+        </optional>
       </element>
     </define>
     <define name="sourcecode">
@@ -2099,10 +2113,7 @@
   <define name="termsource">
     <element name="termsource">
       <attribute name="status">
-        <choice>
-          <value>identical</value>
-          <value>modified</value>
-        </choice>
+        <ref name="SourceStatusType"/>
       </attribute>
       <attribute name="type">
         <choice>
@@ -2115,6 +2126,17 @@
         <ref name="modification"/>
       </optional>
     </element>
+  </define>
+  <define name="SourceStatusType">
+    <choice>
+      <value>identical</value>
+      <value>modified</value>
+      <value>restyled</value>
+      <value>context-added</value>
+      <value>generalisation</value>
+      <value>specialisation</value>
+      <value>unspecified</value>
+    </choice>
   </define>
   <define name="origin">
     <element name="origin">

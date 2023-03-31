@@ -183,9 +183,7 @@ module IsoDoc
         measurement_units(node, out)
         out.table **table_attrs(node) do |t|
           table_parse_core(node, t)
-          (dl = node.at(ns("./dl"))) && parse(dl, out)
-          node.xpath(ns("./note[not(@type = 'units')]"))
-            .each { |n| parse(n, out) }
+          table_parse_tail(node, t)
         end
         @in_table = false
       end
