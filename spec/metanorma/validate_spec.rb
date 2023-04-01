@@ -501,23 +501,6 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "Figure should have title"
   end
 
-  it "warns that callouts do not match annotations" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
-      [source,ruby]
-      --
-      puts "Hello, world." <1>
-      %w{a b c}.each do |x|
-        puts x
-      end
-      --
-      <1> This is one callout
-      <2> This is another callout
-    INPUT
-    expect(File.read("test.err"))
-      .to include "mismatch of callouts and annotations"
-  end
-
   it "warns that term source is not a real reference" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}

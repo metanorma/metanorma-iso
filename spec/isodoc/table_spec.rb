@@ -61,6 +61,18 @@ RSpec.describe IsoDoc do
                 <dt>Drago</dt>
                 <dd>A type of rice</dd>
               </dl>
+                          <source status="generalisation">
+        <origin bibitemid="ISO712" type="inline" citeas="">
+          <localityStack>
+            <locality type="section">
+              <referenceFrom>1</referenceFrom>
+            </locality>
+          </localityStack>
+        </origin>
+        <modification>
+          <p id="_">with adjustments</p>
+        </modification>
+      </source>
               <note>
                 <p>This is a table about rice</p>
               </note>
@@ -143,6 +155,12 @@ RSpec.describe IsoDoc do
                 <dt>Drago</dt>
                 <dd>A type of rice</dd>
               </dl>
+              <source status="generalisation">
+                 <origin bibitemid="ISO712" type="inline" citeas=""><localityStack><locality type="section"><referenceFrom>1</referenceFrom></locality></localityStack>, Section 1</origin>
+                 <modification>
+                   <p id="_">with adjustments</p>
+                 </modification>
+               </source>
               <note>
                 <name>NOTE</name>
                 <p>This is a table about rice</p>
@@ -234,6 +252,18 @@ RSpec.describe IsoDoc do
               </tr>
               <tr>
                 <td colspan='5' style='border-top:0pt;border-bottom:solid windowtext 1.5pt;'>
+                           <dl>
+             <dt>
+               <p>Drago</p>
+             </dt>
+             <dd>A type of rice</dd>
+           </dl>
+           <div class="BlockSource">
+             <p>
+          , Section 1
+          with adjustments
+        </p>
+           </div>
                   <div class='Note'>
                     <p>
                       <span class='note_label'>NOTE</span>
@@ -254,12 +284,6 @@ RSpec.describe IsoDoc do
                 </td>
               </tr>
             </tfoot>
-            <dl>
-              <dt>
-                <p>Drago</p>
-              </dt>
-              <dd>A type of rice</dd>
-            </dl>
           </table>
         </div>
         <p class='zzSTDTitle1'/>
@@ -335,6 +359,12 @@ RSpec.describe IsoDoc do
               </tr>
               <tr>
                 <td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
+                            <dl>
+              <dt>
+                <p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal">Drago</p>
+              </dt>
+              <dd>A type of rice</dd>
+            </dl>
                   <div class="Note">
                     <p class="Note"><span class="note_label">NOTE</span><span style="mso-tab-count:1">  </span>This is a table about rice</p>
                   </div>
@@ -347,12 +377,6 @@ RSpec.describe IsoDoc do
                 </td>
               </tr>
             </tfoot>
-            <dl>
-              <dt>
-                <p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal">Drago</p>
-              </dt>
-              <dd>A type of rice</dd>
-            </dl>
           </table>
         </div>
     OUTPUT

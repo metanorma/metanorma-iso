@@ -97,7 +97,7 @@ RSpec.describe IsoDoc do
               <preferred><strong>paddy</strong></preferred>
               <admitted>paddy rice</admitted>
               <admitted>rough rice</admitted>
-              <deprecates>cargo rice</deprecates>
+              <deprecates>DEPRECATED: cargo rice</deprecates>
               <definition>
                 <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>rice retaining its husk after threshing</p>
               </definition>
