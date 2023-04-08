@@ -88,7 +88,7 @@ def xmlpp(xml)
   HTMLEntities.new.decode(ret)
 end
 
-ASCIIDOC_BLANK_HDR = <<~"HDR".freeze
+ASCIIDOC_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -98,7 +98,7 @@ ASCIIDOC_BLANK_HDR = <<~"HDR".freeze
 
 HDR
 
-AMD_BLANK_HDR = <<~"HDR".freeze
+AMD_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -109,7 +109,7 @@ AMD_BLANK_HDR = <<~"HDR".freeze
 
 HDR
 
-ISOBIB_BLANK_HDR = <<~"HDR".freeze
+ISOBIB_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -119,7 +119,7 @@ ISOBIB_BLANK_HDR = <<~"HDR".freeze
 
 HDR
 
-FLUSH_CACHE_ISOBIB_BLANK_HDR = <<~"HDR".freeze
+FLUSH_CACHE_ISOBIB_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -129,7 +129,7 @@ FLUSH_CACHE_ISOBIB_BLANK_HDR = <<~"HDR".freeze
 
 HDR
 
-CACHED_ISOBIB_BLANK_HDR = <<~"HDR".freeze
+CACHED_ISOBIB_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -138,7 +138,7 @@ CACHED_ISOBIB_BLANK_HDR = <<~"HDR".freeze
 
 HDR
 
-LOCAL_CACHED_ISOBIB_BLANK_HDR = <<~"HDR".freeze
+LOCAL_CACHED_ISOBIB_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -148,7 +148,7 @@ LOCAL_CACHED_ISOBIB_BLANK_HDR = <<~"HDR".freeze
 
 HDR
 
-VALIDATING_BLANK_HDR = <<~"HDR".freeze
+VALIDATING_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -303,13 +303,13 @@ HDR
 OPTIONS = [backend: :iso, header_footer: true].freeze
 
 def mock_pdf
-  allow(::Mn2pdf).to receive(:convert) do |url, output,|
+  allow(Mn2pdf).to receive(:convert) do |url, output,|
     FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
   end
 end
 
 def mock_sts
-  allow(::Mn2sts).to receive(:convert) do |url, output,|
+  allow(Mn2sts).to receive(:convert) do |url, output,|
     FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
   end
 end

@@ -25,9 +25,10 @@ WORD_HTML_CSS_WORDINTRO = {
 
 RSpec.describe IsoDoc do
   it "generates file based on string input" do
+    FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS.merge(filename: "test"))
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
               <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
@@ -52,9 +53,10 @@ RSpec.describe IsoDoc do
   end
 
   it "generates HTML output docs with null configuration" do
+    FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
               <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
@@ -79,9 +81,10 @@ RSpec.describe IsoDoc do
   end
 
   it "generates Word output docs with null configuration" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>
             <foreword>
@@ -98,6 +101,7 @@ RSpec.describe IsoDoc do
   end
 
   it "generates HTML output docs with null configuration from file" do
+    FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS_SUBDIR.dup)
       .convert("spec/assets/iso.xml", nil, false)
@@ -109,6 +113,7 @@ RSpec.describe IsoDoc do
   end
 
   it "generates Word output docs with null configuration from file" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS_SUBDIR.dup)
       .convert("spec/assets/iso.xml", nil, false)
@@ -119,6 +124,7 @@ RSpec.describe IsoDoc do
   end
 
   it "generates Pdf output docs with null configuration from file" do
+    FileUtils.rm_rf "spec/assets/iso.pdf"
     mock_pdf
     IsoDoc::Iso::PdfConvert
       .new(WORD_HTML_CSS.dup)
@@ -127,9 +133,10 @@ RSpec.describe IsoDoc do
   end
 
   it "populates Word template with terms reference labels" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <terms id="_terms_and_definitions" obligation="normative">
@@ -157,7 +164,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
 
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class='WordSection3'>
          <p class='zzSTDTitle1'/>
          <div>
@@ -186,9 +193,10 @@ RSpec.describe IsoDoc do
   end
 
   it "populates Word header" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS_HEADER_HTML.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata type="article">
             <docidentifier>
@@ -202,9 +210,10 @@ RSpec.describe IsoDoc do
   end
 
   it "populates HTML ToC" do
+    FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <clause id="A" inline-header="false" obligation="normative">
@@ -243,99 +252,100 @@ RSpec.describe IsoDoc do
       .at("//div[@id = 'toc']").to_xml
 
     expect(xmlpp(strip_guid(html)))
-      .to be_equivalent_to xmlpp(<<~'OUTPUT')
-           <div id="toc">
-         <ul>
-           <li class="h1">
-             <div class="collapse-group">
-               <a href="#_">1
-                
-               Clause 4</a>
-               <div class="collapse-button"/>
-             </div>
-             <ul class="content collapse">
-               <li class="h2">
-                 <a href="#_">      1.1
-                  
-                 Introduction
+      .to be_equivalent_to xmlpp(<<~OUTPUT)
+            <div id="toc">
+          <ul>
+            <li class="h1">
+              <div class="collapse-group">
+                <a href="#_">1
+                 
+                Clause 4</a>
+                <div class="collapse-button"/>
+              </div>
+              <ul class="content collapse">
+                <li class="h2">
+                  <a href="#_">      1.1
+                   
+                  Introduction
 
-                 to this
+                  to this
 
-               </a>
-               </li>
-               <li class="h2">
-                 <a href="#_">      1.2
-                  
-                 Clause 4.2</a>
-               </li>
-             </ul>
-           </li>
-           <li class="h1">
-             <div class="collapse-group">
-               <a href="#_">2  Clause 5</a>
-               <div class="collapse-button"/>
-             </div>
-           </li>
-           <li class="h1">
-             <a href="#_">      3  Clause 6</a>
-             <ul class="content collapse">
-               <li class="h2">
-                 <a href="#_">      2.1  Clause 5.1</a>
-               </li>
-             </ul>
-           </li>
-         </ul>
-       </div>
+                </a>
+                </li>
+                <li class="h2">
+                  <a href="#_">      1.2
+                   
+                  Clause 4.2</a>
+                </li>
+              </ul>
+            </li>
+            <li class="h1">
+              <div class="collapse-group">
+                <a href="#_">2  Clause 5</a>
+                <div class="collapse-button"/>
+              </div>
+            </li>
+            <li class="h1">
+              <a href="#_">      3  Clause 6</a>
+              <ul class="content collapse">
+                <li class="h2">
+                  <a href="#_">      2.1  Clause 5.1</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       OUTPUT
   end
 
   it "populates Word ToC" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS_WORDINTRO.dup)
-      .convert("test", <<~"INPUT", false)
-<iso-standard xmlns="http://riboseinc.com/isoxml">
-  <metanorma-extension>
-    <presentation-metadata>
-      <name>TOC Heading Levels</name>
-      <value>3</value>
-    </presentation-metadata>
-    <presentation-metadata>
-      <name>HTML TOC Heading Levels</name>
-      <value>2</value>
-    </presentation-metadata>
-    <presentation-metadata>
-      <name>DOC TOC Heading Levels</name>
-      <value>3</value>
-    </presentation-metadata>
-  </metanorma-extension>
-          <sections>
-            <clause id="A" inline-header="false" obligation="normative">
-              <title>1
-                <tab/>
-                Clause 4</title>
-              <clause id="N" inline-header="false" obligation="normative">
-                <title>1.1
-                  <tab/>
-                  Introduction
-                  <bookmark id="Q"/>
-                  to this
-                  <fn reference="1">
-                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </title>
-              </clause>
-              <clause id="O" inline-header="false" obligation="normative">
-                <title>1.2
-                  <tab/>
-                  Clause 4.2</title>
-                <p>A
-                  <fn reference="1">
-                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </p>
-              </clause>
-            </clause>
-          </sections>
-          <annex id="AA"><title>Annex A<tab/>Annex First</title></annex>
-        </iso-standard>
+      .convert("test", <<~INPUT, false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <metanorma-extension>
+            <presentation-metadata>
+              <name>TOC Heading Levels</name>
+              <value>3</value>
+            </presentation-metadata>
+            <presentation-metadata>
+              <name>HTML TOC Heading Levels</name>
+              <value>2</value>
+            </presentation-metadata>
+            <presentation-metadata>
+              <name>DOC TOC Heading Levels</name>
+              <value>3</value>
+            </presentation-metadata>
+          </metanorma-extension>
+                  <sections>
+                    <clause id="A" inline-header="false" obligation="normative">
+                      <title>1
+                        <tab/>
+                        Clause 4</title>
+                      <clause id="N" inline-header="false" obligation="normative">
+                        <title>1.1
+                          <tab/>
+                          Introduction
+                          <bookmark id="Q"/>
+                          to this
+                          <fn reference="1">
+                            <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                        </title>
+                      </clause>
+                      <clause id="O" inline-header="false" obligation="normative">
+                        <title>1.2
+                          <tab/>
+                          Clause 4.2</title>
+                        <p>A
+                          <fn reference="1">
+                            <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                        </p>
+                      </clause>
+                    </clause>
+                  </sections>
+                  <annex id="AA"><title>Annex A<tab/>Annex First</title></annex>
+                </iso-standard>
       INPUT
 
     word = File.read("test.doc", encoding: "UTF-8")
@@ -455,6 +465,7 @@ RSpec.describe IsoDoc do
   end
 
   it "reorders footnote numbers" do
+    FileUtils.rm_rf "test.html"
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
@@ -494,7 +505,7 @@ RSpec.describe IsoDoc do
            '<main xmlns:epub="epub" class="main-section">')
       .sub(%r{</main>.*$}m, "</main>")
 
-    expect(xmlpp(strip_guid(html))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(strip_guid(html))).to be_equivalent_to xmlpp(<<~OUTPUT)
       <main class="main-section" xmlns:epub="epub">
         <button id="myBtn" onclick="topFunction()" title="Go to top">Top</button>
         <p class="zzSTDTitle1"/>
@@ -534,6 +545,7 @@ RSpec.describe IsoDoc do
       </main>
     OUTPUT
 
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS_WORDINTRO.dup)
       .convert("test", input, false)
@@ -544,7 +556,7 @@ RSpec.describe IsoDoc do
       .sub(%r{</body>.*$}m, "</body>")
       .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
 
-    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~OUTPUT)
         <body xmlns:epub="epub">
         <div class="WordSection3">
           <p class="zzSTDTitle1"/>
@@ -631,9 +643,10 @@ RSpec.describe IsoDoc do
   end
 
   it "processes IsoXML terms for HTML" do
+    FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <terms id="_terms_and_definitions" obligation="normative">
@@ -709,9 +722,10 @@ RSpec.describe IsoDoc do
   end
 
   it "inserts default paragraph between two tables for Word" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <annex id="P" inline-header="false" obligation="normative">
             <example id="_63112cbc-cde0-435f-9553-e0b8c4f5851c">
@@ -726,7 +740,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class="WordSection3">
         <p class="zzSTDTitle1"/>
         <p class="MsoNormal">
@@ -750,9 +764,10 @@ RSpec.describe IsoDoc do
   end
 
   it "processes figure keys (Word)" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <annex id="P" inline-header="false" obligation="normative">
             <figure id="samplecode">
@@ -773,7 +788,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class="WordSection3">
         <p class="zzSTDTitle1"/>
         <p class="MsoNormal">
@@ -809,9 +824,10 @@ RSpec.describe IsoDoc do
   end
 
   it "processes editorial notes (Word)" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
           <iso-standard xmlns="http://riboseinc.com/isoxml">
             <annex id="P" inline-header="false" obligation="normative">
             <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
@@ -827,7 +843,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class='WordSection3'>
          <p class='zzSTDTitle1'/>
          <p class='MsoNormal'>
@@ -942,14 +958,16 @@ RSpec.describe IsoDoc do
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(presxml)
 
+    FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS.dup)
       .convert("test", presxml, false)
 
     word = File.read("test.html", encoding: "UTF-8")
-    expect((word)).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'
-    expect((word)).to include "I am the Walrus."
+    expect(word).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'
+    expect(word).to include "I am the Walrus."
 
+    FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
       .convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
@@ -991,8 +1009,9 @@ RSpec.describe IsoDoc do
   end
 
   it "populates Word ToC" do
+    FileUtils.rm_rf "test.doc"
     IsoDoc::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup)
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <clause id="A" inline-header="false" obligation="normative">
