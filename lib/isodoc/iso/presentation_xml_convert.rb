@@ -23,6 +23,7 @@ module IsoDoc
         sourcecode docxml
         formula docxml
         admonition docxml
+        source docxml
         ol docxml
         permission docxml
         requirement docxml

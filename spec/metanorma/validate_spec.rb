@@ -5,7 +5,7 @@ RSpec.describe Metanorma::ISO do
   context "when xref_error.adoc compilation" do
     it "generates error file" do
       FileUtils.rm_f "xref_error.err"
-      File.write("xref_error.adoc", <<~"CONTENT")
+      File.write("xref_error.adoc", <<~CONTENT)
         = X
         A
 
@@ -25,7 +25,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warns of image names not compliant with DRG" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -73,73 +73,73 @@ RSpec.describe Metanorma::ISO do
       image::spec/examples/rice_img/1000-1_ed2amd3fig3.png[]
 
     INPUT
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/rice_image1.png does not match " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/rice_image1.png does not match " \
       "DRG requirements: expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1001_ed2amd3fig1.png does not " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1001_ed2amd3fig1.png does not " \
       "match DRG requirements: " \
       "expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/SL1000-1_ed2amd3fig1.png does not " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/SL1000-1_ed2amd3fig1.png does not " \
       "match DRG requirements: " \
       "expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/ISO_1213_1.png does not match DRG " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/ISO_1213_1.png does not match DRG " \
       "requirements: expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figA.png does not " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3figA.png does not " \
       "match DRG requirements"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png does " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png does " \
       "not match DRG requirements"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png is " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png is " \
       "under a table but is not so labelled"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig2.png is under " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig2.png is under " \
       "a table but is not so labelled"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figTab2.png is " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3figTab2.png is " \
       "labelled as under a table but is not"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
       "labelled as under a table but is not"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figA2.png is " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3figA2.png is " \
       "under an annex but is not so labelled"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig3.png is " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig3.png is " \
       "under an annex but is not so labelled"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3figA1.png is " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3figA1.png is " \
       "labelled as under an annex but is not"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
       "labelled as under an annex but is not"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1b.png has a " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig1b.png has a " \
       "subfigure letter but is not a subfigure"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig4.png does not " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig4.png does not " \
       "have a subfigure letter but is a subfigure"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1a.png has a " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig1a.png has a " \
       "subfigure letter but is not a subfigure"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png has a " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png has a " \
       "subfigure letter but is not a subfigure"
-    expect(File.read("test.err")).to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig5_f.png expected " \
+    expect(File.read("test.err")).to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig5_f.png expected " \
       "to have suffix _e"
-    expect(File.read("test.err")).not_to include \
-      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png expected " \
+    expect(File.read("test.err")).not_to include
+    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png expected " \
       "to have suffix _e"
   end
 
   context "Warns of missing scope" do
     it "Scope clause missing" do
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -154,7 +154,7 @@ RSpec.describe Metanorma::ISO do
     end
 
     it "Scope clause not missing if supplied" do
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -169,7 +169,7 @@ RSpec.describe Metanorma::ISO do
 
     it "Scope clause not missing in amendments" do
       FileUtils.rm_f "test.err"
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -186,7 +186,7 @@ RSpec.describe Metanorma::ISO do
   context "Warns of missing normative references" do
     it "Normative references missing" do
       FileUtils.rm_f "test.err"
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -200,7 +200,7 @@ RSpec.describe Metanorma::ISO do
     end
 
     it "Normative references not missing if supplied" do
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -216,7 +216,7 @@ RSpec.describe Metanorma::ISO do
     end
 
     it "Normative references not missing in amendments" do
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -233,7 +233,7 @@ RSpec.describe Metanorma::ISO do
 
   context "Warns of missing terms & definitions" do
     it "Terms & definitions missing" do
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -247,7 +247,7 @@ RSpec.describe Metanorma::ISO do
     end
 
     it "Terms & definitions not missing if supplied" do
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -262,7 +262,7 @@ RSpec.describe Metanorma::ISO do
     end
 
     it "Terms & definitions not missing in amendment" do
-      Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      Asciidoctor.convert(<<~INPUT, *OPTIONS)
         = Document title
         Author
         :docfile: test.adoc
@@ -277,7 +277,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warns of illegal doctype" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -292,7 +292,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warns of illegal script" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -306,7 +306,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warns of illegal stage" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -320,7 +320,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warns of illegal substage" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -358,7 +358,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warns of illegal script" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -372,7 +372,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "warns that technical report may contain requirement" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -887,7 +887,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Initial section must be (content) Foreword"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -915,7 +915,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Prefatory material must be followed by (clause) Scope"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -949,7 +949,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Prefatory material must be followed by (clause) Scope"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -990,7 +990,7 @@ RSpec.describe Metanorma::ISO do
       .to include "Normative References must be followed by " \
                   "Terms and Definitions"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1035,7 +1035,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Document must contain at least one clause"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1082,7 +1082,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Scope must occur before Terms and Definitions"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1132,7 +1132,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Only annexes and references can follow clauses"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1186,7 +1186,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "Document must include (references) Normative References"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1236,7 +1236,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "No warning if there are two Terms sections in a Vocabulary document" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1266,7 +1266,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "No warning if there are two Symbols sections in a Vocabulary document" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1293,7 +1293,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warn if single terms section in vocabulary document not named properly" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1315,7 +1315,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warn if vocabulary document contains Symbols section outside annex" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1340,7 +1340,7 @@ RSpec.describe Metanorma::ISO do
 
   it "Warning if multiple terms section in vocabulary document not named " \
      "properly" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1394,7 +1394,7 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .to include "There are sections after the final Bibliography"
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1461,7 +1461,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if final section is not styled Bibliography false" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1495,7 +1495,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if English title intro and no French title intro" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1508,7 +1508,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if French title intro and no English title intro" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1521,7 +1521,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if English title and no French title" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1535,7 +1535,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if French title and no English title" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1548,7 +1548,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if English title part and no French title part" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1561,7 +1561,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if French title part and no English title part" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1574,7 +1574,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "No warning if French main title and English main title" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1589,7 +1589,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if non-IEC document with subpart" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1605,7 +1605,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "No warning if joint IEC/non-IEC document with subpart" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1621,7 +1621,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if main title contains document type" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1634,7 +1634,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if intro title contains document type" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1685,7 +1685,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if invalid technical committee type" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -1699,7 +1699,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "Warning if invalid subcommittee type" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
