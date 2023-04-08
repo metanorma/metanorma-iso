@@ -9056,8 +9056,10 @@
 								<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 							</xsl:if>
 
-							<xsl:apply-templates select="node()[not(local-name() = 'name')]"/>
+							<xsl:apply-templates select="node()[not(local-name() = 'name' or local-name() = 'dl')]"/>
 						</fo:block>
+
+						<xsl:apply-templates select="*[local-name() = 'dl']"/> <!-- Key table -->
 
 								<xsl:apply-templates select="*[local-name()='name']"/> <!-- show sourcecode's name AFTER content -->
 
@@ -9090,11 +9092,22 @@
 	<!-- add sourcecode highlighting -->
 	<xsl:template match="*[local-name()='sourcecode']//*[local-name()='span'][@class]" priority="2">
 		<xsl:variable name="class" select="@class"/>
+
+		<!-- Example: <1> -->
+		<xsl:variable name="is_callout">
+			<xsl:if test="parent::*[local-name() = 'dt']">
+				<xsl:variable name="dt_id" select="../@id"/>
+				<xsl:if test="ancestor::*[local-name() = 'sourcecode']//*[local-name() = 'callout'][@target = $dt_id]">true</xsl:if>
+			</xsl:if>
+		</xsl:variable>
+
 		<xsl:choose>
 			<xsl:when test="$sourcecode_css//class[@name = $class]">
 				<fo:inline>
 					<xsl:apply-templates select="$sourcecode_css//class[@name = $class]" mode="css"/>
+					<xsl:if test="$is_callout = 'true'">&lt;</xsl:if>
 					<xsl:apply-templates/>
+					<xsl:if test="$is_callout = 'true'">&gt;</xsl:if>
 				</fo:inline>
 			</xsl:when>
 			<xsl:otherwise>
@@ -11452,6 +11465,23 @@
 	<xsl:template match="*[local-name() = 'stem'] | *[local-name() = 'image']" mode="update_xml_step1">
 		<xsl:copy-of select="."/>
 	</xsl:template>
+
+	<!-- add @id, redundant for table auto-layout algorithm -->
+	<xsl:template match="*[local-name() = 'dl' or local-name() = 'table'][not(@id)]" mode="update_xml_step1">
+		<xsl:copy>
+			<xsl:copy-of select="@*"/>
+			<xsl:call-template name="add_id"/>
+			<xsl:apply-templates mode="update_xml_step1"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template name="add_id">
+		<xsl:if test="not(@id)">
+			<!-- add @id - first element with @id plus '_element_name' -->
+			<xsl:attribute name="id"><xsl:value-of select="(.//*[@id])[1]/@id"/>_<xsl:value-of select="local-name()"/></xsl:attribute>
+		</xsl:if>
+	</xsl:template>
+
 	<!-- =========================================================================== -->
 	<!-- END STEP1: Re-order elements in 'preface', 'sections' based on @displayorder -->
 	<!-- =========================================================================== -->
