@@ -2974,11 +2974,17 @@
 	<!-- ========================== -->
 	<!-- Definition's list styles -->
 	<!-- ========================== -->
+
+	<xsl:attribute-set name="dl-block-style">
+
+	</xsl:attribute-set>
+
 	<xsl:attribute-set name="dt-row-style">
 
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="dt-cell-style">
+
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="dt-block-style">
@@ -2996,6 +3002,7 @@
 
 	<xsl:attribute-set name="dd-cell-style">
 		<xsl:attribute name="padding-left">2mm</xsl:attribute>
+
 	</xsl:attribute-set>
 
 	<!-- ========================== -->
@@ -5401,7 +5408,7 @@
 		<xsl:variable name="isAdded" select="@added"/>
 		<xsl:variable name="isDeleted" select="@deleted"/>
 		<!-- <dl><xsl:copy-of select="."/></dl> -->
-		<fo:block-container>
+		<fo:block-container xsl:use-attribute-sets="dl-block-style">
 
 			<xsl:call-template name="setBlockSpanAll"/>
 
@@ -5860,6 +5867,7 @@
 		<xsl:param name="split_keep-within-line"/>
 
 		<fo:table-row xsl:use-attribute-sets="dt-row-style">
+
 			<xsl:call-template name="insert_dt_cell">
 				<xsl:with-param name="key_iso" select="$key_iso"/>
 				<xsl:with-param name="split_keep-within-line" select="$split_keep-within-line"/>
@@ -5881,6 +5889,7 @@
 				<!-- border is mandatory, to calculate real width -->
 				<xsl:attribute name="border">0.1pt solid black</xsl:attribute>
 				<xsl:attribute name="text-align">left</xsl:attribute>
+
 			</xsl:if>
 
 			<fo:block xsl:use-attribute-sets="dt-block-style">
