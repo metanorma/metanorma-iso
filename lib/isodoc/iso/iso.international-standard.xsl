@@ -5416,6 +5416,18 @@
 						<xsl:attribute name="margin-left">0mm</xsl:attribute>
 					</xsl:if>
 
+			<xsl:if test="ancestor::*[local-name() = 'sourcecode']">
+				<!-- set font-size as sourcecode font-size -->
+				<xsl:variable name="sourcecode_attributes">
+					<xsl:call-template name="get_sourcecode_attributes"/>
+				</xsl:variable>
+				<xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@font-size">
+					<xsl:attribute name="{local-name()}">
+						<xsl:value-of select="."/>
+					</xsl:attribute>
+				</xsl:for-each>
+			</xsl:if>
+
 			<xsl:if test="parent::*[local-name() = 'note']">
 				<xsl:attribute name="margin-left">
 					<xsl:choose>
