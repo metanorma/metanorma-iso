@@ -155,12 +155,8 @@ RSpec.describe IsoDoc do
                 <dt>Drago</dt>
                 <dd>A type of rice</dd>
               </dl>
-              <source status="generalisation">
-                 <origin bibitemid="ISO712" type="inline" citeas=""><localityStack><locality type="section"><referenceFrom>1</referenceFrom></locality></localityStack>, Section 1</origin>
-                 <modification>
-                   <p id="_">with adjustments</p>
-                 </modification>
-               </source>
+              <source status="generalisation">[SOURCE: <origin bibitemid="ISO712" type="inline" citeas=""><localityStack><locality type="section"><referenceFrom>1</referenceFrom></locality></localityStack>, Section 1</origin>, modified –
+       with adjustments]</source>
               <note>
                 <name>NOTE</name>
                 <p>This is a table about rice</p>
@@ -259,10 +255,7 @@ RSpec.describe IsoDoc do
              <dd>A type of rice</dd>
            </dl>
            <div class="BlockSource">
-             <p>
-          , Section 1
-          with adjustments
-        </p>
+             <p>[SOURCE: , Section 1, modified – with adjustments]</p>
            </div>
                   <div class='Note'>
                     <p>
@@ -365,6 +358,9 @@ RSpec.describe IsoDoc do
               </dt>
               <dd>A type of rice</dd>
             </dl>
+            <div class="BlockSource">
+            <p class="MsoNormal">[SOURCE: , Section 1, modified – with adjustments]</p>
+            </div>
                   <div class="Note">
                     <p class="Note"><span class="note_label">NOTE</span><span style="mso-tab-count:1">  </span>This is a table about rice</p>
                   </div>

@@ -231,12 +231,17 @@ module IsoDoc
         out.div align: "center", class: "table_container" do |div|
           div.table **table_attrs(node) do |t|
             table_parse_core(node, t)
-            (dl = node.at(ns("./dl"))) && parse(dl, div)
-            node.xpath(ns("./note[not(@type = 'units')]"))
-              .each { |n| parse(n, div) }
+            table_parse_tail(node, t)
           end
         end
         @in_table = false
+      end
+
+      def table_parse_tail(node, out)
+        (dl = node.at(ns("./dl"))) && parse(dl, out)
+        node.xpath(ns("./source")).each { |n| parse(n, out) }
+        node.xpath(ns("./note[not(@type = 'units')]"))
+          .each { |n| parse(n, out) }
       end
 
       include BaseConvert
