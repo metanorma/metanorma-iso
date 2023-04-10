@@ -6,7 +6,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert
       .new({})
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
             <status><stage>30</stage></status>
@@ -29,7 +29,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert
       .new({})
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
             <status><stage>50</stage></status>
@@ -52,7 +52,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert
       .new({ isowordtemplate: "simple" })
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
             <status><stage>50</stage></status>
@@ -75,7 +75,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert
       .new({ isowordtemplate: "dis" })
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
             <status><stage>30</stage></status>
@@ -919,84 +919,84 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-           <div class="WordSection3">
-         <p class="zzSTDTitle"/>
-         <div>
-           <a name="A" id="A"/>
-           <h1/>
-           <p class="Tabletitle" style="text-align:center;">Table1</p>
-           <div align="center" class="table_container">
-             <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
-               <a name="B" id="B"/>
-               <thead>
-                 <tr>
-                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;" align="center" valign="middle">
-                     <div class="Tableheader" style="page-break-after:avoid">A</div>
-                   </th>
-                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;" align="center" valign="middle">
-                     <p class="Tableheader" style="text-align: center;page-break-after:avoid">B</p>
-                   </th>
-                 </tr>
-               </thead>
-               <tbody>
-                 <tr>
-                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
-                     <div class="Tablebody" style="page-break-after:auto">C</div>
-                   </th>
-                   <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
-                     <p class="Tablebody" style="page-break-after:auto">D</p>
-                   </td>
-                 </tr>
-               </tbody>
-               <tfoot>
-                 <tr>
-                   <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
-                     <div class="Tablebody" style="page-break-after:auto">E</div>
-                   </th>
-                   <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
-                     <p class="Tablebody" style="page-break-after:auto">F</p>
-                   </td>
-                 </tr>
-               </tfoot>
-             </table>
-           </div>
-           <div align="center" class="table_container">
-             <table class="rouge-line-table" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;">
-               <tbody>
-                 <tr>
-                   <td style="page-break-after:avoid;" class="rouge-gutter gl">
-                     <div class="Tablebody" style="page-break-after:avoid">
-                       <pre style="page-break-after:avoid">1</pre>
-                     </div>
-                   </td>
-                   <td style="page-break-after:avoid;" class="rouge-code">
-                     <p class="Code" style="page-break-after:avoid">
-                       <span class="p">{</span>
-                     </p>
-                   </td>
-                 </tr>
-                 <tr>
-                   <td style="page-break-after:auto;" class="rouge-gutter gl">
-                     <div class="Tablebody" style="page-break-after:auto">
-                       <pre style="page-break-after:auto">2</pre>
-                     </div>
-                   </td>
-                   <td style="page-break-after:auto;" class="rouge-code">
-                     <p class="Code" style="page-break-after:auto">
-                       <span class="w">  </span>
-                       <span class="nl">"$schema"</span>
-                       <span class="p">:</span>
-                       <span class="w"/>
-                       <span class="s2">"http://json-schema.org/draft/2019-09/schema"</span>
-                       <span class="p">,</span>
-                     </p>
-                   </td>
-                 </tr>
-               </tbody>
-             </table>
-           </div>
-         </div>
-       </div>
+          <div class="WordSection3">
+        <p class="zzSTDTitle"/>
+        <div>
+          <a name="A" id="A"/>
+          <h1/>
+          <p class="Tabletitle" style="text-align:center;">Table1</p>
+          <div align="center" class="table_container">
+            <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
+              <a name="B" id="B"/>
+              <thead>
+                <tr>
+                  <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;" align="center" valign="middle">
+                    <div class="Tableheader" style="page-break-after:avoid">A</div>
+                  </th>
+                  <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;" align="center" valign="middle">
+                    <p class="Tableheader" style="text-align: center;page-break-after:avoid">B</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                    <div class="Tablebody" style="page-break-after:auto">C</div>
+                  </th>
+                  <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                    <p class="Tablebody" style="page-break-after:auto">D</p>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                    <div class="Tablebody" style="page-break-after:auto">E</div>
+                  </th>
+                  <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                    <p class="Tablebody" style="page-break-after:auto">F</p>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div align="center" class="table_container">
+            <table class="rouge-line-table" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;">
+              <tbody>
+                <tr>
+                  <td style="page-break-after:avoid;" class="rouge-gutter gl">
+                    <div class="Tablebody" style="page-break-after:avoid">
+                      <pre style="page-break-after:avoid">1</pre>
+                    </div>
+                  </td>
+                  <td style="page-break-after:avoid;" class="rouge-code">
+                    <p class="Code" style="page-break-after:avoid">
+                      <span class="p">{</span>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="page-break-after:auto;" class="rouge-gutter gl">
+                    <div class="Tablebody" style="page-break-after:auto">
+                      <pre style="page-break-after:auto">2</pre>
+                    </div>
+                  </td>
+                  <td style="page-break-after:auto;" class="rouge-code">
+                    <p class="Code" style="page-break-after:auto">
+                      <span class="w">  </span>
+                      <span class="nl">"$schema"</span>
+                      <span class="p">:</span>
+                      <span class="w"/>
+                      <span class="s2">"http://json-schema.org/draft/2019-09/schema"</span>
+                      <span class="p">,</span>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
@@ -1948,7 +1948,7 @@ RSpec.describe IsoDoc do
       .sub(%r{^.*<div class="boilerplate-copyright">}m,
            '<div class="boilerplate-copyright">')
       .sub(%r{</div>.*$}m, "</div></div>")))
-      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+      .to be_equivalent_to xmlpp(<<~OUTPUT)
         <div class='boilerplate-copyright'>
           <div>
             <p class='zzCopyright'>
@@ -1986,7 +1986,7 @@ RSpec.describe IsoDoc do
       .sub(%r{^.*<div class="boilerplate-copyright">}m,
            '<div class="boilerplate-copyright">')
       .sub(%r{</div>.*$}m, "</div></div>")))
-      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+      .to be_equivalent_to xmlpp(<<~OUTPUT)
         <div class='boilerplate-copyright'>
           <div>
             <p class='zzCopyright'>
