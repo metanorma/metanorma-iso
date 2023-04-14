@@ -5483,8 +5483,10 @@
 									<xsl:apply-templates select="preceding-sibling::*[1][local-name() = 'p' and @keep-with-next = 'true']/node()"/>
 									<xsl:text> </xsl:text>
 									<xsl:apply-templates select="*[local-name()='dt']/*"/>
-									<xsl:text/>
-									<xsl:apply-templates select="*[local-name()='dd']/*" mode="inline"/>
+									<xsl:if test="*[local-name()='dd']/node()[normalize-space() != ''][1][self::text()]">
+										<xsl:text> </xsl:text>
+									</xsl:if>
+									<xsl:apply-templates select="*[local-name()='dd']/node()" mode="inline"/>
 								</fo:block>
 
 					</xsl:when> <!-- END: only one component -->
@@ -5985,8 +5987,18 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="*[local-name()='dd']/*[local-name()='p']" mode="inline">
-		<fo:inline><xsl:text> </xsl:text><xsl:apply-templates/></fo:inline>
+	<xsl:template match="*[local-name()='dd']/*" mode="inline">
+		<xsl:variable name="is_inline_element_after_where">
+			<xsl:if test="(local-name() = 'p') and not(preceding-sibling::node()[normalize-space() != ''])">true</xsl:if>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$is_inline_element_after_where = 'true'">
+				<fo:inline><xsl:text> </xsl:text><xsl:apply-templates/></fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<!-- virtual html table for dl/[dt and dd] for IF (Intermediate Format) -->
