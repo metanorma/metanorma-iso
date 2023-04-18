@@ -7504,6 +7504,33 @@
 		<xsl:value-of select="."/><xsl:value-of select="$zero_width_space"/>
 	</xsl:template>
 
+	<!-- specia; case for:
+		<math xmlns="http://www.w3.org/1998/Math/MathML">
+			<mstyle displaystyle="true">
+				<msup>
+					<mi color="#00000000">C</mi>
+					<mtext>R</mtext>
+				</msup>
+				<msubsup>
+					<mtext>C</mtext>
+					<mi>n</mi>
+					<mi>k</mi>
+				</msubsup>
+			</mstyle>
+		</math>
+	-->
+	<xsl:template match="mathml:msup/mathml:mi[. = '‌' or . = ''][not(preceding-sibling::*)][following-sibling::mathml:mtext]" mode="mathml">
+		<xsl:copy>
+			<xsl:copy-of select="@*"/>
+			<xsl:variable name="next_mtext" select="ancestor::mathml:msup/following-sibling::*[1][self::mathml:msubsup or self::mathml:msub or self::mathml:msup]/mathml:mtext"/>
+			<xsl:if test="string-length($next_mtext) != ''">
+				<xsl:attribute name="color">#00000000</xsl:attribute>
+			</xsl:if>
+			<xsl:apply-templates/>
+			<xsl:value-of select="$next_mtext"/>
+		</xsl:copy>
+	</xsl:template>
+
 	<!-- Examples: 
 		<stem type="AsciiMath">x = 1</stem> 
 		<stem type="AsciiMath"><asciimath>x = 1</asciimath></stem>
