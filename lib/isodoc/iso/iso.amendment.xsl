@@ -11296,7 +11296,7 @@
 		<xsl:for-each select="*[local-name() = 'tab']">
 			<xsl:variable name="current_id" select="generate-id()"/>
 			<fo:table-cell>
-				<fo:block>
+				<fo:block line-height-shift-adjustment="disregard-shifts">
 					<xsl:call-template name="insert_basic_link">
 						<xsl:with-param name="element">
 							<fo:basic-link internal-destination="{$target}" fox:alt-text="{.}">
