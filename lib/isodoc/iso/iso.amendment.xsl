@@ -7552,6 +7552,31 @@
 		</mathml:mrow>
 	</xsl:template>
 
+	<!-- add space around vertical line -->
+	<xsl:template match="mathml:mo[normalize-space(text()) = '|']" mode="mathml">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="mathml"/>
+			<xsl:if test="not(@lspace)">
+				<xsl:attribute name="lspace">0.4em</xsl:attribute>
+			</xsl:if>
+			<xsl:if test="not(@rspace)">
+				<xsl:attribute name="rspace">0.4em</xsl:attribute>
+			</xsl:if>
+			<xsl:apply-templates mode="mathml"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- decrease fontsize for 'Circled Times' char -->
+	<xsl:template match="mathml:mo[normalize-space(text()) = '⊗']" mode="mathml">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="mathml"/>
+			<xsl:if test="not(@fontsize)">
+				<xsl:attribute name="fontsize">55%</xsl:attribute>
+			</xsl:if>
+			<xsl:apply-templates mode="mathml"/>
+		</xsl:copy>
+	</xsl:template>
+
 	<!-- Examples: 
 		<stem type="AsciiMath">x = 1</stem> 
 		<stem type="AsciiMath"><asciimath>x = 1</asciimath></stem>
