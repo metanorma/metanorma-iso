@@ -4,7 +4,7 @@ require "nokogiri"
 RSpec.describe IsoDoc::Iso::Metadata do
   it "processes IsoXML metadata" do
     c = IsoDoc::Iso::HtmlConvert.new({})
-    _ = c.convert_init(<<~"INPUT", "test", false)
+    _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
     input = <<~INPUT
@@ -149,7 +149,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
 
   it "processes IsoXML metadata #2" do
     c = IsoDoc::Iso::HtmlConvert.new({})
-    _ = c.convert_init(<<~"INPUT", "test", false)
+    _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
     input = <<~INPUT
@@ -257,7 +257,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
 
   it "processes IsoXML metadata in French" do
     c = IsoDoc::Iso::HtmlConvert.new({})
-    _ = c.convert_init(<<~"INPUT", "test", false)
+    _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <language>fr</language>
@@ -373,7 +373,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
 
   it "processes IsoXML metadata in Russian" do
     c = IsoDoc::Iso::HtmlConvert.new({})
-    _ = c.convert_init(<<~"INPUT", "test", false)
+    _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <language>ru</language>
@@ -511,7 +511,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder="1">
+        <clause displayorder="2">
           <title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
@@ -556,7 +556,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder="1">
+        <clause displayorder="2">
           <title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
@@ -601,7 +601,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder="1">
+        <clause displayorder="2">
           <title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
@@ -648,7 +648,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder='1'>
+        <clause displayorder='2'>
           <title depth='1'>Clause 1</title>
         </clause>
       </sections>
@@ -682,7 +682,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder='1'>
+        <clause displayorder='2'>
           <title depth='1'>Clause 1</title>
         </clause>
       </sections>

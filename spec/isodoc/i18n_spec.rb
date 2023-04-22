@@ -102,11 +102,14 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
         <preface>
-          <foreword obligation="informative" displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword obligation="informative" displayorder='2'>
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
           </foreword>
-          <introduction id="B" obligation="informative" displayorder='2'>
+          <introduction id="B" obligation="informative" displayorder='3'>
             <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
@@ -115,11 +118,11 @@ RSpec.describe IsoDoc do
           </introduction>
         </preface>
         <sections>
-          <clause id="D" obligation="normative" type="scope" displayorder='3'>
+          <clause id="D" obligation="normative" type="scope" displayorder='4'>
             <title depth="1">1<tab/>Scope</title>
             <p id="E">Text</p>
           </clause>
-          <clause id="H" obligation="normative" displayorder='5'>
+          <clause id="H" obligation="normative" displayorder='6'>
             <title depth="1">3<tab/>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="I" obligation="normative">
               <title depth="2">3.1<tab/>Normal Terms</title>
@@ -136,14 +139,14 @@ RSpec.describe IsoDoc do
               </dl>
             </definitions>
           </clause>
-          <definitions id="L" displayorder='6'>
+          <definitions id="L" displayorder='7'>
             <title>4</title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
             </dl>
           </definitions>
-          <clause id="M" inline-header="false" obligation="normative" displayorder='7'>
+          <clause id="M" inline-header="false" obligation="normative" displayorder='8'>
             <title depth="1">5<tab/>Clause 4</title>
             <clause id="N" inline-header="false" obligation="normative">
               <title depth="2">5.1<tab/>Introduction</title>
@@ -153,7 +156,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
+        <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
             <strong>Annex A</strong>
             <br/><span class='obligation'>(normative)</span>
@@ -171,10 +174,10 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='4'>
+          <references id="R" normative="true" obligation="informative" displayorder='5'>
             <title depth="1">2<tab/>Normative References</title>
           </references>
-          <clause id="S" obligation="informative" displayorder='9'>
+          <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
               <title depth="2">Bibliography Subsection</title>
@@ -280,6 +283,12 @@ RSpec.describe IsoDoc do
              <p>
                <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
              </p>
+                   <div class="TOC">
+        <p class="zzContents">Contents</p>
+      </div>
+      <p>
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <p class='ForewordText' id='A'>This is a preamble</p>
@@ -551,11 +560,14 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
           <preface>
-            <foreword obligation="informative" displayorder='1'>
+            <clause type="toc" displayorder="1">
+              <title depth="1">Contents</title>
+            </clause>
+            <foreword obligation="informative" displayorder='2'>
               <title>Foreword</title>
               <p id="A">This is a preamble</p>
             </foreword>
-            <introduction id="B" obligation="informative" displayorder='2'>
+            <introduction id="B" obligation="informative" displayorder='3'>
               <title depth="1">Introduction</title>
               <clause id="C" inline-header="false" obligation="informative">
                 <title depth="2">0.1<tab/>Introduction Subsection</title>
@@ -564,11 +576,11 @@ RSpec.describe IsoDoc do
             </introduction>
           </preface>
           <sections>
-            <clause id="D" obligation="normative" type="scope" displayorder='3'>
+            <clause id="D" obligation="normative" type="scope" displayorder='4'>
               <title depth="1">1<tab/>Scope</title>
               <p id="E">Text</p>
             </clause>
-            <clause id="H" obligation="normative" displayorder='5'>
+            <clause id="H" obligation="normative" displayorder='6'>
               <title depth="1">3<tab/>Terms, definitions, symbols and abbreviated terms</title>
               <terms id="I" obligation="normative">
                 <title depth="2">3.1<tab/>Normal Terms</title>
@@ -585,14 +597,14 @@ RSpec.describe IsoDoc do
                 </dl>
               </definitions>
             </clause>
-            <definitions id="L" displayorder='6'>
+            <definitions id="L" displayorder='7'>
               <title>4</title>
               <dl>
                 <dt>Symbol</dt>
                 <dd>Definition</dd>
               </dl>
             </definitions>
-            <clause id="M" inline-header="false" obligation="normative" displayorder='7'>
+            <clause id="M" inline-header="false" obligation="normative" displayorder='8'>
               <title depth="1">5<tab/>Clause 4</title>
               <clause id="N" inline-header="false" obligation="normative">
                 <title depth="2">5.1<tab/>Introduction</title>
@@ -602,7 +614,7 @@ RSpec.describe IsoDoc do
               </clause>
             </clause>
           </sections>
-          <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
+          <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
             <title>
               <strong>Annex A</strong>
               <br/><span class='obligation'>(normative)</span>
@@ -620,10 +632,10 @@ RSpec.describe IsoDoc do
             </appendix>
           </annex>
           <bibliography>
-            <references id="R" normative="true" obligation="informative" displayorder='4'>
+            <references id="R" normative="true" obligation="informative" displayorder='5'>
               <title depth="1">2<tab/>Normative References</title>
             </references>
-            <clause id="S" obligation="informative" displayorder='9'>
+            <clause id="S" obligation="informative" displayorder='10'>
               <title depth="1">Bibliography</title>
               <references id="T" normative="false" obligation="informative">
                 <title depth="2">Bibliography Subsection</title>
@@ -735,11 +747,14 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
         <preface>
-          <foreword obligation="informative" displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Sommaire</title>
+          </clause>
+          <foreword obligation="informative" displayorder='2'>
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
           </foreword>
-          <introduction id="B" obligation="informative" displayorder='2'>
+          <introduction id="B" obligation="informative" displayorder='3'>
             <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
@@ -748,11 +763,11 @@ RSpec.describe IsoDoc do
           </introduction>
         </preface>
         <sections>
-          <clause id="D" obligation="normative" type="scope" displayorder='3'>
+          <clause id="D" obligation="normative" type="scope" displayorder='4'>
             <title depth="1">1<tab/>Scope</title>
             <p id="E">Text</p>
           </clause>
-          <clause id="H" obligation="normative" displayorder='5'>
+          <clause id="H" obligation="normative" displayorder='6'>
             <title depth="1">3<tab/>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="I" obligation="normative">
               <title depth="2">3.1<tab/>Normal Terms</title>
@@ -769,14 +784,14 @@ RSpec.describe IsoDoc do
               </dl>
             </definitions>
           </clause>
-          <definitions id="L" displayorder='6'>
+          <definitions id="L" displayorder='7'>
             <title>4</title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
             </dl>
           </definitions>
-          <clause id="M" inline-header="false" obligation="normative" displayorder='7'>
+          <clause id="M" inline-header="false" obligation="normative" displayorder='8'>
             <title depth="1">5<tab/>Clause 4</title>
             <clause id="N" inline-header="false" obligation="normative">
               <title depth="2">5.1<tab/>Introduction</title>
@@ -786,7 +801,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
+        <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
             <strong>Annexe A</strong>
             <br/><span class='obligation'>(normative)</span>
@@ -804,10 +819,10 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='4'>
+          <references id="R" normative="true" obligation="informative" displayorder='5'>
             <title depth="1">2<tab/>Normative References</title>
           </references>
-          <clause id="S" obligation="informative" displayorder='9'>
+          <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
               <title depth="2">Bibliography Subsection</title>
@@ -818,7 +833,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"fr"')}
+      #{HTML_HDR.gsub(/"en"/, '"fr"').sub(/Contents/, "Sommaire")}
             <br/>
             <div>
               <h1 class="ForewordTitle">Foreword</h1>
@@ -1020,11 +1035,14 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
         <preface>
-          <foreword obligation="informative" displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Содержание</title>
+          </clause>
+          <foreword obligation="informative" displayorder='2'>
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
           </foreword>
-          <introduction id="B" obligation="informative" displayorder='2'>
+          <introduction id="B" obligation="informative" displayorder='3'>
             <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
@@ -1033,11 +1051,11 @@ RSpec.describe IsoDoc do
           </introduction>
         </preface>
         <sections>
-          <clause id="D" obligation="normative" type="scope" displayorder='3'>
+          <clause id="D" obligation="normative" type="scope" displayorder='4'>
             <title depth="1">1<tab/>Scope</title>
             <p id="E">Text</p>
           </clause>
-          <clause id="H" obligation="normative" displayorder='5'>
+          <clause id="H" obligation="normative" displayorder='6'>
             <title depth="1">3<tab/>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="I" obligation="normative">
               <title depth="2">3.1<tab/>Normal Terms</title>
@@ -1054,14 +1072,14 @@ RSpec.describe IsoDoc do
               </dl>
             </definitions>
           </clause>
-          <definitions id="L" displayorder='6'>
+          <definitions id="L" displayorder='7'>
             <title>4</title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
             </dl>
           </definitions>
-          <clause id="M" inline-header="false" obligation="normative" displayorder='7'>
+          <clause id="M" inline-header="false" obligation="normative" displayorder='8'>
             <title depth="1">5<tab/>Clause 4</title>
             <clause id="N" inline-header="false" obligation="normative">
               <title depth="2">5.1<tab/>Introduction</title>
@@ -1071,7 +1089,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
+        <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
             <strong>&#x414;&#x43E;&#x43F;&#x43E;&#x43B;&#x43D;&#x435;&#x43D;&#x438;&#x435; A</strong>
             <br/><span class='obligation'>(&#x43D;&#x43E;&#x440;&#x43C;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x43E;&#x435;)</span>
@@ -1089,10 +1107,10 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='4'>
+          <references id="R" normative="true" obligation="informative" displayorder='5'>
             <title depth="1">2<tab/>Normative References</title>
           </references>
-          <clause id="S" obligation="informative" displayorder='9'>
+          <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
               <title depth="2">Bibliography Subsection</title>
@@ -1103,7 +1121,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"ru"')}
+      #{HTML_HDR.gsub(/"en"/, '"ru"').sub(/Contents/, "Содержание")}
             <br/>
             <div>
               <h1 class="ForewordTitle">Foreword</h1>
@@ -1314,11 +1332,14 @@ RSpec.describe IsoDoc do
          </bibdata>
 
         <preface>
-          <foreword obligation="informative" displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">目　次</title>
+          </clause>
+          <foreword obligation="informative" displayorder='2'>
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
           </foreword>
-          <introduction id="B" obligation="informative" displayorder='2'>
+          <introduction id="B" obligation="informative" displayorder='3'>
             <title depth="1">Introduction</title>
             <clause id="C" inline-header="false" obligation="informative">
               <title depth="2">0.1<tab/>Introduction Subsection</title>
@@ -1327,13 +1348,13 @@ RSpec.describe IsoDoc do
           </introduction>
         </preface>
         <sections>
-          <clause id="D" obligation="normative" type="scope" displayorder='3'>
+          <clause id="D" obligation="normative" type="scope" displayorder='4'>
             <title depth="1">1<tab/>Scope</title>
             <p id="E">
               <eref bibitemid="ISO712" type="inline"><locality type="table"><referenceFrom>1</referenceFrom><referenceTo>1</referenceTo></locality>ISO&#xa0;712， <span class='citetbl'>第1～1表</span></eref>
             </p>
           </clause>
-          <clause id="H" obligation="normative" displayorder='5'>
+          <clause id="H" obligation="normative" displayorder='6'>
             <title depth="1">3<tab/>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="I" obligation="normative">
               <title depth="2">3.1<tab/>Normal Terms</title>
@@ -1350,14 +1371,14 @@ RSpec.describe IsoDoc do
               </dl>
             </definitions>
           </clause>
-          <definitions id="L" displayorder='6'>
+          <definitions id="L" displayorder='7'>
             <title>4</title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
             </dl>
           </definitions>
-          <clause id="M" inline-header="false" obligation="normative" displayorder='7'>
+          <clause id="M" inline-header="false" obligation="normative" displayorder='8'>
             <title depth="1">5<tab/>Clause 4</title>
             <clause id="N" inline-header="false" obligation="normative">
               <title depth="2">5.1<tab/>Introduction</title>
@@ -1367,7 +1388,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="P" inline-header="false" obligation="normative" displayorder='8'>
+        <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
             <strong>附件A</strong>
             <br/><span class='obligation'>（规范性附录）</span>
@@ -1385,7 +1406,7 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='4'>
+          <references id="R" normative="true" obligation="informative" displayorder='5'>
             <title depth="1">2<tab/>Normative References</title>
             <bibitem id="ISO712" type="standard">
               <formattedref><em>Cereals and cereal products</em>.</formattedref>
@@ -1393,7 +1414,7 @@ RSpec.describe IsoDoc do
               <biblio-tag>ISO&#xa0;712,</biblio-tag>
             </bibitem>
           </references>
-          <clause id="S" obligation="informative" displayorder='9'>
+          <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
               <title depth="2">Bibliography Subsection</title>
@@ -1404,7 +1425,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"zh"')}
+      #{HTML_HDR.gsub(/"en"/, '"zh"').sub(/Contents/, "目　次")}
                    <br/>
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
@@ -1546,7 +1567,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <foreword obligation='informative' displayorder='1'>
+      <foreword obligation='informative' displayorder='2'>
               <title>Foreword</title>
               <p id='A'>
                 <eref type='inline' bibitemid='ISO712'>

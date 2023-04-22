@@ -17,6 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
+<!-- VERSION v1.2.1 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -1349,15 +1350,19 @@
       </choice>
     </element>
   </define>
+  <define name="Root-Attributes">
+    <attribute name="version"/>
+    <attribute name="schema-version"/>
+    <attribute name="type">
+      <choice>
+        <value>semantic</value>
+        <value>presentation</value>
+      </choice>
+    </attribute>
+  </define>
   <define name="standard-document">
     <element name="standard-document">
-      <attribute name="version"/>
-      <attribute name="type">
-        <choice>
-          <value>semantic</value>
-          <value>presentation</value>
-        </choice>
-      </attribute>
+      <ref name="Root-Attributes"/>
       <ref name="bibdata"/>
       <optional>
         <ref name="misccontainer"/>

@@ -91,7 +91,8 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
-          <foreword displayorder='1'>
+            <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword displayorder='2'>
             <table id='tableD-1' alt='tool tip' summary='long desc'>
               <name>
                 Table 1&#xA0;&#x2014; Repeatability and reproducibility of
@@ -164,7 +165,7 @@ RSpec.describe IsoDoc do
             </table>
           </foreword>
         </preface>
-        <annex id='Annex' displayorder='2'>
+        <annex id='Annex' displayorder='3'>
           <title>
             <strong>Annex A</strong>
             <br/>
@@ -186,6 +187,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       <main class='main-section'>
         <button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>
+        <br/>
         <br/>
         <div>
           <h1 class='ForewordTitle' id="_">Foreword</h1>
@@ -458,7 +460,8 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
-           <foreword displayorder="1">
+            <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword displayorder="2">
              <table id="tableD-1">
                <name>Table 1 — Repeatability and reproducibility of
                  <em>husked</em>
@@ -550,6 +553,12 @@ RSpec.describe IsoDoc do
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
+              <div class="TOC">
+          <p class="zzContents">Contents</p>
+        </div>
+        <p>
+          <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+        </p>
           <div>
             <h1 class="ForewordTitle">Foreword</h1>
             <p class="Tabletitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of

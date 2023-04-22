@@ -237,6 +237,12 @@ module IsoDoc
         dlist.remove
       end
 
+      def toc_title(docxml)
+        doctype = docxml.at(ns("//bibdata/ext/doctype"))&.text
+        %w(amendment technical-corrigendum).include?(doctype) and return
+        super
+      end
+
       include Init
     end
   end

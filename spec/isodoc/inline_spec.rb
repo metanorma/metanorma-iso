@@ -5,6 +5,9 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
           <foreword>
             <p>
               <em>A</em>
@@ -54,6 +57,9 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
           <foreword>
             <p>
               <link target="http://example.com"/>
@@ -89,6 +95,9 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
           <foreword>
             <p>
               <barry fred="http://example.com">example</barry>
@@ -120,6 +129,9 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml" xmlns:m="http://www.w3.org/1998/Math/MathML">
         <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
           <foreword>
             <p>
               <stem type="AsciiMath">A</stem>
@@ -159,6 +171,9 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
           <foreword>
             <p><stem type="AsciiMath">A</stem>(#((Hello))#)</p>
           </foreword>
@@ -187,6 +202,9 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
           <foreword>
             <p>
               <eref type="footnote" bibitemid="ISO712" citeas="ISO 712">A</stem>
@@ -325,7 +343,10 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
           <preface>
-            <foreword displayorder="1">
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+            <foreword displayorder="2">
               <p>
                 <eref bibitemid="IEV" citeas="IEV" type="inline">
                   <locality type="clause">
@@ -385,7 +406,7 @@ RSpec.describe IsoDoc do
             </foreword>
           </preface>
           <bibliography>
-            <references id="_normative_references" normative="true" obligation="informative" displayorder="2">
+            <references id="_normative_references" normative="true" obligation="informative" displayorder="3">
               <title depth="1">1<tab/>
                 Normative References</title>
               <bibitem id="ISO712" type="standard">
@@ -504,8 +525,13 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~OUTPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          </preface>
           <sections>
-          <terms id="Terms" displayorder="2"><title>2</title>
+          <terms id="Terms" displayorder="3"><title>2</title>
                 <term id='B'>
         <name>2.1</name>
         <preferred><strong>B</strong></preferred>
@@ -582,9 +608,9 @@ RSpec.describe IsoDoc do
           </p>
           </term>
           </terms>
-          <clause id="clause1" displayorder="3"><title depth="1">3<tab/>Clause 1</title></clause>
+          <clause id="clause1" displayorder="4"><title depth="1">3<tab/>Clause 1</title></clause>
           </sections>
-          <bibliography><references id="_normative_references" obligation="informative" normative="true" displayorder="1"><title depth="1">1<tab/>Normative References</title>
+          <bibliography><references id="_normative_references" obligation="informative" normative="true" displayorder="2"><title depth="1">1<tab/>Normative References</title>
           <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
       <bibitem id="ISO712" type="standard">
          <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
@@ -740,14 +766,17 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
-          <foreword id='A' displayorder='1'>
+        <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword id='A' displayorder='2'>
             <ul>
               <li>term</li>
             </ul>
           </foreword>
         </preface>
                  <sections>
-          <terms id='Terms' displayorder='2'>
+          <terms id='Terms' displayorder='3'>
             <title>1</title>
             <clause id='A' inline-header='true'>
               <title>1.1</title>
@@ -851,9 +880,14 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <preface>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+        </preface>
         <sections>
-        <clause id="clause1" displayorder="1"><title depth="1">1<tab/>Clause 1</title></clause>
-        <terms id="A" displayorder="2"><title>2</title>
+        <clause id="clause1" displayorder="2"><title depth="1">1<tab/>Clause 1</title></clause>
+        <terms id="A" displayorder="3"><title>2</title>
         <term id='B'>
         <name>2.1</name>
       <preferred><strong>B</strong></preferred>

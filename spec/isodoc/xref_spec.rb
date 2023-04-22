@@ -64,7 +64,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target="N">Clause 1, Note</xref>
               <xref target="note1">3.1, Note 1</xref>
@@ -76,7 +79,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
@@ -90,10 +93,10 @@ RSpec.describe IsoDoc do
               <xref target="N">Note</xref>
             </p>
           </clause>
-          <terms id="terms"  displayorder='3'>
+          <terms id="terms"  displayorder='4'>
             <title>2</title>
           </terms>
-          <clause id="widgets"  displayorder='4'>
+          <clause id="widgets"  displayorder='5'>
             <title depth="1">3
               <tab/>
               Widgets</title>
@@ -118,7 +121,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='5'>
+        <annex id="annex1" displayorder='6'>
           <title>
             <strong>Annex A</strong>
             <br/><span class="obligation">(informative)</span></title>
@@ -182,7 +185,10 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
-           <foreword displayorder="1">
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+           <foreword displayorder="2">
              <p>
                <xref target="note1">[note1]</xref>
                <xref target="note2">1.1, Note</xref>
@@ -190,7 +196,7 @@ RSpec.describe IsoDoc do
            </foreword>
          </preface>
          <sections>
-           <clause id="widgets" displayorder="2">
+           <clause id="widgets" displayorder="3">
              <title depth="1">1<tab/>Widgets</title>
              <clause id="widgets1" inline-header="true">
                <title>1.1</title>
@@ -241,7 +247,10 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
-           <foreword displayorder="1">
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+           <foreword displayorder="2">
              <p>
                <xref target="note1">[note1]</xref>
                <xref target="note2">1.1, Note  1</xref>
@@ -250,7 +259,7 @@ RSpec.describe IsoDoc do
            </foreword>
          </preface>
          <sections>
-           <clause id="widgets" displayorder="2">
+           <clause id="widgets" displayorder="3">
              <title depth="1">1<tab/>Widgets</title>
              <clause id="widgets1" inline-header="true">
                <title>1.1</title>
@@ -343,7 +352,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword id="fwd" displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword id="fwd" displayorder='2'>
             <p>
               <xref target="N"><span class='citefig'>Figure 1</span></xref>
               <xref target="note1"><span class='citefig'>Figure 2</span></xref>
@@ -355,7 +367,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
@@ -367,10 +379,10 @@ RSpec.describe IsoDoc do
               <xref target="N"><span class='citefig'>Figure 1</span></xref>
             </p>
           </clause>
-          <terms id="terms" displayorder='3'>
+          <terms id="terms" displayorder='4'>
             <title>2</title>
           </terms>
-          <clause id="widgets" displayorder='4'>
+          <clause id="widgets" displayorder='5'>
             <title depth="1">3
               <tab/>
               Widgets</title>
@@ -391,7 +403,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='5'>
+        <annex id="annex1" displayorder='6'>
           <title>
             <strong>Annex A</strong>
             <br/><span class="obligation">(informative)</span></title>
@@ -481,7 +493,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword id="fwd" displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword id="fwd" displayorder='2'>
             <p>
               <xref target="N"><span class='citefig'>Figure 1</span></xref>
               <xref target="note1"><span class='citefig'>Figure 1 a)</span></xref>
@@ -493,15 +508,15 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
           </clause>
-          <terms id="terms" displayorder='3'>
+          <terms id="terms" displayorder='4'>
             <title>2</title>
           </terms>
-          <clause id="widgets" displayorder='4'>
+          <clause id="widgets" displayorder='5'>
             <title depth="1">3
               <tab/>
               Widgets</title>
@@ -525,7 +540,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='5'>
+        <annex id="annex1" displayorder='6'>
           <title>
             <strong>Annex A</strong>
             <br/><span class="obligation">(informative)</span></title>
@@ -616,7 +631,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target="N">Clause 1, Example</xref>
               <xref target="note1">3.1, Example 1</xref>
@@ -628,7 +646,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
@@ -640,10 +658,10 @@ RSpec.describe IsoDoc do
               <xref target="N">Example</xref>
             </p>
           </clause>
-          <terms id="terms" displayorder='3'>
+          <terms id="terms" displayorder='4'>
             <title>2</title>
           </terms>
-          <clause id="widgets" displayorder='4'>
+          <clause id="widgets" displayorder='5'>
             <title depth="1">3
               <tab/>
               Widgets</title>
@@ -664,7 +682,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='5'>
+        <annex id="annex1" displayorder='6'>
           <title>
             <strong>Annex A</strong>
             <br/><span class="obligation">(informative)</span></title>
@@ -770,7 +788,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target="N">Clause 1, Formula (1)</xref>
               <xref target="note1">3.1, Formula (2)</xref>
@@ -782,7 +803,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
@@ -794,10 +815,10 @@ RSpec.describe IsoDoc do
               <xref target="N">Formula (1)</xref>
             </p>
           </clause>
-          <terms id="terms" displayorder='3'>
+          <terms id="terms" displayorder='4'>
             <title>2</title>
           </terms>
-          <clause id="widgets" displayorder='4'>
+          <clause id="widgets" displayorder='5'>
             <title depth="1">3
               <tab/>
               Widgets</title>
@@ -818,7 +839,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='5'>
+        <annex id="annex1" displayorder='6'>
           <title>
             <strong>Annex A</strong>
             <br/><span class="obligation">(informative)</span></title>
@@ -952,7 +973,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target="N"><span class='citetbl'>Table 1</span></xref>
               <xref target="note1"><span class='citetbl'>Table 2</span></xref>
@@ -964,7 +988,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
@@ -982,10 +1006,10 @@ RSpec.describe IsoDoc do
               <xref target="N"><span class='citetbl'>Table 1</span></xref>
             </p>
           </clause>
-          <terms id="terms" displayorder='3'>
+          <terms id="terms" displayorder='4'>
             <title>2</title>
           </terms>
-          <clause id="widgets" displayorder='4'>
+          <clause id="widgets" displayorder='5'>
             <title depth="1">3
               <tab/>
               Widgets</title>
@@ -1018,7 +1042,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='5'>
+        <annex id="annex1" displayorder='6'>
           <title>
             <strong>Annex A</strong>
             <br/><span class="obligation">(informative)</span></title>
@@ -1105,7 +1129,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target="note1">2.1, Note 1</xref>
               <xref target="note2">2.2, Note 1</xref>
@@ -1114,12 +1141,12 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
           </clause>
-          <terms id="terms" displayorder='3'>
+          <terms id="terms" displayorder='4'>
             <title>2</title>
             <term id="_waxy_rice">
               <name>2.1</name>
@@ -1255,7 +1282,10 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
-          <foreword obligation='informative' displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword obligation='informative' displayorder='2'>
             <title>Foreword</title>
             <p id='A'>
               This is a preamble
@@ -1278,7 +1308,7 @@ RSpec.describe IsoDoc do
               <xref target='R'><span class='citesec'>Clause 2</span></xref>
             </p>
           </foreword>
-          <introduction id='B' obligation='informative' displayorder='2'>
+          <introduction id='B' obligation='informative' displayorder='3'>
             <title depth='1'>Introduction</title>
             <clause id='C' inline-header='false' obligation='informative'>
               <title depth='2'>
@@ -1294,7 +1324,7 @@ RSpec.describe IsoDoc do
           </introduction>
         </preface>
         <sections>
-          <clause id='D' obligation='normative' type='scope' displayorder='3'>
+          <clause id='D' obligation='normative' type='scope' displayorder='4'>
             <title depth='1'>
               1
               <tab/>
@@ -1302,7 +1332,7 @@ RSpec.describe IsoDoc do
             </title>
             <p id='E'>Text</p>
           </clause>
-          <terms id='H' obligation='normative' displayorder='5'>
+          <terms id='H' obligation='normative' displayorder='6'>
             <title depth='1'>
               3
               <tab/>
@@ -1327,14 +1357,14 @@ RSpec.describe IsoDoc do
               </dl>
             </definitions>
           </terms>
-          <definitions id='L' displayorder='6'>
+          <definitions id='L' displayorder='7'>
             <title>4</title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
             </dl>
           </definitions>
-          <clause id='M' inline-header='false' obligation='normative' displayorder='7'>
+          <clause id='M' inline-header='false' obligation='normative' displayorder='8'>
             <title depth='1'>
               5
               <tab/>
@@ -1356,7 +1386,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id='P' inline-header='false' obligation='normative' displayorder='8'>
+        <annex id='P' inline-header='false' obligation='normative' displayorder='9'>
           <title>
             <strong>Annex A</strong>
             <br/>
@@ -1395,14 +1425,14 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id='R' normative='true' obligation='informative' displayorder='4'>
+          <references id='R' normative='true' obligation='informative' displayorder='5'>
             <title depth='1'>
               2
               <tab/>
               Normative References
             </title>
           </references>
-          <clause id='S' obligation='informative' displayorder='9'>
+          <clause id='S' obligation='informative' displayorder='10'>
             <title depth='1'>Bibliography</title>
             <references id='T' normative='false' obligation='informative'>
               <title depth='2'>Bibliography Subsection</title>
@@ -1417,7 +1447,7 @@ RSpec.describe IsoDoc do
 
   it "cross-references lists" do
     output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", <<~"INPUT", true)
+      .convert("test", <<~INPUT, true)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>
             <foreword>
@@ -1470,11 +1500,14 @@ RSpec.describe IsoDoc do
           </annex>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target="N">Clause 1, List</xref>
               <xref target="note1">3.1, List 1</xref>
@@ -1486,7 +1519,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id="scope" type="scope" displayorder='2'>
+          <clause id="scope" type="scope" displayorder='3'>
             <title depth="1">1
               <tab/>
               Scope</title>
@@ -1496,10 +1529,10 @@ RSpec.describe IsoDoc do
               </li>
             </ol>
           </clause>
-          <terms id="terms" displayorder='3'>
+          <terms id="terms" displayorder='4'>
             <title>2</title>
           </terms>
-          <clause id="widgets" displayorder='4'>
+          <clause id="widgets" displayorder='5'>
             <title depth="1">3
               <tab/>
               Widgets</title>
@@ -1518,7 +1551,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='5'>
+        <annex id="annex1" displayorder='6'>
           <title>
             <strong>Annex A</strong>
             <br/><span class="obligation">(informative)</span></title>
@@ -1616,7 +1649,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target='N'>1 a)</xref>
               <xref target='note1'>3.1, List 1 a)</xref>
@@ -1628,7 +1664,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id='scope' type='scope' displayorder='2'>
+          <clause id='scope' type='scope' displayorder='3'>
             <title depth='1'>1<tab/>Scope</title>
             <ol id='N1' type="alphabet">
               <li id='N'>
@@ -1636,8 +1672,8 @@ RSpec.describe IsoDoc do
               </li>
             </ol>
           </clause>
-          <terms id='terms' displayorder='3'><title>2</title></terms>
-          <clause id='widgets' displayorder='4'>
+          <terms id='terms' displayorder='4'><title>2</title></terms>
+          <clause id='widgets' displayorder='5'>
           <title depth='1'>3<tab/>Widgets</title>
             <clause inline-header="true" id='widgets1'><title>3.1</title>
               <ol id='note1l' type="alphabet">
@@ -1653,7 +1689,7 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id='annex1'  displayorder='5'><title><strong>Annex A</strong><br/><span class="obligation">(informative)</span></title>
+        <annex id='annex1'  displayorder='6'><title><strong>Annex A</strong><br/><span class="obligation">(informative)</span></title>
           <clause inline-header="true" id='annex1a'><title>A.1</title>
             <ol id='ANl' type="alphabet">
               <li id='AN'>
@@ -1736,7 +1772,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
-          <foreword displayorder='1'>
+          <clause type="toc" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder='2'>
             <p>
               <xref target='N'>1 a)</xref>
               <xref target='note1'>1 a) 1)</xref>
@@ -1748,7 +1787,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <sections>
-          <clause id='scope' type='scope' displayorder='2'>
+          <clause id='scope' type='scope' displayorder='3'>
             <title depth='1'>1<tab/>Scope</title>
             <ol id='N1' type="alphabet">
               <li id='N'>
@@ -1816,7 +1855,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='1'>
+      <foreword displayorder='2'>
         <p><xref target='Na'>1 a)</xref></p>
       </foreword>
     OUTPUT
@@ -1852,7 +1891,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='1'>
+      <foreword displayorder='2'>
         <p><xref target='Na'>Clause 1, List 1 a)</xref></p>
       </foreword>
     OUTPUT

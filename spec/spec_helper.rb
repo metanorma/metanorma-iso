@@ -281,6 +281,10 @@ HTML_HDR = <<~HDR.freeze
       </div>
       <br/>
       <div class="main-section">
+            <br/>
+      <div class="TOC">
+        <h1 class="IntroTitle">Contents</h1>
+      </div>
 HDR
 
 WORD_HDR = <<~HDR.freeze

@@ -35,26 +35,26 @@ module IsoDoc
         amd(isoxml) and @suppressheadingnumbers = true
       end
 
-      def introduction(isoxml, out)
-        f = isoxml.at(ns("//introduction")) || return
+=begin
+      def introduction(clause, out)
         title_attr = { class: "IntroTitle" }
         page_break(out)
-        out.div class: "Section3", id: f["id"] do |div|
-          clause_name(f, f.at(ns("./title")), div, title_attr)
-          f.elements.each do |e|
+        out.div class: "Section3", id: clause["id"] do |div|
+          clause_name(clause, clause.at(ns("./title")), div, title_attr)
+          clause.elements.each do |e|
             parse(e, div) unless e.name == "title"
           end
         end
       end
+=end
 
-      def foreword(isoxml, out)
-        f = isoxml.at(ns("//foreword")) or return
+      def foreword(clause, out)
         @foreword = true
         page_break(out)
-        out.div **attr_code(id: f["id"]) do |s|
-          clause_name(nil, f.at(ns("./title")) || @i18n.foreword, s,
+        out.div **attr_code(id: clause["id"]) do |s|
+          clause_name(nil, clause.at(ns("./title")) || @i18n.foreword, s,
                       { class: "ForewordTitle" })
-          f.elements.each { |e| parse(e, s) unless e.name == "title" }
+          clause.elements.each { |e| parse(e, s) unless e.name == "title" }
         end
         @foreword = false
       end

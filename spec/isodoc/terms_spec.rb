@@ -67,8 +67,9 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
+        <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
-          <terms id='_terms_and_definitions' obligation='normative' displayorder='1'>
+          <terms id='_terms_and_definitions' obligation='normative' displayorder='2'>
           <title depth='1'>1<tab/>Terms and Definitions</title>
 
             <term id='paddy1'><name>1.1</name>
@@ -226,8 +227,9 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
        <?xml version='1.0'?>
           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+            <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
-          <terms id='A' obligation='normative' displayorder='1'>
+          <terms id='A' obligation='normative' displayorder='2'>
             <title depth='1'>1<tab/>Terms and definitions</title>
             <term id='second'>
               <name>1.1</name>

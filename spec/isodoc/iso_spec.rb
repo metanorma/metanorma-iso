@@ -3,7 +3,7 @@ require "fileutils"
 
 RSpec.describe IsoDoc::Iso do
   it "processes isodoc as ISO: HTML output" do
-    IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", false)
+    IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~INPUT, false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <foreword>
@@ -24,7 +24,7 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "processes isodoc as ISO: alt HTML output" do
-    IsoDoc::Iso::HtmlConvert.new(alt: true).convert("test", <<~"INPUT", false)
+    IsoDoc::Iso::HtmlConvert.new(alt: true).convert("test", <<~INPUT, false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <foreword>
@@ -46,7 +46,7 @@ RSpec.describe IsoDoc::Iso do
 
   it "processes isodoc as ISO: Chinese HTML output" do
     IsoDoc::Iso::HtmlConvert.new(script: "Hans")
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>
             <foreword>
@@ -70,7 +70,7 @@ RSpec.describe IsoDoc::Iso do
     IsoDoc::Iso::HtmlConvert.new(bodyfont: "Zapf Chancery",
                                  headerfont: "Comic Sans",
                                  monospacefont: "Andale Mono")
-      .convert("test", <<~"INPUT", false)
+      .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>
             <foreword>
@@ -91,7 +91,7 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "processes isodoc as ISO: Word output" do
-    IsoDoc::Iso::WordConvert.new({}).convert("test", <<~"INPUT", false)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", <<~INPUT, false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <foreword>
@@ -112,9 +112,10 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "does not include IEV in references" do
-    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
+    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~INPUT, true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
+        <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword>
             <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
               <eref bibitemid="IEV">IEV</eref>

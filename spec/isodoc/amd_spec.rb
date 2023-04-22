@@ -960,11 +960,13 @@ RSpec.describe IsoDoc do
             </structuredidentifier>
           </ext>
         </bibdata>
+        <preface>
+        <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+        </preface>
         <sections/>
       </iso-standard>
     INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
-
       #{HTML_HDR}
             <p class='zzSTDTitle1'>Introduction &#8212; Main Title&#8201;&#8212;&#8201;Title &#8212; </p>
             <p class='zzSTDTitle2'>

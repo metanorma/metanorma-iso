@@ -36,7 +36,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-           <foreword id='A' displayorder='1'>
+             <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='_' class='modspec' type='recommend'>
                <name>Table 1 — Recommendation 1</name>
@@ -242,7 +243,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-           <foreword id='A' displayorder='1'>
+             <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='_' class='modspec' type='recommendclass'>
                <name>Table 1 — Recommendations class 1</name>
@@ -435,7 +437,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~PRESXML
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <foreword id='A' displayorder='1'>
+             <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='A1' class='modspec' type='recommend'>
             <name>Table 1 — Requirement 1</name>
@@ -517,7 +520,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~PRESXML
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-           <foreword id='A' displayorder='1'>
+             <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommend'>
                <name>Table 1 — Requirement 1: First</name>

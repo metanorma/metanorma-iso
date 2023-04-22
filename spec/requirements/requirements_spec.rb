@@ -21,7 +21,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='A0'>
               <name>Table 1</name>
@@ -41,7 +42,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <name>Table 3</name>
             </table>
           </foreword>
-          <introduction id='B' displayorder='2'>
+          <introduction id='B' displayorder='3'>
             <title>Introduction</title>
             <p>
               <xref target='A0'>
@@ -133,7 +134,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
 
     presxml = <<~OUTPUT
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-                <preface><foreword id="A" displayorder="1"><title>Preface</title>
+                <preface>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+                <foreword id="A" displayorder="2"><title>Preface</title>
                 <table id="A1" class="modspec" type="recommend">
             <name>Table 1 — Permission 1: First</name>
             <tbody>
@@ -234,7 +237,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 </tr>
               </tbody></table>
                 </foreword></preface>
-                <bibliography><references id="_bibliography" obligation="informative" normative="false" displayorder="2">
+                <bibliography><references id="_bibliography" obligation="informative" normative="false" displayorder="3">
             <title depth="1">Bibliography</title>
             <bibitem id="rfc2616" type="standard">
             <formattedref><smallcap>R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, & T. Berners-Lee</smallcap>. <em><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></em>. Available from: <span class="biburl"><link target="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</link></span>.</formattedref>
@@ -262,6 +265,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          <br/>
          <div class='main-section'>
            <br/>
+           <div class="TOC">
+              <h1 class="IntroTitle">Contents</h1>
+          </div>
+          <br/>
            <div id='A'>
                          <h1 class="ForewordTitle">Preface</h1>
               <p class="TableTitle" style="text-align:center;">Table 1 — Permission 1: First</p>
@@ -400,6 +407,12 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
+          <div class="TOC">
+          <p class="zzContents">Contents</p>
+        </div>
+        <p>
+          <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+        </p>
           <div id="A">
             <h1 class="ForewordTitle">Preface</h1>
             <p class="Tabletitle" style="text-align:center;">Table 1 — Permission 1: First</p>
@@ -609,7 +622,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-           <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendtest'>
                <name>Table 1 — Conformance test 1: First</name>
@@ -739,7 +753,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
-              <foreword id="A" displayorder="1"><title>Preface</title>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+              <foreword id="A" displayorder="2"><title>Preface</title>
           <table id="A1" type="recommendtest" class="modspec">
           <name>Table 1 — Abstract test 1: First</name>
         <tbody>
@@ -819,7 +834,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='A1' keep-with-next='true' keep-lines-together='true' class='modspec' type='recommendclass'>
               <name>Table 1 — Permissions class 1: First</name>
@@ -923,7 +939,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-           <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
                <name>Table 1 — Conformance class 1: First</name>
@@ -1055,7 +1072,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <language current='true'>fr</language>
          </bibdata>
          <preface>
-           <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Sommaire</title> </clause>
+           <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
                <name>Tableau 1 — Classe de confirmité 1&#xa0;: First</name>
@@ -1172,7 +1190,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-           <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
                <name>Table 1 — Requirements class 1: First</name>
@@ -1261,7 +1280,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='A1' class='modspec' type='recommendclass'>
             <name>Table 1 — Recommendations class 1: First</name>
@@ -1365,7 +1385,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <foreword id='A0' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword id='A0' displayorder='2'>
             <title>Preface</title>
             <table id='A' unnumbered='true' class='modspec' type='recommend'>
             <name>Table — Requirement: A New Requirement</name>
@@ -1480,7 +1501,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <foreword id='A' displayorder='1'>
+          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='_' class='modspec' type='recommend'>
               <name>Table 1 — Recommendation 1: First</name>

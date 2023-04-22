@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <!-- default namespace isostandard = "https://www.metanorma.com/ns/iso" -->
+  <!--
+    VERSION v1.2.1
+    default namespace isostandard = "https://www.metanorma.com/ns/iso"
+  -->
   <include href="isodoc.rng">
     <start>
       <ref name="iso-standard"/>
@@ -240,13 +243,7 @@
   -->
   <define name="iso-standard">
     <element name="iso-standard">
-      <attribute name="version"/>
-      <attribute name="type">
-        <choice>
-          <value>semantic</value>
-          <value>presentation</value>
-        </choice>
-      </attribute>
+      <ref name="Root-Attributes"/>
       <ref name="bibdata"/>
       <zeroOrMore>
         <ref name="termdocsource"/>

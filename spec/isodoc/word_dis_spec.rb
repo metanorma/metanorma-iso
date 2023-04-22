@@ -172,9 +172,6 @@ RSpec.describe IsoDoc do
              <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
            </div>
          </div>
-         <p class='zzContents' style='margin-top:0cm'>
-           <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
-         </p>
          <p class='MsoNormal'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
@@ -199,7 +196,6 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
-      .xpath("//xmlns:p[@class = 'MsoToc1']").each(&:remove)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(xmlpp(doc.to_xml))
       .to be_equivalent_to xmlpp(word)
@@ -220,9 +216,6 @@ RSpec.describe IsoDoc do
            <div>
              <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
          </div>
-         <p class='zzContents'>
-           <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
-         </p>
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
@@ -247,7 +240,6 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
-      .xpath("//xmlns:p[@class = 'MsoToc1']").each(&:remove)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(xmlpp(doc.to_xml))
       .to be_equivalent_to xmlpp(word)
@@ -330,9 +322,6 @@ RSpec.describe IsoDoc do
           <div>
             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
           </div>
-        <p class='zzContents'>
-          <span lang='EN-GB' xml:lang='EN-GB'>Contents</span>
-        </p>
         <p class='MsoBodyText'>
           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
         </p>
@@ -388,7 +377,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
-      .xpath("//xmlns:p[@class = 'MsoToc1']").each(&:remove)
+      #.xpath("//xmlns:p[@class = 'MsoToc1']").each(&:remove)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(xmlpp(doc.to_xml))
       .to be_equivalent_to xmlpp(word)

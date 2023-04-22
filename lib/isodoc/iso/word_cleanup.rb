@@ -142,6 +142,9 @@ module IsoDoc
       # supply missing annex title
       def make_WordToC(docxml, level)
         toc = ""
+        if source = docxml.at("//div[@class = 'TOC']")
+          toc = to_xml(source.children)
+        end
         xpath = (1..level).each.map { |i| "//h#{i}" }.join (" | ")
         docxml.xpath(xpath).each do |h|
           x = ""

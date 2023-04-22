@@ -18,7 +18,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder="1">
+            <clause type="toc" displayorder="1">
+          <title depth="1">Contents</title>
+        </clause>
+          <foreword displayorder="2">
             <example id="samplecode">
               <name>EXAMPLE — Title</name>
               <p>Hello</p>
@@ -55,6 +58,12 @@ RSpec.describe IsoDoc do
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
+              <div class="TOC">
+      <p class="zzContents">Contents</p>
+    </div>
+    <p>
+      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+    </p>
           <div>
             <h1 class="ForewordTitle">Foreword</h1>
             <div id="samplecode" class="example">
@@ -103,7 +112,10 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder="1">
+            <clause type="toc" displayorder="1">
+          <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder="2">
             <example id="samplecode">
               <name>EXAMPLE 1</name>
               <quote>Hello</quote>
@@ -146,6 +158,12 @@ RSpec.describe IsoDoc do
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
+              <div class="TOC">
+      <p class="zzContents">Contents</p>
+    </div>
+    <p>
+      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+    </p>
           <div>
             <h1 class="ForewordTitle">Foreword</h1>
             <div id="samplecode" class="example">
@@ -192,7 +210,11 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~INPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
-          <preface><foreword displayorder="1">
+          <preface>
+          <clause type="toc" displayorder="1">
+          <title depth="1">Contents</title>
+        </clause>
+          <foreword displayorder="2">
           <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="caution">
                          <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>
                  CAUTION — Only use paddy or parboiled rice for the
@@ -204,8 +226,6 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      #{HTML_HDR}
-                   <br/>
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='Admonition'>
@@ -216,16 +236,14 @@ RSpec.describe IsoDoc do
                  <p id='_e94663cc-2473-4ccc-9a72-983a74d989f3'>Para 2.</p>
                </div>
              </div>
-             <p class='zzSTDTitle1'/>
-           </div>
-         </body>
-       </html>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)))
+    expect(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))
+      .at("//div[h1/@class = 'ForewordTitle']").to_xml))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -245,7 +263,11 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~INPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
-          <preface><foreword displayorder="1">
+          <preface>
+             <clause type="toc" displayorder="1">
+          <title depth="1">Contents</title>
+           </clause>
+          <foreword displayorder="2">
           <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="caution">
           <name>Title</name>
           <ul>
@@ -257,8 +279,6 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      #{HTML_HDR}
-                    <br/>
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='Admonition'>
@@ -269,16 +289,14 @@ RSpec.describe IsoDoc do
          <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
                </div>
              </div>
-             <p class='zzSTDTitle1'/>
-           </div>
-         </body>
-       </html>
     OUTPUT
     expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
       .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", input, true)))
+    expect(xmlpp(Nokogiri::XML(
+      IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))
+      .at("//div[h1/@class = 'ForewordTitle']").to_xml))
       .to be_equivalent_to xmlpp(output)
   end
 
@@ -295,7 +313,11 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~INPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
-          <preface><foreword displayorder="1">
+          <preface>    
+            <clause type="toc" displayorder="1">
+              <title depth="1">Contents</title>
+          </clause>
+            <foreword displayorder="2">
           <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
                          <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>EDITORIAL NOTE —
                  Only use paddy or parboiled rice for the
@@ -329,6 +351,12 @@ RSpec.describe IsoDoc do
       <p>
         <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
       </p>
+        <div class="TOC">
+    <p class="zzContents">Contents</p>
+  </div>
+  <p>
+    <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+  </p>
       <div>
         <h1 class='ForewordTitle'>Foreword</h1>
         <div id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' class='zzHelp'>
@@ -355,6 +383,7 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml'>
         <preface>
+        <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword id='fwd'>
             <p>
             </p>
@@ -475,6 +504,12 @@ RSpec.describe IsoDoc do
           <p>
             <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
           </p>
+              <div class="TOC">
+      <p class="zzContents">Contents</p>
+    </div>
+    <p>
+      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+    </p>
           <div id='fwd'>
             <h1 class='ForewordTitle'>Foreword</h1>
             <p class='ForewordText'> </p>
@@ -700,8 +735,9 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+           <preface><clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause></preface>
         <sections>
-          <clause id="widgets" displayorder="1">
+          <clause id="widgets" displayorder="2">
             <title depth="1">1<tab/>Widgets</title>
             <figure id="N">
               <name>Figure 1 — Figure 1</name>
@@ -746,6 +782,12 @@ RSpec.describe IsoDoc do
           <br clear="all" class="section"/>
         </p>
         <div class="WordSection2">
+            <p>
+      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+    </p>
+    <div class="TOC">
+      <p class="zzContents">Contents</p>
+    </div>
           <p> </p>
         </div>
         <p>
@@ -819,7 +861,8 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword displayorder="1">
+           <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword displayorder="2">
             <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
               <p keep-with-next="true">where</p>
@@ -996,7 +1039,8 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
-          <foreword displayorder="1">
+           <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword displayorder="2">
             <formula id="_be9158af-7e93-4ee2-90c5-26d31c181934" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
               <p>where
@@ -1092,7 +1136,8 @@ RSpec.describe IsoDoc do
     presxml = <<~INPUT
               <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
-          <foreword displayorder='1'>
+           <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <foreword displayorder='2'>
             <ol type='alphabet'>
               <li>
                 <p>A</p>
@@ -1217,7 +1262,8 @@ RSpec.describe IsoDoc do
     presxml = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
          <preface>
-           <foreword displayorder='1'>
+           <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword displayorder='2'>
              <ol start='4' type='alphabet'>
                <li>List</li>
              </ol>
@@ -1244,6 +1290,12 @@ RSpec.describe IsoDoc do
         <p>
           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
         </p>
+          <div class="TOC">
+    <p class="zzContents">Contents</p>
+  </div>
+  <p>
+    <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+  </p>
         <div>
           <h1 class='ForewordTitle'>Foreword</h1>
           <ol type='a' start='4'>
@@ -1284,7 +1336,8 @@ RSpec.describe IsoDoc do
     presxml = <<~INPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
          <preface>
-           <foreword displayorder='1'>
+           <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+           <foreword displayorder='2'>
              <ul>
                <li>A</li>
                <li>
