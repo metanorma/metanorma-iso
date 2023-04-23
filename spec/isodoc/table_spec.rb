@@ -91,7 +91,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
-            <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword displayorder='2'>
             <table id='tableD-1' alt='tool tip' summary='long desc'>
               <name>
@@ -109,13 +109,13 @@ RSpec.describe IsoDoc do
                   <td align='center'>
                     Drago
                     <fn reference='a'>
-                      <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55'>Parboiled rice.</p>
+                      <p id='_'>Parboiled rice.</p>
                     </fn>
                   </td>
                   <td align='center'>
                     Balilla
                     <fn reference='a'>
-                      <p id='_0fe65e9a-5531-408e-8295-eeff35f41a55'>Parboiled rice.</p>
+                      <p id='_'>Parboiled rice.</p>
                     </fn>
                   </td>
                   <td align='center'>Thaibonnet</td>
@@ -369,7 +369,7 @@ RSpec.describe IsoDoc do
                   <div class="TableFootnote">
                     <div>
                       <a name="ftntableD-1a" id="ftntableD-1a"/>
-                      <p class="TableFootnote"><a name="_0fe65e9a-5531-408e-8295-eeff35f41a55" id="_0fe65e9a-5531-408e-8295-eeff35f41a55"/><span><span class="TableFootnoteRef"><a name="tableD-1a" id="tableD-1a"/>a</span><span style="mso-tab-count:1">  </span></span>Parboiled rice.</p>
+                      <p class="TableFootnote"><a name="_" id="_"/><span><span class="TableFootnoteRef"><a name="tableD-1a" id="tableD-1a"/>a</span><span style="mso-tab-count:1">  </span></span>Parboiled rice.</p>
                     </div>
                   </div>
                 </td>
@@ -399,8 +399,8 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.html")).to be true
     out = File.read("test.html")
@@ -460,7 +460,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
-            <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
            <foreword displayorder="2">
              <table id="tableD-1">
                <name>Table 1 — Repeatability and reproducibility of
@@ -553,7 +553,7 @@ RSpec.describe IsoDoc do
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
-              <div class="TOC">
+              <div class="TOC" id="_">
           <p class="zzContents">Contents</p>
         </div>
         <p>
@@ -611,8 +611,8 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})

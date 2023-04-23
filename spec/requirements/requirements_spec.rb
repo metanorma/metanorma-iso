@@ -21,7 +21,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='A0'>
@@ -59,10 +59,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </preface>
       </ogc-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -135,7 +135,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
                 <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
                 <foreword id="A" displayorder="2"><title>Preface</title>
                 <table id="A1" class="modspec" type="recommend">
             <name>Table 1 — Permission 1: First</name>
@@ -237,7 +237,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 </tr>
               </tbody></table>
                 </foreword></preface>
-                <bibliography><references id="_bibliography" obligation="informative" normative="false" displayorder="3">
+                <bibliography><references id="_" obligation="informative" normative="false" displayorder="3">
             <title depth="1">Bibliography</title>
             <bibitem id="rfc2616" type="standard">
             <formattedref><smallcap>R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, & T. Berners-Lee</smallcap>. <em><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></em>. Available from: <span class="biburl"><link target="https://www.rfc-editor.org/info/rfc2616">https://www.rfc-editor.org/info/rfc2616</link></span>.</formattedref>
@@ -265,7 +265,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          <br/>
          <div class='main-section'>
            <br/>
-           <div class="TOC">
+           <div class="TOC" id="_">
               <h1 class="IntroTitle">Contents</h1>
           </div>
           <br/>
@@ -407,7 +407,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
-          <div class="TOC">
+          <div class="TOC" id="_">
           <p class="zzContents">Contents</p>
         </div>
         <p>
@@ -548,10 +548,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </body>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
@@ -622,7 +622,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
            <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendtest'>
@@ -690,10 +690,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
-  .gsub(%r{</body>.*}m, "</body>")))
+  .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -753,7 +753,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
               <foreword id="A" displayorder="2"><title>Preface</title>
           <table id="A1" type="recommendtest" class="modspec">
           <name>Table 1 — Abstract test 1: First</name>
@@ -793,10 +793,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
               .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
-  .gsub(%r{</body>.*}m, "</body>")))
+  .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -834,7 +834,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='A1' keep-with-next='true' keep-lines-together='true' class='modspec' type='recommendclass'>
@@ -894,10 +894,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
             .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -939,7 +939,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
            <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
@@ -1024,10 +1024,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -1072,7 +1072,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <language current='true'>fr</language>
          </bibdata>
          <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Sommaire</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Sommaire</title> </clause>
            <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
@@ -1156,11 +1156,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </preface>
        </ogc-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
        .convert("test", input, true)
       .gsub(%r{<localized-strings>.*</localized-strings>}m, "")
        .gsub(%r{^.*<body}m, "<body")
-       .gsub(%r{</body>.*}m, "</body>")))
+       .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -1190,7 +1190,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
       <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
          <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
            <foreword id='A' displayorder='2'>
              <title>Preface</title>
              <table id='A1' class='modspec' type='recommendclass'>
@@ -1243,10 +1243,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -1280,7 +1280,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='A1' class='modspec' type='recommendclass'>
@@ -1324,10 +1324,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -1385,7 +1385,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword id='A0' displayorder='2'>
             <title>Preface</title>
             <table id='A' unnumbered='true' class='modspec' type='recommend'>
@@ -1439,10 +1439,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 
@@ -1501,7 +1501,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     presxml = <<~OUTPUT
           <ogc-standard xmlns='https://standards.opengeospatial.org/document' type='presentation'>
         <preface>
-          <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+          <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword id='A' displayorder='2'>
             <title>Preface</title>
             <table id='_' class='modspec' type='recommend'>
@@ -1555,10 +1555,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>")))
+      .gsub(%r{</body>.*}m, "</body>"))))
       .to be_equivalent_to xmlpp(presxml)
   end
 end

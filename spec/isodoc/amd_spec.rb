@@ -961,7 +961,7 @@ RSpec.describe IsoDoc do
           </ext>
         </bibdata>
         <preface>
-        <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+        <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
         </preface>
         <sections/>
       </iso-standard>

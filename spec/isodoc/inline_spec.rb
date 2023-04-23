@@ -5,7 +5,7 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword>
@@ -57,7 +57,7 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword>
@@ -95,7 +95,7 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword>
@@ -129,7 +129,7 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml" xmlns:m="http://www.w3.org/1998/Math/MathML">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword>
@@ -171,7 +171,7 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword>
@@ -202,7 +202,7 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~"INPUT", true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword>
@@ -338,12 +338,12 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(xmlpp(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
-      .sub(%r{<i18nyaml>.*</i18nyaml>}m, ""))
+    expect(xmlpp(strip_guid(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
+      .sub(%r{<i18nyaml>.*</i18nyaml>}m, "")))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
           <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
             <foreword displayorder="2">
@@ -406,7 +406,7 @@ RSpec.describe IsoDoc do
             </foreword>
           </preface>
           <bibliography>
-            <references id="_normative_references" normative="true" obligation="informative" displayorder="3">
+            <references id="_" normative="true" obligation="informative" displayorder="3">
               <title depth="1">1<tab/>
                 Normative References</title>
               <bibitem id="ISO712" type="standard">
@@ -507,7 +507,7 @@ RSpec.describe IsoDoc do
           </terms>
           <clause id="clause1"><title>Clause 1</title></clause>
           </sections>
-          <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
+          <bibliography><references id="_" obligation="informative" normative="true"><title>Normative References</title>
           <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
       <bibitem id="ISO712" type="standard">
         <title format="text/plain">Cereals or cereal products</title>
@@ -526,7 +526,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           </preface>
@@ -610,7 +610,7 @@ RSpec.describe IsoDoc do
           </terms>
           <clause id="clause1" displayorder="4"><title depth="1">3<tab/>Clause 1</title></clause>
           </sections>
-          <bibliography><references id="_normative_references" obligation="informative" normative="true" displayorder="2"><title depth="1">1<tab/>Normative References</title>
+          <bibliography><references id="_" obligation="informative" normative="true" displayorder="2"><title depth="1">1<tab/>Normative References</title>
           <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
       <bibitem id="ISO712" type="standard">
          <formattedref><em><span class='stddocTitle'>Cereals and cereal products</span></em></formattedref>
@@ -684,8 +684,8 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
   end
@@ -766,7 +766,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
-        <clause type="toc" displayorder="1">
+        <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword id='A' displayorder='2'>
@@ -830,8 +830,8 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-       .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
   end
 
   it "processes concept attributes" do
@@ -881,7 +881,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
         </preface>
@@ -968,8 +968,8 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(presxml)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
   end

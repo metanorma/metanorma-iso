@@ -67,24 +67,24 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
-        <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
-          <terms id='_terms_and_definitions' obligation='normative' displayorder='2'>
+          <terms id='_' obligation='normative' displayorder='2'>
           <title depth='1'>1<tab/>Terms and Definitions</title>
 
             <term id='paddy1'><name>1.1</name>
               <preferred><strong>paddy</strong></preferred>
               <definition>
-                <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>&#x3c;rice&#x3e; rice retaining its husk after threshing</p>
+                <p id='_'>&#x3c;rice&#x3e; rice retaining its husk after threshing</p>
               </definition>
-              <termexample id='_bd57bbf1-f948-4bae-b0ce-73c00431f892'>
+              <termexample id='_'>
                 <name>EXAMPLE 1</name>
-                <p id='_65c9a509-9a89-4b54-a890-274126aeb55c'>Foreign seeds, husks, bran, sand, dust.</p>
+                <p id='_'>Foreign seeds, husks, bran, sand, dust.</p>
                 <ul>
                   <li>A</li>
                 </ul>
               </termexample>
-              <termexample id='_bd57bbf1-f948-4bae-b0ce-73c00431f894'>
+              <termexample id='_'>
                 <name>EXAMPLE 2</name>
                 <ul>
                   <li>A</li>
@@ -100,22 +100,22 @@ RSpec.describe IsoDoc do
               <admitted>rough rice</admitted>
               <deprecates>DEPRECATED: cargo rice</deprecates>
               <definition>
-                <p id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'>rice retaining its husk after threshing</p>
+                <p id='_'>rice retaining its husk after threshing</p>
               </definition>
-              <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74e'>
+              <termnote id='_'>
                 <name>Note 1 to entry</name>
-                <p id='_19830f33-e46c-42cc-94ca-a5ef101132d5'>The starch of waxy rice consists almost entirely of amylopectin. The
+                <p id='_'>The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.</p>
               </termnote>
-              <termnote id='_671a1994-4783-40d0-bc81-987d06ffb74f'>
+              <termnote id='_'>
                 <name>Note 2 to entry</name>
                 <ul>
                   <li>A</li>
                 </ul>
-                <p id='_19830f33-e46c-42cc-94ca-a5ef101132d5'>The starch of waxy rice consists almost entirely of amylopectin. The
+                <p id='_'>The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.</p>
               </termnote>
-              <termexample id='_bd57bbf1-f948-4bae-b0ce-73c00431f893'>
+              <termexample id='_'>
                 <name>EXAMPLE</name>
                 <ul>
                   <li>A</li>
@@ -143,11 +143,11 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
             <p class="zzSTDTitle1"/>
-                         <div id="_terms_and_definitions"><h1>1  Terms and Definitions</h1><p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f"><rice> rice retaining its husk after threshing</p><div id="_bd57bbf1-f948-4bae-b0ce-73c00431f892" class="example"><p><span class="example_label">EXAMPLE 1</span>  Foreign seeds, husks, bran, sand, dust.</p><ul><li>A</li></ul></div><div id="_bd57bbf1-f948-4bae-b0ce-73c00431f894" class="example"><p><span class="example_label">EXAMPLE 2</span>  </p><ul><li>A</li></ul></div><p>[SOURCE:
+                         <div id="_"><h1>1  Terms and Definitions</h1><p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p id="_"><rice> rice retaining its husk after threshing</p><div id="_" class="example"><p><span class="example_label">EXAMPLE 1</span>  Foreign seeds, husks, bran, sand, dust.</p><ul><li>A</li></ul></div><div id="_" class="example"><p><span class="example_label">EXAMPLE 2</span>  </p><ul><li>A</li></ul></div><p>[SOURCE:
                  <span class="stdpublisher">ISO</span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>, <span class="citesec">3.1</span>, modified – The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
-               </p><p class="TermNum" id="paddy">1.2</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p class="AltTerms" style="text-align:left;">paddy rice</p><p class="AltTerms" style="text-align:left;">rough rice</p><p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p><div id="_671a1994-4783-40d0-bc81-987d06ffb74e" class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The
-                   kernels have a tendency to stick together after cooking.</p></div><div id="_671a1994-4783-40d0-bc81-987d06ffb74f" class="Note"><p>Note 2 to entry: <ul><li>A</li></ul><p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The
-                   kernels have a tendency to stick together after cooking.</p></p></div><div id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example"><p><span class="example_label">EXAMPLE</span>  </p><ul><li>A</li></ul></div><p>[SOURCE:
+               </p><p class="TermNum" id="paddy">1.2</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p class="AltTerms" style="text-align:left;">paddy rice</p><p class="AltTerms" style="text-align:left;">rough rice</p><p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p><p id="_">rice retaining its husk after threshing</p><div id="_" class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The
+                   kernels have a tendency to stick together after cooking.</p></div><div id="_" class="Note"><p>Note 2 to entry: <ul><li>A</li></ul><p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
+                   kernels have a tendency to stick together after cooking.</p></p></div><div id="_" class="example"><p><span class="example_label">EXAMPLE</span>  </p><ul><li>A</li></ul></div><p>[SOURCE:
                  <span class="stdpublisher">ISO</span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>, <span class="citesec">3.1</span>]
                </p><p class="TermNum" id="A">1.3</p><p class="Terms" style="text-align:left;"><b>term1</b></p>
                term1 definition
@@ -161,11 +161,11 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     word = <<~OUTPUT
-      <div id="_terms_and_definitions"><h1>1<span style="mso-tab-count:1">  </span>Terms and Definitions</h1><p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p class="Definition" id="_eb29b35e-123e-4d1c-b50b-2714d41e747f"><rice> rice retaining its husk after threshing</p><div id="_bd57bbf1-f948-4bae-b0ce-73c00431f892" class="example"><p><span class="example_label">EXAMPLE 1</span><span style="mso-tab-count:1">  </span>Foreign seeds, husks, bran, sand, dust.</p><ul><li>A</li></ul></div><div id="_bd57bbf1-f948-4bae-b0ce-73c00431f894" class="example"><p><span class="example_label">EXAMPLE 2</span><span style="mso-tab-count:1">  </span></p><ul><li>A</li></ul></div><p class="Source">[SOURCE:
+      <div id="_"><h1>1<span style="mso-tab-count:1">  </span>Terms and Definitions</h1><p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p class="Definition" id="_"><rice> rice retaining its husk after threshing</p><div id="_" class="example"><p><span class="example_label">EXAMPLE 1</span><span style="mso-tab-count:1">  </span>Foreign seeds, husks, bran, sand, dust.</p><ul><li>A</li></ul></div><div id="_" class="example"><p><span class="example_label">EXAMPLE 2</span><span style="mso-tab-count:1">  </span></p><ul><li>A</li></ul></div><p class="Source">[SOURCE:
            <span class="stdpublisher">ISO</span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>, <span class="citesec">3.1</span>, modified – The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
-         </p><p class="TermNum" id="paddy">1.2</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p class="AltTerms" style="text-align:left;">paddy rice</p><p class="AltTerms" style="text-align:left;">rough rice</p><p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p><p class="Definition" id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p><div id="_671a1994-4783-40d0-bc81-987d06ffb74e" class="Note"><p class="Note">Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The
-             kernels have a tendency to stick together after cooking.</p></div><div id="_671a1994-4783-40d0-bc81-987d06ffb74f" class="Note"><p class="Note">Note 2 to entry: <ul><li>A</li></ul><p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The
-             kernels have a tendency to stick together after cooking.</p></p></div><div id="_bd57bbf1-f948-4bae-b0ce-73c00431f893" class="example"><p><span class="example_label">EXAMPLE</span><span style="mso-tab-count:1">  </span></p><ul><li>A</li></ul></div><p class="Source">[SOURCE:
+         </p><p class="TermNum" id="paddy">1.2</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p class="AltTerms" style="text-align:left;">paddy rice</p><p class="AltTerms" style="text-align:left;">rough rice</p><p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p><p class="Definition" id="_">rice retaining its husk after threshing</p><div id="_" class="Note"><p class="Note">Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The
+             kernels have a tendency to stick together after cooking.</p></div><div id="_" class="Note"><p class="Note">Note 2 to entry: <ul><li>A</li></ul><p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
+             kernels have a tendency to stick together after cooking.</p></p></div><div id="_" class="example"><p><span class="example_label">EXAMPLE</span><span style="mso-tab-count:1">  </span></p><ul><li>A</li></ul></div><p class="Source">[SOURCE:
            <span class="stdpublisher">ISO</span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>, <span class="citesec">3.1</span>]
          </p><p class="TermNum" id="A">1.3</p><p class="Terms" style="text-align:left;"><b>term1</b></p>
          term1 definition
@@ -173,8 +173,8 @@ RSpec.describe IsoDoc do
            term2 definition
        </div>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true)))
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
@@ -227,7 +227,7 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
        <?xml version='1.0'?>
           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-            <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+            <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
           <terms id='A' obligation='normative' displayorder='2'>
             <title depth='1'>1<tab/>Terms and definitions</title>
@@ -245,7 +245,7 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-       .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 end

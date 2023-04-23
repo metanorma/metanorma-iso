@@ -102,7 +102,7 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword obligation="informative" displayorder='2'>
@@ -283,7 +283,7 @@ RSpec.describe IsoDoc do
              <p>
                <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
              </p>
-                   <div class="TOC">
+                   <div class="TOC" id="_">
         <p class="zzContents">Contents</p>
       </div>
       <p>
@@ -445,9 +445,9 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     WORD
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(strip_guid(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
@@ -544,7 +544,7 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)
+    expect(xmlpp(strip_guid(output))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(<<~"OUTPUT")
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
@@ -560,7 +560,7 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
           <preface>
-            <clause type="toc" displayorder="1">
+            <clause type="toc" id="_" displayorder="1">
               <title depth="1">Contents</title>
             </clause>
             <foreword obligation="informative" displayorder='2'>
@@ -747,7 +747,7 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Sommaire</title>
           </clause>
           <foreword obligation="informative" displayorder='2'>
@@ -921,9 +921,9 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
@@ -1035,7 +1035,7 @@ RSpec.describe IsoDoc do
            </ext>
          </bibdata>
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Содержание</title>
           </clause>
           <foreword obligation="informative" displayorder='2'>
@@ -1209,9 +1209,9 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
@@ -1332,7 +1332,7 @@ RSpec.describe IsoDoc do
          </bibdata>
 
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">目　次</title>
           </clause>
           <foreword obligation="informative" displayorder='2'>
@@ -1520,9 +1520,9 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))

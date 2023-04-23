@@ -155,11 +155,11 @@ RSpec.describe IsoDoc do
           <language current="true">en</language>
         </bibdata>
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder="2">
-            <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
+            <p id="_">
               <eref bibitemid="ISO712">ISO&#xa0;712</eref>
               <eref bibitemid="ISBN">[1]</eref>
               <eref bibitemid="ISSN">[2]</eref>
@@ -171,7 +171,7 @@ RSpec.describe IsoDoc do
           </foreword>
         </preface>
         <bibliography>
-          <references id="_normative_references" normative="true" obligation="informative" displayorder="3">
+          <references id="_" normative="true" obligation="informative" displayorder="3">
             <title depth="1">1<tab/>Normative References</title>
             <p>The following documents are referred to in the text in such a way that
                        some or all of their content constitutes requirements of this document.
@@ -213,7 +213,7 @@ RSpec.describe IsoDoc do
               <p>This is an annotation of ISO 20483:2013-2014</p>
             </note>
           </references>
-          <references id="_bibliography" normative="false" obligation="informative" displayorder="4">
+          <references id="_" normative="false" obligation="informative" displayorder="4">
             <title depth="1">Bibliography</title>
             <bibitem id="ISBN" type="book">
               <formattedref><em>Chemicals for analytical laboratory use</em>. n.p.: n.d. </formattedref>
@@ -277,7 +277,7 @@ RSpec.describe IsoDoc do
         <br/>
         <div>
           <h1 class="ForewordTitle">Foreword</h1>
-               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
+               <p id="_">
                  <a href="#ISO712">ISO&#xa0;712</a>
                  <a href="#ISBN">[1]</a>
                  <a href="#ISSN">[2]</a>
@@ -344,10 +344,10 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
-      .gsub(/reference="[^"]+"/, 'reference="1"'))
+      .gsub(/reference="[^"]+"/, 'reference="1"')))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))

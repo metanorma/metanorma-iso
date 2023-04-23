@@ -115,7 +115,7 @@ RSpec.describe IsoDoc::Iso do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~INPUT, true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-        <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause>
+        <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword>
             <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
               <eref bibitemid="IEV">IEV</eref>

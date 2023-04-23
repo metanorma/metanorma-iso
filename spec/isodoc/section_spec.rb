@@ -88,7 +88,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
-        <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> 
+        <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> 
           <foreword obligation="informative" displayorder="2">
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
@@ -277,7 +277,7 @@ RSpec.describe IsoDoc do
           <p>
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
-              <div class="TOC">
+              <div class="TOC" id="_">
       <p class="zzContents">Contents</p>
     </div>
     <p>
@@ -419,8 +419,8 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true)))
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
@@ -449,7 +449,7 @@ RSpec.describe IsoDoc do
 
     presxml = <<~OUTPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
-        <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
           <clause id='D' obligation='normative' displayorder="2">
             <title depth='1'>1<tab/>Scope</title>
@@ -478,7 +478,7 @@ RSpec.describe IsoDoc do
           <br/>
           <div class='main-section'>
                 <br/>
-      <div class="TOC">
+      <div class="TOC" id="_">
         <h1 class="IntroTitle">Contents</h1>
       </div>
             <p class='zzSTDTitle1'/>
@@ -497,8 +497,8 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true)))
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
@@ -508,7 +508,7 @@ RSpec.describe IsoDoc do
   it "processes simple terms & definitions" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
           <terms id="H" obligation="normative">
             <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
@@ -597,7 +597,7 @@ RSpec.describe IsoDoc do
                  <stagename>International Standard</stagename>
                </ext>
              </bibdata>
-              <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+              <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
              <sections>
                <terms id='A' obligation='normative' displayorder='2'>
                  <title depth='1'>
@@ -638,7 +638,7 @@ RSpec.describe IsoDoc do
           <br/>
           <div class='main-section'>
                 <br/>
-          <div class="TOC">
+          <div class="TOC" id="_">
             <h1 class="IntroTitle">Contents</h1>
           </div>
             <p class='zzSTDTitle1'/>
@@ -661,7 +661,7 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:localized-strings")&.remove
     xml.at("//xmlns:boilerplate")&.remove
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(xml.to_xml)
+    expect(strip_guid(xml.to_xml))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
@@ -670,7 +670,7 @@ RSpec.describe IsoDoc do
   it "processes inline section headers" do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~INPUT, true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
           <clause id="M" inline-header="false" obligation="normative">
             <title>Clause 4</title>
@@ -780,7 +780,7 @@ RSpec.describe IsoDoc do
               </structuredidentifier>
             </ext>
           </bibdata>
-        <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
           <sections/>
         </iso-standard>
       INPUT
@@ -833,7 +833,7 @@ RSpec.describe IsoDoc do
           <language current='true'>en</language>
           <script current='true'>Latn</script>
         </bibdata>
-        <preface> <clause type="toc" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
           <clause id='A' displayorder="2">
             <title>1</title>
@@ -931,7 +931,7 @@ RSpec.describe IsoDoc do
           <br/>
           <div class='main-section'>
                 <br/>
-            <div class="TOC">
+            <div class="TOC" id="_">
               <h1 class="IntroTitle">Contents</h1>
             </div>
             <p class='zzSTDTitle1'/>

@@ -64,7 +64,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -85,7 +85,7 @@ RSpec.describe IsoDoc do
               Scope</title>
             <note id="N">
               <name>NOTE</name>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
+              <p id="_">These results are based on a study carried out on three different
                         types of kernel.
                       </p>
             </note>
@@ -104,13 +104,13 @@ RSpec.describe IsoDoc do
               <title>3.1</title>
               <note id="note1">
                 <name>NOTE 1</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
+                <p id="_">These results are based on a study carried out on three different
                           types of kernel.
                         </p>
               </note>
               <note id="note2">
                 <name>NOTE 2</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different
+                <p id="_">These results are based on a study carried out on three different
                           types of kernel.
                         </p>
               </note>
@@ -129,7 +129,7 @@ RSpec.describe IsoDoc do
             <title>A.1</title>
             <note id="AN">
               <name>NOTE</name>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
+              <p id="_">These results are based on a study carried out on three different
                         types of kernel.
                       </p>
             </note>
@@ -138,13 +138,13 @@ RSpec.describe IsoDoc do
             <title>A.2</title>
             <note id="Anote1">
               <name>NOTE 1</name>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
+              <p id="_">These results are based on a study carried out on three different
                         types of kernel.
                       </p>
             </note>
             <note id="Anote2">
               <name>NOTE 2</name>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different
+              <p id="_">These results are based on a study carried out on three different
                         types of kernel.
                       </p>
             </note>
@@ -152,8 +152,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references notes, skipping units notes" do
@@ -185,7 +185,7 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
            <foreword displayorder="2">
@@ -201,19 +201,19 @@ RSpec.describe IsoDoc do
              <clause id="widgets1" inline-header="true">
                <title>1.1</title>
                <note id="note1" type="units">
-                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
                </note>
                <note id="note2">
                  <name>NOTE</name>
-                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
                </note>
              </clause>
            </clause>
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-        .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+        .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
 
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -247,7 +247,7 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
            <foreword displayorder="2">
@@ -264,23 +264,23 @@ RSpec.describe IsoDoc do
              <clause id="widgets1" inline-header="true">
                <title>1.1</title>
                <note id="note1" type="units">
-                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
                </note>
                <note id="note2">
                  <name>NOTE  1</name>
-                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
                </note>
                <note id="note3">
                  <name>NOTE  2</name>
-                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83b">These results are based on a study carried out on three different types of kernel.</p>
+                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
                </note>
              </clause>
            </clause>
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-        .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+        .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references figures" do
@@ -352,7 +352,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword id="fwd" displayorder='2'>
@@ -373,7 +373,7 @@ RSpec.describe IsoDoc do
               Scope</title>
             <figure id="N">
               <name>Figure 1 — Split-it-right sample divider</name>
-              <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
             </figure>
             <p>
               <xref target="N"><span class='citefig'>Figure 1</span></xref>
@@ -390,11 +390,11 @@ RSpec.describe IsoDoc do
               <title>3.1</title>
               <figure id="note1">
                 <name>Figure 2 — Split-it-right sample divider</name>
-                <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
               </figure>
               <figure id="note2">
                 <name>Figure 3 — Split-it-right sample divider</name>
-                <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
               </figure>
               <p>
                 <xref target="note1"><span class='citefig'>Figure 2</span></xref>
@@ -411,25 +411,25 @@ RSpec.describe IsoDoc do
             <title>A.1</title>
             <figure id="AN">
               <name>Figure A.1 — Split-it-right sample divider</name>
-              <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
             </figure>
           </clause>
           <clause id="annex1b" inline-header="true">
             <title>A.2</title>
             <figure id="Anote1">
               <name>Figure A.2 — Split-it-right sample divider</name>
-              <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
             </figure>
             <figure id="Anote2">
               <name>Figure A.3 — Split-it-right sample divider</name>
-              <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
             </figure>
           </clause>
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references subfigures" do
@@ -493,7 +493,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword id="fwd" displayorder='2'>
@@ -526,11 +526,11 @@ RSpec.describe IsoDoc do
                 <name>Figure 1</name>
                 <figure id="note1">
                   <name>a)  Split-it-right sample divider</name>
-                  <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                  <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
                 </figure>
                 <figure id="note2">
                   <name>b)  Split-it-right sample divider</name>
-                  <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                  <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
                 </figure>
               </figure>
               <p>
@@ -553,19 +553,19 @@ RSpec.describe IsoDoc do
               <name>Figure A.1</name>
               <figure id="Anote1">
                 <name>a)  Split-it-right sample divider</name>
-                <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
               </figure>
               <figure id="Anote2">
                 <name>b)  Split-it-right sample divider</name>
-                <image id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
               </figure>
             </figure>
           </clause>
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-     .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+     .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references examples" do
@@ -631,7 +631,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -707,8 +707,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references formulae" do
@@ -788,7 +788,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -864,8 +864,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references tables" do
@@ -973,7 +973,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -1085,8 +1085,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references term notes" do
@@ -1129,7 +1129,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -1148,28 +1148,28 @@ RSpec.describe IsoDoc do
           </clause>
           <terms id="terms" displayorder='4'>
             <title>2</title>
-            <term id="_waxy_rice">
+            <term id="_">
               <name>2.1</name>
               <preferred><strong>waxy rice</strong></preferred>
               <termnote id="note1">
                 <name>Note 1 to entry</name>
-                <p id="_b0cb3dfd-78fc-47dd-a339-84070d947463">The starch of waxy rice consists almost entirely of amylopectin. The
+                <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
               </termnote>
             </term>
-            <term id="_nonwaxy_rice">
+            <term id="_">
               <name>2.2</name>
               <preferred><strong>nonwaxy rice</strong></preferred>
               <termnote id="note2">
                 <name>Note 1 to entry</name>
-                <p id="_b0cb3dfd-78fc-47dd-a339-84070d947463">The starch of waxy rice consists almost entirely of amylopectin. The
+                <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
               </termnote>
               <termnote id="note3">
                 <name>Note 2 to entry</name>
-                <p id="_b0cb3dfd-78fc-47dd-a339-84070d947463">The starch of waxy rice consists almost entirely of amylopectin. The
+                <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
               </termnote>
@@ -1178,8 +1178,8 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references sections" do
@@ -1282,7 +1282,7 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword obligation='informative' displayorder='2'>
@@ -1441,8 +1441,8 @@ RSpec.describe IsoDoc do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references lists" do
@@ -1500,11 +1500,11 @@ RSpec.describe IsoDoc do
           </annex>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(strip_guid(<<~OUTPUT))
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -1649,7 +1649,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -1712,8 +1712,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "cross-references nested list items" do
@@ -1772,7 +1772,7 @@ RSpec.describe IsoDoc do
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
-          <clause type="toc" displayorder="1">
+          <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
           <foreword displayorder='2'>
@@ -1823,8 +1823,8 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "conflates cross-references to a split list" do
