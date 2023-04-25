@@ -10494,7 +10494,7 @@
 
 	<xsl:template name="setULLabel">
 		<xsl:variable name="list_level__">
-			<xsl:value-of select="count(ancestor::*[local-name() = 'ul']) + count(ancestor::*[local-name() = 'ol'])"/>/&gt;
+			<xsl:value-of select="count(ancestor::*[local-name() = 'ul']) + count(ancestor::*[local-name() = 'ol'])"/>
 		</xsl:variable>
 		<xsl:variable name="list_level_" select="number($list_level__)"/>
 		<xsl:variable name="list_level">
