@@ -3007,6 +3007,8 @@
 	<xsl:attribute-set name="dt-block-style">
 		<xsl:attribute name="margin-top">0pt</xsl:attribute>
 
+			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="dl-name-style">
