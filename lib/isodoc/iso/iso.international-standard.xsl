@@ -4102,7 +4102,7 @@
 									<xsl:apply-templates select="*[local-name()='thead']" mode="process_tbody"/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:apply-templates select="node()[not(local-name() = 'name') and not(local-name() = 'note') and not(local-name() = 'dl') and not(local-name() = 'source')          and not(local-name() = 'thead') and not(local-name() = 'tfoot')]"/> <!-- process all table' elements, except name, header, footer, note, source and dl which render separaterely -->
+									<xsl:apply-templates select="node()[not(local-name() = 'name') and not(local-name() = 'note') and not(local-name() = 'dl') and not(local-name() = 'source') and not(local-name() = 'p')          and not(local-name() = 'thead') and not(local-name() = 'tfoot')]"/> <!-- process all table' elements, except name, header, footer, note, source and dl which render separaterely -->
 								</xsl:otherwise>
 							</xsl:choose>
 
@@ -4643,7 +4643,7 @@
 		<xsl:param name="colwidths"/>
 		<xsl:param name="colgroup"/>
 
-		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'] or ../*[local-name()='dl'] or ..//*[local-name()='fn'][local-name(..) != 'name'] or ../*[local-name()='source']"/>
+		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'] or ../*[local-name()='dl'] or ..//*[local-name()='fn'][local-name(..) != 'name'] or ../*[local-name()='source'] or ../*[local-name()='p']"/>
 
 		<xsl:variable name="isNoteOrFnExistShowAfterTable">
 
@@ -4711,6 +4711,7 @@
 
 								<!-- except gb and bsi  -->
 
+										<xsl:apply-templates select="../*[local-name()='p']"/>
 										<xsl:apply-templates select="../*[local-name()='dl']"/>
 										<xsl:apply-templates select="../*[local-name()='note']"/>
 										<xsl:apply-templates select="../*[local-name()='source']"/>
@@ -5100,6 +5101,14 @@
 		<!-- list of footnotes to calculate actual footnotes number -->
 		<xsl:variable name="p_fn_">
 			<xsl:call-template name="get_fn_list"/>
+			<!-- <xsl:choose>
+				<xsl:when test="$namespace = 'jis'">
+					<xsl:call-template name="get_fn_list_for_element"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="get_fn_list"/>
+				</xsl:otherwise>
+			</xsl:choose> -->
 		</xsl:variable>
 		<xsl:variable name="p_fn" select="xalan:nodeset($p_fn_)"/>
 
@@ -5126,7 +5135,14 @@
 
 		</xsl:variable>
 
-		<xsl:variable name="ref_id" select="concat('footnote_', $lang, '_', $reference, '_', $current_fn_number)"/>
+		<xsl:variable name="ref_id">
+			<xsl:choose>
+				<xsl:when test="normalize-space(@ref_id) != ''"><xsl:value-of select="@ref_id"/></xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat('footnote_', $lang, '_', $reference, '_', $current_fn_number)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 		<xsl:variable name="footnote_inline">
 			<fo:inline>
 
@@ -5152,7 +5168,7 @@
 				<xsl:call-template name="insert_basic_link">
 					<xsl:with-param name="element">
 						<fo:basic-link internal-destination="{$ref_id}" fox:alt-text="footnote {$current_fn_number}">
-							<xsl:value-of select="$current_fn_number_text"/>
+							<xsl:copy-of select="$current_fn_number_text"/>
 						</fo:basic-link>
 					</xsl:with-param>
 				</xsl:call-template>
@@ -5225,6 +5241,28 @@
 		</xsl:choose>
 	</xsl:template>
 
+	<xsl:template name="get_fn_list_for_element">
+		<xsl:choose>
+			<xsl:when test="@current_fn_number"> <!-- footnote reference number calculated already -->
+				<fn gen_id="{generate-id(.)}">
+					<xsl:copy-of select="@*"/>
+					<xsl:copy-of select="node()"/>
+				</fn>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:for-each select="ancestor::*[local-name() = 'ul' or local-name() = 'ol'][1]">
+					<xsl:variable name="element_id" select="@id"/>
+					<xsl:for-each select=".//*[local-name() = 'fn'][generate-id(.)=generate-id(key('kfn',@reference)[1])]">
+						<!-- copy unique fn -->
+						<fn gen_id="{generate-id(.)}">
+							<xsl:copy-of select="@*"/>
+							<xsl:copy-of select="node()"/>
+						</fn>
+					</xsl:for-each>
+				</xsl:for-each>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 	<!-- ============================ -->
 	<!-- table's footnotes rendering -->
 	<!-- ============================ -->
@@ -11058,6 +11096,7 @@
 
 		<fo:block id="{@id}">
 			<xsl:apply-templates/>
+
 		</fo:block>
 	</xsl:template>
 
@@ -11077,6 +11116,7 @@
 
 		<fo:block id="{@id}" xsl:use-attribute-sets="references-non-normative-style">
 			<xsl:apply-templates/>
+
 		</fo:block>
 
 	</xsl:template> <!-- references -->
@@ -11658,6 +11698,9 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<!-- prevent empty thead processing in XSL-FO, remove it -->
+	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'thead'][count(*) = 0]" mode="update_xml_step1"/>
+
 	<xsl:template name="add_id">
 		<xsl:if test="not(@id)">
 			<!-- add @id - first element with @id plus '_element_name' -->
@@ -12054,6 +12097,14 @@
 	<xsl:template match="*[local-name() = 'fn'][not(ancestor::*[(local-name() = 'table' or local-name() = 'figure')] and not(ancestor::*[local-name() = 'name']))]" mode="linear_xml" name="linear_xml_fn">
 		<xsl:variable name="p_fn_">
 			<xsl:call-template name="get_fn_list"/>
+			<!-- <xsl:choose>
+				<xsl:when test="$namespace = 'jis'">
+					<xsl:call-template name="get_fn_list_for_element"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="get_fn_list"/>
+				</xsl:otherwise>
+			</xsl:choose> -->
 		</xsl:variable>
 		<xsl:variable name="p_fn" select="xalan:nodeset($p_fn_)"/>
 		<xsl:variable name="gen_id" select="generate-id(.)"/>
@@ -12068,8 +12119,14 @@
 			<xsl:attribute name="current_fn_number">
 				<xsl:value-of select="$current_fn_number"/>
 			</xsl:attribute>
+			<xsl:variable name="skip_footnote_body_" select="not($p_fn//fn[@gen_id = $gen_id] and (1 = 1))"/>
 			<xsl:attribute name="skip_footnote_body"> <!-- false for repeatable footnote -->
-				<xsl:value-of select="not($p_fn//fn[@gen_id = $gen_id] and (1 = 1))"/>
+
+						<xsl:value-of select="$skip_footnote_body_"/>
+
+			</xsl:attribute>
+			<xsl:attribute name="ref_id">
+				<xsl:value-of select="concat('footnote_', $lang, '_', $reference, '_', $current_fn_number)"/>
 			</xsl:attribute>
 			<xsl:apply-templates select="node()" mode="linear_xml"/>
 		</xsl:copy>
