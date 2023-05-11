@@ -2162,4 +2162,125 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err"))
       .not_to include "Style override set for ordered list"
   end
+
+  it "warns of ambiguous provision term" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      Might I trouble you?
+    INPUT
+    expect(File.read("test.err"))
+      .to include "may contain ambiguous provision"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      I won't trouble you.
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "may contain ambiguous provision"
+  end
+
+  it "warns of nested subscripts" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      +++Y<sub>n<sub>1</sub></sub>+++
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "may contain nested subscripts (max 3 levels allowed)"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      [stem]
+      ++++
+      a_(n_1)
+      ++++
+
+    INPUT
+    expect(File.read("test.err"))
+      .to include "may contain nested subscripts (max 3 levels allowed)"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      +++Y<sub>n</sub>+++
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "may contain nested subscripts (max 3 levels allowed)"
+  end
+
+  it "warns of cross-references before punctuation" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      <<a,fn:>>.
+
+      [bibliography]
+      == Bibliography
+      * [[[a, b]]]
+    INPUT
+    expect(File.read("test.err"))
+      .to include "superscript cross-reference followed by punctuation"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      <<a,fn:>>,
+
+      [bibliography]
+      == Bibliography
+      * [[[a, b]]]
+    INPUT
+    expect(File.read("test.err"))
+      .to include "superscript cross-reference followed by punctuation"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      <<a>>.
+
+      [bibliography]
+      == Bibliography
+      * [[[a, b]]]
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "superscript cross-reference followed by punctuation"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      <<a,fn:>>
+
+      [bibliography]
+      == Bibliography
+      * [[[a, b]]]
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "superscript cross-reference followed by punctuation"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      , <<a,fn:>> A
+
+      [bibliography]
+      == Bibliography
+      * [[[a, b]]]
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "superscript cross-reference followed by punctuation"
+  end
 end

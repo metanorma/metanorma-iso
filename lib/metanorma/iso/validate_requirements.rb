@@ -24,6 +24,7 @@ module Metanorma
       end
 
       def requirement_check(text)
+        @lang == "en" or return
         text.split(/\.\s+/).each do |t|
           return t if requirement_re.match t
         end
@@ -44,6 +45,7 @@ module Metanorma
       end
 
       def recommendation_check(text)
+        @lang == "en" or return
         text.split(/\.\s+/).each do |t|
           return t if recommendation_re.match t
         end
@@ -60,6 +62,7 @@ module Metanorma
       REGEXP
 
       def permission_re
+        @lang == "en" or return
         Regexp.new(self.class::PERMISSION_RE_STR.gsub(/\s/, "")
           .gsub(/_/, "\\s"), Regexp::IGNORECASE)
       end
@@ -82,6 +85,7 @@ module Metanorma
       REGEXP
 
       def possibility_re
+        @lang == "en" or return
         Regexp.new(self.class::POSSIBILITY_RE_STR.gsub(/\s/, "")
           .gsub(/_/, "\\s"), Regexp::IGNORECASE)
       end
@@ -94,6 +98,26 @@ module Metanorma
       def external_constraint(text)
         text.split(/\.\s+/).each do |t|
           return t if /\b(must)\b/xi.match? t
+        end
+        nil
+      end
+
+      AMBIG_WORDS_RE_STR = <<~REGEXP.freeze
+        \\b
+            need_to | needs_to | might | could
+        \\b
+      REGEXP
+
+      def ambig_words_re
+        @lang == "en" or return
+        Regexp.new(self.class::AMBIG_WORDS_RE_STR.gsub(/\s/, "")
+          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+      end
+
+      def ambig_words_check(text)
+        @lang == "en" or return
+        text.split(/\.\s+/).each do |t|
+          return t if ambig_words_re.match t
         end
         nil
       end

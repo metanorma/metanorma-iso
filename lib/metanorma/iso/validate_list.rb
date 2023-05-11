@@ -60,7 +60,7 @@ module Metanorma
         case prectext.strip[-1]
         when ":", "" then list_after_colon_punctuation(list, entries)
         when "." then entries.each { |li| list_full_sentence(li) }
-        else style_warning(list, "All lists must be preceded by "\
+        else style_warning(list, "All lists must be preceded by " \
                                  "colon or full stop", prectext)
         end
       end
@@ -80,7 +80,7 @@ module Metanorma
       def list_semicolon_phrase(elem, last)
         text = elem.text.strip
         starts_lowercase?(text) or
-          style_warning(elem, "List entry of broken up sentence must start "\
+          style_warning(elem, "List entry of broken up sentence must start " \
                               "with lowercase letter", text)
         list_semicolon_phrase_punct(elem, text, last)
       end
@@ -89,11 +89,11 @@ module Metanorma
         punct = text.strip.sub(/^.*?(\S)$/m, "\\1")
         if last
           punct == "." or
-            style_warning(elem, "Final list entry of broken up "\
+            style_warning(elem, "Final list entry of broken up " \
                                 "sentence must end with full stop", text)
         else
           punct == ";" or
-            style_warning(elem, "List entry of broken up sentence must "\
+            style_warning(elem, "List entry of broken up sentence must " \
                                 "end with semicolon", text)
         end
       end
@@ -102,11 +102,11 @@ module Metanorma
         %w(Cyrl Latn Grek).include?(@script) or return
         text = elem.text.strip
         starts_uppercase?(text) or
-          style_warning(elem, "List entry of separate sentences must start "\
+          style_warning(elem, "List entry of separate sentences must start " \
                               "with uppercase letter", text)
         punct = text.strip.sub(/^.*?(\S)$/m, "\\1")
         punct == "." or
-          style_warning(elem, "List entry of separate sentences must "\
+          style_warning(elem, "List entry of separate sentences must " \
                               "end with full stop", text)
       end
 

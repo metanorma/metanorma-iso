@@ -112,10 +112,10 @@ RSpec.describe IsoDoc::Iso do
   end
 
   it "does not include IEV in references" do
-    output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~INPUT, true)
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", <<~INPUT, true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-        <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword>
             <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
               <eref bibitemid="IEV">IEV</eref>
@@ -125,9 +125,8 @@ RSpec.describe IsoDoc::Iso do
         </preface>
         <bibliography>
           <references id="_normative_references" normative="true" obligation="informative">
-            <title>1<tab/>
-              Normative References</title>
-            <bibitem id="IEV" type="international-standard">
+            <title>Normative References</title>
+            <bibitem id="IEV" type="standard">
               <title format="text/plain" language="en" script="Latn">Electropedia: The World's Online Electrotechnical Vocabulary</title>
               <uri type="src">http://www.electropedia.org</uri>
               <docidentifier>IEV</docidentifier>
@@ -176,7 +175,9 @@ RSpec.describe IsoDoc::Iso do
         </bibliography>
       </iso-standard>
     INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    output = IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true)
+    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(strip_guid(<<~"OUTPUT"))
       #{HTML_HDR}
             <br/>
             <div>

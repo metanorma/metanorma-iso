@@ -3,6 +3,7 @@ require "isodoc"
 require_relative "index"
 require_relative "presentation_xref"
 require_relative "presentation_bibdata"
+require_relative "presentation_terms"
 require_relative "../../relaton/render/general"
 
 module IsoDoc
@@ -86,50 +87,6 @@ module IsoDoc
         end
       end
 
-      def concept(docxml)
-        concept_term(docxml)
-        docxml.xpath(ns("//concept")).each do |node|
-          concept_render(node, ital: "false", ref: "false",
-                               linkref: "true", linkmention: "false")
-        end
-      end
-
-      def concept_term(docxml)
-        docxml.xpath(ns("//term")).each do |f|
-          m = {}
-          (f.xpath(ns(".//concept")) - f.xpath(ns(".//term//concept")))
-            .each { |c| concept_term1(c, m) }
-        end
-      end
-
-      def concept_term1(node, seen)
-        term = to_xml(node.at(ns("./refterm")))
-        if term && seen[term]
-          concept_render(node, ital: "false", ref: "false",
-                               linkref: "true", linkmention: "false")
-        else concept_render(node, ital: "true", ref: "true",
-                                  linkref: "true", linkmention: "false")
-        end
-        seen[term] = true if term
-        seen
-      end
-
-      def concept1_ref_content(ref)
-        prev = "("
-        foll = ")"
-        if ref.name == "termref"
-          prev, foll = @i18n.term_defined_in.split("%")
-        end
-        ref.previous = prev
-        ref.next = foll
-      end
-
-      def concept1(node)
-        node.replace(node&.at(ns("./renderterm"))&.children ||
-                     node&.at(ns("./refterm"))&.children ||
-                     node.children)
-      end
-
       # we're assuming terms and clauses in the right place for display,
       # to cope with multiple terms sections
       def display_order(docxml)
@@ -143,41 +100,6 @@ module IsoDoc
         i = display_order_xpath(docxml, "//annex", i)
         i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
         display_order_xpath(docxml, "//indexsect", i)
-      end
-
-      def termdefinition1(elem)
-        prefix_domain_to_definition(elem)
-        super
-      end
-
-      def prefix_domain_to_definition(elem)
-        ((d = elem.at(ns("./domain"))) &&
-          (v = elem.at(ns("./definition/verbal-definition"))) &&
-          v.elements.first.name == "p") or return
-        v.elements.first.children.first.previous =
-          "&#x3c;#{to_xml(d.remove.children)}&#x3e; "
-      end
-
-      def insertall_after_here(node, insert, name)
-        node.children.each do |n|
-          n.name == name or next
-          insert.next = n.remove
-          insert = n
-        end
-        insert
-      end
-
-      def termexamples_before_termnotes(node)
-        insert = node.at(ns("./definition")) or return
-        insert = insertall_after_here(node, insert, "termexample")
-        insertall_after_here(node, insert, "termnote")
-      end
-
-      def terms(docxml)
-        docxml.xpath(ns("//term[termnote][termexample]")).each do |node|
-          termexamples_before_termnotes(node)
-        end
-        super
       end
 
       def admonition1(elem)
@@ -210,10 +132,6 @@ module IsoDoc
         type = :alphabet_upper if [4, 9].include? depth
         type = :roman_upper if [5, 10].include? depth
         type
-      end
-
-      def related1(node)
-        node.remove
       end
 
       def note1(elem)

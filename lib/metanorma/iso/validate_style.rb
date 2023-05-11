@@ -90,13 +90,32 @@ module Metanorma
       end
 
       def style(node, text)
-        return if @novalid
-
+        @novalid and return
         style_number(node, text)
         style_percent(node, text)
         style_abbrev(node, text)
         style_units(node, text)
         style_punct(node, text)
+        style_subscript(node)
+        style_ambig_words(node, text)
+      end
+
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-quantity
+      def style_subscript(node)
+        warning = "may contain nested subscripts (max 3 levels allowed)"
+        node.xpath(".//sub[.//sub]").each do |x|
+          style_warning(node, warning, x.to_xml)
+        end
+        node.xpath(".//m:msub[.//m:msub]", "m" => MATHML_NS).each do |x|
+          style_warning(node, warning, x.to_xml)
+        end
+      end
+
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-need
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-might
+      def style_ambig_words(node, text)
+        r = ambig_words_check(text) and
+          style_warning(node, "may contain ambiguous provision", r)
       end
 
       # ISO/IEC DIR 2, 9.1
@@ -169,6 +188,16 @@ module Metanorma
                                       "Use 'either x or y, or both'", node, text)
         style_regex(/\s(?<num>&)\s/i,
                     "Avoid ampersand in ordinary text'", node, text)
+        eref_style_punct(node)
+      end
+
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-r-ref_unnumbered
+      def eref_style_punct(node)
+        node.xpath(".//eref[@type='footnote']").each do |e|
+          /^\p{P}/.match?(e.next&.text) or next
+          style_warning(node, "superscript cross-reference followed by punctuation",
+                        node.to_xml)
+        end
       end
 
       def style_warning(node, msg, text = nil)
