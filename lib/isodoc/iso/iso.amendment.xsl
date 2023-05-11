@@ -3190,7 +3190,6 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="xref-style">
-		<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
 
 			<xsl:attribute name="color">blue</xsl:attribute>
 			<xsl:attribute name="text-decoration">underline</xsl:attribute>
@@ -8027,6 +8026,9 @@
 		<xsl:call-template name="insert_basic_link">
 			<xsl:with-param name="element">
 				<fo:basic-link internal-destination="{@target}" fox:alt-text="{@target}" xsl:use-attribute-sets="xref-style">
+					<xsl:if test="string-length(normalize-space()) &lt; 30 and not(contains(normalize-space(), 'http://')) and not(contains(normalize-space(), 'https://'))">
+						<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
+					</xsl:if>
 					<xsl:if test="parent::*[local-name() = 'add']">
 						<xsl:call-template name="append_add-style"/>
 					</xsl:if>
