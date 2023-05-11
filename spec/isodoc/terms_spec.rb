@@ -248,4 +248,96 @@ RSpec.describe IsoDoc do
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
        .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
+
+  it "processes IsoXML term with different term source statuses" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata><language>en</language></bibdata>
+          <sections>
+          <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
+          <p>For the purposes of this document, the following terms and definitions apply.</p>
+      <term id="paddy1"><preferred><expression><name>paddy</name></expression></preferred>
+      <definition><verbal-definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></verbal-definition></definition>
+        <termsource status='identical'>
+          <origin citeas=''>
+            <termref base='IEV' target='xyz'>t1</termref>
+          </origin>
+          <modification>
+            <p id='_'>with adjustments</p>
+          </modification>
+        </termsource>
+        <termsource status='adapted'>
+          <origin citeas=''>
+            <termref base='IEV' target='xyz'/>
+          </origin>
+          <modification>
+            <p id='_'>with adjustments</p>
+          </modification>
+        </termsource>
+        <termsource status='modified'>
+          <origin citeas=''>
+            <termref base='IEV' target='xyz'/>
+          </origin>
+          <modification>
+            <p id='_'>with adjustments</p>
+          </modification>
+        </termsource>
+        <termsource status='identical'>
+          <origin citeas=''>
+            <termref base='IEV' target='xyz'>t1</termref>
+          </origin>
+        </termsource>
+        <termsource status='adapted'>
+          <origin citeas=''>
+            <termref base='IEV' target='xyz'/>
+          </origin>
+        </termsource>
+        <termsource status='modified'>
+          <origin citeas=''>
+            <termref base='IEV' target='xyz'/>
+          </origin>
+        </termsource>
+      </term>
+    INPUT
+    output = <<~OUTPUT
+      <terms id="_terms_and_definitions" obligation="normative" displayorder="2">
+        <title depth="1">1<tab/>Terms and Definitions</title>
+        <p>For the purposes of this document, the following terms and definitions apply.</p>
+        <term id="paddy1">
+          <name>1.1</name>
+          <preferred>
+            <strong>paddy</strong>
+          </preferred>
+          <definition>
+            <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
+          </definition>
+          <termsource status="identical">[SOURCE: <origin citeas=""><termref base="IEV" target="xyz">t1</termref></origin>
+           –
+            with adjustments
+
+        ;
+          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified
+           –
+            with adjustments
+
+        ;
+          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified
+           –
+            with adjustments
+
+        ;
+          <origin citeas=""><termref base="IEV" target="xyz">t1</termref></origin>
+        ;
+          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified
+        ;
+          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified]</termsource>
+        </term>
+      </terms>
+    OUTPUT
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+          .new(presxml_options)
+           .convert("test", input, true))
+          .at("//xmlns:terms").to_xml))
+      .to be_equivalent_to xmlpp(output)
+  end
 end

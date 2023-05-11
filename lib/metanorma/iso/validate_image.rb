@@ -3,8 +3,9 @@ module Metanorma
     class Converter < Standoc::Converter
       # DRG directives 3.7; but anticipated by standoc
       def subfigure_validate(xmldoc)
+        elems = { footnote: "fn", note: "note", key: "dl" }
         xmldoc.xpath("//figure//figure").each do |f|
-          { footnote: "fn", note: "note", key: "dl" }.each do |k, v|
+          elems.each do |k, v|
             f.xpath(".//#{v}").each do |n|
               @log.add("Style", n, "#{k} is not permitted in a subfigure")
             end
@@ -13,10 +14,10 @@ module Metanorma
       end
 
       def image_name_prefix(xmldoc)
-        std = xmldoc&.at("//bibdata/ext/structuredidentifier/project-number") or
+        std = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") or
           return
-        num = xmldoc&.at("//bibdata/docnumber")&.text or return
-        ed = xmldoc&.at("//bibdata/edition")&.text || "1"
+        num = xmldoc.at("//bibdata/docnumber")&.text or return
+        ed = xmldoc.at("//bibdata/edition")&.text || "1"
         prefix = num
         std["part"] and prefix += "-#{std['part']}"
         prefix += "_ed#{ed}"
@@ -25,7 +26,7 @@ module Metanorma
       end
 
       def image_name_suffix(xmldoc)
-        case xmldoc&.at("//bibdata/language")&.text
+        case xmldoc.at("//bibdata/language")&.text
         when "fr" then "_f"
         when "de" then "_d"
         when "ru" then "_r"

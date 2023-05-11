@@ -30,6 +30,7 @@ module Metanorma
       # ISO/IEC DIR 2, 15.5.3, 20.2
       # does not deal with preceding text marked up
       def see_xrefs_validate(root)
+        @lang == "en" or return
         root.xpath("//xref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? &&
@@ -45,6 +46,7 @@ module Metanorma
 
       # ISO/IEC DIR 2, 15.5.3
       def see_erefs_validate(root)
+        @lang == "en" or return
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
           next unless !prec.nil? && /\b(see|refer to)\s*\Z/mi.match(prec)

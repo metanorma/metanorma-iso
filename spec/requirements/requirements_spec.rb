@@ -143,7 +143,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               <tr><th>Identifier</th><td><tt>/ogc/recommendation/wfs/2</tt></td></tr>
               <tr><th>Subject</th><td>user</td></tr>
             <tr><th>Prerequisites</th><td>/ss/584/2015/level/1<br/>
-            <eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref></td></tr>
+            <xref type="inline" target="rfc2616">RFC 2616 (HTTP/1.1)</xref></td></tr>
             <tr>
         <th>Control-class</th>
         <td>Technical</td>

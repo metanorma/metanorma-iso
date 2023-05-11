@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.1 -->
+<!-- VERSION v1.2.2 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -210,6 +210,9 @@
         <attribute name="droploc">
           <data type="boolean"/>
         </attribute>
+      </optional>
+      <optional>
+        <attribute name="style"/>
       </optional>
       <ref name="CitationType"/>
       <oneOrMore>
@@ -2136,6 +2139,7 @@
     <choice>
       <value>identical</value>
       <value>modified</value>
+      <value>adapted</value>
       <value>restyled</value>
       <value>context-added</value>
       <value>generalisation</value>

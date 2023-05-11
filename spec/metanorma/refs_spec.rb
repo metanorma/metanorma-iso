@@ -410,6 +410,7 @@ RSpec.describe Metanorma::ISO do
                 <uri type="src">https://www.iso.org/standard/2405.html</uri>
                 <uri type="rss">https://www.iso.org/contents/data/standard/00/24/2405.detail.rss</uri>
                 <docidentifier type="ISO" primary="true">ISO 31-0</docidentifier>
+                <docidentifier type="iso-reference">ISO 31-0(E)</docidentifier>
                 <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99:ed-1</docidentifier>
                 <docnumber>31</docnumber>
                 <contributor>
@@ -447,6 +448,7 @@ RSpec.describe Metanorma::ISO do
                     <uri type="src">https://www.iso.org/standard/2405.html</uri>
                     <uri type="rss">https://www.iso.org/contents/data/standard/00/24/2405.detail.rss</uri>
                     <docidentifier type="ISO" primary="true">ISO 31-0:1974</docidentifier>
+                    <docidentifier type="iso-reference">ISO 31-0:1974(E)</docidentifier>
                     <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99:ed-1</docidentifier>
                     <docnumber>31</docnumber>
                     <date type="published">
@@ -491,6 +493,7 @@ RSpec.describe Metanorma::ISO do
                 <uri type="src">https://www.iso.org/standard/76389.html</uri>
                 <uri type="rss">https://www.iso.org/contents/data/standard/07/63/76389.detail.rss</uri>
                 <docidentifier type="ISO" primary="true">ISO 683-3:2019</docidentifier>
+                <docidentifier type="iso-reference">ISO 683-3:2019(E)</docidentifier>
                 <docidentifier type="URN">urn:iso:std:iso:683:-3:stage-95.99:ed-3</docidentifier>
                 <docnumber>683</docnumber>
                 <date type="published">
