@@ -122,17 +122,29 @@ module Metanorma
       # ISO/IEC DIR 2, Table B.1
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-n-numbers
       def style_number(node, text)
-        style_two_regex_not_prev(
-          node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/,
-          %r{\b(ISO|IEC|IEEE/|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z},
-          "number not broken up in threes"
-        )
+        style_number_grouping(node, text)
         style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
                     "possible decimal point", node, text)
         @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
                                       "ambiguous number", node, text)
-        style_regex(/(^|\s)(?<num>-[0-9][0-9,.]*)/i,
+        style_regex(/(?:^|\s)(?<num>-[0-9][0-9,.]*)/i,
                     "hyphen instead of minus sign U+2212", node, text)
+      end
+
+      def style_number_grouping(node, text)
+        if @validate_years
+          style_two_regex_not_prev(
+            node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/,
+            %r{\b(ISO|IEC|IEEE|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z},
+            "number not broken up in threes"
+          )
+        else
+          style_two_regex_not_prev(
+            node, text, /^(?<num>-?(?:[0-9]{5,}[,0-9]*|[03-9]\d\d\d|1[0-8]\d\d|2[1-9]\d\d|20[5-9]\d))\Z/,
+            %r{\b(ISO|IEC|IEEE|\b)\Z},
+            "number not broken up in threes"
+          )
+        end
       end
 
       # ISO/IEC DIR 2, 9.2.1

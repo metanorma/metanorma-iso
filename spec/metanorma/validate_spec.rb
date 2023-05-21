@@ -633,6 +633,25 @@ RSpec.describe Metanorma::ISO do
     expect(File.read("test.err")).to include "number not broken up in threes"
   end
 
+  it "gives Style warning if number not broken up in threes looks like year" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      1950
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "number not broken up in threes"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR.sub(/:nodoc:/, ":validate-years:\n  :nodoc:")}
+
+      == Clause
+      1950
+    INPUT
+    expect(File.read("test.err")).to include "number not broken up in threes"
+  end
+
   it "gives No style warning if number not broken up in threes is " \
      "ISO reference" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)

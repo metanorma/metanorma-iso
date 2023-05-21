@@ -54,6 +54,7 @@ module Metanorma
         super
         @amd = %w(amendment technical-corrigendum).include? doctype(node)
         @vocab = node.attr("docsubtype") == "vocabulary"
+        @validate_years = node.attr("validate-years")
       end
 
       def toc_default
