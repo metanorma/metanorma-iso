@@ -403,7 +403,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage>40</stage>
+            <stage abbreviation="FCD">40</stage>
             <substage>00</substage>
           </status>
           <copyright>
