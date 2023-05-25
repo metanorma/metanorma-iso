@@ -47,40 +47,40 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     word = <<~OUTPUT
-          <body lang="EN-US" link="blue" vlink="#954F72">
-        <div class="WordSection1">
-          <p>&#160;</p>
-        </div>
-        <p>
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection2">
-          <p>
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-          </p>
-              <div class="TOC" id="_">
-      <p class="zzContents">Contents</p>
-    </div>
-    <p>
-      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-    </p>
-          <div>
-            <h1 class="ForewordTitle">Foreword</h1>
-            <div id="samplecode" class="example">
-              <p><span class="example_label">EXAMPLE&#160;&#8212; Title</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
-            </div>
+            <body lang="EN-US" link="blue" vlink="#954F72">
+          <div class="WordSection1">
+            <p>&#160;</p>
           </div>
-          <p>&#160;</p>
-        </div>
-        <p>
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-      </body>
+          <p>
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection2">
+            <p>
+              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+            </p>
+                <div class="TOC" id="_">
+        <p class="zzContents">Contents</p>
+      </div>
+      <p>
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
+            <div>
+              <h1 class="ForewordTitle">Foreword</h1>
+              <div id="samplecode" class="example">
+                <p><span class="example_label">EXAMPLE&#160;&#8212; Title</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
+              </div>
+            </div>
+            <p>&#160;</p>
+          </div>
+          <p>
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection3">
+            <p class="zzSTDTitle1"/>
+          </div>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+        </body>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
@@ -147,44 +147,44 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
     word = <<~OUTPUT
-          <body lang="EN-US" link="blue" vlink="#954F72">
-        <div class="WordSection1">
-          <p>&#160;</p>
-        </div>
-        <p>
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection2">
-          <p>
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-          </p>
-              <div class="TOC" id="_">
-      <p class="zzContents">Contents</p>
-    </div>
-    <p>
-      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-    </p>
-          <div>
-            <h1 class="ForewordTitle">Foreword</h1>
-            <div id="samplecode" class="example">
-              <p><span class="example_label">EXAMPLE  1</span><span style="mso-tab-count:1">&#160; </span></p>
-              <div class="Quote">Hello</div>
-            </div>
-            <div id="samplecode2" class="example">
-              <p><span class="example_label">EXAMPLE  2&#160;&#8212; Title</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
-            </div>
+            <body lang="EN-US" link="blue" vlink="#954F72">
+          <div class="WordSection1">
+            <p>&#160;</p>
           </div>
-          <p>&#160;</p>
-        </div>
-        <p>
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-      </body>
+          <p>
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection2">
+            <p>
+              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+            </p>
+                <div class="TOC" id="_">
+        <p class="zzContents">Contents</p>
+      </div>
+      <p>
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
+            <div>
+              <h1 class="ForewordTitle">Foreword</h1>
+              <div id="samplecode" class="example">
+                <p><span class="example_label">EXAMPLE  1</span><span style="mso-tab-count:1">&#160; </span></p>
+                <div class="Quote">Hello</div>
+              </div>
+              <div id="samplecode2" class="example">
+                <p><span class="example_label">EXAMPLE  2&#160;&#8212; Title</span><span style="mso-tab-count:1">&#160; </span>Hello</p>
+              </div>
+            </div>
+            <p>&#160;</p>
+          </div>
+          <p>
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection3">
+            <p class="zzSTDTitle1"/>
+          </div>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+        </body>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
@@ -226,25 +226,55 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-             <div>
-               <h1 class='ForewordTitle'>Foreword</h1>
-               <div id='_' class='Admonition'>
-                 <p>
-                    CAUTION — Only use paddy or parboiled rice for the
-                   determination of husked rice yield.
-                 </p>
-                 <p id='_'>Para 2.</p>
-               </div>
-             </div>
+      <div>
+        <h1 class='ForewordTitle'>Foreword</h1>
+        <div id='_' class='Admonition'>
+          <p>
+             CAUTION — Only use paddy or parboiled rice for the
+            determination of husked rice yield.
+          </p>
+          <p id='_'>Para 2.</p>
+        </div>
+      </div>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))
+      .convert("test", presxml, true),
+    )
       .at("//div[h1/@class = 'ForewordTitle']").to_xml))
       .to be_equivalent_to xmlpp(output)
+  end
+
+  it "processes empty admonitions" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface><foreword>
+          <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="caution">
+      </admonition>
+          </foreword></preface>
+          </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <preface>
+          <clause type="toc" id="_" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+          <foreword displayorder="2">
+            <admonition id="_" type="caution">
+              <name>CAUTION</name>
+            </admonition>
+          </foreword>
+        </preface>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+        .convert("test", input, true))))
+      .to be_equivalent_to xmlpp(presxml)
   end
 
   it "processes admonitions with titles" do
@@ -279,23 +309,24 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-             <div>
-               <h1 class='ForewordTitle'>Foreword</h1>
-               <div id='_' class='Admonition'>
-                        <p>Title — </p>
-         <ul>
-           <li>List</li>
-         </ul>
-         <p id='_'>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
-               </div>
-             </div>
+          <div>
+            <h1 class='ForewordTitle'>Foreword</h1>
+            <div id='_' class='Admonition'>
+                     <p>Title — </p>
+      <ul>
+        <li>List</li>
+      </ul>
+      <p id='_'>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+            </div>
+          </div>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))
+      .convert("test", presxml, true),
+    )
       .at("//div[h1/@class = 'ForewordTitle']").to_xml))
       .to be_equivalent_to xmlpp(output)
   end
@@ -313,7 +344,7 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~INPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
-          <preface>    
+          <preface>#{'    '}
             <clause type="toc" id="_" displayorder="1">
               <title depth="1">Contents</title>
           </clause>
@@ -347,25 +378,25 @@ RSpec.describe IsoDoc do
        </html>
     OUTPUT
     word = <<~OUTPUT
-        <div class='WordSection2'>
+            <div class='WordSection2'>
+          <p>
+            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+          </p>
+            <div class="TOC" id="_">
+        <p class="zzContents">Contents</p>
+      </div>
       <p>
-        <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
       </p>
-        <div class="TOC" id="_">
-    <p class="zzContents">Contents</p>
-  </div>
-  <p>
-    <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-  </p>
-      <div>
-        <h1 class='ForewordTitle'>Foreword</h1>
-        <div id='_' class='zzHelp'>
-          <p>EDITORIAL NOTE — Only use paddy or parboiled rice for the determination of husked rice yield. </p>
-          <p class='ForewordText' id='_'>Para 2.</p>
-        </div>
-      </div>
-      <p> </p>
-      </div>
+          <div>
+            <h1 class='ForewordTitle'>Foreword</h1>
+            <div id='_' class='zzHelp'>
+              <p>EDITORIAL NOTE — Only use paddy or parboiled rice for the determination of husked rice yield. </p>
+              <p class='ForewordText' id='_'>Para 2.</p>
+            </div>
+          </div>
+          <p> </p>
+          </div>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))))
@@ -493,84 +524,84 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
     word = <<~OUTPUT
-      <body lang='EN-US' link='blue' vlink='#954F72'>
-        <div class='WordSection1'>
-          <p>&#xA0;</p>
-        </div>
-        <p>
-          <br clear='all' class='section'/>
-        </p>
-        <div class='WordSection2'>
+        <body lang='EN-US' link='blue' vlink='#954F72'>
+          <div class='WordSection1'>
+            <p>&#xA0;</p>
+          </div>
           <p>
-            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+            <br clear='all' class='section'/>
           </p>
-              <div class="TOC" id="_">
-      <p class="zzContents">Contents</p>
-    </div>
-    <p>
-      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-    </p>
-          <div id='fwd'>
-            <h1 class='ForewordTitle'>Foreword</h1>
-            <p class='ForewordText'> </p>
-          </div>
-          <p>&#xA0;</p>
-        </div>
-        <p>
-          <br clear='all' class='section'/>
-        </p>
-        <div class='WordSection3'>
-          <p class='zzSTDTitle1'/>
-          <div id='scope'>
-            <h1>Scope</h1>
-            <div id='N' class='figure'>
-              <img src='rice_images/rice_image1.png'/>
-              <p class='FigureTitle' style='text-align:center;'>Figure 1&#xA0;&#x2014; Split-it-right sample divider</p>
+          <div class='WordSection2'>
+            <p>
+              <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+            </p>
+                <div class="TOC" id="_">
+        <p class="zzContents">Contents</p>
+      </div>
+      <p>
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
+            <div id='fwd'>
+              <h1 class='ForewordTitle'>Foreword</h1>
+              <p class='ForewordText'> </p>
             </div>
-            <p> </p>
+            <p>&#xA0;</p>
           </div>
-          <div id='terms'>
-            <h1/>
-          </div>
-          <div id='widgets'>
-            <h1>Widgets</h1>
-            <div id='widgets1'>
-              <div id='note1' class='figure'>
+          <p>
+            <br clear='all' class='section'/>
+          </p>
+          <div class='WordSection3'>
+            <p class='zzSTDTitle1'/>
+            <div id='scope'>
+              <h1>Scope</h1>
+              <div id='N' class='figure'>
                 <img src='rice_images/rice_image1.png'/>
-                <p class='FigureTitle' style='text-align:center;'>Figure 2&#xA0;&#x2014; Split-it-right sample divider</p>
-              </div>
-              <div id='note2' class='figure'>
-                <img src='rice_images/rice_image1.png'/>
-                <p class='FigureTitle' style='text-align:center;'>Figure 3&#xA0;&#x2014; Split-it-right sample divider</p>
+                <p class='FigureTitle' style='text-align:center;'>Figure 1&#xA0;&#x2014; Split-it-right sample divider</p>
               </div>
               <p> </p>
             </div>
-          </div>
-          <p>
-            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-          </p>
-          <div id='annex1' class='Section3'>
-            <div id='annex1a'>
-              <div id='AN' class='figure'>
-                <img src='rice_images/rice_image1.png'/>
-                <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</p>
+            <div id='terms'>
+              <h1/>
+            </div>
+            <div id='widgets'>
+              <h1>Widgets</h1>
+              <div id='widgets1'>
+                <div id='note1' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='FigureTitle' style='text-align:center;'>Figure 2&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+                <div id='note2' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='FigureTitle' style='text-align:center;'>Figure 3&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+                <p> </p>
               </div>
             </div>
-            <div id='annex1b'>
-              <div id='Anote1' class='figure'>
-                <img src='rice_images/rice_image1.png'/>
-                <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</p>
+            <p>
+              <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+            </p>
+            <div id='annex1' class='Section3'>
+              <div id='annex1a'>
+                <div id='AN' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.1&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
               </div>
-              <div id='Anote2' class='figure'>
-                <img src='rice_images/rice_image1.png'/>
-                <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</p>
+              <div id='annex1b'>
+                <div id='Anote1' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.2&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
+                <div id='Anote2' class='figure'>
+                  <img src='rice_images/rice_image1.png'/>
+                  <p class='AnnexFigureTitle' style='text-align:center;'>Figure A.3&#xA0;&#x2014; Split-it-right sample divider</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
-        <div class='colophon'/>
-      </body>
+          <br clear='all' style='page-break-before:left;mso-break-type:section-break'/>
+          <div class='colophon'/>
+        </body>
     OUTPUT
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", input, true)
     expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
@@ -581,7 +612,7 @@ RSpec.describe IsoDoc do
 
   it "renders subfigures (HTML)" do
     output = IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", <<~"INPUT", true)
+      .convert("test", <<~INPUT, true)
         <iso-standard xmlns='http://riboseinc.com/isoxml'>
           <preface>
             <foreword id='fwd'>
@@ -639,7 +670,7 @@ RSpec.describe IsoDoc do
           </annex>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <html lang='en'>
         <head/>
         <body lang='en'>
@@ -774,46 +805,46 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
     word = <<~OUTPUT
-      <body lang="EN-US" link="blue" vlink="#954F72">
-        <div class="WordSection1">
-          <p> </p>
-        </div>
-        <p>
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection2">
-            <p>
-      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-    </p>
-    <div class="TOC" id="_">
-      <p class="zzContents">Contents</p>
-    </div>
-          <p> </p>
-        </div>
-        <p>
-          <br clear="all" class="section"/>
-        </p>
-        <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
-          <div id="widgets">
-            <h1>1<span style="mso-tab-count:1">  </span>Widgets</h1>
-            <div align="right">
-              <b>Units in mm</b>
-            </div>
-            <div align="right">
-              <b>Other units in sec</b>
-            </div>
-            <div id="N" class="figure">
-              <img src="rice_images/rice_image1.png"/>
-              <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>
-              <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2</span><span style="mso-tab-count:1">  </span></p>Note 2</div>
-              <p class="FigureTitle" style="text-align:center;">Figure 1 — Figure 1</p>
+        <body lang="EN-US" link="blue" vlink="#954F72">
+          <div class="WordSection1">
+            <p> </p>
+          </div>
+          <p>
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection2">
+              <p>
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
+      <div class="TOC" id="_">
+        <p class="zzContents">Contents</p>
+      </div>
+            <p> </p>
+          </div>
+          <p>
+            <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection3">
+            <p class="zzSTDTitle1"/>
+            <div id="widgets">
+              <h1>1<span style="mso-tab-count:1">  </span>Widgets</h1>
+              <div align="right">
+                <b>Units in mm</b>
+              </div>
+              <div align="right">
+                <b>Other units in sec</b>
+              </div>
+              <div id="N" class="figure">
+                <img src="rice_images/rice_image1.png"/>
+                <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>
+                <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2</span><span style="mso-tab-count:1">  </span></p>Note 2</div>
+                <p class="FigureTitle" style="text-align:center;">Figure 1 — Figure 1</p>
+              </div>
             </div>
           </div>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-      </body>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+        </body>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))))
@@ -1011,7 +1042,7 @@ RSpec.describe IsoDoc do
   end
 
   it "processes formulae with single definition list entry" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <foreword>
@@ -1286,24 +1317,24 @@ RSpec.describe IsoDoc do
        </html>
     OUTPUT
     word = <<~OUTPUT
-      <div class='WordSection2'>
-        <p>
-          <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-        </p>
-          <div class="TOC" id="_">
-    <p class="zzContents">Contents</p>
-  </div>
-  <p>
-    <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-  </p>
-        <div>
-          <h1 class='ForewordTitle'>Foreword</h1>
-          <ol type='a' start='4'>
-            <li>List</li>
-          </ol>
-        </div>
-        <p> </p>
+          <div class='WordSection2'>
+            <p>
+              <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+            </p>
+              <div class="TOC" id="_">
+        <p class="zzContents">Contents</p>
       </div>
+      <p>
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
+            <div>
+              <h1 class='ForewordTitle'>Foreword</h1>
+              <ol type='a' start='4'>
+                <li>List</li>
+              </ol>
+            </div>
+            <p> </p>
+          </div>
     OUTPUT
 
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)

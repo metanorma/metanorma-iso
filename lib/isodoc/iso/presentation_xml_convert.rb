@@ -105,9 +105,9 @@ module IsoDoc
       def admonition1(elem)
         super
         n = elem.at(ns("./name")) or return
-        p = n.next_element
-        p.name == "p" or return
-        p.children.first.previous = admonition_name(to_xml(n.remove.children))
+        if (p = n.next_element) && p&.name == "p"
+          p.children.first.previous = admonition_name(to_xml(n.remove.children))
+        end
       end
 
       def admonition_name(xml)
