@@ -284,6 +284,10 @@
 					<xsl:with-param name="root-style" select="$root-style"/>
 				</xsl:call-template>
 
+				<xsl:if test="/iso:iso-standard/iso:metanorma-extension/iso:presentation-metadata/iso:linenumbers = 'true'">
+					<xsl:processing-instruction name="add_line_numbers">true</xsl:processing-instruction>
+				</xsl:if>
+
 				<fo:layout-master-set>
 
 					<!-- cover page -->
