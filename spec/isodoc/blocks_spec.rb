@@ -1170,48 +1170,48 @@ RSpec.describe IsoDoc do
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
           <foreword displayorder='2'>
             <ol type='alphabet'>
-              <li>
+              <li id="_" label="">
                 <p>A</p>
               </li>
-              <li>
+              <li id="_" label="">
                 <p>B</p>
               </li>
-              <li>
+              <li id="_" label="">
                 <ol type='arabic'>
-                  <li>C</li>
-                  <li>D</li>
-                  <li>
+                  <li id="_" label="">C</li>
+                  <li id="_" label="">D</li>
+                  <li id="_" label="">
                     <ol type='roman'>
-                      <li>E</li>
-                      <li>F</li>
-                      <li>
+                      <li id="_" label="">E</li>
+                      <li id="_" label="">F</li>
+                      <li id="_" label="">
                         <ol type='alphabet_upper'>
-                          <li>G</li>
-                          <li>H</li>
-                          <li>
+                          <li id="_" label="">G</li>
+                          <li id="_" label="">H</li>
+                          <li id="_" label="">
                             <ol type='roman_upper'>
-                              <li>I</li>
-                              <li>J</li>
-                              <li>
+                              <li id="_" label="">I</li>
+                              <li id="_" label="">J</li>
+                              <li id="_" label="">
                                 <ol type='alphabet'>
-                                  <li>K</li>
-                                  <li>L</li>
-                                  <li>M</li>
+                                  <li id="_" label="">K</li>
+                                  <li id="_" label="">L</li>
+                                  <li id="_" label="">M</li>
                                 </ol>
                               </li>
-                              <li>N</li>
+                              <li id="_" label="">N</li>
                             </ol>
                           </li>
-                          <li>O</li>
+                          <li id="_" label="">O</li>
                         </ol>
                       </li>
-                      <li>P</li>
+                      <li id="_" label="">P</li>
                     </ol>
                   </li>
-                  <li>Q</li>
+                  <li id="_" label="">Q</li>
                 </ol>
               </li>
-              <li>R</li>
+              <li id="_" label="">R</li>
             </ol>
           </foreword>
         </preface>
@@ -1223,48 +1223,48 @@ RSpec.describe IsoDoc do
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                               <ol type='a' class='alphabet'>
-                 <li>
+                 <li id="_">
                    <p>A</p>
                  </li>
-                 <li>
+                 <li id="_">
                    <p>B</p>
                  </li>
-                 <li>
+                 <li id="_">
                    <ol type='1' class='arabic'>
-                     <li>C</li>
-                     <li>D</li>
-                     <li>
+                     <li id="_">C</li>
+                     <li id="_">D</li>
+                     <li id="_">
                        <ol type='i' class='roman'>
-                         <li>E</li>
-                         <li>F</li>
-                         <li>
+                         <li id="_">E</li>
+                         <li id="_">F</li>
+                         <li id="_">
                            <ol type='A' class='alphabet_upper'>
-                             <li>G</li>
-                             <li>H</li>
-                             <li>
+                             <li id="_">G</li>
+                             <li id="_">H</li>
+                             <li id="_">
                                <ol type='I' class='roman_upper'>
-                                 <li>I</li>
-                                 <li>J</li>
-                                 <li>
+                                 <li id="_">I</li>
+                                 <li id="_">J</li>
+                                 <li id="_">
                                    <ol type='a' class='alphabet'>
-                                     <li>K</li>
-                                     <li>L</li>
-                                     <li>M</li>
+                                     <li id="_">K</li>
+                                     <li id="_">L</li>
+                                     <li id="_">M</li>
                                    </ol>
                                  </li>
-                                 <li>N</li>
+                                 <li id="_">N</li>
                                </ol>
                              </li>
-                             <li>O</li>
+                             <li id="_">O</li>
                            </ol>
                          </li>
-                         <li>P</li>
+                         <li id="_">P</li>
                        </ol>
                      </li>
-                     <li>Q</li>
+                     <li id="_">Q</li>
                    </ol>
                  </li>
-                 <li>R</li>
+                 <li id="_">R</li>
                </ol>
              </div>
              <p class='zzSTDTitle1'/>
@@ -1272,7 +1272,8 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -1296,7 +1297,7 @@ RSpec.describe IsoDoc do
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
            <foreword displayorder='2'>
              <ol start='4' type='alphabet'>
-               <li>List</li>
+               <li id="_" label="">List</li>
              </ol>
            </foreword>
          </preface>
@@ -1308,7 +1309,7 @@ RSpec.describe IsoDoc do
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <ol type='a' start='4'  class='alphabet'>
-                 <li>List</li>
+                 <li id="_">List</li>
                </ol>
              </div>
              <p class='zzSTDTitle1'/>
@@ -1330,7 +1331,7 @@ RSpec.describe IsoDoc do
             <div>
               <h1 class='ForewordTitle'>Foreword</h1>
               <ol type='a' start='4'>
-                <li>List</li>
+                <li id="_">List</li>
               </ol>
             </div>
             <p> </p>
@@ -1373,7 +1374,7 @@ RSpec.describe IsoDoc do
                <li>A</li>
                <li>
                  <ol type='alphabet'>
-                   <li>List</li>
+                   <li id="_" label="">List</li>
                  </ol>
                </li>
              </ul>

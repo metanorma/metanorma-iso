@@ -471,82 +471,82 @@ RSpec.describe IsoDoc do
              <span style='mso-tab-count:1'> </span>
              B
            </p>
-           <p class='MsoListNumber2'>
+           <p class='MsoListNumber2'><a name="_" id="_"/>
              1)
              <span style='mso-tab-count:1'> </span>
              C
            </p>
-           <p class='MsoListNumber2'>
+           <p class='MsoListNumber2'><a name="_" id="_"/>
              2)
              <span style='mso-tab-count:1'> </span>
              D
            </p>
-           <p class='MsoListNumber3'>
+           <p class='MsoListNumber3'><a name="_" id="_"/>
              i)
              <span style='mso-tab-count:1'> </span>
              E
            </p>
-           <p class='MsoListNumber3'>
+           <p class='MsoListNumber3'><a name="_" id="_"/>
              ii)
              <span style='mso-tab-count:1'> </span>
              F
            </p>
-           <p class='MsoListNumber4'>
+           <p class='MsoListNumber4'><a name="_" id="_"/>
              A)
              <span style='mso-tab-count:1'> </span>
              G
            </p>
-           <p class='MsoListNumber4'>
+           <p class='MsoListNumber4'><a name="_" id="_"/>
              B)
              <span style='mso-tab-count:1'> </span>
              H
            </p>
-           <p class='MsoListNumber5'>
+           <p class='MsoListNumber5'><a name="_" id="_"/>
              I)
              <span style='mso-tab-count:1'> </span>
              I
            </p>
-           <p class='MsoListNumber5'>
+           <p class='MsoListNumber5'><a name="_" id="_"/>
              II)
              <span style='mso-tab-count:1'> </span>
              J
            </p>
-           <p class='MsoListNumber5'>
+           <p class='MsoListNumber5'><a name="_" id="_"/>
              a)
              <span style='mso-tab-count:1'> </span>
              K
            </p>
-           <p class='MsoListNumber5'>
+           <p class='MsoListNumber5'><a name="_" id="_"/>
              b)
              <span style='mso-tab-count:1'> </span>
              L
            </p>
-           <p class='MsoListNumber5'>
+           <p class='MsoListNumber5'><a name="_" id="_"/>
              c)
              <span style='mso-tab-count:1'> </span>
              M
            </p>
-           <p class='MsoListNumber5'>
+           <p class='MsoListNumber5'><a name="_" id="_"/>
              III)
              <span style='mso-tab-count:1'> </span>
              N
            </p>
-           <p class='MsoListNumber4'>
+           <p class='MsoListNumber4'><a name="_" id="_"/>
              C)
              <span style='mso-tab-count:1'> </span>
              O
            </p>
-           <p class='MsoListNumber3'>
+           <p class='MsoListNumber3'><a name="_" id="_"/>
              iii)
              <span style='mso-tab-count:1'> </span>
              P
            </p>
-           <p class='MsoListNumber2'>
+           <p class='MsoListNumber2'><a name="_" id="_"/>
              3)
              <span style='mso-tab-count:1'> </span>
              Q
            </p>
-           <p class='ListNumber1'>
+           <p class='ListNumber1'><a name="_" id="_"/>
              c)
              <span style='mso-tab-count:1'> </span>
              R
@@ -657,8 +657,8 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(xmlpp(Nokogiri::XML(output)
-      .at("//xmlns:div[@class = 'WordSection3']").to_xml))
+    expect(xmlpp(strip_guid(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
       .to be_equivalent_to xmlpp(word)
   end
 
@@ -780,82 +780,82 @@ RSpec.describe IsoDoc do
             <span style='mso-tab-count:1'> </span>
             B
           </p>
-          <p class='MsoListNumber2'>
+          <p class='MsoListNumber2'><a name="_" id="_"/>
             3)
             <span style='mso-tab-count:1'> </span>
             C
           </p>
-          <p class='MsoListNumber2'>
+          <p class='MsoListNumber2'><a name="_" id="_"/>
             4)
             <span style='mso-tab-count:1'> </span>
             D
           </p>
-          <p class='MsoListNumber3'>
+          <p class='MsoListNumber3'><a name="_" id="_"/>
             iii)
             <span style='mso-tab-count:1'> </span>
             E
           </p>
-          <p class='MsoListNumber3'>
+          <p class='MsoListNumber3'><a name="_" id="_"/>
             iv)
             <span style='mso-tab-count:1'> </span>
             F
           </p>
-          <p class='MsoListNumber4'>
+          <p class='MsoListNumber4'><a name="_" id="_"/>
             C)
             <span style='mso-tab-count:1'> </span>
             G
           </p>
-          <p class='MsoListNumber4'>
+          <p class='MsoListNumber4'><a name="_" id="_"/>
             D)
             <span style='mso-tab-count:1'> </span>
             H
           </p>
-          <p class='MsoListNumber5'>
+          <p class='MsoListNumber5'><a name="_" id="_"/>
             III)
             <span style='mso-tab-count:1'> </span>
             I
           </p>
-          <p class='MsoListNumber5'>
+          <p class='MsoListNumber5'><a name="_" id="_"/>
             IV)
             <span style='mso-tab-count:1'> </span>
             J
           </p>
-          <p class='MsoListNumber5'>
+          <p class='MsoListNumber5'><a name="_" id="_"/>
             c)
             <span style='mso-tab-count:1'> </span>
             K
           </p>
-          <p class='MsoListNumber5'>
+          <p class='MsoListNumber5'><a name="_" id="_"/>
             d)
             <span style='mso-tab-count:1'> </span>
             L
           </p>
-          <p class='MsoListNumber5'>
+          <p class='MsoListNumber5'><a name="_" id="_"/>
             e)
             <span style='mso-tab-count:1'> </span>
             M
           </p>
-          <p class='MsoListNumber5'>
+          <p class='MsoListNumber5'><a name="_" id="_"/>
             V)
             <span style='mso-tab-count:1'> </span>
             N
           </p>
-          <p class='MsoListNumber4'>
+          <p class='MsoListNumber4'><a name="_" id="_"/>
             E)
             <span style='mso-tab-count:1'> </span>
             O
           </p>
-          <p class='MsoListNumber3'>
+          <p class='MsoListNumber3'><a name="_" id="_"/>
             v)
             <span style='mso-tab-count:1'> </span>
             P
           </p>
-          <p class='MsoListNumber2'>
+          <p class='MsoListNumber2'><a name="_" id="_"/>
             5)
             <span style='mso-tab-count:1'> </span>
             Q
           </p>
-          <p class='ListNumber1'>
+          <p class='ListNumber1'><a name="_" id="_"/>
             e)
             <span style='mso-tab-count:1'> </span>
             R
@@ -871,8 +871,8 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(xmlpp(Nokogiri::XML(output)
-      .at("//xmlns:div[@class = 'WordSection3']").to_xml))
+    expect(xmlpp(strip_guid(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
       .to be_equivalent_to xmlpp(word)
   end
 
@@ -1442,82 +1442,82 @@ RSpec.describe IsoDoc do
                <span style='mso-tab-count:1'> </span>
                B
              </p>
-             <p class='ListNumber3-'>
+             <p class='ListNumber3-'><a name="_" id="_"/>
                1)
                <span style='mso-tab-count:1'> </span>
                C
              </p>
-             <p class='ListNumber3-'>
+             <p class='ListNumber3-'><a name="_" id="_"/>
                2)
                <span style='mso-tab-count:1'> </span>
                D
              </p>
-             <p class='ListNumber4-'>
+             <p class='ListNumber4-'><a name="_" id="_"/>
                i)
                <span style='mso-tab-count:1'> </span>
                E
              </p>
-             <p class='ListNumber4-'>
+             <p class='ListNumber4-'><a name="_" id="_"/>
                ii)
                <span style='mso-tab-count:1'> </span>
                F
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                A)
                <span style='mso-tab-count:1'> </span>
                G
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                B)
                <span style='mso-tab-count:1'> </span>
                H
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                I)
                <span style='mso-tab-count:1'> </span>
                I
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                II)
                <span style='mso-tab-count:1'> </span>
                J
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                a)
                <span style='mso-tab-count:1'> </span>
                K
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                b)
                <span style='mso-tab-count:1'> </span>
                L
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                c)
                <span style='mso-tab-count:1'> </span>
                M
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                III)
                <span style='mso-tab-count:1'> </span>
                N
              </p>
-             <p class='ListNumber5-'>
+             <p class='ListNumber5-'><a name="_" id="_"/>
                C)
                <span style='mso-tab-count:1'> </span>
                O
              </p>
-             <p class='ListNumber4-'>
+             <p class='ListNumber4-'><a name="_" id="_"/>
                iii)
                <span style='mso-tab-count:1'> </span>
                P
              </p>
-             <p class='ListNumber3-'>
+             <p class='ListNumber3-'><a name="_" id="_"/>
                3)
                <span style='mso-tab-count:1'> </span>
                Q
              </p>
-             <p class='ListNumber2-'>
+             <p class='ListNumber2-'><a name="_" id="_"/>
                c)
                <span style='mso-tab-count:1'> </span>
                R
@@ -1580,7 +1580,7 @@ RSpec.describe IsoDoc do
              A
            </p>
            <p class='MsoListNumber2'>
-             a)
+             <a name="_" id="_"/>a)
              <span style='mso-tab-count:1'> </span>
              List
            </p>
@@ -1590,7 +1590,7 @@ RSpec.describe IsoDoc do
              B
            </p>
            <p class='MsoListNumber4'>
-             1)
+             <a name="_" id="_"/>1)
              <span style='mso-tab-count:1'> </span>
              List 2
            </p>

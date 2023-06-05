@@ -1524,7 +1524,7 @@ RSpec.describe IsoDoc do
               <tab/>
               Scope</title>
             <ol id="N" type="alphabet">
-              <li>
+              <li id="_" label="a">
                 <p>A</p>
               </li>
             </ol>
@@ -1667,7 +1667,7 @@ RSpec.describe IsoDoc do
           <clause id='scope' type='scope' displayorder='3'>
             <title depth='1'>1<tab/>Scope</title>
             <ol id='N1' type="alphabet">
-              <li id='N'>
+              <li id='N' label="a">
                 <p>A</p>
               </li>
             </ol>
@@ -1677,12 +1677,12 @@ RSpec.describe IsoDoc do
           <title depth='1'>3<tab/>Widgets</title>
             <clause inline-header="true" id='widgets1'><title>3.1</title>
               <ol id='note1l' type="alphabet">
-                <li id='note1'>
+                <li id='note1' label="a">
                   <p>A</p>
                 </li>
               </ol>
               <ol id='note2l' type="alphabet">
-                <li id='note2'>
+                <li id='note2' label="a">
                   <p>A</p>
                 </li>
               </ol>
@@ -1692,19 +1692,19 @@ RSpec.describe IsoDoc do
         <annex id='annex1'  displayorder='6'><title><strong>Annex A</strong><br/><span class="obligation">(informative)</span></title>
           <clause inline-header="true" id='annex1a'><title>A.1</title>
             <ol id='ANl' type="alphabet">
-              <li id='AN'>
+              <li id='AN' label="a">
                 <p>A</p>
               </li>
             </ol>
           </clause>
           <clause inline-header="true" id='annex1b'><title>A.2</title>
             <ol id='Anote1l' type="alphabet">
-              <li id='Anote1'>
+              <li id='Anote1' label="a">
                 <p>A</p>
               </li>
             </ol>
             <ol id='Anote2l' type="alphabet">
-              <li id='Anote2'>
+              <li id='Anote2' label="a">
                 <p>A</p>
               </li>
             </ol>
@@ -1712,7 +1712,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1790,22 +1791,22 @@ RSpec.describe IsoDoc do
           <clause id='scope' type='scope' displayorder='3'>
             <title depth='1'>1<tab/>Scope</title>
             <ol id='N1' type="alphabet">
-              <li id='N'>
+              <li id='N' label="a">
                 <p>A</p>
                 <ol type="arabic">
-                  <li id='note1'>
+                  <li id='note1' label="1">
                     <p>A</p>
                     <ol type="roman">
-                      <li id='note2'>
+                      <li id='note2' label="i">
                         <p>A</p>
                         <ol type="alphabet_upper">
-                          <li id='AN'>
+                          <li id='AN' label="A">
                             <p>A</p>
                             <ol type="roman_upper">
-                              <li id='Anote1'>
+                              <li id='Anote1' label="I">
                                 <p>A</p>
                                 <ol type="alphabet">
-                                  <li id='Anote2'>
+                                  <li id='Anote2' label="a">
                                     <p>A</p>
                                   </li>
                                 </ol>

@@ -13,7 +13,6 @@ module IsoDoc
 
       def can_conflate_eref_rendering?(refs)
         super or return false
-
         first = subclause?(nil, refs.first.at(ns("./locality/@type"))&.text,
                            refs.first.at(ns("./locality/referenceFrom"))&.text)
         refs.all? do |r|

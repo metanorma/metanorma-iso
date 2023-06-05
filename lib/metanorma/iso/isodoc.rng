@@ -1012,6 +1012,7 @@
       <ref name="del"/>
       <ref name="span"/>
       <ref name="erefstack"/>
+      <ref name="date_inline"/>
     </choice>
   </define>
   <define name="add">
@@ -1051,6 +1052,23 @@
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="date_inline">
+    <element name="date">
+      <attribute name="value"/>
+      <optional>
+        <attribute name="format"/>
+      </optional>
+      <optional>
+        <attribute name="language"/>
+      </optional>
+      <optional>
+        <attribute name="script"/>
+      </optional>
+      <optional>
+        <attribute name="locale"/>
+      </optional>
     </element>
   </define>
   <define name="concept">
