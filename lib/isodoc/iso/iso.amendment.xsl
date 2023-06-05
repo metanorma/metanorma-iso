@@ -1497,9 +1497,13 @@
 			<xsl:otherwise>
 
 				<fo:block-container font-weight="bold">
+
+					<!-- render 'Contents' outside if role="TOC" -->
+					<xsl:apply-templates select="*[local-name() = 'title']"/>
+
 					<fo:block role="TOC">
 
-						<xsl:apply-templates/>
+						<xsl:apply-templates select="node()[not(local-name() = 'title')]"/>
 
 						<xsl:if test="count(*) = 1 and *[local-name() = 'title']"> <!-- if there isn't user ToC -->
 
@@ -1520,45 +1524,51 @@
 									<xsl:if test="@level = 3">
 										<xsl:attribute name="margin-top">-0.7pt</xsl:attribute>
 									</xsl:if>
-									<fo:list-block>
-										<xsl:attribute name="margin-left"><xsl:value-of select="$margin-left * (@level - 1)"/>mm</xsl:attribute>
-										<xsl:if test="@level &gt;= 2 or @type = 'annex'">
-											<xsl:attribute name="font-weight">normal</xsl:attribute>
-										</xsl:if>
-										<xsl:attribute name="provisional-distance-between-starts">
-											<xsl:choose>
-												<!-- skip 0 section without subsections -->
-												<xsl:when test="@level &gt;= 3"><xsl:value-of select="$margin-left * 1.2"/>mm</xsl:when>
-												<xsl:when test="@section != ''"><xsl:value-of select="$margin-left"/>mm</xsl:when>
-												<xsl:otherwise>0mm</xsl:otherwise>
-											</xsl:choose>
-										</xsl:attribute>
-										<fo:list-item>
-											<fo:list-item-label end-indent="label-end()">
-												<fo:block>
-														<xsl:value-of select="@section"/>
-												</fo:block>
-											</fo:list-item-label>
-											<fo:list-item-body start-indent="body-start()">
-												<fo:block text-align-last="justify" margin-left="12mm" text-indent="-12mm">
-													<fo:basic-link internal-destination="{@id}" fox:alt-text="{title}">
 
-														<xsl:apply-templates select="title"/>
+									<fo:basic-link internal-destination="{@id}" fox:alt-text="{@section} {title}"> <!-- link at this level needs for PDF structure tags -->
 
-														<fo:inline keep-together.within-line="always">
-															<fo:leader font-size="9pt" font-weight="normal" leader-pattern="dots"/>
-															<fo:inline>
-																<xsl:if test="@level = 1 and @type = 'annex'">
-																	<xsl:attribute name="font-weight">bold</xsl:attribute>
-																</xsl:if>
-																<fo:page-number-citation ref-id="{@id}"/>
+										<fo:list-block role="SKIP">
+											<xsl:attribute name="margin-left"><xsl:value-of select="$margin-left * (@level - 1)"/>mm</xsl:attribute>
+											<xsl:if test="@level &gt;= 2 or @type = 'annex'">
+												<xsl:attribute name="font-weight">normal</xsl:attribute>
+											</xsl:if>
+											<xsl:attribute name="provisional-distance-between-starts">
+												<xsl:choose>
+													<!-- skip 0 section without subsections -->
+													<xsl:when test="@level &gt;= 3"><xsl:value-of select="$margin-left * 1.2"/>mm</xsl:when>
+													<xsl:when test="@section != ''"><xsl:value-of select="$margin-left"/>mm</xsl:when>
+													<xsl:otherwise>0mm</xsl:otherwise>
+												</xsl:choose>
+											</xsl:attribute>
+											<fo:list-item role="SKIP">
+												<fo:list-item-label end-indent="label-end()" role="SKIP">
+													<fo:block role="SKIP">
+															<xsl:value-of select="@section"/>
+													</fo:block>
+												</fo:list-item-label>
+												<fo:list-item-body start-indent="body-start()" role="SKIP">
+													<fo:block text-align-last="justify" margin-left="12mm" text-indent="-12mm" role="SKIP">
+														<fo:basic-link internal-destination="{@id}" fox:alt-text="{title}" role="SKIP">
+
+															<xsl:apply-templates select="title"/>
+
+															<fo:inline keep-together.within-line="always" role="SKIP">
+																<fo:leader font-size="9pt" font-weight="normal" leader-pattern="dots"/>
+																<fo:inline role="SKIP">
+																	<xsl:if test="@level = 1 and @type = 'annex'">
+																		<xsl:attribute name="font-weight">bold</xsl:attribute>
+																	</xsl:if>
+																	<fo:wrapper role="artifact">
+																		<fo:page-number-citation ref-id="{@id}"/>
+																	</fo:wrapper>
+																</fo:inline>
 															</fo:inline>
-														</fo:inline>
-													</fo:basic-link>
-												</fo:block>
-											</fo:list-item-body>
-										</fo:list-item>
-									</fo:list-block>
+														</fo:basic-link>
+													</fo:block>
+												</fo:list-item-body>
+											</fo:list-item>
+										</fo:list-block>
+									</fo:basic-link>
 								</fo:block>
 
 							</xsl:for-each>
@@ -1592,16 +1602,16 @@
 
 	<xsl:template match="iso:preface/iso:clause[@type = 'toc']/iso:title" priority="3">
 		<fo:block text-align-last="justify" font-size="16pt" margin-top="10pt" margin-bottom="18pt">
-			<fo:inline font-size="16pt" font-weight="bold" role="H1">
+			<fo:inline font-size="16pt" font-weight="bold" role="SKIP">
 				<!-- Contents -->
 				<!-- <xsl:call-template name="getLocalizedString">
 					<xsl:with-param name="key">table_of_contents</xsl:with-param>
 				</xsl:call-template> -->
 				<xsl:apply-templates/>
 			</fo:inline>
-			<fo:inline keep-together.within-line="always">
+			<fo:inline keep-together.within-line="always" role="SKIP">
 				<fo:leader leader-pattern="space"/>
-				<fo:inline font-weight="normal" font-size="10pt">
+				<fo:inline font-weight="normal" font-size="10pt" role="SKIP">
 					<!-- Page -->
 					<xsl:call-template name="getLocalizedString">
 					<xsl:with-param name="key">locality.page</xsl:with-param>
@@ -6378,8 +6388,17 @@
 	<!-- ========================= -->
 	<xsl:template match="*[local-name()='em']">
 		<fo:inline font-style="italic">
+			<xsl:call-template name="refine_italic_style"/>
 			<xsl:apply-templates/>
 		</fo:inline>
+	</xsl:template>
+
+	<xsl:template name="refine_italic_style">
+
+			<xsl:if test="ancestor::*[local-name() = 'item']">
+				<xsl:attribute name="role">SKIP</xsl:attribute>
+			</xsl:if>
+
 	</xsl:template>
 
 	<xsl:template match="*[local-name()='strong'] | *[local-name()='b']">
@@ -6395,6 +6414,10 @@
 	</xsl:template>
 
 	<xsl:template name="refine_strong_style">
+
+			<xsl:if test="ancestor::*[local-name() = 'item']">
+				<xsl:attribute name="role">SKIP</xsl:attribute>
+			</xsl:if>
 
 	</xsl:template>
 
