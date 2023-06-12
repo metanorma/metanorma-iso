@@ -106,7 +106,7 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "registers output formats against metanorma" do
-    expect(processor.output_formats.sort.to_s).to be_equivalent_to <<~"OUTPUT"
+    expect(processor.output_formats.sort.to_s).to be_equivalent_to <<~OUTPUT
       [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:isosts, "iso.sts.xml"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:xml, "xml"]]
     OUTPUT
   end
@@ -124,8 +124,8 @@ RSpec.describe Metanorma::Iso::Processor do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(processor.input_to_isodoc(input, nil)))
-      .to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(processor.input_to_isodoc(input, nil))))
+      .to be_equivalent_to xmlpp(strip_guid(output))
   end
 
   it "generates HTML from Metanorma XML" do
@@ -135,7 +135,7 @@ RSpec.describe Metanorma::Iso::Processor do
     expect(xmlpp(strip_guid(File.read("test.html", encoding: "utf-8")
       .gsub(%r{^.*<main}m, "<main")
       .gsub(%r{</main>.*}m, "</main>"))))
-      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+      .to be_equivalent_to xmlpp(<<~OUTPUT)
         <main class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div class='authority'> </div>

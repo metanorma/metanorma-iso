@@ -110,11 +110,11 @@ module Metanorma
         xml.xpath("//*[@inline-header]").each { |h| h.delete("inline-header") }
       end
 
-      def boilerplate_file(_xmldoc)
+      def boilerplate_file(xmldoc)
         file = case @lang
                when "fr" then "boilerplate-fr.xml"
                when "ru" then "boilerplate-ru.xml"
-               else "boilerplate.xml"
+               else "boilerplate.adoc"
                end
         File.join(@libdir, file)
       end

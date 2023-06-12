@@ -122,6 +122,44 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(output)
   end
 
+  it "processes initial boilerplate in Asciidoc without succumbing to recursion" do
+    input = <<~INPUT
+      #{ASCIIDOC_BLANK_HDR}
+      == Terms and Definitions
+
+      I am boilerplate
+
+      * So am I
+
+      === Time
+
+      This paragraph is extraneous
+    INPUT
+    output = <<~OUTPUT
+      #{BLANK_HDR}
+        <sections>
+          <terms id="_" obligation="normative">
+            <title>Terms and definitions</title>#{TERM_BOILERPLATE}
+
+            <p id="_">I am boilerplate</p>
+            <ul id="_">
+              <li>
+                <p id="_">So am I</p></li>
+            </ul>
+            <term id="term-Time">
+              <preferred><expression><name>Time</name></expression></preferred>
+              <definition><verbal-definition>
+                <p id="_">This paragraph is extraneous</p>
+              </verbal-definition></definition>
+            </term>
+          </terms>
+        </sections>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
+  end
+
   it "keeps any initial boilerplate from terms and definitions" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
@@ -1628,5 +1666,13 @@ RSpec.describe Metanorma::ISO do
       expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to xmlpp(output)
     end
+  end
+
+  private
+
+  def mock_fdis
+    expect(RelatonIso::IsoBibliography).to receive(:get)
+      .with("ISO/FDIS 17664-1", nil, anything)
+      .and_return("spec/assets/boilerplate.adoc")
   end
 end

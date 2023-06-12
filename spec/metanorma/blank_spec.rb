@@ -10,8 +10,8 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(Asciidoctor.convert(input, *OPTIONS)))
-      .to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(strip_guid(output))
   end
 
   it "converts a blank document" do
@@ -27,8 +27,8 @@ RSpec.describe Metanorma::ISO do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(Asciidoctor.convert(input, *OPTIONS)))
-      .to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(strip_guid(output))
     expect(File.exist?("test_alt.html")).to be true
     expect(File.exist?("test.html")).to be true
     expect(File.exist?("test.doc")).to be true
