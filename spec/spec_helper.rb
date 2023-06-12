@@ -159,25 +159,34 @@ HDR
 ASCIIDOCTOR_ISO_DIR = Pathname
   .new(File.dirname(__FILE__)) / "../lib/metanorma/iso"
 
-BOILERPLATE =
+def boilerplate_read(file)
   HTMLEntities.new.decode(
-    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate.xml", encoding: "utf-8")
-      .gsub(/\{\{ agency \}\}/, "ISO")
-  .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
-      .gsub(/\{% if unpublished %\}.*?\{% endif %\}/m, "")
-      .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% endif %\}/m, "\\1")
-      .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
+    Metanorma::ISO::Converter.new(:iso, {}).boilerplate_file_restructure(file)
+    .to_xml.gsub(/<(\/)?sections>/, "<\\1boilerplate>")
+      .gsub(/ id="_[^"]+"/, " id='_'"),
   )
+end
+
+BOILERPLATE =
+  boilerplate_read(
+    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate.adoc", encoding: "utf-8")
+      .gsub(/<(\/)?sections>/, "<\\1boilerplate>")
+      .gsub(/\{\{ agency \}\}/, "ISO")
+      .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
+      .gsub(/\{% if unpublished %\}.*?\{% endif %\}/m, "")
+      .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% else %\}\{blank\}\{% endif %\}/m, "\\1")
+      .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
+  ).freeze
 
 BOILERPLATE_FR =
-  HTMLEntities.new.decode(
-    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-fr.xml", encoding: "utf-8")
+  boilerplate_read(
+    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-fr.adoc", encoding: "utf-8")
     .gsub(/\{\{ agency \}\}/, "ISO")
     .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
     .gsub(/\{% if unpublished %\}.*?\{% endif %\}/m, "")
-      .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% endif %\}/m, "\\1")
+    .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% else %\}\{blank\}\{% endif %\}/m, "\\1")
     .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
-  )
+  ).freeze
 
 BLANK_HDR1 = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
