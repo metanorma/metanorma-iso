@@ -7428,6 +7428,18 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<xsl:variable name="font_main_root_style">
+		<root-style xsl:use-attribute-sets="root-style">
+		</root-style>
+	</xsl:variable>
+	<xsl:variable name="font_main_root_style_font_family" select="xalan:nodeset($font_main_root_style)/root-style/@font-family"/>
+	<xsl:variable name="font_main">
+		<xsl:choose>
+			<xsl:when test="contains($font_main_root_style_font_family, ',')"><xsl:value-of select="substring-before($font_main_root_style_font_family, ',')"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="$font_main_root_style_font_family"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
 	<xsl:template match="*[local-name()='th' or local-name()='td']" mode="simple-table-id">
 		<xsl:param name="id"/>
 		<xsl:copy>
@@ -7466,6 +7478,33 @@
 
 				<!-- td_text='<xsl:copy-of select="$td_text"/>' -->
 
+				<xsl:variable name="words_with_width">
+					<!-- calculate width for 'word' which contain text only (without formatting tags inside) -->
+					<xsl:for-each select="xalan:nodeset($td_text)//*[local-name() = 'word'][normalize-space() != ''][not(*)]">
+						<xsl:copy>
+							<xsl:copy-of select="@*"/>
+							<xsl:attribute name="width">
+								<xsl:value-of select="java:org.metanorma.fop.Util.getStringWidth(., $font_main)"/> <!-- Example: 'Times New Roman' -->
+							</xsl:attribute>
+							<xsl:copy-of select="node()"/>
+						</xsl:copy>
+					</xsl:for-each>
+				</xsl:variable>
+
+				<xsl:variable name="words_with_width_sorted">
+					<xsl:for-each select="xalan:nodeset($words_with_width)//*[local-name() = 'word']">
+						<xsl:sort select="@width" data-type="number" order="descending"/>
+						<!-- select word maximal width only -->
+						<xsl:if test="position() = 1">
+							<xsl:copy-of select="."/>
+						</xsl:if>
+					</xsl:for-each>
+					<!-- add 'word' with formatting tags inside -->
+					<xsl:for-each select="xalan:nodeset($td_text)//*[local-name() = 'word'][normalize-space() != ''][*]">
+						<xsl:copy-of select="."/>
+					</xsl:for-each>
+				</xsl:variable>
+
 				<xsl:variable name="words">
 					<xsl:for-each select=".//*[local-name() = 'image' or local-name() = 'stem']">
 						<word>
@@ -7473,9 +7512,12 @@
 						</word>
 					</xsl:for-each>
 
-					<xsl:for-each select="xalan:nodeset($td_text)//*[local-name() = 'word'][normalize-space() != '']">
+					<xsl:for-each select="xalan:nodeset($words_with_width_sorted)//*[local-name() = 'word'][normalize-space() != '']">
 						<xsl:copy-of select="."/>
 					</xsl:for-each>
+					<!-- <xsl:for-each select="xalan:nodeset($td_text)//*[local-name() = 'word'][normalize-space() != '']">
+						<xsl:copy-of select="."/>
+					</xsl:for-each> -->
 
 				</xsl:variable>
 
