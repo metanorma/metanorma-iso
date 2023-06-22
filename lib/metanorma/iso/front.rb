@@ -13,11 +13,14 @@ module Metanorma
         super
         structured_id(node, xml)
         id = iso_id_default(iso_id_params(node))
-        id.stage and
-          xml.stagename metadata_stagename(id)&.strip,
-                        **attr_code(abbreviation: id.typed_stage_abbrev&.strip)
+        id.stage and metadata_stage(id, xml)
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
+      end
+
+      def metadata_stage(id, xml)
+        xml.stagename metadata_stagename(id)&.strip,
+                      **attr_code(abbreviation: id.typed_stage_abbrev&.strip)
       end
 
       def metadata_stagename(id)
