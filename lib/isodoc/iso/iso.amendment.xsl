@@ -8021,6 +8021,27 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<!-- increase space before '(' -->
+	<xsl:template match="mathml:mo[normalize-space(text()) = '(']" mode="mathml">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="mathml"/>
+			<xsl:if test="(preceding-sibling::* and not(preceding-sibling::*[1][self::mathml:mo])) or (../preceding-sibling::* and not(../preceding-sibling::*[1][self::mathml:mo]))">
+				<xsl:if test="not(@lspace)">
+					<xsl:attribute name="lspace">0.4em</xsl:attribute>
+					<xsl:choose>
+						<xsl:when test="preceding-sibling::*[1][self::mathml:mi or self::mathml:mstyle]">
+							<xsl:attribute name="lspace">0.2em</xsl:attribute>
+						</xsl:when>
+						<xsl:when test="../preceding-sibling::*[1][self::mathml:mi or self::mathml:mstyle]">
+							<xsl:attribute name="lspace">0.2em</xsl:attribute>
+						</xsl:when>
+					</xsl:choose>
+				</xsl:if>
+			</xsl:if>
+			<xsl:apply-templates mode="mathml"/>
+		</xsl:copy>
+	</xsl:template>
+
 	<!-- Examples: 
 		<stem type="AsciiMath">x = 1</stem> 
 		<stem type="AsciiMath"><asciimath>x = 1</asciimath></stem>
