@@ -8001,10 +8001,10 @@
 		<xsl:copy>
 			<xsl:apply-templates select="@*" mode="mathml"/>
 			<xsl:if test="not(@lspace)">
-				<xsl:attribute name="lspace">0.4em</xsl:attribute>
+				<xsl:attribute name="lspace">0.2em</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="not(@rspace)">
-				<xsl:attribute name="rspace">0.4em</xsl:attribute>
+			<xsl:if test="not(@rspace) and not(following-sibling::*[1][self::mathml:mo and normalize-space(text()) = '|'])">
+				<xsl:attribute name="rspace">0.2em</xsl:attribute>
 			</xsl:if>
 			<xsl:apply-templates mode="mathml"/>
 		</xsl:copy>
