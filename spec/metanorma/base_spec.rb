@@ -1028,9 +1028,6 @@ RSpec.describe Metanorma::ISO do
                 <title type="title-intro" format="text/plain" language="en" script="Latn">Rubber latex</title>
                 <title type="title-main" format="text/plain" language="en" script="Latn">Sampling</title>
                 <title type="main" format="text/plain" language="en" script="Latn">Rubber latex — Sampling</title>
-                <title type="title-intro" format="text/plain" language="fr" script="Latn">Latex de caoutchouc</title>
-                <title type="title-main" format="text/plain" language="fr" script="Latn">Échantillonnage</title>
-                <title type="main" format="text/plain" language="fr" script="Latn">Latex de caoutchouc — Échantillonnage</title>
                 <uri type="src">https://www.iso.org/standard/23281.html</uri>
                 <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:23281:en</uri>
                 <uri type="rss">https://www.iso.org/contents/data/standard/02/32/23281.detail.rss</uri>
@@ -1051,15 +1048,10 @@ RSpec.describe Metanorma::ISO do
                 </contributor>
                 <edition>3</edition>
                 <language>en</language>
-                <language>fr</language>
                 <script>Latn</script>
                 <abstract format="text/plain" language="en" script="Latn">This International Standard specifies procedures for sampling natural rubber latex concentrate and for sampling synthetic
         rubber latices and artificial latices. It is also suitable for sampling rubber latex contained in drums, tank cars or
         tanks. The procedures may also be used for sampling plastics dispersions.</abstract>
-                <abstract format="text/plain" language="fr" script="Latn">La présente Norme internationale spécifie des méthodes d’échantillonnage pour des concentrés de latex de caoutchouc
-        naturel et pour échantillonner des latex de caoutchouc synthétique et des latex artificiels. Elle s’applique également
-        à l’échantillonnage de latex de caoutchouc contenus dans des fûts, citernes routières ou de stockage. Le
-        mode opératoire peut aussi être utilisé pour l’échantillonnage de dispersions de plastiques.</abstract>
                 <status>
                   <stage>90</stage>
                   <substage>93</substage>
@@ -1092,7 +1084,7 @@ RSpec.describe Metanorma::ISO do
                 <title type="title-main" format="text/plain" language="fr" script="Latn">Détermination des matières solides totales</title>
                 <title type="main" format="text/plain" language="fr" script="Latn">Latex de caoutchouc — Détermination des matières solides totales</title>
                 <uri type="src">https://www.iso.org/standard/61884.html</uri>
-                <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
+                <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:61884:en</uri>
                 <uri type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
                 <docidentifier type="ISO" primary="true">ISO 124</docidentifier>
                 <docidentifier type="iso-reference">ISO 124(E)</docidentifier>
@@ -1138,7 +1130,7 @@ RSpec.describe Metanorma::ISO do
                     <title type="title-main" format="text/plain" language="fr" script="Latn">Détermination des matières solides totales</title>
                     <title type="main" format="text/plain" language="fr" script="Latn">Latex de caoutchouc — Détermination des matières solides totales</title>
                     <uri type="src">https://www.iso.org/standard/61884.html</uri>
-                    <uri type="obp">https://www.iso.org/obp/ui/#!iso:std:61884:en</uri>
+                    <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:61884:en</uri>
                     <uri type="rss">https://www.iso.org/contents/data/standard/06/18/61884.detail.rss</uri>
                     <docidentifier type="ISO" primary="true">ISO 124:2014</docidentifier>
                     <docidentifier type="iso-reference">ISO 124:2014(E)</docidentifier>
