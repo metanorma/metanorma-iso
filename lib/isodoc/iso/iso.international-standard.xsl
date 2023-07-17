@@ -719,10 +719,20 @@
 															<fo:block> </fo:block>
 														</fo:table-cell>
 														<fo:table-cell>
-															<fo:block>Voting begins on:</fo:block>
+															<fo:block>
+																<!-- Voting begins on: -->
+																<xsl:call-template name="getLocalizedString">
+																	<xsl:with-param name="key">voting_begins_on</xsl:with-param>
+																</xsl:call-template><xsl:text>:</xsl:text>
+															</fo:block>
 														</fo:table-cell>
 														<fo:table-cell>
-															<fo:block>Voting terminates on:</fo:block>
+															<fo:block>
+																<!-- Voting terminates on: -->
+																<xsl:call-template name="getLocalizedString">
+																	<xsl:with-param name="key">voting_terminates_on</xsl:with-param>
+																</xsl:call-template><xsl:text>:</xsl:text>
+															</fo:block>
 														</fo:table-cell>
 													</fo:table-row>
 													<fo:table-row>
@@ -955,7 +965,12 @@
 																		<fo:block margin="2mm" role="SKIP">
 																				<fo:block margin-bottom="8pt"><xsl:copy-of select="$editorialgroup"/></fo:block>
 																				<fo:block margin-bottom="6pt"><xsl:copy-of select="$secretariat"/></fo:block>
-																				<fo:block margin-bottom="6pt">Voting begins on:<xsl:value-of select="$linebreak"/>
+																				<fo:block margin-bottom="6pt">
+																					<!-- Voting begins on: -->
+																					<xsl:call-template name="getLocalizedString">
+																						<xsl:with-param name="key">voting_begins_on</xsl:with-param>
+																					</xsl:call-template><xsl:text>:</xsl:text>
+																					<xsl:value-of select="$linebreak"/>
 																					<fo:inline font-weight="bold">
 																						<xsl:choose>
 																							<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-started']/iso:on">
@@ -965,7 +980,12 @@
 																						</xsl:choose>
 																					</fo:inline>
 																				</fo:block>
-																				<fo:block>Voting terminates on:<xsl:value-of select="$linebreak"/>
+																				<fo:block>
+																					<!-- Voting terminates on: -->
+																					<xsl:call-template name="getLocalizedString">
+																						<xsl:with-param name="key">voting_terminates_on</xsl:with-param>
+																					</xsl:call-template><xsl:text>:</xsl:text>
+																					<xsl:value-of select="$linebreak"/>
 																					<fo:inline font-weight="bold">
 																						<xsl:choose>
 																							<xsl:when test="/iso:iso-standard/iso:bibdata/iso:date[@type = 'vote-ended']/iso:on">
@@ -1446,8 +1466,8 @@
 										<xsl:if test="/iso:iso-standard/iso:bibdata/iso:keyword">
 											<fo:block font-size="9pt" margin-bottom="6pt">
 												<xsl:variable name="title-descriptors">
-													<xsl:call-template name="getTitle">
-														<xsl:with-param name="name" select="'title-descriptors'"/>
+													<xsl:call-template name="getLocalizedString">
+														<xsl:with-param name="key">Descriptor.pl</xsl:with-param>
 													</xsl:call-template>
 												</xsl:variable>
 												<fo:inline font-weight="bold"><xsl:value-of select="$title-descriptors"/>: </fo:inline>
@@ -2451,19 +2471,32 @@
 	<xsl:variable name="titles_">
 
 		<!-- These titles of Table of contents renders different than determined in localized-strings -->
-		<title-toc lang="en">
-
-		</title-toc>
-		<title-toc lang="fr">
+		<!-- <title-toc lang="en">
+			<xsl:if test="$namespace = 'csd' or $namespace = 'ieee' or $namespace = 'iho' or $namespace = 'mpfd' or $namespace = 'ogc' or $namespace = 'unece-rec'">
+				<xsl:text>Contents</xsl:text>
+			</xsl:if>
+			<xsl:if test="$namespace = 'csa' or $namespace = 'm3d' or $namespace = 'nist-sp' or $namespace = 'ogc-white-paper'">
+				<xsl:text>Table of Contents</xsl:text>
+			</xsl:if>
+			<xsl:if test="$namespace = 'gb'">
+				<xsl:text>Table of contents</xsl:text>
+			</xsl:if>
+		</title-toc> -->
+		<title-toc lang="en">Table of contents</title-toc>
+		<!-- <title-toc lang="fr">
 			<xsl:text>Sommaire</xsl:text>
-		</title-toc>
-		<title-toc lang="zh">
-
+		</title-toc> -->
+		<!-- <title-toc lang="zh">
+			<xsl:choose>
+				<xsl:when test="$namespace = 'gb'">
+					<xsl:text>目次</xsl:text>
+				</xsl:when>
+				<xsl:otherwise>
 					<xsl:text>Contents</xsl:text>
-
-		</title-toc>
-
-		<title-descriptors lang="en">Descriptors</title-descriptors>
+				</xsl:otherwise>
+			</xsl:choose>
+		</title-toc> -->
+		<title-toc lang="zh">目次</title-toc>
 
 		<title-part lang="en">
 
@@ -2485,20 +2518,6 @@
 		<title-subpart lang="en">Sub-part #</title-subpart>
 		<title-subpart lang="fr">Partie de sub #</title-subpart>
 
-		<title-list-tables lang="en">List of Tables</title-list-tables>
-
-		<title-list-figures lang="en">List of Figures</title-list-figures>
-
-		<title-table-figures lang="en">Table of Figures</title-table-figures>
-
-		<title-list-recommendations lang="en">List of Recommendations</title-list-recommendations>
-
-		<title-summary lang="en">Summary</title-summary>
-
-		<title-continued lang="ru">(продолжение)</title-continued>
-		<title-continued lang="en">(continued)</title-continued>
-		<title-continued lang="fr">(continué)</title-continued>
-
 	</xsl:variable>
 	<xsl:variable name="titles" select="xalan:nodeset($titles_)"/>
 
@@ -2506,8 +2525,8 @@
 		<xsl:variable name="toc_table_title" select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'toc'][@type='table']/*[local-name() = 'title']"/>
 		<xsl:value-of select="$toc_table_title"/>
 		<xsl:if test="normalize-space($toc_table_title) = ''">
-			<xsl:call-template name="getTitle">
-				<xsl:with-param name="name" select="'title-list-tables'"/>
+			<xsl:call-template name="getLocalizedString">
+				<xsl:with-param name="key">toc_tables</xsl:with-param>
 			</xsl:call-template>
 		</xsl:if>
 	</xsl:variable>
@@ -2516,8 +2535,8 @@
 		<xsl:variable name="toc_figure_title" select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'toc'][@type='figure']/*[local-name() = 'title']"/>
 		<xsl:value-of select="$toc_figure_title"/>
 		<xsl:if test="normalize-space($toc_figure_title) = ''">
-			<xsl:call-template name="getTitle">
-				<xsl:with-param name="name" select="'title-list-figures'"/>
+			<xsl:call-template name="getLocalizedString">
+				<xsl:with-param name="key">toc_figures</xsl:with-param>
 			</xsl:call-template>
 		</xsl:if>
 	</xsl:variable>
@@ -2526,8 +2545,8 @@
 		<xsl:variable name="toc_requirement_title" select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'toc'][@type='requirement']/*[local-name() = 'title']"/>
 		<xsl:value-of select="$toc_requirement_title"/>
 		<xsl:if test="normalize-space($toc_requirement_title) = ''">
-			<xsl:call-template name="getTitle">
-				<xsl:with-param name="name" select="'title-list-recommendations'"/>
+			<xsl:call-template name="getLocalizedString">
+				<xsl:with-param name="key">toc_recommendations</xsl:with-param>
 			</xsl:call-template>
 		</xsl:if>
 	</xsl:variable>
@@ -5071,13 +5090,13 @@
 		<fo:table-body>
 
 				<xsl:variable name="title_continued_">
-					<xsl:call-template name="getTitle">
-						<xsl:with-param name="name" select="'title-continued'"/>
+					<xsl:call-template name="getLocalizedString">
+						<xsl:with-param name="key">continued</xsl:with-param>
 					</xsl:call-template>
 				</xsl:variable>
-
+				<xsl:variable name="title_continued_in_parenthesis" select="concat('(',$title_continued_,')')"/>
 				<xsl:variable name="title_continued">
-					<xsl:value-of select="$title_continued_"/>
+					<xsl:value-of select="$title_continued_in_parenthesis"/>
 
 				</xsl:variable>
 
