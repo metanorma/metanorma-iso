@@ -38,10 +38,10 @@ q {
     quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
     content: '';
     content: none;
 }
@@ -232,7 +232,7 @@ ul>li {
     list-style: none;
 }
 
-ul>li>p:first-child:before {
+ul>li>p:first-child::before {
     content: "\2014";
     display: inline-block;
     width: 1em;
@@ -246,7 +246,7 @@ li p {
     line-height: 1.2;
 }
 
-#toc li:before {
+#toc li::before {
     content: " ";
     display: none;
 }
@@ -271,7 +271,7 @@ p.Terms {
     //     box-shadow: inset -5px 0px 10px -5px #1d1d1d !important;
     // }
 
-    li:before {
+    li::before {
         content: " ";
         display: none;
     }
@@ -694,7 +694,7 @@ aside.footnote {
     display: inline;
 }
 
-ol>li>p:before {
+ol>li>p::before {
     content: "";
     display: none;
 }

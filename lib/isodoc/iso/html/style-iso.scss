@@ -27,8 +27,8 @@ body {
 blockquote, q {
 	quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
+blockquote::before, blockquote::after,
+q::before, q::after {
 	content: '';
 	content: none;
 }
@@ -177,7 +177,7 @@ ul > li {
     list-style: none;
 }
 
-ul > li > p:first-child:before {
+ul > li > p:first-child::before {
     content: "\2014";
     display: inline-block;
     width: 1em;
@@ -210,7 +210,7 @@ p.Terms {
         background: none;
     }
 
-    li:before {
+    li::before {
         content: " ";
         display: none;
     }
@@ -458,57 +458,57 @@ ol > li {
   list-style: none;
   position: relative;
 }
-ol > li:before {
+ol > li::before {
   position: absolute;
   left: -1.4em;
 }
-ol[class="roman"] > li:before {
+ol[class="roman"] > li::before {
   left: -2.0em;
 }
-ol[class="roman_upper"] > li:before {
+ol[class="roman_upper"] > li::before {
   left: -2.3em;
 }
-ol[class="alphabet"] > li:before {
+ol[class="alphabet"] > li::before {
   counter-increment: alphabet;
   content: counter(alphabet, lower-alpha)") "
 }
-ol[class="arabic"] > li:before {
+ol[class="arabic"] > li::before {
   counter-increment: arabic;
   content: counter(arabic, decimal)") "
 }
-ol[class="roman"] > li:before {
+ol[class="roman"] > li::before {
   counter-increment: roman;
   content: counter(roman, lower-roman)") "
 }
-ol[class="alphabet_upper"] > li:before {
+ol[class="alphabet_upper"] > li::before {
   counter-increment: alphabet_upper;
   content: counter(alphabet_upper, upper-alpha)") "
 }
-ol[class="roman_upper"] > li:before {
+ol[class="roman_upper"] > li::before {
   counter-increment: roman_upper;
   content: counter(roman_upper, upper-roman)") "
 }
-ol > li:before {
+ol > li::before {
   counter-increment: alphabet;
   content: counter(alphabet, lower-alpha)") "
 }
-ol[class="alphabet"] ol[class="alphabet"] > li:before {
+ol[class="alphabet"] ol[class="alphabet"] > li::before {
   counter-increment: alphabet2;
   content: counter(alphabet2, lower-alpha)") "
 }
-ol[class="arabic"] ol[class="arabic"] > li:before {
+ol[class="arabic"] ol[class="arabic"] > li::before {
   counter-increment: arabic2;
   content: counter(arabic2, decimal)") "
 }
-ol[class="roman"] ol[class="roman"] > li:before {
+ol[class="roman"] ol[class="roman"] > li::before {
   counter-increment: roman2;
   content: counter(roman2, lower-roman)") "
 }
-ol[class="alphabet_upper"] ol[class="alphabet_upper"] > li:before {
+ol[class="alphabet_upper"] ol[class="alphabet_upper"] > li::before {
   counter-increment: alphabet_upper2;
   content: counter(alphabet_upper2, upper-alpha)") "
 }
-ol[class="roman_upper"] ol[class="roman_upper"] > li:before {
+ol[class="roman_upper"] ol[class="roman_upper"] > li::before {
   counter-increment: roman_upper2;
   content: counter(roman_upper2, upper-roman)") "
 }
@@ -723,7 +723,7 @@ ol.footnotes-list p, aside.footnote p {
     display: inline;
 }
 
-ol > li > p:before {
+ol > li > p::before {
     content: "";
     display: none;
 }

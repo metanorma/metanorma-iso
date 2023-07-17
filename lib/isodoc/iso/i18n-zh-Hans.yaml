@@ -9,6 +9,7 @@ term_def_boilerplate: |
 all_rights_reserved: 版权所有
 reference_number: 参考编号
 price_based_on: 价格基于%页
+descriptor: 描述符
 under_preparation: 制定中（出版时最新状态为%）
 withdrawn: 撤回 .
 cancelled_and_replaced: 已取消并由%取代。
@@ -20,6 +21,8 @@ secretariat: 秘书处
 edition: 版
 termsrelated: 相关术语 
 availablefrom: 可从
+voting_begins_on: 投票开始于
+voting_terminates_on: 投票终止于
 doctype_dict:
   international-standard: 国际标准
   technical-specification: 技术规格

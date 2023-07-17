@@ -11,6 +11,7 @@ term_def_boilerplate: |
 all_rights_reserved: All rights reserved
 reference_number: Reference number
 price_based_on: Price based on % pages
+descriptor: Descriptor
 under_preparation: Under preparation. (Stage at the time of publication %).
 withdrawn: Withdrawn.
 cancelled_and_replaced: Cancelled and replaced by %.
@@ -23,6 +24,8 @@ secretariat: Secretariat
 edition: edition
 termsrelated: Terms related to 
 availablefrom: Available from
+voting_begins_on: Voting begins on
+voting_terminates_on: Voting terminates on
 multiple_and: "%1 and %2"
 multiple_or: "%1 or %2"
 doctype_dict:
@@ -85,3 +88,6 @@ inflection:
   Statement:
     sg: Statement
     pl: Statements
+  Descriptor:
+    sg: Descriptor
+    pl: Descriptors

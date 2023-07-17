@@ -9,6 +9,7 @@ term_def_boilerplate: |
       </p> </li> </ul>
 all_rights_reserved: Все права защищены
 reference_number: Ссылочный номер
+descriptor: Дескриптор
 price_based_on: Цена рассчитана на % стр.
 under_preparation: В стадии подготовки. (Стадия на момент публикации %).
 withdrawn: Отозван.
@@ -23,6 +24,8 @@ scope: Область применения
 edition: издание
 termsrelated: Термины, связанные 
 availablefrom: Доступна с
+voting_begins_on: Голосование начинается в
+voting_terminates_on: Голосование заканчивается в
 doctype_dict:
   international-standard: Международный Стандарт
   technical-specification: Техническая Спецификация
@@ -83,3 +86,6 @@ inflection:
   Утверждение:
     sg: Утверждение
     pl: Утверждения
+  Дескриптор:
+    sg: Дескриптор
+    pl: Дескрипторы
