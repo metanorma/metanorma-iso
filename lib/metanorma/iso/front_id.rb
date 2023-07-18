@@ -107,18 +107,17 @@ module Metanorma
           node.attr("corrigendum-number"),
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }.compact
-        stage and ret[:stage] = stage
-        #ret[:stage] == "60.00" and ret[:stage] = :PRF
+        if stage
+          ret[:stage] = stage
+          ret[:stage] == "60.00" and ret[:stage] = :PRF
+        end
         ret
       end
 
       def iso_id_stage(node)
-        stage = stage_abbr(get_stage(node), get_substage(node),
-                           doctype(node))
-        harmonised = "#{get_stage(node)}.#{get_substage(node)}"
-        #stage = nil
-        { abbr: stage&.to_sym, harmonized_code: harmonised }
-        harmonised || stage&.to_sym
+        # stage = stage_abbr(get_stage(node), get_substage(node),
+        #                   doctype(node))
+        "#{get_stage(node)}.#{get_substage(node)}"
       end
 
       def iso_id_year(node)
@@ -194,7 +193,7 @@ module Metanorma
       def structured_id(node, xml)
         return unless node.attr("docnumber")
 
-        part, subpart = node&.attr("partnumber")&.split(/-/)
+        part, subpart = node&.attr("partnumber")&.split("-")
         xml.structuredidentifier do |i|
           i.project_number(node.attr("docnumber"), **attr_code(
             part: part, subpart: subpart,
