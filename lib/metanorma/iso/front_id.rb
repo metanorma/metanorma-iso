@@ -103,13 +103,12 @@ module Metanorma
 
       def iso_id_params_add(node)
         stage = iso_id_stage(node)
-
         ret = { number: node.attr("amendment-number") ||
           node.attr("corrigendum-number"),
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }.compact
         stage and ret[:stage] = stage
-        ret[:stage] == "60.00" and ret[:stage] = :PRF
+        #ret[:stage] == "60.00" and ret[:stage] = :PRF
         ret
       end
 
@@ -117,7 +116,7 @@ module Metanorma
         stage = stage_abbr(get_stage(node), get_substage(node),
                            doctype(node))
         harmonised = "#{get_stage(node)}.#{get_substage(node)}"
-        harmonised = nil unless /^\d\d\.\d\d/.match?(harmonised)
+        #stage = nil
         { abbr: stage&.to_sym, harmonized_code: harmonised }
         harmonised || stage&.to_sym
       end
