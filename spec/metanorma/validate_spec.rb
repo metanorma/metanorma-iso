@@ -316,7 +316,31 @@ RSpec.describe Metanorma::ISO do
 
       text
     INPUT
-    expect(File.read("test.err")).to include "pizza is not a recognised stage"
+    expect(File.read("test.err")).to include "Illegal document stage: pizza.00"
+
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :status: 70
+
+      text
+    INPUT
+    expect(File.read("test.err")).to include "Illegal document stage: 70.00"
+
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :status: 60
+
+      text
+    INPUT
+    expect(File.read("test.err")).not_to include "Illegal document stage: 60.00"
   end
 
   it "Warns of illegal substage" do
@@ -332,7 +356,35 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err"))
-      .to include "pizza is not a recognised substage"
+      .to include "Illegal document stage: 60.pizza"
+
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :status: 60
+      :docsubstage: 54
+
+      text
+    INPUT
+    expect(File.read("test.err"))
+      .to include "Illegal document stage: 60.54"
+
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :status: 60
+      :docsubstage: 60
+
+      text
+    INPUT
+    expect(File.read("test.err"))
+      .not_to include "Illegal document stage: 60.60"
   end
 
   xit "Warns of illegal iteration" do
@@ -644,7 +696,7 @@ RSpec.describe Metanorma::ISO do
       .not_to include "number not broken up in threes"
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR.sub(/:nodoc:/, ":validate-years:\n  :nodoc:")}
+      #{VALIDATING_BLANK_HDR.sub(':nodoc:', ":validate-years:\n  :nodoc:")}
 
       == Clause
       1950

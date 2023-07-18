@@ -132,20 +132,6 @@ module Metanorma
                    "#{script} is not a recognised script")
       end
 
-      def stage_validate(xmldoc)
-        stage = xmldoc&.at("//bibdata/status/stage")&.text
-        %w(00 10 20 30 40 50 60 90 95).include? stage or
-          @log.add("Document Attributes", nil,
-                   "#{stage} is not a recognised stage")
-      end
-
-      def substage_validate(xmldoc)
-        substage = xmldoc&.at("//bibdata/status/substage")&.text or return
-        %w(00 20 60 90 92 93 98 99).include? substage or
-          @log.add("Document Attributes", nil,
-                   "#{substage} is not a recognised substage")
-      end
-
       def iteration_validate(xmldoc)
         iteration = xmldoc&.at("//bibdata/status/iteration")&.text or return
         /^\d+/.match(iteration) or
@@ -156,8 +142,6 @@ module Metanorma
       def bibdata_validate(doc)
         doctype_validate(doc)
         script_validate(doc)
-        stage_validate(doc)
-        substage_validate(doc)
         iteration_validate(doc)
       end
 
