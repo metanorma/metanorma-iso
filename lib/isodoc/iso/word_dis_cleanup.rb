@@ -41,6 +41,7 @@ module IsoDoc
 
       def dis_styles1(docxml)
         amd_style(docxml)
+        middle_title_style(docxml)
         code_style(docxml)
         figure_style(docxml)
         formula_style(docxml)
@@ -68,6 +69,14 @@ module IsoDoc
             s["style"] ||= ""
             s["style"] = "mso-pattern:none;#{s['style']}"
           end
+        end
+      end
+
+      def middle_title_style(docxml)
+        docxml.xpath("//p[@class = 'zzSTDTitle2']").each do |p|
+          p1 = p.previous_element && p1.name == p &&
+            p1["class"] = "zzSTDTitle2" or next
+          p1 << " #{p.remove.children.to_xml}"
         end
       end
 

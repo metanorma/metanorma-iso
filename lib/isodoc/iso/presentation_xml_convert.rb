@@ -161,6 +161,37 @@ module IsoDoc
         super
       end
 
+      def middle_title(docxml)
+        s = docxml.at(ns("//sections")) or return
+        ret = "#{middle_title_main}#{middle_title_amd}"
+        s.children.first.previous = ret
+      end
+
+      def middle_title_main
+        ret = "<span class='boldtitle'>#{@meta.get[:doctitleintro]}"
+        ret += " &#x2014; " if @meta.get[:doctitleintro] && @meta.get[:doctitlemain]
+        ret += @meta.get[:doctitlemain]
+        ret += " &#x2014; " if @meta.get[:doctitlemain] && @meta.get[:doctitlepart]
+        ret += "</span>"
+        if a = @meta.get[:doctitlepart]
+          b = @meta.get[:doctitlepartlabel] and ret += "<span class='nonboldtitle'>#{b}:</span> "
+          ret += "<span class='boldtitle'>#{a}</span>"
+        end
+        "<p class='zzSTDTitle1'>#{ret}</p>"
+      end
+
+      def middle_title_amd
+        ret = ""
+        if a = @meta.get[:doctitleamdlabel]
+          ret += "<p class='zzSTDTitle2'>#{a}"
+          a = @meta.get[:doctitleamd] and ret += ": #{a}"
+          ret += "</p>"
+        end
+        a = @meta.get[:doctitlecorrlabel] and
+          ret += "<p class='zzSTDTitle2'>#{a}</p>"
+        ret
+      end
+
       include Init
     end
   end

@@ -86,32 +86,34 @@ module IsoDoc
         middle_title_dis(out)
       end
 
-      def middle_title_dis(out)
+      def middle_title_dis(node, out)
         out.p(class: "zzSTDTitle") do |p|
-          p << @meta.get[:doctitleintro]
-          @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and p << " &#x2014; "
-          p << @meta.get[:doctitlemain]
-          @meta.get[:doctitlemain] && @meta.get[:doctitlepart] and p << " &#x2014; "
-          if @meta.get[:doctitlepart]
-            b = @meta.get[:doctitlepartlabel] and
-              p << "<span style='font-weight:normal'>#{b}:</span> "
-            p << " #{@meta.get[:doctitlepart]}"
-          end
-          @meta.get[:doctitleamdlabel] || @meta.get[:doctitleamd] ||
-            @meta.get[:doctitlecorrlabel] and middle_title_dis_amd(p)
+          node.children.each { |n| parse(n, p) }
         end
       end
 
-      def middle_title_dis_amd(para)
-        para.span(style: "font-weight:normal") do |p|
-          if a = @meta.get[:doctitleamdlabel]
-            p << " #{a}"
-            a = @meta.get[:doctitleamd] and p << ": #{a}"
-          end
-          if a = @meta.get[:doctitlecorrlabel]
-            p << " #{a}"
-          end
+      def middle_title_dis_amd(node, out)
+        out.p(class: "zzSTDTitle2") do |p|
+          p.span(style: "font-weight:normal") do |s|
+          node.children.each { |n| parse(n, s) }
         end
+        end
+      end
+
+      def para_parse(node, out)
+        case node["class"]
+        when "zzSTDTitle1" then middle_title_dis(node, out)
+        when "zzSTDTitle2" then middle_title_amd(node, out)
+        else super
+        end
+      end
+
+      def span_parse(node, out)
+        if node["class"] == "nonboldtitle"
+          out.span(style: "font-weight:normal") do |s|
+            node.children.each { |n| parse(n, s) }
+          end
+      end
       end
 
       def authority_cleanup(docxml)

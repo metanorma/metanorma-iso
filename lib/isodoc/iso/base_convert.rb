@@ -130,22 +130,12 @@ module IsoDoc
         end
       end
 
-      def middle(isoxml, out)
-        middle_title(isoxml, out)
-        middle_admonitions(isoxml, out)
-        i = scope isoxml, out, 0
-        i = norm_ref isoxml, out, i
-        clause_etc isoxml, out, i
-        annex isoxml, out
-        bibliography isoxml, out
-      end
-
-      def clause_etc(isoxml, out, num)
-        isoxml.xpath(ns("//sections/clause[not(@type = 'scope')] | " \
-                        "//sections/terms | //sections/definitions"))
-          .each do |f|
-            clause_etc1(f, out, num)
-          end
+      def top_element_render(elem, out)
+        if %w(clause terms definitions).include?(elem.name) &&
+            elem["type"] != "scope"
+          clause_etc1(elem, out, 0)
+        else super
+        end
       end
 
       def clause_etc1(clause, out, num)
@@ -158,12 +148,6 @@ module IsoDoc
           clause.elements.each do |e|
             parse(e, div) unless %w{title source}.include? e.name
           end
-        end
-      end
-
-      def indexsect(isoxml, out)
-        isoxml.xpath(ns("//indexsect")).each do |i|
-          clause_parse(i, out)
         end
       end
 
