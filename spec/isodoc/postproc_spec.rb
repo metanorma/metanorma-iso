@@ -239,10 +239,10 @@ RSpec.describe IsoDoc do
                 </p>
               </clause>
             </clause>
-            <clause id="P" displayorder="1"><title>2<tab/>Clause 5</title>
+            <clause id="P" displayorder="2"><title>2<tab/>Clause 5</title>
             <clause id="P1"><title>2.1<tab/>Clause 5.1</title></clause>
             </clause>
-            <clause id="Q" displayorder="1"><title>3<tab/>Clause 6</title></clause>
+            <clause id="Q" displayorder="3"><title>3<tab/>Clause 6</title></clause>
           </sections>
         </iso-standard>
       INPUT
@@ -343,7 +343,7 @@ RSpec.describe IsoDoc do
                       </clause>
                     </clause>
                   </sections>
-                  <annex id="AA" displayorder="1"><title>Annex A<tab/>Annex First</title></annex>
+                  <annex id="AA" displayorder="2"><title>Annex A<tab/>Annex First</title></annex>
                 </iso-standard>
       INPUT
 
