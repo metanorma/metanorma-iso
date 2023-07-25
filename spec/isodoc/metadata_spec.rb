@@ -511,7 +511,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder="2">
+               <p class="zzSTDTitle1" displayorder="2">
+           <span class="boldtitle">Specifications and test methods</span>
+         </p>
+        <clause displayorder="3">
           <title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
@@ -556,7 +559,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder="2">
+               <p class="zzSTDTitle1" displayorder="2">
+           <span class="boldtitle">Specifications and test methods</span>
+         </p>
+        <clause displayorder="3">
           <title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
@@ -601,7 +607,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder="2">
+         <p class="zzSTDTitle1" displayorder="2">
+           <span class="boldtitle">Specifications and test methods</span>
+         </p>
+        <clause displayorder="3">
           <title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
@@ -648,7 +657,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder='2'>
+         <p class="zzSTDTitle1" displayorder="2">
+            <span class="boldtitle">Specifications and test methods</span>
+          </p>
+        <clause displayorder='3'>
           <title depth='1'>Clause 1</title>
         </clause>
       </sections>
@@ -682,7 +694,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <clause displayorder='2'>
+        <p class="zzSTDTitle1" displayorder="2">
+            <span class="boldtitle">Specifications and test methods</span>
+          </p>
+        <clause displayorder='3'>
           <title depth='1'>Clause 1</title>
         </clause>
       </sections>

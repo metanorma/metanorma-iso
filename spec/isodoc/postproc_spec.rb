@@ -139,7 +139,7 @@ RSpec.describe IsoDoc do
       .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
-            <terms id="_terms_and_definitions" obligation="normative">
+            <terms id="_terms_and_definitions" obligation="normative" displayorder="1">
               <title>1
                 <tab/>
                 Terms and Definitions</title>
@@ -166,7 +166,6 @@ RSpec.describe IsoDoc do
 
     expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
          <div>
            <a name='_terms_and_definitions' id='_terms_and_definitions'/>
            <h1>
@@ -216,7 +215,7 @@ RSpec.describe IsoDoc do
       .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
-            <clause id="A" inline-header="false" obligation="normative">
+            <clause id="A" inline-header="false" obligation="normative" displayorder="1">
               <title>1
                 <tab/>
                 Clause 4</title>
@@ -240,10 +239,10 @@ RSpec.describe IsoDoc do
                 </p>
               </clause>
             </clause>
-            <clause id="P"><title>2<tab/>Clause 5</title>
+            <clause id="P" displayorder="1"><title>2<tab/>Clause 5</title>
             <clause id="P1"><title>2.1<tab/>Clause 5.1</title></clause>
             </clause>
-            <clause id="Q"><title>3<tab/>Clause 6</title></clause>
+            <clause id="Q" displayorder="1"><title>3<tab/>Clause 6</title></clause>
           </sections>
         </iso-standard>
       INPUT
@@ -319,7 +318,7 @@ RSpec.describe IsoDoc do
             </presentation-metadata>
           </metanorma-extension>
                   <sections>
-                    <clause id="A" inline-header="false" obligation="normative">
+                    <clause id="A" inline-header="false" obligation="normative" displayorder="1">
                       <title>1
                         <tab/>
                         Clause 4</title>
@@ -344,7 +343,7 @@ RSpec.describe IsoDoc do
                       </clause>
                     </clause>
                   </sections>
-                  <annex id="AA"><title>Annex A<tab/>Annex First</title></annex>
+                  <annex id="AA" displayorder="1"><title>Annex A<tab/>Annex First</title></annex>
                 </iso-standard>
       INPUT
 
@@ -469,7 +468,7 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-          <clause id="A" inline-header="false" obligation="normative">
+          <clause id="A" inline-header="false" obligation="normative" displayorder="1">
             <title>1
               <tab/>
               Clause 4</title>
@@ -508,7 +507,6 @@ RSpec.describe IsoDoc do
     expect(xmlpp(strip_guid(html))).to be_equivalent_to xmlpp(<<~OUTPUT)
       <main class="main-section" xmlns:epub="epub">
         <button id="myBtn" onclick="topFunction()" title="Go to top">Top</button>
-        <p class="zzSTDTitle1"/>
         <div id="A">
           <h1 id="_">1 &#xA0; Clause 4</h1>
           <a class="FootnoteRef" href="#fn:3" id="fnref:1">
@@ -559,7 +557,6 @@ RSpec.describe IsoDoc do
     expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~OUTPUT)
         <body xmlns:epub="epub">
         <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
           <div>
             <a id="A" name="A"/>
             <h1>1
@@ -649,7 +646,7 @@ RSpec.describe IsoDoc do
       .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
-            <terms id="_terms_and_definitions" obligation="normative">
+            <terms id="_terms_and_definitions" obligation="normative" displayorder="1">
               <title>Terms and Definitions</title>
               <term id="paddy1">
                 <name>1.1</name>
@@ -727,7 +724,7 @@ RSpec.describe IsoDoc do
       .new(WORD_HTML_CSS.dup)
       .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <annex id="P" inline-header="false" obligation="normative">
+          <annex id="P" inline-header="false" obligation="normative" displayorder="1">
             <example id="_63112cbc-cde0-435f-9553-e0b8c4f5851c">
               <p id="_158d4efa-b1c9-4aec-b325-756de8e4c968">'1M', '01M', and '0001M' all describe the calendar month January.</p>
             </example>
@@ -742,7 +739,6 @@ RSpec.describe IsoDoc do
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
     expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class="WordSection3">
-        <p class="zzSTDTitle1"/>
         <p class="MsoNormal">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
         </p>
@@ -769,7 +765,7 @@ RSpec.describe IsoDoc do
       .new(WORD_HTML_CSS.dup)
       .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <annex id="P" inline-header="false" obligation="normative">
+          <annex id="P" inline-header="false" obligation="normative" displayorder="1">
             <figure id="samplecode">
               <p>Hello</p>
               <p>Key</p>
@@ -790,7 +786,6 @@ RSpec.describe IsoDoc do
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
     expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class="WordSection3">
-        <p class="zzSTDTitle1"/>
         <p class="MsoNormal">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
         </p>
@@ -829,7 +824,7 @@ RSpec.describe IsoDoc do
       .new(WORD_HTML_CSS.dup)
       .convert("test", <<~INPUT, false)
           <iso-standard xmlns="http://riboseinc.com/isoxml">
-            <annex id="P" inline-header="false" obligation="normative">
+            <annex id="P" inline-header="false" obligation="normative" displayorder="1">
             <admonition id="_70234f78-64e5-4dfc-8b6f-f3f037348b6a" type="editorial">
                            <p id='_e94663cc-2473-4ccc-9a72-983a74d989f2'>
                    Only use paddy or parboiled rice for the
@@ -845,7 +840,6 @@ RSpec.describe IsoDoc do
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
     expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
       <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
          <p class='MsoNormal'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
@@ -1014,7 +1008,7 @@ RSpec.describe IsoDoc do
       .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
-            <clause id="A" inline-header="false" obligation="normative">
+            <clause id="A" inline-header="false" obligation="normative" displayorder="1">
               <title>Clause 4</title>
               <clause id="N" inline-header="false" obligation="normative">
                 <title>Introduction

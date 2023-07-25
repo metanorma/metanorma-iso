@@ -12,7 +12,7 @@ RSpec.describe IsoDoc do
             <status><stage>30</stage></status>
           </bibdata>
           <sections>
-          <terms id="A">
+          <terms id="A" displayorder="1">
             <term id="B">
             <preferred><expression><name>First</name></expression></preferred>
             <admitted><expression><name>Second</name></expression></admitted>
@@ -35,7 +35,7 @@ RSpec.describe IsoDoc do
             <status><stage>50</stage></status>
           </bibdata>
           <sections>
-          <terms id="A">
+          <terms id="A" displayorder="1">
             <term id="B">
             <preferred><expression><name>First</name></expression></preferred>
             <admitted><expression><name>Second</name></expression></admitted>
@@ -58,7 +58,7 @@ RSpec.describe IsoDoc do
             <status><stage>50</stage></status>
           </bibdata>
           <sections>
-          <terms id="A">
+          <terms id="A" displayorder="1">
             <term id="B">
             <preferred><expression><name>First</name></expression></preferred>
             <admitted><expression><name>Second</name></expression></admitted>
@@ -81,7 +81,7 @@ RSpec.describe IsoDoc do
             <status><stage>30</stage></status>
           </bibdata>
           <sections>
-          <terms id="A">
+          <terms id="A" displayorder="1">
             <term id="B">
             <preferred><expression><name>First</name></expression></preferred>
             <admitted><expression><name>Second</name></expression></admitted>
@@ -103,13 +103,12 @@ RSpec.describe IsoDoc do
           <status><stage>30</stage></status>
         </bibdata>
         <sections>
-        <clause id="A"><p><span class="C"><em>H</em> I</em></span></p></clause>
+        <clause id="A" displayorder="1"><p><span class="C"><em>H</em> I</em></span></p></clause>
         </sections>
       </iso-standard>
     INPUT
     word = <<~OUTPUT
       <div class='WordSection3'>
-        <p class='zzSTDTitle1'/>
         <div id='A'>
           <h1/>
           <p>
@@ -129,13 +128,12 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <sections>
-        <clause id="A"><p><span class="C"><em>H</em> I</em></span></p></clause>
+        <clause id="A" displayorder="1"><p><span class="C"><em>H</em> I</em></span></p></clause>
         </sections>
       </iso-standard>
     INPUT
     word = <<~OUTPUT
       <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div id='A'>
           <h1/>
           <p>
@@ -160,8 +158,8 @@ RSpec.describe IsoDoc do
           <status><stage>30</stage></status>
         </bibdata>
         <preface>
-        <foreword><title>Foreword</title><p>Para</p></foreword>
-        <introduction><title>Foreword</title><p>Para</p></introduction>
+        <foreword displayorder="1"><title>Foreword</title><p>Para</p></foreword>
+        <introduction displayorder="2"><title>Foreword</title><p>Para</p></introduction>
         </preface>
       </iso-standard>
     INPUT
@@ -206,8 +204,8 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword><title>Foreword</title><p>Para</p></foreword>
-        <introduction><title>Foreword</title><p>Para</p></introduction>
+        <foreword displayorder="1"><title>Foreword</title><p>Para</p></foreword>
+        <introduction displayorder="2"><title>Foreword</title><p>Para</p></introduction>
         </preface>
       </iso-standard>
     INPUT
@@ -252,7 +250,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
                 <bibliography>
-          <references id="_normative_references" normative="true" obligation="informative">
+          <references id="_normative_references" normative="true" obligation="informative" displayorder="1">
             <title>Normative References</title>
             <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="ISO712" type="standard">
@@ -266,7 +264,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
              <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div>
           <h1>Normative References</h1>
           <p class='MsoBodyText'>
@@ -309,7 +306,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword>
+        <foreword displayorder="1">
         <p><tt>A <strong>B</strong> <em>C</em> <strong>D<em>E</em>F</strong> <em>G<strong>H</strong>I</em></tt></p>
         <p><strong>A <tt>B</tt> <em>C<tt>D</tt>E</em></strong></p>
         <p><em>A <tt>B</tt> <strong>C<tt>D</tt>E</strong></em></p>
@@ -457,7 +454,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
            <h1>1</h1>
@@ -685,7 +681,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
            <h1>1</h1>
@@ -766,7 +761,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
           <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1>1</h1>
@@ -883,7 +877,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <sections>
-        <clause id="A">
+        <clause id="A" displayorder="1">
         <table id="B">
         <name>Table1</name>
         <thead>
@@ -909,7 +903,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
           <div class="WordSection3">
-        <p class="zzSTDTitle"/>
         <div>
           <a name="A" id="A"/>
           <h1/>
@@ -1005,7 +998,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <sections>
-        <clause id="A">
+        <clause id="A" displayorder="1">
         <figure id="B">
         <name>Table1</name>
         <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto"/>
@@ -1018,7 +1011,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1/>
@@ -1065,7 +1057,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <sections>
-        <clause id="A">
+        <clause id="A" displayorder="1">
         <example id="B">
         <name>EXAMPLE</name>
         <p>First example</p>
@@ -1081,7 +1073,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1/>
@@ -1123,7 +1114,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <sections>
-        <clause id="A">
+        <clause id="A" displayorder="1">
         <formula id="B"><name>A.1</name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
         </clause>
         </sections>
@@ -1131,7 +1122,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
           <div class="WordSection3">
-        <p class="zzSTDTitle"/>
         <div>
           <a name="A" id="A"/>
           <h1/>
@@ -1162,7 +1152,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <sections>
-        <clause id="A">
+        <clause id="A" displayorder="1">
         <note id="B">
         <name>NOTE</name>
         <p>First example</p>
@@ -1178,7 +1168,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
           <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1/>
@@ -1259,7 +1248,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
              <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1>1</h1>
@@ -1422,7 +1410,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
            <h1>1</h1>
@@ -1570,7 +1557,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
            <h1>1</h1>
@@ -1617,7 +1603,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <sections>
-        <clause id="A">
+        <clause id="A" displayorder="1">
         <example id="B">
         <name>EXAMPLE</name>
         <dl>
@@ -1630,7 +1616,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-        <p class='zzSTDTitle'/>
         <div>
           <a name='A' id='A'/>
           <h1/>
@@ -1671,7 +1656,7 @@ RSpec.describe IsoDoc do
         <bibdata>
           <status><stage>50</stage></status>
         </bibdata>
-        <annex id="A"><title>Annex</title>
+        <annex id="A" displayorder="1"><title>Annex</title>
         <clause id="B"><title>Subannex</title>
         <clause id="C"><title>Subsubannex</title>
         </clause>
@@ -1681,7 +1666,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
@@ -1717,7 +1701,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
          <sections>
-        <clause id="A">
+        <clause id="A" displayorder="1">
         <quote>
         <p>Normal clause</p>
         <note><p>Note clause</p></note>
@@ -1734,7 +1718,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-         <p class='zzSTDTitle'/>
          <div>
            <a name='A' id='A'/>
            <h1/>
@@ -1777,13 +1760,16 @@ RSpec.describe IsoDoc do
         <title language="en" format="text/plain" type="title-intro">Date and time</title>
           <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
         <title language="en" format="text/plain" type="title-part">Basic rules</title>
+        <date type="published"><on>2011</on></date>
           <status><stage>50</stage></status>
           <ext><doctype>international-standard</doctype>
           <structuredidentifier><project-number part="1" origyr="2022-03-10">8601</project-number></structuredidentifier>
+          <editorialgroup/>
+          <secretariat>BSI</secretariat>
           </ext>
         </bibdata>
         <sections>
-        <clause id="A"><title>First clause</title>
+        <clause id="A" displayorder="1"><title>First clause</title>
         </clause>
         </sections>
       </iso-standard>
@@ -1797,12 +1783,15 @@ RSpec.describe IsoDoc do
           </p>
           <div>
             <a name='A' id='A'/>
-            <h1>First clause</h1>
+            <h1>1<span style="mso-tab-count:1">  </span>First clause</h1>
           </div>
         </div>
     WORD
     title = <<~WORD
       <div class='WordSection1'>
+          <p class="zzCover" align="right" style="text-align:right;font-weight:normal;">
+              <span lang="EN-GB" xml:lang="EN-GB">Date: <span style="mso-no-proof:yes">2011</span></span>
+          </p>
         <p class='zzCover' style='font-weight:normal;'>
            <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
          </p>
@@ -1823,7 +1812,9 @@ RSpec.describe IsoDoc do
       </div>
     WORD
     FileUtils.rm_f "test.doc"
-    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
@@ -1844,28 +1835,29 @@ RSpec.describe IsoDoc do
           <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
         <title language="en" format="text/plain" type="title-part">Basic rules</title>
         <title language="en" format="text/plain" type="title-amd">Technical corrections</title>
+        <date type="published"><on>2011</on></date>
           <status><stage>50</stage></status>
           <ext><doctype>amendment</doctype>
           <structuredidentifier><project-number part="1" amendment="1" origyr="2022-03-10">8601</project-number>
           </structuredidentifier>
+          <editorialgroup/>
+          <secretariat>BSI</secretariat>
           </ext>
         </bibdata>
         <preface>
-        <foreword id="F"><title>Foreword</title></foreword>
+        <foreword id="F" displayorder="1"><title>Foreword</title></foreword>
         </preface>
          <sections>
-        <clause id="A"><title>First clause</title>
+        <clause id="A" displayorder="2"><title>First clause</title>
         </clause>
         </sections>
       </iso-standard>
     INPUT
     word = <<~WORD
         <div class='WordSection3'>
-                   <p class='zzSTDTitle'>
-                       Date and time — Representations for information interchange —
-      <span style='font-weight:normal'>Part 1:</span>
-       Basic rules
-      <span style='font-weight:normal'> AMENDMENT 1: Technical corrections</span>
+                   <p class='zzSTDTitle'>Date and time — Representations for information interchange —
+      <span style='font-weight:normal'>Part 1:</span> Basic rules</p>
+      <p class='zzSTDTitle'><span style='font-weight:normal'> AMENDMENT 1: Technical corrections</span>
           </p>
           <div>
             <a name='A' id='A'/>
@@ -1874,7 +1866,9 @@ RSpec.describe IsoDoc do
         </div>
     WORD
     FileUtils.rm_f "test.doc"
-    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
@@ -2011,7 +2005,7 @@ RSpec.describe IsoDoc do
           <status><stage>20</stage></status>
         </bibdata>
          <sections>
-        <clause id="A"><title>Clause Title</title>
+        <clause id="A" displayorder="1"><title>Clause Title</title>
         <ul><li>List</li></ul>
         <note id="B"><p>Note</p>
         <ul><li>Note List</li></ul>
@@ -2024,13 +2018,13 @@ RSpec.describe IsoDoc do
         <table id="F"><name>Table</name></table>
         </clause>
         </sections>
-        <annex id="G"><title>Annex Title</title>
+        <annex id="G" displayorder="2"><title>Annex Title</title>
         <table id="H"><name>Annex Table</name></table>
         <clause id="I"><title>Annex Clause Title</title>
         </clause>
         </annex>
         <bibliography>
-        <references id="_normative_references" normative="false" obligation="informative">
+        <references id="_normative_references" normative="false" obligation="informative" displayorder="3">
             <title>Bibliography</title>
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
@@ -2043,7 +2037,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
       <div class='WordSection3'>
-         <p class='zzSTDTitle1'/>
          <div>
            <a name='A' id='A'/>
            <h1>Clause Title</h1>

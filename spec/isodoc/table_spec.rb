@@ -256,7 +256,6 @@ RSpec.describe IsoDoc do
              </tfoot>
            </table>
          </div>
-         <p class="zzSTDTitle1"/>
          <br/>
          <div id="Annex" class="Section3">
            <h1 class="Annex" id="_">
@@ -325,12 +324,6 @@ RSpec.describe IsoDoc do
              </tr>
              <tr>
                <td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
-                 <dl>
-                   <dt>
-                     <p align="left" style="margin-left:0pt;text-align:left;" class="MsoNormal">Drago</p>
-                   </dt>
-                   <dd>A type of rice</dd>
-                 </dl>
                  <div class="BlockSource">
                    <p class="MsoNormal">[SOURCE: , Section 1
           –
@@ -348,6 +341,7 @@ RSpec.describe IsoDoc do
                </td>
              </tr>
            </tfoot>
+           <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;" class="MsoNormal">Drago<span style="mso-tab-count:1">  </span>A type of rice</p>
          </table>
        </div>
     OUTPUT
@@ -509,7 +503,6 @@ RSpec.describe IsoDoc do
                 <div id="C" class="Note"><p><span class="note_label">NOTE  2</span>  </p>Note 2</div>
               </table>
             </div>
-            <p class="zzSTDTitle1"/>
           </div>
         </body>
       </html>
@@ -519,17 +512,17 @@ RSpec.describe IsoDoc do
         <div class="WordSection1">
           <p> </p>
         </div>
-        <p>
+        <p class="section-break">
           <br clear="all" class="section"/>
         </p>
         <div class="WordSection2">
-          <p>
+          <p class="page-break">
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
               <div class="TOC" id="_">
           <p class="zzContents">Contents</p>
         </div>
-        <p>
+        <p class="page-break">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
         </p>
           <div>
@@ -561,12 +554,7 @@ RSpec.describe IsoDoc do
                     <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">81,2</td>
                   </tr>
                 </tbody>
-                <dl>
-                  <dt>
-                    <p align="left" style="margin-left:0pt;text-align:left;">Drago</p>
-                  </dt>
-                  <dd>A type of rice</dd>
-                </dl>
+                <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;">Drago<span style="mso-tab-count:1">  </span>A type of rice</p>
                 <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>
                 <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2</span><span style="mso-tab-count:1">  </span></p>Note 2</div>
               </table>
@@ -574,11 +562,10 @@ RSpec.describe IsoDoc do
           </div>
           <p> </p>
         </div>
-        <p>
+        <p class="section-break">
           <br clear="all" class="section"/>
         </p>
         <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
         </div>
         <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
         <div class="colophon"/>

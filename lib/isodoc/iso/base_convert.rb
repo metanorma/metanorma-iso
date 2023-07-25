@@ -132,6 +132,7 @@ module IsoDoc
 
       def top_element_render(elem, out)
         if %w(clause terms definitions).include?(elem.name) &&
+            elem.parent.name == "sections" &&
             elem["type"] != "scope"
           clause_etc1(elem, out, 0)
         else super

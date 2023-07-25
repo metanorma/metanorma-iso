@@ -32,7 +32,7 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>#{TERM_BOILERPLATE}
 
-            <term id="term-Tempus">
+            <term id="term-_lt_relativity_gt_-Tempus">
               <preferred><expression><name>Tempus</name></expression></preferred>
               <domain>relativity</domain>
               <definition><verbal-definition>

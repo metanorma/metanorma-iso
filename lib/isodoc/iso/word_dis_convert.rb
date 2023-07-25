@@ -46,12 +46,6 @@ module IsoDoc
         { class: "TableTitle", style: "text-align:center;" }
       end
 
-      def span_parse(node, out)
-        out.span class: node["class"] do |x|
-          node.children.each { |n| parse(n, x) }
-        end
-      end
-
       def word_toc_preface(level)
         <<~TOC.freeze
           <span lang="EN-GB"><span
@@ -68,7 +62,7 @@ module IsoDoc
 
       def toWord(result, filename, dir, header)
         result = from_xhtml(word_cleanup(to_xhtml(result)))
-          .gsub(/-DOUBLE_HYPHEN_ESCAPE-/, "--")
+          .gsub("-DOUBLE_HYPHEN_ESCAPE-", "--")
         @wordstylesheet = wordstylesheet_update
         ::Html2Doc::IsoDIS.new(
           filename: filename,
@@ -92,11 +86,11 @@ module IsoDoc
         end
       end
 
-      def middle_title_dis_amd(node, out)
+      def middle_title_amd(node, out)
         out.p(class: "zzSTDTitle2") do |p|
           p.span(style: "font-weight:normal") do |s|
-          node.children.each { |n| parse(n, s) }
-        end
+            node.children.each { |n| parse(n, s) }
+          end
         end
       end
 
@@ -109,11 +103,18 @@ module IsoDoc
       end
 
       def span_parse(node, out)
-        if node["class"] == "nonboldtitle"
+        case node["class"]
+        when "nonboldtitle"
           out.span(style: "font-weight:normal") do |s|
             node.children.each { |n| parse(n, s) }
           end
-      end
+        when "boldtitle"
+          node.children.each { |n| parse(n, out) }
+        else
+          out.span class: node["class"] do |x|
+            node.children.each { |n| parse(n, x) }
+          end
+        end
       end
 
       def authority_cleanup(docxml)

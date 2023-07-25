@@ -162,6 +162,8 @@ module IsoDoc
       end
 
       def middle_title(docxml)
+        @meta.get[:doctitlemain].nil? || @meta.get[:doctitlemain].empty? and
+          return
         s = docxml.at(ns("//sections")) or return
         ret = "#{middle_title_main}#{middle_title_amd}"
         s.children.first.previous = ret
