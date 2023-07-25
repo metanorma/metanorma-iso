@@ -10,41 +10,6 @@ require "pubid-iso"
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
-      STAGE_ABBRS = {
-        "00": "PWI",
-        "10": "NP",
-        "20": "WD",
-        "30": "CD",
-        "40": "DIS",
-        "50": "FDIS",
-        "60": "IS",
-        "90": "(Review)",
-        "95": "(Withdrawal)",
-      }.freeze
-
-      STAGE_NAMES = {
-        "00": "Preliminary work item",
-        "10": "New work item proposal",
-        "20": "Working draft",
-        "30": "Committee draft",
-        "40": "Draft",
-        "50": "Final draft",
-        "60": "International standard",
-        "90": "Review",
-        "95": "Withdrawal",
-      }.freeze
-
-      def stage_abbr(stage, substage, _doctype)
-        return nil if stage.to_i > 60
-
-        ret = STAGE_ABBRS[stage.to_sym]
-        ret = "PRF" if stage == "60" && substage == "00"
-        ret = nil if stage == "60" && substage != "00"
-        ret = "AWI" if stage == "10" && substage == "99"
-        ret = "AWI" if stage == "20" && substage == "00"
-        ret
-      end
-
       def metadata_id(node, xml)
         if id = node.attr("docidentifier")
           xml.docidentifier id, **attr_code(type: "ISO")
@@ -103,23 +68,19 @@ module Metanorma
 
       def iso_id_params_add(node)
         stage = iso_id_stage(node)
-
         ret = { number: node.attr("amendment-number") ||
           node.attr("corrigendum-number"),
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }.compact
-        stage and ret[:stage] = stage
-        ret[:stage] == "60.00" and ret[:stage] = :PRF
+        if stage
+          ret[:stage] = stage
+          ret[:stage] == "60.00" and ret[:stage] = :PRF
+        end
         ret
       end
 
       def iso_id_stage(node)
-        stage = stage_abbr(get_stage(node), get_substage(node),
-                           doctype(node))
-        harmonised = "#{get_stage(node)}.#{get_substage(node)}"
-        harmonised = nil unless /^\d\d\.\d\d/.match?(harmonised)
-        { abbr: stage&.to_sym, harmonized_code: harmonised }
-        harmonised || stage&.to_sym
+        "#{get_stage(node)}.#{get_substage(node)}"
       end
 
       def iso_id_year(node)
@@ -195,7 +156,7 @@ module Metanorma
       def structured_id(node, xml)
         return unless node.attr("docnumber")
 
-        part, subpart = node&.attr("partnumber")&.split(/-/)
+        part, subpart = node&.attr("partnumber")&.split("-")
         xml.structuredidentifier do |i|
           i.project_number(node.attr("docnumber"), **attr_code(
             part: part, subpart: subpart,

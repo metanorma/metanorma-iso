@@ -960,7 +960,7 @@ RSpec.describe Metanorma::ISO do
         :related-mandate: ABC 15
       INPUT
       output = <<~OUTPUT
-                 <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
+        <iso-standard xmlns="https://www.metanorma.org/ns/iso"  type="semantic" version="#{Metanorma::ISO::VERSION}">
           <bibdata type="standard">
             <contributor>
               <role type="author"/>

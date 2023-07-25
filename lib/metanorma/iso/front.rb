@@ -12,15 +12,18 @@ module Metanorma
       def metadata_ext(node, xml)
         super
         structured_id(node, xml)
-        id = iso_id_default(iso_id_params(node))
-        id.stage and metadata_stage(id, xml)
+        metadata_stage(node, xml)
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
       end
 
-      def metadata_stage(id, xml)
-        xml.stagename metadata_stagename(id)&.strip,
-                      **attr_code(abbreviation: id.typed_stage_abbrev&.strip)
+      def metadata_stage(node, xml)
+        id = iso_id_default(iso_id_params(node))
+        id.stage and
+          xml.stagename metadata_stagename(id)&.strip,
+                        **attr_code(abbreviation: id.typed_stage_abbrev&.strip)
+      rescue Pubid::Core::Errors::HarmonizedStageCodeInvalidError,
+             Pubid::Core::Errors::TypeStageParseError
       end
 
       def metadata_stagename(id)
@@ -95,8 +98,17 @@ module Metanorma
         xml.status do |s|
           s.stage stage, **attr_code(abbreviation: abbrev)
           s.substage substage
-          node.attr("iteration") && (s.iteration node.attr("iteration"))
+          i = node.attr("iteration") and s.iteration i
         end
+      rescue Pubid::Core::Errors::HarmonizedStageCodeInvalidError,
+             Pubid::Core::Errors::TypeStageParseError
+        report_illegal_stage(stage, substage)
+      end
+
+      def report_illegal_stage(stage, substage)
+        err = "Illegal document stage: #{stage}.#{substage}"
+        @log.add("Document Attributes", nil, err)
+        warn err
       end
 
       def metadata_committee(node, xml)
