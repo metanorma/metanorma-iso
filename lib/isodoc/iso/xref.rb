@@ -43,7 +43,7 @@ module IsoDoc
           n = Counter.new
           n = section_names(doc.at(ns("//clause[@type = 'scope']")), n, 1)
           n = section_names(doc.at(ns(@klass.norm_ref_xpath)), n, 1)
-          doc.xpath(ns("//sections/clause[not(@type = 'scope')] | " \
+          doc.xpath(ns("//sections/clause[not(@type = 'scope')][not(.//references)] | " \
                        "//sections/terms | //sections/definitions")).each do |c|
             n = section_names(c, n, 1)
           end

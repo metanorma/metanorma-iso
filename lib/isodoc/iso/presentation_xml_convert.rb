@@ -95,7 +95,7 @@ module IsoDoc
         i = display_order_at(docxml, "//clause[@type = 'scope']", i)
         i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
         i = display_order_xpath(docxml,
-                                "//sections/clause[not(@type = 'scope')] | " \
+                                "//sections/clause[not(@type = 'scope')][not(.//references)] | " \
                                 "//sections/terms | //sections/definitions", i)
         i = display_order_xpath(docxml, "//annex", i)
         i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
