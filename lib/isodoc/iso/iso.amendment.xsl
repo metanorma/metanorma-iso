@@ -1353,38 +1353,35 @@
 						<xsl:call-template name="insertHeaderFooter"/>
 						<fo:flow flow-name="xsl-region-body">
 
-							<fo:block-container>
-								<!-- Information and documentation — Codes for transcription systems -->
-								<!-- <fo:block font-size="16pt" font-weight="bold" margin-bottom="18pt">
-									<xsl:value-of select="$title-en"/>
-								</fo:block>
-								 -->
+							<!-- Information and documentation — Codes for transcription systems -->
+							<!-- <fo:block-container>
+								
 								<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1" role="H1">
-
+								
 									<fo:block role="SKIP">
-
+									
 										<xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-intro']"/>
-
+										
 										<xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-main']"/>
-
+										
 										<xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-part']">
 											<xsl:with-param name="isMainLang">true</xsl:with-param>
 											<xsl:with-param name="isMainBody">true</xsl:with-param>
 										</xsl:apply-templates>
-
+										
 									</fo:block>
 									<fo:block role="SKIP">
 										<xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-part']/node()"/>
 									</fo:block>
-
+									
 									<xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:title[@language = $lang and @type = 'title-amd']">
 										<xsl:with-param name="isMainLang">true</xsl:with-param>
 										<xsl:with-param name="isMainBody">true</xsl:with-param>
 									</xsl:apply-templates>
-
+									
 								</fo:block>
-
-							</fo:block-container>
+							
+							</fo:block-container> -->
 							<!-- Clause(s) -->
 							<fo:block>
 
@@ -1753,6 +1750,31 @@
 					</xsl:if>
 				</fo:block>
 
+			</fo:block>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="iso:sections/iso:p[@class = 'zzSTDTitle1']" priority="4">
+		<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1" role="H1">
+			<xsl:if test="following-sibling::*[1][self::iso:p][starts-with(@class, 'zzSTDTitle')]">
+				<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
+			</xsl:if>
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
+
+	<xsl:template match="iso:sections/iso:p[@class = 'zzSTDTitle1']/iso:span[@class = 'nonboldtitle']" priority="3">
+		<!-- Example: <span class="nonboldtitle">Part 1:</span> -->
+		<fo:block font-weight="normal" margin-top="12pt" line-height="1.1" role="SKIP">
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
+
+	<xsl:template match="iso:sections/iso:p[@class = 'zzSTDTitle2']" priority="4">
+		<!-- Example: <p class="zzSTDTitle2" displayorder="3">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p> -->
+		<xsl:if test="$doctype = 'amendment'">
+			<fo:block font-size="18pt" margin-top="12pt" margin-bottom="20pt" margin-right="0mm" font-weight="normal" line-height="1.1" role="H1">
+				<xsl:apply-templates/>
 			</fo:block>
 		</xsl:if>
 	</xsl:template>
@@ -6428,6 +6450,9 @@
 	<!-- ===================== -->
 	<!-- END Definition List -->
 	<!-- ===================== -->
+
+	<!-- default: ignore title in sections/p -->
+	<xsl:template match="*[local-name() = 'sections']/*[local-name() = 'p'][starts-with(@class, 'zzSTDTitle')]" priority="3"/>
 
 	<!-- ========================= -->
 	<!-- Rich text formatting -->
@@ -12273,7 +12298,7 @@
 	<xsl:template match="*[local-name() = 'span']" mode="update_xml_step1">
 		<xsl:apply-templates mode="update_xml_step1"/>
 	</xsl:template>
-	<xsl:template match="*[local-name() = 'sourcecode']//*[local-name() = 'span'][@class]" mode="update_xml_step1" priority="2">
+	<xsl:template match="*[local-name() = 'sections']/*[local-name() = 'p'][starts-with(@class, 'zzSTDTitle')]/*[local-name() = 'span'][@class] | *[local-name() = 'sourcecode']//*[local-name() = 'span'][@class]" mode="update_xml_step1" priority="2">
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates mode="update_xml_step1"/>
