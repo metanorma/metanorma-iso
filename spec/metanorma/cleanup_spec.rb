@@ -76,13 +76,13 @@ RSpec.describe Metanorma::ISO do
           <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-                         <term id="term-t-90-t_90">
+                         <term id="term-t_90">
                <preferred>
                  <letter-symbol>
                    <name>
-                     <stem type="MathML">
+                     <stem type="MathML" block="false">
                        <math xmlns="http://www.w3.org/1998/Math/MathML">
-                         <mstyle displaystyle="true">
+                         <mstyle displaystyle="false">
                            <msub>
                              <mi>t</mi>
                              <mn>90</mn>
@@ -97,7 +97,7 @@ RSpec.describe Metanorma::ISO do
                <definition>
                  <verbal-definition>
                    <formula id="_">
-                     <stem type="MathML">
+                     <stem type="MathML" block="true">
                        <math xmlns="http://www.w3.org/1998/Math/MathML">
                          <mstyle displaystyle="true">
                            <msub>
@@ -215,7 +215,7 @@ RSpec.describe Metanorma::ISO do
       #{BLANK_HDR}
         <sections>
           <formula id="_">
-            <stem type="MathML">
+            <stem type="MathML" block="true">
               <math xmlns="http://www.w3.org/1998/Math/MathML">
               <mstyle displaystyle="true">
                 <mi>r</mi>
@@ -721,7 +721,7 @@ RSpec.describe Metanorma::ISO do
       #{BLANK_HDR}
         <sections>
           <formula id="_">
-            <stem type="MathML">
+            <stem type="MathML" block="true">
               <math xmlns="http://www.w3.org/1998/Math/MathML">
                 <mstyle displaystyle="true">
                    <mi>F</mi>

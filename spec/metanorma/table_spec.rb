@@ -152,7 +152,7 @@ RSpec.describe Metanorma::ISO do
              <thead>
                <tr>
                  <th valign="top" rowspan="2" align="left">Defect</th>
-                 <th colspan="4" valign="top" align="center">Maximum permissible mass fraction of defects in husked rice<br/><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><msub><mi>w</mi><mi>max</mi></msub></mstyle></math><asciimath>w_max</asciimath></stem></th>
+                 <th colspan="4" valign="top" align="center">Maximum permissible mass fraction of defects in husked rice<br/><stem type="MathML" block="false"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><msub><mi>w</mi><mi>max</mi></msub></mstyle></math><asciimath>w_max</asciimath></stem></th>
                </tr>
                <tr>
                  <th valign="top" align="left">in husked rice</th>

@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.2 -->
+<!-- VERSION v1.2.3 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -192,9 +192,11 @@
         </attribute>
       </optional>
       <attribute name="citeas"/>
-      <attribute name="type">
-        <ref name="ReferenceFormat"/>
-      </attribute>
+      <optional>
+        <attribute name="type">
+          <ref name="ReferenceFormat"/>
+        </attribute>
+      </optional>
       <optional>
         <attribute name="alt"/>
       </optional>
@@ -834,6 +836,26 @@
           </attribute>
         </optional>
         <ref name="paragraph"/>
+      </element>
+    </define>
+    <define name="stem">
+      <element name="stem">
+        <attribute name="type">
+          <choice>
+            <value>MathML</value>
+            <value>AsciiMath</value>
+            <value>LatexMath</value>
+          </choice>
+        </attribute>
+        <attribute name="block">
+          <data type="boolean"/>
+        </attribute>
+        <oneOrMore>
+          <choice>
+            <text/>
+            <ref name="AnyElement"/>
+          </choice>
+        </oneOrMore>
       </element>
     </define>
     <define name="em">

@@ -313,9 +313,9 @@ RSpec.describe IsoDoc do
            <tfoot>
              <tr>
                <td align="left" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;page-break-after:auto;">Reproducibility limit,
-                     <span class="stem"><m:oMath><m:r><m:t>R</m:t></m:r></m:oMath></span>
+                     <span class="stem">(#(R)#)</span>
                      (= 2,83
-                     <span class="stem"><m:oMath><m:sSub><m:e><m:r><m:t>s</m:t></m:r></m:e><m:sub><m:r><m:t>R</m:t></m:r></m:sub></m:sSub></m:oMath></span>
+                     <span class="stem">(#(s_R)#)</span>
                      )</td>
                <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;page-break-after:auto;">2,89</td>
                <td align="center" style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;page-break-after:auto;">0,57</td>
