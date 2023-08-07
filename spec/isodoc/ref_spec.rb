@@ -170,7 +170,7 @@ RSpec.describe IsoDoc do
              </p>
            </foreword>
          </preface>
-         <bibliography>
+         <sections>
            <references id="_" normative="true" obligation="informative" displayorder="3">
              <title depth="1">1<tab/>Normative References</title>
              <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
@@ -218,6 +218,8 @@ RSpec.describe IsoDoc do
                <p>This is an annotation of ISO 20483:2013-2014</p>
              </note>
            </references>
+           </sections>
+           <bibliography>
            <references id="_" normative="false" obligation="informative" displayorder="4">
              <title depth="1">Bibliography</title>
              <bibitem id="ISBN" type="book">
@@ -296,7 +298,6 @@ RSpec.describe IsoDoc do
                  <a href="#ref12">Citn</a>
                </p>
              </div>
-             <p class="zzSTDTitle1"/>
              <div>
                <h1>1  Normative References</h1>
                <p>The following documents are referred to in the text in such a way that

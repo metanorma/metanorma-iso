@@ -1385,6 +1385,13 @@ RSpec.describe IsoDoc do
               </title>
             </clause>
           </clause>
+          <references id='R' normative='true' obligation='informative' displayorder='5'>
+            <title depth='1'>
+              2
+              <tab/>
+              Normative References
+            </title>
+          </references>
         </sections>
         <annex id='P' inline-header='false' obligation='normative' displayorder='9'>
           <title>
@@ -1425,13 +1432,6 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id='R' normative='true' obligation='informative' displayorder='5'>
-            <title depth='1'>
-              2
-              <tab/>
-              Normative References
-            </title>
-          </references>
           <clause id='S' obligation='informative' displayorder='10'>
             <title depth='1'>Bibliography</title>
             <references id='T' normative='false' obligation='informative'>

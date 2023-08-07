@@ -385,7 +385,6 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 </tbody>
               </table>
             </div>
-            <p class="zzSTDTitle1"/>
             <br/>
             <div>
               <h1 class="Section3">Bibliography</h1>
@@ -400,17 +399,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <div class="WordSection1">
           <p> </p>
         </div>
-        <p>
+         <p class="section-break">
           <br clear="all" class="section"/>
         </p>
         <div class="WordSection2">
-          <p>
+         <p class="page-break">
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
           <div class="TOC" id="_">
           <p class="zzContents">Contents</p>
         </div>
-        <p>
+        <p class="page-break">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
         </p>
           <div id="A">
@@ -530,12 +529,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </div>
           <p> </p>
         </div>
-        <p>
+        <p class="section-break">
           <br clear="all" class="section"/>
         </p>
         <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
-          <p>
+          <p class="page-break">
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
           <div>

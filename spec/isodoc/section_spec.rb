@@ -88,7 +88,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
-        <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> 
+        <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>#{' '}
           <foreword obligation="informative" displayorder="2">
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
@@ -136,6 +136,9 @@ RSpec.describe IsoDoc do
               <title depth="2">5.2<tab/>Clause 4.2</title>
             </clause>
           </clause>
+          <references id="R" normative="true" obligation="informative" displayorder="5">
+            <title depth="1">2<tab/>Normative References</title>
+          </references>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder="9">
           <title><strong>Annex A</strong><br/><span class='obligation'>(normative)</span><br/><br/><strong>Annex</strong></title>
@@ -156,9 +159,6 @@ RSpec.describe IsoDoc do
           </references>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder="5">
-            <title depth="1">2<tab/>Normative References</title>
-          </references>
           <clause id="S" obligation="informative" displayorder="10">
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
@@ -184,7 +184,6 @@ RSpec.describe IsoDoc do
               </div>
               <p>This is patent boilerplate</p>
             </div>
-            <p class="zzSTDTitle1"/>
             <div id="D">
               <h1>1&#160; Scope</h1>
               <p id="E">Text</p>
@@ -266,74 +265,85 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     word = <<~OUTPUT
-      <body lang="EN-US" link="blue" vlink="#954F72">
-        <div class="WordSection1">
-          <p>&#160;</p>
-        </div>
-        <p>
-          <br class="section" clear="all"/>
-        </p>
-        <div class="WordSection2">
-          <p>
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+        <body lang="EN-US" link="blue" vlink="#954F72">
+          <div class="WordSection1">
+            <p>&#160;</p>
+          </div>
+          <p class="section-break">
+            <br class="section" clear="all"/>
           </p>
-              <div class="TOC" id="_">
-      <p class="zzContents">Contents</p>
-    </div>
-    <p>
-      <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-    </p>
-          <div>
-            <h1 class="ForewordTitle">Foreword</h1>
-            <p id="A" class='ForewordText'>This is a preamble</p>
+          <div class="WordSection2">
+            <p class="page-break">
+              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+            </p>
+                <div class="TOC" id="_">
+        <p class="zzContents">Contents</p>
+      </div>
+      <p class="page-break">
+        <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+      </p>
+            <div>
+              <h1 class="ForewordTitle">Foreword</h1>
+              <p id="A" class='ForewordText'>This is a preamble</p>
+            </div>
+            <p class="page-break">
+              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+            </p>
+            <div class="Section3" id="B">
+              <h1 class="IntroTitle">
+                Introduction</h1>
+              <div id="C">
+                <h2>0.1
+                  <span style="mso-tab-count:1">&#160; </span>
+                  Introduction Subsection</h2>
+              </div>
+              <p>This is patent boilerplate</p>
+            </div>
+            <p>&#160;</p>
           </div>
-          <p>
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+          <p class="section-break">
+            <br class="section" clear="all"/>
           </p>
-          <div class="Section3" id="B">
-            <h1 class="IntroTitle">
-              Introduction</h1>
-            <div id="C">
-              <h2>0.1
+          <div class="WordSection3">
+            <div id="D">
+              <h1>1
                 <span style="mso-tab-count:1">&#160; </span>
-                Introduction Subsection</h2>
+                Scope</h1>
+              <p id="E">Text</p>
             </div>
-            <p>This is patent boilerplate</p>
-          </div>
-          <p>&#160;</p>
-        </div>
-        <p>
-          <br class="section" clear="all"/>
-        </p>
-        <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
-          <div id="D">
-            <h1>1
-              <span style="mso-tab-count:1">&#160; </span>
-              Scope</h1>
-            <p id="E">Text</p>
-          </div>
-          <div>
-            <h1>2
-              <span style="mso-tab-count:1">&#160; </span>
-              Normative References</h1>
-          </div>
-          <div id="H">
-            <h1>3
-              <span style="mso-tab-count:1">&#160; </span>
-              Terms, Definitions, Symbols and Abbreviated Terms</h1>
-            <div id="I">
-              <h2>3.1
+            <div>
+              <h1>2
                 <span style="mso-tab-count:1">&#160; </span>
-                Normal Terms</h2>
-              <p class="TermNum" id="J">3.1.1</p>
-              <p class="Terms" style="text-align:left;"><b>Term2</b></p>
+                Normative References</h1>
             </div>
-            <div id="K">
-              <span class="zzMoveToFollowing">
-                <b>3.2
-                  <span style="mso-tab-count:1">&#160; </span></b>
-              </span>
+            <div id="H">
+              <h1>3
+                <span style="mso-tab-count:1">&#160; </span>
+                Terms, Definitions, Symbols and Abbreviated Terms</h1>
+              <div id="I">
+                <h2>3.1
+                  <span style="mso-tab-count:1">&#160; </span>
+                  Normal Terms</h2>
+                <p class="TermNum" id="J">3.1.1</p>
+                <p class="Terms" style="text-align:left;"><b>Term2</b></p>
+              </div>
+              <div id="K">
+                <span class="zzMoveToFollowing">
+                  <b>3.2
+                    <span style="mso-tab-count:1">&#160; </span></b>
+                </span>
+                <table class="dl">
+                  <tr>
+                    <td align="left" valign="top">
+                      <p align="left" style="margin-left:0pt;text-align:left;">Symbol</p>
+                    </td>
+                    <td valign="top">Definition</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="Symbols" id="L">
+              <h1>4</h1>
               <table class="dl">
                 <tr>
                   <td align="left" valign="top">
@@ -343,81 +353,69 @@ RSpec.describe IsoDoc do
                 </tr>
               </table>
             </div>
-          </div>
-          <div class="Symbols" id="L">
-            <h1>4</h1>
-            <table class="dl">
-              <tr>
-                <td align="left" valign="top">
-                  <p align="left" style="margin-left:0pt;text-align:left;">Symbol</p>
-                </td>
-                <td valign="top">Definition</td>
-              </tr>
-            </table>
-          </div>
-          <div id="M">
-            <h1>5
-              <span style="mso-tab-count:1">&#160; </span>
-              Clause 4</h1>
-            <div id="N">
-              <h2>5.1
+            <div id="M">
+              <h1>5
                 <span style="mso-tab-count:1">&#160; </span>
-                Introduction</h2>
-            </div>
-            <div id="O">
-              <h2>5.2
-                <span style="mso-tab-count:1">&#160; </span>
-                Clause 4.2</h2>
-            </div>
-          </div>
-          <p>
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-          </p>
-          <div class="Section3" id="P">
-            <h1 class="Annex">
-              <br/><span style='font-weight:normal;'>(normative)</span>
-              <br/>
-              <br/>
-              <b>Annex</b></h1>
-            <div id="Q">
-              <h2>A.1
-                <span style="mso-tab-count:1">&#160; </span>
-                Annex A.1</h2>
-              <div id="Q1">
-                <h3>A.1.1
+                Clause 4</h1>
+              <div id="N">
+                <h2>5.1
                   <span style="mso-tab-count:1">&#160; </span>
-                  Annex A.1a</h3>
+                  Introduction</h2>
+              </div>
+              <div id="O">
+                <h2>5.2
+                  <span style="mso-tab-count:1">&#160; </span>
+                  Clause 4.2</h2>
               </div>
             </div>
-            <div id="Q2">
-              <h2>Appendix 1
-                <span style="mso-tab-count:1">&#160; </span>
-                An Appendix</h2>
-              <div id="Q2a">
-                <h3>Appendix 1.1
+            <p class="page-break">
+              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+            </p>
+            <div class="Section3" id="P">
+              <h1 class="Annex">
+                <br/><span style='font-weight:normal;'>(normative)</span>
+                <br/>
+                <br/>
+                <b>Annex</b></h1>
+              <div id="Q">
+                <h2>A.1
                   <span style="mso-tab-count:1">&#160; </span>
-                  Appendix subclause</h3>
+                  Annex A.1</h2>
+                <div id="Q1">
+                  <h3>A.1.1
+                    <span style="mso-tab-count:1">&#160; </span>
+                    Annex A.1a</h3>
+                </div>
+              </div>
+              <div id="Q2">
+                <h2>Appendix 1
+                  <span style="mso-tab-count:1">&#160; </span>
+                  An Appendix</h2>
+                <div id="Q2a">
+                  <h3>Appendix 1.1
+                    <span style="mso-tab-count:1">&#160; </span>
+                    Appendix subclause</h3>
+                </div>
+              </div>
+              <div>
+                <h2 class="BiblioTitle">A.2
+                  <span style="mso-tab-count:1">&#160; </span>
+                  Annex Bibliography</h2>
               </div>
             </div>
+            <p class="page-break">
+              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+            </p>
             <div>
-              <h2 class="BiblioTitle">A.2
-                <span style="mso-tab-count:1">&#160; </span>
-                Annex Bibliography</h2>
+              <h1 class="BiblioTitle">Bibliography</h1>
+              <div>
+                <h2 class="BiblioTitle">Bibliography Subsection</h2>
+              </div>
             </div>
           </div>
-          <p>
-            <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-          </p>
-          <div>
-            <h1 class="BiblioTitle">Bibliography</h1>
-            <div>
-              <h2 class="BiblioTitle">Bibliography Subsection</h2>
-            </div>
-          </div>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-      </body>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+        </body>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))))
@@ -481,7 +479,6 @@ RSpec.describe IsoDoc do
       <div class="TOC" id="_">
         <h1 class="IntroTitle">Contents</h1>
       </div>
-            <p class='zzSTDTitle1'/>
             <div id='D'>
               <h1>1&#160; Scope</h1>
               <div id='D1'>
@@ -510,7 +507,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
-          <terms id="H" obligation="normative">
+          <terms id="H" obligation="normative" displayorder="2">
             <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
             <term id="J">
               <name>1.1</name>
@@ -522,7 +519,6 @@ RSpec.describe IsoDoc do
     INPUT
     output = <<~OUTPUT
       #{HTML_HDR}
-            <p class="zzSTDTitle1"/>
             <div id="H">
               <h1>Terms, Definitions, Symbols and Abbreviated Terms</h1>
               <p class="TermNum" id="J">1.1</p>
@@ -641,7 +637,6 @@ RSpec.describe IsoDoc do
           <div class="TOC" id="_">
             <h1 class="IntroTitle">Contents</h1>
           </div>
-            <p class='zzSTDTitle1'/>
             <div id='A'>
               <h1> 1 &#160; Terms and definitions </h1>
               <p id='A1'>No terms and definitions are listed in this document.</p>
@@ -672,7 +667,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
         <sections>
-          <clause id="M" inline-header="false" obligation="normative">
+          <clause id="M" inline-header="false" obligation="normative" displayorder="2">
             <title>Clause 4</title>
             <clause id="N" inline-header="false" obligation="normative">
               <title>Introduction</title>
@@ -687,7 +682,6 @@ RSpec.describe IsoDoc do
     INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
       #{HTML_HDR}
-            <p class="zzSTDTitle1"/>
             <div id="M">
               <h1>Clause 4</h1>
               <div id="N">
@@ -722,13 +716,12 @@ RSpec.describe IsoDoc do
           <div class="WordSection1">
             <p>&#160;</p>
           </div>
-          <p><br clear="all" class="section"/></p>
+          <p class="section-break"><br clear="all" class="section"/></p>
           <div class="WordSection2">
             <p>&#160;</p>
           </div>
-          <p><br clear="all" class="section"/></p>
+          <p class="section-break"><br clear="all" class="section"/></p>
           <div class="WordSection3">
-            <p class="zzSTDTitle"/>
           </div>
           <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
           <div class="colophon"/>
@@ -754,46 +747,77 @@ RSpec.describe IsoDoc do
           <div class="WordSection1">
             <p>&#160;</p>
           </div>
-          <p><br clear="all" class="section"/></p>
+          <p class="section-break"><br clear="all" class="section"/></p>
           <div class="WordSection2">
             <p>&#160;</p>
           </div>
-          <p><br clear="all" class="section"/></p>
+          <p class="section-break"><br clear="all" class="section"/></p>
           <div class="WordSection3">
-            <p class="zzSTDTitle1"/>
           </div>
         </body>
       OUTPUT
   end
 
   it "processes middle title" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <title format="text/plain" language="en" type="title-intro">Introduction</title>
+          <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
+          <title format="text/plain" language="en" type="title-part">Title Part</title>
+          <ext>
+            <structuredidentifier>
+              <project-number origyr="2016-05-01" part="1">17301</project-number>
+            </structuredidentifier>
+          </ext>
+        </bibdata>
+      <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <sections>
+        <clause id="A"/>
+        </sections>
+      </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata>
+           <title format="text/plain" language="en" type="title-intro">Introduction</title>
+           <title format="text/plain" language="en" type="title-main">Main Title&#x2009;&#x2014;&#x2009;Title</title>
+           <title format="text/plain" language="en" type="title-part">Title Part</title>
+           <ext>
+             <structuredidentifier>
+               <project-number origyr="2016-05-01" part="1">17301</project-number>
+             </structuredidentifier>
+           </ext>
+         </bibdata>
+       <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+         <sections><p class="zzSTDTitle1" displayorder="2"><span class="boldtitle">Introduction &#x2014; Main Title&#x2009;&#x2014;&#x2009;Title &#x2014; </span><span class="nonboldtitle">Part&#xA0;1:</span> <span class="boldtitle">Title Part</span></p>
+         <clause id="A" displayorder="3"><title>1</title></clause>
+         </sections>
+       </iso-standard>
+    INPUT
+    html = <<~OUTPUT
+      #{HTML_HDR}
+                   <p class="zzSTDTitle1">
+               <span class="boldtitle">Introduction — Main Title — Title — </span>
+               <span class="nonboldtitle">Part 1:</span>
+               <span class="boldtitle">Title Part</span>
+             </p>
+             <div id="A">
+               <h1>1</h1>
+             </div>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    .convert("test", input, true))
+    xml.at("//xmlns:localized-strings")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    xml.at("//xmlns:metanorma-extension")&.remove
+    expect(strip_guid(xml.to_xml))
+      .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", <<~INPUT, true))).to be_equivalent_to xmlpp(<<~"OUTPUT")
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <bibdata>
-            <title format="text/plain" language="en" type="title-intro">Introduction</title>
-            <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
-            <title format="text/plain" language="en" type="title-part">Title Part</title>
-            <ext>
-              <structuredidentifier>
-                <project-number origyr="2016-05-01" part="1">17301</project-number>
-              </structuredidentifier>
-            </ext>
-          </bibdata>
-        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
-          <sections/>
-        </iso-standard>
-      INPUT
-        #{HTML_HDR}
-              <p class='zzSTDTitle1'>Introduction &#8212; Main Title&#8201;&#8212;&#8201;Title &#8212; </p>
-              <p class='zzSTDTitle2'>
-                Part&#160;1:
-                <br/><b>Title Part</b>
-              </p>
-            </div>
-          </body>
-        </html>
-      OUTPUT
+      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
   end
 
   it "generates an index in English" do
@@ -934,7 +958,6 @@ RSpec.describe IsoDoc do
             <div class="TOC" id="_">
               <h1 class="IntroTitle">Contents</h1>
             </div>
-            <p class='zzSTDTitle1'/>
             <div id='A'>
               <h1>1</h1>
               <p>A</p>

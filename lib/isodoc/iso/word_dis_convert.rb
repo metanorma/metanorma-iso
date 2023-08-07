@@ -46,12 +46,6 @@ module IsoDoc
         { class: "TableTitle", style: "text-align:center;" }
       end
 
-      def span_parse(node, out)
-        out.span class: node["class"] do |x|
-          node.children.each { |n| parse(n, x) }
-        end
-      end
-
       def word_toc_preface(level)
         <<~TOC.freeze
           <span lang="EN-GB"><span
@@ -68,7 +62,7 @@ module IsoDoc
 
       def toWord(result, filename, dir, header)
         result = from_xhtml(word_cleanup(to_xhtml(result)))
-          .gsub(/-DOUBLE_HYPHEN_ESCAPE-/, "--")
+          .gsub("-DOUBLE_HYPHEN_ESCAPE-", "--")
         @wordstylesheet = wordstylesheet_update
         ::Html2Doc::IsoDIS.new(
           filename: filename,
@@ -86,30 +80,39 @@ module IsoDoc
         middle_title_dis(out)
       end
 
-      def middle_title_dis(out)
+      def middle_title_dis(node, out)
         out.p(class: "zzSTDTitle") do |p|
-          p << @meta.get[:doctitleintro]
-          @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and p << " &#x2014; "
-          p << @meta.get[:doctitlemain]
-          @meta.get[:doctitlemain] && @meta.get[:doctitlepart] and p << " &#x2014; "
-          if @meta.get[:doctitlepart]
-            b = @meta.get[:doctitlepartlabel] and
-              p << "<span style='font-weight:normal'>#{b}:</span> "
-            p << " #{@meta.get[:doctitlepart]}"
-          end
-          @meta.get[:doctitleamdlabel] || @meta.get[:doctitleamd] ||
-            @meta.get[:doctitlecorrlabel] and middle_title_dis_amd(p)
+          node.children.each { |n| parse(n, p) }
         end
       end
 
-      def middle_title_dis_amd(para)
-        para.span(style: "font-weight:normal") do |p|
-          if a = @meta.get[:doctitleamdlabel]
-            p << " #{a}"
-            a = @meta.get[:doctitleamd] and p << ": #{a}"
+      def middle_title_amd(node, out)
+        out.p(class: "zzSTDTitle2") do |p|
+          p.span(style: "font-weight:normal") do |s|
+            node.children.each { |n| parse(n, s) }
           end
-          if a = @meta.get[:doctitlecorrlabel]
-            p << " #{a}"
+        end
+      end
+
+      def para_parse(node, out)
+        case node["class"]
+        when "zzSTDTitle1" then middle_title_dis(node, out)
+        when "zzSTDTitle2" then middle_title_amd(node, out)
+        else super
+        end
+      end
+
+      def span_parse(node, out)
+        case node["class"]
+        when "nonboldtitle"
+          out.span(style: "font-weight:normal") do |s|
+            node.children.each { |n| parse(n, s) }
+          end
+        when "boldtitle"
+          node.children.each { |n| parse(n, out) }
+        else
+          out.span class: node["class"] do |x|
+            node.children.each { |n| parse(n, x) }
           end
         end
       end

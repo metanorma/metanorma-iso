@@ -8,7 +8,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword>
+          <foreword displayorder="2">
             <p>
               <em>A</em>
               <strong>B</strong>
@@ -24,7 +24,7 @@ RSpec.describe IsoDoc do
             </p>
           </foreword>
         </preface>
-        <sections>
+        <sections/>
       </iso-standard>
     INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -46,7 +46,6 @@ RSpec.describe IsoDoc do
                 <br/>
               </p>
             </div>
-            <p class="zzSTDTitle1"/>
           </div>
         </body>
       </html>
@@ -60,7 +59,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword>
+          <foreword displayorder="2">
             <p>
               <link target="http://example.com"/>
               <link target="http://example.com">example</link>
@@ -69,7 +68,7 @@ RSpec.describe IsoDoc do
             </p>
           </foreword>
         </preface>
-        <sections>
+        <sections/>
       </iso-standard>
     INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -84,7 +83,6 @@ RSpec.describe IsoDoc do
                 <a href="mailto:fred@example.com">mailto:fred@example.com</a>
               </p>
             </div>
-            <p class="zzSTDTitle1"/>
           </div>
         </body>
       </html>
@@ -98,13 +96,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword>
+          <foreword displayorder="2">
             <p>
               <barry fred="http://example.com">example</barry>
             </p>
           </foreword>
         </preface>
-        <sections>
+        <sections/>
       </iso-standard>
     INPUT
     expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
@@ -118,7 +116,6 @@ RSpec.describe IsoDoc do
                 </para>
               </p>
             </div>
-            <p class="zzSTDTitle1"/>
           </div>
         </body>
       </html>
@@ -132,7 +129,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword>
+          <foreword displayorder="2">
             <p>
               <stem type="AsciiMath">A</stem>
               <stem type="MathML"><m:math><m:row>X</m:row></m:math></stem>
@@ -140,7 +137,7 @@ RSpec.describe IsoDoc do
             </p>
           </foreword>
         </preface>
-        <sections>
+        <sections/>
       </iso-standard>
     INPUT
     expect(xmlpp(output
@@ -160,7 +157,6 @@ RSpec.describe IsoDoc do
                   <span class="stem">Latex?</span>
                 </p>
               </div>
-              <p class="zzSTDTitle1"/>
             </div>
           </body>
         </html>
@@ -174,7 +170,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword>
+          <foreword displayorder="2">
             <p><stem type="AsciiMath">A</stem>(#((Hello))#)</p>
           </foreword>
         </preface>
@@ -191,7 +187,6 @@ RSpec.describe IsoDoc do
                 (#((Hello))#)
               </p>
             </div>
-            <p class="zzSTDTitle1"/>
           </div>
         </body>
       </html>
@@ -246,7 +241,7 @@ RSpec.describe IsoDoc do
             <title depth="1">Contents</title>
           </clause>
         </preface>
-        <bibliography>
+        <sections>
           <references id="_normative_references" normative="true" obligation="informative" displayorder="3">
             <title depth="1">1<tab/>1<tab/>
               Normative references</title>
@@ -264,7 +259,8 @@ RSpec.describe IsoDoc do
               <biblio-tag>ISO 712, </biblio-tag>
             </bibitem>
           </references>
-        </bibliography>
+        </sections>
+        <bibliography/>
       </iso-standard>
     OUTPUT
   end
@@ -391,7 +387,7 @@ RSpec.describe IsoDoc do
               </p>
             </foreword>
           </preface>
-          <bibliography>
+          <sections>
             <references id="_" normative="true" obligation="informative" displayorder="3">
               <title depth="1">1<tab/>Normative References</title>
               <bibitem id="ISO712" type="standard">
@@ -404,7 +400,8 @@ RSpec.describe IsoDoc do
                 <biblio-tag>ISO 712, </biblio-tag>
               </bibitem>
             </references>
-          </bibliography>
+            </sections>
+          <bibliography/>
         </iso-standard>
       OUTPUT
   end
@@ -574,8 +571,6 @@ RSpec.describe IsoDoc do
           <clause id="clause1" displayorder="4">
             <title depth="1">3<tab/>Clause 1</title>
           </clause>
-        </sections>
-        <bibliography>
           <references id="_" obligation="informative" normative="true" displayorder="2">
             <title depth="1">1<tab/>Normative References</title>
             <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
@@ -589,12 +584,12 @@ RSpec.describe IsoDoc do
               <biblio-tag>ISO 712, </biblio-tag>
             </bibitem>
           </references>
-        </bibliography>
+          </sections>
+        <bibliography/>
       </iso-standard>
     OUTPUT
     output = <<~OUTPUT
       #{HTML_HDR}
-                   <p class="zzSTDTitle1"/>
              <div>
                <h1>1  Normative References</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
@@ -898,7 +893,6 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = <<~OUTPUT
         #{HTML_HDR}
-           <p class='zzSTDTitle1'/>
             <div id="clause1">
               <h1>1  Clause 1</h1>
             </div>

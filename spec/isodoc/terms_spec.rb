@@ -142,7 +142,6 @@ RSpec.describe IsoDoc do
 
     html = <<~OUTPUT
       #{HTML_HDR}
-            <p class="zzSTDTitle1"/>
                          <div id="_"><h1>1  Terms and Definitions</h1><p class="TermNum" id="paddy1">1.1</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p id="_"><rice> rice retaining its husk after threshing</p><div id="_" class="example"><p><span class="example_label">EXAMPLE 1</span>  Foreign seeds, husks, bran, sand, dust.</p><ul><li>A</li></ul></div><div id="_" class="example"><p><span class="example_label">EXAMPLE 2</span>  </p><ul><li>A</li></ul></div><p>[SOURCE:
                  <span class="stdpublisher">ISO</span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>, <span class="citesec">3.1</span>, modified – The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
                </p><p class="TermNum" id="paddy">1.2</p><p class="Terms" style="text-align:left;"><b>paddy</b></p><p class="AltTerms" style="text-align:left;">paddy rice</p><p class="AltTerms" style="text-align:left;">rough rice</p><p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p><p id="_">rice retaining its husk after threshing</p><div id="_" class="Note"><p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The
@@ -181,7 +180,7 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(html)
     expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
       .convert("test", presxml, true)
-      .sub(%r{^.*<p class="zzSTDTitle1"/>}m, "")
+      .sub(%r{^.*<div class="WordSection3">}m, "")
       .sub(%r{</div>\s*<br.*$}m, "")))
       .to be_equivalent_to xmlpp(word)
   end

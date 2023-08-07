@@ -256,7 +256,6 @@ RSpec.describe IsoDoc do
              </tfoot>
            </table>
          </div>
-         <p class="zzSTDTitle1"/>
          <br/>
          <div id="Annex" class="Section3">
            <h1 class="Annex" id="_">
@@ -504,7 +503,6 @@ RSpec.describe IsoDoc do
                 <div id="C" class="Note"><p><span class="note_label">NOTE  2</span>  </p>Note 2</div>
               </table>
             </div>
-            <p class="zzSTDTitle1"/>
           </div>
         </body>
       </html>
@@ -514,17 +512,17 @@ RSpec.describe IsoDoc do
         <div class="WordSection1">
           <p> </p>
         </div>
-        <p>
+        <p class="section-break">
           <br clear="all" class="section"/>
         </p>
         <div class="WordSection2">
-          <p>
+          <p class="page-break">
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
               <div class="TOC" id="_">
           <p class="zzContents">Contents</p>
         </div>
-        <p>
+        <p class="page-break">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
         </p>
           <div>
@@ -564,11 +562,10 @@ RSpec.describe IsoDoc do
           </div>
           <p> </p>
         </div>
-        <p>
+        <p class="section-break">
           <br clear="all" class="section"/>
         </p>
         <div class="WordSection3">
-          <p class="zzSTDTitle1"/>
         </div>
         <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
         <div class="colophon"/>

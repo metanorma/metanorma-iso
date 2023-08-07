@@ -70,8 +70,8 @@ module IsoDoc
           make_body1(body, docxml)
           make_body2(body, docxml)
           make_body3(body, docxml)
-          indexsect(docxml, body)
-          colophon(body, docxml)
+          indexsect_section(docxml, body)
+          colophon_section(docxml, body)
         end
       end
 
@@ -80,23 +80,31 @@ module IsoDoc
                                     "mso-break-type:section-break"
       end
 
-      def colophon(body, _docxml)
+      MAIN_ELEMENTS =
+        "//sections/*[@displayorder] | //annex[@displayorder] | " \
+        "//bibliography/*[@displayorder]".freeze
+
+      def colophon_section(_isoxml, out)
         stage = @meta.get[:stage_int]
         return if !stage.nil? && stage < 60
 
-        br(body, "left")
-        body.div class: "colophon" do |div|
+        br(out, "left")
+        out.div class: "colophon" do |div|
         end
       end
 
-      def indexsect(isoxml, out)
+      def indexsect_section(isoxml, out)
         isoxml.xpath(ns("//indexsect")).each do |i|
-          indexsect_title(i, out)
-          br(out, "auto")
-          out.div class: "index" do |div|
-            i.children.each do |e|
-              parse(e, div) unless e.name == "title"
-            end
+          indexsect(i, out)
+        end
+      end
+
+      def indexsect(elem, out)
+        indexsect_title(elem, out)
+        br(out, "auto")
+        out.div class: "index" do |div|
+          elem.children.each do |e|
+            parse(e, div) unless e.name == "title"
           end
         end
       end
@@ -128,14 +136,14 @@ module IsoDoc
         { class: "BiblioTitle" }
       end
 
-      def bibliography(xml, out)
-        (f = xml.at(ns(bibliography_xpath)) and f["hidden"] != "true") or return
+      def bibliography(node, out)
+        node["hidden"] != "true" or return
         page_break(out)
         out.div do |div|
           div.h1 **bibliography_attrs do |h1|
-            f&.at(ns("./title"))&.children&.each { |c2| parse(c2, h1) }
+            node&.at(ns("./title"))&.children&.each { |c2| parse(c2, h1) }
           end
-          biblio_list(f, div, true)
+          biblio_list(node, div, true)
         end
       end
 
@@ -197,7 +205,6 @@ module IsoDoc
       end
 
       def annex_name(_annex, name, div)
-        preceding_floating_titles(name, div)
         return if name.nil?
 
         name&.at(ns("./strong"))&.remove # supplied by CSS list numbering

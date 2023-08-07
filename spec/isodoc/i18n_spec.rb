@@ -155,6 +155,9 @@ RSpec.describe IsoDoc do
               <title depth="2">5.2<tab/>Clause 4.2</title>
             </clause>
           </clause>
+          <references id="R" normative="true" obligation="informative" displayorder='5'>
+            <title depth="1">2<tab/>Normative References</title>
+          </references>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
@@ -174,9 +177,6 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='5'>
-            <title depth="1">2<tab/>Normative References</title>
-          </references>
           <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
@@ -202,7 +202,6 @@ RSpec.describe IsoDoc do
               </div>
               <p>This is patent boilerplate</p>
             </div>
-            <p class="zzSTDTitle1"/>
             <div id="D">
               <h1>1&#160; Scope</h1>
               <p id="E">Text</p>
@@ -276,24 +275,24 @@ RSpec.describe IsoDoc do
            <div class='WordSection1'>
              <p> </p>
            </div>
-           <p>
+           <p class="section-break">
              <br clear='all' class='section'/>
            </p>
            <div class='WordSection2'>
-             <p>
+             <p class="page-break">
                <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
              </p>
                    <div class="TOC" id="_">
         <p class="zzContents">Contents</p>
       </div>
-      <p>
+      <p class="page-break">
         <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
       </p>
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <p class='ForewordText' id='A'>This is a preamble</p>
              </div>
-             <p>
+             <p class="page-break">
                <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
              </p>
              <div class='Section3' id='B'>
@@ -311,11 +310,10 @@ RSpec.describe IsoDoc do
              </div>
              <p> </p>
            </div>
-           <p>
+           <p class="section-break">
              <br clear='all' class='section'/>
            </p>
            <div class='WordSection3'>
-             <p class='zzSTDTitle'/>
              <div id='D'>
                <h1>
                  1
@@ -397,7 +395,7 @@ RSpec.describe IsoDoc do
                  </h2>
                </div>
              </div>
-             <p>
+             <p class="page-break">
                <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
              </p>
              <div id='P' class='Section3'>
@@ -430,7 +428,7 @@ RSpec.describe IsoDoc do
                  </h2>
                </div>
              </div>
-             <p>
+             <p class="page-break">
                <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
              </p>
              <div>
@@ -613,6 +611,9 @@ RSpec.describe IsoDoc do
                 <title depth="2">5.2<tab/>Clause 4.2</title>
               </clause>
             </clause>
+            <references id="R" normative="true" obligation="informative" displayorder='5'>
+              <title depth="1">2<tab/>Normative References</title>
+            </references>
           </sections>
           <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
             <title>
@@ -632,9 +633,6 @@ RSpec.describe IsoDoc do
             </appendix>
           </annex>
           <bibliography>
-            <references id="R" normative="true" obligation="informative" displayorder='5'>
-              <title depth="1">2<tab/>Normative References</title>
-            </references>
             <clause id="S" obligation="informative" displayorder='10'>
               <title depth="1">Bibliography</title>
               <references id="T" normative="false" obligation="informative">
@@ -800,6 +798,9 @@ RSpec.describe IsoDoc do
               <title depth="2">5.2<tab/>Clause 4.2</title>
             </clause>
           </clause>
+          <references id="R" normative="true" obligation="informative" displayorder='5'>
+            <title depth="1">2<tab/>Normative References</title>
+          </references>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
@@ -819,9 +820,6 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='5'>
-            <title depth="1">2<tab/>Normative References</title>
-          </references>
           <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
@@ -847,7 +845,6 @@ RSpec.describe IsoDoc do
               </div>
               <p>This is patent boilerplate</p>
             </div>
-            <p class="zzSTDTitle1"/>
             <div id="D">
               <h1>1&#160; Scope</h1>
               <p id="E">Text</p>
@@ -1088,6 +1085,9 @@ RSpec.describe IsoDoc do
               <title depth="2">5.2<tab/>Clause 4.2</title>
             </clause>
           </clause>
+          <references id="R" normative="true" obligation="informative" displayorder='5'>
+            <title depth="1">2<tab/>Normative References</title>
+          </references>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
@@ -1107,9 +1107,6 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='5'>
-            <title depth="1">2<tab/>Normative References</title>
-          </references>
           <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
@@ -1135,7 +1132,6 @@ RSpec.describe IsoDoc do
               </div>
               <p>This is patent boilerplate</p>
             </div>
-            <p class="zzSTDTitle1"/>
             <div id="D">
               <h1>1&#160; Scope</h1>
               <p id="E">Text</p>
@@ -1387,6 +1383,14 @@ RSpec.describe IsoDoc do
               <title depth="2">5.2<tab/>Clause 4.2</title>
             </clause>
           </clause>
+                    <references id="R" normative="true" obligation="informative" displayorder='5'>
+            <title depth="1">2<tab/>Normative References</title>
+            <bibitem id="ISO712" type="standard">
+              <formattedref><em>Cereals and cereal products</em>.</formattedref>
+              <docidentifier>ISO&#xa0;712</docidentifier>
+              <biblio-tag>ISO&#xa0;712,</biblio-tag>
+            </bibitem>
+          </references>
         </sections>
         <annex id="P" inline-header="false" obligation="normative" displayorder='9'>
           <title>
@@ -1406,14 +1410,6 @@ RSpec.describe IsoDoc do
           </appendix>
         </annex>
         <bibliography>
-          <references id="R" normative="true" obligation="informative" displayorder='5'>
-            <title depth="1">2<tab/>Normative References</title>
-            <bibitem id="ISO712" type="standard">
-              <formattedref><em>Cereals and cereal products</em>.</formattedref>
-              <docidentifier>ISO&#xa0;712</docidentifier>
-              <biblio-tag>ISO&#xa0;712,</biblio-tag>
-            </bibitem>
-          </references>
           <clause id="S" obligation="informative" displayorder='10'>
             <title depth="1">Bibliography</title>
             <references id="T" normative="false" obligation="informative">
@@ -1439,7 +1435,6 @@ RSpec.describe IsoDoc do
                </div>
                <p>This is patent boilerplate</p>
              </div>
-             <p class="zzSTDTitle1"/>
              <div id="D">
                <h1>1　Scope</h1>
                <p id="E">

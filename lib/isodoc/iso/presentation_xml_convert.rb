@@ -95,7 +95,7 @@ module IsoDoc
         i = display_order_at(docxml, "//clause[@type = 'scope']", i)
         i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
         i = display_order_xpath(docxml,
-                                "//sections/clause[not(@type = 'scope')] | " \
+                                "//sections/clause[not(@type = 'scope')][not(.//references)] | " \
                                 "//sections/terms | //sections/definitions", i)
         i = display_order_xpath(docxml, "//annex", i)
         i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
@@ -159,6 +159,39 @@ module IsoDoc
         doctype = docxml.at(ns("//bibdata/ext/doctype"))&.text
         %w(amendment technical-corrigendum).include?(doctype) and return
         super
+      end
+
+      def middle_title(docxml)
+        @meta.get[:doctitlemain].nil? || @meta.get[:doctitlemain].empty? and
+          return
+        s = docxml.at(ns("//sections")) or return
+        ret = "#{middle_title_main}#{middle_title_amd}"
+        s.children.first.previous = ret
+      end
+
+      def middle_title_main
+        ret = "<span class='boldtitle'>#{@meta.get[:doctitleintro]}"
+        ret += " &#x2014; " if @meta.get[:doctitleintro] && @meta.get[:doctitlemain]
+        ret += @meta.get[:doctitlemain]
+        ret += " &#x2014; " if @meta.get[:doctitlemain] && @meta.get[:doctitlepart]
+        ret += "</span>"
+        if a = @meta.get[:doctitlepart]
+          b = @meta.get[:doctitlepartlabel] and ret += "<span class='nonboldtitle'>#{b}:</span> "
+          ret += "<span class='boldtitle'>#{a}</span>"
+        end
+        "<p class='zzSTDTitle1'>#{ret}</p>"
+      end
+
+      def middle_title_amd
+        ret = ""
+        if a = @meta.get[:doctitleamdlabel]
+          ret += "<p class='zzSTDTitle2'>#{a}"
+          a = @meta.get[:doctitleamd] and ret += ": #{a}"
+          ret += "</p>"
+        end
+        a = @meta.get[:doctitlecorrlabel] and
+          ret += "<p class='zzSTDTitle2'>#{a}</p>"
+        ret
       end
 
       include Init
