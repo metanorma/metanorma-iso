@@ -5352,21 +5352,21 @@
 
 	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example']" priority="2">
 
-		<fo:block xsl:use-attribute-sets="table-note-style">
+				<fo:block xsl:use-attribute-sets="table-note-style">
 
-			<xsl:call-template name="refine_table-note-style"/>
+					<xsl:call-template name="refine_table-note-style"/>
 
-			<!-- Table's note/example name (NOTE, for example) -->
-			<fo:inline xsl:use-attribute-sets="table-note-name-style">
+					<!-- Table's note/example name (NOTE, for example) -->
+					<fo:inline xsl:use-attribute-sets="table-note-name-style">
 
-				<xsl:call-template name="refine_table-note-name-style"/>
+						<xsl:call-template name="refine_table-note-name-style"/>
 
-				<xsl:apply-templates select="*[local-name() = 'name']"/>
+						<xsl:apply-templates select="*[local-name() = 'name']"/>
 
-			</fo:inline>
+					</fo:inline>
 
-			<xsl:apply-templates select="node()[not(local-name() = 'name')]"/>
-		</fo:block>
+					<xsl:apply-templates select="node()[not(local-name() = 'name')]"/>
+				</fo:block>
 
 	</xsl:template> <!-- table/note -->
 
