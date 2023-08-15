@@ -347,7 +347,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, vol. 1 no. 7 pp. 89–112.</formattedref>
+      <formattedref><smallcap>Aluffi P., Anderson D., Hering M., Mustaţă M., &#x26; Payne S.</smallcap> (eds.). Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, vol. 1 no. 7, pp. 89–112.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
