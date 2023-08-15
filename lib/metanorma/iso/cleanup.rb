@@ -227,7 +227,7 @@ module Metanorma
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']/" \
                      "organization").each_with_object([]) do |p, m|
           x = p.at("./abbreviation") || p.at("./name") or next
-          m << x.text
+          m << x.children.to_xml
         end
       end
 
