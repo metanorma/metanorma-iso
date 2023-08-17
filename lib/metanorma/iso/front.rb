@@ -17,13 +17,16 @@ module Metanorma
           xml.updates_document_type a
       end
 
+      STAGE_ERROR = [Pubid::Core::Errors::HarmonizedStageCodeInvalidError,
+                     Pubid::Core::Errors::TypeStageParseError,
+                     Pubid::Core::Errors::StageInvalidError].freeze
+
       def metadata_stage(node, xml)
         id = iso_id_default(iso_id_params(node))
         id.stage and
           xml.stagename metadata_stagename(id)&.strip,
                         **attr_code(abbreviation: id.typed_stage_abbrev&.strip)
-      rescue Pubid::Core::Errors::HarmonizedStageCodeInvalidError,
-             Pubid::Core::Errors::TypeStageParseError
+      rescue *STAGE_ERROR
       end
 
       def metadata_stagename(id)
@@ -100,8 +103,7 @@ module Metanorma
           s.substage substage
           i = node.attr("iteration") and s.iteration i
         end
-      rescue Pubid::Core::Errors::HarmonizedStageCodeInvalidError,
-             Pubid::Core::Errors::TypeStageParseError
+      rescue *STAGE_ERROR
         report_illegal_stage(stage, substage)
       end
 
