@@ -1,17 +1,21 @@
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
+      def home_agency
+        "ISO"
+      end
+
       def org_abbrev
         { "International Organization for Standardization" => "ISO",
           "International Electrotechnical Commission" => "IEC" }
       end
 
       def metadata_author(node, xml)
-        publishers = node.attr("publisher") || "ISO"
+        publishers = node.attr("publisher") || home_agency
         metadata_contrib_sdo(node, xml, publishers,
                              { role: "author",
                                default_org: !node.attr("publisher") })
-        committee_contributors(node, xml, false)
+        committee_contributors(node, xml, false, home_agency)
       end
 
       def metadata_contrib_sdo(node, xml, publishers, opt)
@@ -31,7 +35,7 @@ module Metanorma
         end
       end
 
-      def committee_contributors(node, xml, approval, agency = "ISO")
+      def committee_contributors(node, xml, approval, agency)
         types = metadata_approval_committee_types(approval ? node : nil)
         types.each do |v|
           n = node.attr("#{v}-number") or next
@@ -44,8 +48,7 @@ module Metanorma
           )
         end
         approval and
-          metadata_contrib_sdo(node, xml,
-                               node.attr("approval-agency") || agency,
+          metadata_contrib_sdo(node, xml, agency,
                                { role: "authorizer", default_org: false,
                                  desc: "Agency", committee: false })
       end
@@ -69,16 +72,18 @@ module Metanorma
       end
 
       def metadata_publisher(node, xml)
-        publishers = node.attr("publisher") || "ISO"
+        publishers = node.attr("publisher") || home_agency
         metadata_contrib_sdo(node, xml, publishers,
                              { role: "publisher",
                                default_org: !node.attr("publisher") })
-        committee_contributors(node, xml, true)
+        # approvals
+        committee_contributors(node, xml, true,
+                               node.attr("approval-agency") || home_agency)
       end
 
       def metadata_copyright(node, xml)
         publishers = node.attr("copyright-holder") || node.attr("publisher") ||
-          "ISO"
+          home_agency
         csv_split(publishers).each do |p|
           xml.copyright do |c|
             c.from (node.attr("copyright-year") || Date.today.year)
@@ -128,7 +133,7 @@ module Metanorma
       end
 
       def metadata_approval_agency(xml, list)
-        list = ["ISO"] if list.nil? || list.empty?
+        list = [home_agency] if list.nil? || list.empty?
         list.each do |v|
           xml.agency v
         end

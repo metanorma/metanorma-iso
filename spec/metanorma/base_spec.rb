@@ -127,7 +127,7 @@ RSpec.describe Metanorma::ISO do
            <contributor>
              <role type="authorizer">Technical committee</role>
              <organization>
-               <name>International Organization for Standardization</name>
+               <name>ISO/IEC</name>
                <subdivision>TCa</subdivision>
                <identifier>Aa 1a</identifier>
              </organization>
@@ -135,7 +135,7 @@ RSpec.describe Metanorma::ISO do
            <contributor>
              <role type="authorizer">Subcommittee</role>
              <organization>
-               <name>International Organization for Standardization</name>
+               <name>ISO/IEC</name>
                <subdivision>SCa</subdivision>
                <identifier>Ba 2a</identifier>
              </organization>
@@ -143,7 +143,7 @@ RSpec.describe Metanorma::ISO do
            <contributor>
              <role type="authorizer">Workgroup</role>
              <organization>
-               <name>International Organization for Standardization</name>
+               <name>ISO/IEC</name>
                <subdivision>WGa</subdivision>
                <identifier>Ca 3a</identifier>
              </organization>
