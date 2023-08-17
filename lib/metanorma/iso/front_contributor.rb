@@ -19,6 +19,7 @@ module Metanorma
       end
 
       def metadata_contrib_sdo(node, xml, publishers, opt)
+        publishers.nil? and return
         csv_split(publishers).each do |p|
           xml.contributor do |c|
             c.role type: opt[:role] do |r|
