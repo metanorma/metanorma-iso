@@ -1,5 +1,5 @@
 == copyright-statement
-=== {% if stage_int >= 40 %}DOCUMENT PROTÉGÉ PAR COPYRIGHT{%else%}{blank}
+=== {% if stage_int >= 40 %}DOCUMENT PROTÉGÉ PAR COPYRIGHT{%else%}{blank}{%endif%}
 
 [[boilerplate-year]]
 &#xa9; span:std_publisher:[{{ agency }}] span:std_docNumber[{{ docyear }}]

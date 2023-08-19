@@ -216,20 +216,75 @@ RSpec.describe Metanorma::ISO do
           <date type="created">
             <on>2016-05-01</on>
           </date>
-          <contributor>
-            <role type="author"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
+                     <contributor>
+             <role type="author"/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="author">Technical committee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>TC</subdivision>
+               <identifier>A 1</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="author">Subcommittee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>SC</subdivision>
+               <identifier>B 2</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="author">Workgroup</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>WG</subdivision>
+               <identifier>C 3</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="publisher"/>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="authorizer">Technical committee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>TC</subdivision>
+               <identifier>A 1</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="authorizer">Subcommittee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>SC</subdivision>
+               <identifier>B 2</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="authorizer">Workgroup</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>WG</subdivision>
+               <identifier>C 3</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="authorizer">Agency</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
           <edition>2</edition>
           <version>
             <revision-date>2000-01-01</revision-date>
@@ -325,6 +380,13 @@ RSpec.describe Metanorma::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
+                      <contributor>
+              <role type="authorizer">Agency</role>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -400,6 +462,13 @@ RSpec.describe Metanorma::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
+                      <contributor>
+              <role type="authorizer">Agency</role>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -474,6 +543,13 @@ RSpec.describe Metanorma::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
+                      <contributor>
+              <role type="authorizer">Agency</role>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -549,6 +625,13 @@ RSpec.describe Metanorma::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
+                      <contributor>
+              <role type="authorizer">Agency</role>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -624,6 +707,13 @@ RSpec.describe Metanorma::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
+                      <contributor>
+              <role type="authorizer">Agency</role>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -698,6 +788,13 @@ RSpec.describe Metanorma::ISO do
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
+                        <contributor>
+              <role type="authorizer">Agency</role>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>

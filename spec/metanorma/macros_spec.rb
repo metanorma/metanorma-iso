@@ -57,6 +57,13 @@ RSpec.describe Metanorma::Standoc do
                    <abbreviation>ISO</abbreviation>
                  </organization>
                </contributor>
+                <contributor>
+                  <role type="authorizer">Agency</role>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                  </organization>
+                </contributor>
                <language>en</language>
                <script>Latn</script>
                <status>

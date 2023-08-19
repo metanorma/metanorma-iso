@@ -110,10 +110,10 @@ module Metanorma
         xml.xpath("//*[@inline-header]").each { |h| h.delete("inline-header") }
       end
 
-      def boilerplate_file(xmldoc)
+      def boilerplate_file(_xmldoc)
         file = case @lang
-               when "fr" then "boilerplate-fr.xml"
-               when "ru" then "boilerplate-ru.xml"
+               when "fr" then "boilerplate-fr.adoc"
+               when "ru" then "boilerplate-ru.adoc"
                else "boilerplate.adoc"
                end
         File.join(@libdir, file)
@@ -142,11 +142,10 @@ module Metanorma
       def unpublished_note(xmldoc)
         xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]" \
                      "[not(note[@type = 'Unpublished-Status'])]").each do |b|
-          next if pub_class(b) > 2
-          next unless (s = b.at("./status/stage")) && (s.text.to_i < 60)
-
+          pub_class(b) > 2 and next
+          ((s = b.at("./status/stage")) && (s.text.to_i < 60)) or next
           id = b.at("docidentifier").text
-          insert_unpub_note(b, @i18n.under_preparation.sub(/%/, id))
+          insert_unpub_note(b, @i18n.under_preparation.sub("%", id))
         end
       end
 
@@ -155,7 +154,7 @@ module Metanorma
           .each do |b|
             withdrawn_ref?(b) or next
             if id = replacement_standard(b)
-              insert_unpub_note(b, @i18n.cancelled_and_replaced.sub(/%/, id))
+              insert_unpub_note(b, @i18n.cancelled_and_replaced.sub("%", id))
             else insert_unpub_note(b, @i18n.withdrawn)
             end
           end
@@ -237,8 +236,7 @@ module Metanorma
       def editorial_group_types(xmldoc)
         %w(technical-committee subcommittee workgroup).each do |v|
           xmldoc.xpath("//bibdata//#{v} | //bibdata//approval-#{v}").each do |g|
-            next if g["type"]
-
+            g["type"] and next
             g["type"] = DEFAULT_EDGROUP_TYPE[v.to_sym]
           end
         end

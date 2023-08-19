@@ -566,6 +566,13 @@ RSpec.describe IsoDoc do
                  <abbreviation>ISO</abbreviation>
                </organization>
              </contributor>
+             <contributor>
+           <role type="authorizer">Agency</role>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <abbreviation>ISO</abbreviation>
+           </organization>
+         </contributor>
              <language current='true'>en</language>
              <script current='true'>Latn</script>
              <status>

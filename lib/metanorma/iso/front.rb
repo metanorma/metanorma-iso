@@ -5,6 +5,7 @@ require "json"
 require "pathname"
 require "open-uri"
 require_relative "front_id"
+require_relative "front_contributor"
 
 module Metanorma
   module ISO
@@ -47,53 +48,6 @@ module Metanorma
         a = node.attr("horizontal") and xml.horizontal a
       end
 
-      def org_abbrev
-        { "International Organization for Standardization" => "ISO",
-          "International Electrotechnical Commission" => "IEC" }
-      end
-
-      def metadata_author(node, xml)
-        publishers = node.attr("publisher") || "ISO"
-        csv_split(publishers).each do |p|
-          xml.contributor do |c|
-            c.role type: "author"
-            c.organization do |a|
-              organization(a, p, false, node, !node.attr("publisher"))
-            end
-          end
-        end
-      end
-
-      def metadata_publisher(node, xml)
-        publishers = node.attr("publisher") || "ISO"
-        csv_split(publishers).each do |p|
-          xml.contributor do |c|
-            c.role type: "publisher"
-            c.organization do |a|
-              organization(a, p, true, node, !node.attr("publisher"))
-            end
-          end
-        end
-      end
-
-      def metadata_copyright(node, xml)
-        publishers = node.attr("copyright-holder") || node.attr("publisher") ||
-          "ISO"
-        csv_split(publishers).each do |p|
-          xml.copyright do |c|
-            c.from (node.attr("copyright-year") || Date.today.year)
-            c.owner do |owner|
-              owner.organization do |o|
-                organization(
-                  o, p, true, node,
-                  !(node.attr("copyright-holder") || node.attr("publisher"))
-                )
-              end
-            end
-          end
-        end
-      end
-
       def metadata_status(node, xml)
         stage = get_stage(node)
         substage = get_substage(node)
@@ -111,46 +65,6 @@ module Metanorma
         err = "Illegal document stage: #{stage}.#{substage}"
         @log.add("Document Attributes", nil, err)
         warn err
-      end
-
-      def metadata_committee(node, xml)
-        metadata_editorial_committee(node, xml)
-        metadata_approval_committee(node, xml)
-      end
-
-      def metadata_editorial_committee(node, xml)
-        xml.editorialgroup do |a|
-          %w(technical-committee subcommittee workgroup).each do |v|
-            node.attr("#{v}-number") and committee_component(v, node, a)
-          end
-          node.attr("secretariat") and a.secretariat(node.attr("secretariat"))
-        end
-      end
-
-      def metadata_approval_committee(node, xml)
-        types = metadata_approval_committee_types(node)
-        xml.approvalgroup do |a|
-          metadata_approval_agency(a, node.attr("approval-agency")
-            &.split(%r{[/,;]}))
-          types.each do |v|
-            node.attr("#{v}-number") and committee_component(v, node, a)
-          end
-        end
-      end
-
-      def metadata_approval_committee_types(node)
-        types = %w(technical-committee subcommittee workgroup)
-        node.attr("approval-technical-committee-number") and
-          types = %w(approval-technical-committee approval-subcommittee
-                     approval-workgroup)
-        types
-      end
-
-      def metadata_approval_agency(xml, list)
-        list = ["ISO"] if list.nil? || list.empty?
-        list.each do |v|
-          xml.agency v
-        end
       end
 
       def title_intro(node, xml, lang, at)
