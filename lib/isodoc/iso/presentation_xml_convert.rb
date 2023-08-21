@@ -104,6 +104,23 @@ module IsoDoc
 
       def admonition1(elem)
         super
+        admonition_inline_name(elem)
+        admonition_outside_clauses(elem)
+      end
+
+      def admonition_outside_clauses(elem)
+        elem.parent.name == "sections" or return
+        wrap_in_bold(elem)
+      end
+
+      def wrap_in_bold(cell)
+        cell.text? && cell.text.strip.empty? and return
+        cell.text? and cell.swap("<strong>#{cell.to_xml}</strong>")
+        %w(strong fn).include?(cell.name) and return
+        cell.children.each { |p| wrap_in_bold(p) }
+      end
+
+      def admonition_inline_name(elem)
         n = elem.at(ns("./name")) or return
         if (p = n.next_element) && p&.name == "p"
           p.children.first.previous = admonition_name(to_xml(n.remove.children))
