@@ -2674,11 +2674,26 @@
 							<xsl:value-of select="$font_extended"/><xsl:text>, </xsl:text>
 						</xsl:if>
 
-						<xsl:value-of select="."/>
+						<xsl:variable name="font_family" select="."/>
 
-						<xsl:if test="$additional_fonts != ''">
-							<xsl:text>, </xsl:text><xsl:value-of select="$additional_fonts"/>
-						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="$additional_fonts = ''">
+								<xsl:value-of select="$font_family"/>
+							</xsl:when>
+							<xsl:otherwise> <!-- $additional_fonts != '' -->
+								<xsl:choose>
+									<xsl:when test="contains($font_family, ',')">
+										<xsl:value-of select="substring-before($font_family, ',')"/>
+										<xsl:text>, </xsl:text><xsl:value-of select="$additional_fonts"/>
+										<xsl:text>, </xsl:text><xsl:value-of select="substring-after($font_family, ',')"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="$font_family"/>
+										<xsl:text>, </xsl:text><xsl:value-of select="$additional_fonts"/>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:attribute>
 				</xsl:when>
 				<xsl:otherwise>
