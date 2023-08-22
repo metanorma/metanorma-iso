@@ -273,17 +273,7 @@ RSpec.describe IsoDoc do
             references, the latest edition of the referenced document (including any
             amendments) applies.
           </p>
-          <p class='RefNorm'>
-            <a name='ISO712' id='ISO712'/>
-            <span class='stdpublisher' style='mso-pattern:none;'>ISO/IEC</span> <span class='stddocNumber' style='mso-pattern:none;'>712</span>-<span class='stddocPartNumber' style='mso-pattern:none;'>3</span>:<span class='stdyear' style='mso-pattern:none;'>2022</span>, ALUFFI, Paolo, ed. (2022).
-            <i>
-              <span class='std_class'>
-                Facets of Algebraic Geometry: A Collection in Honor of William
-                Fulton's 80th Birthday
-              </span>
-            </i>
-            , 1st edition. Cambridge, UK: CUP.
-          </p>
+          <p class="RefNorm"><a name="ISO712" id="ISO712"/><span class="stdpublisher" style="mso-pattern:none;mso-pattern:none;">ISO/IEC</span><span class="stddocNumber" style="mso-pattern:none;mso-pattern:none;">712</span>-<span class="stddocPartNumber" style="mso-pattern:none;mso-pattern:none;">3</span>:<span class="stdyear" style="mso-pattern:none;mso-pattern:none;">2022</span>, ALUFFI, Paolo, ed. (2022). <i><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></i>, 1st edition. Cambridge, UK: CUP.</p>
         </div>
       </div>
     OUTPUT
@@ -1777,9 +1767,9 @@ RSpec.describe IsoDoc do
     word = <<~WORD
         <div class='WordSection3'>
                    <p class='zzSTDTitle'>
-                 Date and time — Representations for information interchange —
-      <span style='font-weight:normal'>Part 1:</span>
-       Basic rules
+                  <span>Date and time — Representations for information interchange — </span>
+           <span style=";font-weight:normal">Part 1:</span>
+           <span>Basic rules</span>
           </p>
           <div>
             <a name='A' id='A'/>
@@ -1855,15 +1845,19 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
         <div class='WordSection3'>
-                   <p class='zzSTDTitle'>Date and time — Representations for information interchange —
-      <span style='font-weight:normal'>Part 1:</span> Basic rules</p>
-      <p class='zzSTDTitle'><span style='font-weight:normal'> AMENDMENT 1: Technical corrections</span>
-          </p>
-          <div>
-            <a name='A' id='A'/>
-            <p style='font-style:italic;page-break-after:avoid;' class='MsoBodyText'>First clause</p>
-          </div>
-        </div>
+                 <p class="zzSTDTitle">
+           <span>Date and time — Representations for information interchange — </span>
+           <span style=";font-weight:normal">Part 1:</span>
+           <span>Basic rules</span>
+         </p>
+         <p class="zzSTDTitle">
+           <span style="font-weight:normal">AMENDMENT 1: Technical corrections</span>
+         </p>
+         <div>
+           <a name="A" id="A"/>
+           <p style="font-style:italic;page-break-after:avoid;" class="MsoBodyText">First clause</p>
+         </div>
+       </div>
     WORD
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)

@@ -4,7 +4,7 @@ module Metanorma
   module ISO
     class Converter < Standoc::Converter
       def section_validate(doc)
-        doctype = doc&.at("//bibdata/ext/doctype")&.text
+        doctype = doc.at("//bibdata/ext/doctype")&.text
         unless %w(amendment technical-corrigendum).include? doctype
           foreword_validate(doc.root)
           normref_validate(doc.root)
@@ -193,10 +193,14 @@ module Metanorma
       NORM_BIBITEMS =
         "//references[@normative = 'true']/bibitem".freeze
 
+      ISO_PUBLISHER_XPATH = <<~XPATH.freeze
+        ./contributor[role/@type = 'publisher']/organization[abbreviation = 'ISO' or abbreviation = 'IEC' or name = 'International Organization for Standardization' or name = 'International Electrotechnical Commission']
+      XPATH
+
       # ISO/IEC DIR 2, 10.2
       def norm_bibitem_style(root)
         root.xpath(NORM_BIBITEMS).each do |b|
-          if b.at(Standoc::Converter::ISO_PUBLISHER_XPATH).nil?
+          if b.at(ISO_PUBLISHER_XPATH).nil?
             @log.add("Style", b, "#{NORM_ISO_WARN}: #{b.text}")
           end
         end
