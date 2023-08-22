@@ -103,15 +103,18 @@ module IsoDoc
       end
 
       def span_parse(node, out)
+        st = node["style"]
         case node["class"]
         when "nonboldtitle"
-          out.span(style: "font-weight:normal") do |s|
+          out.span **attr_code(style: "#{st};font-weight:normal") do |s|
             node.children.each { |n| parse(n, s) }
           end
         when "boldtitle"
-          node.children.each { |n| parse(n, out) }
+          out.span **attr_code(style: st) do |s|
+            node.children.each { |n| parse(n, s) }
+          end
         else
-          out.span class: node["class"] do |x|
+          out.span **attr_code(class: node["class"], style: st) do |x|
             node.children.each { |n| parse(n, x) }
           end
         end
