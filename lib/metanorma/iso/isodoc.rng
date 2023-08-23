@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.3 -->
+<!-- VERSION v1.2.4 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -2068,6 +2068,9 @@
   </define>
   <define name="termdefinition">
     <element name="definition">
+      <optional>
+        <attribute name="type"/>
+      </optional>
       <choice>
         <ref name="verbaldefinition"/>
         <ref name="nonverbalrep"/>

@@ -34,7 +34,7 @@ module Metanorma
         root.xpath("//xref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
           next unless !preceding.nil? &&
-            /\b(see| refer to)\s*\Z/mi.match(preceding)
+            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding)
 
           (target = root.at("//*[@id = '#{t['target']}']")) || next
           target.at("./ancestor-or-self::*[@obligation = 'normative']") &&
@@ -49,7 +49,7 @@ module Metanorma
         @lang == "en" or return
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
-          next unless !prec.nil? && /\b(see|refer to)\s*\Z/mi.match(prec)
+          next unless !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec)
 
           unless target = root.at("//*[@id = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,

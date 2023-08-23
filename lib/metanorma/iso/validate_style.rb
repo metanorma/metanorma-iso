@@ -127,7 +127,7 @@ module Metanorma
                     "possible decimal point", node, text)
         @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
                                       "ambiguous number", node, text)
-        style_regex(/(?:^|\s)(?<num>-[0-9][0-9,.]*)/i,
+        style_regex(/(?:^|\P{Zs})(?<num>-[0-9][0-9,.]*)/i,
                     "hyphen instead of minus sign U+2212", node, text)
       end
 
@@ -158,7 +158,7 @@ module Metanorma
       # ISO/IEC DIR 2, 8.4
       # ISO/IEC DIR 2, 9.3
       def style_abbrev(node, text)
-        style_regex(/(\A|\s)(?!e\.g\.|i\.e\.)
+        style_regex(/(\A|\p{Zs})(?!e\.g\.|i\.e\.)
                     (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
                     "no dots in abbreviations", node, text)
         style_regex(/\b(?<num>ppm)\b/i,
@@ -172,7 +172,7 @@ module Metanorma
 
       # ISO/IEC DIR 2, 9.3
       def style_units(node, text)
-        style_regex(/\b(?<num>[0-9][0-9,]*\s+[\u00b0\u2032\u2033])/,
+        style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+[\u00b0\u2032\u2033])/,
                     "space between number and degrees/minutes/seconds",
                     node, text)
         style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/o,
@@ -188,7 +188,7 @@ module Metanorma
       # ISO/IEC DIR 2, 9.3
       def style_non_std_units(node, text)
         NONSTD_UNITS.each do |k, v|
-          style_regex(/\b(?<num>[0-9][0-9,]*\s+#{k})\b/,
+          style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+#{k})\b/,
                       "non-standard unit (should be #{v})", node, text)
         end
       end
@@ -198,7 +198,7 @@ module Metanorma
       def style_punct(node, text)
         @lang == "en" and style_regex(/\b(?<num>and\/?or)\b/i,
                                       "Use 'either x or y, or both'", node, text)
-        style_regex(/\s(?<num>&)\s/i,
+        style_regex(/\p{Zs}(?<num>&)\p{Zs}/i,
                     "Avoid ampersand in ordinary text'", node, text)
         eref_style_punct(node)
       end
