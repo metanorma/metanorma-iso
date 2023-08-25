@@ -8603,8 +8603,12 @@
 		<xsl:variable name="isAdded" select="../@added"/>
 		<xsl:variable name="isDeleted" select="../@deleted"/>
 		<xsl:choose>
-			<xsl:when test="ancestor::*[local-name() = 'title']">
+			<xsl:when test="ancestor::*[local-name() = 'title'] or not(parent::*[local-name() = 'figure']) or parent::*[local-name() = 'p']">
 				<fo:inline padding-left="1mm" padding-right="1mm">
+					<xsl:if test="not(parent::*[local-name() = 'figure']) or parent::*[local-name() = 'p']">
+						<xsl:attribute name="padding-left">0mm</xsl:attribute>
+						<xsl:attribute name="padding-right">0mm</xsl:attribute>
+					</xsl:if>
 					<xsl:variable name="src">
 						<xsl:call-template name="image_src"/>
 					</xsl:variable>
