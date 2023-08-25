@@ -158,8 +158,8 @@ module Metanorma
       # ISO/IEC DIR 2, 8.4
       # ISO/IEC DIR 2, 9.3
       def style_abbrev(node, text)
-        style_regex(/(\A|\p{Zs})(?!e\.g\.|i\.e\.)
-                    (?<num>[a-z]{1,2}\.([a-z]{1,2}|\.))\b/ix,
+        style_regex(/(?:\A|\p{Zs})(?!e\.g\.|i\.e\.)
+                    (?<num>[a-z]{1,2}\.(?:[a-z]{1,2}|\.))\b/ix,
                     "no dots in abbreviations", node, text)
         style_regex(/\b(?<num>ppm)\b/i,
                     "language-specific abbreviation", node, text)

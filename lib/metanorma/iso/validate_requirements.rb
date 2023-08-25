@@ -20,7 +20,7 @@ module Metanorma
 
       def requirement_re
         Regexp.new(self.class::REQUIREMENT_RE_STR.gsub(/\s/, "")
-          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+          .gsub("_", "\\s"), Regexp::IGNORECASE)
       end
 
       def requirement_check(text)
@@ -41,7 +41,7 @@ module Metanorma
 
       def recommendation_re
         Regexp.new(self.class::RECOMMENDATION_RE_STR.gsub(/\s/, "")
-          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+          .gsub("_", "\\s"), Regexp::IGNORECASE)
       end
 
       def recommendation_check(text)
@@ -64,7 +64,7 @@ module Metanorma
       def permission_re
         @lang == "en" or return
         Regexp.new(self.class::PERMISSION_RE_STR.gsub(/\s/, "")
-          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+          .gsub("_", "\\s"), Regexp::IGNORECASE)
       end
 
       def permission_check(text)
@@ -87,7 +87,7 @@ module Metanorma
       def possibility_re
         @lang == "en" or return
         Regexp.new(self.class::POSSIBILITY_RE_STR.gsub(/\s/, "")
-          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+          .gsub("_", "\\s"), Regexp::IGNORECASE)
       end
 
       def possibility_check(text)
@@ -111,7 +111,7 @@ module Metanorma
       def ambig_words_re
         @lang == "en" or return
         Regexp.new(self.class::AMBIG_WORDS_RE_STR.gsub(/\s/, "")
-          .gsub(/_/, "\\s"), Regexp::IGNORECASE)
+          .gsub("_", "\\s"), Regexp::IGNORECASE)
       end
 
       def ambig_words_check(text)

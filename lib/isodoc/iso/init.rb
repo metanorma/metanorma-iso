@@ -44,16 +44,15 @@ module IsoDoc
       end
 
       def std_docid_semantic1(id)
-        ids = id.split(/ /)
-        %w(ISO IEC ITU IETF NIST OGC IEEE BIPM BSI IANA UN W3C IEV)
-          .include?(ids[0].sub(/\/.*$/, "")) or
-          return id
+        ids = id.split(/(\p{Zs})/)
+        agency?(ids[0].sub(/\/.*$/, "")) or return id
         ids.map! do |i|
           if %w(GUIDE TR TS DIR).include?(i)
             "<span class='stddocNumber'>#{i}</span>"
+          elsif /\p{Zs}/.match?(i) then i
           else std_docid_semantic_full(i)
           end
-        end.join(" ")
+        end.join
       end
 
       def std_docid_semantic_full(ident)

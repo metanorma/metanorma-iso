@@ -363,8 +363,7 @@ RSpec.describe IsoDoc do
               <p>
                 <eref bibitemid="IEV" citeas="IEV" type="inline"><locality type="clause"><referenceFrom>1-2-3</referenceFrom></locality><span class="stdpublisher">IEV</span>, <span class="citesec">1-2-3</span></eref>
                 <xref type="inline" target="ISO712">
-                  <span class="stdpublisher">ISO</span>
-                  <span class="stddocNumber">712</span>
+                  <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>
                 </xref>
                 <xref type="inline" target="ISO712">ISO 712</xref>
                 <xref type="inline" target="ISO712">ISO 712, <span class="citetbl">Table 1</span></xref>
@@ -379,9 +378,7 @@ RSpec.describe IsoDoc do
                 <xref type="inline" target="ISO712">ISO 712, Prelude 7</xref>
                 <xref type="inline" target="ISO712">A</xref>
                 <xref type="inline" target="ISO712">
-                  <span class="stdpublisher">ISO/IEC</span>
-                  <span class="stddocNumber">DIR</span>
-                  <span class="stddocNumber">1</span>
+                  <span class="stdpublisher">ISO/IEC</span>&#xa0;<span class="stddocNumber">DIR</span>&#xa0;<span class="stddocNumber">1</span>
                 </xref>
                 <eref type="inline" bibitemid="ISO_10303_32">[ISO 10303-32<fn reference="1"><p>To be published.</p></fn>]</eref>
               </p>
@@ -536,16 +533,16 @@ RSpec.describe IsoDoc do
               (<xref target="clause1">Clause #1</xref>)
             </li>
                   <li><em>term</em>
-              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span></xref>)
+              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span></xref>)
             </li>
                   <li><em>word</em>
               (<xref type="inline" target="ISO712">The Aforementioned Citation</xref>)
             </li>
                   <li><em>word</em>
-              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></xref>)
+              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></xref>)
             </li>
                   <li><em>word</em>
-              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></xref>)
+              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></xref>)
             </li>
                   <li><em>word</em>
               (<xref type="inline" target="ISO712">
@@ -555,10 +552,10 @@ RSpec.describe IsoDoc do
               </xref>)
             </li>
                   <li><em>word</em>
-              [term defined in <termref base="IEV" target="135-13-13"/>]
+              (<termref base="IEV" target="135-13-13"/>)
             </li>
                   <li><em>word</em>
-              [term defined in <termref base="IEV" target="135-13-13">The IEV database</termref>]
+              (<termref base="IEV" target="135-13-13">The IEV database</termref>)
             </li>
                   <li>
                     <em>word</em>
@@ -613,16 +610,16 @@ RSpec.describe IsoDoc do
                (<a href="#clause1">Clause #1</a>)
              </li>
                    <li><i>term</i>
-               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span></a>)
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span></a>)
              </li>
                    <li><i>word</i>
                (<a href="#ISO712">The Aforementioned Citation</a>)
              </li>
                    <li><i>word</i>
-               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></a>)
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></a>)
              </li>
                    <li><i>word</i>
-               (<a href="#ISO712"><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></a>)
+               (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></a>)
              </li>
                    <li><i>word</i>
                (<a href="#ISO712">
@@ -632,10 +629,10 @@ RSpec.describe IsoDoc do
                </a>)
              </li>
                    <li><i>word</i>
-               [term defined in Termbase IEV, term ID 135-13-13]
+               (Termbase IEV, term ID 135-13-13)
              </li>
                    <li><i>word</i>
-               [term defined in The IEV database]
+               (The IEV database)
              </li>
                    <li>
                      <i>word</i>
