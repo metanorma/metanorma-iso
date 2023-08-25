@@ -11,7 +11,7 @@ module IsoDoc
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
       def convert1(docxml, filename, dir)
         @iso_class = instance_of?(IsoDoc::Iso::PresentationXMLConvert)
-        if amd(docxml)
+        if amd?(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
           @suppressheadingnumbers = true
         end
@@ -38,12 +38,12 @@ module IsoDoc
       end
 
       def annex(isoxml)
-        amd(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
+        amd?(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
         super
         isoxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
           clause1(f)
         end
-        amd(isoxml) and @suppressheadingnumbers = true
+        amd?(isoxml) and @suppressheadingnumbers = true
       end
 
       def figure1(node)
@@ -85,21 +85,6 @@ module IsoDoc
             @xrefs.klass.single_term_clause?(f.parent) and next
           clause1(f)
         end
-      end
-
-      # we're assuming terms and clauses in the right place for display,
-      # to cope with multiple terms sections
-      def display_order(docxml)
-        i = 0
-        i = display_order_xpath(docxml, "//preface/*", i)
-        i = display_order_at(docxml, "//clause[@type = 'scope']", i)
-        i = display_order_at(docxml, @xrefs.klass.norm_ref_xpath, i)
-        p = "#{@xrefs.klass.middle_clause(docxml)} | " \
-            "//sections/terms | //sections/definitions"
-        i = display_order_xpath(docxml, p, i)
-        i = display_order_xpath(docxml, "//annex", i)
-        i = display_order_xpath(docxml, @xrefs.klass.bibliography_xpath, i)
-        display_order_xpath(docxml, "//indexsect", i)
       end
 
       def admonition1(elem)
@@ -209,6 +194,12 @@ module IsoDoc
         a = @meta.get[:doctitlecorrlabel] and
           ret += "<p class='zzSTDTitle2'>#{a}</p>"
         ret
+      end
+
+      def move_norm_ref_to_sections(docxml)
+        if amd?(docxml)
+        else super
+        end
       end
 
       include Init

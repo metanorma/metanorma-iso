@@ -6,7 +6,7 @@ module IsoDoc
   module Iso
     module BaseConvert
       def convert1(docxml, filename, dir)
-        if amd(docxml)
+        if amd?(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
           @suppressheadingnumbers = true
         end
