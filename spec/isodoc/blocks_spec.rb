@@ -80,7 +80,8 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
@@ -182,7 +183,8 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
@@ -233,7 +235,8 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(Nokogiri::XML(
@@ -316,7 +319,8 @@ RSpec.describe IsoDoc do
             </div>
           </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(Nokogiri::XML(
@@ -325,6 +329,42 @@ RSpec.describe IsoDoc do
     )
       .at("//div[h1/@class = 'ForewordTitle']").to_xml))
       .to be_equivalent_to xmlpp(output)
+  end
+
+  it "processes admonitions outside of clauses" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <sections><title>A</title>
+      <admonition id="_47f25c97-8757-9c1f-4ac1-3a9daefd72b7" type="important"><p id="_a83ad1fc-b3b7-2679-ef9d-cb732cd8a046">The electronic file of this document contains colours which are considered to be useful for the correct understanding of the &lt;document&gt;.</p></admonition>
+      <clause id="A"><title>Scope</title></clause>
+      </sections>
+      </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+           <clause type="toc" id="_" displayorder="1">
+             <title depth="1">Contents</title>
+           </clause>
+         </preface>
+         <sections>
+           <title>A</title>
+           <admonition id="_" type="important" displayorder="2">
+             <p id="_">
+               <strong>IMPORTANT — </strong>
+               <strong>The electronic file of this document contains colours which are considered to be useful for the correct understanding of the <document>.</strong>
+             </p>
+           </admonition>
+           <clause id="A" displayorder="3">
+             <title depth="1">1<tab/>Scope</title>
+           </clause>
+         </sections>
+       </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+    .convert("test", input, true))))
+      .to be_equivalent_to xmlpp(presxml)
   end
 
   it "processes editorial notes" do
@@ -393,7 +433,8 @@ RSpec.describe IsoDoc do
           <p> </p>
           </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -828,7 +869,8 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -1316,7 +1358,8 @@ RSpec.describe IsoDoc do
           </div>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -1360,7 +1403,8 @@ RSpec.describe IsoDoc do
          </preface>
        </iso-standard>
     INPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
   end
