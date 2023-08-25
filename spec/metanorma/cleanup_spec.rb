@@ -729,7 +729,7 @@ RSpec.describe Metanorma::ISO do
                    <mstyle mathvariant="normal">
                      <munder>
                        <mi>a</mi>
-                       <mo>¯</mo>
+                       <mo>̲</mo>
                      </munder>
                    </mstyle>
                  </mstyle>
