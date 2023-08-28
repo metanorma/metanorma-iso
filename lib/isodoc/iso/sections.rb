@@ -2,10 +2,10 @@ module IsoDoc
   module Iso
     module BaseConvert
       def annex(node, out)
-        amd(node.document) and
+        amd?(node.document) and
           @suppressheadingnumbers = @oldsuppressheadingnumbers
         super
-        amd(node.document) and @suppressheadingnumbers = true
+        amd?(node.document) and @suppressheadingnumbers = true
       end
 
       def foreword(clause, out)

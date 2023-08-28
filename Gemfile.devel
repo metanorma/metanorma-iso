@@ -1,2 +1,2 @@
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/refactor-display-order"
 

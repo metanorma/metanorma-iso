@@ -20,7 +20,7 @@ module IsoDoc
                                        i18nyaml: i18nyaml || @i18nyaml)
       end
 
-      def amd(docxml)
+      def amd?(docxml)
         doctype = docxml.at(ns("//bibdata/ext/doctype"))&.text
         %w(amendment technical-corrigendum).include? doctype
       end

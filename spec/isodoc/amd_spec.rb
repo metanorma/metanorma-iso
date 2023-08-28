@@ -69,92 +69,82 @@ RSpec.describe IsoDoc do
     expect(xmlpp(output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(<<~OUTPUT)
-        <?xml version='1.0'?>
-        <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
-          <bibdata>
-            <ext>
-              <doctype language="">amendment</doctype>
-              <doctype language='en'>Amendment</doctype>
-            </ext>
-          </bibdata>
-          <preface>
-            <foreword displayorder="1">
-              <p>
-                <xref target="N">Scope, Note</xref>
-                <xref target="note1">Widgets, 1, Note 1</xref>
-                <xref target="note2">Widgets, 1, Note 2</xref>
-                <xref target="AN">A.1, Note</xref>
-                <xref target="Anote1">A.2, Note 1</xref>
-                <xref target="Anote2">A.2, Note 2</xref>
-              </p>
-            </foreword>
-          </preface>
-          <sections>
-            <clause id="scope" displayorder="2">
-              <title depth="1">Scope</title>
-              <note id="N">
-                <name>NOTE</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
-                  types of kernel.
-                </p>
-              </note>
-              <p>
-                <xref target="N">Note</xref>
-              </p>
-            </clause>
-            <terms id="terms" displayorder="3"/>
-            <clause id="widgets" displayorder="4">
-              <title depth="1">Widgets</title>
-              <clause id="widgets1" inline-header="true">
-                <note id="note1">
-                  <name>NOTE 1</name>
-                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
-                    types of kernel.
-                  </p>
-                </note>
-                <note id="note2">
-                  <name>NOTE 2</name>
-                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different
-                    types of kernel.
-                  </p>
-                </note>
-                <p>
-                  <xref target="note1">Note 1</xref>
-                  <xref target="note2">Note 2</xref>
-                </p>
-              </clause>
-            </clause>
-          </sections>
-          <annex id="annex1" displayorder="5">
-            <title>
-              <strong>Annex A</strong>
-              <br/><span class="obligation">(informative)</span></title>
-            <clause id="annex1a" inline-header="true">
-              <title>A.1</title>
-              <note id="AN">
-                <name>NOTE</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
-                  types of kernel.
-                </p>
-              </note>
-            </clause>
-            <clause id="annex1b" inline-header="true">
-              <title>A.2</title>
-              <note id="Anote1">
-                <name>NOTE 1</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
-                  types of kernel.
-                </p>
-              </note>
-              <note id="Anote2">
-                <name>NOTE 2</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different
-                  types of kernel.
-                </p>
-              </note>
-            </clause>
-          </annex>
-        </iso-standard>
+           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata>
+           <ext>
+             <doctype language="">amendment</doctype>
+             <doctype language="en">Amendment</doctype>
+           </ext>
+         </bibdata>
+
+         <preface>
+           <foreword displayorder="1">
+             <p>
+               <xref target="N">Clause 1, Note</xref>
+               <xref target="note1">2.1, Note  1</xref>
+               <xref target="note2">2.1, Note  2</xref>
+               <xref target="AN">A.1, Note</xref>
+               <xref target="Anote1">A.2, Note  1</xref>
+               <xref target="Anote2">A.2, Note  2</xref>
+             </p>
+           </foreword>
+         </preface>
+         <sections>
+           <clause id="scope" displayorder="2">
+             <title depth="1">Scope</title>
+             <note id="N">
+               <name>NOTE</name>
+               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+             </note>
+             <p>
+               <xref target="N">Note</xref>
+             </p>
+           </clause>
+           <terms id="terms"/>
+           <clause id="widgets" displayorder="3">
+             <title depth="1">Widgets</title>
+             <clause id="widgets1" inline-header="true">
+               <note id="note1">
+                 <name>NOTE  1</name>
+                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+               </note>
+               <note id="note2">
+                 <name>NOTE  2</name>
+                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+               </note>
+               <p>
+                 <xref target="note1">Note  1</xref>
+                 <xref target="note2">Note  2</xref>
+               </p>
+             </clause>
+           </clause>
+         </sections>
+         <annex id="annex1" displayorder="4">
+           <title>
+             <strong>Annex A</strong>
+             <br/>
+             <span class="obligation">(informative)</span>
+           </title>
+           <clause id="annex1a" inline-header="true">
+             <title>A.1</title>
+             <note id="AN">
+               <name>NOTE</name>
+               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+             </note>
+           </clause>
+           <clause id="annex1b" inline-header="true">
+             <title>A.2</title>
+             <note id="Anote1">
+               <name>NOTE  1</name>
+               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+             </note>
+             <note id="Anote2">
+               <name>NOTE  2</name>
+               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+             </note>
+           </clause>
+         </annex>
+       </iso-standard>
       OUTPUT
   end
 
@@ -240,102 +230,75 @@ RSpec.describe IsoDoc do
     expect(xmlpp(output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(<<~OUTPUT)
-        <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-          <bibdata>
-            <ext>
-              <doctype language=''>amendment</doctype>
-              <doctype language='en'>Amendment</doctype>
-            </ext>
-          </bibdata>
-          <preface>
-            <foreword obligation='informative' displayorder='1'>
-              <title>Foreword</title>
-              <p id='A'>
-                This is a preamble#{' '}
-                <xref target='C'><span class='citesec'>0.1</span></xref>
-                <xref target='C1'><span class='citesec'>0.2</span></xref>
-                <xref target='D'><span class='citesec'>Scope</span></xref>
-                <xref target='H'>[H]</xref>
-                <xref target='I'>[I]</xref>
-                <xref target='J'>[J]</xref>
-                <xref target='K'>[K]</xref>
-                <xref target='L'>[L]</xref>
-                <xref target='M'><span class='citesec'>Clause 4</span></xref>
-                <xref target='N'><span class='citesec'>Introduction</span></xref>
-                <xref target='O'><span class='citesec'>Clause 4.2</span></xref>
-                <xref target='P'><span class='citeapp'>Annex A</span></xref>
-                <xref target='Q'><span class='citeapp'>A.1</span></xref>
-                <xref target='Q1'><span class='citeapp'>A.1.1</span></xref>
-                <xref target='Q2'><span class='citeapp'>Annex A, Appendix 1</span></xref>
-                <xref target='R'>[R]</xref>
-              </p>
-            </foreword>
-            <introduction id='B' obligation='informative' displayorder='2'>
-              <title depth='1'>Introduction</title>
-              <clause id='C' inline-header='false' obligation='informative'>
-                <title depth='2'>Introduction Subsection</title>
-              </clause>
-              <clause id='C1' inline-header='true' obligation='informative'>Text</clause>
-            </introduction>
-          </preface>
-          <sections>
-            <clause id='D' obligation='normative' type='scope' displayorder='3'>
-              <title depth='1'>Scope</title>
-              <p id='E'>Text</p>
-            </clause>
-            <clause id='M' inline-header='false' obligation='normative' displayorder='5'>
-              <title depth='1'>Clause 4</title>
-              <clause id='N' inline-header='false' obligation='normative'>
-                <title depth='2'>Introduction</title>
-              </clause>
-              <clause id='O' inline-header='false' obligation='normative'>
-                <title depth='2'>Clause 4.2</title>
-              </clause>
-            </clause>
-            <references id='R' normative='true' obligation='informative' displayorder='4'>
-              <title depth='1'>Normative References</title>
-            </references>
-          </sections>
-          <annex id='P' inline-header='false' obligation='normative' displayorder='6'>
-            <title>
-              <strong>Annex A</strong>
-              <br/>
-              <span class="obligation">(normative)</span>
-              <br/>
-              <br/>
-              <strong>Annex</strong>
-            </title>
-            <clause id='Q' inline-header='false' obligation='normative'>
-              <title depth='2'>
-                A.1
-                <tab/>
-                Annex A.1
-              </title>
-              <clause id='Q1' inline-header='false' obligation='normative'>
-                <title depth='3'>
-                  A.1.1
-                  <tab/>
-                  Annex A.1a
-                </title>
-              </clause>
-            </clause>
-            <appendix id='Q2' inline-header='false' obligation='normative'>
-              <title depth='2'>
-                Appendix 1
-                <tab/>
-                An Appendix
-              </title>
-            </appendix>
-          </annex>
-          <bibliography>
-            <clause id='S' obligation='informative' displayorder='7'>
-              <title depth='1'>Bibliography</title>
-              <references id='T' normative='false' obligation='informative'>
-                <title depth='2'>Bibliography Subsection</title>
-              </references>
-            </clause>
-          </bibliography>
-        </iso-standard>
+           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata>
+           <ext>
+             <doctype language="">amendment</doctype>
+             <doctype language="en">Amendment</doctype>
+           </ext>
+         </bibdata>
+
+         <preface>
+           <foreword obligation="informative" displayorder="1">
+             <title>Foreword</title>
+             <p id="A">This is a preamble
+
+               <xref target="C"><span class="citesec">0.1</span></xref><xref target="C1"><span class="citesec">0.2</span></xref><xref target="D"><span class="citesec">Clause 1</span></xref><xref target="H">[H]</xref><xref target="I">[I]</xref><xref target="J">[J]</xref><xref target="K">[K]</xref><xref target="L">[L]</xref><xref target="M"><span class="citesec">Clause 2</span></xref><xref target="N"><span class="citesec">2.1</span></xref><xref target="O"><span class="citesec">2.2</span></xref><xref target="P"><span class="citeapp">Annex A</span></xref><xref target="Q"><span class="citeapp">A.1</span></xref><xref target="Q1"><span class="citeapp">A.1.1</span></xref><xref target="Q2"><span class="citeapp">Annex A, Appendix 1</span></xref><xref target="R"><span class="citesec">Normative References</span></xref></p>
+           </foreword>
+           <introduction id="B" obligation="informative" displayorder="2">
+             <title depth="1">Introduction</title>
+             <clause id="C" inline-header="false" obligation="informative">
+               <title depth="2">Introduction Subsection</title>
+             </clause>
+             <clause id="C1" inline-header="true" obligation="informative">Text</clause>
+           </introduction>
+         </preface>
+         <sections>
+           <clause id="D" obligation="normative" type="scope" displayorder="3">
+             <title depth="1">Scope</title>
+             <p id="E">Text</p>
+           </clause>
+           <clause id="M" inline-header="false" obligation="normative" displayorder="4">
+             <title depth="1">Clause 4</title>
+             <clause id="N" inline-header="false" obligation="normative">
+               <title depth="2">Introduction</title>
+             </clause>
+             <clause id="O" inline-header="false" obligation="normative">
+               <title depth="2">Clause 4.2</title>
+             </clause>
+           </clause>
+         </sections>
+         <annex id="P" inline-header="false" obligation="normative" displayorder="5">
+           <title>
+             <strong>Annex A</strong>
+             <br/>
+             <span class="obligation">(normative)</span>
+             <br/>
+             <br/>
+             <strong>Annex</strong>
+           </title>
+           <clause id="Q" inline-header="false" obligation="normative">
+             <title depth="2">A.1<tab/>Annex A.1</title>
+             <clause id="Q1" inline-header="false" obligation="normative">
+               <title depth="3">A.1.1<tab/>Annex A.1a</title>
+             </clause>
+           </clause>
+           <appendix id="Q2" inline-header="false" obligation="normative">
+             <title depth="2">Appendix 1<tab/>An Appendix</title>
+           </appendix>
+         </annex>
+         <bibliography>
+           <references id="R" normative="true" obligation="informative" displayorder="6">
+             <title depth="1">Normative References</title>
+           </references>
+           <clause id="S" obligation="informative" displayorder="7">
+             <title depth="1">Bibliography</title>
+             <references id="T" normative="false" obligation="informative">
+               <title depth="2">Bibliography Subsection</title>
+             </references>
+           </clause>
+         </bibliography>
+       </iso-standard>
       OUTPUT
   end
 
@@ -433,98 +396,111 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-        <bibdata>
-          <ext>
-            <doctype language="">amendment</doctype>
-            <doctype language='en'>Amendment</doctype>
-          </ext>
-        </bibdata>
-        <boilerplate>
-          <copyright-statement>
-            <clause>
-              <title depth="1">Copyright</title>
-            </clause>
-          </copyright-statement>
-          <license-statement>
-            <clause>
-              <title depth="1">License</title>
-            </clause>
-          </license-statement>
-          <legal-statement>
-            <clause>
-              <title depth="1">Legal</title>
-            </clause>
-          </legal-statement>
-          <feedback-statement>
-            <clause>
-              <title depth="1">Feedback</title>
-            </clause>
-          </feedback-statement>
-        </boilerplate>
-        <preface>
-          <abstract obligation="informative" displayorder="1">
-            <title>Abstract</title>
-          </abstract>
-          <foreword obligation="informative" displayorder="2">
-            <title>Foreword</title>
-            <p id="A">This is a preamble</p>
-          </foreword>
-          <introduction id="B" obligation="informative" displayorder="3">
-            <title depth="1">Introduction</title>
-            <clause id="C" inline-header="false" obligation="informative">
-              <title depth="2">Introduction Subsection</title>
-            </clause>
-          </introduction>
-          <clause id="B1" displayorder="4">
-            <title depth="1">Dedication</title>
-          </clause>
-          <clause id="B2" displayorder="5">
-            <title depth="1">Note to reader</title>
-          </clause>
-          <acknowledgements obligation="informative" displayorder="6">
-            <title>Acknowledgements</title>
-          </acknowledgements>
-        </preface>
-        <sections>
-          <clause id="M" inline-header="false" obligation="normative" displayorder="8">
-            <title depth="1">Clause 4</title>
-            <clause id="N" inline-header="false" obligation="normative">
-              <title depth="2">Introduction</title>
-            </clause>
-            <clause id="O" inline-header="false" obligation="normative">
-              <title depth="2">Clause 4.2</title>
-            </clause>
-            <clause id="O1" inline-header="true" obligation="normative"/>
-          </clause>
-          <clause id="D" obligation="normative" displayorder="9">
-            <title depth="1">Scope</title>
-            <p id="E">Text</p>
-          </clause>
-                    <references id="R" normative="true" obligation="informative" displayorder="7">
-            <title depth="1">Normative References</title>
-          </references>
-        </sections>
-        <annex id="P" inline-header="false" obligation="normative" displayorder="10">
-          <title><strong>Annex A</strong><br/><span class="obligation">(normative)</span><br/><br/><strong>Annex</strong></title>
-          <clause id="Q" inline-header="false" obligation="normative">
-            <title depth="2">A.1<tab/>Annex A.1</title>
-            <clause id="Q1" inline-header="false" obligation="normative">
-              <title depth="3">A.1.1<tab/>Annex A.1a</title>
-            </clause>
-          </clause>
-        </annex>
-        <annex id="P1" inline-header="false" obligation="normative" displayorder="11">
-        <title><strong>Annex B</strong><br/><span class="obligation">(normative)</span></title></annex>
-        <bibliography>
-          <clause id="S" obligation="informative" displayorder="12">
-            <title depth="1">Bibliography</title>
-            <references id="T" normative="false" obligation="informative">
-              <title depth="2">Bibliography Subsection</title>
-            </references>
-          </clause>
-        </bibliography>
-      </iso-standard>
+           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata>
+           <ext>
+             <doctype language="">amendment</doctype>
+             <doctype language="en">Amendment</doctype>
+           </ext>
+         </bibdata>
+
+         <boilerplate>
+           <copyright-statement>
+             <clause>
+               <title depth="1">Copyright</title>
+             </clause>
+           </copyright-statement>
+           <license-statement>
+             <clause>
+               <title depth="1">License</title>
+             </clause>
+           </license-statement>
+           <legal-statement>
+             <clause>
+               <title depth="1">Legal</title>
+             </clause>
+           </legal-statement>
+           <feedback-statement>
+             <clause>
+               <title depth="1">Feedback</title>
+             </clause>
+           </feedback-statement>
+         </boilerplate>
+         <preface>
+           <abstract obligation="informative" displayorder="1">
+             <title>Abstract</title>
+           </abstract>
+           <foreword obligation="informative" displayorder="2">
+             <title>Foreword</title>
+             <p id="A">This is a preamble</p>
+           </foreword>
+           <introduction id="B" obligation="informative" displayorder="3">
+             <title depth="1">Introduction</title>
+             <clause id="C" inline-header="false" obligation="informative">
+               <title depth="2">Introduction Subsection</title>
+             </clause>
+           </introduction>
+           <clause id="B1" displayorder="4">
+             <title depth="1">Dedication</title>
+           </clause>
+           <clause id="B2" displayorder="5">
+             <title depth="1">Note to reader</title>
+           </clause>
+           <acknowledgements obligation="informative" displayorder="6">
+             <title>Acknowledgements</title>
+           </acknowledgements>
+         </preface>
+         <sections>
+           <clause id="M" inline-header="false" obligation="normative" displayorder="7">
+             <title depth="1">Clause 4</title>
+             <clause id="N" inline-header="false" obligation="normative">
+               <title depth="2">Introduction</title>
+             </clause>
+             <clause id="O" inline-header="false" obligation="normative">
+               <title depth="2">Clause 4.2</title>
+             </clause>
+             <clause id="O1" inline-header="true" obligation="normative"/>
+           </clause>
+           <clause id="D" obligation="normative" displayorder="8">
+             <title depth="1">Scope</title>
+             <p id="E">Text</p>
+           </clause>
+         </sections>
+         <annex id="P" inline-header="false" obligation="normative" displayorder="9">
+           <title>
+             <strong>Annex A</strong>
+             <br/>
+             <span class="obligation">(normative)</span>
+             <br/>
+             <br/>
+             <strong>Annex</strong>
+           </title>
+           <clause id="Q" inline-header="false" obligation="normative">
+             <title depth="2">A.1<tab/>Annex A.1</title>
+             <clause id="Q1" inline-header="false" obligation="normative">
+               <title depth="3">A.1.1<tab/>Annex A.1a</title>
+             </clause>
+           </clause>
+         </annex>
+         <annex id="P1" inline-header="false" obligation="normative" displayorder="10">
+           <title>
+             <strong>Annex B</strong>
+             <br/>
+             <span class="obligation">(normative)</span>
+           </title>
+         </annex>
+         <bibliography>
+           <references id="R" normative="true" obligation="informative" displayorder="11">
+             <title depth="1">Normative References</title>
+           </references>
+           <clause id="S" obligation="informative" displayorder="12">
+             <title depth="1">Bibliography</title>
+             <references id="T" normative="false" obligation="informative">
+               <title depth="2">Bibliography Subsection</title>
+             </references>
+           </clause>
+         </bibliography>
+       </iso-standard>
     OUTPUT
     html = <<~OUTPUT
       <html lang="en" xmlns:epub="http://www.idpf.org/2007/ops">
