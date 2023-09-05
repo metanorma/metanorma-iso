@@ -185,8 +185,7 @@ module IsoDoc
       end
 
       def figure_name_parse(node, div, name)
-        return if name.nil?
-
+        name.nil? and return
         div.p **figure_name_attrs(node) do |p|
           name.children.each { |n| parse(n, p) }
         end
@@ -205,8 +204,7 @@ module IsoDoc
       end
 
       def annex_name(_annex, name, div)
-        return if name.nil?
-
+        name.nil? and return
         name&.at(ns("./strong"))&.remove # supplied by CSS list numbering
         div.h1 class: "Annex" do |t|
           annex_name1(name, t)

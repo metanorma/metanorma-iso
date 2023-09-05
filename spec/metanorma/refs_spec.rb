@@ -439,7 +439,7 @@ RSpec.describe Metanorma::ISO do
                     </organization>
                   </owner>
                 </copyright>
-                <relation type="instance">
+                <relation type="instanceOf">
                   <bibitem type="standard">
                     <fetched/>
                     <title type="title-intro" format="text/plain" language="en" script="Latn">Title missing</title>

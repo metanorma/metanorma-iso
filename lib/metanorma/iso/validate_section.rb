@@ -4,8 +4,7 @@ module Metanorma
   module ISO
     class Converter < Standoc::Converter
       def section_validate(doc)
-        doctype = doc.at("//bibdata/ext/doctype")&.text
-        unless %w(amendment technical-corrigendum).include? doctype
+        unless %w(amendment technical-corrigendum).include? @doctype
           foreword_validate(doc.root)
           normref_validate(doc.root)
           symbols_validate(doc.root)
@@ -181,7 +180,7 @@ module Metanorma
       end
 
       def tech_report_style(root)
-        root.at("//bibdata/ext/doctype")&.text == "technical-report" or return
+        @doctype == "technical-report" or return
         root.xpath("//sections/clause[not(@type = 'scope')] | //annex")
           .each do |s|
           r = requirement_check(extract_text(s)) and
