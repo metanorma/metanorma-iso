@@ -355,32 +355,34 @@ RSpec.describe Relaton::Render::Iso do
   end
 
   it "renders software" do
-    input = <<~INPUT
-      <bibitem type="software">
-        <title>metanorma-standoc</title>
-        <uri>https://github.com/metanorma/metanorma-standoc</uri>
-        <date type="published"><on>2019-09-04</on></date>
-        <contributor>
-          <role type="author"/>
-          <organization>
-            <name>Ribose Inc.</name>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="distributor"/>
-          <organization>
-            <name>GitHub</name>
-          </organization>
-        </contributor>
-        <edition>1.3.1</edition>
-      </bibitem>
-    INPUT
-    output = <<~OUTPUT
-      <formattedref><smallcap>Ribose Inc.</smallcap>. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>.</formattedref>
-    OUTPUT
-    p = renderer
-    expect(p.render(input))
-      .to be_equivalent_to output
+    VCR.use_cassette "standoc" do
+      input = <<~INPUT
+        <bibitem type="software">
+          <title>metanorma-standoc</title>
+          <uri>https://github.com/metanorma/metanorma-standoc</uri>
+          <date type="published"><on>2019-09-04</on></date>
+          <contributor>
+            <role type="author"/>
+            <organization>
+              <name>Ribose Inc.</name>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="distributor"/>
+            <organization>
+              <name>GitHub</name>
+            </organization>
+          </contributor>
+          <edition>1.3.1</edition>
+        </bibitem>
+      INPUT
+      output = <<~OUTPUT
+        <formattedref><smallcap>Ribose Inc.</smallcap>. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>. [viewed: #{Date.today.strftime('%B %-d, %Y')}].</formattedref>
+      OUTPUT
+      p = renderer
+      expect(p.render(input))
+        .to be_equivalent_to output
+    end
   end
 
   it "renders home standard" do
@@ -697,6 +699,7 @@ RSpec.describe Relaton::Render::Iso do
       <bibitem type="unpublished">
         <title>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</title>
         <uri>https://eprints.soton.ac.uk/338797/</uri>
+        <date type="published"><on>2020-06</on></date>
         <date type="accessed"><on>2020-06</on></date>
         <contributor>
           <role type="author"/>

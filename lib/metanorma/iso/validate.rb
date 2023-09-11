@@ -1,10 +1,10 @@
 require "metanorma-standoc"
-require_relative "./validate_style"
-require_relative "./validate_requirements"
-require_relative "./validate_section"
-require_relative "./validate_title"
-require_relative "./validate_image"
-require_relative "./validate_list"
+require_relative "validate_style"
+require_relative "validate_requirements"
+require_relative "validate_section"
+require_relative "validate_title"
+require_relative "validate_image"
+require_relative "validate_list"
 require "nokogiri"
 require "jing"
 require "iev"
@@ -116,13 +116,12 @@ module Metanorma
         end
       end
 
-      def doctype_validate(xmldoc)
-        doctype = xmldoc&.at("//bibdata/ext/doctype")&.text
+      def doctype_validate(_xmldoc)
         %w(international-standard technical-specification technical-report
            publicly-available-specification international-workshop-agreement
-           guide amendment technical-corrigendum).include? doctype or
+           guide amendment technical-corrigendum).include? @doctype or
           @log.add("Document Attributes", nil,
-                   "#{doctype} is not a recognised document type")
+                   "#{@doctype} is not a recognised document type")
       end
 
       def script_validate(xmldoc)
@@ -173,8 +172,7 @@ module Metanorma
 
       def validate(doc)
         content_validate(doc)
-        doctype = doc&.at("//bibdata/ext/doctype")&.text
-        schema = case doctype
+        schema = case @doctype
                  when "amendment", "technical-corrigendum" # @amd
                    "isostandard-amd.rng"
                  else
