@@ -346,6 +346,8 @@
           <ref name="keyword"/>
           <ref name="xref"/>
           <ref name="hyperlink"/>
+          <ref name="index"/>
+          <ref name="index-xref"/>
         </choice>
       </oneOrMore>
     </element>
@@ -623,6 +625,8 @@
           <ref name="eref"/>
           <ref name="xref"/>
           <ref name="hyperlink"/>
+          <ref name="index"/>
+          <ref name="index-xref"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -636,6 +640,8 @@
           <ref name="eref"/>
           <ref name="xref"/>
           <ref name="hyperlink"/>
+          <ref name="index"/>
+          <ref name="index-xref"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -648,6 +654,8 @@
           <ref name="eref"/>
           <ref name="xref"/>
           <ref name="hyperlink"/>
+          <ref name="index"/>
+          <ref name="index-xref"/>
         </choice>
       </zeroOrMore>
     </element>
@@ -655,7 +663,11 @@
   <define name="keyword">
     <element name="keyword">
       <zeroOrMore>
-        <ref name="PureTextElement"/>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="index"/>
+          <ref name="index-xref"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>
@@ -676,7 +688,11 @@
   <define name="strike">
     <element name="strike">
       <zeroOrMore>
-        <ref name="PureTextElement"/>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="index"/>
+          <ref name="index-xref"/>
+        </choice>
       </zeroOrMore>
     </element>
   </define>

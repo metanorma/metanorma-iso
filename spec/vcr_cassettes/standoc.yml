@@ -21,14 +21,14 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Tue, 05 Sep 2023 15:45:40 GMT
+      - Mon, 25 Sep 2023 08:17:58 GMT
       Content-Type:
       - text/html; charset=utf-8
       Vary:
       - X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept,
         X-Requested-With
       Etag:
-      - W/"035fc5cb5b7c148d3871a7dffad2000c"
+      - W/"cbc5312ff79f3a381ab47f93f0912bfe"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Strict-Transport-Security:
@@ -44,45 +44,45 @@ http_interactions:
       Content-Security-Policy:
       - 'default-src ''none''; base-uri ''self''; child-src github.com/assets-cdn/worker/
         gist.github.com/assets-cdn/worker/; connect-src ''self'' uploads.github.com
-        objects-origin.githubusercontent.com www.githubstatus.com collector.github.com
-        raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com
+        www.githubstatus.com collector.github.com raw.githubusercontent.com api.githubcopilot.com
+        api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com
         github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com
-        cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com
-        productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/
-        productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/
-        productionresultssa4.blob.core.windows.net/ productionresultssa5.blob.core.windows.net/
-        productionresultssa6.blob.core.windows.net/ productionresultssa7.blob.core.windows.net/
-        productionresultssa8.blob.core.windows.net/ productionresultssa9.blob.core.windows.net/
-        wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com
-        github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com
-        wss://alive.github.com; font-src github.githubassets.com; form-action ''self''
-        github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors
-        ''none''; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com;
-        img-src ''self'' data: github.githubassets.com media.githubusercontent.com
+        cdn.optimizely.com logx.optimizely.com/v1/events objects-origin.githubusercontent.com
+        *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/
+        productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/
+        productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/
+        productionresultssa5.blob.core.windows.net/ productionresultssa6.blob.core.windows.net/
+        productionresultssa7.blob.core.windows.net/ productionresultssa8.blob.core.windows.net/
+        productionresultssa9.blob.core.windows.net/ wss://*.actions.githubusercontent.com
+        github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com
+        insights.github.com wss://alive.github.com; font-src github.githubassets.com;
+        form-action ''self'' github.com gist.github.com objects-origin.githubusercontent.com;
+        frame-ancestors ''none''; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com
+        support.github.com; img-src ''self'' data: github.githubassets.com media.githubusercontent.com
         camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com
-        github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com
-        secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/
-        private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com
-        customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com;
-        manifest-src ''self''; media-src github.com user-images.githubusercontent.com/
+        github-cloud.s3.amazonaws.com objects.githubusercontent.com secured-user-images.githubusercontent.com/
+        user-images.githubusercontent.com/ private-user-images.githubusercontent.com
+        opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com
+        customer-stories-feed.github.com spotlights-feed.github.com objects-origin.githubusercontent.com
+        *.githubusercontent.com; manifest-src ''self''; media-src github.com user-images.githubusercontent.com/
         secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com;
         script-src github.githubassets.com; style-src ''unsafe-inline'' github.githubassets.com;
         upgrade-insecure-requests; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/'
       Content-Encoding:
       - gzip
       Set-Cookie:
-      - _gh_sess=%2F4n%2FYScWRQtVMFYHVx845Niupza%2BVRgR6I72jQdb%2BfCNeNn61QLTQ29cehJBy6eMabwS8d9xqJ9uawZkGTo5AMIx5PCAghlS629xvUijPwEyeaTOBnMII59kQMmSRWtxg35ZCfWxFsXyZ2oCGxvv1SiBgOtIUJavpM%2FSmXDwbm%2F2%2FLbVBk1TnitmOGMxyT2H3GU2s7jAgpNQFAWKdoAd31Elbxiomr30T24X1RnL0coSDVSnmOhx%2BT3DEvBmH5HL6PHfu9dmg0Y8P5ZP0Ao3HQ%3D%3D--SHd25WX%2FVfOaKxN4--j7%2BNC1DQgX6bUI2ve6h6%2BQ%3D%3D;
+      - _gh_sess=vZuY8C%2FmrfScDf6eLvGy4KO6BjU4gWbm9nzZSRO%2BEfdCTRCPElYzvp1lMaSJv8YL7TDMnUDaK8GZ0xf1%2Bu9uNqeWf8FFhdM4UmAnqkSNn21uTc6Vwk3o6%2FXTz4FDb8ew7G4xxta%2FUTYvwDEsxBB6oOICpn3ItlfdPwWpu0JNKpEEDojtJtLyqbcRlb7L1LJSiKlhOh2G1IeCPLOSjKy2NNnYGqre7LzKnUpFZD%2Fep1FeS%2BIUzkPtzTvKvVcypWZayYmzf251WvCCDQv9dTIuzA%3D%3D--xNX%2FujUFjExZlhp0--d%2Bt2KCnaKg9rnEzOfdDE6w%3D%3D;
         Path=/; HttpOnly; Secure; SameSite=Lax
-      - _octo=GH1.1.661598400.1693928739; Path=/; Domain=github.com; Expires=Thu,
-        05 Sep 2024 15:45:39 GMT; Secure; SameSite=Lax
-      - logged_in=no; Path=/; Domain=github.com; Expires=Thu, 05 Sep 2024 15:45:39
+      - _octo=GH1.1.1765600887.1695629877; Path=/; Domain=github.com; Expires=Wed,
+        25 Sep 2024 08:17:57 GMT; Secure; SameSite=Lax
+      - logged_in=no; Path=/; Domain=github.com; Expires=Wed, 25 Sep 2024 08:17:57
         GMT; HttpOnly; Secure; SameSite=Lax
       Accept-Ranges:
       - bytes
       X-Github-Request-Id:
-      - E321:462D:1B4CEA:1E7123:64F74D23
+      - 1003:6ECE:44A9DD:49F5CC:65114235
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Tue, 05 Sep 2023 15:45:40 GMT
+  recorded_at: Mon, 25 Sep 2023 08:17:58 GMT
 recorded_with: VCR 6.1.0

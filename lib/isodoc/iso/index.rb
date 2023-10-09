@@ -8,7 +8,7 @@ module IsoDoc
       def index(xml)
         if xml.at(ns("//index"))
           i = xml.at(ns("//indexsect")) ||
-            xml.root.add_child("<indexsect #{add_id}><title>#{@i18n.index}"\
+            xml.root.add_child("<indexsect #{add_id}><title>#{@i18n.index}" \
                                "</title></indexsect>").first
           index = sort_indexterms(xml.xpath(ns("//index")),
                                   xml.xpath(ns("//index-xref[@also = 'false']")),
@@ -147,7 +147,7 @@ module IsoDoc
           index2bookmark(t)
           term_hash_init(v, term, term2, term3, :xref)
           to = t["to"] ? "to='#{t['to']}' " : ""
-          v[term][term2][term3][:xref] << "<xref target='#{t['id']}' "\
+          v[term][term2][term3][:xref] << "<xref target='#{t['id']}' " \
                                           "#{to}pagenumber='true'/>"
         end
       end

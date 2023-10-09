@@ -1283,7 +1283,7 @@
       <value>mergedInto</value>
       <value>splits</value>
       <value>splitInto</value>
-      <value>instance</value>
+      <value>instanceOf</value>
       <value>hasInstance</value>
       <value>exemplarOf</value>
       <value>hasExemplar</value>
