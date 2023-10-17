@@ -84,7 +84,8 @@ module Metanorma
       end
 
       def iso_id_year(node)
-        node.attr("copyright-year") || node.attr("updated-date")
+        (node.attr("copyright-year") || node.attr("updated-date") ||
+         node.attr("published-date"))
           &.sub(/-.*$/, "") || Date.today.year
       end
 
