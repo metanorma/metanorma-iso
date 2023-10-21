@@ -1,6 +1,3 @@
-require "date"
-require "htmlentities"
-
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
@@ -37,7 +34,6 @@ module Metanorma
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']" \
                      "/organization").each_with_object([]) do |x, prefix|
           x1 = x.at("abbreviation")&.text || x.at("name")&.text
-          # (x1 == "ISO" and prefix.unshift("ISO")) or prefix << x1
           prefix << x1
         end
       end
@@ -76,9 +72,7 @@ module Metanorma
       end
 
       def sort_biblio(bib)
-        bib.sort do |a, b|
-          sort_biblio_key(a) <=> sort_biblio_key(b)
-        end
+        bib.sort { |a, b| sort_biblio_key(a) <=> sort_biblio_key(b) }
       end
 
       # sort by: doc class (ISO, IEC, other standard (not DOI &c), other
@@ -90,15 +84,15 @@ module Metanorma
       # then title
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
-        num = bib&.at("./docnumber")&.text
-        id = bib&.at("./docidentifier[@primary]") ||
-          bib&.at("./docidentifier[not(#{skip_docid} or @type = 'metanorma')]")
-        metaid = bib&.at("./docidentifier[@type = 'metanorma']")&.text
+        num = bib.at("./docnumber")&.text
+        id = bib.at("./docidentifier[@primary]") ||
+          bib.at("./docidentifier[not(#{skip_docid} or @type = 'metanorma')]")
+        metaid = bib.at("./docidentifier[@type = 'metanorma']")&.text
         abbrid = metaid unless /^\[\d+\]$/.match?(metaid)
         /\d-(?<partid>\d+)/ =~ id&.text
         type = id["type"] if id
-        title = bib&.at("./title[@type = 'main']")&.text ||
-          bib&.at("./title")&.text || bib&.at("./formattedref")&.text
+        title = bib.at("./title[@type = 'main']")&.text ||
+          bib.at("./title")&.text || bib&.at("./formattedref")&.text
         "#{pubclass} :: #{type} :: " \
           "#{num.nil? ? abbrid : sprintf('%09d', num.to_i)} :: " \
           "#{sprintf('%09d', partid.to_i)} :: #{id&.text} :: #{title}"
@@ -240,6 +234,14 @@ module Metanorma
             g["type"] = DEFAULT_EDGROUP_TYPE[v.to_sym]
           end
         end
+      end
+
+      def termdef_boilerplate_insert_location(xmldoc)
+        f = xmldoc.at(self.class::TERM_CLAUSE)
+        root = xmldoc.at("//sections/terms | //sections/clause[.//terms]")
+        !f || !root and return f || root
+        f.at("./preceding-sibling::clause") and return root
+        f
       end
     end
   end

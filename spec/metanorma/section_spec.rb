@@ -20,10 +20,6 @@ RSpec.describe Metanorma::ISO do
 
       == Normative References
 
-      == Terms and Definitions
-
-      === Term1
-
       == Terms, Definitions, Symbols and Abbreviated Terms
 
       === Normal Terms
@@ -78,24 +74,6 @@ RSpec.describe Metanorma::ISO do
             <title>Scope</title>
             <p id="_">Text</p>
           </clause>
-          <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>
-            <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
-            <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
-            <ul id="_">
-              <li>
-                <p id="_">ISO Online browsing platform: available at
-                  <link target="https://www.iso.org/obp"/></p>
-              </li>
-              <li>
-                <p id="_">IEC Electropedia: available at
-                  <link target="https://www.electropedia.org"/></p>
-              </li>
-            </ul>
-            <term id="term-Term1">
-              <preferred><expression><name>Term1</name></expression></preferred>
-            </term>
-          </terms>
           <clause id="_" obligation="normative">
             <title>Terms, definitions, symbols and abbreviated terms</title>
             <terms id="_" obligation="normative">

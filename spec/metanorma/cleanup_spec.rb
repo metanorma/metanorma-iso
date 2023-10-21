@@ -1448,6 +1448,79 @@ RSpec.describe Metanorma::ISO do
         .to be_equivalent_to xmlpp(output)
     end
 
+    it "places normal terms & definitions boilerplate at root if first of multiple clauses that excludes symbols is preceded by clause" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+
+        == Terms, definitions, symbols and abbreviated terms
+
+        [.nonterm]
+        === Prefatory clause
+
+        === Terms and definitions
+
+        ==== Term1
+
+        [heading=terms]
+        === Other Terms
+
+        ==== Term 2
+
+        === Symbols and abbreviated terms
+      INPUT
+      output = <<~OUTPUT
+       #{BLANK_HDR}
+        <sections>
+           <clause id="_" obligation="normative">
+             <title>Terms, definitions, symbols and abbreviated terms</title>
+               <p id="_">For the purposes of this document,
+           the following terms and definitions apply.</p>
+               <p id="_">ISO and IEC maintain terminology databases for use in
+       standardization at the following addresses:</p>
+               <ul id="_">
+                 <li>
+                   <p id="_">ISO Online browsing platform: available at
+         <link target="https://www.iso.org/obp"/></p>
+                 </li>
+                 <li>
+                   <p id="_">IEC Electropedia: available at
+       <link target="https://www.electropedia.org"/></p>
+                 </li>
+               </ul>
+               <clause id="_" inline-header="false" obligation="normative">
+                 <title>Prefatory clause</title>
+               </clause>
+             <terms id="_" obligation="normative">
+               <title>Terms and definitions</title>
+               <term id="term-Term1">
+                 <preferred>
+                   <expression>
+                     <name>Term1</name>
+                   </expression>
+                 </preferred>
+               </term>
+             </terms>
+             <terms id="_" obligation="normative">
+               <title>Other Terms</title>
+               <term id="term-Term-2">
+                 <preferred>
+                   <expression>
+                     <name>Term 2</name>
+                   </expression>
+                 </preferred>
+               </term>
+             </terms>
+             <definitions id="_" obligation="normative">
+               <title>Symbols and abbreviated terms</title>
+             </definitions>
+           </clause>
+         </sections>
+       </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+
     it "modifies normal terms & definitions boilerplate in vocabulary document" do
       input = <<~INPUT
         = Document title
