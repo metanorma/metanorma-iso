@@ -76,18 +76,36 @@ RSpec.describe Metanorma::ISO do
           </clause>
           <clause id="_" obligation="normative">
             <title>Terms, definitions, symbols and abbreviated terms</title>
-            <terms id="_" obligation="normative">
-              <title>Normal Terms</title>
-              <term id="term-Term2">
-                <preferred><expression><name>Term2</name></expression></preferred>
-              </term>
-            </terms>
+                         <terms id="_" obligation="normative">
+               <title>Terms and definitions</title>
+               <p id="_">For the purposes of this document,
+           the following terms and definitions apply.</p>
+               <p id="_">ISO and IEC maintain terminology databases for use in
+       standardization at the following addresses:</p>
+               <ul id="_">
+                 <li>
+                   <p id="_">ISO Online browsing platform: available at
+         <link target="https://www.iso.org/obp"/></p>
+                 </li>
+                 <li>
+                   <p id="_">IEC Electropedia: available at
+       <link target="https://www.electropedia.org"/></p>
+                 </li>
+               </ul>
+               <term id="term-Term2">
+                 <preferred>
+                   <expression>
+                     <name>Term2</name>
+                   </expression>
+                 </preferred>
+               </term>
+             </terms>
             <definitions id="_" obligation="normative">
-              <title>Symbols and abbreviated terms</title>
+              <title>Symbols and Abbreviated Terms</title>
             </definitions>
           </clause>
           <definitions id="_" obligation="normative">
-            <title>Symbols and abbreviated terms</title>
+            <title>Symbols and Abbreviated Terms</title>
           </definitions>
           <clause id="_" inline-header="false" obligation="normative">
             <title>Clause 4</title>
@@ -98,9 +116,9 @@ RSpec.describe Metanorma::ISO do
               <title>Clause 4.2</title>
             </clause>
           </clause>
-          <clause id="_" inline-header="false" obligation="normative">
+          <terms id="_" obligation="normative">
             <title>Terms and Definitions</title>
-          </clause>
+          </terms>
         </sections>
         <annex id="_" inline-header="false" obligation="normative">
           <title>Annex</title>
