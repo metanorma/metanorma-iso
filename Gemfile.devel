@@ -1,0 +1,5 @@
+gem "metanorma", git: "https://github.com/metanorma/metanorma", branch: "fix/propagate_output_formats"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/float_clausebefore"
+
+

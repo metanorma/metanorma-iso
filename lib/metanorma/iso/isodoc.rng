@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.5 -->
+<!-- VERSION v1.2.6 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -1011,6 +1011,14 @@
           <ref name="AnyElement"/>
         </choice>
       </oneOrMore>
+    </element>
+  </define>
+  <define name="BasicBlock" combine="choice">
+    <ref name="columnbreak"/>
+  </define>
+  <define name="columnbreak">
+    <element name="columnbreak">
+      <empty/>
     </element>
   </define>
   <define name="MultilingualRenderingType">

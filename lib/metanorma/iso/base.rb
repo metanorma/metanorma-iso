@@ -5,6 +5,7 @@ require "pathname"
 require "open-uri"
 require "isodoc"
 require "fileutils"
+require_relative "processor"
 
 module Metanorma
   module ISO
@@ -47,7 +48,9 @@ module Metanorma
       end
 
       def presentation_xml_converter(node)
-        IsoDoc::Iso::PresentationXMLConvert.new(html_extract_attributes(node))
+        IsoDoc::Iso::PresentationXMLConvert
+          .new(html_extract_attributes(node)
+          .merge(output_formats: ::Metanorma::Iso::Processor.new.output_formats))
       end
 
       def init(node)
