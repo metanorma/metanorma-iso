@@ -649,7 +649,7 @@ RSpec.describe Metanorma::ISO do
       * [[[XYZ,IESO 121]]] _Standard_
     INPUT
     expect(File.read("test.err.html"))
-      .to include "non-ISO/​IEC reference not expected as normative"
+      .to include "non-ISO/IEC reference not expected as normative"
   end
 
   it "warns that Scope contains subclauses" do
