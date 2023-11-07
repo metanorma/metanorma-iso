@@ -6867,8 +6867,17 @@
 		<xsl:variable name="styles_">
 			<xsl:for-each select="xalan:nodeset($styles__)/item">
 				<xsl:variable name="key" select="normalize-space(substring-before(., ':'))"/>
-				<xsl:variable name="value" select="normalize-space(substring-after(translate(.,$quot,''), ':'))"/>
-				<xsl:if test="$key = 'font-family' or $key = 'color'">
+				<xsl:variable name="value_" select="normalize-space(substring-after(translate(.,$quot,''), ':'))"/>
+				<xsl:variable name="value">
+					<xsl:choose>
+						<!-- if font-size is digits only -->
+						<xsl:when test="$key = 'font-size' and translate($value_, '0123456789', '') = ''"><xsl:value-of select="$value_"/>pt</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$value_"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:if test="$key = 'font-family' or $key = 'font-size' or $key = 'color'">
 					<style name="{$key}"><xsl:value-of select="$value"/></style>
 				</xsl:if>
 			</xsl:for-each>
