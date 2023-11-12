@@ -919,6 +919,18 @@
 																	</fo:block>
 																</fo:block>
 															</xsl:if>
+															<xsl:variable name="date_corrected" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:date[@type = 'corrected'])"/>
+															<xsl:if test="$date_corrected != ''">
+																<fo:block text-align="right" font-size="9.5pt">
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:call-template name="getLocalizedString">
+																		<xsl:with-param name="key">corrected_version</xsl:with-param>
+																	</xsl:call-template>
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="$date_corrected"/>
+																</fo:block>
+															</xsl:if>
 														</fo:table-cell>
 													</fo:table-row>
 													<fo:table-row height="17mm" role="SKIP">
