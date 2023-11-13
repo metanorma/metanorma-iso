@@ -26,6 +26,7 @@ termsrelated: Термины, связанные
 availablefrom: Доступна с
 voting_begins_on: Голосование начинается в
 voting_terminates_on: Голосование заканчивается в
+corrected_version: Исправленная версия
 doctype_dict:
   international-standard: Международный Стандарт
   technical-specification: Техническая Спецификация

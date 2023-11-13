@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.6 -->
+<!-- VERSION v1.2.7 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -1054,6 +1054,17 @@
       <ref name="date_inline"/>
     </choice>
   </define>
+  <define name="PureTextElement" combine="choice">
+    <ref name="passthrough_inline"/>
+  </define>
+  <define name="passthrough_inline">
+    <element name="passthrough">
+      <optional>
+        <attribute name="formats"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
   <define name="add">
     <element name="add">
       <choice>
@@ -1091,6 +1102,9 @@
       </optional>
       <optional>
         <attribute name="style"/>
+      </optional>
+      <optional>
+        <attribute name="custom-charset"/>
       </optional>
       <oneOrMore>
         <ref name="TextElement"/>

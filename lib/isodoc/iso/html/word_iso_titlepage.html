@@ -33,6 +33,10 @@ style='mso-no-proof:yes'>{{ editorialgroup }}</span></p>
 <p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB">{{ edition_display | capitalize }}</span></p>
 {% endif %}
 
+{% if correcteddate %}
+<p class="MsoNormal" align="right" style='text-align:right'>{{ labels["corrected_version"] }}: {{ correcteddate }}</p>
+{% endif %}
+
 {% if revdate %}
 <p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB">{{ labels["date"] }}: <span style='mso-no-proof:yes'>{{ revdate }}</span></span></p>
 {% endif %}

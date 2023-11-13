@@ -25,6 +25,7 @@ termsrelated: Termes liés
 availablefrom: Disponible sur
 voting_begins_on: Le vote commence le
 voting_terminates_on: Le vote se termine le
+corrected_version: Version corrigée
 doctype_dict:
   international-standard: Norme internationale
   technical-specification: Spécification technique

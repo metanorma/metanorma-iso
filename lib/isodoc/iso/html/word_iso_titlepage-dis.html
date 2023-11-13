@@ -17,6 +17,9 @@
 {% if doc_date %}
 <p class="zzCover" align="right" style='text-align:right;font-weight:normal;'><span lang="EN-GB">Date: <span style='mso-no-proof:yes'>{{ doc_date }}</span></span></p>
 {% endif %}
+{% if correcteddate %}
+<p class="zzCover">{{ labels["corrected_version"] }}: {{ correcteddate }}</p>
+{% endif %}
 
 <p class="zzCover" style='font-weight:normal;'><span lang="EN-GB">Reference number of project: {{ docnumber_undated }}{% if draftinfo %} {{ draftinfo }}{% endif %}</span></p>
 

@@ -942,6 +942,7 @@
       <value>obsoleted</value>
       <value>confirmed</value>
       <value>updated</value>
+      <value>corrected</value>
       <value>issued</value>
       <value>transmitted</value>
       <value>copied</value>
