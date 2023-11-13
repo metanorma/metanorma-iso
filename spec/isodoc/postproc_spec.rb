@@ -240,7 +240,9 @@ RSpec.describe IsoDoc do
               </clause>
             </clause>
             <clause id="P" displayorder="2"><title>2<tab/>Clause 5</title>
-            <clause id="P1"><title>2.1<tab/>Clause 5.1</title></clause>
+            <clause id="P1"><title>2.1<tab/>Clause 5.1</title>
+            <p>X</p>
+            </clause>
             </clause>
             <clause id="Q" displayorder="3"><title>3<tab/>Clause 6</title></clause>
           </sections>
@@ -278,22 +280,22 @@ RSpec.describe IsoDoc do
                 </li>
               </ul>
             </li>
-            <li class="h1">
-              <div class="collapse-group">
-                <a href="#_">2  Clause 5</a>
-                <div class="collapse-button"/>
-              </div>
-            </li>
-            <li class="h1">
-              <a href="#_">      3  Clause 6</a>
-              <ul class="content collapse">
-                <li class="h2">
-                  <a href="#_">      2.1  Clause 5.1</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+                       <li class="h1">
+             <div class="collapse-group">
+               <a href="#_">2  Clause 5</a>
+               <div class="collapse-button"/>
+             </div>
+             <ul class="content collapse">
+               <li class="h2">
+                 <a href="#_">      2.1  Clause 5.1</a>
+               </li>
+             </ul>
+           </li>
+           <li class="h1">
+             <a href="#_">      3  Clause 6</a>
+           </li>
+         </ul>
+       </div>
       OUTPUT
   end
 
