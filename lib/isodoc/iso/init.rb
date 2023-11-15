@@ -51,12 +51,12 @@ module IsoDoc
           elsif /\p{Zs}/.match?(i) then i
           else std_docid_semantic_full(i)
           end
-        end.join
+        end.join.gsub(%r{</span>(\p{Zs}+)<}, "\\1</span><")
       end
 
       def std_docid_semantic_full(ident)
         ident
-          .sub(/^([^0-9]+)(\s|$)/, "<span class='stdpublisher'>\\1</span>\\2")
+          .sub(/^([^0-9]+)(\p{Zs}|$)/, "<span class='stdpublisher'>\\1</span>\\2")
           .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
           .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
           .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
