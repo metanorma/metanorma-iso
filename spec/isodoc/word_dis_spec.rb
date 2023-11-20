@@ -364,7 +364,72 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
-      #.xpath("//xmlns:p[@class = 'MsoToc1']").each(&:remove)
+      .at("//xmlns:div[@class = 'WordSection2']")
+    expect(xmlpp(doc.to_xml))
+      .to be_equivalent_to xmlpp(word)
+  end
+
+  it "formats tt with ad hoc smaller font" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <preface>
+        <foreword displayorder="1">
+        <table><tbody>
+        <tr><td>
+        <p><tt>A <strong>B</strong> <em>C</em> <strong>D<em>E</em>F</strong> <em>G<strong>H</strong>I</em></tt></p>
+        <p><strong>A <tt>B</tt> <em>C<tt>D</tt>E</em></strong></p>
+        <p><em>A <tt>B</tt> <strong>C<tt>D</tt>E</strong></em></p>
+        </td></tr>
+        </tbody></table>
+        </foreword>
+        </preface>
+      </iso-standard>
+    INPUT
+    word = <<~OUTPUT
+          <div class='WordSection2'>
+          <div>
+            <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
+          </div>
+        <p class='MsoBodyText'>
+          <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
+        </p>
+        <div>
+           <p class="ForewordTitle">Foreword</p>
+           <div align="center" class="table_container">
+             <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
+               <tbody>
+                 <tr>
+                   <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                     <p class="Tablebody" style="page-break-after:auto">
+                       <span class="ISOCode">
+                         <span style="font-size: 9pt;">A <span class="ISOCodebold"><span style="font-size: 9pt;">B</span></span><span class="ISOCodeitalic"><span style="font-size: 9pt;">C</span></span><span class="ISOCodebold"><span style="font-size: 9pt;">D<span class="ISOCodeitalic"><span style="font-size: 9pt;">E</span></span>F</span></span><span class="ISOCodeitalic"><span style="font-size: 9pt;">G<b>H</b>I</span></span></span>
+                       </span>
+                     </p>
+                     <p class="Tablebody" style="page-break-after:auto">
+                       <b>A <span class="ISOCodebold"><span style="font-size: 9pt;">B</span></span><i>C<span class="ISOCodeitalic"><span style="font-size: 9pt;">D</span></span>E</i></b>
+                     </p>
+                     <p class="Tablebody" style="page-break-after:auto">
+                       <i>A <span class="ISOCodeitalic"><span style="font-size: 9pt;">B</span></span><b>C<span class="ISOCodebold"><span style="font-size: 9pt;">D</span></span>E</b></i>
+                     </p>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+        </div>
+        <p class='MsoBodyText'> </p>
+      </div>
+    OUTPUT
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(xmlpp(doc.to_xml))
       .to be_equivalent_to xmlpp(word)
