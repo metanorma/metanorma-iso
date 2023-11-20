@@ -221,6 +221,9 @@
         <attribute name="number"/>
       </optional>
       <optional>
+        <attribute name="branch-number"/>
+      </optional>
+      <optional>
         <attribute name="type"/>
       </optional>
       <optional>

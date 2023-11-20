@@ -914,44 +914,47 @@
   -->
   <define name="image">
     <element name="image">
-      <attribute name="id">
-        <data type="ID"/>
+      <ref name="Image"/>
+    </element>
+  </define>
+  <define name="Image">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <attribute name="src">
+      <data type="anyURI"/>
+    </attribute>
+    <attribute name="mimetype"/>
+    <optional>
+      <attribute name="filename"/>
+    </optional>
+    <optional>
+      <attribute name="width">
+        <choice>
+          <data type="int"/>
+          <value>auto</value>
+        </choice>
       </attribute>
-      <attribute name="src">
+    </optional>
+    <optional>
+      <attribute name="height">
+        <choice>
+          <data type="int"/>
+          <value>auto</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+    <optional>
+      <attribute name="title"/>
+    </optional>
+    <optional>
+      <attribute name="longdesc">
         <data type="anyURI"/>
       </attribute>
-      <attribute name="mimetype"/>
-      <optional>
-        <attribute name="filename"/>
-      </optional>
-      <optional>
-        <attribute name="width">
-          <choice>
-            <data type="int"/>
-            <value>auto</value>
-          </choice>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="height">
-          <choice>
-            <data type="int"/>
-            <value>auto</value>
-          </choice>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="alt"/>
-      </optional>
-      <optional>
-        <attribute name="title"/>
-      </optional>
-      <optional>
-        <attribute name="longdesc">
-          <data type="anyURI"/>
-        </attribute>
-      </optional>
-    </element>
+    </optional>
   </define>
   <define name="video">
     <element name="video">

@@ -348,6 +348,9 @@
       <zeroOrMore>
         <ref name="contact"/>
       </zeroOrMore>
+      <optional>
+        <ref name="logo"/>
+      </optional>
     </element>
   </define>
   <define name="orgname">
@@ -364,6 +367,11 @@
         <ref name="LocalizedString"/>
         <ref name="NameWithVariants"/>
       </choice>
+    </element>
+  </define>
+  <define name="logo">
+    <element name="logo">
+      <ref name="image"/>
     </element>
   </define>
   <define name="NameWithVariants">

@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.7 -->
+<!-- VERSION v1.2.8 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -1409,6 +1409,9 @@
         <attribute name="number"/>
       </optional>
       <optional>
+        <attribute name="branch-number"/>
+      </optional>
+      <optional>
         <attribute name="obligation">
           <choice>
             <value>normative</value>
@@ -1632,6 +1635,9 @@
       <attribute name="number"/>
     </optional>
     <optional>
+      <attribute name="branch-number"/>
+    </optional>
+    <optional>
       <attribute name="type"/>
     </optional>
     <optional>
@@ -1681,6 +1687,9 @@
     </optional>
     <optional>
       <attribute name="number"/>
+    </optional>
+    <optional>
+      <attribute name="branch-number"/>
     </optional>
     <optional>
       <ref name="section-title"/>
@@ -1778,6 +1787,9 @@
       </optional>
       <optional>
         <attribute name="number"/>
+      </optional>
+      <optional>
+        <attribute name="branch-number"/>
       </optional>
       <optional>
         <attribute name="obligation">
