@@ -232,6 +232,14 @@ RSpec.describe Metanorma::ISO do
              </organization>
            </contributor>
            <contributor>
+             <role type="author">Technical committee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>TC1</subdivision>
+               <identifier>A1 11</identifier>
+             </organization>
+           </contributor>
+           <contributor>
              <role type="author">Subcommittee</role>
              <organization>
                <name>International Organization for Standardization</name>
@@ -240,11 +248,27 @@ RSpec.describe Metanorma::ISO do
              </organization>
            </contributor>
            <contributor>
+             <role type="author">Subcommittee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>SC1</subdivision>
+               <identifier>B1 21</identifier>
+             </organization>
+           </contributor>
+           <contributor>
              <role type="author">Workgroup</role>
              <organization>
                <name>International Organization for Standardization</name>
                <subdivision>WG</subdivision>
                <identifier>C 3</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="author">Workgroup</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>WG1</subdivision>
+               <identifier>C1 31</identifier>
              </organization>
            </contributor>
            <contributor>
@@ -263,6 +287,14 @@ RSpec.describe Metanorma::ISO do
              </organization>
            </contributor>
            <contributor>
+             <role type="authorizer">Technical committee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>TC1</subdivision>
+               <identifier>A1 11</identifier>
+             </organization>
+           </contributor>
+           <contributor>
              <role type="authorizer">Subcommittee</role>
              <organization>
                <name>International Organization for Standardization</name>
@@ -271,11 +303,27 @@ RSpec.describe Metanorma::ISO do
              </organization>
            </contributor>
            <contributor>
+             <role type="authorizer">Subcommittee</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>SC1</subdivision>
+               <identifier>B1 21</identifier>
+             </organization>
+           </contributor>
+           <contributor>
              <role type="authorizer">Workgroup</role>
              <organization>
                <name>International Organization for Standardization</name>
                <subdivision>WG</subdivision>
                <identifier>C 3</identifier>
+             </organization>
+           </contributor>
+           <contributor>
+             <role type="authorizer">Workgroup</role>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>WG1</subdivision>
+               <identifier>C1 31</identifier>
              </organization>
            </contributor>
            <contributor>
