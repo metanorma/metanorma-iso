@@ -207,7 +207,7 @@ BLANK_HDR1 = <<~"HDR".freeze
         </organization>
       </contributor>
       <contributor>
-      <role type="authorizer">Agency</role>
+      <role type="authorizer"><description>Agency</description></role>
       <organization>
         <name>International Organization for Standardization</name>
         <abbreviation>ISO</abbreviation>
