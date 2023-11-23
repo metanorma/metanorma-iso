@@ -21,9 +21,12 @@ module Metanorma
       # default_org: !node.attr("publisher") })
       # committee_contributors(node, xml, false, home_agency)
       # end
+      #
 
       def metadata_author(node, xml)
-        super
+        org_contributor(node, xml,
+                        { source: ["publisher", "pub"], role: "author",
+                          default: default_publisher })
         committee_contributors(node, xml, false, default_publisher)
       end
 
