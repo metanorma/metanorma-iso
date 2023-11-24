@@ -1761,6 +1761,7 @@ RSpec.describe Metanorma::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :technical-committee: A
       :technical-committee-type: X
       :technical-committee-number: X
       :no-isobib:
@@ -1775,6 +1776,7 @@ RSpec.describe Metanorma::ISO do
       Author
       :docfile: test.adoc
       :nodoc:
+      :subcommittee: A
       :subcommittee-type: X
       :subcommittee-number: X
       :no-isobib:
