@@ -2,7 +2,7 @@
 === {% if stage_int >= 40 %}DOCUMENT PROTÉGÉ PAR COPYRIGHT{%else%}{blank}{%endif%}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher:[{{ agency }}] span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher:[{{ agency }}]&#xa0;span:std_docNumber[{{ docyear }}]
 
 [[boilerplate-message]]
 Droits de reproduction réservés. Sauf indication contraire, ou requise dans le cadre de sa mise en œuvre,
