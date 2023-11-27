@@ -142,6 +142,13 @@ RSpec.describe Metanorma::ISO do
              </organization>
            </contributor>
            <contributor>
+             <role type="authorizer"><description>Agency</description></role>
+             <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+             </organization>
+           </contributor>
+           <contributor>
              <role type="publisher"/>
              <organization>
                <name>International Organization for Standardization</name>
@@ -194,12 +201,6 @@ RSpec.describe Metanorma::ISO do
                <name>ISO/IEC</name>
                <subdivision>WG1a</subdivision>
                <identifier>C1a 31a</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Agency</description></role>
-             <organization>
-               <name>ISO/IEC</name>
              </organization>
            </contributor>
           <edition>2</edition>
