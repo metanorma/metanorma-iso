@@ -3,7 +3,7 @@
 === {% if stage_int >= 40 %}COPYRIGHT PROTECTED DOCUMENT{% else %}{blank}{% endif %}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher[{{ agency }}]&#xa0;span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
 
 [[boilerplate-message]]
 All rights reserved. Unless otherwise specified, or required in the context of its implementation,

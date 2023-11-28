@@ -374,6 +374,16 @@
       <ref name="image"/>
     </element>
   </define>
+  <define name="depiction">
+    <element name="depiction">
+      <optional>
+        <attribute name="scope"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="image"/>
+      </zeroOrMore>
+    </element>
+  </define>
   <define name="NameWithVariants">
     <element name="primary">
       <ref name="LocalizedString"/>
@@ -759,6 +769,9 @@
     </zeroOrMore>
     <optional>
       <ref name="validity"/>
+    </optional>
+    <optional>
+      <ref name="depiction"/>
     </optional>
   </define>
   <define name="ReducedBibliographicItem">
