@@ -57,10 +57,10 @@ module IsoDoc
         end
       end
 
-      def figure_anchor(elem, sublabel, label, klass)
+      def figure_anchor(elem, sublabel, label, klass, container: false)
         @anchors[elem["id"]] = anchor_struct(
-          "#{label}#{sublabel}",
-          nil, @labels[klass] || klass.capitalize, klass, elem["unnumbered"]
+          "#{label}#{sublabel}", container ? elem : nil,
+          @labels[klass] || klass.capitalize, klass, elem["unnumbered"]
         )
         !sublabel.empty? && elem["unnumbered"] != "true" and
           @anchors[elem["id"]][:label] = sublabel
@@ -71,18 +71,18 @@ module IsoDoc
         " #{(subfignum + 96).chr})"
       end
 
-      def sequential_figure_names(clause)
+      def sequential_figure_names(clause, container: false)
         j = 0
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank
           .each_with_object(IsoDoc::XrefGen::Counter.new) do |t, c|
           j = subfigure_increment(j, c, t)
           sublabel = subfigure_label(j)
-          figure_anchor(t, sublabel, c.print, "figure")
+          figure_anchor(t, sublabel, c.print, "figure", container: container)
         end
-        sequential_figure_class_names(clause)
+        sequential_figure_class_names(clause, container: container)
       end
 
-      def sequential_figure_class_names(clause)
+      def sequential_figure_class_names(clause, container: false)
         c = {}
         j = 0
         clause.xpath(ns(".//figure[@class][not(@class = 'pseudocode')]"))
@@ -90,7 +90,7 @@ module IsoDoc
           c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
           j = subfigure_increment(j, c[t["class"]], t)
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          figure_anchor(t, sublabel, c.print, t["class"])
+          figure_anchor(t, sublabel, c.print, t["class"], container: container)
         end
       end
 
@@ -154,23 +154,23 @@ module IsoDoc
         true
       end
 
-      def sequential_table_names(clause)
+      def sequential_table_names(clause, container: false)
         super
-        modspec_table_xrefs(clause) if @anchors_previous
+        modspec_table_xrefs(clause, container: container) if @anchors_previous
       end
 
-      def modspec_table_xrefs(clause)
+      def modspec_table_xrefs(clause, container: false)
         clause.xpath(ns(".//table[@class = 'modspec']")).noblank.each do |t|
           n = @anchors[t["id"]][:xref]
           xref_to_modspec(t["id"], n) or next
-          modspec_table_components_xrefs(t, n)
+          modspec_table_components_xrefs(t, n, container: container)
         end
       end
 
-      def modspec_table_components_xrefs(table, table_label)
+      def modspec_table_components_xrefs(table, table_label, container: false)
         table.xpath(ns(".//tr[@id]")).each do |tr|
           xref_to_modspec(tr["id"], table_label) or next
-          @anchors[tr["id"]].delete(:container)
+          container or @anchors[tr["id"]].delete(:container)
         end
       end
 

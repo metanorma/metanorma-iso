@@ -105,6 +105,7 @@ module IsoDoc
         locality_span_wrap(ret, opt[:type])
       end
 
+=begin
       def prefix_container(container, linkend, node, target)
         delim = ", "
         ref = if @xrefs.anchor(target, :type) == "listitem" &&
@@ -118,6 +119,29 @@ module IsoDoc
         ref and linkend = ref + delim + linkend
         l10n(linkend)
       end
+=end
+
+      # 7 a) : Clause 7 a), but Clause 7 List 1 a)
+      def prefix_container(container, linkend, node, target)
+        prefix_container?(container, node) or return linkend
+        container_container = @xrefs.anchor(container, :container, false)
+        nested_xref, container_label =
+          prefix_container_template(container, node, target)
+        container_label = prefix_container(container_container,
+                                           container_label, node, target)
+        l10n(nested_xref.sub("%1", container_label).sub("%2", linkend))
+      end
+
+      def prefix_container_template(container, node, target)
+        nested_xref = @i18n.nested_xref
+        container_label = anchor_xref(node, container)
+        if @xrefs.anchor(target, :type) == "listitem" &&
+            !@xrefs.anchor(target, :refer_list)
+          nested_xref = "%1 %2"
+          container_label = @xrefs.anchor(container, :label)
+        end
+        [nested_xref, container_label]
+      end
 
       def expand_citeas(text)
         std_docid_semantic(super)
@@ -125,7 +149,7 @@ module IsoDoc
 
       def anchor_value(id)
         locality_span_wrap(super, @xrefs.anchor(id, :subtype) ||
-                            @xrefs.anchor(id, :type))
+                           @xrefs.anchor(id, :type))
       end
 
       def anchor_linkend1(node)

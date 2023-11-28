@@ -960,7 +960,7 @@ RSpec.describe IsoDoc do
       .convert("test", presxml, false)
 
     word = File.read("test.html", encoding: "UTF-8")
-    expect(word).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'
+    expect(strip_guid(word)).to include '<h1 class="IntroTitle" id="_">Warning for Stuff</h1>'
     expect(word).to include "I am the Walrus."
 
     FileUtils.rm_rf "test.doc"
