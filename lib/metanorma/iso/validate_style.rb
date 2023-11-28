@@ -123,11 +123,11 @@ module Metanorma
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-n-numbers
       def style_number(node, text)
         style_number_grouping(node, text)
-        style_regex(/\b(?<num>[0-9]+\.[0-9]+)/i,
+        style_regex(/(?:^|\p{Zs})(?<num>[0-9]+\.[0-9]+)(?!\.[0-9])/i,
                     "possible decimal point", node, text)
         @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
                                       "ambiguous number", node, text)
-        style_regex(/(?:^|\P{Zs})(?<num>-[0-9][0-9,.]*)/i,
+        style_regex(/(?:^|\p{Zs})(?<num>-[0-9][0-9,.]*)/i,
                     "hyphen instead of minus sign U+2212", node, text)
       end
 

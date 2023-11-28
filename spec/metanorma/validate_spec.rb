@@ -724,6 +724,30 @@ RSpec.describe Metanorma::ISO do
       8.1
     INPUT
     expect(File.read("test.err.html")).to include "possible decimal point"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      and 8.1
+    INPUT
+    expect(File.read("test.err.html")).to include "possible decimal point"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      e8.1
+    INPUT
+    expect(File.read("test.err.html")).not_to include "possible decimal point"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      8.1.1
+    INPUT
+    expect(File.read("test.err.html")).not_to include "possible decimal point"
   end
 
   it "Style warning if billion used" do
@@ -807,6 +831,24 @@ RSpec.describe Metanorma::ISO do
     INPUT
     expect(File.read("test.err.html"))
       .to include "hyphen instead of minus sign U+2212"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      and -2
+    INPUT
+    expect(File.read("test.err.html"))
+      .to include "hyphen instead of minus sign U+2212"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      1-2
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include "hyphen instead of minus sign U+2212"
   end
 
   it "Style warning if no space between number and SI unit" do
