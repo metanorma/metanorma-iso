@@ -1,0 +1,94 @@
+term_def_boilerplate: |
+      <p>ISO und IEC unterhalten Terminologiedatenbanken zur Verwendung in
+       Standardisierung unter folgenden Adressen:</p>
+
+      <ul>
+      <li><p>Online-Browsing-Plattform: verfügbar unter
+        <link target="https://www.iso.org/obp"/></p></li>
+      <li><p>IEC Electropedia: verfügbar unter
+      <link target="https://www.electropedia.org"/></p></li>
+      </ul>
+all_rights_reserved: Alle Rechte vorbehalten
+reference_number: Referenznummer
+price_based_on: Preis basierend auf % Seiten
+descriptor: Deskriptor
+under_preparation: In Vorbereitung. (Stadium zum Zeitpunkt der Veröffentlichung %).
+withdrawn: Zurückgezogen.
+cancelled_and_replaced: Abgebrochen und ersetzt durch %.
+table_of_contents: Inhalt
+date: datum
+index: Index
+see: Schau
+see_also: siehe auch
+secretariat: Sekretariat
+edition: Ausgabe
+termsrelated: Begriffe im Zusammenhang mit
+availablefrom: Verfügbar ab
+voting_begins_on: Die Abstimmung beginnt am
+voting_terminates_on: Die Abstimmung endet am
+corrected_version: Korrigierte Version
+multiple_and: "%1 und %2"
+multiple_or: "%1 oder %2"
+doctype_dict:
+  international-standard: Internationaler Standard
+  technical-specification: Technische Spezifikation
+  technical-report: Technischer Bericht
+  publicly-available-specification: Öffentlich verfügbare Spezifikation
+  international-workshop-agreement: Internationales Workshop-Vereinbarung
+  guide: Leitfaden
+  amendment: Änderung
+  technical-corrigendum: Technische Berichtigung
+  directive: Richtlinie
+stage_dict:
+  "00": Vorläufiges Arbeitselement
+  "10": Neuer Arbeitselementvorschlag
+  "20": Arbeitsentwurf
+  "30": Ausschussentwurf
+  "40": 
+    international-standard: Entwurf des internationalen Standards
+    technical-specification: Entwurf der technischen Spezifikation
+    technical-report: Entwurf des technischen Berichts
+    publicly-available-specification: Entwurf der öffentlich verfügbaren Spezifikation
+    international-workshop-agreement: Entwurf der internationalen Workshop-Vereinbarung
+    guide: Leitfadenentwurf
+    amendment: Änderungsentwurf
+    technical-corrigendum: Entwurf der technischen Berichtigung
+    directive: Richtlinienentwurf
+  "50": 
+    international-standard: Endgültiger Entwurf des internationalen Standards
+    technical-specification: Endgültiger Entwurf der technischen Spezifikation
+    technical-report: Endgültiger Entwurf des technischen Berichts
+    publicly-available-specification: Endgültiger Entwurf der öffentlich verfügbaren Spezifikation
+    international-workshop-agreement: Endgültiger Entwurf der internationalen Workshop-Vereinbarung
+    guide: Endgültiger Leitfadenentwurf
+    amendment: Endgültiger Änderungsentwurf
+    technical-corrigendum: Endgültiger Entwurf der technischen Berichtigung
+    directive: Endgültiger Richtlinienentwurf
+  "60": 
+    international-standard: Internationaler Standard
+    technical-specification: Technische Spezifikation
+    technical-report: Technischer Bericht
+    publicly-available-specification: Öffentlich verfügbare Spezifikation
+    international-workshop-agreement: Internationales Workshop-Vereinbarung
+    guide: Leitfaden
+    amendment: Änderung
+    technical-corrigendum: Technische Berichtigung
+    directive: Richtlinie
+  "90": Rezension
+  "95": Rückzug
+locality:
+  appendix: Anhang
+requirements:
+  modspec:
+    provision: Bereitstellung
+    conformancetest: Konformitätstest
+inflection:
+  Bereitstellung:
+    sg: Bereitstellung
+    pl: Bereitstellungen
+  Aussage:
+    sg: Aussage
+    pl: Aussagen
+  Deskriptor:
+    sg: Deskriptor
+    pl: Deskriptoren
