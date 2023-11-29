@@ -73,10 +73,10 @@ module IsoDoc
       def bibdata_i18n_stage(bib, stage, type, lang: @lang, i18n: @i18n)
         return unless stage
 
-        i18n.get["stage_dict"][stage.text].is_a?(Hash) or
+        i18n.get.dig("stage_dict", stage.text).is_a?(Hash) or
           return hash_translate(bib, i18n.get["stage_dict"],
                                 "./status/stage", lang)
-        stagetype = i18n.get["stage_dict"][stage.text][type&.text] and
+        stagetype = i18n.get.dig("stage_dict", stage.text, type&.text) and
           tag_translate(stage, lang, stagetype)
       end
     end
