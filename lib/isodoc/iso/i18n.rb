@@ -2,8 +2,8 @@ module IsoDoc
   module Iso
     class I18n < IsoDoc::I18n
       def load_file(fname)
-        YAML.load_file(File.join(File.dirname(__FILE__), fname)) ||
-          {}
+        f = File.join(File.dirname(__FILE__), fname)
+        File.exist?(f) ? YAML.load_file(f) : {}
       end
 
       def load_yaml1(lang, script)
