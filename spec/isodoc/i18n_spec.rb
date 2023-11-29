@@ -549,10 +549,12 @@ RSpec.describe IsoDoc do
           <bibdata>
            <status>
              <stage abbreviation='IS' language=''>60</stage>
+             <stage abbreviation="IS" language="tlh">International Standard</stage>
            </status>
            <language current='true'>tlh</language>
            <ext>
              <doctype language=''>international-standard</doctype>
+             <doctype language="tlh">International Standard</doctype>
            </ext>
          </bibdata>
           <preface>

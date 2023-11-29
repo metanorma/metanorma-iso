@@ -8,7 +8,7 @@ module IsoDoc
 
       def load_yaml1(lang, script)
         y = load_file("i18n-#{yaml_lang(lang, script)}.yaml")
-        super.deep_merge(y)
+        y.empty? ? load_file("i18n-en.yaml").merge(super) : super.deep_merge(y)
       end
     end
   end
