@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.8 -->
+<!-- VERSION v1.2.9 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -1956,6 +1956,16 @@
       <optional>
         <attribute name="isInternational">
           <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="type">
+          <choice>
+            <value>letter</value>
+            <value>symbol</value>
+            <value>formula</value>
+            <value>equation</value>
+          </choice>
         </attribute>
       </optional>
       <element name="name">
