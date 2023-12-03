@@ -8,11 +8,9 @@ module IsoDoc
       end
 
       def warning_for_missing_metadata(docxml)
-        return unless @meta.get[:unpublished]
-
+        @meta.get[:unpublished] or return
         ret = warning_for_missing_metadata_create(docxml)
-        return if ret.empty?
-
+        ret.empty? and return
         warning_for_missing_metadata_post(docxml, ret)
       end
 

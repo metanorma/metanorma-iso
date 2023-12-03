@@ -137,9 +137,10 @@ module Metanorma
         xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]" \
                      "[not(note[@type = 'Unpublished-Status'])]").each do |b|
           pub_class(b) > 2 and next
-          ((s = b.at("./status/stage")) && (s.text.to_i < 60)) or next
-          id = b.at("docidentifier").text
-          insert_unpub_note(b, @i18n.under_preparation.sub("%", id))
+          ((s = b.at("./status/stage")) && s.text.match?(/\d/) &&
+           (s.text.to_i < 60)) or next
+          insert_unpub_note(b, @i18n.under_preparation
+            .sub("%", b.at("docidentifier").text))
         end
       end
 
