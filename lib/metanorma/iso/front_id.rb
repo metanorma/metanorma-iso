@@ -124,7 +124,7 @@ module Metanorma
           params2[:base] = orig_id
         elsif orig_id &&
             ![Pubid::Iso::Identifier,
-              Pubid::Iec::Identifier].include?(base_pubid)
+              Pubid::Iec::Identifier].include?(pubid_select(params))
           params2[:adopted] = orig_id
         end
         params.merge!(params2)
