@@ -120,10 +120,11 @@ module Metanorma
       def iso_id_params_resolve(params, params2, node, orig_id)
         if orig_id && (node.attr("amendment-number") ||
             node.attr("corrigendum-number"))
-          params.delete(:unpublished)
-          params.delete(:part)
+          %i(unpublished part).each { |x| params.delete(x) }
           params2[:base] = orig_id
-        elsif orig_id
+        elsif orig_id &&
+            ![Pubid::Iso::Identifier,
+              Pubid::Iec::Identifier].include?(base_pubid)
           params2[:adopted] = orig_id
         end
         params.merge!(params2)
