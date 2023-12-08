@@ -6,6 +6,8 @@ require "pathname"
 require "open-uri"
 require "twitter_cldr"
 require "pubid-iso"
+require "pubid-cen"
+require "pubid-iec"
 
 module Metanorma
   module ISO
@@ -36,8 +38,8 @@ module Metanorma
       end
 
       def iso_id(node, xml)
-        (!@amd && node.attr("docnumber")) || (@amd && node.attr("updates")) or
-          return
+        (!@amd && node.attr("docnumber") || node.attr("adopted-from")) ||
+          (@amd && node.attr("updates")) or return
         params = iso_id_params(node)
         iso_id_out(xml, params, true)
       end
@@ -45,11 +47,37 @@ module Metanorma
       def iso_id_params(node)
         params = iso_id_params_core(node)
         params2 = iso_id_params_add(node)
-        if node.attr("updates")
-          orig_id = Pubid::Iso::Identifier::Base.parse(node.attr("updates"))
-          orig_id.edition ||= 1
-        end
+        num = node.attr("docnumber")
+        orig = node.attr("updates") || node.attr("adopted-from")
+        /^\d+$/.match?(num) or orig ||= num
+        orig and orig_id = orig_id_parse(orig)
         iso_id_params_resolve(params, params2, node, orig_id)
+      end
+
+      def cen?(str)
+        /^C?EN/.match?(str)
+      end
+
+      def orig_id_parse(orig)
+        cen?(orig) and return Pubid::Cen::Identifier::Base.parse(orig)
+        ret = case orig
+              when /^ISO/ then Pubid::Iso::Identifier::Base.parse(orig)
+              when /^IEC/ then Pubid::Iec::Identifier::Base.parse(orig)
+              else base_pubid::Base.parse(orig)
+              end
+        ret.edition ||= 1
+        ret
+      end
+
+      def base_pubid
+        Pubid::Iso::Identifier
+      end
+
+      def pubid_select(params)
+        if cen?(Array(params[:publisher])&.first || "")
+          Pubid::Cen::Identifier
+        else base_pubid
+        end
       end
 
       # unpublished is for internal use
@@ -72,7 +100,7 @@ module Metanorma
           node.attr("corrigendum-number"),
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }.compact
-        if stage
+        if stage && !cen?(node.attr("publisher"))
           ret[:stage] = stage
           ret[:stage] == "60.00" and ret[:stage] = :PRF
         end
@@ -92,30 +120,45 @@ module Metanorma
       def iso_id_params_resolve(params, params2, node, orig_id)
         if orig_id && (node.attr("amendment-number") ||
             node.attr("corrigendum-number"))
-          params.delete(:unpublished)
-          params.delete(:part)
+          %i(unpublished part).each { |x| params.delete(x) }
           params2[:base] = orig_id
+        elsif orig_id &&
+            ![Pubid::Iso::Identifier,
+              Pubid::Iec::Identifier].include?(pubid_select(params))
+          params2[:adopted] = orig_id
         end
         params.merge!(params2)
         params
       end
 
       def iso_id_out(xml, params, with_prf)
+        cen?(params[:publisher]) and return cen_id_out(xml, params)
+        iso_id_out_common(xml, params, with_prf)
+        @amd and return
+        iso_id_out_non_amd(xml, params, with_prf)
+      rescue StandardError => e
+        clean_abort("Document identifier: #{e}", xml)
+      end
+
+      def cen_id_out(xml, params)
+        xml.docidentifier iso_id_default(params).to_s, **attr_code(type: "CEN")
+      end
+
+      def iso_id_out_common(xml, params, with_prf)
         xml.docidentifier iso_id_default(params).to_s(with_prf: with_prf),
                           **attr_code(type: "ISO")
         xml.docidentifier iso_id_reference(params)
           .to_s(format: :ref_num_short, with_prf: with_prf),
                           **attr_code(type: "iso-reference")
         xml.docidentifier iso_id_reference(params).urn, **attr_code(type: "URN")
-        return if @amd
+      end
 
+      def iso_id_out_non_amd(xml, params, with_prf)
         xml.docidentifier iso_id_undated(params).to_s(with_prf: with_prf),
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
           .to_s(format: :ref_num_long, with_prf: with_prf),
                           **attr_code(type: "iso-with-lang")
-      rescue StandardError => e
-        clean_abort("Document identifier: #{e}", xml)
       end
 
       def iso_id_default(params)
@@ -127,7 +170,7 @@ module Metanorma
                   else params_nolang
                   end
         params1.delete(:unpublished)
-        Pubid::Iso::Identifier.create(**params1)
+        pubid_select(params1).create(**params1)
       end
 
       def iso_id_undated(params)
@@ -136,7 +179,7 @@ module Metanorma
           hs.delete(:year)
           hs.delete(:unpublished)
         end
-        Pubid::Iso::Identifier.create(**params2)
+        pubid_select(params2).create(**params2)
       end
 
       def iso_id_with_lang(params)
@@ -146,17 +189,16 @@ module Metanorma
                     end
                   else params end
         params1.delete(:unpublished)
-        Pubid::Iso::Identifier.create(**params1)
+        pubid_select(params1).create(**params1)
       end
 
       def iso_id_reference(params)
         params1 = params.dup.tap { |hs| hs.delete(:unpublished) }
-        Pubid::Iso::Identifier.create(**params1)
+        pubid_select(params1).create(**params1)
       end
 
       def structured_id(node, xml)
-        return unless node.attr("docnumber")
-
+        node.attr("docnumber") or return
         part, subpart = node&.attr("partnumber")&.split("-")
         xml.structuredidentifier do |i|
           i.project_number(node.attr("docnumber"), **attr_code(
