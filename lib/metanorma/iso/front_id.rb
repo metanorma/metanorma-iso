@@ -49,7 +49,7 @@ module Metanorma
         params2 = iso_id_params_add(node)
         num = node.attr("docnumber")
         orig = node.attr("updates") || node.attr("adopted-from")
-        /^\d+$/.match?(num) or orig ||= num
+        /[[:alpha:]]/.match?(num) and orig ||= num
         orig and orig_id = orig_id_parse(orig)
         iso_id_params_resolve(params, params2, node, orig_id)
       end
