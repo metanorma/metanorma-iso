@@ -138,7 +138,7 @@ module IsoDoc
         if @xrefs.anchor(target, :type) == "listitem" &&
             !@xrefs.anchor(target, :refer_list)
           nested_xref = "%1 %2"
-          container_label = @xrefs.anchor(container, :label)
+          n = @xrefs.anchor(container, :label) and container_label = n
         end
         [nested_xref, container_label]
       end
