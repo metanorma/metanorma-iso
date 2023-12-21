@@ -715,27 +715,36 @@
   </define>
   <define name="ruby">
     <element name="ruby">
-      <zeroOrMore>
-        <choice>
-          <ref name="PureTextElement"/>
-          <ref name="rp"/>
-          <ref name="rt"/>
-        </choice>
-      </zeroOrMore>
+      <choice>
+        <ref name="ruby_pronunciation"/>
+        <ref name="ruby_annotation"/>
+      </choice>
+      <choice>
+        <text/>
+        <ref name="ruby"/>
+      </choice>
     </element>
   </define>
-  <define name="rp">
-    <element name="rp">
-      <zeroOrMore>
-        <ref name="PureTextElement"/>
-      </zeroOrMore>
+  <define name="ruby_pronunciation">
+    <element name="pronunciation">
+      <attribute name="value"/>
+      <optional>
+        <attribute name="script"/>
+      </optional>
+      <optional>
+        <attribute name="lang"/>
+      </optional>
     </element>
   </define>
-  <define name="rt">
-    <element name="rt">
-      <zeroOrMore>
-        <ref name="PureTextElement"/>
-      </zeroOrMore>
+  <define name="ruby_annotation">
+    <element name="annotation">
+      <attribute name="value"/>
+      <optional>
+        <attribute name="script"/>
+      </optional>
+      <optional>
+        <attribute name="lang"/>
+      </optional>
     </element>
   </define>
   <define name="br">
