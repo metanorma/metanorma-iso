@@ -61,7 +61,7 @@ module Metanorma
       end
 
       def toc_default
-        { word_levels: 3, html_levels: 2 }
+        { word_levels: 3, html_levels: 2, pdf_levels: 3 }
       end
 
       def ol_attrs(node)
