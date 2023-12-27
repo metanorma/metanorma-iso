@@ -136,7 +136,7 @@ module Metanorma
         iso_id_out_common(xml, params, with_prf)
         @amd and return
         iso_id_out_non_amd(xml, params, with_prf)
-      rescue StandardError => e
+      rescue StandardError, *STAGE_ERROR => e
         clean_abort("Document identifier: #{e}", xml)
       end
 

@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "metanorma-standoc", "~> 2.7.0"
   spec.add_dependency "mnconvert", "~> 1.14"
-  spec.add_dependency "pubid-iso", "~> 0.6.0"
+  spec.add_dependency "pubid-iso"
   spec.add_dependency "pubid-cen"
   spec.add_dependency "pubid-iec"
   spec.add_dependency "ruby-jing"
