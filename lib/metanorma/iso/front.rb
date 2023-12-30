@@ -20,7 +20,6 @@ module Metanorma
 
       STAGE_ERROR = [Pubid::Core::Errors::HarmonizedStageCodeInvalidError,
                      Pubid::Core::Errors::TypeStageParseError,
-                     Pubid::Iec::Errors::StageInvalidError,
                      Pubid::Core::Errors::StageInvalidError].freeze
 
       def metadata_stage(node, xml)
