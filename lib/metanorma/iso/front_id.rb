@@ -95,7 +95,7 @@ module Metanorma
       end
 
       def iso_id_pub(node)
-        (node.attr("publisher") || "ISO").split(/[;,]/)
+        (node.attr("publisher") || default_publisher).split(/[;,]/)
           .map(&:strip).map { |x| org_abbrev[x] || x }
       end
 
