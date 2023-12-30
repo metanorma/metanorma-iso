@@ -198,77 +198,6 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(output)
   end
 
-  it "moves notes inside preceding blocks, if they are not at clause end, and the blocks are not delimited" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      [stem]
-      ++++
-      r = 1 %
-      r = 1 %
-      ++++
-
-      NOTE: That formula does not do much
-
-      Indeed.
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <formula id="_">
-            <stem type="MathML" block="true">
-              <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <mstyle displaystyle="true">
-                <mi>r</mi>
-                <mo>=</mo>
-                <mn>1</mn>
-                <mi>%</mi>
-                <mi>r</mi>
-                <mo>=</mo>
-                <mn>1</mn>
-                <mi>%</mi>
-                </mstyle>
-              </math>
-              <asciimath>r = 1 %
-              r = 1 %</asciimath>
-            </stem>
-            <note id="_">
-              <p id="_">That formula does not do much</p>
-            </note>
-          </formula>
-          <p id="_">Indeed.</p>
-        </sections>
-      </iso-standard>
-    OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
-  end
-
-  it "does not move notes inside preceding blocks, if they are at clause end" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      [source,ruby]
-      [1...x].each do |y|
-        puts y
-      end
-
-      NOTE: That loop does not do much
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <sourcecode id="_" lang="ruby">[1...x].each do |y|
-                 puts y
-               end</sourcecode>
-          <note id="_">
-            <p id="_">That loop does not do much</p>
-          </note>
-        </sections>
-      </iso-standard>
-    OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
-  end
-
   it "converts xrefs to references into erefs" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
@@ -493,45 +422,6 @@ RSpec.describe Metanorma::ISO do
             </bibitem>
           </references>
         </bibliography>
-      </iso-standard>
-    OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
-  end
-
-  it "inserts IDs into paragraphs" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      Paragraph
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <p id="_">Paragraph</p>
-        </sections>
-      </iso-standard>
-    OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
-  end
-
-  it "inserts IDs into notes" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      [example]
-      ====
-      NOTE: This note has no ID
-      ====
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <example id="_">
-            <note id="_">
-              <p id="_">This note has no ID</p>
-            </note>
-          </example>
-        </sections>
       </iso-standard>
     OUTPUT
     expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))

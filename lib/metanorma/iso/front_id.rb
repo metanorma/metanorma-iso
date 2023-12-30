@@ -82,7 +82,7 @@ module Metanorma
 
       # unpublished is for internal use
       def iso_id_params_core(node)
-        pub = (node.attr("publisher") || "ISO").split(/[;,]/)
+        pub = iso_id_pub(node)
         ret = { number: node.attr("docnumber"),
                 part: node.attr("partnumber"),
                 language: node.attr("language") || "en",
@@ -92,6 +92,11 @@ module Metanorma
                 copublisher: pub[1..-1] }.compact
         ret[:copublisher].empty? and ret.delete(:copublisher)
         ret
+      end
+
+      def iso_id_pub(node)
+        (node.attr("publisher") || "ISO").split(/[;,]/)
+          .map(&:strip).map { |x| org_abbrev[x] || x }
       end
 
       def iso_id_params_add(node)
