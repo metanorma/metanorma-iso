@@ -11089,14 +11089,16 @@
 
 	<xsl:template match="*[local-name() = 'annex']">
 		<fo:block break-after="page"/>
-		<fo:block id="{@id}">
+		<fo:block>
 
 			<xsl:call-template name="setBlockSpanAll"/>
 
 			<xsl:call-template name="refine_annex_style"/>
 
 		</fo:block>
-		<xsl:apply-templates/>
+		<fo:block id="{@id}">
+			<xsl:apply-templates/>
+		</fo:block>
 	</xsl:template>
 
 	<xsl:template name="refine_annex_style">
