@@ -9,10 +9,41 @@
   -->
   <include href="biblio.rng">
     <define name="BibData">
-      <ref name="BibliographicItem"/>
+      <ref name="StandardBibliographicItem"/>
       <optional>
         <ref name="ext"/>
       </optional>
+    </define>
+    <define name="docrelation">
+      <element name="relation">
+        <attribute name="type">
+          <ref name="DocRelationType"/>
+        </attribute>
+        <optional>
+          <element name="description">
+            <ref name="FormattedString"/>
+          </element>
+        </optional>
+        <element name="bibitem">
+          <ref name="StandardReducedBibliographicItem"/>
+        </element>
+        <choice>
+          <zeroOrMore>
+            <ref name="locality"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="localityStack"/>
+          </zeroOrMore>
+        </choice>
+        <choice>
+          <zeroOrMore>
+            <ref name="sourceLocality"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="sourceLocalityStack"/>
+          </zeroOrMore>
+        </choice>
+      </element>
     </define>
   </include>
   <define name="ext">
@@ -160,5 +191,17 @@
         </element>
       </optional>
     </element>
+  </define>
+  <define name="StandardBibliographicItem">
+    <ref name="BibliographicItem"/>
+    <zeroOrMore>
+      <ref name="amend"/>
+    </zeroOrMore>
+  </define>
+  <define name="StandardReducedBibliographicItem">
+    <ref name="ReducedBibliographicItem"/>
+    <zeroOrMore>
+      <ref name="amend"/>
+    </zeroOrMore>
   </define>
 </grammar>

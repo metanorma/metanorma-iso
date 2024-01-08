@@ -91,6 +91,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <project-number part="1">ISO/PreCD3 17301</project-number>
             </structuredidentifier>
             <stagename>Committee draft</stagename>
+            <fast-track>true</fast-track>
           </ext>
         </bibdata>
       </iso-standard>
@@ -122,6 +123,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :draftinfo=>" (draft 0.4, 2016-05-01)",
       :edition=>"2",
       :editorialgroup=>"DEF",
+      :fast_track=>"true",
       :horizontal=>"true",
       :keywords=>["kw2", "kw1"],
       :lang=>"en",

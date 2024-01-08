@@ -16,6 +16,7 @@ module Metanorma
         metadata_stage(node, xml)
         @amd && a = node.attr("updates-document-type") and
           xml.updates_document_type a
+        a = node.attr("fast-track") and xml.send "fast-track", a != "false"
       end
 
       STAGE_ERROR = [Pubid::Core::Errors::HarmonizedStageCodeInvalidError,

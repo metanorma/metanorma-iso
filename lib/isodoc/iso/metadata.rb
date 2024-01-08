@@ -237,11 +237,13 @@ module IsoDoc
 
       def doctype(isoxml, _out)
         super
-        ics = []
-        isoxml.xpath(ns("//bibdata/ext/ics/code")).each { |i| ics << i.text }
+        ics = isoxml.xpath(ns("//bibdata/ext/ics/code"))
+          .each_with_object([]) { |i, m| m << i.text }
         set(:ics, ics.empty? ? nil : ics.join(", "))
         a = isoxml.at(ns("//bibdata/ext/horizontal")) and
           set(:horizontal, a.text)
+        a = isoxml.at(ns("//bibdata/ext/fast-track")) and
+          set(:fast_track, a.text)
       end
     end
   end

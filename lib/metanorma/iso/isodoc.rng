@@ -17,10 +17,19 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.2.9 -->
+<!-- VERSION v1.2.12 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
+    <define name="amend">
+      <element name="amend">
+        <ref name="BlockAttributes"/>
+        <ref name="AmendType"/>
+        <zeroOrMore>
+          <ref name="autonumber"/>
+        </zeroOrMore>
+      </element>
+    </define>
     <define name="admonition">
       <element name="admonition">
         <attribute name="type">
@@ -2317,69 +2326,6 @@
   <define name="termdocsource">
     <element name="termdocsource">
       <ref name="CitationType"/>
-    </element>
-  </define>
-  <define name="amend">
-    <element name="amend">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <attribute name="change">
-        <choice>
-          <value>add</value>
-          <value>modify</value>
-          <value>delete</value>
-          <value>replace</value>
-        </choice>
-      </attribute>
-      <optional>
-        <attribute name="path"/>
-      </optional>
-      <optional>
-        <attribute name="path_end"/>
-      </optional>
-      <optional>
-        <attribute name="title"/>
-      </optional>
-      <ref name="BlockAttributes"/>
-      <optional>
-        <element name="location">
-          <zeroOrMore>
-            <ref name="locality"/>
-          </zeroOrMore>
-        </element>
-      </optional>
-      <zeroOrMore>
-        <ref name="autonumber"/>
-      </zeroOrMore>
-      <optional>
-        <element name="description">
-          <zeroOrMore>
-            <ref name="BasicBlock"/>
-          </zeroOrMore>
-        </element>
-      </optional>
-      <optional>
-        <element name="newcontent">
-          <optional>
-            <attribute name="id">
-              <data type="ID"/>
-            </attribute>
-          </optional>
-          <zeroOrMore>
-            <ref name="BasicBlock"/>
-          </zeroOrMore>
-        </element>
-      </optional>
-      <optional>
-        <element name="description">
-          <zeroOrMore>
-            <ref name="BasicBlock"/>
-          </zeroOrMore>
-        </element>
-      </optional>
     </element>
   </define>
   <define name="autonumber">

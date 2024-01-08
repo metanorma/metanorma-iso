@@ -241,6 +241,9 @@
     </element>
   </define>
   <define name="FullNameType">
+    <optional>
+      <ref name="name_abbreviation"/>
+    </optional>
     <choice>
       <group>
         <zeroOrMore>
@@ -265,6 +268,11 @@
     <zeroOrMore>
       <ref name="variantname"/>
     </zeroOrMore>
+  </define>
+  <define name="name_abbreviation">
+    <element name="abbreviation">
+      <ref name="LocalizedString"/>
+    </element>
   </define>
   <define name="prefix">
     <element name="prefix">
@@ -869,6 +877,9 @@
     </zeroOrMore>
     <optional>
       <ref name="validity"/>
+    </optional>
+    <optional>
+      <ref name="depiction"/>
     </optional>
   </define>
   <define name="btitle">

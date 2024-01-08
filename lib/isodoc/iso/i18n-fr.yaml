@@ -26,6 +26,7 @@ availablefrom: Disponible sur
 voting_begins_on: Le vote commence le
 voting_terminates_on: Le vote se termine le
 corrected_version: Version corrigée
+fast-track-procedure: Procédure accélérée
 doctype_dict:
   international-standard: Norme internationale
   technical-specification: Spécification technique
