@@ -561,7 +561,7 @@
 											<fo:table-cell display-align="after" padding-bottom="3mm" role="SKIP">
 												<fo:block-container height="22.5mm" display-align="center" role="SKIP">
 
-													<xsl:variable name="iso-fast-track">false</xsl:variable>
+													<xsl:variable name="iso-fast-track" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:fast-track)"/>
 
 													<xsl:if test="normalize-space($iso-fast-track) = 'true'">
 														<xsl:attribute name="height">28mm</xsl:attribute>
@@ -590,7 +590,13 @@
 																	<fo:block background-color="rgb(77,77,77)" color="white" fox:border-radius="5pt" text-align="center" display-align="center" font-size="19pt" font-weight="bold" role="SKIP">
 																		<fo:block-container height="13.2mm" role="SKIP">
 																			<fo:block>
-																				<xsl:text>FAST TRACK PROCEDURE</xsl:text>
+																				<!-- <xsl:text>FAST TRACK PROCEDURE</xsl:text>  -->
+																				<xsl:variable name="fast_track_procedure_text">
+																					<xsl:call-template name="getLocalizedString">
+																						<xsl:with-param name="key">fast-track-procedure</xsl:with-param>
+																					</xsl:call-template>
+																				</xsl:variable>
+																				<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($fast_track_procedure_text))"/>
 																			</fo:block>
 																		</fo:block-container>
 																	</fo:block>
