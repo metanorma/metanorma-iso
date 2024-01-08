@@ -67,6 +67,7 @@ RSpec.describe Metanorma::ISO do
       :title-part-fr: Part du Titre
       :copyright-year: 2000
       :horizontal: true
+      :fast-track: true
     INPUT
     output = <<~OUTPUT
       <bibdata type="standard">
@@ -249,6 +250,7 @@ RSpec.describe Metanorma::ISO do
             <project-number part="1">ISO 1000</project-number>
           </structuredidentifier>
           <stagename abbreviation="WD">Working Draft International Standard</stagename>
+          <fast-track>true</fast-track>
         </ext>
       </bibdata>
     OUTPUT
@@ -465,11 +467,11 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
           <bibdata type="standard">
-        <docidentifier type="ISO">ISO/IEC TR 1000:2023</docidentifier>
-        <docidentifier type="iso-reference">ISO/IEC TR 1000:2023(E)</docidentifier>
+        <docidentifier type="ISO">ISO/IEC TR 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="iso-reference">ISO/IEC TR 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type="URN">urn:iso:std:iso-iec:tr:1000:stage-60.60:en</docidentifier>
         <docidentifier type="iso-undated">ISO/IEC TR 1000</docidentifier>
-        <docidentifier type="iso-with-lang">ISO/IEC TR 1000:2023(en)</docidentifier>
+        <docidentifier type="iso-with-lang">ISO/IEC TR 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
         <contributor>
           <role type="author"/>
@@ -515,7 +517,7 @@ RSpec.describe Metanorma::ISO do
           <substage>60</substage>
         </status>
         <copyright>
-          <from>2023</from>
+          <from>#{Date.today.year}</from>
           <owner>
             <organization>
               <name>International Organization for Standardization</name>
@@ -524,7 +526,7 @@ RSpec.describe Metanorma::ISO do
           </owner>
         </copyright>
         <copyright>
-          <from>2023</from>
+          <from>#{Date.today.year}</from>
           <owner>
             <organization>
               <name>International Electrotechnical Commission</name>
@@ -583,11 +585,11 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
             <bibdata type="standard">
-        <docidentifier type="ISO">ISO 1000:2023</docidentifier>
-        <docidentifier type="iso-reference">ISO 1000:2023(E)</docidentifier>
+        <docidentifier type="ISO">ISO 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
         <docidentifier type="iso-undated">ISO 1000</docidentifier>
-        <docidentifier type="iso-with-lang">ISO 1000:2023(en)</docidentifier>
+        <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
         <contributor>
           <role type="author"/>
@@ -665,7 +667,7 @@ RSpec.describe Metanorma::ISO do
           <substage>60</substage>
         </status>
         <copyright>
-          <from>2023</from>
+          <from>#{Date.today.year}</from>
           <owner>
             <organization>
               <name>International Organization for Standardization</name>
@@ -723,11 +725,11 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
         <bibdata type="standard">
-          <docidentifier type="ISO">ISO 1000:2023</docidentifier>
-          <docidentifier type="iso-reference">ISO 1000:2023(E)</docidentifier>
+          <docidentifier type="ISO">ISO 1000:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
           <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
           <docidentifier type="iso-undated">ISO 1000</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 1000:2023(en)</docidentifier>
+          <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
           <docnumber>1000</docnumber>
           <contributor>
             <role type="author"/>
@@ -805,7 +807,7 @@ RSpec.describe Metanorma::ISO do
             <substage>60</substage>
           </status>
           <copyright>
-            <from>2023</from>
+            <from>#{Date.today.year}</from>
             <owner>
               <organization>
                 <name>International Organization for Standardization</name>
@@ -1521,7 +1523,7 @@ RSpec.describe Metanorma::ISO do
             <substage>60</substage>
           </status>
           <copyright>
-            <from>2023</from>
+            <from>#{Date.today.year}</from>
             <owner>
               <organization>
                 <name>International Organization for Standardization</name>
@@ -1710,7 +1712,7 @@ RSpec.describe Metanorma::ISO do
             <substage>60</substage>
           </status>
           <copyright>
-            <from>2023</from>
+            <from>#{Date.today.year}</from>
             <owner>
               <organization>
                 <name>CEN</name>

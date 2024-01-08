@@ -207,20 +207,4 @@
       <value>permission</value>
     </choice>
   </define>
-  <define name="classification">
-    <element name="classification">
-      <ref name="classification_tag"/>
-      <ref name="classification_value"/>
-    </element>
-  </define>
-  <define name="classification_tag">
-    <element name="tag">
-      <text/>
-    </element>
-  </define>
-  <define name="classification_value">
-    <element name="value">
-      <text/>
-    </element>
-  </define>
 </grammar>

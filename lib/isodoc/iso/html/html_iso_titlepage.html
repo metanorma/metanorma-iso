@@ -81,3 +81,7 @@
 <p><b>Descriptors:</b> {{ keywords | join: ", " }}
 {% endif %}
 
+{%if fast_track == "true" %}
+<div><span class="subtitle">{{ labels["fast-track-procedure"] }}</span></div>
+{% endif %}
+

@@ -26,6 +26,9 @@
       <optional>
         <ref name="updates_document_type"/>
       </optional>
+      <optional>
+        <ref name="fast_track"/>
+      </optional>
     </define>
     <define name="bdate">
       <element name="date">
@@ -220,6 +223,11 @@
         <attribute name="abbreviation"/>
       </optional>
       <text/>
+    </element>
+  </define>
+  <define name="fast_track">
+    <element name="fast-track">
+      <data type="boolean"/>
     </element>
   </define>
 </grammar>

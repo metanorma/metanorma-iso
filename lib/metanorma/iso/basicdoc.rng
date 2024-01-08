@@ -95,7 +95,88 @@
       <ref name="pagebreak"/>
       <ref name="hr"/>
       <ref name="bookmark"/>
+      <ref name="amend"/>
     </choice>
+  </define>
+  <define name="amend">
+    <element name="amend">
+      <ref name="AmendType"/>
+    </element>
+  </define>
+  <define name="AmendType">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <attribute name="change">
+      <choice>
+        <value>add</value>
+        <value>modify</value>
+        <value>delete</value>
+        <value>replace</value>
+      </choice>
+    </attribute>
+    <optional>
+      <attribute name="path"/>
+    </optional>
+    <optional>
+      <attribute name="path_end"/>
+    </optional>
+    <optional>
+      <attribute name="title"/>
+    </optional>
+    <optional>
+      <element name="location">
+        <zeroOrMore>
+          <choice>
+            <ref name="locality"/>
+            <ref name="localityStack"/>
+          </choice>
+        </zeroOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="description">
+        <zeroOrMore>
+          <ref name="BasicBlock"/>
+        </zeroOrMore>
+      </element>
+    </optional>
+    <optional>
+      <element name="newcontent">
+        <optional>
+          <attribute name="id">
+            <data type="ID"/>
+          </attribute>
+        </optional>
+        <zeroOrMore>
+          <ref name="BasicBlock"/>
+        </zeroOrMore>
+      </element>
+    </optional>
+    <zeroOrMore>
+      <ref name="classification"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="contributor"/>
+    </zeroOrMore>
+  </define>
+  <define name="classification">
+    <element name="classification">
+      <ref name="classification_tag"/>
+      <ref name="classification_value"/>
+    </element>
+  </define>
+  <define name="classification_tag">
+    <element name="tag">
+      <text/>
+    </element>
+  </define>
+  <define name="classification_value">
+    <element name="value">
+      <text/>
+    </element>
   </define>
   <define name="paragraph">
     <element name="p">
@@ -939,18 +1020,12 @@
     </optional>
     <optional>
       <attribute name="width">
-        <choice>
-          <data type="int"/>
-          <value>auto</value>
-        </choice>
+        <ref name="ImageSize"/>
       </attribute>
     </optional>
     <optional>
       <attribute name="height">
-        <choice>
-          <data type="int"/>
-          <value>auto</value>
-        </choice>
+        <ref name="ImageSize"/>
       </attribute>
     </optional>
     <optional>
@@ -964,6 +1039,14 @@
         <data type="anyURI"/>
       </attribute>
     </optional>
+  </define>
+  <define name="ImageSize">
+    <choice>
+      <data type="string">
+        <param name="pattern">\d+([.]\d+)?(%?)</param>
+      </data>
+      <value>auto</value>
+    </choice>
   </define>
   <define name="video">
     <element name="video">
