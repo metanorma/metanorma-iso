@@ -6591,13 +6591,14 @@
 	<!-- ================= -->
 	<!-- Added,deleted text -->
 	<!-- ================= -->
-	<xsl:template match="*[local-name()='add']" name="tag_add">
+	<xsl:template match="*[local-name()='add'] | *[local-name() = 'change-open-tag'] | *[local-name() = 'change-close-tag']" name="tag_add">
 		<xsl:param name="skip">true</xsl:param>
 		<xsl:param name="block">false</xsl:param>
 		<xsl:param name="type"/>
 		<xsl:param name="text-align"/>
 		<xsl:choose>
-			<xsl:when test="starts-with(., $ace_tag)"> <!-- examples: ace-tag_A1_start, ace-tag_A2_end, C1_start, AC_start -->
+			<xsl:when test="starts-with(., $ace_tag) or local-name() = 'change-open-tag' or local-name() = 'change-close-tag'"> <!-- examples: ace-tag_A1_start, ace-tag_A2_end, C1_start, AC_start, or
+							<change-open-tag>A<sub>1</sub></change-open-tag>, <change-close-tag>A<sub>1</sub></change-close-tag> -->
 				<xsl:choose>
 					<xsl:when test="$skip = 'true' and       ((local-name(../..) = 'note' and not(preceding-sibling::node())) or       (local-name(..) = 'title' and preceding-sibling::node()[1][local-name() = 'tab']) or      local-name(..) = 'formattedref' and not(preceding-sibling::node()))      and       ../node()[last()][local-name() = 'add'][starts-with(text(), $ace_tag)]"><!-- start tag displayed in template name="note" and title --></xsl:when>
 					<xsl:otherwise>
@@ -6605,12 +6606,32 @@
 							<xsl:call-template name="insertTag">
 								<xsl:with-param name="type">
 									<xsl:choose>
+										<xsl:when test="local-name() = 'change-open-tag'">start</xsl:when>
+										<xsl:when test="local-name() = 'change-close-tag'">end</xsl:when>
 										<xsl:when test="$type = ''"><xsl:value-of select="substring-after(substring-after(., $ace_tag), '_')"/> <!-- start or end --></xsl:when>
 										<xsl:otherwise><xsl:value-of select="$type"/></xsl:otherwise>
 									</xsl:choose>
 								</xsl:with-param>
-								<xsl:with-param name="kind" select="substring(substring-before(substring-after(., $ace_tag), '_'), 1, 1)"/> <!-- A or C -->
-								<xsl:with-param name="value" select="substring(substring-before(substring-after(., $ace_tag), '_'), 2)"/> <!-- 1, 2, C -->
+								<xsl:with-param name="kind">
+									<xsl:choose>
+										<xsl:when test="local-name() = 'change-open-tag' or local-name() = 'change-close-tag'">
+											<xsl:value-of select="text()"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="substring(substring-before(substring-after(., $ace_tag), '_'), 1, 1)"/> <!-- A or C -->
+										</xsl:otherwise>
+									</xsl:choose>
+								</xsl:with-param>
+								<xsl:with-param name="value">
+									<xsl:choose>
+										<xsl:when test="local-name() = 'change-open-tag' or local-name() = 'change-close-tag'">
+											<xsl:value-of select="*[local-name() = 'sub']"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="substring(substring-before(substring-after(., $ace_tag), '_'), 2)"/> <!-- 1, 2, C -->
+										</xsl:otherwise>
+									</xsl:choose>
+								</xsl:with-param>
 							</xsl:call-template>
 						</xsl:variable>
 						<xsl:choose>
@@ -8896,9 +8917,15 @@
 			</xsl:when>
 			<xsl:otherwise>
 
+				<xsl:variable name="image_class" select="ancestor::*[local-name() = 'image']/@class"/>
+				<xsl:variable name="ancestor_table_cell" select="normalize-space(ancestor::*[local-name() = 'td'] or ancestor::*[local-name() = 'th'])"/>
+
 				<xsl:variable name="element">
 					<xsl:choose>
 						<xsl:when test="ancestor::*[local-name() = 'tr'] and $isGenerateTableIF = 'true'">
+							<fo:inline xsl:use-attribute-sets="image-style" text-align="left"/>
+						</xsl:when>
+						<xsl:when test="not(ancestor::*[local-name() = 'figure'])">
 							<fo:inline xsl:use-attribute-sets="image-style" text-align="left"/>
 						</xsl:when>
 						<xsl:otherwise>
@@ -8916,10 +8943,24 @@
 						<xsl:copy-of select="@*"/>
 					<!-- <fo:block xsl:use-attribute-sets="image-style"> -->
 						<fo:instream-foreign-object fox:alt-text="{$alt-text}">
-							<xsl:if test="$isGenerateTableIF = 'false'">
-								<xsl:attribute name="width">100%</xsl:attribute>
-							</xsl:if>
-							<xsl:attribute name="content-height">100%</xsl:attribute>
+
+							<xsl:choose>
+								<xsl:when test="$image_class = 'corrigenda-tag'">
+									<xsl:attribute name="fox:alt-text">CorrigendaTag</xsl:attribute>
+									<xsl:attribute name="baseline-shift">-10%</xsl:attribute>
+									<xsl:if test="$ancestor_table_cell = 'true'">
+										<xsl:attribute name="baseline-shift">-25%</xsl:attribute>
+									</xsl:if>
+									<xsl:attribute name="height">3.5mm</xsl:attribute>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:if test="$isGenerateTableIF = 'false'">
+										<xsl:attribute name="width">100%</xsl:attribute>
+									</xsl:if>
+									<xsl:attribute name="content-height">100%</xsl:attribute>
+								</xsl:otherwise>
+							</xsl:choose>
+
 							<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
 							<xsl:variable name="svg_width" select="xalan:nodeset($svg_content)/*/@width"/>
 							<xsl:variable name="svg_height" select="xalan:nodeset($svg_content)/*/@height"/>
@@ -11126,12 +11167,18 @@
 				<fo:block id="{@id}" font-size="1pt"><xsl:value-of select="$hair_space"/></fo:block>
 			</xsl:when>
 			<!-- if there isn't element with id 'from', then create 'bookmark' here -->
-			<xsl:when test="not(ancestor::*[contains(local-name(), '-standard')]//*[@id = $id_from])">
+			<xsl:when test="ancestor::*[contains(local-name(), '-standard')] and not(ancestor::*[contains(local-name(), '-standard')]//*[@id = $id_from])">
+				<fo:block id="{@from}" font-size="1pt"><xsl:value-of select="$hair_space"/></fo:block>
+			</xsl:when>
+			<xsl:when test="not(//*[@id = $id_from]) and not(preceding-sibling::*[@id = $id_from])">
 				<fo:block id="{@from}" font-size="1pt"><xsl:value-of select="$hair_space"/></fo:block>
 			</xsl:when>
 		</xsl:choose>
 
 	</xsl:template>
+
+	<!-- https://github.com/metanorma/mn-samples-bsi/issues/312 -->
+	<xsl:template match="*[local-name() = 'review'][@type = 'other']"/>
 
 	<xsl:template match="*[local-name() = 'name']/text()">
 		<!-- 0xA0 to space replacement -->
