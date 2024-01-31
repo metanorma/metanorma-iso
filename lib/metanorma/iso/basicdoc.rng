@@ -245,6 +245,9 @@
       </attribute>
       <attribute name="reviewer"/>
       <optional>
+        <attribute name="type"/>
+      </optional>
+      <optional>
         <attribute name="date">
           <data type="dateTime"/>
         </attribute>

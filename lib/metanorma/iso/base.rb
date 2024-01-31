@@ -79,6 +79,14 @@ module Metanorma
         name
       end
 
+      def metadata_attrs(node)
+        ret = super
+        a = node.attr("document-scheme") and
+          ret += "<presentation-metadata><name>document-scheme</name>" \
+          "<value>#{a}</value></presentation-metadata>"
+        ret
+      end
+
       def outputs(node, ret)
         File.open("#{@filename}.xml", "w:UTF-8") { |f| f.write(ret) }
         presentation_xml_converter(node).convert("#{@filename}.xml")

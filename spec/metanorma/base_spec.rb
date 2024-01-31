@@ -1845,4 +1845,44 @@ RSpec.describe Metanorma::ISO do
     expect(word).to match(%r[mso-style-name: "Intro Title";]m)
     expect(html).not_to match(%r[mso-style-name: "Intro Title";]m)
   end
+
+  it "populates document-scheme metadata" do
+    input = <<~INPUT
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+      :document-scheme: DOCUMENT-SCHEME
+    INPUT
+    output = <<~OUTPUT
+      <metanorma-extension>
+         <presentation-metadata>
+           <name>document-scheme</name>
+           <value>DOCUMENT-SCHEME</value>
+         </presentation-metadata>
+         <presentation-metadata>
+           <name>TOC Heading Levels</name>
+           <value>2</value>
+         </presentation-metadata>
+         <presentation-metadata>
+           <name>HTML TOC Heading Levels</name>
+           <value>2</value>
+         </presentation-metadata>
+         <presentation-metadata>
+           <name>DOC TOC Heading Levels</name>
+           <value>3</value>
+         </presentation-metadata>
+         <presentation-metadata>
+           <name>PDF TOC Heading Levels</name>
+           <value>3</value>
+         </presentation-metadata>
+       </metanorma-extension>
+    OUTPUT
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
 end
