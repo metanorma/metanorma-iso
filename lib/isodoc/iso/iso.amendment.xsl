@@ -78,6 +78,7 @@
 	<xsl:variable name="stage" select="number(/iso:iso-standard/iso:bibdata/iso:status/iso:stage)"/>
 	<xsl:variable name="substage" select="number(/iso:iso-standard/iso:bibdata/iso:status/iso:substage)"/>
 	<xsl:variable name="stagename" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:stagename)"/>
+	<xsl:variable name="stagename_abbreviation" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:stagename/@abbreviation)"/>
 	<xsl:variable name="stagename_localized" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:status/iso:stage[@language = $lang])"/>
 	<xsl:variable name="abbreviation" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:status/iso:stage/@abbreviation)"/>
 
@@ -123,7 +124,8 @@
 
 	<xsl:variable name="stagename-header-firstpage">
 		<xsl:choose>
-			<xsl:when test="$stage-abbreviation = 'PRF'"><xsl:value-of select="$doctype_localized"/></xsl:when>
+			<!-- $stage-abbreviation = 'PRF'  -->
+			<xsl:when test="$stagename_abbreviation = 'PRF'"><xsl:value-of select="$doctype_localized"/></xsl:when>
 			<xsl:when test="$layoutVersion = '2024' and $stagename_localized != ''">
 				<xsl:value-of select="$stagename_localized"/>
 			</xsl:when>
@@ -136,8 +138,8 @@
 
 	<xsl:variable name="stagename-header-coverpage">
 		<xsl:choose>
-			<xsl:when test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or starts-with($stage-abbreviation, 'DTS') or starts-with($stage-abbreviation, 'DTR')">DRAFT</xsl:when>
-			<xsl:when test="$stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or starts-with($stage-abbreviation, 'FDTS') or starts-with($stage-abbreviation, 'FDTR')">FINAL DRAFT</xsl:when>
+			<xsl:when test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or starts-with($stage-abbreviation, 'DTS') or starts-with($stage-abbreviation, 'DTR') or $stagename_abbreviation = 'DIS'">DRAFT</xsl:when>
+			<xsl:when test="$stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or starts-with($stage-abbreviation, 'FDTS') or starts-with($stage-abbreviation, 'FDTR') or $stagename_abbreviation = 'FDIS'">FINAL DRAFT</xsl:when>
 			<xsl:when test="$stage-abbreviation = 'PRF'"/>
 			<xsl:when test="$stage-abbreviation = 'IS'"/>
 			<xsl:otherwise>
@@ -693,7 +695,7 @@
 															</xsl:for-each>
 														</xsl:if>
 
-														<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS'                or $stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM'">
+														<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS' or $stagename_abbreviation = 'FDIS'                 or $stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS'">
 															<fo:block margin-top="20mm">
 																<xsl:copy-of select="$ics"/>
 															</fo:block>
@@ -746,7 +748,7 @@
 														</fo:block>
 													</xsl:if>
 
-													<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or               $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or               $stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
+													<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or               $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS' or               $stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
 														<xsl:if test="normalize-space($editorialgroup) != ''">
 															<fo:block margin-bottom="3mm">
 																<xsl:copy-of select="$editorialgroup"/>
@@ -759,7 +761,7 @@
 														</xsl:if>
 													</xsl:if>
 
-													<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or                    $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM'">
+													<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or                    $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS'">
 
 														<fo:block margin-bottom="3mm">
 														<!-- Voting begins on: -->
@@ -812,9 +814,9 @@
 												<fo:block>
 													<xsl:variable name="feedback_link" select="normalize-space(/iso:iso-standard/iso:metanorma-extension/iso:semantic-metadata/iso:feedback-link)"/>
 													<xsl:if test="$stage &gt;=60 and $feedback_link != ''">
-														<fo:block-container width="66.4mm" background-color="rgb(242,242,242)" display-align="before">
+														<fo:block-container width="69mm" background-color="rgb(242,242,242)" display-align="before">
 															<fo:table table-layout="fixed" width="100%" role="SKIP">
-																<fo:table-column column-width="proportional-column-width(23)"/>
+																<fo:table-column column-width="proportional-column-width(26)"/>
 																<fo:table-column column-width="proportional-column-width(43.5)"/>
 																<fo:table-body>
 																	<fo:table-row>
@@ -1003,7 +1005,7 @@
 
 							<xsl:choose>
 								<!-- COVER PAGE for DIS document only -->
-								<xsl:when test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM'">
+								<xsl:when test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS'">
 									<fo:flow flow-name="xsl-region-body">
 										<fo:block-container role="SKIP">
 											<fo:block margin-top="-1mm" font-size="20pt" text-align="right">
@@ -1204,7 +1206,7 @@
 														<fo:table-cell role="SKIP"><fo:block role="SKIP"/></fo:table-cell>
 														<fo:table-cell number-columns-spanned="2" font-size="10pt" line-height="1.2" display-align="center" role="SKIP">
 															<fo:block role="SKIP">
-																<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS'">
+																<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS' or $stagename_abbreviation = 'FDIS'">
 																	<fo:table table-layout="fixed" width="100%" role="SKIP">
 																		<fo:table-column column-width="50%"/>
 																		<fo:table-column column-width="50%"/>
@@ -1239,7 +1241,7 @@
 													<fo:table-row role="SKIP"> <!--  border="1pt solid black" height="150mm"  -->
 														<fo:table-cell font-size="11pt" role="SKIP">
 															<fo:block role="SKIP">
-																<xsl:if test="$stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM'">
+																<xsl:if test="$stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS'">
 																	<fo:block-container border="0.5mm solid black" width="51mm" role="SKIP">
 																		<fo:block margin="2mm" role="SKIP">
 																				<fo:block margin-bottom="8pt"><xsl:copy-of select="$editorialgroup"/></fo:block>
@@ -1294,7 +1296,7 @@
 																		</xsl:for-each>
 																	</xsl:if>
 
-																	<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS'">
+																	<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS' or $stagename_abbreviation = 'FDIS'">
 																		<fo:block margin-top="10mm">
 																			<xsl:copy-of select="$ics"/>
 																		</fo:block>
@@ -1719,7 +1721,7 @@
 		<xsl:value-of select="$edition"/>
 		<xsl:variable name="date">
 			<xsl:choose>
-				<xsl:when test="($stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS') and /iso:iso-standard/iso:bibdata/iso:version/iso:revision-date">
+				<xsl:when test="($stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS' or $stagename_abbreviation = 'FDIS') and /iso:iso-standard/iso:bibdata/iso:version/iso:revision-date">
 					<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/>
 				</xsl:when>
 				<xsl:when test="$stage-abbreviation = 'IS' and /iso:iso-standard/iso:bibdata/iso:date[@type = 'published']">
@@ -1749,12 +1751,12 @@
 	</xsl:template>
 
 	<xsl:template name="insertDraftComments">
-		<xsl:if test="$stage-abbreviation = 'DIS' or             $stage-abbreviation = 'DAmd' or             $stage-abbreviation = 'DAM' or             $stage-abbreviation = 'NWIP' or             $stage-abbreviation = 'NP' or             $stage-abbreviation = 'PWI' or             $stage-abbreviation = 'AWI' or             $stage-abbreviation = 'WD' or             $stage-abbreviation = 'CD'">
+		<xsl:if test="$stagename_abbreviation = 'DIS' or             $stage-abbreviation = 'DIS' or             $stage-abbreviation = 'DAmd' or             $stage-abbreviation = 'DAM' or             $stage-abbreviation = 'NWIP' or             $stage-abbreviation = 'NP' or             $stage-abbreviation = 'PWI' or             $stage-abbreviation = 'AWI' or             $stage-abbreviation = 'WD' or             $stage-abbreviation = 'CD'">
 			<fo:block margin-bottom="1.5mm">
 				<xsl:text>THIS DOCUMENT IS A DRAFT CIRCULATED FOR COMMENT AND APPROVAL. IT IS THEREFORE SUBJECT TO CHANGE AND MAY NOT BE REFERRED TO AS AN INTERNATIONAL STANDARD UNTIL PUBLISHED AS SUCH.</xsl:text>
 			</fo:block>
 		</xsl:if>
-		<xsl:if test="$stage-abbreviation = 'FDIS' or             $stage-abbreviation = 'DIS' or             $stage-abbreviation = 'FDAmd' or             $stage-abbreviation = 'FDAM' or             $stage-abbreviation = 'DAmd' or             $stage-abbreviation = 'DAM' or             $stage-abbreviation = 'NWIP' or             $stage-abbreviation = 'NP' or             $stage-abbreviation = 'PWI' or             $stage-abbreviation = 'AWI' or             $stage-abbreviation = 'WD' or             $stage-abbreviation = 'CD'">
+		<xsl:if test="$stagename_abbreviation = 'DIS' or            $stagename_abbreviation = 'FDIS' or            $stage-abbreviation = 'FDIS' or             $stage-abbreviation = 'DIS' or             $stage-abbreviation = 'FDAmd' or             $stage-abbreviation = 'FDAM' or             $stage-abbreviation = 'DAmd' or             $stage-abbreviation = 'DAM' or             $stage-abbreviation = 'NWIP' or             $stage-abbreviation = 'NP' or             $stage-abbreviation = 'PWI' or             $stage-abbreviation = 'AWI' or             $stage-abbreviation = 'WD' or             $stage-abbreviation = 'CD'">
 			<fo:block margin-bottom="1.5mm">
 				<xsl:text>RECIPIENTS OF THIS DRAFT ARE INVITED TO
 									SUBMIT, WITH THEIR COMMENTS, NOTIFICATION
@@ -1795,7 +1797,7 @@
 	</xsl:template>
 
 	<xsl:template name="insertCoverPageAdditionalNotes">
-		<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'DIS' or $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM'">
+		<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FCD' or             $stage-abbreviation = 'DIS' or $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or $stagename_abbreviation = 'FDIS'">
 			<xsl:variable name="text">
 				<xsl:for-each select="/iso:iso-standard/iso:preface/iso:note[@coverpage='true']/iso:p">
 					<fo:block>
