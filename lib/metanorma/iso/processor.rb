@@ -33,6 +33,7 @@ module Metanorma
           "Source Han Sans" => nil,
           "Source Han Sans Normal" => nil,
           "Courier New" => nil,
+          "Inter" => nil,
         }
       end
 
