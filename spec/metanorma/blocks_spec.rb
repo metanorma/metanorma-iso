@@ -25,7 +25,7 @@ RSpec.describe Metanorma::ISO do
       .to be_equivalent_to xmlpp(output)
   end
 
-  it "ignores review blocks unless document is in draft mode" do
+  it "processes review blocks if  document is not in draft mode" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [[foreword]]
@@ -43,6 +43,10 @@ RSpec.describe Metanorma::ISO do
       #{BLANK_HDR}
         <sections>
           <p id="foreword">Foreword</p>
+          <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
+          <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
+          <p id="_">For further information on the Foreword, see <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p>
+        </review>
         </sections>
       </iso-standard>
     OUTPUT
@@ -75,7 +79,7 @@ RSpec.describe Metanorma::ISO do
       <iso-standard>
         <sections>
           <p id="foreword">Foreword</p>
-          <review date="20170101T00:00:00Z" from="foreword" id="_" reviewer="ISO" to="foreword">
+          <review date="20170101T00:00:00Z" from="foreword" id="_" reviewer="ISO" to="foreword" type="todo">
             <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
             <p id="_">For further information on the Foreword, see
               <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p>

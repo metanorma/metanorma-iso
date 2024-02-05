@@ -520,7 +520,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation="FCD">40</stage>
+            <stage abbreviation="DAMD">40</stage>
             <substage>00</substage>
           </status>
           <copyright>
@@ -765,7 +765,7 @@ RSpec.describe Metanorma::ISO do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage abbreviation='PRF'>50</stage>
+            <stage abbreviation='FDCOR'>50</stage>
             <substage>00</substage>
           </status>
           <copyright>

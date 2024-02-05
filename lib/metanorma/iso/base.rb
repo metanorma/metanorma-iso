@@ -79,11 +79,15 @@ module Metanorma
         name
       end
 
+      def document_scheme(node)
+        node.attr("document-scheme") || "2024"
+      end
+
       def metadata_attrs(node)
         ret = super
-        a = node.attr("document-scheme") and
+        a = document_scheme(node) and
           ret += "<presentation-metadata><name>document-scheme</name>" \
-          "<value>#{a}</value></presentation-metadata>"
+            "<value>#{a}</value></presentation-metadata>"
         ret
       end
 

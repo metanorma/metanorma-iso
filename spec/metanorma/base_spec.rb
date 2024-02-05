@@ -888,7 +888,7 @@ RSpec.describe Metanorma::ISO do
         <language>en</language>
         <script>Latn</script>
         <status>
-          <stage abbreviation='PRF'>50</stage>
+          <stage abbreviation='FDTS'>50</stage>
           <substage>00</substage>
         </status>
         <copyright>
@@ -1204,7 +1204,7 @@ RSpec.describe Metanorma::ISO do
                 <language>fr</language>
                 <script>Latn</script>
                 <status>
-                  <stage abbreviation="PRF">50</stage>
+                  <stage abbreviation="FDIS">50</stage>
                   <substage>00</substage>
                   <iteration>2</iteration>
                 </status>

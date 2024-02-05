@@ -241,6 +241,10 @@ BLANK_HDR1 = <<~"HDR".freeze
     </bibdata>
         <metanorma-extension>
     <presentation-metadata>
+      <name>document-scheme</name>
+      <value>2024</value>
+    </presentation-metadata>
+    <presentation-metadata>
       <name>TOC Heading Levels</name>
       <value>2</value>
     </presentation-metadata>
