@@ -13,7 +13,7 @@
 {% if doc_date %}
 <p class="zzCover" align="right" style='text-align:right'><span lang="EN-GB">Date: <span style='mso-no-proof:yes'><b>{{ doc_date }}</b></span></span></p>
 {% endif %}
-{% if correcteddate %}
+{% if correcteddate and correcteddate != ""  and correcteddate != "XXX" %}
 <p class="zzCover">{{ labels["corrected_version"] }}: {{ correcteddate }}</p>
 {% endif %}
 
