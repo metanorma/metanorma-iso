@@ -80,6 +80,10 @@ module Metanorma
         end
       end
 
+      def compact_blank(hash)
+        hash.compact.reject { |_, v| v.is_a?(String) && v.empty? }
+      end
+
       # unpublished is for internal use
       def iso_id_params_core(node)
         pub = iso_id_pub(node)
@@ -89,9 +93,9 @@ module Metanorma
                 type: get_typeabbr(node),
                 publisher: pub[0],
                 unpublished: /^[0-5]/.match?(get_stage(node)),
-                copublisher: pub[1..-1] }.compact
+                copublisher: pub[1..-1] }
         ret[:copublisher].empty? and ret.delete(:copublisher)
-        ret
+        compact_blank(ret)
       end
 
       def iso_id_pub(node)
@@ -104,12 +108,12 @@ module Metanorma
         ret = { number: node.attr("amendment-number") ||
           node.attr("corrigendum-number"),
                 year: iso_id_year(node),
-                iteration: node.attr("iteration") }.compact
+                iteration: node.attr("iteration") }
         if stage && !cen?(node.attr("publisher"))
           ret[:stage] = stage
           ret[:stage] == "60.00" and ret[:stage] = :PRF
         end
-        ret
+        compact_blank(ret)
       end
 
       def iso_id_stage(node)
