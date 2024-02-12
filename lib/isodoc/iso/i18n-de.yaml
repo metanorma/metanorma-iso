@@ -40,6 +40,7 @@ doctype_dict:
   amendment: Änderung
   technical-corrigendum: Technische Berichtigung
   directive: Richtlinie
+  committee-document: Ausschussdokument
 stage_dict:
   "00": Vorläufiges Arbeitselement
   "10": Neuer Arbeitselementvorschlag

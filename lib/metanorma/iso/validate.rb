@@ -119,7 +119,8 @@ module Metanorma
       def doctype_validate(_xmldoc)
         %w(international-standard technical-specification technical-report
            publicly-available-specification international-workshop-agreement
-           guide amendment technical-corrigendum).include? @doctype or
+           guide amendment technical-corrigendum committee-document)
+          .include? @doctype or
           @log.add("Document Attributes", nil,
                    "#{@doctype} is not a recognised document type")
       end

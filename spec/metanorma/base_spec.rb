@@ -724,117 +724,117 @@ RSpec.describe Metanorma::ISO do
       :approval-workgroup-type: Other
     INPUT
     output = <<~OUTPUT
-        <bibdata type="standard">
-          <docidentifier type="ISO">ISO 1000:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
-          <docidentifier type="iso-undated">ISO 1000</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
-          <docnumber>1000</docnumber>
-          <contributor>
-            <role type="author"/>
+      <bibdata type="standard">
+        <docidentifier type="ISO">ISO 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
+        <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
+        <docidentifier type="iso-undated">ISO 1000</docidentifier>
+        <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
+        <docnumber>1000</docnumber>
+        <contributor>
+          <role type="author"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+        <role type="author"><description>Technical committee</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <subdivision/>
+            <identifier>1</identifier>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="author"><description>Subcommittee</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <subdivision/>
+            <identifier>2</identifier>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="author"><description>Workgroup</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <subdivision/>
+            <identifier>3</identifier>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+        <role type="authorizer"><description>Technical committee</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <subdivision/>
+            <identifier>1</identifier>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="authorizer"><description>Subcommittee</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <subdivision/>
+            <identifier>2</identifier>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="authorizer"><description>Workgroup</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <subdivision/>
+            <identifier>3</identifier>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="authorizer"><description>Agency</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <language>en</language>
+        <script>Latn</script>
+        <status>
+          <stage>60</stage>
+          <substage>60</substage>
+        </status>
+        <copyright>
+          <from>#{Date.today.year}</from>
+          <owner>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
-          </contributor>
-          <contributor>
-          <role type="author"><description>Technical committee</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision/>
-              <identifier>1</identifier>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="author"><description>Subcommittee</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision/>
-              <identifier>2</identifier>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="author"><description>Workgroup</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision/>
-              <identifier>3</identifier>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-          <contributor>
-          <role type="authorizer"><description>Technical committee</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision/>
-              <identifier>1</identifier>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="authorizer"><description>Subcommittee</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision/>
-              <identifier>2</identifier>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="authorizer"><description>Workgroup</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision/>
-              <identifier>3</identifier>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="authorizer"><description>Agency</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-            <stage>60</stage>
-            <substage>60</substage>
-          </status>
-          <copyright>
-            <from>#{Date.today.year}</from>
-            <owner>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </owner>
-          </copyright>
-          <ext>
-            <doctype>standard</doctype>
-            <editorialgroup>
-              <agency>ISO</agency>
-              <technical-committee number="1" type="Other"/>
-              <subcommittee number="2" type="Other"/>
-              <workgroup number="3" type="Other"/>
-            </editorialgroup>
-            <approvalgroup>
-              <agency>ISO</agency>
-              <technical-committee number="1" type="Other"/>
-              <subcommittee number="2" type="Other"/>
-              <workgroup number="3" type="Other"/>
-            </approvalgroup>
-            <structuredidentifier>
-              <project-number>ISO 1000</project-number>
-            </structuredidentifier>
-            <stagename>International Standard</stagename>
-          </ext>
-        </bibdata>
+          </owner>
+        </copyright>
+        <ext>
+          <doctype>standard</doctype>
+          <editorialgroup>
+            <agency>ISO</agency>
+            <technical-committee number="1" type="Other"/>
+            <subcommittee number="2" type="Other"/>
+            <workgroup number="3" type="Other"/>
+          </editorialgroup>
+          <approvalgroup>
+            <agency>ISO</agency>
+            <technical-committee number="1" type="Other"/>
+            <subcommittee number="2" type="Other"/>
+            <workgroup number="3" type="Other"/>
+          </approvalgroup>
+          <structuredidentifier>
+            <project-number>ISO 1000</project-number>
+          </structuredidentifier>
+          <stagename>International Standard</stagename>
+        </ext>
+      </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(xmlpp(strip_guid(xml.to_xml)))
@@ -916,6 +916,66 @@ RSpec.describe Metanorma::ISO do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
+    expect(xmlpp(strip_guid(xml.to_xml)))
+      .to be_equivalent_to xmlpp(output)
+  end
+
+  it "processes committee document metadata" do
+    input = <<~INPUT
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+      :partnumber: 1
+      :edition: 2
+      :technical-committee: TC
+      :technical-committee-number: 1
+      :technical-committee-type: A
+      :subcommittee: SC
+      :subcommittee-number: 2
+      :subcommittee-type: B
+      :workgroup: WG
+      :workgroup-number: 3
+      :workgroup-type: C
+      :secretariat: SECRETARIAT
+      :IGNORE-docstage: 20
+      :IGNORE-docsubstage: 20
+      :iteration: 3
+      :language: en
+      :title-main-en: Main Title -- Title
+      :title-part-en: Title Part
+      :title-main-fr: Titre Principal
+      :title-part-fr: Part du Titre
+      :copyright-year: 2000
+      :doctype: committee-document
+    INPUT
+    output = <<~OUTPUT
+      <docidentifier type="ISO">ISO/A 1/B 2 N1000</docidentifier>
+    OUTPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
+    expect(xmlpp(strip_guid(xml.to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
+      .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
+    output = <<~OUTPUT
+      <docidentifier type="ISO">ISO/TC 1/SC 2 N1000</docidentifier>
+    OUTPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
+    xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
+    expect(xmlpp(strip_guid(xml.to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input2 = input.gsub(/:subcommittee.+?[\r\n]+/m, "")
+    output = <<~OUTPUT
+      <docidentifier type="ISO">ISO/A 1 N1000</docidentifier>
+    OUTPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
+    xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
     expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
   end

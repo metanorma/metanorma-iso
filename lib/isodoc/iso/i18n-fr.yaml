@@ -37,6 +37,7 @@ doctype_dict:
   amendment: Amendement
   technical-corrigendum: Rectificatif technique
   directive: Directive
+  committee-document: Document du comité
 stage_dict:
   "00": Élément de travail préliminaire
   "10": Nouvelle proposition d'élément de travail

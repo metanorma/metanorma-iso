@@ -1,9 +1,5 @@
 require "date"
-require "nokogiri"
-require "htmlentities"
-require "json"
 require "pathname"
-require "open-uri"
 require "twitter_cldr"
 require "pubid-iso"
 require "pubid-cen"
@@ -23,18 +19,18 @@ module Metanorma
         xml.docnumber node.attr("docnumber")
       end
 
+      DOCTYPE2HASHID =
+        { directive: :dir, "technical-report": :tr, "guide": :guide,
+          "technical-specification": :ts,
+          "publicly-available-specification": :pas,
+          "committee-document": :tc }.freeze
+
       # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type]
       # document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
       def get_typeabbr(node, amd: false)
         node.attr("amendment-number") and return :amd
         node.attr("corrigendum-number") and return :cor
-        case doctype(node)
-        when "directive" then :dir
-        when "technical-report" then :tr
-        when "technical-specification" then :ts
-        when "publicly-available-specification" then :pas
-        when "guide" then :guide
-        end
+        DOCTYPE2HASHID[doctype(node).to_sym]
       end
 
       def iso_id(node, xml)
@@ -109,11 +105,28 @@ module Metanorma
           node.attr("corrigendum-number"),
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }
+        iso_id_stage_populate(ret, node, stage)
+        tc_number(ret, node)
+        compact_blank(ret)
+      end
+
+      def tc_number(ret, node)
+        doctype(node) == "committee-document" or return ret
+        n = node.attr("subcommittee-number") and
+          ret.merge!({ sctype: node.attr("subcommittee-type") || "SC",
+                       scnumber: n })
+        n = node.attr("technical-committee-number") and
+          ret.merge!({ tctype: node.attr("technical-committee-type") || "TC",
+                       tcnumber: n })
+        ret
+      end
+
+      def iso_id_stage_populate(ret, node, stage)
         if stage && !cen?(node.attr("publisher"))
           ret[:stage] = stage
           ret[:stage] == "60.00" and ret[:stage] = :PRF
         end
-        compact_blank(ret)
+        ret
       end
 
       def iso_id_stage(node)

@@ -35,6 +35,7 @@ doctype_dict:
   amendment: 修正
   technical-corrigendum: 技术勘误
   directive: 指令
+  committee-document: 委员会文件
 stage_dict:
   "00": 初步工作项
   "10": 新工作项提案
