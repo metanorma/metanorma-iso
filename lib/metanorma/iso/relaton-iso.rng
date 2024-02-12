@@ -101,6 +101,7 @@
         <value>amendment</value>
         <value>technical-corrigendum</value>
         <value>directive</value>
+        <value>committee-document</value>
       </choice>
     </define>
     <define name="DocumentSubtype">
