@@ -28,7 +28,6 @@ module IsoDoc
         revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
         docstatus and docstatus1(isoxml, docstatus)
-        require "debug"; binding.b
         docscheme = isoxml.at(ns("//presentation-metadata[name" \
           "[text() = 'document-scheme']]/value"))
         docscheme and set(:document_scheme, docscheme.text)
