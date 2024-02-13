@@ -25,6 +25,7 @@ voting_begins_on: 投票开始于
 voting_terminates_on: 投票终止于
 corrected_version: 修正版本
 fast-track-procedure: 快速通道程序
+classification-UDC: 通用十进制图书分类法
 doctype_dict:
   international-standard: 国际标准
   technical-specification: 技术规格

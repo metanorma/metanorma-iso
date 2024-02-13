@@ -30,6 +30,7 @@ corrected_version: Korrigierte Version
 fast-track-procedue: Beschleunigtes Verfahren
 multiple_and: "%1 und %2"
 multiple_or: "%1 oder %2"
+classification-UDC: UDK
 doctype_dict:
   international-standard: Internationaler Standard
   technical-specification: Technische Spezifikation
