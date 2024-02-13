@@ -94,10 +94,14 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <fast-track>true</fast-track>
           </ext>
         </bibdata>
+        <metanorma-extension>
+        <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
+        </metanorma-extension>
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      {:accesseddate=>"2012",
+      {:"presentation_metadata_document-scheme"=>["1951"],
+      :accesseddate=>"2012",
       :activateddate=>"2013",
       :agency=>"ISO",
       :approvalgroup=>"ABC",
@@ -106,6 +110,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :docnumber_lang=>"ISO/PreCD3 17301-1 (E)",
       :docnumber_reference=>"ISO/PreCD3 17301-1:2000 (E)",
       :docnumeric=>"1730",
+      :docschema=>"1951",
       :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses H<sup>2</sup>&#xa0;&#x2014; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai H<sup>2</sup>&#xa0;&#x2014; Partie&#xa0;1: Riz H<sup>2</sup>",
       :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses H<sup>2</sup>",
       :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai H<sup>2</sup>",
@@ -118,6 +123,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :doctitlepartlabel=>"Part&#xa0;1",
       :doctype=>"International Standard",
       :doctype_display=>"International Standard",
+      :document_schema=>"1951",
       :docyear=>"2016",
       :draft=>"0.4",
       :draftinfo=>" (draft 0.4, 2016-05-01)",
