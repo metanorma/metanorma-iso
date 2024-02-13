@@ -69,9 +69,8 @@ module IsoDoc
                      ru: "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ" }.freeze
 
       def part_title(part, titlenums, lang)
-        return "" unless part
-
-        suffix = @c.encode(part.text, :hexadecimal)
+        part or return ""
+        suffix = part.children.to_xml
         p = titlenums[:part]
         titlenums[:part] && titlenums[:subpart] and
           p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
@@ -98,10 +97,9 @@ module IsoDoc
       def compose_title(tparts, tnums, lang)
         main = ""
         tparts[:main].nil? or
-          main = @c.encode(tparts[:main].text, :hexadecimal)
+          main = tparts[:main].children.to_xml
         tparts[:intro] and
-          main = "#{@c.encode(tparts[:intro].text,
-                              :hexadecimal)}&#xa0;&#x2014; #{main}"
+          main = "#{tparts[:intro].children.to_xml}&#xa0;&#x2014; #{main}"
         if tparts[:part]
           suffix = part_title(tparts[:part], tnums, lang)
           main = "#{main}&#xa0;&#x2014; #{suffix}"
@@ -136,18 +134,14 @@ module IsoDoc
         # intro, main, part, amd = title_parts(isoxml, lang)
         tp = title_parts(isoxml, lang)
         tn = title_nums(isoxml)
-
-        set(:doctitlemain,
-            @c.encode(tp[:main] ? tp[:main].text : "", :hexadecimal))
+        set(:doctitlemain, tp[:main] ? tp[:main].children.to_xml : "")
         main = compose_title(tp, tn, lang)
         set(:doctitle, main)
-        tp[:intro] and
-          set(:doctitleintro,
-              @c.encode(tp[:intro] ? tp[:intro].text : "", :hexadecimal))
+        tp[:intro] and set(:doctitleintro, tp[:intro].children.to_xml)
         set(:doctitlepartlabel, part_prefix(tn, lang))
-        set(:doctitlepart, @c.encode(tp[:part].text, :hexadecimal)) if tp[:part]
+        set(:doctitlepart, tp[:part].children.to_xml) if tp[:part]
         set(:doctitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
-        set(:doctitleamd, @c.encode(tp[:amd].text, :hexadecimal)) if tp[:amd]
+        set(:doctitleamd, tp[:amd].children.to_xml) if tp[:amd]
         set(:doctitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
       end
 
@@ -156,19 +150,14 @@ module IsoDoc
         tp = title_parts(isoxml, lang)
         tn = title_nums(isoxml)
 
-        set(:docsubtitlemain,
-            @c.encode(tp[:main] ? tp[:main].text : "", :hexadecimal))
+        set(:docsubtitlemain, tp[:main] ? tp[:main].children.to_xml : "")
         main = compose_title(tp, tn, lang)
         set(:docsubtitle, main)
-        tp[:intro] and
-          set(:docsubtitleintro,
-              @c.encode(tp[:intro] ? tp[:intro].text : "", :hexadecimal))
+        tp[:intro] and set(:docsubtitleintro, tp[:intro].children.to_xml)
         set(:docsubtitlepartlabel, part_prefix(tn, lang))
-        tp[:part] and
-          set(:docsubtitlepart,
-              @c.encode(tp[:part].text, :hexadecimal))
+        tp[:part] and set(:docsubtitlepart, tp[:part].children.to_xml)
         set(:docsubtitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
-        set(:docsubtitleamd, @c.encode(tp[:amd].text, :hexadecimal)) if tp[:amd]
+        set(:docsubtitleamd, tp[:amd].children.to_xml) if tp[:amd]
         set(:docsubtitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
       end
 
