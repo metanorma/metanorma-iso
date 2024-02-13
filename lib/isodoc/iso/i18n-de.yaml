@@ -10,6 +10,7 @@ term_def_boilerplate: |
       </ul>
 all_rights_reserved: Alle Rechte vorbehalten
 reference_number: Referenznummer
+reference_number_abbrev: Ref.nr
 price_based_on: Preis basierend auf % Seiten
 descriptor: Deskriptor
 under_preparation: In Vorbereitung. (Stadium zum Zeitpunkt der Veröffentlichung %).

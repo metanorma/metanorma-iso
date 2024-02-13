@@ -9,6 +9,11 @@ require_relative "../../relaton/render/general"
 module IsoDoc
   module Iso
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
+      def convert_i18n_init(docxml)
+        super
+        update_i18n(docxml)
+      end
+
       def convert1(docxml, filename, dir)
         @iso_class = instance_of?(IsoDoc::Iso::PresentationXMLConvert)
         if amd?(docxml)

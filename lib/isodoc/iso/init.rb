@@ -20,7 +20,14 @@ module IsoDoc
                                        i18nyaml: i18nyaml || @i18nyaml)
       end
 
-      def amd?(docxml)
+      def update_i18n(docxml)
+        scheme = docxml.at(ns("//presentation-metadata[name" \
+                              "[text() = 'document-scheme']]/value"))&.text
+        %w(1951 1972).include?(scheme) or return
+        @i18n.set("reference_number", @i18n.get["reference_number_abbrev"])
+      end
+
+      def amd?(_docxml)
         %w(amendment technical-corrigendum).include? @doctype
       end
 

@@ -14,8 +14,7 @@ module IsoDoc
       end
 
       def implicit_reference(bib)
-        return true if bib&.at(ns("./docidentifier"))&.text == "IEV"
-
+        bib.at(ns("./docidentifier"))&.text == "IEV" and return true
         super
       end
 
@@ -29,8 +28,7 @@ module IsoDoc
       end
 
       def example_span_label(_node, div, name)
-        return if name.nil?
-
+        name.nil? and return
         div.span class: "example_label" do |p|
           name.children.each { |n| parse(n, p) }
         end
@@ -55,9 +53,8 @@ module IsoDoc
 
       def node_begins_with_para(node)
         node.elements.each do |e|
-          next if e.name == "name"
-          return true if e.name == "p"
-
+          e.name == "name" and next
+          e.name == "p" and return true
           return false
         end
         false
@@ -187,8 +184,7 @@ module IsoDoc
         out.div **figure_attrs(node) do |div|
           node.children.each do |n|
             figure_key(out) if n.name == "dl"
-            next if n.name == "note" && n["type"] == "units"
-
+            n.name == "note" && n["type"] == "units" and next
             parse(n, div) unless n.name == "name"
           end
           figure_name_parse(node, div, node.at(ns("./name")))
@@ -203,6 +199,11 @@ module IsoDoc
             end
           end
         end
+      end
+
+      def convert_i18n_init(docxml)
+        super
+        update_i18n(docxml)
       end
     end
   end
