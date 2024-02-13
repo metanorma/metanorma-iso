@@ -10,12 +10,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata type="standard">
-          <title format="text/plain" language="en" type="title-intro">Cereals and pulses</title>
-          <title format="text/plain" language="en" type="title-main">Specifications and test methods</title>
-          <title format="text/plain" language="en" type="title-part">Rice</title>
-          <title format="text/plain" language="fr" type="title-intro">Céréales et légumineuses</title>
-          <title format="text/plain" language="fr" type="title-main">Spécification et méthodes d'essai</title>
-          <title format="text/plain" language="fr" type="title-part">Riz</title>
+          <title format="text/plain" language="en" type="title-intro">Cereals and pulses H<sup>2</sup></title>
+          <title format="text/plain" language="en" type="title-main">Specifications and test methods H<sup>2</sup></title>
+          <title format="text/plain" language="en" type="title-part">Rice H<sup>2</sup></title>
+          <title format="text/plain" language="fr" type="title-intro">Céréales et légumineuses H<sup>2</sup></title>
+          <title format="text/plain" language="fr" type="title-main">Spécification et méthodes d'essai H<sup>2</sup></title>
+          <title format="text/plain" language="fr" type="title-part">Riz H<sup>2</sup></title>
           <docidentifier type="ISO">ISO/PreCD3 17301-1</docidentifier>
           <docidentifier type="iso-with-lang">ISO/PreCD3 17301-1 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/PreCD3 17301-1:2000 (E)</docidentifier>
@@ -106,15 +106,15 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :docnumber_lang=>"ISO/PreCD3 17301-1 (E)",
       :docnumber_reference=>"ISO/PreCD3 17301-1:2000 (E)",
       :docnumeric=>"1730",
-      :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&#xa0;&#x2014; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&#xa0;&#x2014; Partie&#xa0;1: Riz",
-      :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses",
-      :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai",
-      :docsubtitlepart=>"Riz",
+      :docsubtitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses H<sup>2</sup>&#xa0;&#x2014; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai H<sup>2</sup>&#xa0;&#x2014; Partie&#xa0;1: Riz H<sup>2</sup>",
+      :docsubtitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses H<sup>2</sup>",
+      :docsubtitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai H<sup>2</sup>",
+      :docsubtitlepart=>"Riz H<sup>2</sup>",
       :docsubtitlepartlabel=>"Partie&#xa0;1",
-      :doctitle=>"Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1: Rice",
-      :doctitleintro=>"Cereals and pulses",
-      :doctitlemain=>"Specifications and test methods",
-      :doctitlepart=>"Rice",
+      :doctitle=>"Cereals and pulses H<sup>2</sup>&#xa0;&#x2014; Specifications and test methods H<sup>2</sup>&#xa0;&#x2014; Part&#xa0;1: Rice H<sup>2</sup>",
+      :doctitleintro=>"Cereals and pulses H<sup>2</sup>",
+      :doctitlemain=>"Specifications and test methods H<sup>2</sup>",
+      :doctitlepart=>"Rice H<sup>2</sup>",
       :doctitlepartlabel=>"Part&#xa0;1",
       :doctype=>"International Standard",
       :doctype_display=>"International Standard",
