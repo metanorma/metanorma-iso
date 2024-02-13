@@ -443,7 +443,8 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     WORD
-    expect(strip_guid(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(strip_guid(xmlpp(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)
@@ -831,7 +832,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"fr"').sub(/Contents/, "Sommaire")}
+      #{HTML_HDR.gsub(/"en"/, '"fr"').sub(/Contents/, 'Sommaire')}
             <br/>
             <div>
               <h1 class="ForewordTitle">Foreword</h1>
@@ -918,7 +919,8 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)
@@ -1118,7 +1120,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"ru"').sub(/Contents/, "Содержание")}
+      #{HTML_HDR.gsub(/"en"/, '"ru"').sub(/Contents/, 'Содержание')}
             <br/>
             <div>
               <h1 class="ForewordTitle">Foreword</h1>
@@ -1205,7 +1207,8 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)
@@ -1421,7 +1424,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"zh"').sub(/Contents/, "目　次")}
+      #{HTML_HDR.gsub(/"en"/, '"zh"').sub(/Contents/, '目　次')}
                    <br/>
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
@@ -1515,7 +1518,8 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to xmlpp(presxml)

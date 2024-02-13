@@ -40,6 +40,7 @@ doctype_dict:
   technical-corrigendum: Техническое Исправление
   directive: Директива
   committee-document: Документ комитета
+  recommendation: Рекомендации ИСО
 stage_dict:
   "00": Предварительный рабочий элемент
   "10": Предложение нового рабочего элемента
