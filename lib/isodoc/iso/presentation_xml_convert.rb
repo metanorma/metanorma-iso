@@ -54,8 +54,8 @@ module IsoDoc
       def figure1(node)
         lbl = @xrefs.anchor(node["id"], :label, false) or return
         figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
-        connective = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
-        prefix_name(node, connective, l10n("#{figname}#{lbl}"), "name")
+        conn = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
+        prefix_name(node, conn, l10n("#{figname}#{lbl}"), "name")
       end
 
       def example1(node)
@@ -67,8 +67,7 @@ module IsoDoc
       end
 
       def example_span_label(_node, div, name)
-        return if name.nil?
-
+        name.nil? and return
         div.span class: "example_label" do |_p|
           name.children.each { |n| parse(n, div) }
         end
@@ -177,15 +176,23 @@ module IsoDoc
 
       def middle_title_main
         ret = "<span class='boldtitle'>#{@meta.get[:doctitleintro]}"
-        ret += " &#x2014; " if @meta.get[:doctitleintro] && @meta.get[:doctitlemain]
+        @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and
+          ret += " &#x2014; "
         ret += @meta.get[:doctitlemain]
-        ret += " &#x2014; " if @meta.get[:doctitlemain] && @meta.get[:doctitlepart]
-        ret += "</span>"
+        @meta.get[:doctitlemain] && @meta.get[:doctitlepart] and
+          ret += " &#x2014; "
+        ret += "</span>#{middle_title_part}"
+        "<p class='zzSTDTitle1'>#{ret}</p>"
+      end
+
+      def middle_title_part
+        ret = ""
         if a = @meta.get[:doctitlepart]
-          b = @meta.get[:doctitlepartlabel] and ret += "<span class='nonboldtitle'>#{b}:</span> "
+          b = @meta.get[:doctitlepartlabel] and
+            ret += "<span class='nonboldtitle'>#{b}:</span> "
           ret += "<span class='boldtitle'>#{a}</span>"
         end
-        "<p class='zzSTDTitle1'>#{ret}</p>"
+        ret
       end
 
       def middle_title_amd

@@ -1611,19 +1611,29 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <localized-string key="reference_number" language="fr">Numéro de référence</localized-string>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    edn = <<~OUTPUT
+      <edition language="fr">deuxi&#xE8;me &#xE9;dition</edition>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
-      .at("//xmlns:localized-string[@key = 'reference_number']").to_xml))
+    expect(xml.at("//xmlns:localized-string[@key = 'reference_number']").to_xml)
       .to be_equivalent_to output
+    expect(xml.at("//xmlns:edition[@language = 'fr']").to_xml)
+      .to be_equivalent_to edn
 
     output = <<~OUTPUT
       <localized-string key="reference_number" language="fr">Réf. №</localized-string>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    edn = <<~OUTPUT
+      <edition language="fr">2<sup>e</sup> &#xC9;DITION</edition>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input.sub("2024", "1951"), true))
-      .at("//xmlns:localized-string[@key = 'reference_number']").to_xml))
+    expect(xml.at("//xmlns:localized-string[@key = 'reference_number']").to_xml)
       .to be_equivalent_to output
+    expect(xml.at("//xmlns:edition[@language = 'fr']").to_xml)
+      .to be_equivalent_to edn
   end
 end
