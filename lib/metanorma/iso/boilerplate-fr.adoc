@@ -1,4 +1,24 @@
 == copyright-statement
+{% if document_scheme == "1951" %}
+
+=== REPRODUCTION INTERDITE
+
+[[boilerplate-message]]
+Le droit de reproduction des Recommandations ISO et des Normes
+ISO est la propriété des Comités Membres de l’ISO. En 
+conséquence, dans chaque pays, la reproduction de ces documents ne
+peut être autorisée que par l’organisation nationale de 
+normalisation sation de ce pays, membre de I’ISO.
+
+Seules les normes nationales sont valables dans leurs pays respectifs.
+
+[[boilerplate-place]]
+Imprimé en Suisse
+
+Ce document est également édité en anglais et en russe. Il peut être obtenu auprès des organisations +
+nationales de normalisation.
+
+{% else %}
 === {% if stage_int >= 40 %}DOCUMENT PROTÉGÉ PAR COPYRIGHT{%else%}{blank}{%endif%}
 
 [[boilerplate-year]]
@@ -31,4 +51,5 @@ Publié en Suisse
 Ce document n'est pas une Norme internationale de l'ISO. Il est distribué pour examen et observations. Il est susceptible de modification sans préavis et ne peut être cité comme Norme internationale.
 
 Les destinataires du présent projet sont invités à présenter, avec leurs observations, notification des droits de propriété dont ils auraient éventuellement connaissance et à fournir une documentation explicative.
+{% endif %}
 {% endif %}
