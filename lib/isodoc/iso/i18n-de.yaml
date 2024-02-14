@@ -10,6 +10,7 @@ term_def_boilerplate: |
       </ul>
 all_rights_reserved: Alle Rechte vorbehalten
 reference_number: Referenznummer
+reference_number_abbrev: Ref.nr
 price_based_on: Preis basierend auf % Seiten
 descriptor: Deskriptor
 under_preparation: In Vorbereitung. (Stadium zum Zeitpunkt der Veröffentlichung %).
@@ -31,6 +32,7 @@ fast-track-procedue: Beschleunigtes Verfahren
 multiple_and: "%1 und %2"
 multiple_or: "%1 oder %2"
 classification-UDC: UDK
+edition_ordinal_old: "%Ordinal AUSGABE"
 doctype_dict:
   international-standard: Internationaler Standard
   technical-specification: Technische Spezifikation

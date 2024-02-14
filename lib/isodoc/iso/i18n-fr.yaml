@@ -10,6 +10,7 @@ term_def_boilerplate: |
       </p> </li> </ul>
 all_rights_reserved: Tous droits réservés
 reference_number: Numéro de référence
+reference_number_abbrev: Réf. №
 price_based_on: Prix basé sur % pages
 descriptor: Descripteur
 under_preparation: En cours d'élaboration. (Stade au moment de la publication %).
@@ -21,6 +22,7 @@ see: voir
 see_also: voir aussi
 secretariat: Secrétariat
 edition: édition
+edition_ordinal_old: "%Ordinal ÉDITION"
 termsrelated: Termes liés 
 availablefrom: Disponible sur
 voting_begins_on: Le vote commence le

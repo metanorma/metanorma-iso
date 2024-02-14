@@ -8,6 +8,7 @@ term_def_boilerplate: |
       </p> </li> </ul>
 all_rights_reserved: 版权所有
 reference_number: 参考编号
+reference_number_abbrev: 参考编号
 price_based_on: 价格基于%页
 descriptor: 描述符
 under_preparation: 制定中（出版时最新状态为%）
