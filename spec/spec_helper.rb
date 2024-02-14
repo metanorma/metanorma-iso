@@ -159,6 +159,7 @@ HDR
 ASCIIDOCTOR_ISO_DIR = Pathname
   .new(File.dirname(__FILE__)) / "../lib/metanorma/iso"
 
+=begin
 def boilerplate_read(file)
   HTMLEntities.new.decode(
     Metanorma::ISO::Converter.new(:iso, {}).boilerplate_file_restructure(file)
@@ -187,6 +188,29 @@ BOILERPLATE_FR =
     .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% else %\}\{blank\}\{% endif %\}/m, "\\1")
     .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
   ).freeze
+=end
+
+def boilerplate_read(file, xmldoc)
+  conv = Metanorma::ISO::Converter.new(:iso, {})
+  conv.init(Asciidoctor::Document.new([]))
+  x = conv.boilerplate_isodoc(xmldoc).populate_template(file, nil)
+  ret = conv.boilerplate_file_restructure(x)
+  ret.to_xml(encoding: "UTF-8", indent: 2,
+             save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
+    .gsub(/<(\/)?sections>/, "<\\1boilerplate>")
+    .gsub(/ id="_[^"]+"/, " id='_'")
+end
+
+def boilerplate(xmldoc, lang: "en")
+  lang = if lang == "en" then "" else "-#{lang}" end
+  file = File.join(File.dirname(__FILE__), "..", "lib", "metanorma", "iso",
+                   "boilerplate#{lang}.adoc")
+  ret = Nokogiri::XML(boilerplate_read(
+                        File.read(file, encoding: "utf-8"), xmldoc))
+  ret.xpath("//passthrough").each(&:remove)
+  strip_guid(ret.root.to_xml(encoding: "UTF-8", indent: 2,
+                             save_with: Nokogiri::XML::Node::SaveOptions::AS_XML))
+end
 
 BLANK_HDR1 = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
@@ -265,12 +289,12 @@ HDR
 
 BLANK_HDR = <<~"HDR".freeze
   #{BLANK_HDR1}
-  #{BOILERPLATE}
+  #{boilerplate(Nokogiri::XML("#{BLANK_HDR1}</iso-standard>"))}
 HDR
 
 BLANK_HDR_FR = <<~"HDR".freeze
   #{BLANK_HDR1.sub(%r{<language>en</language>}, '<language>fr</language>')}
-  #{BOILERPLATE_FR}
+  #{boilerplate(Nokogiri::XML("#{BLANK_HDR1.sub(%r{<language>en</language>}, '<language>fr</language>')}</iso-standard>"), lang: 'fr')}
 HDR
 
 TERM_BOILERPLATE = <<~TERM.freeze
