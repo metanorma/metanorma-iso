@@ -7667,6 +7667,10 @@
 		<fo:inline keep-with-next.within-line="always"><xsl:value-of select="."/></fo:inline>
 	</xsl:template>
 
+	<xsl:template match="*[local-name() = 'span'][contains(@style, 'text-transform:none')]//text()" priority="5">
+		<xsl:value-of select="."/>
+	</xsl:template>
+
 	<!-- ========================= -->
 	<!-- END Rich text formatting -->
 	<!-- ========================= -->
