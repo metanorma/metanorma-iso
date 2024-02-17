@@ -22,7 +22,7 @@ see: voir
 see_also: voir aussi
 secretariat: Secrétariat
 edition: édition
-edition_ordinal_old: "%Ordinal ÉDITION"
+edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} ÉDITION"
 termsrelated: Termes liés 
 availablefrom: Disponible sur
 voting_begins_on: Le vote commence le

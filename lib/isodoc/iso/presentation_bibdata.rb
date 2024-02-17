@@ -68,16 +68,14 @@ module IsoDoc
         edition_translate(bib)
       end
 
-      def edition_translate1(num)
-        ret = super
-        @lang == "fr" and
-          ret.sub!(/^(\d+)(\p{L}+)$/, "\\1<sup>\\2</sup>")
-        ret
+      def edition_translate(bibdata)
+        super
+        @lang == "fr" and e = bibdata.at(ns("./edition[@language = 'fr']")) and
+          e.children = e.text.sub(/(\d+)(\p{L}+)/, "\\1<sup>\\2</sup>")
       end
 
       def bibdata_i18n_stage(bib, stage, type, lang: @lang, i18n: @i18n)
         stage or return
-
         i18n.get.dig("stage_dict", stage.text).is_a?(Hash) or
           return hash_translate(bib, i18n.get["stage_dict"],
                                 "./status/stage", lang)
