@@ -1636,4 +1636,62 @@ RSpec.describe IsoDoc do
     expect(xml.at("//xmlns:edition[@language = 'fr']").to_xml)
       .to be_equivalent_to edn
   end
+
+  it "add edition replacement text" do
+    input = <<~"INPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+      <language>fr</language>
+      <script>Latn</script>
+      <status>
+      <stage>published</stage>
+      <substage>withdrawn</substage>
+      </status>
+      <edition>2</edition>
+      <ext>
+      <doctype>brochure</doctype>
+      </ext>
+      </bibdata>
+      <metanorma-extension>
+      <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
+      </metanorma-extension>
+      <sections>
+          <clause id="D" obligation="normative" type="scope">
+            <title>Scope</title>
+            <p id="E">Text</p>
+          </clause>
+      </sections>
+      </iso-standard>
+    INPUT
+
+    edn = <<~OUTPUT
+      <edn-replacement>Cette deuxi&#xE8;me &#xE9;dition annule et remplace la premi&#xE8;re &#xE9;dition</edn-replacement>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+    expect(xml.at("//xmlns:edn-replacement").to_xml).to be_equivalent_to edn
+
+    edn = <<~OUTPUT
+      <edn-replacement>Настоящее второе издание заменяет первое издание</edn-replacement>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input
+        .sub("<language>fr</language>", "<language>ru</language>")
+        .sub("<script>Latn</script>", "<script>Cyrl</script>"), true))
+    expect(xml.at("//xmlns:edn-replacement").to_xml).to be_equivalent_to edn
+
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input.sub("1951", "2024"), true))
+    expect(xml.at("//xmlns:edn-replacement")).to be_nil
+
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input
+        .sub("<edition>2</edition>", "<edition>1</edition>"), true))
+    expect(xml.at("//xmlns:edn-replacement"))
+      .to be_nil
+  end
 end

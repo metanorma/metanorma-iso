@@ -23,6 +23,7 @@ see_also: voir aussi
 secretariat: Secrétariat
 edition: édition
 edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} ÉDITION"
+edition_replacement: "Cette {{ var1 | ordinal_word: 'edition', '' }} édition annule et remplace la {{ var2 | ordinal_word: 'edition', '' }} édition"
 termsrelated: Termes liés 
 availablefrom: Disponible sur
 voting_begins_on: Le vote commence le
