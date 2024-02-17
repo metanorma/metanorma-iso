@@ -20,7 +20,22 @@ module IsoDoc
                                        i18nyaml: i18nyaml || @i18nyaml)
       end
 
-      def amd?(docxml)
+      def update_i18n(docxml)
+        @docscheme =
+          docxml.at(ns("//presentation-metadata[name" \
+                       "[text() = 'document-scheme']]/value"))&.text || "2024"
+        %w(1951 1972).include?(@docscheme) and
+          i18n_conditional_set("reference_number", "reference_number_abbrev")
+        %w(1951).include?(@docscheme) and
+          i18n_conditional_set("edition_ordinal", "edition_ordinal_old")
+      end
+
+      def i18n_conditional_set(old, new)
+        @i18n.get[new] or return
+        @i18n.set(old, @i18n.get[new])
+      end
+
+      def amd?(_docxml)
         %w(amendment technical-corrigendum).include? @doctype
       end
 

@@ -1581,4 +1581,59 @@ RSpec.describe IsoDoc do
       .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to xmlpp(presxml)
   end
+
+  it "changes i18n of reference_number based on document scheme" do
+    input = <<~"INPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+      <language>fr</language>
+      <script>Latn</script>
+      <status>
+      <stage>published</stage>
+      <substage>withdrawn</substage>
+      </status>
+      <edition>2</edition>
+      <ext>
+      <doctype>brochure</doctype>
+      </ext>
+      </bibdata>
+      <metanorma-extension>
+      <presentation-metadata><name>document-scheme</name><value>2024</value></presentation-metadata>
+      </metanorma-extension>
+      <sections>
+          <clause id="D" obligation="normative" type="scope">
+            <title>Scope</title>
+            <p id="E">Text</p>
+          </clause>
+      </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <localized-string key="reference_number" language="fr">Numéro de référence</localized-string>
+    OUTPUT
+    edn = <<~OUTPUT
+      <edition language="fr">deuxi&#xE8;me &#xE9;dition</edition>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+    expect(xml.at("//xmlns:localized-string[@key = 'reference_number']").to_xml)
+      .to be_equivalent_to output
+    expect(xml.at("//xmlns:edition[@language = 'fr']").to_xml)
+      .to be_equivalent_to edn
+
+    output = <<~OUTPUT
+      <localized-string key="reference_number" language="fr">Réf. №</localized-string>
+    OUTPUT
+    edn = <<~OUTPUT
+      <edition language="fr">2<sup>e</sup> &#xC9;DITION</edition>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input.sub("2024", "1951"), true))
+    expect(xml.at("//xmlns:localized-string[@key = 'reference_number']").to_xml)
+      .to be_equivalent_to output
+    expect(xml.at("//xmlns:edition[@language = 'fr']").to_xml)
+      .to be_equivalent_to edn
+  end
 end

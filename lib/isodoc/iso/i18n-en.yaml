@@ -10,6 +10,7 @@ term_def_boilerplate: |
       </ul>
 all_rights_reserved: All rights reserved
 reference_number: Reference number
+reference_number_abbrev: Ref. No.
 price_based_on: Price based on % pages
 descriptor: Descriptor
 under_preparation: Under preparation. (Stage at the time of publication %).
@@ -22,6 +23,7 @@ see: see
 see_also: see also
 secretariat: Secretariat
 edition: edition
+edition_ordinal_old: "%Ordinal EDITION"
 termsrelated: Terms related to 
 availablefrom: Available from
 voting_begins_on: Voting begins on

@@ -8,7 +8,8 @@ term_def_boilerplate: |
       <link target="https://www.electropedia.org"/>
       </p> </li> </ul>
 all_rights_reserved: Все права защищены
-reference_number: Ссылочный номер
+reference_number: Ссылочный номерS
+reference_number_abbrev: Исх. №
 descriptor: Дескриптор
 price_based_on: Цена рассчитана на % стр.
 under_preparation: В стадии подготовки. (Стадия на момент публикации %).
@@ -22,6 +23,7 @@ see_also: см. также
 secretariat: Секретариат
 scope: Область применения
 edition: издание
+edition_ordinal_old: "%Ordinal ИЗДАНИЕ"
 termsrelated: Термины, связанные 
 availablefrom: Доступна с
 voting_begins_on: Голосование начинается в

@@ -1,5 +1,25 @@
 == copyright-statement
 
+{% if document_scheme == "1951" %}
+
+=== COPYRIGHT RESERVED
+
+[[boilerplate-message]]
+The copyright of ISO Recommendations and ISO Standards
+belongs to ISO Member Bodies. Reproduction of these 
+documents, in any country, may be authorized therefore only
+by the national standards organization of that country, being
+a member of ISO.
+
+For each individual country the only valid standard is the national standard of that country.
+
+[[boilerplate-place]]
+Printed in Switzerland
+
+Also issued in French and Russian. Copies to be obtained through the national standards organizations.
+
+{% else %}
+
 === {% if stage_int >= 40 %}COPYRIGHT PROTECTED DOCUMENT{% else %}{blank}{% endif %}
 
 [[boilerplate-year]]
@@ -37,4 +57,5 @@ Recipients
 of this draft are invited to submit, with their comments, notification of any
 relevant patent rights of which they are aware and to provide supporting
 documentation.
+{% endif %}
 {% endif %}
