@@ -21,14 +21,14 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Wed, 31 Jan 2024 09:30:36 GMT
+      - Mon, 19 Feb 2024 10:24:33 GMT
       Content-Type:
       - text/html; charset=utf-8
       Vary:
       - X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept,
         X-Requested-With
       Etag:
-      - W/"78e7782c55b4350494917b641de3efaa"
+      - W/"8a950ef173ee833fa3c160436a68589e"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Strict-Transport-Security:
@@ -47,13 +47,18 @@ http_interactions:
         www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com
         github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com
         github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com
-        cdn.optimizely.com logx.optimizely.com/v1/events api.githubcopilot.com objects-origin.githubusercontent.com
-        *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/
+        api.githubcopilot.com objects-origin.githubusercontent.com *.actions.githubusercontent.com
+        wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/
         productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/
         productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/
         productionresultssa5.blob.core.windows.net/ productionresultssa6.blob.core.windows.net/
         productionresultssa7.blob.core.windows.net/ productionresultssa8.blob.core.windows.net/
-        productionresultssa9.blob.core.windows.net/ github-production-repository-image-32fea6.s3.amazonaws.com
+        productionresultssa9.blob.core.windows.net/ productionresultssa10.blob.core.windows.net/
+        productionresultssa11.blob.core.windows.net/ productionresultssa12.blob.core.windows.net/
+        productionresultssa13.blob.core.windows.net/ productionresultssa14.blob.core.windows.net/
+        productionresultssa15.blob.core.windows.net/ productionresultssa16.blob.core.windows.net/
+        productionresultssa17.blob.core.windows.net/ productionresultssa18.blob.core.windows.net/
+        productionresultssa19.blob.core.windows.net/ github-production-repository-image-32fea6.s3.amazonaws.com
         github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com
         wss://alive.github.com; font-src github.githubassets.com; form-action ''self''
         github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors
@@ -72,18 +77,18 @@ http_interactions:
       Content-Encoding:
       - gzip
       Set-Cookie:
-      - _gh_sess=AWT8fkmROb5MJ27z911LyBf0oCWHlJiEDCClZZEbKx1C3ykgjU7V%2FNfKQmiMSROSQ%2Bea8mvOS4QG1Uu0vkQkq9gBxwdY%2BYNfeVxwyrOfWYAt5lK2OpK%2FkdU8YlC9f7EgI0tBJmLsslALQYoWaF%2F9LG0VroqSkneho5XGi5MLOaXmYLOOTYgKAWWn1SZLqfiRLUu9ZcYQKQKEH6XJvKPnoHRt5K6zDCkewu3hvQlwgVFEyVqzWV4u2W3H%2FT3ManiOXxRtIcfOosTi5YG5OES7eQ%3D%3D--uCiyOswR8UiONg4o--OQuc8FY6SklQkMWBRQMUhQ%3D%3D;
+      - _gh_sess=hbnPGLKoL1%2BmjcEqp%2B0uScM%2B%2B3TU%2FlpykH0jZQIABsZlnzCR63uXnyiUc3hvJVDtdyb2dCJUNizJgHreTXsRhpmPo%2FRdhbvzIjEED6kTRlviC5uVbQPtOAdWnwTeDbq%2BGCFKyHePNGV7Ip0H1i4JXpuWPYOIY53rOLbcGrNbXIIRoIjzl24%2BoLHwiP%2FWDSrd7oF2XRInFlIClnil7PqqbhzDyYlSC41A7weYCtLG9USR0TtWGycF9PKOOaCazJeG8bCORNXtWRrKljjxmUsk7Q%3D%3D--r5oSpfesUzTTBueD--yVHaAVBNSNhRCB2xLAridQ%3D%3D;
         Path=/; HttpOnly; Secure; SameSite=Lax
-      - _octo=GH1.1.2073463768.1706693435; Path=/; Domain=github.com; Expires=Fri,
-        31 Jan 2025 09:30:35 GMT; Secure; SameSite=Lax
-      - logged_in=no; Path=/; Domain=github.com; Expires=Fri, 31 Jan 2025 09:30:35
+      - _octo=GH1.1.349681543.1708338272; Path=/; Domain=github.com; Expires=Wed,
+        19 Feb 2025 10:24:32 GMT; Secure; SameSite=Lax
+      - logged_in=no; Path=/; Domain=github.com; Expires=Wed, 19 Feb 2025 10:24:32
         GMT; HttpOnly; Secure; SameSite=Lax
       Accept-Ranges:
       - bytes
       X-Github-Request-Id:
-      - '0846:CF351:7F7596:8B5104:65BA133B'
+      - '0988:2B9CAB:A50460:B79394:65D32C60'
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Wed, 31 Jan 2024 09:30:36 GMT
+  recorded_at: Mon, 19 Feb 2024 10:24:33 GMT
 recorded_with: VCR 6.1.0
