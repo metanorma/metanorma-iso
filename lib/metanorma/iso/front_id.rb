@@ -16,7 +16,6 @@ module Metanorma
         node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
           xml.docidentifier(n, **attr_code(type: "iso-tc"))
         end
-        xml.docnumber node.attr("docnumber")
       end
 
       DOCTYPE2HASHID =

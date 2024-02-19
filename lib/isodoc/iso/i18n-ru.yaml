@@ -23,7 +23,8 @@ see_also: см. также
 secretariat: Секретариат
 scope: Область применения
 edition: издание
-edition_ordinal_old: "%Ordinal ИЗДАНИЕ"
+edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} ИЗДАНИЕ"
+edition_replacement: "Настоящее {{ var1 | ordinal_word: 'edition', 'case:nom' }} издание заменяет {{ var2 | ordinal_word: 'edition', 'case:acc' }} издание"
 termsrelated: Термины, связанные 
 availablefrom: Доступна с
 voting_begins_on: Голосование начинается в

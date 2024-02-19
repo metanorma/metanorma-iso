@@ -23,7 +23,8 @@ see: see
 see_also: see also
 secretariat: Secretariat
 edition: edition
-edition_ordinal_old: "%Ordinal EDITION"
+edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} EDITION"
+edition_replacement: "This {{ var1 | ordinal_word: 'edition', '' }} edition supersedes the {{ var2 | ordinal_word: 'edition', '' }} edition"
 termsrelated: Terms related to 
 availablefrom: Available from
 voting_begins_on: Voting begins on
