@@ -18,6 +18,16 @@ Imprimé en Suisse
 Ce document est également édité en anglais et en russe. Il peut être obtenu auprès des organisations +
 nationales de normalisation.
 
+{% elsif document_scheme == "1987" %}
+
+=== {blank}
+
+[[boilerplate-year]]
+&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*Organisation Nationale de Normalisation*], span:std_docNumber[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
+
+[[boilerplate-place]]
+Publié en Suisse
+
 {% else %}
 === {% if stage_int >= 40 %}DOCUMENT PROTÉGÉ PAR COPYRIGHT{%else%}{blank}{%endif%}
 

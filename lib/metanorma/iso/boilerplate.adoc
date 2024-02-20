@@ -18,6 +18,16 @@ Printed in Switzerland
 
 Also issued in French and Russian. Copies to be obtained through the national standards organizations.
 
+{% elsif document_scheme == "1987" %}
+
+=== {blank}
+
+[[boilerplate-year]]
+&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*International Organization for Standardization*], span:std_docNumber[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
+
+[[boilerplate-place]]
+Printed in Switzerland
+
 {% else %}
 
 === {% if stage_int >= 40 %}COPYRIGHT PROTECTED DOCUMENT{% else %}{blank}{% endif %}
