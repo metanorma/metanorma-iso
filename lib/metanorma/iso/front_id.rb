@@ -1,5 +1,4 @@
 require "date"
-require "pathname"
 require "twitter_cldr"
 require "pubid-iso"
 require "pubid-cen"
@@ -22,7 +21,7 @@ module Metanorma
         { directive: :dir, "technical-report": :tr, "guide": :guide,
           "technical-specification": :ts,
           "publicly-available-specification": :pas,
-          "committee-document": :tc }.freeze
+          "committee-document": :tc, "recommendation": :r }.freeze
 
       # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type]
       # document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
@@ -185,9 +184,7 @@ module Metanorma
       def iso_id_default(params)
         params_nolang = params.dup.tap { |hs| hs.delete(:language) }
         params1 = if params[:unpublished]
-                    params_nolang.dup.tap do |hs|
-                      hs.delete(:year)
-                    end
+                    params_nolang.dup.tap { |hs| hs.delete(:year) }
                   else params_nolang
                   end
         params1.delete(:unpublished)
@@ -205,9 +202,7 @@ module Metanorma
 
       def iso_id_with_lang(params)
         params1 = if params[:unpublished]
-                    params.dup.tap do |hs|
-                      hs.delete(:year)
-                    end
+                    params.dup.tap { |hs| hs.delete(:year) }
                   else params end
         params1.delete(:unpublished)
         pubid_select(params1).create(**params1)
