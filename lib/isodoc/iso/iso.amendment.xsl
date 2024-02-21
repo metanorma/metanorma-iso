@@ -3200,7 +3200,10 @@
 						<fo:block text-align-last="justify" font-size="{$font-size_header}" font-weight="bold">
 							<xsl:choose>
 								<xsl:when test="$layoutVersion = '2024'">
-									<xsl:value-of select="$stagename-header-firstpage"/>
+									<xsl:choose>
+										<xsl:when test="$doctype = 'committee-document'"><xsl:value-of select="$doctype_localized"/></xsl:when>
+										<xsl:otherwise><xsl:value-of select="$stagename-header-firstpage"/></xsl:otherwise>
+									</xsl:choose>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of select="$stagename-header-firstpage-uppercased"/>
