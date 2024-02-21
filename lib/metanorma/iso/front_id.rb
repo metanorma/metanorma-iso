@@ -110,12 +110,12 @@ module Metanorma
 
       def tc_number(ret, node)
         doctype(node) == "committee-document" or return ret
-        n = node.attr("subcommittee-number") and
-          ret.merge!({ sctype: node.attr("subcommittee-type") || "SC",
-                       scnumber: n })
-        n = node.attr("technical-committee-number") and
-          ret.merge!({ tctype: node.attr("technical-committee-type") || "TC",
-                       tcnumber: n })
+        { sc: "subcommittee", tc: "technical-committee",
+          wg: "workgroup" }.each do |k, v|
+          n = node.attr("#{v}-number") and
+            ret.merge!({ "#{k}type": node.attr("#{v}-type") || k.to_s.upcase,
+                         "#{k}number": n })
+        end
         ret
       end
 
