@@ -31,15 +31,45 @@
 	<xsl:variable name="docidentifierISO" select="normalize-space($docidentifierISO_)"/>
 	<xsl:variable name="docidentifierISO_with_break" select="java:replaceAll(java:java.lang.String.new($docidentifierISO),'^([^\d]+) (\d)', concat('$1', $linebreak, '$2'))"/> <!-- add line break before 1st sequence 'space digit' -->
 
+	<xsl:variable name="docidentifier_another_">
+		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type != '' and @type != 'ISO' and not(starts-with(@type, 'iso-')) and @type != 'URN']">
+			<xsl:value-of select="."/>
+			<xsl:if test="position() != last()"><xsl:value-of select="$linebreak"/></xsl:if>
+		</xsl:for-each>
+	</xsl:variable>
+	<xsl:variable name="docidentifier_another">
+		<xsl:if test="normalize-space($docidentifier_another_) != ''">
+			<fo:block margin-top="12pt">
+				<xsl:value-of select="java:replaceAll(java:java.lang.String.new($docidentifier_another_),'^([^\d]+) (\d)', concat('$1', $linebreak, '$2'))"/>
+			</fo:block>
+		</xsl:if>
+	</xsl:variable>
+
 	<xsl:variable name="all_rights_reserved">
 		<xsl:call-template name="getLocalizedString">
 			<xsl:with-param name="key">all_rights_reserved</xsl:with-param>
 		</xsl:call-template>
 	</xsl:variable>
 	<xsl:variable name="copyrightYear" select="/iso:iso-standard/iso:bibdata/iso:copyright/iso:from"/>
+	<xsl:variable name="copyrightAbbr__">
+		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:copyright/iso:owner/iso:organization[normalize-space(iso:abbreviation) != 'IEEE']">
+			<abbr>
+				<xsl:choose>
+					<xsl:when test="iso:abbreviation"><xsl:value-of select="iso:abbreviation"/></xsl:when>
+					<xsl:otherwise><xsl:value-of select="iso:name"/></xsl:otherwise>
+				</xsl:choose>
+			</abbr>
+		</xsl:for-each>
+	</xsl:variable>
 	<xsl:variable name="copyrightAbbr_">
-		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:copyright/iso:owner/iso:organization/iso:abbreviation[. != 'IEEE']">
-			<xsl:value-of select="."/><xsl:if test="position() != last()">/</xsl:if>
+		<xsl:for-each select="xalan:nodeset($copyrightAbbr__)//*">
+			<xsl:value-of select="."/>
+			<xsl:if test="position() != last()">
+				<xsl:choose>
+					<xsl:when test="following-sibling::*[1]/text() = 'IDF'"> and </xsl:when>
+					<xsl:otherwise>/</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
 		</xsl:for-each>
 	</xsl:variable>
 	<xsl:variable name="copyrightAbbr" select="normalize-space($copyrightAbbr_)"/>
@@ -64,9 +94,15 @@
 				<xsl:value-of select="$docidentifier_iso_with_lang"/>
 			</xsl:when>
 			<xsl:otherwise>
+				<!-- part separator '-' replace to '/' -->
+				<xsl:variable name="iso_reference_tmp" select="java:replaceAll(java:java.lang.String.new($iso_reference),'-','/')"/>
 				<xsl:choose>
+					<!-- year separator replace to '-' -->
 					<xsl:when test="$layoutVersion = '1951'">
-						<xsl:value-of select="java:replaceAll(java:java.lang.String.new($iso_reference),':',' - ')"/>
+						<xsl:value-of select="java:replaceAll(java:java.lang.String.new($iso_reference_tmp),':',' - ')"/>
+					</xsl:when>
+					<xsl:when test="$layoutVersion = '1972'">
+						<xsl:value-of select="java:replaceAll(java:java.lang.String.new($iso_reference_tmp),':','-')"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:value-of select="$iso_reference"/>
@@ -76,7 +112,7 @@
 		</xsl:choose>
 	</xsl:variable>
 
-	<xsl:variable name="part" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:project-number/@part"/>
+	<xsl:variable name="part" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:project-number/@part)"/>
 
 	<xsl:variable name="doctype" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:doctype"/>
 	<xsl:variable name="doctype_localized_" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:doctype[@language = $lang]"/>
@@ -337,7 +373,7 @@
 
 				<xsl:variable name="root-style">
 					<root-style xsl:use-attribute-sets="root-style">
-						<xsl:if test="$layoutVersion = '1989'">
+						<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 							<xsl:attribute name="font-family">Arial, Times New Roman, Cambria Math, <xsl:value-of select="$font_noto_sans"/></xsl:attribute>
 							<xsl:attribute name="font-family-generic">Sans</xsl:attribute>
 							<xsl:attribute name="font-size">10pt</xsl:attribute>
@@ -367,6 +403,15 @@
 					<xsl:variable name="marginLeftRight_cover_page_1951">12.5</xsl:variable>
 					<xsl:variable name="marginTop_cover_page_1951">18</xsl:variable>
 					<xsl:variable name="marginBottom_cover_page_1951">94.5</xsl:variable>
+
+					<xsl:variable name="marginLeft_cover_page_1972">21</xsl:variable>
+					<xsl:variable name="marginRight_cover_page_1972">12</xsl:variable>
+					<xsl:variable name="marginTop_cover_page_1972">15</xsl:variable>
+					<xsl:variable name="marginBottom_cover_page_1972">33</xsl:variable>
+
+					<xsl:variable name="marginLeft_cover_page_1987">20</xsl:variable>
+					<xsl:variable name="marginRight_cover_page_1987">37</xsl:variable>
+					<xsl:variable name="marginTopBottom_cover_page_1987">20</xsl:variable>
 
 					<xsl:variable name="marginLeftRight_cover_page_2024">14</xsl:variable>
 					<xsl:variable name="marginTopBottom_cover_page_2024">15</xsl:variable>
@@ -415,6 +460,22 @@
 						<fo:region-after region-name="cover-page-footer" extent="{$marginBottom_cover_page_1951}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight_cover_page_1951}mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight_cover_page_1951}mm"/>
+					</fo:simple-page-master>
+
+					<fo:simple-page-master master-name="cover-page_1972" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+						<fo:region-body margin-top="{$marginTop_cover_page_1972}mm" margin-bottom="{$marginBottom_cover_page_1972}mm" margin-left="{$marginLeft_cover_page_1972}mm" margin-right="{$marginRight_cover_page_1972}mm"/>
+						<fo:region-before region-name="cover-page-header" extent="{$marginTop_cover_page_1972}mm"/>
+						<fo:region-after region-name="cover-page-footer" extent="{$marginBottom_cover_page_1972}mm"/>
+						<fo:region-start region-name="left-region" extent="{$marginLeft_cover_page_1972}mm"/>
+						<fo:region-end region-name="right-region" extent="{$marginRight_cover_page_1972}mm"/>
+					</fo:simple-page-master>
+
+					<fo:simple-page-master master-name="cover-page_1987" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+						<fo:region-body margin-top="{$marginTopBottom_cover_page_1987}mm" margin-bottom="{$marginTopBottom_cover_page_1987}mm" margin-left="{$marginLeft_cover_page_1987}mm" margin-right="{$marginRight_cover_page_1987}mm"/>
+						<fo:region-before region-name="cover-page-header" extent="{$marginTopBottom_cover_page_1987}mm" precedence="true"/>
+						<fo:region-after region-name="cover-page-footer" extent="{$marginTopBottom_cover_page_1987}mm" precedence="true"/>
+						<fo:region-start region-name="left-region" extent="{$marginLeft_cover_page_1987}mm"/>
+						<fo:region-end region-name="right-region" extent="{$marginRight_cover_page_1987}mm"/>
 					</fo:simple-page-master>
 
 					<fo:simple-page-master master-name="cover-page_2024" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
@@ -481,33 +542,33 @@
 						</fo:repeatable-page-master-alternatives>
 					</fo:page-sequence-master>
 
-					<fo:simple-page-master master-name="first-preface_1989-1998" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:simple-page-master master-name="first-preface_1972-1998" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="95mm" margin-left="{$marginLeftRight2}mm" margin-right="82mm"/>
 						<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
-						<fo:region-after region-name="footer-preface-first_1989-1998" extent="95mm"/>
+						<fo:region-after region-name="footer-preface-first_1972-1998" extent="95mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
 						<fo:region-end region-name="right-region" extent="82mm"/>
 					</fo:simple-page-master>
-					<fo:simple-page-master master-name="odd-preface_1989-1998" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:simple-page-master master-name="odd-preface_1972-1998" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="82mm" margin-right="{$marginLeftRight2}mm"/>
 						<fo:region-before region-name="header-odd" extent="{$marginTop}mm"/> <!--   display-align="center" -->
 						<fo:region-after region-name="footer-odd" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="82mm"/>
 						<fo:region-end region-name="right-region" extent="{$marginLeftRight2}mm"/>
 					</fo:simple-page-master>
-					<fo:simple-page-master master-name="even-preface_1989-1998" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
+					<fo:simple-page-master master-name="even-preface_1972-1998" page-width="{$pageWidth}mm" page-height="{$pageHeight}mm">
 						<fo:region-body margin-top="{$marginTop}mm" margin-bottom="{$marginBottom}mm" margin-left="{$marginLeftRight2}mm" margin-right="82mm"/>
 						<fo:region-before region-name="header-even" extent="{$marginTop}mm"/>
 						<fo:region-after region-name="footer-even" extent="{$marginBottom - 2}mm"/>
 						<fo:region-start region-name="left-region" extent="{$marginLeftRight2}mm"/>
 						<fo:region-end region-name="right-region" extent="82mm"/>
 					</fo:simple-page-master>
-					<fo:page-sequence-master master-name="preface-1989-1998">
+					<fo:page-sequence-master master-name="preface-1972-1998">
 						<fo:repeatable-page-master-alternatives>
 							<fo:conditional-page-master-reference master-reference="blankpage" blank-or-not-blank="blank"/>
-							<fo:conditional-page-master-reference master-reference="first-preface_1989-1998" page-position="first"/>
-							<fo:conditional-page-master-reference odd-or-even="even" master-reference="even-preface_1989-1998"/>
-							<fo:conditional-page-master-reference odd-or-even="odd" master-reference="odd-preface_1989-1998"/>
+							<fo:conditional-page-master-reference master-reference="first-preface_1972-1998" page-position="first"/>
+							<fo:conditional-page-master-reference odd-or-even="even" master-reference="even-preface_1972-1998"/>
+							<fo:conditional-page-master-reference odd-or-even="odd" master-reference="odd-preface_1972-1998"/>
 						</fo:repeatable-page-master-alternatives>
 					</fo:page-sequence-master>
 
@@ -706,8 +767,6 @@
 									<fo:block-container height="40mm" display-align="center" font-size="9pt">
 										<fo:block><xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:edition[@language != '']"/></fo:block>
 										<fo:block> </fo:block>
-										<xsl:variable name="revision_date_year" select="substring($revision_date,1,4)"/>
-										<xsl:variable name="revision_date_month" select="substring($revision_date,6,2)"/>
 										<!-- Example: October 1971 -->
 										<fo:block>
 											<xsl:call-template name="convertDate">
@@ -722,6 +781,213 @@
 							</fo:flow>
 						</fo:page-sequence>
 					</xsl:when> <!-- END: $layoutVersion = '1951' -->
+
+					<xsl:when test="$layoutVersion = '1972'">
+						<fo:page-sequence master-reference="cover-page_1972" force-page-count="no-force">
+							<fo:static-content flow-name="cover-page-footer" font-size="7pt">
+								<xsl:call-template name="insertSingleLine"/>
+								<fo:block font-size="11pt" font-weight="bold" text-align-last="justify" margin-right="1mm">
+									<fo:inline keep-together.within-line="always" role="SKIP">
+										<xsl:value-of select="$udc"/>
+										<fo:leader leader-pattern="space"/>
+										<fo:inline role="SKIP">
+											<xsl:call-template name="getLocalizedString">
+												<xsl:with-param name="key">reference_number</xsl:with-param>
+											</xsl:call-template>
+											<xsl:text>  </xsl:text>
+											<xsl:value-of select="$ISOnumber"/>
+										</fo:inline>
+									</fo:inline>
+								</fo:block>
+
+								<xsl:if test="/iso:iso-standard/iso:bibdata/iso:keyword">
+									<fo:block margin-top="10pt">
+										<xsl:variable name="title-descriptors">
+											<xsl:call-template name="getLocalizedString">
+												<xsl:with-param name="key">Descriptor.pl</xsl:with-param>
+											</xsl:call-template>
+										</xsl:variable>
+										<fo:inline font-weight="bold"><xsl:value-of select="$title-descriptors"/> : </fo:inline>
+										<xsl:call-template name="insertKeywords">
+											<xsl:with-param name="sorting">no</xsl:with-param>
+											<xsl:with-param name="charDelim" select="',  '"/>
+										</xsl:call-template>
+									</fo:block>
+								</xsl:if>
+								<fo:block-container position="absolute" left="0mm" top="0mm" height="25mm" text-align="right" display-align="after" role="SKIP">
+									<fo:block>
+										<xsl:for-each select="xalan:nodeset($price_based_on_items)/item">
+											<xsl:value-of select="."/>
+											<xsl:if test="position() != last()">
+												<fo:page-number-citation ref-id="lastBlock"/>
+											</xsl:if>
+										</xsl:for-each>
+									</fo:block>
+								</fo:block-container>
+							</fo:static-content>
+							<fo:static-content flow-name="left-region">
+								<fo:block-container reference-orientation="90">
+									<fo:block font-size="8pt" margin-left="7mm" margin-top="10mm">
+										<xsl:value-of select="$ISOnumber"/>
+									</fo:block>
+								</fo:block-container>
+							</fo:static-content>
+							<fo:flow flow-name="xsl-region-body">
+								<xsl:variable name="docnumber">
+									<xsl:variable name="value" select="/iso:iso-standard/iso:bibdata/iso:docnumber"/>
+									<xsl:value-of select="$value"/>
+									<xsl:if test="$part != ''">/<xsl:value-of select="$part"/></xsl:if>
+								</xsl:variable>
+								<fo:table table-layout="fixed" width="100%" border-top="2pt solid black" border-bottom="2pt solid black">
+									<xsl:choose>
+										<xsl:when test="string-length($docnumber) &gt; 4">
+											<fo:table-column column-width="proportional-column-width(110)"/>
+											<fo:table-column column-width="proportional-column-width(28)"/>
+											<fo:table-column column-width="proportional-column-width(43)"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<fo:table-column column-width="proportional-column-width(123)"/>
+											<fo:table-column column-width="proportional-column-width(28)"/>
+											<fo:table-column column-width="proportional-column-width(30)"/>
+										</xsl:otherwise>
+									</xsl:choose>
+
+									<fo:table-body>
+										<fo:table-row height="39mm" display-align="center">
+											<fo:table-cell>
+												<fo:block font-size="33pt" margin-top="2mm">
+													<xsl:if test="string-length($docnumber) &gt; 4">
+														<xsl:attribute name="font-size">30pt</xsl:attribute>
+													</xsl:if>
+													<xsl:value-of select="$doctype_localized"/>
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell>
+												<fo:block font-size="0">
+													<xsl:variable name="content-height">27</xsl:variable>
+													<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1972))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell text-align="right">
+												<fo:block font-size="34pt" font-weight="bold" margin-top="2mm">
+													<xsl:value-of select="$docnumber"/>
+												</fo:block>
+											</fo:table-cell>
+										</fo:table-row>
+										<fo:table-row border-top="2pt solid black" height="4.5mm" display-align="center">
+											<fo:table-cell number-columns-spanned="3" font-size="5.6pt" text-align-last="justify">
+												<fo:block>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION●МЕЖДУНАРОДНАЯ ОРГАНИЗАЦИЯ ПО СТАНДАРТИЗАЦИИ●ORGANISATION INTERNATIONALE DE NORMALISATION</fo:block>
+											</fo:table-cell>
+										</fo:table-row>
+									</fo:table-body>
+								</fo:table>
+
+								<fo:block font-size="16pt" font-weight="bold" margin-top="44mm" margin-bottom="6mm" role="H1">
+									<xsl:call-template name="insertTitlesLangMain"/>
+								</fo:block>
+
+								<xsl:for-each select="xalan:nodeset($lang_other)/lang">
+									<xsl:variable name="lang_other" select="."/>
+									<fo:block font-size="8pt" font-style="italic" line-height="1.1" role="H1">
+										<!-- Example: title-intro fr -->
+										<xsl:call-template name="insertTitlesLangOther">
+											<xsl:with-param name="lang_other" select="$lang_other"/>
+										</xsl:call-template>
+									</fo:block>
+								</xsl:for-each>
+
+								<fo:block margin-top="6mm" font-weight="bold">
+									<xsl:call-template name="printEdition"/>
+									<xsl:text> — </xsl:text>
+									<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/>
+								</fo:block>
+
+							</fo:flow>
+						</fo:page-sequence>
+					</xsl:when> <!-- END: $layoutVersion = '1972' -->
+
+					<xsl:when test="$layoutVersion = '1987'">
+						<fo:page-sequence master-reference="cover-page_1987" force-page-count="no-force">
+							<fo:static-content flow-name="right-region">
+								<fo:block-container height="50%">
+									<fo:block-container margin-top="8mm" margin-left="2mm">
+										<fo:block-container margin-top="0" margin-left="0" font-family="Times New Roman">
+											<fo:block font-size="24pt" line-height="1.1">
+												<xsl:value-of select="$docidentifierISO_with_break"/>
+											</fo:block>
+											<fo:block line-height="1">
+												<xsl:call-template name="printEdition"/>
+												<xsl:value-of select="$linebreak"/>
+												<xsl:text> </xsl:text><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/>
+											</fo:block>
+									</fo:block-container>
+									</fo:block-container>
+								</fo:block-container>
+								<fo:block-container height="50%" display-align="after">
+									<fo:block-container margin-left="3mm">
+										<fo:block-container margin-left="0" font-family="Times New Roman">
+											<fo:block font-size="8pt" font-family="Times New Roman" margin-bottom="-0.5mm">
+												<xsl:call-template name="getLocalizedString">
+													<xsl:with-param name="key">reference_number</xsl:with-param>
+												</xsl:call-template>
+												<xsl:value-of select="$linebreak"/>
+												<xsl:value-of select="$ISOnumber"/>
+											</fo:block>
+										</fo:block-container>
+									</fo:block-container>
+								</fo:block-container>
+							</fo:static-content>
+							<fo:flow flow-name="xsl-region-body">
+								<fo:block-container height="99.5%" border="1.25pt solid black">
+									<fo:block-container margin-left="11mm" margin-top="16mm" margin-right="10.5mm">
+										<fo:block-container margin-left="0" margin-top="0" margin-right="0">
+											<fo:block font-family="Times New Roman" font-size="24pt">
+												<!-- INTERNATIONAL STANDARD -->
+												<xsl:call-template name="add-letter-spacing">
+													<xsl:with-param name="text" select="$doctype_uppercased"/>
+													<xsl:with-param name="letter-spacing" select="0.1"/>
+												</xsl:call-template>
+											</fo:block>
+											<fo:table table-layout="fixed" width="100%" margin-top="16mm">
+												<fo:table-column column-width="proportional-column-width(23)"/>
+												<fo:table-column column-width="proportional-column-width(108)"/>
+												<fo:table-body>
+													<fo:table-row>
+														<fo:table-cell>
+															<fo:block margin-top="-0.5mm" font-size="0">
+																<xsl:variable name="content-height">18</xsl:variable>
+																<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+															</fo:block>
+														</fo:table-cell>
+														<fo:table-cell font-size="7.5pt" border-top="0.5pt solid black" border-bottom="0.5pt solid black" text-align-last="justify" display-align="center" line-height="1.6" padding-left="32mm">
+															<fo:block>INTERNATIONAL ORGANIZATION FOR STANDARDIZATION</fo:block>
+															<fo:block>ORGANISATION INTERNATIONALE DE NORMALISATION</fo:block>
+															<fo:block>МЕЖДУНАРОДНАЯ ОРГАНИЗАЦИЯ ПО СТАНДАРТИЗАЦИИ</fo:block>
+														</fo:table-cell>
+													</fo:table-row>
+												</fo:table-body>
+											</fo:table>
+
+											<fo:block font-size="13pt" font-weight="bold" margin-top="32mm" margin-bottom="9mm" role="H1">
+												<xsl:call-template name="insertTitlesLangMain"/>
+											</fo:block>
+
+											<xsl:for-each select="xalan:nodeset($lang_other)/lang">
+												<xsl:variable name="lang_other" select="."/>
+												<fo:block font-size="8pt" font-style="italic" line-height="1.1" role="H1">
+													<!-- Example: title-intro fr -->
+													<xsl:call-template name="insertTitlesLangOther">
+														<xsl:with-param name="lang_other" select="$lang_other"/>
+													</xsl:call-template>
+												</fo:block>
+											</xsl:for-each>
+
+										</fo:block-container>
+									</fo:block-container>
+								</fo:block-container>
+							</fo:flow>
+						</fo:page-sequence>
+					</xsl:when>
 
 					<xsl:when test="$layoutVersion = '2024'">
 						<fo:page-sequence master-reference="cover-page_2024" force-page-count="no-force">
@@ -1112,7 +1378,7 @@
 																				<xsl:when test="iso:abbreviation = 'ISO'">
 																					<xsl:choose>
 																						<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt; 19930101">
-																							<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1989))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+																							<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
 																						</xsl:when>
 																						<xsl:otherwise>
 																							<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
@@ -1350,6 +1616,7 @@
 																	<xsl:attribute name="font-size"><xsl:value-of select="$font-size"/></xsl:attribute>
 																</xsl:if>
 																<xsl:value-of select="$docidentifierISO_with_break"/>
+																<xsl:copy-of select="$docidentifier_another"/>
 															</fo:block>
 														</fo:table-cell>
 													</fo:table-row>
@@ -1581,6 +1848,7 @@
 												<fo:table-cell role="SKIP">
 													<fo:block text-align="right" font-weight="bold" margin-bottom="13mm">
 														<xsl:value-of select="$docidentifierISO_with_break"/>
+														<xsl:copy-of select="$docidentifier_another"/>
 													</fo:block>
 												</fo:table-cell>
 											</fo:table-row>
@@ -1746,8 +2014,8 @@
 						<xsl:otherwise>
 
 							<fo:page-sequence master-reference="preface{$document-master-reference}" format="i" force-page-count="{$force-page-count-preface}">
-								<xsl:if test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231">
-									<xsl:attribute name="master-reference">preface-1989-1998</xsl:attribute>
+								<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)">
+									<xsl:attribute name="master-reference">preface-1972-1998</xsl:attribute>
 								</xsl:if>
 								<xsl:call-template name="insertHeaderFooter">
 									<xsl:with-param name="font-weight">normal</xsl:with-param>
@@ -1804,13 +2072,13 @@
 									</xsl:if>
 
 									<xsl:choose>
-										<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231"><!-- copyright renders in the footer footer-preface-first_1989-1998--></xsl:when>
+										<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)"><!-- copyright renders in the footer footer-preface-first_1987-1998--></xsl:when>
 										<xsl:otherwise>
 
 											<xsl:if test="/iso:iso-standard/iso:boilerplate/iso:copyright-statement">
 
 												<fo:block-container height="252mm" display-align="after" role="SKIP">
-													<xsl:if test="$layoutVersion = '2024' or $layoutVersion = '1989'">
+													<xsl:if test="$layoutVersion = '1989' or $layoutVersion = '2024'">
 														<xsl:attribute name="height">241.5mm</xsl:attribute>
 													</xsl:if>
 													<!-- <fo:block margin-bottom="3mm">
@@ -1888,7 +2156,7 @@
 							<!-- <fo:block> -->
 
 								<xsl:choose>
-									<xsl:when test="$layoutVersion = '1989' and $layout_columns != 1">
+									<xsl:when test="($layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989') and $layout_columns != 1">
 										<xsl:choose>
 											<xsl:when test="$doctype = 'amendment'">
 												<xsl:variable name="flatxml">
@@ -1900,7 +2168,7 @@
 												<xsl:call-template name="processMainSectionsDefault_flatxml"/>
 											</xsl:otherwise>
 										</xsl:choose>
-									</xsl:when> <!-- $layoutVersion = '1989' and $layout_columns != 1 -->
+									</xsl:when> <!-- ($layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989') and $layout_columns != 1 -->
 									<xsl:otherwise>
 										<xsl:choose>
 											<xsl:when test="$doctype = 'amendment'">
@@ -1912,6 +2180,12 @@
 										</xsl:choose>
 									</xsl:otherwise>
 								</xsl:choose>
+
+								<xsl:if test="($layoutVersion = '1951' or $layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989')">
+									<fo:block span="all" text-align="center" margin-top="15mm" keep-with-next="always" role="SKIP">
+										<fo:leader leader-pattern="rule" leader-length="20%"/>
+									</fo:block>
+								</xsl:if>
 
 								<fo:block id="lastBlock" font-size="1pt" role="SKIP"> </fo:block>
 							<!-- </fo:block> -->
@@ -1936,6 +2210,7 @@
 					<xsl:apply-templates select="xalan:nodeset($current_document_index)" mode="index"/>
 
 					<xsl:choose>
+						<xsl:when test="$layoutVersion = '1972'"/>
 						<xsl:when test="$layoutVersion = '2024'">
 							<xsl:call-template name="insertLastPage_2024"/>
 						</xsl:when>
@@ -2159,7 +2434,7 @@
 
 				<fo:block-container font-weight="bold">
 
-					<xsl:if test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231">
+					<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)">
 						<xsl:attribute name="margin-top">62mm</xsl:attribute>
 					</xsl:if>
 
@@ -2350,14 +2625,13 @@
 	<xsl:template match="iso:bibdata/iso:title[@type = 'title-part']">
 		<xsl:param name="curr_lang" select="$lang"/>
 		<xsl:param name="isMainLang">false</xsl:param>
-		<xsl:param name="isMainBody">false</xsl:param>
 		<xsl:if test="$part != ''">
 			<!-- <xsl:text> — </xsl:text> -->
 			<xsl:choose>
 				<xsl:when test="$layoutVersion = '1951'"/>
 				<xsl:otherwise><xsl:text> — </xsl:text></xsl:otherwise>
 			</xsl:choose>
-			<xsl:variable name="part-text">
+			<xsl:variable name="part-word">
 				<xsl:choose>
 					<xsl:when test="$isMainLang = 'true'">
 						<xsl:call-template name="getLocalizedString">
@@ -2373,40 +2647,57 @@
 				</xsl:choose>
 			</xsl:variable>
 			<xsl:choose>
-				<xsl:when test="$isMainBody = 'true'">
-					<fo:block font-weight="normal" margin-top="12pt" line-height="1.1" role="SKIP">
-						<xsl:value-of select="$part-text"/>
-					</fo:block>
-				</xsl:when>
 				<xsl:when test="$isMainLang = 'true'">
 					<xsl:choose>
 						<xsl:when test="$layoutVersion = '1951'">
-							<xsl:value-of select="$part-text"/>
+							<xsl:value-of select="$part-word"/>
 							<xsl:apply-templates/>
+						</xsl:when>
+						<xsl:when test="$layoutVersion = '1972'">
+							<fo:block font-weight="bold" role="SKIP">
+								<xsl:value-of select="$part-word"/>
+								<xsl:text> </xsl:text>
+								<xsl:apply-templates/>
+							</fo:block>
+						</xsl:when>
+						<xsl:when test="$layoutVersion = '1987'">
+							<fo:block font-weight="bold" margin-top="12pt" role="SKIP">
+								<xsl:value-of select="$part-word"/>
+							</fo:block>
 						</xsl:when>
 						<xsl:otherwise>
 						<fo:block font-weight="normal" margin-top="6pt" role="SKIP">
-							<xsl:value-of select="$part-text"/>
+							<xsl:value-of select="$part-word"/>
 						</fo:block>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
 					<!-- <xsl:value-of select="$linebreak"/> -->
-					<fo:block font-size="1pt" margin-top="5pt" role="SKIP"> </fo:block>
-					<xsl:value-of select="$part-text"/>
+					<xsl:choose>
+						<xsl:when test="$layoutVersion = '1972'"/>
+						<xsl:otherwise>
+							<fo:block font-size="1pt" margin-top="5pt" role="SKIP"> </fo:block>
+						</xsl:otherwise>
+					</xsl:choose>
+					<xsl:value-of select="$part-word"/>
 					<xsl:text> </xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
-		<xsl:if test="$isMainBody = 'false'">
-			<xsl:choose>
-				<xsl:when test="$layoutVersion = '1951'"/>
-				<xsl:otherwise>
-					<xsl:apply-templates/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="$layoutVersion = '1951'"/>
+			<xsl:when test="$layoutVersion = '1972' and $isMainLang = 'true'"/>
+			<xsl:when test="$layoutVersion = '1972' and $isMainLang = 'false'">
+				<fo:inline font-weight="normal"><xsl:apply-templates/></fo:inline>
+			</xsl:when>
+			<xsl:when test="$layoutVersion = '1987'">
+				<fo:inline font-weight="normal"><xsl:apply-templates/></fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="iso:bibdata/iso:title[@type = 'title-amd']">
@@ -2444,9 +2735,10 @@
 
 	<xsl:template match="iso:sections/iso:p[@class = 'zzSTDTitle1']" priority="4">
 		<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1" role="H1">
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">16pt</xsl:attribute>
 				<xsl:attribute name="span">all</xsl:attribute>
+				<xsl:attribute name="margin-bottom">40pt</xsl:attribute>
 			</xsl:if>
 			<xsl:if test="$layoutVersion = '2024'">
 				<xsl:attribute name="font-size">17.2pt</xsl:attribute>
@@ -2460,16 +2752,25 @@
 
 	<xsl:template match="iso:sections/iso:p[@class = 'zzSTDTitle1']/iso:span[@class = 'nonboldtitle']" priority="3">
 		<!-- Example: <span class="nonboldtitle">Part 1:</span> -->
-		<fo:block font-weight="normal" margin-top="12pt" line-height="1.1" role="SKIP">
-			<xsl:apply-templates/>
-		</fo:block>
+		<xsl:choose>
+			<xsl:when test="$layoutVersion = '1972'">
+				<fo:inline font-weight="bold" role="SKIP">
+					<xsl:apply-templates/>
+				</fo:inline>
+			</xsl:when>
+			<xsl:otherwise>
+				<fo:block font-weight="normal" margin-top="12pt" line-height="1.1" role="SKIP">
+					<xsl:apply-templates/>
+				</fo:block>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="iso:sections/iso:p[@class = 'zzSTDTitle2']" priority="4">
 		<!-- Example: <p class="zzSTDTitle2" displayorder="3">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p> -->
 		<xsl:if test="$doctype = 'amendment'">
 			<fo:block font-size="18pt" margin-top="12pt" margin-bottom="20pt" margin-right="0mm" font-weight="normal" line-height="1.1" role="H1">
-				<xsl:if test="$layoutVersion = '1989'">
+				<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">16pt</xsl:attribute>
 			</xsl:if>
 				<xsl:if test="$layoutVersion = '2024'">
@@ -2633,6 +2934,12 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
+			<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987'">
+				<xsl:if test="@id = 'boilerplate-place'">
+						<fo:block margin-top="6pt"> </fo:block>
+				</xsl:if>
+				<fo:block><xsl:apply-templates/></fo:block>
+			</xsl:when>
 			<xsl:otherwise>
 				<fo:block>
 					<xsl:if test="following-sibling::iso:p">
@@ -2663,7 +2970,7 @@
 					<xsl:if test="$layoutVersion = '2024'">
 						<xsl:attribute name="font-size">15.3pt</xsl:attribute>
 					</xsl:if>
-					<xsl:if test="$layoutVersion = '1989'">
+					<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 						<xsl:attribute name="span">all</xsl:attribute>
 					</xsl:if>
 					<xsl:apply-templates/>
@@ -2681,7 +2988,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<fo:block font-size="16pt" font-weight="bold" text-align="center" margin-top="6pt" margin-bottom="36pt" keep-with-next="always" role="H1">
-					<xsl:if test="$layoutVersion = '1989'">
+					<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 						<xsl:attribute name="font-size">14pt</xsl:attribute>
 						<xsl:attribute name="span">all</xsl:attribute>
 					</xsl:if>
@@ -2702,7 +3009,7 @@
 
 		<xsl:variable name="font-size">
 			<xsl:choose>
-				<xsl:when test="$layoutVersion = '1989'">
+				<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 					<xsl:choose>
 						<xsl:when test="ancestor::iso:annex and $level = 2">12pt</xsl:when>
 						<xsl:when test="ancestor::iso:annex and $level = 3">11pt</xsl:when>
@@ -2740,6 +3047,7 @@
 
 		<xsl:variable name="element-name">
 			<xsl:choose>
+				<xsl:when test="@inline-header = 'true'">fo:inline</xsl:when>
 				<xsl:when test="../@inline-header = 'true'">fo:inline</xsl:when>
 				<xsl:otherwise>fo:block</xsl:otherwise>
 			</xsl:choose>
@@ -2758,6 +3066,12 @@
 
 			<xsl:otherwise>
 				<xsl:element name="{$element-name}">
+
+					<xsl:if test="$layoutVersion = '1951' or $layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
+						<!-- copy @id from empty preceding clause -->
+						<xsl:copy-of select="preceding-sibling::*[1][local-name() = 'clause' and count(node()) = 0]/@id"/>
+					</xsl:if>
+
 					<xsl:attribute name="font-size"><xsl:value-of select="$font-size"/></xsl:attribute>
 					<xsl:attribute name="font-weight">bold</xsl:attribute>
 					<xsl:variable name="attribute-name-before">
@@ -2769,7 +3083,7 @@
 					<xsl:attribute name="{$attribute-name-before}"> <!-- space-before or margin-top -->
 						<xsl:choose>
 							<xsl:when test="ancestor::iso:introduction and $level &gt;= 2 and ../preceding-sibling::iso:clause">30pt</xsl:when>
-							<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231 and ancestor::iso:preface and $level = 1">62mm</xsl:when>
+							<xsl:when test="($layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)) and ancestor::iso:preface and $level = 1">62mm</xsl:when>
 							<xsl:when test="$layoutVersion = '1989' and ancestor::iso:preface and $level = 1">56pt</xsl:when>
 							<xsl:when test="ancestor::iso:preface">8pt</xsl:when>
 							<xsl:when test="$level = 2 and ancestor::iso:annex">18pt</xsl:when>
@@ -2816,6 +3130,15 @@
 
 	</xsl:template>
 
+	<xsl:template match="iso:title[@inline-header = 'true'][following-sibling::*[1][local-name() = 'p']]" priority="3">
+		<xsl:choose>
+			<xsl:when test="($layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989') and $layout_columns != 1"/> <!-- don't show 'title' with inline-header='true' if next element is 'p' -->
+			<xsl:otherwise>
+				<xsl:call-template name="title"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
 	<xsl:template name="titleAmendment">
 		<!-- <xsl:variable name="id">
 			<xsl:call-template name="getId"/>
@@ -2830,6 +3153,27 @@
 
 	<!-- ====== -->
 	<!-- ====== -->
+
+	<xsl:template match="*[local-name() = 'clause']" priority="2">
+		<xsl:choose>
+			<xsl:when test="($layoutVersion = '1951' or $layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989') and     local-name() = 'clause' and count(node()) = 0 and following-sibling::*[1][local-name() = 'title' and not(@id)]"/> <!-- @id will be added to title -->
+			<xsl:otherwise>
+				<fo:block>
+					<xsl:if test="parent::*[local-name() = 'copyright-statement']">
+						<xsl:attribute name="role">SKIP</xsl:attribute>
+					</xsl:if>
+
+					<xsl:call-template name="setId"/>
+
+					<xsl:call-template name="setBlockSpanAll"/>
+
+					<xsl:call-template name="refine_clause_style"/>
+
+					<xsl:apply-templates/>
+				</fo:block>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 
 	<xsl:template match="iso:p" name="paragraph">
 		<xsl:param name="inline" select="'false'"/>
@@ -2897,6 +3241,18 @@
 				<xsl:with-param name="split_keep-within-line" select="$split_keep-within-line"/>
 			</xsl:apply-templates> -->
 			<!-- <xsl:apply-templates select="node()[not(self::iso:note[not(following-sibling::*) or count(following-sibling::*) = count(../iso:note) - 1])]"> -->
+
+			<!-- put inline title in the first paragraph -->
+			<xsl:if test="($layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989') and $layout_columns != 1">
+				<xsl:if test="preceding-sibling::*[1]/@inline-header = 'true' and preceding-sibling::*[1][self::iso:title]">
+					<xsl:attribute name="space-before">0pt</xsl:attribute>
+					<xsl:for-each select="preceding-sibling::*[1]">
+						<xsl:call-template name="title"/>
+					</xsl:for-each>
+					<xsl:text> </xsl:text>
+				</xsl:if>
+			</xsl:if>
+
 			<xsl:apply-templates select="node()[not(self::iso:note)]"> <!-- note renders below paragraph for correct PDF tags order (see https://github.com/metanorma/metanorma-iso/issues/1003) -->
 				<xsl:with-param name="split_keep-within-line" select="$split_keep-within-line"/>
 			</xsl:apply-templates>
@@ -3149,8 +3505,8 @@
 	<xsl:template name="insertHeaderFooter">
 		<xsl:param name="font-weight" select="'bold'"/>
 		<xsl:param name="is_footer">false</xsl:param>
-		<xsl:if test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231 and $is_footer = 'true'">
-			<xsl:call-template name="insertFooterFirst1989_1998">
+		<xsl:if test="($layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)) and $is_footer = 'true'">
+			<xsl:call-template name="insertFooterFirst1972_1998">
 				<xsl:with-param name="font-weight" select="$font-weight"/>
 			</xsl:call-template>
 		</xsl:if>
@@ -3166,7 +3522,7 @@
 	</xsl:template>
 	<xsl:variable name="font-size_header">
 		<xsl:choose>
-			<xsl:when test="$layoutVersion = '1989'">11pt</xsl:when>
+			<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">11pt</xsl:when>
 			<xsl:otherwise>12pt</xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
@@ -3193,7 +3549,11 @@
 				</xsl:when>
 				<xsl:otherwise>
 					<fo:block-container margin-top="13mm" height="9mm" width="172mm" border-top="0.5mm solid black" border-bottom="0.5mm solid black" display-align="center" background-color="white">
-						<xsl:if test="$layoutVersion = '1989' or $layoutVersion = '2024'">
+						<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
+							<xsl:attribute name="border-top">0.5mm solid black</xsl:attribute>
+							<xsl:attribute name="border-bottom">0.5mm solid black</xsl:attribute>
+						</xsl:if>
+						<xsl:if test=" $layoutVersion = '2024'">
 							<xsl:attribute name="border-top">0.8mm solid black</xsl:attribute>
 							<xsl:attribute name="border-bottom">0.8mm solid black</xsl:attribute>
 						</xsl:if>
@@ -3233,16 +3593,19 @@
 
 	<xsl:variable name="font-size_footer_copyright">
 		<xsl:choose>
-			<xsl:when test="$layoutVersion = '1989'">8pt</xsl:when>
+			<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">8pt</xsl:when>
 			<xsl:otherwise>9pt</xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
-	<xsl:template name="insertFooterFirst1989_1998">
+	<xsl:template name="insertFooterFirst1972_1998">
 		<xsl:param name="font-weight" select="'bold'"/>
-		<fo:static-content flow-name="footer-preface-first_1989-1998" role="artifact">
+		<fo:static-content flow-name="footer-preface-first_1972-1998" role="artifact">
 			<fo:block-container display-align="after" height="86mm">
 
 				<fo:block line-height="90%" role="SKIP" margin-bottom="9mm">
+					<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987'">
+						<xsl:attribute name="margin-bottom">5mm</xsl:attribute>
+					</xsl:if>
 					<fo:block font-size="8pt" text-align="justify" role="SKIP">
 						<xsl:apply-templates select="/iso:iso-standard/iso:boilerplate/iso:copyright-statement"/>
 					</fo:block>
@@ -3309,7 +3672,7 @@
 									<fo:table-cell display-align="center" padding-top="0mm" font-size="{$font-size_footer_copyright}">
 										<fo:block text-align="right">
 											<xsl:choose>
-												<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231"/>
+												<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)"/>
 												<xsl:otherwise><xsl:value-of select="$copyrightText"/></xsl:otherwise>
 											</xsl:choose>
 										</fo:block>
@@ -3342,7 +3705,7 @@
 									<fo:table-cell display-align="center" padding-top="0mm" font-size="{$font-size_footer_copyright}">
 										<fo:block>
 											<xsl:choose>
-												<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231"/>
+												<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)"/>
 												<xsl:otherwise><xsl:value-of select="$copyrightText"/></xsl:otherwise>
 											</xsl:choose>
 										</fo:block>
@@ -3412,7 +3775,7 @@
 							<fo:table-cell display-align="center">
 								<fo:block font-size="{$font-size_footer_copyright}">
 									<xsl:choose>
-										<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231"/>
+										<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)"/>
 										<xsl:otherwise><xsl:value-of select="$copyrightText"/></xsl:otherwise>
 									</xsl:choose>
 								</fo:block>
@@ -3433,9 +3796,21 @@
 			</fo:static-content>
 			<fo:flow flow-name="xsl-region-body">
 				<fo:block-container height="252mm" display-align="after">
-					<xsl:call-template name="insertTripleLine"/>
+					<xsl:choose>
+						<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987'">
+							<xsl:call-template name="insertSingleLine"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:call-template name="insertTripleLine"/>
+						</xsl:otherwise>
+					</xsl:choose>
 					<fo:block-container>
 						<fo:block font-size="12pt" font-weight="bold" padding-top="3.5mm" padding-bottom="0.5mm">
+							<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987'">
+								<xsl:attribute name="font-size">11pt</xsl:attribute>
+								<xsl:attribute name="padding-top">1mm</xsl:attribute>
+								<xsl:attribute name="padding-bottom">1mm</xsl:attribute>
+							</xsl:if>
 							<xsl:if test="$layoutVersion = '1989'">
 								<xsl:attribute name="font-size">11pt</xsl:attribute>
 								<xsl:attribute name="padding-top">5.5mm</xsl:attribute>
@@ -3445,7 +3820,7 @@
 									<xsl:attribute name="padding-bottom">2mm</xsl:attribute>
 								</xsl:if>
 							</xsl:if>
-							<xsl:if test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231">
+							<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)">
 								<fo:block margin-bottom="6pt">
 									<xsl:value-of select="$udc"/>
 								</fo:block>
@@ -3455,7 +3830,7 @@
 								<xsl:value-of select="."/>
 								<xsl:if test="position() != last()">
 									<xsl:choose>
-										<xsl:when test="$layoutVersion = '1989'"><xsl:text>: </xsl:text></xsl:when>
+										<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'"><xsl:text>: </xsl:text></xsl:when>
 										<xsl:otherwise><xsl:text>; </xsl:text></xsl:otherwise>
 									</xsl:choose>
 								</xsl:if>
@@ -3493,9 +3868,14 @@
 							<fo:block> </fo:block>
 						</xsl:if>
 					</fo:block-container>
-					<xsl:if test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231">
-						<xsl:call-template name="insertTripleLine"/>
-					</xsl:if>
+					<xsl:choose>
+						<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1987'">
+							<xsl:call-template name="insertSingleLine"/>
+						</xsl:when>
+						<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231">
+							<xsl:call-template name="insertTripleLine"/>
+						</xsl:when>
+					</xsl:choose>
 				</fo:block-container>
 			</fo:flow>
 		</fo:page-sequence>
@@ -3565,6 +3945,12 @@
 		</fo:page-sequence>
 	</xsl:template> <!-- END: insertLastPage_2024 -->
 
+	<xsl:template name="insertSingleLine">
+		<fo:block font-size="1.25pt" role="SKIP">
+			<fo:block role="SKIP"><fo:leader leader-pattern="rule" rule-thickness="1.25pt" leader-length="100%"/></fo:block>
+		</fo:block>
+	</xsl:template>
+
 	<xsl:template name="insertTripleLine">
 		<fo:block font-size="1.25pt" role="SKIP">
 			<fo:block role="SKIP"><fo:leader leader-pattern="rule" rule-thickness="0.75pt" leader-length="100%"/></fo:block>
@@ -3577,7 +3963,7 @@
 		<xsl:text>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</xsl:text>
 	</xsl:variable>
 
-	<xsl:variable name="Image-ISO-Logo-1989">
+	<xsl:variable name="Image-ISO-Logo-1987">
 		<xsl:text>iVBORw0KGgoAAAANSUhEUgAAANoAAADdCAMAAADqxpxRAAADAFBMVEUAAAD////+/v79/f38/Pz7+/v6+vr5+fn4+Pj39/f29vb19fX09PTz8/Py8vLx8fHw8PDv7+/u7u7t7e3s7Ozr6+vq6urp6eno6Ojn5+fm5ubl5eXk5OTj4+Pi4uLh4eHg4ODf39/e3t7d3d3c3Nzb29va2trZ2dnY2NjX19fW1tbV1dXU1NTT09PS0tLR0dHQ0NDPz8/Ozs7MzMzLy8vKysrJycnIyMjHx8fGxsbFxcXExMTDw8PCwsLBwcHAwMC/v7++vr69vb28vLy7u7u6urq5ubm4uLi3t7e2tra1tbW0tLSzs7OysrKxsbGwsLCvr6+urq6tra2srKyrq6uqqqqpqamoqKinp6empqalpaWkpKSjo6OioqKhoaGgoKCfn5+enp6dnZ2cnJybm5uampqZmZmYmJiXl5eWlpaVlZWUlJSSkpKRkZGQkJCPj4+Ojo6NjY2MjIyLi4uKioqJiYmIiIiHh4eGhoaFhYWEhISDg4OCgoKBgYGAgIB/f39+fn59fX18fHx7e3t6enp5eXl4eHh3d3d2dnZ1dXV0dHRzc3NycnJxcXFwcHBvb29ubm5tbW1sbGxra2tqamppaWloaGhnZ2dmZmZlZWVkZGRjY2NiYmJhYWFgYGBeXl5dXV1cXFxbW1taWlpZWVlYWFhXV1dWVlZVVVVUVFRTU1NSUlJRUVFQUFBPT09OTk5NTU1MTExLS0tKSkpJSUlISEhHR0dGRkZFRUVERERDQ0NCQkJBQUFAQEA/Pz8+Pj49PT08PDw7Ozs6Ojo5OTk4ODg3Nzc2NjY1NTU0NDQzMzMyMjIxMTEwMDAvLy8uLi4tLS0sLCwrKysqKiopKSkoKCgnJycmJiYlJSUkJCQjIyMiIiIhISEgICAfHx8eHh4dHR0cHBwbGxsaGhoZGRkYGBgXFxcWFhYVFRUUFBQTExMSEhIREREQEBAPDw8ODg4NDQ0MDAwLCwsKCgoJCQkICAgHBwcGBgYFBQUEBAQDAwMCAgIBAQEAAAAAAAAAAADJRZoKAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO1deWAVRZqvJkHDwiMwggiCB0IMjhwuiAIOISOouK4R8IiZ0R0uBVyFGHEdQRAcR8wG3VlB5ZjRmRAdOdcRFZ1HGEEudzh0IBMQD26JR3xggoT8sfXV1XV293sJ6Lr7+yPprq7urt/rrqpff/XVV8j7wQJZU3tW7vS8FQODT11fWXnzxMo5XofKyrNWVN7sFVR+rzAdeenoO8TQhYGH222h/z/1vMPBF6rzPJx36niE9jJCc5HXJP87RIe+gYebXUf/3+h5w4IvdJvn4byXdsV5GaE+9hfyB4H/C9SyCmy4vBP8beYN6tLTevx7jMtxXcsleMpaO5dPgb/Dcjc++WIyrcO+993H1ia2HUDoyHtkZ1v8Y3FgZxzjXZwhTiFtSsCpaDNsvI9qacpH+8xcGBNxC1nR+HhksPvYWcsH/qqi4pmeZGegd584MAJenvYVFW3YeyRtSsCpFZfAxtUV5TTl3mkhL+QPD/9P7fRgTGI1/Hs3cefURBlPxJt9KvjODfQlXJLAYO+jN+Up+Rq9RV5c1xpZ4HRLldivKg+jGrhCLTr0OUrw6+HNT0/wnf0kQ+VRaHZqeIav5NuLvKbQmpzzAnon5xayPesFkfqan2NWzmy6MSqHpB7OyfkSUp/6Sw4g5iz7TeUUV9gPZ+c0KrIModXB65H/E6852b6oh00QXeRl0Y3WXl9fBeHUq8zi3l0mYTP7bcpFygWpPuEoOGV1rXUJIKB/A7wIeUaeohKcEmpXFRUVPaZwmFOs4i3p2Ps4d1Fz/RpdiwTyOhQFoId3Gd1o513L09pRak0aqmhuUss0tKBgmSj2+lKKTK3gg1n6fp5xHL5QdznHTT73zVODnvy8gt/SjYcKVvO0h6jQSosf3xQ/AAm1+NCmKrSHChWSuo/Jmc/x4SM0/XOegeMlvzwZWLHt9u+6KT405Pk+IQkttDA3t7f/5K3qKQlMhBdyXTfvMVA6q7Hm6javYjy9NknFiol0NfPw4Wdousigo3V29iD1B+0VQgyj/VzljG3Z2eHnRETj1bWMQlq6o9XVtayg/ZuGndT8RZb16+rqb8lGXWZmeuMUqPGozfQfFd9EYe+jt5LnxBV/Ad++rHEKxKjNSWBl0ymROJtqmAj4SrnMu4nEcVyovbFYLE2iVpOYHHTzPYk6iVpGLJZPto8l5NOmRiyQjqeY0KpGWNnsQehDqmEi4IR/83TQRgiVZmV1JvuPf+5nq6qc4+DVobKyzs/3IflQiWVldaOnTRf52kyLWCIVT7fDjX9qOkZY8i4pXwOXmpWTRfcXlh/EuztyiPzCOALaqrXGK6+8fD0twoKcnHHw/73y68kRXJxdeHd/+bM877kple+CBte1IWWroGAPYqFF8TwQWpU/xAP5tZX/hkvLVDDN9WB+/qX4ueQXwM7GYewS1+VDB1VVVtqwojWM2m0lb+NCnCwsPJslpJUcwwkrf8p2hxWuCnppHhGnFSbw7roR/LrXFC7G+/UlJec2oHBAbUK74UFKRkNn/+QRG3EBDhTP4vsdiibjhMXFV/tZrnvLSexksfSRMK0Y1/R1eWK/f/EfIM9srKMY7kyijIDBILSqH9rqvL8J0aAPL4DT9j4qitPpETj+mtJR9/wd/PxEVDGpvAS2NwG1gmZyzslYxmyWVFuX0kWQfR6XX4/DFfa+cYykbiBXxJsryXWr8OaSUhUjQWglh770Tk1yoVLtic8QZemIpV59PN5FeSugH6h9m2yO+juwjJMWJY/wbKdkfSCOMxwe5CfgkiVAfgltOTI+s9vLpLzX8wxdITU+F2/+yNOQYl27Akqm6igg8ameD0z6G/jOBCT1GZYrME2sEoaOfGNKZUyNWtOfGgVr9iQWSX/TM2JqJ/7Md8Kp3QC9ahdFaD2Du8z33F/uAUiNGv3iUAqmPB85dZnYCafm9YVUVWhZ34YowGokqnIRNiZvbA0uI5FUAkuxuP2vf9CvDqkOaukgO44N0U5Iz4bUa+SkMyfiGgoSkKJjMkIratPIy/h45WHc5GcpRVqB36RSoxPSUhVqXtNuyKKfSeq+m+WkVuPh7lSJ4QxZEZGM0LqUXnsW6CjtFVmOW7IFKlkAdA6ShFSpeU3x7vbr9XOa5HyBUMWdchJ9/d9zGMKcSLquPUE+yNGxP4iUNmVl+AV97lIjK2iul/v4+xq1JvlYlI8y7zAMf3hvl9KH/IW+NeW5yZXURq1/yX1YMcngLxVO/Yy9nidLWLN1/jylZ5UAY7RTpH1M7cuJWoY39dqG8fMdCG0dyfeue5vXCD/vmJJwjMAvpCFRlqBPiGLywVqyliT1DWaPmk40V9ffwPYLps04rQi/pW8MVqmp7/E0zO31wZ6B0dsRev9nZHN4EblZfXHxYelqK5GKg8+ZTcNcrEZKw0FNoW3+FU5ZPcgbXPoGOXtWQUEBsSQvPt8sH1SleI6cYlDTK6PAWCxWdhfczrQc1lG/B6G1G71VcC05/oBWvhlnmWUemURdawst1VoqtC6Jr/Z/HyaeVGRcbTSAE1QdhTH/czs1KspO5n4Bl9+HdRRB0UdJCZPo1Frfg0lUnMV30yv4N/K3H9iyn4ds1L7V9Ap+sxZ1tJ0+XvxwR/yRwXsPJWPyYtSaZTogemEwWJ38Qj71Q8Ztb0vLddMvwUeOqm3EmG8MWbFY6dN9ZExixI5Vy9aV0d+AyasJ2W7qKjJDM0ZNWJN0iPta9A7/FDrhmXCoX5t+tlFz2cQk/XyTWVitGaHC5VtXhhOr6TXnHMdfU5phvjn/hE4kengagNqFaWoa1mc2avwWPpYQ85iNWtMceBl6ks2YBROxlGbIQGHC5Txyyfm4d33rPK0EK3zr1yeVijbyhnyK9K8TWwvpeefMMVT1etmqpmouXHMGoiBDZassv5ARmxFc3ZcZcgNeyGUPszJUlMu9seXDy04NXr2v/+jvtisvZ2/Qjpxc+Dday5+RG1VzRaOG1ZWsmCieIzqqU37+z2hZKsvK/pMdGvIOru75GdoJLmoidUhZ2Qp6rZfz84dgJfaVZOfigNRImotSG4t1CR/t8yEUxqOfoZf0H4rYrmhqWmFh4U5Soq+pKBv6trVxsVLrv5icFoMycEk1r5Ddbdx+2c7FMW6fr7nuDxNauGDriopEs6RWYaKYDBkLYmNxX7E7ppiZTFFJEdVGEakR0QyqbSe/7ZxiX7VN2oObOuOULb7mmlS8nfymxQaGBwkt2nY3/zki6koFpK5UGvdbSpn8YqhTDVaURNXtWtoVfOCPokofZnwAqyvD5fRx/DBF6lgo6m/Mnyy8rmXeiu+4qa8ldW0XPa8iv8C1K7eDdLTzU+qzJM5hkmcDDEmaTwj3uO/01hN/fcDeHSoIoxYDN4tduq6P3WppAAHg8CUPiPwy2wcZJKzz93+svv577UOSj1XZhCNOfZu7L7TNtuIcTM2uU9h50IpXn61f2Z7KsMTZ/wfhqOXDjWBKjc2i9bCfOsN+wbku20idT8Kio+ypHMH+xA64u+Hx1tbHT3VT82Kf9XsTzdAlCz0Na6O95k9mT1WobYZrbA/j04/calAotfqvAlLPtCkuEFr42EUZHbPOMs4FTDxs+8XsqQILsChbRfTO+UysddMYPcRVHO3Uw8TTeP8lCkuVEdyM4J5ux5URUwVMUUaNZi+SFx222mtnwLddgHhqOw7Vlxsm/bZ321IlKNTSNK+puz5Am83abU8VAJOX9cu5B35Rq26zHWkOQ4cBQ/pgU15q+HNB6jl0s0uZiVH2ZoS2tmBcsfQejk8sDpe9w6VGAOnB1MhjNd9YP7XvXs87pDAYDU8tzdQoxfdyalt+YVxwxEa05V+Cqb2jS9oo1BYY33wqidmd3annTYHBRxl9g+vaSrRtpDXV5OtjxCeq8VGCm1paaY35+SKhzSLbYz0LUg3zs0AAtcs32spoT/Wh21UluKmR0wKokcf6YAc9NS1+HP2blNot92Lyf0AuuJpjarpCYR7oXXday7gVHXT4aIkyujKEUHvY4vrOQexnFu6HRCqU/BW0iDCoQncRoWU0I1PEzdBMXbx7LbfbzPQ+Mo9Y7fgEQdR21zkftshwj/5t62V+hlhqejWgFp2o5pgdTM1s6g67Sw6Ar7iUqME3WCA1WwZa9Kl+wgy03N8BoaXhTHJWoh5O+7ZMu9phNOyMgPufTmq9EwlC7bjvDH9mTHrNXM0If5aJyjVyamVdsLccUButu6xyNJia5LnleYM/5a+Z+ZFH4KDWbg34uueA23ut5GHVNKRrDc4QRu2jSUGX7r1BJjGq/ANgdVPOeoT2P0bTZpXLmITaqPKEyRncG94NhLLyYSrU0jLa6bd5ydYES4AMKVK7bovz52dYKTL8uqwME9sN0xK9nDjiFUz+YoePmpZF/p5wtoLhQPYR3b4QMiwtGcIGCQOdbsnFUqMmldyBYRvIgCIbvlxXWECTr1nFqQ0rlHG1IrSEsxUoT2EfSCPDdq8XFcEg4ZxAhzAYW7SMIkalJvlo2bCAOM4/AA/hjeLhInkG+uBntuzWutZpKqpXDEswbEcxLugzgqg692MNpRZiyhFjLitLZQPbzZvso25WajeZX3nEgQowxv7RSpB5WwOoPRFmpepJ61I9ccySMR7t7E+3Ouf6uBg1VUQW8SFqfQ86Ybgkebfvo9zGZjsFEQzPGNavqNTgobip4bIRZ1lbyWAyNt2SzSRzUUemS2pQHf57NstqK4IY0JqZmdnCev8rkN2ExxBO7VXrdZtmZv5IlNhyhdHfcGoPV1fLQothvP/ChlFDNm8sQIOp2SuNMkhou0Iep6ZAUDsjJsZ27dTAMQuhztRKVbfTVoaGUcuYhV41vLwwxtRQUsNhZFAfviTIs5m8bM3IxMNoq/FFS8xYGB+ymRcndlhu0SwrK4vUVjnSg6+wW3FveQfaZOk9y3q4AI9+MFQdGZSQJzV7PeEU4s+F2vnShI3gzYT3Ir1cw8dIRT1Lf0y/z0KcWClltDjDT7acppeWXPy4fMftWDzZM7e9m1PLK/9vyPoeEVrnGa/xTLR5CFFMkbB3pnyTtLKyL225lpaVQVfUlaq5D/Fp8N+lox/0Zyiq2FVW9ozthL6ovqwVbHT1J0f2QS19aTKWZLttA26Dz7Ne2Qq5RWltn5NP8GbJiO6L1CRbvQTnsD0BtyPDjDrazxB2Ox9mXSPdS0rUumpTDXWs+52WMN0YEelAdVQwphcZVbYTTtV/qEakljU7+kkMunLpFDi/0MeT+tAepmYYKkV4Bz7jD8uZfTNTodb56aSZadQ6506JemIxs10Z1NpKQsu3jQiT8VwvBWra9MFoUKgldwXVtat9BaN2dUVFBdpViw5WTEPMFoQRZ9RqS1KgJqYPJgWJWovMJK/wp0y5OcEPaACb45hW3W5t9Z2WuraSmCiSpqY7X0aDRG1L8mfL0gbePc2Q/H2hFhJwyQ7pyysCtRVHU6K2IupkRRWcWro8ATEJVPrfV1lVjFp7Ed6BC61J4r1IhVoyU6kkMGrt1qR2utRPp2FRRql1YofmCqE1l1N7/tLkqT1vVVfhoNS6rkjtbIxlfEARPLcoteaG0LqaUyPuT0lSS6mmIE7tihTPBvz+Ev7cDqGl6pixXte2UO+n00mt63+keDaBaDsO6UM5GrXhH9PjbRaFX5Ri76Mwb9F6aDF19XrDepCAUAvztA2GoDb3C0atCY+jlUFlyYX0uBjBS2dzDF0BQ2r5JMQZkPe4NQP7SLsE57Jk4NQ6BqurnR8FUxNDhwN28aLTA3NRexrEajyntld1Pxysf4IyyN1lk+zPgzN43roKa+8A1Ca4i02ia7FAW87egb+F62rZZho9YZr2Qh5GI7QxJnsdr5PtB01tOXQX+cUi6ENEanXViuv97uoT9nxiQHGLNrZoUNOHVe3UFIuWlZrpxKV7koZQM4xbLsHDhw63KKOIFmr6yKDjqckWLTs1lEgkFM+ZMycZWTC1qZaHCTCNW81esOcMpja/cgL8s40MOjodpa5hkWPHPtWiZTygXtZnSWAxJDvmWejU0hSh9TkdkbQ53bS8JZRaenmQB+SR8nI+x7ftuFNLbRbRJjBvcTLE0WK6hPiLwTxAY3TM3nsrTy3f3q8J1IP5apDlFXBTW/UTk1rfpdasfIbiFuE4f1M+9Aiq+1nJMYManVQYSC2aGnmzpKREEwKPnA32Myuso4iOn4Hl/fmOgGbE9kJGqGupCa2viyG8g8vjNQVqd+4MprZSNzJFovbsF8mQWl3q+683IjXejGhCqwOnNkYfPItELbnvNXmkPylqI/9uzbuC+uTNq2ItJJF1eyYyoTWCU0vthfSWJ/WV/cts8QmZFLW20+2Z6TD9hWv4C7kWM5rQSHUtadvIfN4hO6jVzrZRc7yQxxfBwdi2IDVy+qiJbstBze74E1jXwIs1mFoNmYXo66iI1FwqyAU+1dBB7fhTngUOat+SItdzauk8vEMHokpuFtT0kkeklvS8hZo1gacl00L6mCqx4GYf5SMOpUIt+8VkiCH4Vj1F1Fi8Ci60LvKpPc+CkCZJjfi6J4UTjUVtFaHwFQqra3qchsjUvF6FyY3VkAARDmqvX21e30mNhoIYt89CbQIfdGtAC0lw/vNJcYNRURc1S9AH9wtJ+zWhRkiMin6eUdeiUbP7jcBXQrtkhEmvxhRa3mvaUzub2KWGNpDa5dQudhtCw3ZbTzgN1PpsCK5rH+kTMyNR67pTOrYXy5x90ajltTgF8thFbYAeYzQKtczP5GPw3G+Ascj6cG7OZUFs1JrNahC1VF5IzewjrhDhKy4paq4YFC5qNLwDi4AU+6wxqbWIxWKOH5qhX3pG8JNIjtoE5sfPhBZtIQ8ladGqkV3kNWr7KqWJJ22ysm52U/tkoKv+fGWZJ+ag9nQ7To2y8HgcrQwe39NLuV8z7JCqbm8pYpeaGOrsq44862mgAbxMRDKx2ixadmq7bpSyGNTMuWHD8u3D8EPd+qxK9cZ6ruyAI6NP7XllHqdhPdbG3xzUDsq/j2k93lpyn0Fuo52aezjjaz+AV+sSEgjVipfZtNVHDwub/qMlJZgFakljZ13JqS1WYwK4xvW+LAyihmvRXTo369MJogaYTUsXJPk5n2mMGiaUQOiPRYP5WLaY/jSLuj/xePFOv6uTLMNAh82/Ch+THOeHFqy2ZAL72eCUx+hVanzUk4fUGsmEVvwOTo0eJ1GwImGZczgDoTEgvrrr8eIlNMKo6DY+LBo24MvH36KPZb91gZsazaDHi5dAqLlGJ6Mh8lh2y+10/C2pYfpgakFouAfCUR4mM5O/cGlaHC0OPon1fw017gRJDASEmu8SwwOAUhNSi+1UrZweap1poC0SpTQV1PlBU4Ha8DNUajyOlqpWTg81/nXfVI//EBFW9zNByHSJOW0vZF2OGFsmUUqTxuGBNmquZuR0UlPG8Ycl30zulsQeOO//mzYfEongWSPJ/h07SeCq00BNjV0KN04KYtYhQcv7WYvSXYqjJUgwK3wKvscpUTvwsPa+jBaRuKJg7XDl5JYPMGqXSnG02vCoWZMkajQ0aTSkRk0KKC9wy6aoZ68u1db9sTvDa8DUlnfvm0QhU6K2b4bJzPPy4u9FOXltXI8oQ8J6aXMRTWrzvsLv5immdrDiERszjJ5B3lgMlhUQRcCY1nIcrTQROYvN+IPZGb0TSVHTbFc11dXfBJ1x7A4HMQqnNxbGiWrVc0un5odwlRx0hVNUKhNPVNvVqBA1H31hHgOOyaR2ak1aNYwaCQcPtqsYc8HqFzuDRBNtZc1+AmcMXRipWYyvxqNgQkyO3iDhhm+w5iLBZ89Q42ipoUkhhGjiFTOM6RztPnUs3Z8o2CrrZkjljntN4Ogr2llaQPkAxOjly/1zx2R6BZWv2PLmWUNqWSZUzkx1NmpwuLfQNQcck5c144F9GmxEaj0W6tYkAh6gHbA5/0YzA1Crd84kTJlaj/x8yYV3t+XGuGQ0PtddahwtOUppMc06Hn0y1ryAb55ZWWgj5ogt62PA4kBqEFfc0UrQEBMEiinN4+Vlk5cVGyxtIV+gMxi/niWoGfYob8ASdsriYuuwHkZ3WDVnmiu2IrlCqjEQaIgJwJfGuoj4ugep1eoWNWApCK0LHiiVo34OXmMEFh0k1i98zR3jgHwu24LEU4S8kGHhHR4X6yKOV0NMzHC0DZHCOwzIFfZRM0qpBKA2zBldEaK9B1PbN9N9WKz/AG2lEgg1iFpXqkz8eHeDP0Z12bz3aQpxqRA6UlEBn1T9jYBPEnqCSS7FyBUXrgkLpdIJ9yQJmFSI8XB2Np912B53VmRG+YV6wFIstNjA32ZQW5SQH0qlaSaEeEfHqh/wvD6JwJJ79FvIvcBhWGwfmO4YgJXUGyu9upqozD9RYdj8Beaj5a0FfXbiKEI8vIOmOy7TqLHObKgoeSi11MMWBUdkkiLk0KER+ha+Jg/T46+WvqIuoSZqEK00Qe1oD1hnkMZ0YNoISm6smqNT6+fUUWHU7I5ZHO/WoRmsNjSPgUfYSVhvcV2dTw30WbM0HmvVEWyKhBD9BBZ0Bm2UJaqdddUcCUDtEyMCM0cYtacCol5oj/WcLLICIl1kMbk4WuI1fSdHDk0aFkcr46epvpCwiE/gC7kswXzdGc7NuZsVcSHo0rTy8vIrvVF+OIo7PT2OFnVapyFEIUC76pMOY4vlgzw3gLsrw62bgyMNPm8u4qNm0KbEtLmHUhPudOVlH/iNxvZRejOiONkZ4eAbFI4voMsmYeaD4kNaM4AZiw8dNinUcTVqrQcrpUOHacXHrGWc9pkYhrQWwXEaAJY9dFErDqEGv/QSPdC5I5XDHdVz7hfW1ZC2htQJeLMspwHcdQ3mLRrB5yWQ6PRGHSapKQUstZOYX4UWXmwmC7gDlkL8Bwe1KBF0Nxm1w0/NzDWhx9GioBpm+VH0tBGfJGDVHIp1tS5q9x1yUWv642BqzXJs8bkgVZIYGo5MQx2ryTrQCqhwgfVx5pshklyr5nBstcU5BcAiPnZqwSJGC6GnpLJVZHpXG5jskaAcrvje9uDNqYZ0dreQqVOzvFUCJGBpmuOgnUTGLMuqOT5c1GARH2u8qzB9JhmswlMlBDQjzLhlJs/UfLRUnL9GpTaEhVugc9zqeXgt6bq99qCgyPAF+21WHXuqDAQSRbKWLygvvyNPDqklr4/DcOHssG9KuiT0cqJ4PjBqOMHXVA/htvuqv+LdPPf6AOPVQUKKUZUiVVJXWsDSlxB63ZdZX2KJslksZQgOVNKqhhwTrKkSNVgSmqyAGIqNZWV/gf9m4HeOWzbbzFgzfOOWtgpDFWjEJ7Q4WjLYuF6v30qrGgrYUxnut05///dCboN4pHAnWrnYyPCiI/jibett9oFbpdT+asnHguaCaFSBdc1jViqjdbKnEv+oov1SeRcL+XYuKQ2dajimeHB/kqi4lC0oKrKZyhbgLu1ePXH4RluqhjBqxJRjRim1pnYqkEcc68UiPgwwMqhNViwVS00T8KUMJQxajSqNSHVDcStspuqQ4mgZIONYl7yLLFFKzdRuublKfK/at/Rb2YWWavfegW97pnT08g22L80tMKmQbA1wFh4LrYAxGdaJ2j9UlFRpEKqd5+qcw1Il2y//CLAJ0nQ5g2QbOUSUcp5fL0XAUguYFSQdRgaNqOyEGkn1bWLoZHV1W4+smmNZAdFJjcWKeMYfcbwnk0g1uG7NZO0Ejdri6mo6Q3F3Nbhr/VPcp2bcywLbj0dHeTUfE15ybUnbEGq++7k/GDTXJGGn5kYkai22I3Rcn71JVtg5PvufE7ydmxeLcWt8dGogv3xq/ojjt4nVHcHsacShJ6nDg6LTc0SiZognClCLX/G2/qEsqTOAQA7RqC001lDMytpBLlizR6rvAj0h9UZiXe1ZGYjpcsBSG1hg0ZV+/HWVGkWevqwODLVpUUqt1MDB3VDgvXP8QOgaNSLKbqJiIcRNgg3TPwGOwbvyC1jq5nxiLMJqhVu0clbroUklauaqhl4nGO3T+nRQbZaJwcGBHFRqMHx5Mp99DbbJDwQTWp2vwX9uF2ahGz2aKl30mlXasJ2/vrTmbEUBffqzWkBc0zZy/x7Ht11/rsRISHoOWF/aejcrotU1j9qjpGG7lv6q07JfvACZgKiND1hXXtacrRjEQCVCbxTxePHX4iIcCBkYkOBT63Rt89uxhjnX61kgQ0gf6rRO1RWXVOtLwa3KXNXQo13CQ+pjM6gN/9hhR7kCBiqPlZbSb4fNtAyDoFLMoJsFoeju8ThaublTdtxal5u768HcF5Xa6Eufq+JMXXVmkmpTfKiXRzSgZbyw3Wq9pphCC/eXO22ePxAD/kj8Zc9bGiehdXbmDsKSaoM/tvhr1yQUQH08ngCbMo+jFQjuFNUBhu3GZrPAotTGRF3Z88y459Cnj20lJegWrSYwJGkzx8Io4pfMB2JeBSFXR4cvxfrSjwWU9m+et8wI7xCKdOGNdbKar3VIBhQtnSjx3Jogt53qC5kG0d5t7lottyvhHaaIL1pDcwUjOWq+EJbKSIWW5efX9dkE8zSbGUs/TfhdRVFXEpKl1oJGhpcDtFMvr1rzJ9XKCBGzwqmRtX8myB82jBrx/QKhFRE8vEMEsOVvzicNpWLRonG0qqZ5Gi7aqaTONB/2jUYV7QCR18coLkOU2pX01e4ZFKRbwdyg7zUVvGvtQVRQ7Z/lu/fbhWxKDFbN8XtkldolYE8wBsZJ6mjlwxdsV+gkd5xvmRMVIo5WOMSi0n3zYSqa6o11HYguQ4mBjqoUHbpCrQ+skH63pjItqQ/SxXasSySGINm6RtCLLCms6KhhhbhUB3QHKsWDR/HRsvlzXVeyApYBkv2UQImh9wu8VJASNa97MeiokiJ5eUJNiRGM2Q6r5jCHL9lH67LfYRLFakcPOkr4iR6uR3oAAARJSURBVAGaUPMYX29xeFFSGIyah2sWBcyMRSOaKmOLshLjAHc54vB1fQHx8oK5iAXnkpWkj72oEKPTEqv81aHbFMDIINpQOpJlSDIA8Vx0Np/oeIToKBV7IGApFS4cIgozSV3IA8oDriKu7KoDFTFY1amzDh8k9uXDyijoAGiI9kmLSrclDeOmuBj1nB9PDhMRWQca8Ixnaq7x3mAiXJb7SZKRlwbP2uY7pPWkDlS/9L3Vg6K9+25gVHNJOsprm02+GAPW8wlHanWNgQYh3Stcu5i6QjMz6YijEu29hprJZHIXZRJ/rnS6wk7NA+wiLTIzIXyAr+VSQ4Oo+QZSPQ46bRaV2kGVmC1eApt1KHQUm50e5MwbBWTWIW3o+gTqlsneDfIuC7R1JnNaP5bgOrdFDPqmE6s74UwnaRn3Eu8v1udSV7CJ/FHCtYj1kekoCM5ATnuVm8emRlVWhtAiblVESX3qrhYYVZXyOIX/k8ayBpKEQ5W8pnQED/gaLohKrevutMpip1EIH/qelXSJm6d8J/s20+wFeostVv1LcNc6SDzn/wh3+wn+mZTwDslCcovJYNEb9vMRRymk1qwcp2M/Pk1MNaTDm6PLy/9KdifnqN5YVlzKIma1hwy0OBfD3fB1qbhuYF1jGJafT/qQYzD62EvUwAdZfC73aaxaYdX2RBn1sDqJNV3QcorR0TjUKNSJNEGzGXyokRF0k+Rh9wh3OHh4h9ThrzNIBhQFTupO6zaMkONZrC3+hThwGbl2YnbKxRJxtBoAKRZOF3Cp9+fqjiNxQ12siMLzu4eVpcpMwsGlbtSg1btR5Rp0bBE5zY5hPI5WA6CbSEEQSYFFl0ujed1lX6pbRZZquEyQk72GJfEriuITB8RfTjOWPZTRmHXNR0FFhS1UxVtmeOiDWLuZ7huNglNDDaMTkVXuMNZ1VHfJFq0MrNjwd05LNgtS2szEn70tmpIMdLMZzJKkEybPyMhsnp6poemppEbhDqxoiXrHPsMlo5kYSMYd3xYW4ohsknURWbi9GeABrwG+F1BkC1FEqIo2Q1+xWsBw2VuaIE5cNPIoUjchzPzJmsRxsQlvw0k6Zll7HJ0wpqbW+HG0glDnDPw+Oitr+ioQNVV4cw5CW7N8x/mk0dGY6NgwRBFaA71+jiNnYRVE3Lz74c0Lc3L+MVVapwSnuK59l4BZh7H7S0qGSIERfhAYQtTI9P0wQKcvRHi6sTip8A5ufF1C/k31/PAO3zV6ebc0ynV+k0b+DftB17Xv5rathTt923Ni2Vg/ds3w2oMXvuGb36ptdvYFJNUf+riwRXtxHG+e4zWD9bBh1iHdzCaf7FJ4h9OJwlf51pPzbweb2GcDwPr1Kp3jKOOeWQi9R1JHiLO3j/AjmuPNBZm5eKPLNvyHbqIBmRBHq8EfNd9XRByE6hd7Ac3LB9MUn1eq66ZVaEYsNkjkdeqr04eM/wGvNLWQwIO90gAAAABJRU5ErkJggg==</xsl:text>
 	</xsl:variable>
 
@@ -3637,6 +4023,10 @@
 				</g>
 			</g>
 			</svg>
+	</xsl:variable>
+
+	<xsl:variable name="Image-ISO-Logo-1972">
+		<xsl:text>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</xsl:text>
 	</xsl:variable>
 
 	<xsl:variable name="Image-ISO-Logo-1993-SVG">
@@ -4271,7 +4661,7 @@
 
 	<xsl:template name="refine_termexample-style">
 
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
 
@@ -4287,7 +4677,7 @@
 
 	<xsl:template name="refine_example-style">
 
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
 
@@ -4362,10 +4752,10 @@
 			<xsl:if test="starts-with(@id, 'array_')">
 				<xsl:attribute name="margin-top">6pt</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="$layoutVersion = '1989' and $revision_date_num &lt;= 19981231">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)">
 				<xsl:attribute name="span">all</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
 
@@ -4411,7 +4801,7 @@
 			<xsl:if test="$continued = 'true'">
 				<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">10pt</xsl:attribute>
 				<xsl:attribute name="span">all</xsl:attribute>
 			</xsl:if>
@@ -4707,7 +5097,7 @@
 
 	<xsl:template name="refine_note-style">
 
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
 			<xsl:if test="$doctype = 'amendment' and parent::*[local-name() = 'quote']">
@@ -4756,7 +5146,7 @@
 
 	<xsl:template name="refine_termnote-style">
 
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
 			<xsl:if test="$doctype = 'amendment' and parent::*[local-name() = 'quote']">
@@ -5087,7 +5477,7 @@
 
 	<xsl:template name="refine_fn-body-style">
 
-			<xsl:if test="$layoutVersion = '1989'">
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
 
@@ -14331,7 +14721,7 @@
 	<xsl:template name="printEdition">
 		<xsl:variable name="edition_i18n" select="normalize-space((//*[contains(local-name(), '-standard')])[1]/*[local-name() = 'bibdata']/*[local-name() = 'edition'][normalize-space(@language) != ''])"/>
 
-			<xsl:if test="$layoutVersion != '2024'">
+			<xsl:if test="$layoutVersion != '1972' and $layoutVersion != '2024'">
 				<xsl:text> </xsl:text>
 			</xsl:if>
 
