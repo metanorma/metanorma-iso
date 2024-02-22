@@ -18,7 +18,7 @@ Imprimé en Suisse
 Ce document est également édité en anglais et en russe. Il peut être obtenu auprès des organisations +
 nationales de normalisation.
 
-{% elsif document_scheme == "1987" %}
+{% elsif document_scheme == "1972" or document_scheme == "1987" %}
 
 === {blank}
 

@@ -18,7 +18,7 @@ Printed in Switzerland
 
 Also issued in French and Russian. Copies to be obtained through the national standards organizations.
 
-{% elsif document_scheme == "1987" %}
+{% elsif document_scheme == "1972" or document_scheme == "1987" %}
 
 === {blank}
 

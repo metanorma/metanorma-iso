@@ -1,6 +1,6 @@
 == copyright-statement
 
-{% if document_scheme == "1987" %}
+{% if document_scheme == "1972" or document_scheme == "1987" %}
 
 === {blank}
 
