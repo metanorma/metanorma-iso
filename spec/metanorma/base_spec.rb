@@ -953,7 +953,7 @@ RSpec.describe Metanorma::ISO do
       :doctype: committee-document
     INPUT
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/A 1/B 2 N1000</docidentifier>
+      <docidentifier type="ISO">ISO/A 1/B 2/C 3 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
@@ -962,15 +962,43 @@ RSpec.describe Metanorma::ISO do
 
     input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
       .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
+      .gsub(/:workgroup-type:.+?[\r\n]+/m, "")
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/TC 1/SC 2 N1000</docidentifier>
+      <docidentifier type="ISO">ISO/TC 1/SC 2/WG 3 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
     expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
 
+    input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
+      .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
+    output = <<~OUTPUT
+      <docidentifier type="ISO">ISO/TC 1/SC 2/C 3 N1000</docidentifier>
+    OUTPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
+    xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
+    expect(xmlpp(strip_guid(xml.to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input2 = input.gsub(/:workgroup.+?[\r\n]+/m, "")
+    output = <<~OUTPUT
+      <docidentifier type="ISO">ISO/A 1/B 2 N1000</docidentifier>
+    OUTPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
+    xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
+    expect(xmlpp(strip_guid(xml.to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
     input2 = input.gsub(/:subcommittee.+?[\r\n]+/m, "")
+      .gsub(/:workgroup.+?[\r\n]+/m, "")
+    output = <<~OUTPUT
+      <docidentifier type="ISO">ISO/A 1 N1000</docidentifier>
+    OUTPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
+    xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
+    expect(xmlpp(strip_guid(xml.to_xml)))
+      .to be_equivalent_to xmlpp(output)
     output = <<~OUTPUT
       <docidentifier type="ISO">ISO/A 1 N1000</docidentifier>
     OUTPUT
