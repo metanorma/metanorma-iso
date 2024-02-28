@@ -1,5 +1,13 @@
 require "spec_helper"
 RSpec.describe Metanorma::ISO do
+  before do
+    # Force to download Relaton index file
+    allow_any_instance_of(Relaton::Index::Type).to receive(:actual?)
+      .and_return(false)
+    allow_any_instance_of(Relaton::Index::FileIO).to receive(:check_file)
+      .and_return(nil)
+  end
+
   it "has a version number" do
     expect(Metanorma::ISO::VERSION).not_to be nil
   end
@@ -1754,7 +1762,8 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "processes adopted-from identifiers, CEN identifiers" do
-    VCR.use_cassette "withdrawn_iso", match_requests_on: %i[method uri body] do
+    VCR.use_cassette "withdrawn_iso",
+                     match_requests_on: %i[method uri body] do
       xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
         = Document title
         Author
@@ -1969,7 +1978,8 @@ RSpec.describe Metanorma::ISO do
          </presentation-metadata>
        </metanorma-extension>
     OUTPUT
-    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor.convert(input,
+                                                              *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to xmlpp(output)
   end
