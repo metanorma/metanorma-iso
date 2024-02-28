@@ -338,28 +338,31 @@
   </define>
   <define name="organization">
     <element name="organization">
-      <oneOrMore>
-        <ref name="orgname"/>
-      </oneOrMore>
-      <zeroOrMore>
-        <ref name="subdivision"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="abbreviation"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="uri"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="org-identifier"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="contact"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="logo"/>
-      </optional>
+      <ref name="OrganizationType"/>
     </element>
+  </define>
+  <define name="OrganizationType">
+    <oneOrMore>
+      <ref name="orgname"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="subdivision"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="abbreviation"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="uri"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="org-identifier"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="contact"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="logo"/>
+    </optional>
   </define>
   <define name="orgname">
     <element name="name">
@@ -371,10 +374,10 @@
   </define>
   <define name="subdivision">
     <element name="subdivision">
-      <choice>
-        <ref name="LocalizedString"/>
-        <ref name="NameWithVariants"/>
-      </choice>
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <ref name="OrganizationType"/>
     </element>
   </define>
   <define name="logo">

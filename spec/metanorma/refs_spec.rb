@@ -3,6 +3,14 @@ require "relaton_iso"
 require "relaton_ietf"
 
 RSpec.describe Metanorma::ISO do
+  before do
+    # Force to download Relaton index file
+    allow_any_instance_of(Relaton::Index::Type).to receive(:actual?)
+      .and_return(false)
+    allow_any_instance_of(Relaton::Index::FileIO).to receive(:check_file)
+      .and_return(nil)
+  end
+
   it "processes draft ISO reference" do
     mock_fdis
     input = <<~INPUT
@@ -356,7 +364,8 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "renders withdrawn and cancelled ISO references" do
-    VCR.use_cassette "withdrawn_iso", match_requests_on: %i[method uri body] do
+    VCR.use_cassette "withdrawn_iso",
+                     match_requests_on: %i[method uri body] do
       input = <<~INPUT
         #{ISOBIB_BLANK_HDR}
 
@@ -370,252 +379,252 @@ RSpec.describe Metanorma::ISO do
         * [[[iso2,ISO 31-0]]]
       INPUT
       output = <<~OUTPUT
-         #{BLANK_HDR}
-                  <preface>
-           <foreword id="_" obligation="informative">
-             <title>Foreword</title>
-             <p id="_">
-               <eref type="inline" bibitemid="iso1" citeas="ISO 683-3:2019">
-                 <localityStack>
-                   <locality type="clause">
-                     <referenceFrom>1</referenceFrom>
-                   </locality>
-                 </localityStack>
-               </eref>
-               <fn reference="1">
-                 <p id="_">Cancelled and replaced by ISO 683-3:2022.</p>
-               </fn>
-               <eref type="inline" bibitemid="iso2" citeas="ISO 31-0">
-                 <localityStack>
-                   <locality type="clause">
-                     <referenceFrom>1</referenceFrom>
-                   </locality>
-                 </localityStack>
-               </eref>
-               <fn reference="2">
-                 <p id="_">Cancelled and replaced by ISO 80000-1:2009.</p>
-               </fn>
-             </p>
-           </foreword>
-         </preface>
-         <sections/>
-         <bibliography>
-           <references id="_" normative="false" obligation="informative">
-             <title>Bibliography</title>
-             <bibitem id="iso2" type="standard">
-               <fetched/>
-               <title type="title-main" format="text/plain" language="en" script="Latn">Quantities and units</title>
-               <title type="title-part" format="text/plain" language="en" script="Latn">Part 0: General principles</title>
-               <title type="main" format="text/plain" language="en" script="Latn">Quantities and units — Part 0: General principles</title>
-               <uri type="src">https://www.iso.org/standard/3621.html</uri>
-               <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
-               <docidentifier type="ISO" primary="true">ISO 31-0</docidentifier>
-               <docidentifier type="iso-reference">ISO 31-0(E)</docidentifier>
-               <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
-               <docnumber>31</docnumber>
-               <contributor>
-                 <role type="publisher"/>
-                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                   <uri>www.iso.org</uri>
-                 </organization>
-               </contributor>
-               <edition>3</edition>
-               <note type="Unpublished-Status">
-                 <p id="_">Cancelled and replaced by ISO 80000-1:2009.</p>
-               </note>
-               <language>en</language>
-               <language>fr</language>
-               <script>Latn</script>
-               <status>
-                 <stage>95</stage>
-                 <substage>99</substage>
-               </status>
-               <copyright>
-                 <from>1992</from>
-                 <owner>
-                   <organization>
-                     <name>ISO</name>
-                   </organization>
-                 </owner>
-               </copyright>
-               <relation type="obsoletes">
-                 <bibitem type="standard">
-                   <formattedref format="text/plain">ISO 31-0:1981</formattedref>
-                   <docidentifier type="ISO" primary="true">ISO 31-0:1981</docidentifier>
-                 </bibitem>
-               </relation>
-               <relation type="updates">
-                 <bibitem type="standard">
-                   <formattedref format="text/plain">ISO 80000-1:2009</formattedref>
-                   <docidentifier type="ISO" primary="true">ISO 80000-1:2009</docidentifier>
-                   <date type="circulated">
-                     <on>2009-11-17</on>
-                   </date>
-                 </bibitem>
-               </relation>
-               <relation type="updates">
-                 <bibitem type="standard">
-                   <formattedref format="text/plain">ISO 31-0:1992/Amd 1:1998</formattedref>
-                   <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 1:1998</docidentifier>
-                   <date type="circulated">
-                     <on>2009-11-17</on>
-                   </date>
-                 </bibitem>
-               </relation>
-               <relation type="updates">
-                 <bibitem type="standard">
-                   <formattedref format="text/plain">ISO 31-0:1992/Amd 2:2005</formattedref>
-                   <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 2:2005</docidentifier>
-                   <date type="circulated">
-                     <on>2009-11-17</on>
-                   </date>
-                 </bibitem>
-               </relation>
-               <relation type="instanceOf">
-                 <bibitem type="standard">
-                   <fetched/>
-                   <title type="title-main" format="text/plain" language="en" script="Latn">Quantities and units</title>
-                   <title type="title-part" format="text/plain" language="en" script="Latn">Part 0: General principles</title>
-                   <title type="main" format="text/plain" language="en" script="Latn">Quantities and units — Part 0: General principles</title>
-                   <uri type="src">https://www.iso.org/standard/3621.html</uri>
-                   <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
-                   <docidentifier type="ISO" primary="true">ISO 31-0:1992</docidentifier>
-                   <docidentifier type="iso-reference">ISO 31-0:1992(E)</docidentifier>
-                   <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
-                   <docnumber>31</docnumber>
-                   <date type="published">
-                     <on>1992-07</on>
-                   </date>
-                   <contributor>
-                     <role type="publisher"/>
-                     <organization>
-                       <name>International Organization for Standardization</name>
-                       <abbreviation>ISO</abbreviation>
-                       <uri>www.iso.org</uri>
-                     </organization>
-                   </contributor>
-                   <edition>3</edition>
-                   <note type="Unpublished-Status">
-                     <p id="_">Cancelled and replaced by ISO 80000-1:2009.</p>
-                   </note>
-                   <language>en</language>
-                   <language>fr</language>
-                   <script>Latn</script>
-                   <abstract format="text/plain" language="en" script="Latn">Gives general information about principles concerning physical quantities, equations, quantity and unit symbols, and coherent unit systems, especially the International System of Units, SI, including recommendations for printing symbols and numbers. Annex A includes a guide to terms used in names for physical quantities, Annex B a guide to the rounding of numbers, Annex C international organizations in the field of quantities and units.</abstract>
-                   <status>
-                     <stage>95</stage>
-                     <substage>99</substage>
-                   </status>
-                   <copyright>
-                     <from>1992</from>
-                     <owner>
-                       <organization>
-                         <name>ISO</name>
-                       </organization>
-                     </owner>
-                   </copyright>
-                   <relation type="obsoletes">
-                     <bibitem type="standard">
-                       <formattedref format="text/plain">ISO 31-0:1981</formattedref>
-                       <docidentifier type="ISO" primary="true">ISO 31-0:1981</docidentifier>
-                     </bibitem>
-                   </relation>
-                   <relation type="updates">
-                     <bibitem type="standard">
-                       <formattedref format="text/plain">ISO 80000-1:2009</formattedref>
-                       <docidentifier type="ISO" primary="true">ISO 80000-1:2009</docidentifier>
-                       <date type="circulated">
-                         <on>2009-11-17</on>
-                       </date>
-                     </bibitem>
-                   </relation>
-                   <relation type="updates">
-                     <bibitem type="standard">
-                       <formattedref format="text/plain">ISO 31-0:1992/Amd 1:1998</formattedref>
-                       <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 1:1998</docidentifier>
-                       <date type="circulated">
-                         <on>2009-11-17</on>
-                       </date>
-                     </bibitem>
-                   </relation>
-                   <relation type="updates">
-                     <bibitem type="standard">
-                       <formattedref format="text/plain">ISO 31-0:1992/Amd 2:2005</formattedref>
-                       <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 2:2005</docidentifier>
-                       <date type="circulated">
-                         <on>2009-11-17</on>
-                       </date>
-                     </bibitem>
-                   </relation>
-                   <place>Geneva</place>
-                 </bibitem>
-               </relation>
-               <place>Geneva</place>
-             </bibitem>
-             <bibitem id="iso1" type="standard">
-               <fetched/>
-               <title type="title-main" format="text/plain" language="en" script="Latn">Heat-treatable steels, alloy steels and free-cutting steels</title>
-               <title type="title-part" format="text/plain" language="en" script="Latn">Part 3: Case-hardening steels</title>
-               <title type="main" format="text/plain" language="en" script="Latn">Heat-treatable steels, alloy steels and free-cutting steels — Part 3: Case-hardening steels</title>
-               <uri type="src">https://www.iso.org/standard/76389.html</uri>
-               <uri type="rss">https://www.iso.org/contents/data/standard/07/63/76389.detail.rss</uri>
-               <docidentifier type="ISO" primary="true">ISO 683-3:2019</docidentifier>
-               <docidentifier type="iso-reference">ISO 683-3:2019(E)</docidentifier>
-               <docidentifier type="URN">urn:iso:std:iso:683:-3:stage-95.99</docidentifier>
-               <docnumber>683</docnumber>
-               <date type="published">
-                 <on>2019-01</on>
-               </date>
-               <contributor>
-                 <role type="publisher"/>
-                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                   <uri>www.iso.org</uri>
-                 </organization>
-               </contributor>
-               <edition>3</edition>
-               <note type="Unpublished-Status">
-                 <p id="_">Cancelled and replaced by ISO 683-3:2022.</p>
-               </note>
-               <language>en</language>
-               <language>fr</language>
-               <script>Latn</script>
-               <abstract format="text/plain" language="en" script="Latn">This document specifies the technical delivery requirements for —          semi-finished products, hot formed, e.g. blooms, billets, slabs (see NOTE 1), —          bars (see NOTE 1), —          wire rod, —          finished flat products, and —          hammer or drop forgings (see NOTE 1) manufactured from the case-hardening non-alloy or alloy steels listed in Table 3 and supplied in one of the heat-treatment conditions given for the different types of products in Table 1 and in one of the surface conditions given in Table 2. The steels are, in general, intended for the manufacture of case-hardened machine parts. NOTE 1    Hammer-forged semi-finished products (blooms, billets, slabs, etc.), seamless rolled rings and hammer-forged bars are covered under semi-finished products or bars and not under the term “hammer and drop forgings”. NOTE 2    For International Standards relating to steels complying with the requirements for the chemical composition in Table 3, however, supplied in other product forms or treatment conditions than given above or intended for special applications, and for other related International Standards, see the Bibliography. In special cases, variations in these technical delivery requirements or additions to them can form the subject of an agreement at the time of enquiry and order (see 5.2 and Annex A). In addition to this document, the general technical delivery requirements of ISO 404 are applicable.</abstract>
-               <status>
-                 <stage>95</stage>
-                 <substage>99</substage>
-               </status>
-               <copyright>
-                 <from>2019</from>
-                 <owner>
-                   <organization>
-                     <name>ISO</name>
-                   </organization>
-                 </owner>
-               </copyright>
-               <relation type="obsoletes">
-                 <bibitem type="standard">
-                   <formattedref format="text/plain">ISO 683-3:2016</formattedref>
-                   <docidentifier type="ISO" primary="true">ISO 683-3:2016</docidentifier>
-                 </bibitem>
-               </relation>
-               <relation type="updates">
-                 <bibitem type="standard">
-                   <formattedref format="text/plain">ISO 683-3:2022</formattedref>
-                   <docidentifier type="ISO" primary="true">ISO 683-3:2022</docidentifier>
-                   <date type="circulated">
-                     <on>2022-01-21</on>
-                   </date>
-                 </bibitem>
-               </relation>
-               <place>Geneva</place>
-             </bibitem>
-           </references>
-         </bibliography>
-       </iso-standard>
+          #{BLANK_HDR}
+                   <preface>
+            <foreword id="_" obligation="informative">
+              <title>Foreword</title>
+              <p id="_">
+                <eref type="inline" bibitemid="iso1" citeas="ISO 683-3:2019">
+                  <localityStack>
+                    <locality type="clause">
+                      <referenceFrom>1</referenceFrom>
+                    </locality>
+                  </localityStack>
+                </eref>
+                <fn reference="1">
+                  <p id="_">Cancelled and replaced by ISO 683-3:2022.</p>
+                </fn>
+                <eref type="inline" bibitemid="iso2" citeas="ISO 31-0">
+                  <localityStack>
+                    <locality type="clause">
+                      <referenceFrom>1</referenceFrom>
+                    </locality>
+                  </localityStack>
+                </eref>
+                <fn reference="2">
+                  <p id="_">Cancelled and replaced by ISO 80000-1:2009.</p>
+                </fn>
+              </p>
+            </foreword>
+          </preface>
+          <sections/>
+          <bibliography>
+            <references id="_" normative="false" obligation="informative">
+              <title>Bibliography</title>
+              <bibitem id="iso2" type="standard">
+                <fetched/>
+                <title type="title-main" format="text/plain" language="en" script="Latn">Quantities and units</title>
+                <title type="title-part" format="text/plain" language="en" script="Latn">Part 0: General principles</title>
+                <title type="main" format="text/plain" language="en" script="Latn">Quantities and units — Part 0: General principles</title>
+                <uri type="src">https://www.iso.org/standard/3621.html</uri>
+                <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
+                <docidentifier type="ISO" primary="true">ISO 31-0</docidentifier>
+                <docidentifier type="iso-reference">ISO 31-0(E)</docidentifier>
+                <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
+                <docnumber>31</docnumber>
+                <contributor>
+                  <role type="publisher"/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                    <uri>www.iso.org</uri>
+                  </organization>
+                </contributor>
+                <edition>3</edition>
+                <note type="Unpublished-Status">
+                  <p id="_">Cancelled and replaced by ISO 80000-1:2009.</p>
+                </note>
+                <language>en</language>
+                <language>fr</language>
+                <script>Latn</script>
+                <status>
+                  <stage>95</stage>
+                  <substage>99</substage>
+                </status>
+                <copyright>
+                  <from>1992</from>
+                  <owner>
+                    <organization>
+                      <name>ISO</name>
+                    </organization>
+                  </owner>
+                </copyright>
+                <relation type="obsoletes">
+                  <bibitem type="standard">
+                    <formattedref format="text/plain">ISO 31-0:1981</formattedref>
+                    <docidentifier type="ISO" primary="true">ISO 31-0:1981</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type="updates">
+                  <bibitem type="standard">
+                    <formattedref format="text/plain">ISO 80000-1:2009</formattedref>
+                    <docidentifier type="ISO" primary="true">ISO 80000-1:2009</docidentifier>
+                    <date type="circulated">
+                      <on>2009-11-17</on>
+                    </date>
+                  </bibitem>
+                </relation>
+                <relation type="updates">
+                  <bibitem type="standard">
+                    <formattedref format="text/plain">ISO 31-0:1992/Amd 1:1998</formattedref>
+                    <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 1:1998</docidentifier>
+                    <date type="circulated">
+                      <on>2009-11-17</on>
+                    </date>
+                  </bibitem>
+                </relation>
+                <relation type="updates">
+                  <bibitem type="standard">
+                    <formattedref format="text/plain">ISO 31-0:1992/Amd 2:2005</formattedref>
+                    <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 2:2005</docidentifier>
+                    <date type="circulated">
+                      <on>2009-11-17</on>
+                    </date>
+                  </bibitem>
+                </relation>
+                <relation type="instanceOf">
+                  <bibitem type="standard">
+                    <fetched/>
+                    <title type="title-main" format="text/plain" language="en" script="Latn">Quantities and units</title>
+                    <title type="title-part" format="text/plain" language="en" script="Latn">Part 0: General principles</title>
+                    <title type="main" format="text/plain" language="en" script="Latn">Quantities and units — Part 0: General principles</title>
+                    <uri type="src">https://www.iso.org/standard/3621.html</uri>
+                    <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
+                    <docidentifier type="ISO" primary="true">ISO 31-0:1992</docidentifier>
+                    <docidentifier type="iso-reference">ISO 31-0:1992(E)</docidentifier>
+                    <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
+                    <docnumber>31</docnumber>
+                    <date type="published">
+                      <on>1992-07</on>
+                    </date>
+                    <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                        <name>International Organization for Standardization</name>
+                        <abbreviation>ISO</abbreviation>
+                        <uri>www.iso.org</uri>
+                      </organization>
+                    </contributor>
+                    <edition>3</edition>
+                    <note type="Unpublished-Status">
+                      <p id="_">Cancelled and replaced by ISO 80000-1:2009.</p>
+                    </note>
+                    <language>en</language>
+                    <language>fr</language>
+                    <script>Latn</script>
+                    <abstract format="text/plain" language="en" script="Latn">Gives general information about principles concerning physical quantities, equations, quantity and unit symbols, and coherent unit systems, especially the International System of Units, SI, including recommendations for printing symbols and numbers. Annex A includes a guide to terms used in names for physical quantities, Annex B a guide to the rounding of numbers, Annex C international organizations in the field of quantities and units.</abstract>
+                    <status>
+                      <stage>95</stage>
+                      <substage>99</substage>
+                    </status>
+                    <copyright>
+                      <from>1992</from>
+                      <owner>
+                        <organization>
+                          <name>ISO</name>
+                        </organization>
+                      </owner>
+                    </copyright>
+                    <relation type="obsoletes">
+                      <bibitem type="standard">
+                        <formattedref format="text/plain">ISO 31-0:1981</formattedref>
+                        <docidentifier type="ISO" primary="true">ISO 31-0:1981</docidentifier>
+                      </bibitem>
+                    </relation>
+                    <relation type="updates">
+                      <bibitem type="standard">
+                        <formattedref format="text/plain">ISO 80000-1:2009</formattedref>
+                        <docidentifier type="ISO" primary="true">ISO 80000-1:2009</docidentifier>
+                        <date type="circulated">
+                          <on>2009-11-17</on>
+                        </date>
+                      </bibitem>
+                    </relation>
+                    <relation type="updates">
+                      <bibitem type="standard">
+                        <formattedref format="text/plain">ISO 31-0:1992/Amd 1:1998</formattedref>
+                        <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 1:1998</docidentifier>
+                        <date type="circulated">
+                          <on>2009-11-17</on>
+                        </date>
+                      </bibitem>
+                    </relation>
+                    <relation type="updates">
+                      <bibitem type="standard">
+                        <formattedref format="text/plain">ISO 31-0:1992/Amd 2:2005</formattedref>
+                        <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 2:2005</docidentifier>
+                        <date type="circulated">
+                          <on>2009-11-17</on>
+                        </date>
+                      </bibitem>
+                    </relation>
+                    <place>Geneva</place>
+                  </bibitem>
+                </relation>
+                <place>Geneva</place>
+              </bibitem>
+              <bibitem id="iso1" type="standard">
+                <fetched/>
+                <title type="title-main" format="text/plain" language="en" script="Latn">Heat-treatable steels, alloy steels and free-cutting steels</title>
+                <title type="title-part" format="text/plain" language="en" script="Latn">Part 3: Case-hardening steels</title>
+                <title type="main" format="text/plain" language="en" script="Latn">Heat-treatable steels, alloy steels and free-cutting steels — Part 3: Case-hardening steels</title>
+                <uri type="src">https://www.iso.org/standard/76389.html</uri>
+                <uri type="rss">https://www.iso.org/contents/data/standard/07/63/76389.detail.rss</uri>
+                <docidentifier type="ISO" primary="true">ISO 683-3:2019</docidentifier>
+                <docidentifier type="iso-reference">ISO 683-3:2019(E)</docidentifier>
+                <docidentifier type="URN">urn:iso:std:iso:683:-3:stage-95.99</docidentifier>
+                <docnumber>683</docnumber>
+                <date type="published">
+                  <on>2019-01</on>
+                </date>
+                <contributor>
+                  <role type="publisher"/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                    <uri>www.iso.org</uri>
+                  </organization>
+                </contributor>
+                <edition>3</edition>
+                <note type="Unpublished-Status">
+                  <p id="_">Cancelled and replaced by ISO 683-3:2022.</p>
+                </note>
+                <language>en</language>
+                <language>fr</language>
+                <script>Latn</script>
+                <abstract format="text/plain" language="en" script="Latn">This document specifies the technical delivery requirements for —          semi-finished products, hot formed, e.g. blooms, billets, slabs (see NOTE 1), —          bars (see NOTE 1), —          wire rod, —          finished flat products, and —          hammer or drop forgings (see NOTE 1) manufactured from the case-hardening non-alloy or alloy steels listed in Table 3 and supplied in one of the heat-treatment conditions given for the different types of products in Table 1 and in one of the surface conditions given in Table 2. The steels are, in general, intended for the manufacture of case-hardened machine parts. NOTE 1    Hammer-forged semi-finished products (blooms, billets, slabs, etc.), seamless rolled rings and hammer-forged bars are covered under semi-finished products or bars and not under the term “hammer and drop forgings”. NOTE 2    For International Standards relating to steels complying with the requirements for the chemical composition in Table 3, however, supplied in other product forms or treatment conditions than given above or intended for special applications, and for other related International Standards, see the Bibliography. In special cases, variations in these technical delivery requirements or additions to them can form the subject of an agreement at the time of enquiry and order (see 5.2 and Annex A). In addition to this document, the general technical delivery requirements of ISO 404 are applicable.</abstract>
+                <status>
+                  <stage>95</stage>
+                  <substage>99</substage>
+                </status>
+                <copyright>
+                  <from>2019</from>
+                  <owner>
+                    <organization>
+                      <name>ISO</name>
+                    </organization>
+                  </owner>
+                </copyright>
+                <relation type="obsoletes">
+                  <bibitem type="standard">
+                    <formattedref format="text/plain">ISO 683-3:2016</formattedref>
+                    <docidentifier type="ISO" primary="true">ISO 683-3:2016</docidentifier>
+                  </bibitem>
+                </relation>
+                <relation type="updates">
+                  <bibitem type="standard">
+                    <formattedref format="text/plain">ISO 683-3:2022</formattedref>
+                    <docidentifier type="ISO" primary="true">ISO 683-3:2022</docidentifier>
+                    <date type="circulated">
+                      <on>2022-01-21</on>
+                    </date>
+                  </bibitem>
+                </relation>
+                <place>Geneva</place>
+              </bibitem>
+            </references>
+          </bibliography>
+        </iso-standard>
       OUTPUT
       expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to xmlpp(output)
