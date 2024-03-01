@@ -88,6 +88,12 @@
 	<xsl:variable name="lang-1st-letter" select="concat('(', $lang-1st-letter_tmp , ')')"/>
 
 	<xsl:variable name="iso_reference" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-reference']"/>
+	<xsl:variable name="anotherNumbers">
+		<xsl:variable name="year_iso_reference" select="concat(':',substring-after($iso_reference,':'))"/>
+		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type != '' and @type != 'ISO' and not(starts-with(@type, 'iso-')) and @type != 'URN']">
+			<xsl:value-of select="$linebreak"/><xsl:value-of select="concat(., $year_iso_reference)"/>
+		</xsl:for-each>
+	</xsl:variable>
 	<xsl:variable name="ISOnumber">
 		<xsl:choose>
 			<xsl:when test="$layoutVersion = '2024' and $docidentifier_iso_with_lang != ''">
@@ -110,6 +116,7 @@
 				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
+		<xsl:value-of select="$anotherNumbers"/>
 	</xsl:variable>
 
 	<xsl:variable name="part" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:project-number/@part)"/>
@@ -3529,7 +3536,7 @@
 	<xsl:template name="insertHeaderEven">
 		<fo:static-content flow-name="header-even" role="artifact">
 			<fo:block-container height="24mm" display-align="before">
-				<fo:block font-size="{$font-size_header}" font-weight="bold" padding-top="12.5mm">
+				<fo:block font-size="{$font-size_header}" font-weight="bold" padding-top="12.5mm" line-height="1.1">
 					<xsl:call-template name="insertLayoutVersion2024AttributesTop"/>
 					<xsl:value-of select="$ISOnumber"/>
 				</fo:block>
@@ -3541,14 +3548,14 @@
 			<xsl:choose>
 				<xsl:when test="$stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM' or $stage-abbreviation = 'DAmd' or $stage-abbreviation = 'DAM'">
 					<fo:block-container height="24mm" display-align="before">
-						<fo:block font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm">
+						<fo:block font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm" line-height="1.1">
 							<xsl:call-template name="insertLayoutVersion2024AttributesTop"/>
 							<xsl:value-of select="$ISOnumber"/>
 						</fo:block>
 					</fo:block-container>
 				</xsl:when>
 				<xsl:otherwise>
-					<fo:block-container margin-top="13mm" height="9mm" width="172mm" border-top="0.5mm solid black" border-bottom="0.5mm solid black" display-align="center" background-color="white">
+					<fo:block-container margin-top="13mm" width="172mm" border-top="0.5mm solid black" border-bottom="0.5mm solid black" display-align="center" background-color="white">
 						<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 							<xsl:attribute name="border-top">0.5mm solid black</xsl:attribute>
 							<xsl:attribute name="border-bottom">0.5mm solid black</xsl:attribute>
@@ -3557,7 +3564,7 @@
 							<xsl:attribute name="border-top">0.8mm solid black</xsl:attribute>
 							<xsl:attribute name="border-bottom">0.8mm solid black</xsl:attribute>
 						</xsl:if>
-						<fo:block text-align-last="justify" font-size="{$font-size_header}" font-weight="bold">
+						<!-- <fo:block text-align-last="justify" font-size="{$font-size_header}" font-weight="bold" line-height="1.1">
 							<xsl:choose>
 								<xsl:when test="$layoutVersion = '2024'">
 									<xsl:choose>
@@ -3569,12 +3576,41 @@
 									<xsl:value-of select="$stagename-header-firstpage-uppercased"/>
 								</xsl:otherwise>
 							</xsl:choose>
-
 							<fo:inline keep-together.within-line="always">
 								<fo:leader leader-pattern="space"/>
 								<fo:inline><xsl:value-of select="$ISOnumber"/></fo:inline>
 							</fo:inline>
-						</fo:block>
+						</fo:block> -->
+						<fo:table table-layout="fixed" width="100%" font-size="{$font-size_header}" font-weight="bold" line-height="1.1">
+							<fo:table-column column-width="50%"/>
+							<fo:table-column column-width="50%"/>
+							<fo:table-body>
+								<fo:table-row display-align="center" height="9mm">
+									<fo:table-cell>
+										<fo:block>
+											<xsl:choose>
+												<xsl:when test="$layoutVersion = '2024'">
+													<xsl:choose>
+														<xsl:when test="$doctype = 'committee-document'"><xsl:value-of select="$doctype_localized"/></xsl:when>
+														<xsl:otherwise><xsl:value-of select="$stagename-header-firstpage"/></xsl:otherwise>
+													</xsl:choose>
+												</xsl:when>
+												<xsl:otherwise>
+													<xsl:value-of select="$stagename-header-firstpage-uppercased"/>
+												</xsl:otherwise>
+											</xsl:choose>
+										</fo:block>
+									</fo:table-cell>
+									<fo:table-cell text-align="right"> <!-- padding-top="2mm" padding-bottom="2mm" -->
+										<xsl:if test="contains($ISOnumber, $linebreak)">
+											<xsl:attribute name="padding-top">2mm</xsl:attribute>
+											<xsl:attribute name="padding-bottom">2mm</xsl:attribute>
+										</xsl:if>
+										<fo:block><xsl:value-of select="$ISOnumber"/></fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+							</fo:table-body>
+						</fo:table>
 					</fo:block-container>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -3583,7 +3619,7 @@
 	<xsl:template name="insertHeaderOdd">
 		<fo:static-content flow-name="header-odd" role="artifact">
 			<fo:block-container height="24mm" display-align="before">
-				<fo:block font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm">
+				<fo:block font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm" line-height="1.1">
 					<xsl:call-template name="insertLayoutVersion2024AttributesTop"/>
 					<xsl:value-of select="$ISOnumber"/>
 				</fo:block>
@@ -4752,8 +4788,10 @@
 			<xsl:if test="starts-with(@id, 'array_')">
 				<xsl:attribute name="margin-top">6pt</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)">
-				<xsl:attribute name="span">all</xsl:attribute>
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
+				<xsl:if test="normalize-space(@width) != 'text-width'">
+					<xsl:attribute name="span">all</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
@@ -4803,7 +4841,9 @@
 			</xsl:if>
 			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">10pt</xsl:attribute>
-				<xsl:attribute name="span">all</xsl:attribute>
+				<xsl:if test="normalize-space(../@width) != 'text-width'">
+					<xsl:attribute name="span">all</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 			<xsl:if test="$layoutVersion = '2024'">
 				<xsl:attribute name="font-size">10.5pt</xsl:attribute>
@@ -5225,6 +5265,18 @@
 			<xsl:attribute name="space-after">12pt</xsl:attribute>
 
 	</xsl:attribute-set>
+
+	<xsl:template name="refine_figure-block-style">
+
+			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
+				<xsl:if test="normalize-space(@width) != 'text-width'">
+					<xsl:attribute name="span">all</xsl:attribute>
+					<xsl:attribute name="margin-top">6pt</xsl:attribute>
+					<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+				</xsl:if>
+			</xsl:if>
+
+	</xsl:template>
 
 	<xsl:attribute-set name="figure-style">
 
@@ -10447,6 +10499,7 @@
 		<xsl:variable name="isAdded" select="@added"/>
 		<xsl:variable name="isDeleted" select="@deleted"/>
 		<fo:block-container id="{@id}" xsl:use-attribute-sets="figure-block-style">
+			<xsl:call-template name="refine_figure-block-style"/>
 
 			<xsl:call-template name="setTrackChangesStyles">
 				<xsl:with-param name="isAdded" select="$isAdded"/>
