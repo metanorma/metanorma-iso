@@ -28,6 +28,30 @@ nationales de normalisation.
 [[boilerplate-place]]
 Publié en Suisse
 
+
+{% elsif document_scheme == "1989" %}
+
+=== {blank}
+
+[[boilerplate-year]]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+
+[[boilerplate-message]]
+Droits de reproduction réservés. Sauf prescription différente, aucune partie de cette publication 
+ne peut être reproduite ni utilisée sous quelque forme que ce soit et par aucun procédé, 
+électronique ou mécanique, y compris la photocopie et les microfilms, sans l'accord écrit de l'éditeur. 
+
+[[boilerplate-address]]
+[align=left]
+Organisation internationale de normalisation +
+Case postale 56 &#x2022; CH-1211 Genève 20 &#x2022; Suisse +
+Internet&#xa0;&#xa0;&#xa0;central@iso.ch +
+X.400&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;c=ch; a=400net; p=iso; o=isocs; s=central 
+
+[[boilerplate-place]]
+Imprimé en Suisse
+
+
 {% else %}
 === {% if stage_int >= 40 %}DOCUMENT PROTÉGÉ PAR COPYRIGHT{%else%}{blank}{%endif%}
 

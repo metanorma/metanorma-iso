@@ -10,6 +10,28 @@
 [[boilerplate-place]]
 Издано в Швейцарии
 
+{% elsif document_scheme == "1989" %}
+
+=== {blank}
+
+[[boilerplate-year]]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+
+[[boilerplate-message]]
+Охраняется авторским правом. Если это особо не указано, то никакая часть данной публикации не может быть воспроизведена и 
+использована в любой форме или любыми средствами, электронными или механическими, включая фотокопирование и
+микрофильмирование, без предварительного письменного разрешения издателя.
+
+[[boilerplate-address]]
+[align=left]
+Международная Организация по Стандартизации +
+Почтовый адрес: 56 &#x2022; CH-1211 Geneva 20 &#x2022; Switzerland +
+Адрес в Интернете:&#xa0;central@iso.ch +
+X.400&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;c=ch; a=400net; p=iso; o=isocs; s=central
+
+[[boilerplate-place]]
+Напечатано в Швейцарии
+
 {% else %}
 
 === {% if stage_int >= 40 %}ДОКУМЕНТ, ОХРАНЯЕМЫЙ АВТОРСКИМ ПРАВОМ{% else %}{blank}{% endif %}
