@@ -120,11 +120,6 @@ module IsoDoc
         "#{xml} &#x2014; "
       end
 
-      def bibrenderer
-        ::Relaton::Render::Iso::General.new(language: @lang,
-                                            i18nhash: @i18n.get)
-      end
-
       def bibrender_formattedref(formattedref, xml)
         %w(techreport standard).include? xml["type"] and return
         super
