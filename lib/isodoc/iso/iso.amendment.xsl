@@ -10925,8 +10925,12 @@
 			<xsl:variable name="width" select="normalize-space($viewbox//item[3])"/>
 			<xsl:variable name="height" select="normalize-space($viewbox//item[4])"/>
 
+			<xsl:variable name="parent_image_width" select="normalize-space(ancestor::*[1][local-name() = 'image']/@width)"/>
+			<xsl:variable name="parent_image_height" select="normalize-space(ancestor::*[1][local-name() = 'image']/@height)"/>
+
 			<xsl:attribute name="width">
 				<xsl:choose>
+					<xsl:when test="$parent_image_width != '' and $parent_image_width != 'auto'"><xsl:value-of select="$parent_image_width"/></xsl:when>
 					<xsl:when test="$width != ''">
 						<xsl:value-of select="round($width)"/>
 					</xsl:when>
@@ -10935,6 +10939,7 @@
 			</xsl:attribute>
 			<xsl:attribute name="height">
 				<xsl:choose>
+					<xsl:when test="$parent_image_height != '' and $parent_image_height != 'auto'"><xsl:value-of select="$parent_image_height"/></xsl:when>
 					<xsl:when test="$height != ''">
 						<xsl:value-of select="round($height)"/>
 					</xsl:when>
@@ -10944,6 +10949,28 @@
 
 			<xsl:apply-templates mode="svg_update"/>
 		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'svg']/@width" mode="svg_update">
+		<!-- image[@width]/svg -->
+		<xsl:variable name="parent_image_width" select="normalize-space(ancestor::*[2][local-name() = 'image']/@width)"/>
+		<xsl:attribute name="width">
+			<xsl:choose>
+				<xsl:when test="$parent_image_width != '' and $parent_image_width != 'auto'"><xsl:value-of select="$parent_image_width"/></xsl:when>
+				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:attribute>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'svg']/@height" mode="svg_update">
+		<!-- image[@height]/svg -->
+		<xsl:variable name="parent_image_height" select="normalize-space(ancestor::*[2][local-name() = 'image']/@height)"/>
+		<xsl:attribute name="height">
+			<xsl:choose>
+				<xsl:when test="$parent_image_height != '' and $parent_image_height != 'auto'"><xsl:value-of select="$parent_image_height"/></xsl:when>
+				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:attribute>
 	</xsl:template>
 
 	<!-- regex for 'display: inline-block;' -->
