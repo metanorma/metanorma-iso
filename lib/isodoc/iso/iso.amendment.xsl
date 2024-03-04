@@ -8660,7 +8660,8 @@
 	</xsl:template>
 
 	<xsl:template match="text()[ancestor::*[local-name()='smallcap']]">
-		<xsl:variable name="text" select="normalize-space(.)"/>
+		<!-- <xsl:variable name="text" select="normalize-space(.)"/> --> <!-- https://github.com/metanorma/metanorma-iso/issues/1115 -->
+		<xsl:variable name="text" select="."/>
 		<fo:inline font-size="75%" role="SKIP">
 				<xsl:if test="string-length($text) &gt; 0">
 					<xsl:variable name="smallCapsText">
