@@ -4153,6 +4153,8 @@
 	<xsl:param name="svg_images"/> <!-- svg images array -->
 	<xsl:variable name="images" select="document($svg_images)"/>
 	<xsl:param name="basepath"/> <!-- base path for images -->
+	<xsl:param name="inputxml_basepath"/> <!-- input xml file path -->
+	<xsl:param name="inputxml_filename"/> <!-- input xml file name -->
 	<xsl:param name="external_index"/><!-- path to index xml, generated on 1st pass, based on FOP Intermediate Format -->
 	<xsl:param name="syntax-highlight">false</xsl:param> <!-- syntax highlighting feature, default - off -->
 	<xsl:param name="add_math_as_text">true</xsl:param> <!-- add math in text behind svg formula, to copy-paste formula from PDF as text -->
@@ -4203,6 +4205,20 @@
 
 	<xsl:variable name="lang">
 		<xsl:call-template name="getLang"/>
+	</xsl:variable>
+
+	<xsl:variable name="inputxml_filename_prefix">
+		<xsl:choose>
+			<xsl:when test="contains($inputxml_filename, '.presentation.xml')">
+				<xsl:value-of select="substring-before($inputxml_filename, '.presentation.xml')"/>
+			</xsl:when>
+			<xsl:when test="contains($inputxml_filename, '.xml')">
+				<xsl:value-of select="substring-before($inputxml_filename, '.xml')"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$inputxml_filename"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:variable>
 
 	<!-- Note 1: Each xslt has declated variable `namespace` that allows to set some properties, processing logic, etc. for concrete xslt.
@@ -10090,6 +10106,12 @@
 				<xsl:when test="@updatetype = 'true'">
 					<xsl:value-of select="concat(normalize-space(@target), '.pdf')"/>
 				</xsl:when>
+				<xsl:when test="contains(@target, concat('_', $inputxml_filename_prefix, '_attachments'))">
+					<!-- link to the PDF attachment -->
+					<xsl:variable name="target_" select="translate(@target, '\', '/')"/>
+					<xsl:variable name="target__" select="substring-after($target_, concat('_', $inputxml_filename_prefix, '_attachments', '/'))"/>
+					<xsl:value-of select="concat('url(embedded-file:', $target__, ')')"/>
+				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="normalize-space(@target)"/>
 				</xsl:otherwise>
@@ -14978,10 +15000,10 @@
 
 	<xsl:template name="addPDFUAmeta">
 		<pdf:catalog>
-				<pdf:dictionary type="normal" key="ViewerPreferences">
-					<pdf:boolean key="DisplayDocTitle">true</pdf:boolean>
-				</pdf:dictionary>
-			</pdf:catalog>
+			<pdf:dictionary type="normal" key="ViewerPreferences">
+				<pdf:boolean key="DisplayDocTitle">true</pdf:boolean>
+			</pdf:dictionary>
+		</pdf:catalog>
 		<x:xmpmeta xmlns:x="adobe:ns:meta/">
 			<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 				<rdf:Description xmlns:pdf="http://ns.adobe.com/pdf/1.3/" xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:about="">
@@ -15033,6 +15055,19 @@
 				</rdf:Description>
 			</rdf:RDF>
 		</x:xmpmeta>
+		<!-- add attachments -->
+		<xsl:for-each select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment']">
+			<xsl:choose>
+				<xsl:when test="normalize-space() != ''">
+					<pdf:embedded-file src="{.}" filename="{@name}"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<!-- _{filename}_attachments -->
+					<xsl:variable name="url" select="concat('url(file:///',$inputxml_basepath, '_', $inputxml_filename_prefix, '_attachments', '/', @name, ')')"/>
+					<pdf:embedded-file src="{$url}" filename="{@name}"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
 	</xsl:template> <!-- addPDFUAmeta -->
 
 	<xsl:template name="getId">
