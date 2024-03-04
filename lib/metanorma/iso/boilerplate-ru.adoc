@@ -5,7 +5,7 @@
 === {blank}
 
 [[boilerplate-year]]
-&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*Международная Организация по Стандартизации*], span:std_docNumber[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
+&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*Международная Организация по Стандартизации*], span:date[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
 
 [[boilerplate-place]]
 Издано в Швейцарии
@@ -15,7 +15,7 @@
 === {blank}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:date[{{ docyear }}]
 
 [[boilerplate-message]]
 Охраняется авторским правом. Если это особо не указано, то никакая часть данной публикации не может быть воспроизведена и 
@@ -37,7 +37,7 @@ X.400&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;c=ch; a=400net;
 === {% if stage_int >= 40 %}ДОКУМЕНТ, ОХРАНЯЕМЫЙ АВТОРСКИМ ПРАВОМ{% else %}{blank}{% endif %}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:date[{{ docyear }}]
 
 [[boilerplate-message]]
 Все права защищены. Если иначе не определено или не требуется в контексте его реализации, никакая часть этой публикации не может быть воспроизведена или использована иначе в любой форме или каким-либо образом, электронным или механическим, включая фотокопирование, или публикацию в Интернете или интранете, без предварительного письменного разрешения. Разрешение может быть запрошено ISO по адресу, указанному ниже, или у органа — члена ISO страны запрашивающего.

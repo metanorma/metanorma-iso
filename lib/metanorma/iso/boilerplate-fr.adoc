@@ -23,7 +23,7 @@ nationales de normalisation.
 === {blank}
 
 [[boilerplate-year]]
-&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*Organisation Nationale de Normalisation*], span:std_docNumber[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
+&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*Organisation Nationale de Normalisation*], span:date[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
 
 [[boilerplate-place]]
 Publié en Suisse
@@ -34,7 +34,7 @@ Publié en Suisse
 === {blank}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:date[{{ docyear }}]
 
 [[boilerplate-message]]
 Droits de reproduction réservés. Sauf prescription différente, aucune partie de cette publication 
@@ -56,7 +56,7 @@ Imprimé en Suisse
 === {% if stage_int >= 40 %}DOCUMENT PROTÉGÉ PAR COPYRIGHT{%else%}{blank}{%endif%}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher:[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher:[{{ agency }}&#xa0;]span:date[{{ docyear }}]
 
 [[boilerplate-message]]
 Droits de reproduction réservés. Sauf indication contraire, ou requise dans le cadre de sa mise en œuvre,

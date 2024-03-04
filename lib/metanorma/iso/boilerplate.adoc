@@ -23,7 +23,7 @@ Also issued in French and Russian. Copies to be obtained through the national st
 === {blank}
 
 [[boilerplate-year]]
-&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*International Organization for Standardization*], span:std_docNumber[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
+&#xa9;&#xa0;&#xa0;&#xa0;span:std_publisher[*International Organization for Standardization*], span:date[*{{ docyear }}*]&#xa0;&#xa0;&#xa0;&#x25cf;
 
 [[boilerplate-place]]
 Printed in Switzerland
@@ -34,7 +34,7 @@ Printed in Switzerland
 === {blank}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:date[{{ docyear }}]
 
 [[boilerplate-message]]
 All rights reserved. Unless otherwise specified, no part of this publication may be reproduced
@@ -44,7 +44,7 @@ microfilm, without permission in writing from the publisher.
 [[boilerplate-address]]
 [align=left]
 International Organization for Standardization +
-Case postale 56 &#x2022; CH-1211 Geneve 20 &#x2022; Switzerland +
+Case postale 56 &#x2022; CH-1211 Genève 20 &#x2022; Switzerland +
 Internet&#xa0;&#xa0;&#xa0;central@iso.ch +
 X.400&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;c=ch; a=400net; p=iso; o=isocs; s=central
 
@@ -56,7 +56,7 @@ Printed in Switzerland
 === {% if stage_int >= 40 %}COPYRIGHT PROTECTED DOCUMENT{% else %}{blank}{% endif %}
 
 [[boilerplate-year]]
-&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:std_docNumber[{{ docyear }}]
+&#xa9; span:std_publisher[{{ agency }}&#xa0;]span:date[{{ docyear }}]
 
 [[boilerplate-message]]
 All rights reserved. Unless otherwise specified, or required in the context of its implementation,
