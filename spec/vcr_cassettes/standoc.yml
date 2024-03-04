@@ -21,14 +21,14 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Mon, 19 Feb 2024 10:24:33 GMT
+      - Mon, 04 Mar 2024 10:20:54 GMT
       Content-Type:
       - text/html; charset=utf-8
       Vary:
       - X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept,
         X-Requested-With
       Etag:
-      - W/"8a950ef173ee833fa3c160436a68589e"
+      - W/"eaf688d87ea96e30d13f55acfdf372b9"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Strict-Transport-Security:
@@ -77,18 +77,18 @@ http_interactions:
       Content-Encoding:
       - gzip
       Set-Cookie:
-      - _gh_sess=hbnPGLKoL1%2BmjcEqp%2B0uScM%2B%2B3TU%2FlpykH0jZQIABsZlnzCR63uXnyiUc3hvJVDtdyb2dCJUNizJgHreTXsRhpmPo%2FRdhbvzIjEED6kTRlviC5uVbQPtOAdWnwTeDbq%2BGCFKyHePNGV7Ip0H1i4JXpuWPYOIY53rOLbcGrNbXIIRoIjzl24%2BoLHwiP%2FWDSrd7oF2XRInFlIClnil7PqqbhzDyYlSC41A7weYCtLG9USR0TtWGycF9PKOOaCazJeG8bCORNXtWRrKljjxmUsk7Q%3D%3D--r5oSpfesUzTTBueD--yVHaAVBNSNhRCB2xLAridQ%3D%3D;
+      - _gh_sess=NF7A7c%2Fw42EtNMPFE5MoX3E7g3ZtRSJI0ciJl2GyjCM5AZpy6sfxDMosB3JiHdEih7g2IDATE3wqvNLpZykSq15GSrFRq%2BoY2J%2FibWmWlPAMNrX%2FQ1lbIQq7Wq%2F7Z7%2B9buNUP113jzVIPUc5eEumxr8KGexST%2BNBWx0RLNCA%2FE2ejnC0mEX%2BGQhnHXXAeRZYXcGyqjrd4WAa7ja0qx%2FjhxOFtdNpTf%2BTJ0K35eUt3fvPRMyPkKXjOARNwIEPaXnZxxHd92%2F0ckpsuoYG%2FNv1qw%3D%3D--6NhTibAR7CQanBNC--uQMKFLnl2nFvtyWmOm6E5Q%3D%3D;
         Path=/; HttpOnly; Secure; SameSite=Lax
-      - _octo=GH1.1.349681543.1708338272; Path=/; Domain=github.com; Expires=Wed,
-        19 Feb 2025 10:24:32 GMT; Secure; SameSite=Lax
-      - logged_in=no; Path=/; Domain=github.com; Expires=Wed, 19 Feb 2025 10:24:32
+      - _octo=GH1.1.92460133.1709547653; Path=/; Domain=github.com; Expires=Tue, 04
+        Mar 2025 10:20:53 GMT; Secure; SameSite=Lax
+      - logged_in=no; Path=/; Domain=github.com; Expires=Tue, 04 Mar 2025 10:20:53
         GMT; HttpOnly; Secure; SameSite=Lax
       Accept-Ranges:
       - bytes
       X-Github-Request-Id:
-      - '0988:2B9CAB:A50460:B79394:65D32C60'
+      - 06E7:105A7A:1F7FB58:232E39B:65E5A085
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Mon, 19 Feb 2024 10:24:33 GMT
+  recorded_at: Mon, 04 Mar 2024 10:20:54 GMT
 recorded_with: VCR 6.1.0

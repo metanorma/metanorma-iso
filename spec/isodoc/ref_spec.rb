@@ -365,6 +365,7 @@ RSpec.describe IsoDoc do
   end
 
   it "processes websites" do
+    VCR.use_cassette "ignf" do 
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
               <bibdata>
@@ -376,7 +377,7 @@ RSpec.describe IsoDoc do
         <fetched>2022-05-06</fetched>
         <title type="title-main" format="text/plain">IGNF. (IGN France) Registry</title>
         <title type="main" format="text/plain">IGNF. (IGN France) Registry</title>
-        <uri>https://registre.ign.fr/ign/IGNF/</uri>
+        <uri>https://registre.ign.fr/</uri>
         <docidentifier type="metanorma">2</docidentifier>
       </bibitem>
       </references>
@@ -397,11 +398,11 @@ RSpec.describe IsoDoc do
                </em>
                 [website]. n.d. Available from:
                <span class='biburl'>
-                 <link target='https://registre.ign.fr/ign/IGNF/'>https://registre.ign.fr/ign/IGNF/</link>
+                 <link target='https://registre.ign.fr/'>https://registre.ign.fr/</link>
                </span>
                .
              </formattedref>
-             <uri>https://registre.ign.fr/ign/IGNF/</uri>
+             <uri>https://registre.ign.fr/</uri>
              <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
              <biblio-tag>[1]<tab/></biblio-tag>
            </bibitem>
@@ -412,5 +413,6 @@ RSpec.describe IsoDoc do
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(output)
+    end
   end
 end

@@ -1159,95 +1159,105 @@ RSpec.describe Metanorma::ISO do
       :pub-uri: http://www.example.com
     INPUT
     output = <<~OUTPUT
-        <bibdata type='standard'>
-          <docidentifier type='ISO'>OVERRIDE</docidentifier>
-          <docidentifier type='iso-tc'>2000</docidentifier>
-          <docnumber>1000</docnumber>
-          <date type='published'>
-            <on>1000-01</on>
-          </date>
-          <contributor>
-            <role type='author'/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision>Subdivision</subdivision>
-              <abbreviation>SD</abbreviation>
-              <address>
-                <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
-              </address>
-              <phone>3333333</phone>
-              <phone type='fax'>4444444</phone>
-              <email>x@example.com</email>
-              <uri>http://www.example.com</uri>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type='publisher'/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <subdivision>Subdivision</subdivision>
-              <abbreviation>SD</abbreviation>
-              <address>
-                <formattedAddress>1 Infinity Loop <br/>California</formattedAddress>
-              </address>
-              <phone>3333333</phone>
-              <phone type='fax'>4444444</phone>
-              <email>x@example.com</email>
-              <uri>http://www.example.com</uri>
-            </organization>
-          </contributor>
-                      <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision>Subdivision</subdivision>
-                <abbreviation>SD</abbreviation>
-              </organization>
-            </contributor>
-          <version>
-            <revision-date>2000-01</revision-date>
-          </version>
-          <language>el</language>
-          <script>Grek</script>
-          <status>
-            <stage>60</stage>
-            <substage>60</substage>
-          </status>
-          <copyright>
-            <from>#{Time.now.year}</from>
-            <owner>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision>Subdivision</subdivision>
-                <abbreviation>SD</abbreviation>
-                <address>
-                  <formattedAddress>1 Infinity Loop
-                    <br/>
-                    California</formattedAddress>
-                </address>
-                <phone>3333333</phone>
-                <phone type="fax">4444444</phone>
-                <email>x@example.com</email>
-                <uri>http://www.example.com</uri>
-              </organization>
-            </owner>
-          </copyright>
-          <ext>
-            <doctype>this-is-a-doctype</doctype>
-                        <editorialgroup>
-           <agency>SD</agency>
-          </editorialgroup>
-          <approvalgroup>
-           <agency>ISO</agency>
-          </approvalgroup>
-            <structuredidentifier>
-              <project-number part="1" subpart="1">SD 1000</project-number>
-            </structuredidentifier>
-            <stagename>International Standard</stagename>
-          </ext>
-        </bibdata>
-        <sections> </sections>
-      </iso-standard>
+           <bibdata type="standard">
+         <docidentifier type="ISO">OVERRIDE</docidentifier>
+         <docidentifier type="iso-tc">2000</docidentifier>
+         <docnumber>1000</docnumber>
+         <date type="published">
+           <on>1000-01</on>
+         </date>
+         <contributor>
+           <role type="author"/>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <subdivision>
+               <name>Subdivision</name>
+               <abbreviation>SD</abbreviation>
+             </subdivision>
+             <abbreviation>ISO</abbreviation>
+             <address>
+               <formattedAddress>1 Infinity Loop<br/>California</formattedAddress>
+             </address>
+             <phone>3333333</phone>
+             <phone type="fax">4444444</phone>
+             <email>x@example.com</email>
+             <uri>http://www.example.com</uri>
+           </organization>
+         </contributor>
+         <contributor>
+           <role type="authorizer">
+             <description>Agency</description>
+           </role>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <subdivision>
+               <name>Subdivision</name>
+               <abbreviation>SD</abbreviation>
+             </subdivision>
+             <abbreviation>ISO</abbreviation>
+           </organization>
+         </contributor>
+         <contributor>
+           <role type="publisher"/>
+           <organization>
+             <name>International Organization for Standardization</name>
+             <subdivision>
+               <name>Subdivision</name>
+               <abbreviation>SD</abbreviation>
+             </subdivision>
+             <abbreviation>ISO</abbreviation>
+             <address>
+               <formattedAddress>1 Infinity Loop<br/>California</formattedAddress>
+             </address>
+             <phone>3333333</phone>
+             <phone type="fax">4444444</phone>
+             <email>x@example.com</email>
+             <uri>http://www.example.com</uri>
+           </organization>
+         </contributor>
+         <version>
+           <revision-date>2000-01</revision-date>
+         </version>
+         <language>el</language>
+         <script>Grek</script>
+         <status>
+           <stage>60</stage>
+           <substage>60</substage>
+         </status>
+         <copyright>
+           <from>#{Date.today.year}</from>
+           <owner>
+             <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision>
+                 <name>Subdivision</name>
+                 <abbreviation>SD</abbreviation>
+               </subdivision>
+               <abbreviation>ISO</abbreviation>
+               <address>
+                 <formattedAddress>1 Infinity Loop<br/>California</formattedAddress>
+               </address>
+               <phone>3333333</phone>
+               <phone type="fax">4444444</phone>
+               <email>x@example.com</email>
+               <uri>http://www.example.com</uri>
+             </organization>
+           </owner>
+         </copyright>
+         <ext>
+           <doctype>this-is-a-doctype</doctype>
+           <editorialgroup>
+             <agency>ISO</agency>
+           </editorialgroup>
+           <approvalgroup>
+             <agency>ISO</agency>
+           </approvalgroup>
+           <structuredidentifier>
+             <project-number part="1" subpart="1">SD 1000</project-number>
+           </structuredidentifier>
+           <stagename>International Standard</stagename>
+         </ext>
+       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(xmlpp(strip_guid(xml.to_xml)))
