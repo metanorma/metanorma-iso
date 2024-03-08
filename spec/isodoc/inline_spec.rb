@@ -250,6 +250,7 @@ RSpec.describe IsoDoc do
                 <em>Cereals and cereal products</em>
               </formattedref>
               <docidentifier>ISO 712</docidentifier>
+              <docidentifier scope="biblio-tag">ISO 712</docidentifier>
               <contributor>
                 <role type="publisher"/>
                 <organization>
@@ -402,6 +403,7 @@ RSpec.describe IsoDoc do
                   </em>
                 </formattedref>
                 <docidentifier>ISO 712</docidentifier>
+                <docidentifier scope="biblio-tag">ISO 712</docidentifier>
                 <biblio-tag>ISO 712, </biblio-tag>
               </bibitem>
             </references>
@@ -586,6 +588,7 @@ RSpec.describe IsoDoc do
                  </em>
                </formattedref>
                <docidentifier type="ISO">ISO 712</docidentifier>
+               <docidentifier scope="biblio-tag">ISO 712</docidentifier>
                <biblio-tag>ISO 712, </biblio-tag>
              </bibitem>
            </references>

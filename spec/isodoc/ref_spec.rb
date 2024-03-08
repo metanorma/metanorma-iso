@@ -181,6 +181,7 @@ RSpec.describe IsoDoc do
                  </em>
                </formattedref>
                <docidentifier type="ISO">ISO 712</docidentifier>
+               <docidentifier scope="biblio-tag">ISO 712</docidentifier>
                <biblio-tag>ISO 712, </biblio-tag>
              </bibitem>
              <bibitem id="ISO16634" type="standard">
@@ -190,6 +191,7 @@ RSpec.describe IsoDoc do
                  </em>
                </formattedref>
                <docidentifier type="ISO">ISO 16634:-- (all parts)</docidentifier>
+               <docidentifier scope="biblio-tag">ISO 16634:-- (all parts)</docidentifier>
                <note format="text/plain" reference="1" type="Unpublished-Status">Under preparation. (Stage at the time of publication ISO/DIS 16634)</note>
                <biblio-tag>ISO 16634:-- (all parts)<fn reference="1"><p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p></fn>, </biblio-tag>
              </bibitem>
@@ -200,6 +202,7 @@ RSpec.describe IsoDoc do
                  </em>
                </formattedref>
                <docidentifier type="ISO">ISO 20483:2013-2014</docidentifier>
+               <docidentifier scope="biblio-tag">ISO 20483:2013-2014</docidentifier>
                <biblio-tag>ISO 20483:2013-2014, </biblio-tag>
              </bibitem>
              <bibitem id="ref1">
@@ -211,6 +214,7 @@ RSpec.describe IsoDoc do
                  <link target="http://www.icc.or.at"/>
                  )</formattedref>
                <docidentifier type="ICC">ICC 167</docidentifier>
+               <docidentifier scope="biblio-tag">ICC 167</docidentifier>
                <biblio-tag>ICC 167, </biblio-tag>
              </bibitem>
              <note>
@@ -250,6 +254,7 @@ RSpec.describe IsoDoc do
                </formattedref>
                <docidentifier type="metanorma-ordinal">[3]</docidentifier>
                <docidentifier type="ISO">ISO 3696</docidentifier>
+               <docidentifier scope="biblio-tag">ISO 3696</docidentifier>
                <biblio-tag>[3]<tab/>ISO 3696, </biblio-tag>
              </bibitem>
              <bibitem id="ref10">
@@ -267,6 +272,7 @@ RSpec.describe IsoDoc do
                <formattedref><em><span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span></em>.</formattedref>
                <docidentifier type="metanorma-ordinal">[5]</docidentifier>
                <docidentifier type="IETF">IETF RFC 10</docidentifier>
+               <docidentifier scope="biblio-tag">IETF RFC 10</docidentifier>
                <biblio-tag>[5]<tab/>IETF RFC 10, </biblio-tag>
              </bibitem>
              <bibitem id="ref12">
@@ -276,6 +282,7 @@ RSpec.describe IsoDoc do
                  .</formattedref>
                <docidentifier type="metanorma">[Citn]</docidentifier>
                <docidentifier type="IETF">IETF RFC 20</docidentifier>
+               <docidentifier scope="biblio-tag">IETF RFC 20</docidentifier>
                <biblio-tag>Citn<tab/>IETF RFC 20, </biblio-tag>
              </bibitem>
            </references>
@@ -354,7 +361,8 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
       .gsub(/reference="[^"]+"/, 'reference="1"')))
@@ -400,7 +408,7 @@ RSpec.describe IsoDoc do
                <span class='biburl'>
                  <link target='https://registre.ign.fr/'>https://registre.ign.fr/</link>
                </span>
-               .
+               .  [viewed: #{Date.today.strftime('%B %-d, %Y')}].
              </formattedref>
              <uri>https://registre.ign.fr/</uri>
              <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
