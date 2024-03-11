@@ -11070,6 +11070,8 @@
 		</xsl:attribute>
 	</xsl:template>
 
+	<xsl:variable name="regex_starts_with_digit">^[0-9].*</xsl:variable>
+
 	<xsl:template match="*[local-name() = 'svg'][not(@width and @height)]" mode="svg_update">
 		<xsl:copy>
 			<xsl:apply-templates select="@*" mode="svg_update"/>
@@ -11088,7 +11090,8 @@
 
 			<xsl:attribute name="width">
 				<xsl:choose>
-					<xsl:when test="$parent_image_width != '' and $parent_image_width != 'auto'"><xsl:value-of select="$parent_image_width"/></xsl:when>
+					<!-- width is non 'auto', 'text-width', 'full-page-width' or 'narrow' -->
+					<xsl:when test="$parent_image_width != '' and normalize-space(java:matches(java:java.lang.String.new($parent_image_width), $regex_starts_with_digit)) = 'true'"><xsl:value-of select="$parent_image_width"/></xsl:when>
 					<xsl:when test="$width != ''">
 						<xsl:value-of select="round($width)"/>
 					</xsl:when>
@@ -11097,7 +11100,8 @@
 			</xsl:attribute>
 			<xsl:attribute name="height">
 				<xsl:choose>
-					<xsl:when test="$parent_image_height != '' and $parent_image_height != 'auto'"><xsl:value-of select="$parent_image_height"/></xsl:when>
+					<!-- height non 'auto', 'text-width', 'full-page-width' or 'narrow' -->
+					<xsl:when test="$parent_image_height != '' and normalize-space(java:matches(java:java.lang.String.new($parent_image_height), $regex_starts_with_digit)) = 'true'"><xsl:value-of select="$parent_image_height"/></xsl:when>
 					<xsl:when test="$height != ''">
 						<xsl:value-of select="round($height)"/>
 					</xsl:when>
@@ -11114,7 +11118,7 @@
 		<xsl:variable name="parent_image_width" select="normalize-space(ancestor::*[2][local-name() = 'image']/@width)"/>
 		<xsl:attribute name="width">
 			<xsl:choose>
-				<xsl:when test="$parent_image_width != '' and $parent_image_width != 'auto'"><xsl:value-of select="$parent_image_width"/></xsl:when>
+				<xsl:when test="$parent_image_width != '' and normalize-space(java:matches(java:java.lang.String.new($parent_image_width), $regex_starts_with_digit)) = 'true'"><xsl:value-of select="$parent_image_width"/></xsl:when>
 				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
@@ -11125,7 +11129,7 @@
 		<xsl:variable name="parent_image_height" select="normalize-space(ancestor::*[2][local-name() = 'image']/@height)"/>
 		<xsl:attribute name="height">
 			<xsl:choose>
-				<xsl:when test="$parent_image_height != '' and $parent_image_height != 'auto'"><xsl:value-of select="$parent_image_height"/></xsl:when>
+				<xsl:when test="$parent_image_height != '' and normalize-space(java:matches(java:java.lang.String.new($parent_image_height), $regex_starts_with_digit)) = 'true'"><xsl:value-of select="$parent_image_height"/></xsl:when>
 				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
