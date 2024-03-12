@@ -152,7 +152,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -212,7 +213,8 @@ RSpec.describe IsoDoc do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
         .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
 
     input = <<~INPUT
@@ -279,7 +281,8 @@ RSpec.describe IsoDoc do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
         .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -428,7 +431,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -564,7 +568,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -707,7 +712,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -864,7 +870,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1085,7 +1092,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1178,11 +1186,12 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
-  it "cross-references sections" do
+  it "cross-references clauses" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
@@ -1441,7 +1450,131 @@ RSpec.describe IsoDoc do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+  end
+
+  it "cross-references sections" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <preface>
+          <foreword obligation="informative">
+            <title>Foreword</title>
+            <p id="A">This is a preamble
+              <xref target="B"/>
+              <xref target="D"/>
+              <xref target="T"/>
+              <xref target="H"/>
+              <xref target="I"/>
+              <xref target="J"/>
+              <xref target="K"/>
+              <xref target="L"/>
+              <xref target="M"/>
+              <xref target="N"/>
+              </p>
+          </foreword>
+        </preface>
+        <sections>
+        <clause type="section" id="B"><title>General</title>
+          <clause id="D" obligation="normative" type="scope">
+            <title>Scope</title>
+            <p id="E">Text</p>
+          </clause>
+            <references id='T' normative='false' obligation='informative'>
+              <title depth='2'>Bibliography Subsection</title>
+            </references>
+          <terms id="H" obligation="normative">
+            <title>Terms, definitions, symbols and abbreviated terms</title>
+            <terms id="I" obligation="normative">
+              <title>Normal Terms</title>
+              <term id="J">
+                <preferred><expression><name>Term2</name></expression></preferred>
+              </term>
+            </terms>
+            <definitions id="K">
+              <dl>
+                <dt>Symbol</dt>
+                <dd>Definition</dd>
+              </dl>
+            </definitions>
+          </terms>
+          <definitions id="L">
+            <dl>
+              <dt>Symbol</dt>
+              <dd>Definition</dd>
+            </dl>
+          </definitions>
+          <clause id="M" inline-header="false" obligation="normative">
+            <title>Clause 4</title>
+            <clause id="N" inline-header="false" obligation="normative">
+              <title>Introduction</title>
+            </clause>
+            </clause>
+            </clause>
+            </sections>
+            </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+              <preface>
+           <clause type="toc" id="_" displayorder="1">
+             <title depth="1">Contents</title>
+           </clause>
+           <foreword obligation="informative" displayorder="2">
+             <title>Foreword</title>
+             <p id="A">This is a preamble
+               <xref target="B"><span class="citesec">Section 1</span></xref><xref target="D"><span class="citesec">1.1</span></xref><xref target="T"><span class="citesec">1.2</span></xref><xref target="H"><span class="citesec">1.3</span></xref><xref target="I"><span class="citesec">1.3.1</span></xref><xref target="J"><span class="citesec">1.3.1.1</span></xref><xref target="K"><span class="citesec">1.3.2</span></xref><xref target="L"><span class="citesec">1.4</span></xref><xref target="M"><span class="citesec">1.5</span></xref><xref target="N"><span class="citesec">1.5.1</span></xref></p>
+           </foreword>
+         </preface>
+         <sections>
+           <clause type="section" id="B" displayorder="3">
+             <title depth="1">Section 1:<tab/>General</title>
+             <clause id="D" obligation="normative" type="scope">
+               <title depth="2">1.1<tab/>Scope</title>
+               <p id="E">Text</p>
+             </clause>
+             <references id="T" normative="false" obligation="informative">
+               <title depth="2">1.2<tab/>Bibliography Subsection</title>
+             </references>
+             <terms id="H" obligation="normative">
+               <title depth="2">1.3<tab/>Terms, definitions, symbols and abbreviated terms</title>
+               <terms id="I" obligation="normative">
+                 <title depth="3">1.3.1<tab/>Normal Terms</title>
+                 <term id="J">
+                   <name>1.3.1.1</name>
+                   <preferred>
+                     <strong>Term2</strong>
+                   </preferred>
+                 </term>
+               </terms>
+               <definitions id="K" inline-header="true">
+                 <title>1.3.2</title>
+                 <dl>
+                   <dt>Symbol</dt>
+                   <dd>Definition</dd>
+                 </dl>
+               </definitions>
+             </terms>
+             <definitions id="L" inline-header="true">
+               <title>1.4</title>
+               <dl>
+                 <dt>Symbol</dt>
+                 <dd>Definition</dd>
+               </dl>
+             </definitions>
+             <clause id="M" inline-header="false" obligation="normative">
+               <title depth="2">1.5<tab/>Clause 4</title>
+               <clause id="N" inline-header="false" obligation="normative">
+                 <title depth="3">1.5.1<tab/>Introduction</title>
+               </clause>
+             </clause>
+           </clause>
+         </sections>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1500,7 +1633,7 @@ RSpec.describe IsoDoc do
           </annex>
         </iso-standard>
       INPUT
-    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(strip_guid(<<~OUTPUT))
+    presxml = <<~OUTPUT
       <?xml version='1.0'?>
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
@@ -1579,6 +1712,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
+    expect(xmlpp(strip_guid(output)))
+      .to be_equivalent_to xmlpp(strip_guid(presxml))
   end
 
   it "cross-references list items" do
@@ -1824,7 +1959,8 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
   end
 
@@ -1860,7 +1996,8 @@ RSpec.describe IsoDoc do
         <p><xref target='Na'>1 a)</xref></p>
       </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
     .convert("test", input, true))
     .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to xmlpp(output)
@@ -1896,7 +2033,8 @@ RSpec.describe IsoDoc do
         <p><xref target='Na'>Clause 1, List 1 a)</xref></p>
       </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
     .convert("test", input, true))
     .at("//xmlns:foreword").to_xml))
       .to be_equivalent_to xmlpp(output)

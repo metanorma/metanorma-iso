@@ -47,6 +47,17 @@ module IsoDoc
         end
       end
 
+      def section_name_anchors(clause, num, level)
+        if clause["type"] == "section"
+          @anchors[clause["id"]] =
+            { label: l10n("#{@labels['section']} #{num}"),
+              xref: l10n("#{@labels['section']} #{num}"),
+              title: clause_title(clause), level: level, type: "clause",
+              elem: @labels["section"] }
+        else super
+        end
+      end
+
       def annex_names1(clause, num, level)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    subtype: "annex" }

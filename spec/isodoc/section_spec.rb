@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe IsoDoc do
-  it "processes section names" do
+  it "processes clause names" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
@@ -417,7 +417,8 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))))
       .to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
@@ -427,6 +428,54 @@ RSpec.describe IsoDoc do
       .convert("test", presxml, true)
       .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
       .to be_equivalent_to xmlpp(word)
+  end
+
+  it "processes section titles" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <sections>
+        <clause id="B" type="section"><title>General</title>
+          <clause id="D" obligation="normative">
+            <title>Scope</title>
+              <clause id="D1" obligation="normative">
+                <title>Scope 1</title>
+              </clause>
+            <clause id="D2" obligation="normative">
+            </clause>
+          </clause>
+          </clause>
+        </sections>
+      </iso-standard>
+    INPUT
+
+    presxml = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+           <clause type="toc" id="_" displayorder="1">
+             <title depth="1">Contents</title>
+           </clause>
+         </preface>
+         <sections>
+           <clause id="B" type="section" displayorder="2">
+             <title depth="1">Section 1: <tab/>General</title>
+             <clause id="D" obligation="normative">
+               <title depth="2">1.1<tab/>Scope</title>
+               <clause id="D1" obligation="normative">
+                 <title depth="3">1.1.1<tab/>Scope 1</title>
+               </clause>
+               <clause id="D2" obligation="normative" inline-header="true">
+                 <title>1.1.2</title>
+               </clause>
+             </clause>
+           </clause>
+         </sections>
+       </iso-standard>
+    OUTPUT
+
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))))
+      .to be_equivalent_to xmlpp(presxml)
   end
 
   it "processes subclauses with and without titles" do
