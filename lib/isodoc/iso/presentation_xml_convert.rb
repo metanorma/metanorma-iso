@@ -79,6 +79,10 @@ module IsoDoc
           node["inline-header"] = "true"
         end
         super
+        if node["type"] == "section"
+          t = node.at(ns("./title/tab")) and
+            t.previous = @i18n.l10n(": ").sub(/\p{Zs}$/, "")
+        end
       end
 
       def clause(docxml)
