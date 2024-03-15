@@ -12,12 +12,12 @@ module IsoDoc
         if @klass.amd?(docxml)
           [{ path: "//sections/clause", multi: true }]
         else
-          [{ path: "//clause[@type = 'scope']" },
+          [{ path: "//sections/clause[@type = 'scope']" },
            { path: @klass.norm_ref_xpath },
            { path:
              "#{@klass.middle_clause(docxml)} | //sections/terms | " \
-             "//sections/clause[descendant::terms or descendant::definitions] " \
-             "| //sections/definitions", multi: true }]
+             "//sections/clause[descendant::terms or descendant::definitions] | " \
+             "//sections/definitions | //sections/clause[@type = 'section']", multi: true }]
         end
       end
 
@@ -46,9 +46,7 @@ module IsoDoc
 
       def hierarchical_formula_names(clause, num)
         c = IsoDoc::XrefGen::Counter.new
-        clause.xpath(ns(".//formula")).each do |t|
-          next if blank?(t["id"])
-
+        clause.xpath(ns(".//formula")).noblank.each do |t|
           @anchors[t["id"]] = anchor_struct(
             "#{num}#{hiersep}#{c.increment(t).print}", t,
             t["inequality"] ? @labels["inequality"] : @labels["formula"],
@@ -130,7 +128,7 @@ module IsoDoc
           notes = s.xpath(ns(".//ol")) - s.xpath(ns(".//clause//ol")) -
             s.xpath(ns(".//appendix//ol")) - s.xpath(ns(".//ol//ol"))
           c = Counter.new
-          notes.reject { |n| blank?(n["id"]) }.each do |n|
+          notes.noblank.each do |n|
             @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
                                               @labels["list"], "list", false)
             list_item_anchor_names(n, @anchors[n["id"]], 1, "",
