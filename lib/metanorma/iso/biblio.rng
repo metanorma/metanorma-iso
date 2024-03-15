@@ -208,7 +208,9 @@
   </define>
   <define name="roledescription">
     <element name="description">
-      <ref name="FormattedString"/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="person">
@@ -333,7 +335,9 @@
   </define>
   <define name="affiliationdescription">
     <element name="description">
-      <ref name="FormattedString"/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="organization">
@@ -897,7 +901,9 @@
   </define>
   <define name="formattedref">
     <element name="formattedref">
-      <ref name="FormattedString"/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="license">
@@ -942,7 +948,9 @@
     <optional>
       <attribute name="type"/>
     </optional>
-    <ref name="FormattedString"/>
+    <zeroOrMore>
+      <ref name="TextElement"/>
+    </zeroOrMore>
   </define>
   <!-- TitleType = ( "alternative" | "original" | "unofficial" | "subtitle" | "main" ) -->
   <define name="TypedUri">
@@ -1042,7 +1050,9 @@
       <optional>
         <attribute name="script"/>
       </optional>
-      <text/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="docnumber">
@@ -1267,12 +1277,16 @@
       <optional>
         <attribute name="type"/>
       </optional>
-      <ref name="FormattedString"/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="bibabstract">
     <element name="abstract">
-      <ref name="FormattedString"/>
+      <oneOrMore>
+        <ref name="TextElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="copyright">
@@ -1377,7 +1391,9 @@
       </attribute>
       <optional>
         <element name="description">
-          <ref name="FormattedString"/>
+          <oneOrMore>
+            <ref name="TextElement"/>
+          </oneOrMore>
         </element>
       </optional>
       <element name="bibitem">

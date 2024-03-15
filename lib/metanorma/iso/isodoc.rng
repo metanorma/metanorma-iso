@@ -424,6 +424,9 @@
         <optional>
           <attribute name="class"/>
         </optional>
+        <optional>
+          <attribute name="width"/>
+        </optional>
         <ref name="BlockAttributes"/>
         <optional>
           <ref name="tname"/>
