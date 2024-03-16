@@ -385,9 +385,8 @@ RSpec.describe IsoDoc do
                <xref type="inline" target="ISO712">ISO 712, Prelude 7</xref>
                <xref type="inline" target="ISO712">A</xref>
                <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO/IEC </span>
-                 <span class="stddocNumber">DIR </span>
-                 <span class="stddocNumber">1</span>
+                 <span class="stdpublisher">ISO </span>
+                 <span class="stddocNumber">712</span>
                </xref>
                <eref type="inline" bibitemid="ISO_10303_32">[ISO 10303-32<fn reference="1"><p>To be published.</p></fn>]</eref>
              </p>
