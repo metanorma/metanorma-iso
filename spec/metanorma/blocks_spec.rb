@@ -345,7 +345,7 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <figure id="_">
+          <figure id="_" width="3">
             <image height="4" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="3"/>
           </figure>
         </sections>
@@ -365,7 +365,7 @@ RSpec.describe Metanorma::ISO do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <figure id="_">
+          <figure id="_"  width="auto">
             <image height="4" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
           </figure>
         </sections>
