@@ -87,7 +87,7 @@ RSpec.describe Metanorma::ISO do
         <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
         <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
         <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
-        <docidentifier type="ISO">ISO/WD 1000-1.3</docidentifier>
+        <docidentifier type="ISO" primary="true">ISO/WD 1000-1.3</docidentifier>
         <docidentifier type="iso-reference">ISO/WD 1000-1.3:2000(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:1000:-1:stage-20.20.v3:en</docidentifier>
         <docidentifier type='iso-undated'>ISO/WD 1000-1.3</docidentifier>
@@ -307,7 +307,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
            <bibdata type="standard">
-             <docidentifier type='ISO'>IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
+             <docidentifier type='ISO' primary="true">IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
              <docidentifier type='iso-reference'>IEC/IETF/ISO TR 1000-1-1:2001()</docidentifier>
              <docidentifier type='URN'>urn:iso:std:iec-ietf-iso:tr:1000:-1-1:stage-60.60:el</docidentifier>
              <docidentifier type='iso-undated'>IEC/IETF/ISO TR 1000-1-1</docidentifier>
@@ -475,7 +475,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
           <bibdata type="standard">
-        <docidentifier type="ISO">ISO/IEC TR 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="ISO" primary="true">ISO/IEC TR 1000:#{Date.today.year}</docidentifier>
         <docidentifier type="iso-reference">ISO/IEC TR 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type="URN">urn:iso:std:iso-iec:tr:1000:stage-60.60:en</docidentifier>
         <docidentifier type="iso-undated">ISO/IEC TR 1000</docidentifier>
@@ -593,7 +593,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
             <bibdata type="standard">
-        <docidentifier type="ISO">ISO 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
         <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
         <docidentifier type="iso-undated">ISO 1000</docidentifier>
@@ -733,7 +733,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
       <bibdata type="standard">
-        <docidentifier type="ISO">ISO 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
         <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
         <docidentifier type="iso-undated">ISO 1000</docidentifier>
@@ -866,7 +866,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
       <bibdata type='standard'>
-        <docidentifier type='ISO'>ISO/FDTS 1000-1-1</docidentifier>
+        <docidentifier type='ISO' primary="true">ISO/FDTS 1000-1-1</docidentifier>
         <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:ts:1000:-1-1:stage-50.00:en</docidentifier>
         <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>
@@ -961,7 +961,7 @@ RSpec.describe Metanorma::ISO do
       :doctype: committee-document
     INPUT
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/A 1/B 2/C 3 N1000</docidentifier>
+      <docidentifier type="ISO" primary="true">ISO/A 1/B 2/C 3 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
@@ -972,7 +972,7 @@ RSpec.describe Metanorma::ISO do
       .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
       .gsub(/:workgroup-type:.+?[\r\n]+/m, "")
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/TC 1/SC 2/WG 3 N1000</docidentifier>
+      <docidentifier type="ISO" primary="true">ISO/TC 1/SC 2/WG 3 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
@@ -982,7 +982,7 @@ RSpec.describe Metanorma::ISO do
     input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
       .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/TC 1/SC 2/C 3 N1000</docidentifier>
+      <docidentifier type="ISO" primary="true">ISO/TC 1/SC 2/C 3 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
@@ -991,7 +991,7 @@ RSpec.describe Metanorma::ISO do
 
     input2 = input.gsub(/:workgroup.+?[\r\n]+/m, "")
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/A 1/B 2 N1000</docidentifier>
+      <docidentifier type="ISO" primary="true">ISO/A 1/B 2 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
@@ -1001,14 +1001,14 @@ RSpec.describe Metanorma::ISO do
     input2 = input.gsub(/:subcommittee.+?[\r\n]+/m, "")
       .gsub(/:workgroup.+?[\r\n]+/m, "")
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/A 1 N1000</docidentifier>
+      <docidentifier type="ISO" primary="true">ISO/A 1 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
     expect(xmlpp(strip_guid(xml.to_xml)))
       .to be_equivalent_to xmlpp(output)
     output = <<~OUTPUT
-      <docidentifier type="ISO">ISO/A 1 N1000</docidentifier>
+      <docidentifier type="ISO" primary="true">ISO/A 1 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
@@ -1065,7 +1065,7 @@ RSpec.describe Metanorma::ISO do
         <title language='fr' format='text/plain' type='title-intro'>Introduction Fran&#231;aise</title>
         <title language='fr' format='text/plain' type='title-main'>Titre Principal</title>
         <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
-        <docidentifier type='ISO'>ISO 1000-1:2000</docidentifier>
+        <docidentifier type='ISO' primary="true">ISO 1000-1:2000</docidentifier>
         <docidentifier type='iso-reference'>ISO 1000-1:2000(R)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:1000:-1:stage-60.60:ru</docidentifier>
         <docidentifier type='iso-undated'>ISO 1000-1</docidentifier>
@@ -1160,7 +1160,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
            <bibdata type="standard">
-         <docidentifier type="ISO">OVERRIDE</docidentifier>
+         <docidentifier type="ISO" primary="true">OVERRIDE</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
          <docnumber>1000</docnumber>
          <date type="published">
@@ -1280,7 +1280,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
               <bibdata type="standard">
-              <docidentifier type='ISO'>ISO/FDIS 1000.2</docidentifier>
+              <docidentifier type='ISO' primary="true">ISO/FDIS 1000.2</docidentifier>
       <docidentifier type='iso-reference'>ISO/FDIS 1000.2:#{Date.today.year}(F)</docidentifier>
              <docidentifier type='URN'>urn:iso:std:iso:1000:stage-50.00.v2:fr</docidentifier>
               <docidentifier type='iso-undated'>ISO/FDIS 1000.2</docidentifier>
@@ -1357,7 +1357,7 @@ RSpec.describe Metanorma::ISO do
 
     output = <<~OUTPUT
       <bibdata type="standard">
-        <docidentifier type="ISO">ISO 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
         <docidentifier type='iso-reference'>ISO 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
         <docidentifier type='iso-undated'>ISO 1000</docidentifier>
@@ -1434,7 +1434,7 @@ RSpec.describe Metanorma::ISO do
     INPUT
     output = <<~OUTPUT
       <bibdata type="standard">
-        <docidentifier type="ISO">ISO/PRF 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type="ISO" primary="true">ISO/PRF 1000:#{Date.today.year}</docidentifier>
         <docidentifier type='iso-reference'>ISO/PRF 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:1000:stage-draft:en</docidentifier>
         <docidentifier type='iso-undated'>ISO/PRF 1000</docidentifier>
@@ -1511,7 +1511,7 @@ RSpec.describe Metanorma::ISO do
 
     output = <<~OUTPUT
       <bibdata type='standard'>
-        <docidentifier type='ISO'>ISO DIR 1000:#{Date.today.year}</docidentifier>
+        <docidentifier type='ISO' primary="true">ISO DIR 1000:#{Date.today.year}</docidentifier>
         <docidentifier type='iso-reference'>ISO DIR 1000:#{Date.today.year}(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:doc:iso:dir:1000:#{Date.today.year}</docidentifier>
         <docidentifier type='iso-undated'>ISO DIR 1000</docidentifier>
@@ -1789,7 +1789,7 @@ RSpec.describe Metanorma::ISO do
       INPUT
       output = <<~OUTPUT
         <bibdata type="standard">
-          <docidentifier type="CEN">CEN ISO 31-0</docidentifier>
+          <docidentifier type="CEN" primary="true">CEN ISO 31-0</docidentifier>
           <docnumber>31</docnumber>
           <contributor>
             <role type="author"/>

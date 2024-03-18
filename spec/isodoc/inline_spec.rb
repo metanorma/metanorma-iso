@@ -369,7 +369,7 @@ RSpec.describe IsoDoc do
                  <span class="stddocNumber">712</span>
                </xref>
                <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO/IEEE/IEV/IEC/BREAKINGSPACE </span>
+                 <span class="stdpublisher">ISO </span>
                  <span class="stddocNumber">712</span>
                </xref>
                <xref type="inline" target="ISO712">ISO 712</xref>

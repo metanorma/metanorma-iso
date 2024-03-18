@@ -9,7 +9,7 @@ module Metanorma
     class Converter < Standoc::Converter
       def metadata_id(node, xml)
         if id = node.attr("docidentifier")
-          xml.docidentifier id, **attr_code(type: "ISO")
+          xml.docidentifier id, **attr_code(type: "ISO", primary: "true")
         else iso_id(node, xml)
         end
         node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
@@ -161,12 +161,13 @@ module Metanorma
       end
 
       def cen_id_out(xml, params)
-        xml.docidentifier iso_id_default(params).to_s, **attr_code(type: "CEN")
+        xml.docidentifier iso_id_default(params).to_s,
+                          **attr_code(type: "CEN", primary: "true")
       end
 
       def iso_id_out_common(xml, params, with_prf)
         xml.docidentifier iso_id_default(params).to_s(with_prf: with_prf),
-                          **attr_code(type: "ISO")
+                          **attr_code(type: "ISO", primary: "true")
         xml.docidentifier iso_id_reference(params)
           .to_s(format: :ref_num_short, with_prf: with_prf),
                           **attr_code(type: "iso-reference")
