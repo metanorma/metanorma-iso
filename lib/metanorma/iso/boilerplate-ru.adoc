@@ -49,7 +49,7 @@ CP 401 &#x2022; Ch. de Blandonnet 8 +
 CH-1214 Vernier, Geneva +
 Тел: +41 22 749 01 11 +
 Электронная почта: copyright@iso.org +
-Сайт: www.iso.org
+Сайт: {% if document_scheme == "2024" %}https://www.iso.org/[www.iso.org]{% else %}www.iso.org{% endif %}
 
 [[boilerplate-place]]
 Издано в Швейцарии
