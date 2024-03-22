@@ -186,8 +186,7 @@ module Metanorma
         params_nolang = params.dup.tap { |hs| hs.delete(:language) }
         params1 = if params[:unpublished]
                     params_nolang.dup.tap { |hs| hs.delete(:year) }
-                  else params_nolang
-                  end
+                  else params_nolang end
         params1.delete(:unpublished)
         pubid_select(params1).create(**params1)
       end

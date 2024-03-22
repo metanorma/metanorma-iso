@@ -407,26 +407,7 @@
     </define>
     <define name="figure">
       <element name="figure">
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-        <optional>
-          <attribute name="unnumbered">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="number"/>
-        </optional>
-        <optional>
-          <attribute name="subsequence"/>
-        </optional>
-        <optional>
-          <attribute name="class"/>
-        </optional>
-        <optional>
-          <attribute name="width"/>
-        </optional>
+        <ref name="FigureAttributes"/>
         <ref name="BlockAttributes"/>
         <optional>
           <ref name="tname"/>
@@ -456,6 +437,28 @@
           <ref name="source"/>
         </optional>
       </element>
+    </define>
+    <define name="FigureAttributes">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <optional>
+        <attribute name="subsequence"/>
+      </optional>
+      <optional>
+        <attribute name="class"/>
+      </optional>
+      <optional>
+        <attribute name="width"/>
+      </optional>
     </define>
     <define name="source">
       <element name="source">

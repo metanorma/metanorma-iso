@@ -24,6 +24,8 @@ module Metanorma
         end
       end
 
+      def ol_cleanup(doc); end
+
       def id_prefix(prefix, id)
         # we're just inheriting the prefixes from parent doc
         @amd and return id.text
