@@ -2242,6 +2242,13 @@
 								<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)">
 									<xsl:attribute name="master-reference">preface-1972-1998</xsl:attribute>
 								</xsl:if>
+								<xsl:if test="$layoutVersion = '2024'">
+									<fo:static-content flow-name="xsl-footnote-separator">
+										<fo:block margin-bottom="6pt">
+											<fo:leader leader-pattern="rule" leader-length="51mm" rule-thickness="0.5pt"/>
+										</fo:block>
+									</fo:static-content>
+								</xsl:if>
 								<xsl:call-template name="insertHeaderFooter">
 									<xsl:with-param name="font-weight">normal</xsl:with-param>
 									<xsl:with-param name="is_footer">true</xsl:with-param>
@@ -2349,7 +2356,15 @@
 						</xsl:if>
 						<fo:static-content flow-name="xsl-footnote-separator">
 							<fo:block>
-								<fo:leader leader-pattern="rule" leader-length="30%"/>
+								<xsl:if test="$layoutVersion = '2024'">
+									<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+								</xsl:if>
+								<fo:leader leader-pattern="rule" leader-length="30%">
+									<xsl:if test="$layoutVersion = '2024'">
+										<xsl:attribute name="leader-length">51mm</xsl:attribute>
+										<xsl:attribute name="rule-thickness">0.5pt</xsl:attribute>
+									</xsl:if>
+								</fo:leader>
 							</fo:block>
 						</fo:static-content>
 
@@ -3305,9 +3320,10 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<fo:block font-size="16pt" text-align="center" margin-bottom="48pt" keep-with-next="always" role="H1">
-					<!-- <xsl:if test="$layoutVersion = '2024'">
-						<xsl:attribute name="font-size">15.3pt</xsl:attribute>
-					</xsl:if> -->
+					<xsl:if test="$layoutVersion = '2024'">
+						<xsl:attribute name="line-height">1.1</xsl:attribute>
+						<!-- <xsl:attribute name="margin-bottom">52pt</xsl:attribute> -->
+					</xsl:if>
 					<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 						<xsl:attribute name="span">all</xsl:attribute>
 					</xsl:if>
@@ -3330,9 +3346,10 @@
 						<xsl:attribute name="font-size">14pt</xsl:attribute>
 						<xsl:attribute name="span">all</xsl:attribute>
 					</xsl:if>
-					<!-- <xsl:if test="$layoutVersion = '2024'">
-						<xsl:attribute name="font-size">15.3pt</xsl:attribute>
-					</xsl:if> -->
+					<xsl:if test="$layoutVersion = '2024'">
+						<xsl:attribute name="margin-top">0pt</xsl:attribute>
+						<xsl:attribute name="margin-bottom">30pt</xsl:attribute>
+					</xsl:if>
 					<xsl:apply-templates/>
 				</fo:block>
 			</xsl:otherwise>
@@ -3453,6 +3470,7 @@
 							<xsl:when test="ancestor::iso:preface">8pt</xsl:when>
 							<xsl:when test="$level = 2 and ancestor::iso:annex">18pt</xsl:when>
 							<xsl:when test="$level = 1">18pt</xsl:when>
+							<xsl:when test="($level = 2 or $level = 3) and not(../preceding-sibling::iso:clause) and $layoutVersion = '2024'">12pt</xsl:when> <!-- first title in 3rd level clause -->
 							<xsl:when test="($level = 2 or $level = 3) and not(../preceding-sibling::iso:clause)">14pt</xsl:when> <!-- first title in 3rd level clause -->
 							<xsl:when test="$level = 3">14pt</xsl:when>
 							<xsl:when test="$level &gt; 3">3pt</xsl:when>
@@ -3467,6 +3485,7 @@
 							<xsl:when test="ancestor::iso:introduction and $level &gt;= 2">8pt</xsl:when>
 							<xsl:when test="ancestor::iso:preface">18pt</xsl:when>
 							<xsl:when test="$level = 3">9pt</xsl:when>
+							<!-- <xsl:when test="$level = 2 and ancestor::iso:annex and $layoutVersion = '2024'">2pt</xsl:when> -->
 							<!-- <xsl:otherwise>12pt</xsl:otherwise> -->
 							<xsl:otherwise>8pt</xsl:otherwise>
 						</xsl:choose>
@@ -3641,6 +3660,13 @@
 				</xsl:if>
 			</xsl:if>
 
+			<xsl:if test="$layoutVersion = '2024'">
+				<xsl:attribute name="line-height">1.13</xsl:attribute>
+				<xsl:if test="parent::iso:li/following-sibling::* or parent::iso:dd">
+					<xsl:attribute name="margin-bottom">9pt</xsl:attribute>
+				</xsl:if>
+			</xsl:if>
+
 			<!-- put inline title in the first paragraph -->
 			<xsl:if test="($layoutVersion = '1951' or $layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989') and $layout_columns != 1">
 				<xsl:if test="preceding-sibling::*[1]/@inline-header = 'true' and preceding-sibling::*[1][self::iso:title]">
@@ -3764,6 +3790,10 @@
 		<xsl:call-template name="insert_basic_link">
 			<xsl:with-param name="element">
 				<fo:basic-link internal-destination="{@target}" fox:alt-text="{@target}" xsl:use-attribute-sets="xref-style">
+					<xsl:if test="$layoutVersion = '2024' and (ancestor::iso:termsource or $bibitems/*[local-name() ='bibitem'][@id = current()/@target and @type = 'standard'])">
+						<xsl:attribute name="color">inherit</xsl:attribute>
+						<xsl:attribute name="text-decoration">none</xsl:attribute>
+					</xsl:if>
 					<xsl:choose>
 						<xsl:when test="@pagenumber='true'">
 							<fo:inline>
@@ -3773,6 +3803,20 @@
 								<fo:page-number-citation ref-id="{@target}"/>
 							</fo:inline>
 						</xsl:when>
+						<xsl:when test="$layoutVersion = '2024' and $bibitems/*[local-name() ='bibitem'][@id = current()/@target and not(@type = 'standard')]"> <!-- if reference to bibitem -->
+							<!-- <fo:inline baseline-shift="30%" font-size="80%"> -->
+								<xsl:choose>
+									<xsl:when test="contains(., '[') and contains(., ']')">
+										<fo:inline color="black" text-decoration="none">[</fo:inline>
+										<xsl:value-of select="translate(.,'[]','')"/>
+										<fo:inline color="black" text-decoration="none">]</fo:inline>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:apply-templates/>
+									</xsl:otherwise>
+								</xsl:choose>
+							<!-- </fo:inline> -->
+						</xsl:when>
 						<xsl:otherwise>
 							<xsl:apply-templates/>
 						</xsl:otherwise>
@@ -3780,6 +3824,20 @@
 				</fo:basic-link>
 			</xsl:with-param>
 		</xsl:call-template>
+	</xsl:template>
+
+	<xsl:template match="*[local-name()='sup'][*[local-name()='xref'][@type = 'footnote']]" priority="2">
+		<fo:inline font-size="80%">
+			<xsl:choose>
+				<xsl:when test="$layoutVersion = '2024'">
+					<xsl:attribute name="baseline-shift">20%</xsl:attribute>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:attribute name="vertical-align">super</xsl:attribute>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:apply-templates/>
+		</fo:inline>
 	</xsl:template>
 
 	<!-- =================== -->
@@ -5123,7 +5181,7 @@
 
 	<xsl:template name="refine_link-style">
 
-			<xsl:if test="ancestor::*[local-name() = 'copyright-statement'] and contains(@target, 'mailto:')">
+			<xsl:if test="(ancestor::*[local-name() = 'copyright-statement'] and contains(@target, 'mailto:')) or        ($layoutVersion = '2024' and ancestor::iso:termsource)">
 				<xsl:attribute name="color">inherit</xsl:attribute>
 				<xsl:attribute name="text-decoration">none</xsl:attribute>
 			</xsl:if>
@@ -5272,6 +5330,14 @@
 
 	</xsl:attribute-set> <!-- example-name-style -->
 
+	<xsl:template name="refine_example-name-style">
+
+			<xsl:if test="$layoutVersion = '2024' and translate(.,'0123456789','') = ."> <!-- EXAMPLE without number -->
+				<xsl:attribute name="padding-right">8mm</xsl:attribute>
+			</xsl:if>
+
+	</xsl:template>
+
 	<xsl:attribute-set name="example-p-style">
 
 			<xsl:attribute name="font-size">10pt</xsl:attribute>
@@ -5291,6 +5357,14 @@
 			<xsl:attribute name="padding-right">5mm</xsl:attribute>
 
 	</xsl:attribute-set> <!-- termexample-name-style -->
+
+	<xsl:template name="refine_termexample-name-style">
+
+			<xsl:if test="$layoutVersion = '2024' and translate(.,'0123456789','') = ."> <!-- EXAMPLE without number -->
+				<xsl:attribute name="padding-right">8mm</xsl:attribute>
+			</xsl:if>
+
+	</xsl:template>
 
 	<!-- ========================== -->
 	<!-- Table styles -->
@@ -5330,8 +5404,6 @@
 				<xsl:if test="normalize-space(@width) != 'text-width'">
 					<xsl:attribute name="span">all</xsl:attribute>
 				</xsl:if>
-			</xsl:if>
-			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
 
@@ -5383,9 +5455,6 @@
 					<xsl:attribute name="span">all</xsl:attribute>
 				</xsl:if>
 			</xsl:if>
-			<!-- <xsl:if test="$layoutVersion = '2024'">
-				<xsl:attribute name="font-size">10.5pt</xsl:attribute>
-			</xsl:if> -->
 
 	</xsl:template> <!-- refine_table-name-style -->
 
@@ -5464,6 +5533,10 @@
 				<xsl:attribute name="border-top"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 				<xsl:attribute name="border-bottom"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 			</xsl:if>
+			<!-- vertical table header -->
+			<xsl:if test="ancestor::*[local-name() = 'tbody'] and not(following-sibling::*[local-name() = 'th'])">
+				<xsl:attribute name="border-right"><xsl:value-of select="$table-border"/></xsl:attribute>
+			</xsl:if>
 
 		<xsl:call-template name="setBordersTableArray"/>
 
@@ -5521,6 +5594,10 @@
 
 	<xsl:template name="refine_table-footer-cell-style">
 
+			<xsl:if test="$layoutVersion = '2024'">
+				<xsl:attribute name="border-top"><xsl:value-of select="$table-border"/></xsl:attribute>
+			</xsl:if>
+
 	</xsl:template> <!-- refine_table-footer-cell-style -->
 
 	<xsl:attribute-set name="table-note-style">
@@ -5544,6 +5621,17 @@
 
 	</xsl:attribute-set> <!-- table-fn-style -->
 
+	<xsl:template name="refine_table-fn-style">
+
+			<xsl:if test="$layoutVersion = '2024'">
+				<xsl:attribute name="margin-bottom">5pt</xsl:attribute>
+				<xsl:if test="position() = last()">
+					<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
+				</xsl:if>
+			</xsl:if>
+
+	</xsl:template>
+
 	<xsl:attribute-set name="table-fn-number-style">
 		<xsl:attribute name="font-size">80%</xsl:attribute>
 		<xsl:attribute name="padding-right">5mm</xsl:attribute>
@@ -5551,6 +5639,15 @@
 			<xsl:attribute name="alignment-baseline">hanging</xsl:attribute>
 
 	</xsl:attribute-set> <!-- table-fn-number-style -->
+
+	<xsl:template name="refine_table-fn-number-style">
+
+			<xsl:if test="$layoutVersion = '2024'">
+				<xsl:attribute name="alignment-baseline">auto</xsl:attribute>
+				<xsl:attribute name="baseline-shift">15%</xsl:attribute>
+			</xsl:if>
+
+	</xsl:template>
 
 	<xsl:attribute-set name="fn-container-body-style">
 		<xsl:attribute name="text-indent">0</xsl:attribute>
@@ -5606,6 +5703,10 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_dt-block-style">
+
+			<xsl:if test="$layoutVersion = '2024'">
+				<xsl:attribute name="margin-bottom">9pt</xsl:attribute>
+			</xsl:if>
 
 	</xsl:template> <!-- refine_dt-block-style -->
 
@@ -5678,6 +5779,14 @@
 			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
 			</xsl:if>
+			<xsl:if test="$layoutVersion  = '2024'">
+				<xsl:if test="ancestor::*[local-name() = 'li'] and not(following-sibling::*)">
+					<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="preceding-sibling::*[1][local-name() = 'table']">
+					<xsl:attribute name="margin-top">0pt</xsl:attribute>
+				</xsl:if>
+			</xsl:if>
 			<xsl:if test="$doctype = 'amendment' and parent::*[local-name() = 'quote']">
 				<xsl:attribute name="font-size">inherit</xsl:attribute>
 			</xsl:if>
@@ -5694,6 +5803,11 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_note-name-style">
+
+			<xsl:variable name="note_name" select="*[local-name() = 'name']"/>
+			<xsl:if test="$layoutVersion = '2024' and translate($note_name,'0123456789','') = $note_name"> <!-- NOTE without number -->
+				<xsl:attribute name="padding-right">8mm</xsl:attribute>
+			</xsl:if>
 
 	</xsl:template> <!-- refine_note-name-style -->
 
@@ -5812,6 +5926,9 @@
 					<xsl:attribute name="margin-top">6pt</xsl:attribute>
 					<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 				</xsl:if>
+			</xsl:if>
+			<xsl:if test="$layoutVersion = '2024'">
+				<xsl:attribute name="space-after">18pt</xsl:attribute>
 			</xsl:if>
 
 	</xsl:template>
@@ -6017,6 +6134,8 @@
 
 	<xsl:attribute-set name="list-item-body-style">
 
+			<xsl:attribute name="line-height-shift-adjustment">disregard-shifts</xsl:attribute>
+
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_list-item-body-style">
@@ -6050,7 +6169,8 @@
 		<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
 
 			<xsl:attribute name="font-size">80%</xsl:attribute>
-			<xsl:attribute name="vertical-align">super</xsl:attribute>
+			<!--<xsl:attribute name="vertical-align">super</xsl:attribute> -->
+			<xsl:attribute name="baseline-shift">30%</xsl:attribute>
 
 	</xsl:attribute-set>
 
@@ -6069,6 +6189,9 @@
 
 			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">9pt</xsl:attribute>
+			</xsl:if>
+			<xsl:if test="$layoutVersion = '2024'">
+				<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
 			</xsl:if>
 
 	</xsl:template> <!-- refine_fn-body-style -->
@@ -6903,6 +7026,12 @@
 				<!-- centered table when table name is centered (see table-name-style) -->
 
 					<fo:table table-layout="fixed" width="100%" xsl:use-attribute-sets="table-container-style">
+
+							<xsl:if test="$layoutVersion = '2024'">
+								<xsl:attribute name="margin-top">12pt</xsl:attribute>
+								<xsl:attribute name="margin-bottom">2pt</xsl:attribute>
+							</xsl:if>
+
 						<fo:table-column column-width="proportional-column-width(1)"/>
 						<fo:table-column column-width="{@width}"/>
 						<fo:table-column column-width="proportional-column-width(1)"/>
@@ -7901,6 +8030,10 @@
 					<xsl:attribute name="padding-right">0.5mm</xsl:attribute>
 				</xsl:if>
 
+					<xsl:if test="$layoutVersion = '2024'">
+						<xsl:attribute name="font-size">70%</xsl:attribute>
+					</xsl:if>
+
 				<xsl:call-template name="insert_basic_link">
 					<xsl:with-param name="element">
 						<fo:basic-link internal-destination="{$ref_id}" fox:alt-text="footnote {$current_fn_number}" role="Lbl">
@@ -8019,8 +8152,9 @@
 			<xsl:if test="not(preceding-sibling::*[@reference = $reference])"> <!-- only unique reference puts in note-->
 
 						<fo:block xsl:use-attribute-sets="table-fn-style">
-
+							<xsl:call-template name="refine_table-fn-style"/>
 							<fo:inline id="{@id}" xsl:use-attribute-sets="table-fn-number-style">
+								<xsl:call-template name="refine_table-fn-number-style"/>
 
 								<xsl:value-of select="@reference"/>
 
@@ -9184,11 +9318,21 @@
 	<xsl:template match="text()[ancestor::*[local-name()='smallcap']]">
 		<!-- <xsl:variable name="text" select="normalize-space(.)"/> --> <!-- https://github.com/metanorma/metanorma-iso/issues/1115 -->
 		<xsl:variable name="text" select="."/>
-		<fo:inline font-size="75%" role="SKIP">
+		<xsl:variable name="ratio_">
+
+					<xsl:choose>
+						<xsl:when test="$layoutVersion = '2024'">0.8</xsl:when>
+						<xsl:otherwise>0.75</xsl:otherwise>
+					</xsl:choose>
+
+		</xsl:variable>
+		<xsl:variable name="ratio" select="number(normalize-space($ratio_))"/>
+		<fo:inline font-size="{$ratio * 100}%" role="SKIP">
 				<xsl:if test="string-length($text) &gt; 0">
 					<xsl:variable name="smallCapsText">
 						<xsl:call-template name="recursiveSmallCaps">
 							<xsl:with-param name="text" select="$text"/>
+							<xsl:with-param name="ratio" select="$ratio"/>
 						</xsl:call-template>
 					</xsl:variable>
 					<!-- merge neighboring fo:inline -->
@@ -9225,12 +9369,13 @@
 
 	<xsl:template name="recursiveSmallCaps">
     <xsl:param name="text"/>
+    <xsl:param name="ratio"/>
     <xsl:variable name="char" select="substring($text,1,1)"/>
     <!-- <xsl:variable name="upperCase" select="translate($char, $lower, $upper)"/> -->
 		<xsl:variable name="upperCase" select="java:toUpperCase(java:java.lang.String.new($char))"/>
     <xsl:choose>
       <xsl:when test="$char=$upperCase">
-        <fo:inline font-size="{100 div 0.75}%" role="SKIP">
+        <fo:inline font-size="{100 div $ratio}%" role="SKIP">
           <xsl:value-of select="$upperCase"/>
         </fo:inline>
       </xsl:when>
@@ -9241,6 +9386,7 @@
     <xsl:if test="string-length($text) &gt; 1">
       <xsl:call-template name="recursiveSmallCaps">
         <xsl:with-param name="text" select="substring($text,2)"/>
+        <xsl:with-param name="ratio" select="$ratio"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
@@ -9347,6 +9493,9 @@
 				</xsl:variable>
 				<xsl:if test="$key = 'font-family' or $key = 'font-size' or $key = 'color'">
 					<style name="{$key}"><xsl:value-of select="$value"/></style>
+				</xsl:if>
+				<xsl:if test="$key = 'text-indent'">
+					<style name="padding-left"><xsl:value-of select="$value"/></style>
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
@@ -10755,6 +10904,13 @@
 				</fo:basic-link>
 			</xsl:with-param>
 		</xsl:call-template>
+	</xsl:template>
+
+	<!-- command between two xref points to non-standard bibitem -->
+	<xsl:template match="text()[. = ','][preceding-sibling::node()[1][local-name() = 'sup'][*[local-name() = 'xref'][@type = 'footnote']] and    following-sibling::node()[1][local-name() = 'sup'][*[local-name() = 'xref'][@type = 'footnote']]]">
+
+				<fo:inline baseline-shift="20%" font-size="80%"><xsl:value-of select="."/></fo:inline>
+
 	</xsl:template>
 
 	<!-- ====== -->
@@ -12984,6 +13140,7 @@
 	<xsl:template match="*[local-name() = 'termexample']/*[local-name() = 'name']">
 		<xsl:if test="normalize-space() != ''">
 			<fo:inline xsl:use-attribute-sets="termexample-name-style">
+				<xsl:call-template name="refine_termexample-name-style"/>
 				<xsl:apply-templates/>
 			</fo:inline>
 		</xsl:if>
@@ -13134,6 +13291,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<fo:inline xsl:use-attribute-sets="example-name-style">
+					<xsl:call-template name="refine_example-name-style"/>
 					<xsl:apply-templates/>
 				</fo:inline>
 			</xsl:otherwise>
@@ -14355,6 +14513,11 @@
 	<xsl:template match="*[local-name() = 'references'][@normative='true']/*[local-name() = 'bibitem']" name="bibitem" priority="2">
 
 				<fo:block id="{@id}" xsl:use-attribute-sets="bibitem-normative-style">
+
+						<xsl:if test="$layoutVersion = '2024'">
+							<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+						</xsl:if>
+
 					<xsl:call-template name="processBibitem"/>
 				</fo:block>
 
@@ -14390,6 +14553,11 @@
 			<xsl:when test="@hidden = 'true'"><!-- skip --></xsl:when>
 			<xsl:otherwise>
 				<fo:list-item id="{@id}" xsl:use-attribute-sets="bibitem-non-normative-list-item-style">
+
+						<xsl:if test="$layoutVersion = '2024'">
+							<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
+						</xsl:if>
+
 					<fo:list-item-label end-indent="label-end()">
 						<fo:block role="SKIP">
 							<fo:inline role="SKIP">
