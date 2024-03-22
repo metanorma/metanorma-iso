@@ -1,3 +1,5 @@
+require_relative "cleanup_biblio"
+
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
