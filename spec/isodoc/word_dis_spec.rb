@@ -713,6 +713,73 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to xmlpp(word)
   end
 
+  it "deals with lists types" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <status><stage>50</stage></status>
+        </bibdata>
+        <sections>
+        <clause id="A"><p>
+        <ol type="arabic">
+        <li><p>A</p></li>
+        <li><ol type="alphabet_upper">
+        <li>C</li>
+        <li><ol type="roman_upper">
+        <li>E</li>
+        <li><ol type="roman">
+        <li>G</li>
+        <li><ol type="alphabet">
+        <li>I</li>
+        <li><ol type="roman_upper">
+        <li>K</li>
+        </ol></li>
+        <li>N</li>
+        </ol></li>
+        <li>O</li>
+        </ol></li>
+        <li>P</li>
+        </ol></li>
+        <li>Q</li>
+        </ol></li>
+        <li>R</li>
+        </ol>
+        </p></clause>
+        </sections>
+      </iso-standard>
+    INPUT
+    word = <<~OUTPUT
+       <div class="WordSection3">
+         <div>
+           <a name="A" id="A"/>
+           <h1>1</h1>
+           <p class="ListNumber1">1)<span style="mso-tab-count:1"> </span>A</p>
+           <p class="MsoListNumber2"><a name="_" id="_"/>A)<span style="mso-tab-count:1"> </span>C</p>
+           <p class="MsoListNumber3"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>E</p>
+           <p class="MsoListNumber4"><a name="_" id="_"/>i)<span style="mso-tab-count:1"> </span>G</p>
+           <p class="MsoListNumber5"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>I</p>
+           <p class="MsoListNumber5"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>K</p>
+           <p class="MsoListNumber5"><a name="_" id="_"/>b)<span style="mso-tab-count:1"> </span>N</p>
+           <p class="MsoListNumber4"><a name="_" id="_"/>ii)<span style="mso-tab-count:1"> </span>O</p>
+           <p class="MsoListNumber3"><a name="_" id="_"/>II)<span style="mso-tab-count:1"> </span>P</p>
+           <p class="MsoListNumber2"><a name="_" id="_"/>B)<span style="mso-tab-count:1"> </span>Q</p>
+           <p class="ListNumber1"><a name="_" id="_"/>2)<span style="mso-tab-count:1"> </span>R</p>
+         </div>
+       </div>
+    OUTPUT
+    FileUtils.rm_f "test.doc"
+    presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
+    expect(File.exist?("test.doc")).to be true
+    output = File.read("test.doc", encoding: "UTF-8")
+      .sub(/^.*<html/m, "<html")
+      .sub(/<\/html>.*$/m, "</html>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
+      .to be_equivalent_to xmlpp(word)
+  end
+
   it "deals with lists and paragraphs" do
     input = <<~INPUT
         <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -1830,17 +1897,17 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-        <div class='WordSection3'>
-                   <p class='zzSTDTitle'>
-                  <span>Date and time — Representations for information interchange — </span>
-           <span style=";font-weight:normal">Part 1:</span>
-           <span>Basic rules</span>
-          </p>
-          <div>
-            <a name='A' id='A'/>
-            <h1>1<span style="mso-tab-count:1">  </span>First clause</h1>
-          </div>
+      <div class='WordSection3'>
+                 <p class='zzSTDTitle'>
+                <span>Date and time — Representations for information interchange — </span>
+         <span style=";font-weight:normal">Part 1:</span>
+         <span>Basic rules</span>
+        </p>
+        <div>
+          <a name='A' id='A'/>
+          <h1>1<span style="mso-tab-count:1">  </span>First clause</h1>
         </div>
+      </div>
     WORD
     title = <<~WORD
       <div class='WordSection1'>
@@ -1909,20 +1976,20 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-        <div class='WordSection3'>
-                 <p class="zzSTDTitle">
-           <span>Date and time — Representations for information interchange — </span>
-           <span style=";font-weight:normal">Part 1:</span>
-           <span>Basic rules</span>
-         </p>
-         <p class="zzSTDTitle">
-           <span style="font-weight:normal">AMENDMENT 1: Technical corrections</span>
-         </p>
-         <div>
-           <a name="A" id="A"/>
-           <p style="font-style:italic;page-break-after:avoid;" class="MsoBodyText">First clause</p>
-         </div>
-       </div>
+       <div class='WordSection3'>
+                <p class="zzSTDTitle">
+          <span>Date and time — Representations for information interchange — </span>
+          <span style=";font-weight:normal">Part 1:</span>
+          <span>Basic rules</span>
+        </p>
+        <p class="zzSTDTitle">
+          <span style="font-weight:normal">AMENDMENT 1: Technical corrections</span>
+        </p>
+        <div>
+          <a name="A" id="A"/>
+          <p style="font-style:italic;page-break-after:avoid;" class="MsoBodyText">First clause</p>
+        </div>
+      </div>
     WORD
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)

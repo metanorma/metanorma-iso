@@ -111,13 +111,13 @@ RSpec.describe Metanorma::ISO do
               <p id="_">entry2</p>
             </li>
           </ul>
-          <ol id="id1">
+          <ol id="id1" type="alphabet">
             <li>
               <p id="_">First</p>
             </li>
             <li>
               <p id="_">Second</p>
-              <ol id='_' start='4'>
+              <ol id='_' start='4' type="alphabet_upper">
                 <li>
                   <p id="_">Third</p>
                 </li>
@@ -133,19 +133,19 @@ RSpec.describe Metanorma::ISO do
               <p id="_">Sixth</p>
             </li>
           </ol>
-          <ol id="_">
+          <ol id="_" type="roman">
             <li>
               <p id="_">A</p>
             </li>
             <li>
               <p id="_">B</p>
-              <ol id="_">
+              <ol id="_" type="roman_upper">
                 <li>
                   <p id="_">C</p>
                 </li>
                 <li>
                   <p id="_">D</p>
-                  <ol id="_">
+                  <ol id="_" type="arabic">
                     <li>
                       <p id="_">E</p>
                     </li>

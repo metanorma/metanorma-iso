@@ -146,7 +146,7 @@ RSpec.describe IsoDoc do
                  <dd>A type of rice</dd>
                </dl>
                <source status="generalisation">[SOURCE: <origin bibitemid="ISO712" type="inline" citeas=""><localityStack><locality type="section"><referenceFrom>1</referenceFrom></locality></localityStack>, Section 1</origin>
-          –
+          &#x2014;
            with adjustments]</source>
                <note>
                  <name>NOTE</name>
@@ -240,7 +240,7 @@ RSpec.describe IsoDoc do
                    </dl>
                    <div class="BlockSource">
                      <p>[SOURCE: , Section 1
-          –
+          &#x2014;
            with adjustments]</p>
                    </div>
                    <div class="Note">
@@ -326,7 +326,7 @@ RSpec.describe IsoDoc do
                <td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
                  <div class="BlockSource">
                    <p class="MsoNormal">[SOURCE: , Section 1
-          –
+          &#x2014;
            with adjustments]</p>
                  </div>
                  <div class="Note">
