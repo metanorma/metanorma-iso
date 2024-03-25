@@ -156,44 +156,7 @@
     </define>
     <define name="xref">
       <element name="xref">
-        <attribute name="target">
-          <data type="string">
-            <param name="pattern">\i\c*|\c+#\c+</param>
-          </data>
-        </attribute>
-        <optional>
-          <attribute name="to">
-            <data type="string">
-              <param name="pattern">\i\c*|\c+#\c+</param>
-            </data>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="type">
-            <ref name="ReferenceFormat"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="alt"/>
-        </optional>
-        <optional>
-          <attribute name="case">
-            <choice>
-              <value>capital</value>
-              <value>lowercase</value>
-            </choice>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="droploc">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="style">
-            <ref name="XrefStyleType"/>
-          </attribute>
-        </optional>
+        <ref name="XrefAttributes"/>
         <ref name="XrefBody"/>
       </element>
     </define>
@@ -2433,6 +2396,49 @@
         <ref name="TextElement"/>
       </zeroOrMore>
     </element>
+  </define>
+  <define name="XrefAttributes">
+    <attribute name="target">
+      <data type="string">
+        <param name="pattern">\i\c*|\c+#\c+</param>
+      </data>
+    </attribute>
+    <optional>
+      <attribute name="to">
+        <data type="string">
+          <param name="pattern">\i\c*|\c+#\c+</param>
+        </data>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="type">
+        <ref name="ReferenceFormat"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+    <optional>
+      <attribute name="case">
+        <choice>
+          <value>capital</value>
+          <value>lowercase</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="droploc">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="style">
+        <ref name="XrefStyleType"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
   </define>
   <define name="XrefBody">
     <zeroOrMore>
