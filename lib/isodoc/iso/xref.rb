@@ -140,12 +140,10 @@ module IsoDoc
 
       # all li in the ol in lists are consecutively numbered through @start
       def single_ol_for_xrefs?(lists)
-        return true if lists.size == 1
-
+        lists.size == 1 and return true
         start = 0
         lists.each_with_index do |l, i|
-          next if i.zero?
-
+          i.zero? and next
           start += lists[i - 1].xpath(ns("./li")).size
           return false unless l["start"]&.to_i == start + 1
         end

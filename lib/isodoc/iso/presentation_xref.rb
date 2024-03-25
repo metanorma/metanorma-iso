@@ -105,22 +105,6 @@ module IsoDoc
         locality_span_wrap(ret, opt[:type])
       end
 
-=begin
-      def prefix_container(container, linkend, node, target)
-        delim = ", "
-        ref = if @xrefs.anchor(target, :type) == "listitem" &&
-            !@xrefs.anchor(target, :refer_list)
-                delim = " "
-                @xrefs.anchor(container, :label)
-                # 7 a) : Clause 7 a), but Clause 7 List 1 a)
-              else anchor_xref(node, container)
-              end
-
-        ref and linkend = ref + delim + linkend
-        l10n(linkend)
-      end
-=end
-
       # 7 a) : Clause 7 a), but Clause 7 List 1 a)
       def prefix_container(container, linkend, node, target)
         prefix_container?(container, node) or return linkend
@@ -138,7 +122,7 @@ module IsoDoc
         if @xrefs.anchor(target, :type) == "listitem" &&
             !@xrefs.anchor(target, :refer_list)
           nested_xref = "%1 %2"
-          n = @xrefs.anchor(container, :label) and container_label = n
+          # n = @xrefs.anchor(container, :label) and container_label = n
         end
         [nested_xref, container_label]
       end

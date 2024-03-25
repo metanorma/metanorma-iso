@@ -58,9 +58,19 @@ module IsoDoc
         end
       end
 
+      def annex_name_anchors1(clause, num, level)
+        ret = { label: num, level: level, subtype: "annex" }
+        ret2 = if level == 2
+                 { xref: l10n("#{@labels['clause']} #{num}"),
+                   elem: @labels["clause"] }
+               else
+                 { xref: num }
+               end
+        @anchors[clause["id"]] = ret.merge(ret2)
+      end
+
       def annex_names1(clause, num, level)
-        @anchors[clause["id"]] = { label: num, xref: num, level: level,
-                                   subtype: "annex" }
+        annex_name_anchors1(clause, num, level)
         i = Counter.new(0, prefix: "#{num}.")
         clause.xpath(ns("./clause | ./references")).each do |c|
           annex_names1(c, i.increment(c).print, level + 1)

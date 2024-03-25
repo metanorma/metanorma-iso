@@ -72,9 +72,9 @@ RSpec.describe IsoDoc do
               <xref target="N">Clause 1, Note</xref>
               <xref target="note1">3.1, Note 1</xref>
               <xref target="note2">3.1, Note 2</xref>
-              <xref target="AN">A.1, Note</xref>
-              <xref target="Anote1">A.2, Note 1</xref>
-              <xref target="Anote2">A.2, Note 2</xref>
+              <xref target="AN">Clause A.1, Note</xref>
+              <xref target="Anote1">Clause A.2, Note 1</xref>
+              <xref target="Anote2">Clause A.2, Note 2</xref>
             </p>
           </foreword>
         </preface>
@@ -644,9 +644,9 @@ RSpec.describe IsoDoc do
               <xref target="N">Clause 1, Example</xref>
               <xref target="note1">3.1, Example 1</xref>
               <xref target="note2">3.1, Example 2</xref>
-              <xref target="AN">A.1, Example</xref>
-              <xref target="Anote1">A.2, Example 1</xref>
-              <xref target="Anote2">A.2, Example 2</xref>
+              <xref target="AN">Clause A.1, Example</xref>
+              <xref target="Anote1">Clause A.2, Example 1</xref>
+              <xref target="Anote2">Clause A.2, Example 2</xref>
             </p>
           </foreword>
         </preface>
@@ -802,9 +802,9 @@ RSpec.describe IsoDoc do
               <xref target="N">Clause 1, Formula (1)</xref>
               <xref target="note1">3.1, Formula (2)</xref>
               <xref target="note2">3.1, Formula (3)</xref>
-              <xref target="AN">A.1, Formula (A.1)</xref>
-              <xref target="Anote1">A.2, Formula (A.2)</xref>
-              <xref target="Anote2">A.2, Formula (A.3)</xref>
+              <xref target="AN">Clause A.1, Formula (A.1)</xref>
+              <xref target="Anote1">Clause A.2, Formula (A.2)</xref>
+              <xref target="Anote2">Clause A.2, Formula (A.3)</xref>
             </p>
           </foreword>
         </preface>
@@ -1310,7 +1310,7 @@ RSpec.describe IsoDoc do
               <xref target='N'><span class='citesec'>5.1</span></xref>
               <xref target='O'><span class='citesec'>5.2</span></xref>
               <xref target='P'><span class='citeapp'>Annex A</span></xref>
-              <xref target='Q'><span class='citeapp'>A.1</span></xref>
+              <xref target='Q'><span class='citeapp'>Clause A.1</span></xref>
               <xref target='Q1'><span class='citeapp'>A.1.1</span></xref>
               <xref target='Q2'><span class='citeapp'>Annex A, Appendix 1</span></xref>
               <xref target='Q3'>Annex A, Appendix 1.1</xref>
@@ -1645,9 +1645,9 @@ RSpec.describe IsoDoc do
               <xref target="N">Clause 1, List</xref>
               <xref target="note1">3.1, List 1</xref>
               <xref target="note2">3.1, List 2</xref>
-              <xref target="AN">A.1, List</xref>
-              <xref target="Anote1">A.2, List 1</xref>
-              <xref target="Anote2">A.2, List 2</xref>
+              <xref target="AN">Clause A.1, List</xref>
+              <xref target="Anote1">Clause A.2, List 1</xref>
+              <xref target="Anote2">Clause A.2, List 2</xref>
             </p>
           </foreword>
         </preface>
@@ -1789,12 +1789,12 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder='2'>
             <p>
-              <xref target='N'>1 a)</xref>
+              <xref target='N'>Clause 1 a)</xref>
               <xref target='note1'>3.1, List 1 a)</xref>
               <xref target='note2'>3.1, List 2 a)</xref>
-              <xref target='AN'>A.1 a)</xref>
-              <xref target='Anote1'>A.2, List 1 a)</xref>
-              <xref target='Anote2'>A.2, List 2 a)</xref>
+              <xref target='AN'>Clause A.1 a)</xref>
+              <xref target='Anote1'>Clause A.2, List 1 a)</xref>
+              <xref target='Anote2'>Clause A.2, List 2 a)</xref>
             </p>
           </foreword>
         </preface>
@@ -1913,12 +1913,12 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder='2'>
             <p>
-              <xref target='N'>1 a)</xref>
-              <xref target='note1'>1 a) 1)</xref>
-              <xref target='note2'>1 a) 1) i)</xref>
-              <xref target='AN'>1 a) 1) i) A)</xref>
-              <xref target='Anote1'>1 a) 1) i) A) I)</xref>
-              <xref target='Anote2'>1 a) 1) i) A) I) a)</xref>
+              <xref target='N'>Clause 1 a)</xref>
+              <xref target='note1'>Clause 1 a) 1)</xref>
+              <xref target='note2'>Clause 1 a) 1) i)</xref>
+              <xref target='AN'>Clause 1 a) 1) i) A)</xref>
+              <xref target='Anote1'>Clause 1 a) 1) i) A) I)</xref>
+              <xref target='Anote2'>Clause 1 a) 1) i) A) I) a)</xref>
             </p>
           </foreword>
         </preface>
@@ -1993,7 +1993,7 @@ RSpec.describe IsoDoc do
     INPUT
     output = <<~OUTPUT
       <foreword displayorder='2'>
-        <p><xref target='Na'>1 a)</xref></p>
+        <p><xref target='Na'>Clause 1 a)</xref></p>
       </foreword>
     OUTPUT
     expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
