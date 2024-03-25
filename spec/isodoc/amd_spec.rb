@@ -83,9 +83,9 @@ RSpec.describe IsoDoc do
                <xref target="N">Clause 1, Note</xref>
                <xref target="note1">2.1, Note  1</xref>
                <xref target="note2">2.1, Note  2</xref>
-               <xref target="AN">A.1, Note</xref>
-               <xref target="Anote1">A.2, Note  1</xref>
-               <xref target="Anote2">A.2, Note  2</xref>
+               <xref target="AN">Clause A.1, Note</xref>
+               <xref target="Anote1">Clause A.2, Note  1</xref>
+               <xref target="Anote2">Clause A.2, Note  2</xref>
              </p>
            </foreword>
          </preface>
@@ -230,7 +230,7 @@ RSpec.describe IsoDoc do
     expect(xmlpp(output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to xmlpp(<<~OUTPUT)
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <bibdata>
            <ext>
              <doctype language="">amendment</doctype>
@@ -243,7 +243,7 @@ RSpec.describe IsoDoc do
              <title>Foreword</title>
              <p id="A">This is a preamble
 
-               <xref target="C"><span class="citesec">0.1</span></xref><xref target="C1"><span class="citesec">0.2</span></xref><xref target="D"><span class="citesec">Clause 1</span></xref><xref target="H">[H]</xref><xref target="I">[I]</xref><xref target="J">[J]</xref><xref target="K">[K]</xref><xref target="L">[L]</xref><xref target="M"><span class="citesec">Clause 2</span></xref><xref target="N"><span class="citesec">2.1</span></xref><xref target="O"><span class="citesec">2.2</span></xref><xref target="P"><span class="citeapp">Annex A</span></xref><xref target="Q"><span class="citeapp">A.1</span></xref><xref target="Q1"><span class="citeapp">A.1.1</span></xref><xref target="Q2"><span class="citeapp">Annex A, Appendix 1</span></xref><xref target="R"><span class="citesec">Normative References</span></xref></p>
+               <xref target="C"><span class="citesec">0.1</span></xref><xref target="C1"><span class="citesec">0.2</span></xref><xref target="D"><span class="citesec">Clause 1</span></xref><xref target="H">[H]</xref><xref target="I">[I]</xref><xref target="J">[J]</xref><xref target="K">[K]</xref><xref target="L">[L]</xref><xref target="M"><span class="citesec">Clause 2</span></xref><xref target="N"><span class="citesec">2.1</span></xref><xref target="O"><span class="citesec">2.2</span></xref><xref target="P"><span class="citeapp">Annex A</span></xref><xref target="Q"><span class="citeapp">Clause A.1</span></xref><xref target="Q1"><span class="citeapp">A.1.1</span></xref><xref target="Q2"><span class="citeapp">Annex A, Appendix 1</span></xref><xref target="R"><span class="citesec">Normative References</span></xref></p>
            </foreword>
            <introduction id="B" obligation="informative" displayorder="2">
              <title depth="1">Introduction</title>
@@ -396,7 +396,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <bibdata>
            <ext>
              <doctype language="">amendment</doctype>
