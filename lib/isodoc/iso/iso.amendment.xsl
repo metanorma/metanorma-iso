@@ -426,9 +426,10 @@
 							<xsl:attribute name="font-size">8.5pt</xsl:attribute>
 						 </xsl:if>
 
-						<!-- <xsl:if test="$lang = 'zh'">
-							<xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute>
-						</xsl:if> -->
+						<xsl:if test="$lang = 'zh'">
+							<!-- <xsl:attribute name="font-family">Source Han Sans, Times New Roman, Cambria Math</xsl:attribute> -->
+							<xsl:attribute name="font-selection-strategy">character-by-character</xsl:attribute>
+						</xsl:if>
 					</root-style>
 				</xsl:variable>
 				<xsl:call-template name="insertRootStyle">
@@ -445,8 +446,8 @@
 
 				<fo:layout-master-set>
 
-					<xsl:variable name="marginLeftRight_cover_page_1951">12.5</xsl:variable>
-					<xsl:variable name="marginTop_cover_page_1951">18</xsl:variable>
+					<xsl:variable name="marginLeftRight_cover_page_1951">16.5</xsl:variable> <!-- 12.5 -->
+					<xsl:variable name="marginTop_cover_page_1951">19.5</xsl:variable>
 					<xsl:variable name="marginBottom_cover_page_1951">94.5</xsl:variable>
 
 					<xsl:variable name="marginLeft_cover_page_1972">21</xsl:variable>
@@ -805,14 +806,14 @@
 				<xsl:choose>
 					<xsl:when test="$layoutVersion = '1951'">
 						<fo:page-sequence master-reference="cover-page_1951" force-page-count="no-force">
-							<fo:static-content flow-name="cover-page-header" font-weight="bold" font-size="9pt">
+							<fo:static-content flow-name="cover-page-header" font-family="Times New Roman" font-size="8.5pt" font-weight="bold">
 								<fo:block-container height="99%" display-align="after">
 									<fo:block text-align-last="justify" role="SKIP">
 										<!-- Example: UDC 669.7 : 620.178.1 -->
 										<xsl:value-of select="$udc"/>
 										<fo:inline keep-together.within-line="always" role="SKIP">
 											<fo:leader leader-pattern="space"/>
-											<fo:inline font-weight="normal"><xsl:value-of select="concat($i18n_reference_number_abbrev, ': ')"/></fo:inline><xsl:value-of select="$ISOnumber"/>
+											<fo:inline font-weight="normal"><xsl:value-of select="concat($i18n_reference_number_abbrev, ' : ')"/></fo:inline><xsl:value-of select="$ISOnumber"/> <!-- font-family="Arial" -->
 										</fo:inline>
 									</fo:block>
 								</fo:block-container>
@@ -824,40 +825,43 @@
 								</fo:block>
 							</fo:static-content>
 							<fo:flow flow-name="xsl-region-body">
-								<fo:block text-align="center" font-family="Arial" margin-top="18mm">
+								<fo:block text-align="center" font-family="Arial" margin-top="14mm">
 									<fo:block>
 										<fo:instream-foreign-object content-width="23mm" fox:alt-text="Image ISO Logo">
 											<xsl:copy-of select="$Image-ISO-Logo-1951-SVG"/>
 										</fo:instream-foreign-object>
 									</fo:block>
-									<fo:block margin-top="3mm" font-size="8pt" font-weight="bold">
+									<fo:block margin-top="2mm" font-size="8pt" font-weight="bold">
 										<xsl:call-template name="add-letter-spacing">
 											<xsl:with-param name="text" select="java:toUpperCase(java:java.lang.String.new(/iso:iso-standard/iso:bibdata/iso:copyright/iso:owner/iso:organization/iso:name))"/>
-											<xsl:with-param name="letter-spacing" select="0.65"/>
+											<xsl:with-param name="letter-spacing" select="0.55"/>
 										</xsl:call-template>
 									</fo:block>
-									<fo:block-container margin-top="12mm" height="78mm" display-align="center">
-										<fo:block font-size="20pt">
-											<!-- ISO RECOMMENDATION -->
-											<xsl:call-template name="add-letter-spacing">
-												<xsl:with-param name="text" select="$doctype_uppercased"/>
-												<xsl:with-param name="letter-spacing" select="0.65"/>
-											</xsl:call-template>
-										</fo:block>
-										<fo:block font-size="24pt" margin-top="5mm">
-											<xsl:value-of select="$docnumber_with_prefix"/>
-										</fo:block>
 
-										<fo:block font-size="11pt" margin-top="12mm">
+									<fo:block font-size="20pt" margin-top="31mm">
+										<!-- ISO RECOMMENDATION -->
+										<xsl:call-template name="add-letter-spacing">
+											<xsl:with-param name="text" select="$doctype_uppercased"/>
+											<xsl:with-param name="letter-spacing" select="0.35"/>
+										</xsl:call-template>
+									</fo:block>
+									<fo:block font-size="24pt" margin-top="5mm">
+										<xsl:value-of select="$docnumber_with_prefix"/>
+									</fo:block>
+
+									<fo:block-container height="39mm" display-align="center">
+										<fo:block font-size="11pt">
 											<xsl:call-template name="insertTitlesLangMain"/>
 										</fo:block>
-
 									</fo:block-container>
-									<fo:block-container height="40mm" display-align="center" font-size="9pt">
-										<fo:block><xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:edition[@language != '']"/></fo:block>
-										<fo:block> </fo:block>
+
+									<fo:block-container margin-top="8.5mm" font-size="10pt"> <!--  height="40mm" display-align="center"  -->
+										<!-- Example: 1st EDITION -->
+										<!-- <fo:block><xsl:apply-templates select="/iso:iso-standard/iso:bibdata/iso:edition[@language != '']" /></fo:block> -->
+										<fo:block font-weight="bold"><xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:edition[@language != '']"/></fo:block>
+										<!-- <fo:block>&#xa0;</fo:block> -->
 										<!-- Example: October 1971 -->
-										<fo:block>
+										<fo:block margin-top="2mm" font-size="9pt">
 											<xsl:call-template name="convertDate">
 												<xsl:with-param name="date" select="/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date"/>
 											</xsl:call-template>
@@ -2409,9 +2413,17 @@
 							<xsl:if test="$layoutVersion = '1951'">
 								<!-- first page header -->
 								<!-- Example: ISO Recommendation R 453 November 1965 -->
-								<fo:block-container margin-top="-13mm" margin-left="-12mm" margin-right="-12mm">
+								<fo:block-container margin-top="-8mm" margin-left="-12mm" margin-right="-12mm">
+									<xsl:if test="$revision_date_num &gt;= 19690101">
+										<xsl:attribute name="margin-top">-9mm</xsl:attribute>
+										<xsl:attribute name="margin-left">-12.5mm</xsl:attribute>
+										<xsl:attribute name="margin-right">-12.5mm</xsl:attribute>
+									</xsl:if>
 									<fo:block-container margin-left="0" margin-right="0" border-bottom="1.25pt solid black">
 										<fo:table table-layout="fixed" width="100%" font-family="Arial" font-size="13pt">
+											<xsl:if test="$revision_date_num &gt;= 19690101">
+												<xsl:attribute name="font-size">10pt</xsl:attribute>
+											</xsl:if>
 											<fo:table-column column-width="proportional-column-width(9.5)"/>
 											<fo:table-column column-width="proportional-column-width(65)"/>
 											<fo:table-column column-width="proportional-column-width(34)"/>
@@ -2419,6 +2431,9 @@
 											<fo:table-column column-width="proportional-column-width(9.5)"/>
 											<fo:table-body>
 												<fo:table-row height="10mm">
+													<xsl:if test="$revision_date_num &gt;= 19690101">
+														<xsl:attribute name="height">7mm</xsl:attribute>
+													</xsl:if>
 													<fo:table-cell><fo:block> </fo:block></fo:table-cell>
 													<fo:table-cell><fo:block><xsl:value-of select="$doctype_localized"/></fo:block></fo:table-cell>
 													<fo:table-cell text-align="center"><fo:block><xsl:value-of select="$docnumber_with_prefix"/></fo:block></fo:table-cell>
@@ -2762,6 +2777,7 @@
 
 	<xsl:template match="iso:preface/iso:clause[@type = 'toc']" priority="3">
 		<xsl:choose>
+			<xsl:when test="$toc_level = 0"/>
 			<xsl:when test="$doctype = 'amendment'"/><!-- ToC shouldn't be generated in amendments. -->
 			<xsl:when test="$layoutVersion = '1987' and $doctype = 'technical-report'"/>
 			<xsl:otherwise>
@@ -3083,6 +3099,10 @@
 				<xsl:attribute name="text-align">center</xsl:attribute>
 				<xsl:attribute name="margin-top">49mm</xsl:attribute>
 				<xsl:attribute name="text-transform">uppercase</xsl:attribute>
+				<xsl:if test="$revision_date_num &gt;= 19690101">
+					<xsl:attribute name="font-family">Arial</xsl:attribute>
+					<xsl:attribute name="font-size">11pt</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 			<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">16pt</xsl:attribute>
@@ -3259,7 +3279,7 @@
 			<xsl:when test="$layoutVersion = '1951'">
 				<xsl:choose>
 					<xsl:when test="@id = 'boilerplate-message'">
-						<fo:block-container width="85.5mm" margin-left="50mm" margin-right="50mm">
+						<fo:block-container width="87mm" margin-left="45mm" margin-right="45mm">
 							<fo:block-container margin-left="0" margin-right="0">
 								<fo:block text-align="justify" text-align-last="center">
 								<!-- The copyright of ISO Recommendations and 1SO Standards
@@ -4004,7 +4024,7 @@
 		<fo:static-content flow-name="header-even" role="artifact">
 			<xsl:if test="$layoutVersion = '1951' and $border_around_page = 'true'">
 				<!-- box around page -->
-				<fo:block-container position="absolute" left="16.5mm" top="10mm" height="271.5mm" width="170mm" border="1.25pt solid black" role="SKIP">
+				<fo:block-container position="absolute" left="16.5mm" top="15mm" height="270mm" width="170mm" border="1.25pt solid black" role="SKIP">
 					<fo:block> </fo:block>
 				</fo:block-container>
 			</xsl:if>
@@ -4012,14 +4032,24 @@
 				<xsl:if test="$layoutVersion = '2024'">
 					<xsl:attribute name="height">23mm</xsl:attribute>
 				</xsl:if>
-				<fo:block font-size="{$font-size_header}" font-weight="bold" padding-top="12.5mm" line-height="1.1">
-					<xsl:call-template name="insertLayoutVersionAttributesTop">
-						<xsl:with-param name="odd_or_even">even</xsl:with-param>
-					</xsl:call-template>
-					<xsl:if test="$is_header = 'true'">
-						<xsl:value-of select="$ISOnumber"/>
-					</xsl:if>
-				</fo:block>
+				<xsl:choose>
+					<xsl:when test="$layoutVersion = '1951'">
+						<xsl:call-template name="insertHeader1951">
+							<xsl:with-param name="is_header" select="$is_header"/>
+							<xsl:with-param name="odd_or_even">even</xsl:with-param>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<fo:block font-size="{$font-size_header}" font-weight="bold" padding-top="12.5mm" line-height="1.1">
+							<xsl:call-template name="insertLayoutVersionAttributesTop">
+								<xsl:with-param name="odd_or_even">even</xsl:with-param>
+							</xsl:call-template>
+							<xsl:if test="$is_header = 'true'">
+								<xsl:value-of select="$ISOnumber"/>
+							</xsl:if>
+						</fo:block>
+					</xsl:otherwise>
+				</xsl:choose>
 			</fo:block-container>
 		</fo:static-content>
 	</xsl:template>
@@ -4106,7 +4136,7 @@
 		<fo:static-content flow-name="header-odd" role="artifact">
 			<xsl:if test="$layoutVersion = '1951' and $border_around_page = 'true'">
 				<!-- box around page -->
-				<fo:block-container position="absolute" left="23.5mm" top="10mm" height="271.5mm" width="170mm" border="1.25pt solid black" role="SKIP">
+				<fo:block-container position="absolute" left="23.5mm" top="15mm" height="270mm" width="170mm" border="1.25pt solid black" role="SKIP">
 					<fo:block> </fo:block>
 				</fo:block-container>
 			</xsl:if>
@@ -4114,16 +4144,64 @@
 				<xsl:if test="$layoutVersion = '2024'">
 					<xsl:attribute name="height">23mm</xsl:attribute>
 				</xsl:if>
-				<fo:block font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm" line-height="1.1">
-					<xsl:call-template name="insertLayoutVersionAttributesTop">
-						<xsl:with-param name="odd_or_even">odd</xsl:with-param>
-					</xsl:call-template>
-					<xsl:if test="$is_header = 'true'">
-						<xsl:value-of select="$ISOnumber"/>
-					</xsl:if>
-				</fo:block>
+				<xsl:choose>
+					<xsl:when test="$layoutVersion = '1951'">
+						<xsl:call-template name="insertHeader1951">
+							<xsl:with-param name="is_header" select="$is_header"/>
+							<xsl:with-param name="odd_or_even">odd</xsl:with-param>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<fo:block font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm" line-height="1.1">
+							<xsl:call-template name="insertLayoutVersionAttributesTop">
+								<xsl:with-param name="odd_or_even">odd</xsl:with-param>
+							</xsl:call-template>
+							<xsl:if test="$is_header = 'true'">
+								<xsl:value-of select="$ISOnumber"/>
+							</xsl:if>
+						</fo:block>
+					</xsl:otherwise>
+				</xsl:choose>
 			</fo:block-container>
 		</fo:static-content>
+	</xsl:template>
+
+	<xsl:template name="insertHeader1951">
+		<xsl:param name="is_header"/>
+		<xsl:param name="odd_or_even"/>
+		<fo:block-container font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm" line-height="1.1">
+			<xsl:call-template name="insertLayoutVersionAttributesTop">
+				<xsl:with-param name="odd_or_even" select="$odd_or_even"/>
+			</xsl:call-template>
+			<fo:block-container margin-left="0mm" margin-right="0mm">
+				<fo:table table-layout="fixed" width="100%">
+					<fo:table-column column-width="proportional-column-width(1)"/>
+					<fo:table-column column-width="proportional-column-width(1)"/>
+					<fo:table-column column-width="proportional-column-width(1)"/>
+					<fo:table-body>
+						<fo:table-row>
+							<fo:table-cell>
+								<fo:block> </fo:block>
+							</fo:table-cell>
+							<fo:table-cell padding-top="-0.5mm">
+								<fo:block font-size="9.5pt" text-align="center">
+									<xsl:if test="$revision_date_num &gt;= 19690101">
+										<xsl:value-of select="$em_dash"/>  <fo:page-number/>  <xsl:value-of select="$em_dash"/>
+									</xsl:if>
+								</fo:block>
+							</fo:table-cell>
+							<fo:table-cell>
+								<fo:block>
+									<xsl:if test="$is_header = 'true'">
+										<xsl:value-of select="$ISOnumber"/>
+									</xsl:if>
+								</fo:block>
+							</fo:table-cell>
+						</fo:table-row>
+					</fo:table-body>
+				</fo:table>
+			</fo:block-container>
+		</fo:block-container>
 	</xsl:template>
 
 	<xsl:variable name="font-size_footer_copyright">
@@ -4289,8 +4367,8 @@
 		<xsl:attribute name="display-align">after</xsl:attribute>
 		<xsl:attribute name="text-align">center</xsl:attribute>
 		<fo:block-container margin-left="-13mm" margin-right="-13mm">
-		<fo:block-container margin-left="0mm" margin-right="0mm">
-				<fo:table table-layout="fixed" width="100%" margin-bottom="8mm">
+			<fo:block-container margin-left="0mm" margin-right="0mm">
+				<fo:table table-layout="fixed" width="100%" margin-bottom="5mm">
 					<fo:table-column column-width="proportional-column-width(35)"/>
 					<fo:table-column column-width="proportional-column-width(100)"/>
 					<fo:table-column column-width="proportional-column-width(35)"/>
@@ -4311,7 +4389,11 @@
 								</fo:block>
 							</fo:table-cell>
 							<fo:table-cell>
-								<fo:block font-size="9.5pt" font-weight="bold"><xsl:value-of select="$em_dash"/>  <fo:page-number/>  <xsl:value-of select="$em_dash"/></fo:block>
+								<fo:block font-size="9.5pt" font-weight="bold">
+									<xsl:if test="$revision_date_num &lt; 19690101">
+										<xsl:value-of select="$em_dash"/>  <fo:page-number/>  <xsl:value-of select="$em_dash"/>
+									</xsl:if>
+								</fo:block>
 							</fo:table-cell>
 							<fo:table-cell>
 								<fo:block font-size="8.5pt" text-align="right" font-weight="bold">
@@ -4346,12 +4428,22 @@
 			<xsl:attribute name="font-family">Arial</xsl:attribute>
 			<xsl:attribute name="font-size">8pt</xsl:attribute>
 			<xsl:attribute name="text-align">right</xsl:attribute>
-			<xsl:attribute name="padding-top">5mm</xsl:attribute>
+			<xsl:attribute name="padding-top">8mm</xsl:attribute>
+			<xsl:if test="$revision_date_num &gt;= 19690101">
+				<xsl:attribute name="padding-top">11mm</xsl:attribute>
+				<xsl:attribute name="font-family">Times New Roman</xsl:attribute>
+			</xsl:if>
 			<xsl:if test="$odd_or_even = 'odd'">
 				<xsl:attribute name="margin-right">16.5mm</xsl:attribute>
+				<xsl:if test="$revision_date_num &gt;= 19690101">
+					<xsl:attribute name="margin-left">23.5mm</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 			<xsl:if test="$odd_or_even = 'even'">
 				<xsl:attribute name="margin-right">23.5mm</xsl:attribute>
+				<xsl:if test="$revision_date_num &gt;= 19690101">
+					<xsl:attribute name="margin-left">16.5mm</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 		</xsl:if>
 		<xsl:if test="$layoutVersion = '2024'">
@@ -5428,6 +5520,11 @@
 				<!-- for internal table in table cell -->
 				<xsl:attribute name="border"><xsl:value-of select="$table-cell-border"/></xsl:attribute>
 			</xsl:if>
+			<xsl:if test="$layoutVersion = '1951'">
+				<xsl:if test="@unnumbered = 'true' and ancestor::*[local-name() = 'preface']">
+					<xsl:attribute name="border">none</xsl:attribute>
+				</xsl:if>
+			</xsl:if>
 
 		<xsl:call-template name="setBordersTableArray"/>
 
@@ -5574,6 +5671,11 @@
 			</xsl:if>
 			<xsl:if test="ancestor::*[local-name() = 'tbody'] and not(../preceding-sibling::*[local-name() = 'tr']) and ancestor::*[local-name() = 'table'][1]/*[local-name() = 'thead']"> <!-- cells in 1st row in the table body, and if thead exists -->
 				<xsl:attribute name="border-top">0pt solid black</xsl:attribute>
+			</xsl:if>
+			<xsl:if test="$layoutVersion = '1951'">
+				<xsl:if test="ancestor::*[local-name() = 'table'][1]/@unnumbered = 'true' and ancestor::*[local-name() = 'preface']">
+					<xsl:attribute name="border">none</xsl:attribute>
+				</xsl:if>
 			</xsl:if>
 			<!-- <xsl:attribute name="page-break-inside">avoid</xsl:attribute> -->
 
@@ -16441,7 +16543,5 @@
 			</fo:block>
 		</xsl:if>
 	</xsl:template>
-
-	<!-- update -->
 
 </xsl:stylesheet>
