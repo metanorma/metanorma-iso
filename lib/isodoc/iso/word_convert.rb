@@ -52,16 +52,20 @@ module IsoDoc
 
       def convert(input_filename, file = nil, debug = false,
                 output_filename = nil)
-        file = File.read(input_filename, encoding: "utf-8") if file.nil?
-        docxml = Nokogiri::XML(file) { |config| config.huge }
-        stage = docxml&.at(ns("//bibdata/status/stage"))&.text
-        if @dis &&
-            ((/^[4569].$/.match?(stage) && @wordtemplate != "simple") ||
-            (/^[0-3].$/.match?(stage) && @wordtemplate == "dis"))
+        if @dis && use_dis?(input_filename, file)
+          swap_renderer(self, @dis, file, input_filename, debug)
           @dis.convert(input_filename, file, debug, output_filename)
         else
           super
         end
+      end
+
+      def use_dis?(input_filename, file)
+        file ||= File.read(input_filename, encoding: "utf-8")
+        stage = Nokogiri::XML(file, &:huge)
+          .at(ns("//bibdata/status/stage"))&.text
+        (/^[4569].$/.match?(stage) && @wordtemplate != "simple") ||
+          (/^[0-3].$/.match?(stage) && @wordtemplate == "dis")
       end
 
       def make_body(xml, docxml)
