@@ -212,6 +212,11 @@ module IsoDoc
         end
       end
 
+      def twitter_cldr_localiser_symbols
+        { group: "&#xA0;", fraction_group: "&#xA0;",
+          fraction_group_digits: 3 }
+      end
+
       include Init
     end
   end
