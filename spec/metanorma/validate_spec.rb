@@ -538,9 +538,20 @@ RSpec.describe Metanorma::ISO do
 
       == Clause
       12121
+      12121
     INPUT
-    expect(File.read("test.err.html"))
-      .to include "number not broken up in threes"
+    r = File.read("test.err.html")
+    expect(r).to include "number not broken up in threes"
+    expect(r.scan(/number not broken up in threes/).length).to be 1
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      stem:[12121]
+    INPUT
+    r = File.read("test.err.html")
+    expect(r).not_to include "number not broken up in threes"
   end
 
   it "gives Style warning if number not broken up in threes looks like year" do
@@ -581,8 +592,11 @@ RSpec.describe Metanorma::ISO do
 
       == Clause
       8.1
+      8.1
     INPUT
-    expect(File.read("test.err.html")).to include "possible decimal point"
+    r = File.read("test.err.html")
+    expect(r).to include "possible decimal point"
+    expect(r.scan(/possible decimal point/).length).to be 1
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -605,6 +619,14 @@ RSpec.describe Metanorma::ISO do
 
       == Clause
       8.1.1
+    INPUT
+    expect(File.read("test.err.html")).not_to include "possible decimal point"
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      stem:[8.1]
     INPUT
     expect(File.read("test.err.html")).not_to include "possible decimal point"
   end
