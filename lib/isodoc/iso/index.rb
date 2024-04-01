@@ -50,9 +50,8 @@ module IsoDoc
         ret = index_entries_head(words[primary],
                                  index.dig(words[primary], nil, nil),
                                  index_entries_opt)
-        words2 = index[words[primary]]&.keys&.reject do |k|
-                   k.nil?
-                 end&.each_with_object({}) { |w, v| v[w.downcase] = w }
+        words2 = index[words[primary]]&.keys&.compact
+          &.each_with_object({}) { |w, v| v[w.downcase] = w }
         unless words2.empty?
           ret += "<ul>"
           words2.keys.localize(@lang.to_sym).sort.to_a.each do |w|
@@ -67,9 +66,8 @@ module IsoDoc
         ret = index_entries_head(words[secondary],
                                  index.dig(words[secondary], nil),
                                  index_entries_opt)
-        words3 = index[words[secondary]]&.keys&.reject do |k|
-                   k.nil?
-                 end&.each_with_object({}) { |w, v| v[w.downcase] = w }
+        words3 = index[words[secondary]]&.keys&.compact
+          &.each_with_object({}) { |w, v| v[w.downcase] = w }
         unless words3.empty?
           ret += "<ul>"
           words3.keys.localize(@lang.to_sym).sort.to_a.each do |w|

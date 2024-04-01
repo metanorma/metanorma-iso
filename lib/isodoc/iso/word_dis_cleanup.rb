@@ -18,7 +18,7 @@ module IsoDoc
       end
 
       def word_section_end_empty_para(docxml)
-        docxml.at("//div[@class='WordSection1']/p[last()]").remove
+        docxml.at("//div[@class='WordSection1']/p[last()]")&.remove
       end
 
       def word_table_cell_para(docxml)

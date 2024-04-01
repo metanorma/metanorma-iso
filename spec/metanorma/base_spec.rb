@@ -1988,9 +1988,73 @@ RSpec.describe Metanorma::ISO do
          </presentation-metadata>
        </metanorma-extension>
     OUTPUT
-    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor.convert(input,
-                                                              *OPTIONS))
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":document-scheme: DOCUMENT-SCHEME",
+               ":copyright-year: 1960")
+    output.sub!("DOCUMENT-SCHEME", "1951")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 1960", ":copyright-year: 1973")
+    output.sub!("<value>1951</value>", "<value>1972</value>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 1973", ":copyright-year: 1980")
+    output.sub!("<value>1972</value>", "<value>1979</value>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 1980", ":copyright-year: 1988")
+    output.sub!("<value>1979</value>", "<value>1987</value>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 1988", ":copyright-year: 1990")
+    output.sub!("<value>1987</value>", "<value>1989</value>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 1990", ":copyright-year: 2012")
+    output.sub!("<value>1989</value>", "<value>2012</value>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 2012", ":copyright-year: 2014")
+    output.sub!("<value>2012</value>", "<value>2013</value>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 2014", ":copyright-year: 2025")
+    output.sub!("<value>2013</value>", "<value>2024</value>")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
+    input.sub!(":copyright-year: 2014", "")
+    expect(xmlpp(strip_guid(Nokogiri::XML(Asciidoctor
+      .convert(input, *OPTIONS))
+      .at("//xmlns:metanorma-extension").to_xml)))
+      .to be_equivalent_to xmlpp(output)
+
   end
 end
