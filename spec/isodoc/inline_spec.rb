@@ -193,6 +193,167 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
+  it "localises numbers in MathML" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <title language="en">test</title>
+          <language>en</language>
+        </bibdata>
+        <preface>
+          <p>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>30000</mn>
+              </math>
+            </stem>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>3000.0003</mn>
+              </math>
+            </stem>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>3000000.0000003</mn>
+              </math>
+            </stem>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>.0003</mn>
+              </math>
+            </stem>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>.0000003</mn>
+              </math>
+            </stem>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>3000</mn>
+              </math>
+            </stem>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>3000000</mn>
+              </math>
+            </stem>
+            <stem type="MathML">
+              <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>P</mi>
+                <mfenced close=")" open="(">
+                  <mrow>
+                    <mi>X</mi>
+                    <mo>≥</mo>
+                    <msub>
+                      <mrow>
+                        <mi>X</mi>
+                      </mrow>
+                      <mrow>
+                        <mo>max</mo>
+                      </mrow>
+                    </msub>
+                  </mrow>
+                </mfenced>
+                <mo>=</mo>
+                <munderover>
+                  <mrow>
+                    <mo>∑</mo>
+                  </mrow>
+                  <mrow>
+                    <mrow>
+                      <mi>j</mi>
+                      <mo>=</mo>
+                      <msub>
+                        <mrow>
+                          <mi>X</mi>
+                        </mrow>
+                        <mrow>
+                          <mo>max</mo>
+                        </mrow>
+                      </msub>
+                    </mrow>
+                  </mrow>
+                  <mrow>
+                    <mn>1000</mn>
+                  </mrow>
+                </munderover>
+                <mfenced close=")" open="(">
+                  <mtable>
+                    <mtr>
+                      <mtd>
+                        <mn>0.0001</mn>
+                      </mtd>
+                    </mtr>
+                    <mtr>
+                      <mtd>
+                        <mi>j</mi>
+                      </mtd>
+                    </mtr>
+                  </mtable>
+                </mfenced>
+                <msup>
+                  <mrow>
+                    <mi>p</mi>
+                  </mrow>
+                  <mrow>
+                    <mi>j</mi>
+                  </mrow>
+                </msup>
+                <msup>
+                  <mrow>
+                    <mfenced close=")" open="(">
+                      <mrow>
+                        <mn>1000.00001</mn>
+                        <mo>−</mo>
+                        <mi>p</mi>
+                      </mrow>
+                    </mfenced>
+                  </mrow>
+                  <mrow>
+                    <mrow>
+                      <mn>1.003</mn>
+                      <mo>−</mo>
+                      <mi>j</mi>
+                    </mrow>
+                  </mrow>
+                </msup>
+              </math>
+            </stem>
+          </p>
+        </preface>
+      </iso-standard>
+    INPUT
+
+    output = <<~OUTPUT
+      <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
+        <bibdata>
+          <title language="en">test</title>
+          <language current="true">en</language>
+        </bibdata>
+        <preface>
+            <clause type="toc" id="_" displayorder="1">
+              <title depth="1">Contents</title>
+            </clause>
+          <p displayorder="2">
+             30&#xa0;000
+             3&#xa0;000.000&#xa0;3
+             3&#xa0;000&#xa0;000.000&#xa0;000&#xa0;3
+             0.000&#xa0;3
+             0.000&#xa0;000&#xa0;3
+             3&#xa0;000
+             3&#xa0;000&#xa0;000
+             <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi><mfenced close=")" open="("><mrow><mi>X</mi><mo>≥</mo><msub><mrow><mi>X</mi></mrow><mrow><mo>max</mo></mrow></msub></mrow></mfenced><mo>=</mo><munderover><mrow><mo>∑</mo></mrow><mrow><mrow><mi>j</mi><mo>=</mo><msub><mrow><mi>X</mi></mrow><mrow><mo>max</mo></mrow></msub></mrow></mrow><mrow><mn>1&#xa0;000</mn></mrow></munderover><mfenced close=")" open="("><mtable><mtr><mtd><mn>0.000&#xa0;1</mn></mtd></mtr><mtr><mtd><mi>j</mi></mtd></mtr></mtable></mfenced><msup><mrow><mi>p</mi></mrow><mrow><mi>j</mi></mrow></msup><msup><mrow><mfenced close=")" open="("><mrow><mn>1&#xa0;000.000&#xa0;01</mn><mo>−</mo><mi>p</mi></mrow></mfenced></mrow><mrow><mrow><mn>1.003</mn><mo>−</mo><mi>j</mi></mrow></mrow></msup></math><asciimath>P (X ge X_(max)) = sum_(j = X_(max))^(1000) ([[0.0001], [j]]) p^(j) (1000.00001 - p)^(1.003 - j)</asciimath></stem>
+          </p>
+        </preface>
+      </iso-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
+      .to be_equivalent_to xmlpp(output)
+  end
+
   it "processes eref types" do
     output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", <<~INPUT, true)
@@ -516,84 +677,84 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-                   <preface>
-           <clause type="toc" id="_" displayorder="1">
-             <title depth="1">Contents</title>
-           </clause>
-         </preface>
-         <sections>
-           <terms id="Terms" displayorder="3">
-             <title>2</title>
-             <term id="B">
-               <name>2.1</name>
-               <preferred>
-                 <strong>B</strong>
-               </preferred>
-               <p>
-                 <ul>
-                   <li>
-               (<xref target="clause1"><span class="citesec">Clause 3</span></xref>)
-             </li>
-                   <li><em>term</em>
-               (<xref target="clause1"><span class="citesec">Clause 3</span></xref>)
-             </li>
-                   <li><em>w[o]rd</em>
-               (<xref target="clause1">Clause #1</xref>)
-             </li>
-                   <li><em>term</em>
-               (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span></xref>)
-             </li>
-                   <li><em>word</em>
-               (<xref type="inline" target="ISO712">The Aforementioned Citation</xref>)
-             </li>
-                   <li><em>word</em>
-               (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></xref>)
-             </li>
-                   <li><em>word</em>
-               (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></xref>)
-             </li>
-                   <li><em>word</em>
-               (<xref type="inline" target="ISO712">
+         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+                  <preface>
+          <clause type="toc" id="_" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+        </preface>
+        <sections>
+          <terms id="Terms" displayorder="3">
+            <title>2</title>
+            <term id="B">
+              <name>2.1</name>
+              <preferred>
+                <strong>B</strong>
+              </preferred>
+              <p>
+                <ul>
+                  <li>
+              (<xref target="clause1"><span class="citesec">Clause 3</span></xref>)
+            </li>
+                  <li><em>term</em>
+              (<xref target="clause1"><span class="citesec">Clause 3</span></xref>)
+            </li>
+                  <li><em>w[o]rd</em>
+              (<xref target="clause1">Clause #1</xref>)
+            </li>
+                  <li><em>term</em>
+              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span></xref>)
+            </li>
+                  <li><em>word</em>
+              (<xref type="inline" target="ISO712">The Aforementioned Citation</xref>)
+            </li>
+                  <li><em>word</em>
+              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></xref>)
+            </li>
+                  <li><em>word</em>
+              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></xref>)
+            </li>
+                  <li><em>word</em>
+              (<xref type="inline" target="ISO712">
 
 
-               The Aforementioned Citation
-               </xref>)
-             </li>
-                   <li><em>word</em>
-               (<termref base="IEV" target="135-13-13"/>)
-             </li>
-                   <li><em>word</em>
-               (<termref base="IEV" target="135-13-13">The IEV database</termref>)
-             </li>
-                   <li>
-                     <em>word</em>
-                     <strong>error!</strong>
-                   </li>
-                 </ul>
-               </p>
-             </term>
-           </terms>
-           <clause id="clause1" displayorder="4">
-             <title depth="1">3<tab/>Clause 1</title>
-           </clause>
-           <references id="_" obligation="informative" normative="true" displayorder="2">
-             <title depth="1">1<tab/>Normative References</title>
-             <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-             <bibitem id="ISO712" type="standard">
-               <formattedref>
-                 <em>
-                   <span class="stddocTitle">Cereals and cereal products</span>
-                 </em>
-               </formattedref>
-               <docidentifier type="ISO">ISO 712</docidentifier>
-               <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-               <biblio-tag>ISO 712, </biblio-tag>
-             </bibitem>
-           </references>
-         </sections>
-         <bibliography/>
-       </iso-standard>
+              The Aforementioned Citation
+              </xref>)
+            </li>
+                  <li><em>word</em>
+              (<termref base="IEV" target="135-13-13"/>)
+            </li>
+                  <li><em>word</em>
+              (<termref base="IEV" target="135-13-13">The IEV database</termref>)
+            </li>
+                  <li>
+                    <em>word</em>
+                    <strong>error!</strong>
+                  </li>
+                </ul>
+              </p>
+            </term>
+          </terms>
+          <clause id="clause1" displayorder="4">
+            <title depth="1">3<tab/>Clause 1</title>
+          </clause>
+          <references id="_" obligation="informative" normative="true" displayorder="2">
+            <title depth="1">1<tab/>Normative References</title>
+            <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+            <bibitem id="ISO712" type="standard">
+              <formattedref>
+                <em>
+                  <span class="stddocTitle">Cereals and cereal products</span>
+                </em>
+              </formattedref>
+              <docidentifier type="ISO">ISO 712</docidentifier>
+              <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+              <biblio-tag>ISO 712, </biblio-tag>
+            </bibitem>
+          </references>
+        </sections>
+        <bibliography/>
+      </iso-standard>
     OUTPUT
     output = <<~OUTPUT
       #{HTML_HDR}

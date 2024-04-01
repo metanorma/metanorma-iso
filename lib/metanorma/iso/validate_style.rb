@@ -6,10 +6,10 @@ module Metanorma
   module ISO
     class Converter < Standoc::Converter
       def extract_text(node)
-        return "" if node.nil?
-
+        node.nil? and return ""
         node1 = Nokogiri::XML.fragment(node.to_s)
-        node1.xpath("//link | //locality | //localityStack").each(&:remove)
+        node1.xpath(".//link | .//locality | .//localityStack | .//stem")
+          .each(&:remove)
         ret = ""
         node1.traverse { |x| ret += x.text if x.text? }
         HTMLEntities.new.decode(ret)
@@ -17,30 +17,26 @@ module Metanorma
 
       # ISO/IEC DIR 2, 12.2
       def foreword_style(node)
-        return if @novalid
-
+        @novalid and return
         style_no_guidance(node, extract_text(node), "Foreword")
       end
 
       # ISO/IEC DIR 2, 14.2
       def scope_style(node)
-        return if @novalid
-
+        @novalid and return
         style_no_guidance(node, extract_text(node), "Scope")
       end
 
       # ISO/IEC DIR 2, 13.2
       def introduction_style(node)
-        return if @novalid
-
+        @novalid and return
         r = requirement_check(extract_text(node))
         style_warning(node, "Introduction may contain requirement", r) if r
       end
 
       # ISO/IEC DIR 2, 16.5.6
       def definition_style(node)
-        return if @novalid
-
+        @novalid and return
         r = requirement_check(extract_text(node))
         style_warning(node, "Definition may contain requirement", r) if r
       end
@@ -48,24 +44,21 @@ module Metanorma
       # ISO/IEC DIR 2, 16.5.7
       # ISO/IEC DIR 2, 25.5
       def example_style(node)
-        return if @novalid
-
+        @novalid and return
         style_no_guidance(node, extract_text(node), "Example")
         style(node, extract_text(node))
       end
 
       # ISO/IEC DIR 2, 24.5
       def note_style(node)
-        return if @novalid
-
+        @novalid and return
         style_no_guidance(node, extract_text(node), "Note")
         style(node, extract_text(node))
       end
 
       # ISO/IEC DIR 2, 26.5
       def footnote_style(node)
-        return if @novalid
-
+        @novalid and return
         style_no_guidance(node, extract_text(node), "Footnote")
         style(node, extract_text(node))
       end
@@ -91,7 +84,7 @@ module Metanorma
 
       def style(node, text)
         @novalid and return
-        style_number(node, text)
+        @novalid_number or style_number(node, text)
         style_percent(node, text)
         style_abbrev(node, text)
         style_units(node, text)
@@ -116,6 +109,8 @@ module Metanorma
       def style_ambig_words(node, text)
         r = ambig_words_check(text) and
           style_warning(node, "may contain ambiguous provision", r)
+        @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
+                                      "ambiguous number", node, text)
       end
 
       # ISO/IEC DIR 2, 9.1
@@ -124,11 +119,12 @@ module Metanorma
       def style_number(node, text)
         style_number_grouping(node, text)
         style_regex(/(?:^|\p{Zs})(?<num>[0-9]+\.[0-9]+)(?!\.[0-9])/i,
-                    "possible decimal point", node, text)
+                    "possible decimal point: mark up numbers with stem:[]", node, text)
         @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
                                       "ambiguous number", node, text)
         style_regex(/(?:^|\p{Zs})(?<num>-[0-9][0-9,.]*)/i,
                     "hyphen instead of minus sign U+2212", node, text)
+        @novalid_number = true
       end
 
       def style_number_grouping(node, text)
@@ -136,13 +132,13 @@ module Metanorma
           style_two_regex_not_prev(
             node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/,
             %r{\b(ISO|IEC|IEEE|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z},
-            "number not broken up in threes"
+            "number not broken up in threes: mark up numbers with stem:[]"
           )
         else
           style_two_regex_not_prev(
             node, text, /^(?<num>-?(?:[0-9]{5,}[,0-9]*|[03-9]\d\d\d|1[0-8]\d\d|2[1-9]\d\d|20[5-9]\d))\Z/,
             %r{\b(ISO|IEC|IEEE|\b)\Z},
-            "number not broken up in threes"
+            "number not broken up in threes: mark up numbers with stem:[]"
           )
         end
       end
