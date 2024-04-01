@@ -1104,9 +1104,6 @@ RSpec.describe IsoDoc do
         <p class="MsoNormal">
           <br clear="all" class="section"/>
         </p>
-        <p class="MsoNormal">
-          <br clear="all" class="section"/>
-        </p>
         <br clear="all" style="page-break-before:always;mso-break-type:section-break"/>
         <div class="WordSection3">
           <h1>Index</h1>
@@ -1167,9 +1164,9 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")
     wordxml = Nokogiri::XML(word)
-    wordxml.at("//div[@class = 'WordSection1']").remove
-    wordxml.at("//div[@class = 'WordSection2']").remove
-    wordxml.at("//div[@class = 'WordSection3']").remove
+    wordxml.xpath("//div[@class = 'WordSection1' or @class = 'WordSection2']")
+      .each(&:remove)
+    wordxml.at("//div[@class = 'WordSection3']")&.remove
     expect(xmlpp(wordxml.to_xml))
       .to be_equivalent_to xmlpp(doc)
   end

@@ -1,7 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Metanorma::ISO do
-=begin
   it "processes sections" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
@@ -244,7 +243,7 @@ RSpec.describe Metanorma::ISO do
     expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to xmlpp(output)
   end
-=end
+
   it "processes terms & definitions with external source" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
