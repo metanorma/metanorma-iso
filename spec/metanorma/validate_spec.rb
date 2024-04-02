@@ -152,21 +152,6 @@ RSpec.describe Metanorma::ISO do
       .to include "pizza is not a recognised document type"
   end
 
-  it "Warns of illegal script" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :script: pizza
-
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include "pizza is not a recognised script"
-  end
-
   it "Warns of illegal stage" do
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -272,21 +257,6 @@ RSpec.describe Metanorma::ISO do
     end
     expect(File.read("test.err.html"))
       .to include "IS stage document cannot have iteration"
-  end
-
-  it "Warns of illegal script" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :script: pizza
-
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include "pizza is not a recognised script"
   end
 
   it "warns that technical report may contain requirement" do

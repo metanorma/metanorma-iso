@@ -404,7 +404,7 @@ RSpec.describe IsoDoc do
                <em>
                  <span class='stddocTitle'>IGNF. (IGN France) Registry</span>
                </em>
-                [website]. n.d. Available from:
+                [website]. Available from:
                <span class='biburl'>
                  <link target='https://registre.ign.fr/'>https://registre.ign.fr/</link>
                </span>

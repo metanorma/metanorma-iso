@@ -125,13 +125,6 @@ module Metanorma
                    "#{@doctype} is not a recognised document type")
       end
 
-      def script_validate(xmldoc)
-        script = xmldoc&.at("//bibdata/script")&.text
-        %w(Cyrl Latn).include?(script) or
-          @log.add("Document Attributes", nil,
-                   "#{script} is not a recognised script")
-      end
-
       def iteration_validate(xmldoc)
         iteration = xmldoc&.at("//bibdata/status/iteration")&.text or return
         /^\d+/.match(iteration) or
@@ -141,7 +134,6 @@ module Metanorma
 
       def bibdata_validate(doc)
         doctype_validate(doc)
-        script_validate(doc)
         iteration_validate(doc)
       end
 
