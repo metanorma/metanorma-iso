@@ -296,10 +296,12 @@
 	-->
 	<xsl:variable name="contents_">
 		<contents>
-			<xsl:call-template name="processPrefaceSectionsDefault_Contents"/>
-			<xsl:call-template name="processMainSectionsDefault_Contents"/>
-			<xsl:apply-templates select="//iso:indexsect" mode="contents"/>
-			<xsl:call-template name="processTablesFigures_Contents"/>
+			<xsl:if test="$isGenerateTableIF = 'false'">
+				<xsl:call-template name="processPrefaceSectionsDefault_Contents"/>
+				<xsl:call-template name="processMainSectionsDefault_Contents"/>
+				<xsl:apply-templates select="//iso:indexsect" mode="contents"/>
+				<xsl:call-template name="processTablesFigures_Contents"/>
+			</xsl:if>
 		</contents>
 	</xsl:variable>
 	<xsl:variable name="contents" select="xalan:nodeset($contents_)"/>
@@ -801,6 +803,8 @@
 				<xsl:call-template name="addBookmarks">
 					<xsl:with-param name="contents" select="$contents"/>
 				</xsl:call-template>
+
+				<xsl:if test="$isGenerateTableIF = 'false'"> <!-- no need cover page for auto-layout algorithm -->
 
 				<!-- cover page -->
 				<xsl:choose>
@@ -2049,12 +2053,16 @@
 					</xsl:otherwise>
 				</xsl:choose>
 
+				</xsl:if> <!-- $isGenerateTableIF = ' false' -->
+
 				<xsl:if test="$debug = 'true'"><xsl:message>START updated_xml_step1</xsl:message></xsl:if>
 				<xsl:variable name="startTime1" select="java:getTime(java:java.util.Date.new())"/>
 
 				<!-- STEP1: Re-order elements in 'preface', 'sections' based on @displayorder -->
 				<xsl:variable name="updated_xml_step1">
-					<xsl:apply-templates mode="update_xml_step1"/>
+					<xsl:if test="$table_if = 'false'">
+						<xsl:apply-templates mode="update_xml_step1"/>
+					</xsl:if>
 				</xsl:variable>
 
 				<!-- DEBUG -->
@@ -2073,7 +2081,9 @@
 
 				<!-- STEP2: add 'fn' after 'eref' and 'origin', if referenced to bibitem with 'note' = Withdrawn.' or 'Cancelled and replaced...'  -->
 				<xsl:variable name="updated_xml_step2">
-					<xsl:apply-templates select="xalan:nodeset($updated_xml_step1)" mode="update_xml_step2"/>
+					<xsl:if test="$table_if = 'false'">
+						<xsl:apply-templates select="xalan:nodeset($updated_xml_step1)" mode="update_xml_step2"/>
+					</xsl:if>
 				</xsl:variable>
 
 				<xsl:variable name="endTime2" select="java:getTime(java:java.util.Date.new())"/>
@@ -2087,7 +2097,14 @@
 				<xsl:variable name="startTime3" select="java:getTime(java:java.util.Date.new())"/>
 
 				<xsl:variable name="updated_xml_step3">
-					<xsl:apply-templates select="xalan:nodeset($updated_xml_step2)" mode="update_xml_enclose_keep-together_within-line"/>
+					<xsl:choose>
+						<xsl:when test="$table_if = 'false'">
+							<xsl:apply-templates select="xalan:nodeset($updated_xml_step2)" mode="update_xml_enclose_keep-together_within-line"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:copy-of select="."/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:variable>
 
 				<xsl:variable name="endTime3" select="java:getTime(java:java.util.Date.new())"/>
@@ -2528,6 +2545,7 @@
 					<xsl:message>END xalan:nodeset</xsl:message> -->
 
 					<xsl:choose>
+						<xsl:when test="$isGenerateTableIF = 'true'"><!-- skip last page --></xsl:when>
 						<xsl:when test="$layoutVersion = '1951'"/>
 						<xsl:when test="$layoutVersion = '1972'"/>
 						<xsl:when test="$layoutVersion = '1987' and $doctype = 'technical-report'"><!-- UDC, Keywords and Price renders on the first page for technical-report --></xsl:when>
@@ -2777,6 +2795,7 @@
 
 	<xsl:template match="iso:preface/iso:clause[@type = 'toc']" priority="3">
 		<xsl:choose>
+			<xsl:when test="$isGenerateTableIF = 'true'"/>
 			<xsl:when test="$toc_level = 0"/>
 			<xsl:when test="$doctype = 'amendment'"/><!-- ToC shouldn't be generated in amendments. -->
 			<xsl:when test="$layoutVersion = '1987' and $doctype = 'technical-report'"/>
@@ -4818,17 +4837,30 @@
 	<xsl:param name="add_math_as_text">true</xsl:param> <!-- add math in text behind svg formula, to copy-paste formula from PDF as text -->
 
 	<xsl:param name="table_if">false</xsl:param> <!-- generate extended table in IF for autolayout-algorithm -->
-	<xsl:param name="table_widths"/> <!-- path to xml with table's widths, generated on 1st pass, based on FOP Intermediate Format -->
+	<xsl:param name="table_widths"/> <!-- (debug: path to) xml with table's widths, generated on 1st pass, based on FOP Intermediate Format -->
 	<!-- Example: <tables>
-			<table id="table_if_tab-symdu" page-width="75"> - table id prefixed by 'table_if_' to simple search in IF 
-				<tbody>
-					<tr>
-						<td id="tab-symdu_1_1">
-							<p_len>6</p_len>
-							<p_len>100</p_len>  for 2nd paragraph
-							<word_len>6</word_len>
-							<word_len>20</word_len>
-						...
+		<table page-width="509103" id="table1" width_max="223561" width_min="223560">
+			<column width_max="39354" width_min="39354"/>
+			<column width_max="75394" width_min="75394"/>
+			<column width_max="108813" width_min="108813"/>
+			<tbody>
+				<tr>
+					<td width_max="39354" width_min="39354">
+						<p_len>39354</p_len>
+						<word_len>39354</word_len>
+					</td>
+					
+		OLD:
+			<tables>
+					<table id="table_if_tab-symdu" page-width="75"> - table id prefixed by 'table_if_' to simple search in IF 
+						<tbody>
+							<tr>
+								<td id="tab-symdu_1_1">
+									<p_len>6</p_len>
+									<p_len>100</p_len>  for 2nd paragraph
+									<word_len>6</word_len>
+									<word_len>20</word_len>
+								...
 	-->
 
 	<!-- for command line debug: <xsl:variable name="table_widths_from_if" select="document($table_widths)"/> -->
@@ -6939,6 +6971,20 @@
 		</xsl:for-each>
 	</xsl:template>
 
+	<xsl:param name="table_only_with_id"/><!-- Example: table1, for table auto-layout algorithm -->
+
+	<xsl:template match="*[local-name()='table']" priority="2">
+		<xsl:choose>
+			<xsl:when test="$table_only_with_id != '' and @id = $table_only_with_id">
+				<xsl:call-template name="table"/>
+			</xsl:when>
+			<xsl:when test="$table_only_with_id != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="table"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
 	<xsl:template match="*[local-name()='table']" name="table">
 
 		<xsl:variable name="table-preamble">
@@ -6948,9 +6994,11 @@
 		<xsl:variable name="table">
 
 			<xsl:variable name="simple-table">
-				<xsl:call-template name="getSimpleTable">
-					<xsl:with-param name="id" select="@id"/>
-				</xsl:call-template>
+				<xsl:if test="$isGenerateTableIF = 'true' and $isApplyAutolayoutAlgorithm = 'true'">
+					<xsl:call-template name="getSimpleTable">
+						<xsl:with-param name="id" select="@id"/>
+					</xsl:call-template>
+				</xsl:if>
 			</xsl:variable>
 			<!-- <xsl:variable name="simple-table" select="xalan:nodeset($simple-table_)"/> -->
 
@@ -8462,7 +8510,20 @@
 	<!-- Definition List -->
 	<!-- ===================== -->
 
-	<xsl:template match="*[local-name()='dl']">
+	<!-- for table auto-layout algorithm -->
+	<xsl:template match="*[local-name()='dl']" priority="2">
+		<xsl:choose>
+			<xsl:when test="$table_only_with_id != '' and @id = $table_only_with_id">
+				<xsl:call-template name="dl"/>
+			</xsl:when>
+			<xsl:when test="$table_only_with_id != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="dl"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="*[local-name()='dl']" name="dl">
 		<xsl:variable name="isAdded" select="@added"/>
 		<xsl:variable name="isDeleted" select="@deleted"/>
 		<!-- <dl><xsl:copy-of select="."/></dl> -->
@@ -10493,7 +10554,13 @@
 							<xsl:value-of select="$language_current_2"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="//*[local-name()='bibdata']//*[local-name()='language']"/>
+							<xsl:variable name="language_current_3" select="normalize-space(//*[local-name()='bibdata']//*[local-name()='language'])"/>
+							<xsl:choose>
+								<xsl:when test="$language_current_3 != ''">
+									<xsl:value-of select="$language_current_3"/>
+								</xsl:when>
+								<xsl:otherwise>en</xsl:otherwise>
+							</xsl:choose>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:otherwise>
