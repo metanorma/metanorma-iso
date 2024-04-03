@@ -5077,6 +5077,9 @@
 	<xsl:variable name="hair_space"> </xsl:variable>
 	<xsl:variable name="en_dash">–</xsl:variable>
 	<xsl:variable name="em_dash">—</xsl:variable>
+	<xsl:variable name="cr">&#13;</xsl:variable>
+	<xsl:variable name="lf">
+</xsl:variable>
 
 	<xsl:template name="getTitle">
 		<xsl:param name="name"/>
@@ -7041,9 +7044,9 @@
 						</xsl:attribute>
 					</xsl:for-each>
 
-					<xsl:variable name="isNoteOrFnExist" select="./*[local-name()='note'] or ./*[local-name()='example'] or .//*[local-name()='fn'][local-name(..) != 'name'] or ./*[local-name()='source']"/>
+					<xsl:variable name="isNoteOrFnExist" select="./*[local-name()='note'][not(@type = 'units')] or ./*[local-name()='example'] or .//*[local-name()='fn'][local-name(..) != 'name'] or ./*[local-name()='source']"/>
 					<xsl:if test="$isNoteOrFnExist = 'true'">
-						<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute> <!-- set 0pt border, because there is a separete table below for footer  -->
+						<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute><!-- set 0pt border, because there is a separete table below for footer -->
 					</xsl:if>
 
 					<xsl:choose>
@@ -7216,8 +7219,27 @@
 
 					</fo:block>
 
+					<!-- <xsl:if test="$namespace = 'bsi' or $namespace = 'iec' or $namespace = 'iso'"> -->
+					<xsl:if test="$continued = 'true'">
+						<fo:block text-align="right">
+							<xsl:apply-templates select="../*[local-name() = 'note'][@type = 'units']/node()"/>
+						</fo:block>
+					</xsl:if>
+					<!-- </xsl:if> -->
+
 		</xsl:if>
 	</xsl:template> <!-- table/name -->
+
+	<!-- workaround solution for https://github.com/metanorma/metanorma-iso/issues/1151#issuecomment-2033087938 -->
+	<xsl:template match="*[local-name()='table']/*[local-name() = 'note'][@type = 'units']/*[local-name() = 'p']/text()" priority="4">
+		<xsl:choose>
+			<xsl:when test="preceding-sibling::*[local-name() = 'br']">
+				<!-- remove CR or LF at start -->
+				<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),'^(&#13;&#10;|&#13;|&#10;)', '')"/>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 
 	<!-- SOURCE: ... -->
 	<xsl:template match="*[local-name()='table']/*[local-name() = 'source']" priority="2">
@@ -7643,7 +7665,7 @@
 		<xsl:param name="colwidths"/>
 		<xsl:param name="colgroup"/>
 
-		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'] or ../*[local-name()='example'] or ../*[local-name()='dl'] or ..//*[local-name()='fn'][local-name(..) != 'name'] or ../*[local-name()='source'] or ../*[local-name()='p']"/>
+		<xsl:variable name="isNoteOrFnExist" select="../*[local-name()='note'][not(@type = 'units')] or ../*[local-name()='example'] or ../*[local-name()='dl'] or ..//*[local-name()='fn'][local-name(..) != 'name'] or ../*[local-name()='source'] or ../*[local-name()='p']"/>
 
 		<xsl:variable name="isNoteOrFnExistShowAfterTable">
 
@@ -7715,7 +7737,7 @@
 
 										<xsl:apply-templates select="../*[local-name()='p']"/>
 										<xsl:apply-templates select="../*[local-name()='dl']"/>
-										<xsl:apply-templates select="../*[local-name()='note']"/>
+										<xsl:apply-templates select="../*[local-name()='note'][not(@type = 'units')]"/>
 										<xsl:apply-templates select="../*[local-name()='example']"/>
 										<xsl:apply-templates select="../*[local-name()='source']"/>
 
@@ -7725,7 +7747,7 @@
 
 								<!-- horizontal row separator -->
 								<xsl:if test="normalize-space($isDisplayRowSeparator) = 'true'">
-									<xsl:if test="(../*[local-name()='note'] or ../*[local-name()='example']) and normalize-space($table_fn_block) != ''">
+									<xsl:if test="(../*[local-name()='note'][not(@type = 'units')] or ../*[local-name()='example']) and normalize-space($table_fn_block) != ''">
 										<fo:block-container border-top="0.5pt solid black" padding-left="1mm" padding-right="1mm">
 
 											<xsl:call-template name="setBordersTableArray"/>
