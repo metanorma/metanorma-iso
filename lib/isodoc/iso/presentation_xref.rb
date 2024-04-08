@@ -119,10 +119,11 @@ module IsoDoc
       def prefix_container_template(container, node, target)
         nested_xref = @i18n.nested_xref
         container_label = anchor_xref(node, container)
-        if @xrefs.anchor(target, :type) == "listitem" &&
-            !@xrefs.anchor(target, :refer_list)
+        if @xrefs.anchor(target, :type) == "listitem"
+            if !@xrefs.anchor(target, :refer_list)
           nested_xref = "%1 %2"
           # n = @xrefs.anchor(container, :label) and container_label = n
+          end
         end
         [nested_xref, container_label]
       end

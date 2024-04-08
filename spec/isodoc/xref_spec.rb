@@ -1864,6 +1864,11 @@ RSpec.describe IsoDoc do
               <xref target="AN"/>
               <xref target="Anote1"/>
               <xref target="Anote2"/>
+              <xref target="P"/>
+         <xref target="Q"/>
+         <xref target="R"/>
+         <xref target="S"/>
+         <xref target="P1"/>
             </p>
           </foreword>
         </preface>
@@ -1901,6 +1906,27 @@ RSpec.describe IsoDoc do
               </li>
             </ol>
           </clause>
+       <clause id="A"><title>Clause</title>
+       <ol id="L">
+       <li id="P">
+       <ol id="L11">
+       <li id="Q">
+       <ol id="L12">
+       <li id="R">
+       <ol id="L13">
+       <li id="S">
+       </li>
+       </ol>
+       </li>
+       </ol>
+       </li>
+       </ol>
+       </li>
+       </ol>
+       <ol id="L1">
+       <li id="P1">A</li>
+       </ol>
+       </clause>
         </sections>
       </iso-standard>
     INPUT
@@ -1919,6 +1945,11 @@ RSpec.describe IsoDoc do
               <xref target='AN'>Clause 1 a) 1) i) A)</xref>
               <xref target='Anote1'>Clause 1 a) 1) i) A) I)</xref>
               <xref target='Anote2'>Clause 1 a) 1) i) A) I) a)</xref>
+              <xref target="P">Clause 2, List  1 a)</xref>
+              <xref target="Q">Clause 2, List  1 a) 1)</xref>
+              <xref target="R">Clause 2, List  1 a) 1) i)</xref>
+              <xref target="S">Clause 2, List  1 a) 1) i) A)</xref>
+              <xref target="P1">Clause 2, List  2 a)</xref>
             </p>
           </foreword>
         </preface>
@@ -1956,6 +1987,27 @@ RSpec.describe IsoDoc do
               </li>
             </ol>
           </clause>
+           <clause id="A" displayorder="4">
+          <title depth="1">2<tab/>Clause</title>
+          <ol id="L" type="alphabet">
+            <li id="P" label="a">
+              <ol id="L11" type="arabic">
+                    <li id="Q" label="1">
+                  <ol id="L12" type="roman">
+                    <li id="R" label="i">
+                  <ol id="L13" type="alphabet_upper">
+                    <li id="S" label="A"/>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <ol id="L1" type="alphabet">
+        <li id="P1" label="a">A</li>
+      </ol>
+    </clause>
         </sections>
       </iso-standard>
     OUTPUT
