@@ -95,7 +95,7 @@
       <text/>
     </element>
   </define>
-  <define name="LocalizedString1">
+  <define name="LocalizedStringAttrs">
     <optional>
       <!-- multiple languages and scripts possible: comma delimit them if so -->
       <attribute name="language"/>
@@ -106,6 +106,10 @@
     <optional>
       <attribute name="script"/>
     </optional>
+  </define>
+  <define name="LocalizedString1">
+    <!-- multiple languages and scripts possible: comma delimit them if so -->
+    <ref name="LocalizedStringAttrs"/>
     <text/>
   </define>
   <define name="LocalizedString">
@@ -142,16 +146,8 @@
     <ref name="LocalizedStringOrXsAny"/>
   </define>
   <define name="LocalizedStringOrXsAny1">
-    <optional>
-      <!-- multiple languages and scripts possible: comma delimit them if so -->
-      <attribute name="language"/>
-    </optional>
-    <optional>
-      <attribute name="locale"/>
-    </optional>
-    <optional>
-      <attribute name="script"/>
-    </optional>
+    <!-- multiple languages and scripts possible: comma delimit them if so -->
+    <ref name="LocalizedStringAttrs"/>
     <oneOrMore>
       <choice>
         <text/>
@@ -208,6 +204,7 @@
   </define>
   <define name="roledescription">
     <element name="description">
+      <ref name="LocalizedStringAttrs"/>
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>
@@ -335,6 +332,7 @@
   </define>
   <define name="affiliationdescription">
     <element name="description">
+      <ref name="LocalizedStringAttrs"/>
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>
@@ -948,6 +946,7 @@
     <optional>
       <attribute name="type"/>
     </optional>
+    <ref name="LocalizedStringAttrs"/>
     <zeroOrMore>
       <ref name="TextElement"/>
     </zeroOrMore>
@@ -1041,15 +1040,7 @@
           <data type="boolean"/>
         </attribute>
       </optional>
-      <optional>
-        <attribute name="language"/>
-      </optional>
-      <optional>
-        <attribute name="locale"/>
-      </optional>
-      <optional>
-        <attribute name="script"/>
-      </optional>
+      <ref name="LocalizedStringAttrs"/>
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>
@@ -1277,6 +1268,7 @@
       <optional>
         <attribute name="type"/>
       </optional>
+      <ref name="LocalizedStringAttrs"/>
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>
@@ -1284,9 +1276,15 @@
   </define>
   <define name="bibabstract">
     <element name="abstract">
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="LocalizedStringAttrs"/>
+      <choice>
+        <oneOrMore>
+          <ref name="BasicBlock"/>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="TextElement"/>
+        </oneOrMore>
+      </choice>
     </element>
   </define>
   <define name="copyright">
@@ -1391,6 +1389,7 @@
       </attribute>
       <optional>
         <element name="description">
+          <ref name="LocalizedStringAttrs"/>
           <oneOrMore>
             <ref name="TextElement"/>
           </oneOrMore>

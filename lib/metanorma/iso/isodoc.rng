@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.3.0 -->
+<!-- VERSION v1.3.1 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -1346,38 +1346,41 @@
       </oneOrMore>
     </element>
   </define>
+  <define name="Section-Attributes">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="language"/>
+    </optional>
+    <optional>
+      <attribute name="script"/>
+    </optional>
+    <optional>
+      <attribute name="inline-header">
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="number"/>
+    </optional>
+    <optional>
+      <attribute name="branch-number"/>
+    </optional>
+    <optional>
+      <attribute name="obligation">
+        <choice>
+          <value>normative</value>
+          <value>informative</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
   <define name="reference-clause">
     <element name="clause">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="language"/>
-      </optional>
-      <optional>
-        <attribute name="script"/>
-      </optional>
-      <optional>
-        <attribute name="inline-header">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="number"/>
-      </optional>
-      <optional>
-        <attribute name="branch-number"/>
-      </optional>
-      <optional>
-        <attribute name="obligation">
-          <choice>
-            <value>normative</value>
-            <value>informative</value>
-          </choice>
-        </attribute>
-      </optional>
+      <ref name="Section-Attributes"/>
       <optional>
         <ref name="section-title"/>
       </optional>
@@ -1566,36 +1569,7 @@
     </element>
   </define>
   <define name="Content-Section">
-    <optional>
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="language"/>
-    </optional>
-    <optional>
-      <attribute name="script"/>
-    </optional>
-    <optional>
-      <attribute name="inline-header">
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="obligation">
-        <choice>
-          <value>normative</value>
-          <value>informative</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="number"/>
-    </optional>
-    <optional>
-      <attribute name="branch-number"/>
-    </optional>
+    <ref name="Section-Attributes"/>
     <optional>
       <attribute name="type"/>
     </optional>
@@ -1617,38 +1591,9 @@
     </element>
   </define>
   <define name="Clause-Section">
-    <optional>
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="language"/>
-    </optional>
-    <optional>
-      <attribute name="script"/>
-    </optional>
-    <optional>
-      <attribute name="inline-header">
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="obligation">
-        <choice>
-          <value>normative</value>
-          <value>informative</value>
-        </choice>
-      </attribute>
-    </optional>
+    <ref name="Section-Attributes"/>
     <optional>
       <attribute name="type"/>
-    </optional>
-    <optional>
-      <attribute name="number"/>
-    </optional>
-    <optional>
-      <attribute name="branch-number"/>
     </optional>
     <optional>
       <ref name="section-title"/>
@@ -1730,33 +1675,9 @@
   </define>
   <define name="terms">
     <element name="terms">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="language"/>
-      </optional>
-      <optional>
-        <attribute name="script"/>
-      </optional>
+      <ref name="Section-Attributes"/>
       <optional>
         <attribute name="type"/>
-      </optional>
-      <optional>
-        <attribute name="number"/>
-      </optional>
-      <optional>
-        <attribute name="branch-number"/>
-      </optional>
-      <optional>
-        <attribute name="obligation">
-          <choice>
-            <value>normative</value>
-            <value>informative</value>
-          </choice>
-        </attribute>
       </optional>
       <optional>
         <ref name="section-title"/>
