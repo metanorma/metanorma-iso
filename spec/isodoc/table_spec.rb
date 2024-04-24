@@ -57,7 +57,7 @@ RSpec.describe IsoDoc do
                   <td align="center">6,06</td>
                 </tr>
               </tfoot>
-              <dl>
+              <dl key="true">
                 <dt>Drago</dt>
                 <dd>A type of rice</dd>
               </dl>
@@ -88,7 +88,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
            <clause type="toc" id="_" displayorder="1">
              <title depth="1">Contents</title>
@@ -141,7 +141,8 @@ RSpec.describe IsoDoc do
                    <td align="center">6,06</td>
                  </tr>
                </tfoot>
-               <dl>
+               <dl key="true">
+               <name>Key</name>
                  <dt>Drago</dt>
                  <dd>A type of rice</dd>
                </dl>
@@ -175,7 +176,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-           <main class="main-section">
+      <main class="main-section">
          <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
          <br/>
          <br/>
@@ -232,6 +233,7 @@ RSpec.describe IsoDoc do
                </tr>
                <tr>
                  <td colspan="5" style="border-top:0pt;border-bottom:solid windowtext 1.5pt;">
+                  <p class="ListTitle">Key</p>
                    <dl>
                      <dt>
                        <p>Drago</p>
@@ -277,7 +279,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     doc = <<~OUTPUT
-           <div>
+      <div>
          <table xmlns:m="m" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" title="tool tip" summary="long desc">
            <a name="tableD-1" id="tableD-1"/>
            <thead>
@@ -324,6 +326,10 @@ RSpec.describe IsoDoc do
              </tr>
              <tr>
                <td colspan="5" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
+            <div class="figdl">
+           <p class="ListTitle">Key</p>
+           <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;" class="MsoNormal">Drago<span style="mso-tab-count:1">  </span>A type of rice</p>
+           </div>
                  <div class="BlockSource">
                    <p class="MsoNormal">[SOURCE: , Section 1
           &#x2014;
@@ -341,7 +347,6 @@ RSpec.describe IsoDoc do
                </td>
              </tr>
            </tfoot>
-           <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;" class="MsoNormal">Drago<span style="mso-tab-count:1">  </span>A type of rice</p>
          </table>
        </div>
     OUTPUT
@@ -366,7 +371,8 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.html")).to be true
@@ -554,7 +560,9 @@ RSpec.describe IsoDoc do
                     <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">81,2</td>
                   </tr>
                 </tbody>
+                <div class="figdl">
                 <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;">Drago<span style="mso-tab-count:1">  </span>A type of rice</p>
+                </div>
                 <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>
                 <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2</span><span style="mso-tab-count:1">  </span></p>Note 2</div>
               </table>
@@ -571,7 +579,8 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
        .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
