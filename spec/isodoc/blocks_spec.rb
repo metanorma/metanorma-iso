@@ -964,6 +964,7 @@ RSpec.describe IsoDoc do
                       </p>
                     </div>
                     <p style='page-break-after: avoid;'>where</p>
+                    <div class="figdl">
                     <dl id='_' class='formula_dl'>
                       <dt>
                         <span class='stem'>(#(r)#)</span>
@@ -978,6 +979,7 @@ RSpec.describe IsoDoc do
                         <p id='_'>is the other repeatability limit.</p>
                       </dd>
                     </dl>
+                    </div>
                     <div id='_' class='Note'>
                       <p>
                       <span class='note_label'>NOTE</span>

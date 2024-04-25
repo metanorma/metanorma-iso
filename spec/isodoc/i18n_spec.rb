@@ -234,22 +234,26 @@ RSpec.describe IsoDoc do
                  <span class="zzMoveToFollowing">
                    <b>4.2  </b>
                  </span>
+                 <div class="figdl">
                  <dl>
                    <dt>
                      <p>Symbol</p>
                    </dt>
                    <dd>Definition</dd>
                  </dl>
+                 </div>
                </div>
              </div>
              <div id="L" class="Symbols">
                <h1>5</h1>
+               <div class="figdl">
                <dl>
                  <dt>
                    <p>Symbol</p>
                  </dt>
                  <dd>Definition</dd>
                </dl>
+               </div>
              </div>
              <div id="M">
                <h1>6  Clause 4</h1>
@@ -857,22 +861,26 @@ RSpec.describe IsoDoc do
                  <span class="zzMoveToFollowing">
                    <b>4.2  </b>
                  </span>
+                 <div class="figdl">
                  <dl>
                    <dt>
                      <p>Symbol</p>
                    </dt>
                    <dd>Definition</dd>
                  </dl>
+                 </div>
                </div>
              </div>
              <div id="L" class="Symbols">
                <h1>5</h1>
+               <div class="figdl">
                <dl>
                  <dt>
                    <p>Symbol</p>
                  </dt>
                  <dd>Definition</dd>
                </dl>
+               </div>
              </div>
              <div id="M">
                <h1>6  Clause 4</h1>
@@ -1156,22 +1164,26 @@ RSpec.describe IsoDoc do
                  <span class="zzMoveToFollowing">
                    <b>4.2  </b>
                  </span>
+                 <div class="figdl">
                  <dl>
                    <dt>
                      <p>Symbol</p>
                    </dt>
                    <dd>Definition</dd>
                  </dl>
+                 </div>
                </div>
              </div>
              <div id="L" class="Symbols">
                <h1>5</h1>
+               <div class="figdl">
                <dl>
                  <dt>
                    <p>Symbol</p>
                  </dt>
                  <dd>Definition</dd>
                </dl>
+               </div>
              </div>
              <div id="M">
                <h1>6  Clause 4</h1>
@@ -1478,22 +1490,26 @@ RSpec.describe IsoDoc do
                  <span class="zzMoveToFollowing">
                    <b>4.2　</b>
                  </span>
+                 <div class="figdl">
                  <dl>
                    <dt>
                      <p>Symbol</p>
                    </dt>
                    <dd>Definition</dd>
                  </dl>
+                 </div>
                </div>
              </div>
              <div id="L" class="Symbols">
                <h1>5</h1>
+               <div class="figdl">
                <dl>
                  <dt>
                    <p>Symbol</p>
                  </dt>
                  <dd>Definition</dd>
                </dl>
+               </div>
              </div>
              <div id="M">
                <h1>6　Clause 4</h1>

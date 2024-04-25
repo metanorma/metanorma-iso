@@ -233,6 +233,7 @@ RSpec.describe IsoDoc do
                </tr>
                <tr>
                  <td colspan="5" style="border-top:0pt;border-bottom:solid windowtext 1.5pt;">
+                 <div class="figdl">
                   <p class="ListTitle">Key</p>
                    <dl>
                      <dt>
@@ -240,6 +241,7 @@ RSpec.describe IsoDoc do
                      </dt>
                      <dd>A type of rice</dd>
                    </dl>
+                   </div>
                    <div class="BlockSource">
                      <p>[SOURCE: , Section 1
           &#x2014;
@@ -499,12 +501,14 @@ RSpec.describe IsoDoc do
                     <td style="text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;">81,2</td>
                   </tr>
                 </tbody>
+                <div class="figdl">
                 <dl>
                   <dt>
                     <p>Drago</p>
                   </dt>
                   <dd>A type of rice</dd>
                 </dl>
+                </div>
                 <div id="A" class="Note"><p><span class="note_label">NOTE  1</span>  </p>Note 1</div>
                 <div id="C" class="Note"><p><span class="note_label">NOTE  2</span>  </p>Note 2</div>
               </table>

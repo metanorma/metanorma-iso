@@ -201,6 +201,15 @@ module IsoDoc
         end
       end
 
+      def table_cleanup(docxml)
+        super
+        docxml.xpath("//tfoot/div[@class = 'figdl']/p[@class = 'ListTitle']")
+          .each do |p|
+          p["align"] = "left"
+        end
+        docxml
+      end
+
       def convert_i18n_init(docxml)
         super
         update_i18n(docxml)
