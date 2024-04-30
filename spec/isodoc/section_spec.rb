@@ -202,22 +202,26 @@ RSpec.describe IsoDoc do
                 <span class="zzMoveToFollowing">
                   <b>3.2&#160; </b>
                 </span>
+                <div class="figdl">
                 <dl>
                   <dt>
                     <p>Symbol</p>
                   </dt>
                   <dd>Definition</dd>
                 </dl>
+                </div>
               </div>
             </div>
             <div class="Symbols" id="L">
               <h1>4</h1>
+              <div class="figdl">
               <dl>
                 <dt>
                   <p>Symbol</p>
                 </dt>
                 <dd>Definition</dd>
               </dl>
+              </div>
             </div>
             <div id="M">
               <h1>5&#160; Clause 4</h1>

@@ -160,6 +160,13 @@ module IsoDoc
         dlist.remove
       end
 
+      def table1(elem)
+        elem.xpath(ns(".//dl[@key = 'true'][not(./name)]")).each do |dl|
+          dl.children.first.previous = "<name>#{@i18n.key}</name>"
+        end
+        super
+      end
+
       def toc_title(docxml)
         %w(amendment technical-corrigendum).include?(@doctype) and return
         super
