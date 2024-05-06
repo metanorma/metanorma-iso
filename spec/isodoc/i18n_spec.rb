@@ -231,7 +231,7 @@ RSpec.describe IsoDoc do
                  </p>
                </div>
                <div id="K">
-                 <span class="zzMoveToFollowing">
+                 <span class="zzMoveToFollowing inline-header">
                    <b>4.2  </b>
                  </span>
                  <div class="figdl">
@@ -358,7 +358,7 @@ RSpec.describe IsoDoc do
                  </p>
                </div>
                <div id="K">
-                 <span class="zzMoveToFollowing">
+                 <span class="zzMoveToFollowing inline-header">
                    <b>4.2<span style="mso-tab-count:1">  </span></b>
                  </span>
                  <table class="dl">
@@ -858,7 +858,7 @@ RSpec.describe IsoDoc do
                  </p>
                </div>
                <div id="K">
-                 <span class="zzMoveToFollowing">
+                 <span class="zzMoveToFollowing inline-header">
                    <b>4.2  </b>
                  </span>
                  <div class="figdl">
@@ -1161,7 +1161,7 @@ RSpec.describe IsoDoc do
                  </p>
                </div>
                <div id="K">
-                 <span class="zzMoveToFollowing">
+                 <span class="zzMoveToFollowing inline-header">
                    <b>4.2  </b>
                  </span>
                  <div class="figdl">
@@ -1487,7 +1487,7 @@ RSpec.describe IsoDoc do
                  </p>
                </div>
                <div id="K">
-                 <span class="zzMoveToFollowing">
+                 <span class="zzMoveToFollowing inline-header">
                    <b>4.2　</b>
                  </span>
                  <div class="figdl">

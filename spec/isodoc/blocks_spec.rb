@@ -308,16 +308,18 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-          <div>
-            <h1 class='ForewordTitle'>Foreword</h1>
-            <div id='_' class='Admonition'>
-                     <p>Title — </p>
-      <ul>
-        <li>List</li>
-      </ul>
-      <p id='_'>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
-            </div>
-          </div>
+      <div>
+               <h1 class='ForewordTitle'>Foreword</h1>
+               <div id='_' class='Admonition'>
+                        <p>Title — </p>
+                        <div class="ul_wrap">
+         <ul>
+           <li>List</li>
+         </ul>
+       </div>
+         <p id='_'>Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+               </div>
+             </div>
     OUTPUT
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -380,7 +382,7 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~INPUT
           <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
-          <preface>#{'    '}
+          <preface>
             <clause type="toc" id="_" displayorder="1">
               <title depth="1">Contents</title>
           </clause>
@@ -1246,50 +1248,62 @@ RSpec.describe IsoDoc do
                     <br/>
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
-                              <ol type='a' class='alphabet'>
-                 <li id="_">
-                   <p>A</p>
-                 </li>
-                 <li id="_">
-                   <p>B</p>
-                 </li>
-                 <li id="_">
-                   <ol type='1' class='arabic'>
-                     <li id="_">C</li>
-                     <li id="_">D</li>
-                     <li id="_">
-                       <ol type='i' class='roman'>
-                         <li id="_">E</li>
-                         <li id="_">F</li>
+                              <div class="ol_wrap">
+                 <ol type="a" class="alphabet">
+                   <li id="_">
+                     <p>A</p>
+                   </li>
+                   <li id="_">
+                     <p>B</p>
+                   </li>
+                   <li id="_">
+                     <div class="ol_wrap">
+                       <ol type="1" class="arabic">
+                         <li id="_">C</li>
+                         <li id="_">D</li>
                          <li id="_">
-                           <ol type='A' class='alphabet_upper'>
-                             <li id="_">G</li>
-                             <li id="_">H</li>
-                             <li id="_">
-                               <ol type='I' class='roman_upper'>
-                                 <li id="_">I</li>
-                                 <li id="_">J</li>
-                                 <li id="_">
-                                   <ol type='a' class='alphabet'>
-                                     <li id="_">K</li>
-                                     <li id="_">L</li>
-                                     <li id="_">M</li>
+                           <div class="ol_wrap">
+                             <ol type="i" class="roman">
+                               <li id="_">E</li>
+                               <li id="_">F</li>
+                               <li id="_">
+                                 <div class="ol_wrap">
+                                   <ol type="A" class="alphabet_upper">
+                                     <li id="_">G</li>
+                                     <li id="_">H</li>
+                                     <li id="_">
+                                       <div class="ol_wrap">
+                                         <ol type="I" class="roman_upper">
+                                           <li id="_">I</li>
+                                           <li id="_">J</li>
+                                           <li id="_">
+                                             <div class="ol_wrap">
+                                               <ol type="a" class="alphabet">
+                                                 <li id="_">K</li>
+                                                 <li id="_">L</li>
+                                                 <li id="_">M</li>
+                                               </ol>
+                                             </div>
+                                           </li>
+                                           <li id="_">N</li>
+                                         </ol>
+                                       </div>
+                                     </li>
+                                     <li id="_">O</li>
                                    </ol>
-                                 </li>
-                                 <li id="_">N</li>
-                               </ol>
-                             </li>
-                             <li id="_">O</li>
-                           </ol>
+                                 </div>
+                               </li>
+                               <li id="_">P</li>
+                             </ol>
+                           </div>
                          </li>
-                         <li id="_">P</li>
+                         <li id="_">Q</li>
                        </ol>
-                     </li>
-                     <li id="_">Q</li>
-                   </ol>
-                 </li>
-                 <li id="_">R</li>
-               </ol>
+                     </div>
+                   </li>
+                   <li id="_">R</li>
+                 </ol>
+               </div>
              </div>
            </div>
          </body>
@@ -1331,9 +1345,11 @@ RSpec.describe IsoDoc do
                     <br/>
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
+               <div class="ol_wrap">
                <ol type='a' start='4'  class='alphabet'>
                  <li id="_">List</li>
                </ol>
+               </div>
              </div>
            </div>
          </body>
@@ -1352,9 +1368,11 @@ RSpec.describe IsoDoc do
       </p>
             <div>
               <h1 class='ForewordTitle'>Foreword</h1>
+              <div class="ol_wrap">
               <ol type='a' start='4'>
                 <li id="_">List</li>
               </ol>
+              </div>
             </div>
             <p> </p>
           </div>

@@ -139,9 +139,18 @@ RSpec.describe Metanorma::Iso::Processor do
       .to be_equivalent_to xmlpp(<<~OUTPUT)
         <main class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-          <div class='authority'> </div>
-          <div id="H"><h1 id="_">1&#xA0; Terms, Definitions, Symbols and Abbreviated Terms</h1>
-            <h2 class="TermNum" id="J">1.1</h2>
+          <div class="authority"/>
+          <div id="H">
+            <h1 id="_">
+              <a class="anchor" href="#H"/>
+              <a class="header" href="#H">1  Terms, Definitions, Symbols and Abbreviated Terms</a>
+            </h1>
+            <div id="J">
+              <h2 class="TermNum" id="_">
+                <a class="anchor" href="#J"/>
+                <a class="header" href="#J">1.1</a>
+              </h2>
+            </div>
             <p class="Terms" style="text-align:left;">Term2</p>
           </div>
         </main>

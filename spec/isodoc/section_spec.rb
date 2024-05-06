@@ -199,7 +199,7 @@ RSpec.describe IsoDoc do
                 <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
               <div id="K">
-                <span class="zzMoveToFollowing">
+                <span class="zzMoveToFollowing inline-header">
                   <b>3.2&#160; </b>
                 </span>
                 <div class="figdl">
@@ -332,7 +332,7 @@ RSpec.describe IsoDoc do
                 <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
               <div id="K">
-                <span class="zzMoveToFollowing">
+                <span class="zzMoveToFollowing inline-header">
                   <b>3.2
                     <span style="mso-tab-count:1">&#160; </span></b>
                 </span>
@@ -538,7 +538,7 @@ RSpec.describe IsoDoc do
                 <h2>1.1&#160; Scope 1</h2>
               </div>
               <div id='D2'>
-                <span class='zzMoveToFollowing'>
+                <span class='zzMoveToFollowing inline-header'>
                   <b>1.2&#160; </b>
                 </span>
               </div>
@@ -748,7 +748,7 @@ RSpec.describe IsoDoc do
                 <h2>Introduction</h2>
               </div>
               <div id="O">
-                <span class="zzMoveToFollowing"><b>Clause 4.2&#160; </b></span>
+                <span class="zzMoveToFollowing inline-header"><b>Clause 4.2&#160; </b></span>
                 <p>Hello</p>
               </div>
             </div>
@@ -1027,7 +1027,7 @@ RSpec.describe IsoDoc do
               <a id='_'/>
               <a id='_'/>
               <div id='B'>
-                <span class='zzMoveToFollowing'>
+                <span class='zzMoveToFollowing inline-header'>
                   <b>1.1&#160; </b>
                 </span>
                 <p>B</p>
@@ -1039,6 +1039,7 @@ RSpec.describe IsoDoc do
             </div>
             <div id='_'>
               <h1>Index</h1>
+              <div class="ul_wrap">
               <ul>
                 <li>
                   <i>Dasein</i>
@@ -1056,10 +1057,12 @@ RSpec.describe IsoDoc do
                   <a href='#_'>Clause 1</a>
                    ,
                   <a href='#_'>1.1</a>
+                  <div class="ul_wrap">
                   <ul>
                     <li>
                        dans la France,
                       <a href='#_'>Clause 1</a>
+                      <div class="ul_wrap">
                       <ul>
                         <li>
                            &#224; Paris,
@@ -1070,90 +1073,97 @@ RSpec.describe IsoDoc do
                           <a href='#_'>Clause 1</a>
                         </li>
                       </ul>
+                      </div>
                     </li>
                     <li>
                        dans les &#201;tats-Unis,
                       <a href='#_'>1.1</a>
                     </li>
                   </ul>
+                  </div>
                 </li>
                 <li>
                    &#234;tre
+                   <div class="ul_wrap">
                   <ul>
                     <li>
                        Husserl, see zebra, see also
                       <i>Eman</i>
                        cipation, zebra
+                       <div class="ul_wrap">
                       <ul>
                         <li>
                            en allemand,
                           <a href='#_'>Clause 1</a>
                         </li>
                       </ul>
+                      </div>
                     </li>
                   </ul>
+                  </div>
                 </li>
                 <li>
                    zebra,
                   <a href='#_'>1.1</a>
                 </li>
               </ul>
+              </div>
             </div>
           </div>
         </body>
       </html>
     OUTPUT
     doc = <<~DOC
-          <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US">
-        <p class="MsoNormal">
-          <br clear="all" class="section"/>
-        </p>
-        <br clear="all" style="page-break-before:always;mso-break-type:section-break"/>
-        <div class="WordSection3">
-          <h1>Index</h1>
-        </div>
-        <br clear="all" style="page-break-before:auto;mso-break-type:section-break"/>
-        <div class="index">
-          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpFirst"><i>Dasein</i>
-              , see
-              <i>Eman</i>
-              cipation, être
-            </p>
-          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
-              élongé,
-              <a href="#_">Clause 1</a></p>
-          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle"><i>Eman</i>
-              cipation,
-              <a href="#_">Clause 1</a>
-              ,
-              <a href="#_">1.1</a><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
-                  dans la France,
-                  <a href="#_">Clause 1</a><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
-                      à Paris,
-                      <a href="#_">1.1</a></p><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpLast">
-                      en Bretagne,
-                      <a href="#_">Clause 1</a></p></p><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpLast">
-                  dans les États-Unis,
-                  <a href="#_">1.1</a></p></p>
-          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
-              être
-
-                <p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
-                  Husserl, see zebra, see also
-                  <i>Eman</i>
-                  cipation, zebra
-
-                    <p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
-                      en allemand,
-                      <a href="#_">Clause 1</a></p></p></p>
-          <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpLast">
-              zebra,
-              <a href="#_">1.1</a></p>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-        <div style="mso-element:footnote-list"/>
-      </body>
+        <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US">
+          <p class="MsoNormal">
+            <br clear="all" class="section"/>
+          </p>
+          <br clear="all" style="page-break-before:always;mso-break-type:section-break"/>
+          <div class="WordSection3">
+            <h1>Index</h1>
+          </div>
+          <br clear="all" style="page-break-before:auto;mso-break-type:section-break"/>
+          <div class="index">
+            <div class="ul_wrap">
+              <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpFirst"><i>Dasein</i>
+                , see
+                <i>Eman</i>
+                cipation, être
+              </p>
+              <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
+                élongé,
+                <a href="#_">Clause 1</a></p>
+              <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle"><i>Eman</i>
+                cipation,
+                <a href="#_">Clause 1</a>
+                ,
+                <a href="#_">1.1</a><div class="ul_wrap"><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
+                    dans la France,
+                    <a href="#_">Clause 1</a><div class="ul_wrap"><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
+                        à Paris,
+                        <a href="#_">1.1</a></p><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpLast">
+                        en Bretagne,
+                        <a href="#_">Clause 1</a></p></div></p><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpLast">
+                    dans les États-Unis,
+                    <a href="#_">1.1</a></p></div></p>
+              <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
+                être
+                <div class="ul_wrap"><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
+                    Husserl, see zebra, see also
+                    <i>Eman</i>
+                    cipation, zebra
+                    <div class="ul_wrap"><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
+                        en allemand,
+                        <a href="#_">Clause 1</a></p></div></p></div></p>
+              <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpLast">
+                zebra,
+                <a href="#_">1.1</a></p>
+            </div>
+          </div>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+          <div style="mso-element:footnote-list"/>
+        </body>
     DOC
     expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)

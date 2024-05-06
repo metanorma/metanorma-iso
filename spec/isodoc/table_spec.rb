@@ -263,12 +263,14 @@ RSpec.describe IsoDoc do
          <br/>
          <div id="Annex" class="Section3">
            <h1 class="Annex" id="_">
+           <a class="anchor" href="#Annex"/>
+          <a class="header" href="#Annex">
              <b>Annex A</b>
              <br/>
              <span class="obligation">(informative)</span>
              <br/>
              <br/>
-             <b>Annex</b>
+             <b>Annex</b></a>
            </h1>
            <p class="TableTitle" style="text-align:center;">Table A.1 — Another table</p>
            <table id="AnnexTable" class="MsoISOTable" style="border-width:1px;border-spacing:0;">

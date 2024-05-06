@@ -770,6 +770,7 @@ RSpec.describe IsoDoc do
                  <b>B</b>
                </p>
                <p>
+               <div class="ul_wrap">
                  <ul>
                    <li>
                (<a href="#clause1"><span class="citesec">Clause 3</span></a>)
@@ -810,6 +811,7 @@ RSpec.describe IsoDoc do
                      <b>error!</b>
                    </li>
                  </ul>
+                 </div>
                </p>
              </div>
              <div id="clause1">
@@ -819,7 +821,8 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
@@ -965,7 +968,8 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
        .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
   end
 
@@ -1071,6 +1075,7 @@ RSpec.describe IsoDoc do
                 <b>B</b>
               </p>
               <p>
+              <div class="ul_wrap">
                 <ul>
                   <li><i>term</i>
             (<a href="#clause1"><span class="citesec">Clause 1</span></a>)
@@ -1096,13 +1101,15 @@ RSpec.describe IsoDoc do
                   <li><i>term</i> (<a href="#clause1"><span class="citesec">Clause 1</span></a>)</li>
                   <li><i>term</i> (<span class="citesec">Clause 1</span>)</li>
                 </ul>
+                </div>
               </p>
             </div>
           </div>
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
     expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)

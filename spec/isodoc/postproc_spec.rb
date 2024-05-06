@@ -453,42 +453,45 @@ RSpec.describe IsoDoc do
       .sub(%r{</main>.*$}m, "</main>")
 
     expect(xmlpp(strip_guid(html))).to be_equivalent_to xmlpp(<<~OUTPUT)
-      <main class="main-section" xmlns:epub="epub">
-        <button id="myBtn" onclick="topFunction()" title="Go to top">Top</button>
-        <div id="A">
-          <h1 id="_">1 &#xA0; Clause 4</h1>
-          <a class="FootnoteRef" href="#fn:3" id="fnref:1">
-            <sup>1)</sup>
-          </a>
-          <div id="N">
-            <h2 id="_">1.1 &#xA0; Introduction to this
-              <a class="FootnoteRef" href="#fn:2" id="fnref:2">
-                <sup>2)</sup></a>
-            </h2>
-          </div>
-          <div id="O">
-            <h2 id="_">1.2 &#xA0; Clause 4.2</h2>
-            <p>A
-              <a class="FootnoteRef" href="#fn:2">
-                <sup>2)</sup></a>
-            </p>
-          </div>
-        </div>
-        <aside class="footnote" id="fn:3">
-          <p id="_">
-            <a class="FootnoteRef" href="#fn:3">
+      <main xmlns:epub="epub" class="main-section">
+          <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+          <div id="A">
+            <h1 id="_">
+              <a class="anchor" href="#A"/>
+              <a class="header" href="#A">1
+                 
+                Clause 4</a>
+            </h1>
+            <a class="FootnoteRef" href="#fn:3" id="fnref:1">
               <sup>1)</sup>
-            </a>This is a footnote.</p>
-          <a href="#fnref:1">↩</a>
-        </aside>
-        <aside class="footnote" id="fn:2">
-          <p id="_">
-            <a class="FootnoteRef" href="#fn:2">
-              <sup>2)</sup>
-            </a>Formerly denoted as 15 % (m/m).</p>
-          <a href="#fnref:2">↩</a>
-        </aside>
-      </main>
+            </a>
+            <div id="N">
+              <h2 id="_">
+                <a class="anchor" href="#N"/>
+                <a class="header" href="#N">1.1  
+                  Introduction to this
+                  <a class="FootnoteRef" href="#fn:2" id="fnref:2"><sup>2)</sup></a></a>
+              </h2>
+            </div>
+            <div id="O">
+              <h2 id="_">
+                <a class="anchor" href="#O"/>
+                <a class="header" href="#O">1.2  
+                  Clause 4.2</a>
+              </h2>
+              <p>A
+                  <a class="FootnoteRef" href="#fn:2"><sup>2)</sup></a></p>
+            </div>
+          </div>
+          <aside id="fn:3" class="footnote">
+            <p id="_"><a class="FootnoteRef" href="#fn:3"><sup>1)</sup></a>This is a footnote.</p>
+            <a href="#fnref:1">↩</a>
+          </aside>
+          <aside id="fn:2" class="footnote">
+            <p id="_"><a class="FootnoteRef" href="#fn:2"><sup>2)</sup></a>Formerly denoted as 15 % (m/m).</p>
+            <a href="#fnref:2">↩</a>
+          </aside>
+        </main>
     OUTPUT
 
     FileUtils.rm_rf "test.doc"
@@ -661,9 +664,9 @@ RSpec.describe IsoDoc do
         </iso-standard>
       INPUT
     expect(File.exist?("test.html")).to be true
-    html = File.read("test.html", encoding: "UTF-8")
-    expect(html).to match(%r{<h2 class="TermNum" id="paddy1">1\.1</h2>})
-    expect(html).to match(%r{<h2 class="TermNum" id="paddy">1\.2</h2>})
+    html = strip_guid(File.read("test.html", encoding: "UTF-8"))
+    expect(html).to match(%r{<h2 class="TermNum" id="_"><a class="anchor" href="#paddy1"></a><a class="header" href="#paddy1">1\.1</a>})
+    expect(html).to match(%r{<h2 class="TermNum" id="_"><a class="anchor" href="#paddy"></a><a class="header" href="#paddy">1\.2</a>})
   end
 
   it "inserts default paragraph between two tables for Word" do
