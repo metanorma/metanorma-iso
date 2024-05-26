@@ -7098,7 +7098,9 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:param name="table_only_with_id"/><!-- Example: table1, for table auto-layout algorithm -->
+	<!-- for table auto-layout algorithm -->
+	<xsl:param name="table_only_with_id"/> <!-- Example: 'table1' -->
+	<xsl:param name="table_only_with_ids"/> <!-- Example: 'table1 table2 table3 ' -->
 
 	<xsl:template match="*[local-name()='table']" priority="2">
 		<xsl:choose>
@@ -7106,6 +7108,10 @@
 				<xsl:call-template name="table"/>
 			</xsl:when>
 			<xsl:when test="$table_only_with_id != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
+			<xsl:when test="$table_only_with_ids != '' and contains($table_only_with_ids, concat(@id, ' '))">
+				<xsl:call-template name="table"/>
+			</xsl:when>
+			<xsl:when test="$table_only_with_ids != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
 			<xsl:otherwise>
 				<xsl:call-template name="table"/>
 			</xsl:otherwise>
@@ -8646,6 +8652,10 @@
 				<xsl:call-template name="dl"/>
 			</xsl:when>
 			<xsl:when test="$table_only_with_id != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
+			<xsl:when test="$table_only_with_ids != '' and contains($table_only_with_ids, concat(@id, ' '))">
+				<xsl:call-template name="dl"/>
+			</xsl:when>
+			<xsl:when test="$table_only_with_ids != ''"><fo:block/><!-- to prevent empty fo:block-container --></xsl:when>
 			<xsl:otherwise>
 				<xsl:call-template name="dl"/>
 			</xsl:otherwise>
@@ -8815,7 +8825,7 @@
 
 										<!-- create virtual html table for dl/[dt and dd] -->
 										<xsl:variable name="simple-table">
-
+											<!-- initial='<xsl:copy-of select="."/>' -->
 											<xsl:variable name="dl_table">
 												<tbody>
 													<xsl:apply-templates mode="dl_if">
@@ -15581,7 +15591,20 @@
 	<!-- optimization: remove clause if table_only_with_id isn't empty and clause doesn't contain table or dl with table_only_with_id -->
 	<xsl:template match="*[local-name() = 'clause' or local-name() = 'p' or local-name() = 'definitions' or local-name() = 'annex']" mode="update_xml_step1">
 		<xsl:choose>
+			<xsl:when test="($table_only_with_id != '' or $table_only_with_ids != '') and local-name() = 'p' and (ancestor::*[local-name() = 'table' or local-name() = 'dl' or local-name() = 'toc'])">
+				<xsl:copy>
+					<xsl:copy-of select="@*"/>
+					<xsl:apply-templates mode="update_xml_step1"/>
+				</xsl:copy>
+			</xsl:when>
+			<!-- for table auto-layout algorithm -->
 			<xsl:when test="$table_only_with_id != '' and not(.//*[local-name() = 'table' or local-name() = 'dl'][@id = $table_only_with_id])">
+				<xsl:copy>
+					<xsl:copy-of select="@*"/>
+				</xsl:copy>
+			</xsl:when>
+			<!-- for table auto-layout algorithm -->
+			<xsl:when test="$table_only_with_ids != '' and not(.//*[local-name() = 'table' or local-name() = 'dl'][contains($table_only_with_ids, concat(@id, ' '))])">
 				<xsl:copy>
 					<xsl:copy-of select="@*"/>
 				</xsl:copy>
