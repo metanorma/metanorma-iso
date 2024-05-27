@@ -16086,6 +16086,25 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<xsl:template match="*[local-name() = 'li']" mode="linear_xml" priority="2">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="linear_xml"/>
+
+			<xsl:variable name="ancestor">
+				<xsl:choose>
+					<xsl:when test="ancestor::*[local-name() = 'preface']">preface</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'sections']">sections</xsl:when>
+					<xsl:when test="ancestor::*[local-name() = 'annex']">annex</xsl:when>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:attribute name="ancestor">
+				<xsl:value-of select="$ancestor"/>
+			</xsl:attribute>
+
+			<xsl:apply-templates mode="linear_xml"/>
+		</xsl:copy>
+	</xsl:template>
+
 	<!-- add @to = figure, table, clause -->
 	<!-- add @depth = from  -->
 	<xsl:template match="*[local-name() = 'xref']" mode="linear_xml">
