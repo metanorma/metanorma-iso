@@ -66,12 +66,12 @@
   {% endif %}
 </div>
 
-{% if unpublished %}
+{% if stage_int >= 20 and stage_int < 40 %}
 <div class="coverpage_warning">
   <div id="boilerplate-license-destination"/>
 </div>
 {% endif %}
-<div class="coverpage-warning" id="coverpage-note-destination"/>
+<div class="coverpage_warning" id="coverpage-note-destination"/>
 
 {% if ics %}
 <p><b>ICS:</b> {{ ics }}</p>

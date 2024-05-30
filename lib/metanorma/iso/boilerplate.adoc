@@ -78,7 +78,7 @@ Website: {% if document_scheme == "2024" %}https://www.iso.org/[www.iso.org]{% e
 [[boilerplate-place]]
 Published in Switzerland
 
-{% if unpublished %}
+{% if stage_int >= 20 and stage_int < 40 %}
 == license-statement
 === Warning for WDs and CDs
 

@@ -122,6 +122,23 @@
       </oneOrMore>
     </choice>
   </define>
+  <define name="LocalizedMarkedUpString1">
+    <!-- multiple languages and scripts possible: comma delimit them if so -->
+    <ref name="LocalizedStringAttrs"/>
+    <oneOrMore>
+      <ref name="TextElement"/>
+    </oneOrMore>
+  </define>
+  <define name="LocalizedMarkedUpString">
+    <choice>
+      <ref name="LocalizedMarkedUpString1"/>
+      <oneOrMore>
+        <element name="variant">
+          <ref name="LocalizedMarkedUpString1"/>
+        </element>
+      </oneOrMore>
+    </choice>
+  </define>
   <!--
     Unlike UML, change type to format: type is overloaded
     Would be need if plain were default value and could omit the attribute
@@ -204,10 +221,7 @@
   </define>
   <define name="roledescription">
     <element name="description">
-      <ref name="LocalizedStringAttrs"/>
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="LocalizedMarkedUpString"/>
     </element>
   </define>
   <define name="person">
@@ -332,10 +346,7 @@
   </define>
   <define name="affiliationdescription">
     <element name="description">
-      <ref name="LocalizedStringAttrs"/>
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="LocalizedMarkedUpString"/>
     </element>
   </define>
   <define name="organization">
@@ -384,7 +395,7 @@
   </define>
   <define name="logo">
     <element name="logo">
-      <ref name="image"/>
+      <ref name="image-no-id"/>
     </element>
   </define>
   <define name="depiction">
@@ -393,7 +404,7 @@
         <attribute name="scope"/>
       </optional>
       <zeroOrMore>
-        <ref name="image"/>
+        <ref name="image-no-id"/>
       </zeroOrMore>
     </element>
   </define>
@@ -946,10 +957,7 @@
     <optional>
       <attribute name="type"/>
     </optional>
-    <ref name="LocalizedStringAttrs"/>
-    <zeroOrMore>
-      <ref name="TextElement"/>
-    </zeroOrMore>
+    <ref name="LocalizedMarkedUpString"/>
   </define>
   <!-- TitleType = ( "alternative" | "original" | "unofficial" | "subtitle" | "main" ) -->
   <define name="TypedUri">
@@ -1040,10 +1048,7 @@
           <data type="boolean"/>
         </attribute>
       </optional>
-      <ref name="LocalizedStringAttrs"/>
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="LocalizedMarkedUpString"/>
     </element>
   </define>
   <define name="docnumber">
@@ -1268,10 +1273,7 @@
       <optional>
         <attribute name="type"/>
       </optional>
-      <ref name="LocalizedStringAttrs"/>
-      <oneOrMore>
-        <ref name="TextElement"/>
-      </oneOrMore>
+      <ref name="LocalizedMarkedUpString"/>
     </element>
   </define>
   <define name="bibabstract">
@@ -1279,7 +1281,7 @@
       <ref name="LocalizedStringAttrs"/>
       <choice>
         <oneOrMore>
-          <ref name="BasicBlock"/>
+          <ref name="BasicBlockNoId"/>
         </oneOrMore>
         <oneOrMore>
           <ref name="TextElement"/>
@@ -1389,10 +1391,7 @@
       </attribute>
       <optional>
         <element name="description">
-          <ref name="LocalizedStringAttrs"/>
-          <oneOrMore>
-            <ref name="TextElement"/>
-          </oneOrMore>
+          <ref name="LocalizedMarkedUpString"/>
         </element>
       </optional>
       <element name="bibitem">

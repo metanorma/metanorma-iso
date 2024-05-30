@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.3.1 -->
+<!-- VERSION v1.3.2 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -30,42 +30,28 @@
         </zeroOrMore>
       </element>
     </define>
-    <define name="admonition">
-      <element name="admonition">
-        <attribute name="type">
-          <ref name="AdmonitionType"/>
+    <define name="AdmonitionAttr">
+      <attribute name="type">
+        <ref name="AdmonitionType"/>
+      </attribute>
+      <optional>
+        <attribute name="class"/>
+      </optional>
+      <optional>
+        <attribute name="uri">
+          <data type="anyURI"/>
         </attribute>
-        <optional>
-          <attribute name="class"/>
-        </optional>
-        <attribute name="id">
-          <data type="ID"/>
+      </optional>
+      <optional>
+        <attribute name="coverpage">
+          <data type="boolean"/>
         </attribute>
-        <optional>
-          <attribute name="uri">
-            <data type="anyURI"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="coverpage">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="notag">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <ref name="tname"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="paragraph-with-footnote"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
+      </optional>
+      <optional>
+        <attribute name="notag">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
     </define>
     <define name="AdmonitionType">
       <choice>
@@ -196,210 +182,207 @@
         <ref name="PureTextElement"/>
       </oneOrMore>
     </define>
-    <define name="ul">
-      <element name="ul">
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <ref name="tname"/>
-        </optional>
-        <oneOrMore>
-          <ref name="ul_li"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
+    <define name="UlAttr">
+      <ref name="BlockAttributes"/>
     </define>
-    <define name="ol">
-      <element name="ol">
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <attribute name="type">
-            <choice>
-              <value>roman</value>
-              <value>alphabet</value>
-              <value>arabic</value>
-              <value>roman_upper</value>
-              <value>alphabet_upper</value>
-            </choice>
-          </attribute>
-        </optional>
-        <optional>
-          <ref name="tname"/>
-        </optional>
-        <oneOrMore>
-          <ref name="li"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
+    <define name="UlBody">
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <oneOrMore>
+        <ref name="ul_li"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </define>
-    <define name="dl">
-      <element name="dl">
-        <attribute name="id">
-          <data type="ID"/>
+    <define name="OlBody">
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </define>
+    <define name="OlAttr">
+      <ref name="BlockAttributes"/>
+      <optional>
+        <attribute name="type">
+          <choice>
+            <value>roman</value>
+            <value>alphabet</value>
+            <value>arabic</value>
+            <value>roman_upper</value>
+            <value>alphabet_upper</value>
+          </choice>
         </attribute>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <attribute name="key">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <ref name="tname"/>
-        </optional>
-        <oneOrMore>
-          <ref name="dt"/>
-          <ref name="dd"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
+      </optional>
+    </define>
+    <define name="DlAttr">
+      <ref name="BlockAttributes"/>
+      <optional>
+        <attribute name="key">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+    </define>
+    <define name="DlBody">
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <oneOrMore>
+        <ref name="dt"/>
+        <ref name="dd"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </define>
     <define name="dt">
       <element name="dt">
-        <optional>
-          <attribute name="id">
-            <data type="ID"/>
-          </attribute>
-        </optional>
+        <ref name="OptionalId"/>
         <zeroOrMore>
           <ref name="TextElement"/>
         </zeroOrMore>
       </element>
     </define>
-    <define name="example">
-      <element name="example">
-        <attribute name="id">
-          <data type="ID"/>
+    <define name="ExampleAttr">
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
         </attribute>
-        <optional>
-          <attribute name="unnumbered">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="subsequence"/>
-        </optional>
-        <optional>
-          <attribute name="number"/>
-        </optional>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <ref name="tname"/>
-        </optional>
+      </optional>
+      <optional>
+        <attribute name="subsequence"/>
+      </optional>
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <ref name="BlockAttributes"/>
+    </define>
+    <define name="ExampleBody">
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <ref name="formula"/>
+          <ref name="ul"/>
+          <ref name="ol"/>
+          <ref name="dl"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+          <ref name="paragraph-with-footnote"/>
+          <ref name="figure"/>
+        </choice>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+    </define>
+    <define name="TableAttr">
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <optional>
+        <attribute name="subsequence"/>
+      </optional>
+      <optional>
+        <attribute name="alt"/>
+      </optional>
+      <optional>
+        <attribute name="summary"/>
+      </optional>
+      <optional>
+        <attribute name="uri">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="width"/>
+      </optional>
+      <ref name="BlockAttributes"/>
+    </define>
+    <define name="TableBody">
+      <optional>
+        <ref name="colgroup"/>
+      </optional>
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <optional>
+        <ref name="thead"/>
+      </optional>
+      <ref name="tbody"/>
+      <optional>
+        <ref name="tfoot"/>
+      </optional>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="table-note"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="source"/>
+      </optional>
+    </define>
+    <define name="FigureAttr">
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <optional>
+        <attribute name="subsequence"/>
+      </optional>
+      <optional>
+        <attribute name="class"/>
+      </optional>
+      <optional>
+        <attribute name="width"/>
+      </optional>
+      <ref name="BlockAttributes"/>
+    </define>
+    <define name="FigureBody">
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <choice>
+        <ref name="image"/>
+        <ref name="video"/>
+        <ref name="audio"/>
+        <ref name="pre"/>
         <oneOrMore>
-          <choice>
-            <ref name="formula"/>
-            <ref name="ul"/>
-            <ref name="ol"/>
-            <ref name="dl"/>
-            <ref name="quote"/>
-            <ref name="sourcecode"/>
-            <ref name="paragraph-with-footnote"/>
-            <ref name="figure"/>
-          </choice>
+          <ref name="paragraph-with-footnote"/>
         </oneOrMore>
         <zeroOrMore>
-          <ref name="note"/>
+          <ref name="figure"/>
         </zeroOrMore>
-      </element>
-    </define>
-    <define name="table">
-      <element name="table">
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-        <optional>
-          <attribute name="unnumbered">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="number"/>
-        </optional>
-        <optional>
-          <attribute name="subsequence"/>
-        </optional>
-        <optional>
-          <attribute name="alt"/>
-        </optional>
-        <optional>
-          <attribute name="summary"/>
-        </optional>
-        <optional>
-          <attribute name="uri">
-            <data type="anyURI"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="width"/>
-        </optional>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <ref name="colgroup"/>
-        </optional>
-        <optional>
-          <ref name="tname"/>
-        </optional>
-        <optional>
-          <ref name="thead"/>
-        </optional>
-        <ref name="tbody"/>
-        <optional>
-          <ref name="tfoot"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="table-note"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="dl"/>
-        </optional>
-        <optional>
-          <ref name="source"/>
-        </optional>
-      </element>
-    </define>
-    <define name="figure">
-      <element name="figure">
-        <ref name="FigureAttributes"/>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <ref name="tname"/>
-        </optional>
-        <choice>
-          <ref name="image"/>
-          <ref name="video"/>
-          <ref name="audio"/>
-          <ref name="pre"/>
-          <oneOrMore>
-            <ref name="paragraph-with-footnote"/>
-          </oneOrMore>
-          <zeroOrMore>
-            <ref name="figure"/>
-          </zeroOrMore>
-        </choice>
-        <zeroOrMore>
-          <ref name="fn"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="dl"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="source"/>
-        </optional>
-      </element>
+      </choice>
+      <zeroOrMore>
+        <ref name="fn"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="source"/>
+      </optional>
     </define>
     <define name="source">
       <element name="source">
@@ -412,147 +395,84 @@
         </optional>
       </element>
     </define>
-    <define name="sourcecode">
-      <element name="sourcecode">
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-        <optional>
-          <attribute name="unnumbered">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="number"/>
-        </optional>
-        <optional>
-          <attribute name="subsequence"/>
-        </optional>
-        <optional>
-          <attribute name="lang"/>
-        </optional>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <attribute name="linenums">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <ref name="tname"/>
-        </optional>
-        <oneOrMore>
-          <choice>
-            <text/>
-            <ref name="callout"/>
-            <ref name="xref"/>
-            <ref name="eref"/>
-          </choice>
-        </oneOrMore>
-        <zeroOrMore>
-          <ref name="annotation"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
-    </define>
-    <define name="formula">
-      <element name="formula">
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-        <optional>
-          <attribute name="unnumbered">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="number"/>
-        </optional>
-        <optional>
-          <attribute name="subsequence"/>
-        </optional>
-        <optional>
-          <attribute name="inequality">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <ref name="BlockAttributes"/>
-        <ref name="stem"/>
-        <optional>
-          <ref name="dl"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
-    </define>
-    <define name="ParagraphType">
-      <attribute name="id">
-        <data type="ID"/>
-      </attribute>
+    <define name="SourceAttr">
       <optional>
-        <attribute name="align">
-          <ref name="Alignments"/>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <optional>
+        <attribute name="subsequence"/>
+      </optional>
+      <optional>
+        <attribute name="lang"/>
+      </optional>
       <ref name="BlockAttributes"/>
+      <optional>
+        <attribute name="linenums">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+    </define>
+    <define name="SourceBody">
+      <optional>
+        <ref name="tname"/>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="callout"/>
+          <ref name="xref"/>
+          <ref name="eref"/>
+        </choice>
+      </oneOrMore>
       <zeroOrMore>
-        <ref name="TextElement"/>
+        <ref name="annotation"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="note"/>
       </zeroOrMore>
     </define>
-    <define name="paragraph-with-footnote">
-      <element name="p">
-        <attribute name="id">
-          <data type="ID"/>
+    <define name="FormulaAttr">
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
         </attribute>
-        <optional>
-          <attribute name="align">
-            <ref name="Alignments"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="type"/>
-        </optional>
-        <ref name="BlockAttributes"/>
-        <zeroOrMore>
-          <choice>
-            <ref name="TextElement"/>
-            <ref name="fn"/>
-          </choice>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
+      </optional>
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <optional>
+        <attribute name="subsequence"/>
+      </optional>
+      <optional>
+        <attribute name="inequality">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <ref name="BlockAttributes"/>
     </define>
-    <define name="quote">
-      <element name="quote">
-        <attribute name="id">
-          <data type="ID"/>
+    <define name="ParagraphAttrs">
+      <optional>
+        <attribute name="align">
+          <ref name="Alignments"/>
         </attribute>
-        <optional>
-          <attribute name="alignment">
-            <ref name="Alignments"/>
-          </attribute>
-        </optional>
-        <ref name="BlockAttributes"/>
-        <optional>
-          <ref name="quote-source"/>
-        </optional>
-        <optional>
-          <ref name="quote-author"/>
-        </optional>
-        <oneOrMore>
-          <ref name="paragraph-with-footnote"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <ref name="note"/>
-        </zeroOrMore>
-      </element>
+      </optional>
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <ref name="BlockAttributes"/>
+    </define>
+    <define name="QuoteAttr">
+      <optional>
+        <attribute name="alignment">
+          <ref name="Alignments"/>
+        </attribute>
+      </optional>
+      <ref name="BlockAttributes"/>
     </define>
     <!-- TitleType = text -->
     <define name="sections">
@@ -603,48 +523,45 @@
         </zeroOrMore>
       </element>
     </define>
-    <define name="note">
-      <element name="note">
-        <attribute name="id">
-          <data type="ID"/>
+    <define name="NoteAttr">
+      <optional>
+        <attribute name="unnumbered">
+          <data type="boolean"/>
         </attribute>
-        <optional>
-          <attribute name="unnumbered">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="number"/>
-        </optional>
-        <optional>
-          <attribute name="subsequence"/>
-        </optional>
-        <optional>
-          <attribute name="type"/>
-        </optional>
-        <optional>
-          <attribute name="coverpage">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="notag">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <ref name="BlockAttributes"/>
-        <oneOrMore>
-          <choice>
-            <ref name="paragraph"/>
-            <ref name="ul"/>
-            <ref name="ol"/>
-            <ref name="dl"/>
-            <ref name="formula"/>
-            <ref name="quote"/>
-            <ref name="sourcecode"/>
-          </choice>
-        </oneOrMore>
-      </element>
+      </optional>
+      <optional>
+        <attribute name="number"/>
+      </optional>
+      <optional>
+        <attribute name="subsequence"/>
+      </optional>
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <optional>
+        <attribute name="coverpage">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="notag">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <ref name="BlockAttributes"/>
+    </define>
+    <define name="NoteBody">
+      <oneOrMore>
+        <choice>
+          <ref name="paragraph"/>
+          <ref name="ul"/>
+          <ref name="ol"/>
+          <ref name="dl"/>
+          <ref name="formula"/>
+          <ref name="quote"/>
+          <ref name="sourcecode"/>
+        </choice>
+      </oneOrMore>
     </define>
     <define name="Basic-Section">
       <optional>
@@ -673,21 +590,12 @@
         <ref name="BasicBlock"/>
       </oneOrMore>
     </define>
-    <define name="li">
-      <element name="li">
-        <group>
-          <optional>
-            <attribute name="id">
-              <data type="ID"/>
-            </attribute>
-          </optional>
-          <oneOrMore>
-            <ref name="BasicBlock"/>
-          </oneOrMore>
-        </group>
-        <!-- exclude figures? -->
-      </element>
+    <define name="LiBody">
+      <oneOrMore>
+        <ref name="BasicBlock"/>
+      </oneOrMore>
     </define>
+    <!-- exclude figures? -->
     <define name="dd">
       <element name="dd">
         <zeroOrMore>
@@ -703,91 +611,37 @@
         </oneOrMore>
       </element>
     </define>
-    <define name="td">
-      <element name="td">
-        <optional>
-          <attribute name="colspan"/>
-        </optional>
-        <optional>
-          <attribute name="rowspan"/>
-        </optional>
-        <optional>
-          <attribute name="align">
-            <choice>
-              <value>left</value>
-              <value>right</value>
-              <value>center</value>
-            </choice>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="valign">
-            <choice>
-              <value>top</value>
-              <value>middle</value>
-              <value>bottom</value>
-              <value>baseline</value>
-            </choice>
-          </attribute>
-        </optional>
-        <choice>
-          <zeroOrMore>
-            <choice>
-              <ref name="TextElement"/>
-              <ref name="fn"/>
-            </choice>
-          </zeroOrMore>
-          <oneOrMore>
-            <choice>
-              <ref name="paragraph-with-footnote"/>
-              <ref name="dl"/>
-              <ref name="ul"/>
-              <ref name="ol"/>
-              <ref name="figure"/>
-            </choice>
-          </oneOrMore>
-        </choice>
-      </element>
-    </define>
-    <define name="th">
-      <element name="th">
-        <optional>
-          <attribute name="colspan"/>
-        </optional>
-        <optional>
-          <attribute name="rowspan"/>
-        </optional>
-        <optional>
-          <attribute name="align">
-            <choice>
-              <value>left</value>
-              <value>right</value>
-              <value>center</value>
-            </choice>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="valign">
-            <choice>
-              <value>top</value>
-              <value>middle</value>
-              <value>bottom</value>
-              <value>baseline</value>
-            </choice>
-          </attribute>
-        </optional>
-        <choice>
-          <zeroOrMore>
-            <choice>
-              <ref name="TextElement"/>
-              <ref name="fn"/>
-            </choice>
-          </zeroOrMore>
-          <oneOrMore>
+    <define name="TdBody">
+      <choice>
+        <zeroOrMore>
+          <choice>
+            <ref name="TextElement"/>
+            <ref name="fn"/>
+          </choice>
+        </zeroOrMore>
+        <oneOrMore>
+          <choice>
             <ref name="paragraph-with-footnote"/>
-          </oneOrMore>
-        </choice>
-      </element>
+            <ref name="dl"/>
+            <ref name="ul"/>
+            <ref name="ol"/>
+            <ref name="figure"/>
+          </choice>
+        </oneOrMore>
+      </choice>
+    </define>
+    <define name="ThBody">
+      <choice>
+        <zeroOrMore>
+          <choice>
+            <ref name="TextElement"/>
+            <ref name="fn"/>
+          </choice>
+        </zeroOrMore>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </oneOrMore>
+      </choice>
     </define>
     <define name="table-note">
       <element name="note">
@@ -1616,6 +1470,10 @@
     </choice>
   </define>
   <define name="Annex-Section">
+    <ref name="Annex-Section-Attr"/>
+    <ref name="Annex-Section-Body"/>
+  </define>
+  <define name="Annex-Section-Attr">
     <optional>
       <attribute name="id">
         <data type="ID"/>
@@ -1640,6 +1498,11 @@
         </choice>
       </attribute>
     </optional>
+    <optional>
+      <attribute name="type"/>
+    </optional>
+  </define>
+  <define name="Annex-Section-Body">
     <optional>
       <ref name="section-title"/>
     </optional>
@@ -2437,28 +2300,6 @@
     </optional>
     <optional>
       <attribute name="columns"/>
-    </optional>
-  </define>
-  <define name="FigureAttributes">
-    <attribute name="id">
-      <data type="ID"/>
-    </attribute>
-    <optional>
-      <attribute name="unnumbered">
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="number"/>
-    </optional>
-    <optional>
-      <attribute name="subsequence"/>
-    </optional>
-    <optional>
-      <attribute name="class"/>
-    </optional>
-    <optional>
-      <attribute name="width"/>
     </optional>
   </define>
   <start>

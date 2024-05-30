@@ -54,7 +54,7 @@ CH-1214 Vernier, Geneva +
 [[boilerplate-place]]
 Издано в Швейцарии
 
-{% if unpublished %}
+{% if stage_int >= 20 and stage_int < 40 %}
 == license-statement
 === Предупреждение для WD и CD
 
