@@ -36,19 +36,6 @@ module IsoDoc
 
       # subclauses are not prefixed with "Clause"
       # retaining subtype for the semantics
-      def xsection_names1(clause, num, level) # KILL
-        @anchors[clause["id"]] =
-          { label: num, level: level, xref: num, subtype: "clause" }
-        i = Counter.new(0, prefix: "#{num}.")
-        clause.xpath(ns("./clause | ./terms | ./term | ./definitions | " \
-                        "./references"))
-          .each do |c|
-          section_names1(c, i.increment(c).print, level + 1)
-        end
-      end
-
-      # subclauses are not prefixed with "Clause"
-      # retaining subtype for the semantics
       def section_name_anchors(clause, num, level)
         if clause["type"] == "section"
           @anchors[clause["id"]] =
