@@ -36,7 +36,7 @@ module IsoDoc
 
       # subclauses are not prefixed with "Clause"
       # retaining subtype for the semantics
-      def section_names1(clause, num, level)
+      def xsection_names1(clause, num, level) # KILL
         @anchors[clause["id"]] =
           { label: num, level: level, xref: num, subtype: "clause" }
         i = Counter.new(0, prefix: "#{num}.")
@@ -47,6 +47,8 @@ module IsoDoc
         end
       end
 
+      # subclauses are not prefixed with "Clause"
+      # retaining subtype for the semantics
       def section_name_anchors(clause, num, level)
         if clause["type"] == "section"
           @anchors[clause["id"]] =
@@ -54,8 +56,10 @@ module IsoDoc
               xref: l10n("#{@labels['section']} #{num}"),
               title: clause_title(clause), level: level, type: "clause",
               elem: @labels["section"] }
-        else super
-        end
+        elsif level > 1
+          @anchors[clause["id"]] =
+            { label: num, level: level, xref: num, subtype: "clause" }
+        else super end
       end
 
       def annex_name_anchors1(clause, num, level)
