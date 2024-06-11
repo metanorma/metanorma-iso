@@ -3636,19 +3636,11 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:element name="{$element-name}">
-			<xsl:attribute name="text-align">
-				<xsl:choose>
-					<!-- <xsl:when test="ancestor::iso:preface">justify</xsl:when> -->
-					<xsl:when test="@align = 'justified'">justify</xsl:when>
-					<xsl:when test="@align and not(@align = 'indent')"><xsl:value-of select="@align"/></xsl:when>
-					<xsl:when test="ancestor::iso:td/@align"><xsl:value-of select="ancestor::iso:td/@align"/></xsl:when>
-					<xsl:when test="ancestor::iso:th/@align"><xsl:value-of select="ancestor::iso:th/@align"/></xsl:when>
-					<xsl:otherwise>justify</xsl:otherwise><!-- left -->
-				</xsl:choose>
-			</xsl:attribute>
-			<xsl:if test="@align = 'indent'">
-				<xsl:attribute name="margin-left">7mm</xsl:attribute>
-			</xsl:if>
+
+			<xsl:call-template name="setBlockAttributes">
+				<xsl:with-param name="text_align_default">justify</xsl:with-param>
+			</xsl:call-template>
+
 			<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 			<xsl:if test="count(ancestor::iso:li) = 1 and not(ancestor::iso:li[1]/following-sibling::iso:li) and not(following-sibling::iso:p)">
 				<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
@@ -16850,7 +16842,10 @@
 		<xsl:call-template name="setTextAlignment">
 			<xsl:with-param name="default" select="$text_align_default"/>
 		</xsl:call-template>
+		<xsl:call-template name="setKeepAttributes"/>
+	</xsl:template>
 
+	<xsl:template name="setKeepAttributes">
 		<!-- https://www.metanorma.org/author/topics/document-format/text/#avoiding-page-breaks -->
 		<!-- Example: keep-lines-together="true" -->
 		<xsl:if test="@keep-lines-together = 'true'">
