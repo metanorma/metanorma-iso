@@ -42,9 +42,9 @@ module Metanorma
       end
 
       TERM_CLAUSE =
-        "//sections//terms[not(.//ancestor::clause[@type = 'terms'])] | " \
+        "//sections//terms[not(preceding-sibling::clause)] | " \
         "//sections//clause[descendant::terms][not(descendant::definitions)][@type = 'terms'] | " \
-        "//sections/clause[not(@type = 'terms')]//terms".freeze
+        "//sections/clause[not(@type = 'terms')][not(descendant::definitions)]//terms".freeze
 
       def sections_cleanup(xml)
         super
@@ -139,7 +139,7 @@ module Metanorma
         end
       end
 
-      def termdef_boilerplate_insert_location(xmldoc)
+      def termdef_boilerplate_insert_locationx(xmldoc)
         f = xmldoc.at(self.class::TERM_CLAUSE)
         root = xmldoc.at("//sections/terms | //sections/clause[.//terms]")
         !f || !root and return f || root
