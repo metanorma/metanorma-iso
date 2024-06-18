@@ -42,9 +42,9 @@ module Metanorma
       end
 
       TERM_CLAUSE =
-        "//sections//terms | " \
-        "//sections//clause[descendant::terms][not(descendant::definitions)]"
-          .freeze
+        "//sections//terms[not(.//ancestor::clause[@type = 'terms'])] | " \
+        "//sections//clause[descendant::terms][not(descendant::definitions)][@type = 'terms'] | " \
+        "//sections/clause[not(@type = 'terms')]//terms".freeze
 
       def sections_cleanup(xml)
         super
