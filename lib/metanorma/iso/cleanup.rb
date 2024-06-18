@@ -15,6 +15,12 @@ module Metanorma
         "//annex//fn | //references[@normative = 'false']//fn | " \
         "//clause[.//references[@normative = 'false']]//fn".freeze
 
+      NORM_REF =
+        "//bibliography/references[@normative = 'true'][not(@hidden)] | " \
+        "//bibliography/clause[.//references[@normative = 'true']] | "\
+        "//sections//references[@normative = 'true'][not(@hidden)]"
+          .freeze
+
       def other_footnote_renumber(xmldoc)
         seen = {}
         i = 0

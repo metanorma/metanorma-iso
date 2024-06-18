@@ -74,7 +74,7 @@ RSpec.describe Metanorma::ISO do
             <title>Scope</title>
             <p id="_">Text</p>
           </clause>
-          <clause id="_" obligation="normative">
+          <clause id="_" obligation="normative" type="terms">
             <title>Terms, definitions, symbols and abbreviated terms</title>
                          <terms id="_" obligation="normative">
                <title>Terms and definitions</title>
