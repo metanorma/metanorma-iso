@@ -964,14 +964,6 @@
 							<xsl:call-template name="processPrefaceSectionsDefault_items"/>
 						</xsl:variable>
 
-						<xsl:if test="$debug = 'true'">
-							<xsl:message>start redirect</xsl:message>
-							<redirect:write file="update_xml_step4_with_pages_preface.xml">
-								<xsl:copy-of select="$update_xml_step4_with_pages_preface"/>
-							</redirect:write>
-							<xsl:message>end redirect</xsl:message>
-						</xsl:if>
-
 						<xsl:variable name="copyright-statement">
 							<xsl:apply-templates select="/iso:iso-standard/iso:boilerplate/iso:copyright-statement"/>
 						</xsl:variable>
@@ -1130,14 +1122,6 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
-
-				<xsl:if test="$debug = 'true'">
-					<xsl:message>start redirect</xsl:message>
-					<redirect:write file="update_xml_step4_with_pages_main.xml">
-						<xsl:copy-of select="$update_xml_step4_with_pages_main"/>
-					</redirect:write>
-					<xsl:message>end redirect</xsl:message>
-				</xsl:if>
 
 				<xsl:for-each select="xalan:nodeset($update_xml_step4_with_pages_main)"> <!-- set context to sections, if top element in 'sections' -->
 
