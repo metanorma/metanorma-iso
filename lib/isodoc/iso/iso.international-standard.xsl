@@ -8299,6 +8299,7 @@
 	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example']" priority="2">
 
 				<fo:block xsl:use-attribute-sets="table-note-style">
+					<xsl:copy-of select="@id"/>
 
 					<xsl:call-template name="refine_table-note-style"/>
 
