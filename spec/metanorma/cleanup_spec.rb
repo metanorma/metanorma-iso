@@ -1165,7 +1165,7 @@ RSpec.describe Metanorma::ISO do
       output = <<~OUTPUT
         #{BLANK_HDR}
           <sections>
-            <clause id='_' obligation='normative'>
+            <clause id='_' obligation='normative' type="terms">
               <title>Terms and definitions</title>
               <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
               <p id='_'>
@@ -1227,9 +1227,9 @@ RSpec.describe Metanorma::ISO do
       output = <<~OUTPUT
         #{BLANK_HDR}
           <sections>
-            <clause id='_' obligation='normative'>
+            <clause id='_' obligation='normative' type="terms">
               <title>Terms, definitions, symbols and abbreviated terms</title>
-              <clause id='_' obligation='normative'>
+              <clause id='_' obligation='normative' type="terms">
                 <title>Terms and definitions</title>
                 <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
                 <p id='_'>
@@ -1294,7 +1294,7 @@ RSpec.describe Metanorma::ISO do
       output = <<~OUTPUT
         #{BLANK_HDR}
           <sections>
-            <clause id='_' obligation='normative'>
+            <clause id='_' obligation='normative' type="terms">
               <title>Terms, definitions, symbols and abbreviated terms</title>
               <terms id='_' obligation='normative'>
                 <title>Terms and definitions</title>
@@ -1359,53 +1359,130 @@ RSpec.describe Metanorma::ISO do
         === Symbols and abbreviated terms
       INPUT
       output = <<~OUTPUT
-       #{BLANK_HDR}
+        #{BLANK_HDR}
+         <sections>
+            <clause id="_" obligation="normative" type="terms">
+              <title>Terms, definitions, symbols and abbreviated terms</title>
+                <p id="_">For the purposes of this document,
+            the following terms and definitions apply.</p>
+                <p id="_">ISO and IEC maintain terminology databases for use in
+        standardization at the following addresses:</p>
+                <ul id="_">
+                  <li>
+                    <p id="_">ISO Online browsing platform: available at
+          <link target="https://www.iso.org/obp"/></p>
+                  </li>
+                  <li>
+                    <p id="_">IEC Electropedia: available at
+        <link target="https://www.electropedia.org"/></p>
+                  </li>
+                </ul>
+                <clause id="_" inline-header="false" obligation="normative">
+                  <title>Prefatory clause</title>
+                </clause>
+              <terms id="_" obligation="normative">
+                <title>Terms and definitions</title>
+                <term id="term-Term1">
+                  <preferred>
+                    <expression>
+                      <name>Term1</name>
+                    </expression>
+                  </preferred>
+                </term>
+              </terms>
+              <terms id="_" obligation="normative">
+                <title>Other Terms</title>
+                <term id="term-Term-2">
+                  <preferred>
+                    <expression>
+                      <name>Term 2</name>
+                    </expression>
+                  </preferred>
+                </term>
+              </terms>
+              <definitions id="_" obligation="normative">
+                <title>Symbols and abbreviated terms</title>
+              </definitions>
+            </clause>
+          </sections>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+
+    it "places boilerplate in Normative References subclause" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+
+        [type=section]
+        == General
+
+        [heading=scope]
+        === Scope
+
+        This part of ISO 7005 for a single of flanges
+
+        [bibliography,heading=normative references]
+        === Normative references
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR}
         <sections>
-           <clause id="_" obligation="normative">
-             <title>Terms, definitions, symbols and abbreviated terms</title>
-               <p id="_">For the purposes of this document,
-           the following terms and definitions apply.</p>
-               <p id="_">ISO and IEC maintain terminology databases for use in
-       standardization at the following addresses:</p>
-               <ul id="_">
-                 <li>
-                   <p id="_">ISO Online browsing platform: available at
-         <link target="https://www.iso.org/obp"/></p>
-                 </li>
-                 <li>
-                   <p id="_">IEC Electropedia: available at
-       <link target="https://www.electropedia.org"/></p>
-                 </li>
-               </ul>
-               <clause id="_" inline-header="false" obligation="normative">
-                 <title>Prefatory clause</title>
-               </clause>
-             <terms id="_" obligation="normative">
-               <title>Terms and definitions</title>
-               <term id="term-Term1">
-                 <preferred>
-                   <expression>
-                     <name>Term1</name>
-                   </expression>
-                 </preferred>
-               </term>
-             </terms>
-             <terms id="_" obligation="normative">
-               <title>Other Terms</title>
-               <term id="term-Term-2">
-                 <preferred>
-                   <expression>
-                     <name>Term 2</name>
-                   </expression>
-                 </preferred>
-               </term>
-             </terms>
-             <definitions id="_" obligation="normative">
-               <title>Symbols and abbreviated terms</title>
-             </definitions>
-           </clause>
-         </sections>
-       </iso-standard>
+            <clause id="_" type="section" inline-header="false" obligation="normative">
+              <title>General</title>
+              <clause id="_" type="scope" inline-header="false" obligation="normative">
+                <title>Scope</title>
+                <p id="_">This part of ISO 7005 for a single of flanges</p>
+              </clause>
+              <references id="_" normative="true" obligation="informative">
+                <title>Normative references</title>
+                <p id="_">There are no normative references in this document.</p>
+              </references>
+            </clause>
+          </sections>
+        </iso-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to xmlpp(output)
+    end
+
+    it "places user-defined boilerplate in Normative References subclause" do
+      input = <<~INPUT
+        #{ASCIIDOC_BLANK_HDR}
+
+        [type=section]
+        == General
+
+        [heading=scope]
+        === Scope
+
+        This part of ISO 7005 for a single of flanges
+
+        [bibliography,heading=normative references]
+        === Normative references
+
+        [.boilerplate]
+        --
+        The following standards contain provisions
+        --
+      INPUT
+      output = <<~OUTPUT
+        #{BLANK_HDR}
+        <sections>
+            <clause id="_" type="section" inline-header="false" obligation="normative">
+              <title>General</title>
+              <clause id="_" type="scope" inline-header="false" obligation="normative">
+                <title>Scope</title>
+                <p id="_">This part of ISO 7005 for a single of flanges</p>
+              </clause>
+              <references id="_" normative="true" obligation="informative">
+                <title>Normative references</title>
+                <p id="_">The following standards contain provisions</p>
+              </references>
+            </clause>
+          </sections>
+        </iso-standard>
       OUTPUT
       expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to xmlpp(output)

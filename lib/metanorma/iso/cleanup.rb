@@ -15,6 +15,12 @@ module Metanorma
         "//annex//fn | //references[@normative = 'false']//fn | " \
         "//clause[.//references[@normative = 'false']]//fn".freeze
 
+      NORM_REF =
+        "//bibliography/references[@normative = 'true'][not(@hidden)] | " \
+        "//bibliography/clause[.//references[@normative = 'true']] | "\
+        "//sections//references[@normative = 'true'][not(@hidden)]"
+          .freeze
+
       def other_footnote_renumber(xmldoc)
         seen = {}
         i = 0
@@ -36,9 +42,9 @@ module Metanorma
       end
 
       TERM_CLAUSE =
-        "//sections//terms | " \
-        "//sections//clause[descendant::terms][not(descendant::definitions)]"
-          .freeze
+        "//sections//terms[not(preceding-sibling::clause)] | " \
+        "//sections//clause[descendant::terms][not(descendant::definitions)][@type = 'terms'] | " \
+        "//sections/clause[not(@type = 'terms')][not(descendant::definitions)]//terms".freeze
 
       def sections_cleanup(xml)
         super
@@ -133,7 +139,7 @@ module Metanorma
         end
       end
 
-      def termdef_boilerplate_insert_location(xmldoc)
+      def termdef_boilerplate_insert_locationx(xmldoc)
         f = xmldoc.at(self.class::TERM_CLAUSE)
         root = xmldoc.at("//sections/terms | //sections/clause[.//terms]")
         !f || !root and return f || root
