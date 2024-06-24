@@ -11924,6 +11924,8 @@
 			</xsl:choose>
 		</xsl:variable>
 
+		<xsl:variable name="isPrecedingTitle" select="normalize-space(ancestor::*[local-name() = 'figure']/preceding-sibling::*[1][local-name() = 'title'] and 1 = 1)"/>
+
 		<xsl:choose>
 			<xsl:when test=".//*[local-name() = 'a'][*[local-name() = 'rect'] or *[local-name() = 'polygon'] or *[local-name() = 'circle'] or *[local-name() = 'ellipse']]">
 				<fo:block>
@@ -12070,7 +12072,14 @@
 							<xsl:variable name="scale_y">
 								<xsl:choose>
 									<xsl:when test="$svg_height * $scale_x &gt; $height_effective_px">
-										<xsl:value-of select="$height_effective_px div ($svg_height * $scale_x)"/>
+										<xsl:variable name="height_effective_px_">
+											<xsl:choose>
+												<!-- title is 'keep-with-next' with following figure -->
+												<xsl:when test="$isPrecedingTitle = 'true'"><xsl:value-of select="$height_effective_px - 80"/></xsl:when>
+												<xsl:otherwise><xsl:value-of select="$height_effective_px"/></xsl:otherwise>
+											</xsl:choose>
+										</xsl:variable>
+										<xsl:value-of select="$height_effective_px_ div ($svg_height * $scale_x)"/>
 									</xsl:when>
 									<xsl:otherwise>1</xsl:otherwise>
 								</xsl:choose>
