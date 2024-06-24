@@ -193,7 +193,7 @@ module IsoDoc
 
       def measurement_units(node, out)
         node.xpath(ns("./note[@type = 'units']")).each do |n|
-          out.div align: "right" do |p|
+          out.div style: "text-align: right;" do |p|
             n.children.each { |e| parse(e, p) }
           end
         end

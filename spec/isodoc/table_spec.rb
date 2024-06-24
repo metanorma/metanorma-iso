@@ -428,7 +428,7 @@ RSpec.describe IsoDoc do
               <note id="A">Note 1</note>
               <note id="B" type="units">Units in mm</note>
               <note id="C">Note 2</note>
-              <note id="D" type="units">Other units in sec</note>
+              <note id="D" type="units"><p>Other units in sec</p></note>
             </table>
           </foreword>
         </preface>
@@ -466,7 +466,7 @@ RSpec.describe IsoDoc do
                <note id="A"><name>NOTE  1</name>Note 1</note>
                <note id="B" type="units">Units in mm</note>
                <note id="C"><name>NOTE  2</name>Note 2</note>
-               <note id="D" type="units">Other units in sec</note>
+               <note id="D" type="units"><p>Other units in sec</p></note>
              </table>
            </foreword>
          </preface>
@@ -480,11 +480,11 @@ RSpec.describe IsoDoc do
               <p class="TableTitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of
                  <i>husked</i>
                  rice yield</p>
-              <div align="right">
+              <div style="text-align: right;">
                 Units in mm
               </div>
-              <div align="right">
-                Other units in sec
+              <div style="text-align: right;">
+                <p>Other units in sec</p>
               </div>
               <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
                 <thead>
@@ -542,11 +542,11 @@ RSpec.describe IsoDoc do
             <p class="Tabletitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of
                <i>husked</i>
                rice yield</p>
-            <div align="right">
+            <div class="Note" style="text-align: right;">
               Units in mm
             </div>
-            <div align="right">
-              Other units in sec
+            <div class="Note" style="text-align: right;">
+              <p class="Note" style="text-align:right;page-break-after:avoid;page-break-inside:avoid;">Other units in sec</p>
             </div>
             <div align="center" class="table_container">
               <table id="tableD-1" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">

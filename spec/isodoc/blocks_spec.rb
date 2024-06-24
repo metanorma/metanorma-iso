@@ -785,7 +785,7 @@ RSpec.describe IsoDoc do
                     <note id="A">Note 1</note>
                     <note id="B" type="units">Units in mm</note>
                     <note id="C">Note 2</note>
-                    <note id="D" type="units">Other units in sec</note>
+                    <note id="D" type="units"><p>Other units in sec</p></note>
                 </figure>
             </clause>
           </sections>
@@ -803,7 +803,7 @@ RSpec.describe IsoDoc do
               <note id="A"><name>NOTE  1</name>Note 1</note>
               <note id="B" type="units">Units in mm</note>
               <note id="C"><name>NOTE  2</name>Note 2</note>
-              <note id="D" type="units">Other units in sec</note>
+              <note id="D" type="units"><p>Other units in sec</p></note>
             </figure>
           </clause>
         </sections>
@@ -813,11 +813,11 @@ RSpec.describe IsoDoc do
           #{HTML_HDR}
             <div id="widgets">
               <h1>1  Widgets</h1>
-              <div align="right">
+              <div style="text-align: right;">
                 Units in mm
               </div>
-              <div align="right">
-                Other units in sec
+              <div style="text-align: right;">
+                <p>Other units in sec</p>
               </div>
               <div id="N" class="figure">
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
@@ -853,11 +853,11 @@ RSpec.describe IsoDoc do
           <div class="WordSection3">
             <div id="widgets">
               <h1>1<span style="mso-tab-count:1">  </span>Widgets</h1>
-              <div align="right">
+              <div class="Note" style="text-align: right;">
                 Units in mm
               </div>
-              <div align="right">
-                Other units in sec
+              <div class="Note" style="text-align: right;">
+                <p style="text-align:right;page-break-after:avoid;page-break-inside:avoid;" class="Note">Other units in sec</p>
               </div>
               <div id="N" class="figure">
                 <img src="rice_images/rice_image1.png"/>
