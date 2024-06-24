@@ -481,10 +481,10 @@ RSpec.describe IsoDoc do
                  <i>husked</i>
                  rice yield</p>
               <div align="right">
-                <b>Units in mm</b>
+                Units in mm
               </div>
               <div align="right">
-                <b>Other units in sec</b>
+                Other units in sec
               </div>
               <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
                 <thead>
@@ -543,10 +543,10 @@ RSpec.describe IsoDoc do
                <i>husked</i>
                rice yield</p>
             <div align="right">
-              <b>Units in mm</b>
+              Units in mm
             </div>
             <div align="right">
-              <b>Other units in sec</b>
+              Other units in sec
             </div>
             <div align="center" class="table_container">
               <table id="tableD-1" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">

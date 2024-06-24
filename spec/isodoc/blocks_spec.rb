@@ -814,10 +814,10 @@ RSpec.describe IsoDoc do
             <div id="widgets">
               <h1>1  Widgets</h1>
               <div align="right">
-                <b>Units in mm</b>
+                Units in mm
               </div>
               <div align="right">
-                <b>Other units in sec</b>
+                Other units in sec
               </div>
               <div id="N" class="figure">
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
@@ -854,10 +854,10 @@ RSpec.describe IsoDoc do
             <div id="widgets">
               <h1>1<span style="mso-tab-count:1">  </span>Widgets</h1>
               <div align="right">
-                <b>Units in mm</b>
+                Units in mm
               </div>
               <div align="right">
-                <b>Other units in sec</b>
+                Other units in sec
               </div>
               <div id="N" class="figure">
                 <img src="rice_images/rice_image1.png"/>

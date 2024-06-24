@@ -194,9 +194,7 @@ module IsoDoc
       def measurement_units(node, out)
         node.xpath(ns("./note[@type = 'units']")).each do |n|
           out.div align: "right" do |p|
-            p.b do |b|
-              n.children.each { |e| parse(e, b) }
-            end
+            n.children.each { |e| parse(e, p) }
           end
         end
       end
