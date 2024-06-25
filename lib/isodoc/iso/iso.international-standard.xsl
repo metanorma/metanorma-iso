@@ -9740,7 +9740,7 @@
 
 	<xsl:template name="recursiveSmallCaps">
     <xsl:param name="text"/>
-    <xsl:param name="ratio"/>
+    <xsl:param name="ratio">0.75</xsl:param>
     <xsl:variable name="char" select="substring($text,1,1)"/>
     <!-- <xsl:variable name="upperCase" select="translate($char, $lower, $upper)"/> -->
 		<xsl:variable name="upperCase" select="java:toUpperCase(java:java.lang.String.new($char))"/>
