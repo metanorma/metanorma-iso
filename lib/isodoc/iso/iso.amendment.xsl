@@ -13710,9 +13710,17 @@
 
 						<fo:block-container xsl:use-attribute-sets="example-body-style" role="SKIP">
 							<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
-								<xsl:apply-templates select="node()[not(local-name() = 'name')]">
-									<xsl:with-param name="fo_element" select="$fo_element"/>
-								</xsl:apply-templates>
+								<xsl:variable name="example_body">
+									<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+										<xsl:with-param name="fo_element" select="$fo_element"/>
+									</xsl:apply-templates>
+								</xsl:variable>
+								<xsl:choose>
+									<xsl:when test="xalan:nodeset($example_body)/*">
+										<xsl:copy-of select="$example_body"/>
+									</xsl:when>
+									<xsl:otherwise><fo:block/><!-- prevent empty block-container --></xsl:otherwise>
+								</xsl:choose>
 							</fo:block-container>
 						</fo:block-container>
 					</xsl:when> <!-- end block -->
