@@ -8380,7 +8380,7 @@
 					<xsl:copy-of select="."/>
 				</xsl:for-each>
 
-				<xsl:if test="following-sibling::*[1][local-name() = 'fn']">
+				<xsl:if test="following-sibling::node()[normalize-space() != ''][1][local-name() = 'fn']">
 					<xsl:attribute name="padding-right">0.5mm</xsl:attribute>
 				</xsl:if>
 
