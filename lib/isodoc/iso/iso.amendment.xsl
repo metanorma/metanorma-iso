@@ -8631,6 +8631,11 @@
 
 	<xsl:template name="create_fn">
 		<fn reference="{@reference}" id="{@reference}_{ancestor::*[@id][1]/@id}">
+			<xsl:if test="ancestor::*[local-name()='table'][1]/@id"> <!-- for footnotes in tables -->
+				<xsl:attribute name="id">
+					<xsl:value-of select="concat(@reference, '_', ancestor::*[local-name()='table'][1]/@id)"/>
+				</xsl:attribute>
+			</xsl:if>
 
 			<xsl:apply-templates/>
 		</fn>
@@ -8774,6 +8779,11 @@
 			<xsl:call-template name="refine_fn-reference-style"/>
 
 			<fo:basic-link internal-destination="{@reference}_{ancestor::*[@id][1]/@id}" fox:alt-text="{@reference}"> <!-- @reference   | ancestor::*[local-name()='clause'][1]/@id-->
+				<xsl:if test="ancestor::*[local-name()='table'][1]/@id"> <!-- for footnotes in tables -->
+					<xsl:attribute name="internal-destination">
+						<xsl:value-of select="concat(@reference, '_', ancestor::*[local-name()='table'][1]/@id)"/>
+					</xsl:attribute>
+				</xsl:if>
 
 				<xsl:value-of select="@reference"/>
 
