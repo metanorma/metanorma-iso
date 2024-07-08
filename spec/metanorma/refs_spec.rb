@@ -445,7 +445,7 @@ RSpec.describe Metanorma::ISO do
                   <from>1992</from>
                   <owner>
                     <organization>
-                    <!--  <name>ISO</name> -->
+                    <name>ISO</name>
                     </organization>
                   </owner>
                 </copyright>
@@ -521,7 +521,7 @@ RSpec.describe Metanorma::ISO do
                       <from>1992</from>
                       <owner>
                         <organization>
-                          <!-- <name>ISO</name> -->
+                          <name>ISO</name>
                         </organization>
                       </owner>
                     </copyright>
