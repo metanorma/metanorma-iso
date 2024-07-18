@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.3.2 -->
+<!-- VERSION v1.3.3 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -331,9 +331,9 @@
       <zeroOrMore>
         <ref name="table-note"/>
       </zeroOrMore>
-      <optional>
+      <zeroOrMore>
         <ref name="source"/>
-      </optional>
+      </zeroOrMore>
     </define>
     <define name="FigureAttr">
       <optional>
@@ -380,9 +380,9 @@
       <zeroOrMore>
         <ref name="note"/>
       </zeroOrMore>
-      <optional>
+      <zeroOrMore>
         <ref name="source"/>
-      </optional>
+      </zeroOrMore>
     </define>
     <define name="source">
       <element name="source">
