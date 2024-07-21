@@ -12,7 +12,7 @@ module Relaton
 
         def klass_initialize(_options)
           super
-          @parseklass = Relaton::Render::ISO::Parse
+          @parseklass = Relaton::Render::Iso::Parse
         end
       end
     end
