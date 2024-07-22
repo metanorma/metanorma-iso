@@ -375,25 +375,25 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
     IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.html")).to be true
     out = File.read("test.html")
       .sub(/^.*<main /m, "<main ")
       .sub(%r{</main>.*$}m, "</main>")
-    expect(xmlpp(strip_guid(out))).to be_equivalent_to xmlpp(html)
+    expect(Xml::C14n.format(strip_guid(out))).to be_equivalent_to Xml::C14n.format(html)
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     out = File.read("test.doc")
       .sub(/^.+?<table /m, '<table xmlns:m="m" ')
       .sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
-    expect(xmlpp("<div>#{out}")).to be_equivalent_to xmlpp(doc)
+    expect(Xml::C14n.format("<div>#{out}")).to be_equivalent_to Xml::C14n.format(doc)
     out = File.read("test.doc")
       .sub(/^.+?<div class="Section3"/m, '<div class="Section3"')
       .sub(%r{</div>\s*<br[^>]+>\s*<div class="colophon".*$}m, "")
-    expect(xmlpp(out)).to be_equivalent_to xmlpp(doc2)
+    expect(Xml::C14n.format(out)).to be_equivalent_to Xml::C14n.format(doc2)
   end
 
   it "processes units statements in tables" do
@@ -585,13 +585,13 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+       .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", presxml, true))
-      .at("//body").to_xml)).to be_equivalent_to xmlpp(doc)
+      .at("//body").to_xml)).to be_equivalent_to Xml::C14n.format(doc)
   end
 end

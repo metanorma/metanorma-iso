@@ -537,12 +537,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </clause>
       </sections>
     OUTPUT
-    expect(xmlpp(strip_guid(Nokogiri::XML(
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
       .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "warns of missing publication date" do
@@ -585,13 +585,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </clause>
       </sections>
     OUTPUT
-    expect(strip_guid(xmlpp(Nokogiri::XML(
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
       .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "warns of missing editorial groups" do
@@ -633,13 +633,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </clause>
       </sections>
     OUTPUT
-    expect(strip_guid(xmlpp(Nokogiri::XML(
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
   .at("//xmlns:sections")
       .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "does not warn of missing metadata in compliant document" do
@@ -672,12 +672,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </clause>
       </sections>
     OUTPUT
-    expect(strip_guid(xmlpp(Nokogiri::XML(
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
       .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "does not warn of missing metadata in published document" do
@@ -709,11 +709,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </clause>
       </sections>
     OUTPUT
-    expect(strip_guid(xmlpp(Nokogiri::XML(
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
   .at("//xmlns:sections").to_xml)))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

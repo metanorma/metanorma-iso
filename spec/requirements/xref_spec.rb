@@ -98,10 +98,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references requirements with labels" do
@@ -209,10 +209,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references requirements with modspec style" do
@@ -323,10 +323,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references requirement parts" do
@@ -439,10 +439,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references requirement tests" do
@@ -539,10 +539,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references requirement tests in French" do
@@ -640,10 +640,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references recommendations" do
@@ -740,10 +740,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references recommendation tests" do
@@ -840,10 +840,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references permissions" do
@@ -940,10 +940,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references permission tests" do
@@ -1040,10 +1040,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "labels and cross-references nested requirements" do
@@ -1117,10 +1117,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references abstract tests" do
@@ -1217,10 +1217,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references conformance classes" do
@@ -1317,9 +1317,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </p>
        </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

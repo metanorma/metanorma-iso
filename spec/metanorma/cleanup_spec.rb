@@ -13,8 +13,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "moves term domains out of the term definition paragraph" do
@@ -42,8 +42,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "permits multiple blocks in term definition paragraph" do
@@ -118,8 +118,8 @@ RSpec.describe Metanorma::ISO do
        </iso-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes initial boilerplate in Asciidoc without succumbing to recursion" do
@@ -156,8 +156,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "keeps any initial boilerplate from terms and definitions" do
@@ -194,8 +194,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "converts xrefs to references into erefs" do
@@ -242,8 +242,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "extracts localities from erefs" do
@@ -301,8 +301,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "strips type from xrefs" do
@@ -345,8 +345,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes localities in term sources" do
@@ -387,8 +387,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "removes extraneous material from Normative References" do
@@ -424,8 +424,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "moves table key inside table" do
@@ -460,8 +460,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes headerrows attribute for table without header rows" do
@@ -507,8 +507,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes headerrows attribute for table with header rows" do
@@ -555,8 +555,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "moves table notes inside table" do
@@ -591,8 +591,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "moves formula key inside formula" do
@@ -636,8 +636,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "moves footnotes inside figures" do
@@ -664,8 +664,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "moves figure key inside figure" do
@@ -692,8 +692,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "numbers bibliographic notes and footnotes sequentially" do
@@ -755,8 +755,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "defaults section obligations" do
@@ -785,8 +785,8 @@ RSpec.describe Metanorma::ISO do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "extends clause levels past 5" do
@@ -854,8 +854,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "reorders references in bibliography, and renumbers citations accordingly" do
@@ -1100,8 +1100,8 @@ RSpec.describe Metanorma::ISO do
          </bibliography>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   context "terms & definitions boilerplate" do
@@ -1144,8 +1144,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "places normal terms & definitions boilerplate in multi-clause" do
@@ -1202,8 +1202,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "places normal terms & definitions boilerplate in single clause that excludes symbols" do
@@ -1270,8 +1270,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "places normal terms & definitions boilerplate in first of multiple clauses that excludes symbols" do
@@ -1334,8 +1334,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "places normal terms & definitions boilerplate at root if first of multiple clauses that excludes symbols is preceded by clause" do
@@ -1407,8 +1407,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "places boilerplate in Normative References subclause" do
@@ -1443,8 +1443,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "places user-defined boilerplate in Normative References subclause" do
@@ -1484,8 +1484,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "modifies normal terms & definitions boilerplate in vocabulary document" do
@@ -1532,8 +1532,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "does not allows subterms outside of vocabulary document" do
@@ -1598,8 +1598,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
 
     it "allows subterms in document" do
@@ -1703,8 +1703,8 @@ RSpec.describe Metanorma::ISO do
           </sections>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
   end
 

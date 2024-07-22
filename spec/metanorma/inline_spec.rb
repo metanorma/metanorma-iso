@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::ISO do
   it "processes inline_quoted formatting" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [alt]#alt#
       [deprecated]#deprecated#
@@ -31,7 +31,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "processes breaks" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       Line break +
       line break
@@ -53,7 +53,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "processes links" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       mailto:fred@example.com
       http://example.com[]
@@ -71,7 +71,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "processes bookmarks" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       Text [[bookmark]] Text
     INPUT
@@ -84,7 +84,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "processes crossreferences" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [[reference]]
       == Section
@@ -109,7 +109,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "processes bibliographic anchors" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [bibliography]
       == Normative References
@@ -142,7 +142,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "processes footnotes" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       Hello!footnote:[Footnote text]
     INPUT

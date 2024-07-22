@@ -125,18 +125,18 @@ RSpec.describe Metanorma::Iso::Processor do
         <sections/>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(processor.input_to_isodoc(input, nil))))
-      .to be_equivalent_to xmlpp(strip_guid(output))
+    expect(Xml::C14n.format(strip_guid(processor.input_to_isodoc(input, nil))))
+      .to be_equivalent_to Xml::C14n.format(strip_guid(output))
   end
 
   it "generates HTML from Metanorma XML" do
     FileUtils.rm_f "test.xml"
     FileUtils.rm_f "test.html"
     processor.output(inputxml, "test.xml", "test.html", :html)
-    expect(xmlpp(strip_guid(File.read("test.html", encoding: "utf-8")
+    expect(Xml::C14n.format(strip_guid(File.read("test.html", encoding: "utf-8")
       .gsub(%r{^.*<main}m, "<main")
       .gsub(%r{</main>.*}m, "</main>"))))
-      .to be_equivalent_to xmlpp(<<~OUTPUT)
+      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
         <main class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div class="authority"/>

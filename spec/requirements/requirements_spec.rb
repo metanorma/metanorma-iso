@@ -59,11 +59,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </preface>
       </ogc-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes permissions" do
@@ -545,22 +545,22 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </body>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
-      .to be_equivalent_to xmlpp(html)
-    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(IsoDoc::Iso::WordConvert.new({})
       .convert("test", presxml, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>")))
-      .to be_equivalent_to xmlpp(doc)
+      .to be_equivalent_to Xml::C14n.format(doc)
   end
 
   it "processes permission verifications" do
@@ -688,11 +688,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
   .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes abstract tests" do
@@ -791,11 +791,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
               .convert("test", input, true)
   .gsub(%r{^.*<body}m, "<body")
   .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes permission classes" do
@@ -892,11 +892,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
             .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes conformance classes" do
@@ -1022,11 +1022,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes conformance classes in French" do
@@ -1154,12 +1154,12 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
          </preface>
        </ogc-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
        .convert("test", input, true)
       .gsub(%r{<localized-strings>.*</localized-strings>}m, "")
        .gsub(%r{^.*<body}m, "<body")
        .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes requirement classes" do
@@ -1241,11 +1241,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes recommendation classes" do
@@ -1322,11 +1322,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes requirements" do
@@ -1437,11 +1437,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes recommendations" do
@@ -1553,10 +1553,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 end

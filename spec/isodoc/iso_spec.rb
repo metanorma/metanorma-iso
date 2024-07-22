@@ -177,7 +177,7 @@ RSpec.describe IsoDoc::Iso do
     INPUT
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
-    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(strip_guid(<<~"OUTPUT"))
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(strip_guid(<<~"OUTPUT"))
       #{HTML_HDR}
             <br/>
             <div>
@@ -247,11 +247,11 @@ RSpec.describe IsoDoc::Iso do
         </ext>
       </bibdata>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(
+    expect(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
       .at("//xmlns:bibdata").to_xml))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 end

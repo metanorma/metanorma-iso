@@ -73,7 +73,7 @@ RSpec.describe Metanorma::ISO do
               <note format="text/plain" type="Unpublished-Status">The standard is in press</note>
             </bibitem>
             <bibitem id="fdis" type="standard">
-              <fetched>#{Date.today}</fetched>
+              <fetched/>
               <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
               <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à
                          fournir par le fabricant du dispositif
@@ -122,7 +122,7 @@ RSpec.describe Metanorma::ISO do
               </relation>
               <relation type="instance">
                 <bibitem type="standard">
-                  <fetched>2020-11-03</fetched>
+                  <fetched/>
                   <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
                   <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à
                              fournir par le fabricant du dispositif
@@ -175,8 +175,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes all-parts ISO reference" do
@@ -228,8 +228,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes non-ISO reference in Normative References" do
@@ -260,8 +260,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes non-ISO reference in Bibliography" do
@@ -290,8 +290,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "sort ISO references in Bibliography" do
@@ -359,8 +359,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "renders withdrawn and cancelled ISO references" do
@@ -626,8 +626,8 @@ RSpec.describe Metanorma::ISO do
           </bibliography>
         </iso-standard>
       OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to xmlpp(output)
+      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Xml::C14n.format(output)
     end
   end
 

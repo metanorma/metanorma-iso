@@ -152,9 +152,9 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references notes, skipping units notes" do
@@ -213,9 +213,9 @@ RSpec.describe IsoDoc do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-        .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+        .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
 
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -281,9 +281,9 @@ RSpec.describe IsoDoc do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-        .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+        .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references figures" do
@@ -431,9 +431,9 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references subfigures" do
@@ -568,9 +568,9 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-     .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+     .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references examples" do
@@ -712,9 +712,9 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references formulae" do
@@ -870,9 +870,9 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references tables" do
@@ -1092,9 +1092,9 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references term notes" do
@@ -1186,9 +1186,9 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references clauses" do
@@ -1450,9 +1450,9 @@ RSpec.describe IsoDoc do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references sections" do
@@ -1573,9 +1573,9 @@ RSpec.describe IsoDoc do
          </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references lists" do
@@ -1712,8 +1712,8 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(output)))
-      .to be_equivalent_to xmlpp(strip_guid(presxml))
+    expect(Xml::C14n.format(strip_guid(output)))
+      .to be_equivalent_to Xml::C14n.format(strip_guid(presxml))
   end
 
   it "cross-references list items" do
@@ -1847,9 +1847,9 @@ RSpec.describe IsoDoc do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references nested list items" do
@@ -2011,9 +2011,9 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "conflates cross-references to a split list" do
@@ -2048,11 +2048,11 @@ RSpec.describe IsoDoc do
         <p><xref target='Na'>Clause 1 a)</xref></p>
       </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
     .convert("test", input, true))
     .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
 
     input = <<~INPUT
         <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -2085,10 +2085,10 @@ RSpec.describe IsoDoc do
         <p><xref target='Na'>Clause 1, List 1 a)</xref></p>
       </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
     .convert("test", input, true))
     .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

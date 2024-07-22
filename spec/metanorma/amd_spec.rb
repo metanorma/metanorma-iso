@@ -129,8 +129,8 @@ RSpec.describe Metanorma::ISO do
       </iso-standard>
     OUTPUT
     xml = Nokogiri::XML(input)
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes default metadata, amendment" do
@@ -388,8 +388,8 @@ RSpec.describe Metanorma::ISO do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes metadata, amendment, stage 30" do
@@ -470,8 +470,8 @@ RSpec.describe Metanorma::ISO do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes metadata, amendment, stage 40" do
@@ -552,8 +552,8 @@ RSpec.describe Metanorma::ISO do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes metadata, amendment, published" do
@@ -633,8 +633,8 @@ RSpec.describe Metanorma::ISO do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes metadata, corrigendum, stage 30" do
@@ -715,8 +715,8 @@ RSpec.describe Metanorma::ISO do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes metadata, corrigendum, stage 50" do
@@ -797,8 +797,8 @@ RSpec.describe Metanorma::ISO do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes metadata, corrigendum, published" do
@@ -878,7 +878,7 @@ RSpec.describe Metanorma::ISO do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

@@ -21,8 +21,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes review blocks if  document is not in draft mode" do
@@ -50,8 +50,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes review blocks if document is in draft mode" do
@@ -87,9 +87,9 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(input)
+    expect(Xml::C14n.format(strip_guid(input)
       .sub(/^.+<sections>/m, "<iso-standard><sections>")))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes term notes" do
@@ -116,8 +116,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes notes" do
@@ -134,8 +134,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes literals" do
@@ -154,8 +154,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes simple admonitions with Asciidoc names" do
@@ -172,8 +172,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes editorial notes" do
@@ -193,8 +193,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes complex admonitions with non-Asciidoc names" do
@@ -231,8 +231,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes term examples" do
@@ -260,8 +260,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes examples" do
@@ -284,8 +284,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes preambles" do
@@ -310,8 +310,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes images" do
@@ -331,8 +331,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "accepts width and height attributes on images" do
@@ -351,8 +351,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "accepts auto for width and height attributes on images" do
@@ -371,8 +371,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "accepts alignment attribute on paragraphs" do
@@ -388,8 +388,8 @@ RSpec.describe Metanorma::ISO do
          </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes blockquotes" do
@@ -417,8 +417,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes source code" do
@@ -444,8 +444,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes callouts" do
@@ -479,8 +479,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes unmodified term sources" do
@@ -521,8 +521,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes modified term sources" do
@@ -566,7 +566,7 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

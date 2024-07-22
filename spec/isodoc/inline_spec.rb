@@ -27,7 +27,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{HTML_HDR}
             <br/>
             <div>
@@ -71,7 +71,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{HTML_HDR}
             <br/>
             <div>
@@ -105,7 +105,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{HTML_HDR}
             <br/>
             <div>
@@ -140,9 +140,9 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(xmlpp(output
+    expect(Xml::C14n.format(output
       .sub(/<html/, "<html xmlns:m='m'")))
-      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+      .to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
         #{HTML_HDR.sub(/<html/, "<html xmlns:m='m'")}
               <br/>
               <div>
@@ -177,7 +177,7 @@ RSpec.describe IsoDoc do
         <sections>
       </iso-standard>
     INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{HTML_HDR}
               <br/>
               <div>
@@ -347,11 +347,11 @@ RSpec.describe IsoDoc do
         </preface>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes eref types" do
@@ -387,7 +387,7 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
           <foreword displayorder="1">
@@ -514,9 +514,9 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(xmlpp(strip_guid(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
+    expect(Xml::C14n.format(strip_guid(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
       .sub(%r{<i18nyaml>.*</i18nyaml>}m, "")))
-      .to be_equivalent_to xmlpp(<<~OUTPUT)
+      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
             <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
             <clause type="toc" id="_" displayorder="1">
@@ -821,11 +821,11 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes concept markup by context" do
@@ -968,9 +968,9 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-       .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
+       .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes concept attributes" do
@@ -1108,11 +1108,11 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to xmlpp(output)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "combines locality stacks with connectives, omitting subclauses" do
@@ -1180,7 +1180,7 @@ RSpec.describe IsoDoc do
         </p>
       </itu-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))).to be_equivalent_to Xml::C14n.format(output)
   end
 end

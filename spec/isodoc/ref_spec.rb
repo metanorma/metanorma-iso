@@ -361,15 +361,15 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
       .gsub(/reference="[^"]+"/, 'reference="1"')))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "processes websites" do
@@ -417,10 +417,10 @@ RSpec.describe IsoDoc do
          </references>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
     end
   end
 end

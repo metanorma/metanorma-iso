@@ -80,15 +80,15 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
-    expect(xmlpp(output
+    expect(Xml::C14n.format(output
       .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "processes sequences of examples" do
@@ -183,15 +183,15 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to xmlpp(html)
+      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
-    expect(xmlpp(output
+    expect(Xml::C14n.format(output
       .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "processes admonitions" do
@@ -235,16 +235,16 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(Nokogiri::XML(
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true),
     )
       .at("//div[h1/@class = 'ForewordTitle']").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes empty admonitions" do
@@ -270,10 +270,10 @@ RSpec.describe IsoDoc do
         </preface>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
         .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes admonitions with titles" do
@@ -321,16 +321,16 @@ RSpec.describe IsoDoc do
                </div>
              </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(Nokogiri::XML(
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true),
     )
       .at("//div[h1/@class = 'ForewordTitle']").to_xml))
-      .to be_equivalent_to xmlpp(output)
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes admonitions outside of clauses" do
@@ -354,7 +354,7 @@ RSpec.describe IsoDoc do
            <admonition id="_" type="important" displayorder="2">
              <p id="_">
                <strong>IMPORTANT — </strong>
-               <strong>The electronic file of this document contains colours which are considered to be useful for the correct understanding of the <document>.</strong>
+               <strong>The electronic file of this document contains colours which are considered to be useful for the correct understanding of the &lt;document&gt;.</strong>
              </p>
            </admonition>
            <clause id="A" displayorder="3">
@@ -363,10 +363,10 @@ RSpec.describe IsoDoc do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
     .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes editorial notes" do
@@ -435,17 +435,17 @@ RSpec.describe IsoDoc do
           <p> </p>
           </div>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", presxml, true))
       .at("//div[@class = 'WordSection2']").to_xml))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "renders figures" do
@@ -635,10 +635,10 @@ RSpec.describe IsoDoc do
         </body>
     OUTPUT
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", input, true)
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(xmlpp(Nokogiri::XML(output).at("//body").to_xml))
-      .to be_equivalent_to xmlpp(word)
+    expect(Xml::C14n.format(Nokogiri::XML(output).at("//body").to_xml))
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "renders subfigures (HTML)" do
@@ -701,7 +701,7 @@ RSpec.describe IsoDoc do
           </annex>
         </iso-standard>
       INPUT
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
       <html lang='en'>
         <head/>
         <body lang='en'>
@@ -871,16 +871,16 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
+      .to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
-    expect(xmlpp(Nokogiri::XML(output).at("//body").to_xml))
-      .to be_equivalent_to xmlpp(word)
+    expect(Xml::C14n.format(Nokogiri::XML(output).at("//body").to_xml))
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "processes formulae" do
@@ -1059,13 +1059,13 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options).convert("test", input, true)
-    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(presxml)
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, true)
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
-    expect(xmlpp(output
+    expect(Xml::C14n.format(output
       .sub(%r{^.*<div>\s*<h1 class="ForewordTitle">}m, '<div><h1 class="ForewordTitle">')
-      .sub(%r{<p>&#160;</p>\s*</div>.*$}m, ""))).to be_equivalent_to xmlpp(word)
+      .sub(%r{<p>&#160;</p>\s*</div>.*$}m, ""))).to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "processes formulae with single definition list entry" do
@@ -1147,10 +1147,10 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options).convert("test", input, true)
-    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(presxml)
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
-    expect(xmlpp(output)).to be_equivalent_to xmlpp(html)
+    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "adds ordered list classes for HTML" do
@@ -1309,13 +1309,13 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "processes ordered lists with start" do
@@ -1378,17 +1378,17 @@ RSpec.describe IsoDoc do
           </div>
     OUTPUT
 
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", presxml, true))
       .at("//div[@class = 'WordSection2']").to_xml))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "ignores intervening ul in numbering ol" do
@@ -1423,9 +1423,9 @@ RSpec.describe IsoDoc do
          </preface>
        </iso-standard>
     INPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 end

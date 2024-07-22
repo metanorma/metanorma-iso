@@ -427,17 +427,17 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     WORD
-    expect(strip_guid(xmlpp(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
-    expect(xmlpp(IsoDoc::Iso::WordConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(IsoDoc::Iso::WordConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "defaults to English" do
@@ -527,9 +527,9 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(xmlpp(strip_guid(output))
+    expect(Xml::C14n.format(strip_guid(output))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+      .to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
         <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
           <bibdata>
            <status>
@@ -922,14 +922,14 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "processes Russian" do
@@ -1225,14 +1225,14 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "processes Simplified Chinese" do
@@ -1551,14 +1551,14 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(xmlpp(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to xmlpp(presxml)
-    expect(xmlpp(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)))
-      .to be_equivalent_to xmlpp(html)
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "internationalises locality" do
@@ -1609,10 +1609,10 @@ RSpec.describe IsoDoc do
         </p>
       </foreword>
     OUTPUT
-    expect(xmlpp(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new({}).convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "changes i18n of reference_number based on document scheme" do

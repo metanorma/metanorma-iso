@@ -164,7 +164,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
 
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
       <div class='WordSection3'>
          <div>
            <a name='_terms_and_definitions' id='_terms_and_definitions'/>
@@ -252,8 +252,8 @@ RSpec.describe IsoDoc do
     html = Nokogiri::XML(File.read("test.html", encoding: "UTF-8"))
       .at("//div[@id = 'toc']").to_xml
 
-    expect(xmlpp(strip_guid(html)))
-      .to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(strip_guid(html)))
+      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
              <div id="toc">
            <ul>
              <li class="h1">
@@ -354,8 +354,8 @@ RSpec.describe IsoDoc do
       .sub(%r{</div>.*$}m, "</div>")
       .gsub(/<o:p>&#xA0;<\/o:p>/, "")
 
-    expect(xmlpp("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}"))
-      .to be_equivalent_to xmlpp(<<~'OUTPUT')
+    expect(Xml::C14n.format("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}"))
+      .to be_equivalent_to Xml::C14n.format(<<~'OUTPUT')
            <div>
          <p class="MsoToc1">
            <span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"/><span style="mso-spacerun:yes"> </span>TOC
@@ -452,7 +452,7 @@ RSpec.describe IsoDoc do
            '<main xmlns:epub="epub" class="main-section">')
       .sub(%r{</main>.*$}m, "</main>")
 
-    expect(xmlpp(strip_guid(html))).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(strip_guid(html))).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
       <main xmlns:epub="epub" class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div id="A">
@@ -505,7 +505,7 @@ RSpec.describe IsoDoc do
       .sub(%r{</body>.*$}m, "</body>")
       .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
 
-    expect(xmlpp(html)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(html)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
         <body xmlns:epub="epub">
         <div class="WordSection3">
           <div>
@@ -688,7 +688,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
       <div class="WordSection3">
         <p class="MsoNormal">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
@@ -735,7 +735,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
       <div class="WordSection3">
         <p class="MsoNormal">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
@@ -789,7 +789,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(xmlpp(word)).to be_equivalent_to xmlpp(<<~OUTPUT)
+    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
       <div class='WordSection3'>
          <p class='MsoNormal'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
@@ -897,11 +897,11 @@ RSpec.describe IsoDoc do
       </iso-standard>
     OUTPUT
 
-    expect(xmlpp(IsoDoc::Iso::PresentationXMLConvert.new(WORD_HTML_CSS.dup
+    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert.new(WORD_HTML_CSS.dup
       .merge(presxml_options))
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to xmlpp(presxml)
+      .to be_equivalent_to Xml::C14n.format(presxml)
 
     FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
@@ -916,11 +916,11 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
       .convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
-    expect(xmlpp(word
+    expect(Xml::C14n.format(word
       .sub(%r{^.*<div class="boilerplate-copyright">}m,
            '<div class="boilerplate-copyright">')
       .sub(%r{</div>.*$}m, "</div></div>")))
-      .to be_equivalent_to xmlpp(<<~"OUTPUT")
+      .to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
         <div class="boilerplate-copyright">
           <div>
             <p class="zzCopyright">
@@ -988,9 +988,9 @@ RSpec.describe IsoDoc do
            '<div class="WordSection2">')
       .sub(%r{<p class="MsoNormal">\s*<br clear="all" class="section"/>\s*</p>\s*<div class="WordSection3">.*$}m, "")
 
-    expect(xmlpp(word.gsub(/_Toc\d\d+/, "_Toc")
+    expect(Xml::C14n.format(word.gsub(/_Toc\d\d+/, "_Toc")
       .gsub(/<o:p>&#xA0;<\/o:p>/, "")))
-      .to be_equivalent_to xmlpp(<<~'OUTPUT')
+      .to be_equivalent_to Xml::C14n.format(<<~'OUTPUT')
         <div class="WordSection2">
          An empty word intro page.
 

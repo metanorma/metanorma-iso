@@ -56,7 +56,7 @@ module Metanorma
         cen?(orig) and return Pubid::Cen::Identifier::Base.parse(orig)
         ret = case orig
               when /^ISO/ then Pubid::Iso::Identifier::Base.parse(orig)
-              when /^IEC/ then Pubid::Iec::Identifier::Base.parse(orig)
+              when /^IEC/ then Pubid::Iec::Identifier.parse(orig)
               else base_pubid::Base.parse(orig)
               end
         ret.edition ||= 1

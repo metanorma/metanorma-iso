@@ -23,6 +23,7 @@ require "equivalent-xml"
 require "metanorma"
 require "metanorma/iso"
 require "iev"
+require "xml-c14n"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -56,36 +57,14 @@ def strip_guid(xml)
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
     .gsub(%r{ src="cid:[^.]+.gif"}, ' src="_.gif"')
     .gsub(%r{ src='cid:[^.]+.gif'}, ' src="_.gif"')
+    .gsub(%r{<fetched>20[0-9-]+</fetched>}, "<fetched/>")
+    .gsub(%r{ schema-version="[^"]+"}, "")
 end
 
 def metadata(hash)
   hash.sort.to_h.delete_if do |_, v|
     v.nil? || (v.respond_to?(:empty?) && v.empty?)
   end
-end
-
-def xmlpp(xml)
-  c = HTMLEntities.new
-  xml &&= xml.split(/(&\S+?;)/).map do |n|
-    if /^&\S+?;$/.match?(n)
-      c.encode(c.decode(n), :hexadecimal)
-    else n
-    end
-  end.join
-  xsl = <<~XSL
-    <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-      <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-      <xsl:strip-space elements="*"/>
-      <xsl:template match="/">
-        <xsl:copy-of select="."/>
-      </xsl:template>
-    </xsl:stylesheet>
-  XSL
-  ret = Nokogiri::XSLT(xsl).transform(Nokogiri::XML(xml, &:noblanks))
-    .to_xml(indent: 2, encoding: "UTF-8")
-    .gsub(%r{<fetched>20[0-9-]+</fetched>}, "<fetched/>")
-    .gsub(%r{ schema-version="[^"]+"}, "")
-  HTMLEntities.new.decode(ret)
 end
 
 ASCIIDOC_BLANK_HDR = <<~HDR.freeze

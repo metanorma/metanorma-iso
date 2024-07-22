@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::ISO do
   it "processes basic tables" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       .Table Name
       |===
@@ -36,7 +36,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "inserts header rows in a table with a name and no header" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=2]
       .Table Name
@@ -76,7 +76,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "inserts header rows in a table without a name and no header" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=2]
       |===
@@ -286,6 +286,6 @@ RSpec.describe Metanorma::ISO do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS)))).to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS)))).to be_equivalent_to Xml::C14n.format(output)
   end
 end

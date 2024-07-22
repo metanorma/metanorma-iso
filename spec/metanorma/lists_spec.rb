@@ -16,7 +16,7 @@ RSpec.describe Metanorma::ISO do
       List F:: List G
 
     INPUT
-    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{BLANK_HDR}
         <sections>
           <ul id="_">
@@ -98,7 +98,7 @@ RSpec.describe Metanorma::ISO do
       Note 3.
 
     INPUT
-    expect(xmlpp(strip_guid(output))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{BLANK_HDR}
         <sections>
           <ul id="id">
@@ -173,7 +173,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "anchors lists and list items" do
-    expect(xmlpp(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to xmlpp(<<~"OUTPUT")
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}
       [[id1]]
       * [[id2]] List item

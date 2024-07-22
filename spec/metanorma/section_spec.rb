@@ -146,8 +146,8 @@ RSpec.describe Metanorma::ISO do
         </bibliography>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes section obligations" do
@@ -182,8 +182,8 @@ RSpec.describe Metanorma::ISO do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes inline headers" do
@@ -218,8 +218,8 @@ RSpec.describe Metanorma::ISO do
         </annex>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes blank headers" do
@@ -240,8 +240,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes terms & definitions with external source" do
@@ -290,8 +290,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes empty terms & definitions" do
@@ -339,8 +339,8 @@ RSpec.describe Metanorma::ISO do
       </iso-standard>
 
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes empty terms & definitions with external source" do
@@ -384,8 +384,8 @@ RSpec.describe Metanorma::ISO do
         </sections>
       </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "ignores multiple terms & definitions in default documents" do
@@ -434,8 +434,8 @@ RSpec.describe Metanorma::ISO do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "permits multiple terms & definitions in vocabulary documents" do
@@ -482,7 +482,7 @@ RSpec.describe Metanorma::ISO do
          </sections>
        </iso-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(output)
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

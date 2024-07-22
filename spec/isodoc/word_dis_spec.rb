@@ -118,9 +118,9 @@ RSpec.describe IsoDoc do
       </div>
     OUTPUT
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(xmlpp(Nokogiri::XML(output)
+    expect(Xml::C14n.format(Nokogiri::XML(output)
       .at("//div[@class = 'WordSection3']").to_xml))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
 
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -146,9 +146,9 @@ RSpec.describe IsoDoc do
       </div>
     OUTPUT
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(xmlpp(Nokogiri::XML(output)
+    expect(Xml::C14n.format(Nokogiri::XML(output)
       .at("//div[@class = 'WordSection3']").to_xml))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with foreword and intro" do
@@ -195,8 +195,8 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(xmlpp(doc.to_xml))
-      .to be_equivalent_to xmlpp(word)
+    expect(Xml::C14n.format(doc.to_xml))
+      .to be_equivalent_to Xml::C14n.format(word)
 
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -239,8 +239,8 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(xmlpp(doc.to_xml))
-      .to be_equivalent_to xmlpp(word)
+    expect(Xml::C14n.format(doc.to_xml))
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "formats references" do
@@ -285,8 +285,8 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']")
-    expect(xmlpp(doc.to_xml))
-      .to be_equivalent_to xmlpp(word)
+    expect(Xml::C14n.format(doc.to_xml))
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "formats tt" do
@@ -365,8 +365,8 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(xmlpp(doc.to_xml))
-      .to be_equivalent_to xmlpp(word)
+    expect(Xml::C14n.format(doc.to_xml))
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "formats tt with ad hoc smaller font" do
@@ -431,8 +431,8 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(xmlpp(doc.to_xml))
-      .to be_equivalent_to xmlpp(word)
+    expect(Xml::C14n.format(doc.to_xml))
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with lists" do
@@ -613,9 +613,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(xmlpp(strip_guid(Nokogiri::XML(output)
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with lists types" do
@@ -709,9 +709,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(xmlpp(strip_guid(Nokogiri::XML(output)
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with lists and paragraphs" do
@@ -770,9 +770,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(xmlpp(Nokogiri::XML(output)
+    expect(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with ordered list start" do
@@ -880,9 +880,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(xmlpp(strip_guid(Nokogiri::XML(output)
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with tables" do
@@ -1001,9 +1001,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(xmlpp(Nokogiri::XML(output)
+    expect(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with figures" do
@@ -1060,9 +1060,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with examples" do
@@ -1117,9 +1117,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with formulas" do
@@ -1155,9 +1155,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with notes" do
@@ -1212,9 +1212,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with unordered lists embedded within notes and examples" do
@@ -1321,9 +1321,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with ordered lists embedded within notes and examples" do
@@ -1435,9 +1435,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "ignores intervening ul in numbering ol" do
@@ -1504,9 +1504,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with definition lists embedded within notes and examples" do
@@ -1558,9 +1558,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with annexes" do
@@ -1602,9 +1602,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with blockquotes" do
@@ -1661,9 +1661,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with title" do
@@ -1732,12 +1732,12 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+      .to be_equivalent_to Xml::C14n.format(word)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection1']").to_xml)))
-      .to be_equivalent_to xmlpp(title)
+      .to be_equivalent_to Xml::C14n.format(title)
   end
 
   it "deals with amendments" do
@@ -1790,9 +1790,9 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "deals with copyright boilerplate" do
@@ -1844,11 +1844,11 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new(wordstylesheet: "spec/assets/word.css")
       .convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
-    expect(xmlpp(word
+    expect(Xml::C14n.format(word
       .sub(%r{^.*<div class="boilerplate-copyright">}m,
            '<div class="boilerplate-copyright">')
       .sub(%r{</div>.*$}m, "</div></div>")))
-      .to be_equivalent_to xmlpp(<<~OUTPUT)
+      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
         <div class='boilerplate-copyright'>
           <div>
             <p class='zzCopyright'>
@@ -1882,11 +1882,11 @@ RSpec.describe IsoDoc do
                presxml.sub(%r{<stage language="">50</stage>},
                            "<stage>60</stage><substage>00</substage>"), false)
     word = File.read("test.doc", encoding: "UTF-8")
-    expect(xmlpp(word
+    expect(Xml::C14n.format(word
       .sub(%r{^.*<div class="boilerplate-copyright">}m,
            '<div class="boilerplate-copyright">')
       .sub(%r{</div>.*$}m, "</div></div>")))
-      .to be_equivalent_to xmlpp(<<~OUTPUT)
+      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
         <div class='boilerplate-copyright'>
           <div>
             <p class='zzCopyright'>
@@ -2035,8 +2035,8 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(xmlpp(Nokogiri::XML(output)
+    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to xmlpp(word)
+      .to be_equivalent_to Xml::C14n.format(word)
   end
 end
