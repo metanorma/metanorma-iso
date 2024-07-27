@@ -11519,14 +11519,26 @@
 
 	<xsl:template match="*[local-name()='localityStack']"/>
 
+	<xsl:variable name="pdfAttachmentsList_">
+		<xsl:for-each select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment']">
+			<attachment filename="{@name}"/>
+		</xsl:for-each>
+	</xsl:variable>
+	<xsl:variable name="pdfAttachmentsList" select="xalan:nodeset($pdfAttachmentsList_)"/>
+
 	<xsl:template match="*[local-name()='link']" name="link">
+		<xsl:variable name="target_normalized" select="translate(@target, '\', '/')"/>
+		<xsl:variable name="target_attachment_name" select="substring-after($target_normalized, '_attachments/')"/>
 		<xsl:variable name="target">
 			<xsl:choose>
 				<xsl:when test="@updatetype = 'true'">
 					<xsl:value-of select="concat(normalize-space(@target), '.pdf')"/>
 				</xsl:when>
+				<!-- link to the PDF attachment -->
+				<xsl:when test="starts-with($target_normalized, '_') and contains($target_normalized, '_attachments/') and $pdfAttachmentsList//attachment[@filename = $target_attachment_name]">
+					<xsl:value-of select="concat('url(embedded-file:', $target_attachment_name, ')')"/>
+				</xsl:when>
 				<xsl:when test="contains(@target, concat('_', $inputxml_filename_prefix, '_attachments'))">
-					<!-- link to the PDF attachment -->
 					<xsl:variable name="target_" select="translate(@target, '\', '/')"/>
 					<xsl:variable name="target__" select="substring-after($target_, concat('_', $inputxml_filename_prefix, '_attachments', '/'))"/>
 					<xsl:value-of select="concat('url(embedded-file:', $target__, ')')"/>
