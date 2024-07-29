@@ -11535,14 +11535,17 @@
 					<xsl:value-of select="concat(normalize-space(@target), '.pdf')"/>
 				</xsl:when>
 				<!-- link to the PDF attachment -->
-				<xsl:when test="starts-with($target_normalized, '_') and contains($target_normalized, '_attachments/') and $pdfAttachmentsList//attachment[@filename = $target_attachment_name]">
+				<xsl:when test="$pdfAttachmentsList//attachment[@filename = current()/@target]">
+					<xsl:value-of select="concat('url(embedded-file:', @target, ')')"/>
+				</xsl:when>
+				<!-- <xsl:when test="starts-with($target_normalized, '_') and contains($target_normalized, '_attachments/') and $pdfAttachmentsList//attachment[@filename = $target_attachment_name]">
 					<xsl:value-of select="concat('url(embedded-file:', $target_attachment_name, ')')"/>
 				</xsl:when>
 				<xsl:when test="contains(@target, concat('_', $inputxml_filename_prefix, '_attachments'))">
 					<xsl:variable name="target_" select="translate(@target, '\', '/')"/>
 					<xsl:variable name="target__" select="substring-after($target_, concat('_', $inputxml_filename_prefix, '_attachments', '/'))"/>
 					<xsl:value-of select="concat('url(embedded-file:', $target__, ')')"/>
-				</xsl:when>
+				</xsl:when> -->
 				<xsl:otherwise>
 					<xsl:value-of select="normalize-space(@target)"/>
 				</xsl:otherwise>
