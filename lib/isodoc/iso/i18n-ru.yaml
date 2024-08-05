@@ -14,6 +14,7 @@ descriptor: Дескриптор
 price_based_on: Цена рассчитана на % стр.
 price: Цена
 date_first_printing: Дата первой печати
+date_printing: Дата % печати
 under_preparation: В стадии подготовки. (Стадия на момент публикации %).
 withdrawn: Отозван.
 cancelled_and_replaced: Отменено и заменено на %.

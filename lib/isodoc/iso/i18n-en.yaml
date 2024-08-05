@@ -14,6 +14,7 @@ reference_number_abbrev: Ref. No.
 price_based_on: Price based on % pages
 price: Price
 date_first_printing: Date of the first printing
+date_printing: Date of the % printing
 descriptor: Descriptor
 under_preparation: Under preparation. (Stage at the time of publication %).
 withdrawn: Withdrawn.
