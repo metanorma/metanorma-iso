@@ -73,6 +73,16 @@ module IsoDoc
         @lang == "fr" and e = bibdata.at(ns("./edition[@language = 'fr']")) and
           e.children = e.text.sub(/(\d+)(\p{L}+)/, "\\1<sup>\\2</sup>")
         @docscheme == "1951" and edition_replacement(bibdata)
+        edition_printing_date(bibdata)
+      end
+
+      def edition_printing_date(bibdata)
+        @i18n.date_printing &&
+          pd = bibdata.at(ns("//metanorma-extension/presentation-metadata" \
+                             "[name = 'printing-date']/value")) or return
+        x = @i18n.populate("date_printing",
+                           { "var1" => pd.text.split(/,/).first.to_i })
+        bibdata.at(ns("./ext")) << "<date-printing>#{x}</date-printing>"
       end
 
       def edition_replacement(bibdata)

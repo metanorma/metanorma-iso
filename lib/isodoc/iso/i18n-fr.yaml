@@ -14,7 +14,7 @@ reference_number_abbrev: Réf. №
 price_based_on: Prix basé sur % pages
 price: Prix
 date_first_printing: Date de la première impression
-date_printing: Date de la % impression
+date_printing: "Date de la {{ var1 | ordinal_word: '', 'f' }} impression"
 descriptor: Descripteur
 under_preparation: En cours d'élaboration. (Stade au moment de la publication %).
 withdrawn: Retiré.
