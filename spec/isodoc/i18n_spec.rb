@@ -1741,7 +1741,8 @@ RSpec.describe IsoDoc do
       </bibdata>
       <metanorma-extension>
       <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
-      <presentation-metadata><name>printing-date</name><value>2,1965-12-01</value></presentation-metadata>
+      <presentation-metadata><printing-date>2</printing-date>value></presentation-metadata>
+      <presentation-metadata><printing-date>1965-12-01</printing-date>value></presentation-metadata>
       </metanorma-extension>
       <sections>
           <clause id="D" obligation="normative" type="scope">
