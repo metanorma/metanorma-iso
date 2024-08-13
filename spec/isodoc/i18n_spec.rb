@@ -1727,4 +1727,51 @@ RSpec.describe IsoDoc do
     expect(xml.at("//xmlns:edn-replacement"))
       .to be_nil
   end
+
+  it "add printing number text" do
+    input = <<~"INPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+      <language>en</language>
+      <script>Latn</script>
+      <edition>2</edition>
+      <ext>
+      <doctype>brochure</doctype>
+      </ext>
+      </bibdata>
+      <metanorma-extension>
+      <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
+      <presentation-metadata><printing-date>2</printing-date>value></presentation-metadata>
+      <presentation-metadata><printing-date>1965-12-01</printing-date>value></presentation-metadata>
+      </metanorma-extension>
+      <sections>
+          <clause id="D" obligation="normative" type="scope">
+            <title>Scope</title>
+            <p id="E">Text</p>
+          </clause>
+      </sections>
+      </iso-standard>
+    INPUT
+
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+    expect(xml.at("//xmlns:date-printing").to_xml)
+      .to be_equivalent_to "<date-printing>Date of the second printing</date-printing>"
+
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input
+        .sub("<language>en</language>", "<language>fr</language>"), true))
+    expect(xml.at("//xmlns:date-printing").to_xml)
+      .to be_equivalent_to "<date-printing>Date de la deuxi&#xE8;me impression</date-printing>"
+
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input
+        .sub("<language>en</language>", "<language>ru</language>")
+        .sub("<script>Latn</script>", "<script>Cyrl</script>"), true))
+    expect(xml.at("//xmlns:date-printing").to_xml)
+      .to be_equivalent_to "<date-printing>&#x414;&#x430;&#x442;&#x430; &#x432;&#x442;&#x43E;&#x440;&#x43E;&#x439; &#x43F;&#x435;&#x447;&#x430;&#x442;&#x438;</date-printing>"
+  end
 end
