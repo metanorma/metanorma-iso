@@ -1773,5 +1773,12 @@ RSpec.describe IsoDoc do
         .sub("<script>Latn</script>", "<script>Cyrl</script>"), true))
     expect(xml.at("//xmlns:date-printing").to_xml)
       .to be_equivalent_to "<date-printing>&#x414;&#x430;&#x442;&#x430; &#x432;&#x442;&#x43E;&#x440;&#x43E;&#x439; &#x43F;&#x435;&#x447;&#x430;&#x442;&#x438;</date-printing>"
+
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+     .new(presxml_options)
+     .convert("test", input
+       .sub("<language>en</language>", "<language>ja</language>")
+       .sub("<script>Latn</script>", "<script>Japn</script>"), true))
+    expect(xml.at("//xmlns:date-printing")).to be_nil
   end
 end
