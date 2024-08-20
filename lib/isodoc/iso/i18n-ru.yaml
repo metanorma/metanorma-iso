@@ -35,6 +35,7 @@ voting_terminates_on: Голосование заканчивается в
 corrected_version: Исправленная версия
 fast-track-procedure: Ускоренная процедура
 classification-UDC: УДК
+website: веб-сайт
 doctype_dict:
   international-standard: Международный Стандарт
   technical-specification: Техническая Спецификация

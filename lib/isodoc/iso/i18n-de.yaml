@@ -34,6 +34,7 @@ multiple_or: "%1 oder %2"
 classification-UDC: UDK
 edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} AUSGABE"
 edition_replacement: "Diese {{ var1 | ordinal_word: 'edition', '' }} Ausgabe ersetzt die {{ var2 | ordinal_word: 'edition', '' }} Ausgabe"
+website: Webseite
 doctype_dict:
   international-standard: Internationaler Standard
   technical-specification: Technische Spezifikation
