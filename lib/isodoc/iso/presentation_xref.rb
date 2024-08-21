@@ -32,10 +32,11 @@ module IsoDoc
         ret = resolve_eref_connectives(eref_locality_stacks(refs, target,
                                                             node))
         node["droploc"] = droploc
-        eref_localities1({ target: target, number: "pl",
-                           type: prefix_clause(target, refs.first.at(ns("./locality"))),
-                           from: l10n(ret[1..-1].join),
-                           node: node, lang: @lang })
+        eref_localities1({ target:, number: "pl",
+                           type: prefix_clause(target,
+                                               refs.first.at(ns("./locality"))),
+                           from: l10n(ret[1..].join),
+                           node:, lang: @lang })
       end
 
       def prefix_clause(target, loc)
@@ -54,7 +55,8 @@ module IsoDoc
           target&.gsub(/<[^>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
       end
 
-      # ISO has not bothered to communicate to us what most of these span classes mean
+      # ISO has not bothered to communicate to us what most of these 
+      # span classes mean
       LOCALITY2SPAN = {
         annex: "citeapp",
         dunno: "citebase",
@@ -119,11 +121,10 @@ module IsoDoc
       def prefix_container_template(container, node, target)
         nested_xref = @i18n.nested_xref
         container_label = anchor_xref(node, container)
-        if @xrefs.anchor(target, :type) == "listitem"
-            if !@xrefs.anchor(target, :refer_list)
+        if @xrefs.anchor(target, :type) == "listitem" &&
+            !@xrefs.anchor(target, :refer_list)
           nested_xref = "%1 %2"
           # n = @xrefs.anchor(container, :label) and container_label = n
-          end
         end
         [nested_xref, container_label]
       end
