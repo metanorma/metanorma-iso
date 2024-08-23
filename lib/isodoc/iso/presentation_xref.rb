@@ -52,7 +52,7 @@ module IsoDoc
       def subclause?(target, type, from)
         (from&.match?(/\./) && type == "clause") ||
           type == "list" ||
-          target&.gsub(/<[^>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
+          target&.gsub(/<[^<>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
       end
 
       # ISO has not bothered to communicate to us what most of these 
@@ -74,7 +74,7 @@ module IsoDoc
 
       def locality_span_wrap(ret, type)
         type or return ret
-        m = /^(\s*)(.+?)(\s*)$/.match(ret) or return ret
+        m = /^(\s*)(?=\S)(.+?)(\s*)$/.match(ret) or return ret
         ret = [m[1], m[2], m[3]]
         spanclass = LOCALITY2SPAN[type.to_sym] and
           ret[1] = "<span class='#{spanclass}'>#{ret[1]}</span>"

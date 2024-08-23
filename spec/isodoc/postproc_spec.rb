@@ -108,7 +108,7 @@ RSpec.describe IsoDoc do
     expect(File.exist?("spec/assets/iso.html")).to be true
     html = File.read("spec/assets/iso.html", encoding: "UTF-8")
     expect(html).to match(/<style>/)
-    expect(html).to match(%r{https://use.fontawesome.com})
+    expect(html).to match(%r{https://use\.fontawesome\.com})
     expect(html).to match(%r{libs/jquery})
   end
 

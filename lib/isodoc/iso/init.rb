@@ -64,7 +64,7 @@ module IsoDoc
 
       def std_docid_semantic1(id)
         ids = id.split(/(\p{Zs})/)
-        agency?(ids[0].sub(/\/.*$/, "")) or return id
+        agency?(ids[0].sub(%r{^([^/]+)/.*$}, "\\1")) or return id
         ids.map! do |i|
           if %w(GUIDE TR TS DIR).include?(i)
             "<span class='stddocNumber'>#{i}</span>"
