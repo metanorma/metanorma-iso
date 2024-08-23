@@ -73,68 +73,89 @@ RSpec.describe Metanorma::ISO do
       image::spec/examples/rice_img/1000-1_ed2amd3fig3.png[]
 
     INPUT
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/rice_image1.png does not match " \
-      "DRG requirements: expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1001_ed2amd3fig1.png does not " \
-      "match DRG requirements: " \
-      "expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/SL1000-1_ed2amd3fig1.png does not " \
-      "match DRG requirements: " \
-      "expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/ISO_1213_1.png does not match DRG " \
-      "requirements: expect 1000-1_ed2amd3fig"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3figA.png does not " \
-      "match DRG requirements"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png does " \
-      "not match DRG requirements"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png is " \
-      "under a table but is not so labelled"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig2.png is under " \
-      "a table but is not so labelled"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3figTab2.png is " \
-      "labelled as under a table but is not"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
-      "labelled as under a table but is not"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3figA2.png is " \
-      "under an annex but is not so labelled"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig3.png is " \
-      "under an annex but is not so labelled"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3figA1.png is " \
-      "labelled as under an annex but is not"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
-      "labelled as under an annex but is not"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig1b.png has a " \
-      "subfigure letter but is not a subfigure"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig4.png does not " \
-      "have a subfigure letter but is a subfigure"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig1a.png has a " \
-      "subfigure letter but is not a subfigure"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png has a " \
-      "subfigure letter but is not a subfigure"
-    expect(File.read("test.err.html")).to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig5_f.png expected " \
-      "to have suffix _e"
-    expect(File.read("test.err.html")).not_to include
-    "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png expected " \
-      "to have suffix _e"
+    f = File.read("test.err.html").gsub(/[​­]/, "")
+    expect(f).to include(
+      "image name spec/examples/rice_img/rice_image1.png does not match " \
+        "DRG requirements: expect 1000-1_ed2amd3fig",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1001_ed2amd3fig1.png does not " \
+        "match DRG requirements: " \
+        "expect 1000-1_ed2amd3fig",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/SL1000-1_ed2amd3fig1.png does not " \
+        "match DRG requirements: " \
+        "expect 1000-1_ed2amd3fig",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/ISO_1213_1.png does not match DRG " \
+        "requirements: expect 1000-1_ed2amd3fig",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA.png does not " \
+        "match DRG requirements",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png does " \
+        "not match DRG requirements",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab1.png is " \
+        "under a table but is not so labelled",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig2.png is under " \
+        "a table but is not so labelled",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3figTab2.png is " \
+        "labelled as under a table but is not",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
+        "labelled as under a table but is not",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA2.png is " \
+        "under an annex but is not so labelled",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig3.png is " \
+        "under an annex but is not so labelled",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3figA1.png is " \
+        "labelled as under an annex but is not",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png is " \
+        "labelled as under an annex but is not",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1b.png has a " \
+        "subfigure letter but is not a subfigure",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig4.png does not " \
+        "have a subfigure letter but is a subfigure",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1a.png has a " \
+        "subfigure letter but is not a subfigure",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png has a " \
+        "subfigure letter but is not a subfigure",
+    )
+    expect(f).to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig5_f.png expected " \
+        "to have suffix _e",
+    )
+    expect(f).not_to include(
+      "image name spec/examples/rice_img/1000-1_ed2amd3fig1.png expected " \
+        "to have suffix _e",
+    )
   end
 
   it "Warns of illegal doctype" do

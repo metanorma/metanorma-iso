@@ -1860,7 +1860,7 @@ RSpec.describe Metanorma::ISO do
       :no-pdf:
     INPUT
     html = File.read("test.html", encoding: "utf-8")
-    expect(html).to match(%r{<script>})
+    expect(html).to match(%r{<script>}i)
   end
 
   it "uses default fonts" do

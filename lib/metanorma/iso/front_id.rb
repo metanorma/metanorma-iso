@@ -87,7 +87,7 @@ module Metanorma
                 type: get_typeabbr(node),
                 publisher: pub[0],
                 unpublished: /^[0-5]/.match?(get_stage(node)),
-                copublisher: pub[1..-1] }
+                copublisher: pub[1..] }
         ret[:copublisher].empty? and ret.delete(:copublisher)
         compact_blank(ret)
       end
@@ -166,19 +166,19 @@ module Metanorma
       end
 
       def iso_id_out_common(xml, params, with_prf)
-        xml.docidentifier iso_id_default(params).to_s(with_prf: with_prf),
+        xml.docidentifier iso_id_default(params).to_s(with_prf:),
                           **attr_code(type: "ISO", primary: "true")
         xml.docidentifier iso_id_reference(params)
-          .to_s(format: :ref_num_short, with_prf: with_prf),
+          .to_s(format: :ref_num_short, with_prf:),
                           **attr_code(type: "iso-reference")
         xml.docidentifier iso_id_reference(params).urn, **attr_code(type: "URN")
       end
 
       def iso_id_out_non_amd(xml, params, with_prf)
-        xml.docidentifier iso_id_undated(params).to_s(with_prf: with_prf),
+        xml.docidentifier iso_id_undated(params).to_s(with_prf:),
                           **attr_code(type: "iso-undated")
         xml.docidentifier iso_id_with_lang(params)
-          .to_s(format: :ref_num_long, with_prf: with_prf),
+          .to_s(format: :ref_num_long, with_prf:),
                           **attr_code(type: "iso-with-lang")
       end
 
@@ -218,7 +218,7 @@ module Metanorma
         part, subpart = node&.attr("partnumber")&.split("-")
         xml.structuredidentifier do |i|
           i.project_number(node.attr("docnumber"), **attr_code(
-            part: part, subpart: subpart,
+            part:, subpart:,
             amendment: node.attr("amendment-number"),
             corrigendum: node.attr("corrigendum-number"),
             origyr: node.attr("created-date")
