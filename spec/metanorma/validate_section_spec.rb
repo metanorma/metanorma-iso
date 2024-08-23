@@ -15,7 +15,7 @@ RSpec.describe Metanorma::ISO do
         text
       INPUT
 
-      expect(File.read("test.err.html")).to include "Scope clause missing"
+      expect(File.read("test.err.html")).to include("Scope clause missing")
     end
 
     it "Scope clause not missing if supplied" do
@@ -29,7 +29,7 @@ RSpec.describe Metanorma::ISO do
 
         == Scope
       INPUT
-      expect(File.read("test.err.html")).not_to include "Scope clause missing"
+      expect(File.read("test.err.html")).not_to include("Scope clause missing")
     end
 
     it "Scope clause not missing in amendments" do
@@ -44,7 +44,7 @@ RSpec.describe Metanorma::ISO do
 
         text
       INPUT
-      expect(File.read("test.err.html")).not_to include "Scope clause missing"
+      expect(File.read("test.err.html")).not_to include("Scope clause missing")
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe Metanorma::ISO do
         text
       INPUT
       expect(File.read("test.err.html"))
-        .to include "Normative references missing"
+        .to include("Normative references missing")
     end
 
     it "Normative references not missing if supplied" do
@@ -78,7 +78,7 @@ RSpec.describe Metanorma::ISO do
         == Normative references
       INPUT
       expect(File.read("test.err.html"))
-        .not_to include "Normative references missing"
+        .not_to include("Normative references missing")
     end
 
     it "Normative references not missing in amendments" do
@@ -93,7 +93,7 @@ RSpec.describe Metanorma::ISO do
         text
       INPUT
       expect(File.read("test.err.html"))
-        .not_to include "Normative references missing"
+        .not_to include("Normative references missing")
     end
   end
 
@@ -110,7 +110,7 @@ RSpec.describe Metanorma::ISO do
         text
       INPUT
       expect(File.read("test.err.html"))
-        .to include "Terms & definitions missing"
+        .to include("Terms & definitions missing")
     end
 
     it "Terms & definitions not missing if supplied" do
@@ -126,7 +126,7 @@ RSpec.describe Metanorma::ISO do
         === Term 1
       INPUT
       expect(File.read("test.err.html"))
-        .not_to include "Terms & definitions missing"
+        .not_to include("Terms & definitions missing")
     end
 
     it "Terms & definitions not missing in amendment" do
@@ -141,7 +141,7 @@ RSpec.describe Metanorma::ISO do
         text
       INPUT
       expect(File.read("test.err.html"))
-        .not_to include "Terms & definitions missing"
+        .not_to include("Terms & definitions missing")
     end
   end
 
@@ -154,7 +154,7 @@ RSpec.describe Metanorma::ISO do
       === Scope subclause
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Scope contains subclauses: should be succinct"
+      .to include("Scope contains subclauses: should be succinct")
   end
 
   # can't test: our asciidoc template won't allow this to be generated
@@ -190,8 +190,8 @@ RSpec.describe Metanorma::ISO do
       == Symbols and Abbreviated Terms
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Only one Symbols and Abbreviated Terms section " \
-                  "in the standard"
+      .to include("Only one Symbols and Abbreviated Terms section " \
+                  "in the standard")
   end
 
   it "Style warning if Symbols and Abbreviated Terms contains " \
@@ -204,8 +204,8 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Symbols and Abbreviated Terms can only contain " \
-                  "a definition list"
+      .to include("Symbols and Abbreviated Terms can only contain " \
+                  "a definition list")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -215,8 +215,8 @@ RSpec.describe Metanorma::ISO do
       A:: B
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Symbols and Abbreviated Terms can only contain " \
-                      "a definition list"
+      .not_to include("Symbols and Abbreviated Terms can only contain " \
+                      "a definition list")
   end
 
   it "Warning if missing foreword" do
@@ -228,7 +228,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Initial section must be (content) Foreword"
+      .to include("Initial section must be (content) Foreword")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -243,7 +243,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Initial section must be (content) Foreword"
+      .not_to include("Initial section must be (content) Foreword")
   end
 
   it "Warning if do not start with scope or introduction" do
@@ -256,7 +256,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Prefatory material must be followed by (clause) Scope"
+      .to include("Prefatory material must be followed by (clause) Scope")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -273,7 +273,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Prefatory material must be followed by (clause) Scope"
+      .not_to include("Prefatory material must be followed by (clause) Scope")
   end
 
   it "Warning if introduction not followed by scope" do
@@ -290,7 +290,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Prefatory material must be followed by (clause) Scope"
+      .to include("Prefatory material must be followed by (clause) Scope")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -310,7 +310,7 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Prefatory material must be followed by (clause) Scope"
+      .not_to include("Prefatory material must be followed by (clause) Scope")
   end
 
   it "Warning if normative references not followed by terms and definitions" do
@@ -330,8 +330,8 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Normative References must be followed by " \
-                  "Terms and Definitions"
+      .to include("Normative References must be followed by " \
+                  "Terms and Definitions")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -354,8 +354,8 @@ RSpec.describe Metanorma::ISO do
       Paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Normative References must be followed by " \
-                      "Terms and Definitions"
+      .not_to include("Normative References must be followed by " \
+                      "Terms and Definitions")
   end
 
   it "Warning if there are no clauses in the document" do
@@ -376,7 +376,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Document must contain at least one clause"
+      .to include("Document must contain at least one clause")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -400,7 +400,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Document must contain at least one clause"
+      .not_to include("Document must contain at least one clause")
   end
 
   it "Warning if scope occurs after Terms and Definitions" do
@@ -423,7 +423,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Scope must occur before Terms and Definitions"
+      .to include("Scope must occur before Terms and Definitions")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -449,7 +449,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Scope must occur before Terms and Definitions"
+      .not_to include("Scope must occur before Terms and Definitions")
   end
 
   it "Warning if Symbols and Abbreviated Terms does not occur immediately " \
@@ -473,7 +473,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Only annexes and references can follow clauses"
+      .to include("Only annexes and references can follow clauses")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -500,7 +500,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Only annexes and references can follow clauses"
+      .not_to include("Only annexes and references can follow clauses")
   end
 
   it "Warning if no normative references" do
@@ -527,7 +527,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Document must include (references) Normative References"
+      .to include("Document must include (references) Normative References")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -557,7 +557,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Document must include (references) Normative References"
+      .not_to include("Document must include (references) Normative References")
   end
 
   it "Warning if there are two Terms sections" do
@@ -575,7 +575,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Only annexes and references can follow clauses"
+      .to include("Only annexes and references can follow clauses")
   end
 
   it "No warning if there are two Terms sections in a Vocabulary document" do
@@ -601,11 +601,11 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Only annexes and references can follow clauses"
+      .not_to include("Only annexes and references can follow clauses")
     expect(File.read("test.err.html"))
-      .not_to include "Scope must occur before Terms and Definitions"
+      .not_to include("Scope must occur before Terms and Definitions")
     expect(File.read("test.err.html"))
-      .to include "Only annexes and references can follow terms and clauses"
+      .to include("Only annexes and references can follow terms and clauses")
   end
 
   it "No warning if there are two Symbols sections in a Vocabulary document" do
@@ -631,8 +631,8 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Only one Symbols and Abbreviated Terms section " \
-                      "in the standard"
+      .not_to include("Only one Symbols and Abbreviated Terms section " \
+                      "in the standard")
   end
 
   it "Warn if single terms section in vocabulary document not named properly" do
@@ -650,11 +650,11 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Single terms clause in vocabulary document should have " \
-                  "normal Terms and definitions heading"
+      .to include("Single terms clause in vocabulary document should have " \
+                  "normal Terms and definitions heading")
     expect(File.read("test.err.html"))
-      .not_to include "Multiple terms clauses in vocabulary document should " \
-                      "have 'Terms related to' heading"
+      .not_to include("Multiple terms clauses in vocabulary document should " \
+                      "have 'Terms related to' heading")
   end
 
   it "Warn if vocabulary document contains Symbols section outside annex" do
@@ -677,8 +677,8 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "In vocabulary documents, Symbols and Abbreviated Terms are " \
-                  "only permitted in annexes"
+      .to include("In vocabulary documents, Symbols and Abbreviated Terms are " \
+                  "only permitted in annexes")
   end
 
   it "Warning if multiple terms section in vocabulary document not named " \
@@ -698,11 +698,11 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Single terms clause in vocabulary document should have " \
-                      "normal Terms and definitions heading"
+      .not_to include("Single terms clause in vocabulary document should have " \
+                      "normal Terms and definitions heading")
     expect(File.read("test.err.html"))
-      .to include "Multiple terms clauses in vocabulary document should " \
-                  "have 'Terms related to' heading"
+      .to include("Multiple terms clauses in vocabulary document should " \
+                  "have 'Terms related to' heading")
   end
 
   it "Warning if final section is not named Bibliography" do
@@ -735,7 +735,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "There are sections after the final Bibliography"
+      .to include("There are sections after the final Bibliography")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -771,7 +771,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "There are sections after the final Bibliography"
+      .not_to include("There are sections after the final Bibliography")
   end
 
   it "Warning if final section is not styled Bibliography" do
@@ -800,7 +800,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Section not marked up as [bibliography]"
+      .to include("Section not marked up as [bibliography]")
   end
 
   it "Warning if final section is not styled Bibliography false" do
@@ -834,7 +834,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Section not marked up as [bibliography]"
+      .not_to include("Section not marked up as [bibliography]")
   end
 
   it "Each first-level subclause must have a title" do
@@ -845,7 +845,7 @@ RSpec.describe Metanorma::ISO do
       === {blank}
     INPUT
     expect(File.read("test.err.html"))
-      .to include "each first-level subclause must have a title"
+      .to include("each first-level subclause must have a title")
   end
 
   it "All subclauses must have a title, or none" do
@@ -860,7 +860,7 @@ RSpec.describe Metanorma::ISO do
       ==== Subsubclause
     INPUT
     expect(File.read("test.err.html"))
-      .to include "all subclauses must have a title, or none"
+      .to include("all subclauses must have a title, or none")
   end
 
   it "Warning if subclause is only child of its parent, or none" do
@@ -871,7 +871,7 @@ RSpec.describe Metanorma::ISO do
       === Subclause
 
     INPUT
-    expect(File.read("test.err.html")).to include "subclause is only child"
+    expect(File.read("test.err.html")).to include("subclause is only child")
   end
 
   it "Warn if more than 7 levels of subclause" do
@@ -899,7 +899,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Exceeds the maximum clause depth of 7"
+      .to include("Exceeds the maximum clause depth of 7")
   end
 
   it "Do not warn if not more than 7 levels of subclause" do
@@ -924,6 +924,6 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "exceeds the maximum clause depth of 7"
+      .not_to include("exceeds the maximum clause depth of 7")
   end
 end

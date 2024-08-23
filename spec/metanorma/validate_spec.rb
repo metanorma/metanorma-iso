@@ -170,7 +170,7 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .to include "pizza is not a recognised document type"
+      .to include("pizza is not a recognised document type")
   end
 
   it "Warns of illegal stage" do
@@ -185,7 +185,7 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Illegal document stage: pizza.00"
+      .to include("Illegal document stage: pizza.00")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -198,7 +198,7 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Illegal document stage: 70.00"
+      .to include("Illegal document stage: 70.00")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -211,7 +211,7 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Illegal document stage: 60.00"
+      .not_to include("Illegal document stage: 60.00")
   end
 
   it "Warns of illegal substage" do
@@ -227,7 +227,7 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Illegal document stage: 60.pizza"
+      .to include("Illegal document stage: 60.pizza")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -241,7 +241,7 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Illegal document stage: 60.54"
+      .to include("Illegal document stage: 60.54")
 
     Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
@@ -255,7 +255,7 @@ RSpec.describe Metanorma::ISO do
       text
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Illegal document stage: 60.60"
+      .not_to include("Illegal document stage: 60.60")
   end
 
   xit "Warns of illegal iteration" do
@@ -277,7 +277,7 @@ RSpec.describe Metanorma::ISO do
     rescue StandardError
     end
     expect(File.read("test.err.html"))
-      .to include "IS stage document cannot have iteration"
+      .to include("IS stage document cannot have iteration")
   end
 
   it "warns that technical report may contain requirement" do
@@ -294,7 +294,7 @@ RSpec.describe Metanorma::ISO do
       The widget is required not to be larger than 15 cm.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Technical Report clause may contain requirement"
+      .to include("Technical Report clause may contain requirement")
   end
 
   it "warns that introduction may contain requirement" do
@@ -305,7 +305,7 @@ RSpec.describe Metanorma::ISO do
       The widget is required not to be larger than 15 cm.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Introduction may contain requirement"
+      .to include("Introduction may contain requirement")
   end
 
   it "warns that foreword may contain recommendation" do
@@ -317,7 +317,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Foreword may contain recommendation"
+      .to include("Foreword may contain recommendation")
   end
 
   it "warns that foreword may contain permission" do
@@ -329,7 +329,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Foreword may contain permission"
+      .to include("Foreword may contain permission")
   end
 
   it "warns that scope may contain recommendation" do
@@ -340,7 +340,7 @@ RSpec.describe Metanorma::ISO do
       It is not recommended that widgets should be larger than 15 cm.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Scope may contain recommendation"
+      .to include("Scope may contain recommendation")
   end
 
   it "warns that definition may contain requirement" do
@@ -355,7 +355,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Definition may contain requirement"
+      .to include("Definition may contain requirement")
   end
 
   it "warns that term example may contain recommendation" do
@@ -370,7 +370,7 @@ RSpec.describe Metanorma::ISO do
       It is not recommended that widgets should be larger than 15 cm.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Example may contain recommendation"
+      .to include("Example may contain recommendation")
   end
 
   it "warns that note may contain recommendation" do
@@ -380,7 +380,7 @@ RSpec.describe Metanorma::ISO do
       NOTE: It is not recommended that widgets should be larger than 15 cm.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Note may contain recommendation"
+      .to include("Note may contain recommendation")
   end
 
   it "warns that footnote may contain recommendation" do
@@ -390,7 +390,7 @@ RSpec.describe Metanorma::ISO do
       footnote:[It is not recommended that widgets should be larger than 15 cm.]
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Footnote may contain recommendation"
+      .to include("Footnote may contain recommendation")
   end
 
   it "warns that term source is not in expected format" do
@@ -401,7 +401,7 @@ RSpec.describe Metanorma::ISO do
       I am a generic paragraph
     INPUT
     expect(File.read("test.err.html"))
-      .to include "term reference not in expected format"
+      .to include("term reference not in expected format")
   end
 
   it "warns that figure does not have title" do
@@ -410,7 +410,7 @@ RSpec.describe Metanorma::ISO do
 
       image::spec/examples/rice_img/rice_image1.png[]
     INPUT
-    expect(File.read("test.err.html")).to include "Figure should have title"
+    expect(File.read("test.err.html")).to include("Figure should have title")
   end
 
   it "warns that term source is not a real reference" do
@@ -421,8 +421,8 @@ RSpec.describe Metanorma::ISO do
       <<iso123>>
     INPUT
     expect(File.read("test.err.html"))
-      .to include "iso123 does not have a corresponding anchor ID " \
-                  "in the bibliography"
+      .to include("iso123 does not have a corresponding anchor ID " \
+                  "in the bibliography")
   end
 
   it "warns that undated reference has locality" do
@@ -437,8 +437,8 @@ RSpec.describe Metanorma::ISO do
       * [[[iso123,ISO 123]]] _Standard_
     INPUT
     expect(File.read("test.err.html"))
-      .to include "undated reference ISO 123 should not contain " \
-                  "specific elements"
+      .to include("undated reference ISO 123 should not contain " \
+                  "specific elements")
   end
 
   it "do not warn that undated reference which is a bibliographic reference " \
@@ -454,8 +454,8 @@ RSpec.describe Metanorma::ISO do
       * [[[iso123,1]]] _Standard_
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "undated reference [1] should not contain specific " \
-                      "elements"
+      .not_to include("undated reference [1] should not contain specific " \
+                      "elements")
   end
 
   it "do not warn that undated IEV reference has locality" do
@@ -470,8 +470,8 @@ RSpec.describe Metanorma::ISO do
       * [[[iev,IEV]]] _Standard_
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "undated reference IEV should not contain specific " \
-                      "elements"
+      .not_to include("undated reference IEV should not contain specific " \
+                      "elements")
   end
 
   it "do not warn that in print has locality" do
@@ -486,8 +486,8 @@ RSpec.describe Metanorma::ISO do
       * [[[iev,ISO 123:--]]] _Standard_
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "undated reference ISO 123 should not contain specific " \
-                      "elements"
+      .not_to include("undated reference ISO 123 should not contain specific " \
+                      "elements")
   end
 
   it "warns of Non-reference in bibliography" do
@@ -497,7 +497,7 @@ RSpec.describe Metanorma::ISO do
       == Normative References
       * I am not a reference
     INPUT
-    expect(File.read("test.err.html")).to include "no anchor on reference"
+    expect(File.read("test.err.html")).to include("no anchor on reference")
   end
 
   it "warns of Non-ISO reference in Normative References" do
@@ -509,7 +509,7 @@ RSpec.describe Metanorma::ISO do
       * [[[XYZ,IESO 121]]] _Standard_
     INPUT
     expect(File.read("test.err.html"))
-      .to include "non-ISO/IEC reference not expected as normative"
+      .to include("non-ISO/IEC reference not expected as normative")
   end
 
   it "warns that Table should have title" do
@@ -520,7 +520,7 @@ RSpec.describe Metanorma::ISO do
       |a |b |c
       |===
     INPUT
-    expect(File.read("test.err.html")).to include "Table should have title"
+    expect(File.read("test.err.html")).to include("Table should have title")
   end
 
   it "gives Style warning if number not broken up in threes" do
@@ -532,7 +532,7 @@ RSpec.describe Metanorma::ISO do
       12121
     INPUT
     r = File.read("test.err.html")
-    expect(r).to include "number not broken up in threes"
+    expect(r).to include("number not broken up in threes")
     expect(r.scan(/number not broken up in threes/).length).to be 1
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
@@ -542,7 +542,7 @@ RSpec.describe Metanorma::ISO do
       stem:[12121]
     INPUT
     r = File.read("test.err.html")
-    expect(r).not_to include "number not broken up in threes"
+    expect(r).not_to include("number not broken up in threes")
   end
 
   it "gives Style warning if number not broken up in threes looks like year" do
@@ -553,7 +553,7 @@ RSpec.describe Metanorma::ISO do
       1950
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "number not broken up in threes"
+      .not_to include("number not broken up in threes")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR.sub(':nodoc:', ":validate-years:\n  :nodoc:")}
@@ -562,7 +562,7 @@ RSpec.describe Metanorma::ISO do
       1950
     INPUT
     expect(File.read("test.err.html"))
-      .to include "number not broken up in threes"
+      .to include("number not broken up in threes")
   end
 
   it "gives No style warning if number not broken up in threes is " \
@@ -574,7 +574,7 @@ RSpec.describe Metanorma::ISO do
       ISO 12121
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "number not broken up in threes"
+      .not_to include("number not broken up in threes")
   end
 
   it "Style warning if decimal point" do
@@ -586,7 +586,7 @@ RSpec.describe Metanorma::ISO do
       8.1
     INPUT
     r = File.read("test.err.html")
-    expect(r).to include "possible decimal point"
+    expect(r).to include("possible decimal point")
     expect(r.scan(/possible decimal point/).length).to be 1
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
@@ -595,7 +595,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       and 8.1
     INPUT
-    expect(File.read("test.err.html")).to include "possible decimal point"
+    expect(File.read("test.err.html")).to include("possible decimal point")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -603,7 +603,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       e8.1
     INPUT
-    expect(File.read("test.err.html")).not_to include "possible decimal point"
+    expect(File.read("test.err.html")).not_to include("possible decimal point")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -611,7 +611,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       8.1.1
     INPUT
-    expect(File.read("test.err.html")).not_to include "possible decimal point"
+    expect(File.read("test.err.html")).not_to include("possible decimal point")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -619,7 +619,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       stem:[8.1]
     INPUT
-    expect(File.read("test.err.html")).not_to include "possible decimal point"
+    expect(File.read("test.err.html")).not_to include("possible decimal point")
   end
 
   it "Style warning if billion used" do
@@ -629,7 +629,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       "Billions" are a term of art.
     INPUT
-    expect(File.read("test.err.html")).to include "ambiguous number"
+    expect(File.read("test.err.html")).to include("ambiguous number")
   end
 
   it "Style warning if no space before percent sign" do
@@ -639,7 +639,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       95%
     INPUT
-    expect(File.read("test.err.html")).to include "no space before percent sign"
+    expect(File.read("test.err.html")).to include("no space before percent sign")
   end
 
   it "Style warning if unbracketed tolerance before percent sign" do
@@ -650,7 +650,7 @@ RSpec.describe Metanorma::ISO do
       95 ± 5 %
     INPUT
     expect(File.read("test.err.html"))
-      .to include "unbracketed tolerance before percent sign"
+      .to include("unbracketed tolerance before percent sign")
   end
 
   it "Style warning if dots in abbreviation" do
@@ -660,7 +660,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       r.p.m.
     INPUT
-    expect(File.read("test.err.html")).to include "no dots in abbreviation"
+    expect(File.read("test.err.html")).to(include "no dots in abbreviation")
   end
 
   it "No Style warning if dots in abbreviation are e.g." do
@@ -670,7 +670,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       e.g. 5
     INPUT
-    expect(File.read("test.err.html")).not_to include "no dots in abbreviation"
+    expect(File.read("test.err.html")).not_to include("no dots in abbreviation")
   end
 
   it "Style warning if ppm used" do
@@ -681,7 +681,7 @@ RSpec.describe Metanorma::ISO do
       5 ppm
     INPUT
     expect(File.read("test.err.html"))
-      .to include "language-specific abbreviation"
+      .to include("language-specific abbreviation")
   end
 
   it "Style warning if space between number and degree" do
@@ -692,7 +692,7 @@ RSpec.describe Metanorma::ISO do
       5 °
     INPUT
     expect(File.read("test.err.html"))
-      .to include "space between number and degrees/​minutes/​seconds"
+      .to include("space between number and degrees/​minutes/​seconds")
   end
 
   it "Style warning if hyphen instead of minus sign" do
@@ -703,7 +703,7 @@ RSpec.describe Metanorma::ISO do
       -2
     INPUT
     expect(File.read("test.err.html"))
-      .to include "hyphen instead of minus sign U+2212"
+      .to include("hyphen instead of minus sign U+2212")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -712,7 +712,7 @@ RSpec.describe Metanorma::ISO do
       and -2
     INPUT
     expect(File.read("test.err.html"))
-      .to include "hyphen instead of minus sign U+2212"
+      .to include("hyphen instead of minus sign U+2212")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -721,7 +721,7 @@ RSpec.describe Metanorma::ISO do
       1-2
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "hyphen instead of minus sign U+2212"
+      .not_to include("hyphen instead of minus sign U+2212")
   end
 
   it "Style warning if no space between number and SI unit" do
@@ -732,7 +732,7 @@ RSpec.describe Metanorma::ISO do
       A measurement of 5Bq was taken.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "no space between number and SI unit"
+      .to include("no space between number and SI unit")
   end
 
   it "Style warning if mins used" do
@@ -742,7 +742,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       5 mins
     INPUT
-    expect(File.read("test.err.html")).to include "non-standard unit"
+    expect(File.read("test.err.html")).to include("non-standard unit")
   end
 
   it "Style warning if and/or used" do
@@ -752,7 +752,7 @@ RSpec.describe Metanorma::ISO do
       == Clause
       7 and/or 8
     INPUT
-    expect(File.read("test.err.html")).to include "Use 'either x or y, or both'"
+    expect(File.read("test.err.html")).to include("Use 'either x or y, or both'")
   end
 
   it "Style warning if & used" do
@@ -763,7 +763,7 @@ RSpec.describe Metanorma::ISO do
       7 & 8
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Avoid ampersand in ordinary text"
+      .to include("Avoid ampersand in ordinary text")
   end
 
   it "Style warning if full stop used in title or caption" do
@@ -790,15 +790,15 @@ RSpec.describe Metanorma::ISO do
       ....
     INPUT
     expect(File.read("test.err.html"))
-      .to include "No full stop at end of title or caption: Clause."
+      .to include("No full stop at end of title or caption: Clause.")
     expect(File.read("test.err.html"))
-      .to include "No full stop at end of title or caption: Clause 2."
+      .to include("No full stop at end of title or caption: Clause 2.")
     expect(File.read("test.err.html"))
-      .to include "No full stop at end of title or caption: Table."
+      .to include("No full stop at end of title or caption: Table.")
     expect(File.read("test.err.html"))
-      .to include "No full stop at end of title or caption: Figure."
+      .to include("No full stop at end of title or caption: Figure.")
     expect(File.read("test.err.html"))
-      .not_to include "No full stop at end of title or caption: Other Figure."
+      .not_to include("No full stop at end of title or caption: Other Figure.")
   end
 
   it "Warning if English title intro and no French title intro" do
@@ -811,7 +811,7 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include "No French Title Intro"
+    expect(File.read("test.err.html")).to include("No French Title Intro")
   end
 
   it "Warning if French title intro and no English title intro" do
@@ -824,7 +824,7 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include "No English Title Intro"
+    expect(File.read("test.err.html")).to include("No English Title Intro")
   end
 
   it "Warning if English title and no French title" do
@@ -837,8 +837,8 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include "No French Title"
-    expect(File.read("test.err.html")).not_to include "No French Intro"
+    expect(File.read("test.err.html")).to include("No French Title")
+    expect(File.read("test.err.html")).not_to include("No French Intro")
   end
 
   it "Warning if French title and no English title" do
@@ -851,7 +851,7 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include "No English Title"
+    expect(File.read("test.err.html")).to include("No English Title")
   end
 
   it "Warning if English title part and no French title part" do
@@ -864,7 +864,7 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include "No French Title Part"
+    expect(File.read("test.err.html")).to include("No French Title Part")
   end
 
   it "Warning if French title part and no English title part" do
@@ -877,7 +877,7 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include "No English Title Part"
+    expect(File.read("test.err.html")).to include("No English Title Part")
   end
 
   it "No warning if French main title and English main title" do
@@ -891,8 +891,8 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).not_to include "No French Title Intro"
-    expect(File.read("test.err.html")).not_to include "No French Title Part"
+    expect(File.read("test.err.html")).not_to include("No French Title Intro")
+    expect(File.read("test.err.html")).not_to include("No French Title Part")
   end
 
   it "Warning if non-IEC document with subpart" do
@@ -908,7 +908,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Subpart defined on non-IEC document"
+      .to include("Subpart defined on non-IEC document")
   end
 
   it "No warning if joint IEC/non-IEC document with subpart" do
@@ -924,7 +924,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Subpart defined on non-IEC document"
+      .not_to include("Subpart defined on non-IEC document")
   end
 
   it "Warning if main title contains document type" do
@@ -938,7 +938,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Main Title may name document type"
+      .to include("Main Title may name document type")
   end
 
   it "Warning if intro title contains document type" do
@@ -952,7 +952,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Title Intro may name document type"
+      .to include("Title Intro may name document type")
   end
 
   it "Warning if invalid technical committee type" do
@@ -968,7 +968,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "invalid technical committee type"
+      .to include("invalid technical committee type")
   end
 
   it "Warning if invalid subcommittee type" do
@@ -983,7 +983,7 @@ RSpec.describe Metanorma::ISO do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include "invalid subcommittee type"
+    expect(File.read("test.err.html")).to include("invalid subcommittee type")
   end
 
   it "Do not warn if 'see' crossreference points to normative section" do
@@ -996,7 +996,7 @@ RSpec.describe Metanorma::ISO do
       See <<terms>>
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "'see terms' is pointing to a normative section"
+      .not_to include("'see terms' is pointing to a normative section")
   end
 
   it "Warning if 'see' reference points to normative reference" do
@@ -1010,7 +1010,7 @@ RSpec.describe Metanorma::ISO do
       See <<terms>>
     INPUT
     expect(File.read("test.err.html"))
-      .to include "is pointing to a normative reference"
+      .to include("is pointing to a normative reference")
   end
 
   it "Warning if term definition starts with article" do
@@ -1023,7 +1023,7 @@ RSpec.describe Metanorma::ISO do
       The definition of a term is a part of the specialized vocabulary of a particular field
     INPUT
     expect(File.read("test.err.html"))
-      .to include "term definition starts with article"
+      .to include("term definition starts with article")
   end
 
   it "Warning if term definition ends with period" do
@@ -1036,7 +1036,7 @@ RSpec.describe Metanorma::ISO do
       Part of the specialized vocabulary of a particular field.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "term definition ends with period"
+      .to include("term definition ends with period")
   end
 
   it "validates document against ISO XML schema" do
@@ -1047,7 +1047,7 @@ RSpec.describe Metanorma::ISO do
       Para
     INPUT
     expect(File.read("test.err.html"))
-      .to include 'value of attribute "align" is invalid; must be equal to'
+      .to include('value of attribute "align" is invalid; must be equal to')
   end
 
   it "Warn if an undated reference has no associated footnote" do
@@ -1059,8 +1059,8 @@ RSpec.describe Metanorma::ISO do
       * [[[ISO8,ISO 8:--]]], _Title_
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Reference ISO8 does not have an associated footnote " \
-                  "indicating unpublished status"
+      .to include("Reference ISO8 does not have an associated footnote " \
+                  "indicating unpublished status")
   end
 
   it "Warn if no colon or full stop before list" do
@@ -1076,7 +1076,7 @@ RSpec.describe Metanorma::ISO do
       * C
     INPUT
     expect(File.read("test.err.html"))
-      .to include "All lists must be preceded by colon or full stop"
+      .to include("All lists must be preceded by colon or full stop")
   end
 
   it "Do not warn if colon or full stop before list" do
@@ -1098,7 +1098,7 @@ RSpec.describe Metanorma::ISO do
       . C
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "All lists must be preceded by colon or full stop"
+      .not_to include("All lists must be preceded by colon or full stop")
   end
 
   it "Warn of list punctuation after colon" do
@@ -1130,26 +1130,26 @@ RSpec.describe Metanorma::ISO do
       . Sentence.
     INPUT
     expect(File.read("test.err.html"))
-      .to include "List entry of broken up sentence must start with " \
-                  "lowercase letter: Sentence."
+      .to include("List entry of broken up sentence must start with " \
+                  "lowercase letter: Sentence.")
     expect(File.read("test.err.html"))
-      .not_to include "List entry of broken up sentence must start with " \
-                      "lowercase letter: another broken up;."
+      .not_to include("List entry of broken up sentence must start with " \
+                      "lowercase letter: another broken up;.")
     expect(File.read("test.err.html"))
-      .to include "List entry of broken up sentence must end with semicolon: " \
-                  "this is"
+      .to include("List entry of broken up sentence must end with semicolon: " \
+                  "this is")
     expect(File.read("test.err.html"))
-      .to include "Final list entry of broken up sentence must end with " \
-                  "full stop: sentence"
+      .to include("Final list entry of broken up sentence must end with " \
+                  "full stop: sentence")
     expect(File.read("test.err.html"))
-      .not_to include "Final list entry of broken up sentence must end with " \
-                      "full stop: sentence."
+      .not_to include("Final list entry of broken up sentence must end with " \
+                      "full stop: sentence.")
     expect(File.read("test.err.html"))
-      .not_to include "List entry of broken up sentence must start with " \
-                      "lowercase letter: Another broken up."
+      .not_to include("List entry of broken up sentence must start with " \
+                      "lowercase letter: Another broken up.")
     expect(File.read("test.err.html"))
-      .not_to include "List entry of broken up sentence must end with " \
-                      "semicolon: This is."
+      .not_to include("List entry of broken up sentence must end with " \
+                      "semicolon: This is.")
   end
 
   it "Warn of list punctuation after full stop" do
@@ -1166,14 +1166,14 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "List entry of separate sentences must end with full stop: " \
-                  "This is;"
+      .to include("List entry of separate sentences must end with full stop: " \
+                  "This is;")
     expect(File.read("test.err.html"))
-      .not_to include "List entry of separate sentences must end with " \
-                      "full stop: Another broken up."
+      .not_to include("List entry of separate sentences must end with " \
+                      "full stop: Another broken up.")
     expect(File.read("test.err.html"))
-      .to include "List entry of separate sentences must start with " \
-                  "uppercase letter: sentence."
+      .to include("List entry of separate sentences must start with " \
+                  "uppercase letter: sentence.")
   end
 
   it "Skips punctuation check for short entries in lists" do
@@ -1190,8 +1190,8 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "List entry after full stop must end with full stop: " \
-                      "This is"
+      .not_to include("List entry after full stop must end with full stop: " \
+                      "This is")
   end
 
   it "Skips punctuation check for lists within tables" do
@@ -1210,8 +1210,8 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "List entry after full stop must end with full stop: " \
-                      "This is"
+      .not_to include("List entry after full stop must end with full stop: " \
+                      "This is")
   end
 
   it "Warn if more than one ordered lists in a clause" do
@@ -1235,7 +1235,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "More than 1 ordered list in a numbered clause"
+      .to include("More than 1 ordered list in a numbered clause")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1256,7 +1256,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "More than 1 ordered list in a numbered clause"
+      .not_to include("More than 1 ordered list in a numbered clause")
   end
 
   it "Warn if list more than four levels deep" do
@@ -1272,7 +1272,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "List more than four levels deep"
+      .not_to include("List more than four levels deep")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1287,7 +1287,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "List more than four levels deep"
+      .to include("List more than four levels deep")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1302,7 +1302,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "List more than four levels deep"
+      .to include("List more than four levels deep")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1317,7 +1317,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "List more than four levels deep"
+      .to include("List more than four levels deep")
   end
 
   it "warn if term clause crossreferences non-term reference" do
@@ -1336,10 +1336,10 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "non-terms clauses cannot cross-reference terms clause (c)"
+      .to include("non-terms clauses cannot cross-reference terms clause (c)")
     expect(File.read("test.err.html"))
-      .not_to include "non-terms clauses cannot cross-reference terms " \
-                      "clause (b)"
+      .not_to include("non-terms clauses cannot cross-reference terms " \
+                      "clause (b)")
   end
 
   it "warn if non-term clause crossreferences term reference" do
@@ -1359,9 +1359,9 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "only terms clauses can cross-reference terms clause (b)"
+      .to include("only terms clauses can cross-reference terms clause (b)")
     expect(File.read("test.err.html"))
-      .not_to include "only terms clauses can cross-reference terms clause (c)"
+      .not_to include("only terms clauses can cross-reference terms clause (c)")
   end
 
   it "warns of explicit style set on ordered list" do
@@ -1373,7 +1373,7 @@ RSpec.describe Metanorma::ISO do
       . A
     INPUT
     expect(File.read("test.err.html"))
-      .to include "Style override set for ordered list"
+      .to include("Style override set for ordered list")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1382,7 +1382,7 @@ RSpec.describe Metanorma::ISO do
       . A
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "Style override set for ordered list"
+      .not_to include("Style override set for ordered list")
   end
 
   it "warns of ambiguous provision term" do
@@ -1393,7 +1393,7 @@ RSpec.describe Metanorma::ISO do
       Might I trouble you?
     INPUT
     expect(File.read("test.err.html"))
-      .to include "may contain ambiguous provision"
+      .to include("may contain ambiguous provision")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1402,7 +1402,7 @@ RSpec.describe Metanorma::ISO do
       I won't trouble you.
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "may contain ambiguous provision"
+      .not_to include("may contain ambiguous provision")
   end
 
   it "warns of nested subscripts" do
@@ -1414,7 +1414,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "may contain nested subscripts (max 3 levels allowed)"
+      .to include("may contain nested subscripts (max 3 levels allowed)")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1427,7 +1427,7 @@ RSpec.describe Metanorma::ISO do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include "may contain nested subscripts (max 3 levels allowed)"
+      .to include("may contain nested subscripts (max 3 levels allowed)")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1436,7 +1436,7 @@ RSpec.describe Metanorma::ISO do
       +++Y<sub>n</sub>+++
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "may contain nested subscripts (max 3 levels allowed)"
+      .not_to include("may contain nested subscripts (max 3 levels allowed)")
   end
 
   it "warns of cross-references before punctuation" do
@@ -1451,7 +1451,7 @@ RSpec.describe Metanorma::ISO do
       * [[[a, b]]]
     INPUT
     expect(File.read("test.err.html"))
-      .to include "superscript cross-reference followed by punctuation"
+      .to include("superscript cross-reference followed by punctuation")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1464,7 +1464,7 @@ RSpec.describe Metanorma::ISO do
       * [[[a, b]]]
     INPUT
     expect(File.read("test.err.html"))
-      .to include "superscript cross-reference followed by punctuation"
+      .to include("superscript cross-reference followed by punctuation")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1477,7 +1477,7 @@ RSpec.describe Metanorma::ISO do
       * [[[a, b]]]
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "superscript cross-reference followed by punctuation"
+      .not_to include("superscript cross-reference followed by punctuation")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1490,7 +1490,7 @@ RSpec.describe Metanorma::ISO do
       * [[[a, b]]]
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "superscript cross-reference followed by punctuation"
+      .not_to include("superscript cross-reference followed by punctuation")
 
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
@@ -1503,6 +1503,6 @@ RSpec.describe Metanorma::ISO do
       * [[[a, b]]]
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include "superscript cross-reference followed by punctuation"
+      .not_to include("superscript cross-reference followed by punctuation")
   end
 end

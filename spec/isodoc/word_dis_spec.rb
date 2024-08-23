@@ -23,8 +23,8 @@ RSpec.describe IsoDoc do
     INPUT
     expect(File.exist?("test.doc")).to be true
     html = File.read("test.doc", encoding: "UTF-8")
-    expect(html).to include 'class="AltTerms"'
-    expect(html).not_to include 'class="AdmittedTerm"'
+    expect(html).to include('class="AltTerms"')
+    expect(html).not_to include('class="AdmittedTerm"')
 
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert
@@ -46,8 +46,8 @@ RSpec.describe IsoDoc do
     INPUT
     expect(File.exist?("test.doc")).to be true
     html = File.read("test.doc", encoding: "UTF-8")
-    expect(html).not_to include 'class="AltTerms"'
-    expect(html).to include 'class="AdmittedTerm"'
+    expect(html).not_to include('class="AltTerms"')
+    expect(html).to include('class="AdmittedTerm"')
 
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert
@@ -69,8 +69,8 @@ RSpec.describe IsoDoc do
     INPUT
     expect(File.exist?("test.doc")).to be true
     html = File.read("test.doc", encoding: "UTF-8")
-    expect(html).to include 'class="AltTerms"'
-    expect(html).not_to include 'class="AdmittedTerm"'
+    expect(html).to include('class="AltTerms"')
+    expect(html).not_to include('class="AdmittedTerm"')
 
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert
@@ -92,8 +92,8 @@ RSpec.describe IsoDoc do
     INPUT
     expect(File.exist?("test.doc")).to be true
     html = File.read("test.doc", encoding: "UTF-8")
-    expect(html).not_to include 'class="AltTerms"'
-    expect(html).to include 'class="AdmittedTerm"'
+    expect(html).not_to include('class="AltTerms"')
+    expect(html).to include('class="AdmittedTerm"')
   end
 
   it "deals with span" do

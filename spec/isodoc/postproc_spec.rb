@@ -46,8 +46,8 @@ RSpec.describe IsoDoc do
     INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
-    expect(html).to include "<title>Cereals and pulses — Specifications " \
-                            "and test methods — Rice</title>"
+    expect(html).to include("<title>Cereals and pulses — Specifications " \
+                            "and test methods — Rice</title>")
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
@@ -74,8 +74,8 @@ RSpec.describe IsoDoc do
       INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
-    expect(html).to include "<title>Cereals and pulses — Specifications " \
-                            "and test methods — Rice</title>"
+    expect(html).to(include "<title>Cereals and pulses — Specifications " \
+                            "and test methods — Rice</title>")
     expect(html).to match(%r{cdnjs\.cloudflare\.com/ajax/libs/mathjax/})
     expect(html).to match(/delimiters: \[\['\(#\(', '\)#\)'\]\]/)
   end
@@ -909,8 +909,8 @@ RSpec.describe IsoDoc do
       .convert("test", presxml, false)
 
     word = File.read("test.html", encoding: "UTF-8")
-    expect(strip_guid(word)).to include '<h1 class="IntroTitle">Warning for Stuff</h1>'
-    expect(word).to include "I am the Walrus."
+    expect(strip_guid(word)).to include('<h1 class="IntroTitle">Warning for Stuff</h1>')
+    expect(word).to include("I am the Walrus.")
 
     FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
@@ -949,8 +949,8 @@ RSpec.describe IsoDoc do
           </div>
         </div>
       OUTPUT
-    expect(word).to include '<p class="zzWarning">This document is not ' \
-                            "an ISO International Standard"
+    expect(word).to include('<p class="zzWarning">This document is not ' \
+                            "an ISO International Standard")
   end
 
   it "populates Word ToC" do
