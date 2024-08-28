@@ -11545,6 +11545,12 @@
 		<xsl:for-each select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment']">
 			<attachment filename="{@name}"/>
 		</xsl:for-each>
+		<xsl:if test="not(//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment'])">
+			<xsl:for-each select="//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment']]">
+				<xsl:variable name="attachment_path" select="*[local-name() = 'uri'][@type = 'attachment']"/>
+				<attachment filename="{$attachment_path}"/>
+			</xsl:for-each>
+		</xsl:if>
 	</xsl:variable>
 	<xsl:variable name="pdfAttachmentsList" select="xalan:nodeset($pdfAttachmentsList_)"/>
 
@@ -11557,7 +11563,7 @@
 					<xsl:value-of select="concat(normalize-space(@target), '.pdf')"/>
 				</xsl:when>
 				<!-- link to the PDF attachment -->
-				<xsl:when test="$pdfAttachmentsList//attachment[@filename = current()/@target]">
+				<xsl:when test="@attachment = 'true' and $pdfAttachmentsList//attachment[@filename = current()/@target]">
 					<xsl:value-of select="concat('url(embedded-file:', @target, ')')"/>
 				</xsl:when>
 				<!-- <xsl:when test="starts-with($target_normalized, '_') and contains($target_normalized, '_attachments/') and $pdfAttachmentsList//attachment[@filename = $target_attachment_name]">
@@ -17247,9 +17253,9 @@
 		<xsl:if test="not(//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment'])">
 			<xsl:for-each select="//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment']]">
 				<xsl:variable name="attachment_path" select="*[local-name() = 'uri'][@type = 'attachment']"/>
-				<xsl:variable name="url" select="concat('url(file:///',$inputxml_basepath, $attachment_path, ')')"/>
-				<xsl:variable name="filename_embedded" select="substring-after($attachment_path, concat('_', $inputxml_filename_prefix, '_attachments', '/'))"/>
-				<pdf:embedded-file src="{$url}" filename="{$filename_embedded}"/>
+				<xsl:variable name="url" select="concat('url(file:///',$basepath, $attachment_path, ')')"/>
+				<!-- <xsl:variable name="filename_embedded" select="substring-after($attachment_path, concat('_', $inputxml_filename_prefix, '_attachments', '/'))"/> -->
+				<pdf:embedded-file src="{$url}" filename="{$attachment_path}"/>
 			</xsl:for-each>
 		</xsl:if>
 	</xsl:template> <!-- addPDFUAmeta -->
