@@ -3,10 +3,8 @@ term_def_boilerplate: |
       destinées à être utilisées en normalisation, consultables aux adresses
       suivantes:</p>
       <ul>
-      <li> <p>ISO Online browsing platform: disponible à l'adresse
-        <link target="https://www.iso.org/obp"/></p></li>
-      <li> <p>IEC Electropedia: disponible à l'adresse
-        <link target="https://www.electropedia.org"/>
+      <li> <p>ISO Online browsing platform: disponible à l'adresse <link target="https://www.iso.org/obp"/></p></li>
+      <li> <p>IEC Electropedia: disponible à l'adresse <link target="https://www.electropedia.org"/>
       </p> </li> </ul>
 all_rights_reserved: Tous droits réservés
 reference_number: Numéro de référence
@@ -47,6 +45,7 @@ doctype_dict:
   directive: Directive
   committee-document: Document du comité
   recommendation: Recommandation ISO
+  addendum: Additif
 stage_dict:
   "00": Élément de travail préliminaire
   "10": Nouvelle proposition d'élément de travail

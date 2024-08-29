@@ -1204,7 +1204,9 @@
       <optional>
         <ref name="formattedref"/>
       </optional>
-      <ref name="btitle"/>
+      <oneOrMore>
+        <ref name="btitle"/>
+      </oneOrMore>
       <optional>
         <ref name="bplace"/>
       </optional>

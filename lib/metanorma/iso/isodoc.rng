@@ -662,6 +662,9 @@
             <value>LatexMath</value>
           </choice>
         </attribute>
+        <optional>
+          <attribute name="number-format"/>
+        </optional>
         <attribute name="block">
           <data type="boolean"/>
         </attribute>
