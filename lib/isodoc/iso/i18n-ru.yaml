@@ -1,12 +1,10 @@
 term_def_boilerplate: |
-  <p>ИСО и МЭК поддерживают терминологические базы данных для использования в стандартизации по следующим адресам:</p>
+  ИСО и МЭК поддерживают терминологические базы данных для использования в стандартизации по следующим адресам:
 
-      <ul>
-      <li> <p>ИСО, Интернет-онлайн-платформа: доступна на <link target="https://www.iso.org/obp"/></p></li>
-      <li> <p>МЭК Electropedia: доступна на <link target="https://www.electropedia.org"/>
-      </p> </li> </ul>
+  * ИСО, Интернет-онлайн-платформа: доступна на https://www.iso.org/obp[]
+  * МЭК Electropedia: доступна на https://www.electropedia.org[]
 all_rights_reserved: Все права защищены
-reference_number: Ссылочный номерS
+reference_number: Ссылочный номер
 reference_number_abbrev: Исх. №
 descriptor: Дескриптор
 price_based_on: Цена рассчитана на % стр.

@@ -1,11 +1,10 @@
 term_def_boilerplate: |
-      <p>L'ISO et l'IEC tiennent à jour des bases de données terminologiques
+      L'ISO et l'IEC tiennent à jour des bases de données terminologiques
       destinées à être utilisées en normalisation, consultables aux adresses
-      suivantes:</p>
-      <ul>
-      <li> <p>ISO Online browsing platform: disponible à l'adresse <link target="https://www.iso.org/obp"/></p></li>
-      <li> <p>IEC Electropedia: disponible à l'adresse <link target="https://www.electropedia.org"/>
-      </p> </li> </ul>
+      suivantes:
+
+      * ISO Online browsing platform: disponible à l'adresse https://www.iso.org/obp[]
+      * IEC Electropedia: disponible à l'adresse https://www.electropedia.org[]
 all_rights_reserved: Tous droits réservés
 reference_number: Numéro de référence
 reference_number_abbrev: Réf. №
