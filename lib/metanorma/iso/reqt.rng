@@ -67,6 +67,9 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
       <ref name="reqtitle"/>
     </optional>
     <optional>

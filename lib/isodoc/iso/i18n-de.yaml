@@ -1,13 +1,9 @@
 term_def_boilerplate: |
-      <p>ISO und IEC unterhalten Terminologiedatenbanken zur Verwendung in
-       Standardisierung unter folgenden Adressen:</p>
+      ISO und IEC unterhalten Terminologiedatenbanken zur Verwendung in
+      Standardisierung unter folgenden Adressen:
 
-      <ul>
-      <li><p>Online-Browsing-Plattform: verfügbar unter
-        <link target="https://www.iso.org/obp"/></p></li>
-      <li><p>IEC Electropedia: verfügbar unter
-      <link target="https://www.electropedia.org"/></p></li>
-      </ul>
+      * Online-Browsing-Plattform: verfügbar unter https://www.iso.org/obp[]
+      * IEC Electropedia: verfügbar unter https://www.electropedia.org[]
 all_rights_reserved: Alle Rechte vorbehalten
 reference_number: Referenznummer
 reference_number_abbrev: Ref.nr

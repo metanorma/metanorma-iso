@@ -1,11 +1,8 @@
 term_def_boilerplate: |
-      <p>ISO和IEC用于标准化的术语数据库地址如下：</p>
-      <ul>
-      <li> <p>ISO在线浏览平台:
-        位于<link target="https://www.iso.org/obp"/></p></li>
-      <li> <p>IEC Electropedia:
-        位于<link target="https://www.electropedia.org"/>
-      </p> </li> </ul>
+      ISO和IEC用于标准化的术语数据库地址如下：
+      
+      * ISO在线浏览平台: 位于{blank}https://www.iso.org/obp[]
+      * IEC Electropedia: 位于{blank}https://www.electropedia.org[]
 all_rights_reserved: 版权所有
 reference_number: 参考编号
 reference_number_abbrev: 参考编号

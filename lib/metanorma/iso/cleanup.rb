@@ -90,7 +90,7 @@ module Metanorma
         super
       end
 
-      def term_children_cleanup(xmldoc)
+      def terms_terms_cleanup(xmldoc)
         @vocab and return
         super
       end
@@ -111,7 +111,7 @@ module Metanorma
       def editorial_groups_agency(xmldoc)
         pubs = extract_publishers(xmldoc)
         xmldoc.xpath("//bibdata/ext/editorialgroup").each do |e|
-          pubs.reverse.each do |p|
+          pubs.reverse_each do |p|
             if e.children.empty? then e << "<agency>#{p}</agency>"
             else e.children.first.previous = "<agency>#{p}</agency>"
             end
