@@ -17236,26 +17236,37 @@
 		</x:xmpmeta>
 		<!-- add attachments -->
 		<xsl:for-each select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment']">
-			<xsl:choose>
-				<xsl:when test="normalize-space() != ''">
-					<xsl:variable name="src_attachment" select="java:replaceAll(java:java.lang.String.new(.),'(&#13;&#10;|&#13;|&#10;)', '')"/> <!-- remove line breaks -->
-					<pdf:embedded-file src="{$src_attachment}" filename="{@name}"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<!-- _{filename}_attachments -->
-					<!-- <xsl:variable name="url" select="concat('url(file:///',$inputxml_basepath, '_', $inputxml_filename_prefix, '_attachments', '/', @name, ')')"/> -->
-					<xsl:variable name="url" select="concat('url(file:///',$inputxml_basepath , @name, ')')"/>
-					<pdf:embedded-file src="{$url}" filename="{@name}"/>
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:variable name="description" select="normalize-space(//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment'] = current()/@name]/*[local-name() = 'formattedref'])"/>
+
+			<pdf:embedded-file filename="{@name}">
+				<xsl:attribute name="src">
+					<xsl:choose>
+						<xsl:when test="normalize-space() != ''">
+							<xsl:variable name="src_attachment" select="java:replaceAll(java:java.lang.String.new(.),'(&#13;&#10;|&#13;|&#10;)', '')"/> <!-- remove line breaks -->
+							<xsl:value-of select="$src_attachment"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:variable name="url" select="concat('url(file:///',$inputxml_basepath , @name, ')')"/>
+							<xsl:value-of select="$url"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:attribute>
+				<xsl:if test="$description != ''">
+					<xsl:attribute name="description"><xsl:value-of select="$description"/></xsl:attribute>
+				</xsl:if>
+			</pdf:embedded-file>
 		</xsl:for-each>
 		<!-- references to external attachments (no binary-encoded within the Metanorma XML file) -->
 		<xsl:if test="not(//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment'])">
 			<xsl:for-each select="//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment']]">
 				<xsl:variable name="attachment_path" select="*[local-name() = 'uri'][@type = 'attachment']"/>
 				<xsl:variable name="url" select="concat('url(file:///',$basepath, $attachment_path, ')')"/>
-				<!-- <xsl:variable name="filename_embedded" select="substring-after($attachment_path, concat('_', $inputxml_filename_prefix, '_attachments', '/'))"/> -->
-				<pdf:embedded-file src="{$url}" filename="{$attachment_path}"/>
+				<xsl:variable name="description" select="normalize-space(*[local-name() = 'formattedref'])"/>
+				<pdf:embedded-file src="{$url}" filename="{$attachment_path}">
+					<xsl:if test="$description != ''">
+						<xsl:attribute name="description"><xsl:value-of select="$description"/></xsl:attribute>
+					</xsl:if>
+				</pdf:embedded-file>
 			</xsl:for-each>
 		</xsl:if>
 	</xsl:template> <!-- addPDFUAmeta -->
