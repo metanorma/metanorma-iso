@@ -1,2 +1,0 @@
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/yaml-no-xml"
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/yaml-no-xml"
