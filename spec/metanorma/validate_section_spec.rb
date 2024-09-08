@@ -2,6 +2,10 @@ require "spec_helper"
 require "fileutils"
 
 RSpec.describe Metanorma::ISO do
+  before do
+    FileUtils.rm_rf("test.err.html")
+  end
+
   context "Warns of missing scope" do
     it "Scope clause missing" do
       Asciidoctor.convert(<<~INPUT, *OPTIONS)

@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <!--
     Presupposes isodoc.rnc, is included in it
     include "isodoc.rnc" { }
+    
+    This is the Metanorma default provisions model; it is overridden by other provisions models,
+    such as Modspec
   -->
   <define name="requirement">
+    <a:documentation>Specification of an attribute of a subject that is required.
+NOTE: A requirement can contain other requirements</a:documentation>
     <element name="requirement">
       <ref name="RequirementType"/>
     </element>
   </define>
   <define name="recommendation">
+    <a:documentation>Specification of an attribute of a subject that is recommended</a:documentation>
     <element name="recommendation">
       <ref name="RequirementType"/>
     </element>
   </define>
   <define name="permission">
+    <a:documentation>Specification of an attribute of a subject that is permitted</a:documentation>
     <element name="permission">
       <ref name="RequirementType"/>
     </element>
@@ -22,83 +29,101 @@
   <define name="RequirementType">
     <optional>
       <attribute name="obligation">
-        <ref name="ObligationType"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="unnumbered">
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="number"/>
-    </optional>
-    <optional>
-      <attribute name="subsequence"/>
-    </optional>
-    <optional>
-      <attribute name="keep-with-next">
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="keep-lines-together">
-        <data type="boolean"/>
+        <a:documentation>An attribute that may be used to override the obligation represented in
+the tag name of the top level containers</a:documentation>
+        <ref name="ReqtObligationType"/>
       </attribute>
     </optional>
     <attribute name="id">
       <data type="ID"/>
     </attribute>
+    <ref name="NumberingAttributes"/>
+    <ref name="BlockAttributes"/>
     <optional>
-      <attribute name="filename"/>
-    </optional>
-    <optional>
-      <attribute name="model"/>
-    </optional>
-    <optional>
-      <attribute name="type"/>
-    </optional>
-    <optional>
-      <attribute name="tag"/>
-    </optional>
-    <optional>
-      <attribute name="multilingual-rendering">
-        <ref name="MultilingualRenderingType"/>
+      <attribute name="filename">
+        <a:documentation>File name of the requirement model when exported</a:documentation>
       </attribute>
     </optional>
     <optional>
-      <attribute name="class"/>
+      <attribute name="model">
+        <a:documentation>Model of requirements realised by this requirement, e.g. "ogc" for Modspec</a:documentation>
+      </attribute>
     </optional>
     <optional>
-      <ref name="reqtitle"/>
+      <attribute name="type">
+        <a:documentation>Type of requirement; does not override labelling, unlike `class`</a:documentation>
+      </attribute>
     </optional>
     <optional>
-      <ref name="label"/>
+      <attribute name="class">
+        <a:documentation>Class of provision, used to sequence and label that class separately.
+By default, provisions are sequenced and labelled as requirements, recommendations, or
+permissions, by obligation; the class overrides that</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <ref name="reqtitle">
+        <a:documentation>Human-readable title of the requirement</a:documentation>
+      </ref>
+    </optional>
+    <optional>
+      <ref name="label">
+        <a:documentation>Formal identifier with which the requirement is referenced</a:documentation>
+      </ref>
     </optional>
     <zeroOrMore>
-      <ref name="subject"/>
+      <ref name="subject">
+        <a:documentation>The party subject to the obligation stated in the requirement</a:documentation>
+      </ref>
     </zeroOrMore>
     <zeroOrMore>
-      <ref name="reqinherit"/>
+      <ref name="reqinherit">
+        <a:documentation>Reference to the identifier of another requirement, of which this requirement
+is a subclass, and from which it inherits attributes</a:documentation>
+      </ref>
     </zeroOrMore>
     <zeroOrMore>
-      <ref name="classification"/>
+      <ref name="classification">
+        <a:documentation>Key/Value pairs of metadata used to describe the requirement.
+A key can be associated with multiple values</a:documentation>
+      </ref>
     </zeroOrMore>
     <zeroOrMore>
       <choice>
-        <ref name="measurementtarget"/>
-        <ref name="specification"/>
-        <ref name="verification"/>
-        <ref name="import"/>
-        <ref name="description"/>
-        <ref name="component"/>
+        <ref name="measurementtarget">
+          <a:documentation>Quantitative statement of metrics that the requirement realises</a:documentation>
+        </ref>
+        <ref name="specification">
+          <a:documentation>Formal specification of the requirement. Expected to be machine-readable</a:documentation>
+        </ref>
+        <ref name="verification">
+          <a:documentation>Processes or code used to verify that the requirement is being complied
+with. Can be a test (including test code), or a compliance statement</a:documentation>
+        </ref>
+        <ref name="import">
+          <a:documentation>A reference to source code or a statement of prerequisites which is defined elsewhere</a:documentation>
+        </ref>
+        <ref name="description">
+          <a:documentation>Descriptive statement of the content of the requirement. Is expected to
+be human-readable, and to contain formatting markup following Metanorma
+conventions. Is expected to be discursive, and be resumed after
+interruption by other sub-containers</a:documentation>
+        </ref>
+        <ref name="component">
+          <a:documentation>Provisions nested within this provision, which cannot be referenced autonomously and have
+subclasses specific to the parent provision. Not expressed with provision metadata</a:documentation>
+        </ref>
       </choice>
     </zeroOrMore>
     <optional>
-      <ref name="reqt_references"/>
+      <ref name="reqt_references">
+        <a:documentation>A list of references for the requirement, following the Relaton model</a:documentation>
+      </ref>
     </optional>
     <zeroOrMore>
       <choice>
+        <a:documentation>Provisions nested within this provision, which are self-standing and do not have
+subclasses specific to the parent provision</a:documentation>
         <ref name="requirement"/>
         <ref name="recommendation"/>
         <ref name="permission"/>
@@ -158,7 +183,9 @@
   </define>
   <define name="component">
     <element name="component">
-      <attribute name="class"/>
+      <attribute name="class">
+        <a:documentation>Class of component</a:documentation>
+      </attribute>
       <ref name="RequirementSubpart"/>
     </element>
   </define>
@@ -170,44 +197,36 @@
     </element>
   </define>
   <define name="RequirementSubpart">
+    <a:documentation>A subcontainer can be either machine-readable or human-readable, or a
+mixture of the two.
+A machine-readable component can be included as source code with
+nomination of the language</a:documentation>
     <optional>
-      <attribute name="type"/>
+      <attribute name="type">
+        <a:documentation>Type of sub-container.
+For example a `verification[@type = "unit-test"]` contains a unit test of a single
+feature, and is to be treated differently from
+`verification[@type = "comprehensive"]`, which represents a comprehensive test suite</a:documentation>
+      </attribute>
     </optional>
     <optional>
       <attribute name="exclude">
+        <a:documentation>Indicates that the current sub-container is only intended to be
+machine-readable, and is not to be rendered as document output</a:documentation>
         <data type="boolean"/>
       </attribute>
     </optional>
-    <optional>
-      <attribute name="keep-with-next">
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="keep-lines-together">
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="tag"/>
-    </optional>
-    <optional>
-      <attribute name="multilingual-rendering">
-        <ref name="MultilingualRenderingType"/>
-      </attribute>
-    </optional>
+    <ref name="BlockAttributes"/>
     <oneOrMore>
       <choice>
+        <a:documentation>Content of subpart: blocks, rather than provisions</a:documentation>
         <ref name="BasicBlock"/>
         <ref name="component"/>
       </choice>
     </oneOrMore>
   </define>
-  <define name="ObligationType">
-    <choice>
-      <value>requirement</value>
-      <value>recommendation</value>
-      <value>permission</value>
-    </choice>
+  <define name="ReqtObligationType">
+    <a:documentation>Values are "requirement", "recommendation", "permission"; multiple values can be comma-delimited</a:documentation>
+    <text/>
   </define>
 </grammar>
