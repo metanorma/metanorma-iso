@@ -52,15 +52,15 @@ module Metanorma
       end
 
       def contrib_committee_build(xml, agency, committee)
-        n = org_abbrev.invert[agency] and agency = n
+        name = org_abbrev.invert[agency] and agency = name
         xml.name agency
         xml.subdivision do |s|
           s.organization do |o|
-            o << committee[:name]
+            o.name committee[:name]
+            committee[:abbr] and o.abbreviation committee[:abbr]
+            committee[:ident] and o.identifier committee[:ident]
           end
         end
-        committee[:abbr] and xml.abbreviation committee[:abbr]
-        committee[:ident] and xml.identifier committee[:ident]
       end
 
       COMMITTEE_ABBREVS =
