@@ -187,203 +187,266 @@ RSpec.describe Metanorma::ISO do
 
     output = <<~OUTPUT
       <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
-        <bibdata type="standard">
-          <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part — Mass fraction of
-             extraneous matter, milled rice (nonglutinous), sample dividers and
-             recommendations relating to storage and transport conditions</title>
-          <title format="text/plain" language="en" type="title-intro">Introduction</title>
-          <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
-          <title format="text/plain" language="en" type="title-part">Title Part</title>
-          <title format="text/plain" language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample
-        dividers and recommendations relating to storage and transport conditions
-      </title>
-          <title format="text/plain" language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction
-        massique de matière étrangère, riz usiné (non gluant), diviseurs
-        d’échantillon et recommandations relatives aux conditions d’entreposage et
-        de transport
-      </title>
-          <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
-          <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
-          <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
-          <title format="text/plain" language="fr" type="title-amd">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs
-        d’échantillon et recommandations relatives aux conditions d’entreposage et
-        de transport
-      </title>
-          <docidentifier type="ISO" primary="true">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-10.20:amd:2017:v1</docidentifier>
-          <docnumber>17301</docnumber>
-          <date type="created">
-            <on>2016-05-01</on>
-          </date>
-                     <contributor>
-             <role type="author"/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="author"><description>Technical committee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>TC</subdivision>
-               <identifier>A 1</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="author"><description>Technical committee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>TC1</subdivision>
-               <identifier>A1 11</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="author"><description>Subcommittee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>SC</subdivision>
-               <identifier>B 2</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="author"><description>Subcommittee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>SC1</subdivision>
-               <identifier>B1 21</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="author"><description>Workgroup</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>WG</subdivision>
-               <identifier>C 3</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="author"><description>Workgroup</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>WG1</subdivision>
-               <identifier>C1 31</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="publisher"/>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Technical committee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>TC</subdivision>
-               <identifier>A 1</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Technical committee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>TC1</subdivision>
-               <identifier>A1 11</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Subcommittee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>SC</subdivision>
-               <identifier>B 2</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Subcommittee</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>SC1</subdivision>
-               <identifier>B1 21</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Workgroup</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>WG</subdivision>
-               <identifier>C 3</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Workgroup</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <subdivision>WG1</subdivision>
-               <identifier>C1 31</identifier>
-             </organization>
-           </contributor>
-           <contributor>
-             <role type="authorizer"><description>Agency</description></role>
-             <organization>
-               <name>International Organization for Standardization</name>
-               <abbreviation>ISO</abbreviation>
-             </organization>
-           </contributor>
-          <edition>2</edition>
-          <version>
-            <revision-date>2000-01-01</revision-date>
-            <draft>0.3.4</draft>
-          </version>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-            <stage abbreviation="NP">10</stage>
-            <substage>20</substage>
-            <iteration>3</iteration>
-          </status>
-          <copyright>
-            <from>2017</from>
-            <owner>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </owner>
-          </copyright>
-          <ext>
-            <doctype>amendment</doctype>
-            <editorialgroup>
-             <agency>ISO</agency>
-              <technical-committee number="1" type="A">TC</technical-committee>
-              <technical-committee number="11" type="A1">TC1</technical-committee>
-              <subcommittee number="2" type="B">SC</subcommittee>
-              <subcommittee number="21" type="B1">SC1</subcommittee>
-              <workgroup number="3" type="C">WG</workgroup>
-              <workgroup number="31" type="C1">WG1</workgroup>
-              <secretariat>SECRETARIAT</secretariat>
-            </editorialgroup>
-            <approvalgroup>
-             <agency>ISO</agency>
-              <technical-committee number="1" type="A">TC</technical-committee>
-              <technical-committee number="11" type="A1">TC1</technical-committee>
-              <subcommittee number="2" type="B">SC</subcommittee>
-              <subcommittee number="21" type="B1">SC1</subcommittee>
-              <workgroup number="3" type="C">WG</workgroup>
-              <workgroup number="31" type="C1">WG1</workgroup>
-            </approvalgroup>
-            <structuredidentifier>
-              <project-number amendment="1" origyr="2016-05-01" part="1">17301</project-number>
-            </structuredidentifier>
-            <stagename abbreviation="NP AMD"/>
-            <updates-document-type>international-standard</updates-document-type>
-          </ext>
-        </bibdata>
-        <sections/>
-      </iso-standard>
+          <bibdata type="standard">
+             <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="en" format="text/plain" type="title-intro">Introduction</title>
+             <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+             <title language="en" format="text/plain" type="title-part">Title Part</title>
+             <title language="en" format="text/plain" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="fr" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <title language="fr" format="text/plain" type="title-intro">Introduction Française</title>
+             <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
+             <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
+             <title language="fr" format="text/plain" type="title-amd">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <docidentifier type="ISO" primary="true">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
+             <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(E)</docidentifier>
+             <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-10.20:amd:2017:v1</docidentifier>
+             <docnumber>17301</docnumber>
+             <date type="created">
+                <on>2016-05-01</on>
+             </date>
+             <contributor>
+                <role type="author"/>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>Technical committee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>TC</name>
+                         <identifier>A 1</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>Technical committee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>TC1</name>
+                         <identifier>A1 11</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>Subcommittee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>SC</name>
+                         <identifier>B 2</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>Subcommittee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>SC1</name>
+                         <identifier>B1 21</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>Workgroup</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>WG</name>
+                         <identifier>C 3</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>Workgroup</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>WG1</name>
+                         <identifier>C1 31</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Agency</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="publisher"/>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Technical committee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>TC</name>
+                         <identifier>A 1</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Technical committee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>TC1</name>
+                         <identifier>A1 11</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Subcommittee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>SC</name>
+                         <identifier>B 2</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Subcommittee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>SC1</name>
+                         <identifier>B1 21</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Workgroup</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>WG</name>
+                         <identifier>C 3</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Workgroup</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision>
+                      <organization>
+                         <name>WG1</name>
+                         <identifier>C1 31</identifier>
+                      </organization>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <edition>2</edition>
+             <version>
+                <revision-date>2000-01-01</revision-date>
+                <draft>0.3.4</draft>
+             </version>
+             <language>en</language>
+             <script>Latn</script>
+             <status>
+                <stage abbreviation="NP">10</stage>
+                <substage>20</substage>
+                <iteration>3</iteration>
+             </status>
+             <copyright>
+                <from>2017</from>
+                <owner>
+                   <organization>
+                      <name>International Organization for Standardization</name>
+                      <abbreviation>ISO</abbreviation>
+                   </organization>
+                </owner>
+             </copyright>
+             <ext>
+                <doctype>amendment</doctype>
+                <editorialgroup>
+                   <agency>ISO</agency>
+                   <technical-committee number="1" type="A">TC</technical-committee>
+                   <technical-committee number="11" type="A1">TC1</technical-committee>
+                   <subcommittee number="2" type="B">SC</subcommittee>
+                   <subcommittee number="21" type="B1">SC1</subcommittee>
+                   <workgroup number="3" type="C">WG</workgroup>
+                   <workgroup number="31" type="C1">WG1</workgroup>
+                   <secretariat>SECRETARIAT</secretariat>
+                </editorialgroup>
+                <approvalgroup>
+                   <agency>ISO</agency>
+                   <technical-committee number="1" type="A">TC</technical-committee>
+                   <technical-committee number="11" type="A1">TC1</technical-committee>
+                   <subcommittee number="2" type="B">SC</subcommittee>
+                   <subcommittee number="21" type="B1">SC1</subcommittee>
+                   <workgroup number="3" type="C">WG</workgroup>
+                   <workgroup number="31" type="C1">WG1</workgroup>
+                </approvalgroup>
+                <structuredidentifier>
+                   <project-number part="1" amendment="1" origyr="2016-05-01">17301</project-number>
+                </structuredidentifier>
+                <stagename abbreviation="NP AMD"/>
+                <updates-document-type>international-standard</updates-document-type>
+             </ext>
+          </bibdata>
+          <sections> </sections>
+       </iso-standard>
     OUTPUT
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove

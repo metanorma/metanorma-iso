@@ -114,12 +114,12 @@ module Metanorma
       def xrefs_mandate_validate1(xmldoc, xpath, name)
         exc = %w(table note example figure).map { |x| "//#{x}#{xpath}" }
           .join(" | ")
-        #require "debug"; binding.b
         (xmldoc.xpath(xpath) - xmldoc.xpath(exc)).each do |x|
           x["unnumbered"] == "true" and next
           @doc_xrefs[x["id"]] or
             @log.add("Style", x, "#{name} #{x['id']} has not been " \
-                                 "cross-referenced within document")
+                                 "cross-referenced within document",
+                     severity: xpath == "//formula" ? 2 : 1)
         end
       end
 

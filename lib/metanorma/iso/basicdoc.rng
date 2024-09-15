@@ -1593,7 +1593,7 @@ which can be bookmarks as well as block or section references</a:documentation>
     <ref name="CitationType">
       <a:documentation>Reference cross-reference: modelled as cross-reference to the corresponding bibliographical item in a References section</a:documentation>
     </ref>
-    <ref name="erefBody">
+    <ref name="ErefBody">
       <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>
     </ref>
   </define>
@@ -1635,10 +1635,12 @@ which can be bookmarks as well as block or section references</a:documentation>
       <a:documentation>The location or online identifier of the external document or resource</a:documentation>
       <data type="anyURI"/>
     </attribute>
-    <attribute name="type">
-      <a:documentation>The type of Reference Element, prescribing how it is to be rendered</a:documentation>
-      <ref name="ReferenceFormat"/>
-    </attribute>
+    <optional>
+      <attribute name="type">
+        <a:documentation>The type of Reference Element, prescribing how it is to be rendered</a:documentation>
+        <ref name="ReferenceFormat"/>
+      </attribute>
+    </optional>
     <optional>
       <attribute name="alt">
         <a:documentation>Alternate text, used for accessibility</a:documentation>
@@ -1670,6 +1672,13 @@ which can be bookmarks as well as block or section references</a:documentation>
     </optional>
   </define>
   <define name="XrefBody">
+    <oneOrMore>
+      <ref name="PureTextElement">
+        <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>
+      </ref>
+    </oneOrMore>
+  </define>
+  <define name="ErefBody">
     <oneOrMore>
       <ref name="PureTextElement">
         <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>

@@ -471,11 +471,6 @@ real names (if the person is named with a pseudonym or user name); previous lega
       </ref>
     </optional>
     <zeroOrMore>
-      <ref name="uri">
-        <a:documentation>A URI with information about the organization</a:documentation>
-      </ref>
-    </zeroOrMore>
-    <zeroOrMore>
       <ref name="org-identifier">
         <a:documentation>An identifier of the organization according to an international identifier scheme</a:documentation>
       </ref>

@@ -67,7 +67,7 @@ permissions, by obligation; the class overrides that</a:documentation>
       </ref>
     </optional>
     <optional>
-      <ref name="label">
+      <ref name="reqtlabel">
         <a:documentation>Formal identifier with which the requirement is referenced</a:documentation>
       </ref>
     </optional>
@@ -135,7 +135,7 @@ subclasses specific to the parent provision</a:documentation>
       <ref name="FormattedString"/>
     </element>
   </define>
-  <define name="label">
+  <define name="reqtlabel">
     <element name="identifier">
       <oneOrMore>
         <ref name="TextElement"/>
