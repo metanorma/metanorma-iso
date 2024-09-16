@@ -13,6 +13,7 @@ module Metanorma
         end
         section_style(doc.root)
         subclause_validate(doc.root)
+        onlychild_clause_validate(doc.root)
         @vocab and vocab_terms_titles_validate(doc.root)
         super
       end

@@ -49,8 +49,7 @@ module Metanorma
         @lang == "en" or return
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
-          next unless !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec)
-
+          !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
           unless target = root.at("//*[@id = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
@@ -103,6 +102,27 @@ module Metanorma
                    "(#{xref['target']})")
       end
 
+      # require that all assets of a particular type be cross-referenced
+      # within the document
+      def xrefs_mandate_validate(xmldoc)
+        xrefs_mandate_validate1(xmldoc, "//annex", "Annex")
+        xrefs_mandate_validate1(xmldoc, "//table", "Table")
+        xrefs_mandate_validate1(xmldoc, "//figure", "Figure")
+        xrefs_mandate_validate1(xmldoc, "//formula", "Formula")
+      end
+
+      def xrefs_mandate_validate1(xmldoc, xpath, name)
+        exc = %w(table note example figure).map { |x| "//#{x}#{xpath}" }
+          .join(" | ")
+        (xmldoc.xpath(xpath) - xmldoc.xpath(exc)).each do |x|
+          x["unnumbered"] == "true" and next
+          @doc_xrefs[x["id"]] or
+            @log.add("Style", x, "#{name} #{x['id']} has not been " \
+                                 "cross-referenced within document",
+                     severity: xpath == "//formula" ? 2 : 1)
+        end
+      end
+
       # ISO/IEC DIR 2, 16.5.6
       def termdef_style(xmldoc)
         xmldoc.xpath("//term").each do |t|
@@ -139,19 +159,28 @@ module Metanorma
 
       def content_validate(doc)
         super
-        title_validate(doc.root)
-        isosubgroup_validate(doc.root)
-        onlychild_clause_validate(doc.root)
-        termdef_style(doc.root)
-        see_xrefs_validate(doc.root)
-        term_xrefs_validate(doc.root)
-        see_erefs_validate(doc.root)
-        locality_erefs_validate(doc.root)
-        bibdata_validate(doc.root)
-        bibitem_validate(doc.root)
-        figure_validate(doc.root)
+        root = doc.root
+        title_validate(root)
+        isosubgroup_validate(root)
+        termdef_style(root)
+        iso_xref_validate(root)
+        bibdata_validate(root)
+        bibitem_validate(root)
+        figure_validate(root)
+        list_validate(doc)
+      end
+
+      def list_validate(doc)
         listcount_validate(doc)
         list_punctuation(doc)
+      end
+
+      def iso_xref_validate(doc)
+        see_xrefs_validate(doc)
+        term_xrefs_validate(doc)
+        xrefs_mandate_validate(doc)
+        see_erefs_validate(doc)
+        locality_erefs_validate(doc)
       end
 
       def bibitem_validate(xmldoc)
@@ -168,8 +197,7 @@ module Metanorma
         schema = case @doctype
                  when "amendment", "technical-corrigendum" # @amd
                    "isostandard-amd.rng"
-                 else
-                   "isostandard-compile.rng"
+                 else "isostandard-compile.rng"
                  end
         schema_validate(formattedstr_strip(doc.dup),
                         File.join(File.dirname(__FILE__), schema))

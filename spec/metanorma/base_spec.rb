@@ -104,48 +104,60 @@ RSpec.describe Metanorma::ISO do
            <role type="author"><description>Technical committee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision>TC</subdivision>
+             <subdivision><organization><name>TC</name>
              <identifier>A 1</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
          <role type="author"><description>Technical committee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision>TC1</subdivision>
+             <subdivision><organization><name>TC1</name>
              <identifier>A1 11</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="author"><description>Subcommittee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision>SC</subdivision>
+             <subdivision><organization><name>SC</name>
              <identifier>B 2</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="author"><description>Subcommittee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision>SC1</subdivision>
+             <subdivision><organization><name>SC1</name>
              <identifier>B1 21</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="author"><description>Workgroup</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision>WG</subdivision>
+             <subdivision><organization><name>WG</name>
              <identifier>C 3</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="author"><description>Workgroup</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision>WG1</subdivision>
+             <subdivision><organization><name>WG1</name>
              <identifier>C1 31</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
@@ -166,48 +178,60 @@ RSpec.describe Metanorma::ISO do
          <role type="authorizer"><description>Technical committee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision>TCa</subdivision>
+             <subdivision><organization><name>TCa</name>
              <identifier>Aa 1a</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
          <role type="authorizer"><description>Technical committee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision>TC1a</subdivision>
+             <subdivision><organization><name>TC1a</name>
              <identifier>A1a 11a</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="authorizer"><description>Subcommittee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision>SCa</subdivision>
+             <subdivision><organization><name>SCa</name>
              <identifier>Ba 2a</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="authorizer"><description>Subcommittee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision>SC1a</subdivision>
+             <subdivision><organization><name>SC1a</name>
              <identifier>B1a 21a</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="authorizer"><description>Workgroup</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision>WGa</subdivision>
+             <subdivision><organization><name>WGa</name>
              <identifier>Ca 3a</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
          <contributor>
            <role type="authorizer"><description>Workgroup</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision>WG1a</subdivision>
+             <subdivision><organization><name>WG1a</name>
              <identifier>C1a 31a</identifier>
+              </organization>
+             </subdivision>
            </organization>
          </contributor>
         <edition>2</edition>
@@ -339,24 +363,30 @@ RSpec.describe Metanorma::ISO do
         <role type="author"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>Techcomm</subdivision>
+            <subdivision><organization><name>Techcomm</name>
             <identifier>TC 1</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="author"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>Subcommitt</subdivision>
+            <subdivision><organization><name>Subcommitt</name>
             <identifier>SC 2</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="author"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>Workg</subdivision>
+            <subdivision><organization><name>Workg</name>
             <identifier>WG 3</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
@@ -383,24 +413,30 @@ RSpec.describe Metanorma::ISO do
         <role type="authorizer"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>ApprovTechcom</subdivision>
+            <subdivision><organization><name>ApprovTechcom</name>
             <identifier>TC 1</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="authorizer"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>ApprovSubcom</subdivision>
+            <subdivision><organization><name>ApprovSubcom</name>
             <identifier>SC 2</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="authorizer"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>ApprovWorkg</subdivision>
+            <subdivision><organization><name>ApprovWorkg</name>
             <identifier>WG 3</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
@@ -610,24 +646,30 @@ RSpec.describe Metanorma::ISO do
         <role type="author"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>Techcomm</subdivision>
+            <subdivision><organization><name>Techcomm</name>
             <identifier>1</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="author"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>Subcommitt</subdivision>
+            <subdivision><organization><name>Subcommitt</name>
             <identifier>2</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="author"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>Workg</subdivision>
+            <subdivision><organization><name>Workg</name>
             <identifier>3</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
@@ -641,24 +683,30 @@ RSpec.describe Metanorma::ISO do
         <role type="authorizer"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>ApprovTechcom</subdivision>
+            <subdivision><organization><name>ApprovTechcom</name>
             <identifier>1</identifier>
+             </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="authorizer"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>ApprovSubcom</subdivision>
+            <subdivision><organization><name>ApprovSubcom</name>
             <identifier>2</identifier>
+            </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
           <role type="authorizer"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision>ApprovWorkg</subdivision>
+            <subdivision><organization><name>ApprovWorkg</name>
             <identifier>3</identifier>
+            </organization>
+            </subdivision>
           </organization>
         </contributor>
         <contributor>
@@ -739,110 +787,142 @@ RSpec.describe Metanorma::ISO do
         <docidentifier type="iso-undated">ISO 1000</docidentifier>
         <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
-        <contributor>
-          <role type="author"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-        <role type="author"><description>Technical committee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision/>
-            <identifier>1</identifier>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"><description>Subcommittee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision/>
-            <identifier>2</identifier>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"><description>Workgroup</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision/>
-            <identifier>3</identifier>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-        <role type="authorizer"><description>Technical committee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision/>
-            <identifier>1</identifier>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Subcommittee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision/>
-            <identifier>2</identifier>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Workgroup</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision/>
-            <identifier>3</identifier>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Agency</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <language>en</language>
-        <script>Latn</script>
-        <status>
-          <stage>60</stage>
-          <substage>60</substage>
-        </status>
-        <copyright>
-          <from>#{Date.today.year}</from>
-          <owner>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </owner>
-        </copyright>
-        <ext>
-          <doctype>standard</doctype>
-          <editorialgroup>
-            <agency>ISO</agency>
-            <technical-committee number="1" type="Other"/>
-            <subcommittee number="2" type="Other"/>
-            <workgroup number="3" type="Other"/>
-          </editorialgroup>
-          <approvalgroup>
-            <agency>ISO</agency>
-            <technical-committee number="1" type="Other"/>
-            <subcommittee number="2" type="Other"/>
-            <workgroup number="3" type="Other"/>
-          </approvalgroup>
-          <structuredidentifier>
-            <project-number>ISO 1000</project-number>
-          </structuredidentifier>
-          <stagename>International Standard</stagename>
-        </ext>
-      </bibdata>
+                  <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision>
+                   <organization>
+                      <identifier>1</identifier>
+                   </organization>
+                </subdivision>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Subcommittee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision>
+                   <organization>
+                      <identifier>2</identifier>
+                   </organization>
+                </subdivision>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Workgroup</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision>
+                   <organization>
+                      <identifier>3</identifier>
+                   </organization>
+                </subdivision>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision>
+                   <organization>
+                      <identifier>1</identifier>
+                   </organization>
+                </subdivision>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Subcommittee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision>
+                   <organization>
+                      <identifier>2</identifier>
+                   </organization>
+                </subdivision>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Workgroup</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision>
+                   <organization>
+                      <identifier>3</identifier>
+                   </organization>
+                </subdivision>
+             </organization>
+          </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+             <stage>60</stage>
+             <substage>60</substage>
+          </status>
+          <copyright>
+             <from>2024</from>
+             <owner>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </owner>
+          </copyright>
+          <ext>
+             <doctype>standard</doctype>
+             <editorialgroup>
+                <agency>ISO</agency>
+                <technical-committee number="1" type="Other"/>
+                <subcommittee number="2" type="Other"/>
+                <workgroup number="3" type="Other"/>
+             </editorialgroup>
+             <approvalgroup>
+                <agency>ISO</agency>
+                <technical-committee number="1" type="Other"/>
+                <subcommittee number="2" type="Other"/>
+                <workgroup number="3" type="Other"/>
+             </approvalgroup>
+             <structuredidentifier>
+                <project-number>ISO 1000</project-number>
+             </structuredidentifier>
+             <stagename>International Standard</stagename>
+          </ext>
+       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(Xml::C14n.format(strip_guid(xml.to_xml)))

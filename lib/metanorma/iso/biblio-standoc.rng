@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
   <!--
     Add-ons to biblio.rnc for standoc model: defines the extension point BibDataExtensionType
     of relaton
@@ -9,12 +9,16 @@
   -->
   <include href="biblio.rng">
     <define name="BibData">
+      <a:documentation>The bibliographic description of a standardisation document</a:documentation>
       <ref name="StandardBibliographicItem"/>
       <optional>
-        <ref name="ext"/>
+        <ref name="ext">
+          <a:documentation>The extension point of the bibliographic description of a standardisation document</a:documentation>
+        </ref>
       </optional>
     </define>
     <define name="docrelation">
+      <a:documentation>Update to StandardReducedBibliographicItem</a:documentation>
       <element name="relation">
         <attribute name="type">
           <ref name="DocRelationType"/>
@@ -47,34 +51,55 @@
     </define>
   </include>
   <define name="ext">
+    <a:documentation>The extension point of the bibliographic description of a standardisation document</a:documentation>
     <element name="ext">
       <ref name="BibDataExtensionType"/>
     </element>
   </define>
   <define name="BibDataExtensionType">
     <optional>
-      <attribute name="schema-version"/>
+      <attribute name="schema-version">
+        <a:documentation>The version of the flavour-specific schema that this extension point conforms to</a:documentation>
+      </attribute>
     </optional>
-    <ref name="doctype"/>
+    <ref name="doctype">
+      <a:documentation>Classification of the standardisation document that is treated as a distinct series by the
+standards defining organization, and that is rendered in a distinct manner</a:documentation>
+    </ref>
     <optional>
-      <ref name="docsubtype"/>
+      <ref name="docsubtype">
+        <a:documentation>Subclass of the standardisation document, that is treated or processed differently
+from other documents in the same doctype</a:documentation>
+      </ref>
     </optional>
     <optional>
-      <ref name="editorialgroup"/>
+      <ref name="editorialgroup">
+        <a:documentation>Groups associated with the production of the standards document, typically within
+a standards definition organization</a:documentation>
+      </ref>
     </optional>
     <zeroOrMore>
-      <ref name="ics"/>
+      <ref name="ics">
+        <a:documentation>Classification of the document contents taken from the International Classification of Standards</a:documentation>
+      </ref>
     </zeroOrMore>
     <zeroOrMore>
-      <ref name="structuredidentifier"/>
+      <ref name="structuredidentifier">
+        <a:documentation>Representation of the identifier for the standardisation document, giving its individual semantic components</a:documentation>
+      </ref>
     </zeroOrMore>
   </define>
   <define name="doctype">
+    <a:documentation>Classification of the standardisation document</a:documentation>
     <element name="doctype">
       <optional>
-        <attribute name="abbreviation"/>
+        <attribute name="abbreviation">
+          <a:documentation>Standard abbreviation for the doctype value used by the standards defining organization</a:documentation>
+        </attribute>
       </optional>
-      <ref name="DocumentType"/>
+      <ref name="DocumentType">
+        <a:documentation>Name of the doctype</a:documentation>
+      </ref>
     </element>
   </define>
   <define name="DocumentType">
@@ -89,104 +114,142 @@
     <text/>
   </define>
   <define name="editorialgroup">
+    <a:documentation>A group associated with the production of the standards document, typically within
+a standards definition organization</a:documentation>
     <element name="editorialgroup">
       <oneOrMore>
-        <ref name="technical-committee"/>
+        <ref name="technical-committee">
+          <a:documentation>A technical committee associated with the production of the standards document</a:documentation>
+        </ref>
       </oneOrMore>
     </element>
   </define>
   <define name="technical-committee">
+    <a:documentation>Technical committee associated with the production of a standards document</a:documentation>
     <element name="technical-committee">
       <ref name="IsoWorkgroup"/>
     </element>
   </define>
   <define name="IsoWorkgroup">
     <optional>
-      <attribute name="number"/>
+      <attribute name="number">
+        <a:documentation>Numeric identifier of the technical committee</a:documentation>
+      </attribute>
     </optional>
     <optional>
-      <attribute name="type"/>
+      <attribute name="type">
+        <a:documentation>Type of the technical committee, used in identifying the technical committee</a:documentation>
+      </attribute>
     </optional>
     <optional>
-      <attribute name="identifier"/>
+      <attribute name="identifier">
+        <a:documentation>Non-numeric, complete identifier of the technical committee</a:documentation>
+      </attribute>
     </optional>
     <optional>
-      <attribute name="prefix"/>
+      <attribute name="prefix">
+        <a:documentation>Disambiguating prefix added to number to form the identifier of the technical committee,
+typically indicating its type</a:documentation>
+      </attribute>
     </optional>
-    <text/>
+    <text>
+      <a:documentation>Name of the technical committee</a:documentation>
+    </text>
   </define>
   <define name="ics">
+    <a:documentation>Classification taken from the International Classification of Standards. 
+ICS is defined by ISO here -- https://www.iso.org/publication/PUB100033.html</a:documentation>
     <element name="ics">
       <element name="code">
+        <a:documentation>Classification code taken from the ICS</a:documentation>
         <text/>
       </element>
       <optional>
         <element name="text">
+          <a:documentation>Text string associated with the classification code</a:documentation>
           <text/>
         </element>
       </optional>
     </element>
   </define>
   <define name="structuredidentifier">
+    <a:documentation>Representation of the identifier for a standardisation document, giving its individual semantic components</a:documentation>
     <element name="structuredidentifier">
       <optional>
-        <attribute name="type"/>
+        <attribute name="type">
+          <a:documentation>Representation in the identifier of the type of standard document, corresponds to bibitem/ext/doctype</a:documentation>
+        </attribute>
       </optional>
       <oneOrMore>
         <element name="agency">
+          <a:documentation>Representation in the identifier of the agency responsible for the standard document</a:documentation>
           <text/>
         </element>
       </oneOrMore>
       <optional>
         <element name="class">
+          <a:documentation>Representation in the identifier of the class of standard document (as a subclass of the document type),
+corresponds to bibitem/item/docsubtype</a:documentation>
           <text/>
         </element>
       </optional>
       <element name="docnumber">
+        <a:documentation>Representation in the identifier of the (typically numeric) component uniquely identifying the document
+or standard. If a document includes parts or supplements, the docnumber identifies the document as whole,
+and not those document components</a:documentation>
         <text/>
       </element>
       <optional>
         <element name="partnumber">
+          <a:documentation>Representation in the identifier of the document part, if this is a document part. May be compound</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="edition">
+          <a:documentation>Representation in the identifier of the document edition, if this is a published document</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="version">
+          <a:documentation>Representation in the identifier of the document version, which can include document drafts</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="supplementtype">
+          <a:documentation>Representation in the identifier of the type of document supplement, if this is a document supplement</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="supplementnumber">
+          <a:documentation>Representation in the identifier of the document supplement, if this is a document supplement</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="amendment">
+          <a:documentation>Representation in the identifier of the document amendment, if this is a document amendment</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="corrigendum">
+          <a:documentation>Representation in the identifier of the document corrigendum, if this is a document corrigendum</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="language">
+          <a:documentation>Representation in the identifier of the language of the document</a:documentation>
           <text/>
         </element>
       </optional>
       <optional>
         <element name="year">
+          <a:documentation>Representation in the identifier of the year of publication or issuance of the document</a:documentation>
           <text/>
         </element>
       </optional>
@@ -195,13 +258,17 @@
   <define name="StandardBibliographicItem">
     <ref name="BibliographicItem"/>
     <zeroOrMore>
-      <ref name="amend"/>
+      <ref name="amend">
+        <a:documentation>Description of changes specific to this document</a:documentation>
+      </ref>
     </zeroOrMore>
   </define>
   <define name="StandardReducedBibliographicItem">
     <ref name="ReducedBibliographicItem"/>
     <zeroOrMore>
-      <ref name="amend"/>
+      <ref name="amend">
+        <a:documentation>Description of changes specific to this document</a:documentation>
+      </ref>
     </zeroOrMore>
   </define>
 </grammar>

@@ -32,8 +32,8 @@ module Metanorma
           node.attr("#{v}-number") or next
           node.attr(v) or node.set_attr(v, "")
           o = { source: [v], role: approval ? "authorizer" : "author",
-                default_org: false, committee: true, agency: agency,
-                desc: v.sub(/^approval-/, "").gsub("-", " ").capitalize }
+                default_org: false, committee: true, agency:,
+                desc: v.sub(/^approval-/, "").tr("-", " ").capitalize }
           org_contributor(node, xml, o)
         end
         approval or committee_contributors_approval(node, xml, agency)
@@ -52,11 +52,15 @@ module Metanorma
       end
 
       def contrib_committee_build(xml, agency, committee)
-        n = org_abbrev.invert[agency] and agency = n
+        name = org_abbrev.invert[agency] and agency = name
         xml.name agency
-        xml.subdivision committee[:name]
-        committee[:abbr] and xml.abbreviation committee[:abbr]
-        committee[:ident] and xml.identifier committee[:ident]
+        xml.subdivision do |s|
+          s.organization do |o|
+            o.name committee[:name]
+            committee[:abbr] and o.abbreviation committee[:abbr]
+            committee[:ident] and o.identifier committee[:ident]
+          end
+        end
       end
 
       COMMITTEE_ABBREVS =
