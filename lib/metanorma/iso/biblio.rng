@@ -134,67 +134,38 @@ NOTE: The number attribute can be used to represent the numeric equivalent of th
       </attribute>
     </optional>
   </define>
-  <define name="LocalizedString1">
+  <define name="LocalizedString">
     <ref name="LocalizedStringAttributes"/>
     <text/>
   </define>
-  <define name="LocalizedString">
-    <a:documentation>FormattedString which optionally specifies its language, locale, and/or script</a:documentation>
-    <choice>
-      <ref name="LocalizedString1"/>
-      <oneOrMore>
-        <element name="variant">
-          <a:documentation>Variants of the string, with the same content, but in different language, script, or format</a:documentation>
-          <ref name="LocalizedString1"/>
-        </element>
-      </oneOrMore>
-    </choice>
-  </define>
-  <define name="LocalizedMarkedUpString1">
+  <!--
+    LocalizedString =
+     LocalizedStringAttributes,
+     text
+    
+    LocalizedString =
+     LocalizedString1 |
+     element variant { LocalizedString1 }+
+  -->
+  <define name="LocalizedMarkedUpString">
     <ref name="LocalizedStringAttributes"/>
     <oneOrMore>
-      <ref name="TextElement"/>
+      <ref name="PureTextElement"/>
     </oneOrMore>
   </define>
-  <define name="LocalizedMarkedUpString">
-    <choice>
-      <ref name="LocalizedMarkedUpString1"/>
-      <oneOrMore>
-        <element name="variant">
-          <a:documentation>Variants of the string, with the same content, but in different language, script, or format</a:documentation>
-          <ref name="LocalizedMarkedUpString1"/>
-        </element>
-      </oneOrMore>
-    </choice>
-  </define>
+  <!--
+    LocalizedMarkedUpString =
+    LocalizedMarkedUpString1 |
+    Variants of the string, with the same content, but in different language, script, or format
+    element variant { LocalizedMarkedUpString1 }+
+  -->
   <!--
     Unlike UML, change type to format: type is overloaded
     Would be need if plain were default value and could omit the attribute
     Added LocalizedStringOrXsAny
   -->
-  <define name="FormattedString">
-    <a:documentation>String which is formatted according to conventions specified in a named MIME type </a:documentation>
-    <optional>
-      <attribute name="format">
-        <a:documentation>MIME type for string (defailts to text/plain). 
-NOTE: `docbook`, `AsciiDoc`, `Metanorma` are not registered IANA Media Types</a:documentation>
-        <choice>
-          <value>text/plain</value>
-          <value>text/html</value>
-          <value>application/docbook+xml</value>
-          <value>application/tei+xml</value>
-          <value>text/x-asciidoc</value>
-          <value>text/markdown</value>
-          <value>application/x-metanorma+xml</value>
-          <text/>
-        </choice>
-      </attribute>
-    </optional>
-    <ref name="LocalizedStringOrXsAny">
-      <a:documentation>String</a:documentation>
-    </ref>
-  </define>
-  <define name="LocalizedStringOrXsAny1">
+  <!-- LocalizedStringOrXsAny1 = -->
+  <define name="LocalizedStringOrXsAny">
     <ref name="LocalizedStringAttributes"/>
     <oneOrMore>
       <choice>
@@ -203,18 +174,24 @@ NOTE: `docbook`, `AsciiDoc`, `Metanorma` are not registered IANA Media Types</a:
       </choice>
     </oneOrMore>
   </define>
-  <define name="LocalizedStringOrXsAny">
-    <choice>
-      <ref name="LocalizedStringOrXsAny1"/>
-      <oneOrMore>
-        <element name="variant">
-          <a:documentation>Variants of the string, with the same content, but in different language, script, or format</a:documentation>
-          <ref name="LocalizedStringOrXsAny1"/>
-        </element>
-      </oneOrMore>
-    </choice>
-  </define>
+  <!--
+    LocalizedStringOrXsAny =
+     LocalizedStringOrXsAny1 |
+     element variant { LocalizedStringOrXsAny1 }+
+  -->
   <define name="contributor">
+    <a:documentation>String which is formatted according to conventions specified in a named MIME type </a:documentation>
+    <!-- FormattedString = -->
+    <a:documentation>MIME type for string (defailts to text/plain). 
+NOTE: `docbook`, `AsciiDoc`, `Metanorma` are not registered IANA Media Types</a:documentation>
+    <!--
+      attribute format { 
+      "text/plain" | "text/html" | "application/docbook+xml" |
+      "application/tei+xml" | "text/x-asciidoc" | "text/markdown" | "application/x-metanorma+xml" | text 
+      }?,
+    -->
+    <a:documentation>String</a:documentation>
+    <!-- LocalizedStringOrXsAny -->
     <a:documentation>Description of a contributor to the production of the bibliographic item</a:documentation>
     <element name="contributor">
       <oneOrMore>
@@ -316,39 +293,41 @@ surname. Can be used instead of the complete name. Distinct from formatted-initi
 which are the initials only of the forenames of the person</a:documentation>
       </ref>
     </optional>
-    <choice>
-      <group>
-        <zeroOrMore>
-          <ref name="prefix">
-            <a:documentation>A prefixed addition to the name of the person, such as "Dr"</a:documentation>
-          </ref>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="forename">
-            <a:documentation>A forename or given name of the person. Includes middle names</a:documentation>
-          </ref>
-        </zeroOrMore>
-        <optional>
-          <ref name="formatted-initials">
-            <a:documentation>The initials of the person, as a formatted string, including punctuation, dropping
+    <group>
+      <zeroOrMore>
+        <ref name="prefix">
+          <a:documentation>A prefixed addition to the name of the person, such as "Dr"</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="forename">
+          <a:documentation>A forename or given name of the person. Includes middle names</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <optional>
+        <ref name="formatted-initials">
+          <a:documentation>The initials of the person, as a formatted string, including punctuation, dropping
 punctuation as desired, and including hyphens where necessary. For example,
 the initial set for Jean-Paul would be J, P; the formatted initials would be "J.-P."
 or "J-P.". Can be used instead of forenames</a:documentation>
-          </ref>
-        </optional>
+        </ref>
+      </optional>
+      <optional>
         <ref name="surname">
           <a:documentation>The surname, family name, or equivalent of the person</a:documentation>
         </ref>
-        <zeroOrMore>
-          <ref name="addition">
-            <a:documentation>A suffixed addition to the name of the person, such as "Jr"</a:documentation>
-          </ref>
-        </zeroOrMore>
-      </group>
-      <ref name="completeName">
-        <a:documentation>A preformatted version of the name of the person, not broken down into its component parts</a:documentation>
-      </ref>
-    </choice>
+      </optional>
+      <zeroOrMore>
+        <ref name="addition">
+          <a:documentation>A suffixed addition to the name of the person, such as "Jr"</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <optional>
+        <ref name="completeName">
+          <a:documentation>A preformatted version of the name of the person, not broken down into its component parts</a:documentation>
+        </ref>
+      </optional>
+    </group>
     <zeroOrMore>
       <ref name="biblionote">
         <a:documentation>An additional note about the name of the person</a:documentation>
@@ -488,10 +467,12 @@ real names (if the person is named with a pseudonym or user name); previous lega
   </define>
   <define name="orgname">
     <element name="name">
-      <choice>
-        <ref name="LocalizedString"/>
-        <ref name="NameWithVariants"/>
-      </choice>
+      <optional>
+        <attribute name="type">
+          <a:documentation>Type of organisation name, to differentiate variant names</a:documentation>
+        </attribute>
+      </optional>
+      <ref name="LocalizedString"/>
     </element>
   </define>
   <define name="subdivision">
@@ -527,26 +508,16 @@ real names (if the person is named with a pseudonym or user name); previous lega
       </zeroOrMore>
     </element>
   </define>
-  <define name="NameWithVariants">
-    <element name="primary">
-      <a:documentation>Primary name of the organization</a:documentation>
-      <ref name="LocalizedString"/>
-    </element>
-    <zeroOrMore>
-      <element name="variant">
-        <a:documentation>A variant name of the organization</a:documentation>
-        <ref name="NameWithVariants1"/>
-      </element>
-    </zeroOrMore>
-  </define>
-  <define name="NameWithVariants1">
-    <attribute name="type">
-      <a:documentation>Type of variant name of organisation</a:documentation>
-    </attribute>
-    <ref name="LocalizedString">
-      <a:documentation>Value of variant name</a:documentation>
-    </ref>
-  </define>
+  <!--
+    NameWithVariants =
+    element primary { LocalizedString },
+    element variant { NameWithVariants1 }*
+    
+    NameWithVariants1 =
+    attribute type { text },
+    element primary { LocalizedString },
+    element variant { NameWithVariants1 }*
+  -->
   <define name="abbreviation">
     <element name="abbreviation">
       <ref name="LocalizedString"/>
@@ -598,35 +569,37 @@ real names (if the person is named with a pseudonym or user name); previous lega
   <define name="address">
     <a:documentation>An address for a person or organization</a:documentation>
     <element name="address">
-      <choice>
+      <zeroOrMore>
         <!-- iso191606 TODO -->
-        <group>
-          <zeroOrMore>
-            <ref name="street">
-              <a:documentation>The street and street number or equivalent in the address, as one or more lines of text</a:documentation>
-            </ref>
-          </zeroOrMore>
-          <ref name="city">
-            <a:documentation>The settlement or municipality in the address</a:documentation>
-          </ref>
-          <optional>
-            <ref name="state">
-              <a:documentation>The region of the country in the address</a:documentation>
-            </ref>
-          </optional>
-          <ref name="country">
-            <a:documentation>The country in the address</a:documentation>
-          </ref>
-          <optional>
-            <ref name="postcode">
-              <a:documentation>The postal code or equivalent in the address</a:documentation>
-            </ref>
-          </optional>
-        </group>
+        <ref name="street">
+          <a:documentation>The street and street number or equivalent in the address, as one or more lines of text</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <optional>
+        <ref name="city">
+          <a:documentation>The settlement or municipality in the address</a:documentation>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="state">
+          <a:documentation>The region of the country in the address</a:documentation>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="country">
+          <a:documentation>The country in the address</a:documentation>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="postcode">
+          <a:documentation>The postal code or equivalent in the address</a:documentation>
+        </ref>
+      </optional>
+      <optional>
         <ref name="formattedAddress">
           <a:documentation>Preformatted version of the address, not decomposed into its component parts</a:documentation>
         </ref>
-      </choice>
+      </optional>
     </element>
   </define>
   <define name="street">
@@ -679,10 +652,12 @@ Examples include "isni", "orcid", "uri"</a:documentation>
   <define name="org-identifier">
     <a:documentation>An identifier of an organization according to an international identifier scheme</a:documentation>
     <element name="identifier">
-      <attribute name="type">
-        <a:documentation>The international identifier scheme for the identifier of the organization.
+      <optional>
+        <attribute name="type">
+          <a:documentation>The international identifier scheme for the identifier of the organization.
 Examples include GRID, LEI, CrossRef, and Ringgold</a:documentation>
-      </attribute>
+        </attribute>
+      </optional>
       <text>
         <a:documentation>The identifier value</a:documentation>
       </text>
@@ -1320,6 +1295,11 @@ for which this claim of validity is made, if applicable</a:documentation>
 "main": The default title of the item, privileged in citation</a:documentation>
       </attribute>
     </optional>
+    <optional>
+      <attribute name="format">
+        <a:documentation>(legacy attribute) format; can have value text/plain</a:documentation>
+      </attribute>
+    </optional>
     <ref name="LocalizedMarkedUpString">
       <a:documentation>Content of title</a:documentation>
     </ref>
@@ -1478,35 +1458,40 @@ is for a particular instance of the document, e.g. for a particular format or ed
   <define name="bplace">
     <a:documentation>Place associated with the production of a bibliographic item</a:documentation>
     <element name="place">
-      <choice>
-        <text>
+      <optional>
+        <ref name="bibliocity">
+          <a:documentation>City</a:documentation>
+        </ref>
+      </optional>
+      <zeroOrMore>
+        <ref name="biblioregion">
+          <a:documentation>Region that city is located in, given for disambiguation purposes.</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="bibliocountry">
+          <a:documentation>Country that city is located in, given for disambiguation purposes.</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <optional>
+        <ref name="formattedPlace">
           <a:documentation>Name of the place, not broken down semantically</a:documentation>
-        </text>
-        <group>
-          <ref name="bibliocity">
-            <a:documentation>City</a:documentation>
-          </ref>
-          <zeroOrMore>
-            <ref name="biblioregion">
-              <a:documentation>Region that city is located in, given for disambiguation purposes.</a:documentation>
-            </ref>
-          </zeroOrMore>
-          <zeroOrMore>
-            <ref name="bibliocountry">
-              <a:documentation>Country that city is located in, given for disambiguation purposes.</a:documentation>
-            </ref>
-          </zeroOrMore>
-          <optional>
-            <ref name="uri">
-              <a:documentation>URI in a geographical registry identifying the place</a:documentation>
-            </ref>
-          </optional>
-        </group>
-      </choice>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="uri">
+          <a:documentation>URI in a geographical registry identifying the place</a:documentation>
+        </ref>
+      </optional>
     </element>
   </define>
   <define name="bibliocity">
     <element name="city">
+      <text/>
+    </element>
+  </define>
+  <define name="formattedPlace">
+    <element name="formattedPlace">
       <text/>
     </element>
   </define>
@@ -1649,7 +1634,8 @@ A sequence of sizes can be used to indicate different numberings, e.g. xii + 40 
 or different kinds of measures, e.g. pages + plates</a:documentation>
     <element name="value">
       <attribute name="type">
-        <a:documentation>The type of size. Recommended values: page, volume, time (in ISO 8601 duration values), data (including unit), value (free-form string)</a:documentation>
+        <a:documentation>The type of size. Recommended values: page, volume, time (in ISO 8601 duration values), 
+data (including unit), value (free-form string)</a:documentation>
       </attribute>
       <optional>
         <text>
@@ -1996,41 +1982,40 @@ provided that it is not the entire bibliographic item that is so related</a:docu
       <text/>
     </element>
   </define>
+  <!--
+    bkeyword = element keyword {
+    LocalizedString |
+    (
+    element vocab { LocalizedString },
+    vocabid+
+    ) |
+    (
+    element taxon { LocalizedString }+,
+    vocabid+
+    )
+    }
+  -->
   <define name="bkeyword">
     <a:documentation>Keyword for a bibliographic item</a:documentation>
     <element name="keyword">
-      <choice>
-        <ref name="LocalizedString">
-          <a:documentation>Representation of keyword as a string in an uncontrolled vocabulary</a:documentation>
-        </ref>
-        <group>
-          <a:documentation>Representation of keyword as a string in a controlled vocabulary</a:documentation>
-          <element name="vocab">
-            <a:documentation>The keyword as a controlled vocabulary item</a:documentation>
-            <ref name="LocalizedString"/>
-          </element>
-          <oneOrMore>
-            <ref name="vocabid">
-              <a:documentation>Identifiers for the keyword as a controlled vocabulary</a:documentation>
-            </ref>
-          </oneOrMore>
-        </group>
-        <group>
-          <a:documentation>Reprsentation of keyword as a hierarchical sequence of strings with associated identifiers (taxonomy)</a:documentation>
-          <oneOrMore>
-            <element name="taxon">
-              <a:documentation>The keyword as a taxonomy. For example, the sequence of `taxon` elements
+      <optional>
+        <element name="vocab">
+          <a:documentation>The keyword as a single, controlled or uncontrolled vocabulary item</a:documentation>
+          <ref name="LocalizedString"/>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="taxon">
+          <a:documentation>The keywords as a hierarchical taxonomy. For example, the sequence of `taxon` elements
 `pump`, `centrifugal pump`, `line shaft pump` represents a taxonomic classification</a:documentation>
-              <ref name="LocalizedString"/>
-            </element>
-          </oneOrMore>
-          <oneOrMore>
-            <ref name="vocabid">
-              <a:documentation>Identifiers for the keyword in a taxonomy</a:documentation>
-            </ref>
-          </oneOrMore>
-        </group>
-      </choice>
+          <ref name="LocalizedString"/>
+        </element>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="vocabid">
+          <a:documentation>Identifiers for the keyword as a controlled vocabulary</a:documentation>
+        </ref>
+      </zeroOrMore>
     </element>
   </define>
   <define name="vocabid">
