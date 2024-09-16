@@ -25,7 +25,7 @@
         </attribute>
         <optional>
           <element name="description">
-            <ref name="FormattedString"/>
+            <ref name="LocalizedMarkedUpString"/>
           </element>
         </optional>
         <element name="bibitem">

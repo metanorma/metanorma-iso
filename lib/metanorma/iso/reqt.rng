@@ -132,7 +132,7 @@ subclasses specific to the parent provision</a:documentation>
   </define>
   <define name="reqtitle">
     <element name="title">
-      <ref name="FormattedString"/>
+      <ref name="LocalizedMarkedUpString"/>
     </element>
   </define>
   <define name="reqtlabel">
