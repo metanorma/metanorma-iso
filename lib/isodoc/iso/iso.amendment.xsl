@@ -11557,14 +11557,16 @@
 	<xsl:template match="*[local-name()='link']" name="link">
 		<xsl:variable name="target_normalized" select="translate(@target, '\', '/')"/>
 		<xsl:variable name="target_attachment_name" select="substring-after($target_normalized, '_attachments/')"/>
+		<xsl:variable name="isLinkToEmbeddedFile" select="normalize-space(@attachment = 'true' and $pdfAttachmentsList//attachment[@filename = current()/@target])"/>
 		<xsl:variable name="target">
 			<xsl:choose>
 				<xsl:when test="@updatetype = 'true'">
 					<xsl:value-of select="concat(normalize-space(@target), '.pdf')"/>
 				</xsl:when>
 				<!-- link to the PDF attachment -->
-				<xsl:when test="@attachment = 'true' and $pdfAttachmentsList//attachment[@filename = current()/@target]">
-					<xsl:value-of select="concat('url(embedded-file:', @target, ')')"/>
+				<xsl:when test="$isLinkToEmbeddedFile = 'true'">
+					<xsl:variable name="target_file" select="java:org.metanorma.fop.Util.getFilenameFromPath(@target)"/>
+					<xsl:value-of select="concat('url(embedded-file:', $target_file, ')')"/>
 				</xsl:when>
 				<!-- <xsl:when test="starts-with($target_normalized, '_') and contains($target_normalized, '_attachments/') and $pdfAttachmentsList//attachment[@filename = $target_attachment_name]">
 					<xsl:value-of select="concat('url(embedded-file:', $target_attachment_name, ')')"/>
@@ -11595,6 +11597,11 @@
 				<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
 			</xsl:if>
 
+			<xsl:if test="$isLinkToEmbeddedFile = 'true'">
+				<xsl:attribute name="color">inherit</xsl:attribute>
+				<xsl:attribute name="text-decoration">none</xsl:attribute>
+			</xsl:if>
+
 			<xsl:call-template name="refine_link-style"/>
 
 			<xsl:choose>
@@ -11617,6 +11624,10 @@
 									</xsl:otherwise>
 								</xsl:choose>
 							</fo:basic-link>
+							<xsl:if test="$isLinkToEmbeddedFile = 'true'">
+								<!-- reserve space at right for PaperClip icon -->
+								<fo:inline keep-with-previous.within-line="always">        </fo:inline>
+							</xsl:if>
 						</xsl:with-param>
 					</xsl:call-template>
 				</xsl:otherwise>
@@ -17293,9 +17304,14 @@
 		</x:xmpmeta>
 		<!-- add attachments -->
 		<xsl:for-each select="//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment']">
-			<xsl:variable name="description" select="normalize-space(//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment'] = current()/@name]/*[local-name() = 'formattedref'])"/>
+			<xsl:variable name="bibitem_attachment_" select="//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment'] = current()/@name]"/>
+			<xsl:variable name="bibitem_attachment" select="xalan:nodeset($bibitem_attachment_)"/>
+			<xsl:variable name="description" select="normalize-space($bibitem_attachment/*[local-name() = 'formattedref'])"/>
+			<xsl:variable name="filename" select="java:org.metanorma.fop.Util.getFilenameFromPath(@name)"/>
+			<!-- Todo: need update -->
+			<xsl:variable name="afrelationship" select="normalize-space($bibitem_attachment//*[local-name() = 'span'][@class = 'pdf-AFRelationship'])"/>
 
-			<pdf:embedded-file filename="{@name}">
+			<pdf:embedded-file filename="{$filename}" link-as-file-annotation="true">
 				<xsl:attribute name="src">
 					<xsl:choose>
 						<xsl:when test="normalize-space() != ''">
@@ -17311,18 +17327,27 @@
 				<xsl:if test="$description != ''">
 					<xsl:attribute name="description"><xsl:value-of select="$description"/></xsl:attribute>
 				</xsl:if>
+				<xsl:if test="$afrelationship != ''">
+					<xsl:attribute name="afrelationship"><xsl:value-of select="$afrelationship"/></xsl:attribute>
+				</xsl:if>
 			</pdf:embedded-file>
 		</xsl:for-each>
 		<!-- references to external attachments (no binary-encoded within the Metanorma XML file) -->
 		<xsl:if test="not(//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment'])">
 			<xsl:for-each select="//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment']]">
 				<xsl:variable name="attachment_path" select="*[local-name() = 'uri'][@type = 'attachment']"/>
+				<xsl:variable name="attachment_name" select="java:org.metanorma.fop.Util.getFilenameFromPath($attachment_path)"/>
 				<xsl:variable name="url" select="concat('url(file:///',$basepath, $attachment_path, ')')"/>
 				<xsl:variable name="description" select="normalize-space(*[local-name() = 'formattedref'])"/>
-				<pdf:embedded-file src="{$url}" filename="{$attachment_path}">
+				<!-- Todo: need update -->
+			<xsl:variable name="afrelationship" select="normalize-space(.//*[local-name() = 'span'][@class = 'pdf-AFRelationship'])"/>
+				<pdf:embedded-file src="{$url}" filename="{$attachment_name}" link-as-file-annotation="true">
 					<xsl:if test="$description != ''">
 						<xsl:attribute name="description"><xsl:value-of select="$description"/></xsl:attribute>
 					</xsl:if>
+					<xsl:if test="$afrelationship != ''">
+					<xsl:attribute name="afrelationship"><xsl:value-of select="$afrelationship"/></xsl:attribute>
+				</xsl:if>
 				</pdf:embedded-file>
 			</xsl:for-each>
 		</xsl:if>
