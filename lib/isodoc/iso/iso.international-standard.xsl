@@ -1438,6 +1438,7 @@
 
 	<xsl:template name="insertCoverPage">
 		<xsl:if test="$isGenerateTableIF = 'false'"> <!-- no need cover page for auto-layout algorithm -->
+			<xsl:variable name="fo_cover_page">
 			<!-- cover page -->
 			<xsl:choose>
 				<xsl:when test="$layoutVersion = '1951'">
@@ -1752,7 +1753,7 @@
 										<!-- International 
 										Standard -->
 										<fo:table-cell number-columns-spanned="2" padding-left="6mm">
-											<fo:block-container height="46mm">
+											<fo:block-container height="46mm" role="SKIP">
 												<fo:block font-size="20pt" font-weight="bold" line-height="1.25" margin-top="3mm">
 
 													<xsl:variable name="updates-document-type" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:updates-document-type"/>
@@ -1816,8 +1817,7 @@
 
 									<fo:table-row height="46mm">
 										<fo:table-cell number-columns-spanned="2" border-right="{$cover_page_border}">
-											<fo:block>
-												</fo:block>
+											<fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block>
 										</fo:table-cell>
 										<fo:table-cell number-columns-spanned="2" display-align="after" padding-left="6mm">
 											<fo:block font-size="19pt" font-weight="bold" line-height="1">
@@ -1830,12 +1830,12 @@
 									</fo:table-row>
 
 									<fo:table-row height="1.4mm" font-size="0pt">
-										<fo:table-cell border-bottom="{$cover_page_border}"><fo:block> </fo:block></fo:table-cell>
-										<fo:table-cell number-columns-spanned="2"><fo:block> </fo:block></fo:table-cell>
-										<fo:table-cell border-bottom="{$cover_page_border}"><fo:block> </fo:block></fo:table-cell>
+										<fo:table-cell border-bottom="{$cover_page_border}"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
+										<fo:table-cell number-columns-spanned="2"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
+										<fo:table-cell border-bottom="{$cover_page_border}"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
 									</fo:table-row>
 									<fo:table-row height="1.4mm" font-size="0pt">
-										<fo:table-cell number-columns-spanned="4"><fo:block> </fo:block></fo:table-cell>
+										<fo:table-cell number-columns-spanned="4"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
 									</fo:table-row>
 
 									<fo:table-row>
@@ -1870,7 +1870,7 @@
 											</fo:block-container>
 										</fo:table-cell>
 										<fo:table-cell number-columns-spanned="2" padding-left="6mm">
-											<fo:block margin-top="2.5mm" line-height="1.1">
+											<fo:block margin-top="2.5mm" line-height="1.1" role="SKIP">
 
 												<xsl:if test="not($stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM')">
 													<xsl:variable name="edition_and_date">
@@ -2509,7 +2509,7 @@
 										</fo:block>
 									</fo:block-container>
 								</fo:flow>
-						</xsl:otherwise>
+							</xsl:otherwise>
 						</xsl:choose>
 
 					</fo:page-sequence>
@@ -2709,7 +2709,11 @@
 					</fo:page-sequence>
 				</xsl:otherwise>
 			</xsl:choose>
-		</xsl:if> <!-- $isGenerateTableIF = ' false' -->
+			</xsl:variable>
+
+			<xsl:apply-templates select="xalan:nodeset($fo_cover_page)" mode="set_table_role_skip"/>
+
+		</xsl:if> <!-- $isGenerateTableIF = 'false' -->
 	</xsl:template> <!-- END insertCoverPage -->
 
 	<xsl:template match="iso:preface/iso:introduction" mode="update_xml_step1" priority="3">
@@ -4833,6 +4837,7 @@
 	<xsl:template name="insertLastPage_2024">
 		<fo:page-sequence master-reference="last-page_2024" force-page-count="no-force">
 			<fo:flow flow-name="xsl-region-body">
+				<xsl:variable name="fo_last_page">
 				<fo:table table-layout="fixed" width="100%" margin-bottom="-1mm">
 					<xsl:call-template name="insertInterFont"/>
 					<fo:table-column column-width="proportional-column-width(73)"/>
@@ -4846,15 +4851,15 @@
 									<xsl:call-template name="insertLogoImages2024"/>
 								</fo:block>
 							</fo:table-cell>
-							<fo:table-cell number-columns-spanned="2"><fo:block> </fo:block></fo:table-cell>
+							<fo:table-cell number-columns-spanned="2"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="1.4mm" font-size="0pt">
-							<fo:table-cell border-bottom="{$cover_page_border}"><fo:block> </fo:block></fo:table-cell>
-							<fo:table-cell number-columns-spanned="2"><fo:block> </fo:block></fo:table-cell>
-							<fo:table-cell border-bottom="{$cover_page_border}"><fo:block> </fo:block></fo:table-cell>
+							<fo:table-cell border-bottom="{$cover_page_border}"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
+							<fo:table-cell number-columns-spanned="2"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
+							<fo:table-cell border-bottom="{$cover_page_border}"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="2mm" font-size="0pt">
-							<fo:table-cell number-columns-spanned="4"><fo:block> </fo:block></fo:table-cell>
+							<fo:table-cell number-columns-spanned="4"><fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block></fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="182mm"> <!-- 174 -->
 							<fo:table-cell number-columns-spanned="2" display-align="after" border-right="{$cover_page_border}">
@@ -4890,6 +4895,8 @@
 						</fo:table-row>
 					</fo:table-body>
 				</fo:table>
+				</xsl:variable>
+				<xsl:apply-templates select="xalan:nodeset($fo_last_page)" mode="set_table_role_skip"/>
 			</fo:flow>
 		</fo:page-sequence>
 	</xsl:template> <!-- END: insertLastPage_2024 -->
@@ -5080,7 +5087,7 @@
 	</xsl:template>
 
 	<xsl:template name="insertLastBlock">
-		<fo:block id="lastBlock" font-size="1pt" keep-with-previous="always" role="SKIP"> </fo:block>
+		<fo:block id="lastBlock" font-size="1pt" keep-with-previous="always" role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block>
 	</xsl:template>
 
 			<xsl:strip-space elements="iso:xref"/>
@@ -8596,6 +8603,7 @@
 
 			<fo:block role="SKIP">
 				<xsl:apply-templates/>
+				<xsl:if test="$isGenerateTableIF = 'false' and count(node()) = 0"> </xsl:if>
 			</fo:block>
 		</fo:table-cell>
 	</xsl:template> <!-- cell in table header row - 'th' -->
@@ -8658,6 +8666,8 @@
 				<xsl:apply-templates/>
 
 				<xsl:if test="$isGenerateTableIF = 'true'"> <fo:inline id="{@id}_end">end</fo:inline></xsl:if> <!-- to determine width of text --> <!-- <xsl:value-of select="$hair_space"/> -->
+
+				<xsl:if test="$isGenerateTableIF = 'false' and count(node()) = 0"> </xsl:if>
 
 			</fo:block>
 		</fo:table-cell>
@@ -11612,6 +11622,9 @@
 					<xsl:call-template name="insert_basic_link">
 						<xsl:with-param name="element">
 							<fo:basic-link external-destination="{$target}" fox:alt-text="{$target}">
+								<xsl:if test="$isLinkToEmbeddedFile = 'true'">
+									<xsl:attribute name="role">Annot</xsl:attribute>
+								</xsl:if>
 								<xsl:choose>
 									<xsl:when test="normalize-space(.) = ''">
 										<xsl:call-template name="add-zero-spaces-link-java">
@@ -17367,6 +17380,12 @@
 	<!-- Get or calculate depth of the element -->
 	<xsl:template name="getLevel">
 		<xsl:param name="depth"/>
+		<!-- <xsl:message>
+			<xsl:choose>
+				<xsl:when test="local-name() = 'title'">title=<xsl:value-of select="."/></xsl:when>
+				<xsl:when test="local-name() = 'clause'">clause/title=<xsl:value-of select="*[local-name() = 'title']"/></xsl:when>
+			</xsl:choose>
+		</xsl:message> -->
 		<xsl:choose>
 			<xsl:when test="normalize-space(@depth) != ''">
 				<xsl:value-of select="@depth"/>
@@ -17387,14 +17406,44 @@
 						<xsl:when test="ancestor::*[local-name() = 'preface']">
 							<xsl:value-of select="$level_total - 2"/>
 						</xsl:when>
+						<xsl:when test="ancestor::*[local-name() = 'sections'] and self::*[local-name() = 'title']">
+							<xsl:variable name="upper_clause_depth" select="normalize-space(ancestor::*[local-name() = 'clause'][2]/*[local-name() = 'title']/@depth)"/>
+							<xsl:choose>
+								<xsl:when test="string(number($upper_clause_depth)) != 'NaN'">
+									<xsl:value-of select="number($upper_clause_depth + 1)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$level_total - 2"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:when>
 						<xsl:when test="ancestor::*[local-name() = 'sections']">
-							<xsl:value-of select="$level_total - 1"/>
+							<xsl:variable name="upper_clause_depth" select="normalize-space(ancestor::*[local-name() = 'clause'][1]/*[local-name() = 'title']/@depth)"/>
+							<xsl:choose>
+								<xsl:when test="string(number($upper_clause_depth)) != 'NaN'">
+									<xsl:value-of select="number($upper_clause_depth + 1)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$level_total - 1"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:when>
 						<xsl:when test="ancestor::*[local-name() = 'bibliography']">
 							<xsl:value-of select="$level_total - 1"/>
 						</xsl:when>
 						<xsl:when test="parent::*[local-name() = 'annex']">
 							<xsl:value-of select="$level_total - 1"/>
+						</xsl:when>
+						<xsl:when test="ancestor::*[local-name() = 'annex'] and self::*[local-name() = 'title']">
+							<xsl:variable name="upper_clause_depth" select="normalize-space(ancestor::*[local-name() = 'clause'][2]/*[local-name() = 'title']/@depth)"/>
+							<xsl:choose>
+								<xsl:when test="string(number($upper_clause_depth)) != 'NaN'">
+									<xsl:value-of select="number($upper_clause_depth + 1)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$level_total - 1"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:when>
 						<xsl:when test="ancestor::*[local-name() = 'annex']">
 							<xsl:value-of select="$level_total"/>
@@ -18053,6 +18102,20 @@
 				<xsl:text>&gt;</xsl:text>
 			</fo:block>
 		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="@*|node()" mode="set_table_role_skip">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" mode="set_table_role_skip"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[starts-with(local-name(), 'table')]" mode="set_table_role_skip">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="set_table_role_skip"/>
+			<xsl:attribute name="role">SKIP</xsl:attribute>
+			<xsl:apply-templates select="node()" mode="set_table_role_skip"/>
+		</xsl:copy>
 	</xsl:template>
 
 </xsl:stylesheet>
