@@ -69,82 +69,82 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <bibdata>
-           <ext>
-             <doctype language="">amendment</doctype>
-             <doctype language="en">Amendment</doctype>
-           </ext>
-         </bibdata>
+          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata>
+            <ext>
+              <doctype language="">amendment</doctype>
+              <doctype language="en">Amendment</doctype>
+            </ext>
+          </bibdata>
 
-         <preface>
-           <foreword displayorder="1">
-             <p>
-               <xref target="N">Clause 1, Note</xref>
-               <xref target="note1">2.1, Note  1</xref>
-               <xref target="note2">2.1, Note  2</xref>
-               <xref target="AN">Clause A.1, Note</xref>
-               <xref target="Anote1">Clause A.2, Note  1</xref>
-               <xref target="Anote2">Clause A.2, Note  2</xref>
-             </p>
-           </foreword>
-         </preface>
-         <sections>
-           <clause id="scope" displayorder="2">
-             <title depth="1">Scope</title>
-             <note id="N">
-               <name>NOTE</name>
-               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-             </note>
-             <p>
-               <xref target="N">Note</xref>
-             </p>
-           </clause>
-           <terms id="terms"/>
-           <clause id="widgets" displayorder="3">
-             <title depth="1">Widgets</title>
-             <clause id="widgets1" inline-header="true">
-               <note id="note1">
-                 <name>NOTE  1</name>
-                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-               </note>
-               <note id="note2">
-                 <name>NOTE  2</name>
-                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
-               </note>
-               <p>
-                 <xref target="note1">Note  1</xref>
-                 <xref target="note2">Note  2</xref>
-               </p>
-             </clause>
-           </clause>
-         </sections>
-         <annex id="annex1" displayorder="4">
-           <title>
-             <strong>Annex A</strong>
-             <br/>
-             <span class="obligation">(informative)</span>
-           </title>
-           <clause id="annex1a" inline-header="true">
-             <title>A.1</title>
-             <note id="AN">
-               <name>NOTE</name>
-               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-             </note>
-           </clause>
-           <clause id="annex1b" inline-header="true">
-             <title>A.2</title>
-             <note id="Anote1">
-               <name>NOTE  1</name>
-               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-             </note>
-             <note id="Anote2">
-               <name>NOTE  2</name>
-               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
-             </note>
-           </clause>
-         </annex>
-       </iso-standard>
+          <preface>
+            <foreword displayorder="1">
+              <p>
+                <xref target="N">Clause 1, Note</xref>
+                <xref target="note1">2.1, Note  1</xref>
+                <xref target="note2">2.1, Note  2</xref>
+                <xref target="AN">Clause A.1, Note</xref>
+                <xref target="Anote1">Clause A.2, Note  1</xref>
+                <xref target="Anote2">Clause A.2, Note  2</xref>
+              </p>
+            </foreword>
+          </preface>
+          <sections>
+            <clause id="scope" displayorder="2">
+              <title depth="1">Scope</title>
+              <note id="N">
+                <name>NOTE</name>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+              <p>
+                <xref target="N">Note</xref>
+              </p>
+            </clause>
+            <terms id="terms"/>
+            <clause id="widgets" displayorder="3">
+              <title depth="1">Widgets</title>
+              <clause id="widgets1" inline-header="true">
+                <note id="note1">
+                  <name>NOTE  1</name>
+                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+                </note>
+                <note id="note2">
+                  <name>NOTE  2</name>
+                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+                </note>
+                <p>
+                  <xref target="note1">Note  1</xref>
+                  <xref target="note2">Note  2</xref>
+                </p>
+              </clause>
+            </clause>
+          </sections>
+          <annex id="annex1" displayorder="4">
+            <title>
+              <strong>Annex A</strong>
+              <br/>
+              <span class="obligation">(informative)</span>
+            </title>
+            <clause id="annex1a" inline-header="true">
+              <title>A.1</title>
+              <note id="AN">
+                <name>NOTE</name>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+            </clause>
+            <clause id="annex1b" inline-header="true">
+              <title>A.2</title>
+              <note id="Anote1">
+                <name>NOTE  1</name>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+              <note id="Anote2">
+                <name>NOTE  2</name>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+              </note>
+            </clause>
+          </annex>
+        </iso-standard>
       OUTPUT
   end
 
@@ -230,75 +230,75 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <bibdata>
-           <ext>
-             <doctype language="">amendment</doctype>
-             <doctype language="en">Amendment</doctype>
-           </ext>
-         </bibdata>
+         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata>
+            <ext>
+              <doctype language="">amendment</doctype>
+              <doctype language="en">Amendment</doctype>
+            </ext>
+          </bibdata>
 
-         <preface>
-           <foreword obligation="informative" displayorder="1">
-             <title>Foreword</title>
-             <p id="A">This is a preamble
+          <preface>
+            <foreword obligation="informative" displayorder="1">
+              <title>Foreword</title>
+              <p id="A">This is a preamble
 
-               <xref target="C"><span class="citesec">0.1</span></xref><xref target="C1"><span class="citesec">0.2</span></xref><xref target="D"><span class="citesec">Clause 1</span></xref><xref target="H">[H]</xref><xref target="I">[I]</xref><xref target="J">[J]</xref><xref target="K">[K]</xref><xref target="L">[L]</xref><xref target="M"><span class="citesec">Clause 2</span></xref><xref target="N"><span class="citesec">2.1</span></xref><xref target="O"><span class="citesec">2.2</span></xref><xref target="P"><span class="citeapp">Annex A</span></xref><xref target="Q"><span class="citeapp">Clause A.1</span></xref><xref target="Q1"><span class="citeapp">A.1.1</span></xref><xref target="Q2"><span class="citeapp">Annex A, Appendix 1</span></xref><xref target="R"><span class="citesec">Normative References</span></xref></p>
-           </foreword>
-           <introduction id="B" obligation="informative" displayorder="2">
-             <title depth="1">Introduction</title>
-             <clause id="C" inline-header="false" obligation="informative">
-               <title depth="2">Introduction Subsection</title>
-             </clause>
-             <clause id="C1" inline-header="true" obligation="informative">Text</clause>
-           </introduction>
-         </preface>
-         <sections>
-           <clause id="D" obligation="normative" type="scope" displayorder="3">
-             <title depth="1">Scope</title>
-             <p id="E">Text</p>
-           </clause>
-           <clause id="M" inline-header="false" obligation="normative" displayorder="4">
-             <title depth="1">Clause 4</title>
-             <clause id="N" inline-header="false" obligation="normative">
-               <title depth="2">Introduction</title>
-             </clause>
-             <clause id="O" inline-header="false" obligation="normative">
-               <title depth="2">Clause 4.2</title>
-             </clause>
-           </clause>
-         </sections>
-         <annex id="P" inline-header="false" obligation="normative" displayorder="5">
-           <title>
-             <strong>Annex A</strong>
-             <br/>
-             <span class="obligation">(normative)</span>
-             <br/>
-             <br/>
-             <strong>Annex</strong>
-           </title>
-           <clause id="Q" inline-header="false" obligation="normative">
-             <title depth="2">A.1<tab/>Annex A.1</title>
-             <clause id="Q1" inline-header="false" obligation="normative">
-               <title depth="3">A.1.1<tab/>Annex A.1a</title>
-             </clause>
-           </clause>
-           <appendix id="Q2" inline-header="false" obligation="normative">
-             <title depth="2">Appendix 1<tab/>An Appendix</title>
-           </appendix>
-         </annex>
-         <bibliography>
-           <references id="R" normative="true" obligation="informative" displayorder="6">
-             <title depth="1">Normative References</title>
-           </references>
-           <clause id="S" obligation="informative" displayorder="7">
-             <title depth="1">Bibliography</title>
-             <references id="T" normative="false" obligation="informative">
-               <title depth="2">Bibliography Subsection</title>
-             </references>
-           </clause>
-         </bibliography>
-       </iso-standard>
+                <xref target="C"><span class="citesec">0.1</span></xref><xref target="C1"><span class="citesec">0.2</span></xref><xref target="D"><span class="citesec">Clause 1</span></xref><xref target="H">[H]</xref><xref target="I">[I]</xref><xref target="J">[J]</xref><xref target="K">[K]</xref><xref target="L">[L]</xref><xref target="M"><span class="citesec">Clause 2</span></xref><xref target="N"><span class="citesec">2.1</span></xref><xref target="O"><span class="citesec">2.2</span></xref><xref target="P"><span class="citeapp">Annex A</span></xref><xref target="Q"><span class="citeapp">Clause A.1</span></xref><xref target="Q1"><span class="citeapp">A.1.1</span></xref><xref target="Q2"><span class="citeapp">Annex A, Appendix 1</span></xref><xref target="R"><span class="citesec">Normative References</span></xref></p>
+            </foreword>
+            <introduction id="B" obligation="informative" displayorder="2">
+              <title depth="1">Introduction</title>
+              <clause id="C" inline-header="false" obligation="informative">
+                <title depth="2">Introduction Subsection</title>
+              </clause>
+              <clause id="C1" inline-header="true" obligation="informative">Text</clause>
+            </introduction>
+          </preface>
+          <sections>
+            <clause id="D" obligation="normative" type="scope" displayorder="3">
+              <title depth="1">Scope</title>
+              <p id="E">Text</p>
+            </clause>
+            <clause id="M" inline-header="false" obligation="normative" displayorder="4">
+              <title depth="1">Clause 4</title>
+              <clause id="N" inline-header="false" obligation="normative">
+                <title depth="2">Introduction</title>
+              </clause>
+              <clause id="O" inline-header="false" obligation="normative">
+                <title depth="2">Clause 4.2</title>
+              </clause>
+            </clause>
+          </sections>
+          <annex id="P" inline-header="false" obligation="normative" displayorder="5">
+            <title>
+              <strong>Annex A</strong>
+              <br/>
+              <span class="obligation">(normative)</span>
+              <br/>
+              <br/>
+              <strong>Annex</strong>
+            </title>
+            <clause id="Q" inline-header="false" obligation="normative">
+              <title depth="2">A.1<tab/>Annex A.1</title>
+              <clause id="Q1" inline-header="false" obligation="normative">
+                <title depth="3">A.1.1<tab/>Annex A.1a</title>
+              </clause>
+            </clause>
+            <appendix id="Q2" inline-header="false" obligation="normative">
+              <title depth="2">Appendix 1<tab/>An Appendix</title>
+            </appendix>
+          </annex>
+          <bibliography>
+            <references id="R" normative="true" obligation="informative" displayorder="6">
+              <title depth="1">Normative References</title>
+            </references>
+            <clause id="S" obligation="informative" displayorder="7">
+              <title depth="1">Bibliography</title>
+              <references id="T" normative="false" obligation="informative">
+                <title depth="2">Bibliography Subsection</title>
+              </references>
+            </clause>
+          </bibliography>
+        </iso-standard>
       OUTPUT
   end
 
@@ -623,7 +623,7 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to Xml::C14n.format(html)
   end
 
-  it "processes IsoXML metadata" do
+  it "processes IsoXML metadata for amendment" do
     c = IsoDoc::Iso::HtmlConvert.new({})
     _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -769,7 +769,7 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to output
   end
 
-  it "processes IsoXML metadata in French" do
+  it "processes IsoXML metadata for amendment in French" do
     c = IsoDoc::Iso::HtmlConvert.new({})
     _ = c.convert_init(<<~INPUT, "test", false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -921,6 +921,152 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to output
   end
 
+  it "processes IsoXML metadata for addendum" do
+    c = IsoDoc::Iso::HtmlConvert.new({})
+    _ = c.convert_init(<<~INPUT, "test", false)
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+    INPUT
+    input = <<~INPUT
+      <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+        <bibdata type="standard">
+          <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part  — Mass fraction of
+                   extraneous matter, milled rice (nonglutinous), sample dividers and
+                   recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="en" type="title-intro">Introduction</title>
+          <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
+          <title format="text/plain" language="en" type="title-part">Title Part</title>
+          <title format="text/plain" language="en" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction
+              massique de matière étrangère, riz usiné (non gluant), diviseurs
+              d’échantillon et recommandations relatives aux conditions d’entreposage et
+              de transport
+            </title>
+          <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
+          <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
+          <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
+          <title format="text/plain" language="fr" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+          <docidentifier type="ISO">ISO/PreNWIP3 17301-1:2016/Add.1</docidentifier>
+          <docidentifier type="iso-with-lang">ISO/PreNWIP3 17301-1:2016/Add.1(E)</docidentifier>
+          <docidentifier type="iso-reference">ISO/PreNWIP3 17301-1:2016/Add.1:2017(E)</docidentifier>
+          <docnumber>17301</docnumber>
+          <date type="created">
+            <on>2016-05-01</on>
+          </date>
+          <contributor>
+            <role type="author"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <edition>2</edition>
+          <version>
+            <revision-date>2000-01-01</revision-date>
+            <draft>0.3.4</draft>
+          </version>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+            <stage abbreviation="NWIP">10</stage>
+            <substage>20</substage>
+            <iteration>3</iteration>
+          </status>
+          <copyright>
+            <from>2017</from>
+            <owner>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </owner>
+          </copyright>
+          <ext>
+            <doctype>addendum</doctype>
+            <editorialgroup>
+              <technical-committee number="1" type="A">TC</technical-committee>
+              <technical-committee number="11" type="A1">TC1</technical-committee>
+              <subcommittee number="2" type="B">SC</subcommittee>
+              <subcommittee number="21" type="B1">SC1</subcommittee>
+              <workgroup number="3" type="C">WG</workgroup>
+              <workgroup number="31" type="C1">WG1</workgroup>
+              <secretariat>SECRETARIAT</secretariat>
+            </editorialgroup>
+            <ics>
+              <code>1</code>
+            </ics>
+            <ics>
+              <code>2</code>
+            </ics>
+            <ics>
+              <code>3</code>
+            </ics>
+            <structuredidentifier>
+              <project-number addendum="1" corrigendum="2" origyr="2016-05-01" part="1">17301</project-number>
+            </structuredidentifier>
+            <stagename>New work item proposal</stagename>
+            <updates-document-type>international-standard</updates-document-type>
+          </ext>
+        </bibdata>
+        <sections/>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      {:agency=>"ISO",
+      :createddate=>"2016-05-01",
+      :docnumber=>"ISO/PreNWIP3 17301-1:2016/Add.1",
+      :docnumber_lang=>"ISO/PreNWIP3 17301-1:2016/Add.1(E)",
+      :docnumber_reference=>"ISO/PreNWIP3 17301-1:2016/Add.1:2017(E)",
+      :docnumeric=>"17301",
+      :docsubtitle=>"Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1: Part du Titre",
+      :docsubtitleadd=>"Fraction massique de mati&#xe8;re &#xe9;trang&#xe8;re, riz usin&#xe9; (non gluant), diviseurs d&#x2019;&#xe9;chantillon et recommandations relatives aux conditions d&#x2019;entreposage et de transport",
+      :docsubtitleaddlabel=>"ADDITIF&#xa0;1",
+      :docsubtitlecorrlabel=>"RECTIFICATIF TECHNIQUE&#xa0;2",
+      :docsubtitleintro=>"Introduction Fran&#xe7;aise",
+      :docsubtitlemain=>"Titre Principal",
+      :docsubtitlepart=>"Part du Titre",
+      :docsubtitlepartlabel=>"Partie&#xa0;1",
+      :doctitle=>"Introduction&#xa0;&#x2014; Main Title&#x2009;&#x2014;&#x2009;Title&#xa0;&#x2014; Part&#xa0;1: Title Part",
+      :doctitleadd=>"Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions",
+      :doctitleaddlabel=>"ADDENDUM&#xa0;1",
+      :doctitlecorrlabel=>"TECHNICAL CORRIGENDUM&#xa0;2",
+      :doctitleintro=>"Introduction",
+      :doctitlemain=>"Main Title&#x2009;&#x2014;&#x2009;Title",
+      :doctitlepart=>"Title Part",
+      :doctitlepartlabel=>"Part&#xa0;1",
+      :doctype=>"Addendum",
+      :doctype_display=>"Addendum",
+      :docyear=>"2017",
+      :draft=>"0.3.4",
+      :draftinfo=>" (draft 0.3.4, 2000-01-01)",
+      :edition=>"2",
+      :ics=>"1, 2, 3",
+      :lang=>"en",
+      :publisher=>"International Organization for Standardization",
+      :revdate=>"2000-01-01",
+      :revdate_monthyear=>"January 2000",
+      :sc=>"B 2",
+      :script=>"Latn",
+      :secretariat=>"SECRETARIAT",
+      :stage=>"10",
+      :stage_int=>10,
+      :stageabbr=>"NWIP",
+      :statusabbr=>"PreNWIP3",
+      :substage_int=>"20",
+      :tc=>"A 1",
+      :unpublished=>true,
+      :wg=>"C 3"}
+    OUTPUT
+    expect(metadata(c.info(Nokogiri::XML(input), nil)))
+      .to be_equivalent_to output
+  end
+
   it "processes middle title" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -944,34 +1090,34 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~PRESXML
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <bibdata>
-           <title format="text/plain" language="en" type="title-intro">Introduction</title>
-           <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
-           <title format="text/plain" language="en" type="title-part">Title Part</title>
-           <title format="text/plain" language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
-           <ext>
-             <structuredidentifier>
-               <project-number amendment="1" corrigendum="2" origyr="2016-05-01" part="1">17301</project-number>
-             </structuredidentifier>
-           </ext>
-         </bibdata>
-         <preface>
-           <clause type="toc" id="_" displayorder="1">
-             <title depth="1">Contents</title>
-           </clause>
-         </preface>
-         <sections>
-           <p class="zzSTDTitle1" displayorder="2">
-             <span class="boldtitle">Introduction — Main Title — Title — </span>
-             <span class="nonboldtitle">Part 1:</span>
-             <span class="boldtitle">Title Part</span>
-           </p>
-           <p class="zzSTDTitle2" displayorder="3">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p>
-           <p class="zzSTDTitle2" displayorder="4">TECHNICAL CORRIGENDUM 2</p>
-           <clause displayorder="5"/>
-         </sections>
-       </iso-standard>
+          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <bibdata>
+          <title format="text/plain" language="en" type="title-intro">Introduction</title>
+          <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
+          <title format="text/plain" language="en" type="title-part">Title Part</title>
+          <title format="text/plain" language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <ext>
+            <structuredidentifier>
+              <project-number amendment="1" corrigendum="2" origyr="2016-05-01" part="1">17301</project-number>
+            </structuredidentifier>
+          </ext>
+        </bibdata>
+        <preface>
+          <clause type="toc" id="_" displayorder="1">
+            <title depth="1">Contents</title>
+          </clause>
+        </preface>
+        <sections>
+          <p class="zzSTDTitle1" displayorder="2">
+            <span class="boldtitle">Introduction — Main Title — Title — </span>
+            <span class="nonboldtitle">Part 1:</span>
+            <span class="boldtitle">Title Part</span>
+          </p>
+          <p class="zzSTDTitle2" displayorder="3">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p>
+          <p class="zzSTDTitle2" displayorder="4">TECHNICAL CORRIGENDUM 2</p>
+          <clause displayorder="5"/>
+        </sections>
+      </iso-standard>
     PRESXML
     html = <<~OUTPUT
       #{HTML_HDR}

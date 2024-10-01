@@ -40,6 +40,9 @@
 {% if doctitleamdlabel %}
 <div class="doctitle-part">{{ doctitleamdlabel }}{% if doctitleamd %}: {{ doctitleamd }}{% endif %}</div>
 {% endif %}
+{% if doctitleaddlabel %}
+<div class="doctitle-part">{{ doctitleaddlabel }}{% if doctitleadd %}: {{ doctitleadd }}{% endif %}</div>
+{% endif %}
 {% if doctitlecorrlabel %}
 <div class="doctitle-part">{{ doctitlecorrlabel }}</div>
 {% endif %}
@@ -54,6 +57,9 @@
 </div>
 {% if docsubtitleamdlabel %}
 <div>{{ docsubtitleamdlabel }}{% if docsubtitleamd %}: {{ docsubtitleamd }}{% endif %}</div>
+{% endif %}
+{% if docsubtitleaddlabel %}
+<div>{{ docsubtitleaddlabel }}{% if docsubtitleadd %}: {{ docsubtitleadd }}{% endif %}</div>
 {% endif %}
 {% if docsubtitlecorrlabel %}
 <div>{{ docsubtitlecorrlabel }}</div>
