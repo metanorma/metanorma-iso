@@ -8782,8 +8782,10 @@
 
 				<xsl:call-template name="insert_basic_link">
 					<xsl:with-param name="element">
-						<fo:basic-link internal-destination="{$ref_id}" fox:alt-text="footnote {$current_fn_number}" role="Lbl">
-							<xsl:copy-of select="$current_fn_number_text"/>
+						<fo:basic-link internal-destination="{$ref_id}" fox:alt-text="footnote {$current_fn_number}"> <!-- note: role="Lbl" removed in https://github.com/metanorma/mn2pdf/issues/291 -->
+							<fo:inline role="Lbl"> <!-- need for https://github.com/metanorma/metanorma-iso/issues/1003 -->
+								<xsl:copy-of select="$current_fn_number_text"/>
+							</fo:inline>
 						</fo:basic-link>
 					</xsl:with-param>
 				</xsl:call-template>
@@ -9064,7 +9066,7 @@
 
 			<xsl:call-template name="refine_fn-reference-style"/>
 
-			<fo:basic-link internal-destination="{@reference}_{ancestor::*[@id][1]/@id}" fox:alt-text="{@reference}"> <!-- @reference   | ancestor::*[local-name()='clause'][1]/@id-->
+			<fo:basic-link internal-destination="{@reference}_{ancestor::*[@id][1]/@id}" fox:alt-text="footnote {@reference}"> <!-- @reference   | ancestor::*[local-name()='clause'][1]/@id-->
 				<xsl:if test="ancestor::*[local-name()='table'][1]/@id"> <!-- for footnotes in tables -->
 					<xsl:attribute name="internal-destination">
 						<xsl:value-of select="concat(@reference, '_', ancestor::*[local-name()='table'][1]/@id)"/>
@@ -11619,9 +11621,12 @@
 					<xsl:apply-templates/>
 				</xsl:when>
 				<xsl:otherwise>
+					<xsl:variable name="alt_text">
+						<xsl:call-template name="getAltText"/>
+					</xsl:variable>
 					<xsl:call-template name="insert_basic_link">
 						<xsl:with-param name="element">
-							<fo:basic-link external-destination="{$target}" fox:alt-text="{$target}">
+							<fo:basic-link external-destination="{$target}" fox:alt-text="{$alt_text}">
 								<xsl:if test="$isLinkToEmbeddedFile = 'true'">
 									<xsl:attribute name="role">Annot</xsl:attribute>
 								</xsl:if>
@@ -11647,6 +11652,14 @@
 			</xsl:choose>
 		</fo:inline>
 	</xsl:template> <!-- link -->
+
+	<xsl:template name="getAltText">
+		<xsl:choose>
+			<xsl:when test="normalize-space(.) = ''"><xsl:value-of select="@target"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="normalize-space(translate(normalize-space(), ' —', ' -'))"/></xsl:otherwise>
+			<!-- <xsl:otherwise><xsl:value-of select="@target"/></xsl:otherwise> -->
+		</xsl:choose>
+	</xsl:template>
 
 	<!-- ======================== -->
 	<!-- Appendix processing -->
@@ -11678,7 +11691,7 @@
 	<xsl:template match="*[local-name() = 'callout']">
 		<xsl:choose>
 			<xsl:when test="normalize-space(@target) = ''">&lt;<xsl:apply-templates/>&gt;</xsl:when>
-			<xsl:otherwise><fo:basic-link internal-destination="{@target}" fox:alt-text="{@target}">&lt;<xsl:apply-templates/>&gt;</fo:basic-link></xsl:otherwise>
+			<xsl:otherwise><fo:basic-link internal-destination="{@target}" fox:alt-text="{normalize-space()}">&lt;<xsl:apply-templates/>&gt;</fo:basic-link></xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 
@@ -11707,7 +11720,10 @@
 	<xsl:template match="*[local-name() = 'xref']">
 		<xsl:call-template name="insert_basic_link">
 			<xsl:with-param name="element">
-				<fo:basic-link internal-destination="{@target}" fox:alt-text="{@target}" xsl:use-attribute-sets="xref-style">
+				<xsl:variable name="alt_text">
+					<xsl:call-template name="getAltText"/>
+				</xsl:variable>
+				<fo:basic-link internal-destination="{@target}" fox:alt-text="{$alt_text}" xsl:use-attribute-sets="xref-style">
 					<xsl:if test="string-length(normalize-space()) &lt; 30 and not(contains(normalize-space(), 'http://')) and not(contains(normalize-space(), 'https://')) and not(ancestor::*[local-name() = 'table' or local-name() = 'dl'])">
 						<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
 					</xsl:if>
