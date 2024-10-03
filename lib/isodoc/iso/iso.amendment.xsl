@@ -17423,10 +17423,31 @@
 							<xsl:value-of select="$level_total - 2"/>
 						</xsl:when>
 						<xsl:when test="ancestor::*[local-name() = 'sections'] and self::*[local-name() = 'title']">
-							<xsl:variable name="upper_clause_depth" select="normalize-space(ancestor::*[local-name() = 'clause'][2]/*[local-name() = 'title']/@depth)"/>
+							<!-- determine 'depth' depends on upper clause with title/@depth -->
+							<!-- <xsl:message>title=<xsl:value-of select="."/></xsl:message> -->
+							<xsl:variable name="clause_with_depth_depth" select="ancestor::*[local-name() = 'clause'][*[local-name() = 'title']/@depth][1]/*[local-name() = 'title']/@depth"/>
+							<!-- <xsl:message>clause_with_depth_depth=<xsl:value-of select="$clause_with_depth_depth"/></xsl:message> -->
+							<xsl:variable name="clause_with_depth_level" select="count(ancestor::*[local-name() = 'clause'][*[local-name() = 'title']/@depth][1]/ancestor::*)"/>
+							<!-- <xsl:message>clause_with_depth_level=<xsl:value-of select="$clause_with_depth_level"/></xsl:message> -->
+							<xsl:variable name="curr_level" select="count(ancestor::*) - 1"/>
+							<!-- <xsl:message>curr_level=<xsl:value-of select="$curr_level"/></xsl:message> -->
+							<!-- <xsl:variable name="upper_clause_depth" select="normalize-space(ancestor::*[local-name() = 'clause'][2]/*[local-name() = 'title']/@depth)"/> -->
+							<xsl:variable name="curr_clause_depth" select="number($clause_with_depth_depth) + (number($curr_level) - number($clause_with_depth_level)) "/>
+							<!-- <xsl:message>curr_clause_depth=<xsl:value-of select="$curr_clause_depth"/></xsl:message> -->
 							<xsl:choose>
-								<xsl:when test="string(number($upper_clause_depth)) != 'NaN'">
-									<xsl:value-of select="number($upper_clause_depth + 1)"/>
+								<xsl:when test="string(number($curr_clause_depth)) != 'NaN'">
+									<xsl:value-of select="number($curr_clause_depth)"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$level_total - 2"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:when>
+						<xsl:when test="ancestor::*[local-name() = 'sections'] and self::*[local-name() = 'name'] and parent::*[local-name() = 'term']">
+							<xsl:variable name="upper_terms_depth" select="normalize-space(ancestor::*[local-name() = 'terms'][1]/*[local-name() = 'title']/@depth)"/>
+							<xsl:choose>
+								<xsl:when test="string(number($upper_terms_depth)) != 'NaN'">
+									<xsl:value-of select="number($upper_terms_depth + 1)"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of select="$level_total - 2"/>
@@ -17434,7 +17455,7 @@
 							</xsl:choose>
 						</xsl:when>
 						<xsl:when test="ancestor::*[local-name() = 'sections']">
-							<xsl:variable name="upper_clause_depth" select="normalize-space(ancestor::*[local-name() = 'clause'][1]/*[local-name() = 'title']/@depth)"/>
+							<xsl:variable name="upper_clause_depth" select="normalize-space(ancestor::*[local-name() = 'clause' or local-name() = 'terms'][1]/*[local-name() = 'title']/@depth)"/>
 							<xsl:choose>
 								<xsl:when test="string(number($upper_clause_depth)) != 'NaN'">
 									<xsl:value-of select="number($upper_clause_depth + 1)"/>
