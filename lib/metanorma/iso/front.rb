@@ -71,10 +71,9 @@ module Metanorma
       end
 
       def title_intro(node, xml, lang, at)
-        return unless node.attr("title-intro-#{lang}")
-
+        t = node.attr("title-intro-#{lang}") or return
         xml.title(**attr_code(at.merge(type: "title-intro"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-intro-#{lang}"))
+          t1 << Metanorma::Utils::asciidoc_sub(t)
         end
       end
 
@@ -85,20 +84,23 @@ module Metanorma
       end
 
       def title_part(node, xml, lang, at)
-        return unless node.attr("title-part-#{lang}")
-
+        t = node.attr("title-part-#{lang}") or return
         xml.title(**attr_code(at.merge(type: "title-part"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-part-#{lang}"))
+          t1 << Metanorma::Utils::asciidoc_sub(t)
         end
       end
 
       def title_amd(node, xml, lang, at)
-        return unless node.attr("title-amendment-#{lang}")
-
+        t = node.attr("title-amendment-#{lang}") or return
         xml.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(
-            node.attr("title-amendment-#{lang}"),
-          )
+          t1 << Metanorma::Utils::asciidoc_sub(t)
+        end
+      end
+
+      def title_add(node, xml, lang, at)
+        t = node.attr("title-addendum-#{lang}") or return
+        xml.title(**attr_code(at.merge(type: "title-add"))) do |t1|
+          t1 << Metanorma::Utils::asciidoc_sub(t)
         end
       end
 
@@ -107,9 +109,11 @@ module Metanorma
         intro = node.attr("title-intro-#{lang}")
         part = node.attr("title-part-#{lang}")
         amd = node.attr("title-amendment-#{lang}")
+        add = node.attr("title-addendum-#{lang}")
         title = "#{intro} -- #{title}" if intro
         title = "#{title} -- #{part}" if part
         title = "#{title} -- #{amd}" if amd && @amd
+        title = "#{title} -- #{add}" if amd && node.attr("addendum-number")
         xml.title **attr_code(at.merge(type: "main")) do |t1|
           t1 << Metanorma::Utils::asciidoc_sub(title)
         end
@@ -123,6 +127,7 @@ module Metanorma
           title_main(node, xml, lang, at)
           title_part(node, xml, lang, at)
           title_amd(node, xml, lang, at) if @amd
+          title_add(node, xml, lang, at) if node.attr("addendum-number")
         end
       end
 

@@ -83,12 +83,12 @@ module Metanorma
 
       def document_scheme(node)
         r = node.attr("document-scheme") and return r
-        r = node.attr("copyright-year")&.to_i or return "2024"
+        r = node.attr("copyright-year")&.to_i or return DOCUMENT_SCHEMES[-1]
         DOCUMENT_SCHEMES.each_index do |i|
           i.zero? and next
           r < DOCUMENT_SCHEMES[i] and return DOCUMENT_SCHEMES[i - 1].to_s
         end
-        "2024"
+        DOCUMENT_SCHEMES[-1]
       end
 
       def outputs(node, ret)

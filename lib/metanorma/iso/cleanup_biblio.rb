@@ -1,9 +1,9 @@
 module Metanorma
   module ISO
     class Converter < Standoc::Converter
-      def id_prefix(prefix, id)
+      def id_prefix(prefix, id, amd: false)
         # we're just inheriting the prefixes from parent doc
-        @amd and return id.text
+        amd and return id.text
         prefix.join("/") + (id.text.match?(%{^/}) ? "" : " ") + id.text
       end
 
@@ -16,10 +16,12 @@ module Metanorma
       end
 
       # ISO as a prefix goes first
-      def docidentifier_cleanup(xmldoc)
-        prefix = get_id_prefix(xmldoc)
-        id = xmldoc.at("//bibdata/ext/structuredidentifier/project-number") and
-          id.content = id_prefix(prefix, id)
+      def docidentifier_cleanup(xml)
+        prefix = get_id_prefix(xml)
+        amd = @amd || xml.at("//bibdata/ext/doctype")&.text == "addendum"
+        id = xml.at("//bibdata/ext/structuredidentifier/project-number") and
+          id.content =
+            id_prefix(prefix, id, amd:)
       end
 
       def format_ref(ref, type)
