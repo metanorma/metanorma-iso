@@ -17852,7 +17852,8 @@
 			<xsl:variable name="description" select="normalize-space($bibitem_attachment/*[local-name() = 'formattedref'])"/>
 			<xsl:variable name="filename" select="java:org.metanorma.fop.Util.getFilenameFromPath(@name)"/>
 			<!-- Todo: need update -->
-			<xsl:variable name="afrelationship" select="normalize-space($bibitem_attachment//*[local-name() = 'span'][@class = 'pdf-AFRelationship'])"/>
+			<xsl:variable name="afrelationship" select="normalize-space($bibitem_attachment//*[local-name() = 'classification'][@type = 'pdf-AFRelationship'])"/>
+			<xsl:variable name="volatile" select="normalize-space($bibitem_attachment//*[local-name() = 'classification'][@type = 'pdf-volatile'])"/>
 
 			<pdf:embedded-file filename="{$filename}" link-as-file-annotation="true">
 				<xsl:attribute name="src">
@@ -17873,6 +17874,9 @@
 				<xsl:if test="$afrelationship != ''">
 					<xsl:attribute name="afrelationship"><xsl:value-of select="$afrelationship"/></xsl:attribute>
 				</xsl:if>
+				<xsl:if test="$volatile != ''">
+					<xsl:attribute name="volatile"><xsl:value-of select="$volatile"/></xsl:attribute>
+				</xsl:if>
 			</pdf:embedded-file>
 		</xsl:for-each>
 		<!-- references to external attachments (no binary-encoded within the Metanorma XML file) -->
@@ -17883,14 +17887,18 @@
 				<xsl:variable name="url" select="concat('url(file:///',$basepath, $attachment_path, ')')"/>
 				<xsl:variable name="description" select="normalize-space(*[local-name() = 'formattedref'])"/>
 				<!-- Todo: need update -->
-			<xsl:variable name="afrelationship" select="normalize-space(.//*[local-name() = 'span'][@class = 'pdf-AFRelationship'])"/>
+				<xsl:variable name="afrelationship" select="normalize-space(.//*[local-name() = 'classification'][@type = 'pdf-AFRelationship'])"/>
+				<xsl:variable name="volatile" select="normalize-space(.//*[local-name() = 'classification'][@type = 'pdf-volatile'])"/>
 				<pdf:embedded-file src="{$url}" filename="{$attachment_name}" link-as-file-annotation="true">
 					<xsl:if test="$description != ''">
 						<xsl:attribute name="description"><xsl:value-of select="$description"/></xsl:attribute>
 					</xsl:if>
 					<xsl:if test="$afrelationship != ''">
-					<xsl:attribute name="afrelationship"><xsl:value-of select="$afrelationship"/></xsl:attribute>
-				</xsl:if>
+						<xsl:attribute name="afrelationship"><xsl:value-of select="$afrelationship"/></xsl:attribute>
+					</xsl:if>
+					<xsl:if test="$volatile != ''">
+						<xsl:attribute name="volatile"><xsl:value-of select="$volatile"/></xsl:attribute>
+					</xsl:if>
 				</pdf:embedded-file>
 			</xsl:for-each>
 		</xsl:if>
