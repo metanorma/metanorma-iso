@@ -998,6 +998,11 @@
 											<fo:block font-size="12pt" font-weight="bold" role="H2" line-height="1.05" margin-top="6pt">
 												<xsl:call-template name="printAddendumTitle"/>
 											</fo:block>
+
+											<xsl:apply-templates select="/iso:iso-standard/iso:preface/iso:clause[@type = 'provenance']">
+												<xsl:with-param name="process">true</xsl:with-param>
+											</xsl:apply-templates>
+
 										</xsl:when>
 										<xsl:otherwise>
 											<xsl:for-each select="xalan:nodeset($lang_other)/lang">
@@ -1013,6 +1018,10 @@
 										</xsl:otherwise>
 									</xsl:choose>
 								</fo:block-container>
+
+								<xsl:if test="$doctype = 'addendum'">
+									<fo:block break-after="page"/>
+								</xsl:if>
 
 								<!-- ToC, Foreword, Introduction -->
 								<xsl:call-template name="processPrefaceSectionsDefault"/>
@@ -1401,6 +1410,15 @@
 		<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:project-number/@addendum"/>
 		<xsl:text> : </xsl:text>
 		<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:title[@type = 'title-add']"/>
+	</xsl:template>
+
+	<xsl:template match="iso:preface/iso:clause[@type = 'provenance']" priority="5">
+		<xsl:param name="process">false</xsl:param>
+		<xsl:if test="$process = 'true'">
+			<fo:block margin-top="30mm" role="SKIP" font-size="8pt">
+				<xsl:apply-templates/>
+			</fo:block>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="insertMainSectionsAmendmentPageSequences">
