@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::ISO do
+RSpec.describe Metanorma::Iso do
   it "processes inline_quoted formatting" do
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{ASCIIDOC_BLANK_HDR}

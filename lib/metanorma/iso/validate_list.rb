@@ -1,5 +1,5 @@
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-lists
       def listcount_validate(doc)

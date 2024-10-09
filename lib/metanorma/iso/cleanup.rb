@@ -1,7 +1,7 @@
 require_relative "cleanup_biblio"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       PRE_NORMREF_FOOTNOTES = "//preface//fn | " \
                               "//clause[@type = 'scope']//fn".freeze

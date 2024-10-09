@@ -8,7 +8,7 @@ require "metanorma/iso/validate"
 require "metanorma/iso/cleanup"
 
 module Metanorma
-  module ISO
+  module Iso
     # A {Converter} implementation that generates ISO output, and a document
     # schema encapsulation of the document for validation
     class Converter < ::Metanorma::Standoc::Converter

@@ -31,6 +31,8 @@ voting_terminates_on: Голосование заканчивается в
 corrected_version: Исправленная версия
 fast-track-procedure: Ускоренная процедура
 classification-UDC: УДК
+formerly_id: "(прежде обозначенное %)"
+was_developed_by: "%1 было разработано %2"
 website: веб-сайт
 doctype_dict:
   international-standard: Международный Стандарт

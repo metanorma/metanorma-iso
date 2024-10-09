@@ -3,7 +3,7 @@ require "nokogiri"
 require "tokenizer"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       def extract_text(node)
         node.nil? and return ""

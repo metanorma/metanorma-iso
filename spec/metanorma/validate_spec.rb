@@ -1,7 +1,7 @@
 require "spec_helper"
 require "fileutils"
 
-RSpec.describe Metanorma::ISO do
+RSpec.describe Metanorma::Iso do
   before do
     FileUtils.rm_rf("test.err.html")
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::ISO do
+RSpec.describe Metanorma::Iso do
   it "processes simple lists" do
     output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{ASCIIDOC_BLANK_HDR}

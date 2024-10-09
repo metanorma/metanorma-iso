@@ -1,7 +1,7 @@
 require "metanorma-standoc"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       REQUIREMENT_RE_STR = <<~REGEXP.freeze
         \\b

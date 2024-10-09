@@ -2,7 +2,7 @@ require "htmlentities"
 require "uri" if /^2\./.match?(RUBY_VERSION)
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       def clause_parse(attrs, xml, node)
         node.option? "appendix" and return appendix_parse(attrs, xml, node)

@@ -1,7 +1,7 @@
 require "metanorma-standoc"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       def title_lang_part(doc, part, lang)
         doc.at("//bibdata/title[@type='title-#{part}' and @language='#{lang}']")

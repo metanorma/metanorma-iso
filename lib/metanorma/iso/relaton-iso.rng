@@ -9,6 +9,7 @@
       <optional>
         <ref name="docsubtype"/>
       </optional>
+      <ref name="flavor"/>
       <optional>
         <ref name="horizontal"/>
       </optional>
