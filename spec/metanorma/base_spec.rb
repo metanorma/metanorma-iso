@@ -1678,6 +1678,7 @@ RSpec.describe Metanorma::ISO do
         :modified-adopted-from: ABC 13
         :related-directive: ABC 14
         :related-mandate: ABC 15
+        :has-draft: ABC 16
       INPUT
       output = <<~OUTPUT
         <bibdata type="standard">
@@ -1829,6 +1830,12 @@ RSpec.describe Metanorma::ISO do
               <docidentifier>ABC 15</docidentifier>
             </bibitem>
           </relation>
+          <relation type="hasDraft">
+            <bibitem>
+              <title>--</title>
+              <docidentifier>ABC 16</docidentifier>
+            </bibitem>
+           </relation>
           <ext>
             <doctype>standard</doctype>
             <editorialgroup>

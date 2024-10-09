@@ -128,7 +128,7 @@ module Metanorma
 
       def relaton_relations
         super + %w(obsoletes successor-of manifestation-of related
-                   annotation-of)
+                   annotation-of has-draft)
       end
 
       def relaton_relation_descriptions

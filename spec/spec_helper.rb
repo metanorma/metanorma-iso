@@ -24,6 +24,7 @@ require "metanorma"
 require "metanorma/iso"
 require "iev"
 require "xml-c14n"
+require "relaton_iso"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
