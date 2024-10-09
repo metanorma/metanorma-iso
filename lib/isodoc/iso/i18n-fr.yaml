@@ -31,6 +31,8 @@ voting_terminates_on: Le vote se termine le
 corrected_version: Version corrigée
 fast-track-procedure: Procédure accélérée
 classification-UDC: CDU
+formerly_id: "(précédemment %)"
+was_developed_by: "%1 a été élaboré par %2"
 website: site web
 doctype_dict:
   international-standard: Norme internationale
