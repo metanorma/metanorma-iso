@@ -1382,18 +1382,7 @@ Applies whether the resource has already been created or not, and whether it is 
   <define name="bdate">
     <a:documentation>Significant date in the lifecycle of the bibliographic item, including its production and its access</a:documentation>
     <element name="date">
-      <attribute name="type">
-        <a:documentation>The phase of the production of or access to a bibliographic item</a:documentation>
-        <choice>
-          <ref name="BibliographicDateType"/>
-          <text/>
-        </choice>
-      </attribute>
-      <optional>
-        <attribute name="text">
-          <a:documentation>An optional textual description of the date, especially when a Gregorian date is not applicable</a:documentation>
-        </attribute>
-      </optional>
+      <ref name="bDateAttributes"/>
       <optional>
         <choice>
           <group>
@@ -1415,6 +1404,20 @@ Applies whether the resource has already been created or not, and whether it is 
         </choice>
       </optional>
     </element>
+  </define>
+  <define name="bDateAttributes">
+    <attribute name="type">
+      <a:documentation>The phase of the production of or access to a bibliographic item</a:documentation>
+      <choice>
+        <ref name="BibliographicDateType"/>
+        <text/>
+      </choice>
+    </attribute>
+    <optional>
+      <attribute name="text">
+        <a:documentation>An optional textual description of the date, especially when a Gregorian date is not applicable</a:documentation>
+      </attribute>
+    </optional>
   </define>
   <define name="docidentifier">
     <a:documentation>An identifier of a bibliographic item in an international standard scheme</a:documentation>
@@ -1884,6 +1887,10 @@ Detailed in https://www.relaton.org/model/relations/</a:documentation>
       <value>hasAnnotation</value>
       <value>draftOf</value>
       <value>hasDraft</value>
+      <value>preliminaryDraftOf</value>
+      <value>hasPreliminaryDraft</value>
+      <value>revisionDraftOf</value>
+      <value>hasRevisionDraft</value>
       <value>editionOf</value>
       <value>hasEdition</value>
       <value>updates</value>

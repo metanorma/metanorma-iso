@@ -3,7 +3,6 @@ require "metanorma/processor"
 module Metanorma
   module Iso
     class Processor < Metanorma::Processor
-
       def initialize # rubocop:disable Lint/MissingSuper
         @short = :iso
         @input_format = :asciidoc
@@ -22,7 +21,7 @@ module Metanorma
       end
 
       def version
-        "Metanorma::ISO #{Metanorma::ISO::VERSION}"
+        "Metanorma::Iso #{Metanorma::Iso::VERSION}"
       end
 
       def fonts_manifest
@@ -38,12 +37,12 @@ module Metanorma
       end
 
       def use_presentation_xml(ext)
-        return true if [:html_alt, :sts, :isosts].include?(ext)
+        return true if %i[html_alt sts isosts].include?(ext)
 
         super
       end
 
-      def output(isodoc_node, inname, outname, format, options={})
+      def output(isodoc_node, inname, outname, format, options = {})
         options_preprocess(options)
         case format
         when :html
@@ -71,7 +70,6 @@ module Metanorma
           super
         end
       end
-
     end
   end
 end

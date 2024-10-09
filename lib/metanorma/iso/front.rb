@@ -8,7 +8,7 @@ require_relative "front_id"
 require_relative "front_contributor"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       def metadata_ext(node, xml)
         super
@@ -47,7 +47,7 @@ module Metanorma
         end
       end
 
-      def metadata_subdoctype(node, xml)
+      def metadata_flavor(node, xml)
         super
         a = node.attr("horizontal") and xml.horizontal a
       end

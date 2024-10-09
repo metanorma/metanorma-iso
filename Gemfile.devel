@@ -1,1 +1,1 @@
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "feature/ext-flavor"

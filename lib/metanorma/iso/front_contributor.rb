@@ -1,5 +1,5 @@
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       # def home_agency
       # "ISO"

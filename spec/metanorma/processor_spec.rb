@@ -49,6 +49,7 @@ RSpec.describe Metanorma::Iso::Processor do
     <ext>
     <doctype>directive</doctype>
     <subdoctype>vocabulary</subdoctype>
+                <flavor>iso</flavor>
     <editorialgroup>
     <technical-committee/>
     <subcommittee/>
@@ -113,7 +114,7 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "registers version against metanorma" do
-    expect(processor.version.to_s).to match(%r{^Metanorma::ISO })
+    expect(processor.version.to_s).to match(%r{^Metanorma::Iso })
   end
 
   it "generates IsoDoc XML from a blank document" do

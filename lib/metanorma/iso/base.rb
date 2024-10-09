@@ -8,7 +8,7 @@ require "fileutils"
 require_relative "processor"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       XML_ROOT_TAG = "iso-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/iso".freeze
