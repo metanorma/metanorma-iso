@@ -970,7 +970,7 @@ RSpec.describe Metanorma::Iso do
       :updates-document-type: international-standard
     INPUT
     output = <<~OUTPUT
-      <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
+      <iso-standard type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
         <bibdata type="standard">
           <title language="en" format="text/plain" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
           <title language="fr" format="text/plain" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
@@ -1018,6 +1018,7 @@ RSpec.describe Metanorma::Iso do
           </copyright>
           <ext>
             <doctype>addendum</doctype>
+            <flavor>iso</flavor>
             <editorialgroup>
              <agency>ISO</agency>
             </editorialgroup>
