@@ -67,6 +67,7 @@ module IsoDoc
       # French titles in the same document
       PART_LABEL = { en: "Part", fr: "Partie", ru: "Часть" }.freeze
       AMD_LABEL = { en: "AMENDMENT", fr: "AMENDMENT", ru: "ПОПРАВКА" }.freeze
+      ADD_LABEL = { en: "ADDENDUM", fr: "ADDITIF", ru: "ДОПОЛНЕНИЕ" }.freeze
       CORR_LABEL = { en: "TECHNICAL CORRIGENDUM",
                      fr: "RECTIFICATIF TECHNIQUE",
                      ru: "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ" }.freeze
@@ -93,6 +94,10 @@ module IsoDoc
         "#{self.class::AMD_LABEL[lang.to_sym]}&#xa0;#{titlenums[:amd]}"
       end
 
+      def add_prefix(titlenums, lang)
+        "#{self.class::ADD_LABEL[lang.to_sym]}&#xa0;#{titlenums[:add]}"
+      end
+
       def corr_prefix(titlenums, lang)
         "#{self.class::CORR_LABEL[lang.to_sym]}&#xa0;#{titlenums[:corr]}"
       end
@@ -115,6 +120,7 @@ module IsoDoc
         { part: isoxml.at(ns("#{prefix}/@part")),
           subpart: isoxml.at(ns("#{prefix}/@subpart")),
           amd: isoxml.at(ns("#{prefix}/@amendment")),
+          add: isoxml.at(ns("#{prefix}/@addendum")),
           corr: isoxml.at(ns("#{prefix}/@corrigendum")) }
       end
 
@@ -126,6 +132,8 @@ module IsoDoc
           part: isoxml.at(ns("//bibdata/title[@type='title-part' and " \
                              "@language='#{lang}']")),
           amd: isoxml.at(ns("//bibdata/title[@type='title-amd' and " \
+                            "@language='#{lang}']")),
+          add: isoxml.at(ns("//bibdata/title[@type='title-add' and " \
                             "@language='#{lang}']")) }
       end
 
@@ -146,6 +154,8 @@ module IsoDoc
         set(:doctitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
         set(:doctitleamd, tp[:amd].children.to_xml) if tp[:amd]
         set(:doctitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
+        set(:doctitleaddlabel, add_prefix(tn, lang)) if tn[:add]
+        set(:doctitleadd, tp[:add].children.to_xml) if tp[:add]
       end
 
       def subtitle(isoxml, _out)
@@ -161,6 +171,8 @@ module IsoDoc
         tp[:part] and set(:docsubtitlepart, tp[:part].children.to_xml)
         set(:docsubtitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
         set(:docsubtitleamd, tp[:amd].children.to_xml) if tp[:amd]
+        set(:docsubtitleaddlabel, add_prefix(tn, lang)) if tn[:add]
+        set(:docsubtitleadd, tp[:add].children.to_xml) if tp[:add]
         set(:docsubtitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
       end
 

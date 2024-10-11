@@ -18,6 +18,10 @@ style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'>
 <p class="MsoNormal" align="right" style='text-align:right'><b>{{ doctitleamdlabel }}</b></p>
 {% endif %}
 
+{% if doctitleaddlabel %}
+<p class="MsoNormal" align="right" style='text-align:right'><b>{{ doctitleaddlabel }}</b></p>
+{% endif %}
+
 {% if doctitlecorrlabel %}
 <p class="MsoNormal" align="right" style='text-align:right'><b>{{ doctitlecorrlabel }}</b></p>
 {% endif %}
@@ -51,6 +55,9 @@ style='mso-no-proof:yes'>{{ editorialgroup }}</span></p>
 {% if doctitleamdlabel %}
 <p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ doctitleamdlabel }}{% if doctitleamd %}: {{ doctitleamd }}{% endif %}</p>
 {% endif %}
+{% if doctitleaddlabel %}
+<p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ doctitleaddlabel }}{% if doctitleadd %}: {{ doctitleadd }}{% endif %}</p>
+{% endif %}
 {% if doctitlecorrlabel %}
 <p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ doctitlecorrlabel }}</p>
 {% endif %}
@@ -67,6 +74,9 @@ style='mso-no-proof:yes'>{{ editorialgroup }}</span></p>
 </p>
 {% if docsubtitleamdlabel %}
 <p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ docsubtitleamdlabel }}{% if docsubtitleamd %}: {{ docsubtitleamd }}{% endif %}</p>
+{% endif %}
+{% if docsubtitleaddlabel %}
+<p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ docsubtitleaddlabel }}{% if docsubtitleadd %}: {{ docsubtitleadd }}{% endif %}</p>
 {% endif %}
 {% if docsubtitlecorrlabel %}
 <p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ docsubtitlecorrlabel }}</p>

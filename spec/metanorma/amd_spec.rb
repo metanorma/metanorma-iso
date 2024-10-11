@@ -55,7 +55,7 @@ RSpec.describe Metanorma::Iso do
       === Bibliography Subsection
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename>International Standard</stagename>}, "<stagename/>")}
+      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename>International Standard</stagename>}, '<stagename/>')}
         <sections>
           <clause id="_" obligation="normative">
             <title>Foreword</title>
@@ -940,6 +940,94 @@ RSpec.describe Metanorma::Iso do
               <project-number corrigendum="3" part="1">17301</project-number>
             </structuredidentifier>
             <stagename abbreviation="COR"/>
+          </ext>
+        </bibdata>
+        <sections/>
+      </iso-standard>
+    OUTPUT
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
+  end
+
+  it "processes metadata, addendum" do
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 17301
+      :partnumber: 1
+      :doctype: addendum
+      :updates: ISO 17301-1:2030
+      :addendum-number: 3
+      :title-addendum-en: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions
+      :title-addendum-fr: Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport
+      :updates-document-type: international-standard
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard type="semantic" version="#{Metanorma::ISO::VERSION}" xmlns="https://www.metanorma.org/ns/iso">
+        <bibdata type="standard">
+          <title language="en" format="text/plain" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <title language="fr" format="text/plain" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+          <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Add 3:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Add 3:#{Date.today.year}(E)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:sup:iso:#{Date.today.year}:v3</docidentifier>
+          <docidentifier type="iso-undated">ISO 17301-1:2030/Add 3</docidentifier>
+          <docidentifier type="iso-with-lang">ISO 17301-1:2030/Add 3:2024(en)</docidentifier>
+          <docnumber>17301</docnumber>
+          <contributor>
+            <role type="author"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+                        <contributor>
+              <role type="authorizer"><description>Agency</description></role>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+            <stage>60</stage>
+            <substage>60</substage>
+          </status>
+          <copyright>
+            <from>#{Time.now.year}</from>
+            <owner>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </owner>
+          </copyright>
+          <ext>
+            <doctype>addendum</doctype>
+            <editorialgroup>
+             <agency>ISO</agency>
+            </editorialgroup>
+            <approvalgroup>
+             <agency>ISO</agency>
+            </approvalgroup>
+            <structuredidentifier>
+              <project-number addendum="3" part="1">17301</project-number>
+            </structuredidentifier>
+            <stagename abbreviation="ADD">Addendum</stagename>
           </ext>
         </bibdata>
         <sections/>

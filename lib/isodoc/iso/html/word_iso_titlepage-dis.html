@@ -30,6 +30,10 @@
 <p class="zzCover"><b>{{ doctitleamdlabel }}</b></p>
 {% endif %}
 
+{% if doctitleaddlabel %}
+<p class="zzCover"><b>{{ doctitleaddlabel }}</b></p>
+{% endif %}
+
 {% if doctitlecorrlabel %}
 <p class="zzCover"><b>{{ doctitlecorrlabel }}</b></p>
 {% endif %}
@@ -45,6 +49,9 @@
 {% if doctitleamdlabel %}
 <p class="zzCover"><b>{{ doctitleamdlabel }}{% if doctitleamd %}: {{ doctitleamd }}{% endif %}</b></p>
 {% endif %}
+{% if doctitleaddlabel %}
+<p class="zzCover"><b>{{ doctitleaddlabel }}{% if doctitleadd %}: {{ doctitleadd }}{% endif %}</b></p>
+{% endif %}
 {% if doctitlecorrlabel %}
 <p class="zzCover"><b>{{ doctitlecorrlabel }}</b></p>
 {% endif %}
@@ -52,6 +59,9 @@
 <p class="zzCover" style='font-weight:normal;'><i>{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &#x2014; {% endif %}{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &#x2014; {% endif %}{% if docsubtitlepart %}{% if docsubtitlepartlabel %}{{ docsubtitlepartlabel }}: {% endif %}{{ docsubtitlepart }}{% endif %}</i></p>
 {% if docsubtitleamdlabel %}
 <p class="zzCover" style='font-weight:normal;'><i>{{ docsubtitleamdlabel }}{% if docsubtitleamd %}: {{ docsubtitleamd }}{% endif %}</i></p>
+{% endif %}
+{% if docsubtitleaddlabel %}
+<p class="zzCover" style='font-weight:normal;'><i>{{ docsubtitleaddlabel }}{% if docsubtitleadd %}: {{ docsubtitleadd }}{% endif %}</i></p>
 {% endif %}
 {% if docsubtitlecorrlabel %}
 <p class="zzCover" style='font-weight:normal;'><i>{{ docsubtitlecorrlabel }}</i></p>
