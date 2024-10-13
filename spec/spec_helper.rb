@@ -24,6 +24,7 @@ require "metanorma"
 require "metanorma/iso"
 require "iev"
 require "xml-c14n"
+require "relaton_iso"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -138,39 +139,8 @@ HDR
 ASCIIDOCTOR_ISO_DIR = Pathname
   .new(File.dirname(__FILE__)) / "../lib/metanorma/iso"
 
-=begin
-def boilerplate_read(file)
-  HTMLEntities.new.decode(
-    Metanorma::ISO::Converter.new(:iso, {}).boilerplate_file_restructure(file)
-    .to_xml.gsub(/<(\/)?sections>/, "<\\1boilerplate>")
-      .gsub(/ id="_[^"]+"/, " id='_'"),
-  )
-end
-
-BOILERPLATE =
-  boilerplate_read(
-    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate.adoc", encoding: "utf-8")
-      .gsub(/<(\/)?sections>/, "<\\1boilerplate>")
-      .gsub(/\{\{ agency \}\}/, "ISO")
-      .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
-      .gsub(/\{% if unpublished %\}.*?\{% endif %\}/m, "")
-      .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% else %\}\{blank\}\{% endif %\}/m, "\\1")
-      .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
-  ).freeze
-
-BOILERPLATE_FR =
-  boilerplate_read(
-    File.read(ASCIIDOCTOR_ISO_DIR / "boilerplate-fr.adoc", encoding: "utf-8")
-    .gsub(/\{\{ agency \}\}/, "ISO")
-    .gsub(/\{\{ docyear \}\}/, Date.today.year.to_s)
-    .gsub(/\{% if unpublished %\}.*?\{% endif %\}/m, "")
-    .gsub(/\{% if stage_int >= 40 %\}(.*?)\{% else %\}\{blank\}\{% endif %\}/m, "\\1")
-    .gsub(/(?<=\p{Alnum})'(?=\p{Alpha})/, "’"),
-  ).freeze
-=end
-
 def boilerplate_read(file, xmldoc)
-  conv = Metanorma::ISO::Converter.new(:iso, {})
+  conv = Metanorma::Iso::Converter.new(:iso, {})
   conv.init(Asciidoctor::Document.new([]))
   x = conv.boilerplate_isodoc(xmldoc).populate_template(file, nil)
   ret = conv.boilerplate_file_restructure(x)
@@ -185,7 +155,8 @@ def boilerplate(xmldoc, lang: "en")
   file = File.join(File.dirname(__FILE__), "..", "lib", "metanorma", "iso",
                    "boilerplate#{lang}.adoc")
   ret = Nokogiri::XML(boilerplate_read(
-                        File.read(file, encoding: "utf-8"), xmldoc))
+                        File.read(file, encoding: "utf-8"), xmldoc
+                      ))
   ret.xpath("//passthrough").each(&:remove)
   strip_guid(ret.root.to_xml(encoding: "UTF-8", indent: 2,
                              save_with: Nokogiri::XML::Node::SaveOptions::AS_XML))
@@ -193,7 +164,7 @@ end
 
 BLANK_HDR1 = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
-  <iso-standard xmlns="https://www.metanorma.org/ns/iso" type="semantic" version="#{Metanorma::ISO::VERSION}">
+  <iso-standard xmlns="https://www.metanorma.org/ns/iso" type="semantic" version="#{Metanorma::Iso::VERSION}">
     <bibdata type="standard">
       <contributor>
         <role type="author"/>
@@ -233,6 +204,7 @@ BLANK_HDR1 = <<~"HDR".freeze
       </copyright>
       <ext>
         <doctype>standard</doctype>
+        <flavor>iso</flavor>
         <editorialgroup>
           <agency>ISO</agency>
         </editorialgroup>
@@ -335,13 +307,13 @@ OPTIONS = [backend: :iso, header_footer: true].freeze
 
 def mock_pdf
   allow(Mn2pdf).to receive(:convert) do |url, output,|
-    FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
+    FileUtils.cp(url.delete('"'), output.delete('"'))
   end
 end
 
 def mock_sts
   allow(Mn2sts).to receive(:convert) do |url, output,|
-    FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
+    FileUtils.cp(url.delete('"'), output.delete('"'))
   end
 end
 

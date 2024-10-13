@@ -1,5 +1,5 @@
 require "spec_helper"
-RSpec.describe Metanorma::ISO do
+RSpec.describe Metanorma::Iso do
   before do
     # Force to download Relaton index file
     allow_any_instance_of(Relaton::Index::Type).to receive(:actual?)
@@ -9,7 +9,7 @@ RSpec.describe Metanorma::ISO do
   end
 
   it "has a version number" do
-    expect(Metanorma::ISO::VERSION).not_to be nil
+    expect(Metanorma::Iso::VERSION).not_to be nil
   end
 
   it "processes default metadata" do
@@ -257,6 +257,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>standard</doctype>
+                <flavor>iso</flavor>
           <horizontal>true</horizontal>
           <editorialgroup>
            <agency>ISO</agency>
@@ -471,6 +472,7 @@ RSpec.describe Metanorma::ISO do
              </copyright>
              <ext>
                <doctype>technical-report</doctype>
+                <flavor>iso</flavor>
         <editorialgroup>
          <agency>IEC</agency>
          <agency>IETF</agency>
@@ -580,6 +582,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>technical-report</doctype>
+                <flavor>iso</flavor>
           <editorialgroup>
             <agency>ISO</agency>
             <agency>IEC</agency>
@@ -733,6 +736,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>standard</doctype>
+                <flavor>iso</flavor>
           <editorialgroup>
             <agency>ISO</agency>
             <technical-committee number="1" type="Other">Techcomm</technical-committee>
@@ -905,6 +909,7 @@ RSpec.describe Metanorma::ISO do
           </copyright>
           <ext>
              <doctype>standard</doctype>
+                <flavor>iso</flavor>
              <editorialgroup>
                 <agency>ISO</agency>
                 <technical-committee number="1" type="Other"/>
@@ -990,6 +995,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>technical-specification</doctype>
+                <flavor>iso</flavor>
                       <editorialgroup>
           <agency>ISO</agency>
          </editorialgroup>
@@ -1194,6 +1200,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>standard</doctype>
+                <flavor>iso</flavor>
           <horizontal>true</horizontal>
                       <editorialgroup>
          <agency>ISO</agency>
@@ -1326,6 +1333,7 @@ RSpec.describe Metanorma::ISO do
          </copyright>
          <ext>
            <doctype>this-is-a-doctype</doctype>
+                <flavor>iso</flavor>
            <editorialgroup>
              <agency>ISO</agency>
            </editorialgroup>
@@ -1405,6 +1413,7 @@ RSpec.describe Metanorma::ISO do
                 </copyright>
                 <ext>
                   <doctype>international-standard</doctype>
+                <flavor>iso</flavor>
                               <editorialgroup>
            <agency>ISO</agency>
           </editorialgroup>
@@ -1482,6 +1491,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>standard</doctype>
+                <flavor>iso</flavor>
                       <editorialgroup>
            <agency>ISO</agency>
           </editorialgroup>
@@ -1559,6 +1569,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>standard</doctype>
+                <flavor>iso</flavor>
                       <editorialgroup>
          <agency>ISO</agency>
         </editorialgroup>
@@ -1635,6 +1646,7 @@ RSpec.describe Metanorma::ISO do
         </copyright>
         <ext>
           <doctype>directive</doctype>
+                <flavor>iso</flavor>
                       <editorialgroup>
          <agency>ISO</agency>
         </editorialgroup>
@@ -1678,6 +1690,7 @@ RSpec.describe Metanorma::ISO do
         :modified-adopted-from: ABC 13
         :related-directive: ABC 14
         :related-mandate: ABC 15
+        :has-draft: ABC 16
       INPUT
       output = <<~OUTPUT
         <bibdata type="standard">
@@ -1829,8 +1842,15 @@ RSpec.describe Metanorma::ISO do
               <docidentifier>ABC 15</docidentifier>
             </bibitem>
           </relation>
+          <relation type="hasDraft">
+            <bibitem>
+              <title>--</title>
+              <docidentifier>ABC 16</docidentifier>
+            </bibitem>
+           </relation>
           <ext>
             <doctype>standard</doctype>
+                <flavor>iso</flavor>
             <editorialgroup>
               <agency>ISO</agency>
             </editorialgroup>
@@ -1908,6 +1928,7 @@ RSpec.describe Metanorma::ISO do
           </copyright>
           <ext>
             <doctype>international-standard</doctype>
+                <flavor>iso</flavor>
             <editorialgroup>
               <agency>CEN</agency>
             </editorialgroup>

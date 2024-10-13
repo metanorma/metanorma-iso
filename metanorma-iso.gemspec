@@ -6,7 +6,7 @@ require "metanorma/iso/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "metanorma-iso"
-  spec.version       = Metanorma::ISO::VERSION
+  spec.version       = Metanorma::Iso::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
     f.match(%r{^(test|spec|features|bin|.github)/}) \
     || f.match(%r{Rakefile|bin/rspec})
   end
-  spec.test_files    = `git ls-files -- {spec}/*`.split("\n")
+  spec.test_files = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 3.1.0")
 
   spec.add_dependency "metanorma-standoc", "~> 2.9.3"

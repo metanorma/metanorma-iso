@@ -1,5 +1,5 @@
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       def id_prefix(prefix, id, amd: false)
         # we're just inheriting the prefixes from parent doc

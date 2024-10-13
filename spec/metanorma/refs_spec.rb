@@ -2,7 +2,7 @@ require "spec_helper"
 require "relaton_iso"
 require "relaton_ietf"
 
-RSpec.describe Metanorma::ISO do
+RSpec.describe Metanorma::Iso do
   before do
     # Force to download Relaton index file
     allow_any_instance_of(Relaton::Index::Type).to receive(:actual?)

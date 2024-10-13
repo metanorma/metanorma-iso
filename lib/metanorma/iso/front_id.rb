@@ -5,7 +5,7 @@ require "pubid-cen"
 require "pubid-iec"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       def metadata_id(node, xml)
         if id = node.attr("docidentifier")

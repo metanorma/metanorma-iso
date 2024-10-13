@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::ISO do
+RSpec.describe Metanorma::Iso do
   it "processes sections" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}

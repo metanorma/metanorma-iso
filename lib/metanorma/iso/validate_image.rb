@@ -1,5 +1,5 @@
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       # DRG directives 3.7; but anticipated by standoc
       def subfigure_validate(xmldoc)

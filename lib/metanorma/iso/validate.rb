@@ -10,7 +10,7 @@ require "jing"
 require "iev"
 
 module Metanorma
-  module ISO
+  module Iso
     class Converter < Standoc::Converter
       def isosubgroup_validate(root)
         root.xpath("//technical-committee/@type").each do |t|
