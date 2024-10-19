@@ -2,6 +2,7 @@
 
 {% if document_scheme == "1951" %}
 
+[[boilerplate-copyright-default]]
 === COPYRIGHT RESERVED
 
 [[boilerplate-message]]
@@ -20,6 +21,7 @@ Also issued in French and Russian. Copies to be obtained through the national st
 
 {% elsif document_scheme == "1972" or document_scheme == "1987" %}
 
+[[boilerplate-copyright-default]]
 === {blank}
 
 [[boilerplate-year]]
@@ -31,6 +33,7 @@ Printed in Switzerland
 
 {% elsif document_scheme == "1989" %}
 
+[[boilerplate-copyright-default]]
 === {blank}
 
 [[boilerplate-year]]
@@ -53,6 +56,7 @@ Printed in Switzerland
 
 {% else %}
 
+[[boilerplate-copyright-default]]
 === {% if stage_int >= 40 %}COPYRIGHT PROTECTED DOCUMENT{% else %}{blank}{% endif %}
 
 [[boilerplate-year]]

@@ -819,7 +819,7 @@ RSpec.describe IsoDoc do
         </bibdata>
         <boilerplate>
           <copyright-statement>
-            <clause>
+            <clause id="boilerplate-copyright-default">
               <p id="boilerplate-year">© ISO 2019, Published in Switzerland</p>
               <p id="boilerplate-message">I am the Walrus.</p>
               <p id="boilerplate-name">ISO copyright office</p>
@@ -834,6 +834,9 @@ RSpec.describe IsoDoc do
                 Email: copyright@iso.org
                 <br/>
                 www.iso.org</p>
+            </clause>
+            <clause id="added">
+            <p>Is there anybody out there?</p>
             </clause>
           </copyright-statement>
           <license-statement>
@@ -862,7 +865,7 @@ RSpec.describe IsoDoc do
         </bibdata>
         <boilerplate>
           <copyright-statement>
-            <clause inline-header="true">
+            <clause inline-header="true" id="boilerplate-copyright-default">
               <p id="boilerplate-year">© ISO 2019, Published in Switzerland
                </p>
               <p id="boilerplate-message">I am the Walrus.
@@ -880,6 +883,9 @@ RSpec.describe IsoDoc do
                 <br/>
                 www.iso.org</p>
             </clause>
+           <clause id="added" inline-header="true">
+            <p>Is there anybody out there?</p>
+         </clause>
           </copyright-statement>
           <license-statement>
             <clause>
@@ -897,7 +903,8 @@ RSpec.describe IsoDoc do
       </iso-standard>
     OUTPUT
 
-    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert.new(WORD_HTML_CSS.dup
+    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert
+      .new(WORD_HTML_CSS.dup
       .merge(presxml_options))
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
@@ -909,45 +916,65 @@ RSpec.describe IsoDoc do
       .convert("test", presxml, false)
 
     word = File.read("test.html", encoding: "UTF-8")
-    expect(strip_guid(word)).to include('<h1 class="IntroTitle">Warning for Stuff</h1>')
+    expect(strip_guid(word))
+      .to include('<h1 class="IntroTitle">Warning for Stuff</h1>')
     expect(word).to include("I am the Walrus.")
 
     FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
       .convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
-    expect(Xml::C14n.format(word
-      .sub(%r{^.*<div class="boilerplate-copyright">}m,
-           '<div class="boilerplate-copyright">')
-      .sub(%r{</div>.*$}m, "</div></div>")))
+    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
+    contents = Nokogiri::XML(contents)
+      .at("//div[a/@id = 'boilerplate-copyright-destination']")
+    expect(Xml::C14n.format(contents.to_xml))
       .to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
-        <div class="boilerplate-copyright">
-          <div>
-            <p class="zzCopyright">
-              <a id="boilerplate-year" name="boilerplate-year"/>© ISO 2019, Published in Switzerland#{' '}</p>
-            <p class="zzCopyright1">
-              <a id="boilerplate-message" name="boilerplate-message"/>I am the Walrus.#{' '}</p>
-            <p class="zzCopyright">
-              <a id="boilerplate-name" name="boilerplate-name"/>ISO copyright office</p>
-            <p align="left" class="zzAddress" style="text-align:left;">
-              <a id="boilerplate-address" name="boilerplate-address"/>ISO copyright office
-
-              <br/>
-              Ch. de Blandonnet 8 ?~@? CP 401
-
-              <br/>
-              CH-1214 Vernier, Geneva, Switzerland
-
-              <br/>
-              Phone: +41 22 749 01 11
-
-              <br/>
-              Email: copyright@iso.org
-
-              <br/>
-              www.iso.org#{' '}</p>
+           <div>
+          <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
+          <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">
+             <div>
+                <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+                <div>
+                   <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"/>
+                   <p class="zzCopyright">
+                      <a name="boilerplate-year" id="boilerplate-year"/>
+                      © ISO 2019, Published in Switzerland
+                   </p>
+                   <p class="zzCopyright1">
+                      <a name="boilerplate-message" id="boilerplate-message"/>
+                      I am the Walrus.
+                   </p>
+                   <p class="zzCopyright">
+                      <a name="boilerplate-name" id="boilerplate-name"/>
+                      ISO copyright office
+                   </p>
+                   <p style="text-align:left;" align="left" class="zzAddress">
+                      <a name="boilerplate-address" id="boilerplate-address"/>
+                      ISO copyright office
+                      <br/>
+                      Ch. de Blandonnet 8 ?~@? CP 401
+                      <br/>
+                      CH-1214 Vernier, Geneva, Switzerland
+                      <br/>
+                      Phone: +41 22 749 01 11
+                      <br/>
+                      Email: copyright@iso.org
+                      <br/>
+                      www.iso.org
+                   </p>
+                </div>
+             </div>
           </div>
-        </div>
+          <div>
+             <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+             <div class="boilerplate-copyright">
+                <div>
+                   <a name="added" id="added"/>
+                   <p class="zzCopyright">Is there anybody out there?</p>
+                </div>
+             </div>
+          </div>
+       </div>
       OUTPUT
     expect(word).to include('<p class="zzWarning">This document is not ' \
                             "an ISO International Standard")

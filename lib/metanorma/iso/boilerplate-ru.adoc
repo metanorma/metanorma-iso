@@ -2,6 +2,7 @@
 
 {% if document_scheme == "1972" or document_scheme == "1987" %}
 
+[[boilerplate-copyright-default]]
 === {blank}
 
 [[boilerplate-year]]
@@ -12,6 +13,7 @@
 
 {% elsif document_scheme == "1989" %}
 
+[[boilerplate-copyright-default]]
 === {blank}
 
 [[boilerplate-year]]
@@ -34,6 +36,7 @@ X.400&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;c=ch; a=400net;
 
 {% else %}
 
+[[boilerplate-copyright-default]]
 === {% if stage_int >= 40 %}ДОКУМЕНТ, ОХРАНЯЕМЫЙ АВТОРСКИМ ПРАВОМ{% else %}{blank}{% endif %}
 
 [[boilerplate-year]]
