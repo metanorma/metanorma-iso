@@ -110,26 +110,44 @@ module IsoDoc
       end
 
       def authority_cleanup(docxml)
-        insert = docxml.at("//div[@id = 'boilerplate-license-destination']")
-        auth = docxml.at("//div[@class = 'boilerplate-license']")&.remove
-        auth&.xpath(".//p[not(@class)]")&.each { |p| p["class"] = "zzWarning" }
-        auth and insert and insert.children = auth
-        insert = docxml.at("//div[@id = 'boilerplate-copyright-destination']")
-        auth = docxml.at("//div[@class = 'boilerplate-copyright']")&.remove
-        auth&.xpath(".//p[not(@class)]")&.each do |p|
-          p["class"] = "zzCopyright"
-        end
-        auth&.xpath(".//p[@id = 'boilerplate-message']")&.each do |p|
+        authority_license_cleanup(docxml)
+        authority_copyright_cleanup(docxml)
+        coverpage_note_cleanup(docxml)
+      end
+
+      def authority_copyright_cleanup(docxml)
+        auth = docxml.at("//div[@class = 'boilerplate-copyright']") or return
+        authority_copyright_style(auth)
+        authority_copyright_populate(docxml, auth)
+      end
+
+      def authority_copyright_style(auth)
+        auth.xpath(".//p[not(@class)]").each { |p| p["class"] = "zzCopyright" }
+        auth.xpath(".//p[@id = 'boilerplate-message']").each do |p|
           p["class"] = "zzCopyright1"
         end
-        auth&.xpath(".//p[@id = 'boilerplate-address']")&.each do |p|
+        auth.xpath(".//p[@id = 'boilerplate-address']").each do |p|
           p["class"] = "zzAddress"
         end
-        auth&.xpath(".//p[@id = 'boilerplate-place']")&.each do |p|
+        auth.xpath(".//p[@id = 'boilerplate-place']").each do |p|
           p["class"] = "zzCopyright1"
         end
-        auth and insert and insert.children = auth
-        coverpage_note_cleanup(docxml)
+      end
+
+      def authority_copyright_populate(doc, auth)
+        i = doc.at("//div[@id = 'boilerplate-copyright-default-destination']")
+        j = doc.at("//div[@id = 'boilerplate-copyright-append-destination']")
+        default = auth.at(".//div[@id = 'boilerplate-copyright-default']")
+        default and i and i.children = default.remove
+        j and j.children = auth.remove
+      end
+
+      def authority_license_cleanup(docxml)
+        dest = docxml.at("//div[@id = 'boilerplate-license-destination']") or
+          return
+        auth = docxml.at("//div[@class = 'boilerplate-license']") or return
+        auth.xpath(".//p[not(@class)]").each { |p| p["class"] = "zzWarning" }
+        dest.children = auth.remove
       end
 
       def word_cleanup(docxml)
@@ -142,9 +160,7 @@ module IsoDoc
       # supply missing annex title
       def make_WordToC(docxml, level)
         toc = ""
-        if source = docxml.at("//div[@class = 'TOC']")
-          toc = to_xml(source.children)
-        end
+        s = docxml.at("//div[@class = 'TOC']") and toc = to_xml(s.children)
         xpath = (1..level).each.map { |i| "//h#{i}" }.join (" | ")
         docxml.xpath(xpath).each do |h|
           x = ""

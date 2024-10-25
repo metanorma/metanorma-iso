@@ -164,27 +164,33 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~OUTPUT
-      <div class='WordSection2'>
-         <div style='mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt'>
-           <div>
-             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
-           </div>
-         </div>
-         <p class='MsoNormal'>
-           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-         </p>
-         <div>
-           <p class='ForewordTitle'>Foreword</p>
-           <p class='ForewordText'>Para</p>
-         </div>
-         <p class='MsoNormal'>
-           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-         </p>
-         <div class='Section3' id=''>
-           <p class='IntroTitle'>Foreword</p>
-           <p class='MsoNormal'>Para</p>
-         </div>
-         <p class='MsoNormal'> </p>
+      <div class="WordSection2">
+          <div>
+             <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
+             <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">
+                <div>
+                   <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+                </div>
+             </div>
+             <div>
+                <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+             </div>
+          </div>
+          <p class="MsoNormal">
+             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+          </p>
+          <div>
+             <p class="ForewordTitle">Foreword</p>
+             <p class="ForewordText">Para</p>
+          </div>
+          <p class="MsoNormal">
+             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+          </p>
+          <div class="Section3" id="">
+             <p class="IntroTitle">Foreword</p>
+             <p class="MsoNormal">Para</p>
+          </div>
+          <p class="MsoNormal"> </p>
        </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
@@ -213,6 +219,12 @@ RSpec.describe IsoDoc do
       <div class='WordSection2'>
            <div>
              <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
+         <div>
+         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+      </div>
+      <div>
+         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+      </div>
          </div>
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
@@ -308,6 +320,12 @@ RSpec.describe IsoDoc do
           <div class='WordSection2'>
           <div>
             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
+          <div>
+         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+      </div>
+      <div>
+         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+      </div>
           </div>
         <p class='MsoBodyText'>
           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
@@ -392,6 +410,12 @@ RSpec.describe IsoDoc do
           <div class='WordSection2'>
           <div>
             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
+          <div>
+         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+      </div>
+      <div>
+         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+      </div>
           </div>
         <p class='MsoBodyText'>
           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
@@ -1805,7 +1829,8 @@ RSpec.describe IsoDoc do
         </bibdata>
         <boilerplate>
           <copyright-statement>
-            <clause><title>COPYRIGHT PROTECTED DOCUMENT</title>
+             <clause id="boilerplate-copyright-default">
+            <title>COPYRIGHT PROTECTED DOCUMENT</title>
               <p id="boilerplate-year">© ISO 2019, Published in Switzerland
                </p>
               <p id="boilerplate-message">I am the Walrus.
@@ -1822,6 +1847,9 @@ RSpec.describe IsoDoc do
                 Email: copyright@iso.org
                 <br/>
                 www.iso.org</p>
+            </clause>
+              <clause id="added">
+            <p>Is there anybody out there?</p>
             </clause>
           </copyright-statement>
           <license-statement>
@@ -1844,36 +1872,59 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new(wordstylesheet: "spec/assets/word.css")
       .convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
-    expect(Xml::C14n.format(word
-      .sub(%r{^.*<div class="boilerplate-copyright">}m,
-           '<div class="boilerplate-copyright">')
-      .sub(%r{</div>.*$}m, "</div></div>")))
+    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
+    contents = Nokogiri::XML(contents)
+      .at("//div[a/@id = 'boilerplate-copyright-destination']")
+    expect(Xml::C14n.format(contents.to_xml))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-        <div class='boilerplate-copyright'>
+      <div>
+          <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
           <div>
-            <p class='zzCopyright'>
-              <a name='boilerplate-year' id='boilerplate-year'/>
-              © ISO 2019, Published in Switzerland
-            </p>
-            <p class='zzCopyright'>
-              <a name='boilerplate-message' id='boilerplate-message'/>
-              I am the Walrus.
-            </p>
-            <p class='zzCopyright'>
-              <a name='boilerplate-name' id='boilerplate-name'/>
-              ISO copyright office
-            </p>
-            <p style='text-align:left;' align='left' class='zzCopyright'>
-              <a name='boilerplate-address' id='boilerplate-address'/>
-              ISO copyright office
-            </p>
-            <p class='zzCopyright'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
-            <p class='zzCopyright'> CH-1214 Vernier, Geneva, Switzerland </p>
-            <p class='zzCopyright'> Phone: +41 22 749 01 11 </p>
-            <p class='zzCopyright'> Email: copyright@iso.org </p>
-            <p class='zzCopyright'> www.iso.org</p>
+             <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+             <div>
+                <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"/>
+                <p class="zzCopyright">
+                   <a name="boilerplate-year" id="boilerplate-year"/>
+                   © ISO 2019, Published in Switzerland
+                </p>
+                <p class="zzCopyright">
+                   <a name="boilerplate-message" id="boilerplate-message"/>
+                   I am the Walrus.
+                </p>
+                <p class="zzCopyright">
+                   <a name="boilerplate-name" id="boilerplate-name"/>
+                   ISO copyright office
+                </p>
+                <p style="text-align:left;" align="left" class="zzCopyright">
+                   <a name="boilerplate-address" id="boilerplate-address"/>
+                   ISO copyright office
+                </p>
+                <p class="zzCopyright">
+                 Ch. de Blandonnet 8 ?~@? CP 401
+                 </p>
+                <p class="zzCopyright">
+                 CH-1214 Vernier, Geneva, Switzerland
+                 </p>
+                <p class="zzCopyright">
+                 Phone: +41 22 749 01 11
+                 </p>
+                <p class="zzCopyright">
+                 Email: copyright@iso.org
+                 </p>
+                <p class="zzCopyright">
+                 www.iso.org</p>
+             </div>
           </div>
-        </div>
+          <div>
+             <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+             <div class="boilerplate-copyright">
+                <div>
+                   <a name="added" id="added"/>
+                   <p class="zzCopyright">Is there anybody out there?</p>
+                </div>
+             </div>
+          </div>
+       </div>
       OUTPUT
 
     FileUtils.rm_f "test.doc"
@@ -1882,36 +1933,59 @@ RSpec.describe IsoDoc do
                presxml.sub(%r{<stage language="">50</stage>},
                            "<stage>60</stage><substage>00</substage>"), false)
     word = File.read("test.doc", encoding: "UTF-8")
-    expect(Xml::C14n.format(word
-      .sub(%r{^.*<div class="boilerplate-copyright">}m,
-           '<div class="boilerplate-copyright">')
-      .sub(%r{</div>.*$}m, "</div></div>")))
+    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
+    contents = Nokogiri::XML(contents)
+      .at("//div[a/@id = 'boilerplate-copyright-destination']")
+    expect(Xml::C14n.format(contents.to_xml))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-        <div class='boilerplate-copyright'>
+           <div>
+          <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
           <div>
-            <p class='zzCopyright'>
-              <a name='boilerplate-year' id='boilerplate-year'/>
-              © ISO 2019, Published in Switzerland
-            </p>
-            <p class='zzCopyright'>
-              <a name='boilerplate-message' id='boilerplate-message'/>
-              I am the Walrus.
-            </p>
-            <p class='zzCopyright'>
-              <a name='boilerplate-name' id='boilerplate-name'/>
-              ISO copyright office
-            </p>
-            <p style='text-indent:20.15pt;' align='left' class='zzCopyright'>
-              <a name='boilerplate-address' id='boilerplate-address'/>
-              ISO copyright office
-            </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> Ch. de Blandonnet 8 ?~@? CP 401 </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> CH-1214 Vernier, Geneva, Switzerland </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> Phone: +41 22 749 01 11 </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> Email: copyright@iso.org </p>
-            <p class='zzCopyright' style='text-indent:20.15pt;'> www.iso.org</p>
+             <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+             <div>
+                <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"/>
+                <p class="zzCopyright">
+                   <a name="boilerplate-year" id="boilerplate-year"/>
+                   © ISO 2019, Published in Switzerland
+                </p>
+                <p class="zzCopyright">
+                   <a name="boilerplate-message" id="boilerplate-message"/>
+                   I am the Walrus.
+                </p>
+                <p class="zzCopyright">
+                   <a name="boilerplate-name" id="boilerplate-name"/>
+                   ISO copyright office
+                </p>
+                <p style="text-indent:20.15pt;" align="left" class="zzCopyright">
+                   <a name="boilerplate-address" id="boilerplate-address"/>
+                   ISO copyright office
+                </p>
+                <p class="zzCopyright" style="text-indent:20.15pt;">
+                 Ch. de Blandonnet 8 ?~@? CP 401
+                 </p>
+                <p class="zzCopyright" style="text-indent:20.15pt;">
+                 CH-1214 Vernier, Geneva, Switzerland
+                 </p>
+                <p class="zzCopyright" style="text-indent:20.15pt;">
+                 Phone: +41 22 749 01 11
+                 </p>
+                <p class="zzCopyright" style="text-indent:20.15pt;">
+                 Email: copyright@iso.org
+                 </p>
+                <p class="zzCopyright" style="text-indent:20.15pt;">
+                 www.iso.org</p>
+             </div>
           </div>
-        </div>
+          <div>
+             <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+             <div class="boilerplate-copyright">
+                <div>
+                   <a name="added" id="added"/>
+                   <p class="zzCopyright">Is there anybody out there?</p>
+                </div>
+             </div>
+          </div>
+       </div>
       OUTPUT
   end
 

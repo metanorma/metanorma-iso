@@ -1,0 +1,4 @@
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/boilerplate-append"
+
+
+
