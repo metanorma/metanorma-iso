@@ -12,6 +12,10 @@ module Metanorma
     class Converter < Standoc::Converter
       def metadata_ext(node, xml)
         super
+        metadata_ext_iso(node, xml)
+      end
+
+      def metadata_ext_iso(node, xml)
         structured_id(node, xml)
         metadata_stage(node, xml)
         @amd && a = node.attr("updates-document-type") and

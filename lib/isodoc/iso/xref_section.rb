@@ -7,7 +7,7 @@ module IsoDoc
         clause.at(ns("./clause")) and
           @anchors[clause["id"]] = { label: nil, level: 1, type: "clause",
                                      xref: clause.at(ns("./title"))&.text }
-        i = Counter.new(0, prefix: "0.")
+        i = Counter.new(0, prefix: "0")
         clause.xpath(ns("./clause")).each do |c|
           section_names1(c, i.increment(c).print, 2)
         end
@@ -26,7 +26,7 @@ module IsoDoc
             anchor_struct(i.print, nil, @labels["appendix"],
                           "clause").merge(level: 2, subtype: "annex",
                                           container: clause["id"])
-          j = Counter.new(0, prefix: "#{i.print}.")
+          j = Counter.new(0, prefix: i.print)
           c.xpath(ns("./clause | ./references")).each do |c1|
             lbl = "#{@labels['appendix']} #{j.increment(c1).print}"
             appendix_names1(c1, l10n(lbl), 3, clause["id"])
@@ -62,7 +62,7 @@ module IsoDoc
 
       def annex_names1(clause, num, level)
         annex_name_anchors1(clause, num, level)
-        i = Counter.new(0, prefix: "#{num}.")
+        i = Counter.new(0, prefix: num)
         clause.xpath(ns("./clause | ./references")).each do |c|
           annex_names1(c, i.increment(c).print, level + 1)
         end
@@ -71,7 +71,7 @@ module IsoDoc
       def appendix_names1(clause, num, level, container)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
-        i = Counter.new(0, prefix: "#{num}.")
+        i = Counter.new(0, prefix: num)
         clause.xpath(ns("./clause | ./references")).each do |c|
           appendix_names1(c, i.increment(c).print, level + 1, container)
         end
