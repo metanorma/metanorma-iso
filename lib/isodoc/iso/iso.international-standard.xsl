@@ -9207,10 +9207,14 @@
 				<xsl:variable name="fn_styles">
 					<xsl:choose>
 						<xsl:when test="ancestor::*[local-name() = 'bibitem']">
-							<fn_styles xsl:use-attribute-sets="bibitem-note-fn-style"/>
+							<fn_styles xsl:use-attribute-sets="bibitem-note-fn-style">
+
+							</fn_styles>
 						</xsl:when>
 						<xsl:otherwise>
-							<fn_styles xsl:use-attribute-sets="fn-num-style"/>
+							<fn_styles xsl:use-attribute-sets="fn-num-style">
+
+							</fn_styles>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
@@ -12185,6 +12189,7 @@
 					<xsl:if test="string-length(normalize-space()) &lt; 30 and not(contains(normalize-space(), 'http://')) and not(contains(normalize-space(), 'https://')) and not(ancestor::*[local-name() = 'table' or local-name() = 'dl'])">
 						<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
 					</xsl:if>
+
 					<xsl:if test="parent::*[local-name() = 'add']">
 						<xsl:call-template name="append_add-style"/>
 					</xsl:if>
@@ -12295,44 +12300,44 @@
 
 	<xsl:template match="*[local-name() = 'note']" name="note">
 
-		<fo:block-container id="{@id}" xsl:use-attribute-sets="note-style" role="SKIP">
+				<fo:block-container id="{@id}" xsl:use-attribute-sets="note-style" role="SKIP">
 
-			<xsl:call-template name="setBlockSpanAll"/>
+					<xsl:call-template name="setBlockSpanAll"/>
 
-			<xsl:call-template name="refine_note-style"/>
+					<xsl:call-template name="refine_note-style"/>
 
-			<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
+					<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
 
-						<fo:block>
+								<fo:block>
 
-							<xsl:call-template name="refine_note_block_style"/>
+									<xsl:call-template name="refine_note_block_style"/>
 
-							<fo:inline xsl:use-attribute-sets="note-name-style" role="SKIP">
+									<fo:inline xsl:use-attribute-sets="note-name-style" role="SKIP">
 
-								<xsl:call-template name="refine_note-name-style"/>
+										<xsl:call-template name="refine_note-name-style"/>
 
-								<!-- if 'p' contains all text in 'add' first and last elements in first p are 'add' -->
-								<!-- <xsl:if test="*[not(local-name()='name')][1][node()[normalize-space() != ''][1][local-name() = 'add'] and node()[normalize-space() != ''][last()][local-name() = 'add']]"> -->
-								<xsl:if test="*[not(local-name()='name')][1][count(node()[normalize-space() != '']) = 1 and *[local-name() = 'add']]">
-									<xsl:call-template name="append_add-style"/>
-								</xsl:if>
+										<!-- if 'p' contains all text in 'add' first and last elements in first p are 'add' -->
+										<!-- <xsl:if test="*[not(local-name()='name')][1][node()[normalize-space() != ''][1][local-name() = 'add'] and node()[normalize-space() != ''][last()][local-name() = 'add']]"> -->
+										<xsl:if test="*[not(local-name()='name')][1][count(node()[normalize-space() != '']) = 1 and *[local-name() = 'add']]">
+											<xsl:call-template name="append_add-style"/>
+										</xsl:if>
 
-								<!-- if note contains only one element and first and last childs are `add` ace-tag, then move start ace-tag before NOTE's name-->
-								<xsl:if test="count(*[not(local-name() = 'name')]) = 1 and *[not(local-name() = 'name')]/node()[last()][local-name() = 'add'][starts-with(text(), $ace_tag)]">
-									<xsl:apply-templates select="*[not(local-name() = 'name')]/node()[1][local-name() = 'add'][starts-with(text(), $ace_tag)]">
-										<xsl:with-param name="skip">false</xsl:with-param>
-									</xsl:apply-templates>
-								</xsl:if>
+										<!-- if note contains only one element and first and last childs are `add` ace-tag, then move start ace-tag before NOTE's name-->
+										<xsl:if test="count(*[not(local-name() = 'name')]) = 1 and *[not(local-name() = 'name')]/node()[last()][local-name() = 'add'][starts-with(text(), $ace_tag)]">
+											<xsl:apply-templates select="*[not(local-name() = 'name')]/node()[1][local-name() = 'add'][starts-with(text(), $ace_tag)]">
+												<xsl:with-param name="skip">false</xsl:with-param>
+											</xsl:apply-templates>
+										</xsl:if>
 
-								<xsl:apply-templates select="*[local-name() = 'name']"/>
+										<xsl:apply-templates select="*[local-name() = 'name']"/>
 
-							</fo:inline>
+									</fo:inline>
 
-							<xsl:apply-templates select="node()[not(local-name() = 'name')]"/>
-						</fo:block>
+									<xsl:apply-templates select="node()[not(local-name() = 'name')]"/>
+								</fo:block>
 
-			</fo:block-container>
-		</fo:block-container>
+					</fo:block-container>
+				</fo:block-container>
 
 	</xsl:template>
 
@@ -14770,6 +14775,7 @@
 			</xsl:when>
 			<xsl:when test="contains(normalize-space($fo_element), 'block')">
 				<fo:block xsl:use-attribute-sets="example-name-style">
+
 					<xsl:apply-templates/>
 				</fo:block>
 			</xsl:when>
@@ -14785,6 +14791,7 @@
 
 	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name']">
 		<fo:inline xsl:use-attribute-sets="example-name-style">
+
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template>
@@ -15166,12 +15173,14 @@
 
 			<xsl:if test="parent::*[local-name() = 'term'] and not(preceding-sibling::*[local-name() = 'preferred'])"> <!-- if first preffered in term, then display term's name -->
 				<fo:block xsl:use-attribute-sets="term-name-style" role="SKIP">
+
 					<xsl:apply-templates select="ancestor::*[local-name() = 'term'][1]/*[local-name() = 'name']"/>
 				</fo:block>
 			</xsl:if>
 
 			<fo:block xsl:use-attribute-sets="preferred-term-style" role="SKIP">
 				<xsl:call-template name="setStyle_preferred"/>
+
 				<xsl:apply-templates/>
 			</fo:block>
 		</fo:block>
@@ -18312,9 +18321,10 @@
 	<xsl:template name="insertBackgroundPageImage">
 		<xsl:param name="number">1</xsl:param>
 		<xsl:param name="name">coverpage-image</xsl:param>
+		<xsl:param name="suffix"/>
 		<xsl:variable name="num" select="number($number)"/>
 		<!-- background image -->
-		<fo:block-container absolute-position="fixed" left="0mm" top="0mm" font-size="0" id="__internal_layout__coverpage_{$name}_{$number}_{generate-id()}">
+		<fo:block-container absolute-position="fixed" left="0mm" top="0mm" font-size="0" id="__internal_layout__coverpage{$suffix}_{$name}_{$number}_{generate-id()}">
 			<fo:block>
 				<xsl:for-each select="/*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = $name][1]/*[local-name() = 'value']/*[local-name() = 'image'][$num]">
 					<xsl:choose>
@@ -18380,16 +18390,29 @@
 
 	<!-- END: insert cover page image -->
 
+	<xsl:variable name="regex_ja_spec">[\uFF08\uFF09]</xsl:variable>
 	<xsl:template name="insertVerticalChar">
 		<xsl:param name="str"/>
+		<xsl:param name="writing-mode">lr-tb</xsl:param>
+		<xsl:param name="reference-orientation">90</xsl:param>
 		<xsl:if test="string-length($str) &gt; 0">
-			<fo:inline-container writing-mode="lr-tb" text-align="center" alignment-baseline="central" reference-orientation="90" width="1em" margin="0" padding="0" text-indent="0mm" last-line-end-indent="0mm" start-indent="0mm" end-indent="0mm">
+			<fo:inline-container text-align="center" alignment-baseline="central" width="1em" margin="0" padding="0" text-indent="0mm" last-line-end-indent="0mm" start-indent="0mm" end-indent="0mm">
+				<xsl:if test="normalize-space($writing-mode) != ''">
+					<xsl:attribute name="writing-mode"><xsl:value-of select="$writing-mode"/></xsl:attribute>
+					<xsl:attribute name="reference-orientation">90</xsl:attribute>
+				</xsl:if>
+				<xsl:variable name="char" select="substring($str,1,1)"/>
+				<xsl:if test="normalize-space(java:matches(java:java.lang.String.new($char), concat('(', $regex_ja_spec, '{1,})'))) = 'true'">
+					<xsl:attribute name="reference-orientation">0</xsl:attribute>
+				</xsl:if>
 				<fo:block-container width="1em">
-						<fo:block line-height="1em"><xsl:value-of select="substring($str,1,1)"/></fo:block>
+						<fo:block line-height="1em"><xsl:value-of select="$char"/></fo:block>
 				</fo:block-container>
 			</fo:inline-container>
 			<xsl:call-template name="insertVerticalChar">
 				<xsl:with-param name="str" select="substring($str, 2)"/>
+				<xsl:with-param name="writing-mode" select="$writing-mode"/>
+				<xsl:with-param name="reference-orientation" select="$reference-orientation"/>
 			</xsl:call-template>
 		</xsl:if>
 	</xsl:template>
