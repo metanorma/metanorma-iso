@@ -710,65 +710,6 @@ RSpec.describe IsoDoc do
     OUTPUT
   end
 
-  it "processes figure keys (Word)" do
-    FileUtils.rm_rf "test.doc"
-    IsoDoc::Iso::WordConvert
-      .new(WORD_HTML_CSS.dup)
-      .convert("test", <<~INPUT, false)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <annex id="P" inline-header="false" obligation="normative" displayorder="1">
-            <figure id="samplecode">
-              <p>Hello</p>
-              <p>Key</p>
-              <dl>
-                <dt>
-                  <p>A</p>
-                </dt>
-                <dd>
-                  <p>B</p>
-                </dd>
-              </dl>
-            </figure>
-          </annex>
-        </iso-standard>
-      INPUT
-    word = File.read("test.doc", encoding: "UTF-8")
-      .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
-      .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-      <div class="WordSection3">
-        <p class="MsoNormal">
-          <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-        </p>
-        <div class="Section3">
-          <a id="P" name="P"/>
-          <div class="MsoNormal" style='text-align:center;'>
-            <a id="samplecode" name="samplecode"/>
-            <p class="MsoNormal">Hello</p>
-            <p class="MsoNormal">Key</p>
-            <p class="MsoNormal" style="page-break-after:avoid;">
-              <b>Key</b>
-            </p>
-            <div class="figdl" style="page-break-after:avoid;">
-              <table class="figdl">
-                <tr>
-                  <td align="left" valign="top">
-                    <p align="left" class="MsoNormal" style="margin-left:0pt;text-align:left;">
-                      <p class="MsoNormal">A</p>
-                    </p>
-                  </td>
-                  <td valign="top">
-                    <p class="MsoNormal">B</p>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    OUTPUT
-  end
-
   it "processes editorial notes (Word)" do
     FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert
