@@ -3731,6 +3731,21 @@
 		</xsl:choose>
 	</xsl:template>
 
+	<xsl:template match="iso:copyright-statement/iso:clause" priority="3">
+		<fo:block role="SKIP">
+			<xsl:if test="@id = 'boilerplate-copyright-default' and ../iso:clause">
+				<xsl:attribute name="color">blue</xsl:attribute>
+				<xsl:attribute name="border">1pt solid blue</xsl:attribute>
+				<xsl:attribute name="padding">1mm</xsl:attribute>
+			</xsl:if>
+			<xsl:if test="not(@id = 'boilerplate-copyright-default') and preceding-sibling::iso:clause">
+				<xsl:attribute name="margin-top">5mm</xsl:attribute>
+			</xsl:if>
+			<xsl:copy-of select="@id"/>
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
+
 	<xsl:template match="iso:copyright-statement//iso:p" priority="2">
 		<xsl:choose>
 			<xsl:when test="$layoutVersion = '1951'">
@@ -3777,7 +3792,7 @@
 						<xsl:attribute name="margin-left">0.5mm</xsl:attribute>
 						<xsl:attribute name="margin-right">0.5mm</xsl:attribute>
 					</xsl:if>
-					<xsl:if test="contains(@id, 'address')">
+					<xsl:if test="contains(@id, 'address') or contains(normalize-space(), 'Tel:') or contains(normalize-space(), 'Phone:')">
 						<xsl:attribute name="margin-left">4.5mm</xsl:attribute>
 					</xsl:if>
 					<xsl:apply-templates/>
@@ -9656,17 +9671,18 @@
 						</fo:block>
 					</xsl:when>  <!-- END: a few components -->
 					<xsl:when test="$parent = 'figure' and  (not(../@class) or ../@class !='pseudocode')"> <!-- definition list in a figure -->
-						<fo:block font-weight="bold" text-align="left" margin-bottom="12pt" keep-with-next="always">
-
+						<!-- commented, Presentation XML contains 'Key' caption, https://github.com/metanorma/isodoc/issues/607 -->
+						<!-- <fo:block font-weight="bold" text-align="left" margin-bottom="12pt" keep-with-next="always">
+						
 							<xsl:call-template name="refine_figure_key_style"/>
-
+						
 							<xsl:variable name="title-key">
 								<xsl:call-template name="getLocalizedString">
 									<xsl:with-param name="key">key</xsl:with-param>
 								</xsl:call-template>
 							</xsl:variable>
 							<xsl:value-of select="$title-key"/>
-						</fo:block>
+						</fo:block> -->
 					</xsl:when>  <!-- END: definition list in a figure -->
 				</xsl:choose>
 
@@ -9855,6 +9871,14 @@
 		</xsl:if>
 
 	</xsl:template> <!-- END: dl -->
+
+	<!-- caption for figure key and another caption -->
+	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'p'][@keep-with-next = 'true' and *[local-name() = 'strong']]" priority="3">
+		<fo:block text-align="left" margin-bottom="12pt" keep-with-next="always">
+			<xsl:call-template name="refine_figure_key_style"/>
+			<xsl:apply-templates/>
+		</fo:block>
+	</xsl:template>
 
 	<xsl:template name="refine_dl_formula_where_style">
 
