@@ -76,6 +76,7 @@ RSpec.describe Metanorma::Iso do
       :copyright-year: 2000
       :horizontal: true
       :fast-track: true
+      :price-code: XC
     INPUT
     output = <<~OUTPUT
       <bibdata type="standard">
@@ -284,6 +285,7 @@ RSpec.describe Metanorma::Iso do
           </structuredidentifier>
           <stagename abbreviation="WD">Working Draft International Standard</stagename>
           <fast-track>true</fast-track>
+          <price-code>XC</price-code>
         </ext>
       </bibdata>
     OUTPUT
