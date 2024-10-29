@@ -183,7 +183,6 @@ module IsoDoc
         measurement_units(node, out)
         out.div **figure_attrs(node) do |div|
           node.children.each do |n|
-            figure_key(out) if n.name == "dl"
             n.name == "note" && n["type"] == "units" and next
             parse(n, div) unless n.name == "name"
           end

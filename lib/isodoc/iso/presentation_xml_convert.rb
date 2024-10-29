@@ -52,6 +52,7 @@ module IsoDoc
       end
 
       def figure1(node)
+        figure_key(elem.at(ns("./dl")))
         lbl = @xrefs.anchor(node["id"], :label, false) or return
         figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
         conn = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
