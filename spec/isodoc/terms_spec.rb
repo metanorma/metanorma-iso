@@ -75,7 +75,7 @@ RSpec.describe IsoDoc do
             <term id='paddy1'><name>1.1</name>
               <preferred><strong>paddy</strong></preferred>
               <definition>
-                <p id='_'>&#x3c;rice&#x3e; rice retaining its husk after threshing</p>
+                <p id='_'>&#x3c;<domain>rice</domain>&#x3e; rice retaining its husk after threshing</p>
               </definition>
               <termexample id='_'>
                 <name>EXAMPLE 1</name>

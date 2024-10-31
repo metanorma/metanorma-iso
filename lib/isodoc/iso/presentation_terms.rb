@@ -52,19 +52,6 @@ module IsoDoc
                      node.children)
       end
 
-      def termdefinition1(elem)
-        prefix_domain_to_definition(elem)
-        super
-      end
-
-      def prefix_domain_to_definition(elem)
-        ((d = elem.at(ns("./domain"))) &&
-          (v = elem.at(ns("./definition/verbal-definition"))) &&
-          v.elements.first.name == "p") or return
-        v.elements.first.children.first.previous =
-          "&#x3c;#{to_xml(d.remove.children)}&#x3e; "
-      end
-
       def insertall_after_here(node, insert, name)
         node.children.each do |n|
           n.name == name or next
