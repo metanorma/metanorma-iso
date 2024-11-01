@@ -1160,7 +1160,7 @@ RSpec.describe IsoDoc do
               <name>2.1</name>
               <preferred><strong>waxy rice</strong></preferred>
               <termnote id="note1">
-                <name>Note 1 to entry</name>
+                <name>Note 1 to entry:</name>
                 <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
@@ -1170,13 +1170,13 @@ RSpec.describe IsoDoc do
               <name>2.2</name>
               <preferred><strong>nonwaxy rice</strong></preferred>
               <termnote id="note2">
-                <name>Note 1 to entry</name>
+                <name>Note 1 to entry:</name>
                 <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
               </termnote>
               <termnote id="note3">
-                <name>Note 2 to entry</name>
+                <name>Note 2 to entry:</name>
                 <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>

@@ -103,12 +103,12 @@ RSpec.describe IsoDoc do
                 <p id='_'>rice retaining its husk after threshing</p>
               </definition>
               <termnote id='_'>
-                <name>Note 1 to entry</name>
+                <name>Note 1 to entry:</name>
                 <p id='_'>The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.</p>
               </termnote>
               <termnote id='_'>
-                <name>Note 2 to entry</name>
+                <name>Note 2 to entry:</name>
                 <ul>
                   <li>A</li>
                 </ul>
