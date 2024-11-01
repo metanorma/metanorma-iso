@@ -21,7 +21,7 @@ RSpec.describe IsoDoc do
             <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
         </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <example id="samplecode">
               <name>EXAMPLE — Title</name>
               <p>Hello</p>
@@ -114,7 +114,7 @@ RSpec.describe IsoDoc do
             <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <example id="samplecode">
               <name>EXAMPLE 1</name>
               <quote>Hello</quote>
@@ -212,7 +212,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
         </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="caution">
                          <p id='_'>
                  CAUTION — Only use paddy or parboiled rice for the
@@ -262,7 +262,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <admonition id="_" type="caution">
               <name>CAUTION</name>
             </admonition>
@@ -296,7 +296,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
            </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="caution">
           <name>Title</name>
           <ul>
@@ -386,7 +386,7 @@ RSpec.describe IsoDoc do
             <clause type="toc" id="_" displayorder="1">
               <title depth="1">Contents</title>
           </clause>
-            <foreword displayorder="2">
+            <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="editorial">
                          <p id='_'>EDITORIAL NOTE —
                  Only use paddy or parboiled rice for the
@@ -453,7 +453,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns='http://riboseinc.com/isoxml'>
         <preface>
         <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword id='fwd' displayorder="2">
+          <foreword id='fwd' displayorder="2"><title>Foreword</title>
             <p>
             </p>
           </foreword>
@@ -646,7 +646,7 @@ RSpec.describe IsoDoc do
       .convert("test", <<~INPUT, true)
         <iso-standard xmlns='http://riboseinc.com/isoxml'>
           <preface>
-            <foreword id='fwd' displayorder="1">
+            <foreword id='fwd' displayorder="1"><title>Foreword</title>
               <p>
                 <xref target='N'/>
                 <xref target='note1'/>
@@ -919,7 +919,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <formula id="_" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
               <p keep-with-next="true">where</p>
@@ -946,7 +946,7 @@ RSpec.describe IsoDoc do
               </note>
             </formula>
             <formula id="_">
-              <name>1</name>
+              <name>(1)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </foreword>
@@ -1098,7 +1098,7 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <formula id="_" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
               <p>where
@@ -1110,7 +1110,7 @@ RSpec.describe IsoDoc do
               </note>
             </formula>
             <formula id="_">
-              <name>1</name>
+              <name>(1)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </foreword>
@@ -1222,7 +1222,7 @@ RSpec.describe IsoDoc do
       <clause type="toc" id="_" displayorder="1">
         <title depth="1">Contents</title>
       </clause>
-       <foreword displayorder="2">
+       <foreword displayorder="2"><title>Foreword</title>
                 <figure id="figureA-1" keep-with-next="true" keep-lines-together="true">
                    <name>
                       Figure 1 — Split-it-right
@@ -1353,7 +1353,7 @@ RSpec.describe IsoDoc do
               <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <ol type='alphabet'>
               <li id="_" label="">
                 <p>A</p>
@@ -1491,7 +1491,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
          <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-           <foreword displayorder='2'>
+           <foreword displayorder='2'><title>Foreword</title>
              <ol start='4' type='alphabet'>
                <li id="_" label="">List</li>
              </ol>
@@ -1569,7 +1569,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
          <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-           <foreword displayorder='2'>
+           <foreword displayorder='2'><title>Foreword</title>
              <ul>
                <li>A</li>
                <li>

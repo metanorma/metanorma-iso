@@ -93,7 +93,7 @@ RSpec.describe IsoDoc do
            <clause type="toc" id="_" displayorder="1">
              <title depth="1">Contents</title>
            </clause>
-           <foreword displayorder="2">
+           <foreword displayorder="2"><title>Foreword</title>
              <table alt="tool tip" id="tableD-1" summary="long desc">
                <name>Table 1 — Repeatability and reproducibility of
                  <em>husked</em>
@@ -438,7 +438,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
             <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-           <foreword displayorder="2">
+           <foreword displayorder="2"><title>Foreword</title>
              <table id="tableD-1">
                <name>Table 1 — Repeatability and reproducibility of
                  <em>husked</em>

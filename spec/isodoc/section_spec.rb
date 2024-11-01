@@ -114,14 +114,14 @@ RSpec.describe IsoDoc do
                 <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
-            <definitions id="K" inline-header="true"><title>3.2</title>
+            <definitions id="K"><title depth="2">3.2<tab/>Symbols</title>
               <dl>
                 <dt>Symbol</dt>
                 <dd>Definition</dd>
               </dl>
             </definitions>
           </clause>
-          <definitions id="L" displayorder="7"><title>4</title>
+          <definitions id="L" displayorder="7"><title depth="1">4<tab/>Symbols</title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
@@ -199,9 +199,7 @@ RSpec.describe IsoDoc do
                 <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
               <div id="K">
-                <span class="zzMoveToFollowing inline-header">
-                  <b>3.2&#160; </b>
-                </span>
+                <h2>3.2  Symbols</h2>
                 <div class="figdl">
                 <dl>
                   <dt>
@@ -213,7 +211,7 @@ RSpec.describe IsoDoc do
               </div>
             </div>
             <div class="Symbols" id="L">
-              <h1>4</h1>
+            <h1>4  Symbols</h1>
               <div class="figdl">
               <dl>
                 <dt>
@@ -332,10 +330,7 @@ RSpec.describe IsoDoc do
                 <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
               <div id="K">
-                <span class="zzMoveToFollowing inline-header">
-                  <b>3.2
-                    <span style="mso-tab-count:1">&#160; </span></b>
-                </span>
+              <h2>3.2<span style="mso-tab-count:1">  </span>Symbols</h2>
                 <table class="dl">
                   <tr>
                     <td align="left" valign="top">
@@ -347,7 +342,7 @@ RSpec.describe IsoDoc do
               </div>
             </div>
             <div class="Symbols" id="L">
-              <h1>4</h1>
+            <h1>4<span style="mso-tab-count:1">  </span>Symbols</h1>
               <table class="dl">
                 <tr>
                   <td align="left" valign="top">

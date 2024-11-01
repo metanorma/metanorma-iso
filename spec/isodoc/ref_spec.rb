@@ -158,7 +158,7 @@ RSpec.describe IsoDoc do
            <clause type="toc" id="_" displayorder="1">
              <title depth="1">Contents</title>
            </clause>
-           <foreword displayorder="2">
+           <foreword displayorder="2"><title>Foreword</title>
              <p id="_">
                <xref target="ISO712">ISO 712</xref>
                <xref target="ISBN">[1]</xref>

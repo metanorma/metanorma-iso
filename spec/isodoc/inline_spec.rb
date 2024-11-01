@@ -8,7 +8,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <em>A</em>
               <strong>B</strong>
@@ -59,7 +59,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <link target="http://example.com"/>
               <link target="http://example.com">example</link>
@@ -96,7 +96,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <barry fred="http://example.com">example</barry>
             </p>
@@ -129,7 +129,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <stem type="AsciiMath">A</stem>
               <stem type="MathML"><m:math><m:row>X</m:row></m:math></stem>
@@ -170,7 +170,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p><stem type="AsciiMath">A</stem>(#((Hello))#)</p>
           </foreword>
         </preface>
@@ -390,7 +390,7 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
-          <foreword displayorder="1">
+          <foreword displayorder="1"><title>Foreword</title>
             <p>
               <sup>
                 <xref type="footnote" target="ISO712">A</xref>
@@ -522,7 +522,7 @@ RSpec.describe IsoDoc do
             <clause type="toc" id="_" displayorder="1">
               <title depth="1">Contents</title>
             </clause>
-            <foreword displayorder="2">
+            <foreword displayorder="2"><title>Foreword</title>
              <p>
                <eref bibitemid="IEV" citeas="IEV" type="inline"><locality type="clause"><referenceFrom>1-2-3</referenceFrom></locality><span class="stdpublisher">IEV</span>, <span class="citesec">1-2-3</span></eref>
                <xref type="inline" target="ISO712">
@@ -907,7 +907,7 @@ RSpec.describe IsoDoc do
         <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword id='A' displayorder='2'>
+          <foreword id='A' displayorder='2'><title>Foreword</title>
             <ul>
               <li>term</li>
             </ul>
@@ -970,7 +970,8 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-       .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+       .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes concept attributes" do

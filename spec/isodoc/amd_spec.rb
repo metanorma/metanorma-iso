@@ -78,7 +78,7 @@ RSpec.describe IsoDoc do
           </bibdata>
 
           <preface>
-            <foreword displayorder="1">
+            <foreword displayorder="1"><title>Foreword</title>
               <p>
                 <xref target="N">Clause 1, Note</xref>
                 <xref target="note1">2.1, Note  1</xref>
