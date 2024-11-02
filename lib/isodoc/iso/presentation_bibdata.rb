@@ -32,7 +32,7 @@ module IsoDoc
         ret = "<review date='#{Date.today}' reviewer='Metanorma' id='_#{id}'>" \
               "<p><strong>Metadata warnings:<strong></p> #{ret}</review>"
         ins = docxml.at(ns("//sections//title")) or return
-        ins.children.first.previous = ret
+        ins.add_first_child ret
       end
 
       def editorialgroup_identifier(docxml)

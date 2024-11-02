@@ -120,7 +120,7 @@ module IsoDoc
       def admonition_inline_name(elem)
         n = elem.at(ns("./name")) or return
         if (p = n.next_element) && p&.name == "p"
-          p.children.first.previous = admonition_name(to_xml(n.remove.children))
+          p.add_first_child admonition_name(to_xml(n.remove.children))
         end
       end
 
@@ -166,7 +166,7 @@ module IsoDoc
 
       def table1(elem)
         elem.xpath(ns(".//dl[@key = 'true'][not(./name)]")).each do |dl|
-          dl.children.first.previous = "<name>#{@i18n.key}</name>"
+          dl.add_first_child "<name>#{@i18n.key}</name>"
         end
         super
       end
@@ -181,7 +181,7 @@ module IsoDoc
           return
         s = docxml.at(ns("//sections")) or return
         ret = "#{middle_title_main}#{middle_title_amd}"
-        s.children.first.previous = ret
+        s.add_first_child ret
       end
 
       def middle_title_main
