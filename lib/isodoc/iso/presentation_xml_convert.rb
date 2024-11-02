@@ -31,7 +31,6 @@ module IsoDoc
         admonition docxml
         source docxml
         ol docxml
-        dl docxml
         quote docxml
         permission docxml
         requirement docxml
@@ -40,6 +39,8 @@ module IsoDoc
         @xrefs.anchors_previous = @xrefs.anchors.dup # store old xrefs of reqts
         @xrefs.parse docxml
         table docxml # have table include requirements newly converted to tables
+        # table feeds dl
+        dl docxml
         example docxml
         note docxml
       end
