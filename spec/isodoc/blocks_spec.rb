@@ -1153,7 +1153,7 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(html)
   end
 
-    it "processes figures" do
+  it "processes figures" do
     input = <<~INPUT
             <iso-standard xmlns="http://riboseinc.com/isoxml">
             <preface><foreword>
@@ -1216,7 +1216,7 @@ RSpec.describe IsoDoc do
       </bibliography>
             </iso-standard>
     INPUT
- presxml = <<~OUTPUT
+    presxml = <<~OUTPUT
         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
             <preface>
       <clause type="toc" id="_" displayorder="1">
@@ -1239,11 +1239,10 @@ RSpec.describe IsoDoc do
                    <p keep-with-next="true">
                       <strong>
                          Key
-                         <strong/>
                       </strong>
                    </p>
                    <dl class="formula_dl">
-                      <dt>a</dt>
+                      <dt><p><sup>a</sup></p></dt>
                       <dd>
                          <p id="_">
                             The time
@@ -1306,9 +1305,9 @@ RSpec.describe IsoDoc do
              </bibliography>
        </iso-standard>
     OUTPUT
- expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
-      .new(presxml_options)
-      .convert("test", input, true).gsub(/&lt;/, "&#x3c;"))))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+       .new(presxml_options)
+       .convert("test", input, true).gsub(/&lt;/, "&#x3c;"))))
       .to be_equivalent_to Xml::C14n.format(presxml)
   end
 

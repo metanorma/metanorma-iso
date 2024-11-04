@@ -13,11 +13,6 @@ module IsoDoc
         super
       end
 
-      def implicit_reference(bib)
-        bib.at(ns("./docidentifier"))&.text == "IEV" and return true
-        super
-      end
-
       # terms not defined in standoc
       def error_parse(node, out)
         case node.name
@@ -113,7 +108,7 @@ module IsoDoc
           admonition_name_parse(node, p, name) if name
           node.first_element_child.children.each { |n| parse(n, p) }
         end
-        node.element_children[1..-1].each { |n| parse(n, div) }
+        node.element_children[1..].each { |n| parse(n, div) }
       end
 
       def admonition_name_parse(_node, div, name)
@@ -152,12 +147,6 @@ module IsoDoc
 
       def ol_attrs(node)
         super.merge(start: node["start"]).compact
-      end
-
-      def render_identifier(ident)
-        ret = super
-        ret[:sdo] = std_docid_semantic(ret[:sdo])
-        ret
       end
 
       def table_parse(node, out)

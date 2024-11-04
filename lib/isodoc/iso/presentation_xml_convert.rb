@@ -219,14 +219,23 @@ module IsoDoc
       end
 
       def move_norm_ref_to_sections(docxml)
-        if amd?(docxml)
-        else super
-        end
+        amd?(docxml) or super
       end
 
       def twitter_cldr_localiser_symbols
         { group: "&#xA0;", fraction_group: "&#xA0;",
           fraction_group_digits: 3 }
+      end
+
+      def implicit_reference(bib)
+        bib.at(ns("./docidentifier"))&.text == "IEV" and return true
+        super
+      end
+
+      def render_identifier(ident)
+        ret = super
+        ret[:sdo] = std_docid_semantic(ret[:sdo])
+        ret
       end
 
       include Init
