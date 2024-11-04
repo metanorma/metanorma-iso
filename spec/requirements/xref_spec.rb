@@ -69,7 +69,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Requirement 1
@@ -180,7 +180,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Requirement 1
@@ -294,7 +294,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder="2">
+      <foreword displayorder="2"><title>Foreword</title>
          <p>
            <xref target="N1" style="modspec">
              Requirement 1: First
@@ -418,7 +418,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1a'>Table 1, Requirement 1 A</xref>
            <xref target='N1b'>Table 1, Requirement 1 B</xref>
@@ -510,7 +510,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Conformance test 1
@@ -611,7 +611,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Avant-propos</title>
          <p>
            <xref target='N1'>
              Tableau 1, Test de conformité 1
@@ -711,7 +711,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Recommendation 1
@@ -811,7 +811,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Conformance test 1
@@ -911,7 +911,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Permission 1
@@ -1011,7 +1011,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Conformance test 1
@@ -1098,7 +1098,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Permission 1
@@ -1188,7 +1188,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Abstract test 1
@@ -1288,7 +1288,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
          <p>
            <xref target='N1'>
              Table 1, Conformance class 1

@@ -173,7 +173,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <td colspan='2'>
           <p id='_'>The measurement target shall be measured as:</p>
           <formula id='_'>
-            <name>1</name>
+            <name>(1)</name>
             <stem type='AsciiMath'>r/1 = 0</stem>
           </formula>
         </td>
@@ -667,7 +667,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td colspan='2'>
                      <p id='_'>The measurement target shall be measured as:</p>
                      <formula id='_'>
-                       <name>1</name>
+                       <name>(1)</name>
                        <stem type='AsciiMath'>r/1 = 0</stem>
                      </formula>
                    </td>
@@ -776,7 +776,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </tr>
             <tr> <td colspan='2'>
           <p id="_">The measurement target shall be measured as:</p>
-          <formula id="_"><name>1</name>
+          <formula id="_"><name>(1)</name>
             <stem type="AsciiMath">r/1 = 0</stem>
           </formula>
         </td></tr><tr><td colspan="2">
@@ -1416,7 +1416,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td colspan='2'>
                     <p id='_'>The measurement target shall be measured as:</p>
                     <formula id='B'>
-                      <name>1</name>
+                      <name>(1)</name>
                       <stem type='AsciiMath'>r/1 = 0</stem>
                     </formula>
                   </td>
@@ -1532,7 +1532,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td colspan='2'>
                     <p id='_'>The measurement target shall be measured as:</p>
                     <formula id='_'>
-                      <name>1</name>
+                      <name>(1)</name>
                       <stem type='AsciiMath'>r/1 = 0</stem>
                     </formula>
                   </td>
