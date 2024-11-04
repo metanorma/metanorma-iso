@@ -1239,11 +1239,10 @@ RSpec.describe IsoDoc do
                    <p keep-with-next="true">
                       <strong>
                          Key
-                         <strong/>
                       </strong>
                    </p>
                    <dl class="formula_dl">
-                      <dt>a</dt>
+                      <dt><p><sup>a</sup></p></dt>
                       <dd>
                          <p id="_">
                             The time
