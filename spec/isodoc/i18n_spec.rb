@@ -1460,7 +1460,9 @@ RSpec.describe IsoDoc do
            <clause id="D" obligation="normative" type="scope" displayorder="4">
              <title depth="1">1<tab/>Scope</title>
              <p id="E">
-               <xref type="inline" target="ISO712">ISO 712， <span class="citetbl">第1～1表</span></xref>
+               <xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span>
+               <span class="stddocNumber">712</span>，
+                <span class="citetbl">第1～1表</span></xref>
              </p>
            </clause>
            <clause id="H" obligation="normative" displayorder="7">
@@ -1508,7 +1510,11 @@ RSpec.describe IsoDoc do
                <formattedref><em>Cereals and cereal products</em>.</formattedref>
                <docidentifier>ISO 712</docidentifier>
                <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-               <biblio-tag>ISO 712, </biblio-tag>
+            <biblio-tag>
+               <span class="stdpublisher">ISO </span>
+               <span class="stddocNumber">712</span>
+               ,
+            </biblio-tag>
              </bibitem>
            </references>
          </sections>
@@ -1560,12 +1566,15 @@ RSpec.describe IsoDoc do
              <div id="D">
                <h1>1　Scope</h1>
                <p id="E">
-                 <a href="#ISO712">ISO 712， <span class="citetbl">第1～1表</span></a>
+                 <a href="#ISO712"><span class="stdpublisher">ISO </span>
+                  <span class="stddocNumber">712</span>，
+                  <span class="citetbl">第1～1表</span></a>
                </p>
              </div>
              <div>
                <h1>2　Normative References</h1>
-               <p id="ISO712" class="NormRef">ISO 712, <i>Cereals and cereal products</i>.</p>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
+              <i>Cereals and cereal products</i>.</p>
              </div>
              <div id="D0">
                <h1>条3：　General</h1>
@@ -1697,10 +1706,18 @@ RSpec.describe IsoDoc do
       <foreword obligation='informative' displayorder='2'>
               <title>Foreword</title>
               <p id='A'>
-              <xref type="inline" target="ISO712">ISO 712, Appendice 7</xref>
+     <xref type="inline" target="ISO712">
+        <span class="stdpublisher">ISO </span>
+        <span class="stddocNumber">712</span>
+        , Appendice 7
+     </xref>
               </p>
               <p id='B'>
-              <xref type="inline" target="ISO712">ISO 712, <span class="citeapp">Annexe 7</span></xref>
+              <xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span>
+         <span class="stddocNumber">712</span>
+         ,
+         <span class="citeapp">Annexe 7</span>
+      </xref>
         </p>
       </foreword>
     OUTPUT

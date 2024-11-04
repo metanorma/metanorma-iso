@@ -1297,7 +1297,11 @@ RSpec.describe IsoDoc do
                    </formattedref>
                    <docidentifier type="ISO">ISO 712</docidentifier>
                    <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-                   <biblio-tag>ISO 712, </biblio-tag>
+            <biblio-tag>
+               <span class="stdpublisher">ISO </span>
+               <span class="stddocNumber">712</span>
+               ,
+            </biblio-tag>
                 </bibitem>
              </references>
           </sections>
