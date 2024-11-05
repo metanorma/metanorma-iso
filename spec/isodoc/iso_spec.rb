@@ -177,13 +177,14 @@ RSpec.describe IsoDoc::Iso do
     INPUT
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
-    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(strip_guid(<<~"OUTPUT"))
+    expect(Xml::C14n.format(strip_guid(output)))
+     .to be_equivalent_to Xml::C14n.format(strip_guid(<<~"OUTPUT"))
       #{HTML_HDR}
             <br/>
             <div>
               <h1 class="ForewordTitle">Foreword</h1>
               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
-                <a href="#IEV">IEV</a>
+                <a href="http://www.electropedia.org">IEV</a>
                 <a href="#ISO20483">ISO 20483</a>
               </p>
             </div>

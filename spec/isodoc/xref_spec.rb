@@ -67,7 +67,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target="N">Clause 1, Note</xref>
               <xref target="note1">3.1, Note 1</xref>
@@ -189,7 +189,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-           <foreword displayorder="2">
+           <foreword displayorder="2"><title>Foreword</title>
              <p>
                <xref target="note1">[note1]</xref>
                <xref target="note2">1.1, Note</xref>
@@ -252,7 +252,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-           <foreword displayorder="2">
+           <foreword displayorder="2"><title>Foreword</title>
              <p>
                <xref target="note1">[note1]</xref>
                <xref target="note2">1.1, Note  1</xref>
@@ -358,7 +358,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword id="fwd" displayorder='2'>
+          <foreword id="fwd" displayorder='2'><title>Foreword</title>
             <p>
               <xref target="N"><span class='citefig'>Figure 1</span></xref>
               <xref target="note1"><span class='citefig'>Figure 2</span></xref>
@@ -500,7 +500,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword id="fwd" displayorder='2'>
+          <foreword id="fwd" displayorder='2'><title>Foreword</title>
             <p>
               <xref target="N"><span class='citefig'>Figure 1</span></xref>
               <xref target="note1"><span class='citefig'>Figure 1 a)</span></xref>
@@ -639,7 +639,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target="N">Clause 1, Example</xref>
               <xref target="note1">3.1, Example 1</xref>
@@ -797,7 +797,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target="N">Clause 1, Formula (1)</xref>
               <xref target="note1">3.1, Formula (2)</xref>
@@ -814,7 +814,7 @@ RSpec.describe IsoDoc do
               <tab/>
               Scope</title>
             <formula id="N">
-              <name>1</name>
+              <name>(1)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
             <p>
@@ -831,11 +831,11 @@ RSpec.describe IsoDoc do
             <clause id="widgets1" inline-header="true">
               <title>3.1</title>
               <formula id="note1">
-                <name>2</name>
+                <name>(2)</name>
                 <stem type="AsciiMath">r = 1 %</stem>
               </formula>
               <formula id="note2">
-                <name>3</name>
+                <name>(3)</name>
                 <stem type="AsciiMath">r = 1 %</stem>
               </formula>
               <p>
@@ -852,18 +852,18 @@ RSpec.describe IsoDoc do
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <formula id="AN">
-              <name>A.1</name>
+              <name>(A.1)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </clause>
           <clause id="annex1b" inline-header="true">
             <title>A.2</title>
             <formula id="Anote1">
-              <name>A.2</name>
+              <name>(A.2)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
             <formula id="Anote2">
-              <name>A.3</name>
+              <name>(A.3)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </clause>
@@ -983,7 +983,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target="N"><span class='citetbl'>Table 1</span></xref>
               <xref target="note1"><span class='citetbl'>Table 2</span></xref>
@@ -1140,7 +1140,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target="note1">2.1, Note 1</xref>
               <xref target="note2">2.2, Note 1</xref>
@@ -1160,7 +1160,7 @@ RSpec.describe IsoDoc do
               <name>2.1</name>
               <preferred><strong>waxy rice</strong></preferred>
               <termnote id="note1">
-                <name>Note 1 to entry</name>
+                <name>Note 1 to entry:</name>
                 <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
@@ -1170,13 +1170,13 @@ RSpec.describe IsoDoc do
               <name>2.2</name>
               <preferred><strong>nonwaxy rice</strong></preferred>
               <termnote id="note2">
-                <name>Note 1 to entry</name>
+                <name>Note 1 to entry:</name>
                 <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
               </termnote>
               <termnote id="note3">
-                <name>Note 2 to entry</name>
+                <name>Note 2 to entry:</name>
                 <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.
                 </p>
@@ -1358,8 +1358,8 @@ RSpec.describe IsoDoc do
                 <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
-            <definitions id='K' inline-header='true'>
-              <title>3.2</title>
+            <definitions id='K'>
+              <title depth="2">3.2<tab/>Symbols</title>
               <dl>
                 <dt>Symbol</dt>
                 <dd>Definition</dd>
@@ -1367,7 +1367,7 @@ RSpec.describe IsoDoc do
             </definitions>
           </terms>
           <definitions id='L' displayorder='7'>
-            <title>4</title>
+            <title depth="1">4<tab/>Symbols</title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
@@ -1548,16 +1548,24 @@ RSpec.describe IsoDoc do
                    </preferred>
                  </term>
                </terms>
-               <definitions id="K" inline-header="true">
-                 <title>1.3.2</title>
+               <definitions id="K">
+               <title depth="3">
+                  1.3.2
+                  <tab/>
+                  Symbols
+               </title>
                  <dl>
                    <dt>Symbol</dt>
                    <dd>Definition</dd>
                  </dl>
                </definitions>
              </terms>
-             <definitions id="L" inline-header="true">
-               <title>1.4</title>
+               <definitions id="L">
+           <title depth="2">
+              1.4
+              <tab/>
+              Symbols
+           </title>
                <dl>
                  <dt>Symbol</dt>
                  <dd>Definition</dd>
@@ -1640,7 +1648,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target="N">Clause 1, List</xref>
               <xref target="note1">3.1, List 1</xref>
@@ -1787,7 +1795,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target='N'>Clause 1 a)</xref>
               <xref target='note1'>3.1, List 1 a)</xref>
@@ -1937,7 +1945,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <p>
               <xref target='N'>Clause 1 a)</xref>
               <xref target='note1'>Clause 1 a) 1)</xref>
@@ -2044,7 +2052,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
         <p><xref target='Na'>Clause 1 a)</xref></p>
       </foreword>
     OUTPUT
@@ -2081,7 +2089,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'>
+      <foreword displayorder='2'><title>Foreword</title>
         <p><xref target='Na'>Clause 1, List 1 a)</xref></p>
       </foreword>
     OUTPUT

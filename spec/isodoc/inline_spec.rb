@@ -8,7 +8,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <em>A</em>
               <strong>B</strong>
@@ -59,7 +59,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <link target="http://example.com"/>
               <link target="http://example.com">example</link>
@@ -96,7 +96,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <barry fred="http://example.com">example</barry>
             </p>
@@ -129,7 +129,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p>
               <stem type="AsciiMath">A</stem>
               <stem type="MathML"><m:math><m:row>X</m:row></m:math></stem>
@@ -170,7 +170,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <p><stem type="AsciiMath">A</stem>(#((Hello))#)</p>
           </foreword>
         </preface>
@@ -390,7 +390,7 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
-          <foreword displayorder="1">
+          <foreword displayorder="1"><title>Foreword</title>
             <p>
               <sup>
                 <xref type="footnote" target="ISO712">A</xref>
@@ -418,7 +418,11 @@ RSpec.describe IsoDoc do
                   <abbreviation>ISO</abbreviation>
                 </organization>
               </contributor>
-              <biblio-tag>ISO 712, </biblio-tag>
+            <biblio-tag>
+               <span class="stdpublisher">ISO </span>
+               <span class="stddocNumber">712</span>
+               ,
+            </biblio-tag>
             </bibitem>
           </references>
         </sections>
@@ -517,59 +521,127 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(strip_guid(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
       .sub(%r{<i18nyaml>.*</i18nyaml>}m, "")))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-            <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
-            <clause type="toc" id="_" displayorder="1">
-              <title depth="1">Contents</title>
-            </clause>
-            <foreword displayorder="2">
-             <p>
-               <eref bibitemid="IEV" citeas="IEV" type="inline"><locality type="clause"><referenceFrom>1-2-3</referenceFrom></locality><span class="stdpublisher">IEV</span>, <span class="citesec">1-2-3</span></eref>
-               <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO </span>
-                 <span class="stddocNumber">712</span>
-               </xref>
-               <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO </span>
-                 <span class="stddocNumber">712</span>
-               </xref>
-               <xref type="inline" target="ISO712">ISO 712</xref>
-               <xref type="inline" target="ISO712">ISO 712, <span class="citetbl">Table 1</span></xref>
-               <xref type="inline" target="ISO712">ISO 712, <span class="citetbl">Table 1–1</span></xref>
-               <xref type="inline" target="ISO712">ISO 712, <span class="citesec">Clause 1</span>, <span class="citetbl">Table 1</span></xref>
-               <xref type="inline" target="ISO712">ISO 712, <span class="citesec">Clause 1</span> a)</xref>
-               <xref type="inline" target="ISO712">ISO 712, <span class="citesec">Clause 1</span></xref>
-               <xref type="inline" target="ISO712">ISO 712, <span class="citesec">1.5</span></xref>
-               <xref type="inline" target="ISO712">
+             <clause type="toc" id="_" displayorder="1">
+                <title depth="1">Contents</title>
+             </clause>
+             <foreword displayorder="2">
+                <title>Foreword</title>
+                <p>
+                   <eref bibitemid="IEV" citeas="IEV" type="inline">
+                      <locality type="clause">
+                         <referenceFrom>1-2-3</referenceFrom>
+                      </locality>
+                      <span class="stdpublisher">IEV</span>
+                      ,
+                      <span class="citesec">1-2-3</span>
+                   </eref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                      <span class="citetbl">Table 1</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                      <span class="citetbl">Table 1–1</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                      <span class="citesec">Clause 1</span>
+                      ,
+                      <span class="citetbl">Table 1</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                      <span class="citesec">Clause 1</span>
+                      a)
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                      <span class="citesec">Clause 1</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                      <span class="citesec">1.5</span>
+                   </xref>
+                   <xref type="inline" target="ISO712">
                  A</xref>
-               <xref type="inline" target="ISO712">ISO 712, Whole of text</xref>
-               <xref type="inline" target="ISO712">ISO 712, Prelude 7</xref>
-               <xref type="inline" target="ISO712">A</xref>
-               <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO </span>
-                 <span class="stddocNumber">712</span>
-               </xref>
-               <eref type="inline" bibitemid="ISO_10303_32">[ISO 10303-32<fn reference="1"><p>To be published.</p></fn>]</eref>
-             </p>
-           </foreword>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      , Whole of text
+                   </xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      , Prelude 7
+                   </xref>
+                   <xref type="inline" target="ISO712">A</xref>
+                   <xref type="inline" target="ISO712">
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                   </xref>
+                   <eref type="inline" bibitemid="ISO_10303_32">
+                      [ISO 10303-32
+                      <fn reference="1">
+                         <p>To be published.</p>
+                      </fn>
+                      ]
+                   </eref>
+                </p>
+             </foreword>
           </preface>
           <sections>
-            <references id="_" normative="true" obligation="informative" displayorder="3">
-              <title depth="1">1<tab/>Normative References</title>
-              <bibitem id="ISO712" type="standard">
-                <formattedref>
-                  <em>
-                    <span class="stddocTitle">Cereals and cereal products</span>
-                  </em>
-                </formattedref>
-                <docidentifier>ISO 712</docidentifier>
-                <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-                <biblio-tag>ISO 712, </biblio-tag>
-              </bibitem>
-            </references>
-            </sections>
-          <bibliography/>
-        </iso-standard>
+             <references id="_" normative="true" obligation="informative" displayorder="3">
+                <title depth="1">
+                   1
+                   <tab/>
+                   Normative References
+                </title>
+                <bibitem id="ISO712" type="standard">
+                   <formattedref>
+                      <em>
+                         <span class="stddocTitle">Cereals and cereal products</span>
+                      </em>
+                   </formattedref>
+                   <docidentifier>ISO 712</docidentifier>
+                   <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+                   <biblio-tag>
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                   </biblio-tag>
+                </bibitem>
+             </references>
+          </sections>
+          <bibliography>
+           
+         </bibliography>
+       </iso-standard>
       OUTPUT
   end
 
@@ -749,7 +821,11 @@ RSpec.describe IsoDoc do
               </formattedref>
               <docidentifier type="ISO">ISO 712</docidentifier>
               <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-              <biblio-tag>ISO 712, </biblio-tag>
+            <biblio-tag>
+               <span class="stdpublisher">ISO </span>
+               <span class="stddocNumber">712</span>
+               ,
+            </biblio-tag>
             </bibitem>
           </references>
         </sections>
@@ -761,7 +837,7 @@ RSpec.describe IsoDoc do
              <div>
                <h1>1  Normative References</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-               <p id="ISO712" class="NormRef">ISO&#xa0;712,<i><span class="stddocTitle">Cereals and cereal products</span></i></p>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products</span></i></p>
              </div>
                           <div id="Terms">
                <h1>2</h1>
@@ -907,7 +983,7 @@ RSpec.describe IsoDoc do
         <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword id='A' displayorder='2'>
+          <foreword id='A' displayorder='2'><title>Foreword</title>
             <ul>
               <li>term</li>
             </ul>
@@ -970,7 +1046,8 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-       .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+       .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes concept attributes" do

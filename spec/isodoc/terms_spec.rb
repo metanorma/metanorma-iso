@@ -74,8 +74,9 @@ RSpec.describe IsoDoc do
 
             <term id='paddy1'><name>1.1</name>
               <preferred><strong>paddy</strong></preferred>
+              <domain hidden="true">rice</domain>
               <definition>
-                <p id='_'>&#x3c;rice&#x3e; rice retaining its husk after threshing</p>
+                <p id='_'>&#x3c;<domain>rice</domain>&#x3e; rice retaining its husk after threshing</p>
               </definition>
               <termexample id='_'>
                 <name>EXAMPLE 1</name>
@@ -103,12 +104,12 @@ RSpec.describe IsoDoc do
                 <p id='_'>rice retaining its husk after threshing</p>
               </definition>
               <termnote id='_'>
-                <name>Note 1 to entry</name>
+                <name>Note 1 to entry:</name>
                 <p id='_'>The starch of waxy rice consists almost entirely of amylopectin. The
                   kernels have a tendency to stick together after cooking.</p>
               </termnote>
               <termnote id='_'>
-                <name>Note 2 to entry</name>
+                <name>Note 2 to entry:</name>
                 <ul>
                   <li>A</li>
                 </ul>

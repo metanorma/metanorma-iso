@@ -13,11 +13,6 @@ module IsoDoc
         super
       end
 
-      def implicit_reference(bib)
-        bib.at(ns("./docidentifier"))&.text == "IEV" and return true
-        super
-      end
-
       # terms not defined in standoc
       def error_parse(node, out)
         case node.name
@@ -40,7 +35,7 @@ module IsoDoc
           insert_tab(p, 1)
           node.first_element_child.children.each { |n| parse(n, p) }
         end
-        node.element_children[1..-1].each { |n| parse(n, div) }
+        node.element_children[1..].each { |n| parse(n, div) }
       end
 
       def example_parse1(node, div)
@@ -113,9 +108,10 @@ module IsoDoc
           admonition_name_parse(node, p, name) if name
           node.first_element_child.children.each { |n| parse(n, p) }
         end
-        node.element_children[1..-1].each { |n| parse(n, div) }
+        node.element_children[1..].each { |n| parse(n, div) }
       end
 
+      # TODO to presentation XML
       def admonition_name_parse(_node, div, name)
         name.children.each { |n| parse(n, div) }
         div << " &#x2014; "
@@ -154,12 +150,6 @@ module IsoDoc
         super.merge(start: node["start"]).compact
       end
 
-      def render_identifier(ident)
-        ret = super
-        ret[:sdo] = std_docid_semantic(ret[:sdo])
-        ret
-      end
-
       def table_parse(node, out)
         @in_table = true
         table_title_parse(node, out)
@@ -183,7 +173,6 @@ module IsoDoc
         measurement_units(node, out)
         out.div **figure_attrs(node) do |div|
           node.children.each do |n|
-            figure_key(out) if n.name == "dl"
             n.name == "note" && n["type"] == "units" and next
             parse(n, div) unless n.name == "name"
           end

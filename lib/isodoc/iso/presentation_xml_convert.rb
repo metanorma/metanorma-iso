@@ -31,6 +31,7 @@ module IsoDoc
         admonition docxml
         source docxml
         ol docxml
+        quote docxml
         permission docxml
         requirement docxml
         recommendation docxml
@@ -38,6 +39,8 @@ module IsoDoc
         @xrefs.anchors_previous = @xrefs.anchors.dup # store old xrefs of reqts
         @xrefs.parse docxml
         table docxml # have table include requirements newly converted to tables
+        # table feeds dl
+        dl docxml
         example docxml
         note docxml
       end
@@ -52,6 +55,8 @@ module IsoDoc
       end
 
       def figure1(node)
+        figure_fn(node)
+        figure_key(node.at(ns("./dl")))
         lbl = @xrefs.anchor(node["id"], :label, false) or return
         figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
         conn = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
@@ -113,10 +118,11 @@ module IsoDoc
         cell.children.each { |p| wrap_in_bold(p) }
       end
 
+      # TODO keep name, and append em-dash within it
       def admonition_inline_name(elem)
         n = elem.at(ns("./name")) or return
         if (p = n.next_element) && p&.name == "p"
-          p.children.first.previous = admonition_name(to_xml(n.remove.children))
+          p.add_first_child admonition_name(to_xml(n.remove.children))
         end
       end
 
@@ -146,10 +152,9 @@ module IsoDoc
 
       def formula_where(dlist)
         dlist.nil? and return
-        return super unless dlist.xpath(ns("./dt")).size == 1 &&
+        dlist.xpath(ns("./dt")).size == 1 &&
           dlist.at(ns("./dd"))&.elements&.size == 1 &&
-          dlist.at(ns("./dd/p"))
-
+          dlist.at(ns("./dd/p")) or return super
         formula_where_one(dlist)
       end
 
@@ -162,7 +167,7 @@ module IsoDoc
 
       def table1(elem)
         elem.xpath(ns(".//dl[@key = 'true'][not(./name)]")).each do |dl|
-          dl.children.first.previous = "<name>#{@i18n.key}</name>"
+          dl.add_first_child "<name>#{@i18n.key}</name>"
         end
         super
       end
@@ -177,7 +182,7 @@ module IsoDoc
           return
         s = docxml.at(ns("//sections")) or return
         ret = "#{middle_title_main}#{middle_title_amd}"
-        s.children.first.previous = ret
+        s.add_first_child ret
       end
 
       def middle_title_main
@@ -214,14 +219,23 @@ module IsoDoc
       end
 
       def move_norm_ref_to_sections(docxml)
-        if amd?(docxml)
-        else super
-        end
+        amd?(docxml) or super
       end
 
       def twitter_cldr_localiser_symbols
         { group: "&#xA0;", fraction_group: "&#xA0;",
           fraction_group_digits: 3 }
+      end
+
+      def implicit_reference(bib)
+        bib.at(ns("./docidentifier"))&.text == "IEV" and return true
+        super
+      end
+
+      def render_identifier(ident)
+        ret = super
+        ret[:sdo] = std_docid_semantic(ret[:sdo])
+        ret
       end
 
       include Init

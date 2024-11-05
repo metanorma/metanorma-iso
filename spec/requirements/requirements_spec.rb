@@ -173,7 +173,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <td colspan='2'>
           <p id='_'>The measurement target shall be measured as:</p>
           <formula id='_'>
-            <name>1</name>
+            <name>(1)</name>
             <stem type='AsciiMath'>r/1 = 0</stem>
           </formula>
         </td>
@@ -240,13 +240,18 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <bibliography><references id="_" obligation="informative" normative="false" displayorder="3">
             <title depth="1">Bibliography</title>
             <bibitem id="rfc2616" type="standard">
-            <formattedref><smallcap>R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, & T. Berners-Lee</smallcap>. <em><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></em>.</formattedref>
+            <formattedref><smallcap>R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</smallcap>. <em><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></em>.</formattedref>
                 <docidentifier type='metanorma-ordinal'>[1]</docidentifier>
                 <docidentifier type='IETF'>IETF&#xa0;RFC&#xa0;2616</docidentifier>
                 <docidentifier type='IETF' scope='anchor'>IETF&#xa0;RFC2616</docidentifier>
                 <docidentifier type='DOI'>DOI 10.17487/RFC2616</docidentifier>
                 <docidentifier scope="biblio-tag">IETF RFC 2616</docidentifier>
-                <biblio-tag>[1]<tab/>IETF&#xa0;RFC&#xa0;2616, </biblio-tag>
+                <biblio-tag>[1]<tab/>
+                <span class="stdpublisher">IETF </span>
+               <span class="stdpublisher">RFC </span>
+               <span class="stddocNumber">2616</span>
+               ,
+                </biblio-tag>
           </bibitem>
             </references></bibliography>
                 </ogc-standard>
@@ -385,12 +390,24 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
               </table>
             </div>
             <br/>
-            <div>
-              <h1 class="Section3">Bibliography</h1>
-              <p id="rfc2616" class="Biblio">[1]  IETF&#xa0;RFC&#xa0;2616, <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>.</p>
-            </div>
+                         <div>
+                <h1 class="Section3">Bibliography</h1>
+                <p id="rfc2616" class="Biblio">
+                   [1] 
+                   <span class="stdpublisher">IETF </span>
+                   <span class="stdpublisher">RFC </span>
+                   <span class="stddocNumber">2616</span>
+                   ,
+                   <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</span>
+                   .
+                   <i>
+                      <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
+                   </i>
+                   .
+                </p>
+             </div>
           </div>
-        </body>
+       </body>
     OUTPUT
 
     doc = <<~OUTPUT
@@ -535,14 +552,27 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <p class="page-break">
             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
-          <div>
-            <h1 class="BiblioTitle">Bibliography</h1>
-            <p id="rfc2616" class="Biblio">[1]<span style="mso-tab-count:1">  </span>IETF&#xa0;RFC&#xa0;2616, <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach,  T. Berners-Lee</span>. <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>.</p>
+                       <div>
+                <h1 class="BiblioTitle">Bibliography</h1>
+                <p id="rfc2616" class="Biblio">
+                   [1]
+                   <span style="mso-tab-count:1">  </span>
+                   <span class="stdpublisher">IETF </span>
+                   <span class="stdpublisher">RFC </span>
+                   <span class="stddocNumber">2616</span>
+                   ,
+                   <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</span>
+                   .
+                   <i>
+                      <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
+                   </i>
+                   .
+                </p>
+             </div>
           </div>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-      </body>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+       </body>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
@@ -667,7 +697,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <td colspan='2'>
                      <p id='_'>The measurement target shall be measured as:</p>
                      <formula id='_'>
-                       <name>1</name>
+                       <name>(1)</name>
                        <stem type='AsciiMath'>r/1 = 0</stem>
                      </formula>
                    </td>
@@ -776,7 +806,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </tr>
             <tr> <td colspan='2'>
           <p id="_">The measurement target shall be measured as:</p>
-          <formula id="_"><name>1</name>
+          <formula id="_"><name>(1)</name>
             <stem type="AsciiMath">r/1 = 0</stem>
           </formula>
         </td></tr><tr><td colspan="2">
@@ -1416,7 +1446,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td colspan='2'>
                     <p id='_'>The measurement target shall be measured as:</p>
                     <formula id='B'>
-                      <name>1</name>
+                      <name>(1)</name>
                       <stem type='AsciiMath'>r/1 = 0</stem>
                     </formula>
                   </td>
@@ -1532,7 +1562,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <td colspan='2'>
                     <p id='_'>The measurement target shall be measured as:</p>
                     <formula id='_'>
-                      <name>1</name>
+                      <name>(1)</name>
                       <stem type='AsciiMath'>r/1 = 0</stem>
                     </formula>
                   </td>

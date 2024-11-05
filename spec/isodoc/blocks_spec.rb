@@ -21,7 +21,7 @@ RSpec.describe IsoDoc do
             <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
         </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <example id="samplecode">
               <name>EXAMPLE — Title</name>
               <p>Hello</p>
@@ -114,7 +114,7 @@ RSpec.describe IsoDoc do
             <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <example id="samplecode">
               <name>EXAMPLE 1</name>
               <quote>Hello</quote>
@@ -212,7 +212,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
         </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="caution">
                          <p id='_'>
                  CAUTION — Only use paddy or parboiled rice for the
@@ -262,7 +262,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <title depth="1">Contents</title>
           </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <admonition id="_" type="caution">
               <name>CAUTION</name>
             </admonition>
@@ -296,7 +296,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
           <title depth="1">Contents</title>
            </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="caution">
           <name>Title</name>
           <ul>
@@ -386,7 +386,7 @@ RSpec.describe IsoDoc do
             <clause type="toc" id="_" displayorder="1">
               <title depth="1">Contents</title>
           </clause>
-            <foreword displayorder="2">
+            <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="editorial">
                          <p id='_'>EDITORIAL NOTE —
                  Only use paddy or parboiled rice for the
@@ -453,7 +453,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns='http://riboseinc.com/isoxml'>
         <preface>
         <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword id='fwd' displayorder="2">
+          <foreword id='fwd' displayorder="2"><title>Foreword</title>
             <p>
             </p>
           </foreword>
@@ -646,7 +646,7 @@ RSpec.describe IsoDoc do
       .convert("test", <<~INPUT, true)
         <iso-standard xmlns='http://riboseinc.com/isoxml'>
           <preface>
-            <foreword id='fwd' displayorder="1">
+            <foreword id='fwd' displayorder="1"><title>Foreword</title>
               <p>
                 <xref target='N'/>
                 <xref target='note1'/>
@@ -919,7 +919,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <formula id="_" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
               <p keep-with-next="true">where</p>
@@ -946,7 +946,7 @@ RSpec.describe IsoDoc do
               </note>
             </formula>
             <formula id="_">
-              <name>1</name>
+              <name>(1)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </foreword>
@@ -1098,7 +1098,7 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword displayorder="2">
+          <foreword displayorder="2"><title>Foreword</title>
             <formula id="_" unnumbered="true">
               <stem type="AsciiMath">r = 1 %</stem>
               <p>where
@@ -1110,7 +1110,7 @@ RSpec.describe IsoDoc do
               </note>
             </formula>
             <formula id="_">
-              <name>1</name>
+              <name>(1)</name>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </foreword>
@@ -1151,6 +1151,168 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
     expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(html)
+  end
+
+  it "processes figures" do
+    input = <<~INPUT
+            <iso-standard xmlns="http://riboseinc.com/isoxml">
+            <preface><foreword>
+            <figure id="figureA-1" keep-with-next="true" keep-lines-together="true">
+          <name>Split-it-right <em>sample</em> divider<fn reference="1"><p>X</p></fn></name>
+          <image src="rice_images/rice_image1.png" height="20" width="30" id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png" alt="alttext" title="titletxt"/>
+          <image src="rice_images/rice_image1.png" height="20" width="auto" id="_8357ede4-6d44-4672-bac4-9a85e82ab7f1" mimetype="image/png"/>
+          <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto" id="_8357ede4-6d44-4672-bac4-9a85e82ab7f2" mimetype="image/png"/>
+          <image src="data:application/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjw/eG1sLXN0eWxlc2hlZXQgdHlwZT0idGV4dC94c2wiIGhyZWY9Ii4uLy4uLy4uL3hzbC9yZXNfZG9jL2ltZ2ZpbGUueHNsIj8+CjwhRE9DVFlQRSBpbWdmaWxlLmNvbnRlbnQgU1lTVEVNICIuLi8uLi8uLi9kdGQvdGV4dC5lbnQiPgo8aW1nZmlsZS5jb250ZW50IG1vZHVsZT0iZnVuZGFtZW50YWxzX29mX3Byb2R1Y3RfZGVzY3JpcHRpb25fYW5kX3N1cHBvcnQiIGZpbGU9ImFjdGlvbl9zY2hlbWFleHBnMS54bWwiPgo8aW1nIHNyYz0iYWN0aW9uX3NjaGVtYWV4cGcxLmdpZiI+CjxpbWcuYXJlYSBzaGFwZT0icmVjdCIgY29vcmRzPSIyMTAsMTg2LDM0MywyMjciIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9iYXNpY19hdHRyaWJ1dGVfc2NoZW1hL2Jhc2ljX2F0dHJpYnV0ZV9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMTAsMTAsOTYsNTEiIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9hY3Rpb25fc2NoZW1hL2FjdGlvbl9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMjEwLDI2NCwzNTgsMzA1IiBocmVmPSIuLi8uLi9yZXNvdXJjZXMvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEueG1sIiAvPgo8L2ltZz4KPC9pbWdmaWxlLmNvbnRlbnQ+Cg==" height="20" width="auto" id="_8357ede4-6d44-4672-bac4-9a85e82ab7f2" mimetype="application/xml"/>
+          <fn reference="a">
+          <p id="_ef2c85b8-5a5a-4ecd-a1e6-92acefaaa852">The time <stem type="AsciiMath">t_90</stem> was estimated to be 18,2 min for this example.</p>
+        </fn>
+          <dl>
+          <dt>A</dt>
+          <dd><p>B</p></dd>
+          </dl>
+                <source status="generalisation">
+          <origin bibitemid="ISO712" type="inline" citeas="ISO 712">
+            <localityStack>
+              <locality type="section">
+                <referenceFrom>1</referenceFrom>
+              </locality>
+            </localityStack>
+          </origin>
+          <modification>
+            <p id="_">with adjustments</p>
+          </modification>
+        </source>
+                <source status="specialisation">
+          <origin bibitemid="ISO712" type="inline" citeas="ISO 712">
+            <localityStack>
+              <locality type="section">
+                <referenceFrom>2</referenceFrom>
+              </locality>
+            </localityStack>
+          </origin>
+        </source>
+        </figure>
+        <figure id="figure-B">
+        <pre alt="A B">A &#x3c;
+        B</pre>
+        </figure>
+        <figure id="figure-C" unnumbered="true">
+        <pre>A &#x3c;
+        B</pre>
+        </figure>
+            </foreword></preface>
+                  <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
+        <bibitem id="ISO712" type="standard">
+          <title format="text/plain">Cereals or cereal products</title>
+          <title type="main" format="text/plain">Cereals and cereal products</title>
+          <docidentifier type="ISO">ISO 712</docidentifier>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+            </organization>
+          </contributor>
+        </bibitem>
+      </bibliography>
+            </iso-standard>
+    INPUT
+    presxml = <<~OUTPUT
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+            <preface>
+      <clause type="toc" id="_" displayorder="1">
+        <title depth="1">Contents</title>
+      </clause>
+       <foreword displayorder="2"><title>Foreword</title>
+                <figure id="figureA-1" keep-with-next="true" keep-lines-together="true">
+                   <name>
+                      Figure 1 — Split-it-right
+                      <em>sample</em>
+                      divider
+                      <fn reference="1">
+                         <p>X</p>
+                      </fn>
+                   </name>
+                   <image src="rice_images/rice_image1.png" height="20" width="30" id="_" mimetype="image/png" alt="alttext" title="titletxt"/>
+                   <image src="rice_images/rice_image1.png" height="20" width="auto" id="_" mimetype="image/png"/>
+                   <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto" id="_" mimetype="image/png"/>
+                   <image src="data:application/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjw/eG1sLXN0eWxlc2hlZXQgdHlwZT0idGV4dC94c2wiIGhyZWY9Ii4uLy4uLy4uL3hzbC9yZXNfZG9jL2ltZ2ZpbGUueHNsIj8+CjwhRE9DVFlQRSBpbWdmaWxlLmNvbnRlbnQgU1lTVEVNICIuLi8uLi8uLi9kdGQvdGV4dC5lbnQiPgo8aW1nZmlsZS5jb250ZW50IG1vZHVsZT0iZnVuZGFtZW50YWxzX29mX3Byb2R1Y3RfZGVzY3JpcHRpb25fYW5kX3N1cHBvcnQiIGZpbGU9ImFjdGlvbl9zY2hlbWFleHBnMS54bWwiPgo8aW1nIHNyYz0iYWN0aW9uX3NjaGVtYWV4cGcxLmdpZiI+CjxpbWcuYXJlYSBzaGFwZT0icmVjdCIgY29vcmRzPSIyMTAsMTg2LDM0MywyMjciIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9iYXNpY19hdHRyaWJ1dGVfc2NoZW1hL2Jhc2ljX2F0dHJpYnV0ZV9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMTAsMTAsOTYsNTEiIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9hY3Rpb25fc2NoZW1hL2FjdGlvbl9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMjEwLDI2NCwzNTgsMzA1IiBocmVmPSIuLi8uLi9yZXNvdXJjZXMvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEueG1sIiAvPgo8L2ltZz4KPC9pbWdmaWxlLmNvbnRlbnQ+Cg==" height="20" width="auto" id="_" mimetype="application/xml"/>
+                   <p keep-with-next="true">
+                      <strong>
+                         Key
+                      </strong>
+                   </p>
+                   <dl class="formula_dl">
+                      <dt><p><sup>a</sup></p></dt>
+                      <dd>
+                         <p id="_">
+                            The time
+                            <stem type="AsciiMath">t_90</stem>
+                            was estimated to be 18,2 min for this example.
+                         </p>
+                      </dd>
+                      <dt>A</dt>
+                      <dd>
+                         <p>B</p>
+                      </dd>
+                   </dl>
+                   <source status="generalisation">
+                      [SOURCE:
+                      <xref type="inline" target="ISO712">
+                         <span class="stdpublisher">ISO </span>
+                         <span class="stddocNumber">712</span>
+                         , Section 1
+                      </xref>
+                      — with adjustments ;
+                      <xref type="inline" target="ISO712">
+                         <span class="stdpublisher">ISO </span>
+                         <span class="stddocNumber">712</span>
+                         , Section 2
+                      </xref>
+                      ]
+                   </source>
+                </figure>
+                <figure id="figure-B">
+                   <name>Figure 2</name>
+                   <pre alt="A B">A &lt;
+         B</pre>
+                </figure>
+                <figure id="figure-C" unnumbered="true">
+                   <pre>A &lt;
+         B</pre>
+                </figure>
+             </foreword>
+          </preface>
+          <sections>
+             <references id="_" obligation="informative" normative="true" displayorder="3">
+                <title depth="1">
+                   1
+                   <tab/>
+                   Normative References
+                </title>
+                <bibitem id="ISO712" type="standard">
+                   <formattedref>
+                      <em>
+                         <span class="stddocTitle">Cereals and cereal products</span>
+                      </em>
+                   </formattedref>
+                   <docidentifier type="ISO">ISO 712</docidentifier>
+                   <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+            <biblio-tag>
+               <span class="stdpublisher">ISO </span>
+               <span class="stddocNumber">712</span>
+               ,
+            </biblio-tag>
+                </bibitem>
+             </references>
+          </sections>
+          <bibliography>
+             </bibliography>
+       </iso-standard>
+    OUTPUT
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+       .new(presxml_options)
+       .convert("test", input, true).gsub(/&lt;/, "&#x3c;"))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "adds ordered list classes for HTML" do
@@ -1194,7 +1356,7 @@ RSpec.describe IsoDoc do
               <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-          <foreword displayorder='2'>
+          <foreword displayorder='2'><title>Foreword</title>
             <ol type='alphabet'>
               <li id="_" label="">
                 <p>A</p>
@@ -1332,7 +1494,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
          <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-           <foreword displayorder='2'>
+           <foreword displayorder='2'><title>Foreword</title>
              <ol start='4' type='alphabet'>
                <li id="_" label="">List</li>
              </ol>
@@ -1410,7 +1572,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
          <preface>
            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
-           <foreword displayorder='2'>
+           <foreword displayorder='2'><title>Foreword</title>
              <ul>
                <li>A</li>
                <li>

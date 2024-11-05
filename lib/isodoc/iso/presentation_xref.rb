@@ -130,6 +130,8 @@ module IsoDoc
       end
 
       def expand_citeas(text)
+        ret = super or return
+        ret.include?("<span") and return ret
         std_docid_semantic(super)
       end
 
