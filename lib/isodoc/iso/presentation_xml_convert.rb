@@ -118,6 +118,7 @@ module IsoDoc
         cell.children.each { |p| wrap_in_bold(p) }
       end
 
+      # TODO keep name, and append em-dash within it
       def admonition_inline_name(elem)
         n = elem.at(ns("./name")) or return
         if (p = n.next_element) && p&.name == "p"
@@ -151,10 +152,9 @@ module IsoDoc
 
       def formula_where(dlist)
         dlist.nil? and return
-        return super unless dlist.xpath(ns("./dt")).size == 1 &&
+        dlist.xpath(ns("./dt")).size == 1 &&
           dlist.at(ns("./dd"))&.elements&.size == 1 &&
-          dlist.at(ns("./dd/p"))
-
+          dlist.at(ns("./dd/p")) or return super
         formula_where_one(dlist)
       end
 

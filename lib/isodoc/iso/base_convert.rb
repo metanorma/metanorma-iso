@@ -35,7 +35,7 @@ module IsoDoc
           insert_tab(p, 1)
           node.first_element_child.children.each { |n| parse(n, p) }
         end
-        node.element_children[1..-1].each { |n| parse(n, div) }
+        node.element_children[1..].each { |n| parse(n, div) }
       end
 
       def example_parse1(node, div)
@@ -111,6 +111,7 @@ module IsoDoc
         node.element_children[1..].each { |n| parse(n, div) }
       end
 
+      # TODO to presentation XML
       def admonition_name_parse(_node, div, name)
         name.children.each { |n| parse(n, div) }
         div << " &#x2014; "
