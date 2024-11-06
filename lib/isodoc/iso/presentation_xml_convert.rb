@@ -102,7 +102,6 @@ module IsoDoc
 
       def admonition1(elem)
         super
-        admonition_inline_name(elem)
         admonition_outside_clauses(elem)
       end
 
@@ -116,18 +115,6 @@ module IsoDoc
         cell.text? and cell.swap("<strong>#{cell.to_xml}</strong>")
         %w(strong fn).include?(cell.name) and return
         cell.children.each { |p| wrap_in_bold(p) }
-      end
-
-      # TODO keep name, and append em-dash within it
-      def admonition_inline_name(elem)
-        n = elem.at(ns("./name")) or return
-        if (p = n.next_element) && p&.name == "p"
-          p.add_first_child admonition_name(to_xml(n.remove.children))
-        end
-      end
-
-      def admonition_name(xml)
-        "#{xml} &#x2014; "
       end
 
       def bibrender_formattedref(formattedref, xml)
@@ -236,6 +223,15 @@ module IsoDoc
         ret = super
         ret[:sdo] = std_docid_semantic(ret[:sdo])
         ret
+      end
+
+      def admonition_delim(elem)
+        require "debug"; binding.b
+        if elem.at("./*[not(self::xmlns:name)]")&.name == "p"
+          " &#x2014; "
+        else
+          ""
+        end
       end
 
       include Init

@@ -185,9 +185,11 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+      .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
+      .convert("test", presxml, true)))
+      .to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
     expect(Xml::C14n.format(output
       .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
@@ -214,8 +216,8 @@ RSpec.describe IsoDoc do
         </clause>
           <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="caution">
-                         <p id='_'>
-                 CAUTION — Only use paddy or parboiled rice for the
+                 <name>CAUTION — </name>
+                  <p id='_'>Only use paddy or parboiled rice for the
                  determination of husked rice yield.
                </p>
         <p id="_">Para 2.</p>
@@ -264,7 +266,7 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder="2"><title>Foreword</title>
             <admonition id="_" type="caution">
-              <name>CAUTION</name>
+              <name>CAUTION<</name>
             </admonition>
           </foreword>
         </preface>
@@ -311,7 +313,7 @@ RSpec.describe IsoDoc do
       <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <div id='_' class='Admonition'>
-                        <p>Title — </p>
+                        <p class="AdmonitionTitle" style="text-align:center;">Title</p>
                         <div class="ul_wrap">
          <ul>
            <li>List</li>
@@ -352,8 +354,8 @@ RSpec.describe IsoDoc do
          <sections>
            <title>A</title>
            <admonition id="_" type="important" displayorder="2">
+               <name><strong>IMPORTANT —</strong></name>
              <p id="_">
-               <strong>IMPORTANT — </strong>
                <strong>The electronic file of this document contains colours which are considered to be useful for the correct understanding of the &lt;document&gt;.</strong>
              </p>
            </admonition>
@@ -388,8 +390,8 @@ RSpec.describe IsoDoc do
           </clause>
             <foreword displayorder="2"><title>Foreword</title>
           <admonition id="_" type="editorial">
-                         <p id='_'>EDITORIAL NOTE —
-                 Only use paddy or parboiled rice for the
+                         <name>EDITORIAL NOTE —</name>
+                         <p id="_">Only use paddy or parboiled rice for the
                  determination of husked rice yield.
                </p>
         <p id="_">Para 2.</p>
@@ -403,8 +405,7 @@ RSpec.describe IsoDoc do
              <div>
                <h1 class='ForewordTitle'>Foreword</h1>
                <div id='_' class='zzHelp'>
-                 <p>EDITORIAL NOTE —
-                    Only use paddy or parboiled rice for the
+                 <p>EDITORIAL NOTE — Only use paddy or parboiled rice for the
                    determination of husked rice yield.
                  </p>
                  <p id='_'>Para 2.</p>
