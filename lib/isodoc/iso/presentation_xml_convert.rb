@@ -226,7 +226,6 @@ module IsoDoc
       end
 
       def admonition_delim(elem)
-        require "debug"; binding.b
         if elem.at("./*[not(self::xmlns:name)]")&.name == "p"
           " &#x2014; "
         else
