@@ -105,9 +105,8 @@ RSpec.describe Metanorma::Iso do
            <role type="author"><description>Technical committee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision><organization><name>TC</name>
+             <subdivision><name>TC</name>
              <identifier>A 1</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -115,9 +114,8 @@ RSpec.describe Metanorma::Iso do
          <role type="author"><description>Technical committee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision><organization><name>TC1</name>
+             <subdivision><name>TC1</name>
              <identifier>A1 11</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -125,9 +123,8 @@ RSpec.describe Metanorma::Iso do
            <role type="author"><description>Subcommittee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision><organization><name>SC</name>
+             <subdivision><name>SC</name>
              <identifier>B 2</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -135,9 +132,8 @@ RSpec.describe Metanorma::Iso do
            <role type="author"><description>Subcommittee</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision><organization><name>SC1</name>
+             <subdivision><name>SC1</name>
              <identifier>B1 21</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -145,9 +141,8 @@ RSpec.describe Metanorma::Iso do
            <role type="author"><description>Workgroup</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision><organization><name>WG</name>
+             <subdivision><name>WG</name>
              <identifier>C 3</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -155,9 +150,8 @@ RSpec.describe Metanorma::Iso do
            <role type="author"><description>Workgroup</description></role>
            <organization>
              <name>International Organization for Standardization</name>
-             <subdivision><organization><name>WG1</name>
+             <subdivision><name>WG1</name>
              <identifier>C1 31</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -179,9 +173,8 @@ RSpec.describe Metanorma::Iso do
          <role type="authorizer"><description>Technical committee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision><organization><name>TCa</name>
+             <subdivision><name>TCa</name>
              <identifier>Aa 1a</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -189,9 +182,8 @@ RSpec.describe Metanorma::Iso do
          <role type="authorizer"><description>Technical committee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision><organization><name>TC1a</name>
+             <subdivision><name>TC1a</name>
              <identifier>A1a 11a</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -199,9 +191,8 @@ RSpec.describe Metanorma::Iso do
            <role type="authorizer"><description>Subcommittee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision><organization><name>SCa</name>
+             <subdivision><name>SCa</name>
              <identifier>Ba 2a</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -209,9 +200,8 @@ RSpec.describe Metanorma::Iso do
            <role type="authorizer"><description>Subcommittee</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision><organization><name>SC1a</name>
+             <subdivision><name>SC1a</name>
              <identifier>B1a 21a</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -219,9 +209,8 @@ RSpec.describe Metanorma::Iso do
            <role type="authorizer"><description>Workgroup</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision><organization><name>WGa</name>
+             <subdivision><name>WGa</name>
              <identifier>Ca 3a</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -229,9 +218,8 @@ RSpec.describe Metanorma::Iso do
            <role type="authorizer"><description>Workgroup</description></role>
            <organization>
              <name>ISO/IEC</name>
-             <subdivision><organization><name>WG1a</name>
+             <subdivision><name>WG1a</name>
              <identifier>C1a 31a</identifier>
-              </organization>
              </subdivision>
            </organization>
          </contributor>
@@ -366,9 +354,8 @@ RSpec.describe Metanorma::Iso do
         <role type="author"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>Techcomm</name>
+            <subdivision><name>Techcomm</name>
             <identifier>TC 1</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -376,9 +363,8 @@ RSpec.describe Metanorma::Iso do
           <role type="author"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>Subcommitt</name>
+            <subdivision><name>Subcommitt</name>
             <identifier>SC 2</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -386,9 +372,8 @@ RSpec.describe Metanorma::Iso do
           <role type="author"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>Workg</name>
+            <subdivision><name>Workg</name>
             <identifier>WG 3</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -416,9 +401,8 @@ RSpec.describe Metanorma::Iso do
         <role type="authorizer"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>ApprovTechcom</name>
+            <subdivision><name>ApprovTechcom</name>
             <identifier>TC 1</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -426,9 +410,8 @@ RSpec.describe Metanorma::Iso do
           <role type="authorizer"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>ApprovSubcom</name>
+            <subdivision><name>ApprovSubcom</name>
             <identifier>SC 2</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -436,9 +419,8 @@ RSpec.describe Metanorma::Iso do
           <role type="authorizer"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>ApprovWorkg</name>
+            <subdivision><name>ApprovWorkg</name>
             <identifier>WG 3</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -651,9 +633,8 @@ RSpec.describe Metanorma::Iso do
         <role type="author"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>Techcomm</name>
+            <subdivision><name>Techcomm</name>
             <identifier>1</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -661,9 +642,8 @@ RSpec.describe Metanorma::Iso do
           <role type="author"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>Subcommitt</name>
+            <subdivision><name>Subcommitt</name>
             <identifier>2</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -671,9 +651,8 @@ RSpec.describe Metanorma::Iso do
           <role type="author"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>Workg</name>
+            <subdivision><name>Workg</name>
             <identifier>3</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -688,9 +667,8 @@ RSpec.describe Metanorma::Iso do
         <role type="authorizer"><description>Technical committee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>ApprovTechcom</name>
+            <subdivision><name>ApprovTechcom</name>
             <identifier>1</identifier>
-             </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -698,9 +676,8 @@ RSpec.describe Metanorma::Iso do
           <role type="authorizer"><description>Subcommittee</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>ApprovSubcom</name>
+            <subdivision><name>ApprovSubcom</name>
             <identifier>2</identifier>
-            </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -708,9 +685,8 @@ RSpec.describe Metanorma::Iso do
           <role type="authorizer"><description>Workgroup</description></role>
           <organization>
             <name>International Organization for Standardization</name>
-            <subdivision><organization><name>ApprovWorkg</name>
+            <subdivision><name>ApprovWorkg</name>
             <identifier>3</identifier>
-            </organization>
             </subdivision>
           </organization>
         </contributor>
@@ -807,9 +783,7 @@ RSpec.describe Metanorma::Iso do
              <organization>
                 <name>International Organization for Standardization</name>
                 <subdivision>
-                   <organization>
                       <identifier>1</identifier>
-                   </organization>
                 </subdivision>
              </organization>
           </contributor>
@@ -820,9 +794,7 @@ RSpec.describe Metanorma::Iso do
              <organization>
                 <name>International Organization for Standardization</name>
                 <subdivision>
-                   <organization>
                       <identifier>2</identifier>
-                   </organization>
                 </subdivision>
              </organization>
           </contributor>
@@ -833,9 +805,7 @@ RSpec.describe Metanorma::Iso do
              <organization>
                 <name>International Organization for Standardization</name>
                 <subdivision>
-                   <organization>
                       <identifier>3</identifier>
-                   </organization>
                 </subdivision>
              </organization>
           </contributor>
@@ -862,9 +832,7 @@ RSpec.describe Metanorma::Iso do
              <organization>
                 <name>International Organization for Standardization</name>
                 <subdivision>
-                   <organization>
                       <identifier>1</identifier>
-                   </organization>
                 </subdivision>
              </organization>
           </contributor>
@@ -875,9 +843,7 @@ RSpec.describe Metanorma::Iso do
              <organization>
                 <name>International Organization for Standardization</name>
                 <subdivision>
-                   <organization>
                       <identifier>2</identifier>
-                   </organization>
                 </subdivision>
              </organization>
           </contributor>
@@ -888,9 +854,7 @@ RSpec.describe Metanorma::Iso do
              <organization>
                 <name>International Organization for Standardization</name>
                 <subdivision>
-                   <organization>
                       <identifier>3</identifier>
-                   </organization>
                 </subdivision>
              </organization>
           </contributor>
@@ -1248,7 +1212,7 @@ RSpec.describe Metanorma::Iso do
       :pub-uri: http://www.example.com
     INPUT
     output = <<~OUTPUT
-           <bibdata type="standard">
+      <bibdata type="standard">
          <docidentifier type="ISO" primary="true">OVERRIDE</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
          <docnumber>1000</docnumber>

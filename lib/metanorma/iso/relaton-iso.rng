@@ -30,6 +30,9 @@
       <optional>
         <ref name="fast_track"/>
       </optional>
+      <optional>
+        <ref name="price-code"/>
+      </optional>
     </define>
     <define name="bdate">
       <element name="date">
@@ -232,6 +235,11 @@
   <define name="fast_track">
     <element name="fast-track">
       <data type="boolean"/>
+    </element>
+  </define>
+  <define name="price-code">
+    <element name="price-code">
+      <text/>
     </element>
   </define>
 </grammar>
