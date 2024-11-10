@@ -78,43 +78,18 @@ module IsoDoc
         end
       end
 
-      def admonition_parse(node, out)
-        type = node["type"]
-        name = admonition_name(node, type)
-        out.div id: node["id"], class: admonition_class(node) do |div|
-          if node.first_element_child.name == "p"
-            admonition_p_parse(node, div, name)
-          else
-            admonition_parse1(node, div, name)
-          end
-        end
-      end
-
       def admonition_class(node)
         if node["type"] == "editorial" then "zzHelp"
         else super
         end
       end
 
-      def admonition_parse1(node, div, name)
-        div.p do |p|
-          admonition_name_parse(node, p, name) if name
-        end
-        node.children.each { |n| parse(n, div) unless n.name == "name" }
+      def admonition_p_parse(node, div)
+        admonition_name_in_first_para(node, div)
       end
 
-      def admonition_p_parse(node, div, name)
-        div.p do |p|
-          admonition_name_parse(node, p, name) if name
-          node.first_element_child.children.each { |n| parse(n, p) }
-        end
-        node.element_children[1..].each { |n| parse(n, div) }
-      end
-
-      # TODO to presentation XML
-      def admonition_name_parse(_node, div, name)
-        name.children.each { |n| parse(n, div) }
-        div << " &#x2014; "
+      def admonition_name_para_delim(para)
+        para << " "
       end
 
       def figure_name_parse(_node, div, name)
