@@ -719,7 +719,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    output = <<~OUTPUT
+    output = 
       {:agency=>"ISO",
       :createddate=>"2016-05-01",
       :docnumber=>"ISO/PreNWIP3 17301-1:2016/Amd.1",
@@ -764,7 +764,6 @@ RSpec.describe IsoDoc do
       :tc=>"A 1",
       :unpublished=>true,
       :wg=>"C 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end
@@ -870,7 +869,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    output = <<~OUTPUT
+    output = 
       {:agency=>"ISO",
       :createddate=>"2016-05-01",
       :docnumber=>"ISO/PreNWIP3 17301-1:2016/Amd.1",
@@ -916,7 +915,6 @@ RSpec.describe IsoDoc do
       :tc=>"A 1",
       :unpublished=>true,
       :wg=>"C 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end
@@ -1017,7 +1015,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    output = <<~OUTPUT
+    output = 
       {:agency=>"ISO",
       :createddate=>"2016-05-01",
       :docnumber=>"ISO/PreNWIP3 17301-1:2016/Add.1",
@@ -1062,7 +1060,6 @@ RSpec.describe IsoDoc do
       :tc=>"A 1",
       :unpublished=>true,
       :wg=>"C 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end

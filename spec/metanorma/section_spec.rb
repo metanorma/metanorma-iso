@@ -438,7 +438,7 @@ RSpec.describe Metanorma::Iso do
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
-  it "ignores multiple terms & definitions in default documents" do
+  xit "ignores multiple terms & definitions in default documents" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
 

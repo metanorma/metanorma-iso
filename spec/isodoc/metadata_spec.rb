@@ -99,7 +99,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </metanorma-extension>
       </iso-standard>
     INPUT
-    output = <<~OUTPUT
+    output = 
       {:accesseddate=>"2012",
       :activateddate=>"2013",
       :agency=>"ISO",
@@ -149,7 +149,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :tc_docnumber=>["17301", "17302"],
       :unpublished=>true,
       :wg=>"WG 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -228,7 +227,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
-    output = <<~OUTPUT
+    output = 
       {:agency=>"ISO/IEC",
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -257,7 +256,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :tc_docnumber=>["17301"],
       :unpublished=>false,
       :wg=>"GHI 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -340,7 +338,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
-    output = <<~OUTPUT
+    output =
       {:agency=>"ISO/IEC",
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -373,7 +371,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :tc_docnumber=>["17301"],
       :unpublished=>false,
       :wg=>"GHI 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -459,7 +456,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
-    output = <<~OUTPUT
+    output = 
       {:agency=>"ISO/IEC",
       :docnumber=>"ISO/IEC/CD 17301-1-3",
       :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
@@ -492,7 +489,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
       :tc_docnumber=>["17301"],
       :unpublished=>false,
       :wg=>"GHI 3"}
-    OUTPUT
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
