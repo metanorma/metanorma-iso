@@ -63,36 +63,19 @@
         </choice>
       </element>
     </define>
-    <define name="organization">
-      <element name="organization">
-        <oneOrMore>
-          <ref name="orgname"/>
-        </oneOrMore>
-        <optional>
-          <ref name="abbreviation"/>
-        </optional>
-        <optional>
-          <ref name="uri"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="org-identifier"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="contact"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="technical-committee"/>
-        </optional>
-        <optional>
-          <ref name="subcommittee"/>
-        </optional>
-        <optional>
-          <ref name="workgroup"/>
-        </optional>
-        <optional>
-          <ref name="secretariat"/>
-        </optional>
-      </element>
+    <define name="OrganizationType" combine="interleave">
+      <optional>
+        <ref name="technical-committee"/>
+      </optional>
+      <optional>
+        <ref name="subcommittee"/>
+      </optional>
+      <optional>
+        <ref name="workgroup"/>
+      </optional>
+      <optional>
+        <ref name="secretariat"/>
+      </optional>
     </define>
     <define name="DocumentType">
       <choice>

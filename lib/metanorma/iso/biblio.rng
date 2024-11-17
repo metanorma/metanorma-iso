@@ -1783,9 +1783,21 @@ that the `number` given for the series applies to the second iteration of number
 May be used to differentiate rendering of notes in bibliographies</a:documentation>
         </attribute>
       </optional>
-      <ref name="LocalizedMarkedUpString">
+      <ref name="LocalizedStringAttributes">
         <a:documentation>The content of the note</a:documentation>
       </ref>
+      <choice>
+        <oneOrMore>
+          <ref name="BasicBlockNoId">
+            <a:documentation>Multiple blocks of content</a:documentation>
+          </ref>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="TextElement">
+            <a:documentation>Single block of content</a:documentation>
+          </ref>
+        </oneOrMore>
+      </choice>
     </element>
   </define>
   <define name="bibabstract">

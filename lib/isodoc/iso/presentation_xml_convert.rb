@@ -30,6 +30,7 @@ module IsoDoc
         formula docxml
         admonition docxml
         source docxml
+        ul docxml
         ol docxml
         quote docxml
         permission docxml
