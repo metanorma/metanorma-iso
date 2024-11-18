@@ -67,7 +67,9 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
-        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> 
+        <fmt-title depth="1">Contents</fmt-title>
+          </clause> </preface>
         <sections>
           <terms id='_' obligation='normative' displayorder='2'>
           <title depth='1'>1<tab/>Terms and Definitions</title>
@@ -343,14 +345,16 @@ RSpec.describe IsoDoc do
           term2 definition
        </div>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))))
+     pres_output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)))
+      .convert("test", pres_output, true)))
       .to be_equivalent_to Xml::C14n.format(html)
     expect(Xml::C14n.format(IsoDoc::Iso::WordConvert.new({})
-      .convert("test", presxml, true)
+      .convert("test", pres_output, true)
       .sub(%r{^.*<div class="WordSection3">}m, "")
       .sub(%r{</div>\s*<br.*$}m, "")))
       .to be_equivalent_to Xml::C14n.format(word)
@@ -397,7 +401,9 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
        <?xml version='1.0'?>
           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-            <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+            <preface> <clause type="toc" id="_" displayorder="1">
+          <fmt-title depth="1">Contents</fmt-title>
+          </clause> </preface>
         <sections>
           <terms id='A' obligation='normative' displayorder='2'>
             <title depth='1'>1<tab/>Terms and definitions</title>
@@ -416,7 +422,8 @@ RSpec.describe IsoDoc do
       </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-       .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes IsoXML term with different term source statuses" do

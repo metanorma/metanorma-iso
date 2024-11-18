@@ -156,7 +156,7 @@ RSpec.describe IsoDoc do
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <title depth="1">Contents</title>
+             <fmt-title depth="1">Contents</fmt-title>
              </clause>
              <foreword displayorder="2">
                 <title>Foreword</title>
@@ -521,14 +521,15 @@ RSpec.describe IsoDoc do
           </body>
        </html>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true))
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
-      .gsub(/reference="[^"]+"/, 'reference="1"')))
+      .gsub(/reference="[^"]+"/, 'reference="1"'))))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)))
+      .convert("test", pres_output, true)))
       .to be_equivalent_to Xml::C14n.format(html)
   end
 
@@ -540,7 +541,7 @@ RSpec.describe IsoDoc do
                 <language>en</language>
               </bibdata>
               <references normative="false">
-              <title>Bibliography</title>
+              <fmt-title>Bibliography</fmt-title>
               <bibitem id="ignf" type="website">
         <fetched>2022-05-06</fetched>
         <title type="title-main" format="text/plain">IGNF. (IGN France) Registry</title>

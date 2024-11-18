@@ -6,9 +6,9 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+            <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><title>Foreword</title>
+          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
             <p>
               <em>A</em>
               <strong>B</strong>
@@ -57,9 +57,9 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+            <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><title>Foreword</title>
+          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
             <p>
               <link target="http://example.com"/>
               <link target="http://example.com">example</link>
@@ -94,9 +94,9 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+            <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><title>Foreword</title>
+          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
             <p>
               <barry fred="http://example.com">example</barry>
             </p>
@@ -127,9 +127,9 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" xmlns:m="http://www.w3.org/1998/Math/MathML">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+            <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><title>Foreword</title>
+          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
             <p>
               <stem type="AsciiMath">A</stem>
               <stem type="MathML"><m:math><m:row>X</m:row></m:math></stem>
@@ -168,9 +168,9 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+            <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><title>Foreword</title>
+          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
             <p><stem type="AsciiMath">A</stem>(#((Hello))#)</p>
           </foreword>
         </preface>
@@ -332,7 +332,7 @@ RSpec.describe IsoDoc do
         </bibdata>
         <preface>
             <clause type="toc" id="_" displayorder="1">
-              <title depth="1">Contents</title>
+            <fmt-title depth="1">Contents</fmt-title>
             </clause>
           <p displayorder="2">
              30&#xa0;000
@@ -524,7 +524,7 @@ RSpec.describe IsoDoc do
        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <title depth="1">Contents</title>
+             <fmt-title depth="1">Contents</fmt-title>
              </clause>
              <foreword displayorder="2">
                 <title>Foreword</title>
@@ -752,7 +752,7 @@ RSpec.describe IsoDoc do
          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
                   <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
         </preface>
         <sections>
@@ -897,11 +897,13 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output)))
+      .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes concept markup by context" do
@@ -981,7 +983,7 @@ RSpec.describe IsoDoc do
           <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
         <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+        <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword id='A' displayorder='2'><title>Foreword</title>
             <ul>
@@ -1098,7 +1100,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
         </preface>
         <sections>
@@ -1185,11 +1187,13 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output)))
+      .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "combines locality stacks with connectives, omitting subclauses" do

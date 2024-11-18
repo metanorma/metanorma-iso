@@ -158,8 +158,8 @@ RSpec.describe IsoDoc do
           <status><stage>30</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title><p>Para</p></foreword>
-        <introduction displayorder="2"><title>Foreword</title><p>Para</p></introduction>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title><p>Para</p></foreword>
+        <introduction displayorder="2"><fmt-title>Foreword</fmt-title><p>Para</p></introduction>
         </preface>
       </iso-standard>
     INPUT
@@ -210,8 +210,8 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title><p>Para</p></foreword>
-        <introduction displayorder="2"><title>Foreword</title><p>Para</p></introduction>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title><p>Para</p></foreword>
+        <introduction displayorder="2"><fmt-title>Foreword</fmt-title><p>Para</p></introduction>
         </preface>
       </iso-standard>
     INPUT
@@ -263,7 +263,7 @@ RSpec.describe IsoDoc do
         </bibdata>
                 <bibliography>
           <references id="_normative_references" normative="true" obligation="informative" displayorder="1">
-            <title>Normative References</title>
+            <fmt-title>Normative References</fmt-title>
             <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
@@ -308,7 +308,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title>
         <p><tt>A <strong>B</strong> <em>C</em> <strong>D<em>E</em>F</strong> <em>G<strong>H</strong>I</em></tt></p>
         <p><strong>A <tt>B</tt> <em>C<tt>D</tt>E</em></strong></p>
         <p><em>A <tt>B</tt> <strong>C<tt>D</tt>E</strong></em></p>
@@ -394,7 +394,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title>
         <table><tbody>
         <tr><td>
         <p><tt>A <strong>B</strong> <em>C</em> <strong>D<em>E</em>F</strong> <em>G<strong>H</strong>I</em></tt></p>
@@ -918,7 +918,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <table id="B">
-        <name>Table1</name>
+        <fmt-name>Table1</fmt-name>
         <thead>
         <tr>
         <th>A</th><th><p>B</p></th>
@@ -1039,9 +1039,9 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <figure id="B">
-        <name>Table1</name>
+        <fmt-name>Table1</fmt-name>
         <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto"/>
-        <note id="C"><name>FIGURENOTE</name><p>Note</p></note>
+        <note id="C"><fmt-name>FIGURENOTE</fmt-name><p>Note</p></note>
         <example id="D"><p>Example</p></example>
         </figure>
         </clause>
@@ -1098,7 +1098,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <example id="B">
-        <name>EXAMPLE</name>
+        <fmt-name>EXAMPLE</fmt-name>
         <p>First example</p>
         </example>
         <example id="C">
@@ -1154,7 +1154,7 @@ RSpec.describe IsoDoc do
         </bibdata>
         <sections>
         <clause id="A" displayorder="1">
-        <formula id="B"><name>(A.1)</name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
+        <formula id="B"><fmt-name>(A.1)</fmt-name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
         </clause>
         </sections>
       </iso-standard>
@@ -1193,7 +1193,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <note id="B">
-        <name>NOTE</name>
+        <fmt-name>NOTE</fmt-name>
         <p>First example</p>
         </note>
         <note id="C">
@@ -1542,7 +1542,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <example id="B">
-        <name>EXAMPLE</name>
+        <fmt-name>EXAMPLE</fmt-name>
         <dl>
         <dt>A</dt><dd>B</dd>
         </dl>
@@ -1593,9 +1593,9 @@ RSpec.describe IsoDoc do
         <bibdata>
           <status><stage>50</stage></status>
         </bibdata>
-        <annex id="A" displayorder="1"><title>Annex</title>
-        <clause id="B"><title>Subannex</title>
-        <clause id="C"><title>Subsubannex</title>
+        <annex id="A" displayorder="1"><fmt-title>Annex</fmt-title>
+        <clause id="B"><fmt-title>Subannex</fmt-title>
+        <clause id="C"><fmt-title>Subsubannex</fmt-title>
         </clause>
         </clause>
         </annex>
@@ -1706,7 +1706,7 @@ RSpec.describe IsoDoc do
           </ext>
         </bibdata>
         <sections>
-        <clause id="A" displayorder="1"><title>First clause</title>
+        <clause id="A" displayorder="1"><fmt-title>First clause</fmt-title>
         </clause>
         </sections>
       </iso-standard>
@@ -1782,10 +1782,10 @@ RSpec.describe IsoDoc do
           </ext>
         </bibdata>
         <preface>
-        <foreword id="F" displayorder="1"><title>Foreword</title></foreword>
+        <foreword id="F" displayorder="1"><fmt-title>Foreword</fmt-title></foreword>
         </preface>
          <sections>
-        <clause id="A" displayorder="2"><title>First clause</title>
+        <clause id="A" displayorder="2"><fmt-title>First clause</fmt-title>
         </clause>
         </sections>
       </iso-standard>
@@ -1996,7 +1996,7 @@ RSpec.describe IsoDoc do
           <status><stage>20</stage></status>
         </bibdata>
          <sections>
-        <clause id="A" displayorder="1"><title>Clause Title</title>
+        <clause id="A" displayorder="1"><fmt-title>Clause Title</fmt-title>
         <ul><li>List</li></ul>
         <note id="B"><p>Note</p>
         <ul><li>Note List</li></ul>
@@ -2004,19 +2004,19 @@ RSpec.describe IsoDoc do
         <example id="C"><p>Example</p>
         <ul><li>Example List</li></ul>
         </example>
-        <figure id="D"><name>Figure Title</name></figure>
+        <figure id="D"><fmt-name>Figure Title</fmt-name></figure>
         <sourcecode id="E">XYZ</sourcecode>
-        <table id="F"><name>Table</name></table>
+        <table id="F"><fmt-name>Table</fmt-name></table>
         </clause>
         </sections>
-        <annex id="G" displayorder="2"><title>Annex Title</title>
-        <table id="H"><name>Annex Table</name></table>
-        <clause id="I"><title>Annex Clause Title</title>
+        <annex id="G" displayorder="2"><fmt-title>Annex Title</fmt-title>
+        <table id="H"><fmt-name>Annex Table</fmt-name></table>
+        <clause id="I"><fmt-title>Annex Clause Title</fmt-title>
         </clause>
         </annex>
         <bibliography>
         <references id="_normative_references" normative="false" obligation="informative" displayorder="3">
-            <title>Bibliography</title>
+            <fmt-title>Bibliography</fmt-title>
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
             <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>

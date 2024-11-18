@@ -108,7 +108,7 @@ module IsoDoc
         br(out, "auto")
         out.div class: "index" do |div|
           elem.children.each do |e|
-            parse(e, div) unless e.name == "title"
+            parse(e, div) unless e.name == "fmt-title"
           end
         end
       end
@@ -116,7 +116,7 @@ module IsoDoc
       def indexsect_title(clause, out)
         br(out, "always")
         out.div class: "WordSection3" do |div|
-          clause_name(clause, clause.at(ns("./title")), div, nil)
+          clause_name(clause, clause.at(ns("./fmt-title")), div, nil)
         end
       end
 
@@ -145,7 +145,7 @@ module IsoDoc
         page_break(out)
         out.div do |div|
           div.h1 **bibliography_attrs do |h1|
-            node&.at(ns("./title"))&.children&.each { |c2| parse(c2, h1) }
+            node&.at(ns("./fmt-title"))&.children&.each { |c2| parse(c2, h1) }
           end
           biblio_list(node, div, true)
         end
@@ -154,7 +154,7 @@ module IsoDoc
       def bibliography_parse(node, out)
         node["hidden"] != true or return
         out.div do |div|
-          clause_parse_title(node, div, node.at(ns("./title")), out,
+          clause_parse_title(node, div, node.at(ns("./fmt-title")), out,
                              bibliography_attrs)
           biblio_list(node, div, true)
         end
@@ -201,7 +201,7 @@ module IsoDoc
       end
 
       def table_title_parse(node, out)
-        name = node.at(ns("./name")) or return
+        name = node.at(ns("./fmt-name")) or return
         out.p **table_title_attrs(node) do |p|
           name&.children&.each { |n| parse(n, p) }
         end

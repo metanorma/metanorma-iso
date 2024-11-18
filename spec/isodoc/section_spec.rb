@@ -88,7 +88,9 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
         <preface>
-        <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>#{' '}
+        <clause type="toc" id="_" displayorder="1"> 
+        <fmt-title depth="1">Contents</fmt-title>
+        </clause>
           <foreword obligation="informative" displayorder="2">
             <title>Foreword</title>
             <p id="A">This is a preamble</p>
@@ -416,15 +418,16 @@ RSpec.describe IsoDoc do
           <div class="colophon"/>
         </body>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true))))
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)))
+      .convert("test", pres_output, true)))
       .to be_equivalent_to Xml::C14n.format(html)
     expect(Xml::C14n.format(IsoDoc::Iso::WordConvert.new({})
-      .convert("test", presxml, true)
+      .convert("test", pres_output, true)
       .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
       .to be_equivalent_to Xml::C14n.format(word)
   end
@@ -451,7 +454,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
            <clause type="toc" id="_" displayorder="1">
-             <title depth="1">Contents</title>
+           <fmt-title depth="1">Contents</fmt-title>
            </clause>
          </preface>
          <sections>
@@ -495,7 +498,9 @@ RSpec.describe IsoDoc do
 
     presxml = <<~OUTPUT
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
-        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> 
+       <fmt-title depth="1">Contents</fmt-title>
+        </clause> </preface>
         <sections>
           <clause id='D' obligation='normative' displayorder="2">
             <title depth='1'>1<tab/>Scope</title>
@@ -542,23 +547,28 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))))
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)))
+      .convert("test", pres_output, true)))
       .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "processes simple terms & definitions" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> <clause type="toc" id="_" displayorder="1"> 
+        <fmt-title depth="1">Contents</fmt-title> 
+        </clause> 
+        </preface>
         <sections>
           <terms id="H" obligation="normative" displayorder="2">
-            <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
+            <fmt-title>Terms, Definitions, Symbols and Abbreviated Terms</fmt-title>
             <term id="J">
-              <name>1.1</name>
+              <fmt-name>1.1</fmt-name>
               <preferred>Term2</preferred>
             </term>
           </terms>
@@ -707,29 +717,36 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)
+    xml = Nokogiri::XML(pres_output)
     xml.at("//xmlns:localized-strings")&.remove
     xml.at("//xmlns:boilerplate")&.remove
     xml.at("//xmlns:metanorma-extension")&.remove
     expect(strip_guid(xml.to_xml))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", pres_output, true)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes inline section headers" do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", <<~INPUT, true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface> <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause> </preface>
+        <preface> 
+        <clause type="toc" id="_" displayorder="1"> 
+        <fmt-title depth="1">Contents</fmt-title> 
+        </clause> 
+        </preface>
         <sections>
           <clause id="M" inline-header="false" obligation="normative" displayorder="2">
-            <title>Clause 4</title>
+            <fmt-title>Clause 4</fmt-title>
             <clause id="N" inline-header="false" obligation="normative">
-              <title>Introduction</title>
+              <fmt-title>Introduction</fmt-title>
             </clause>
             <clause id="O" inline-header="true" obligation="normative">
-              <title>Clause 4.2</title>
+              <fmt-title>Clause 4.2</fmt-title>
               <p>Hello</p>
             </clause>
           </clause>
@@ -765,8 +782,8 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(Xml::C14n.format(output.sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m,
-                                                        "</body>")))
+    expect(Xml::C14n.format(output.sub(/^.*<body /m, "<body ")
+      .sub(%r{</body>.*$}m, "</body>")))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
         <body lang="EN-US" link="blue" vlink="#954F72">
           <div class="WordSection1">
@@ -796,8 +813,8 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(Xml::C14n.format(output.sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m,
-                                                        "</body>")))
+    expect(Xml::C14n.format(output.sub(/^.*<body /m, "<body ")
+      .sub(%r{</body>.*$}m, "</body>")))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
         <body lang="EN-US" link="blue" vlink="#954F72">
           <div class="WordSection1">
@@ -865,15 +882,18 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-    .convert("test", input, true))
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)
+    xml = Nokogiri::XML(pres_output)
     xml.at("//xmlns:localized-strings")&.remove
     xml.at("//xmlns:boilerplate")&.remove
     xml.at("//xmlns:metanorma-extension")&.remove
     expect(strip_guid(xml.to_xml))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
+      .convert("test", pres_output, true)))
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "generates an index in English" do
@@ -1161,15 +1181,17 @@ RSpec.describe IsoDoc do
           <div style="mso-element:footnote-list"/>
         </body>
     DOC
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output
       .gsub(%r{<localized-strings>.*</localized-strings>}m, ""))))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
+      .convert("test", pres_output, true)))
+      .to be_equivalent_to Xml::C14n.format(html)
     FileUtils.rm_f("test.doc")
-    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.doc")).to be true
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")

@@ -614,12 +614,14 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true)))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
       .to be_equivalent_to Xml::C14n.format(html)
   end
 
@@ -1132,12 +1134,14 @@ RSpec.describe IsoDoc do
          </body>
        </html>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    .sub(%r{<localized-strings>.*</localized-strings>}m, ""))))
+    expect(Xml::C14n.format(strip_guid(pres_output))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
+      .to be_equivalent_to Xml::C14n.format(html)
   end
 end

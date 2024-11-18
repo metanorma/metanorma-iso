@@ -50,15 +50,16 @@ module IsoDoc
           @anchors[t["id"]] = anchor_struct(
             "#{num}#{hiersep}#{c.increment(t).print}", t,
             t["inequality"] ? @labels["inequality"] : @labels["formula"],
-            "formula", t["unnumbered"]
+            "formula", { unnumb: t["unnumbered"], container: true }
           )
         end
       end
 
       def figure_anchor(elem, sublabel, label, klass, container: false)
         @anchors[elem["id"]] = anchor_struct(
-          "#{label}#{sublabel}", container ? elem : nil,
-          @labels[klass] || klass.capitalize, klass, elem["unnumbered"]
+          "#{label}#{sublabel}", elem,
+          @labels[klass] || klass.capitalize, klass, 
+          { unnumb: elem["unnumbered"], container:  }
         )
         !sublabel.empty? && elem["unnumbered"] != "true" and
           @anchors[elem["id"]][:label] = sublabel
@@ -130,7 +131,8 @@ module IsoDoc
           c = Counter.new
           notes.noblank.each do |n|
             @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
-                                              @labels["list"], "list", false)
+                                              @labels["list"], "list", 
+                                              { unnumb: false, container: true })
             list_item_anchor_names(n, @anchors[n["id"]], 1, "",
                                    !single_ol_for_xrefs?(notes))
           end
@@ -194,7 +196,8 @@ module IsoDoc
         countable.each do |n|
           @anchors[n["id"]] =
             anchor_struct(increment_label(countable, n, counter), n,
-                          @labels["note_xref"], "note", false)
+                          @labels["note_xref"], "note",
+                          { unnum: false, container: true } )
         end
       end
     end

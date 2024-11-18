@@ -125,7 +125,7 @@ RSpec.describe IsoDoc::Iso do
         </preface>
         <bibliography>
           <references id="_normative_references" normative="true" obligation="informative">
-            <title>Normative References</title>
+            <fmt-title>Normative References</fmt-title>
             <bibitem id="IEV" type="standard">
               <title format="text/plain" language="en" script="Latn">Electropedia: The World's Online Electrotechnical Vocabulary</title>
               <uri type="src">http://www.electropedia.org</uri>

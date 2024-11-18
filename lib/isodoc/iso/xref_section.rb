@@ -23,7 +23,7 @@ module IsoDoc
         clause.xpath(ns("./appendix")).each do |c|
           i.increment(c)
           @anchors[c["id"]] =
-            anchor_struct(i.print, nil, @labels["appendix"],
+            anchor_struct(i.print, c, @labels["appendix"],
                           "clause").merge(level: 2, subtype: "annex",
                                           container: clause["id"])
           j = Counter.new(0, prefix: i.print)
@@ -38,24 +38,31 @@ module IsoDoc
       # retaining subtype for the semantics
       def section_name_anchors(clause, num, level)
         if clause["type"] == "section"
+          xref = labelled_autonum(@labels["section"], clause, num)
+          label = labelled_autonum(@labels["section"], clause, num)
           @anchors[clause["id"]] =
-            { label: l10n("#{@labels['section']} #{num}"),
-              xref: l10n("#{@labels['section']} #{num}"),
+            { label:,#l10n("#{@labels['section']} #{num}"),
+              xref:, #l10n("#{@labels['section']} #{num}"),
               title: clause_title(clause), level: level, type: "clause",
               elem: @labels["section"] }
         elsif level > 1
+          num = semx(clause, num)
           @anchors[clause["id"]] =
-            { label: num, level: level, xref: num, subtype: "clause" }
+            { label: num, 
+              level: level, 
+              xref: num, 
+              subtype: "clause" }
         else super end
       end
 
       def annex_name_anchors1(clause, num, level)
-        ret = { label: num, level: level, subtype: "annex" }
+        ret = { label: semx(clause, num), level: level, subtype: "annex" }
         ret2 = if level == 2
-                 { xref: l10n("#{@labels['clause']} #{num}"),
+                 xref = labelled_autonum(@labels["clause"], clause, num)
+                 { xref: , #l10n("#{@labels['clause']} #{num}"),
                    elem: @labels["clause"] }
                else
-                 { xref: num }
+                 { xref: semx(clause, num) }
                end
         @anchors[clause["id"]] = ret.merge(ret2)
       end
@@ -69,6 +76,7 @@ module IsoDoc
       end
 
       def appendix_names1(clause, num, level, container)
+        num = semx(clause, num)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
         i = Counter.new(0, prefix: num)

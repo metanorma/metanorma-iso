@@ -91,7 +91,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
            <clause type="toc" id="_" displayorder="1">
-             <title depth="1">Contents</title>
+           <fmt-title depth="1">Contents</fmt-title>
            </clause>
            <foreword displayorder="2"><title>Foreword</title>
              <table alt="tool tip" id="tableD-1" summary="long desc">
@@ -375,21 +375,25 @@ RSpec.describe IsoDoc do
         </div>
       </div>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
-    IsoDoc::Iso::HtmlConvert.new({}).convert("test", presxml, false)
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output)))
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    IsoDoc::Iso::HtmlConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.html")).to be true
     out = File.read("test.html")
       .sub(/^.*<main /m, "<main ")
       .sub(%r{</main>.*$}m, "</main>")
-    expect(Xml::C14n.format(strip_guid(out))).to be_equivalent_to Xml::C14n.format(html)
-    IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
+    expect(Xml::C14n.format(strip_guid(out)))
+      .to be_equivalent_to Xml::C14n.format(html)
+    IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.doc")).to be true
     out = File.read("test.doc")
       .sub(/^.+?<table /m, '<table xmlns:m="m" ')
       .sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
-    expect(Xml::C14n.format("<div>#{out}")).to be_equivalent_to Xml::C14n.format(doc)
+    expect(Xml::C14n.format("<div>#{out}"))
+      .to be_equivalent_to Xml::C14n.format(doc)
     out = File.read("test.doc")
       .sub(/^.+?<div class="Section3"/m, '<div class="Section3"')
       .sub(%r{</div>\s*<br[^>]+>\s*<div class="colophon".*$}m, "")
@@ -437,7 +441,9 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
-            <clause type="toc" id="_" displayorder="1"> <title depth="1">Contents</title> </clause>
+            <clause type="toc" id="_" displayorder="1"> 
+         <fmt-title depth="1">Contents</fmt-title>
+          </clause>
            <foreword displayorder="2"><title>Foreword</title>
              <table id="tableD-1">
                <name>Table 1 — Repeatability and reproducibility of
@@ -585,13 +591,15 @@ RSpec.describe IsoDoc do
         <div class="colophon"/>
       </body>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-       .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(presxml)
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output)))
+       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", presxml, true))).to be_equivalent_to Xml::C14n.format(html)
+      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(html)
     expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
-      .convert("test", presxml, true))
+      .convert("test", pres_output, true))
       .at("//body").to_xml)).to be_equivalent_to Xml::C14n.format(doc)
   end
 end

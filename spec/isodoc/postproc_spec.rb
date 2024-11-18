@@ -140,9 +140,9 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <terms id="_terms_and_definitions" obligation="normative" displayorder="1">
-              <title>1
+              <fmt-title>1
                 <tab/>
-                Terms and Definitions</title>
+                Terms and Definitions</fmt-title>
               <term id="paddy1">
                 <name>1.1</name>
                 <preferred>paddy</preferred>
@@ -216,35 +216,35 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-              <title>1
+              <fmt-title>1
                 <tab/>
-                Clause 4</title>
+                Clause 4</fmt-title>
               <clause id="N" inline-header="false" obligation="normative">
-                <title>1.1
+                <fmt-title>1.1
                   <tab/>
                   Introduction
                   <bookmark id="Q"/>
                   to this
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </title>
+                </fmt-title>
               </clause>
               <clause id="O" inline-header="false" obligation="normative">
-                <title>1.2
+                <fmt-title>1.2
                   <tab/>
-                  Clause 4.2</title>
+                  Clause 4.2</fmt-title>
                 <p>A
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
                 </p>
               </clause>
             </clause>
-            <clause id="P" displayorder="2"><title>2<tab/>Clause 5</title>
-            <clause id="P1"><title>2.1<tab/>Clause 5.1</title>
+            <clause id="P" displayorder="2"><fmt-title>2<tab/>Clause 5</fmt-title>
+            <clause id="P1"><fmt-title>2.1<tab/>Clause 5.1</fmt-title>
             <p>X</p>
             </clause>
             </clause>
-            <clause id="Q" displayorder="3"><title>3<tab/>Clause 6</title></clause>
+            <clause id="Q" displayorder="3"><fmt-title>3<tab/>Clause 6</fmt-title></clause>
           </sections>
         </iso-standard>
       INPUT
@@ -321,23 +321,23 @@ RSpec.describe IsoDoc do
           </metanorma-extension>
                   <sections>
                     <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-                      <title>1
+                      <fmt-title>1
                         <tab/>
-                        Clause 4</title>
+                        Clause 4</fmt-title>
                       <clause id="N" inline-header="false" obligation="normative">
-                        <title>1.1
+                        <fmt-title>1.1
                           <tab/>
                           Introduction
                           <bookmark id="Q"/>
                           to this
                           <fn reference="1">
                             <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                        </title>
+                        </fmt-title>
                       </clause>
                       <clause id="O" inline-header="false" obligation="normative">
-                        <title>1.2
+                        <fmt-title>1.2
                           <tab/>
-                          Clause 4.2</title>
+                          Clause 4.2</fmt-title>
                         <p>A
                           <fn reference="1">
                             <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
@@ -417,22 +417,22 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
           <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-            <title>1
+            <fmt-title>1
               <tab/>
-              Clause 4</title>
+              Clause 4</fmt-title>
             <fn reference="3">
               <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
             </fn>
             <clause id="N" inline-header="false" obligation="normative">
-              <title>1.1 <tab/>
+              <fmt-title>1.1 <tab/>
                 Introduction to this
                 <fn reference="2">
                   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-              </title>
+              </fmt-title>
             </clause>
             <clause id="O" inline-header="false" obligation="normative">
-              <title>1.2 <tab/>
-                Clause 4.2</title>
+              <fmt-title>1.2 <tab/>
+                Clause 4.2</fmt-title>
               <p>A
                 <fn reference="1">
                   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
@@ -598,9 +598,9 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <terms id="_terms_and_definitions" obligation="normative" displayorder="1">
-              <title>Terms and Definitions</title>
+              <fmt-title>Terms and Definitions</fmt-title>
               <term id="paddy1">
-                <name>1.1</name>
+                <fmt-name>1.1</fmt-name>
                 <preferred>paddy</preferred>
                 <domain>rice</domain>
                 <definition>
@@ -629,7 +629,7 @@ RSpec.describe IsoDoc do
                 </termsource>
               </term>
               <term id="paddy">
-                <name>1.2</name>
+                <fmt-name>1.2</fmt-name>
                 <preferred>paddy</preferred>
                 <admitted>paddy rice</admitted>
                 <admitted>rough rice</admitted>
@@ -844,17 +844,19 @@ RSpec.describe IsoDoc do
       </iso-standard>
     OUTPUT
 
-    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(WORD_HTML_CSS.dup
       .merge(presxml_options))
-      .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .convert("test", input, true)
+
+    expect(Xml::C14n.format(pres_output
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Xml::C14n.format(presxml)
 
     FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", presxml, false)
+      .convert("test", pres_output, false)
 
     word = File.read("test.html", encoding: "UTF-8")
     expect(strip_guid(word))
@@ -863,7 +865,7 @@ RSpec.describe IsoDoc do
 
     FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
-      .convert("test", presxml, false)
+      .convert("test", pres_output, false)
     word = File.read("test.doc", encoding: "UTF-8")
     contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
     contents = Nokogiri::XML(contents)
@@ -928,23 +930,23 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-              <title>Clause 4</title>
+              <fmt-title>Clause 4</fmt-title>
               <clause id="N" inline-header="false" obligation="normative">
-                <title>Introduction
+                <fmt-title>Introduction
                   <bookmark id="Q"/>
                   to this
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </title>
+                </fmt-title>
               </clause>
               <clause id="O" inline-header="false" obligation="normative">
-                <title>Clause 4.2</title>
+                <fmt-title>Clause 4.2</fmt-title>
                 <p>A
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
                 </p>
                 <clause id="P" inline-header="false" obligation="normative">
-                  <title>Clause 4.2.1</title>
+                  <fmt-title>Clause 4.2.1</fmt-title>
                 </clause>
               </clause>
             </clause>

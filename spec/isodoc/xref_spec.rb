@@ -65,7 +65,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
@@ -187,7 +187,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
            <foreword displayorder="2"><title>Foreword</title>
              <p>
@@ -250,7 +250,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
            <foreword displayorder="2"><title>Foreword</title>
              <p>
@@ -356,7 +356,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword id="fwd" displayorder='2'><title>Foreword</title>
             <p>
@@ -498,7 +498,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword id="fwd" displayorder='2'><title>Foreword</title>
             <p>
@@ -637,7 +637,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
@@ -795,7 +795,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
@@ -981,7 +981,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
@@ -1138,7 +1138,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
@@ -1292,7 +1292,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword obligation='informative' displayorder='2'>
             <title>Foreword</title>
@@ -1519,7 +1519,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
               <preface>
            <clause type="toc" id="_" displayorder="1">
-             <title depth="1">Contents</title>
+           <fmt-title depth="1">Contents</fmt-title>
            </clause>
            <foreword obligation="informative" displayorder="2">
              <title>Foreword</title>
@@ -1646,7 +1646,7 @@ RSpec.describe IsoDoc do
       <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
@@ -1789,36 +1789,119 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
-              <xref target='N'>Clause 1 a)</xref>
-              <xref target='note1'>3.1, List 1 a)</xref>
-              <xref target='note2'>3.1, List 2 a)</xref>
-              <xref target='AN'>Clause A.1 a)</xref>
-              <xref target='Anote1'>Clause A.2, List 1 a)</xref>
-              <xref target='Anote2'>Clause A.2, List 2 a)</xref>
+            <xref target="N">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <semx element="autonum" source="N">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="note1">
+               <semx element="autonum" source="widgets1">3.1</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="note1l">1</semx>
+               <semx element="autonum" source="note1">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="note2">
+               <semx element="autonum" source="widgets1">3.1</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="note2l">2</semx>
+               <semx element="autonum" source="note2">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="AN">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1a">A.1</semx>
+               <semx element="autonum" source="AN">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="Anote1">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1b">A.2</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="Anote1l">1</semx>
+               <semx element="autonum" source="Anote1">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="Anote2">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1b">A.2</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="Anote2l">2</semx>
+               <semx element="autonum" source="Anote2">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id='scope' type='scope' displayorder='3'>
-            <title depth='1'>1<tab/>Scope</title>
+           <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
             <ol id='N1' type="alphabet">
               <li id='N' label="a">
                 <p>A</p>
               </li>
             </ol>
           </clause>
-          <terms id='terms' displayorder='4'><title>2</title></terms>
+          <terms id='terms' displayorder='4'>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="terms">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="terms">2</semx>
+         </fmt-xref-label>
+          </terms>
           <clause id='widgets' displayorder='5'>
-          <title depth='1'>3<tab/>Widgets</title>
-            <clause inline-header="true" id='widgets1'><title>3.1</title>
+         <title id="_">Widgets</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="widgets">3</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Widgets</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="widgets">3</semx>
+         </fmt-xref-label>
+         <clause id="widgets1" inline-header="true">
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
               <ol id='note1l' type="alphabet">
                 <li id='note1' label="a">
                   <p>A</p>
@@ -1832,15 +1915,47 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id='annex1'  displayorder='6'><title><strong>Annex A</strong><br/><span class="obligation">(informative)</span></title>
-          <clause inline-header="true" id='annex1a'><title>A.1</title>
+      <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
+      <clause id="annex1a" inline-header="true">
+         <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1a">A.1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1a">A.1</semx>
+         </fmt-xref-label>
             <ol id='ANl' type="alphabet">
               <li id='AN' label="a">
                 <p>A</p>
               </li>
             </ol>
           </clause>
-          <clause inline-header="true" id='annex1b'><title>A.2</title>
+          <clause inline-header="true" id='annex1b'>
+         <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
             <ol id='Anote1l' type="alphabet">
               <li id='Anote1' label="a">
                 <p>A</p>
@@ -1939,31 +2054,155 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <?xml version='1.0'?>
       <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+          <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
-              <xref target='N'>Clause 1 a)</xref>
-              <xref target='note1'>Clause 1 a) 1)</xref>
-              <xref target='note2'>Clause 1 a) 1) i)</xref>
-              <xref target='AN'>Clause 1 a) 1) i) A)</xref>
-              <xref target='Anote1'>Clause 1 a) 1) i) A) I)</xref>
-              <xref target='Anote2'>Clause 1 a) 1) i) A) I) a)</xref>
-              <xref target="P">Clause 2, List  1 a)</xref>
-              <xref target="Q">Clause 2, List  1 a) 1)</xref>
-              <xref target="R">Clause 2, List  1 a) 1) i)</xref>
-              <xref target="S">Clause 2, List  1 a) 1) i) A)</xref>
-              <xref target="P1">Clause 2, List  2 a)</xref>
+            <xref target="N">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <semx element="autonum" source="N">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="note1">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <semx element="autonum" source="N">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note1">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="note2">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <semx element="autonum" source="N">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note1">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note2">i</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="AN">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <semx element="autonum" source="N">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note1">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note2">i</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="AN">A</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="Anote1">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <semx element="autonum" source="N">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note1">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note2">i</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="AN">A</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="Anote1">I</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="Anote2">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <semx element="autonum" source="N">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note1">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="note2">i</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="AN">A</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="Anote1">I</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="Anote2">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="P">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="A">2</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="L">1</semx>
+               <semx element="autonum" source="P">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="Q">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="A">2</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="L">1</semx>
+               <semx element="autonum" source="P">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="Q">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="R">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="A">2</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="L">1</semx>
+               <semx element="autonum" source="P">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="Q">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="R">i</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="S">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="A">2</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="L">1</semx>
+               <semx element="autonum" source="P">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="Q">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="R">i</semx>
+               <span class="fmt-autonum-delim">)</span>
+               <semx element="autonum" source="S">A</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="P1">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="A">2</semx>
+               <comma>,</comma>
+               <span class="fmt-element-name">List</span>
+               <semx element="autonum" source="L1">2</semx>
+               <semx element="autonum" source="P1">a</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id='scope' type='scope' displayorder='3'>
-            <title depth='1'>1<tab/>Scope</title>
+         <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
             <ol id='N1' type="alphabet">
               <li id='N' label="a">
                 <p>A</p>
@@ -1996,7 +2235,20 @@ RSpec.describe IsoDoc do
             </ol>
           </clause>
            <clause id="A" displayorder="4">
-          <title depth="1">2<tab/>Clause</title>
+         <title id="_">Clause</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="A">2</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Clause</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="A">2</semx>
+         </fmt-xref-label>
           <ol id="L" type="alphabet">
             <li id="P" label="a">
               <ol id="L11" type="arabic">
@@ -2021,7 +2273,8 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "conflates cross-references to a split list" do
@@ -2053,7 +2306,14 @@ RSpec.describe IsoDoc do
     INPUT
     output = <<~OUTPUT
       <foreword displayorder='2'><title>Foreword</title>
-        <p><xref target='Na'>Clause 1 a)</xref></p>
+        <p>
+        <xref target="Na">
+        <span class="fmt-element-name">Clause</span>
+        <semx element="autonum" source="scope">1</semx>
+        <semx element="autonum" source="Na">a</semx>
+        <span class="fmt-autonum-delim">)</span>
+        </xref>
+        </p>
       </foreword>
     OUTPUT
     expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
@@ -2090,7 +2350,17 @@ RSpec.describe IsoDoc do
     INPUT
     output = <<~OUTPUT
       <foreword displayorder='2'><title>Foreword</title>
-        <p><xref target='Na'>Clause 1, List 1 a)</xref></p>
+        <p>
+        <xref target="Na">
+         <span class="fmt-element-name">Clause</span>
+         <semx element="autonum" source="scope">1</semx>
+         <comma>,</comma>
+         <span class="fmt-element-name">List</span>
+         <semx element="autonum" source="N1">1</semx>
+         <semx element="autonum" source="Na">a</semx>
+         <span class="fmt-autonum-delim">)</span>
+      </xref>
+        </p>
       </foreword>
     OUTPUT
     expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
