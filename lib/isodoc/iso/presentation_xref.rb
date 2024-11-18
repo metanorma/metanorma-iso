@@ -115,7 +115,7 @@ module IsoDoc
           prefix_container_template(container, node, target)
         container_label = prefix_container(container_container,
                                            container_label, node, target)
-        l10n(nested_xref.sub("%1", container_label).sub("%2", linkend))
+        l10n(connectives_spans(nested_xref.sub("%1", container_label).sub("%2", linkend)))
       end
 
       def prefix_container_template(container, node, target)

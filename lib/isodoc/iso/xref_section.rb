@@ -28,8 +28,9 @@ module IsoDoc
                                           container: clause["id"])
           j = Counter.new(0, prefix: i.print)
           c.xpath(ns("./clause | ./references")).each do |c1|
-            lbl = "#{@labels['appendix']} #{j.increment(c1).print}"
-            appendix_names1(c1, l10n(lbl), 3, clause["id"])
+            #lbl = "#{@labels['appendix']} #{j.increment(c1).print}"
+            #appendix_names1(c1, l10n(lbl), 3, clause["id"])
+            appendix_names1(c1, j.increment(c1).print, 3, clause["id"])
           end
         end
       end
@@ -76,7 +77,7 @@ module IsoDoc
       end
 
       def appendix_names1(clause, num, level, container)
-        num = semx(clause, num)
+        num = labelled_autonum(@labels['appendix'], clause, num)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
         i = Counter.new(0, prefix: num)

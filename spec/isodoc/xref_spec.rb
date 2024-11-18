@@ -80,9 +80,20 @@ RSpec.describe IsoDoc do
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
             <note id="N">
               <name>NOTE</name>
               <p id="_">These results are based on a study carried out on three different
@@ -94,14 +105,40 @@ RSpec.describe IsoDoc do
             </p>
           </clause>
           <terms id="terms"  displayorder='4'>
-            <title>2</title>
+                   <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="terms">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="terms">2</semx>
+         </fmt-xref-label>
           </terms>
           <clause id="widgets"  displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Widgets</title>
+                 <title id="_">Widgets</title>
+       <fmt-title depth="1">
+          <span class="fmt-caption-label">
+             <semx element="autonum" source="widgets">3</semx>
+             <span class="fmt-caption-delim">
+                <tab/>
+             </span>
+             <semx element="title" source="_">Widgets</semx>
+          </span>
+       </fmt-title>
+       <fmt-xref-label>
+          <span class="fmt-element-name">Clause</span>
+          <semx element="autonum" source="widgets">3</semx>
+       </fmt-xref-label>
             <clause id="widgets1" inline-header="true">
-              <title>3.1</title>
+                        <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
               <note id="note1">
                 <name>NOTE 1</name>
                 <p id="_">These results are based on a study carried out on three different
@@ -121,10 +158,21 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='6'>
-          <title>
-            <strong>Annex A</strong>
-            <br/><span class="obligation">(informative)</span></title>
+           <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
           <clause id="annex1a" inline-header="true">
             <title>A.1</title>
             <note id="AN">
@@ -135,7 +183,15 @@ RSpec.describe IsoDoc do
             </note>
           </clause>
           <clause id="annex1b" inline-header="true">
-            <title>A.2</title>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
             <note id="Anote1">
               <name>NOTE 1</name>
               <p id="_">These results are based on a study carried out on three different
@@ -371,9 +427,20 @@ RSpec.describe IsoDoc do
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
             <figure id="N">
               <name>Figure 1 — Split-it-right sample divider</name>
               <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
@@ -383,14 +450,40 @@ RSpec.describe IsoDoc do
             </p>
           </clause>
           <terms id="terms" displayorder='4'>
-            <title>2</title>
+                   <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="terms">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="terms">2</semx>
+         </fmt-xref-label>
           </terms>
           <clause id="widgets" displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Widgets</title>
+                 <title id="_">Widgets</title>
+       <fmt-title depth="1">
+          <span class="fmt-caption-label">
+             <semx element="autonum" source="widgets">3</semx>
+             <span class="fmt-caption-delim">
+                <tab/>
+             </span>
+             <semx element="title" source="_">Widgets</semx>
+          </span>
+       </fmt-title>
+       <fmt-xref-label>
+          <span class="fmt-element-name">Clause</span>
+          <semx element="autonum" source="widgets">3</semx>
+       </fmt-xref-label>
             <clause id="widgets1" inline-header="true">
-              <title>3.1</title>
+                          <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
               <figure id="note1">
                 <name>Figure 2 — Split-it-right sample divider</name>
                 <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
@@ -406,19 +499,46 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='6'>
-          <title>
-            <strong>Annex A</strong>
-            <br/><span class="obligation">(informative)</span></title>
+           <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
           <clause id="annex1a" inline-header="true">
-            <title>A.1</title>
+                  <fmt-title depth="2">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="annex1a">A.1</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="annex1a">A.1</semx>
+        </fmt-xref-label>
             <figure id="AN">
               <name>Figure A.1 — Split-it-right sample divider</name>
               <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
             </figure>
           </clause>
           <clause id="annex1b" inline-header="true">
-            <title>A.2</title>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
             <figure id="Anote1">
               <name>Figure A.2 — Split-it-right sample divider</name>
               <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
@@ -502,30 +622,97 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword id="fwd" displayorder='2'><title>Foreword</title>
             <p>
-              <xref target="N"><span class='citefig'>Figure 1</span></xref>
-              <xref target="note1"><span class='citefig'>Figure 1 a)</span></xref>
-              <xref target="note2"><span class='citefig'>Figure 1 b)</span></xref>
-              <xref target="AN"><span class='citefig'>Figure A.1</span></xref>
-              <xref target="Anote1"><span class='citefig'>Figure A.1 a)</span></xref>
-              <xref target="Anote2"><span class='citefig'>Figure A.1 b)</span></xref>
+                  <xref target="N">
+                      <span class="citefig">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="N">1</semx>
+                      </span>
+                   </xref>
+                   <xref target="note1">
+                      <span class="citefig">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="note1">1 a)</semx>
+                      </span>
+                   </xref>
+                   <xref target="note2">
+                      <span class="citefig">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="note2">1 b)</semx>
+                      </span>
+                   </xref>
+                   <xref target="AN">
+                      <span class="citefig">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="AN">A.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="Anote1">
+                      <span class="citefig">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="Anote1">A.1 a)</semx>
+                      </span>
+                   </xref>
+                   <xref target="Anote2">
+                      <span class="citefig">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="Anote2">A.1 b)</semx>
+                      </span>
+                   </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
           </clause>
           <terms id="terms" displayorder='4'>
-            <title>2</title>
+                   <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="terms">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="terms">2</semx>
+         </fmt-xref-label>
           </terms>
           <clause id="widgets" displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Widgets</title>
+                 <title id="_">Widgets</title>
+       <fmt-title depth="1">
+          <span class="fmt-caption-label">
+             <semx element="autonum" source="widgets">3</semx>
+             <span class="fmt-caption-delim">
+                <tab/>
+             </span>
+             <semx element="title" source="_">Widgets</semx>
+          </span>
+       </fmt-title>
+       <fmt-xref-label>
+          <span class="fmt-element-name">Clause</span>
+          <semx element="autonum" source="widgets">3</semx>
+       </fmt-xref-label>
             <clause id="widgets1" inline-header="true">
-              <title>3.1</title>
+                        <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
               <figure id="N">
                 <name>Figure 1</name>
                 <figure id="note1">
@@ -544,15 +731,42 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='6'>
-          <title>
-            <strong>Annex A</strong>
-            <br/><span class="obligation">(informative)</span></title>
+           <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
           <clause id="annex1a" inline-header="true">
-            <title>A.1</title>
+                  <fmt-title depth="2">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="annex1a">A.1</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="annex1a">A.1</semx>
+        </fmt-xref-label>
           </clause>
           <clause id="annex1b" inline-header="true">
-            <title>A.2</title>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
             <figure id="AN">
               <name>Figure A.1</name>
               <figure id="Anote1">
@@ -641,71 +855,225 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
-              <xref target="N">Clause 1, Example</xref>
-              <xref target="note1">3.1, Example 1</xref>
-              <xref target="note2">3.1, Example 2</xref>
-              <xref target="AN">Clause A.1, Example</xref>
-              <xref target="Anote1">Clause A.2, Example 1</xref>
-              <xref target="Anote2">Clause A.2, Example 2</xref>
+            <xref target="N">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Example</span>
+            </xref>
+            <xref target="note1">
+               <semx element="autonum" source="widgets1">3.1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Example</span>
+               <semx element="autonum" source="note1">1</semx>
+            </xref>
+            <xref target="note2">
+               <semx element="autonum" source="widgets1">3.1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Example</span>
+               <semx element="autonum" source="note2">2</semx>
+            </xref>
+            <xref target="AN">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1a">A.1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Example</span>
+            </xref>
+            <xref target="Anote1">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1b">A.2</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Example</span>
+               <semx element="autonum" source="Anote1">1</semx>
+            </xref>
+            <xref target="Anote2">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1b">A.2</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Example</span>
+               <semx element="autonum" source="Anote2">2</semx>
+            </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
-            <example id="N">
-              <name>EXAMPLE</name>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
+         <example id="N" autonum="">
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">EXAMPLE</span>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Example</span>
+            </fmt-xref-label>
               <p>Hello</p>
             </example>
             <p>
-              <xref target="N">Example</xref>
+            <xref target="N">
+               <span class="fmt-element-name">Example</span>
+            </xref>
             </p>
           </clause>
           <terms id="terms" displayorder='4'>
-            <title>2</title>
+                   <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="terms">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="terms">2</semx>
+         </fmt-xref-label>
           </terms>
           <clause id="widgets" displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Widgets</title>
+                 <title id="_">Widgets</title>
+       <fmt-title depth="1">
+          <span class="fmt-caption-label">
+             <semx element="autonum" source="widgets">3</semx>
+             <span class="fmt-caption-delim">
+                <tab/>
+             </span>
+             <semx element="title" source="_">Widgets</semx>
+          </span>
+       </fmt-title>
+       <fmt-xref-label>
+          <span class="fmt-element-name">Clause</span>
+          <semx element="autonum" source="widgets">3</semx>
+       </fmt-xref-label>
             <clause id="widgets1" inline-header="true">
-              <title>3.1</title>
-              <example id="note1">
-                <name>EXAMPLE 1</name>
+                        <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
+            <example id="note1" autonum="1">
+               <fmt-name>
+                  <span class="fmt-caption-label">
+                     <span class="fmt-element-name">EXAMPLE</span>
+                     <semx element="autonum" source="note1">1</semx>
+                  </span>
+               </fmt-name>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Example</span>
+                  <semx element="autonum" source="note1">1</semx>
+               </fmt-xref-label>
                 <p>Hello</p>
               </example>
-              <example id="note2">
-                <name>EXAMPLE 2</name>
+              <example id="note2" autonum="2">
+               <fmt-name>
+                  <span class="fmt-caption-label">
+                     <span class="fmt-element-name">EXAMPLE</span>
+                     <semx element="autonum" source="note2">2</semx>
+                  </span>
+               </fmt-name>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Example</span>
+                  <semx element="autonum" source="note2">2</semx>
+               </fmt-xref-label>
                 <p>Hello</p>
               </example>
               <p>
-                <xref target="note1">Example 1</xref>
-                <xref target="note2">Example 2</xref>
+               <xref target="note1">
+                  <span class="fmt-element-name">Example</span>
+                  <semx element="autonum" source="note1">1</semx>
+               </xref>
+               <xref target="note2">
+                  <span class="fmt-element-name">Example</span>
+                  <semx element="autonum" source="note2">2</semx>
+               </xref>
               </p>
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='6'>
-          <title>
-            <strong>Annex A</strong>
-            <br/><span class="obligation">(informative)</span></title>
+           <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
           <clause id="annex1a" inline-header="true">
-            <title>A.1</title>
-            <example id="AN">
-              <name>EXAMPLE</name>
+                  <fmt-title depth="2">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="annex1a">A.1</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="annex1a">A.1</semx>
+        </fmt-xref-label>
+                 <example id="AN" autonum="">
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">EXAMPLE</span>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Example</span>
+            </fmt-xref-label>
               <p>Hello</p>
             </example>
           </clause>
           <clause id="annex1b" inline-header="true">
-            <title>A.2</title>
-            <example id="Anote1">
-              <name>EXAMPLE 1</name>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
+                  <example id="Anote1" autonum="1">
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">EXAMPLE</span>
+                  <semx element="autonum" source="Anote1">1</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Example</span>
+               <semx element="autonum" source="Anote1">1</semx>
+            </fmt-xref-label>
               <p>Hello</p>
             </example>
-            <example id="Anote2">
-              <name>EXAMPLE 2</name>
+                     <example id="Anote2" autonum="2">
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">EXAMPLE</span>
+                  <semx element="autonum" source="Anote2">2</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Example</span>
+               <semx element="autonum" source="Anote2">2</semx>
+            </fmt-xref-label>
               <p>Hello</p>
             </example>
           </clause>
@@ -799,71 +1167,268 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
-              <xref target="N">Clause 1, Formula (1)</xref>
-              <xref target="note1">3.1, Formula (2)</xref>
-              <xref target="note2">3.1, Formula (3)</xref>
-              <xref target="AN">Clause A.1, Formula (A.1)</xref>
-              <xref target="Anote1">Clause A.2, Formula (A.2)</xref>
-              <xref target="Anote2">Clause A.2, Formula (A.3)</xref>
+            <xref target="N">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="N">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="note1">
+               <semx element="autonum" source="widgets1">3.1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="note1">2</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="note2">
+               <semx element="autonum" source="widgets1">3.1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="note2">3</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="AN">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1a">A.1</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="AN">A.1</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="Anote1">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1b">A.2</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="Anote1">A.2</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
+            <xref target="Anote2">
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="annex1b">A.2</semx>
+               <span class="fmt-comma">,</span>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="Anote2">A.3</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
-            <formula id="N">
-              <name>(1)</name>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
+         <formula id="N" autonum="1">
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-autonum-delim">(</span>
+                  1
+                  <span class="fmt-autonum-delim">)</span>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="N">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </fmt-xref-label>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
             <p>
-              <xref target="N">Formula (1)</xref>
+              <xref target="N">
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="N">1</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </xref>
             </p>
           </clause>
           <terms id="terms" displayorder='4'>
-            <title>2</title>
+                   <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="terms">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="terms">2</semx>
+         </fmt-xref-label>
           </terms>
           <clause id="widgets" displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Widgets</title>
+                 <title id="_">Widgets</title>
+       <fmt-title depth="1">
+          <span class="fmt-caption-label">
+             <semx element="autonum" source="widgets">3</semx>
+             <span class="fmt-caption-delim">
+                <tab/>
+             </span>
+             <semx element="title" source="_">Widgets</semx>
+          </span>
+       </fmt-title>
+       <fmt-xref-label>
+          <span class="fmt-element-name">Clause</span>
+          <semx element="autonum" source="widgets">3</semx>
+       </fmt-xref-label>
             <clause id="widgets1" inline-header="true">
-              <title>3.1</title>
-              <formula id="note1">
-                <name>(2)</name>
+                        <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
+                        <formula id="note1" autonum="2">
+               <fmt-name>
+                  <span class="fmt-caption-label">
+                     <span class="fmt-autonum-delim">(</span>
+                     2
+                     <span class="fmt-autonum-delim">)</span>
+                  </span>
+               </fmt-name>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Formula</span>
+                  <span class="fmt-autonum-delim">(</span>
+                  <semx element="autonum" source="note1">2</semx>
+                  <span class="fmt-autonum-delim">)</span>
+               </fmt-xref-label>
                 <stem type="AsciiMath">r = 1 %</stem>
               </formula>
-              <formula id="note2">
-                <name>(3)</name>
+              <formula id="note2" autonum="3">
+               <fmt-name>
+                  <span class="fmt-caption-label">
+                     <span class="fmt-autonum-delim">(</span>
+                     3
+                     <span class="fmt-autonum-delim">)</span>
+                  </span>
+               </fmt-name>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Formula</span>
+                  <span class="fmt-autonum-delim">(</span>
+                  <semx element="autonum" source="note2">3</semx>
+                  <span class="fmt-autonum-delim">)</span>
+               </fmt-xref-label>
                 <stem type="AsciiMath">r = 1 %</stem>
               </formula>
               <p>
-                <xref target="note1">Formula (2)</xref>
-                <xref target="note2">Formula (3)</xref>
+               <xref target="note1">
+                  <span class="fmt-element-name">Formula</span>
+                  <span class="fmt-autonum-delim">(</span>
+                  <semx element="autonum" source="note1">2</semx>
+                  <span class="fmt-autonum-delim">)</span>
+               </xref>
+               <xref target="note2">
+                  <span class="fmt-element-name">Formula</span>
+                  <span class="fmt-autonum-delim">(</span>
+                  <semx element="autonum" source="note2">3</semx>
+                  <span class="fmt-autonum-delim">)</span>
+               </xref>
               </p>
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='6'>
-          <title>
-            <strong>Annex A</strong>
-            <br/><span class="obligation">(informative)</span></title>
+           <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
           <clause id="annex1a" inline-header="true">
-            <title>A.1</title>
-            <formula id="AN">
-              <name>(A.1)</name>
+                  <fmt-title depth="2">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="annex1a">A.1</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="annex1a">A.1</semx>
+        </fmt-xref-label>
+                <formula id="AN" autonum="A.1">
+           <fmt-name>
+              <span class="fmt-caption-label">
+                 <span class="fmt-autonum-delim">(</span>
+                 A.1
+                 <span class="fmt-autonum-delim">)</span>
+              </span>
+           </fmt-name>
+           <fmt-xref-label>
+              <span class="fmt-element-name">Formula</span>
+              <span class="fmt-autonum-delim">(</span>
+              <semx element="autonum" source="AN">A.1</semx>
+              <span class="fmt-autonum-delim">)</span>
+           </fmt-xref-label>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </clause>
           <clause id="annex1b" inline-header="true">
-            <title>A.2</title>
-            <formula id="Anote1">
-              <name>(A.2)</name>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
+                  <formula id="Anote1" autonum="A.2">
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-autonum-delim">(</span>
+                  A.2
+                  <span class="fmt-autonum-delim">)</span>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="Anote1">A.2</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </fmt-xref-label>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
-            <formula id="Anote2">
-              <name>(A.3)</name>
+                     <formula id="Anote2" autonum="A.3">
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-autonum-delim">(</span>
+                  A.3
+                  <span class="fmt-autonum-delim">)</span>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Formula</span>
+               <span class="fmt-autonum-delim">(</span>
+               <semx element="autonum" source="Anote2">A.3</semx>
+               <span class="fmt-autonum-delim">)</span>
+            </fmt-xref-label>
               <stem type="AsciiMath">r = 1 %</stem>
             </formula>
           </clause>
@@ -985,22 +1550,75 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
-              <xref target="N"><span class='citetbl'>Table 1</span></xref>
-              <xref target="note1"><span class='citetbl'>Table 2</span></xref>
-              <xref target="note2"><span class='citetbl'>Table 3</span></xref>
-              <xref target="AN"><span class='citetbl'>Table A.1</span></xref>
-              <xref target="Anote1"><span class='citetbl'>Table A.2</span></xref>
-              <xref target="Anote2"><span class='citetbl'>Table A.3</span></xref>
+                   <xref target="N">
+                      <span class="citetbl">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="N">1</semx>
+                      </span>
+                   </xref>
+                   <xref target="note1">
+                      <span class="citetbl">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="note1">2</semx>
+                      </span>
+                   </xref>
+                   <xref target="note2">
+                      <span class="citetbl">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="note2">3</semx>
+                      </span>
+                   </xref>
+                   <xref target="AN">
+                      <span class="citetbl">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="AN">A.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="Anote1">
+                      <span class="citetbl">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="Anote1">A.2</semx>
+                      </span>
+                   </xref>
+                   <xref target="Anote2">
+                      <span class="citetbl">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="Anote2">A.3</semx>
+                      </span>
+                   </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
-            <table id="N">
-              <name>Table 1 — Repeatability and reproducibility of husked rice yield</name>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
+                 <table id="N" autonum="1">
+           <name id="_">Repeatability and reproducibility of husked rice yield</name>
+           <fmt-name>
+              <span class="fmt-caption-label">
+                 <span class="fmt-element-name">Table</span>
+                 <semx element="autonum" source="N">1</semx>
+                 <span class="fmt-caption-delim"> — </span>
+                 <semx element="name" source="_">Repeatability and reproducibility of husked rice yield</semx>
+              </span>
+           </fmt-name>
+           <fmt-xref-label>
+              <span class="fmt-element-name">Table</span>
+              <semx element="autonum" source="N">1</semx>
+           </fmt-xref-label>
               <tbody>
                 <tr>
                   <td align="left">Number of laboratories retained after eliminating outliers</td>
@@ -1010,20 +1628,63 @@ RSpec.describe IsoDoc do
               </tbody>
             </table>
             <p>
-              <xref target="N"><span class='citetbl'>Table 1</span></xref>
+              <xref target="N">
+                            <span class="citetbl">
+                 <span class="fmt-element-name">Table</span>
+                 <semx element="autonum" source="N">1</semx>
+              </span>
+            </xref>
             </p>
           </clause>
           <terms id="terms" displayorder='4'>
-            <title>2</title>
+                   <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="terms">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="terms">2</semx>
+         </fmt-xref-label>
           </terms>
           <clause id="widgets" displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Widgets</title>
+                 <title id="_">Widgets</title>
+       <fmt-title depth="1">
+          <span class="fmt-caption-label">
+             <semx element="autonum" source="widgets">3</semx>
+             <span class="fmt-caption-delim">
+                <tab/>
+             </span>
+             <semx element="title" source="_">Widgets</semx>
+          </span>
+       </fmt-title>
+       <fmt-xref-label>
+          <span class="fmt-element-name">Clause</span>
+          <semx element="autonum" source="widgets">3</semx>
+       </fmt-xref-label>
             <clause id="widgets1" inline-header="true">
-              <title>3.1</title>
-              <table id="note1">
-                <name>Table 2 — Repeatability and reproducibility of husked rice yield</name>
+                        <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
+                        <table id="note1" autonum="2">
+               <name id="_">Repeatability and reproducibility of husked rice yield</name>
+               <fmt-name>
+                  <span class="fmt-caption-label">
+                     <span class="fmt-element-name">Table</span>
+                     <semx element="autonum" source="note1">2</semx>
+                     <span class="fmt-caption-delim"> — </span>
+                     <semx element="name" source="_">Repeatability and reproducibility of husked rice yield</semx>
+                  </span>
+               </fmt-name>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Table</span>
+                  <semx element="autonum" source="note1">2</semx>
+               </fmt-xref-label>
                 <tbody>
                   <tr>
                     <td align="left">Number of laboratories retained after eliminating outliers</td>
@@ -1032,8 +1693,20 @@ RSpec.describe IsoDoc do
                   </tr>
                 </tbody>
               </table>
-              <table id="note2">
-                <name>Table 3 — Repeatability and reproducibility of husked rice yield</name>
+                          <table id="note2" autonum="3">
+               <name id="_">Repeatability and reproducibility of husked rice yield</name>
+               <fmt-name>
+                  <span class="fmt-caption-label">
+                     <span class="fmt-element-name">Table</span>
+                     <semx element="autonum" source="note2">3</semx>
+                     <span class="fmt-caption-delim"> — </span>
+                     <semx element="name" source="_">Repeatability and reproducibility of husked rice yield</semx>
+                  </span>
+               </fmt-name>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Table</span>
+                  <semx element="autonum" source="note2">3</semx>
+               </fmt-xref-label>
                 <tbody>
                   <tr>
                     <td align="left">Number of laboratories retained after eliminating outliers</td>
@@ -1043,20 +1716,61 @@ RSpec.describe IsoDoc do
                 </tbody>
               </table>
               <p>
-                <xref target="note1"><span class='citetbl'>Table 2</span></xref>
-                <xref target="note2"><span class='citetbl'>Table 3</span></xref>
+                     <xref target="note1">
+                         <span class="citetbl">
+                            <span class="fmt-element-name">Table</span>
+                            <semx element="autonum" source="note1">2</semx>
+                         </span>
+                      </xref>
+                      <xref target="note2">
+                         <span class="citetbl">
+                            <span class="fmt-element-name">Table</span>
+                            <semx element="autonum" source="note2">3</semx>
+                         </span>
+                      </xref>
               </p>
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='6'>
-          <title>
-            <strong>Annex A</strong>
-            <br/><span class="obligation">(informative)</span></title>
+           <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
           <clause id="annex1a" inline-header="true">
-            <title>A.1</title>
-            <table id="AN">
-              <name>Table A.1 — Repeatability and reproducibility of husked rice yield</name>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1a">A.1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1a">A.1</semx>
+         </fmt-xref-label>
+         <table id="AN" autonum="A.1">
+            <name id="_">Repeatability and reproducibility of husked rice yield</name>
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">Table</span>
+                  <semx element="autonum" source="AN">A.1</semx>
+                  <span class="fmt-caption-delim"> — </span>
+                  <semx element="name" source="_">Repeatability and reproducibility of husked rice yield</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Table</span>
+               <semx element="autonum" source="AN">A.1</semx>
+            </fmt-xref-label>
               <tbody>
                 <tr>
                   <td align="left">Number of laboratories retained after eliminating outliers</td>
@@ -1067,9 +1781,29 @@ RSpec.describe IsoDoc do
             </table>
           </clause>
           <clause id="annex1b" inline-header="true">
-            <title>A.2</title>
-            <table id="Anote1">
-              <name>Table A.2 — Repeatability and reproducibility of husked rice yield</name>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
+         <table id="Anote1" autonum="A.2">
+            <name id="_">Repeatability and reproducibility of husked rice yield</name>
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">Table</span>
+                  <semx element="autonum" source="Anote1">A.2</semx>
+                  <span class="fmt-caption-delim"> — </span>
+                  <semx element="name" source="_">Repeatability and reproducibility of husked rice yield</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Table</span>
+               <semx element="autonum" source="Anote1">A.2</semx>
+            </fmt-xref-label>
               <tbody>
                 <tr>
                   <td align="left">Number of laboratories retained after eliminating outliers</td>
@@ -1078,8 +1812,20 @@ RSpec.describe IsoDoc do
                 </tr>
               </tbody>
             </table>
-            <table id="Anote2">
-              <name>Table A.3 — Repeatability and reproducibility of husked rice yield</name>
+                    <table id="Anote2" autonum="A.3">
+           <name id="_">Repeatability and reproducibility of husked rice yield</name>
+           <fmt-name>
+              <span class="fmt-caption-label">
+                 <span class="fmt-element-name">Table</span>
+                 <semx element="autonum" source="Anote2">A.3</semx>
+                 <span class="fmt-caption-delim"> — </span>
+                 <semx element="name" source="_">Repeatability and reproducibility of husked rice yield</semx>
+              </span>
+           </fmt-name>
+           <fmt-xref-label>
+              <span class="fmt-element-name">Table</span>
+              <semx element="autonum" source="Anote2">A.3</semx>
+           </fmt-xref-label>
               <tbody>
                 <tr>
                   <td align="left">Number of laboratories retained after eliminating outliers</td>
@@ -1094,7 +1840,8 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references term notes" do
@@ -1142,49 +1889,128 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
-              <xref target="note1">2.1, Note 1</xref>
-              <xref target="note2">2.2, Note 1</xref>
-              <xref target="note3">2.2, Note 2</xref>
+           <xref target="note1">
+              <semx element="autonum" source="_">2.1</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">Note</span>
+              <semx element="autonum" source="note1">1</semx>
+           </xref>
+           <xref target="note2">
+              <semx element="autonum" source="_">2.2</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">Note</span>
+              <semx element="autonum" source="note2">1</semx>
+           </xref>
+           <xref target="note3">
+              <semx element="autonum" source="_">2.2</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">Note</span>
+              <semx element="autonum" source="note3">2</semx>
+           </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
           </clause>
-          <terms id="terms" displayorder='4'>
-            <title>2</title>
-            <term id="_">
-              <name>2.1</name>
-              <preferred><strong>waxy rice</strong></preferred>
-              <termnote id="note1">
-                <name>Note 1 to entry:</name>
-                <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
-                  kernels have a tendency to stick together after cooking.
-                </p>
-              </termnote>
-            </term>
-            <term id="_">
-              <name>2.2</name>
-              <preferred><strong>nonwaxy rice</strong></preferred>
-              <termnote id="note2">
-                <name>Note 1 to entry:</name>
-                <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
-                  kernels have a tendency to stick together after cooking.
-                </p>
-              </termnote>
-              <termnote id="note3">
-                <name>Note 2 to entry:</name>
-                <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
-                  kernels have a tendency to stick together after cooking.
-                </p>
-              </termnote>
-            </term>
-          </terms>
-        </sections>
-      </iso-standard>
+                       <terms id="terms" displayorder="4">
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="terms">2</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="terms">2</semx>
+                </fmt-xref-label>
+                <term id="_">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="_">2.1</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="_">2.1</semx>
+                   </fmt-xref-label>
+                   <preferred>
+                      <strong>waxy rice</strong>
+                   </preferred>
+                   <termnote id="note1" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            Note
+                            <semx element="autonum" source="note1">1</semx>
+                            to entry
+                         </span>
+                         <span class="fmt-label-delim">: </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note1">1</semx>
+                      </fmt-xref-label>
+                      <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+                   </termnote>
+                </term>
+                <term id="_">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="_">2.2</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="_">2.2</semx>
+                   </fmt-xref-label>
+                   <preferred>
+                      <strong>nonwaxy rice</strong>
+                   </preferred>
+                   <termnote id="note2" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            Note
+                            <semx element="autonum" source="note2">1</semx>
+                            to entry
+                         </span>
+                         <span class="fmt-label-delim">: </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note2">1</semx>
+                      </fmt-xref-label>
+                      <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+                   </termnote>
+                   <termnote id="note3" autonum="2">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            Note
+                            <semx element="autonum" source="note3">2</semx>
+                            to entry
+                         </span>
+                         <span class="fmt-label-delim">: </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note3">2</semx>
+                      </fmt-xref-label>
+                      <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+                   </termnote>
+                </term>
+             </terms>
+          </sections>
+       </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -1298,68 +2124,214 @@ RSpec.describe IsoDoc do
             <title>Foreword</title>
             <p id='A'>
               This is a preamble
-              <xref target='C'><span class='citesec'>0.1</span></xref>
-              <xref target='C1'><span class='citesec'>0.2</span></xref>
-              <xref target='D'><span class='citesec'>Clause 1</span></xref>
-              <xref target='H'><span class='citesec'>Clause 3</span></xref>
-              <xref target='I'><span class='citesec'>3.1</span></xref>
-              <xref target='J'><span class='citesec'>3.1.1</span></xref>
-              <xref target='K'><span class='citesec'>3.2</span></xref>
-              <xref target='L'><span class='citesec'>Clause 4</span></xref>
-              <xref target='M'><span class='citesec'>Clause 5</span></xref>
-              <xref target='N'><span class='citesec'>5.1</span></xref>
-              <xref target='O'><span class='citesec'>5.2</span></xref>
-              <xref target='P'><span class='citeapp'>Annex A</span></xref>
-              <xref target='Q'><span class='citeapp'>Clause A.1</span></xref>
-              <xref target='Q1'><span class='citeapp'>A.1.1</span></xref>
-              <xref target='Q2'><span class='citeapp'>Annex A, Appendix 1</span></xref>
-              <xref target='Q3'>Annex A, Appendix 1.1</xref>
-              <xref target='R'><span class='citesec'>Clause 2</span></xref>
+                   <xref target="C">
+                      <span class="citesec">
+                         <semx element="autonum" source="C">0.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="C1">
+                      <span class="citesec">
+                         <semx element="autonum" source="C1">0.2</semx>
+                      </span>
+                   </xref>
+                   <xref target="D">
+                      <span class="citesec">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="D">1</semx>
+                      </span>
+                   </xref>
+                   <xref target="H">
+                      <span class="citesec">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="H">3</semx>
+                      </span>
+                   </xref>
+                   <xref target="I">
+                      <span class="citesec">
+                         <semx element="autonum" source="I">3.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="J">
+                      <span class="citesec">
+                         <semx element="autonum" source="J">3.1.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="K">
+                      <span class="citesec">
+                         <semx element="autonum" source="K">3.2</semx>
+                      </span>
+                   </xref>
+                   <xref target="L">
+                      <span class="citesec">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="L">4</semx>
+                      </span>
+                   </xref>
+                   <xref target="M">
+                      <span class="citesec">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="M">5</semx>
+                      </span>
+                   </xref>
+                   <xref target="N">
+                      <span class="citesec">
+                         <semx element="autonum" source="N">5.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="O">
+                      <span class="citesec">
+                         <semx element="autonum" source="O">5.2</semx>
+                      </span>
+                   </xref>
+                   <xref target="P">
+                      <span class="citeapp">
+                         <span class="fmt-element-name">Annex</span>
+                         <semx element="autonum" source="P">A</semx>
+                      </span>
+                   </xref>
+                   <xref target="Q">
+                      <span class="citeapp">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="Q">A.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="Q1">
+                      <span class="citeapp">
+                         <semx element="autonum" source="Q1">A.1.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="Q2">
+                      <span class="citeapp">
+                         <span class="fmt-element-name">Annex</span>
+                         <semx element="autonum" source="P">A</semx>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Appendix</span>
+                         <semx element="autonum" source="Q2">1</semx>
+                      </span>
+                   </xref>
+                   <xref target="Q3">
+                      <span class="fmt-element-name">Annex</span>
+                      <semx element="autonum" source="P">A</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Appendix</span>
+                      <semx element="autonum" source="Q3">1.1</semx>
+                   </xref>
+                   <xref target="R">
+                      <span class="citesec">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="R">2</semx>
+                      </span>
+                   </xref>
             </p>
           </foreword>
           <introduction id='B' obligation='informative' displayorder='3'>
-            <title depth='1'>Introduction</title>
+                   <title id="_">Introduction</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Introduction</semx>
+            </span>
+         </fmt-title>
             <clause id='C' inline-header='false' obligation='informative'>
-              <title depth='2'>
-                0.1
-                <tab/>
-                Introduction Subsection
-              </title>
+                        <title id="_">Introduction Subsection</title>
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="C">0.1</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Introduction Subsection</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="C">0.1</semx>
+            </fmt-xref-label>
             </clause>
             <clause id='C1' inline-header='true' obligation='informative'>
-              <title>0.2</title>
+                        <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="C1">0.2</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="C1">0.2</semx>
+            </fmt-xref-label>
               Text
             </clause>
           </introduction>
         </preface>
         <sections>
           <clause id='D' obligation='normative' type='scope' displayorder='4'>
-            <title depth='1'>
-              1
-              <tab/>
-              Scope
-            </title>
+                   <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="D">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="D">1</semx>
+         </fmt-xref-label>
             <p id='E'>Text</p>
           </clause>
           <terms id='H' obligation='normative' displayorder='6'>
-            <title depth='1'>
-              3
-              <tab/>
-              Terms, definitions, symbols and abbreviated terms
-            </title>
+                   <title id="_">Terms, definitions, symbols and abbreviated terms</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="H">3</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Terms, definitions, symbols and abbreviated terms</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="H">3</semx>
+         </fmt-xref-label>
             <terms id='I' obligation='normative'>
-              <title depth='2'>
-                3.1
-                <tab/>
-                Normal Terms
-              </title>
+                        <title id="_">Normal Terms</title>
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="I">3.1</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Normal Terms</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="I">3.1</semx>
+            </fmt-xref-label>
               <term id='J'>
-                <name>3.1.1</name>
+                             <fmt-name>
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="J">3.1.1</semx>
+                  </span>
+               </fmt-name>
+               <fmt-xref-label>
+                  <semx element="autonum" source="J">3.1.1</semx>
+               </fmt-xref-label>
                 <preferred><strong>Term2</strong></preferred>
               </term>
             </terms>
             <definitions id='K'>
-              <title depth="2">3.2<tab/>Symbols</title>
+                        <title id="_">Symbols</title>
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="K">3.2</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Symbols</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="K">3.2</semx>
+            </fmt-xref-label>
               <dl>
                 <dt>Symbol</dt>
                 <dd>Definition</dd>
@@ -1367,84 +2339,194 @@ RSpec.describe IsoDoc do
             </definitions>
           </terms>
           <definitions id='L' displayorder='7'>
-            <title depth="1">4<tab/>Symbols</title>
+                  <title id="_">Symbols</title>
+        <fmt-title depth="1">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="L">4</semx>
+              <span class="fmt-caption-delim">
+                 <tab/>
+              </span>
+              <semx element="title" source="_">Symbols</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="L">4</semx>
+        </fmt-xref-label>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
             </dl>
           </definitions>
           <clause id='M' inline-header='false' obligation='normative' displayorder='8'>
-            <title depth='1'>
-              5
-              <tab/>
-              Clause 4
-            </title>
+                  <title id="_">Clause 4</title>
+        <fmt-title depth="1">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="M">5</semx>
+              <span class="fmt-caption-delim">
+                 <tab/>
+              </span>
+              <semx element="title" source="_">Clause 4</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="M">5</semx>
+        </fmt-xref-label>
             <clause id='N' inline-header='false' obligation='normative'>
-              <title depth='2'>
-                5.1
-                <tab/>
-                Introduction
-              </title>
+                        <title id="_">Introduction</title>
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="N">5.1</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Introduction</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="N">5.1</semx>
+            </fmt-xref-label>
             </clause>
             <clause id='O' inline-header='false' obligation='normative'>
-              <title depth='2'>
-                5.2
-                <tab/>
-                Clause 4.2
-              </title>
+                       <title id="_">Clause 4.2</title>
+           <fmt-title depth="2">
+              <span class="fmt-caption-label">
+                 <semx element="autonum" source="O">5.2</semx>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Clause 4.2</semx>
+              </span>
+           </fmt-title>
+           <fmt-xref-label>
+              <semx element="autonum" source="O">5.2</semx>
+           </fmt-xref-label>
             </clause>
           </clause>
           <references id='R' normative='true' obligation='informative' displayorder='5'>
-            <title depth='1'>
-              2
-              <tab/>
-              Normative References
-            </title>
+                   <title id="_">Normative References</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="R">2</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Normative References</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="R">2</semx>
+         </fmt-xref-label>
           </references>
         </sections>
-        <annex id='P' inline-header='false' obligation='normative' displayorder='9'>
-          <title>
-            <strong>Annex A</strong>
+         <annex id="P" inline-header="false" obligation="normative" autonum="A" displayorder="9">
+        <title id="_">
+            <strong>Annex</strong>
+            </title>
+                  <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="P">A</semx>
+            </strong>
             <br/>
             <span class="obligation">(normative)</span>
-            <br/>
-            <br/>
-            <strong>Annex</strong>
-          </title>
+            <span class="fmt-caption-delim">
+               <br/>
+               <br/>
+            </span>
+            <semx element="title" source="_">
+               <strong>Annex</strong>
+            </semx>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="P">A</semx>
+      </fmt-xref-label>
           <clause id='Q' inline-header='false' obligation='normative'>
-            <title depth='2'>
-              A.1
-              <tab/>
-              Annex A.1
-            </title>
+                   <title id="_">Annex A.1</title>
+         <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="Q">A.1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Annex A.1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="Q">A.1</semx>
+         </fmt-xref-label>
             <clause id='Q1' inline-header='false' obligation='normative'>
-              <title depth='3'>
-                A.1.1
-                <tab/>
-                Annex A.1a
-              </title>
+                          <title id="_">Annex A.1a</title>
+            <fmt-title depth="3">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="Q1">A.1.1</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Annex A.1a</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="Q1">A.1.1</semx>
+            </fmt-xref-label>
             </clause>
           </clause>
-          <appendix id='Q2' inline-header='false' obligation='normative'>
-            <title depth='2'>
-              Appendix 1
-              <tab/>
-              An Appendix
-            </title>
+                <appendix id="Q2" inline-header="false" obligation="normative" autonum="1">
+         <title id="_">An Appendix</title>
+         <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <span class="fmt-element-name">Appendix</span>
+               <semx element="autonum" source="Q2">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">An Appendix</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Appendix</span>
+            <semx element="autonum" source="Q2">1</semx>
+         </fmt-xref-label>
             <clause id='Q3' inline-header='false' obligation='normative'>
-              <title depth='3'>
-                Appendix 1.1
-                <tab/>
-                Appendix subclause
-              </title>
+                       <title id="_">Appendix subclause</title>
+           <fmt-title depth="3">
+              <span class="fmt-caption-label">
+                 <span class="fmt-element-name">Appendix</span>
+                 <semx element="autonum" source="Q3">1.1</semx>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Appendix subclause</semx>
+              </span>
+           </fmt-title>
+           <fmt-xref-label>
+              <span class="fmt-element-name">Appendix</span>
+              <semx element="autonum" source="Q3">1.1</semx>
+           </fmt-xref-label>
             </clause>
           </appendix>
         </annex>
         <bibliography>
           <clause id='S' obligation='informative' displayorder='10'>
-            <title depth='1'>Bibliography</title>
+                  <title id="_">Bibliography</title>
+        <fmt-title depth="1">
+           <span class="fmt-caption-label">
+              <semx element="title" source="_">Bibliography</semx>
+           </span>
+        </fmt-title>
             <references id='T' normative='false' obligation='informative'>
-              <title depth='2'>Bibliography Subsection</title>
+                       <title id="_">Bibliography Subsection</title>
+           <fmt-title depth="2">
+              <span class="fmt-caption-label">
+                 <semx element="title" source="_">Bibliography Subsection</semx>
+              </span>
+           </fmt-title>
             </references>
           </clause>
         </bibliography>
@@ -1524,36 +2606,165 @@ RSpec.describe IsoDoc do
            <foreword obligation="informative" displayorder="2">
              <title>Foreword</title>
              <p id="A">This is a preamble
-               <xref target="B"><span class="citesec">Section 1</span></xref><xref target="D"><span class="citesec">1.1</span></xref><xref target="T"><span class="citesec">1.2</span></xref><xref target="H"><span class="citesec">1.3</span></xref><xref target="I"><span class="citesec">1.3.1</span></xref><xref target="J"><span class="citesec">1.3.1.1</span></xref><xref target="K"><span class="citesec">1.3.2</span></xref><xref target="L"><span class="citesec">1.4</span></xref><xref target="M"><span class="citesec">1.5</span></xref><xref target="N"><span class="citesec">1.5.1</span></xref></p>
+                    <xref target="B">
+                       <span class="citesec">
+                          <span class="fmt-element-name">Section</span>
+                          <semx element="autonum" source="B">1</semx>
+                       </span>
+                    </xref>
+                    <xref target="D">
+                       <span class="citesec">
+                          <semx element="autonum" source="D">1.1</semx>
+                       </span>
+                    </xref>
+                    <xref target="T">
+                       <span class="citesec">
+                          <semx element="autonum" source="T">1.2</semx>
+                       </span>
+                    </xref>
+                    <xref target="H">
+                       <span class="citesec">
+                          <semx element="autonum" source="H">1.3</semx>
+                       </span>
+                    </xref>
+                    <xref target="I">
+                       <span class="citesec">
+                          <semx element="autonum" source="I">1.3.1</semx>
+                       </span>
+                    </xref>
+                    <xref target="J">
+                       <span class="citesec">
+                          <semx element="autonum" source="J">1.3.1.1</semx>
+                       </span>
+                    </xref>
+                    <xref target="K">
+                       <span class="citesec">
+                          <semx element="autonum" source="K">1.3.2</semx>
+                       </span>
+                    </xref>
+                    <xref target="L">
+                       <span class="citesec">
+                          <semx element="autonum" source="L">1.4</semx>
+                       </span>
+                    </xref>
+                    <xref target="M">
+                       <span class="citesec">
+                          <semx element="autonum" source="M">1.5</semx>
+                       </span>
+                    </xref>
+                    <xref target="N">
+                       <span class="citesec">
+                          <semx element="autonum" source="N">1.5.1</semx>
+                       </span>
+                    </xref>
+                 </p>
            </foreword>
          </preface>
          <sections>
            <clause type="section" id="B" displayorder="3">
-             <title depth="1">Section 1:<tab/>General</title>
+                    <title id="_">General</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <span class="fmt-element-name">Section</span>
+               <semx element="autonum" source="B">1</semx>
+               <span class="fmt-caption-delim">
+                  :
+                  <tab/>
+               </span>
+               <semx element="title" source="_">General</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Section</span>
+            <semx element="autonum" source="B">1</semx>
+         </fmt-xref-label>
              <clause id="D" obligation="normative" type="scope">
-               <title depth="2">1.1<tab/>Scope</title>
+                         <title id="_">Scope</title>
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="D">1.1</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Scope</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="D">1.1</semx>
+            </fmt-xref-label>
                <p id="E">Text</p>
              </clause>
              <references id="T" normative="false" obligation="informative">
-               <title depth="2">1.2<tab/>Bibliography Subsection</title>
+                        <title depth="2" id="_">Bibliography Subsection</title>
+           <fmt-title depth="2">
+              <span class="fmt-caption-label">
+                 <semx element="autonum" source="T">1.2</semx>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Bibliography Subsection</semx>
+              </span>
+           </fmt-title>
+           <fmt-xref-label>
+              <semx element="autonum" source="T">1.2</semx>
+           </fmt-xref-label>
              </references>
              <terms id="H" obligation="normative">
-               <title depth="2">1.3<tab/>Terms, definitions, symbols and abbreviated terms</title>
+                         <title id="_">Terms, definitions, symbols and abbreviated terms</title>
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="H">1.3</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Terms, definitions, symbols and abbreviated terms</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="H">1.3</semx>
+            </fmt-xref-label>
                <terms id="I" obligation="normative">
-                 <title depth="3">1.3.1<tab/>Normal Terms</title>
+                             <title id="_">Normal Terms</title>
+              <fmt-title depth="3">
+                 <span class="fmt-caption-label">
+                    <semx element="autonum" source="I">1.3.1</semx>
+                    <span class="fmt-caption-delim">
+                       <tab/>
+                    </span>
+                    <semx element="title" source="_">Normal Terms</semx>
+                 </span>
+              </fmt-title>
+              <fmt-xref-label>
+                 <semx element="autonum" source="I">1.3.1</semx>
+              </fmt-xref-label>
                  <term id="J">
-                   <name>1.3.1.1</name>
+                   <fmt-name>
+                     <span class="fmt-caption-label">
+                        <semx element="autonum" source="J">1.3.1.1</semx>
+                     </span>
+                  </fmt-name>
+                  <fmt-xref-label>
+                     <semx element="autonum" source="J">1.3.1.1</semx>
+                  </fmt-xref-label>
                    <preferred>
                      <strong>Term2</strong>
                    </preferred>
                  </term>
                </terms>
                <definitions id="K">
-               <title depth="3">
-                  1.3.2
-                  <tab/>
-                  Symbols
-               </title>
+                 <title id="_">Symbols</title>
+               <fmt-title depth="3">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="K">1.3.2</semx>
+                     <span class="fmt-caption-delim">
+                        <tab/>
+                     </span>
+                     <semx element="title" source="_">Symbols</semx>
+                  </span>
+               </fmt-title>
+               <fmt-xref-label>
+                  <semx element="autonum" source="K">1.3.2</semx>
+               </fmt-xref-label>
                  <dl>
                    <dt>Symbol</dt>
                    <dd>Definition</dd>
@@ -1561,20 +2772,52 @@ RSpec.describe IsoDoc do
                </definitions>
              </terms>
                <definitions id="L">
-           <title depth="2">
-              1.4
-              <tab/>
-              Symbols
-           </title>
+               <title id="_">Symbols</title>
+            <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="L">1.4</semx>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Symbols</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="L">1.4</semx>
+            </fmt-xref-label>
                <dl>
                  <dt>Symbol</dt>
                  <dd>Definition</dd>
                </dl>
              </definitions>
              <clause id="M" inline-header="false" obligation="normative">
-               <title depth="2">1.5<tab/>Clause 4</title>
+               <title id="_">Clause 4</title>
+           <fmt-title depth="2">
+              <span class="fmt-caption-label">
+                 <semx element="autonum" source="M">1.5</semx>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Clause 4</semx>
+              </span>
+           </fmt-title>
+           <fmt-xref-label>
+              <semx element="autonum" source="M">1.5</semx>
+           </fmt-xref-label>
                <clause id="N" inline-header="false" obligation="normative">
-                 <title depth="3">1.5.1<tab/>Introduction</title>
+               <title id="_">Introduction</title>
+              <fmt-title depth="3">
+                 <span class="fmt-caption-label">
+                    <semx element="autonum" source="N">1.5.1</semx>
+                    <span class="fmt-caption-delim">
+                       <tab/>
+                    </span>
+                    <semx element="title" source="_">Introduction</semx>
+                 </span>
+              </fmt-title>
+              <fmt-xref-label>
+                 <semx element="autonum" source="N">1.5.1</semx>
+              </fmt-xref-label>
                </clause>
              </clause>
            </clause>
@@ -1650,20 +2893,63 @@ RSpec.describe IsoDoc do
           </clause>
           <foreword displayorder='2'><title>Foreword</title>
             <p>
-              <xref target="N">Clause 1, List</xref>
-              <xref target="note1">3.1, List 1</xref>
-              <xref target="note2">3.1, List 2</xref>
-              <xref target="AN">Clause A.1, List</xref>
-              <xref target="Anote1">Clause A.2, List 1</xref>
-              <xref target="Anote2">Clause A.2, List 2</xref>
+           <xref target="N">
+              <span class="fmt-element-name">Clause</span>
+              <semx element="autonum" source="scope">1</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">List</span>
+           </xref>
+           <xref target="note1">
+              <semx element="autonum" source="widgets1">3.1</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">List</span>
+              <semx element="autonum" source="note1">1</semx>
+           </xref>
+           <xref target="note2">
+              <semx element="autonum" source="widgets1">3.1</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">List</span>
+              <semx element="autonum" source="note2">2</semx>
+           </xref>
+           <xref target="AN">
+              <span class="fmt-element-name">Clause</span>
+              <semx element="autonum" source="annex1a">A.1</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">List</span>
+           </xref>
+           <xref target="Anote1">
+              <span class="fmt-element-name">Clause</span>
+              <semx element="autonum" source="annex1b">A.2</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">List</span>
+              <semx element="autonum" source="Anote1">1</semx>
+           </xref>
+           <xref target="Anote2">
+              <span class="fmt-element-name">Clause</span>
+              <semx element="autonum" source="annex1b">A.2</semx>
+              <span class="fmt-comma">,</span>
+              <span class="fmt-element-name">List</span>
+              <semx element="autonum" source="Anote2">2</semx>
+           </xref>
             </p>
           </foreword>
         </preface>
         <sections>
           <clause id="scope" type="scope" displayorder='3'>
-            <title depth="1">1
-              <tab/>
-              Scope</title>
+            <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="scope">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="scope">1</semx>
+         </fmt-xref-label>
             <ol id="N" type="alphabet">
               <li id="_" label="a">
                 <p>A</p>
@@ -1671,14 +2957,40 @@ RSpec.describe IsoDoc do
             </ol>
           </clause>
           <terms id="terms" displayorder='4'>
-            <title>2</title>
+                  <fmt-title depth="1">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="terms">2</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="terms">2</semx>
+        </fmt-xref-label>
           </terms>
           <clause id="widgets" displayorder='5'>
-            <title depth="1">3
-              <tab/>
-              Widgets</title>
+                   <title id="_">Widgets</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="widgets">3</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Widgets</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="widgets">3</semx>
+         </fmt-xref-label>
             <clause id="widgets1" inline-header="true">
-              <title>3.1</title>
+                        <fmt-title depth="2">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="widgets1">3.1</semx>
+               </span>
+            </fmt-title>
+            <fmt-xref-label>
+               <semx element="autonum" source="widgets1">3.1</semx>
+            </fmt-xref-label>
               <ol id="note1" type="alphabet">
                 <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
                           types of kernel.
@@ -1692,12 +3004,31 @@ RSpec.describe IsoDoc do
             </clause>
           </clause>
         </sections>
-        <annex id="annex1" displayorder='6'>
-          <title>
-            <strong>Annex A</strong>
-            <br/><span class="obligation">(informative)</span></title>
+           <annex id="annex1" autonum="A" displayorder="6">
+      <fmt-title>
+         <span class="fmt-caption-label">
+            <strong>
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="annex1">A</semx>
+            </strong>
+            <br/>
+            <span class="obligation">(informative)</span>
+         </span>
+      </fmt-title>
+      <fmt-xref-label>
+         <span class="fmt-element-name">Annex</span>
+         <semx element="autonum" source="annex1">A</semx>
+      </fmt-xref-label>
           <clause id="annex1a" inline-header="true">
-            <title>A.1</title>
+            <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1a">A.1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1a">A.1</semx>
+         </fmt-xref-label>
             <ol id="AN" type="alphabet">
               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
                         types of kernel.
@@ -1705,7 +3036,15 @@ RSpec.describe IsoDoc do
             </ol>
           </clause>
           <clause id="annex1b" inline-header="true">
-            <title>A.2</title>
+                   <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="annex1b">A.2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="annex1b">A.2</semx>
+         </fmt-xref-label>
             <ol id="Anote1" type="alphabet">
               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different
                         types of kernel.
@@ -1804,7 +3143,7 @@ RSpec.describe IsoDoc do
             </xref>
             <xref target="note1">
                <semx element="autonum" source="widgets1">3.1</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="note1l">1</semx>
                <semx element="autonum" source="note1">a</semx>
@@ -1812,7 +3151,7 @@ RSpec.describe IsoDoc do
             </xref>
             <xref target="note2">
                <semx element="autonum" source="widgets1">3.1</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="note2l">2</semx>
                <semx element="autonum" source="note2">a</semx>
@@ -1827,7 +3166,7 @@ RSpec.describe IsoDoc do
             <xref target="Anote1">
                <span class="fmt-element-name">Clause</span>
                <semx element="autonum" source="annex1b">A.2</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="Anote1l">1</semx>
                <semx element="autonum" source="Anote1">a</semx>
@@ -1836,7 +3175,7 @@ RSpec.describe IsoDoc do
             <xref target="Anote2">
                <span class="fmt-element-name">Clause</span>
                <semx element="autonum" source="annex1b">A.2</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="Anote2l">2</semx>
                <semx element="autonum" source="Anote2">a</semx>
@@ -2130,7 +3469,7 @@ RSpec.describe IsoDoc do
             <xref target="P">
                <span class="fmt-element-name">Clause</span>
                <semx element="autonum" source="A">2</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="L">1</semx>
                <semx element="autonum" source="P">a</semx>
@@ -2139,7 +3478,7 @@ RSpec.describe IsoDoc do
             <xref target="Q">
                <span class="fmt-element-name">Clause</span>
                <semx element="autonum" source="A">2</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="L">1</semx>
                <semx element="autonum" source="P">a</semx>
@@ -2150,7 +3489,7 @@ RSpec.describe IsoDoc do
             <xref target="R">
                <span class="fmt-element-name">Clause</span>
                <semx element="autonum" source="A">2</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="L">1</semx>
                <semx element="autonum" source="P">a</semx>
@@ -2163,7 +3502,7 @@ RSpec.describe IsoDoc do
             <xref target="S">
                <span class="fmt-element-name">Clause</span>
                <semx element="autonum" source="A">2</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="L">1</semx>
                <semx element="autonum" source="P">a</semx>
@@ -2178,7 +3517,7 @@ RSpec.describe IsoDoc do
             <xref target="P1">
                <span class="fmt-element-name">Clause</span>
                <semx element="autonum" source="A">2</semx>
-               <comma>,</comma>
+               <span class="fmt-comma">,</span>
                <span class="fmt-element-name">List</span>
                <semx element="autonum" source="L1">2</semx>
                <semx element="autonum" source="P1">a</semx>
@@ -2354,7 +3693,7 @@ RSpec.describe IsoDoc do
         <xref target="Na">
          <span class="fmt-element-name">Clause</span>
          <semx element="autonum" source="scope">1</semx>
-         <comma>,</comma>
+         <span class="fmt-comma">,</span>
          <span class="fmt-element-name">List</span>
          <semx element="autonum" source="N1">1</semx>
          <semx element="autonum" source="Na">a</semx>

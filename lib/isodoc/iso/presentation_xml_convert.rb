@@ -58,12 +58,16 @@ module IsoDoc
       def figure1(node)
         figure_fn(node)
         figure_key(node.at(ns("./dl")))
-        lbl = @xrefs.anchor(node["id"], :label, false) or return
-        figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
+        lbl = @xrefs.anchor(node["id"], :label, false)
+        lbl and a = autonum(node["id"], lbl.strip)
+        node.parent.name == "figure" or
+          figname = "<span class='fmt-element-name'>#{i18n.figure}</span> "
         conn = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
-        prefix_name(node, conn, l10n("#{figname}#{lbl}"), "name")
+        lbl and s = "#{figname}#{a}"
+        prefix_name(node, { caption: conn }, l10n(s&.strip), "name")
       end
 
+=begin
       def example1(node)
         n = @xrefs.get[node["id"]]
         lbl = if n.nil? || blank?(n[:label]) then @i18n.example
@@ -71,7 +75,7 @@ module IsoDoc
               end
         prefix_name(node, block_delim, lbl, "name")
       end
-
+=end 
       def example_span_label(_node, div, name)
         name.nil? and return
         div.span class: "example_label" do |_p|
@@ -86,8 +90,8 @@ module IsoDoc
         end
         super
         if node["type"] == "section"
-          t = node.at(ns("./title/tab")) and
-            t.previous = @i18n.l10n(": ").sub(/\p{Zs}$/, "")
+          t = node.at(ns("./fmt-title//span[@class = 'fmt-caption-delim']")) and
+            t.add_first_child(@i18n.l10n(": ").sub(/\p{Zs}$/, ""))
         end
       end
 
