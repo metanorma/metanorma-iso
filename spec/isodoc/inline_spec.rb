@@ -903,7 +903,8 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", pres_output, true)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes concept markup by context" do
@@ -1254,14 +1255,15 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
           <itu-standard xmlns="https://www.calconnect.org/standards/itu" type="presentation">
         <p id="_">
-          <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">Clauses  <span class="citesec">3</span> to  <span class="citesec">5</span></span></eref>
-          <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5.1</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,    <span class="citesec">3.1</span> to  <span class="citesec">5.1</span></eref>
-          <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> to  <span class="citesec">Clause 5</span></eref>
-          <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="table"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> to  <span class="citetbl">Table 5</span></eref>
+          <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">Clauses  <span class="citesec">3</span> <span class="fmt-conn">to</span>  <span class="citesec">5</span></span></eref>
+          <eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5.1</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,    <span class="citesec">3.1</span> <span class="fmt-conn">to</span>  <span class="citesec">5.1</span></eref>
+          <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="clause"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> <span class="fmt-conn">to</span>  <span class="citesec">Clause 5</span></eref>
+          <eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack><localityStack connective="to"><locality type="table"><referenceFrom>5</referenceFrom></locality></localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> <span class="fmt-conn">to</span>  <span class="citetbl">Table 5</span></eref>
         </p>
       </itu-standard>
     OUTPUT
     expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))).to be_equivalent_to Xml::C14n.format(output)
+      .convert("test", input, true)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

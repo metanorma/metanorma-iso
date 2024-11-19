@@ -144,7 +144,7 @@ RSpec.describe IsoDoc do
                 <tab/>
                 Terms and Definitions</fmt-title>
               <term id="paddy1">
-                <name>1.1</name>
+                <fmt-name>1.1</fmt-name>
                 <preferred>paddy</preferred>
                 <definition>
                   <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>

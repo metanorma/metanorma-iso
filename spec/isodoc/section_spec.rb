@@ -724,7 +724,7 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:localized-strings")&.remove
     xml.at("//xmlns:boilerplate")&.remove
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(strip_guid(xml.to_xml))
+    expect(Xml::C14n.formatstrip_guid(xml.to_xml))
       .to be_equivalent_to Xml::C14n.format(presxml)
     expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))

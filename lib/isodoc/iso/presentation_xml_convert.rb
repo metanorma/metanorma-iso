@@ -67,15 +67,14 @@ module IsoDoc
         prefix_name(node, { caption: conn }, l10n(s&.strip), "name")
       end
 
-=begin
-      def example1(node)
-        n = @xrefs.get[node["id"]]
-        lbl = if n.nil? || blank?(n[:label]) then @i18n.example
-              else l10n("#{@i18n.example} #{n[:label]}")
-              end
-        prefix_name(node, block_delim, lbl, "name")
-      end
-=end 
+#       def example1(node)
+#         n = @xrefs.get[node["id"]]
+#         lbl = if n.nil? || blank?(n[:label]) then @i18n.example
+#               else l10n("#{@i18n.example} #{n[:label]}")
+#               end
+#         prefix_name(node, block_delim, lbl, "name")
+#       end
+      
       def example_span_label(_node, div, name)
         name.nil? and return
         div.span class: "example_label" do |_p|
@@ -95,6 +94,7 @@ module IsoDoc
         end
       end
 
+=begin
       def clause(docxml)
         docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
                         "//terms | //definitions | //references | " \
@@ -104,6 +104,7 @@ module IsoDoc
           clause1(f)
         end
       end
+=end
 
       def admonition1(elem)
         super
@@ -158,10 +159,22 @@ module IsoDoc
       end
 
       def table1(elem)
+        table1_key(elem)
+        if elem["class"] == "modspec"
+          n = elem.at(ns(".//fmt-name")).remove
+          n.name = "name"
+          elem.add_first_child(n)
+          elem.at(ns("./thead"))&.remove
+          super
+          elem.at(ns("./name")).remove
+        else super
+        end
+      end
+
+      def table1_key(elem)
         elem.xpath(ns(".//dl[@key = 'true'][not(./name)]")).each do |dl|
           dl.add_first_child "<name>#{@i18n.key}</name>"
         end
-        super
       end
 
       def toc_title(docxml)

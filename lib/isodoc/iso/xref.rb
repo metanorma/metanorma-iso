@@ -176,7 +176,12 @@ module IsoDoc
         (@anchors[id] && !@anchors[id][:has_modspec]) or return
         @anchors[id][:has_modspec] = true
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
-        @anchors[id][:xref] = l10n("#{table_label}, #{x}")
+        #@anchors[id][:xref] = l10n("#{table_label}<span class='fmt-comma'>,</span> #{x}")
+
+@anchors[id][:xref] = l10n(@klass.connectives_spans(@i18n.nested_xref
+  .sub("%1", table_label).sub("%2", x)))
+
+
         @anchors[id][:modspec] = @anchors_previous[id][:modspec]
         @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
         true
