@@ -150,16 +150,21 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
              <language current="true">en</language>
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
-             <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title depth="1">Contents</fmt-title>
              </clause>
              <foreword displayorder="2">
-                <title>Foreword</title>
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
                 <p id="_">
                    <xref target="ISO712">
                       <span class="stdpublisher">ISO </span>
@@ -182,11 +187,20 @@ RSpec.describe IsoDoc do
           </preface>
           <sections>
              <references id="_" normative="true" obligation="informative" displayorder="3">
-                <title depth="1">
-                   1
-                   <tab/>
-                   Normative References
-                </title>
+                <title id="_">Normative References</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="_">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Normative References</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="_">1</semx>
+                </fmt-xref-label>
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
                    <formattedref>
@@ -255,14 +269,23 @@ RSpec.describe IsoDoc do
                    <biblio-tag>ICC 167, </biblio-tag>
                 </bibitem>
                 <note>
-                   <name>NOTE</name>
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">NOTE</span>
+                      </span>
+                   </fmt-name>
                    <p>This is an annotation of ISO 20483:2013-2014</p>
                 </note>
              </references>
           </sections>
           <bibliography>
              <references id="_" normative="false" obligation="informative" displayorder="4">
-                <title depth="1">Bibliography</title>
+                <title id="_">Bibliography</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Bibliography</semx>
+                   </span>
+                </fmt-title>
                 <bibitem id="ISBN" type="book">
                    <formattedref>
                       <em>Chemicals for analytical laboratory use</em>
@@ -288,11 +311,19 @@ RSpec.describe IsoDoc do
                    </biblio-tag>
                 </bibitem>
                 <note>
-                   <name>NOTE</name>
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">NOTE</span>
+                      </span>
+                   </fmt-name>
                    <p>This is an annotation of document ISSN.</p>
                 </note>
                 <note>
-                   <name>NOTE</name>
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">NOTE</span>
+                      </span>
+                   </fmt-name>
                    <p>This is another annotation of document ISSN.</p>
                 </note>
                 <bibitem id="ISO3696" type="standard">
@@ -372,8 +403,8 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
                       <br/>
-                <div>
-                   <h1 class="ForewordTitle">Foreword</h1>
+             <div>
+             <h1 class="ForewordTitle">Foreword</h1>
                    <p id="_">
                       <a href="#ISO712">
                          <span class="stdpublisher">ISO </span>
@@ -394,11 +425,7 @@ RSpec.describe IsoDoc do
                    </p>
                 </div>
                 <div>
-                   <h1>
-                   1
-                    
-                   Normative References
-                </h1>
+                   <h1>1  Normative References</h1>
                    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                    <p id="ISO712" class="NormRef">
                       <span class="stdpublisher">ISO </span>
@@ -454,12 +481,12 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1 class="Section3">Bibliography</h1>
                    <p id="ISBN" class="Biblio">
-                      [1]  
+                      [1] 
                       <i>Chemicals for analytical laboratory use</i>
                       . n.p.: n.d.
                    </p>
                    <p id="ISSN" class="Biblio">
-                      [2]  
+                      [2] 
                       <i>Instruments for analytical laboratory use</i>
                       . n.d.
                    </p>
@@ -476,7 +503,7 @@ RSpec.describe IsoDoc do
                       </p>
                    </div>
                    <p id="ISO3696" class="Biblio">
-                      [3]  
+                      [3] 
                       <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">3696</span>
                       ,
@@ -485,7 +512,7 @@ RSpec.describe IsoDoc do
                       </i>
                    </p>
                    <p id="ref10" class="Biblio">
-                      [4]  
+                      [4] 
                       <span style="font-variant:small-caps;">Standard No I.C.C 167</span>
                       .
                       <i>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</i>
@@ -494,7 +521,7 @@ RSpec.describe IsoDoc do
                       )
                    </p>
                    <p id="ref11" class="Biblio">
-                      [5]  
+                      [5] 
                       <span class="stdpublisher">IETF </span>
                       <span class="stdpublisher">RFC </span>
                       <span class="stddocNumber">10</span>
@@ -505,7 +532,7 @@ RSpec.describe IsoDoc do
                       .
                    </p>
                    <p id="ref12" class="Biblio">
-                      Citn  
+                      Citn 
                       <span class="stdpublisher">IETF </span>
                       <span class="stdpublisher">RFC </span>
                       <span class="stddocNumber">20</span>
@@ -526,10 +553,14 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
-      .gsub(/reference="[^"]+"/, 'reference="1"'))))
+      .gsub(/reference="[^"]+"/, 'reference="1"')
+                                      )))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)
+      .gsub(/fn:[^"]+"/, 'fn:1"')
+      .gsub(/<sup>[^<]+</, "<sup>1<")
+                                      )))
       .to be_equivalent_to Xml::C14n.format(html)
   end
 
@@ -540,6 +571,7 @@ RSpec.describe IsoDoc do
               <bibdata>
                 <language>en</language>
               </bibdata>
+              <bibliography>
               <references normative="false">
               <fmt-title>Bibliography</fmt-title>
               <bibitem id="ignf" type="website">
@@ -550,6 +582,7 @@ RSpec.describe IsoDoc do
         <docidentifier type="metanorma">2</docidentifier>
       </bibitem>
       </references>
+              </bibliography>
       </iso-standard>
     INPUT
     output = <<~OUTPUT
@@ -557,9 +590,14 @@ RSpec.describe IsoDoc do
          <bibdata>
            <language current='true'>en</language>
          </bibdata>
-
-         <references normative='false'>
-           <title depth='1'>Bibliography</title>
+            <preface>
+      <clause type="toc" id="_" displayorder="1">
+         <fmt-title depth="1">Contents</fmt-title>
+      </clause>
+   </preface>
+   <bibliography>
+      <references normative="false" displayorder="2">
+         <fmt-title depth="1">Bibliography</fmt-title>
            <bibitem id='ignf' type='website'>
              <formattedref>
                <em>
@@ -576,11 +614,12 @@ RSpec.describe IsoDoc do
              <biblio-tag>[1]<tab/></biblio-tag>
            </bibitem>
          </references>
+         </bibliography>
        </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Xml::C14n.format(output)
     end
   end

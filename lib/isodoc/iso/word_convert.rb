@@ -209,7 +209,7 @@ module IsoDoc
 
       def annex_name(_annex, name, div)
         name.nil? and return
-        name&.at(ns("./strong"))&.remove # supplied by CSS list numbering
+        name&.at(ns(".//strong"))&.remove # label supplied by CSS list numbering
         div.h1 class: "Annex" do |t|
           annex_name1(name, t)
           clause_parse_subtitle(name, t)
@@ -217,14 +217,12 @@ module IsoDoc
       end
 
       def annex_name1(name, out)
-        name.children.each do |c2|
-          if c2.name == "span" && c2["class"] == "obligation"
-            out.span style: "font-weight:normal;" do |s|
-              c2.children.each { |c3| parse(c3, s) }
-            end
-          else parse(c2, out)
-          end
+        n = name.dup
+        n.xpath(ns(".//span[@class = 'obligation']")).each do |s|
+          s.delete("class")
+          s["style"] = "font-weight:normal;"
         end
+        children_parse(n, out)
       end
 
       def table_attrs(node)

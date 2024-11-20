@@ -88,90 +88,170 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <preface>
-           <clause type="toc" id="_" displayorder="1">
-           <fmt-title depth="1">Contents</fmt-title>
-           </clause>
-           <foreword displayorder="2"><title>Foreword</title>
-             <table alt="tool tip" id="tableD-1" summary="long desc">
-               <name>Table 1 — Repeatability and reproducibility of
-                 <em>husked</em>
-                 rice yield</name>
-               <thead>
-                 <tr>
-                   <td align="left" rowspan="2">Description</td>
-                   <td align="center" colspan="4">Rice sample</td>
-                 </tr>
-                 <tr>
-                   <td align="left">Arborio</td>
-                   <td align="center">Drago
-                     <fn reference="a"><p id="_">Parboiled rice.</p></fn></td>
-                   <td align="center">Balilla
-                     <fn reference="a"><p id="_">Parboiled rice.</p></fn></td>
-                   <td align="center">Thaibonnet</td>
-                 </tr>
-               </thead>
-               <tbody>
-                 <tr>
-                   <th align="left">Number of laboratories retained after eliminating outliers</th>
-                   <td align="center">13</td>
-                   <td align="center">11</td>
-                   <td align="center">13</td>
-                   <td align="center">13</td>
-                 </tr>
-                 <tr>
-                   <td align="left">Mean value, g/100 g</td>
-                   <td align="center">81,2</td>
-                   <td align="center">82,0</td>
-                   <td align="center">81,8</td>
-                   <td align="center">77,7</td>
-                 </tr>
-               </tbody>
-               <tfoot>
-                 <tr>
-                   <td align="left">Reproducibility limit,
-                     <stem type="AsciiMath">R</stem>
-                     (= 2,83
-                     <stem type="AsciiMath">s_R</stem>
-                     )</td>
-                   <td align="center">2,89</td>
-                   <td align="center">0,57</td>
-                   <td align="center">2,26</td>
-                   <td align="center">6,06</td>
-                 </tr>
-               </tfoot>
-               <dl key="true">
-               <name>Key</name>
-                 <dt>Drago</dt>
-                 <dd>A type of rice</dd>
-               </dl>
-               <source status="generalisation">[SOURCE: <origin bibitemid="ISO712" type="inline" citeas=""><localityStack><locality type="section"><referenceFrom>1</referenceFrom></locality></localityStack>, Section 1</origin>
-          &#x2014;
-           with adjustments]</source>
-               <note>
-                 <name>NOTE</name>
-                 <p>This is a table about rice</p>
-               </note>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <table alt="tool tip" id="tableD-1" summary="long desc" autonum="1">
+                   <name id="_">
+                      Repeatability and reproducibility of
+                      <em>husked</em>
+                      rice yield
+                   </name>
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="tableD-1">1</semx>
+                         <span class="fmt-caption-delim"> — </span>
+                         <semx element="name" source="_">
+                            Repeatability and reproducibility of
+                            <em>husked</em>
+                            rice yield
+                         </semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="tableD-1">1</semx>
+                   </fmt-xref-label>
+                   <thead>
+                      <tr>
+                         <td align="left" rowspan="2">Description</td>
+                         <td align="center" colspan="4">Rice sample</td>
+                      </tr>
+                      <tr>
+                         <td align="left">Arborio</td>
+                         <td align="center">
+                            Drago
+                            <fn reference="a">
+                               <p id="_">Parboiled rice.</p>
+                            </fn>
+                         </td>
+                         <td align="center">
+                            Balilla
+                            <fn reference="a">
+                               <p id="_">Parboiled rice.</p>
+                            </fn>
+                         </td>
+                         <td align="center">Thaibonnet</td>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr>
+                         <th align="left">Number of laboratories retained after eliminating outliers</th>
+                         <td align="center">13</td>
+                         <td align="center">11</td>
+                         <td align="center">13</td>
+                         <td align="center">13</td>
+                      </tr>
+                      <tr>
+                         <td align="left">Mean value, g/100 g</td>
+                         <td align="center">81,2</td>
+                         <td align="center">82,0</td>
+                         <td align="center">81,8</td>
+                         <td align="center">77,7</td>
+                      </tr>
+                   </tbody>
+                   <tfoot>
+                      <tr>
+                         <td align="left">
+                            Reproducibility limit,
+                            <stem type="AsciiMath">R</stem>
+                            (= 2,83
+                            <stem type="AsciiMath">s_R</stem>
+                            )
+                         </td>
+                         <td align="center">2,89</td>
+                         <td align="center">0,57</td>
+                         <td align="center">2,26</td>
+                         <td align="center">6,06</td>
+                      </tr>
+                   </tfoot>
+                   <dl key="true">
+                      <name id="_">Key</name>
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <semx element="name" source="_">Key</semx>
+                         </span>
+                      </fmt-name>
+                      <dt>Drago</dt>
+                      <dd>A type of rice</dd>
+                   </dl>
+                   <source status="generalisation">
+                      [SOURCE:
+                      <origin bibitemid="ISO712" type="inline" citeas="">
+                         <localityStack>
+                            <locality type="section">
+                               <referenceFrom>1</referenceFrom>
+                            </locality>
+                         </localityStack>
+                         , Section 1
+                      </origin>
+                      — with adjustments]
+                   </source>
+                   <note>
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                         </span>
+                      </fmt-name>
+                      <p>This is a table about rice</p>
+                   </note>
+                </table>
+             </foreword>
+          </preface>
+          <annex id="Annex" autonum="A" displayorder="3">
+             <title id="_">
+                <strong>Annex</strong>
+             </title>
+             <fmt-title>
+                <span class="fmt-caption-label">
+                   <strong>
+                      <span class="fmt-element-name">Annex</span>
+                      <semx element="autonum" source="Annex">A</semx>
+                   </strong>
+                   <br/>
+                   <span class="obligation">(informative)</span>
+                   <span class="fmt-caption-delim">
+                      <br/>
+                      <br/>
+                   </span>
+                   <semx element="title" source="_">
+                      <strong>Annex</strong>
+                   </semx>
+                </span>
+             </fmt-title>
+             <fmt-xref-label>
+                <span class="fmt-element-name">Annex</span>
+                <semx element="autonum" source="Annex">A</semx>
+             </fmt-xref-label>
+             <table id="AnnexTable" autonum="A.1">
+                <name id="_">Another table</name>
+                <fmt-name>
+                   <span class="fmt-caption-label">
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="AnnexTable">A.1</semx>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">Another table</semx>
+                   </span>
+                </fmt-name>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Table</span>
+                   <semx element="autonum" source="AnnexTable">A.1</semx>
+                </fmt-xref-label>
+                <tbody>
+                   <td>?</td>
+                </tbody>
              </table>
-           </foreword>
-         </preface>
-         <annex id="Annex" displayorder="3">
-           <title>
-             <strong>Annex A</strong>
-             <br/>
-             <span class="obligation">(informative)</span>
-             <br/>
-             <br/>
-             <strong>Annex</strong>
-           </title>
-           <table id="AnnexTable">
-             <name>Table A.1 — Another table</name>
-             <tbody>
-               <td>?</td>
-             </tbody>
-           </table>
-         </annex>
+          </annex>
        </iso-standard>
     OUTPUT
 
@@ -392,12 +472,12 @@ RSpec.describe IsoDoc do
     out = File.read("test.doc")
       .sub(/^.+?<table /m, '<table xmlns:m="m" ')
       .sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
-    expect(Xml::C14n.format("<div>#{out}"))
+    expect(Xml::C14n.format("<div>#{strip_guid(out)}"))
       .to be_equivalent_to Xml::C14n.format(doc)
     out = File.read("test.doc")
       .sub(/^.+?<div class="Section3"/m, '<div class="Section3"')
       .sub(%r{</div>\s*<br[^>]+>\s*<div class="colophon".*$}m, "")
-    expect(Xml::C14n.format(out)).to be_equivalent_to Xml::C14n.format(doc2)
+    expect(Xml::C14n.format(strip_guid(out))).to be_equivalent_to Xml::C14n.format(doc2)
   end
 
   it "processes units statements in tables" do
@@ -439,43 +519,91 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <preface>
-            <clause type="toc" id="_" displayorder="1"> 
-         <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-           <foreword displayorder="2"><title>Foreword</title>
-             <table id="tableD-1">
-               <name>Table 1 — Repeatability and reproducibility of
-                 <em>husked</em>
-                 rice yield</name>
-               <thead>
-                 <tr>
-                   <td>Description</td>
-                   <td>Rice sample</td>
-                 </tr>
-               </thead>
-               <tbody>
-                 <tr>
-                   <th align="left">Number of laboratories retained after eliminating outliers</th>
-                   <td align="center">13</td>
-                 </tr>
-                 <tr>
-                   <td align="left">Mean value, g/100 g</td>
-                   <td align="center">81,2</td>
-                 </tr>
-               </tbody>
-               <dl>
-                 <dt>Drago</dt>
-                 <dd>A type of rice</dd>
-               </dl>
-               <note id="A"><name>NOTE  1</name>Note 1</note>
-               <note id="B" type="units">Units in mm</note>
-               <note id="C"><name>NOTE  2</name>Note 2</note>
-               <note id="D" type="units">Other units in sec</note>
-             </table>
-           </foreword>
-         </preface>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <table id="tableD-1" autonum="1">
+                   <name id="_">
+                      Repeatability and reproducibility of
+                      <em>husked</em>
+                      rice yield
+                   </name>
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="tableD-1">1</semx>
+                         <span class="fmt-caption-delim"> — </span>
+                         <semx element="name" source="_">
+                            Repeatability and reproducibility of
+                            <em>husked</em>
+                            rice yield
+                         </semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="tableD-1">1</semx>
+                   </fmt-xref-label>
+                   <thead>
+                      <tr>
+                         <td>Description</td>
+                         <td>Rice sample</td>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr>
+                         <th align="left">Number of laboratories retained after eliminating outliers</th>
+                         <td align="center">13</td>
+                      </tr>
+                      <tr>
+                         <td align="left">Mean value, g/100 g</td>
+                         <td align="center">81,2</td>
+                      </tr>
+                   </tbody>
+                   <dl>
+                      <dt>Drago</dt>
+                      <dd>A type of rice</dd>
+                   </dl>
+                   <note id="A" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="A">1</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="A">1</semx>
+                      </fmt-xref-label>
+                      Note 1
+                   </note>
+                   <note id="B" type="units">Units in mm</note>
+                   <note id="C" autonum="2">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="C">2</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="C">2</semx>
+                      </fmt-xref-label>
+                      Note 2
+                   </note>
+                   <note id="D" type="units">Other units in sec</note>
+                </table>
+             </foreword>
+          </preface>
        </iso-standard>
     OUTPUT
     html = <<~OUTPUT
@@ -596,10 +724,10 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
        .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(html)
-    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
-      .at("//body").to_xml)).to be_equivalent_to Xml::C14n.format(doc)
+      .at("//body").to_xml))).to be_equivalent_to Xml::C14n.format(doc)
   end
 end
