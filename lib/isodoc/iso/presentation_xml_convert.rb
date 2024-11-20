@@ -55,7 +55,8 @@ module IsoDoc
         amd?(isoxml) and @suppressheadingnumbers = true
       end
 
-      def figure1(node)
+      # TODO remove
+      def figure1x(node)
         figure_fn(node)
         figure_key(node.at(ns("./dl")))
         lbl = @xrefs.anchor(node["id"], :label, false)
@@ -70,14 +71,31 @@ module IsoDoc
         prefix_name(node, { caption: conn }, l10n(s&.strip), "name")
       end
 
-#       def example1(node)
-#         n = @xrefs.get[node["id"]]
-#         lbl = if n.nil? || blank?(n[:label]) then @i18n.example
-#               else l10n("#{@i18n.example} #{n[:label]}")
-#               end
-#         prefix_name(node, block_delim, lbl, "name")
-#       end
-      
+      def subfigure_delim
+        "<span class='fmt-label-delim'>)</span>"
+      end
+
+      def figure_delim(elem)
+        elem.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
+      end
+
+      def figure_name(elem)
+        elem.parent.name == "figure" and return ""
+        super
+      end
+
+      def figure_label?(elem)
+        true
+      end
+
+      #       def example1(node)
+      #         n = @xrefs.get[node["id"]]
+      #         lbl = if n.nil? || blank?(n[:label]) then @i18n.example
+      #               else l10n("#{@i18n.example} #{n[:label]}")
+      #               end
+      #         prefix_name(node, block_delim, lbl, "name")
+      #       end
+
       def example_span_label(_node, div, name)
         name.nil? and return
         div.span class: "example_label" do |_p|
@@ -97,17 +115,15 @@ module IsoDoc
         end
       end
 
-=begin
-      def clause(docxml)
-        docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
-                        "//terms | //definitions | //references | " \
-                        "//preface/introduction[clause]")).each do |f|
-          f.parent.name == "annex" &&
-            @xrefs.klass.single_term_clause?(f.parent) and next
-          clause1(f)
-        end
-      end
-=end
+      #       def clause(docxml)
+      #         docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
+      #                         "//terms | //definitions | //references | " \
+      #                         "//preface/introduction[clause]")).each do |f|
+      #           f.parent.name == "annex" &&
+      #             @xrefs.klass.single_term_clause?(f.parent) and next
+      #           clause1(f)
+      #         end
+      #       end
 
       def admonition1(elem)
         super
