@@ -55,19 +55,37 @@ module IsoDoc
         end
       end
 
+      def subfigure_delim
+        '<span class="fmt-autonum-delim">)</span>'
+      end
+
       def figure_anchor(elem, sublabel, label, klass, container: false)
+        if sublabel
+          subfigure_anchor(elem, sublabel, label, klass, container: false)
+        else
+          @anchors[elem["id"]] = anchor_struct(
+            label, elem, @labels[klass] || klass.capitalize, klass,
+            { unnumb: elem["unnumbered"], container: }
+          )
+        end
+      end
+
+      def subfigure_anchor(elem, sublabel, label, klass, container: false)
+        figlabel = "#{label} #{sublabel}"
         @anchors[elem["id"]] = anchor_struct(
-          "#{label}#{sublabel}", elem,
-          @labels[klass] || klass.capitalize, klass, 
-          { unnumb: elem["unnumbered"], container:  }
+          figlabel, elem, @labels[klass] || klass.capitalize, klass,
+          { unnumb: elem["unnumbered"], container: }
         )
-        !sublabel.empty? && elem["unnumbered"] != "true" and
+        if elem["unnumbered"] != "true"
           @anchors[elem["id"]][:label] = sublabel
+          @anchors[elem["id"]][:xref] = @anchors[elem.parent["id"]][:xref] +
+            " " + semx(elem, sublabel) + subfigure_delim
+        end
       end
 
       def subfigure_label(subfignum)
-        subfignum.zero? and return ""
-        " #{(subfignum + 96).chr})"
+        subfignum.zero? and return
+        (subfignum + 96).chr
       end
 
       def sequential_figure_names(clause, container: false)
@@ -131,7 +149,7 @@ module IsoDoc
           c = Counter.new
           notes.noblank.each do |n|
             @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
-                                              @labels["list"], "list", 
+                                              @labels["list"], "list",
                                               { unnumb: false, container: true })
             list_item_anchor_names(n, @anchors[n["id"]], 1, "",
                                    !single_ol_for_xrefs?(notes))
@@ -176,11 +194,10 @@ module IsoDoc
         (@anchors[id] && !@anchors[id][:has_modspec]) or return
         @anchors[id][:has_modspec] = true
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
-        #@anchors[id][:xref] = l10n("#{table_label}<span class='fmt-comma'>,</span> #{x}")
+        # @anchors[id][:xref] = l10n("#{table_label}<span class='fmt-comma'>,</span> #{x}")
 
-@anchors[id][:xref] = l10n(@klass.connectives_spans(@i18n.nested_xref
-  .sub("%1", table_label).sub("%2", x)))
-
+        @anchors[id][:xref] = l10n(@klass.connectives_spans(@i18n.nested_xref
+          .sub("%1", table_label).sub("%2", x)))
 
         @anchors[id][:modspec] = @anchors_previous[id][:modspec]
         @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
@@ -202,7 +219,7 @@ module IsoDoc
           @anchors[n["id"]] =
             anchor_struct(increment_label(countable, n, counter), n,
                           @labels["note_xref"], "note",
-                          { unnum: false, container: true } )
+                          { unnum: false, container: true })
         end
       end
     end

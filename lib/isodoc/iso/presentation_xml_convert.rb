@@ -49,7 +49,7 @@ module IsoDoc
       def annex(isoxml)
         amd?(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
         super
-        isoxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
+        isoxml.xpath(ns("//annex//appendix")).each do |f|
           clause1(f)
         end
         amd?(isoxml) and @suppressheadingnumbers = true
@@ -60,8 +60,11 @@ module IsoDoc
         figure_key(node.at(ns("./dl")))
         lbl = @xrefs.anchor(node["id"], :label, false)
         lbl and a = autonum(node["id"], lbl.strip)
-        node.parent.name == "figure" or
+        if node.parent.name == "figure"
+          a += "<span class='fmt-label-delim'>)</span>"
+        else
           figname = "<span class='fmt-element-name'>#{i18n.figure}</span> "
+        end
         conn = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
         lbl and s = "#{figname}#{a}"
         prefix_name(node, { caption: conn }, l10n(s&.strip), "name")

@@ -61,152 +61,243 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <?xml version='1.0'?>
-      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <clause type="toc" id="_" displayorder="1">
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-          <foreword displayorder='2'><title>Foreword</title>
-            <p>
-              <xref target="N">Clause 1, Note</xref>
-              <xref target="note1">3.1, Note 1</xref>
-              <xref target="note2">3.1, Note 2</xref>
-              <xref target="AN">Clause A.1, Note</xref>
-              <xref target="Anote1">Clause A.2, Note 1</xref>
-              <xref target="Anote2">Clause A.2, Note 2</xref>
-            </p>
-          </foreword>
-        </preface>
-        <sections>
-          <clause id="scope" type="scope" displayorder='3'>
-                   <title id="_">Scope</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="scope">1</semx>
-               <span class="fmt-caption-delim">
-                  <tab/>
-               </span>
-               <semx element="title" source="_">Scope</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="scope">1</semx>
-         </fmt-xref-label>
-            <note id="N">
-              <name>NOTE</name>
-              <p id="_">These results are based on a study carried out on three different
-                        types of kernel.
-                      </p>
-            </note>
-            <p>
-              <xref target="N">Note</xref>
-            </p>
-          </clause>
-          <terms id="terms"  displayorder='4'>
-                   <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="terms">2</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="terms">2</semx>
-         </fmt-xref-label>
-          </terms>
-          <clause id="widgets"  displayorder='5'>
-                 <title id="_">Widgets</title>
-       <fmt-title depth="1">
-          <span class="fmt-caption-label">
-             <semx element="autonum" source="widgets">3</semx>
-             <span class="fmt-caption-delim">
-                <tab/>
-             </span>
-             <semx element="title" source="_">Widgets</semx>
-          </span>
-       </fmt-title>
-       <fmt-xref-label>
-          <span class="fmt-element-name">Clause</span>
-          <semx element="autonum" source="widgets">3</semx>
-       </fmt-xref-label>
-            <clause id="widgets1" inline-header="true">
-                        <fmt-title depth="2">
-               <span class="fmt-caption-label">
-                  <semx element="autonum" source="widgets1">3.1</semx>
-               </span>
-            </fmt-title>
-            <fmt-xref-label>
-               <semx element="autonum" source="widgets1">3.1</semx>
-            </fmt-xref-label>
-              <note id="note1">
-                <name>NOTE 1</name>
-                <p id="_">These results are based on a study carried out on three different
-                          types of kernel.
-                        </p>
-              </note>
-              <note id="note2">
-                <name>NOTE 2</name>
-                <p id="_">These results are based on a study carried out on three different
-                          types of kernel.
-                        </p>
-              </note>
-              <p>
-                <xref target="note1">Note 1</xref>
-                <xref target="note2">Note 2</xref>
-              </p>
-            </clause>
-          </clause>
-        </sections>
-           <annex id="annex1" autonum="A" displayorder="6">
-      <fmt-title>
-         <span class="fmt-caption-label">
-            <strong>
-               <span class="fmt-element-name">Annex</span>
-               <semx element="autonum" source="annex1">A</semx>
-            </strong>
-            <br/>
-            <span class="obligation">(informative)</span>
-         </span>
-      </fmt-title>
-      <fmt-xref-label>
-         <span class="fmt-element-name">Annex</span>
-         <semx element="autonum" source="annex1">A</semx>
-      </fmt-xref-label>
-          <clause id="annex1a" inline-header="true">
-            <title>A.1</title>
-            <note id="AN">
-              <name>NOTE</name>
-              <p id="_">These results are based on a study carried out on three different
-                        types of kernel.
-                      </p>
-            </note>
-          </clause>
-          <clause id="annex1b" inline-header="true">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <p>
+                   <xref target="N">
+                      <span class="fmt-element-name">Clause</span>
+                      <semx element="autonum" source="scope">1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                   </xref>
+                   <xref target="note1">
+                      <semx element="autonum" source="widgets1">3.1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="note1">1</semx>
+                   </xref>
+                   <xref target="note2">
+                      <semx element="autonum" source="widgets1">3.1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="note2">2</semx>
+                   </xref>
+                   <xref target="AN">
+                      <span class="fmt-element-name">Clause</span>
+                      <semx element="autonum" source="annex1a">A.1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                   </xref>
+                   <xref target="Anote1">
+                      <span class="fmt-element-name">Clause</span>
+                      <semx element="autonum" source="annex1b">A.2</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="Anote1">1</semx>
+                   </xref>
+                   <xref target="Anote2">
+                      <span class="fmt-element-name">Clause</span>
+                      <semx element="autonum" source="annex1b">A.2</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="Anote2">2</semx>
+                   </xref>
+                </p>
+             </foreword>
+          </preface>
+          <sections>
+             <clause id="scope" type="scope" displayorder="3">
+                <title id="_">Scope</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="scope">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Scope</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="scope">1</semx>
+                </fmt-xref-label>
+                <note id="N" autonum="">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">NOTE</span>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Note</span>
+                   </fmt-xref-label>
+                   <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                </note>
+                <p>
+                   <xref target="N">
+                      <span class="fmt-element-name">Note</span>
+                   </xref>
+                </p>
+             </clause>
+             <terms id="terms" displayorder="4">
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="terms">2</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="terms">2</semx>
+                </fmt-xref-label>
+             </terms>
+             <clause id="widgets" displayorder="5">
+                <title id="_">Widgets</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="widgets">3</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Widgets</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="widgets">3</semx>
+                </fmt-xref-label>
+                <clause id="widgets1" inline-header="true">
                    <fmt-title depth="2">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="annex1b">A.2</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="annex1b">A.2</semx>
-         </fmt-xref-label>
-            <note id="Anote1">
-              <name>NOTE 1</name>
-              <p id="_">These results are based on a study carried out on three different
-                        types of kernel.
-                      </p>
-            </note>
-            <note id="Anote2">
-              <name>NOTE 2</name>
-              <p id="_">These results are based on a study carried out on three different
-                        types of kernel.
-                      </p>
-            </note>
-          </clause>
-        </annex>
-      </iso-standard>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="widgets1">3.1</semx>
+                      </span>
+                   </fmt-title>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="widgets1">3.1</semx>
+                   </fmt-xref-label>
+                   <note id="note1" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="note1">1</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note1">1</semx>
+                      </fmt-xref-label>
+                      <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                   </note>
+                   <note id="note2" autonum="2">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="note2">2</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note2">2</semx>
+                      </fmt-xref-label>
+                      <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                   </note>
+                   <p>
+                      <xref target="note1">
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note1">1</semx>
+                      </xref>
+                      <xref target="note2">
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note2">2</semx>
+                      </xref>
+                   </p>
+                </clause>
+             </clause>
+          </sections>
+          <annex id="annex1" autonum="A" displayorder="6">
+             <fmt-title>
+                <span class="fmt-caption-label">
+                   <strong>
+                      <span class="fmt-element-name">Annex</span>
+                      <semx element="autonum" source="annex1">A</semx>
+                   </strong>
+                   <br/>
+                   <span class="obligation">(informative)</span>
+                </span>
+             </fmt-title>
+             <fmt-xref-label>
+                <span class="fmt-element-name">Annex</span>
+                <semx element="autonum" source="annex1">A</semx>
+             </fmt-xref-label>
+             <clause id="annex1a" inline-header="true">
+                <fmt-title depth="2">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="annex1a">A.1</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="annex1a">A.1</semx>
+                </fmt-xref-label>
+                <note id="AN" autonum="">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">NOTE</span>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Note</span>
+                   </fmt-xref-label>
+                   <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                </note>
+             </clause>
+             <clause id="annex1b" inline-header="true">
+                <fmt-title depth="2">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="annex1b">A.2</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="annex1b">A.2</semx>
+                </fmt-xref-label>
+                <note id="Anote1" autonum="1">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">NOTE</span>
+                         <semx element="autonum" source="Anote1">1</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="Anote1">1</semx>
+                   </fmt-xref-label>
+                   <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                </note>
+                <note id="Anote2" autonum="2">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">NOTE</span>
+                         <semx element="autonum" source="Anote2">2</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="Anote2">2</semx>
+                   </fmt-xref-label>
+                   <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                </note>
+             </clause>
+          </annex>
+       </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -240,33 +331,70 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <preface>
-          <clause type="toc" id="_" displayorder="1">
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-           <foreword displayorder="2"><title>Foreword</title>
-             <p>
-               <xref target="note1">[note1]</xref>
-               <xref target="note2">1.1, Note</xref>
-             </p>
-           </foreword>
-         </preface>
-         <sections>
-           <clause id="widgets" displayorder="3">
-             <title depth="1">1<tab/>Widgets</title>
-             <clause id="widgets1" inline-header="true">
-               <title>1.1</title>
-               <note id="note1" type="units">
-                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
-               </note>
-               <note id="note2">
-                 <name>NOTE</name>
-                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
-               </note>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
              </clause>
-           </clause>
-         </sections>
+             <foreword displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <p>
+                   <xref target="note1">[note1]</xref>
+                   <xref target="note2">
+                      <semx element="autonum" source="widgets1">1.1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                   </xref>
+                </p>
+             </foreword>
+          </preface>
+          <sections>
+             <clause id="widgets" displayorder="3">
+                <title id="_">Widgets</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="widgets">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Widgets</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="widgets">1</semx>
+                </fmt-xref-label>
+                <clause id="widgets1" inline-header="true">
+                   <fmt-title depth="2">
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="widgets1">1.1</semx>
+                      </span>
+                   </fmt-title>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="widgets1">1.1</semx>
+                   </fmt-xref-label>
+                   <note id="note1" type="units">
+                      <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                   </note>
+                   <note id="note2" autonum="">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                      </fmt-xref-label>
+                      <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                   </note>
+                </clause>
+             </clause>
+          </sections>
        </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
@@ -303,38 +431,92 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <preface>
-          <clause type="toc" id="_" displayorder="1">
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-           <foreword displayorder="2"><title>Foreword</title>
-             <p>
-               <xref target="note1">[note1]</xref>
-               <xref target="note2">1.1, Note  1</xref>
-               <xref target="note3">1.1, Note  2</xref>
-             </p>
-           </foreword>
-         </preface>
-         <sections>
-           <clause id="widgets" displayorder="3">
-             <title depth="1">1<tab/>Widgets</title>
-             <clause id="widgets1" inline-header="true">
-               <title>1.1</title>
-               <note id="note1" type="units">
-                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
-               </note>
-               <note id="note2">
-                 <name>NOTE  1</name>
-                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
-               </note>
-               <note id="note3">
-                 <name>NOTE  2</name>
-                 <p id="_">These results are based on a study carried out on three different types of kernel.</p>
-               </note>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
              </clause>
-           </clause>
-         </sections>
+             <foreword displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <p>
+                   <xref target="note1">[note1]</xref>
+                   <xref target="note2">
+                      <semx element="autonum" source="widgets1">1.1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="note2">1</semx>
+                   </xref>
+                   <xref target="note3">
+                      <semx element="autonum" source="widgets1">1.1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Note</span>
+                      <semx element="autonum" source="note3">2</semx>
+                   </xref>
+                </p>
+             </foreword>
+          </preface>
+          <sections>
+             <clause id="widgets" displayorder="3">
+                <title id="_">Widgets</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="widgets">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Widgets</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="widgets">1</semx>
+                </fmt-xref-label>
+                <clause id="widgets1" inline-header="true">
+                   <fmt-title depth="2">
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="widgets1">1.1</semx>
+                      </span>
+                   </fmt-title>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="widgets1">1.1</semx>
+                   </fmt-xref-label>
+                   <note id="note1" type="units">
+                      <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                   </note>
+                   <note id="note2" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="note2">1</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note2">1</semx>
+                      </fmt-xref-label>
+                      <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                   </note>
+                   <note id="note3" autonum="2">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="note3">2</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="note3">2</semx>
+                      </fmt-xref-label>
+                      <p id="_">These results are based on a study carried out on three different types of kernel.</p>
+                   </note>
+                </clause>
+             </clause>
+          </sections>
        </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
@@ -408,148 +590,270 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <?xml version='1.0'?>
-      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <clause type="toc" id="_" displayorder="1">
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-          <foreword id="fwd" displayorder='2'><title>Foreword</title>
-            <p>
-              <xref target="N"><span class='citefig'>Figure 1</span></xref>
-              <xref target="note1"><span class='citefig'>Figure 2</span></xref>
-              <xref target="note2"><span class='citefig'>Figure 3</span></xref>
-              <xref target="AN"><span class='citefig'>Figure A.1</span></xref>
-              <xref target="Anote1"><span class='citefig'>Figure A.2</span></xref>
-              <xref target="Anote2"><span class='citefig'>Figure A.3</span></xref>
-            </p>
-          </foreword>
-        </preface>
-        <sections>
-          <clause id="scope" type="scope" displayorder='3'>
-                   <title id="_">Scope</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="scope">1</semx>
-               <span class="fmt-caption-delim">
-                  <tab/>
-               </span>
-               <semx element="title" source="_">Scope</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="scope">1</semx>
-         </fmt-xref-label>
-            <figure id="N">
-              <name>Figure 1 — Split-it-right sample divider</name>
-              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-            </figure>
-            <p>
-              <xref target="N"><span class='citefig'>Figure 1</span></xref>
-            </p>
-          </clause>
-          <terms id="terms" displayorder='4'>
-                   <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="terms">2</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="terms">2</semx>
-         </fmt-xref-label>
-          </terms>
-          <clause id="widgets" displayorder='5'>
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword id="fwd" displayorder="2">
+                 <title id="_">Foreword</title>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="title" source="_">Foreword</semx>
+                    </span>
+                 </fmt-title>
+                 <p>
+                    <xref target="N">
+                       <span class="citefig">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="N">1</semx>
+                       </span>
+                    </xref>
+                    <xref target="note1">
+                       <span class="citefig">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="note1">2</semx>
+                       </span>
+                    </xref>
+                    <xref target="note2">
+                       <span class="citefig">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="note2">3</semx>
+                       </span>
+                    </xref>
+                    <xref target="AN">
+                       <span class="citefig">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="AN">A.1</semx>
+                       </span>
+                    </xref>
+                    <xref target="Anote1">
+                       <span class="citefig">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="Anote1">A.2</semx>
+                       </span>
+                    </xref>
+                    <xref target="Anote2">
+                       <span class="citefig">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="Anote2">A.3</semx>
+                       </span>
+                    </xref>
+                 </p>
+              </foreword>
+           </preface>
+           <sections>
+              <clause id="scope" type="scope" displayorder="3">
+                 <title id="_">Scope</title>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="scope">1</semx>
+                       <span class="fmt-caption-delim">
+                          <tab/>
+                       </span>
+                       <semx element="title" source="_">Scope</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="scope">1</semx>
+                 </fmt-xref-label>
+                 <figure id="N" autonum="1">
+                    <name id="_">Split-it-right sample divider</name>
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="N">1</semx>
+                          <span class="fmt-caption-delim"> — </span>
+                          <semx element="name" source="_">Split-it-right sample divider</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Figure</span>
+                       <semx element="autonum" source="N">1</semx>
+                    </fmt-xref-label>
+                    <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                 </figure>
+                 <p>
+                    <xref target="N">
+                       <span class="citefig">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="N">1</semx>
+                       </span>
+                    </xref>
+                 </p>
+              </clause>
+              <terms id="terms" displayorder="4">
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="terms">2</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="terms">2</semx>
+                 </fmt-xref-label>
+              </terms>
+              <clause id="widgets" displayorder="5">
                  <title id="_">Widgets</title>
-       <fmt-title depth="1">
-          <span class="fmt-caption-label">
-             <semx element="autonum" source="widgets">3</semx>
-             <span class="fmt-caption-delim">
-                <tab/>
-             </span>
-             <semx element="title" source="_">Widgets</semx>
-          </span>
-       </fmt-title>
-       <fmt-xref-label>
-          <span class="fmt-element-name">Clause</span>
-          <semx element="autonum" source="widgets">3</semx>
-       </fmt-xref-label>
-            <clause id="widgets1" inline-header="true">
-                          <fmt-title depth="2">
-               <span class="fmt-caption-label">
-                  <semx element="autonum" source="widgets1">3.1</semx>
-               </span>
-            </fmt-title>
-            <fmt-xref-label>
-               <semx element="autonum" source="widgets1">3.1</semx>
-            </fmt-xref-label>
-              <figure id="note1">
-                <name>Figure 2 — Split-it-right sample divider</name>
-                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-              </figure>
-              <figure id="note2">
-                <name>Figure 3 — Split-it-right sample divider</name>
-                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-              </figure>
-              <p>
-                <xref target="note1"><span class='citefig'>Figure 2</span></xref>
-                <xref target="note2"><span class='citefig'>Figure 3</span></xref>
-              </p>
-            </clause>
-          </clause>
-        </sections>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="widgets">3</semx>
+                       <span class="fmt-caption-delim">
+                          <tab/>
+                       </span>
+                       <semx element="title" source="_">Widgets</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="widgets">3</semx>
+                 </fmt-xref-label>
+                 <clause id="widgets1" inline-header="true">
+                    <fmt-title depth="2">
+                       <span class="fmt-caption-label">
+                          <semx element="autonum" source="widgets1">3.1</semx>
+                       </span>
+                    </fmt-title>
+                    <fmt-xref-label>
+                       <semx element="autonum" source="widgets1">3.1</semx>
+                    </fmt-xref-label>
+                    <figure id="note1" autonum="2">
+                       <name id="_">Split-it-right sample divider</name>
+                       <fmt-name>
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Figure</span>
+                             <semx element="autonum" source="note1">2</semx>
+                             <span class="fmt-caption-delim"> — </span>
+                             <semx element="name" source="_">Split-it-right sample divider</semx>
+                          </span>
+                       </fmt-name>
+                       <fmt-xref-label>
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="note1">2</semx>
+                       </fmt-xref-label>
+                       <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                    </figure>
+                    <figure id="note2" autonum="3">
+                       <name id="_">Split-it-right sample divider</name>
+                       <fmt-name>
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Figure</span>
+                             <semx element="autonum" source="note2">3</semx>
+                             <span class="fmt-caption-delim"> — </span>
+                             <semx element="name" source="_">Split-it-right sample divider</semx>
+                          </span>
+                       </fmt-name>
+                       <fmt-xref-label>
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="note2">3</semx>
+                       </fmt-xref-label>
+                       <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                    </figure>
+                    <p>
+                       <xref target="note1">
+                          <span class="citefig">
+                             <span class="fmt-element-name">Figure</span>
+                             <semx element="autonum" source="note1">2</semx>
+                          </span>
+                       </xref>
+                       <xref target="note2">
+                          <span class="citefig">
+                             <span class="fmt-element-name">Figure</span>
+                             <semx element="autonum" source="note2">3</semx>
+                          </span>
+                       </xref>
+                    </p>
+                 </clause>
+              </clause>
+           </sections>
            <annex id="annex1" autonum="A" displayorder="6">
-      <fmt-title>
-         <span class="fmt-caption-label">
-            <strong>
-               <span class="fmt-element-name">Annex</span>
-               <semx element="autonum" source="annex1">A</semx>
-            </strong>
-            <br/>
-            <span class="obligation">(informative)</span>
-         </span>
-      </fmt-title>
-      <fmt-xref-label>
-         <span class="fmt-element-name">Annex</span>
-         <semx element="autonum" source="annex1">A</semx>
-      </fmt-xref-label>
-          <clause id="annex1a" inline-header="true">
-                  <fmt-title depth="2">
-           <span class="fmt-caption-label">
-              <semx element="autonum" source="annex1a">A.1</semx>
-           </span>
-        </fmt-title>
-        <fmt-xref-label>
-           <span class="fmt-element-name">Clause</span>
-           <semx element="autonum" source="annex1a">A.1</semx>
-        </fmt-xref-label>
-            <figure id="AN">
-              <name>Figure A.1 — Split-it-right sample divider</name>
-              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-            </figure>
-          </clause>
-          <clause id="annex1b" inline-header="true">
-                   <fmt-title depth="2">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="annex1b">A.2</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="annex1b">A.2</semx>
-         </fmt-xref-label>
-            <figure id="Anote1">
-              <name>Figure A.2 — Split-it-right sample divider</name>
-              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-            </figure>
-            <figure id="Anote2">
-              <name>Figure A.3 — Split-it-right sample divider</name>
-              <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-            </figure>
-          </clause>
-        </annex>
-      </iso-standard>
+              <fmt-title>
+                 <span class="fmt-caption-label">
+                    <strong>
+                       <span class="fmt-element-name">Annex</span>
+                       <semx element="autonum" source="annex1">A</semx>
+                    </strong>
+                    <br/>
+                    <span class="obligation">(informative)</span>
+                 </span>
+              </fmt-title>
+              <fmt-xref-label>
+                 <span class="fmt-element-name">Annex</span>
+                 <semx element="autonum" source="annex1">A</semx>
+              </fmt-xref-label>
+              <clause id="annex1a" inline-header="true">
+                 <fmt-title depth="2">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="annex1a">A.1</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="annex1a">A.1</semx>
+                 </fmt-xref-label>
+                 <figure id="AN" autonum="A.1">
+                    <name id="_">Split-it-right sample divider</name>
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="AN">A.1</semx>
+                          <span class="fmt-caption-delim"> — </span>
+                          <semx element="name" source="_">Split-it-right sample divider</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Figure</span>
+                       <semx element="autonum" source="AN">A.1</semx>
+                    </fmt-xref-label>
+                    <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                 </figure>
+              </clause>
+              <clause id="annex1b" inline-header="true">
+                 <fmt-title depth="2">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="annex1b">A.2</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="annex1b">A.2</semx>
+                 </fmt-xref-label>
+                 <figure id="Anote1" autonum="A.2">
+                    <name id="_">Split-it-right sample divider</name>
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="Anote1">A.2</semx>
+                          <span class="fmt-caption-delim"> — </span>
+                          <semx element="name" source="_">Split-it-right sample divider</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Figure</span>
+                       <semx element="autonum" source="Anote1">A.2</semx>
+                    </fmt-xref-label>
+                    <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                 </figure>
+                 <figure id="Anote2" autonum="A.3">
+                    <name id="_">Split-it-right sample divider</name>
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="Anote2">A.3</semx>
+                          <span class="fmt-caption-delim"> — </span>
+                          <semx element="name" source="_">Split-it-right sample divider</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Figure</span>
+                       <semx element="autonum" source="Anote2">A.3</semx>
+                    </fmt-xref-label>
+                    <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                 </figure>
+              </clause>
+           </annex>
+        </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -614,15 +918,20 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <?xml version='1.0'?>
-      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <clause type="toc" id="_" displayorder="1">
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-          <foreword id="fwd" displayorder='2'><title>Foreword</title>
-            <p>
-                  <xref target="N">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="fwd" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <p>
+                   <xref target="N">
                       <span class="citefig">
                          <span class="fmt-element-name">Figure</span>
                          <semx element="autonum" source="N">1</semx>
@@ -631,13 +940,17 @@ RSpec.describe IsoDoc do
                    <xref target="note1">
                       <span class="citefig">
                          <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="note1">1 a)</semx>
+                         <semx element="autonum" source="N">1</semx>
+                         <semx element="autonum" source="note1">a</semx>
+                         <span class="fmt-autonum-delim">)</span>
                       </span>
                    </xref>
                    <xref target="note2">
                       <span class="citefig">
                          <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="note2">1 b)</semx>
+                         <semx element="autonum" source="N">1</semx>
+                         <semx element="autonum" source="note2">b</semx>
+                         <span class="fmt-autonum-delim">)</span>
                       </span>
                    </xref>
                    <xref target="AN">
@@ -649,138 +962,230 @@ RSpec.describe IsoDoc do
                    <xref target="Anote1">
                       <span class="citefig">
                          <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="Anote1">A.1 a)</semx>
+                         <semx element="autonum" source="AN">A.1</semx>
+                         <semx element="autonum" source="Anote1">a</semx>
+                         <span class="fmt-autonum-delim">)</span>
                       </span>
                    </xref>
                    <xref target="Anote2">
                       <span class="citefig">
                          <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="Anote2">A.1 b)</semx>
+                         <semx element="autonum" source="AN">A.1</semx>
+                         <semx element="autonum" source="Anote2">b</semx>
+                         <span class="fmt-autonum-delim">)</span>
                       </span>
                    </xref>
-            </p>
-          </foreword>
-        </preface>
-        <sections>
-          <clause id="scope" type="scope" displayorder='3'>
-                   <title id="_">Scope</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="scope">1</semx>
-               <span class="fmt-caption-delim">
-                  <tab/>
-               </span>
-               <semx element="title" source="_">Scope</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="scope">1</semx>
-         </fmt-xref-label>
-          </clause>
-          <terms id="terms" displayorder='4'>
-                   <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="terms">2</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="terms">2</semx>
-         </fmt-xref-label>
-          </terms>
-          <clause id="widgets" displayorder='5'>
-                 <title id="_">Widgets</title>
-       <fmt-title depth="1">
-          <span class="fmt-caption-label">
-             <semx element="autonum" source="widgets">3</semx>
-             <span class="fmt-caption-delim">
-                <tab/>
-             </span>
-             <semx element="title" source="_">Widgets</semx>
-          </span>
-       </fmt-title>
-       <fmt-xref-label>
-          <span class="fmt-element-name">Clause</span>
-          <semx element="autonum" source="widgets">3</semx>
-       </fmt-xref-label>
-            <clause id="widgets1" inline-header="true">
-                        <fmt-title depth="2">
-               <span class="fmt-caption-label">
-                  <semx element="autonum" source="widgets1">3.1</semx>
-               </span>
-            </fmt-title>
-            <fmt-xref-label>
-               <semx element="autonum" source="widgets1">3.1</semx>
-            </fmt-xref-label>
-              <figure id="N">
-                <name>Figure 1</name>
-                <figure id="note1">
-                  <name>a)  Split-it-right sample divider</name>
-                  <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-                </figure>
-                <figure id="note2">
-                  <name>b)  Split-it-right sample divider</name>
-                  <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-                </figure>
-              </figure>
-              <p>
-                <xref target="note1"><span class='citefig'>Figure 1 a)</span></xref>
-                <xref target="note2"><span class='citefig'>Figure 1 b)</span></xref>
-              </p>
-            </clause>
-          </clause>
-        </sections>
-           <annex id="annex1" autonum="A" displayorder="6">
-      <fmt-title>
-         <span class="fmt-caption-label">
-            <strong>
-               <span class="fmt-element-name">Annex</span>
-               <semx element="autonum" source="annex1">A</semx>
-            </strong>
-            <br/>
-            <span class="obligation">(informative)</span>
-         </span>
-      </fmt-title>
-      <fmt-xref-label>
-         <span class="fmt-element-name">Annex</span>
-         <semx element="autonum" source="annex1">A</semx>
-      </fmt-xref-label>
-          <clause id="annex1a" inline-header="true">
-                  <fmt-title depth="2">
-           <span class="fmt-caption-label">
-              <semx element="autonum" source="annex1a">A.1</semx>
-           </span>
-        </fmt-title>
-        <fmt-xref-label>
-           <span class="fmt-element-name">Clause</span>
-           <semx element="autonum" source="annex1a">A.1</semx>
-        </fmt-xref-label>
-          </clause>
-          <clause id="annex1b" inline-header="true">
+                </p>
+             </foreword>
+          </preface>
+          <sections>
+             <clause id="scope" type="scope" displayorder="3">
+                <title id="_">Scope</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="scope">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Scope</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="scope">1</semx>
+                </fmt-xref-label>
+             </clause>
+             <terms id="terms" displayorder="4">
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="terms">2</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="terms">2</semx>
+                </fmt-xref-label>
+             </terms>
+             <clause id="widgets" displayorder="5">
+                <title id="_">Widgets</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="widgets">3</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Widgets</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="widgets">3</semx>
+                </fmt-xref-label>
+                <clause id="widgets1" inline-header="true">
                    <fmt-title depth="2">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="annex1b">A.2</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="annex1b">A.2</semx>
-         </fmt-xref-label>
-            <figure id="AN">
-              <name>Figure A.1</name>
-              <figure id="Anote1">
-                <name>a)  Split-it-right sample divider</name>
-                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-              </figure>
-              <figure id="Anote2">
-                <name>b)  Split-it-right sample divider</name>
-                <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
-              </figure>
-            </figure>
-          </clause>
-        </annex>
-      </iso-standard>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="widgets1">3.1</semx>
+                      </span>
+                   </fmt-title>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="widgets1">3.1</semx>
+                   </fmt-xref-label>
+                   <figure id="N" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Figure</span>
+                            <semx element="autonum" source="N">1</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="N">1</semx>
+                      </fmt-xref-label>
+                      <figure id="note1" autonum="1 a">
+                         <name id="_">Split-it-right sample divider</name>
+                         <fmt-name>
+                            <span class="fmt-caption-label">
+                               <semx element="autonum" source="note1">a</semx>
+                               <span class="fmt-label-delim">)</span>
+                               <span class="fmt-caption-delim">  </span>
+                               <semx element="name" source="_">Split-it-right sample divider</semx>
+                            </span>
+                         </fmt-name>
+                         <fmt-xref-label>
+                            <span class="fmt-element-name">Figure</span>
+                            <semx element="autonum" source="N">1</semx>
+                            <semx element="autonum" source="note1">a</semx>
+                            <span class="fmt-autonum-delim">)</span>
+                         </fmt-xref-label>
+                         <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                      </figure>
+                      <figure id="note2" autonum="1 b">
+                         <name id="_">Split-it-right sample divider</name>
+                         <fmt-name>
+                            <span class="fmt-caption-label">
+                               <semx element="autonum" source="note2">b</semx>
+                               <span class="fmt-label-delim">)</span>
+                               <span class="fmt-caption-delim">  </span>
+                               <semx element="name" source="_">Split-it-right sample divider</semx>
+                            </span>
+                         </fmt-name>
+                         <fmt-xref-label>
+                            <span class="fmt-element-name">Figure</span>
+                            <semx element="autonum" source="N">1</semx>
+                            <semx element="autonum" source="note2">b</semx>
+                            <span class="fmt-autonum-delim">)</span>
+                         </fmt-xref-label>
+                         <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                      </figure>
+                   </figure>
+                   <p>
+                      <xref target="note1">
+                         <span class="citefig">
+                            <span class="fmt-element-name">Figure</span>
+                            <semx element="autonum" source="N">1</semx>
+                            <semx element="autonum" source="note1">a</semx>
+                            <span class="fmt-autonum-delim">)</span>
+                         </span>
+                      </xref>
+                      <xref target="note2">
+                         <span class="citefig">
+                            <span class="fmt-element-name">Figure</span>
+                            <semx element="autonum" source="N">1</semx>
+                            <semx element="autonum" source="note2">b</semx>
+                            <span class="fmt-autonum-delim">)</span>
+                         </span>
+                      </xref>
+                   </p>
+                </clause>
+             </clause>
+          </sections>
+          <annex id="annex1" autonum="A" displayorder="6">
+             <fmt-title>
+                <span class="fmt-caption-label">
+                   <strong>
+                      <span class="fmt-element-name">Annex</span>
+                      <semx element="autonum" source="annex1">A</semx>
+                   </strong>
+                   <br/>
+                   <span class="obligation">(informative)</span>
+                </span>
+             </fmt-title>
+             <fmt-xref-label>
+                <span class="fmt-element-name">Annex</span>
+                <semx element="autonum" source="annex1">A</semx>
+             </fmt-xref-label>
+             <clause id="annex1a" inline-header="true">
+                <fmt-title depth="2">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="annex1a">A.1</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="annex1a">A.1</semx>
+                </fmt-xref-label>
+             </clause>
+             <clause id="annex1b" inline-header="true">
+                <fmt-title depth="2">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="annex1b">A.2</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="annex1b">A.2</semx>
+                </fmt-xref-label>
+                <figure id="AN" autonum="A.1">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="AN">A.1</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Figure</span>
+                      <semx element="autonum" source="AN">A.1</semx>
+                   </fmt-xref-label>
+                   <figure id="Anote1" autonum="A.1 a">
+                      <name id="_">Split-it-right sample divider</name>
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <semx element="autonum" source="Anote1">a</semx>
+                            <span class="fmt-label-delim">)</span>
+                            <span class="fmt-caption-delim">  </span>
+                            <semx element="name" source="_">Split-it-right sample divider</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="AN">A.1</semx>
+                         <semx element="autonum" source="Anote1">a</semx>
+                         <span class="fmt-autonum-delim">)</span>
+                      </fmt-xref-label>
+                      <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                   </figure>
+                   <figure id="Anote2" autonum="A.1 b">
+                      <name id="_">Split-it-right sample divider</name>
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <semx element="autonum" source="Anote2">b</semx>
+                            <span class="fmt-label-delim">)</span>
+                            <span class="fmt-caption-delim">  </span>
+                            <semx element="name" source="_">Split-it-right sample divider</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="AN">A.1</semx>
+                         <semx element="autonum" source="Anote2">b</semx>
+                         <span class="fmt-autonum-delim">)</span>
+                      </fmt-xref-label>
+                      <image id="_" mimetype="image/png" src="rice_images/rice_image1.png"/>
+                   </figure>
+                </figure>
+             </clause>
+          </annex>
+       </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -853,7 +1258,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder='2'><title>Foreword</title>
+          <foreword displayorder='2'>
+         <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p>
             <xref target="N">
                <span class="fmt-element-name">Clause</span>
@@ -1165,7 +1576,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder='2'><title>Foreword</title>
+          <foreword displayorder='2'>
+                   <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p>
             <xref target="N">
                <span class="fmt-element-name">Clause</span>
@@ -1548,7 +1965,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder='2'><title>Foreword</title>
+          <foreword displayorder='2'>
+                   <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p>
                    <xref target="N">
                       <span class="citetbl">
@@ -1887,7 +2310,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder='2'><title>Foreword</title>
+          <foreword displayorder='2'>
+                   <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p>
            <xref target="note1">
               <semx element="autonum" source="_">2.1</semx>
@@ -2121,7 +2550,12 @@ RSpec.describe IsoDoc do
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
           <foreword obligation='informative' displayorder='2'>
-            <title>Foreword</title>
+                   <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p id='A'>
               This is a preamble
                    <xref target="C">
@@ -2604,7 +3038,12 @@ RSpec.describe IsoDoc do
            <fmt-title depth="1">Contents</fmt-title>
            </clause>
            <foreword obligation="informative" displayorder="2">
-             <title>Foreword</title>
+                    <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
              <p id="A">This is a preamble
                     <xref target="B">
                        <span class="citesec">
@@ -2891,7 +3330,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder='2'><title>Foreword</title>
+          <foreword displayorder='2'>
+                   <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p>
            <xref target="N">
               <span class="fmt-element-name">Clause</span>
@@ -3133,7 +3578,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder='2'><title>Foreword</title>
+          <foreword displayorder='2'>
+                   <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p>
             <xref target="N">
                <span class="fmt-element-name">Clause</span>
@@ -3398,7 +3849,13 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
           <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder='2'><title>Foreword</title>
+          <foreword displayorder='2'>
+                   <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
             <p>
             <xref target="N">
                <span class="fmt-element-name">Clause</span>
@@ -3644,7 +4101,13 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'><title>Foreword</title>
+      <foreword displayorder='2'>
+               <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
         <p>
         <xref target="Na">
         <span class="fmt-element-name">Clause</span>
@@ -3655,10 +4118,10 @@ RSpec.describe IsoDoc do
         </p>
       </foreword>
     OUTPUT
-    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
     .convert("test", input, true))
-    .at("//xmlns:foreword").to_xml))
+    .at("//xmlns:foreword").to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
 
     input = <<~INPUT
@@ -3688,7 +4151,13 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <foreword displayorder='2'><title>Foreword</title>
+      <foreword displayorder='2'>
+               <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
         <p>
         <xref target="Na">
          <span class="fmt-element-name">Clause</span>
@@ -3702,10 +4171,10 @@ RSpec.describe IsoDoc do
         </p>
       </foreword>
     OUTPUT
-    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
     .convert("test", input, true))
-    .at("//xmlns:foreword").to_xml))
+    .at("//xmlns:foreword").to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 end
