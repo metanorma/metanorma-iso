@@ -66,7 +66,7 @@ RSpec.describe IsoDoc do
           </annex>
         </iso-standard>
       INPUT
-    expect(Xml::C14n.format(output)
+    expect(Xml::C14n.format(strip_guid(output))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
@@ -227,7 +227,7 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(Xml::C14n.format(output)
+    expect(Xml::C14n.format(strip_guid(output))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
@@ -396,76 +396,151 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <bibdata>
-           <ext>
-             <doctype language="">amendment</doctype>
-             <doctype language="en">Amendment</doctype>
-           </ext>
-         </bibdata>
+           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata>
+             <ext>
+                <doctype language="">amendment</doctype>
+                <doctype language="en">Amendment</doctype>
+             </ext>
+          </bibdata>
 
-         <boilerplate>
-           <copyright-statement>
-             <clause>
-               <title depth="1">Copyright</title>
+          <boilerplate>
+             <copyright-statement>
+                <clause>
+                   <title id="_">Copyright</title>
+                   <fmt-title depth="1">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">Copyright</semx>
+                      </span>
+                   </fmt-title>
+                </clause>
+             </copyright-statement>
+             <license-statement>
+                <clause>
+                   <title id="_">License</title>
+                   <fmt-title depth="1">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">License</semx>
+                      </span>
+                   </fmt-title>
+                </clause>
+             </license-statement>
+             <legal-statement>
+                <clause>
+                   <title id="_">Legal</title>
+                   <fmt-title depth="1">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">Legal</semx>
+                      </span>
+                   </fmt-title>
+                </clause>
+             </legal-statement>
+             <feedback-statement>
+                <clause>
+                   <title id="_">Feedback</title>
+                   <fmt-title depth="1">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">Feedback</semx>
+                      </span>
+                   </fmt-title>
+                </clause>
+             </feedback-statement>
+          </boilerplate>
+          <preface>
+             <abstract obligation="informative" displayorder="1">
+                <title id="_">Abstract</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Abstract</semx>
+                   </span>
+                </fmt-title>
+             </abstract>
+             <foreword obligation="informative" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <p id="A">This is a preamble</p>
+             </foreword>
+             <introduction id="B" obligation="informative" displayorder="3">
+                <title id="_">Introduction</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Introduction</semx>
+                   </span>
+                </fmt-title>
+                <clause id="C" inline-header="false" obligation="informative">
+                   <title id="_">Introduction Subsection</title>
+                   <fmt-title depth="2">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">Introduction Subsection</semx>
+                      </span>
+                   </fmt-title>
+                </clause>
+             </introduction>
+             <clause id="B1" displayorder="4">
+                <title id="_">Dedication</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Dedication</semx>
+                   </span>
+                </fmt-title>
              </clause>
-           </copyright-statement>
-           <license-statement>
-             <clause>
-               <title depth="1">License</title>
+             <clause id="B2" displayorder="5">
+                <title id="_">Note to reader</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Note to reader</semx>
+                   </span>
+                </fmt-title>
              </clause>
-           </license-statement>
-           <legal-statement>
-             <clause>
-               <title depth="1">Legal</title>
+             <acknowledgements obligation="informative" displayorder="6">
+                <title id="_">Acknowledgements</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Acknowledgements</semx>
+                   </span>
+                </fmt-title>
+             </acknowledgements>
+          </preface>
+          <sections>
+             <clause id="M" inline-header="false" obligation="normative" displayorder="7">
+                <title id="_">Clause 4</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Clause 4</semx>
+                   </span>
+                </fmt-title>
+                <clause id="N" inline-header="false" obligation="normative">
+                   <title id="_">Introduction</title>
+                   <fmt-title depth="2">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">Introduction</semx>
+                      </span>
+                   </fmt-title>
+                </clause>
+                <clause id="O" inline-header="false" obligation="normative">
+                   <title id="_">Clause 4.2</title>
+                   <fmt-title depth="2">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">Clause 4.2</semx>
+                      </span>
+                   </fmt-title>
+                </clause>
+                <clause id="O1" inline-header="true" obligation="normative"/>
              </clause>
-           </legal-statement>
-           <feedback-statement>
-             <clause>
-               <title depth="1">Feedback</title>
+             <clause id="D" obligation="normative" displayorder="8">
+                <title id="_">Scope</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Scope</semx>
+                   </span>
+                </fmt-title>
+                <p id="E">Text</p>
              </clause>
-           </feedback-statement>
-         </boilerplate>
-         <preface>
-           <abstract obligation="informative" displayorder="1">
-             <title>Abstract</title>
-           </abstract>
-           <foreword obligation="informative" displayorder="2">
-             <title>Foreword</title>
-             <p id="A">This is a preamble</p>
-           </foreword>
-           <introduction id="B" obligation="informative" displayorder="3">
-             <title depth="1">Introduction</title>
-             <clause id="C" inline-header="false" obligation="informative">
-               <title depth="2">Introduction Subsection</title>
-             </clause>
-           </introduction>
-           <clause id="B1" displayorder="4">
-             <title depth="1">Dedication</title>
-           </clause>
-           <clause id="B2" displayorder="5">
-             <title depth="1">Note to reader</title>
-           </clause>
-           <acknowledgements obligation="informative" displayorder="6">
-             <title>Acknowledgements</title>
-           </acknowledgements>
-         </preface>
-         <sections>
-           <clause id="M" inline-header="false" obligation="normative" displayorder="7">
-             <title depth="1">Clause 4</title>
-             <clause id="N" inline-header="false" obligation="normative">
-               <title depth="2">Introduction</title>
-             </clause>
-             <clause id="O" inline-header="false" obligation="normative">
-               <title depth="2">Clause 4.2</title>
-             </clause>
-             <clause id="O1" inline-header="true" obligation="normative"/>
-           </clause>
-           <clause id="D" obligation="normative" displayorder="8">
-             <title depth="1">Scope</title>
-             <p id="E">Text</p>
-           </clause>
-         </sections>
+          </sections>
          <annex id="P" inline-header="false" obligation="normative" displayorder="9">
            <title>
              <strong>Annex A</strong>
@@ -1103,7 +1178,12 @@ RSpec.describe IsoDoc do
         </bibdata>
         <preface>
           <clause type="toc" id="_" displayorder="1">
-            <title depth="1">Contents</title>
+                   <title depth="1" id="_">Contents</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Contents</semx>
+            </span>
+         </fmt-title>
           </clause>
         </preface>
         <sections>
