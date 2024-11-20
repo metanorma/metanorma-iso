@@ -627,6 +627,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -718,6 +719,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -779,6 +781,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -884,6 +887,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -1328,6 +1332,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -1440,6 +1445,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -1508,6 +1514,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")

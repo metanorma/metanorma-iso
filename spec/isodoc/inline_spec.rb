@@ -387,48 +387,82 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-        <preface>
-          <foreword displayorder="1"><title>Foreword</title>
-            <p>
-              <sup>
-                <xref type="footnote" target="ISO712">A</xref>
-              </sup>
-              <xref type="inline" target="ISO712">A</xref>
-            </p>
-          </foreword>
-          <clause type="toc" id="_" displayorder="2">
-            <title depth="1">Contents</title>
-          </clause>
-        </preface>
-        <sections>
-          <references id="_normative_references" normative="true" obligation="informative" displayorder="3">
-            <title depth="1">1<tab/>1<tab/>
-              Normative references</title>
-            <bibitem id="ISO712" type="standard">
-              <formattedref format="text/plain">
-                <em>Cereals and cereal products</em>
-              </formattedref>
-              <docidentifier>ISO 712</docidentifier>
-              <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
-            <biblio-tag>
-               <span class="stdpublisher">ISO </span>
-               <span class="stddocNumber">712</span>
-               ,
-            </biblio-tag>
-            </bibitem>
-          </references>
-        </sections>
-        <bibliography/>
-      </iso-standard>
+    presxml = <<~OUTPUT
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <foreword displayorder="1">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <p>
+                   <sup>
+                      <xref type="footnote" target="ISO712">A</xref>
+                   </sup>
+                   <xref type="inline" target="ISO712">A</xref>
+                </p>
+             </foreword>
+             <clause type="toc" id="_" displayorder="2">
+                <title depth="1" id="_">Contents</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Contents</semx>
+                   </span>
+                </fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <references id="_" normative="true" obligation="informative" displayorder="3">
+                <title id="_">
+                   1
+                   <tab/>
+                   Normative references
+                </title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="_">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">
+                         1
+                         <tab/>
+                         Normative references
+                      </semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="_">1</semx>
+                </fmt-xref-label>
+                <bibitem id="ISO712" type="standard">
+                   <formattedref format="text/plain">
+                      <em>Cereals and cereal products</em>
+                   </formattedref>
+                   <docidentifier>ISO 712</docidentifier>
+                   <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+                   <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                         <abbreviation>ISO</abbreviation>
+                      </organization>
+                   </contributor>
+                   <biblio-tag>
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                   </biblio-tag>
+                </bibitem>
+             </references>
+          </sections>
+          <bibliography>
+           
+         </bibliography>
+       </iso-standard>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes eref content" do
@@ -527,7 +561,12 @@ RSpec.describe IsoDoc do
              <fmt-title depth="1">Contents</fmt-title>
              </clause>
              <foreword displayorder="2">
-                <title>Foreword</title>
+                      <title id="_">Foreword</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
                 <p>
                    <eref bibitemid="IEV" citeas="IEV" type="inline">
                       <locality type="clause">
@@ -617,11 +656,20 @@ RSpec.describe IsoDoc do
           </preface>
           <sections>
              <references id="_" normative="true" obligation="informative" displayorder="3">
-                <title depth="1">
-                   1
-                   <tab/>
-                   Normative References
-                </title>
+                      <title id="_">Normative References</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="_">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Normative References</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="_">1</semx>
+         </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
                    <formattedref>
                       <em>
@@ -757,19 +805,37 @@ RSpec.describe IsoDoc do
         </preface>
         <sections>
           <terms id="Terms" displayorder="3">
-            <title>2</title>
+                  <fmt-title depth="1">
+           <span class="fmt-caption-label">
+              <semx element="autonum" source="Terms">2</semx>
+           </span>
+        </fmt-title>
+        <fmt-xref-label>
+           <span class="fmt-element-name">Clause</span>
+           <semx element="autonum" source="Terms">2</semx>
+        </fmt-xref-label>
             <term id="B">
-              <name>2.1</name>
+                        <fmt-name>
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="B">2.1</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="B">2.1</semx>
+            </fmt-xref-label>
               <preferred>
                 <strong>B</strong>
               </preferred>
               <p>
                 <ul>
                   <li>
-              (<xref target="clause1"><span class="citesec">Clause 3</span></xref>)
+              (<xref target="clause1"><span class="citesec"><span class="fmt-element-name">Clause</span>
+                            <semx element="autonum" source="clause1">3</semx>
+              </span></xref>)
             </li>
                   <li><em>term</em>
-              (<xref target="clause1"><span class="citesec">Clause 3</span></xref>)
+              (<xref target="clause1"><span class="citesec"><span class="fmt-element-name">Clause</span>
+                            <semx element="autonum" source="clause1">3</semx></span></xref>)
             </li>
                   <li><em>w[o]rd</em>
               (<xref target="clause1">Clause #1</xref>)
@@ -784,7 +850,7 @@ RSpec.describe IsoDoc do
               (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></xref>)
             </li>
                   <li><em>word</em>
-              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></xref>)
+              (<xref type="inline" target="ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> <span class="fmt-conn">and</span> <span class="citefig">Figure b</span></xref>)
             </li>
                   <li><em>word</em>
               (<xref type="inline" target="ISO712">
@@ -808,10 +874,36 @@ RSpec.describe IsoDoc do
             </term>
           </terms>
           <clause id="clause1" displayorder="4">
-            <title depth="1">3<tab/>Clause 1</title>
-          </clause>
-          <references id="_" obligation="informative" normative="true" displayorder="2">
-            <title depth="1">1<tab/>Normative References</title>
+                   <title id="_">Clause 1</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="clause1">3</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Clause 1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="clause1">3</semx>
+         </fmt-xref-label>
+         </clause>
+      <references id="_" obligation="informative" normative="true" displayorder="2">
+         <title id="_">Normative References</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="_">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Normative References</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="_">1</semx>
+         </fmt-xref-label>
             <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="ISO712" type="standard">
               <formattedref>
@@ -867,7 +959,7 @@ RSpec.describe IsoDoc do
                (<a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></a>)
              </li>
                    <li><i>word</i>
-               (<a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></a>)
+               (<a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> <span class="fmt-conn">and</span> <span class="citefig">Figure b</span></a>)
              </li>
                    <li><i>word</i>
                (<a href="#ISO712">
@@ -902,8 +994,8 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
@@ -986,7 +1078,20 @@ RSpec.describe IsoDoc do
         <clause type="toc" id="_" displayorder="1">
         <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword id='A' displayorder='2'><title>Foreword</title>
+          <foreword id='A' displayorder='2'>
+         <title id="_">Foreword</title>
+         <fmt-title depth="2">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="A">1.1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Foreword</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <semx element="autonum" source="A">1.1</semx>
+         </fmt-xref-label>
             <ul>
               <li>term</li>
             </ul>
@@ -994,50 +1099,96 @@ RSpec.describe IsoDoc do
         </preface>
                  <sections>
           <terms id='Terms' displayorder='3'>
-            <title>1</title>
+                   <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="Terms">1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="Terms">1</semx>
+         </fmt-xref-label>
             <clause id='A' inline-header='true'>
-              <title>1.1</title>
+                       <fmt-title depth="2">
+              <span class="fmt-caption-label">
+                 <semx element="autonum" source="A">1.1</semx>
+              </span>
+           </fmt-title>
+           <fmt-xref-label>
+              <semx element="autonum" source="A">1.1</semx>
+           </fmt-xref-label>
               <ul>
                 <li> term </li>
               </ul>
             </clause>
             <term id='clause1'>
-              <name>1.2</name>
+              <fmt-name>
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="clause1">1.2</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="clause1">1.2</semx>
+            </fmt-xref-label>
               <ul>
                 <li>
                   <em>term</em>
                    (
-                  <xref target='clause1'><span class='citesec'>1.2</span></xref>
+                  <xref target='clause1'><span class="citesec">
+                  <semx element="autonum" source="clause1">1.2</semx>
+                  </span>
+                  </xref>
                   )
                 </li>
                 <li> term </li>
               </ul>
             </term>
             <term id='clause2'>
-              <name>1.3</name>
+                          <fmt-name>
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="clause2">1.3</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="clause2">1.3</semx>
+            </fmt-xref-label>
               <ul>
                 <li>
                   <em>term</em>
                    (
-                  <xref target='clause1'><span class='citesec'>1.2</span></xref>
+                  <xref target='clause1'><span class='citesec'><semx element="autonum" source="clause1">1.2</semx></span></xref>
                   )
                 </li>
                 <li> term </li>
               </ul>
             </term>
             <term id="clause3">
-               <name>1.4</name>
+                        <fmt-name>
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="clause3">1.4</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="clause3">1.4</semx>
+            </fmt-xref-label>
                <ul>
                  <li><em>term</em>
-           (<xref target="clause1"><span class="citesec">1.2</span></xref>)
+           (<xref target="clause1"><span class="citesec"><semx element="autonum" source="clause1">1.2</semx></span></xref>)
          </li>
                  <li>term</li>
                </ul>
                <term id="clause4">
-                 <name>1.4.1</name>
+                 <fmt-name>
+                 <span class="fmt-caption-label">
+                    <semx element="autonum" source="clause4">1.4.1</semx>
+                 </span>
+              </fmt-name>
+              <fmt-xref-label>
+                 <semx element="autonum" source="clause4">1.4.1</semx>
+              </fmt-xref-label>
                  <ul>
                    <li><em>term</em>
-           (<xref target="clause1"><span class="citesec">1.2</span></xref>)
+           (<xref target="clause1"><span class="citesec"><semx element="autonum" source="clause1">1.2</semx></span></xref>)
          </li>
                    <li>term</li>
                  </ul>
@@ -1105,38 +1256,94 @@ RSpec.describe IsoDoc do
           </clause>
         </preface>
         <sections>
-        <clause id="clause1" displayorder="2"><title depth="1">1<tab/>Clause 1</title></clause>
-        <terms id="A" displayorder="3"><title>2</title>
+        <clause id="clause1" displayorder="2">
+                 <title id="_">Clause 1</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="clause1">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Clause 1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="clause1">1</semx>
+         </fmt-xref-label>
+        </clause>
+        <terms id="A" displayorder="3">
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="A">2</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="A">2</semx>
+         </fmt-xref-label>
         <term id='B'>
-        <name>2.1</name>
+                    <fmt-name>
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="B">2.1</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="B">2.1</semx>
+            </fmt-xref-label>
       <preferred><strong>B</strong></preferred>
         <p>
         <ul>
         <li>
             <em>term</em>
-            (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)
+            (<xref target="clause1"><span class="citesec">
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="clause1">1</semx>
+                        </span>
+                        </xref>)
           </li>
           <li>
             term
-            (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)
+            (<xref target="clause1"><span class="citesec">
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="clause1">1</semx>
+                        </span></xref>)
           </li>
         <li>
             <em>term</em>
-            (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)
+            (<xref target="clause1"><span class="citesec">
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="clause1">1</semx>
+                        </span></xref>)
           </li>
-         <li>
-            term
-          </li>
-          <li>
-            term
-          </li>
-        <li>
-            term
-          </li>
-        <li><xref target="clause1"><em>term</em></xref> (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)</li>
-        <li><xref target="clause1"><em>term</em></xref> (<span class='citesec'>Clause 1</span>)</li>
-        <li><em>term</em> (<xref target="clause1"><span class='citesec'>Clause 1</span></xref>)</li>
-        <li><em>term</em> (<span class='citesec'>Clause 1</span>)</li>
+                                   <li>
+             term
+
+           </li>
+                          <li>
+             term
+
+           </li>
+                          <li>
+             term
+        </li>
+        <li><xref target="clause1"><em>term</em></xref> (<xref target="clause1"><span class="citesec">
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="clause1">1</semx>
+                        </span></xref>)</li>
+        <li><xref target="clause1"><em>term</em></xref> (<span class="citesec">
+                        <span class="fmt-element-name">Clause</span>
+                        <semx element="autonum" source="clause1">1</semx>
+                     </span>
+        )</li>
+        <li><em>term</em> (<xref target="clause1"><span class='citesec'>
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="clause1">1</semx>
+                        </span></xref>)</li>
+        <li><em>term</em> (<span class="citesec">
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="clause1">1</semx>
+                        </span>)</li>
          </ul></p>
          </term>
         </terms>
@@ -1193,8 +1400,8 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(output)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "combines locality stacks with connectives, omitting subclauses" do

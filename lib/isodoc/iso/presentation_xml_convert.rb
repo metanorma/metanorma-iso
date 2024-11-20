@@ -23,6 +23,39 @@ module IsoDoc
         super
       end
 
+      def section(docxml)
+        super
+        warning_for_missing_metadata(docxml)
+      end
+
+      def warning_for_missing_metadata(docxml)
+        @meta.get[:unpublished] or return
+        ret = warning_for_missing_metadata_create(docxml)
+        ret.empty? and return
+        warning_for_missing_metadata_post(docxml, ret)
+      end
+
+      def warning_for_missing_metadata_create(docxml)
+        ret = ""
+        docxml.at(ns("//bibdata/ext//secretariat")) or
+          ret += "<p>Secretariat is missing.</p>"
+        docxml.at(ns("//bibdata/ext//editorialgroup")) or
+          ret += "<p>Editorial groups are missing.</p>"
+        docxml.at(ns("//bibdata/date[@type = 'published' or @type = 'issued' " \
+                     "or @type = 'created']")) ||
+          docxml.at(ns("//bibdata/version/revision-date")) or
+          ret += "<p>Document date is missing.</p>"
+        ret
+      end
+
+      def warning_for_missing_metadata_post(docxml, ret)
+        id = UUIDTools::UUID.random_create
+        ret = "<review date='#{Date.today}' reviewer='Metanorma' id='_#{id}'>" \
+              "<p><strong>Metadata warnings:<strong></p> #{ret}</review>"
+        ins = docxml.at(ns("//sections//fmt-title")) or return
+        ins.add_first_child ret
+      end
+
       def block(docxml)
         amend docxml
         figure docxml

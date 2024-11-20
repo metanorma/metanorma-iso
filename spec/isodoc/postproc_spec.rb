@@ -345,7 +345,7 @@ RSpec.describe IsoDoc do
                       </clause>
                     </clause>
                   </sections>
-                  <annex id="AA" displayorder="2"><title>Annex A<tab/>Annex First</title></annex>
+                  <annex id="AA" displayorder="2"><fmt-title>Annex A<tab/>Annex First</fmt-title></annex>
                 </iso-standard>
       INPUT
 
@@ -730,7 +730,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+    output = <<~OUTPUT
       <div class='WordSection3'>
          <p class='MsoNormal'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
@@ -738,16 +738,17 @@ RSpec.describe IsoDoc do
          <div class='Section3'>
            <a name='P' id='P'/>
            <div class='zzHelp'>
-             <a name='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a'/>
+             <a name='_' id='_'/>
              <p class='zzHelp'> Only use paddy or parboiled rice for the determination of husked rice yield. </p>
              <p class='zzHelp'>
-               <a name='_e94663cc-2473-4ccc-9a72-983a74d989f3' id='_e94663cc-2473-4ccc-9a72-983a74d989f3'/>
+               <a name='_' id='_'/>
                Para 2.
              </p>
            </div>
          </div>
        </div>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(word))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes boilerplate" do
@@ -830,7 +831,12 @@ RSpec.describe IsoDoc do
           </copyright-statement>
           <license-statement>
             <clause>
-              <title depth="1">Warning for Stuff</title>
+              <title id="_">Warning for Stuff</title>
+           <fmt-title depth="1">
+              <span class="fmt-caption-label">
+                 <semx element="title" source="_">Warning for Stuff</semx>
+              </span>
+           </fmt-title>
               <p>This document is not an ISO International Standard. It is distributed for review and
              comment. It is subject to change without notice and may not be referred to as
              an International Standard.</p>
@@ -849,7 +855,7 @@ RSpec.describe IsoDoc do
       .merge(presxml_options))
       .convert("test", input, true)
 
-    expect(Xml::C14n.format(pres_output
+    expect(Xml::C14n.format(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Xml::C14n.format(presxml)
 
