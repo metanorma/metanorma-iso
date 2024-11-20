@@ -117,7 +117,7 @@ module IsoDoc
         super
       end
 
-      def figure_label?(elem)
+      def figure_label?(_elem)
         true
       end
 
@@ -137,14 +137,21 @@ module IsoDoc
       end
 
       def clause1(node)
-        if !node.at(ns("./title")) &&
-            !%w(sections preface bibliography).include?(node.parent.name)
+        !node.at(ns("./title")) &&
+          !%w(sections preface bibliography).include?(node.parent.name) and
           node["inline-header"] = "true"
-        end
         super
-        if node["type"] == "section"
-          t = node.at(ns("./fmt-title//span[@class = 'fmt-caption-delim']")) and
-            t.add_first_child(@i18n.l10n(": ").sub(/\p{Zs}$/, ""))
+        clause1_section_prefix(node)
+      end
+
+      def clause1_section_prefix(node)
+        if node["type"] == "section" &&
+            c = node.at(ns("./fmt-title//span[@class = 'fmt-caption-delim']"))
+          c.add_first_child(":")
+          t = node.at(ns("./fmt-title"))
+          # French l10n needs tab to be treated as space
+          t.replace @i18n.l10n(to_xml(t).gsub("<tab/>", "<tab> </tab>"))
+            .gsub(%r{<tab>[^<]+</tab>}, "<tab/>")
         end
       end
 

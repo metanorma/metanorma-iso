@@ -535,7 +535,7 @@ RSpec.describe IsoDoc do
         <div class="WordSection3">
           <div>
             <a name="A" id="A"/>
-            <h1><span class="fmt-caption-label">1</span></h1>
+            <h1>1</h1>
             <p class="MsoBodyText">
               <div class="ol_wrap">
                 <p class="ListNumber1">a)<span style="mso-tab-count:1"> </span>A</p>
@@ -677,7 +677,7 @@ RSpec.describe IsoDoc do
       <div class="WordSection3">
           <div>
             <a name="A" id="A"/>
-            <h1><span class="fmt-caption-label">1</span></h1>
+            <h1>1</h1>
             <p class="MsoBodyText">
               <div class="ol_wrap">
                 <p class="ListNumber1">1)<span style="mso-tab-count:1"> </span>A</p>
@@ -755,7 +755,7 @@ RSpec.describe IsoDoc do
       <div class='WordSection3'>
          <div>
            <a name='A' id='A'/>
-           <h1><span class="fmt-caption-label">1</span></h1>
+           <h1>1</h1>
            <p class='MsoBodyText'>
              <a name='_eb2fd8cd-5cbe-1f1f-7bdb-282868a25828' id='_eb2fd8cd-5cbe-1f1f-7bdb-282868a25828'/>
              ISO and IEC maintain terminological databases for use in standardization
@@ -838,7 +838,7 @@ RSpec.describe IsoDoc do
       <div class="WordSection3">
         <div>
           <a name="A" id="A"/>
-          <h1><span class="fmt-caption-label">1</span></h1>
+          <h1>1</h1>
           <p class="MsoBodyText">
             <div class="ol_wrap">
               <p class="ListNumber1">c)<span style="mso-tab-count:1"> </span>A</p>
@@ -1278,12 +1278,10 @@ RSpec.describe IsoDoc do
       <div class="WordSection3">
           <div>
             <a name="A" id="A"/>
-            <h1><span class="fmt-caption-label">1</span></h1>
+            <h1>1</h1>
             <div>
               <a name="B" id="B"/>
-              <p class="Note"><span class="fmt-caption-label">
-               <span class="fmt-element-name">NOTE</span>
-            </span>
+              <p class="Note">NOTE
             <span style="mso-tab-count:1">  </span></p>
               <div class="ul_wrap">
                 <p class="ListContinue2-">—<span style="mso-tab-count:1"> </span>A</p>
@@ -1391,12 +1389,10 @@ RSpec.describe IsoDoc do
       <div class="WordSection3">
           <div>
             <a name="A" id="A"/>
-            <h1><span class="fmt-caption-label">1</span></h1>
+            <h1>1</h1>
             <div>
               <a name="B" id="B"/>
-              <p class="Example"> <span class="fmt-caption-label">
-                  <span class="fmt-element-name">EXAMPLE</span>
-              </span>
+              <p class="Example">EXAMPLE
               <span style="mso-tab-count:1">  </span></p>
               <div class="ol_wrap">
                 <p class="ListNumber2-">a)<span style="mso-tab-count:1"> </span>A</p>
@@ -1489,7 +1485,7 @@ RSpec.describe IsoDoc do
       <div class="WordSection3">
           <div>
             <a name="A" id="A"/>
-            <h1><span class="fmt-caption-label">1</span></h1>
+            <h1>1</h1>
             <div class="ul_wrap">
               <p class="ListContinue1">—<span style="mso-tab-count:1"> </span>A</p>
               <p class="MsoNormal">
@@ -1712,14 +1708,9 @@ RSpec.describe IsoDoc do
         </p>
         <div>
           <a name='A' id='A'/>
-             <h1>
-                <span class="fmt-caption-label">
-                   1
-                   <span class="fmt-caption-delim">
+             <h1>1
                       <span style="mso-tab-count:1">  </span>
-                   </span>
                    First clause
-                </span>
              </h1>
         </div>
       </div>

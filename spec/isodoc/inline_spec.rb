@@ -959,7 +959,7 @@ RSpec.describe IsoDoc do
                (<a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span>, <span class="citefig">Figure a</span></a>)
              </li>
                    <li><i>word</i>
-               (<a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> <span class="fmt-conn">and</span> <span class="citefig">Figure b</span></a>)
+               (<a href="#ISO712"><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, <span class="citesec">3.1</span> and <span class="citefig">Figure b</span></a>)
              </li>
                    <li><i>word</i>
                (<a href="#ISO712">
