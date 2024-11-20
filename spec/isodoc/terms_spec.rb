@@ -65,80 +65,206 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <?xml version='1.0'?>
-      <iso-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
-        <preface> <clause type="toc" id="_" displayorder="1"> 
-        <fmt-title depth="1">Contents</fmt-title>
-          </clause> </preface>
-        <sections>
-          <terms id='_' obligation='normative' displayorder='2'>
-          <title depth='1'>1<tab/>Terms and Definitions</title>
-
-            <term id='paddy1'><name>1.1</name>
-              <preferred><strong>paddy</strong></preferred>
-              <domain hidden="true">rice</domain>
-              <definition>
-                <p id='_'>&#x3c;<domain>rice</domain>&#x3e; rice retaining its husk after threshing</p>
-              </definition>
-              <termexample id='_'>
-                <name>EXAMPLE 1</name>
-                <p id='_'>Foreign seeds, husks, bran, sand, dust.</p>
-                <ul>
-                  <li>A</li>
-                </ul>
-              </termexample>
-              <termexample id='_'>
-                <name>EXAMPLE 2</name>
-                <ul>
-                  <li>A</li>
-                </ul>
-              </termexample>
-              <termsource status="modified">[SOURCE: <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality><span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>, <span class="citesec">3.1</span></origin>, modified
-                    &#x2014;
-                   The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</termsource>
-            </term>
-            <term id='paddy'><name>1.2</name>
-              <preferred><strong>paddy</strong></preferred>
-              <admitted>paddy rice</admitted>
-              <admitted>rough rice</admitted>
-              <deprecates>DEPRECATED: cargo rice</deprecates>
-              <definition>
-                <p id='_'>rice retaining its husk after threshing</p>
-              </definition>
-              <termnote id='_'>
-                <name>Note 1 to entry:</name>
-                <p id='_'>The starch of waxy rice consists almost entirely of amylopectin. The
-                  kernels have a tendency to stick together after cooking.</p>
-              </termnote>
-              <termnote id='_'>
-                <name>Note 2 to entry:</name>
-                <ul>
-                  <li>A</li>
-                </ul>
-                <p id='_'>The starch of waxy rice consists almost entirely of amylopectin. The
-                  kernels have a tendency to stick together after cooking.</p>
-              </termnote>
-              <termexample id='_'>
-                <name>EXAMPLE</name>
-                <ul>
-                  <li>A</li>
-                </ul>
-              </termexample>
-              <termsource status="identical">[SOURCE: <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality><span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>, <span class="citesec">3.1</span></origin>]</termsource>
-            </term>
-            <term id='A'>
-              <name>1.3</name>
-              <preferred><strong>term1</strong></preferred>
-              <definition>term1 definition</definition>
-              <term id='B'>
-                <name>1.3.1</name>
-                <preferred><strong>term2</strong></preferred>
-                <definition>term2 definition</definition>
-              </term>
-            </term>
-          </terms>
-        </sections>
-      </iso-standard>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <terms id="_" obligation="normative" displayorder="2">
+                <title id="_">Terms and Definitions</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="_">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Terms and Definitions</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="_">1</semx>
+                </fmt-xref-label>
+                <term id="paddy1">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="paddy1">1.1</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="paddy1">1.1</semx>
+                   </fmt-xref-label>
+                   <preferred>
+                      <strong>paddy</strong>
+                   </preferred>
+                   <domain hidden="true">rice</domain>
+                   <definition>
+                      <p id="_">
+                         &lt;
+                         <domain>rice</domain>
+                         &gt; rice retaining its husk after threshing
+                      </p>
+                   </definition>
+                   <termexample id="_" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">EXAMPLE</span>
+                            <semx element="autonum" source="_">1</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Example</span>
+                         <semx element="autonum" source="_">1</semx>
+                      </fmt-xref-label>
+                      <p id="_">Foreign seeds, husks, bran, sand, dust.</p>
+                      <ul>
+                         <li>A</li>
+                      </ul>
+                   </termexample>
+                   <termexample id="_" autonum="2">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">EXAMPLE</span>
+                            <semx element="autonum" source="_">2</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Example</span>
+                         <semx element="autonum" source="_">2</semx>
+                      </fmt-xref-label>
+                      <ul>
+                         <li>A</li>
+                      </ul>
+                   </termexample>
+                   <termsource status="modified">
+                      [SOURCE:
+                      <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
+                         <locality type="clause">
+                            <referenceFrom>3.1</referenceFrom>
+                         </locality>
+                         <span class="stdpublisher">ISO </span>
+                         <span class="stddocNumber">7301</span>
+                         :
+                         <span class="stdyear">2011</span>
+                         ,
+                         <span class="citesec">3.1</span>
+                      </origin>
+                      , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
+                   </termsource>
+                </term>
+                <term id="paddy">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="paddy">1.2</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="paddy">1.2</semx>
+                   </fmt-xref-label>
+                   <preferred>
+                      <strong>paddy</strong>
+                   </preferred>
+                   <admitted>paddy rice</admitted>
+                   <admitted>rough rice</admitted>
+                   <deprecates>DEPRECATED: cargo rice</deprecates>
+                   <definition>
+                      <p id="_">rice retaining its husk after threshing</p>
+                   </definition>
+                   <termexample id="_" autonum="">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">EXAMPLE</span>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Example</span>
+                      </fmt-xref-label>
+                      <ul>
+                         <li>A</li>
+                      </ul>
+                   </termexample>
+                   <termnote id="_" autonum="1">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            Note
+                            <semx element="autonum" source="_">1</semx>
+                            to entry
+                         </span>
+                         <span class="fmt-label-delim">: </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="_">1</semx>
+                      </fmt-xref-label>
+                      <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+                   </termnote>
+                   <termnote id="_" autonum="2">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            Note
+                            <semx element="autonum" source="_">2</semx>
+                            to entry
+                         </span>
+                         <span class="fmt-label-delim">: </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="_">2</semx>
+                      </fmt-xref-label>
+                      <ul>
+                         <li>A</li>
+                      </ul>
+                      <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
+                   </termnote>
+                   <termsource status="identical">
+                      [SOURCE:
+                      <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
+                         <locality type="clause">
+                            <referenceFrom>3.1</referenceFrom>
+                         </locality>
+                         <span class="stdpublisher">ISO </span>
+                         <span class="stddocNumber">7301</span>
+                         :
+                         <span class="stdyear">2011</span>
+                         ,
+                         <span class="citesec">3.1</span>
+                      </origin>
+                      ]
+                   </termsource>
+                </term>
+                <term id="A">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="A">1.3</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="A">1.3</semx>
+                   </fmt-xref-label>
+                   <preferred>
+                      <strong>term1</strong>
+                   </preferred>
+                   <definition>term1 definition</definition>
+                   <term id="B">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <semx element="autonum" source="B">1.3.1</semx>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <semx element="autonum" source="B">1.3.1</semx>
+                      </fmt-xref-label>
+                      <preferred>
+                         <strong>term2</strong>
+                      </preferred>
+                      <definition>term2 definition</definition>
+                   </term>
+                </term>
+             </terms>
+          </sections>
+       </iso-standard>
     OUTPUT
 
     html = <<~OUTPUT
@@ -191,12 +317,13 @@ RSpec.describe IsoDoc do
                    <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
                    <p id="_">rice retaining its husk after threshing</p>
                    <div id="_" class="Note">
-                      <p>Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The
+                      <p><span class="termnote_label">Note 1 to entry: </span>The starch of waxy rice consists almost entirely of amylopectin. The
                    kernels have a tendency to stick together after cooking.</p>
                    </div>
                    <div id="_" class="Note">
                       <p>
-                         Note 2 to entry:
+                         <span class="termnote_label">Note 2 to entry: </span>
+                         </p>
                          <div class="ul_wrap">
                             <ul>
                                <li>A</li>
@@ -204,7 +331,6 @@ RSpec.describe IsoDoc do
                          </div>
                          <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                    kernels have a tendency to stick together after cooking.</p>
-                      </p>
                    </div>
                    <div id="_" class="example">
                       <p>
@@ -297,12 +423,13 @@ RSpec.describe IsoDoc do
           <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
           <p class="Definition" id="_">rice retaining its husk after threshing</p>
           <div id="_" class="Note">
-             <p class="Note">Note 1 to entry: The starch of waxy rice consists almost entirely of amylopectin. The
+             <p class="Note"><span class="termnote_label">Note 1 to entry: </span>The starch of waxy rice consists almost entirely of amylopectin. The
                    kernels have a tendency to stick together after cooking.</p>
           </div>
           <div id="_" class="Note">
              <p class="Note">
-                Note 2 to entry:
+                <span class="termnote_label">Note 2 to entry: </span>
+                </p>
                 <div class="ul_wrap">
                    <ul>
                       <li>A</li>
@@ -310,7 +437,6 @@ RSpec.describe IsoDoc do
                 </div>
                 <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The
                    kernels have a tendency to stick together after cooking.</p>
-             </p>
           </div>
           <div id="_" class="example">
              <p>
@@ -345,18 +471,18 @@ RSpec.describe IsoDoc do
           term2 definition
        </div>
     OUTPUT
-     pres_output = IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
       .to be_equivalent_to Xml::C14n.format(html)
-    expect(Xml::C14n.format(IsoDoc::Iso::WordConvert.new({})
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true)
       .sub(%r{^.*<div class="WordSection3">}m, "")
-      .sub(%r{</div>\s*<br.*$}m, "")))
+      .sub(%r{</div>\s*<br.*$}m, ""))))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -399,27 +525,60 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-       <?xml version='1.0'?>
-          <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-            <preface> <clause type="toc" id="_" displayorder="1">
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause> </preface>
-        <sections>
-          <terms id='A' obligation='normative' displayorder='2'>
-            <title depth='1'>1<tab/>Terms and definitions</title>
-            <term id='second'>
-              <name>1.1</name>
-              <preferred><strong>Second Term</strong>, &#x3c;Field, Usage Info 1&#x3e;</preferred>
-              <definition>Definition 1</definition>
-            </term>
-            <term id='C'>
-              <name>1.2</name>
-              <preferred language='fr' script='Latn' type='prefix'><strong>First Designation</strong></preferred>
-              <definition>Definition 2</definition>
-            </term>
-          </terms>
-        </sections>
-      </iso-standard>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <terms id="A" obligation="normative" displayorder="2">
+                <title id="_">Terms and definitions</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="A">1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Terms and definitions</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="A">1</semx>
+                </fmt-xref-label>
+                <term id="second">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="second">1.1</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="second">1.1</semx>
+                   </fmt-xref-label>
+                   <preferred>
+                      <strong>Second Term</strong>
+                      , &lt;Field, Usage Info 1&gt;
+                   </preferred>
+                   <definition>Definition 1</definition>
+                </term>
+                <term id="C">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="C">1.2</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="C">1.2</semx>
+                   </fmt-xref-label>
+                   <preferred language="fr" script="Latn" type="prefix">
+                      <strong>First Designation</strong>
+                   </preferred>
+                   <definition>Definition 2</definition>
+                </term>
+             </terms>
+          </sections>
+       </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))))
@@ -477,44 +636,71 @@ RSpec.describe IsoDoc do
       </term>
     INPUT
     output = <<~OUTPUT
-      <terms id="_terms_and_definitions" obligation="normative" displayorder="2">
-        <title depth="1">1<tab/>Terms and Definitions</title>
-        <p>For the purposes of this document, the following terms and definitions apply.</p>
-        <term id="paddy1">
-          <name>1.1</name>
-          <preferred>
-            <strong>paddy</strong>
-          </preferred>
-          <definition>
-            <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-          </definition>
-          <termsource status="identical">[SOURCE: <origin citeas=""><termref base="IEV" target="xyz">t1</termref></origin>
-           &#x2014;
-            with adjustments
-
-        ;
-          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified
-           &#x2014;
-            with adjustments
-
-        ;
-          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified
-           &#x2014;
-            with adjustments
-
-        ;
-          <origin citeas=""><termref base="IEV" target="xyz">t1</termref></origin>
-        ;
-          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified
-        ;
-          <origin citeas=""><termref base="IEV" target="xyz"/></origin>, modified]</termsource>
-        </term>
-      </terms>
+       <terms id="_" obligation="normative" displayorder="2">
+          <title id="_">Terms and Definitions</title>
+          <fmt-title depth="1">
+             <span class="fmt-caption-label">
+                <semx element="autonum" source="_">1</semx>
+                <span class="fmt-caption-delim">
+                   <tab/>
+                </span>
+                <semx element="title" source="_">Terms and Definitions</semx>
+             </span>
+          </fmt-title>
+          <fmt-xref-label>
+             <span class="fmt-element-name">Clause</span>
+             <semx element="autonum" source="_">1</semx>
+          </fmt-xref-label>
+          <p>For the purposes of this document, the following terms and definitions apply.</p>
+          <term id="paddy1">
+             <fmt-name>
+                <span class="fmt-caption-label">
+                   <semx element="autonum" source="paddy1">1.1</semx>
+                </span>
+             </fmt-name>
+             <fmt-xref-label>
+                <semx element="autonum" source="paddy1">1.1</semx>
+             </fmt-xref-label>
+             <preferred>
+                <strong>paddy</strong>
+             </preferred>
+             <definition>
+                <p id="_">rice retaining its husk after threshing</p>
+             </definition>
+             <termsource status="identical">
+                [SOURCE:
+                <origin citeas="">
+                   <termref base="IEV" target="xyz">t1</termref>
+                </origin>
+                — with adjustments ;
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+                , modified — with adjustments ;
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+                , modified — with adjustments ;
+                <origin citeas="">
+                   <termref base="IEV" target="xyz">t1</termref>
+                </origin>
+                ;
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+                , modified ;
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+                , modified]
+             </termsource>
+          </term>
+       </terms>
     OUTPUT
-    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
           .new(presxml_options)
            .convert("test", input, true))
-          .at("//xmlns:terms").to_xml))
+          .at("//xmlns:terms").to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 end

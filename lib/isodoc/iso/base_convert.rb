@@ -29,13 +29,21 @@ module IsoDoc
         end
       end
 
+      def example_p_class
+        nil
+      end
+
       def example_p_parse(node, div)
-        div.p do |p|
-          example_span_label(node, p, node&.at(ns("./fmt-name"))&.remove)
-          insert_tab(p, 1)
-          node.first_element_child.children.each { |n| parse(n, p) }
+        name = node.at(ns("./fmt-name"))
+        para = node.at(ns("./p"))
+        div.p **attr_code(class: example_p_class) do |p|
+          name and p.span class: "example_label" do |s|
+            name.children.each { |n| parse(n, s) }
+          end
+          insert_tab(p, 1) # TODO to Presentation XML
+          children_parse(para, p)
         end
-        node.element_children[1..].each { |n| parse(n, div) }
+        para.xpath("./following-sibling::*").each { |n| parse(n, div) }
       end
 
       def example_parse1(node, div)

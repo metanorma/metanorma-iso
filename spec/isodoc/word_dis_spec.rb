@@ -1691,7 +1691,7 @@ RSpec.describe IsoDoc do
           </ext>
         </bibdata>
         <sections>
-        <clause id="A" displayorder="1"><fmt-title>First clause</fmt-title>
+        <clause id="A" displayorder="1"><title>First clause</title>
         </clause>
         </sections>
       </iso-standard>
@@ -1705,7 +1705,15 @@ RSpec.describe IsoDoc do
         </p>
         <div>
           <a name='A' id='A'/>
-          <h1>1<span style="mso-tab-count:1">  </span>First clause</h1>
+             <h1>
+                <span class="fmt-caption-label">
+                   1
+                   <span class="fmt-caption-delim">
+                      <span style="mso-tab-count:1">  </span>
+                   </span>
+                   First clause
+                </span>
+             </h1>
         </div>
       </div>
     WORD
