@@ -72,6 +72,7 @@ module IsoDoc
         requirement_render docxml
         @xrefs.anchors_previous = @xrefs.anchors.dup # store old xrefs of reqts
         @xrefs.parse docxml
+        # TODO move this dependency around: requirements at root should be processed before everything else
         table docxml # have table include requirements newly converted to tables
         # table feeds dl
         dl docxml
@@ -89,6 +90,7 @@ module IsoDoc
       # Redo Amendment annex subclause titles as numbered
       def clause(docxml)
         super
+        docxml.xpath(ns("//annex//appendix")).each { |f| clause1(f) }
         amd?(docxml) or return
         @suppressheadingnumbers = @oldsuppressheadingnumbers
         docxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
