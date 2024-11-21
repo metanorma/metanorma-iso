@@ -79,29 +79,23 @@ module IsoDoc
         note docxml
       end
 
+      # Redo Amendment annex titles as numbered
       def annex(isoxml)
         amd?(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
         super
-        isoxml.xpath(ns("//annex//appendix")).each do |f|
-          clause1(f)
-        end
         amd?(isoxml) and @suppressheadingnumbers = true
       end
 
-      # TODO remove
-      def figure1x(node)
-        figure_fn(node)
-        figure_key(node.at(ns("./dl")))
-        lbl = @xrefs.anchor(node["id"], :label, false)
-        lbl and a = autonum(node["id"], lbl.strip)
-        if node.parent.name == "figure"
-          a += "<span class='fmt-label-delim'>)</span>"
-        else
-          figname = "<span class='fmt-element-name'>#{i18n.figure}</span> "
+      # Redo Amendment annex subclause titles as numbered
+      def clause(docxml)
+        super
+        amd?(docxml) or return
+        @suppressheadingnumbers = @oldsuppressheadingnumbers
+        docxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
+          f.xpath(ns("./fmt-title | ./fmt-xref-label")).each(&:remove)
+          clause1(f)
         end
-        conn = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
-        lbl and s = "#{figname}#{a}"
-        prefix_name(node, { caption: conn }, l10n(s&.strip), "name")
+        @suppressheadingnumbers = true
       end
 
       def subfigure_delim
@@ -120,14 +114,6 @@ module IsoDoc
       def figure_label?(_elem)
         true
       end
-
-      #       def example1(node)
-      #         n = @xrefs.get[node["id"]]
-      #         lbl = if n.nil? || blank?(n[:label]) then @i18n.example
-      #               else l10n("#{@i18n.example} #{n[:label]}")
-      #               end
-      #         prefix_name(node, block_delim, lbl, "name")
-      #       end
 
       def example_span_label(_node, div, name)
         name.nil? and return

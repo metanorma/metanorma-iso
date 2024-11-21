@@ -28,8 +28,18 @@ RSpec.describe IsoDoc do
                <semx element="title" source="_">Foreword</semx>
             </span>
          </fmt-title>
-            <example id="samplecode">
-              <name>EXAMPLE — Title</name>
+         <example id="samplecode" autonum="">
+           <name id="_">Title</name>
+           <fmt-name>
+              <span class="fmt-caption-label">
+                 <span class="fmt-element-name">EXAMPLE</span>
+                 <span class="fmt-caption-delim"> — </span>
+                 <semx element="name" source="_">Title</semx>
+              </span>
+           </fmt-name>
+           <fmt-xref-label>
+              <span class="fmt-element-name">Example</span>
+           </fmt-xref-label>
               <p>Hello</p>
             </example>
           </foreword>
@@ -91,11 +101,11 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))).to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(Xml::C14n.format(output
-      .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
+    expect(Xml::C14n.format(strip_guid(output
+      .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>"))))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -129,12 +139,33 @@ RSpec.describe IsoDoc do
                <semx element="title" source="_">Foreword</semx>
             </span>
          </fmt-title>
-            <example id="samplecode">
-              <name>EXAMPLE 1</name>
+                    <example id="samplecode" autonum="1">
+           <fmt-name>
+              <span class="fmt-caption-label">
+                 <span class="fmt-element-name">EXAMPLE</span>
+                 <semx element="autonum" source="samplecode">1</semx>
+              </span>
+           </fmt-name>
+           <fmt-xref-label>
+              <span class="fmt-element-name">Example</span>
+              <semx element="autonum" source="samplecode">1</semx>
+           </fmt-xref-label>
               <quote>Hello</quote>
             </example>
-            <example id="samplecode2">
-              <name>EXAMPLE 2 — Title</name>
+                     <example id="samplecode2" autonum="2">
+            <name id="_">Title</name>
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">EXAMPLE</span>
+                  <semx element="autonum" source="samplecode2">2</semx>
+                  <span class="fmt-caption-delim"> — </span>
+                  <semx element="name" source="_">Title</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Example</span>
+               <semx element="autonum" source="samplecode2">2</semx>
+            </fmt-xref-label>
               <p>Hello</p>
             </example>
           </foreword>
@@ -202,11 +233,12 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
+      .to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(Xml::C14n.format(output
-      .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>")))
+    expect(Xml::C14n.format(strip_guid(output
+      .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>"))))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -236,7 +268,13 @@ RSpec.describe IsoDoc do
             </span>
          </fmt-title>
           <admonition id="_" type="caution">
-                 <name>CAUTION — </name>
+          <name id="_">CAUTION</name>
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <semx element="name" source="_">CAUTION</semx>
+               </span>
+               <span class="fmt-label-delim"> — </span>
+            </fmt-name>
                   <p id='_'>Only use paddy or parboiled rice for the
                  determination of husked rice yield.
                </p>
@@ -262,11 +300,11 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(Nokogiri::XML(
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )
-      .at("//div[h1/@class = 'ForewordTitle']").to_xml))
+      .at("//div[h1/@class = 'ForewordTitle']").to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
@@ -293,7 +331,11 @@ RSpec.describe IsoDoc do
             </span>
          </fmt-title>
             <admonition id="_" type="caution">
-              <name>CAUTION<</name>
+              <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">CAUTION</span>
+               </span>
+            </fmt-name>
             </admonition>
           </foreword>
         </preface>
@@ -333,7 +375,12 @@ RSpec.describe IsoDoc do
             </span>
          </fmt-title>
           <admonition id="_" type="caution">
-          <name>Title</name>
+          <name id="_">Title</name>
+            <fmt-name>
+               <span class="fmt-caption-label">
+                  <semx element="name" source="_">Title</semx>
+               </span>
+            </fmt-name>
           <ul>
           <li>List</li>
           </ul>
@@ -361,11 +408,11 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(Nokogiri::XML(
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )
-      .at("//div[h1/@class = 'ForewordTitle']").to_xml))
+      .at("//div[h1/@class = 'ForewordTitle']").to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
@@ -388,13 +435,35 @@ RSpec.describe IsoDoc do
          <sections>
            <title>A</title>
            <admonition id="_" type="important" displayorder="2">
-               <name><strong>IMPORTANT —</strong></name>
+             <fmt-name>
+            <span class="fmt-caption-label">
+               <span class="fmt-element-name">
+                  <strong>IMPORTANT</strong>
+               </span>
+            </span>
+            <span class="fmt-label-delim">
+               <strong> — </strong>
+            </span>
+         </fmt-name>
              <p id="_">
                <strong>The electronic file of this document contains colours which are considered to be useful for the correct understanding of the &lt;document&gt;.</strong>
              </p>
            </admonition>
            <clause id="A" displayorder="3">
-             <title depth="1">1<tab/>Scope</title>
+           <title id="_">Scope</title>
+         <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="A">1</semx>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Scope</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="A">1</semx>
+         </fmt-xref-label>
            </clause>
          </sections>
        </iso-standard>
@@ -430,7 +499,12 @@ RSpec.describe IsoDoc do
             </span>
          </fmt-title>
           <admonition id="_" type="editorial">
-                         <name>EDITORIAL NOTE —</name>
+                      <fmt-name>
+               <span class="fmt-caption-label">
+                  <span class="fmt-element-name">EDITORIAL NOTE</span>
+               </span>
+               <span class="fmt-label-delim"> — </span>
+            </fmt-name>
                          <p id="_">Only use paddy or parboiled rice for the
                  determination of husked rice yield.
                </p>
@@ -481,12 +555,12 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
       .to be_equivalent_to Xml::C14n.format(html)
-    expect(Xml::C14n.format(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
-      .at("//div[@class = 'WordSection2']").to_xml))
+      .at("//div[@class = 'WordSection2']").to_xml)))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -834,24 +908,75 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-           <preface><clause type="toc" id="_" displayorder="1"> 
-            <fmt-title depth="1">Contents</fmt-title>
-        </clause></preface>
-        <sections>
-          <clause id="widgets" displayorder="2">
-            <title depth="1">1<tab/>Widgets</title>
-            <figure id="N">
-              <name>Figure 1 — Figure 1</name>
-              <image src="rice_images/rice_image1.png" id="_" mimetype="image/png"/>
-              <note id="A"><name>NOTE  1</name>Note 1</note>
-              <note id="B" type="units">Units in mm</note>
-              <note id="C"><name>NOTE  2</name>Note 2</note>
-              <note id="D" type="units">Other units in sec</note>
-            </figure>
-          </clause>
-        </sections>
-      </iso-standard>
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+           </preface>
+           <sections>
+              <clause id="widgets" displayorder="2">
+                 <title id="_">Widgets</title>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="widgets">1</semx>
+                       <span class="fmt-caption-delim">
+                          <tab/>
+                       </span>
+                       <semx element="title" source="_">Widgets</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="widgets">1</semx>
+                 </fmt-xref-label>
+                 <figure id="N" autonum="1">
+                    <name id="_">Figure 1</name>
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="N">1</semx>
+                          <span class="fmt-caption-delim"> — </span>
+                          <semx element="name" source="_">Figure 1</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Figure</span>
+                       <semx element="autonum" source="N">1</semx>
+                    </fmt-xref-label>
+                    <image src="rice_images/rice_image1.png" id="_" mimetype="image/png"/>
+                    <note id="A" autonum="1">
+                       <fmt-name>
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">NOTE</span>
+                             <semx element="autonum" source="A">1</semx>
+                          </span>
+                       </fmt-name>
+                       <fmt-xref-label>
+                          <span class="fmt-element-name">Note</span>
+                          <semx element="autonum" source="A">1</semx>
+                       </fmt-xref-label>
+                       Note 1
+                    </note>
+                    <note id="B" type="units">Units in mm</note>
+                    <note id="C" autonum="2">
+                       <fmt-name>
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">NOTE</span>
+                             <semx element="autonum" source="C">2</semx>
+                          </span>
+                       </fmt-name>
+                       <fmt-xref-label>
+                          <span class="fmt-element-name">Note</span>
+                          <semx element="autonum" source="C">2</semx>
+                       </fmt-xref-label>
+                       Note 2
+                    </note>
+                    <note id="D" type="units">Other units in sec</note>
+                 </figure>
+              </clause>
+           </sections>
+        </iso-standard>
     OUTPUT
     html = <<~OUTPUT
           #{HTML_HDR}
@@ -920,11 +1045,11 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
       .to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(Xml::C14n.format(Nokogiri::XML(output).at("//body").to_xml))
+    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(output).at("//body").to_xml)))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -961,50 +1086,66 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard type="presentation" xmlns="http://riboseinc.com/isoxml">
-        <preface>
-           <clause type="toc" id="_" displayorder="1"> 
-            <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-          <foreword displayorder="2">
-                   <title id="_">Foreword</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Foreword</semx>
-            </span>
-         </fmt-title>
-            <formula id="_" unnumbered="true">
-              <stem type="AsciiMath">r = 1 %</stem>
-              <p keep-with-next="true">where</p>
-              <dl id="_" class="formula_dl">
-                <dt>
-                  <stem type="AsciiMath">r</stem>
-                </dt>
-                <dd>
-                  <p id="_">is the repeatability limit.</p>
-                </dd>
-                <dt>
-                  <stem type="AsciiMath">s_1</stem>
-                </dt>
-                <dd>
-                  <p id="_">is the other repeatability limit.</p>
-                </dd>
-              </dl>
-              <note id="_">
-                <name>NOTE</name>
-                <p id="_">[durationUnits] is essentially a duration statement without the "P"
-                  prefix. "P" is unnecessary because between "G" and "U" duration is
-                  always expressed.
-                </p>
-              </note>
-            </formula>
-            <formula id="_">
-              <name>(1)</name>
-              <stem type="AsciiMath">r = 1 %</stem>
-            </formula>
-          </foreword>
-        </preface>
-      </iso-standard>
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword displayorder="2">
+                 <title id="_">Foreword</title>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="title" source="_">Foreword</semx>
+                    </span>
+                 </fmt-title>
+                 <formula id="_" unnumbered="true">
+                    <stem type="AsciiMath">r = 1 %</stem>
+                    <p keep-with-next="true">where</p>
+                    <dl id="_" class="formula_dl">
+                       <dt>
+                          <stem type="AsciiMath">r</stem>
+                       </dt>
+                       <dd>
+                          <p id="_">is the repeatability limit.</p>
+                       </dd>
+                       <dt>
+                          <stem type="AsciiMath">s_1</stem>
+                       </dt>
+                       <dd>
+                          <p id="_">is the other repeatability limit.</p>
+                       </dd>
+                    </dl>
+                    <note id="_" autonum="">
+                       <fmt-name>
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">NOTE</span>
+                          </span>
+                       </fmt-name>
+                       <fmt-xref-label>
+                          <span class="fmt-element-name">Note</span>
+                       </fmt-xref-label>
+                       <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+                    </note>
+                 </formula>
+                 <formula id="_" autonum="1">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-autonum-delim">(</span>
+                          1
+                          <span class="fmt-autonum-delim">)</span>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Formula</span>
+                       <span class="fmt-autonum-delim">(</span>
+                       <semx element="autonum" source="_">1</semx>
+                       <span class="fmt-autonum-delim">)</span>
+                    </fmt-xref-label>
+                    <stem type="AsciiMath">r = 1 %</stem>
+                 </formula>
+              </foreword>
+           </preface>
+        </iso-standard>
     OUTPUT
 
     html = <<~OUTPUT
@@ -1116,11 +1257,11 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(strip_guid(pres_output)))
       .to be_equivalent_to Xml::C14n.format(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", pres_output, true)
-    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(html)
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(Xml::C14n.format(output
+    expect(Xml::C14n.format(strip_guid(output
       .sub(%r{^.*<div>\s*<h1 class="ForewordTitle">}m, '<div><h1 class="ForewordTitle">')
-      .sub(%r{<p>&#160;</p>\s*</div>.*$}m, ""))).to be_equivalent_to Xml::C14n.format(word)
+      .sub(%r{<p>&#160;</p>\s*</div>.*$}m, "")))).to be_equivalent_to Xml::C14n.format(word)
   end
 
   it "processes formulae with single definition list entry" do
@@ -1151,34 +1292,55 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~OUTPUT
         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-        <preface>
-           <clause type="toc" id="_" displayorder="1"> 
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-          <foreword displayorder="2">
-                   <title id="_">Foreword</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Foreword</semx>
-            </span>
-         </fmt-title>
-            <formula id="_" unnumbered="true">
-              <stem type="AsciiMath">r = 1 %</stem>
-              <p>where
-                  <stem type="AsciiMath">r</stem>
-                 is the repeatability limit.</p>
-              <note id="_">
-                <name>NOTE</name>
-                <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
-              </note>
-            </formula>
-            <formula id="_">
-              <name>(1)</name>
-              <stem type="AsciiMath">r = 1 %</stem>
-            </formula>
-          </foreword>
-        </preface>
-      </iso-standard>
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword displayorder="2">
+                 <title id="_">Foreword</title>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="title" source="_">Foreword</semx>
+                    </span>
+                 </fmt-title>
+                 <formula id="_" unnumbered="true">
+                    <stem type="AsciiMath">r = 1 %</stem>
+                    <p>
+                       where
+                       <stem type="AsciiMath">r</stem>
+                       is the repeatability limit.
+                    </p>
+                    <note id="_" autonum="">
+                       <fmt-name>
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">NOTE</span>
+                          </span>
+                       </fmt-name>
+                       <fmt-xref-label>
+                          <span class="fmt-element-name">Note</span>
+                       </fmt-xref-label>
+                       <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+                    </note>
+                 </formula>
+                 <formula id="_" autonum="1">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-autonum-delim">(</span>
+                          1
+                          <span class="fmt-autonum-delim">)</span>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Formula</span>
+                       <span class="fmt-autonum-delim">(</span>
+                       <semx element="autonum" source="_">1</semx>
+                       <span class="fmt-autonum-delim">)</span>
+                    </fmt-xref-label>
+                    <stem type="AsciiMath">r = 1 %</stem>
+                 </formula>
+              </foreword>
+           </preface>
+        </iso-standard>
     OUTPUT
     html = <<~"OUTPUT"
       #{HTML_HDR}
@@ -1216,7 +1378,7 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(strip_guid(pres_output))).to be_equivalent_to Xml::C14n.format(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)
-    expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(html)
+    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(html)
   end
 
   it "processes figures" do
@@ -1284,102 +1446,141 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~OUTPUT
         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-            <preface>
-      <clause type="toc" id="_" displayorder="1">
-      <fmt-title depth="1">Contents</fmt-title>
-      </clause>
-       <foreword displayorder="2">
-                <title id="_">Foreword</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Foreword</semx>
-            </span>
-         </fmt-title>
-                <figure id="figureA-1" keep-with-next="true" keep-lines-together="true">
-                   <name>
-                      Figure 1 — Split-it-right
-                      <em>sample</em>
-                      divider
-                      <fn reference="1">
-                         <p>X</p>
-                      </fn>
-                   </name>
-                   <image src="rice_images/rice_image1.png" height="20" width="30" id="_" mimetype="image/png" alt="alttext" title="titletxt"/>
-                   <image src="rice_images/rice_image1.png" height="20" width="auto" id="_" mimetype="image/png"/>
-                   <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto" id="_" mimetype="image/png"/>
-                   <image src="data:application/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjw/eG1sLXN0eWxlc2hlZXQgdHlwZT0idGV4dC94c2wiIGhyZWY9Ii4uLy4uLy4uL3hzbC9yZXNfZG9jL2ltZ2ZpbGUueHNsIj8+CjwhRE9DVFlQRSBpbWdmaWxlLmNvbnRlbnQgU1lTVEVNICIuLi8uLi8uLi9kdGQvdGV4dC5lbnQiPgo8aW1nZmlsZS5jb250ZW50IG1vZHVsZT0iZnVuZGFtZW50YWxzX29mX3Byb2R1Y3RfZGVzY3JpcHRpb25fYW5kX3N1cHBvcnQiIGZpbGU9ImFjdGlvbl9zY2hlbWFleHBnMS54bWwiPgo8aW1nIHNyYz0iYWN0aW9uX3NjaGVtYWV4cGcxLmdpZiI+CjxpbWcuYXJlYSBzaGFwZT0icmVjdCIgY29vcmRzPSIyMTAsMTg2LDM0MywyMjciIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9iYXNpY19hdHRyaWJ1dGVfc2NoZW1hL2Jhc2ljX2F0dHJpYnV0ZV9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMTAsMTAsOTYsNTEiIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9hY3Rpb25fc2NoZW1hL2FjdGlvbl9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMjEwLDI2NCwzNTgsMzA1IiBocmVmPSIuLi8uLi9yZXNvdXJjZXMvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEueG1sIiAvPgo8L2ltZz4KPC9pbWdmaWxlLmNvbnRlbnQ+Cg==" height="20" width="auto" id="_" mimetype="application/xml"/>
-                   <p keep-with-next="true">
-                      <strong>
-                         Key
-                      </strong>
-                   </p>
-                   <dl class="formula_dl">
-                      <dt><p><sup>a</sup></p></dt>
-                      <dd>
-                         <p id="_">
-                            The time
-                            <stem type="AsciiMath">t_90</stem>
-                            was estimated to be 18,2 min for this example.
-                         </p>
-                      </dd>
-                      <dt>A</dt>
-                      <dd>
-                         <p>B</p>
-                      </dd>
-                   </dl>
-                   <source status="generalisation">
-                      [SOURCE:
-                      <xref type="inline" target="ISO712">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">712</span>
-                         , Section 1
-                      </xref>
-                      — with adjustments ;
-                      <xref type="inline" target="ISO712">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">712</span>
-                         , Section 2
-                      </xref>
-                      ]
-                   </source>
-                </figure>
-                <figure id="figure-B">
-                   <name>Figure 2</name>
-                   <pre alt="A B">A &lt;
-         B</pre>
-                </figure>
-                <figure id="figure-C" unnumbered="true">
-                   <pre>A &lt;
-         B</pre>
-                </figure>
-             </foreword>
-          </preface>
-          <sections>
-             <references id="_" obligation="informative" normative="true" displayorder="3">
-                <title depth="1">
-                   1
-                   <tab/>
-                   Normative References
-                </title>
-                <bibitem id="ISO712" type="standard">
-                   <formattedref>
-                      <em>
-                         <span class="stddocTitle">Cereals and cereal products</span>
-                      </em>
-                   </formattedref>
-                   <docidentifier type="ISO">ISO 712</docidentifier>
-                   <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-            <biblio-tag>
-               <span class="stdpublisher">ISO </span>
-               <span class="stddocNumber">712</span>
-               ,
-            </biblio-tag>
-                </bibitem>
-             </references>
-          </sections>
-          <bibliography>
-             </bibliography>
-       </iso-standard>
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword displayorder="2">
+                 <title id="_">Foreword</title>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="title" source="_">Foreword</semx>
+                    </span>
+                 </fmt-title>
+                 <figure id="figureA-1" keep-with-next="true" keep-lines-together="true" autonum="1">
+                    <name id="_">
+                       Split-it-right
+                       <em>sample</em>
+                       divider
+                       <fn reference="1">
+                          <p>X</p>
+                       </fn>
+                    </name>
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="figureA-1">1</semx>
+                          <span class="fmt-caption-delim"> — </span>
+                          <semx element="name" source="_">
+                             Split-it-right
+                             <em>sample</em>
+                             divider
+                             <fn reference="1">
+                                <p>X</p>
+                             </fn>
+                          </semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Figure</span>
+                       <semx element="autonum" source="figureA-1">1</semx>
+                    </fmt-xref-label>
+                    <image src="rice_images/rice_image1.png" height="20" width="30" id="_" mimetype="image/png" alt="alttext" title="titletxt"/>
+                    <image src="rice_images/rice_image1.png" height="20" width="auto" id="_" mimetype="image/png"/>
+                    <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto" id="_" mimetype="image/png"/>
+                    <image src="data:application/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjw/eG1sLXN0eWxlc2hlZXQgdHlwZT0idGV4dC94c2wiIGhyZWY9Ii4uLy4uLy4uL3hzbC9yZXNfZG9jL2ltZ2ZpbGUueHNsIj8+CjwhRE9DVFlQRSBpbWdmaWxlLmNvbnRlbnQgU1lTVEVNICIuLi8uLi8uLi9kdGQvdGV4dC5lbnQiPgo8aW1nZmlsZS5jb250ZW50IG1vZHVsZT0iZnVuZGFtZW50YWxzX29mX3Byb2R1Y3RfZGVzY3JpcHRpb25fYW5kX3N1cHBvcnQiIGZpbGU9ImFjdGlvbl9zY2hlbWFleHBnMS54bWwiPgo8aW1nIHNyYz0iYWN0aW9uX3NjaGVtYWV4cGcxLmdpZiI+CjxpbWcuYXJlYSBzaGFwZT0icmVjdCIgY29vcmRzPSIyMTAsMTg2LDM0MywyMjciIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9iYXNpY19hdHRyaWJ1dGVfc2NoZW1hL2Jhc2ljX2F0dHJpYnV0ZV9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMTAsMTAsOTYsNTEiIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9hY3Rpb25fc2NoZW1hL2FjdGlvbl9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMjEwLDI2NCwzNTgsMzA1IiBocmVmPSIuLi8uLi9yZXNvdXJjZXMvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEueG1sIiAvPgo8L2ltZz4KPC9pbWdmaWxlLmNvbnRlbnQ+Cg==" height="20" width="auto" id="_" mimetype="application/xml"/>
+                    <p keep-with-next="true">
+                       <strong>Key</strong>
+                    </p>
+                    <dl class="formula_dl">
+                       <dt>
+                          <p>
+                             <sup>a</sup>
+                          </p>
+                       </dt>
+                       <dd>
+                          <p id="_">
+                             The time
+                             <stem type="AsciiMath">t_90</stem>
+                             was estimated to be 18,2 min for this example.
+                          </p>
+                       </dd>
+                       <dt>A</dt>
+                       <dd>
+                          <p>B</p>
+                       </dd>
+                    </dl>
+                    <source status="generalisation">
+                       [SOURCE:
+                       <xref type="inline" target="ISO712">
+                          <span class="stdpublisher">ISO </span>
+                          <span class="stddocNumber">712</span>
+                          , Section 1
+                       </xref>
+                       — with adjustments ;
+                       <xref type="inline" target="ISO712">
+                          <span class="stdpublisher">ISO </span>
+                          <span class="stddocNumber">712</span>
+                          , Section 2
+                       </xref>
+                       ]
+                    </source>
+                 </figure>
+                 <figure id="figure-B" autonum="2">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Figure</span>
+                          <semx element="autonum" source="figure-B">2</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Figure</span>
+                       <semx element="autonum" source="figure-B">2</semx>
+                    </fmt-xref-label>
+                    <pre alt="A B">A &lt;
+          B</pre>
+                 </figure>
+                 <figure id="figure-C" unnumbered="true">
+                    <pre>A &lt;
+          B</pre>
+                 </figure>
+              </foreword>
+           </preface>
+           <sections>
+              <references id="_" obligation="informative" normative="true" displayorder="3">
+                 <title id="_">Normative References</title>
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="_">1</semx>
+                       <span class="fmt-caption-delim">
+                          <tab/>
+                       </span>
+                       <semx element="title" source="_">Normative References</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="_">1</semx>
+                 </fmt-xref-label>
+                 <bibitem id="ISO712" type="standard">
+                    <formattedref>
+                       <em>
+                          <span class="stddocTitle">Cereals and cereal products</span>
+                       </em>
+                    </formattedref>
+                    <docidentifier type="ISO">ISO 712</docidentifier>
+                    <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+                    <biblio-tag>
+                       <span class="stdpublisher">ISO </span>
+                       <span class="stddocNumber">712</span>
+                       ,
+                    </biblio-tag>
+                 </bibitem>
+              </references>
+           </sections>
+           <bibliography>
+              </bibliography>
+        </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
        .new(presxml_options)

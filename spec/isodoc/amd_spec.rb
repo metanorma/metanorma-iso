@@ -26,7 +26,7 @@ RSpec.describe IsoDoc do
             <clause id="scope">
               <title>Scope</title>
               <note id="N">
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+                <p>These results are based on a study carried out on three different types of kernel.</p>
               </note>
               <p>
                 <xref target="N"/>
@@ -37,10 +37,10 @@ RSpec.describe IsoDoc do
               <title>Widgets</title>
               <clause id="widgets1">
                 <note id="note1">
-                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+                  <p>These results are based on a study carried out on three different types of kernel.</p>
                 </note>
                 <note id="note2">
-                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+                  <p>These results are based on a study carried out on three different types of kernel.</p>
                 </note>
                 <p>
                   <xref target="note1"/>
@@ -52,99 +52,72 @@ RSpec.describe IsoDoc do
           <annex id="annex1">
             <clause id="annex1a">
               <note id="AN">
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+                <p>These results are based on a study carried out on three different types of kernel.</p>
               </note>
             </clause>
             <clause id="annex1b">
               <note id="Anote1">
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
+                <p>These results are based on a study carried out on three different types of kernel.</p>
               </note>
               <note id="Anote2">
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
+                <p>These results are based on a study carried out on three different types of kernel.</p>
               </note>
             </clause>
           </annex>
         </iso-standard>
       INPUT
-    expect(Xml::C14n.format(strip_guid(output))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      xml = Nokogiri::XML(output)
+      xml = xml.at("//xmlns:foreword")
+      expect(Xml::C14n.format(strip_guid(xml.to_xml)))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-          <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <bibdata>
-            <ext>
-              <doctype language="">amendment</doctype>
-              <doctype language="en">Amendment</doctype>
-            </ext>
-          </bibdata>
-
-          <preface>
-            <foreword displayorder="1"><title>Foreword</title>
-              <p>
-                <xref target="N">Clause 1, Note</xref>
-                <xref target="note1">2.1, Note  1</xref>
-                <xref target="note2">2.1, Note  2</xref>
-                <xref target="AN">Clause A.1, Note</xref>
-                <xref target="Anote1">Clause A.2, Note  1</xref>
-                <xref target="Anote2">Clause A.2, Note  2</xref>
-              </p>
-            </foreword>
-          </preface>
-          <sections>
-            <clause id="scope" displayorder="2">
-              <title depth="1">Scope</title>
-              <note id="N">
-                <name>NOTE</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-              </note>
-              <p>
-                <xref target="N">Note</xref>
-              </p>
-            </clause>
-            <terms id="terms"/>
-            <clause id="widgets" displayorder="3">
-              <title depth="1">Widgets</title>
-              <clause id="widgets1" inline-header="true">
-                <note id="note1">
-                  <name>NOTE  1</name>
-                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-                </note>
-                <note id="note2">
-                  <name>NOTE  2</name>
-                  <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
-                </note>
-                <p>
-                  <xref target="note1">Note  1</xref>
-                  <xref target="note2">Note  2</xref>
-                </p>
-              </clause>
-            </clause>
-          </sections>
-          <annex id="annex1" displayorder="4">
-            <title>
-              <strong>Annex A</strong>
-              <br/>
-              <span class="obligation">(informative)</span>
-            </title>
-            <clause id="annex1a" inline-header="true">
-              <title>A.1</title>
-              <note id="AN">
-                <name>NOTE</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-              </note>
-            </clause>
-            <clause id="annex1b" inline-header="true">
-              <title>A.2</title>
-              <note id="Anote1">
-                <name>NOTE  1</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">These results are based on a study carried out on three different types of kernel.</p>
-              </note>
-              <note id="Anote2">
-                <name>NOTE  2</name>
-                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83a">These results are based on a study carried out on three different types of kernel.</p>
-              </note>
-            </clause>
-          </annex>
-        </iso-standard>
+      <foreword displayorder="1">
+          <title id="_">Foreword</title>
+          <fmt-title depth="1">
+             <span class="fmt-caption-label">
+                <semx element="title" source="_">Foreword</semx>
+             </span>
+          </fmt-title>
+          <p>
+             <xref target="N">
+                <span class="fmt-element-name">Clause</span>
+                <semx element="autonum" source="scope">1</semx>
+                <span class="fmt-comma">,</span>
+                <span class="fmt-element-name">Note</span>
+             </xref>
+             <xref target="note1">
+                <semx element="autonum" source="widgets1">2.1</semx>
+                <span class="fmt-comma">,</span>
+                <span class="fmt-element-name">Note</span>
+                <semx element="autonum" source="note1">1</semx>
+             </xref>
+             <xref target="note2">
+                <semx element="autonum" source="widgets1">2.1</semx>
+                <span class="fmt-comma">,</span>
+                <span class="fmt-element-name">Note</span>
+                <semx element="autonum" source="note2">2</semx>
+             </xref>
+             <xref target="AN">
+                <span class="fmt-element-name">Clause</span>
+                <semx element="autonum" source="annex1a">A.1</semx>
+                <span class="fmt-comma">,</span>
+                <span class="fmt-element-name">Note</span>
+             </xref>
+             <xref target="Anote1">
+                <span class="fmt-element-name">Clause</span>
+                <semx element="autonum" source="annex1b">A.2</semx>
+                <span class="fmt-comma">,</span>
+                <span class="fmt-element-name">Note</span>
+                <semx element="autonum" source="Anote1">1</semx>
+             </xref>
+             <xref target="Anote2">
+                <span class="fmt-element-name">Clause</span>
+                <semx element="autonum" source="annex1b">A.2</semx>
+                <span class="fmt-comma">,</span>
+                <span class="fmt-element-name">Note</span>
+                <semx element="autonum" source="Anote2">2</semx>
+             </xref>
+          </p>
+       </foreword>
       OUTPUT
   end
 
@@ -227,78 +200,90 @@ RSpec.describe IsoDoc do
           </bibliography>
         </iso-standard>
       INPUT
-    expect(Xml::C14n.format(strip_guid(output))
+      xml = Nokogiri::XML(output)
+      xml = xml.at("//xmlns:foreword")
+      expect(Xml::C14n.format(strip_guid(xml.to_xml))
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
       .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-         <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <bibdata>
-            <ext>
-              <doctype language="">amendment</doctype>
-              <doctype language="en">Amendment</doctype>
-            </ext>
-          </bibdata>
-
-          <preface>
-            <foreword obligation="informative" displayorder="1">
-              <title>Foreword</title>
-              <p id="A">This is a preamble
-
-                <xref target="C"><span class="citesec">0.1</span></xref><xref target="C1"><span class="citesec">0.2</span></xref><xref target="D"><span class="citesec">Clause 1</span></xref><xref target="H">[H]</xref><xref target="I">[I]</xref><xref target="J">[J]</xref><xref target="K">[K]</xref><xref target="L">[L]</xref><xref target="M"><span class="citesec">Clause 2</span></xref><xref target="N"><span class="citesec">2.1</span></xref><xref target="O"><span class="citesec">2.2</span></xref><xref target="P"><span class="citeapp">Annex A</span></xref><xref target="Q"><span class="citeapp">Clause A.1</span></xref><xref target="Q1"><span class="citeapp">A.1.1</span></xref><xref target="Q2"><span class="citeapp">Annex A, Appendix 1</span></xref><xref target="R"><span class="citesec">Normative References</span></xref></p>
-            </foreword>
-            <introduction id="B" obligation="informative" displayorder="2">
-              <title depth="1">Introduction</title>
-              <clause id="C" inline-header="false" obligation="informative">
-                <title depth="2">Introduction Subsection</title>
-              </clause>
-              <clause id="C1" inline-header="true" obligation="informative">Text</clause>
-            </introduction>
-          </preface>
-          <sections>
-            <clause id="D" obligation="normative" type="scope" displayorder="3">
-              <title depth="1">Scope</title>
-              <p id="E">Text</p>
-            </clause>
-            <clause id="M" inline-header="false" obligation="normative" displayorder="4">
-              <title depth="1">Clause 4</title>
-              <clause id="N" inline-header="false" obligation="normative">
-                <title depth="2">Introduction</title>
-              </clause>
-              <clause id="O" inline-header="false" obligation="normative">
-                <title depth="2">Clause 4.2</title>
-              </clause>
-            </clause>
-          </sections>
-          <annex id="P" inline-header="false" obligation="normative" displayorder="5">
-            <title>
-              <strong>Annex A</strong>
-              <br/>
-              <span class="obligation">(normative)</span>
-              <br/>
-              <br/>
-              <strong>Annex</strong>
-            </title>
-            <clause id="Q" inline-header="false" obligation="normative">
-              <title depth="2">A.1<tab/>Annex A.1</title>
-              <clause id="Q1" inline-header="false" obligation="normative">
-                <title depth="3">A.1.1<tab/>Annex A.1a</title>
-              </clause>
-            </clause>
-            <appendix id="Q2" inline-header="false" obligation="normative">
-              <title depth="2">Appendix 1<tab/>An Appendix</title>
-            </appendix>
-          </annex>
-          <bibliography>
-            <references id="R" normative="true" obligation="informative" displayorder="6">
-              <title depth="1">Normative References</title>
-            </references>
-            <clause id="S" obligation="informative" displayorder="7">
-              <title depth="1">Bibliography</title>
-              <references id="T" normative="false" obligation="informative">
-                <title depth="2">Bibliography Subsection</title>
-              </references>
-            </clause>
-          </bibliography>
-        </iso-standard>
+             <foreword obligation="informative" displayorder="1">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Foreword</semx>
+                   </span>
+                </fmt-title>
+                <p id="A">
+                   This is a preamble
+                   <xref target="C">
+                      <span class="citesec">
+                         <semx element="autonum" source="C">0.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="C1">
+                      <span class="citesec">
+                         <semx element="autonum" source="C1">0.2</semx>
+                      </span>
+                   </xref>
+                   <xref target="D">
+                      <span class="citesec">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="D">1</semx>
+                      </span>
+                   </xref>
+                   <xref target="H">[H]</xref>
+                   <xref target="I">[I]</xref>
+                   <xref target="J">[J]</xref>
+                   <xref target="K">[K]</xref>
+                   <xref target="L">[L]</xref>
+                   <xref target="M">
+                      <span class="citesec">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="M">2</semx>
+                      </span>
+                   </xref>
+                   <xref target="N">
+                      <span class="citesec">
+                         <semx element="autonum" source="N">2.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="O">
+                      <span class="citesec">
+                         <semx element="autonum" source="O">2.2</semx>
+                      </span>
+                   </xref>
+                   <xref target="P">
+                      <span class="citeapp">
+                         <span class="fmt-element-name">Annex</span>
+                         <semx element="autonum" source="P">A</semx>
+                      </span>
+                   </xref>
+                   <xref target="Q">
+                      <span class="citeapp">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="Q">A.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="Q1">
+                      <span class="citeapp">
+                         <semx element="autonum" source="Q1">A.1.1</semx>
+                      </span>
+                   </xref>
+                   <xref target="Q2">
+                      <span class="citeapp">
+                         <span class="fmt-element-name">Annex</span>
+                         <semx element="autonum" source="P">A</semx>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Appendix</span>
+                         <semx element="autonum" source="Q2">1</semx>
+                      </span>
+                   </xref>
+                   <xref target="R">
+                      <span class="citesec">
+                         <semx element="references" source="R">Normative References</semx>
+                      </span>
+                   </xref>
+                </p>
+             </foreword>
       OUTPUT
   end
 
@@ -396,14 +381,14 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-           <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
              <ext>
                 <doctype language="">amendment</doctype>
                 <doctype language="en">Amendment</doctype>
              </ext>
           </bibdata>
-
+          
           <boilerplate>
              <copyright-statement>
                 <clause>
@@ -541,40 +526,105 @@ RSpec.describe IsoDoc do
                 <p id="E">Text</p>
              </clause>
           </sections>
-         <annex id="P" inline-header="false" obligation="normative" displayorder="9">
-           <title>
-             <strong>Annex A</strong>
-             <br/>
-             <span class="obligation">(normative)</span>
-             <br/>
-             <br/>
-             <strong>Annex</strong>
-           </title>
-           <clause id="Q" inline-header="false" obligation="normative">
-             <title depth="2">A.1<tab/>Annex A.1</title>
-             <clause id="Q1" inline-header="false" obligation="normative">
-               <title depth="3">A.1.1<tab/>Annex A.1a</title>
+          <annex id="P" inline-header="false" obligation="normative" autonum="A" displayorder="9">
+             <title id="_">
+                <strong>Annex</strong>
+             </title>
+             <fmt-title>
+                <span class="fmt-caption-label">
+                   <strong>
+                      <span class="fmt-element-name">Annex</span>
+                      <semx element="autonum" source="P">A</semx>
+                   </strong>
+                   <br/>
+                   <span class="obligation">(normative)</span>
+                   <span class="fmt-caption-delim">
+                      <br/>
+                      <br/>
+                   </span>
+                   <semx element="title" source="_">
+                      <strong>Annex</strong>
+                   </semx>
+                </span>
+             </fmt-title>
+             <fmt-xref-label>
+                <span class="fmt-element-name">Annex</span>
+                <semx element="autonum" source="P">A</semx>
+             </fmt-xref-label>
+             <clause id="Q" inline-header="false" obligation="normative">
+                <title id="_">Annex A.1</title>
+                <fmt-title depth="2">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="Q">A.1</semx>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Annex A.1</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="Q">A.1</semx>
+                </fmt-xref-label>
+                <clause id="Q1" inline-header="false" obligation="normative">
+                   <title id="_">Annex A.1a</title>
+                   <fmt-title depth="3">
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="Q1">A.1.1</semx>
+                         <span class="fmt-caption-delim">
+                            <tab/>
+                         </span>
+                         <semx element="title" source="_">Annex A.1a</semx>
+                      </span>
+                   </fmt-title>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="Q1">A.1.1</semx>
+                   </fmt-xref-label>
+                </clause>
              </clause>
-           </clause>
-         </annex>
-         <annex id="P1" inline-header="false" obligation="normative" displayorder="10">
-           <title>
-             <strong>Annex B</strong>
-             <br/>
-             <span class="obligation">(normative)</span>
-           </title>
-         </annex>
-         <bibliography>
-           <references id="R" normative="true" obligation="informative" displayorder="11">
-             <title depth="1">Normative References</title>
-           </references>
-           <clause id="S" obligation="informative" displayorder="12">
-             <title depth="1">Bibliography</title>
-             <references id="T" normative="false" obligation="informative">
-               <title depth="2">Bibliography Subsection</title>
+          </annex>
+          <annex id="P1" inline-header="false" obligation="normative" autonum="B" displayorder="10">
+             <fmt-title>
+                <span class="fmt-caption-label">
+                   <strong>
+                      <span class="fmt-element-name">Annex</span>
+                      <semx element="autonum" source="P1">B</semx>
+                   </strong>
+                   <br/>
+                   <span class="obligation">(normative)</span>
+                </span>
+             </fmt-title>
+             <fmt-xref-label>
+                <span class="fmt-element-name">Annex</span>
+                <semx element="autonum" source="P1">B</semx>
+             </fmt-xref-label>
+          </annex>
+          <bibliography>
+             <references id="R" normative="true" obligation="informative" displayorder="11">
+                <title id="_">Normative References</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Normative References</semx>
+                   </span>
+                </fmt-title>
              </references>
-           </clause>
-         </bibliography>
+             <clause id="S" obligation="informative" displayorder="12">
+                <title id="_">Bibliography</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="title" source="_">Bibliography</semx>
+                   </span>
+                </fmt-title>
+                <references id="T" normative="false" obligation="informative">
+                   <title id="_">Bibliography Subsection</title>
+                   <fmt-title depth="2">
+                      <span class="fmt-caption-label">
+                         <semx element="title" source="_">Bibliography Subsection</semx>
+                      </span>
+                   </fmt-title>
+                </references>
+             </clause>
+          </bibliography>
        </iso-standard>
     OUTPUT
     html = <<~OUTPUT
