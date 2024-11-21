@@ -1030,7 +1030,8 @@ RSpec.describe IsoDoc do
         <figure id="B">
         <fmt-name>Table1</fmt-name>
         <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto"/>
-        <note id="C"><fmt-name>FIGURENOTE</fmt-name><p>Note</p></note>
+        <note id="C"><fmt-name>FIGURENOTE<span class="fmt-label-delim"><tab/></span></fmt-name>
+        <p>Note</p></note>
         <example id="D"><p>Example</p></example>
         </figure>
         </clause>
@@ -1182,7 +1183,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <note id="B">
-        <fmt-name>NOTE</fmt-name>
+        <fmt-name>NOTE<span class="fmt-label-delim"><tab/></span></fmt-name>
         <p>First example</p>
         </note>
         <note id="C">
@@ -1210,7 +1211,6 @@ RSpec.describe IsoDoc do
           <div>
              <a name='C' id='C'/>
              <p class='Note'>
-               <span style='mso-tab-count:1'>  </span>
                Second example
              </p>
              <p class='Code-'>Code</p>
@@ -1650,7 +1650,6 @@ RSpec.describe IsoDoc do
              <p class='BodyTextindent1'>Normal clause</p>
              <div>
                <p class='Noteindent'>
-                 <span style='mso-tab-count:1'>  </span>
                  Note clause
                </p>
              </div>
@@ -2028,7 +2027,6 @@ RSpec.describe IsoDoc do
            <div class='Note'>
              <a name='B' id='B'/>
              <p class='Note'>
-               <span style='mso-tab-count:1'>  </span>
                Note
              </p>
              <div class="ul_wrap">

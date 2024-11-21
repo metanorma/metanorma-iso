@@ -273,6 +273,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                    </fmt-name>
                    <p>This is an annotation of ISO 20483:2013-2014</p>
                 </note>
@@ -315,6 +318,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                    </fmt-name>
                    <p>This is an annotation of document ISSN.</p>
                 </note>
@@ -323,6 +329,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                    </fmt-name>
                    <p>This is another annotation of document ISSN.</p>
                 </note>
@@ -472,8 +481,8 @@ RSpec.describe IsoDoc do
                    </p>
                    <div class="Note">
                       <p>
-                         <span class="note_label">NOTE</span>
-                           This is an annotation of ISO 20483:2013-2014
+                         <span class="note_label">NOTE  </span>
+                         This is an annotation of ISO 20483:2013-2014
                       </p>
                    </div>
                 </div>
@@ -492,14 +501,14 @@ RSpec.describe IsoDoc do
                    </p>
                    <div class="Note">
                       <p>
-                         <span class="note_label">NOTE</span>
-                           This is an annotation of document ISSN.
+                         <span class="note_label">NOTE  </span>
+                         This is an annotation of document ISSN.
                       </p>
                    </div>
                    <div class="Note">
                       <p>
-                         <span class="note_label">NOTE</span>
-                           This is another annotation of document ISSN.
+                         <span class="note_label">NOTE  </span>
+                         This is another annotation of document ISSN.
                       </p>
                    </div>
                    <p id="ISO3696" class="Biblio">

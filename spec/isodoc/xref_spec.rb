@@ -136,6 +136,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Note</span>
@@ -189,6 +192,9 @@ RSpec.describe IsoDoc do
                             <span class="fmt-element-name">NOTE</span>
                             <semx element="autonum" source="note1">1</semx>
                          </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Note</span>
@@ -202,6 +208,9 @@ RSpec.describe IsoDoc do
                             <span class="fmt-element-name">NOTE</span>
                             <semx element="autonum" source="note2">2</semx>
                          </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Note</span>
@@ -252,6 +261,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Note</span>
@@ -275,6 +287,9 @@ RSpec.describe IsoDoc do
                          <span class="fmt-element-name">NOTE</span>
                          <semx element="autonum" source="Anote1">1</semx>
                       </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Note</span>
@@ -288,6 +303,9 @@ RSpec.describe IsoDoc do
                          <span class="fmt-element-name">NOTE</span>
                          <semx element="autonum" source="Anote2">2</semx>
                       </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Note</span>
@@ -386,6 +404,9 @@ RSpec.describe IsoDoc do
                          <span class="fmt-caption-label">
                             <span class="fmt-element-name">NOTE</span>
                          </span>
+                  <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Note</span>
@@ -494,6 +515,9 @@ RSpec.describe IsoDoc do
                             <span class="fmt-element-name">NOTE</span>
                             <semx element="autonum" source="note2">1</semx>
                          </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Note</span>
@@ -507,6 +531,9 @@ RSpec.describe IsoDoc do
                             <span class="fmt-element-name">NOTE</span>
                             <semx element="autonum" source="note3">2</semx>
                          </span>
+                   <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Note</span>

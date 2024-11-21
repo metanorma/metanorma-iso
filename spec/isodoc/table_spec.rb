@@ -202,6 +202,9 @@ RSpec.describe IsoDoc do
                          <span class="fmt-caption-label">
                             <span class="fmt-element-name">NOTE</span>
                          </span>
+                  <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <p>This is a table about rice</p>
                    </note>
@@ -328,7 +331,7 @@ RSpec.describe IsoDoc do
            with adjustments]</p>
                    </div>
                    <div class="Note">
-                     <p><span class="note_label">NOTE</span>  This is a table about rice</p>
+                     <p><span class="note_label">NOTE  </span>This is a table about rice</p>
                    </div>
                    <div class="TableFootnote">
                      <div id="fn:tableD-1a">
@@ -420,7 +423,7 @@ RSpec.describe IsoDoc do
            with adjustments]</p>
                  </div>
                  <div class="Note">
-                   <p class="Note"><span class="note_label">NOTE</span><span style="mso-tab-count:1">  </span>This is a table about rice</p>
+                   <p class="Note"><span class="note_label">NOTE<span style="mso-tab-count:1">  </span></span>This is a table about rice</p>
                  </div>
                  <div class="TableFootnote">
                    <div>
@@ -579,6 +582,9 @@ RSpec.describe IsoDoc do
                             <span class="fmt-element-name">NOTE</span>
                             <semx element="autonum" source="A">1</semx>
                          </span>
+                      <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Note</span>
@@ -593,6 +599,9 @@ RSpec.describe IsoDoc do
                             <span class="fmt-element-name">NOTE</span>
                             <semx element="autonum" source="C">2</semx>
                          </span>
+                      <span class="fmt-label-delim">
+                     <tab/>
+                  </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Note</span>
@@ -645,8 +654,8 @@ RSpec.describe IsoDoc do
                   <dd>A type of rice</dd>
                 </dl>
                 </div>
-                <div id="A" class="Note"><p><span class="note_label">NOTE  1</span>  </p>Note 1</div>
-                <div id="C" class="Note"><p><span class="note_label">NOTE  2</span>  </p>Note 2</div>
+                <div id="A" class="Note"><p><span class="note_label">NOTE  1  </span></p>Note 1</div>
+                <div id="C" class="Note"><p><span class="note_label">NOTE  2  </span></p>Note 2</div>
               </table>
             </div>
           </div>
@@ -703,8 +712,8 @@ RSpec.describe IsoDoc do
                 <div class="figdl">
                 <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;">Drago<span style="mso-tab-count:1">  </span>A type of rice</p>
                 </div>
-                <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1</span><span style="mso-tab-count:1">  </span></p>Note 1</div>
-                <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2</span><span style="mso-tab-count:1">  </span></p>Note 2</div>
+                <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1<span style="mso-tab-count:1">  </span></span></p>Note 1</div>
+                <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2<span style="mso-tab-count:1">  </span></span></p>Note 2</div>
               </table>
             </div>
           </div>
