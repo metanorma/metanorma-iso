@@ -178,6 +178,12 @@ module IsoDoc
         super
         update_i18n(docxml)
       end
+
+      def span_parse(node, out)
+        node["class"] == "fmt-obligation" and
+          node["class"] = "obligation"
+        super
+      end
     end
   end
 end

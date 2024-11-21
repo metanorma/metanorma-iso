@@ -537,7 +537,7 @@ RSpec.describe IsoDoc do
                      <semx element="autonum" source="P">A</semx>
                   </strong>
                   <br/>
-                  <span class="obligation">(normative)</span>
+                  <span class="fmt-obligation">(normative)</span>
                   <span class="fmt-caption-delim">
                      <br/>
                      <br/>
@@ -591,7 +591,7 @@ RSpec.describe IsoDoc do
                      <semx element="autonum" source="P1">B</semx>
                   </strong>
                   <br/>
-                  <span class="obligation">(normative)</span>
+                  <span class="fmt-obligation">(normative)</span>
                </span>
             </fmt-title>
             <fmt-xref-label>

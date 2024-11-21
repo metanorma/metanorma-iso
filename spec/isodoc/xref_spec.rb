@@ -230,7 +230,7 @@ RSpec.describe IsoDoc do
                       <semx element="autonum" source="annex1">A</semx>
                    </strong>
                    <br/>
-                   <span class="obligation">(informative)</span>
+                   <span class="fmt-obligation">(informative)</span>
                 </span>
              </fmt-title>
              <fmt-xref-label>
@@ -775,7 +775,7 @@ RSpec.describe IsoDoc do
                        <semx element="autonum" source="annex1">A</semx>
                     </strong>
                     <br/>
-                    <span class="obligation">(informative)</span>
+                    <span class="fmt-obligation">(informative)</span>
                  </span>
               </fmt-title>
               <fmt-xref-label>
@@ -1107,7 +1107,7 @@ RSpec.describe IsoDoc do
                       <semx element="autonum" source="annex1">A</semx>
                    </strong>
                    <br/>
-                   <span class="obligation">(informative)</span>
+                   <span class="fmt-obligation">(informative)</span>
                 </span>
              </fmt-title>
              <fmt-xref-label>
@@ -1422,7 +1422,7 @@ RSpec.describe IsoDoc do
                <semx element="autonum" source="annex1">A</semx>
             </strong>
             <br/>
-            <span class="obligation">(informative)</span>
+            <span class="fmt-obligation">(informative)</span>
          </span>
       </fmt-title>
       <fmt-xref-label>
@@ -1772,7 +1772,7 @@ RSpec.describe IsoDoc do
                <semx element="autonum" source="annex1">A</semx>
             </strong>
             <br/>
-            <span class="obligation">(informative)</span>
+            <span class="fmt-obligation">(informative)</span>
          </span>
       </fmt-title>
       <fmt-xref-label>
@@ -2163,7 +2163,7 @@ RSpec.describe IsoDoc do
                <semx element="autonum" source="annex1">A</semx>
             </strong>
             <br/>
-            <span class="obligation">(informative)</span>
+            <span class="fmt-obligation">(informative)</span>
          </span>
       </fmt-title>
       <fmt-xref-label>
@@ -2866,7 +2866,7 @@ RSpec.describe IsoDoc do
                <semx element="autonum" source="P">A</semx>
             </strong>
             <br/>
-            <span class="obligation">(normative)</span>
+            <span class="fmt-obligation">(normative)</span>
             <span class="fmt-caption-delim">
                <br/>
                <br/>
@@ -3457,7 +3457,7 @@ RSpec.describe IsoDoc do
                <semx element="autonum" source="annex1">A</semx>
             </strong>
             <br/>
-            <span class="obligation">(informative)</span>
+            <span class="fmt-obligation">(informative)</span>
          </span>
       </fmt-title>
       <fmt-xref-label>
@@ -3713,7 +3713,7 @@ RSpec.describe IsoDoc do
                <semx element="autonum" source="annex1">A</semx>
             </strong>
             <br/>
-            <span class="obligation">(informative)</span>
+            <span class="fmt-obligation">(informative)</span>
          </span>
       </fmt-title>
       <fmt-xref-label>

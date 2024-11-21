@@ -28,8 +28,6 @@ module IsoDoc
                                           container: clause["id"])
           j = Counter.new(0, prefix: i.print)
           c.xpath(ns("./clause | ./references")).each do |c1|
-            #lbl = "#{@labels['appendix']} #{j.increment(c1).print}"
-            #appendix_names1(c1, l10n(lbl), 3, clause["id"])
             appendix_names1(c1, j.increment(c1).print, 3, clause["id"])
           end
         end
@@ -42,17 +40,12 @@ module IsoDoc
           xref = labelled_autonum(@labels["section"], clause, num)
           label = labelled_autonum(@labels["section"], clause, num)
           @anchors[clause["id"]] =
-            { label:,#l10n("#{@labels['section']} #{num}"),
-              xref:, #l10n("#{@labels['section']} #{num}"),
-              title: clause_title(clause), level: level, type: "clause",
-              elem: @labels["section"] }
+            { label:, xref:, elem: @labels["section"],
+              title: clause_title(clause), level: level, type: "clause" }
         elsif level > 1
           num = semx(clause, num)
           @anchors[clause["id"]] =
-            { label: num, 
-              level: level, 
-              xref: num, 
-              subtype: "clause" }
+            { label: num, level: level, xref: num, subtype: "clause" }
         else super end
       end
 
@@ -60,7 +53,7 @@ module IsoDoc
         ret = { label: semx(clause, num), level: level, subtype: "annex" }
         ret2 = if level == 2
                  xref = labelled_autonum(@labels["clause"], clause, num)
-                 { xref: , #l10n("#{@labels['clause']} #{num}"),
+                 { xref:, # l10n("#{@labels['clause']} #{num}"),
                    elem: @labels["clause"] }
                else
                  { xref: semx(clause, num) }
@@ -77,17 +70,13 @@ module IsoDoc
       end
 
       def appendix_names1(clause, num, level, container)
-        num = labelled_autonum(@labels['appendix'], clause, num)
+        num = labelled_autonum(@labels["appendix"], clause, num)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
         i = Counter.new(0, prefix: num)
         clause.xpath(ns("./clause | ./references")).each do |c|
           appendix_names1(c, i.increment(c).print, level + 1, container)
         end
-      end
-
-      def annex_name_lbl(clause, num)
-        super.sub(%r{<br/>(.*)$}, "<br/><span class='obligation'>\\1</span>")
       end
     end
   end

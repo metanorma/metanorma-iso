@@ -333,7 +333,7 @@ RSpec.describe IsoDoc do
                        <semx element="autonum" source="P">A</semx>
                     </strong>
                     <br/>
-                    <span class="obligation">(normative)</span>
+                    <span class="fmt-obligation">(normative)</span>
                     <span class="fmt-caption-delim">
                        <br/>
                        <br/>
@@ -1030,7 +1030,7 @@ RSpec.describe IsoDoc do
                        <semx element="autonum" source="P">A</semx>
                     </strong>
                     <br/>
-                    <span class="obligation">(normative)</span>
+                    <span class="fmt-obligation">(normative)</span>
                     <span class="fmt-caption-delim">
                        <br/>
                        <br/>
@@ -1447,7 +1447,7 @@ RSpec.describe IsoDoc do
                        <semx element="autonum" source="P">A</semx>
                     </strong>
                     <br/>
-                    <span class="obligation">(normative)</span>
+                    <span class="fmt-obligation">(normative)</span>
                     <span class="fmt-caption-delim">
                        <br/>
                        <br/>
@@ -1971,7 +1971,7 @@ RSpec.describe IsoDoc do
                        <semx element="autonum" source="P">A</semx>
                     </strong>
                     <br/>
-                    <span class="obligation">(нормативное)</span>
+                    <span class="fmt-obligation">(нормативное)</span>
                     <span class="fmt-caption-delim">
                        <br/>
                        <br/>
@@ -2527,7 +2527,7 @@ RSpec.describe IsoDoc do
                        <semx element="autonum" source="P">A</semx>
                     </strong>
                     <br/>
-                    <span class="obligation">（规范性附录）</span>
+                    <span class="fmt-obligation">（规范性附录）</span>
                     <span class="fmt-caption-delim">
                        <br/>
                        <br/>

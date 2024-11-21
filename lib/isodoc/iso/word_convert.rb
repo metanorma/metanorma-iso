@@ -218,7 +218,7 @@ module IsoDoc
 
       def annex_name1(name, out)
         n = name.dup
-        n.xpath(ns(".//span[@class = 'obligation']")).each do |s|
+        n.xpath(ns(".//span[@class = 'fmt-obligation']")).each do |s|
           s.delete("class")
           s["style"] = "font-weight:normal;"
         end

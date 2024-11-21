@@ -219,7 +219,7 @@ RSpec.describe IsoDoc do
                       <semx element="autonum" source="Annex">A</semx>
                    </strong>
                    <br/>
-                   <span class="obligation">(informative)</span>
+                   <span class="fmt-obligation">(informative)</span>
                    <span class="fmt-caption-delim">
                       <br/>
                       <br/>
