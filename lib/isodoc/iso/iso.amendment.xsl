@@ -12646,17 +12646,29 @@
 			<!-- Example: Dimensions in millimeters -->
 			<xsl:apply-templates select="*[local-name() = 'note'][@type = 'units']"/>
 
+			<xsl:variable name="show_figure_key_in_block_container">
+				true
+			</xsl:variable>
+
 			<fo:block xsl:use-attribute-sets="figure-style" role="SKIP">
 				<xsl:apply-templates select="node()[not(local-name() = 'name') and not(local-name() = 'note' and @type = 'units')]"/>
 			</fo:block>
-			<xsl:for-each select="*[local-name() = 'note'][not(@type = 'units')]">
-				<xsl:call-template name="note"/>
-			</xsl:for-each>
-			<xsl:call-template name="fn_display_figure"/>
+
+			<xsl:if test="normalize-space($show_figure_key_in_block_container) = 'true'">
+				<xsl:call-template name="showFigureKey"/>
+			</xsl:if>
 
 					<xsl:apply-templates select="*[local-name() = 'name']"/> <!-- show figure's name AFTER image -->
 
 		</fo:block-container>
+
+	</xsl:template>
+
+	<xsl:template name="showFigureKey">
+		<xsl:for-each select="*[local-name() = 'note'][not(@type = 'units')]">
+			<xsl:call-template name="note"/>
+		</xsl:for-each>
+		<xsl:call-template name="fn_display_figure"/>
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'figure'][@class = 'pseudocode']">
@@ -12852,6 +12864,22 @@
 		</xsl:if>
 	</xsl:template>
 
+	<xsl:template name="getImageSrc">
+		<xsl:choose>
+			<xsl:when test="not(starts-with(@src, 'data:'))">
+				<xsl:choose>
+					<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
+						<xsl:value-of select="@src"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="concat($basepath, @src)"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise><xsl:value-of select="@src"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
 	<xsl:template name="getImageScale">
 		<xsl:param name="indent"/>
 		<xsl:variable name="indent_left">
@@ -12861,19 +12889,7 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="img_src">
-			<xsl:choose>
-				<xsl:when test="not(starts-with(@src, 'data:'))">
-					<xsl:choose>
-						<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
-							<xsl:value-of select="@src"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="concat($basepath, @src)"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:when>
-				<xsl:otherwise><xsl:value-of select="@src"/></xsl:otherwise>
-			</xsl:choose>
+			<xsl:call-template name="getImageSrc"/>
 		</xsl:variable>
 
 		<xsl:variable name="image_width_effective">
@@ -12881,10 +12897,15 @@
 					<xsl:value-of select="$width_effective - number($indent_left)"/>
 
 		</xsl:variable>
+		<xsl:variable name="image_height_effective" select="$height_effective - number($indent_left)"/>
 		<!-- <xsl:message>width_effective=<xsl:value-of select="$width_effective"/></xsl:message>
 		<xsl:message>indent_left=<xsl:value-of select="$indent_left"/></xsl:message>
 		<xsl:message>image_width_effective=<xsl:value-of select="$image_width_effective"/> for <xsl:value-of select="ancestor::ogc:p[1]/@id"/></xsl:message> -->
-		<xsl:variable name="scale" select="java:org.metanorma.fop.utils.ImageUtils.getImageScale($img_src, $image_width_effective, $height_effective)"/>
+		<xsl:variable name="scale">
+
+					<xsl:value-of select="java:org.metanorma.fop.utils.ImageUtils.getImageScale($img_src, $image_width_effective, $height_effective)"/>
+
+		</xsl:variable>
 		<xsl:value-of select="$scale"/>
 	</xsl:template>
 
@@ -14772,112 +14793,113 @@
 	-->
 	<xsl:template match="*[local-name() = 'example']">
 
-		<fo:block-container id="{@id}" xsl:use-attribute-sets="example-style" role="SKIP">
+				<fo:block-container id="{@id}" xsl:use-attribute-sets="example-style" role="SKIP">
 
-			<xsl:call-template name="setBlockSpanAll"/>
+					<xsl:call-template name="setBlockSpanAll"/>
 
-			<xsl:call-template name="refine_example-style"/>
+					<xsl:call-template name="refine_example-style"/>
 
-			<xsl:variable name="fo_element">
-				<xsl:if test=".//*[local-name() = 'table'] or .//*[local-name() = 'dl'] or *[not(local-name() = 'name')][1][local-name() = 'sourcecode']">block</xsl:if>
+					<xsl:variable name="fo_element">
+						<xsl:if test=".//*[local-name() = 'table'] or .//*[local-name() = 'dl'] or *[not(local-name() = 'name')][1][local-name() = 'sourcecode']">block</xsl:if>
+
+								<xsl:choose>
+									<xsl:when test="$layoutVersion = '1951' and $revision_date_num &lt; 19610101">list</xsl:when>
+									<xsl:otherwise>inline</xsl:otherwise>
+								</xsl:choose>
+
+					</xsl:variable>
+
+					<fo:block-container margin-left="0mm" role="SKIP">
 
 						<xsl:choose>
-							<xsl:when test="$layoutVersion = '1951' and $revision_date_num &lt; 19610101">list</xsl:when>
-							<xsl:otherwise>inline</xsl:otherwise>
-						</xsl:choose>
 
-			</xsl:variable>
+							<xsl:when test="contains(normalize-space($fo_element), 'block')">
 
-			<fo:block-container margin-left="0mm" role="SKIP">
-
-				<xsl:choose>
-
-					<xsl:when test="contains(normalize-space($fo_element), 'block')">
-
-						<!-- display name 'EXAMPLE' in a separate block  -->
-						<fo:block>
-							<xsl:apply-templates select="*[local-name()='name']">
-								<xsl:with-param name="fo_element" select="$fo_element"/>
-							</xsl:apply-templates>
-						</fo:block>
-
-						<fo:block-container xsl:use-attribute-sets="example-body-style" role="SKIP">
-							<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
-								<xsl:variable name="example_body">
-									<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+								<!-- display name 'EXAMPLE' in a separate block  -->
+								<fo:block>
+									<xsl:apply-templates select="*[local-name()='name']">
 										<xsl:with-param name="fo_element" select="$fo_element"/>
 									</xsl:apply-templates>
+								</fo:block>
+
+								<fo:block-container xsl:use-attribute-sets="example-body-style" role="SKIP">
+									<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
+										<xsl:variable name="example_body">
+											<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+												<xsl:with-param name="fo_element" select="$fo_element"/>
+											</xsl:apply-templates>
+										</xsl:variable>
+										<xsl:choose>
+											<xsl:when test="xalan:nodeset($example_body)/*">
+												<xsl:copy-of select="$example_body"/>
+											</xsl:when>
+											<xsl:otherwise><fo:block/><!-- prevent empty block-container --></xsl:otherwise>
+										</xsl:choose>
+									</fo:block-container>
+								</fo:block-container>
+							</xsl:when> <!-- end block -->
+
+							<xsl:when test="contains(normalize-space($fo_element), 'list')">
+
+								<xsl:variable name="provisional_distance_between_starts_">
+									45
 								</xsl:variable>
-								<xsl:choose>
-									<xsl:when test="xalan:nodeset($example_body)/*">
-										<xsl:copy-of select="$example_body"/>
-									</xsl:when>
-									<xsl:otherwise><fo:block/><!-- prevent empty block-container --></xsl:otherwise>
-								</xsl:choose>
-							</fo:block-container>
-						</fo:block-container>
-					</xsl:when> <!-- end block -->
+								<xsl:variable name="provisional_distance_between_starts" select="normalize-space($provisional_distance_between_starts_)"/>
+								<xsl:variable name="indent_">
+									28
+								</xsl:variable>
+								<xsl:variable name="indent" select="normalize-space($indent_)"/>
 
-					<xsl:when test="contains(normalize-space($fo_element), 'list')">
+								<fo:list-block provisional-distance-between-starts="{$provisional_distance_between_starts}mm">
+									<fo:list-item>
+										<fo:list-item-label start-indent="{$indent}mm" end-indent="label-end()">
+											<fo:block>
+												<xsl:apply-templates select="*[local-name()='name']">
+													<xsl:with-param name="fo_element">block</xsl:with-param>
+												</xsl:apply-templates>
+											</fo:block>
+										</fo:list-item-label>
+										<fo:list-item-body start-indent="body-start()">
+											<fo:block>
+												<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+													<xsl:with-param name="fo_element" select="$fo_element"/>
+												</xsl:apply-templates>
+											</fo:block>
+										</fo:list-item-body>
+									</fo:list-item>
+								</fo:list-block>
+							</xsl:when> <!-- end list -->
 
-						<xsl:variable name="provisional_distance_between_starts_">
-							45
-						</xsl:variable>
-						<xsl:variable name="provisional_distance_between_starts" select="normalize-space($provisional_distance_between_starts_)"/>
-						<xsl:variable name="indent_">
-							28
-						</xsl:variable>
-						<xsl:variable name="indent" select="normalize-space($indent_)"/>
+							<xsl:otherwise> <!-- inline -->
 
-						<fo:list-block provisional-distance-between-starts="{$provisional_distance_between_starts}mm">
-							<fo:list-item>
-								<fo:list-item-label start-indent="{$indent}mm" end-indent="label-end()">
-									<fo:block>
-										<xsl:apply-templates select="*[local-name()='name']">
-											<xsl:with-param name="fo_element">block</xsl:with-param>
-										</xsl:apply-templates>
-									</fo:block>
-								</fo:list-item-label>
-								<fo:list-item-body start-indent="body-start()">
-									<fo:block>
-										<xsl:apply-templates select="node()[not(local-name() = 'name')]">
+								<!-- display 'EXAMPLE' and first element in the same line -->
+								<fo:block>
+									<xsl:apply-templates select="*[local-name()='name']">
+										<xsl:with-param name="fo_element" select="$fo_element"/>
+									</xsl:apply-templates>
+									<fo:inline>
+										<xsl:apply-templates select="*[not(local-name() = 'name')][1]">
 											<xsl:with-param name="fo_element" select="$fo_element"/>
 										</xsl:apply-templates>
-									</fo:block>
-								</fo:list-item-body>
-							</fo:list-item>
-						</fo:list-block>
-					</xsl:when> <!-- end list -->
+									</fo:inline>
+								</fo:block>
 
-					<xsl:otherwise> <!-- inline -->
+								<xsl:if test="*[not(local-name() = 'name')][position() &gt; 1]">
+									<!-- display further elements in blocks -->
+									<fo:block-container xsl:use-attribute-sets="example-body-style" role="SKIP">
+										<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
+											<xsl:apply-templates select="*[not(local-name() = 'name')][position() &gt; 1]">
+												<xsl:with-param name="fo_element" select="'block'"/>
+											</xsl:apply-templates>
+										</fo:block-container>
+									</fo:block-container>
+								</xsl:if>
+							</xsl:otherwise> <!-- end inline -->
 
-						<!-- display 'EXAMPLE' and first element in the same line -->
-						<fo:block>
-							<xsl:apply-templates select="*[local-name()='name']">
-								<xsl:with-param name="fo_element" select="$fo_element"/>
-							</xsl:apply-templates>
-							<fo:inline>
-								<xsl:apply-templates select="*[not(local-name() = 'name')][1]">
-									<xsl:with-param name="fo_element" select="$fo_element"/>
-								</xsl:apply-templates>
-							</fo:inline>
-						</fo:block>
+						</xsl:choose>
+					</fo:block-container>
+				</fo:block-container>
 
-						<xsl:if test="*[not(local-name() = 'name')][position() &gt; 1]">
-							<!-- display further elements in blocks -->
-							<fo:block-container xsl:use-attribute-sets="example-body-style" role="SKIP">
-								<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
-									<xsl:apply-templates select="*[not(local-name() = 'name')][position() &gt; 1]">
-										<xsl:with-param name="fo_element" select="'block'"/>
-									</xsl:apply-templates>
-								</fo:block-container>
-							</fo:block-container>
-						</xsl:if>
-					</xsl:otherwise> <!-- end inline -->
-
-				</xsl:choose>
-			</fo:block-container>
-		</fo:block-container>
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'example']/*[local-name() = 'name']">
@@ -17957,6 +17979,7 @@
 		</pdf:catalog>
 		<x:xmpmeta xmlns:x="adobe:ns:meta/">
 			<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+				<!-- Commented after upgrade to Apache FOP 2.10
 				<rdf:Description xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" rdf:about="">
 					<pdfaExtension:schemas>
 						<rdf:Bag>
@@ -17989,7 +18012,7 @@
 							</rdf:li>
 						</rdf:Bag>
 					</pdfaExtension:schemas>
-				</rdf:Description>
+				</rdf:Description> -->
 				<rdf:Description xmlns:pdf="http://ns.adobe.com/pdf/1.3/" xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:about="">
 				<!-- Dublin Core properties go here -->
 					<dc:title>
@@ -18586,13 +18609,14 @@
 		<xsl:param name="str"/>
 		<xsl:param name="writing-mode">lr-tb</xsl:param>
 		<xsl:param name="reference-orientation">90</xsl:param>
+		<xsl:param name="add_zero_width_space">false</xsl:param>
 		<xsl:if test="string-length($str) &gt; 0">
+			<xsl:variable name="char" select="substring($str,1,1)"/>
 			<fo:inline-container text-align="center" alignment-baseline="central" width="1em" margin="0" padding="0" text-indent="0mm" last-line-end-indent="0mm" start-indent="0mm" end-indent="0mm">
 				<xsl:if test="normalize-space($writing-mode) != ''">
 					<xsl:attribute name="writing-mode"><xsl:value-of select="$writing-mode"/></xsl:attribute>
 					<xsl:attribute name="reference-orientation">90</xsl:attribute>
 				</xsl:if>
-				<xsl:variable name="char" select="substring($str,1,1)"/>
 				<xsl:if test="normalize-space(java:matches(java:java.lang.String.new($char), concat('(', $regex_ja_spec, '{1,})'))) = 'true'">
 					<xsl:attribute name="reference-orientation">0</xsl:attribute>
 				</xsl:if>
@@ -18600,10 +18624,12 @@
 						<fo:block line-height="1em"><xsl:value-of select="$char"/></fo:block>
 				</fo:block-container>
 			</fo:inline-container>
+			<xsl:if test="$add_zero_width_space = 'true' and ($char = ',' or $char = '.' or $char = ' ' or $char = '·' or $char = ')' or $char = ']' or $char = '}')"><xsl:value-of select="$zero_width_space"/></xsl:if>
 			<xsl:call-template name="insertVerticalChar">
 				<xsl:with-param name="str" select="substring($str, 2)"/>
 				<xsl:with-param name="writing-mode" select="$writing-mode"/>
 				<xsl:with-param name="reference-orientation" select="$reference-orientation"/>
+				<xsl:with-param name="add_zero_width_space" select="$add_zero_width_space"/>
 			</xsl:call-template>
 		</xsl:if>
 	</xsl:template>
