@@ -3375,6 +3375,7 @@ RSpec.describe IsoDoc do
                  <title id="_">General</title>
                  <fmt-title depth="1">
                     <span class="fmt-caption-label">
+                    <span class="fmt-element-name">Section</span>
                        <semx element="autonum" source="B">1</semx>
                        <span class="fmt-caption-delim">
                           :

@@ -241,7 +241,9 @@ RSpec.describe IsoDoc do
                 <fmt-name>
                    <span class="fmt-caption-label">
                       <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="AnnexTable">A.1</semx>
+                      <semx element="autonum" source="Annex">A</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="AnnexTable">1</semx>
                       <span class="fmt-caption-delim"> — </span>
                       <semx element="name" source="_">Another table</semx>
                    </span>

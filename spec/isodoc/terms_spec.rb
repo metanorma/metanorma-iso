@@ -5,7 +5,7 @@ RSpec.describe IsoDoc do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-          <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
+          <terms id="terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
             <term id="paddy1">
               <preferred><expression><name>paddy</name></expression></preferred>
               <domain>rice</domain>
@@ -65,18 +65,18 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
           </preface>
           <sections>
-             <terms id="_" obligation="normative" displayorder="2">
+             <terms id="terms_and_definitions" obligation="normative" displayorder="2">
                 <title id="_">Terms and Definitions</title>
                 <fmt-title depth="1">
                    <span class="fmt-caption-label">
-                      <semx element="autonum" source="_">1</semx>
+                      <semx element="autonum" source="terms_and_definitions">1</semx>
                       <span class="fmt-caption-delim">
                          <tab/>
                       </span>
@@ -85,16 +85,20 @@ RSpec.describe IsoDoc do
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="_">1</semx>
+                   <semx element="autonum" source="terms_and_definitions">1</semx>
                 </fmt-xref-label>
                 <term id="paddy1">
                    <fmt-name>
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="paddy1">1.1</semx>
+                         <semx element="autonum" source="terms_and_definitions">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="paddy1">1</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
-                      <semx element="autonum" source="paddy1">1.1</semx>
+                      <semx element="autonum" source="terms_and_definitions">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="paddy1">1</semx>
                    </fmt-xref-label>
                    <preferred>
                       <strong>paddy</strong>
@@ -157,11 +161,15 @@ RSpec.describe IsoDoc do
                 <term id="paddy">
                    <fmt-name>
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="paddy">1.2</semx>
+                         <semx element="autonum" source="terms_and_definitions">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="paddy">2</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
-                      <semx element="autonum" source="paddy">1.2</semx>
+                      <semx element="autonum" source="terms_and_definitions">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="paddy">2</semx>
                    </fmt-xref-label>
                    <preferred>
                       <strong>paddy</strong>
@@ -237,11 +245,15 @@ RSpec.describe IsoDoc do
                 <term id="A">
                    <fmt-name>
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="A">1.3</semx>
+                         <semx element="autonum" source="terms_and_definitions">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="A">3</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
-                      <semx element="autonum" source="A">1.3</semx>
+                      <semx element="autonum" source="terms_and_definitions">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="A">3</semx>
                    </fmt-xref-label>
                    <preferred>
                       <strong>term1</strong>
@@ -250,11 +262,19 @@ RSpec.describe IsoDoc do
                    <term id="B">
                       <fmt-name>
                          <span class="fmt-caption-label">
-                            <semx element="autonum" source="B">1.3.1</semx>
+                            <semx element="autonum" source="terms_and_definitions">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="A">3</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="B">1</semx>
                          </span>
                       </fmt-name>
                       <fmt-xref-label>
-                         <semx element="autonum" source="B">1.3.1</semx>
+                         <semx element="autonum" source="terms_and_definitions">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="A">3</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="B">1</semx>
                       </fmt-xref-label>
                       <preferred>
                          <strong>term2</strong>
@@ -269,7 +289,7 @@ RSpec.describe IsoDoc do
 
     html = <<~OUTPUT
       #{HTML_HDR}
-                <div id="_">
+                <div id="terms_and_definitions">
                    <h1>1  Terms and Definitions</h1>
                    <p class="TermNum" id="paddy1">1.1</p>
                    <p class="Terms" style="text-align:left;">
@@ -370,7 +390,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     word = <<~OUTPUT
-          <div id="_">
+          <div id="terms_and_definitions">
           <h1>
              1
              <span style="mso-tab-count:1">  </span>
@@ -550,11 +570,15 @@ RSpec.describe IsoDoc do
                 <term id="second">
                    <fmt-name>
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="second">1.1</semx>
+                         <semx element="autonum" source="A">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="second">1</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
-                      <semx element="autonum" source="second">1.1</semx>
+                      <semx element="autonum" source="A">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="second">1</semx>
                    </fmt-xref-label>
                    <preferred>
                       <strong>Second Term</strong>
@@ -565,11 +589,15 @@ RSpec.describe IsoDoc do
                 <term id="C">
                    <fmt-name>
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="C">1.2</semx>
+                         <semx element="autonum" source="A">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="C">2</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
-                      <semx element="autonum" source="C">1.2</semx>
+                      <semx element="autonum" source="A">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="C">2</semx>
                    </fmt-xref-label>
                    <preferred language="fr" script="Latn" type="prefix">
                       <strong>First Designation</strong>
@@ -590,7 +618,7 @@ RSpec.describe IsoDoc do
           <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata><language>en</language></bibdata>
           <sections>
-          <terms id="_terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
+          <terms id="terms_and_definitions" obligation="normative"><title>Terms and Definitions</title>
           <p>For the purposes of this document, the following terms and definitions apply.</p>
       <term id="paddy1"><preferred><expression><name>paddy</name></expression></preferred>
       <definition><verbal-definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></verbal-definition></definition>
@@ -636,11 +664,11 @@ RSpec.describe IsoDoc do
       </term>
     INPUT
     output = <<~OUTPUT
-       <terms id="_" obligation="normative" displayorder="2">
+       <terms id="terms_and_definitions" obligation="normative" displayorder="2">
           <title id="_">Terms and Definitions</title>
           <fmt-title depth="1">
              <span class="fmt-caption-label">
-                <semx element="autonum" source="_">1</semx>
+                <semx element="autonum" source="terms_and_definitions">1</semx>
                 <span class="fmt-caption-delim">
                    <tab/>
                 </span>
@@ -649,17 +677,21 @@ RSpec.describe IsoDoc do
           </fmt-title>
           <fmt-xref-label>
              <span class="fmt-element-name">Clause</span>
-             <semx element="autonum" source="_">1</semx>
+             <semx element="autonum" source="terms_and_definitions">1</semx>
           </fmt-xref-label>
           <p>For the purposes of this document, the following terms and definitions apply.</p>
           <term id="paddy1">
              <fmt-name>
                 <span class="fmt-caption-label">
-                   <semx element="autonum" source="paddy1">1.1</semx>
+                   <semx element="autonum" source="terms_and_definitions">1</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="paddy1">1</semx>
                 </span>
              </fmt-name>
              <fmt-xref-label>
-                <semx element="autonum" source="paddy1">1.1</semx>
+                <semx element="autonum" source="terms_and_definitions">1</semx>
+                <span class="fmt-autonum-delim">.</span>
+                <semx element="autonum" source="paddy1">1</semx>
              </fmt-xref-label>
              <preferred>
                 <strong>paddy</strong>

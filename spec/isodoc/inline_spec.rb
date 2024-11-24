@@ -817,11 +817,15 @@ RSpec.describe IsoDoc do
             <term id="B">
                         <fmt-name>
                <span class="fmt-caption-label">
-                  <semx element="autonum" source="B">2.1</semx>
+                  <semx element="autonum" source="Terms">2</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="B">1</semx>
                </span>
             </fmt-name>
             <fmt-xref-label>
-               <semx element="autonum" source="B">2.1</semx>
+                  <semx element="autonum" source="Terms">2</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="B">1</semx>
             </fmt-xref-label>
               <preferred>
                 <strong>B</strong>
@@ -1073,130 +1077,203 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-          <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-        <preface>
-        <clause type="toc" id="_" displayorder="1">
-        <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-          <foreword id='A' displayorder='2'>
-         <title id="_">Foreword</title>
-         <fmt-title depth="2">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="A">1.1</semx>
-               <span class="fmt-caption-delim">
-                  <tab/>
-               </span>
-               <semx element="title" source="_">Foreword</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <semx element="autonum" source="A">1.1</semx>
-         </fmt-xref-label>
-            <ul>
-              <li>term</li>
-            </ul>
-          </foreword>
-        </preface>
-                 <sections>
-          <terms id='Terms' displayorder='3'>
-                   <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="autonum" source="Terms">1</semx>
-            </span>
-         </fmt-title>
-         <fmt-xref-label>
-            <span class="fmt-element-name">Clause</span>
-            <semx element="autonum" source="Terms">1</semx>
-         </fmt-xref-label>
-            <clause id='A' inline-header='true'>
-                       <fmt-title depth="2">
-              <span class="fmt-caption-label">
-                 <semx element="autonum" source="A">1.1</semx>
-              </span>
-           </fmt-title>
-           <fmt-xref-label>
-              <semx element="autonum" source="A">1.1</semx>
-           </fmt-xref-label>
-              <ul>
-                <li> term </li>
-              </ul>
-            </clause>
-            <term id='clause1'>
-              <fmt-name>
-               <span class="fmt-caption-label">
-                  <semx element="autonum" source="clause1">1.2</semx>
-               </span>
-            </fmt-name>
-            <fmt-xref-label>
-               <semx element="autonum" source="clause1">1.2</semx>
-            </fmt-xref-label>
-              <ul>
-                <li>
-                  <em>term</em>
-                   (
-                  <xref target='clause1'><span class="citesec">
-                  <semx element="autonum" source="clause1">1.2</semx>
-                  </span>
-                  </xref>
-                  )
-                </li>
-                <li> term </li>
-              </ul>
-            </term>
-            <term id='clause2'>
-                          <fmt-name>
-               <span class="fmt-caption-label">
-                  <semx element="autonum" source="clause2">1.3</semx>
-               </span>
-            </fmt-name>
-            <fmt-xref-label>
-               <semx element="autonum" source="clause2">1.3</semx>
-            </fmt-xref-label>
-              <ul>
-                <li>
-                  <em>term</em>
-                   (
-                  <xref target='clause1'><span class='citesec'><semx element="autonum" source="clause1">1.2</semx></span></xref>
-                  )
-                </li>
-                <li> term </li>
-              </ul>
-            </term>
-            <term id="clause3">
-                        <fmt-name>
-               <span class="fmt-caption-label">
-                  <semx element="autonum" source="clause3">1.4</semx>
-               </span>
-            </fmt-name>
-            <fmt-xref-label>
-               <semx element="autonum" source="clause3">1.4</semx>
-            </fmt-xref-label>
-               <ul>
-                 <li><em>term</em>
-           (<xref target="clause1"><span class="citesec"><semx element="autonum" source="clause1">1.2</semx></span></xref>)
-         </li>
-                 <li>term</li>
-               </ul>
-               <term id="clause4">
-                 <fmt-name>
-                 <span class="fmt-caption-label">
-                    <semx element="autonum" source="clause4">1.4.1</semx>
-                 </span>
-              </fmt-name>
-              <fmt-xref-label>
-                 <semx element="autonum" source="clause4">1.4.1</semx>
-              </fmt-xref-label>
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword id="A" displayorder="2">
+                 <title id="_">Foreword</title>
+                 <fmt-title depth="2">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="Terms">1</semx>
+                       <span class="fmt-autonum-delim">.</span>
+                       <semx element="autonum" source="A">1</semx>
+                       <span class="fmt-caption-delim">
+                          <tab/>
+                       </span>
+                       <semx element="title" source="_">Foreword</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <semx element="autonum" source="Terms">1</semx>
+                    <span class="fmt-autonum-delim">.</span>
+                    <semx element="autonum" source="A">1</semx>
+                 </fmt-xref-label>
                  <ul>
-                   <li><em>term</em>
-           (<xref target="clause1"><span class="citesec"><semx element="autonum" source="clause1">1.2</semx></span></xref>)
-         </li>
-                   <li>term</li>
+                    <li>
+            term
+            
+          </li>
                  </ul>
-               </term>
-             </term>
-          </terms>
-        </sections>
-      </iso-standard>
+              </foreword>
+           </preface>
+           <sections>
+              <terms id="Terms" displayorder="3">
+                 <fmt-title depth="1">
+                    <span class="fmt-caption-label">
+                       <semx element="autonum" source="Terms">1</semx>
+                    </span>
+                 </fmt-title>
+                 <fmt-xref-label>
+                    <span class="fmt-element-name">Clause</span>
+                    <semx element="autonum" source="Terms">1</semx>
+                 </fmt-xref-label>
+                 <clause id="A" inline-header="true">
+                    <fmt-title depth="2">
+                       <span class="fmt-caption-label">
+                          <semx element="autonum" source="Terms">1</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="A">1</semx>
+                       </span>
+                    </fmt-title>
+                    <fmt-xref-label>
+                       <semx element="autonum" source="Terms">1</semx>
+                       <span class="fmt-autonum-delim">.</span>
+                       <semx element="autonum" source="A">1</semx>
+                    </fmt-xref-label>
+                    <ul>
+                       <li>
+            term
+            
+          </li>
+                    </ul>
+                 </clause>
+                 <term id="clause1">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <semx element="autonum" source="Terms">1</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="clause1">2</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <semx element="autonum" source="Terms">1</semx>
+                       <span class="fmt-autonum-delim">.</span>
+                       <semx element="autonum" source="clause1">2</semx>
+                    </fmt-xref-label>
+                    <ul>
+                       <li>
+                          <em>term</em>
+                          (
+                          <xref target="clause1">
+                             <span class="citesec">
+                                <semx element="autonum" source="Terms">1</semx>
+                                <span class="fmt-autonum-delim">.</span>
+                                <semx element="autonum" source="clause1">2</semx>
+                             </span>
+                          </xref>
+                          )
+                       </li>
+                       <li>
+            term
+            
+          </li>
+                    </ul>
+                 </term>
+                 <term id="clause2">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <semx element="autonum" source="Terms">1</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="clause2">3</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <semx element="autonum" source="Terms">1</semx>
+                       <span class="fmt-autonum-delim">.</span>
+                       <semx element="autonum" source="clause2">3</semx>
+                    </fmt-xref-label>
+                    <ul>
+                       <li>
+                          <em>term</em>
+                          (
+                          <xref target="clause1">
+                             <span class="citesec">
+                                <semx element="autonum" source="Terms">1</semx>
+                                <span class="fmt-autonum-delim">.</span>
+                                <semx element="autonum" source="clause1">2</semx>
+                             </span>
+                          </xref>
+                          )
+                       </li>
+                       <li>
+            term
+            
+          </li>
+                    </ul>
+                 </term>
+                 <term id="clause3">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <semx element="autonum" source="Terms">1</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="clause3">4</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <semx element="autonum" source="Terms">1</semx>
+                       <span class="fmt-autonum-delim">.</span>
+                       <semx element="autonum" source="clause3">4</semx>
+                    </fmt-xref-label>
+                    <ul>
+                       <li>
+                          <em>term</em>
+                          (
+                          <xref target="clause1">
+                             <span class="citesec">
+                                <semx element="autonum" source="Terms">1</semx>
+                                <span class="fmt-autonum-delim">.</span>
+                                <semx element="autonum" source="clause1">2</semx>
+                             </span>
+                          </xref>
+                          )
+                       </li>
+                       <li>
+            term
+            
+          </li>
+                    </ul>
+                    <term id="clause4">
+                       <fmt-name>
+                          <span class="fmt-caption-label">
+                             <semx element="autonum" source="Terms">1</semx>
+                             <span class="fmt-autonum-delim">.</span>
+                             <semx element="autonum" source="clause3">4</semx>
+                             <span class="fmt-autonum-delim">.</span>
+                             <semx element="autonum" source="clause4">1</semx>
+                          </span>
+                       </fmt-name>
+                       <fmt-xref-label>
+                          <semx element="autonum" source="Terms">1</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="clause3">4</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="clause4">1</semx>
+                       </fmt-xref-label>
+                       <ul>
+                          <li>
+                             <em>term</em>
+                             (
+                             <xref target="clause1">
+                                <span class="citesec">
+                                   <semx element="autonum" source="Terms">1</semx>
+                                   <span class="fmt-autonum-delim">.</span>
+                                   <semx element="autonum" source="clause1">2</semx>
+                                </span>
+                             </xref>
+                             )
+                          </li>
+                          <li>
+            term
+            
+          </li>
+                       </ul>
+                    </term>
+                 </term>
+              </terms>
+           </sections>
+        </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -1285,11 +1362,15 @@ RSpec.describe IsoDoc do
         <term id='B'>
                     <fmt-name>
                <span class="fmt-caption-label">
-                  <semx element="autonum" source="B">2.1</semx>
+                  <semx element="autonum" source="A">2</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="B">1</semx>
                </span>
             </fmt-name>
             <fmt-xref-label>
-               <semx element="autonum" source="B">2.1</semx>
+               <semx element="autonum" source="A">2</semx>
+               <span class="fmt-autonum-delim">.</span>
+               <semx element="autonum" source="B">1</semx>
             </fmt-xref-label>
       <preferred><strong>B</strong></preferred>
         <p>

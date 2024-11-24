@@ -41,7 +41,7 @@ module IsoDoc
       def section_name_anchors(clause, num, level)
         if clause["type"] == "section"
           xref = labelled_autonum(@labels["section"], num)
-          label = num #labelled_autonum(@labels["section"], clause, num)
+          label = labelled_autonum(@labels["section"], num)
           @anchors[clause["id"]] =
             { label:, xref:, elem: @labels["section"],
               title: clause_title(clause), level: level, type: "clause" }
