@@ -48,7 +48,8 @@ module IsoDoc
         c = IsoDoc::XrefGen::Counter.new
         clause.xpath(ns(".//formula")).noblank.each do |t|
           @anchors[t["id"]] = anchor_struct(
-            "#{num}#{hiersep}#{c.increment(t).print}", t,
+            #"#{num}#{hier_separator}#{c.increment(t).print}", t,
+            hiersemx(clause, num, c.increment(t), t), t,
             t["inequality"] ? @labels["inequality"] : @labels["formula"],
             "formula", { unnumb: t["unnumbered"], container: true }
           )
@@ -116,9 +117,9 @@ module IsoDoc
         j = 0
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
           j = subfigure_increment(j, c, t)
-          label = "#{num}#{hiersep}#{c.print}"
+          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = subfigure_label(j)
-          figure_anchor(t, sublabel, label, "figure")
+          figure_anchor(t, sublabel, hiersemx(clause, num, c, t), "figure")
         end
         hierarchical_figure_class_names(clause, num)
       end
@@ -130,9 +131,9 @@ module IsoDoc
           .noblank.each do |t|
           c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
           j = subfigure_increment(j, c[t["class"]], t)
-          label = "#{num}#{hiersep}#{c.print}"
+          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          figure_anchor(t, sublabel, label, t["class"])
+          figure_anchor(t, sublabel, hiersemx(clause, num, c[t["class"]], t), t["class"])
         end
       end
 

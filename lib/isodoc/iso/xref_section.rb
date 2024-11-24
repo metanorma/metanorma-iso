@@ -7,9 +7,10 @@ module IsoDoc
         clause.at(ns("./clause")) and
           @anchors[clause["id"]] = { label: nil, level: 1, type: "clause",
                                      xref: clause.at(ns("./title"))&.text }
-        i = Counter.new(0, prefix: "0")
+        #i = Counter.new(0, prefix: "0")
+        i = Counter.new(0)
         clause.xpath(ns("./clause")).each do |c|
-          section_names1(c, i.increment(c).print, 2)
+          section_names1(c, semx(clause, "0"), i.increment(c).print, 2)
         end
       end
 
@@ -22,13 +23,15 @@ module IsoDoc
         i = Counter.new
         clause.xpath(ns("./appendix")).each do |c|
           i.increment(c)
+          num = semx(c, i.print)
+          lbl = labelled_autonum(@labels["appendix"], num)
           @anchors[c["id"]] =
             anchor_struct(i.print, c, @labels["appendix"],
                           "clause").merge(level: 2, subtype: "annex",
                                           container: clause["id"])
-          j = Counter.new(0, prefix: i.print)
+          j = Counter.new(0)
           c.xpath(ns("./clause | ./references")).each do |c1|
-            appendix_names1(c1, j.increment(c1).print, 3, clause["id"])
+            appendix_names1(c1, lbl, j.increment(c1).print, 3, clause["id"])
           end
         end
       end
@@ -37,22 +40,23 @@ module IsoDoc
       # retaining subtype for the semantics
       def section_name_anchors(clause, num, level)
         if clause["type"] == "section"
-          xref = labelled_autonum(@labels["section"], clause, num)
-          label = labelled_autonum(@labels["section"], clause, num)
+          xref = labelled_autonum(@labels["section"], num)
+          label = num #labelled_autonum(@labels["section"], clause, num)
           @anchors[clause["id"]] =
             { label:, xref:, elem: @labels["section"],
               title: clause_title(clause), level: level, type: "clause" }
         elsif level > 1
-          num = semx(clause, num)
+          #num = semx(clause, num)
           @anchors[clause["id"]] =
             { label: num, level: level, xref: num, subtype: "clause" }
         else super end
       end
 
       def annex_name_anchors1(clause, num, level)
-        ret = { label: semx(clause, num), level: level, subtype: "annex" }
+        ret = { label: num , #semx(clause, num),
+                level: level, subtype: "annex" }
         ret2 = if level == 2
-                 xref = labelled_autonum(@labels["clause"], clause, num)
+                 xref = labelled_autonum(@labels["clause"], num)
                  { xref:, # l10n("#{@labels['clause']} #{num}"),
                    elem: @labels["clause"] }
                else
@@ -61,16 +65,18 @@ module IsoDoc
         @anchors[clause["id"]] = ret.merge(ret2)
       end
 
-      def annex_names1(clause, num, level)
-        annex_name_anchors1(clause, num, level)
-        i = Counter.new(0, prefix: num)
+      def annex_names1(clause, parentnum, num, level)
+        lbl = clause_number_semx(parentnum, clause, num)
+        annex_name_anchors1(clause, lbl, level)
+        i = Counter.new(0)
         clause.xpath(ns("./clause | ./references")).each do |c|
-          annex_names1(c, i.increment(c).print, level + 1)
+          annex_names1(c, lbl, i.increment(c).print, level + 1)
         end
       end
 
-      def appendix_names1(clause, num, level, container)
-        num = labelled_autonum(@labels["appendix"], clause, num)
+      def appendix_names1(clause, parentnum, num, level, container)
+        #num = labelled_autonum(@labels["appendix"], num)
+        num = clause_number_semx(parentnum, clause, num)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
         i = Counter.new(0, prefix: num)
