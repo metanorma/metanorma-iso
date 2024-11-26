@@ -833,9 +833,7 @@ RSpec.describe IsoDoc do
             <clause>
               <title id="_">Warning for Stuff</title>
            <fmt-title depth="1">
-              <span class="fmt-caption-label">
                  <semx element="title" source="_">Warning for Stuff</semx>
-              </span>
            </fmt-title>
               <p>This document is not an ISO International Standard. It is distributed for review and
              comment. It is subject to change without notice and may not be referred to as

@@ -529,9 +529,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-          <span class="fmt-caption-label">
             <semx element="title" source="_">Clause 1</semx>
-         </span>
           </fmt-title>
         </clause>
       </sections>
@@ -580,9 +578,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            <span class="fmt-caption-label">
             <semx element="title" source="_">Clause 1</semx>
-         </span>
           </fmt-title>
         </clause>
       </sections>
@@ -631,9 +627,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            <span class="fmt-caption-label">
             <semx element="title" source="_">Clause 1</semx>
-         </span>
           </fmt-title>
         </clause>
       </sections>
@@ -675,9 +669,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         <clause displayorder='3'>
               <title id="_">Clause 1</title>
       <fmt-title depth="1">
-         <span class="fmt-caption-label">
             <semx element="title" source="_">Clause 1</semx>
-         </span>
       </fmt-title>
         </clause>
       </sections>
@@ -717,9 +709,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         <clause displayorder='3'>
               <title id="_">Clause 1</title>
       <fmt-title depth="1">
-         <span class="fmt-caption-label">
             <semx element="title" source="_">Clause 1</semx>
-         </span>
       </fmt-title>
         </clause>
       </sections>

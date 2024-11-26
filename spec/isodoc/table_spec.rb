@@ -96,9 +96,7 @@ RSpec.describe IsoDoc do
              <foreword displayorder="2">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
                       <semx element="title" source="_">Foreword</semx>
-                   </span>
                 </fmt-title>
                 <table alt="tool tip" id="tableD-1" summary="long desc" autonum="1">
                    <name id="_">
@@ -110,13 +108,13 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="tableD-1">1</semx>
+                         </span>
                          <span class="fmt-caption-delim"> — </span>
                          <semx element="name" source="_">
                             Repeatability and reproducibility of
                             <em>husked</em>
                             rice yield
                          </semx>
-                      </span>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
@@ -178,9 +176,7 @@ RSpec.describe IsoDoc do
                    <dl key="true">
                       <name id="_">Key</name>
                       <fmt-name>
-                         <span class="fmt-caption-label">
                             <semx element="name" source="_">Key</semx>
-                         </span>
                       </fmt-name>
                       <dt>Drago</dt>
                       <dd>A type of rice</dd>
@@ -215,23 +211,23 @@ RSpec.describe IsoDoc do
              <title id="_">
                 <strong>Annex</strong>
              </title>
-             <fmt-title>
-                <span class="fmt-caption-label">
-                   <strong>
-                      <span class="fmt-element-name">Annex</span>
-                      <semx element="autonum" source="Annex">A</semx>
-                   </strong>
-                   <br/>
-                   <span class="fmt-obligation">(informative)</span>
-                   <span class="fmt-caption-delim">
-                      <br/>
-                      <br/>
-                   </span>
-                   <semx element="title" source="_">
-                      <strong>Annex</strong>
-                   </semx>
-                </span>
-             </fmt-title>
+              <fmt-title>
+                 <strong>
+                    <span class="fmt-caption-label">
+                       <span class="fmt-element-name">Annex</span>
+                       <semx element="autonum" source="Annex">A</semx>
+                    </span>
+                 </strong>
+                 <br/>
+                 <span class="fmt-obligation">(informative)</span>
+                 <span class="fmt-caption-delim">
+                    <br/>
+                    <br/>
+                 </span>
+                 <semx element="title" source="_">
+                    <strong>Annex</strong>
+                 </semx>
+              </fmt-title>
              <fmt-xref-label>
                 <span class="fmt-element-name">Annex</span>
                 <semx element="autonum" source="Annex">A</semx>
@@ -244,9 +240,9 @@ RSpec.describe IsoDoc do
                       <semx element="autonum" source="Annex">A</semx>
                       <span class="fmt-autonum-delim">.</span>
                       <semx element="autonum" source="AnnexTable">1</semx>
+                      </span>
                       <span class="fmt-caption-delim"> — </span>
                       <semx element="name" source="_">Another table</semx>
-                   </span>
                 </fmt-name>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Table</span>
@@ -534,9 +530,7 @@ RSpec.describe IsoDoc do
              <foreword displayorder="2">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
                       <semx element="title" source="_">Foreword</semx>
-                   </span>
                 </fmt-title>
                 <table id="tableD-1" autonum="1">
                    <name id="_">
@@ -548,13 +542,13 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="tableD-1">1</semx>
+                         </span>
                          <span class="fmt-caption-delim"> — </span>
                          <semx element="name" source="_">
                             Repeatability and reproducibility of
                             <em>husked</em>
                             rice yield
                          </semx>
-                      </span>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>

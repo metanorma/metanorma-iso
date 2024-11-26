@@ -161,9 +161,7 @@ RSpec.describe IsoDoc do
              <foreword displayorder="2">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
                       <semx element="title" source="_">Foreword</semx>
-                   </span>
                 </fmt-title>
                 <p id="_">
                    <xref target="ISO712">
@@ -191,11 +189,11 @@ RSpec.describe IsoDoc do
                 <fmt-title depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="_">1</semx>
+                      </span>
                       <span class="fmt-caption-delim">
                          <tab/>
                       </span>
                       <semx element="title" source="_">Normative References</semx>
-                   </span>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -285,9 +283,7 @@ RSpec.describe IsoDoc do
              <references id="_" normative="false" obligation="informative" displayorder="4">
                 <title id="_">Bibliography</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
                       <semx element="title" source="_">Bibliography</semx>
-                   </span>
                 </fmt-title>
                 <bibitem id="ISBN" type="book">
                    <formattedref>
