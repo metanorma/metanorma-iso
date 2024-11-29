@@ -65,7 +65,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -77,11 +77,11 @@ RSpec.describe IsoDoc do
                 <fmt-title depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="terms_and_definitions">1</semx>
-                      </span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Terms and Definitions</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Terms and Definitions</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -122,6 +122,16 @@ RSpec.describe IsoDoc do
                          <span class="fmt-element-name">Example</span>
                          <semx element="autonum" source="_">1</semx>
                       </fmt-xref-label>
+                      <fmt-xref-label container="paddy1">
+                         <span class="fmt-xref-container">
+                            <semx element="autonum" source="terms_and_definitions">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="paddy1">1</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Example</span>
+                         <semx element="autonum" source="_">1</semx>
+                      </fmt-xref-label>
                       <p id="_">Foreign seeds, husks, bran, sand, dust.</p>
                       <ul>
                          <li>A</li>
@@ -135,6 +145,16 @@ RSpec.describe IsoDoc do
                          </span>
                       </fmt-name>
                       <fmt-xref-label>
+                         <span class="fmt-element-name">Example</span>
+                         <semx element="autonum" source="_">2</semx>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="paddy1">
+                         <span class="fmt-xref-container">
+                            <semx element="autonum" source="terms_and_definitions">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="paddy1">1</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
                          <span class="fmt-element-name">Example</span>
                          <semx element="autonum" source="_">2</semx>
                       </fmt-xref-label>
@@ -189,6 +209,15 @@ RSpec.describe IsoDoc do
                       <fmt-xref-label>
                          <span class="fmt-element-name">Example</span>
                       </fmt-xref-label>
+                      <fmt-xref-label container="paddy">
+                         <span class="fmt-xref-container">
+                            <semx element="autonum" source="terms_and_definitions">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="paddy">2</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Example</span>
+                      </fmt-xref-label>
                       <ul>
                          <li>A</li>
                       </ul>
@@ -206,6 +235,16 @@ RSpec.describe IsoDoc do
                          <span class="fmt-element-name">Note</span>
                          <semx element="autonum" source="_">1</semx>
                       </fmt-xref-label>
+                      <fmt-xref-label container="paddy">
+                         <span class="fmt-xref-container">
+                            <semx element="autonum" source="terms_and_definitions">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="paddy">2</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="_">1</semx>
+                      </fmt-xref-label>
                       <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
                    </termnote>
                    <termnote id="_" autonum="2">
@@ -218,6 +257,16 @@ RSpec.describe IsoDoc do
                          <span class="fmt-label-delim">: </span>
                       </fmt-name>
                       <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="_">2</semx>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="paddy">
+                         <span class="fmt-xref-container">
+                            <semx element="autonum" source="terms_and_definitions">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="paddy">2</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
                          <span class="fmt-element-name">Note</span>
                          <semx element="autonum" source="_">2</semx>
                       </fmt-xref-label>

@@ -68,58 +68,69 @@ RSpec.describe IsoDoc do
       INPUT
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:foreword")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+    output = <<~OUTPUT
        <foreword displayorder="1">
           <title id="_">Foreword</title>
           <fmt-title depth="1">
-                <semx element="title" source="_">Foreword</semx>
+             <semx element="title" source="_">Foreword</semx>
           </fmt-title>
           <p>
              <xref target="N">
-                <span class="fmt-element-name">Clause</span>
-                <semx element="autonum" source="scope">1</semx>
+                <span class="fmt-xref-container">
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="scope">1</semx>
+                </span>
                 <span class="fmt-comma">,</span>
                 <span class="fmt-element-name">Note</span>
              </xref>
              <xref target="note1">
-                <semx element="autonum" source="widgets">2</semx>
-                <span class="fmt-autonum-delim">.</span>
-                <semx element="autonum" source="widgets1">1</semx>
+                <span class="fmt-xref-container">
+                   <semx element="autonum" source="widgets">2</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="widgets1">1</semx>
+                </span>
                 <span class="fmt-comma">,</span>
                 <span class="fmt-element-name">Note</span>
                 <semx element="autonum" source="note1">1</semx>
              </xref>
              <xref target="note2">
-                <semx element="autonum" source="widgets">2</semx>
-                <span class="fmt-autonum-delim">.</span>
-                <semx element="autonum" source="widgets1">1</semx>
+                <span class="fmt-xref-container">
+                   <semx element="autonum" source="widgets">2</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="widgets1">1</semx>
+                </span>
                 <span class="fmt-comma">,</span>
                 <span class="fmt-element-name">Note</span>
                 <semx element="autonum" source="note2">2</semx>
              </xref>
              <xref target="AN">
-                <span class="fmt-element-name">Clause</span>
-                <semx element="autonum" source="annex1">A</semx>
-                <span class="fmt-autonum-delim">.</span>
-                <semx element="autonum" source="annex1a">1</semx>
+                <span class="fmt-xref-container">
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="annex1">A</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="annex1a">1</semx>
+                </span>
                 <span class="fmt-comma">,</span>
                 <span class="fmt-element-name">Note</span>
              </xref>
              <xref target="Anote1">
-                <span class="fmt-element-name">Clause</span>
-                <semx element="autonum" source="annex1">A</semx>
-                <span class="fmt-autonum-delim">.</span>
-                <semx element="autonum" source="annex1b">2</semx>
+                <span class="fmt-xref-container">
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="annex1">A</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="annex1b">2</semx>
+                </span>
                 <span class="fmt-comma">,</span>
                 <span class="fmt-element-name">Note</span>
                 <semx element="autonum" source="Anote1">1</semx>
              </xref>
              <xref target="Anote2">
-                <span class="fmt-element-name">Clause</span>
-                <semx element="autonum" source="annex1">A</semx>
-                <span class="fmt-autonum-delim">.</span>
-                <semx element="autonum" source="annex1b">2</semx>
+                <span class="fmt-xref-container">
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="annex1">A</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="annex1b">2</semx>
+                </span>
                 <span class="fmt-comma">,</span>
                 <span class="fmt-element-name">Note</span>
                 <semx element="autonum" source="Anote2">2</semx>
@@ -127,6 +138,8 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
       OUTPUT
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "cross-references sections" do
@@ -210,9 +223,7 @@ RSpec.describe IsoDoc do
       INPUT
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:foreword")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml))
-    .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+    output = <<~OUTPUT
       <foreword obligation="informative" displayorder="1">
           <title id="_">Foreword</title>
           <fmt-title depth="1">
@@ -290,8 +301,10 @@ RSpec.describe IsoDoc do
              </xref>
              <xref target="Q2">
                 <span class="citeapp">
+                <span class="fmt-xref-container">
                    <span class="fmt-element-name">Annex</span>
                    <semx element="autonum" source="P">A</semx>
+                   </span>
                    <span class="fmt-comma">,</span>
                    <span class="fmt-element-name">Appendix</span>
                    <semx element="autonum" source="Q2">1</semx>
@@ -305,6 +318,9 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
       OUTPUT
+    expect(Xml::C14n.format(strip_guid(xml.to_xml))
+    .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes section names" do

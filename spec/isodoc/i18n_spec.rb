@@ -430,6 +430,15 @@ RSpec.describe IsoDoc do
                     <span class="fmt-element-name">Appendix</span>
                     <semx element="autonum" source="Q2">1</semx>
                  </fmt-xref-label>
+                          <fmt-xref-label container="P">
+            <span class="fmt-xref-container">
+               <span class="fmt-element-name">Annex</span>
+               <semx element="autonum" source="P">A</semx>
+            </span>
+            <span class="fmt-comma">,</span>
+            <span class="fmt-element-name">Appendix</span>
+            <semx element="autonum" source="Q2">1</semx>
+         </fmt-xref-label>
               </appendix>
            </annex>
            <bibliography>
@@ -1306,6 +1315,15 @@ RSpec.describe IsoDoc do
                     <span class="fmt-element-name">Appendice</span>
                     <semx element="autonum" source="Q2">1</semx>
                  </fmt-xref-label>
+                          <fmt-xref-label container="P">
+            <span class="fmt-xref-container">
+               <span class="fmt-element-name">Annexe</span>
+               <semx element="autonum" source="P">A</semx>
+            </span>
+            <span class="fmt-comma">,</span>
+            <span class="fmt-element-name">Appendice</span>
+            <semx element="autonum" source="Q2">1</semx>
+         </fmt-xref-label>
               </appendix>
            </annex>
            <bibliography>
@@ -1868,6 +1886,15 @@ RSpec.describe IsoDoc do
                     <span class="fmt-element-name">Приложение</span>
                     <semx element="autonum" source="Q2">1</semx>
                  </fmt-xref-label>
+                          <fmt-xref-label container="P">
+            <span class="fmt-xref-container">
+               <span class="fmt-element-name">Дополнение</span>
+               <semx element="autonum" source="P">A</semx>
+            </span>
+            <span class="fmt-comma">,</span>
+            <span class="fmt-element-name">Приложение</span>
+            <semx element="autonum" source="Q2">1</semx>
+         </fmt-xref-label>
               </appendix>
            </annex>
            <bibliography>
@@ -2456,6 +2483,15 @@ RSpec.describe IsoDoc do
                     <span class="fmt-element-name">附录</span>
                     <semx element="autonum" source="Q2">1</semx>
                  </fmt-xref-label>
+         <fmt-xref-label container="P">
+            <span class="fmt-xref-container">
+               <span class="fmt-element-name">附件</span>
+               <semx element="autonum" source="P">A</semx>
+            </span>
+            <span class="fmt-comma">,</span>
+            <span class="fmt-element-name">附录</span>
+            <semx element="autonum" source="Q2">1</semx>
+         </fmt-xref-label>
               </appendix>
            </annex>
            <bibliography>
