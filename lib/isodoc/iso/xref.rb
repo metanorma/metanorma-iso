@@ -71,8 +71,12 @@ module IsoDoc
         end
       end
 
+      def fig_subfig_label(label, sublabel)
+        "#{label} #{sublabel}"
+      end
+
       def subfigure_anchor(elem, sublabel, label, klass, container: false)
-        figlabel = "#{label} #{sublabel}"
+        figlabel = fig_subfig_label(label, sublabel)
         @anchors[elem["id"]] = anchor_struct(
           figlabel, elem, @labels[klass] || klass.capitalize, klass,
           { unnumb: elem["unnumbered"], container: }
