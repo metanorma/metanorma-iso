@@ -149,6 +149,7 @@ module IsoDoc
             s.xpath(ns(".//appendix//ol")) - s.xpath(ns(".//ol//ol"))
           c = Counter.new
           notes.noblank.each do |n|
+            n["id"] ||= "_#{UUIDTools::UUID.random_create}"
             @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
                                               @labels["list"], "list",
                                               { unnumb: false, container: true })
