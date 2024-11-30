@@ -82,6 +82,7 @@ module IsoDoc
           { unnumb: elem["unnumbered"], container: }
         )
         if elem["unnumbered"] != "true"
+          # Dropping the parent figure label is specific to ISO
           @anchors[elem["id"]][:label] = sublabel
           @anchors[elem["id"]][:xref] = @anchors[elem.parent["id"]][:xref] +
             " " + semx(elem, sublabel) + delim_wrap(subfigure_delim)
