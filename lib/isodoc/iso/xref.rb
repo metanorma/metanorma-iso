@@ -62,7 +62,7 @@ module IsoDoc
 
       def figure_anchor(elem, sublabel, label, klass, container: false)
         if sublabel
-          subfigure_anchor(elem, sublabel, label, klass, container: false)
+          subfigure_anchor(elem, sublabel, label, klass, container: container)
         else
           @anchors[elem["id"]] = anchor_struct(
             label, elem, @labels[klass] || klass.capitalize, klass,
@@ -79,13 +79,15 @@ module IsoDoc
         figlabel = fig_subfig_label(label, sublabel)
         @anchors[elem["id"]] = anchor_struct(
           figlabel, elem, @labels[klass] || klass.capitalize, klass,
-          { unnumb: elem["unnumbered"], container: }
+          { unnumb: elem["unnumbered"] }
         )
         if elem["unnumbered"] != "true"
           # Dropping the parent figure label is specific to ISO
           @anchors[elem["id"]][:label] = sublabel
           @anchors[elem["id"]][:xref] = @anchors[elem.parent["id"]][:xref] +
             " " + semx(elem, sublabel) + delim_wrap(subfigure_delim)
+                    x = @anchors[elem.parent["id"]][:container] and
+          @anchors[elem["id"]][:container] = x
         end
       end
 

@@ -388,6 +388,9 @@ RSpec.describe IsoDoc do
               <xref target="AN"/>
               <xref target="Anote1"/>
               <xref target="Anote2"/>
+                     <xref target="AN1"/>
+        <xref target="Anote11"/>
+        <xref target="Anote21"/>
             </p>
           </foreword>
         </preface>
@@ -431,6 +434,18 @@ RSpec.describe IsoDoc do
             </figure>
           </clause>
         </annex>
+                          <bibliography><references normative="false" id="biblio"><title>Bibliographical Section</title>
+                  <figure id="AN1">
+            <figure id="Anote11">
+      <name>Split-it-right sample divider</name>
+      <image src="rice_images/rice_image1.png" id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png"/>
+      </figure>
+        <figure id="Anote21">
+      <name>Split-it-right sample divider</name>
+      <image src="rice_images/rice_image1.png" id="_8357ede4-6d44-4672-bac4-9a85e82ab7f0" mimetype="image/png"/>
+      </figure>
+      </figure>
+          </references></bibliography>
       </iso-standard>
     INPUT
     output = <<~OUTPUT
@@ -490,6 +505,40 @@ RSpec.describe IsoDoc do
                     <span class="fmt-autonum-delim">)</span>
                  </span>
               </xref>
+                    <xref target="AN1">
+         <span class="citefig">
+            <span class="fmt-xref-container">
+               <semx element="references" source="biblio">Bibliographical Section</semx>
+            </span>
+            <span class="fmt-comma">,</span>
+            <span class="fmt-element-name">Figure</span>
+            <semx element="autonum" source="AN1">1</semx>
+         </span>
+      </xref>
+      <xref target="Anote11">
+         <span class="citefig">
+            <span class="fmt-xref-container">
+               <semx element="references" source="biblio">Bibliographical Section</semx>
+            </span>
+            <span class="fmt-comma">,</span>
+            <span class="fmt-element-name">Figure</span>
+            <semx element="autonum" source="AN1">1</semx>
+            <semx element="autonum" source="Anote11">a</semx>
+            <span class="fmt-autonum-delim">)</span>
+         </span>
+      </xref>
+      <xref target="Anote21">
+         <span class="citefig">
+            <span class="fmt-xref-container">
+               <semx element="references" source="biblio">Bibliographical Section</semx>
+            </span>
+            <span class="fmt-comma">,</span>
+            <span class="fmt-element-name">Figure</span>
+            <semx element="autonum" source="AN1">1</semx>
+            <semx element="autonum" source="Anote21">b</semx>
+            <span class="fmt-autonum-delim">)</span>
+         </span>
+      </xref>
            </p>
         </foreword>
     OUTPUT
