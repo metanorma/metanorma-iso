@@ -94,6 +94,10 @@ module IsoDoc
         (subfignum + 96).chr
       end
 
+      def hierfigsep
+        " "
+      end
+
       def sequential_figure_names(clause, container: false)
         j = 0
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank
