@@ -74,7 +74,7 @@ module IsoDoc
 
       def locality_span_wrap(ret, type)
         type or return ret
-        m = /^(\s*)(?=\S)(.+?)(\s*)$/m.match(ret) or return ret
+        m = /\A(\s*)(?=\S)(.+?)(\s*)\Z/m.match(ret) or return ret
         ret = [m[1], m[2], m[3]]
         spanclass = LOCALITY2SPAN[type.to_sym] and
           ret[1] = "<span class='#{spanclass}'>#{ret[1]}</span>"
