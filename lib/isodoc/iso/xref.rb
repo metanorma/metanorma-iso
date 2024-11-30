@@ -57,7 +57,7 @@ module IsoDoc
       end
 
       def subfigure_delim
-        '<span class="fmt-autonum-delim">)</span>'
+        ")"
       end
 
       def figure_anchor(elem, sublabel, label, klass, container: false)
@@ -80,7 +80,7 @@ module IsoDoc
         if elem["unnumbered"] != "true"
           @anchors[elem["id"]][:label] = sublabel
           @anchors[elem["id"]][:xref] = @anchors[elem.parent["id"]][:xref] +
-            " " + semx(elem, sublabel) + subfigure_delim
+            " " + semx(elem, sublabel) + delim_wrap(subfigure_delim)
         end
       end
 
