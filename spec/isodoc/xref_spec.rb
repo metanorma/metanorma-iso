@@ -1116,6 +1116,7 @@ RSpec.describe IsoDoc do
               <xref target="Q1"/>
               <xref target="Q2"/>
               <xref target="Q3"/>
+              <xref target="Q4"/>
               <xref target="R"/></p>
           </foreword>
           <introduction id="B" obligation="informative">
@@ -1174,6 +1175,9 @@ RSpec.describe IsoDoc do
             <title>An Appendix</title>
             <clause id="Q3" inline-header="false" obligation="normative">
               <title>Appendix subclause</title>
+            <clause id="Q4" inline-header="false" obligation="normative">
+              <title>Appendix subclause</title>
+              </clause>
             </clause>
           </appendix>
         </annex>
@@ -1318,6 +1322,19 @@ RSpec.describe IsoDoc do
                 <span class="fmt-autonum-delim">.</span>
                 <semx element="autonum" source="Q3">1</semx>
              </xref>
+      <xref target="Q4">
+         <span class="fmt-xref-container">
+            <span class="fmt-element-name">Annex</span>
+            <semx element="autonum" source="P">A</semx>
+         </span>
+         <span class="fmt-comma">,</span>
+         <span class="fmt-element-name">Appendix</span>
+         <semx element="autonum" source="Q2">1</semx>
+         <span class="fmt-autonum-delim">.</span>
+         <semx element="autonum" source="Q3">1</semx>
+         <span class="fmt-autonum-delim">.</span>
+         <semx element="autonum" source="Q4">1</semx>
+      </xref>
              <xref target="R">
                 <span class="citesec">
                    <span class="fmt-element-name">Clause</span>

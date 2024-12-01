@@ -8,7 +8,7 @@ module IsoDoc
           @anchors[clause["id"]] = { label: nil, level: 1, type: "clause",
                                      xref: clause.at(ns("./title"))&.text }
         #i = Counter.new(0, prefix: "0")
-        i = Counter.new(0)
+        i = clause_counter(0)
         clause.xpath(ns("./clause")).each do |c|
           section_names1(c, semx(clause, "0"), i.increment(c).print, 2)
         end
@@ -20,7 +20,7 @@ module IsoDoc
       end
 
       def appendix_names(clause, _num)
-        i = Counter.new
+        i = clause_counter(0)
         clause.xpath(ns("./appendix")).each do |c|
           i.increment(c)
           num = semx(c, i.print)
@@ -29,7 +29,7 @@ module IsoDoc
             anchor_struct(i.print, c, @labels["appendix"],
                           "clause").merge(level: 2, subtype: "annex",
                                           container: clause["id"])
-          j = Counter.new(0)
+          j = clause_counter(0)
           c.xpath(ns("./clause | ./references")).each do |c1|
             appendix_names1(c1, lbl, j.increment(c1).print, 3, clause["id"])
           end
@@ -68,7 +68,7 @@ module IsoDoc
       def annex_names1(clause, parentnum, num, level)
         lbl = clause_number_semx(parentnum, clause, num)
         annex_name_anchors1(clause, lbl, level)
-        i = Counter.new(0)
+        i = clause_counter(0)
         clause.xpath(ns("./clause | ./references")).each do |c|
           annex_names1(c, lbl, i.increment(c).print, level + 1)
         end
@@ -79,9 +79,9 @@ module IsoDoc
         num = clause_number_semx(parentnum, clause, num)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
-        i = Counter.new(0, prefix: num)
+        i = clause_counter(0)
         clause.xpath(ns("./clause | ./references")).each do |c|
-          appendix_names1(c, i.increment(c).print, level + 1, container)
+          appendix_names1(c, num, i.increment(c).print, level + 1, container)
         end
       end
     end

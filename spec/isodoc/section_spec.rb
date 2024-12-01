@@ -65,6 +65,9 @@ RSpec.describe IsoDoc do
             <title>An Appendix</title>
             <clause id="Q2a" inline-header="false" obligation="normative">
               <title>Appendix subclause</title>
+            <clause id="Q2b" inline-header="false" obligation="normative">
+              <title>Appendix subsubclause</title>
+              </clause>
             </clause>
           </appendix>
           <references id="Q3" normative="false">
@@ -437,6 +440,44 @@ RSpec.describe IsoDoc do
                       <span class="fmt-autonum-delim">.</span>
                       <semx element="autonum" source="Q2a">1</semx>
                    </fmt-xref-label>
+                               <clause id="Q2b" inline-header="false" obligation="normative">
+               <title id="_">Appendix subsubclause</title>
+               <fmt-title depth="4">
+                  <span class="fmt-caption-label">
+                     <span class="fmt-element-name">Appendix</span>
+                     <semx element="autonum" source="Q2">1</semx>
+                     <span class="fmt-autonum-delim">.</span>
+                     <semx element="autonum" source="Q2a">1</semx>
+                     <span class="fmt-autonum-delim">.</span>
+                     <semx element="autonum" source="Q2b">1</semx>
+                  </span>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Appendix subsubclause</semx>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Appendix</span>
+                  <semx element="autonum" source="Q2">1</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="Q2a">1</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="Q2b">1</semx>
+               </fmt-xref-label>
+               <fmt-xref-label container="P">
+                  <span class="fmt-xref-container">
+                     <span class="fmt-element-name">Annex</span>
+                     <semx element="autonum" source="P">A</semx>
+                  </span>
+                  <span class="fmt-comma">,</span>
+                  <span class="fmt-element-name">Appendix</span>
+                  <semx element="autonum" source="Q2">1</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="Q2a">1</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="Q2b">1</semx>
+               </fmt-xref-label>
+            </clause>
                 </clause>
              </appendix>
              <references id="Q3" normative="false">
@@ -556,6 +597,9 @@ RSpec.describe IsoDoc do
                 <h2>Appendix 1&#160; An Appendix</h2>
                 <div id="Q2a">
                   <h3>Appendix 1.1&#160; Appendix subclause</h3>
+                  <div id="Q2b">
+                     <h4>Appendix 1.1.1  Appendix subsubclause</h4>
+                  </div>
                 </div>
               </div>
               <div>
@@ -702,6 +746,13 @@ RSpec.describe IsoDoc do
                   <h3>Appendix 1.1
                     <span style="mso-tab-count:1">&#160; </span>
                     Appendix subclause</h3>
+                                   <div id="Q2b">
+                  <h4>
+                     Appendix 1.1.1
+                     <span style="mso-tab-count:1">  </span>
+                     Appendix subsubclause
+                  </h4>
+               </div>
                 </div>
               </div>
               <div>
