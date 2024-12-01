@@ -1366,85 +1366,79 @@ RSpec.describe IsoDoc do
                <h1>2  Normative References</h1>
              </div>
                  <div id="D0">
-                    <h1>
-          Section 3
-           : 
-          General
-        </h1>
-                 </div>
-                 <div id="H">
-                    <h1>4  Terms, definitions, symbols and abbreviated terms</h1>
-                    <div id="I">
-                       <h2>4.1  Normal Terms</h2>
-                       <p class="TermNum" id="J">4.1.1</p>
-                       <p class="Terms" style="text-align:left;">
-                          <b>Term2</b>
-                       </p>
-                    </div>
-                    <div id="K">
-                       <h2>4.2  Symboles</h2>
-                       <div class="figdl">
-                          <dl>
-                             <dt>
-                                <p>Symbol</p>
-                             </dt>
-                             <dd>Definition</dd>
-                          </dl>
-                       </div>
-                    </div>
-                 </div>
-                 <div id="L" class="Symbols">
-                    <h1>5  Symboles</h1>
-                    <div class="figdl">
-                       <dl>
-                          <dt>
-                             <p>Symbol</p>
-                          </dt>
-                          <dd>Definition</dd>
-                       </dl>
-                    </div>
-                 </div>
-                 <div id="M">
-                    <h1>6  Clause 4</h1>
-                    <div id="N">
-                       <h2>6.1  Introduction</h2>
-                    </div>
-                    <div id="O">
-                       <h2>6.2  Clause 4.2</h2>
-                    </div>
-                 </div>
-                 <br/>
-                 <div id="P" class="Section3">
-                    <h1 class="Annex">
-                       <b>
-          Annexe A
-        </b>
-                       <br/>
-                       <span class="obligation">(normative)</span>
-                       <br/>
-                       <br/>
-                       <b>Annex</b>
-                    </h1>
-                    <div id="Q">
-                       <h2>A.1  Annex A.1</h2>
-                       <div id="Q1">
-                          <h3>A.1.1  Annex A.1a</h3>
-                       </div>
-                    </div>
-                    <div id="Q2">
-                       <h2>Appendice 1  An Appendix</h2>
-                    </div>
-                 </div>
-                 <br/>
-                 <div>
-                    <h1 class="Section3">Bibliography</h1>
-                    <div>
-                       <h2 class="Section3">Bibliography Subsection</h2>
-                    </div>
-                 </div>
-              </div>
-           </body>
-        </html>
+                   <h1>Section 3 :  General</h1>
+                </div>
+                <div id="H">
+                   <h1>4  Terms, definitions, symbols and abbreviated terms</h1>
+                   <div id="I">
+                      <h2>4.1  Normal Terms</h2>
+                      <p class="TermNum" id="J">4.1.1</p>
+                      <p class="Terms" style="text-align:left;">
+                         <b>Term2</b>
+                      </p>
+                   </div>
+                   <div id="K">
+                      <h2>4.2  Symboles</h2>
+                      <div class="figdl">
+                         <dl>
+                            <dt>
+                               <p>Symbol</p>
+                            </dt>
+                            <dd>Definition</dd>
+                         </dl>
+                      </div>
+                   </div>
+                </div>
+                <div id="L" class="Symbols">
+                   <h1>5  Symboles</h1>
+                   <div class="figdl">
+                      <dl>
+                         <dt>
+                            <p>Symbol</p>
+                         </dt>
+                         <dd>Definition</dd>
+                      </dl>
+                   </div>
+                </div>
+                <div id="M">
+                   <h1>6  Clause 4</h1>
+                   <div id="N">
+                      <h2>6.1  Introduction</h2>
+                   </div>
+                   <div id="O">
+                      <h2>6.2  Clause 4.2</h2>
+                   </div>
+                </div>
+                <br/>
+                <div id="P" class="Section3">
+                   <h1 class="Annex">
+                      <b>Annexe A</b>
+                      <br/>
+                      <span class="obligation">(normative)</span>
+                      <br/>
+                      <br/>
+                      <b>Annex</b>
+                   </h1>
+                   <div id="Q">
+                      <h2>A.1  Annex A.1</h2>
+                      <div id="Q1">
+                         <h3>A.1.1  Annex A.1a</h3>
+                      </div>
+                   </div>
+                   <div id="Q2">
+                      <h2>Appendice 1  An Appendix</h2>
+                   </div>
+                </div>
+                <br/>
+                <div>
+                   <h1 class="Section3">Bibliography</h1>
+                   <div>
+                      <h2 class="Section3">Bibliography Subsection</h2>
+                   </div>
+                </div>
+             </div>
+          </body>
+       </html>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -2540,14 +2534,7 @@ RSpec.describe IsoDoc do
               <i>Cereals and cereal products</i>.</p>
              </div>
              <div id="D0">
-                               <h1>
-
-           条
-           3
-           :　
-           一般的
-
-       </h1>
+                  <h1>条3:　一般的</h1>
              </div>
              <div id="H">
                <h1>4　Terms, definitions, symbols and abbreviated terms</h1>
@@ -2593,10 +2580,7 @@ RSpec.describe IsoDoc do
              <br/>
              <div id="P" class="Section3">
                <h1 class="Annex">
-                              <b>
-            附件
-            A
-          </b>
+                              <b>附件A</b>
                  <br/>
                  <span class="obligation">（规范性附录）</span>
                  <br/>
