@@ -1117,6 +1117,9 @@ RSpec.describe IsoDoc do
               <xref target="Q2"/>
               <xref target="Q3"/>
               <xref target="Q4"/>
+              <xref target="QQ"/>
+              <xref target="QQ1"/>
+              <xref target="QQ2"/>
               <xref target="R"/></p>
           </foreword>
           <introduction id="B" obligation="informative">
@@ -1181,6 +1184,11 @@ RSpec.describe IsoDoc do
             </clause>
           </appendix>
         </annex>
+       <annex id="QQ">
+       <terms id="QQ1">
+       <term id="QQ2"/>
+       </terms>
+       </annex>
         <bibliography>
           <references id="R" normative="true" obligation="informative">
             <title>Normative References</title>
@@ -1334,6 +1342,26 @@ RSpec.describe IsoDoc do
          <semx element="autonum" source="Q3">1</semx>
          <span class="fmt-autonum-delim">.</span>
          <semx element="autonum" source="Q4">1</semx>
+      </xref>
+            <xref target="QQ">
+         <span class="citeapp">
+            <span class="fmt-element-name">Annex</span>
+            <semx element="autonum" source="QQ">B</semx>
+         </span>
+      </xref>
+      <xref target="QQ1">
+         <span class="citeapp">
+            <span class="fmt-element-name">Annex</span>
+            <semx element="autonum" source="QQ1">B</semx>
+         </span>
+      </xref>
+      <xref target="QQ2">
+         <span class="citeapp">
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="QQ1">B</semx>
+            <span class="fmt-autonum-delim">.</span>
+            <semx element="autonum" source="QQ2">1</semx>
+         </span>
       </xref>
              <xref target="R">
                 <span class="citesec">
