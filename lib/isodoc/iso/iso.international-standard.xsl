@@ -1898,7 +1898,7 @@
 										</fo:table-cell>
 										<fo:table-cell number-columns-spanned="2" display-align="after" padding-left="6mm">
 											<fo:block font-size="19pt" font-weight="bold" line-height="1">
-												<xsl:if test="$stage &gt;=60">
+												<xsl:if test="$stage &gt;=60 and $substage != 0">
 													<xsl:attribute name="color"><xsl:value-of select="$color_red"/></xsl:attribute>
 												</xsl:if>
 												<xsl:value-of select="$docidentifierISO"/>
@@ -1924,7 +1924,7 @@
 														<xsl:call-template name="insertTitlesLangMain"/>
 													</fo:block>
 
-													<xsl:if test="not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM')">
+													<xsl:if test="not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stage-abbreviation = 'PRF')">
 														<xsl:for-each select="xalan:nodeset($lang_other)/lang">
 															<xsl:variable name="lang_other" select="."/>
 															<fo:block font-size="12pt" role="SKIP"><xsl:value-of select="$linebreak"/></fo:block>
@@ -1961,7 +1961,7 @@
 												</xsl:if>
 
 												<xsl:if test="$doctype = 'amendment'"> <!-- and not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM') -->
-													<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
+													<fo:block font-size="15pt" font-weight="bold" margin-bottom="3mm">
 														<xsl:value-of select="$doctype_uppercased"/>
 														<xsl:text> </xsl:text>
 														<xsl:variable name="amendment-number" select="/iso:iso-standard/iso:bibdata/iso:ext/iso:structuredidentifier/iso:project-number/@amendment"/>
@@ -2030,7 +2030,10 @@
 											<xsl:variable name="additionalNotes">
 												<xsl:call-template name="insertCoverPageAdditionalNotes"/>
 											</xsl:variable>
-											<xsl:if test="normalize-space($additionalNotes) != '' or $stage-abbreviation = 'PRF'">
+
+											<xsl:variable name="feedback_link" select="normalize-space(/iso:iso-standard/iso:metanorma-extension/iso:semantic-metadata/iso:feedback-link)"/>
+
+											<xsl:if test="normalize-space($additionalNotes) != ''"> <!--  or $stage-abbreviation = 'PRF' -->
 												<xsl:attribute name="display-align">center</xsl:attribute>
 												<fo:block>
 													<xsl:copy-of select="$additionalNotes"/>
@@ -2038,7 +2041,10 @@
 											</xsl:if>
 
 											<xsl:if test="$stage-abbreviation = 'PRF'">
-												<fo:block font-size="28pt" font-weight="bold">
+												<fo:block font-size="34pt" font-weight="bold">
+													<xsl:if test="normalize-space($additionalNotes) = '' and $feedback_link = ''">
+														<xsl:attribute name="margin-bottom">3.5mm</xsl:attribute>
+													</xsl:if>
 													<xsl:call-template name="add-letter-spacing">
 														<xsl:with-param name="text" select="$proof-text"/>
 														<xsl:with-param name="letter-spacing" select="0.65"/>
@@ -2047,7 +2053,6 @@
 											</xsl:if>
 
 											<fo:block>
-												<xsl:variable name="feedback_link" select="normalize-space(/iso:iso-standard/iso:metanorma-extension/iso:semantic-metadata/iso:feedback-link)"/>
 												<xsl:if test="$stage &gt;=60 and $feedback_link != ''">
 													<fo:block-container width="69mm" background-color="rgb(242,242,242)" display-align="before">
 														<fo:table table-layout="fixed" width="100%" role="SKIP">
@@ -2973,7 +2978,7 @@
 				<xsl:when test="($stage-abbreviation = 'IS' or $stage-abbreviation = 'D') and /iso:iso-standard/iso:bibdata/iso:date[@type = 'created']">
 					<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:date[@type = 'created']"/>
 				</xsl:when>
-				<xsl:when test="$stage-abbreviation = 'IS' or $stage-abbreviation = 'published'">
+				<xsl:when test="$stage-abbreviation = 'IS' or $stage-abbreviation = 'published' or $stage-abbreviation = 'PRF'">
 					<xsl:value-of select="substring(/iso:iso-standard/iso:bibdata/iso:version/iso:revision-date,1, 7)"/>
 				</xsl:when>
 			</xsl:choose>
@@ -5099,12 +5104,22 @@
 		<xsl:param name="font-weight" select="'bold'"/>
 		<xsl:attribute name="text-align">center</xsl:attribute>
 		<xsl:attribute name="line-height">1.1</xsl:attribute>
+		<xsl:if test="$stage-abbreviation = 'PRF'">
+			<fo:block font-size="10pt" font-weight="bold" text-align="center">
+				<xsl:value-of select="$proof-text"/>
+			</fo:block>
+		</xsl:if>
 		<fo:block font-size="9pt">
 			<!-- <xsl:call-template name="insertInterFont"/> -->
 			<xsl:value-of select="$copyrightText"/>
 		</fo:block>
-		<xsl:if test="$copyrightAbbrIEEE = ''"><fo:block> </fo:block></xsl:if>
-		<fo:block font-size="11pt" font-weight="{$font-weight}"><fo:page-number/></fo:block>
+		<xsl:if test="$copyrightAbbrIEEE = '' and $stage-abbreviation != 'PRF'"><fo:block> </fo:block></xsl:if>
+		<fo:block font-size="11pt" font-weight="{$font-weight}">
+			<xsl:if test="$stage-abbreviation = 'PRF'">
+				<xsl:attribute name="margin-top">1mm</xsl:attribute>
+			</xsl:if>
+			<fo:page-number/>
+		</fo:block>
 	</xsl:template>
 	<xsl:template name="insertLayoutVersionAttributesTop">
 		<xsl:param name="odd_or_even"/>
@@ -5320,7 +5335,7 @@
 							</fo:table-cell>
 							<fo:table-cell number-columns-spanned="2" text-align="right" display-align="after">
 								<fo:block font-size="16pt" font-weight="bold" margin-bottom="1mm" margin-right="1.5mm">
-									<xsl:if test="$stage &gt;=60">
+									<xsl:if test="$stage &gt;=60 and $substage != 0">
 										<xsl:attribute name="color"><xsl:value-of select="$color_red"/></xsl:attribute>
 									</xsl:if>
 									<xsl:text>iso.org</xsl:text>
@@ -5360,7 +5375,7 @@
 	<xsl:variable name="Image-ISO-Logo-SVG">
 		<xsl:variable name="logo_color">
 			<xsl:choose>
-				<xsl:when test="$stage &gt;=60"><xsl:value-of select="$color_red"/></xsl:when>
+				<xsl:when test="$stage &gt;=60 and $substage != 0"><xsl:value-of select="$color_red"/></xsl:when>
 				<xsl:otherwise>rgb(88,88,90)</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
