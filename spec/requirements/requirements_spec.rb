@@ -26,11 +26,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
              </clause>
              <foreword id="A" displayorder="2">
                 <title id="_">Preface</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Preface</semx>
-            </span>
-         </fmt-title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
                 <table id="A0" autonum="1">
                    <fmt-name>
                       <span class="fmt-caption-label">
@@ -48,16 +46,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="A1">2</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Permission</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
                       </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Permission</span>
+                            <semx element="autonum" source="A1">1</semx>
+                            <span class="fmt-caption-delim">: </span>
+                            <semx element="title" source="A1">First</semx>
+                         </span>
+                      </semx>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
@@ -89,12 +87,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 </table>
              </foreword>
              <introduction id="B" displayorder="3">
-                      <title id="_">Introduction</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Introduction</semx>
-            </span>
-         </fmt-title>
+                <title id="_">Introduction</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Introduction</semx>
+                </fmt-title>
                 <p>
                    <xref target="A0">
                       <span class="citetbl">
@@ -194,33 +190,31 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
-                      <title id="_">Preface</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Preface</semx>
-            </span>
-         </fmt-title>
+                <title id="_">Preface</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
                 <table id="A1" type="recommend" class="modspec" autonum="1">
                    <fmt-name>
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Permission</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
                       </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Permission</span>
+                            <semx element="autonum" source="A1">1</semx>
+                            <span class="fmt-caption-delim">: </span>
+                            <semx element="title" source="A1">First</semx>
+                         </span>
+                      </semx>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
@@ -299,6 +293,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                   <semx element="autonum" source="B">1</semx>
                                   <span class="fmt-autonum-delim">)</span>
                                </fmt-xref-label>
+                               <fmt-xref-label container="A">
+                                  <span class="fmt-xref-container">
+                                     <semx element="foreword" source="A">Preface</semx>
+                                  </span>
+                                  <span class="fmt-comma">,</span>
+                                  <span class="fmt-element-name">Formula</span>
+                                  <span class="fmt-autonum-delim">(</span>
+                                  <semx element="autonum" source="B">1</semx>
+                                  <span class="fmt-autonum-delim">)</span>
+                               </fmt-xref-label>
                                <stem type="AsciiMath">r/1 = 0</stem>
                             </formula>
                          </td>
@@ -369,9 +373,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
              <references id="_" obligation="informative" normative="false" displayorder="3">
                 <title id="_">Bibliography</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Bibliography</semx>
-                   </span>
+                   <semx element="title" source="_">Bibliography</semx>
                 </fmt-title>
                 <bibitem id="rfc2616" type="standard">
                    <formattedref>
@@ -810,33 +812,31 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
-                      <title id="_">Preface</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Preface</semx>
-            </span>
-         </fmt-title>
+                <title id="_">Preface</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
                 <table id="A1" type="recommendtest" class="modspec" autonum="1">
                    <fmt-name>
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Conformance test</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
                       </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Conformance test</span>
+                            <semx element="autonum" source="A1">1</semx>
+                            <span class="fmt-caption-delim">: </span>
+                            <semx element="title" source="A1">First</semx>
+                         </span>
+                      </semx>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
@@ -906,6 +906,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                   </span>
                                </fmt-name>
                                <fmt-xref-label>
+                                  <span class="fmt-element-name">Formula</span>
+                                  <span class="fmt-autonum-delim">(</span>
+                                  <semx element="autonum" source="B">1</semx>
+                                  <span class="fmt-autonum-delim">)</span>
+                               </fmt-xref-label>
+                               <fmt-xref-label container="A">
+                                  <span class="fmt-xref-container">
+                                     <semx element="foreword" source="A">Preface</semx>
+                                  </span>
+                                  <span class="fmt-comma">,</span>
                                   <span class="fmt-element-name">Formula</span>
                                   <span class="fmt-autonum-delim">(</span>
                                   <semx element="autonum" source="B">1</semx>
@@ -999,27 +1009,25 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
-                      <title id="_">Preface</title>
-         <fmt-title depth="1">
-            <span class="fmt-caption-label">
-               <semx element="title" source="_">Preface</semx>
-            </span>
-         </fmt-title>
+                <title id="_">Preface</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
                 <table id="A1" type="recommendtest" class="modspec" autonum="1">
                    <fmt-name>
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Abstract test</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
                       </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Abstract test</span>
+                            <semx element="autonum" source="A1">1</semx>
+                            <span class="fmt-caption-delim">: </span>
+                            <semx element="title" source="A1">First</semx>
+                         </span>
+                      </semx>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
@@ -1094,6 +1102,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                   <semx element="autonum" source="B">1</semx>
                                   <span class="fmt-autonum-delim">)</span>
                                </fmt-xref-label>
+                               <fmt-xref-label container="A">
+                                  <span class="fmt-xref-container">
+                                     <semx element="foreword" source="A">Preface</semx>
+                                  </span>
+                                  <span class="fmt-comma">,</span>
+                                  <span class="fmt-element-name">Formula</span>
+                                  <span class="fmt-autonum-delim">(</span>
+                                  <semx element="autonum" source="B">1</semx>
+                                  <span class="fmt-autonum-delim">)</span>
+                               </fmt-xref-label>
                                <stem type="AsciiMath">r/1 = 0</stem>
                             </formula>
                          </td>
@@ -1162,25 +1180,23 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
              <foreword id="A" displayorder="2">
                 <title id="_">Preface</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Preface</semx>
-                   </span>
+                   <semx element="title" source="_">Preface</semx>
                 </fmt-title>
                 <table id="A1" keep-with-next="true" keep-lines-together="true" type="recommendclass" class="modspec" autonum="1">
                    <fmt-name>
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Permissions class</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
                       </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Permissions class</span>
+                            <semx element="autonum" source="A1">1</semx>
+                            <span class="fmt-caption-delim">: </span>
+                            <semx element="title" source="A1">First</semx>
+                         </span>
+                      </semx>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
@@ -1246,16 +1262,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="B1">2</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Permission</span>
-                               <semx element="autonum" source="B1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="B1">Second</semx>
-                            </span>
-                         </semx>
                       </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Permission</span>
+                            <semx element="autonum" source="B1">1</semx>
+                            <span class="fmt-caption-delim">: </span>
+                            <semx element="title" source="B1">Second</semx>
+                         </span>
+                      </semx>
                    </fmt-name>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
@@ -1332,196 +1348,194 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
-             </clause>
-             <foreword id="A" displayorder="2">
-                <title id="_">Preface</title>
-                <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Preface</semx>
-                   </span>
-                </fmt-title>
-                <table id="A1" type="recommendclass" class="modspec" autonum="1">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Conformance class</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A1">1</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Conformance class</span>
-                      <semx element="autonum" source="A1">1</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifier</th>
-                         <td>
-                            <tt>/ogc/recommendation/wfs/2</tt>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Subject</th>
-                         <td>user</td>
-                      </tr>
-                      <tr>
-                         <th>Requirements class</th>
-                         <td>
-                            <xref target="B">
-                               <span class="fmt-element-name">Conformance class</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="B">Second</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Prerequisites</th>
-                         <td>
-                            /ss/584/2015/level/1
-                            <br/>
-                            <xref target="B">
-                               <span class="fmt-element-name">Conformance class</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="B">Second</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Indirect prerequisites</th>
-                         <td>
-                            <link target="http://www.example.com/"/>
-                            <br/>
-                            <xref target="B">
-                               <span class="fmt-element-name">Conformance class</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="B">Second</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Conformance tests</th>
-                         <td>
-                            <span class="fmt-caption-label">
-                               <xref target="B2">
-                                  <span class="fmt-element-name">Permission</span>
-                                  <semx element="autonum" source="B2">1</semx>
-                                  <span class="fmt-caption-delim">: </span>
-                                  <semx element="title" source="B2">Third</semx>
-                               </xref>
-                            </span>
-                            <br/>
-                            <span class="fmt-caption-label">
-                               <xref target="A3">
-                                  <span class="fmt-element-name">Requirement</span>
-                                  <semx element="autonum" source="A3">1-1</semx>
-                               </xref>
-                            </span>
-                            <br/>
-                            <span class="fmt-caption-label">
-                               <xref target="A4">
-                                  <span class="fmt-element-name">Recommendation</span>
-                                  <semx element="autonum" source="A4">1-1</semx>
-                               </xref>
-                            </span>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-                <table id="B" type="recommendclass" class="modspec" autonum="2">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="B">2</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Conformance class</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="B">Second</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="B">2</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Conformance class</span>
-                      <semx element="autonum" source="B">2</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifier</th>
-                         <td>
-                            <tt>ABC</tt>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-                <table id="B2" type="recommend" class="modspec" autonum="3">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="B2">3</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Permission</span>
-                               <semx element="autonum" source="B2">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="B2">Third</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="B2">3</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Permission</span>
-                      <semx element="autonum" source="B2">1</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifier</th>
-                         <td>
-                            <tt>Permission 1</tt>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Included in</th>
-                         <td>
-                            <xref target="A1">
-                               <span class="fmt-element-name">Conformance class</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-             </foreword>
-          </preface>
-       </ogc-standard>
+        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword id="A" displayorder="2">
+                 <title id="_">Preface</title>
+                 <fmt-title depth="1">
+                    <semx element="title" source="_">Preface</semx>
+                 </fmt-title>
+                 <table id="A1" type="recommendclass" class="modspec" autonum="1">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="A1">1</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Conformance class</span>
+                             <semx element="autonum" source="A1">1</semx>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="A1">First</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="A1">1</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Conformance class</span>
+                       <semx element="autonum" source="A1">1</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifier</th>
+                          <td>
+                             <tt>/ogc/recommendation/wfs/2</tt>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Subject</th>
+                          <td>user</td>
+                       </tr>
+                       <tr>
+                          <th>Requirements class</th>
+                          <td>
+                             <xref target="B">
+                                <span class="fmt-element-name">Conformance class</span>
+                                <semx element="autonum" source="B">2</semx>
+                                <span class="fmt-caption-delim">: </span>
+                                <semx element="title" source="B">Second</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Prerequisites</th>
+                          <td>
+                             /ss/584/2015/level/1
+                             <br/>
+                             <xref target="B">
+                                <span class="fmt-element-name">Conformance class</span>
+                                <semx element="autonum" source="B">2</semx>
+                                <span class="fmt-caption-delim">: </span>
+                                <semx element="title" source="B">Second</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Indirect prerequisites</th>
+                          <td>
+                             <link target="http://www.example.com/"/>
+                             <br/>
+                             <xref target="B">
+                                <span class="fmt-element-name">Conformance class</span>
+                                <semx element="autonum" source="B">2</semx>
+                                <span class="fmt-caption-delim">: </span>
+                                <semx element="title" source="B">Second</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Conformance tests</th>
+                          <td>
+                             <span class="fmt-caption-label">
+                                <xref target="B2">
+                                   <span class="fmt-element-name">Permission</span>
+                                   <semx element="autonum" source="B2">1</semx>
+                                   <span class="fmt-caption-delim">: </span>
+                                   <semx element="title" source="B2">Third</semx>
+                                </xref>
+                             </span>
+                             <br/>
+                             <span class="fmt-caption-label">
+                                <xref target="A3">
+                                   <span class="fmt-element-name">Requirement</span>
+                                   <semx element="autonum" source="A3">1-1</semx>
+                                </xref>
+                             </span>
+                             <br/>
+                             <span class="fmt-caption-label">
+                                <xref target="A4">
+                                   <span class="fmt-element-name">Recommendation</span>
+                                   <semx element="autonum" source="A4">1-1</semx>
+                                </xref>
+                             </span>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+                 <table id="B" type="recommendclass" class="modspec" autonum="2">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="B">2</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Conformance class</span>
+                             <semx element="autonum" source="B">2</semx>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="B">Second</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="B">2</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Conformance class</span>
+                       <semx element="autonum" source="B">2</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifier</th>
+                          <td>
+                             <tt>ABC</tt>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+                 <table id="B2" type="recommend" class="modspec" autonum="3">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="B2">3</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Permission</span>
+                             <semx element="autonum" source="B2">1</semx>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="B2">Third</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="B2">3</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Permission</span>
+                       <semx element="autonum" source="B2">1</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifier</th>
+                          <td>
+                             <tt>Permission 1</tt>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Included in</th>
+                          <td>
+                             <xref target="A1">
+                                <span class="fmt-element-name">Conformance class</span>
+                                <semx element="autonum" source="A1">1</semx>
+                                <span class="fmt-caption-delim">: </span>
+                                <semx element="title" source="A1">First</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+              </foreword>
+           </preface>
+        </ogc-standard>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -1567,199 +1581,197 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-          <bibdata>
-             <language current="true">fr</language>
-          </bibdata>
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Sommaire</fmt-title>
-             </clause>
-             <foreword id="A" displayorder="2">
-                <title id="_">Preface</title>
-                <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Preface</semx>
-                   </span>
-                </fmt-title>
-                <table id="A1" type="recommendclass" class="modspec" autonum="1">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Tableau</span>
-                         <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Classe de confirmité</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim"> : </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Tableau</span>
-                      <semx element="autonum" source="A1">1</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Classe de confirmité</span>
-                      <semx element="autonum" source="A1">1</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifiant</th>
-                         <td>
-                            <tt>/ogc/recommendation/wfs/2</tt>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Sujet</th>
-                         <td>user</td>
-                      </tr>
-                      <tr>
-                         <th>Classe d’exigences</th>
-                         <td>
-                            <xref target="B">
-                               <span class="fmt-element-name">Classe de confirmité</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim"> : </span>
-                               <semx element="title" source="B">Second</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Prérequis</th>
-                         <td>
-                            /ss/584/2015/level/1
-                            <br/>
-                            <xref target="B">
-                               <span class="fmt-element-name">Classe de confirmité</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim"> : </span>
-                               <semx element="title" source="B">Second</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Prérequis indirect</th>
-                         <td>
-                            <link target="http://www.example.com/"/>
-                            <br/>
-                            <xref target="B">
-                               <span class="fmt-element-name">Classe de confirmité</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim"> : </span>
-                               <semx element="title" source="B">Second</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Tests de conformité</th>
-                         <td>
-                            <span class="fmt-caption-label">
-                               <xref target="B2">
-                                  <span class="fmt-element-name">Autorisation</span>
-                                  <semx element="autonum" source="B2">1</semx>
-                                  <span class="fmt-caption-delim"> : </span>
-                                  <semx element="title" source="B2">Third</semx>
-                               </xref>
-                            </span>
-                            <br/>
-                            <span class="fmt-caption-label">
-                               <xref target="A3">
-                                  <span class="fmt-element-name">Exigence</span>
-                                  <semx element="autonum" source="A3">1-1</semx>
-                               </xref>
-                            </span>
-                            <br/>
-                            <span class="fmt-caption-label">
-                               <xref target="A4">
-                                  <span class="fmt-element-name">Recommandation</span>
-                                  <semx element="autonum" source="A4">1-1</semx>
-                               </xref>
-                            </span>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-                <table id="B" type="recommendclass" class="modspec" autonum="2">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Tableau</span>
-                         <semx element="autonum" source="B">2</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Classe de confirmité</span>
-                               <semx element="autonum" source="B">2</semx>
-                               <span class="fmt-caption-delim"> : </span>
-                               <semx element="title" source="B">Second</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Tableau</span>
-                      <semx element="autonum" source="B">2</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Classe de confirmité</span>
-                      <semx element="autonum" source="B">2</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifiant</th>
-                         <td>
-                            <tt>ABC</tt>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-                <table id="B2" type="recommend" class="modspec" autonum="3">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Tableau</span>
-                         <semx element="autonum" source="B2">3</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Autorisation</span>
-                               <semx element="autonum" source="B2">1</semx>
-                               <span class="fmt-caption-delim"> : </span>
-                               <semx element="title" source="B2">Third</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Tableau</span>
-                      <semx element="autonum" source="B2">3</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Autorisation</span>
-                      <semx element="autonum" source="B2">1</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifiant</th>
-                         <td>
-                            <tt>Permission 1</tt>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Inclus dans</th>
-                         <td>
-                            <xref target="A1">
-                               <span class="fmt-element-name">Classe de confirmité</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim"> : </span>
-                               <semx element="title" source="A1">First</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-             </foreword>
-          </preface>
-       </ogc-standard>
+        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+           <bibdata>
+              <language current="true">fr</language>
+           </bibdata>
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Sommaire</fmt-title>
+              </clause>
+              <foreword id="A" displayorder="2">
+                 <title id="_">Preface</title>
+                 <fmt-title depth="1">
+                    <semx element="title" source="_">Preface</semx>
+                 </fmt-title>
+                 <table id="A1" type="recommendclass" class="modspec" autonum="1">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Tableau</span>
+                          <semx element="autonum" source="A1">1</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Classe de confirmité</span>
+                             <semx element="autonum" source="A1">1</semx>
+                             <span class="fmt-caption-delim"> : </span>
+                             <semx element="title" source="A1">First</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Tableau</span>
+                       <semx element="autonum" source="A1">1</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Classe de confirmité</span>
+                       <semx element="autonum" source="A1">1</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifiant</th>
+                          <td>
+                             <tt>/ogc/recommendation/wfs/2</tt>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Sujet</th>
+                          <td>user</td>
+                       </tr>
+                       <tr>
+                          <th>Classe d’exigences</th>
+                          <td>
+                             <xref target="B">
+                                <span class="fmt-element-name">Classe de confirmité</span>
+                                <semx element="autonum" source="B">2</semx>
+                                <span class="fmt-caption-delim"> : </span>
+                                <semx element="title" source="B">Second</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Prérequis</th>
+                          <td>
+                             /ss/584/2015/level/1
+                             <br/>
+                             <xref target="B">
+                                <span class="fmt-element-name">Classe de confirmité</span>
+                                <semx element="autonum" source="B">2</semx>
+                                <span class="fmt-caption-delim"> : </span>
+                                <semx element="title" source="B">Second</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Prérequis indirect</th>
+                          <td>
+                             <link target="http://www.example.com/"/>
+                             <br/>
+                             <xref target="B">
+                                <span class="fmt-element-name">Classe de confirmité</span>
+                                <semx element="autonum" source="B">2</semx>
+                                <span class="fmt-caption-delim"> : </span>
+                                <semx element="title" source="B">Second</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Tests de conformité</th>
+                          <td>
+                             <span class="fmt-caption-label">
+                                <xref target="B2">
+                                   <span class="fmt-element-name">Autorisation</span>
+                                   <semx element="autonum" source="B2">1</semx>
+                                   <span class="fmt-caption-delim"> : </span>
+                                   <semx element="title" source="B2">Third</semx>
+                                </xref>
+                             </span>
+                             <br/>
+                             <span class="fmt-caption-label">
+                                <xref target="A3">
+                                   <span class="fmt-element-name">Exigence</span>
+                                   <semx element="autonum" source="A3">1-1</semx>
+                                </xref>
+                             </span>
+                             <br/>
+                             <span class="fmt-caption-label">
+                                <xref target="A4">
+                                   <span class="fmt-element-name">Recommandation</span>
+                                   <semx element="autonum" source="A4">1-1</semx>
+                                </xref>
+                             </span>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+                 <table id="B" type="recommendclass" class="modspec" autonum="2">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Tableau</span>
+                          <semx element="autonum" source="B">2</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Classe de confirmité</span>
+                             <semx element="autonum" source="B">2</semx>
+                             <span class="fmt-caption-delim"> : </span>
+                             <semx element="title" source="B">Second</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Tableau</span>
+                       <semx element="autonum" source="B">2</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Classe de confirmité</span>
+                       <semx element="autonum" source="B">2</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifiant</th>
+                          <td>
+                             <tt>ABC</tt>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+                 <table id="B2" type="recommend" class="modspec" autonum="3">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Tableau</span>
+                          <semx element="autonum" source="B2">3</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Autorisation</span>
+                             <semx element="autonum" source="B2">1</semx>
+                             <span class="fmt-caption-delim"> : </span>
+                             <semx element="title" source="B2">Third</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Tableau</span>
+                       <semx element="autonum" source="B2">3</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Autorisation</span>
+                       <semx element="autonum" source="B2">1</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifiant</th>
+                          <td>
+                             <tt>Permission 1</tt>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Inclus dans</th>
+                          <td>
+                             <xref target="A1">
+                                <span class="fmt-element-name">Classe de confirmité</span>
+                                <semx element="autonum" source="A1">1</semx>
+                                <span class="fmt-caption-delim"> : </span>
+                                <semx element="title" source="A1">First</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+              </foreword>
+           </preface>
+        </ogc-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
        .convert("test", input, true)
@@ -1793,121 +1805,119 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
-             </clause>
-             <foreword id="A" displayorder="2">
-                <title id="_">Preface</title>
-                <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Preface</semx>
-                   </span>
-                </fmt-title>
-                <table id="A1" type="recommendclass" class="modspec" autonum="1">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Requirements class</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A1">1</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Requirements class</span>
-                      <semx element="autonum" source="A1">1</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifier</th>
-                         <td>
-                            <tt>/ogc/recommendation/wfs/2</tt>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Target type</th>
-                         <td>user</td>
-                      </tr>
-                      <tr>
-                         <th>Prerequisites</th>
-                         <td>
-                            /ss/584/2015/level/1
-                            <br/>
-                            /ss/584/2015/level/2
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Provision</th>
-                         <td>
-                            <span class="fmt-caption-label">
-                               <xref target="A5">
-                                  <span class="fmt-element-name">Permission</span>
-                                  <semx element="autonum" source="A5">1</semx>
-                                  <span class="fmt-caption-delim">: </span>
-                                  <semx element="title" source="A5">Second</semx>
-                               </xref>
-                            </span>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-                <table id="A5" type="recommend" class="modspec" autonum="2">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A5">2</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Permission</span>
-                               <semx element="autonum" source="A5">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A5">Second</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A5">2</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Permission</span>
-                      <semx element="autonum" source="A5">1</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifier</th>
-                         <td>
-                            <tt>Permission 1</tt>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Included in</th>
-                         <td>
-                            <xref target="A1">
-                               <span class="fmt-element-name">Requirements class</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </xref>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-             </foreword>
-          </preface>
-       </ogc-standard>
+        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword id="A" displayorder="2">
+                 <title id="_">Preface</title>
+                 <fmt-title depth="1">
+                    <semx element="title" source="_">Preface</semx>
+                 </fmt-title>
+                 <table id="A1" type="recommendclass" class="modspec" autonum="1">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="A1">1</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Requirements class</span>
+                             <semx element="autonum" source="A1">1</semx>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="A1">First</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="A1">1</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Requirements class</span>
+                       <semx element="autonum" source="A1">1</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifier</th>
+                          <td>
+                             <tt>/ogc/recommendation/wfs/2</tt>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Target type</th>
+                          <td>user</td>
+                       </tr>
+                       <tr>
+                          <th>Prerequisites</th>
+                          <td>
+                             /ss/584/2015/level/1
+                             <br/>
+                             /ss/584/2015/level/2
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Provision</th>
+                          <td>
+                             <span class="fmt-caption-label">
+                                <xref target="A5">
+                                   <span class="fmt-element-name">Permission</span>
+                                   <semx element="autonum" source="A5">1</semx>
+                                   <span class="fmt-caption-delim">: </span>
+                                   <semx element="title" source="A5">Second</semx>
+                                </xref>
+                             </span>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+                 <table id="A5" type="recommend" class="modspec" autonum="2">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="A5">2</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Permission</span>
+                             <semx element="autonum" source="A5">1</semx>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="A5">Second</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="A5">2</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Permission</span>
+                       <semx element="autonum" source="A5">1</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifier</th>
+                          <td>
+                             <tt>Permission 1</tt>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Included in</th>
+                          <td>
+                             <xref target="A1">
+                                <span class="fmt-element-name">Requirements class</span>
+                                <semx element="autonum" source="A1">1</semx>
+                                <span class="fmt-caption-delim">: </span>
+                                <semx element="title" source="A1">First</semx>
+                             </xref>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+              </foreword>
+           </preface>
+        </ogc-standard>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -1945,96 +1955,94 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
-             </clause>
-             <foreword id="A" displayorder="2">
-                <title id="_">Preface</title>
-                <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Preface</semx>
-                   </span>
-                </fmt-title>
-                <table id="A1" type="recommendclass" class="modspec" autonum="1">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A1">1</semx>
-                         <span class="fmt-caption-delim"> — </span>
-                         <semx element="name" source="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Recommendations class</span>
-                               <semx element="autonum" source="A1">1</semx>
-                               <span class="fmt-caption-delim">: </span>
-                               <semx element="title" source="A1">First</semx>
-                            </span>
-                         </semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A1">1</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Recommendations class</span>
-                      <semx element="autonum" source="A1">1</semx>
-                   </fmt-xref-label>
-                   <tbody>
-                      <tr>
-                         <th>Identifier</th>
-                         <td>
-                            <tt>/ogc/recommendation/wfs/2</tt>
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Target type</th>
-                         <td>user</td>
-                      </tr>
-                      <tr>
-                         <th>Prerequisites</th>
-                         <td>
-                            /ss/584/2015/level/1
-                            <br/>
-                            /ss/584/2015/level/2
-                         </td>
-                      </tr>
-                      <tr>
-                         <th>Provisions</th>
-                         <td>
-                            <span class="fmt-caption-label">
-                               <xref target="A2">
-                                  <span class="fmt-element-name">Permission</span>
-                                  <semx element="autonum" source="A2">1-1</semx>
-                                  <span class="fmt-caption-delim">: </span>
-                                  <semx element="title" source="A2">First #1</semx>
-                               </xref>
-                            </span>
-                            <br/>
-                            <span class="fmt-caption-label">
-                               <xref target="A3">
-                                  <span class="fmt-element-name">Requirement</span>
-                                  <semx element="autonum" source="A3">1-1</semx>
-                                  <span class="fmt-caption-delim">: </span>
-                                  <semx element="title" source="A3">First #2</semx>
-                               </xref>
-                            </span>
-                            <br/>
-                            <span class="fmt-caption-label">
-                               <xref target="A4">
-                                  <span class="fmt-element-name">Recommendation</span>
-                                  <semx element="autonum" source="A4">1-1</semx>
-                                  <span class="fmt-caption-delim">: </span>
-                                  <semx element="title" source="A4">First #3</semx>
-                               </xref>
-                            </span>
-                         </td>
-                      </tr>
-                   </tbody>
-                </table>
-             </foreword>
-          </preface>
-       </ogc-standard>
+        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+              </clause>
+              <foreword id="A" displayorder="2">
+                 <title id="_">Preface</title>
+                 <fmt-title depth="1">
+                    <semx element="title" source="_">Preface</semx>
+                 </fmt-title>
+                 <table id="A1" type="recommendclass" class="modspec" autonum="1">
+                    <fmt-name>
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="A1">1</semx>
+                       </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Recommendations class</span>
+                             <semx element="autonum" source="A1">1</semx>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="A1">First</semx>
+                          </span>
+                       </semx>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="A1">1</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Recommendations class</span>
+                       <semx element="autonum" source="A1">1</semx>
+                    </fmt-xref-label>
+                    <tbody>
+                       <tr>
+                          <th>Identifier</th>
+                          <td>
+                             <tt>/ogc/recommendation/wfs/2</tt>
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Target type</th>
+                          <td>user</td>
+                       </tr>
+                       <tr>
+                          <th>Prerequisites</th>
+                          <td>
+                             /ss/584/2015/level/1
+                             <br/>
+                             /ss/584/2015/level/2
+                          </td>
+                       </tr>
+                       <tr>
+                          <th>Provisions</th>
+                          <td>
+                             <span class="fmt-caption-label">
+                                <xref target="A2">
+                                   <span class="fmt-element-name">Permission</span>
+                                   <semx element="autonum" source="A2">1-1</semx>
+                                   <span class="fmt-caption-delim">: </span>
+                                   <semx element="title" source="A2">First #1</semx>
+                                </xref>
+                             </span>
+                             <br/>
+                             <span class="fmt-caption-label">
+                                <xref target="A3">
+                                   <span class="fmt-element-name">Requirement</span>
+                                   <semx element="autonum" source="A3">1-1</semx>
+                                   <span class="fmt-caption-delim">: </span>
+                                   <semx element="title" source="A3">First #2</semx>
+                                </xref>
+                             </span>
+                             <br/>
+                             <span class="fmt-caption-label">
+                                <xref target="A4">
+                                   <span class="fmt-element-name">Recommendation</span>
+                                   <semx element="autonum" source="A4">1-1</semx>
+                                   <span class="fmt-caption-delim">: </span>
+                                   <semx element="title" source="A4">First #3</semx>
+                                </xref>
+                             </span>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+              </foreword>
+           </preface>
+        </ogc-standard>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -2096,32 +2104,29 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
            <preface>
               <clause type="toc" id="_" displayorder="1">
                  <fmt-title depth="1">Contents</fmt-title>
               </clause>
               <foreword id="A0" displayorder="2">
-                      <title id="_">Preface</title>
-        <fmt-title depth="1">
-           <span class="fmt-caption-label">
-              <semx element="title" source="_">Preface</semx>
-           </span>
-        </fmt-title>
+                 <title id="_">Preface</title>
+                 <fmt-title depth="1">
+                    <semx element="title" source="_">Preface</semx>
+                 </fmt-title>
                  <table id="A" unnumbered="true" type="recommend" class="modspec">
                     <fmt-name>
                        <span class="fmt-caption-label">
                           <span class="fmt-element-name">Table</span>
-                          <semx element="autonum" source="A"/>
-                          <span class="fmt-caption-delim"> — </span>
-                          <semx element="name" source="_">
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Requirement</span>
-                                <span class="fmt-caption-delim">: </span>
-                                <semx element="title" source="A">A New Requirement</semx>
-                             </span>
-                          </semx>
                        </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Requirement</span>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="A">A New Requirement</semx>
+                          </span>
+                       </semx>
                     </fmt-name>
                     <fmt-xref-label>
                        <span class="fmt-element-name">Table</span>
@@ -2169,6 +2174,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                    </span>
                                 </fmt-name>
                                 <fmt-xref-label>
+                                   <span class="fmt-element-name">Formula</span>
+                                   <span class="fmt-autonum-delim">(</span>
+                                   <semx element="autonum" source="B">1</semx>
+                                   <span class="fmt-autonum-delim">)</span>
+                                </fmt-xref-label>
+                                <fmt-xref-label container="A0">
+                                   <span class="fmt-xref-container">
+                                      <semx element="foreword" source="A0">Preface</semx>
+                                   </span>
+                                   <span class="fmt-comma">,</span>
                                    <span class="fmt-element-name">Formula</span>
                                    <span class="fmt-autonum-delim">(</span>
                                    <semx element="autonum" source="B">1</semx>
@@ -2255,33 +2270,31 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
            <preface>
               <clause type="toc" id="_" displayorder="1">
                  <fmt-title depth="1">Contents</fmt-title>
               </clause>
               <foreword id="A" displayorder="2">
-                      <title id="_">Preface</title>
-        <fmt-title depth="1">
-           <span class="fmt-caption-label">
-              <semx element="title" source="_">Preface</semx>
-           </span>
-        </fmt-title>
+                 <title id="_">Preface</title>
+                 <fmt-title depth="1">
+                    <semx element="title" source="_">Preface</semx>
+                 </fmt-title>
                  <table id="B" type="recommend" class="modspec" autonum="1">
                     <fmt-name>
                        <span class="fmt-caption-label">
                           <span class="fmt-element-name">Table</span>
                           <semx element="autonum" source="B">1</semx>
-                          <span class="fmt-caption-delim"> — </span>
-                          <semx element="name" source="_">
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Recommendation</span>
-                                <semx element="autonum" source="B">1</semx>
-                                <span class="fmt-caption-delim">: </span>
-                                <semx element="title" source="B">First</semx>
-                             </span>
-                          </semx>
                        </span>
+                       <span class="fmt-caption-delim"> — </span>
+                       <semx element="name" source="_">
+                          <span class="fmt-caption-label">
+                             <span class="fmt-element-name">Recommendation</span>
+                             <semx element="autonum" source="B">1</semx>
+                             <span class="fmt-caption-delim">: </span>
+                             <semx element="title" source="B">First</semx>
+                          </span>
+                       </semx>
                     </fmt-name>
                     <fmt-xref-label>
                        <span class="fmt-element-name">Table</span>
@@ -2329,6 +2342,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                    </span>
                                 </fmt-name>
                                 <fmt-xref-label>
+                                   <span class="fmt-element-name">Formula</span>
+                                   <span class="fmt-autonum-delim">(</span>
+                                   <semx element="autonum" source="C">1</semx>
+                                   <span class="fmt-autonum-delim">)</span>
+                                </fmt-xref-label>
+                                <fmt-xref-label container="A">
+                                   <span class="fmt-xref-container">
+                                      <semx element="foreword" source="A">Preface</semx>
+                                   </span>
+                                   <span class="fmt-comma">,</span>
                                    <span class="fmt-element-name">Formula</span>
                                    <span class="fmt-autonum-delim">(</span>
                                    <semx element="autonum" source="C">1</semx>
