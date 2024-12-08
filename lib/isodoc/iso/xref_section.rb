@@ -7,9 +7,10 @@ module IsoDoc
         clause.at(ns("./clause")) and
           @anchors[clause["id"]] = { label: nil, level: 1, type: "clause",
                                      xref: clause.at(ns("./title"))&.text }
-        i = Counter.new(0, prefix: "0")
+        #i = Counter.new(0, prefix: "0")
+        i = clause_counter(0)
         clause.xpath(ns("./clause")).each do |c|
-          section_names1(c, i.increment(c).print, 2)
+          section_names1(c, semx(clause, "0"), i.increment(c).print, 2)
         end
       end
 
@@ -19,17 +20,18 @@ module IsoDoc
       end
 
       def appendix_names(clause, _num)
-        i = Counter.new
+        i = clause_counter(0)
         clause.xpath(ns("./appendix")).each do |c|
           i.increment(c)
+          num = semx(c, i.print)
+          lbl = labelled_autonum(@labels["appendix"], num)
           @anchors[c["id"]] =
-            anchor_struct(i.print, nil, @labels["appendix"],
+            anchor_struct(i.print, c, @labels["appendix"],
                           "clause").merge(level: 2, subtype: "annex",
                                           container: clause["id"])
-          j = Counter.new(0, prefix: i.print)
+          j = clause_counter(0)
           c.xpath(ns("./clause | ./references")).each do |c1|
-            lbl = "#{@labels['appendix']} #{j.increment(c1).print}"
-            appendix_names1(c1, l10n(lbl), 3, clause["id"])
+            appendix_names1(c1, lbl, j.increment(c1).print, 3, clause["id"])
           end
         end
       end
@@ -38,47 +40,40 @@ module IsoDoc
       # retaining subtype for the semantics
       def section_name_anchors(clause, num, level)
         if clause["type"] == "section"
+          xref = labelled_autonum(@labels["section"], num)
+          label = labelled_autonum(@labels["section"], num)
           @anchors[clause["id"]] =
-            { label: l10n("#{@labels['section']} #{num}"),
-              xref: l10n("#{@labels['section']} #{num}"),
-              title: clause_title(clause), level: level, type: "clause",
-              elem: @labels["section"] }
+            { label:, xref:, elem: @labels["section"],
+              title: clause_title(clause), level: level, type: "clause" }
         elsif level > 1
+          #num = semx(clause, num)
           @anchors[clause["id"]] =
             { label: num, level: level, xref: num, subtype: "clause" }
         else super end
       end
 
       def annex_name_anchors1(clause, num, level)
+        level == 1 and return annex_name_anchors(clause, num, level)
         ret = { label: num, level: level, subtype: "annex" }
         ret2 = if level == 2
-                 { xref: l10n("#{@labels['clause']} #{num}"),
+                 xref = labelled_autonum(@labels["clause"], num)
+                 { xref:, # l10n("#{@labels['clause']} #{num}"),
                    elem: @labels["clause"] }
                else
-                 { xref: num }
+                 { xref: semx(clause, num) }
                end
         @anchors[clause["id"]] = ret.merge(ret2)
       end
 
-      def annex_names1(clause, num, level)
-        annex_name_anchors1(clause, num, level)
-        i = Counter.new(0, prefix: num)
-        clause.xpath(ns("./clause | ./references")).each do |c|
-          annex_names1(c, i.increment(c).print, level + 1)
-        end
-      end
-
-      def appendix_names1(clause, num, level, container)
+      def appendix_names1(clause, parentnum, num, level, container)
+        #num = labelled_autonum(@labels["appendix"], num)
+        num = clause_number_semx(parentnum, clause, num)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
-        i = Counter.new(0, prefix: num)
+        i = clause_counter(0)
         clause.xpath(ns("./clause | ./references")).each do |c|
-          appendix_names1(c, i.increment(c).print, level + 1, container)
+          appendix_names1(c, num, i.increment(c).print, level + 1, container)
         end
-      end
-
-      def annex_name_lbl(clause, num)
-        super.sub(%r{<br/>(.*)$}, "<br/><span class='obligation'>\\1</span>")
       end
     end
   end

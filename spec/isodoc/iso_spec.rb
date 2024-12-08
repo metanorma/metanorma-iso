@@ -116,7 +116,7 @@ RSpec.describe IsoDoc::Iso do
       .convert("test", <<~INPUT, true)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <preface>
-          <foreword>
+          <foreword id="A"><title>Foreword</title>
             <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
               <eref bibitemid="IEV">IEV</eref>
               <eref bibitemid="ISO20483">ISO 20483</eref>
@@ -181,7 +181,7 @@ RSpec.describe IsoDoc::Iso do
      .to be_equivalent_to Xml::C14n.format(strip_guid(<<~"OUTPUT"))
       #{HTML_HDR}
             <br/>
-            <div>
+            <div id="A">
               <h1 class="ForewordTitle">Foreword</h1>
               <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
                 <a href="http://www.electropedia.org">IEV</a>

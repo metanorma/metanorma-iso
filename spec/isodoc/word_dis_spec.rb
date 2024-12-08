@@ -158,8 +158,8 @@ RSpec.describe IsoDoc do
           <status><stage>30</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title><p>Para</p></foreword>
-        <introduction displayorder="2"><title>Foreword</title><p>Para</p></introduction>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title><p>Para</p></foreword>
+        <introduction displayorder="2"><fmt-title>Foreword</fmt-title><p>Para</p></introduction>
         </preface>
       </iso-standard>
     INPUT
@@ -210,8 +210,8 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title><p>Para</p></foreword>
-        <introduction displayorder="2"><title>Foreword</title><p>Para</p></introduction>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title><p>Para</p></foreword>
+        <introduction displayorder="2"><fmt-title>Foreword</fmt-title><p>Para</p></introduction>
         </preface>
       </iso-standard>
     INPUT
@@ -263,7 +263,7 @@ RSpec.describe IsoDoc do
         </bibdata>
                 <bibliography>
           <references id="_normative_references" normative="true" obligation="informative" displayorder="1">
-            <title>Normative References</title>
+            <fmt-title>Normative References</fmt-title>
             <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
@@ -308,7 +308,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title>
         <p><tt>A <strong>B</strong> <em>C</em> <strong>D<em>E</em>F</strong> <em>G<strong>H</strong>I</em></tt></p>
         <p><strong>A <tt>B</tt> <em>C<tt>D</tt>E</em></strong></p>
         <p><em>A <tt>B</tt> <strong>C<tt>D</tt>E</strong></em></p>
@@ -394,7 +394,7 @@ RSpec.describe IsoDoc do
           <status><stage>50</stage></status>
         </bibdata>
         <preface>
-        <foreword displayorder="1"><title>Foreword</title>
+        <foreword displayorder="1"><fmt-title>Foreword</fmt-title>
         <table><tbody>
         <tr><td>
         <p><tt>A <strong>B</strong> <em>C</em> <strong>D<em>E</em>F</strong> <em>G<strong>H</strong>I</em></tt></p>
@@ -541,46 +541,41 @@ RSpec.describe IsoDoc do
                 <p class="ListNumber1">a)<span style="mso-tab-count:1"> </span>A</p>
                 <p class="ListNumber1">b)<span style="mso-tab-count:1"> </span>B</p>
                 <p class="MsoNormal">
-                  <a name="_" id="_"/>
                   <div class="ol_wrap">
-                    <p class="MsoListNumber2"><a name="_" id="_"/>1)<span style="mso-tab-count:1"> </span>C</p>
-                    <p class="MsoListNumber2"><a name="_" id="_"/>2)<span style="mso-tab-count:1"> </span>D</p>
+                    <p class="MsoListNumber2">1)<span style="mso-tab-count:1"> </span>C</p>
+                    <p class="MsoListNumber2">2)<span style="mso-tab-count:1"> </span>D</p>
                     <p class="MsoNormal">
-                      <a name="_" id="_"/>
                       <div class="ol_wrap">
-                        <p class="MsoListNumber3"><a name="_" id="_"/>i)<span style="mso-tab-count:1"> </span>E</p>
-                        <p class="MsoListNumber3"><a name="_" id="_"/>ii)<span style="mso-tab-count:1"> </span>F</p>
+                        <p class="MsoListNumber3">i)<span style="mso-tab-count:1"> </span>E</p>
+                        <p class="MsoListNumber3">ii)<span style="mso-tab-count:1"> </span>F</p>
                         <p class="MsoNormal">
-                          <a name="_" id="_"/>
                           <div class="ol_wrap">
-                            <p class="MsoListNumber4"><a name="_" id="_"/>A)<span style="mso-tab-count:1"> </span>G</p>
-                            <p class="MsoListNumber4"><a name="_" id="_"/>B)<span style="mso-tab-count:1"> </span>H</p>
+                            <p class="MsoListNumber4">A)<span style="mso-tab-count:1"> </span>G</p>
+                            <p class="MsoListNumber4">B)<span style="mso-tab-count:1"> </span>H</p>
                             <p class="MsoNormal">
-                              <a name="_" id="_"/>
                               <div class="ol_wrap">
-                                <p class="MsoListNumber5"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>I</p>
-                                <p class="MsoListNumber5"><a name="_" id="_"/>II)<span style="mso-tab-count:1"> </span>J</p>
+                                <p class="MsoListNumber5">I)<span style="mso-tab-count:1"> </span>I</p>
+                                <p class="MsoListNumber5">II)<span style="mso-tab-count:1"> </span>J</p>
                                 <p class="MsoNormal">
-                                  <a name="_" id="_"/>
                                   <div class="ol_wrap">
-                                    <p class="MsoListNumber5"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>K</p>
-                                    <p class="MsoListNumber5"><a name="_" id="_"/>b)<span style="mso-tab-count:1"> </span>L</p>
-                                    <p class="MsoListNumber5"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>M</p>
+                                    <p class="MsoListNumber5">a)<span style="mso-tab-count:1"> </span>K</p>
+                                    <p class="MsoListNumber5">b)<span style="mso-tab-count:1"> </span>L</p>
+                                    <p class="MsoListNumber5">c)<span style="mso-tab-count:1"> </span>M</p>
                                   </div>
                                 </p>
-                                <p class="MsoListNumber5"><a name="_" id="_"/>III)<span style="mso-tab-count:1"> </span>N</p>
+                                <p class="MsoListNumber5">III)<span style="mso-tab-count:1"> </span>N</p>
                               </div>
                             </p>
-                            <p class="MsoListNumber4"><a name="_" id="_"/>C)<span style="mso-tab-count:1"> </span>O</p>
+                            <p class="MsoListNumber4">C)<span style="mso-tab-count:1"> </span>O</p>
                           </div>
                         </p>
-                        <p class="MsoListNumber3"><a name="_" id="_"/>iii)<span style="mso-tab-count:1"> </span>P</p>
+                        <p class="MsoListNumber3">iii)<span style="mso-tab-count:1"> </span>P</p>
                       </div>
                     </p>
-                    <p class="MsoListNumber2"><a name="_" id="_"/>3)<span style="mso-tab-count:1"> </span>Q</p>
+                    <p class="MsoListNumber2">3)<span style="mso-tab-count:1"> </span>Q</p>
                   </div>
                 </p>
-                <p class="ListNumber1"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>R</p>
+                <p class="ListNumber1">c)<span style="mso-tab-count:1"> </span>R</p>
               </div>
               <div class="ul_wrap">
                 <p class="ListContinue1">—<span style="mso-tab-count:1"> </span>A</p>
@@ -632,6 +627,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -686,40 +682,35 @@ RSpec.describe IsoDoc do
               <div class="ol_wrap">
                 <p class="ListNumber1">1)<span style="mso-tab-count:1"> </span>A</p>
                 <p class="MsoNormal">
-                  <a name="_" id="_"/>
                   <div class="ol_wrap">
-                    <p class="MsoListNumber2"><a name="_" id="_"/>A)<span style="mso-tab-count:1"> </span>C</p>
+                    <p class="MsoListNumber2">A)<span style="mso-tab-count:1"> </span>C</p>
                     <p class="MsoNormal">
-                      <a name="_" id="_"/>
                       <div class="ol_wrap">
-                        <p class="MsoListNumber3"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>E</p>
+                        <p class="MsoListNumber3">I)<span style="mso-tab-count:1"> </span>E</p>
                         <p class="MsoNormal">
-                          <a name="_" id="_"/>
                           <div class="ol_wrap">
-                            <p class="MsoListNumber4"><a name="_" id="_"/>i)<span style="mso-tab-count:1"> </span>G</p>
+                            <p class="MsoListNumber4">i)<span style="mso-tab-count:1"> </span>G</p>
                             <p class="MsoNormal">
-                              <a name="_" id="_"/>
                               <div class="ol_wrap">
-                                <p class="MsoListNumber5"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>I</p>
+                                <p class="MsoListNumber5">a)<span style="mso-tab-count:1"> </span>I</p>
                                 <p class="MsoNormal">
-                                  <a name="_" id="_"/>
                                   <div class="ol_wrap">
-                                    <p class="MsoListNumber5"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>K</p>
+                                    <p class="MsoListNumber5">I)<span style="mso-tab-count:1"> </span>K</p>
                                   </div>
                                 </p>
-                                <p class="MsoListNumber5"><a name="_" id="_"/>b)<span style="mso-tab-count:1"> </span>N</p>
+                                <p class="MsoListNumber5">b)<span style="mso-tab-count:1"> </span>N</p>
                               </div>
                             </p>
-                            <p class="MsoListNumber4"><a name="_" id="_"/>ii)<span style="mso-tab-count:1"> </span>O</p>
+                            <p class="MsoListNumber4">ii)<span style="mso-tab-count:1"> </span>O</p>
                           </div>
                         </p>
-                        <p class="MsoListNumber3"><a name="_" id="_"/>II)<span style="mso-tab-count:1"> </span>P</p>
+                        <p class="MsoListNumber3">II)<span style="mso-tab-count:1"> </span>P</p>
                       </div>
                     </p>
-                    <p class="MsoListNumber2"><a name="_" id="_"/>B)<span style="mso-tab-count:1"> </span>Q</p>
+                    <p class="MsoListNumber2">B)<span style="mso-tab-count:1"> </span>Q</p>
                   </div>
                 </p>
-                <p class="ListNumber1"><a name="_" id="_"/>2)<span style="mso-tab-count:1"> </span>R</p>
+                <p class="ListNumber1">2)<span style="mso-tab-count:1"> </span>R</p>
               </div>
             </p>
           </div>
@@ -728,6 +719,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -789,6 +781,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -851,46 +844,41 @@ RSpec.describe IsoDoc do
               <p class="ListNumber1">c)<span style="mso-tab-count:1"> </span>A</p>
               <p class="ListNumber1">d)<span style="mso-tab-count:1"> </span>B</p>
               <p class="MsoNormal">
-                <a name="_" id="_"/>
                 <div class="ol_wrap">
-                  <p class="MsoListNumber2"><a name="_" id="_"/>3)<span style="mso-tab-count:1"> </span>C</p>
-                  <p class="MsoListNumber2"><a name="_" id="_"/>4)<span style="mso-tab-count:1"> </span>D</p>
+                  <p class="MsoListNumber2">3)<span style="mso-tab-count:1"> </span>C</p>
+                  <p class="MsoListNumber2">4)<span style="mso-tab-count:1"> </span>D</p>
                   <p class="MsoNormal">
-                    <a name="_" id="_"/>
                     <div class="ol_wrap">
-                      <p class="MsoListNumber3"><a name="_" id="_"/>iii)<span style="mso-tab-count:1"> </span>E</p>
-                      <p class="MsoListNumber3"><a name="_" id="_"/>iv)<span style="mso-tab-count:1"> </span>F</p>
+                      <p class="MsoListNumber3">iii)<span style="mso-tab-count:1"> </span>E</p>
+                      <p class="MsoListNumber3">iv)<span style="mso-tab-count:1"> </span>F</p>
                       <p class="MsoNormal">
-                        <a name="_" id="_"/>
                         <div class="ol_wrap">
-                          <p class="MsoListNumber4"><a name="_" id="_"/>C)<span style="mso-tab-count:1"> </span>G</p>
-                          <p class="MsoListNumber4"><a name="_" id="_"/>D)<span style="mso-tab-count:1"> </span>H</p>
+                          <p class="MsoListNumber4">C)<span style="mso-tab-count:1"> </span>G</p>
+                          <p class="MsoListNumber4">D)<span style="mso-tab-count:1"> </span>H</p>
                           <p class="MsoNormal">
-                            <a name="_" id="_"/>
                             <div class="ol_wrap">
-                              <p class="MsoListNumber5"><a name="_" id="_"/>III)<span style="mso-tab-count:1"> </span>I</p>
-                              <p class="MsoListNumber5"><a name="_" id="_"/>IV)<span style="mso-tab-count:1"> </span>J</p>
+                              <p class="MsoListNumber5">III)<span style="mso-tab-count:1"> </span>I</p>
+                              <p class="MsoListNumber5">IV)<span style="mso-tab-count:1"> </span>J</p>
                               <p class="MsoNormal">
-                                <a name="_" id="_"/>
                                 <div class="ol_wrap">
-                                  <p class="MsoListNumber5"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>K</p>
-                                  <p class="MsoListNumber5"><a name="_" id="_"/>d)<span style="mso-tab-count:1"> </span>L</p>
-                                  <p class="MsoListNumber5"><a name="_" id="_"/>e)<span style="mso-tab-count:1"> </span>M</p>
+                                  <p class="MsoListNumber5">c)<span style="mso-tab-count:1"> </span>K</p>
+                                  <p class="MsoListNumber5">d)<span style="mso-tab-count:1"> </span>L</p>
+                                  <p class="MsoListNumber5">e)<span style="mso-tab-count:1"> </span>M</p>
                                 </div>
                               </p>
-                              <p class="MsoListNumber5"><a name="_" id="_"/>V)<span style="mso-tab-count:1"> </span>N</p>
+                              <p class="MsoListNumber5">V)<span style="mso-tab-count:1"> </span>N</p>
                             </div>
                           </p>
-                          <p class="MsoListNumber4"><a name="_" id="_"/>E)<span style="mso-tab-count:1"> </span>O</p>
+                          <p class="MsoListNumber4">E)<span style="mso-tab-count:1"> </span>O</p>
                         </div>
                       </p>
-                      <p class="MsoListNumber3"><a name="_" id="_"/>v)<span style="mso-tab-count:1"> </span>P</p>
+                      <p class="MsoListNumber3">v)<span style="mso-tab-count:1"> </span>P</p>
                     </div>
                   </p>
-                  <p class="MsoListNumber2"><a name="_" id="_"/>5)<span style="mso-tab-count:1"> </span>Q</p>
+                  <p class="MsoListNumber2">5)<span style="mso-tab-count:1"> </span>Q</p>
                 </div>
               </p>
-              <p class="ListNumber1"><a name="_" id="_"/>e)<span style="mso-tab-count:1"> </span>R</p>
+              <p class="ListNumber1">e)<span style="mso-tab-count:1"> </span>R</p>
             </div>
           </p>
         </div>
@@ -899,6 +887,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -918,7 +907,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <table id="B">
-        <name>Table1</name>
+        <fmt-name>Table1</fmt-name>
         <thead>
         <tr>
         <th>A</th><th><p>B</p></th>
@@ -1039,9 +1028,10 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <figure id="B">
-        <name>Table1</name>
+        <fmt-name>Table1</fmt-name>
         <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto"/>
-        <note id="C"><name>FIGURENOTE</name><p>Note</p></note>
+        <note id="C"><fmt-name>FIGURENOTE<span class="fmt-label-delim"><tab/></span></fmt-name>
+        <p>Note</p></note>
         <example id="D"><p>Example</p></example>
         </figure>
         </clause>
@@ -1098,7 +1088,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <example id="B">
-        <name>EXAMPLE</name>
+        <fmt-name>EXAMPLE</fmt-name>
         <p>First example</p>
         </example>
         <example id="C">
@@ -1154,7 +1144,7 @@ RSpec.describe IsoDoc do
         </bibdata>
         <sections>
         <clause id="A" displayorder="1">
-        <formula id="B"><name>(A.1)</name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
+        <formula id="B"><fmt-name>(A.1)</fmt-name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
         </clause>
         </sections>
       </iso-standard>
@@ -1193,7 +1183,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <note id="B">
-        <name>NOTE</name>
+        <fmt-name>NOTE<span class="fmt-label-delim"><tab/></span></fmt-name>
         <p>First example</p>
         </note>
         <note id="C">
@@ -1221,7 +1211,6 @@ RSpec.describe IsoDoc do
           <div>
              <a name='C' id='C'/>
              <p class='Note'>
-               <span style='mso-tab-count:1'>  </span>
                Second example
              </p>
              <p class='Code-'>Code</p>
@@ -1292,7 +1281,8 @@ RSpec.describe IsoDoc do
             <h1>1</h1>
             <div>
               <a name="B" id="B"/>
-              <p class="Note">NOTE<span style="mso-tab-count:1">  </span></p>
+              <p class="Note">NOTE
+            <span style="mso-tab-count:1">  </span></p>
               <div class="ul_wrap">
                 <p class="ListContinue2-">—<span style="mso-tab-count:1"> </span>A</p>
                 <p class="ListContinue2-">—<span style="mso-tab-count:1"> </span>B</p>
@@ -1340,6 +1330,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -1401,51 +1392,47 @@ RSpec.describe IsoDoc do
             <h1>1</h1>
             <div>
               <a name="B" id="B"/>
-              <p class="Example">EXAMPLE<span style="mso-tab-count:1">  </span></p>
+              <p class="Example">EXAMPLE
+              <span style="mso-tab-count:1">  </span></p>
               <div class="ol_wrap">
                 <p class="ListNumber2-">a)<span style="mso-tab-count:1"> </span>A</p>
                 <p class="ListNumber2-">b)<span style="mso-tab-count:1"> </span>B</p>
                 <p class="MsoNormal">
-                  <a name="_" id="_"/>
                   <div class="ol_wrap">
-                    <p class="ListNumber3-"><a name="_" id="_"/>1)<span style="mso-tab-count:1"> </span>C</p>
-                    <p class="ListNumber3-"><a name="_" id="_"/>2)<span style="mso-tab-count:1"> </span>D</p>
+                    <p class="ListNumber3-">1)<span style="mso-tab-count:1"> </span>C</p>
+                    <p class="ListNumber3-">2)<span style="mso-tab-count:1"> </span>D</p>
                     <p class="MsoNormal">
-                      <a name="_" id="_"/>
                       <div class="ol_wrap">
-                        <p class="ListNumber4-"><a name="_" id="_"/>i)<span style="mso-tab-count:1"> </span>E</p>
-                        <p class="ListNumber4-"><a name="_" id="_"/>ii)<span style="mso-tab-count:1"> </span>F</p>
+                        <p class="ListNumber4-">i)<span style="mso-tab-count:1"> </span>E</p>
+                        <p class="ListNumber4-">ii)<span style="mso-tab-count:1"> </span>F</p>
                         <p class="MsoNormal">
-                          <a name="_" id="_"/>
                           <div class="ol_wrap">
-                            <p class="ListNumber5-"><a name="_" id="_"/>A)<span style="mso-tab-count:1"> </span>G</p>
-                            <p class="ListNumber5-"><a name="_" id="_"/>B)<span style="mso-tab-count:1"> </span>H</p>
+                            <p class="ListNumber5-">A)<span style="mso-tab-count:1"> </span>G</p>
+                            <p class="ListNumber5-">B)<span style="mso-tab-count:1"> </span>H</p>
                             <p class="MsoNormal">
-                              <a name="_" id="_"/>
                               <div class="ol_wrap">
-                                <p class="ListNumber5-"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>I</p>
-                                <p class="ListNumber5-"><a name="_" id="_"/>II)<span style="mso-tab-count:1"> </span>J</p>
+                                <p class="ListNumber5-">I)<span style="mso-tab-count:1"> </span>I</p>
+                                <p class="ListNumber5-">II)<span style="mso-tab-count:1"> </span>J</p>
                                 <p class="MsoNormal">
-                                  <a name="_" id="_"/>
                                   <div class="ol_wrap">
-                                    <p class="ListNumber5-"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>K</p>
-                                    <p class="ListNumber5-"><a name="_" id="_"/>b)<span style="mso-tab-count:1"> </span>L</p>
-                                    <p class="ListNumber5-"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>M</p>
+                                    <p class="ListNumber5-">a)<span style="mso-tab-count:1"> </span>K</p>
+                                    <p class="ListNumber5-">b)<span style="mso-tab-count:1"> </span>L</p>
+                                    <p class="ListNumber5-">c)<span style="mso-tab-count:1"> </span>M</p>
                                   </div>
                                 </p>
-                                <p class="ListNumber5-"><a name="_" id="_"/>III)<span style="mso-tab-count:1"> </span>N</p>
+                                <p class="ListNumber5-">III)<span style="mso-tab-count:1"> </span>N</p>
                               </div>
                             </p>
-                            <p class="ListNumber5-"><a name="_" id="_"/>C)<span style="mso-tab-count:1"> </span>O</p>
+                            <p class="ListNumber5-">C)<span style="mso-tab-count:1"> </span>O</p>
                           </div>
                         </p>
-                        <p class="ListNumber4-"><a name="_" id="_"/>iii)<span style="mso-tab-count:1"> </span>P</p>
+                        <p class="ListNumber4-">iii)<span style="mso-tab-count:1"> </span>P</p>
                       </div>
                     </p>
-                    <p class="ListNumber3-"><a name="_" id="_"/>3)<span style="mso-tab-count:1"> </span>Q</p>
+                    <p class="ListNumber3-">3)<span style="mso-tab-count:1"> </span>Q</p>
                   </div>
                 </p>
-                <p class="ListNumber2-"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>R</p>
+                <p class="ListNumber2-">c)<span style="mso-tab-count:1"> </span>R</p>
               </div>
             </div>
           </div>
@@ -1454,6 +1441,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -1502,14 +1490,13 @@ RSpec.describe IsoDoc do
               <p class="ListContinue1">—<span style="mso-tab-count:1"> </span>A</p>
               <p class="MsoNormal">
                 <div class="ol_wrap">
-                  <p class="MsoListNumber2"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>List</p>
+                  <p class="MsoListNumber2">>a)<span style="mso-tab-count:1"> </span>List</p>
                   <p class="MsoNormal">
-                    <a name="_" id="_"/>
                     <div class="ul_wrap">
                       <p class="MsoListContinue3">—<span style="mso-tab-count:1"> </span>B</p>
                       <p class="MsoNormal">
                         <div class="ol_wrap">
-                          <p class="MsoListNumber4"><a name="_" id="_"/>1)<span style="mso-tab-count:1"> </span>List 2</p>
+                          <p class="MsoListNumber4">1)<span style="mso-tab-count:1"> </span>List 2</p>
                         </div>
                       </p>
                     </div>
@@ -1523,6 +1510,7 @@ RSpec.describe IsoDoc do
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
+      .sub(%r{<review.*</review>}m, "")
     IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, false)
     expect(File.exist?("test.doc")).to be true
     output = File.read("test.doc", encoding: "UTF-8")
@@ -1542,7 +1530,7 @@ RSpec.describe IsoDoc do
         <sections>
         <clause id="A" displayorder="1">
         <example id="B">
-        <name>EXAMPLE</name>
+        <fmt-name>EXAMPLE</fmt-name>
         <dl>
         <dt>A</dt><dd>B</dd>
         </dl>
@@ -1593,9 +1581,9 @@ RSpec.describe IsoDoc do
         <bibdata>
           <status><stage>50</stage></status>
         </bibdata>
-        <annex id="A" displayorder="1"><title>Annex</title>
-        <clause id="B"><title>Subannex</title>
-        <clause id="C"><title>Subsubannex</title>
+        <annex id="A" displayorder="1"><fmt-title>Annex</fmt-title>
+        <clause id="B"><fmt-title>Subannex</fmt-title>
+        <clause id="C"><fmt-title>Subsubannex</fmt-title>
         </clause>
         </clause>
         </annex>
@@ -1662,7 +1650,6 @@ RSpec.describe IsoDoc do
              <p class='BodyTextindent1'>Normal clause</p>
              <div>
                <p class='Noteindent'>
-                 <span style='mso-tab-count:1'>  </span>
                  Note clause
                </p>
              </div>
@@ -1720,7 +1707,10 @@ RSpec.describe IsoDoc do
         </p>
         <div>
           <a name='A' id='A'/>
-          <h1>1<span style="mso-tab-count:1">  </span>First clause</h1>
+             <h1>1
+                      <span style="mso-tab-count:1">  </span>
+                   First clause
+             </h1>
         </div>
       </div>
     WORD
@@ -1782,10 +1772,10 @@ RSpec.describe IsoDoc do
           </ext>
         </bibdata>
         <preface>
-        <foreword id="F" displayorder="1"><title>Foreword</title></foreword>
+        <foreword id="F" displayorder="1"><fmt-title>Foreword</fmt-title></foreword>
         </preface>
          <sections>
-        <clause id="A" displayorder="2"><title>First clause</title>
+        <clause id="A" displayorder="2"><fmt-title>First clause</fmt-title>
         </clause>
         </sections>
       </iso-standard>
@@ -1996,7 +1986,7 @@ RSpec.describe IsoDoc do
           <status><stage>20</stage></status>
         </bibdata>
          <sections>
-        <clause id="A" displayorder="1"><title>Clause Title</title>
+        <clause id="A" displayorder="1"><fmt-title>Clause Title</fmt-title>
         <ul><li>List</li></ul>
         <note id="B"><p>Note</p>
         <ul><li>Note List</li></ul>
@@ -2004,19 +1994,19 @@ RSpec.describe IsoDoc do
         <example id="C"><p>Example</p>
         <ul><li>Example List</li></ul>
         </example>
-        <figure id="D"><name>Figure Title</name></figure>
+        <figure id="D"><fmt-name>Figure Title</fmt-name></figure>
         <sourcecode id="E">XYZ</sourcecode>
-        <table id="F"><name>Table</name></table>
+        <table id="F"><fmt-name>Table</fmt-name></table>
         </clause>
         </sections>
-        <annex id="G" displayorder="2"><title>Annex Title</title>
-        <table id="H"><name>Annex Table</name></table>
-        <clause id="I"><title>Annex Clause Title</title>
+        <annex id="G" displayorder="2"><fmt-title>Annex Title</fmt-title>
+        <table id="H"><fmt-name>Annex Table</fmt-name></table>
+        <clause id="I"><fmt-title>Annex Clause Title</fmt-title>
         </clause>
         </annex>
         <bibliography>
         <references id="_normative_references" normative="false" obligation="informative" displayorder="3">
-            <title>Bibliography</title>
+            <fmt-title>Bibliography</fmt-title>
             <bibitem id="ISO712" type="standard">
             <formattedref>ALUFFI, Paolo, ed. (2022). <em><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></em>, 1st edition. Cambridge, UK: CUP.</formattedref>
             <docidentifier type="ISO">ISO/IEC 712-3:2022</docidentifier>
@@ -2037,8 +2027,6 @@ RSpec.describe IsoDoc do
            <div class='Note'>
              <a name='B' id='B'/>
              <p class='Note'>
-               <span class='note_label'/>
-               <span style='mso-tab-count:1'>  </span>
                Note
              </p>
              <div class="ul_wrap">

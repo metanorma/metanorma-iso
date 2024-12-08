@@ -111,10 +111,7 @@ module IsoDoc
           out.span **attr_code(style: st) do |s|
             node.children.each { |n| parse(n, s) }
           end
-        else
-          out.span **attr_code(class: node["class"], style: st) do |x|
-            node.children.each { |n| parse(n, x) }
-          end
+        else super
         end
       end
 

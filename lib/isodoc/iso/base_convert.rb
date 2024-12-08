@@ -29,35 +29,34 @@ module IsoDoc
         end
       end
 
+      def example_p_class
+        nil
+      end
+
       def example_p_parse(node, div)
-        div.p do |p|
-          example_span_label(node, p, node&.at(ns("./name"))&.remove)
-          insert_tab(p, 1)
-          node.first_element_child.children.each { |n| parse(n, p) }
+        name = node.at(ns("./fmt-name"))
+        para = node.at(ns("./p"))
+        div.p **attr_code(class: example_p_class) do |p|
+          name and p.span class: "example_label" do |s|
+            name.children.each { |n| parse(n, s) }
+          end
+          insert_tab(p, 1) # TODO to Presentation XML
+          children_parse(para, p)
         end
-        node.element_children[1..].each { |n| parse(n, div) }
+        para.xpath("./following-sibling::*").each { |n| parse(n, div) }
       end
 
       def example_parse1(node, div)
         div.p do |p|
-          example_span_label(node, p, node.at(ns("./name")))
+          example_span_label(node, p, node.at(ns("./fmt-name")))
           insert_tab(p, 1)
         end
-        node.children.each { |n| parse(n, div) unless n.name == "name" }
-      end
-
-      def node_begins_with_para(node)
-        node.elements.each do |e|
-          e.name == "name" and next
-          e.name == "p" and return true
-          return false
-        end
-        false
+        node.children.each { |n| parse(n, div) unless n.name == "fmt-name" }
       end
 
       def example_parse(node, out)
         out.div id: node["id"], class: "example" do |div|
-          if node_begins_with_para(node)
+          if starts_with_para?(node)
             example_p_parse(node, div)
           else
             example_parse1(node, div)
@@ -88,6 +87,7 @@ module IsoDoc
         admonition_name_in_first_para(node, div)
       end
 
+      # TODO: To Presentation XML
       def admonition_name_para_delim(para)
         para << " "
       end
@@ -114,9 +114,9 @@ module IsoDoc
           class: clause.name == "definitions" ? "Symbols" : nil,
         ) do |div|
           num = num + 1
-          clause_name(clause, clause&.at(ns("./title")), div, nil)
+          clause_name(clause, clause&.at(ns("./fmt-title")), div, nil)
           clause.elements.each do |e|
-            parse(e, div) unless %w{title source}.include? e.name
+            parse(e, div) unless %w{fmt-title source}.include? e.name
           end
         end
       end
@@ -149,9 +149,9 @@ module IsoDoc
         out.div **figure_attrs(node) do |div|
           node.children.each do |n|
             n.name == "note" && n["type"] == "units" and next
-            parse(n, div) unless n.name == "name"
+            parse(n, div) unless n.name == "fmt-name"
           end
-          figure_name_parse(node, div, node.at(ns("./name")))
+          figure_name_parse(node, div, node.at(ns("./fmt-name")))
         end
       end
 
@@ -177,6 +177,12 @@ module IsoDoc
       def convert_i18n_init(docxml)
         super
         update_i18n(docxml)
+      end
+
+      def span_parse(node, out)
+        node["class"] == "fmt-obligation" and
+          node["class"] = "obligation"
+        super
       end
     end
   end

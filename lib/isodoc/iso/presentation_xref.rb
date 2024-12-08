@@ -74,7 +74,7 @@ module IsoDoc
 
       def locality_span_wrap(ret, type)
         type or return ret
-        m = /^(\s*)(?=\S)(.+?)(\s*)$/.match(ret) or return ret
+        m = /\A(\s*)(?=\S)(.+?)(\s*)\Z/m.match(ret) or return ret
         ret = [m[1], m[2], m[3]]
         spanclass = LOCALITY2SPAN[type.to_sym] and
           ret[1] = "<span class='#{spanclass}'>#{ret[1]}</span>"
@@ -115,7 +115,9 @@ module IsoDoc
           prefix_container_template(container, node, target)
         container_label = prefix_container(container_container,
                                            container_label, node, target)
-        l10n(nested_xref.sub("%1", container_label).sub("%2", linkend))
+        l10n(connectives_spans(nested_xref
+          .sub("%1", "<span class='fmt-xref-container'>#{container_label}</span>")
+          .sub("%2", linkend)))
       end
 
       def prefix_container_template(container, node, target)

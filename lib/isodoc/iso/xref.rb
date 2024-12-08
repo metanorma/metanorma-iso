@@ -48,25 +48,56 @@ module IsoDoc
         c = IsoDoc::XrefGen::Counter.new
         clause.xpath(ns(".//formula")).noblank.each do |t|
           @anchors[t["id"]] = anchor_struct(
-            "#{num}#{hiersep}#{c.increment(t).print}", t,
+            #"#{num}#{hier_separator}#{c.increment(t).print}", t,
+            hiersemx(clause, num, c.increment(t), t), t,
             t["inequality"] ? @labels["inequality"] : @labels["formula"],
-            "formula", t["unnumbered"]
+            "formula", { unnumb: t["unnumbered"], container: true }
           )
         end
       end
 
+      def subfigure_delim
+        ")"
+      end
+
       def figure_anchor(elem, sublabel, label, klass, container: false)
+        if sublabel
+          subfigure_anchor(elem, sublabel, label, klass, container: container)
+        else
+          @anchors[elem["id"]] = anchor_struct(
+            label, elem, @labels[klass] || klass.capitalize, klass,
+            { unnumb: elem["unnumbered"], container: }
+          )
+        end
+      end
+
+      def fig_subfig_label(label, sublabel)
+        "#{label} #{sublabel}"
+      end
+
+      def subfigure_anchor(elem, sublabel, label, klass, container: false)
+        figlabel = fig_subfig_label(label, sublabel)
         @anchors[elem["id"]] = anchor_struct(
-          "#{label}#{sublabel}", container ? elem : nil,
-          @labels[klass] || klass.capitalize, klass, elem["unnumbered"]
+          figlabel, elem, @labels[klass] || klass.capitalize, klass,
+          { unnumb: elem["unnumbered"] }
         )
-        !sublabel.empty? && elem["unnumbered"] != "true" and
+        if elem["unnumbered"] != "true"
+          # Dropping the parent figure label is specific to ISO
           @anchors[elem["id"]][:label] = sublabel
+          @anchors[elem["id"]][:xref] = @anchors[elem.parent["id"]][:xref] +
+            " " + semx(elem, sublabel) + delim_wrap(subfigure_delim)
+                    x = @anchors[elem.parent["id"]][:container] and
+          @anchors[elem["id"]][:container] = x
+        end
       end
 
       def subfigure_label(subfignum)
-        subfignum.zero? and return ""
-        " #{(subfignum + 96).chr})"
+        subfignum.zero? and return
+        (subfignum + 96).chr
+      end
+
+      def hierfigsep
+        " "
       end
 
       def sequential_figure_names(clause, container: false)
@@ -97,9 +128,9 @@ module IsoDoc
         j = 0
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
           j = subfigure_increment(j, c, t)
-          label = "#{num}#{hiersep}#{c.print}"
+          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = subfigure_label(j)
-          figure_anchor(t, sublabel, label, "figure")
+          figure_anchor(t, sublabel, hiersemx(clause, num, c, t), "figure")
         end
         hierarchical_figure_class_names(clause, num)
       end
@@ -111,9 +142,9 @@ module IsoDoc
           .noblank.each do |t|
           c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
           j = subfigure_increment(j, c[t["class"]], t)
-          label = "#{num}#{hiersep}#{c.print}"
+          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          figure_anchor(t, sublabel, label, t["class"])
+          figure_anchor(t, sublabel, hiersemx(clause, num, c[t["class"]], t), t["class"])
         end
       end
 
@@ -129,8 +160,10 @@ module IsoDoc
             s.xpath(ns(".//appendix//ol")) - s.xpath(ns(".//ol//ol"))
           c = Counter.new
           notes.noblank.each do |n|
+            n["id"] ||= "_#{UUIDTools::UUID.random_create}"
             @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
-                                              @labels["list"], "list", false)
+                                              @labels["list"], "list",
+                                              { unnumb: false, container: true })
             list_item_anchor_names(n, @anchors[n["id"]], 1, "",
                                    !single_ol_for_xrefs?(notes))
           end
@@ -174,7 +207,11 @@ module IsoDoc
         (@anchors[id] && !@anchors[id][:has_modspec]) or return
         @anchors[id][:has_modspec] = true
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
-        @anchors[id][:xref] = l10n("#{table_label}, #{x}")
+        # @anchors[id][:xref] = l10n("#{table_label}<span class='fmt-comma'>,</span> #{x}")
+
+        @anchors[id][:xref] = l10n(@klass.connectives_spans(@i18n.nested_xref
+          .sub("%1", table_label).sub("%2", x)))
+
         @anchors[id][:modspec] = @anchors_previous[id][:modspec]
         @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
         true
@@ -194,7 +231,8 @@ module IsoDoc
         countable.each do |n|
           @anchors[n["id"]] =
             anchor_struct(increment_label(countable, n, counter), n,
-                          @labels["note_xref"], "note", false)
+                          @labels["note_xref"], "note",
+                          { unnum: false, container: true })
         end
       end
     end

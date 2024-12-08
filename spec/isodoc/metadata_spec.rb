@@ -518,7 +518,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
            <span class="boldtitle">Specifications and test methods</span>
          </p>
         <clause displayorder="3">
-          <title depth="1">
+           <title id="_">Clause 1</title>
+            <fmt-title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
@@ -528,8 +529,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            Clause 1
-          </title>
+            <semx element="title" source="_">Clause 1</semx>
+          </fmt-title>
         </clause>
       </sections>
     OUTPUT
@@ -566,7 +567,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
            <span class="boldtitle">Specifications and test methods</span>
          </p>
         <clause displayorder="3">
-          <title depth="1">
+          <title id="_">Clause 1</title>
+            <fmt-title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
@@ -576,8 +578,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            Clause 1
-          </title>
+            <semx element="title" source="_">Clause 1</semx>
+          </fmt-title>
         </clause>
       </sections>
     OUTPUT
@@ -614,7 +616,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
            <span class="boldtitle">Specifications and test methods</span>
          </p>
         <clause displayorder="3">
-          <title depth="1">
+           <title id="_">Clause 1</title>
+            <fmt-title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
               <p>
                 <strong>
@@ -624,8 +627,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            Clause 1
-          </title>
+            <semx element="title" source="_">Clause 1</semx>
+          </fmt-title>
         </clause>
       </sections>
     OUTPUT
@@ -664,7 +667,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <span class="boldtitle">Specifications and test methods</span>
           </p>
         <clause displayorder='3'>
-          <title depth='1'>Clause 1</title>
+              <title id="_">Clause 1</title>
+      <fmt-title depth="1">
+            <semx element="title" source="_">Clause 1</semx>
+      </fmt-title>
         </clause>
       </sections>
     OUTPUT
@@ -701,7 +707,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <span class="boldtitle">Specifications and test methods</span>
           </p>
         <clause displayorder='3'>
-          <title depth='1'>Clause 1</title>
+              <title id="_">Clause 1</title>
+      <fmt-title depth="1">
+            <semx element="title" source="_">Clause 1</semx>
+      </fmt-title>
         </clause>
       </sections>
     OUTPUT

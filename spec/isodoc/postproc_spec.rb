@@ -140,11 +140,11 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <terms id="_terms_and_definitions" obligation="normative" displayorder="1">
-              <title>1
+              <fmt-title>1
                 <tab/>
-                Terms and Definitions</title>
+                Terms and Definitions</fmt-title>
               <term id="paddy1">
-                <name>1.1</name>
+                <fmt-name>1.1</fmt-name>
                 <preferred>paddy</preferred>
                 <definition>
                   <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
@@ -216,35 +216,35 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-              <title>1
+              <fmt-title>1
                 <tab/>
-                Clause 4</title>
+                Clause 4</fmt-title>
               <clause id="N" inline-header="false" obligation="normative">
-                <title>1.1
+                <fmt-title>1.1
                   <tab/>
                   Introduction
                   <bookmark id="Q"/>
                   to this
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </title>
+                </fmt-title>
               </clause>
               <clause id="O" inline-header="false" obligation="normative">
-                <title>1.2
+                <fmt-title>1.2
                   <tab/>
-                  Clause 4.2</title>
+                  Clause 4.2</fmt-title>
                 <p>A
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
                 </p>
               </clause>
             </clause>
-            <clause id="P" displayorder="2"><title>2<tab/>Clause 5</title>
-            <clause id="P1"><title>2.1<tab/>Clause 5.1</title>
+            <clause id="P" displayorder="2"><fmt-title>2<tab/>Clause 5</fmt-title>
+            <clause id="P1"><fmt-title>2.1<tab/>Clause 5.1</fmt-title>
             <p>X</p>
             </clause>
             </clause>
-            <clause id="Q" displayorder="3"><title>3<tab/>Clause 6</title></clause>
+            <clause id="Q" displayorder="3"><fmt-title>3<tab/>Clause 6</fmt-title></clause>
           </sections>
         </iso-standard>
       INPUT
@@ -321,23 +321,23 @@ RSpec.describe IsoDoc do
           </metanorma-extension>
                   <sections>
                     <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-                      <title>1
+                      <fmt-title>1
                         <tab/>
-                        Clause 4</title>
+                        Clause 4</fmt-title>
                       <clause id="N" inline-header="false" obligation="normative">
-                        <title>1.1
+                        <fmt-title>1.1
                           <tab/>
                           Introduction
                           <bookmark id="Q"/>
                           to this
                           <fn reference="1">
                             <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                        </title>
+                        </fmt-title>
                       </clause>
                       <clause id="O" inline-header="false" obligation="normative">
-                        <title>1.2
+                        <fmt-title>1.2
                           <tab/>
-                          Clause 4.2</title>
+                          Clause 4.2</fmt-title>
                         <p>A
                           <fn reference="1">
                             <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
@@ -345,7 +345,7 @@ RSpec.describe IsoDoc do
                       </clause>
                     </clause>
                   </sections>
-                  <annex id="AA" displayorder="2"><title>Annex A<tab/>Annex First</title></annex>
+                  <annex id="AA" displayorder="2"><fmt-title>Annex A<tab/>Annex First</fmt-title></annex>
                 </iso-standard>
       INPUT
 
@@ -417,22 +417,22 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
           <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-            <title>1
+            <fmt-title>1
               <tab/>
-              Clause 4</title>
+              Clause 4</fmt-title>
             <fn reference="3">
               <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
             </fn>
             <clause id="N" inline-header="false" obligation="normative">
-              <title>1.1 <tab/>
+              <fmt-title>1.1 <tab/>
                 Introduction to this
                 <fn reference="2">
                   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-              </title>
+              </fmt-title>
             </clause>
             <clause id="O" inline-header="false" obligation="normative">
-              <title>1.2 <tab/>
-                Clause 4.2</title>
+              <fmt-title>1.2 <tab/>
+                Clause 4.2</fmt-title>
               <p>A
                 <fn reference="1">
                   <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
@@ -598,9 +598,9 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <terms id="_terms_and_definitions" obligation="normative" displayorder="1">
-              <title>Terms and Definitions</title>
+              <fmt-title>Terms and Definitions</fmt-title>
               <term id="paddy1">
-                <name>1.1</name>
+                <fmt-name>1.1</fmt-name>
                 <preferred>paddy</preferred>
                 <domain>rice</domain>
                 <definition>
@@ -629,7 +629,7 @@ RSpec.describe IsoDoc do
                 </termsource>
               </term>
               <term id="paddy">
-                <name>1.2</name>
+                <fmt-name>1.2</fmt-name>
                 <preferred>paddy</preferred>
                 <admitted>paddy rice</admitted>
                 <admitted>rough rice</admitted>
@@ -730,7 +730,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+    output = <<~OUTPUT
       <div class='WordSection3'>
          <p class='MsoNormal'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
@@ -738,16 +738,17 @@ RSpec.describe IsoDoc do
          <div class='Section3'>
            <a name='P' id='P'/>
            <div class='zzHelp'>
-             <a name='_70234f78-64e5-4dfc-8b6f-f3f037348b6a' id='_70234f78-64e5-4dfc-8b6f-f3f037348b6a'/>
+             <a name='_' id='_'/>
              <p class='zzHelp'> Only use paddy or parboiled rice for the determination of husked rice yield. </p>
              <p class='zzHelp'>
-               <a name='_e94663cc-2473-4ccc-9a72-983a74d989f3' id='_e94663cc-2473-4ccc-9a72-983a74d989f3'/>
+               <a name='_' id='_'/>
                Para 2.
              </p>
            </div>
          </div>
        </div>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(word))).to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes boilerplate" do
@@ -830,7 +831,10 @@ RSpec.describe IsoDoc do
           </copyright-statement>
           <license-statement>
             <clause>
-              <title depth="1">Warning for Stuff</title>
+              <title id="_">Warning for Stuff</title>
+           <fmt-title depth="1">
+                 <semx element="title" source="_">Warning for Stuff</semx>
+           </fmt-title>
               <p>This document is not an ISO International Standard. It is distributed for review and
              comment. It is subject to change without notice and may not be referred to as
              an International Standard.</p>
@@ -844,17 +848,19 @@ RSpec.describe IsoDoc do
       </iso-standard>
     OUTPUT
 
-    expect(Xml::C14n.format(IsoDoc::Iso::PresentationXMLConvert
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(WORD_HTML_CSS.dup
       .merge(presxml_options))
-      .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .convert("test", input, true)
+
+    expect(Xml::C14n.format(strip_guid(pres_output)
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Xml::C14n.format(presxml)
 
     FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
       .new(WORD_HTML_CSS.dup)
-      .convert("test", presxml, false)
+      .convert("test", pres_output, false)
 
     word = File.read("test.html", encoding: "UTF-8")
     expect(strip_guid(word))
@@ -863,7 +869,7 @@ RSpec.describe IsoDoc do
 
     FileUtils.rm_rf "test.doc"
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
-      .convert("test", presxml, false)
+      .convert("test", pres_output, false)
     word = File.read("test.doc", encoding: "UTF-8")
     contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
     contents = Nokogiri::XML(contents)
@@ -928,23 +934,23 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <sections>
             <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-              <title>Clause 4</title>
+              <fmt-title>Clause 4</fmt-title>
               <clause id="N" inline-header="false" obligation="normative">
-                <title>Introduction
+                <fmt-title>Introduction
                   <bookmark id="Q"/>
                   to this
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </title>
+                </fmt-title>
               </clause>
               <clause id="O" inline-header="false" obligation="normative">
-                <title>Clause 4.2</title>
+                <fmt-title>Clause 4.2</fmt-title>
                 <p>A
                   <fn reference="1">
                     <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
                 </p>
                 <clause id="P" inline-header="false" obligation="normative">
-                  <title>Clause 4.2.1</title>
+                  <fmt-title>Clause 4.2.1</fmt-title>
                 </clause>
               </clause>
             </clause>

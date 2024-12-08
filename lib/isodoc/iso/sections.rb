@@ -12,9 +12,9 @@ module IsoDoc
         @foreword = true
         page_break(out)
         out.div **attr_code(id: clause["id"]) do |s|
-          clause_name(nil, clause.at(ns("./title")), s,
+          clause_name(nil, clause.at(ns("./fmt-title")), s,
                       { class: "ForewordTitle" })
-          clause.elements.each { |e| parse(e, s) unless e.name == "title" }
+          clause.elements.each { |e| parse(e, s) unless e.name == "fmt-title" }
         end
         @foreword = false
       end

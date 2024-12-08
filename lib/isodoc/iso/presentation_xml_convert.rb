@@ -23,6 +23,39 @@ module IsoDoc
         super
       end
 
+      def section(docxml)
+        super
+        warning_for_missing_metadata(docxml)
+      end
+
+      def warning_for_missing_metadata(docxml)
+        @meta.get[:unpublished] or return
+        ret = warning_for_missing_metadata_create(docxml)
+        ret.empty? and return
+        warning_for_missing_metadata_post(docxml, ret)
+      end
+
+      def warning_for_missing_metadata_create(docxml)
+        ret = ""
+        docxml.at(ns("//bibdata/ext//secretariat")) or
+          ret += "<p>Secretariat is missing.</p>"
+        docxml.at(ns("//bibdata/ext//editorialgroup")) or
+          ret += "<p>Editorial groups are missing.</p>"
+        docxml.at(ns("//bibdata/date[@type = 'published' or @type = 'issued' " \
+                     "or @type = 'created']")) ||
+          docxml.at(ns("//bibdata/version/revision-date")) or
+          ret += "<p>Document date is missing.</p>"
+        ret
+      end
+
+      def warning_for_missing_metadata_post(docxml, ret)
+        id = UUIDTools::UUID.random_create
+        ret = "<review date='#{Date.today}' reviewer='Metanorma' id='_#{id}'>" \
+              "<p><strong>Metadata warnings:<strong></p> #{ret}</review>"
+        ins = docxml.at(ns("//sections//fmt-title")) or return
+        ins.add_first_child ret
+      end
+
       def block(docxml)
         amend docxml
         figure docxml
@@ -30,6 +63,7 @@ module IsoDoc
         formula docxml
         admonition docxml
         source docxml
+        ul docxml
         ol docxml
         quote docxml
         permission docxml
@@ -38,6 +72,7 @@ module IsoDoc
         requirement_render docxml
         @xrefs.anchors_previous = @xrefs.anchors.dup # store old xrefs of reqts
         @xrefs.parse docxml
+        # TODO move this dependency around: requirements at root should be processed before everything else
         table docxml # have table include requirements newly converted to tables
         # table feeds dl
         dl docxml
@@ -45,30 +80,41 @@ module IsoDoc
         note docxml
       end
 
+      # Redo Amendment annex titles as numbered
       def annex(isoxml)
         amd?(isoxml) and @suppressheadingnumbers = @oldsuppressheadingnumbers
         super
-        isoxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
-          clause1(f)
-        end
         amd?(isoxml) and @suppressheadingnumbers = true
       end
 
-      def figure1(node)
-        figure_fn(node)
-        figure_key(node.at(ns("./dl")))
-        lbl = @xrefs.anchor(node["id"], :label, false) or return
-        figname = node.parent.name == "figure" ? "" : "#{@i18n.figure} "
-        conn = node.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
-        prefix_name(node, conn, l10n("#{figname}#{lbl}"), "name")
+      # Redo Amendment annex subclause titles as numbered
+      def clause(docxml)
+        super
+        docxml.xpath(ns("//annex//appendix")).each { |f| clause1(f) }
+        amd?(docxml) or return
+        @suppressheadingnumbers = @oldsuppressheadingnumbers
+        docxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
+          f.xpath(ns("./fmt-title | ./fmt-xref-label")).each(&:remove)
+          clause1(f)
+        end
+        @suppressheadingnumbers = true
       end
 
-      def example1(node)
-        n = @xrefs.get[node["id"]]
-        lbl = if n.nil? || blank?(n[:label]) then @i18n.example
-              else l10n("#{@i18n.example} #{n[:label]}")
-              end
-        prefix_name(node, block_delim, lbl, "name")
+      def subfigure_delim
+        "<span class='fmt-label-delim'>)</span>"
+      end
+
+      def figure_delim(elem)
+        elem.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
+      end
+
+      def figure_name(elem)
+        elem.parent.name == "figure" and return ""
+        super
+      end
+
+      def figure_label?(_elem)
+        true
       end
 
       def example_span_label(_node, div, name)
@@ -79,26 +125,33 @@ module IsoDoc
       end
 
       def clause1(node)
-        if !node.at(ns("./title")) &&
-            !%w(sections preface bibliography).include?(node.parent.name)
+        !node.at(ns("./title")) &&
+          !%w(sections preface bibliography).include?(node.parent.name) and
           node["inline-header"] = "true"
-        end
         super
-        if node["type"] == "section"
-          t = node.at(ns("./title/tab")) and
-            t.previous = @i18n.l10n(": ").sub(/\p{Zs}$/, "")
+        clause1_section_prefix(node)
+      end
+
+      def clause1_section_prefix(node)
+        if node["type"] == "section" &&
+            c = node.at(ns("./fmt-title//span[@class = 'fmt-caption-delim']"))
+          c.add_first_child(":")
+          t = node.at(ns("./fmt-title"))
+          # French l10n needs tab to be treated as space
+          t.replace @i18n.l10n(to_xml(t).gsub("<tab/>", "<tab> </tab>"))
+            .gsub(%r{<tab>[^<]+</tab>}, "<tab/>")
         end
       end
 
-      def clause(docxml)
-        docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
-                        "//terms | //definitions | //references | " \
-                        "//preface/introduction[clause]")).each do |f|
-          f.parent.name == "annex" &&
-            @xrefs.klass.single_term_clause?(f.parent) and next
-          clause1(f)
-        end
-      end
+      #       def clause(docxml)
+      #         docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
+      #                         "//terms | //definitions | //references | " \
+      #                         "//preface/introduction[clause]")).each do |f|
+      #           f.parent.name == "annex" &&
+      #             @xrefs.klass.single_term_clause?(f.parent) and next
+      #           clause1(f)
+      #         end
+      #       end
 
       def admonition1(elem)
         super
@@ -153,10 +206,22 @@ module IsoDoc
       end
 
       def table1(elem)
+        table1_key(elem)
+        if elem["class"] == "modspec"
+          n = elem.at(ns(".//fmt-name")).remove
+          n.name = "name"
+          elem.add_first_child(n)
+          elem.at(ns("./thead"))&.remove
+          super
+          elem.at(ns("./name")).remove
+        else super
+        end
+      end
+
+      def table1_key(elem)
         elem.xpath(ns(".//dl[@key = 'true'][not(./name)]")).each do |dl|
           dl.add_first_child "<name>#{@i18n.key}</name>"
         end
-        super
       end
 
       def toc_title(docxml)
