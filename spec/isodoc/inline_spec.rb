@@ -639,7 +639,7 @@ RSpec.describe IsoDoc do
                       <span class="stddocNumber">712</span>
                    </xref>
                    <eref type="inline" bibitemid="ISO_10303_32">
-                      [ISO 10303-32
+                      [ISO 10303-32
                       <fn reference="1">
                          <p>To be published.</p>
                       </fn>

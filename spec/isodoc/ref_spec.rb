@@ -161,7 +161,7 @@ RSpec.describe IsoDoc do
              <foreword displayorder="2">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
-                      <semx element="title" source="_">Foreword</semx>
+                   <semx element="title" source="_">Foreword</semx>
                 </fmt-title>
                 <p id="_">
                    <xref target="ISO712">
@@ -171,10 +171,10 @@ RSpec.describe IsoDoc do
                    <xref target="ISBN">[1]</xref>
                    <xref target="ISSN">[2]</xref>
                    <xref target="ISO16634">
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">16634</span>
-                      :--
-                      <span class="stdpublisher">(all </span>
+                      :-- 
+                      <span class="stdpublisher">(all </span>
                       <span class="stdpublisher">parts)</span>
                    </xref>
                    <xref target="ref1">ICC 167</xref>
@@ -189,11 +189,11 @@ RSpec.describe IsoDoc do
                 <fmt-title depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="_">1</semx>
-                      </span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Normative References</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Normative References</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -220,14 +220,14 @@ RSpec.describe IsoDoc do
                          <span class="stddocTitle">Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs</span>
                       </em>
                    </formattedref>
-                   <docidentifier type="ISO">ISO 16634:-- (all parts)</docidentifier>
-                   <docidentifier scope="biblio-tag">ISO 16634:-- (all parts)</docidentifier>
+                   <docidentifier type="ISO">ISO 16634:-- (all parts)</docidentifier>
+                   <docidentifier scope="biblio-tag">ISO 16634:-- (all parts)</docidentifier>
                    <note format="text/plain" reference="1" type="Unpublished-Status">Under preparation. (Stage at the time of publication ISO/DIS 16634)</note>
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">16634</span>
-                      :--
-                      <span class="stdpublisher">(all </span>
+                      :-- 
+                      <span class="stdpublisher">(all </span>
                       <span class="stdpublisher">parts)</span>
                       <fn reference="1">
                          <p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p>
@@ -271,9 +271,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
-                   <span class="fmt-label-delim">
-                     <tab/>
-                  </span>
+                      <span class="fmt-label-delim">
+                         <tab/>
+                      </span>
                    </fmt-name>
                    <p>This is an annotation of ISO 20483:2013-2014</p>
                 </note>
@@ -283,7 +283,7 @@ RSpec.describe IsoDoc do
              <references id="_" normative="false" obligation="informative" displayorder="4">
                 <title id="_">Bibliography</title>
                 <fmt-title depth="1">
-                      <semx element="title" source="_">Bibliography</semx>
+                   <semx element="title" source="_">Bibliography</semx>
                 </fmt-title>
                 <bibitem id="ISBN" type="book">
                    <formattedref>
@@ -314,9 +314,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
-                   <span class="fmt-label-delim">
-                     <tab/>
-                  </span>
+                      <span class="fmt-label-delim">
+                         <tab/>
+                      </span>
                    </fmt-name>
                    <p>This is an annotation of document ISSN.</p>
                 </note>
@@ -325,9 +325,9 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">NOTE</span>
                       </span>
-                   <span class="fmt-label-delim">
-                     <tab/>
-                  </span>
+                      <span class="fmt-label-delim">
+                         <tab/>
+                      </span>
                    </fmt-name>
                    <p>This is another annotation of document ISSN.</p>
                 </note>
@@ -408,8 +408,8 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
                       <br/>
-             <div>
-             <h1 class="ForewordTitle">Foreword</h1>
+                <div>
+                   <h1 class="ForewordTitle">Foreword</h1>
                    <p id="_">
                       <a href="#ISO712">
                          <span class="stdpublisher">ISO </span>
@@ -418,10 +418,10 @@ RSpec.describe IsoDoc do
                       <a href="#ISBN">[1]</a>
                       <a href="#ISSN">[2]</a>
                       <a href="#ISO16634">
-                         <span class="stdpublisher">ISO </span>
+                         <span class="stdpublisher">ISO </span>
                          <span class="stddocNumber">16634</span>
-                         :--
-                         <span class="stdpublisher">(all </span>
+                         :-- 
+                         <span class="stdpublisher">(all </span>
                          <span class="stdpublisher">parts)</span>
                       </a>
                       <a href="#ref1">ICC 167</a>
@@ -441,10 +441,10 @@ RSpec.describe IsoDoc do
                       </i>
                    </p>
                    <p id="ISO16634" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">16634</span>
-                      :--
-                      <span class="stdpublisher">(all </span>
+                      :-- 
+                      <span class="stdpublisher">(all </span>
                       <span class="stdpublisher">parts)</span>
                       <a class="FootnoteRef" href="#fn:1">
                          <sup>1</sup>
