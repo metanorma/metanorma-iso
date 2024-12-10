@@ -11,11 +11,20 @@
 
 	<xsl:variable name="column_gap">8.5mm</xsl:variable>
 
-	<xsl:variable name="docidentifierISO_undated"><xsl:if test="not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM')"><xsl:value-of select="normalize-space(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-undated'])"/></xsl:if></xsl:variable>
+	<xsl:variable name="docidentifier_iso" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'] | /iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'ISO']"/>
+
+	<xsl:variable name="docidentifier_undated_" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-undated'])"/>
+	<xsl:variable name="docidentifier_undated"><xsl:value-of select="$docidentifier_undated_"/><xsl:if test="$docidentifier_undated_ = ''"><xsl:value-of select="$docidentifier_iso"/></xsl:if></xsl:variable>
+	<xsl:variable name="docidentifierISO_undated_">
+		<xsl:if test="not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM')">
+			<xsl:value-of select="$docidentifier_undated_"/>
+		</xsl:if>
+	</xsl:variable>
+	<xsl:variable name="docidentifierISO_undated" select="normalize-space($docidentifierISO_undated_)"/>
 	<xsl:variable name="docidentifierISO_">
 		<xsl:value-of select="$docidentifierISO_undated"/>
 		<xsl:if test="$docidentifierISO_undated = ''">
-			<xsl:value-of select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso'] | /iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'ISO']"/>
+			<xsl:value-of select="$docidentifier_iso"/>
 		</xsl:if>
 	</xsl:variable>
 	<xsl:variable name="docidentifierISO" select="normalize-space($docidentifierISO_)"/>
@@ -77,12 +86,14 @@
 		<xsl:value-of select="$i18n_all_rights_reserved"/>
 	</xsl:variable>
 
-	<xsl:variable name="docidentifier_iso_with_lang" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-with-lang']"/>
+	<xsl:variable name="docidentifier_iso_with_lang_" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-with-lang'])"/>
+	<xsl:variable name="docidentifier_iso_with_lang"><xsl:value-of select="$docidentifier_iso_with_lang_"/><xsl:if test="$docidentifier_iso_with_lang_ = ''"><xsl:value-of select="$docidentifier_iso"/></xsl:if></xsl:variable>
 
 	<xsl:variable name="lang-1st-letter_tmp" select="substring-before(substring-after($docidentifier_iso_with_lang, '('), ')')"/>
 	<xsl:variable name="lang-1st-letter" select="concat('(', $lang-1st-letter_tmp , ')')"/>
 
-	<xsl:variable name="iso_reference" select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-reference']"/>
+	<xsl:variable name="iso_reference_" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-reference'])"/>
+	<xsl:variable name="iso_reference"><xsl:value-of select="$iso_reference_"/><xsl:if test="$iso_reference_ = ''"><xsl:value-of select="$docidentifier_iso"/></xsl:if></xsl:variable>
 	<xsl:variable name="anotherNumbers">
 		<xsl:variable name="year_iso_reference" select="concat(':',substring-after($iso_reference,':'))"/>
 		<xsl:for-each select="/iso:iso-standard/iso:bibdata/iso:docidentifier[@type != '' and @type != 'ISO' and not(starts-with(@type, 'iso-')) and @type != 'URN']">
@@ -966,7 +977,7 @@
 															</xsl:variable>
 															<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($doctype_international_standard))"/>
 															<xsl:text> </xsl:text>
-															<xsl:value-of select="translate(substring-before(/iso:iso-standard/iso:bibdata/iso:docidentifier[@type = 'iso-undated'], '/'),':','-')"/>
+															<xsl:value-of select="translate(substring-before($docidentifier_undated, '/'),':','-')"/>
 															<xsl:text>/</xsl:text>
 															<xsl:value-of select="$doctype_localized"/>
 															<xsl:text> </xsl:text>
@@ -1924,7 +1935,7 @@
 														<xsl:call-template name="insertTitlesLangMain"/>
 													</fo:block>
 
-													<xsl:if test="not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stage-abbreviation = 'PRF')">
+													<xsl:if test="not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM')"> <!--  or $stage-abbreviation = 'PRF' -->
 														<xsl:for-each select="xalan:nodeset($lang_other)/lang">
 															<xsl:variable name="lang_other" select="."/>
 															<fo:block font-size="12pt" role="SKIP"><xsl:value-of select="$linebreak"/></fo:block>
