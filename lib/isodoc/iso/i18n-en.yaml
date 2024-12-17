@@ -17,9 +17,6 @@ withdrawn: Withdrawn.
 cancelled_and_replaced: Cancelled and replaced by %.
 table_of_contents: Contents
 date: Date
-index: Index
-see: see
-see_also: see also
 secretariat: Secretariat
 edition: edition
 edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} EDITION"
