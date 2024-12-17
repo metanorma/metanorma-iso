@@ -1,6 +1,5 @@
 require_relative "init"
 require "isodoc"
-require_relative "index"
 require_relative "presentation_xref"
 require_relative "presentation_bibdata"
 require_relative "presentation_terms"
@@ -296,6 +295,10 @@ module IsoDoc
         else
           ""
         end
+      end
+
+      def enable_indexsect
+        true
       end
 
       include Init

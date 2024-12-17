@@ -17,9 +17,6 @@ under_preparation: En cours d'élaboration. (Stade au moment de la publication %
 withdrawn: Retiré.
 cancelled_and_replaced: Annulé et remplacé par %.
 date: Date
-index: Index
-see: voir
-see_also: voir aussi
 secretariat: Secrétariat
 edition: édition
 edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} ÉDITION"
