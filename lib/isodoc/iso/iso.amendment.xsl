@@ -12249,7 +12249,16 @@
 									</xsl:when>
 									<xsl:otherwise>
 										<!-- output text from <link>text</link> -->
-										<xsl:apply-templates/>
+										<xsl:choose>
+											<xsl:when test="starts-with(., 'http://') or starts-with(., 'https://') or starts-with(., 'www.')">
+												<xsl:call-template name="add-zero-spaces-link-java">
+													<xsl:with-param name="text" select="."/>
+												</xsl:call-template>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:apply-templates/>
+											</xsl:otherwise>
+										</xsl:choose>
 									</xsl:otherwise>
 								</xsl:choose>
 							</fo:basic-link>
