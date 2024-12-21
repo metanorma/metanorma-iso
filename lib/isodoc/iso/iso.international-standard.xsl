@@ -12951,16 +12951,29 @@
 	<xsl:template name="getImageSrc">
 		<xsl:choose>
 			<xsl:when test="not(starts-with(@src, 'data:'))">
-				<xsl:choose>
-					<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
-						<xsl:value-of select="@src"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="concat($basepath, @src)"/>
-					</xsl:otherwise>
-				</xsl:choose>
+				<xsl:call-template name="getImageSrcExternal"/>
 			</xsl:when>
 			<xsl:otherwise><xsl:value-of select="@src"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="getImageSrcExternal">
+		<xsl:choose>
+			<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
+				<xsl:value-of select="@src"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:variable name="src_with_basepath" select="concat($basepath, @src)"/>
+				<xsl:variable name="file_exists" select="normalize-space(java:exists(java:java.io.File.new($src_with_basepath)))"/>
+				<xsl:choose>
+					<xsl:when test="$file_exists = 'true'">
+						<xsl:value-of select="$src_with_basepath"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="@src"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 
@@ -13008,14 +13021,8 @@
 				<xsl:value-of select="concat('url(file:///',$basepath, $src_png, ')')"/>
 			</xsl:when>
 			<xsl:when test="not(starts-with(@src, 'data:'))">
-				<xsl:choose>
-					<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
-						<xsl:value-of select="concat('url(file:///', @src, ')')"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="concat('url(file:///',$basepath, @src, ')')"/>
-					</xsl:otherwise>
-				</xsl:choose>
+				<xsl:variable name="src_external"><xsl:call-template name="getImageSrcExternal"/></xsl:variable>
+				<xsl:value-of select="concat('url(file:///', $src_external, ')')"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="@src"/>
@@ -13036,16 +13043,8 @@
 				</svg>
 			</xsl:when>
 			<xsl:when test="not(starts-with(@src, 'data:'))">
-				<xsl:variable name="src">
-					<xsl:choose>
-						<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
-							<xsl:value-of select="concat('url(file:///', @src, ')')"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="concat('url(file:///',$basepath, @src, ')')"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable>
+				<xsl:variable name="src_external"><xsl:call-template name="getImageSrcExternal"/></xsl:variable>
+				<xsl:variable name="src" select="concat('url(file:///', $src_external, ')')"/>
 				<xsl:variable name="file" select="java:java.io.File.new(@src)"/>
 				<xsl:variable name="bufferedImage" select="java:javax.imageio.ImageIO.read($file)"/>
 				<xsl:variable name="width" select="java:getWidth($bufferedImage)"/>
@@ -18867,14 +18866,8 @@
 				<xsl:value-of select="$src"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:choose>
-					<xsl:when test="@extracted = 'true'"> <!-- added in mn2pdf v1.97 -->
-						<xsl:value-of select="concat('url(file:///', @src, ')')"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="concat('url(file:///',$basepath, $src, ')')"/>
-					</xsl:otherwise>
-				</xsl:choose>
+				<xsl:variable name="src_external"><xsl:call-template name="getImageSrcExternal"/></xsl:variable>
+				<xsl:value-of select="concat('url(file:///', $src_external, ')')"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
