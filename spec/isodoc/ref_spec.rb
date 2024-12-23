@@ -612,7 +612,7 @@ RSpec.describe IsoDoc do
                <span class='biburl'>
                  <link target='https://registre.ign.fr/'>https://registre.ign.fr/</link>
                </span>
-               .  [viewed: #{Date.today.strftime('%B %-d, %Y')}].
+               .
              </formattedref>
              <uri>https://registre.ign.fr/</uri>
              <docidentifier type='metanorma-ordinal'>[1]</docidentifier>

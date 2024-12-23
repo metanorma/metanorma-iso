@@ -377,7 +377,7 @@ RSpec.describe Relaton::Render::Iso do
         </bibitem>
       INPUT
       output = <<~OUTPUT
-        <formattedref><smallcap>Ribose Inc.</smallcap>. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>. [viewed: #{Date.today.strftime('%B %-d, %Y')}].</formattedref>
+        <formattedref><smallcap>Ribose Inc.</smallcap>. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>.</formattedref>
       OUTPUT
       p = renderer
       expect(p.render(input))
