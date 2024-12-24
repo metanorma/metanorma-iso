@@ -33,6 +33,7 @@ classification-UDC: UDC
 website: website
 formerly_id: "(formerly %)"
 was_developed_by: "%1 was developed by %2"
+iso-cen-parallel: ISO/CEN PARALLEL PROCESSING
 doctype_dict:
   international-standard: International Standard
   technical-specification: Technical Specification

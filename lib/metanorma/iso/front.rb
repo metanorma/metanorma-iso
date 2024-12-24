@@ -22,6 +22,7 @@ module Metanorma
           xml.updates_document_type a
         a = node.attr("fast-track") and xml.send "fast-track", a != "false"
         a = node.attr("price-code") and xml.price_code a
+        node.attr("iso-cen-parallel") and xml.iso_cen_parallel true
       end
 
       STAGE_ERROR = [Pubid::Core::Errors::HarmonizedStageCodeInvalidError,

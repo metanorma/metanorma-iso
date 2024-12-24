@@ -30,6 +30,7 @@ fast-track-procedure: Procédure accélérée
 classification-UDC: CDU
 formerly_id: "(précédemment %)"
 was_developed_by: "%1 a été élaboré par %2"
+iso-cen-parallel: TRAITEMENT PARALLÈLE ISO/CEN
 website: site web
 doctype_dict:
   international-standard: Norme internationale
