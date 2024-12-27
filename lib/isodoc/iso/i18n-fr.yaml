@@ -23,8 +23,8 @@ edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} ÉDITION"
 edition_replacement: "Cette {{ var1 | ordinal_word: 'edition', '' }} édition annule et remplace la {{ var2 | ordinal_word: 'edition', '' }} édition"
 termsrelated: Termes liés 
 availablefrom: Disponible sur
-voting_begins_on: Le vote commence le
-voting_terminates_on: Le vote se termine le
+voting_begins_on: Début de vote
+voting_terminates_on: Vote clos le
 corrected_version: Version corrigée
 fast-track-procedure: Procédure accélérée
 classification-UDC: CDU
