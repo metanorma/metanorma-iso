@@ -287,6 +287,7 @@
 	<xsl:variable name="i18n_date_printing"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">date_printing</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_corrected_version"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">corrected_version</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_fast_track_procedure"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">fast-track-procedure</xsl:with-param></xsl:call-template></xsl:variable>
+	<xsl:variable name="i18n_iso_cen_parallel"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">iso-cen-parallel</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_all_rights_reserved"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">all_rights_reserved</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_locality_page"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">locality.page</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_locality_part"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">locality.part</xsl:with-param></xsl:call-template></xsl:variable>
@@ -1863,9 +1864,19 @@
 
 													<xsl:choose>
 														<xsl:when test="$stage-abbreviation = 'DIS'"> <!--  or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' -->
-															<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($stagename))"/>
-															<xsl:value-of select="$linebreak"/>
-															<xsl:value-of select="$doctype_localized"/>
+															<xsl:choose>
+																<xsl:when test="contains($stagename, ' ')">
+																	<!-- Draft International Standard to DRAFT -->
+																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(substring-before($stagename, ' ')))"/>
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="substring-after($stagename, ' ')"/>
+																</xsl:when>
+																<xsl:otherwise>
+																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($stagename))"/>
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="$doctype_localized"/>
+																</xsl:otherwise>
+															</xsl:choose>
 														</xsl:when>
 														<!-- <xsl:when test="$stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM'"><xsl:value-of select="$doctype_uppercased"/></xsl:when> -->
 														<xsl:when test="$stagename-header-coverpage != ''">
@@ -1949,7 +1960,8 @@
 													</xsl:if>
 
 													<xsl:if test="$stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS' or $stagename_abbreviation = 'FDIS'                or $stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS'">
-														<fo:block margin-top="20mm">
+														<fo:block margin-top="20mm" font-size="11pt">
+															<xsl:call-template name="insertInterFont"/>
 															<xsl:copy-of select="$ics"/>
 														</fo:block>
 													</xsl:if>
@@ -2046,7 +2058,7 @@
 
 											<xsl:if test="normalize-space($additionalNotes) != ''"> <!--  or $stage-abbreviation = 'PRF' -->
 												<xsl:attribute name="display-align">center</xsl:attribute>
-												<fo:block>
+												<fo:block margin-bottom="6.5mm">
 													<xsl:copy-of select="$additionalNotes"/>
 												</fo:block>
 											</xsl:if>
@@ -2163,9 +2175,13 @@
 											<fo:block-container height="22.5mm" display-align="center" role="SKIP">
 
 												<xsl:variable name="iso-fast-track" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:fast-track)"/>
-
 												<xsl:if test="normalize-space($iso-fast-track) = 'true'">
 													<xsl:attribute name="height">28mm</xsl:attribute>
+												</xsl:if>
+
+												<xsl:variable name="iso-cen-parallel" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:iso-cen-parallel)"/>
+												<xsl:if test="normalize-space($iso-cen-parallel) = 'true'">
+													<xsl:attribute name="height">35mm</xsl:attribute>
 												</xsl:if>
 
 												<fo:block>
@@ -3099,6 +3115,31 @@
 					</fo:block>
 				</fo:block-container>
 			</xsl:if>
+
+			<xsl:variable name="iso-cen-parallel" select="normalize-space(/iso:iso-standard/iso:bibdata/iso:ext/iso:iso-cen-parallel)"/>
+
+			<xsl:if test="normalize-space($iso-cen-parallel) = 'true'">
+				<fo:block-container space-before="4mm" role="SKIP">
+					<fo:block background-color="rgb(77,77,77)" color="white" fox:border-radius="5pt" text-align="center" display-align="center" font-size="19pt" font-weight="bold" role="SKIP">
+						<xsl:if test="$layoutVersion = '2024'">
+							<xsl:attribute name="background-color">rgb(88,88,88)</xsl:attribute>
+							<xsl:attribute name="fox:border-radius">0pt</xsl:attribute>
+							<xsl:attribute name="font-size">16pt</xsl:attribute>
+						</xsl:if>
+						<fo:block-container height="13.2mm" role="SKIP">
+							<xsl:if test="$layoutVersion = '2024'">
+								<xsl:attribute name="height">11.2mm</xsl:attribute>
+								<xsl:attribute name="padding-top">2mm</xsl:attribute>
+							</xsl:if>
+							<fo:block>
+								<!-- <xsl:text>ISO/CEN PARALLEL PROCESSING</xsl:text>  -->
+								<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($i18n_iso_cen_parallel))"/>
+							</fo:block>
+						</fo:block-container>
+					</fo:block>
+				</fo:block-container>
+			</xsl:if>
+
 		</xsl:if>
 	</xsl:template>
 
