@@ -89,7 +89,7 @@ RSpec.describe IsoDoc do
     INPUT
 
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -196,9 +196,18 @@ RSpec.describe IsoDoc do
                          <span class="fmt-autonum-delim">.</span>
                          <semx element="autonum" source="J">1</semx>
                       </fmt-xref-label>
-                      <preferred>
-                         <strong>Term2</strong>
+                      <preferred id="_">
+                         <expression>
+                            <name>Term2</name>
+                         </expression>
                       </preferred>
+                      <fmt-preferred>
+                         <p>
+                            <semx element="preferred" source="_">
+                               <strong>Term2</strong>
+                            </semx>
+                         </p>
+                      </fmt-preferred>
                    </term>
                 </terms>
                 <definitions id="K">
@@ -440,44 +449,44 @@ RSpec.describe IsoDoc do
                       <span class="fmt-autonum-delim">.</span>
                       <semx element="autonum" source="Q2a">1</semx>
                    </fmt-xref-label>
-                               <clause id="Q2b" inline-header="false" obligation="normative">
-               <title id="_">Appendix subsubclause</title>
-               <fmt-title depth="4">
-                  <span class="fmt-caption-label">
-                     <span class="fmt-element-name">Appendix</span>
-                     <semx element="autonum" source="Q2">1</semx>
-                     <span class="fmt-autonum-delim">.</span>
-                     <semx element="autonum" source="Q2a">1</semx>
-                     <span class="fmt-autonum-delim">.</span>
-                     <semx element="autonum" source="Q2b">1</semx>
-                  </span>
-                  <span class="fmt-caption-delim">
-                     <tab/>
-                  </span>
-                  <semx element="title" source="_">Appendix subsubclause</semx>
-               </fmt-title>
-               <fmt-xref-label>
-                  <span class="fmt-element-name">Appendix</span>
-                  <semx element="autonum" source="Q2">1</semx>
-                  <span class="fmt-autonum-delim">.</span>
-                  <semx element="autonum" source="Q2a">1</semx>
-                  <span class="fmt-autonum-delim">.</span>
-                  <semx element="autonum" source="Q2b">1</semx>
-               </fmt-xref-label>
-               <fmt-xref-label container="P">
-                  <span class="fmt-xref-container">
-                     <span class="fmt-element-name">Annex</span>
-                     <semx element="autonum" source="P">A</semx>
-                  </span>
-                  <span class="fmt-comma">,</span>
-                  <span class="fmt-element-name">Appendix</span>
-                  <semx element="autonum" source="Q2">1</semx>
-                  <span class="fmt-autonum-delim">.</span>
-                  <semx element="autonum" source="Q2a">1</semx>
-                  <span class="fmt-autonum-delim">.</span>
-                  <semx element="autonum" source="Q2b">1</semx>
-               </fmt-xref-label>
-            </clause>
+                   <clause id="Q2b" inline-header="false" obligation="normative">
+                      <title id="_">Appendix subsubclause</title>
+                      <fmt-title depth="4">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">Appendix</span>
+                            <semx element="autonum" source="Q2">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="Q2a">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="Q2b">1</semx>
+                         </span>
+                         <span class="fmt-caption-delim">
+                            <tab/>
+                         </span>
+                         <semx element="title" source="_">Appendix subsubclause</semx>
+                      </fmt-title>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Appendix</span>
+                         <semx element="autonum" source="Q2">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="Q2a">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="Q2b">1</semx>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="P">
+                         <span class="fmt-xref-container">
+                            <span class="fmt-element-name">Annex</span>
+                            <semx element="autonum" source="P">A</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Appendix</span>
+                         <semx element="autonum" source="Q2">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="Q2a">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="Q2b">1</semx>
+                      </fmt-xref-label>
+                   </clause>
                 </clause>
              </appendix>
              <references id="Q3" normative="false">
@@ -1034,7 +1043,7 @@ RSpec.describe IsoDoc do
             <fmt-title>Terms, Definitions, Symbols and Abbreviated Terms</fmt-title>
             <term id="J">
               <fmt-name>1.1</fmt-name>
-              <preferred>Term2</preferred>
+              <fmt-preferred><p>Term2</p></fmt-preferred>
             </term>
           </terms>
         </sections>
