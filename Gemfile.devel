@@ -1,0 +1,3 @@
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "feature/presentation-terms"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/remove-asciimath2unitsml"
+gem "mn-requirements", git: "https://github.com/metanorma/mn-requirements", branch: "main"

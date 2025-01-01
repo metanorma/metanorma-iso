@@ -1525,7 +1525,7 @@ RSpec.describe IsoDoc do
                           <span class="stddocNumber">712</span>
                           , Section 1
                        </xref>
-                       — with adjustments ;
+                       — with adjustments;
                        <xref type="inline" target="ISO712">
                           <span class="stdpublisher">ISO </span>
                           <span class="stddocNumber">712</span>

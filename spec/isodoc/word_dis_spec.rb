@@ -14,8 +14,8 @@ RSpec.describe IsoDoc do
           <sections>
           <terms id="A" displayorder="1">
             <term id="B">
-            <preferred><expression><name>First</name></expression></preferred>
-            <admitted><expression><name>Second</name></expression></admitted>
+            <fmt-preferred><p>First</p></fmt-preferred>
+            <fmt-admitted><p>Second</p></fmt-admitted>
             </term>
           </terms>
           </sections>
@@ -37,8 +37,8 @@ RSpec.describe IsoDoc do
           <sections>
           <terms id="A" displayorder="1">
             <term id="B">
-            <preferred><expression><name>First</name></expression></preferred>
-            <admitted><expression><name>Second</name></expression></admitted>
+            <fmt-preferred><p>First</p></fmt-preferred>
+            <fmt-admitted><p>Second</p></fmt-admitted>
             </term>
           </terms>
           </sections>
@@ -60,8 +60,8 @@ RSpec.describe IsoDoc do
           <sections>
           <terms id="A" displayorder="1">
             <term id="B">
-            <preferred><expression><name>First</name></expression></preferred>
-            <admitted><expression><name>Second</name></expression></admitted>
+            <fmt-preferred><p>First</p></fmt-preferred>
+            <fmt-admitted><p>Second</p></fmt-admitted>
             </term>
           </terms>
           </sections>
@@ -83,8 +83,8 @@ RSpec.describe IsoDoc do
           <sections>
           <terms id="A" displayorder="1">
             <term id="B">
-            <preferred><expression><name>First</name></expression></preferred>
-            <admitted><expression><name>Second</name></expression></admitted>
+            <fmt-preferred><p>First</p></fmt-preferred>
+            <fmt-admitted><p>Second</p></fmt-admitted>
             </term>
           </terms>
           </sections>
