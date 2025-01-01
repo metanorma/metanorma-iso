@@ -1337,6 +1337,109 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
+  it "processes concept markup in term definitions" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <sections>
+      <terms id="Terms">
+      <term id="clause1">
+      <preferred>A</preferred>
+      <definition>
+      <ul>
+      <concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+      <li><concept><refterm>term1</refterm>
+          <renderterm>term</renderterm>
+          <xref target='clause1'/>
+        </concept></li>
+        </ul>
+        </definition>
+        </term>
+      </terms>
+      </sections>
+      </iso-standard>
+      INPUT
+      presxml = <<~OUTPUT
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <terms id="Terms" displayorder="2">
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="Terms">1</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="Terms">1</semx>
+                </fmt-xref-label>
+                <term id="clause1">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="Terms">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="clause1">1</semx>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="Terms">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="clause1">1</semx>
+                   </fmt-xref-label>
+                   <preferred id="_">A</preferred>
+                   <definition id="_">
+                      <ul>
+                         <concept>
+                            <refterm>term1</refterm>
+                            <renderterm>term</renderterm>
+                            <xref target="clause1"/>
+                         </concept>
+                      </ul>
+                      <li>
+                         <concept>
+                            <refterm>term1</refterm>
+                            <renderterm>term</renderterm>
+                            <xref target="clause1"/>
+                         </concept>
+                      </li>
+                   </definition>
+                   <fmt-definition>
+                      <semx element="definition" source="_">
+                         <ul>
+                            <em>term</em>
+                            (
+                            <xref target="clause1">
+                               <span class="citesec">
+                                  <semx element="autonum" source="Terms">1</semx>
+                                  <span class="fmt-autonum-delim">.</span>
+                                  <semx element="autonum" source="clause1">1</semx>
+                               </span>
+                            </xref>
+                            )
+                         </ul>
+                         <li>
+           term
+           
+         </li>
+                      </semx>
+                   </fmt-definition>
+                </term>
+             </terms>
+          </sections>
+       </iso-standard>
+        OUTPUT
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+       .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
+  end
+
   it "processes concept attributes" do
     input = <<~INPUT
        <iso-standard xmlns="http://riboseinc.com/isoxml">
