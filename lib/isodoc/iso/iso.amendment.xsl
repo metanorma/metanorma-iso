@@ -10812,6 +10812,12 @@
     </xsl:if>
   </xsl:template>
 
+	<xsl:template match="*[local-name()='strike']">
+		<fo:inline text-decoration="line-through">
+			<xsl:apply-templates/>
+		</fo:inline>
+	</xsl:template>
+
 	<xsl:template match="*[local-name() = 'pagebreak']">
 		<fo:block break-after="page"/>
 		<fo:block> </fo:block>
