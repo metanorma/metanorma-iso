@@ -23,14 +23,17 @@ edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} ÉDITION"
 edition_replacement: "Cette {{ var1 | ordinal_word: 'edition', '' }} édition annule et remplace la {{ var2 | ordinal_word: 'edition', '' }} édition"
 termsrelated: Termes liés 
 availablefrom: Disponible sur
-voting_begins_on: Le vote commence le
-voting_terminates_on: Le vote se termine le
+voting_begins_on: Début de vote
+voting_terminates_on: Vote clos le
 corrected_version: Version corrigée
 fast-track-procedure: Procédure accélérée
 classification-UDC: CDU
 formerly_id: "(précédemment %)"
 was_developed_by: "%1 a été élaboré par %2"
 iso-cen-parallel: TRAITEMENT PARALLÈLE ISO/CEN
+draft_comment_1: Ce document est un projet diffusé pour observations et approbation. Il est donc susceptible de modification et ne peut être cité comme norme internationale avant sa publication en tant que telle.
+draft_comment_2: Outre le fait d’être examinés pour établir s’ils sont acceptables à des fins industrielles, technologiques et commerciales, ainsi que du point de vue des utilisateurs, les projets de normes internationales doivent parfois être considérés du point de vue de leur possibilité de devenir des normes pouvant servir de référence dans la réglementation nationale.
+draft_comment_3: Les destinataires du présent projet sont invités à présenter, avec leurs observations, notification des droits de propriété dont ils auraient éventuellement connaissance et à fournir une documentation explicative.
 website: site web
 doctype_dict:
   international-standard: Norme internationale
