@@ -867,7 +867,7 @@ RSpec.describe Metanorma::Iso do
              <substage>60</substage>
           </status>
           <copyright>
-             <from>2024</from>
+             <from>#{Date.today.year}</from>
              <owner>
                 <organization>
                    <name>International Organization for Standardization</name>
