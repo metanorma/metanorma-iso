@@ -202,7 +202,7 @@ RSpec.describe IsoDoc do
                              ,
                              <span class="citesec">3.1</span>
                           </origin>
-                          , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here
+                          , modified — <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                        </semx>
                        ]
                     </fmt-termsource>
@@ -741,14 +741,20 @@ RSpec.describe IsoDoc do
                        <expression>
                           <name>Second Term</name>
                        </expression>
-                       <field-of-application>Field</field-of-application>
-                       <usage-info>Usage Info 1</usage-info>
+                       <field-of-application id="_">Field</field-of-application>
+                       <usage-info id="_">Usage Info 1</usage-info>
                     </preferred>
                     <fmt-preferred>
                        <p>
                           <semx element="preferred" source="_">
                              <strong>Second Term</strong>
-                             , &lt;Field, Usage Info 1&gt;
+                     <span class="fmt-designation-field">
+                        , &lt;
+                        <semx element="field-of-application" source="_">Field</semx>
+                        ,
+                        <semx element="usage-info" source="_">Usage Info 1</semx>
+                        &gt;
+                     </span>
                           </semx>
                        </p>
                     </fmt-preferred>
@@ -958,21 +964,21 @@ RSpec.describe IsoDoc do
                     <origin citeas="">
                        <termref base="IEV" target="xyz">t1</termref>
                     </origin>
-                    — with adjustments
+                    — <semx element="modification" source="_">with adjustments</semx>
                  </semx>
                  ;
                  <semx element="termsource" source="_">
                     <origin citeas="">
                        <termref base="IEV" target="xyz"/>
                     </origin>
-                    , modified — with adjustments
+                    , modified — <semx element="modification" source="_">with adjustments</semx>
                  </semx>
                  ;
                  <semx element="termsource" source="_">
                     <origin citeas="">
                        <termref base="IEV" target="xyz"/>
                     </origin>
-                    , modified — with adjustments
+                    , modified — <semx element="modification" source="_">with adjustments</semx>
                  </semx>
                  ;
                  <semx element="termsource" source="_">

@@ -191,7 +191,7 @@ RSpec.describe IsoDoc do
                          </localityStack>
                          , Section 1
                       </origin>
-                      — with adjustments]
+                      — <semx element="modification" source="_">with adjustments</semx>]
                    </source>
                    <note>
                       <fmt-name>
