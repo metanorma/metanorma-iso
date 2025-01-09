@@ -267,11 +267,11 @@ Detailed in https://www.relaton.org/model/creator/</a:documentation>
           <a:documentation>An identifier of the person according to an international identifier scheme</a:documentation>
         </ref>
       </zeroOrMore>
-      <zeroOrMore>
+      <optional>
         <ref name="contact">
           <a:documentation>Contact information for the person, including URI, address, phone number, and email</a:documentation>
         </ref>
-      </zeroOrMore>
+      </optional>
     </element>
   </define>
   <define name="fullname">
@@ -454,11 +454,11 @@ real names (if the person is named with a pseudonym or user name); previous lega
         <a:documentation>An identifier of the organization according to an international identifier scheme</a:documentation>
       </ref>
     </zeroOrMore>
-    <zeroOrMore>
+    <optional>
       <ref name="contact">
         <a:documentation>Contact information for the organization, including address, phone number, and email</a:documentation>
       </ref>
-    </zeroOrMore>
+    </optional>
     <optional>
       <ref name="logo">
         <a:documentation>A logo for the organization</a:documentation>
@@ -540,12 +540,18 @@ real names (if the person is named with a pseudonym or user name); previous lega
   <!-- TODO may change -->
   <define name="contact">
     <a:documentation>Contact information for a person or organization</a:documentation>
-    <choice>
+    <zeroOrMore>
       <ref name="address"/>
+    </zeroOrMore>
+    <zeroOrMore>
       <ref name="phone"/>
+    </zeroOrMore>
+    <zeroOrMore>
       <ref name="email"/>
+    </zeroOrMore>
+    <zeroOrMore>
       <ref name="uri"/>
-    </choice>
+    </zeroOrMore>
   </define>
   <define name="phone">
     <a:documentation>The phone number associated with a person or organization</a:documentation>

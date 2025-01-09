@@ -954,7 +954,7 @@ RSpec.describe Metanorma::Iso do
           <docidentifier type="iso-reference">ISO 17301-1:2030/Add 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:sup:iso:#{Date.today.year}:v3</docidentifier>
           <docidentifier type="iso-undated">ISO 17301-1:2030/Add 3</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 17301-1:2030/Add 3:2024(en)</docidentifier>
+          <docidentifier type="iso-with-lang">ISO 17301-1:2030/Add 3:#{Date.today.year}(en)</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>

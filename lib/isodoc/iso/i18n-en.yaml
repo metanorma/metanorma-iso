@@ -34,6 +34,9 @@ website: website
 formerly_id: "(formerly %)"
 was_developed_by: "%1 was developed by %2"
 iso-cen-parallel: ISO/CEN PARALLEL PROCESSING
+draft_comment_1: This document is a draft circulated for comments and approval. It is therefore subject to change and may not be referred to as an international standard until published as such.
+draft_comment_2: In addition to their evaluation as being acceptable for industrial, technological, commercial and user purposes, draft international standards may on occasion have to be considered in the light of their potential to become standards to which reference may be made in national regulations.
+draft_comment_3: Recipients of this draft are invited to submit, with their comments, notification of any relevant patent rights of which they are aware and to provide supporting documentation.
 doctype_dict:
   international-standard: International Standard
   technical-specification: Technical Specification

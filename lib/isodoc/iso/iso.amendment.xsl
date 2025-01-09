@@ -5593,8 +5593,21 @@
 
 			<!-- <xsl:strip-space elements="iso:xref"/> -->
 
-	<xsl:variable name="namespace_full" select="namespace-uri(/*)"/> <!-- example: https://www.metanorma.org/ns/iso -->
-	<xsl:variable name="root_element" select="local-name(/*)"/> <!-- example: iso-standard -->
+	<xsl:variable name="namespace_full_">
+		<xsl:choose>
+			<xsl:when test="local-name(/*) = 'metanorma-collection'"><xsl:value-of select="namespace-uri(//*[contains(local-name(), '-standard')][1])"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="namespace-uri(/*)"/></xsl:otherwise><!-- example: https://www.metanorma.org/ns/iso -->
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="namespace_full" select="normalize-space($namespace_full_)"/>
+
+	<xsl:variable name="root_element_">
+		<xsl:choose>
+			<xsl:when test="local-name(/*) = 'metanorma-collection'"><xsl:value-of select="local-name(//*[contains(local-name(), '-standard')][1])"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="local-name(/*)"/></xsl:otherwise><!-- example: iso-standard -->
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable name="root_element" select="normalize-space($root_element_)"/>
 
 	<xsl:variable name="document_scheme" select="normalize-space(//*[contains(local-name(), '-standard')]/*[local-name() = 'metanorma-extension']/*[local-name() = 'presentation-metadata'][*[local-name() = 'name'] = 'document-scheme']/*[local-name() = 'value'])"/>
 
@@ -10798,6 +10811,12 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
+
+	<xsl:template match="*[local-name()='strike']">
+		<fo:inline text-decoration="line-through">
+			<xsl:apply-templates/>
+		</fo:inline>
+	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'pagebreak']">
 		<fo:block break-after="page"/>
