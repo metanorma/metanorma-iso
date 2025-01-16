@@ -9364,7 +9364,9 @@
 					<xsl:with-param name="element">
 						<fo:basic-link internal-destination="{$ref_id}" fox:alt-text="footnote {$current_fn_number}"> <!-- note: role="Lbl" removed in https://github.com/metanorma/mn2pdf/issues/291 -->
 							<fo:inline role="Lbl"> <!-- need for https://github.com/metanorma/metanorma-iso/issues/1003 -->
+
 								<xsl:copy-of select="$current_fn_number_text"/>
+
 							</fo:inline>
 						</fo:basic-link>
 					</xsl:with-param>
@@ -9383,8 +9385,7 @@
 
 						<fo:block-container xsl:use-attribute-sets="fn-container-body-style" role="SKIP">
 
-							<fo:block xsl:use-attribute-sets="fn-body-style" role="SKIP">
-
+							<xsl:variable name="fn_block">
 								<xsl:call-template name="refine_fn-body-style"/>
 
 								<fo:inline id="{$ref_id}" xsl:use-attribute-sets="fn-body-num-style" role="Lbl">
@@ -9392,9 +9393,15 @@
 									<xsl:call-template name="refine_fn-body-num-style"/>
 
 									<xsl:value-of select="$current_fn_number_text"/>
+
 								</fo:inline>
 								<xsl:apply-templates/>
-							</fo:block>
+							</xsl:variable>
+
+									<fo:block xsl:use-attribute-sets="fn-body-style" role="SKIP">
+										<xsl:copy-of select="$fn_block"/>
+									</fo:block>
+
 						</fo:block-container>
 					</fo:footnote-body>
 				</fo:footnote>
