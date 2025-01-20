@@ -54,6 +54,7 @@ end
 def strip_guid(xml)
   xml.gsub(%r{ id=['"]_[^"']+['"]}, ' id="_"')
     .gsub(%r{ name="_[^"]+"}, ' name="_"')
+    .gsub(%r{ original-id="_[^"]+"}, ' original-id="_"')
     .gsub(%r{ href="#_[^"]+"}, ' href="#_"')
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
     .gsub(%r{ source="_[^"]+"}, ' source="_"')

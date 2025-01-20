@@ -145,15 +145,15 @@ RSpec.describe IsoDoc do
                 Terms and Definitions</fmt-title>
               <term id="paddy1">
                 <fmt-name>1.1</fmt-name>
-                <preferred>paddy</preferred>
-                <definition>
+                <fmt-preferred><p>paddy</p></fmt-preferred>
+                <fmt-definition>
                   <p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p>
-                </definition>
-                <termsource status="modified">[SOURCE:
+                </fmt-definition>
+                <fmt-termsource status="modified">[SOURCE:
                   <origin bibitemid="ISO7301" citeas="ISO 7301:2011" type="inline"><locality type="clause">
                       <referenceFrom>3.1</referenceFrom></locality>ISO 7301:2011, 3.1</origin>, modified &#x2013;
                     The term &quot;cargo rice&quot; is shown as deprecated, and Note 1 to entry is not included here]
-                </termsource>
+                </fmt-termsource>
               </term>
             </terms>
           </sections>

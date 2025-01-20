@@ -10,6 +10,7 @@ module IsoDoc
       def concept(docxml)
         concept_term(docxml)
         docxml.xpath(ns("//concept")).each do |node|
+              node.ancestors("definition, termsource, related").empty? and
           concept_render(node, ital: "false", ref: "false",
                                linkref: "true", linkmention: "false")
         end
@@ -19,7 +20,10 @@ module IsoDoc
         docxml.xpath(ns("//term")).each do |f|
           m = {}
           (f.xpath(ns(".//concept")) - f.xpath(ns(".//term//concept")))
-            .each { |c| concept_term1(c, m) }
+            .each do |c|
+              c.ancestors("definition, termsource, related").empty? and
+              concept_term1(c, m)
+            end
         end
       end
 
