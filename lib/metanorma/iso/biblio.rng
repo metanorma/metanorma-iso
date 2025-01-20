@@ -1277,17 +1277,17 @@ for which this claim of validity is made, if applicable</a:documentation>
   </define>
   <define name="validityBegins">
     <element name="validityBegins">
-      <ref name="ISO8601DateTime"/>
+      <ref name="ISO8601Date"/>
     </element>
   </define>
   <define name="validityEnds">
     <element name="validityEnds">
-      <ref name="ISO8601DateTime"/>
+      <ref name="ISO8601Date"/>
     </element>
   </define>
   <define name="validityRevision">
     <element name="revision">
-      <ref name="ISO8601DateTime"/>
+      <ref name="ISO8601Date"/>
     </element>
   </define>
   <define name="TypedTitleString">
