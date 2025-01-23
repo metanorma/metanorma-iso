@@ -42,7 +42,8 @@ module Metanorma
       end
 
       TERM_CLAUSE =
-        "//sections//terms[not(preceding-sibling::clause)] | " \
+        "//sections/terms | " \
+        "//sections/clause//terms[not(preceding-sibling::clause)] | " \
         "//sections//clause[descendant::terms][not(descendant::definitions)][@type = 'terms'] | " \
         "//sections/clause[not(@type = 'terms')][not(descendant::definitions)]//terms".freeze
 
