@@ -17441,16 +17441,30 @@
 
 	<xsl:template match="*[local-name() = 'fmt-name']"/>
 	<xsl:template match="*[local-name() = 'fmt-name']" mode="update_xml_step1">
-		<xsl:element name="name" namespace="{$namespace_full}">
-			<xsl:copy-of select="@*"/>
-			<xsl:apply-templates mode="update_xml_step1"/>
-		</xsl:element>
+		<xsl:choose>
+			<xsl:when test="local-name(..) = 'p' and ancestor::*[local-name() = 'table']">
+				<xsl:apply-templates mode="update_xml_step1"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="name" namespace="{$namespace_full}">
+					<xsl:copy-of select="@*"/>
+					<xsl:apply-templates mode="update_xml_step1"/>
+				</xsl:element>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:template match="*[local-name() = 'fmt-name']" mode="update_xml_pres">
-		<xsl:element name="name" namespace="{$namespace_full}">
-			<xsl:copy-of select="@*"/>
-			<xsl:apply-templates mode="update_xml_pres"/>
-		</xsl:element>
+		<xsl:choose>
+			<xsl:when test="local-name(..) = 'p' and ancestor::*[local-name() = 'table']">
+				<xsl:apply-templates mode="update_xml_step1"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="name" namespace="{$namespace_full}">
+					<xsl:copy-of select="@*"/>
+					<xsl:apply-templates mode="update_xml_pres"/>
+				</xsl:element>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="*[local-name() = 'fmt-preferred']"/>
