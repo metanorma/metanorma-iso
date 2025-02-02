@@ -11274,9 +11274,14 @@
 
 		<xsl:variable name="simple-table">
 
+			<xsl:variable name="table_without_semantic_elements">
+				<xsl:apply-templates mode="update_xml_pres"/>
+			</xsl:variable>
+
 			<!-- Step 0. replace <br/> to <p>...</p> -->
 			<xsl:variable name="table_without_br">
-				<xsl:apply-templates mode="table-without-br"/>
+				<!-- <xsl:apply-templates mode="table-without-br"/> -->
+				<xsl:apply-templates select="xalan:nodeset($table_without_semantic_elements)" mode="table-without-br"/>
 			</xsl:variable>
 
 			<!-- Step 1. colspan processing -->
@@ -17562,6 +17567,9 @@
 		<xsl:apply-templates mode="update_xml_pres"/>
 	</xsl:template>
 
+	<xsl:template match="*[local-name() = 'semx']">
+		<xsl:apply-templates/>
+	</xsl:template>
 	<xsl:template match="*[local-name() = 'semx']" mode="update_xml_step1">
 		<xsl:apply-templates mode="update_xml_step1"/>
 	</xsl:template>
