@@ -392,11 +392,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statement</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>this</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr>
@@ -969,7 +971,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -1124,11 +1126,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>this</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr>
@@ -1409,11 +1413,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>this</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr>
@@ -2719,7 +2725,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -2828,13 +2834,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statements</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>this</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
                                   <br/>
-                                  <p id="_">As for the measurement targets,</p>
+                                  <semx element="description" source="_">
+                                     <p id="_">As for the measurement targets,</p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="_">
@@ -3062,13 +3072,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statements</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>this</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
                                   <br/>
-                                  <p id="_">As for the measurement targets,</p>
+                                  <semx element="description" source="_">
+                                     <p id="_">As for the measurement targets,</p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="_">

@@ -197,11 +197,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statement</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>1</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>1</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A1">
@@ -215,17 +217,21 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statements</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>2</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>2</em>
+                                        .
+                                     </p>
+                                  </semx>
                                   <br/>
-                                  <p id="_">
-                                     I recommend
-                                     <em>2a</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>2a</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A2">
@@ -239,11 +245,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statement</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>3</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>3</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A3">
@@ -257,11 +265,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statement</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>4</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>4</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A4">
@@ -275,11 +285,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statement</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>5</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>5</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A5">
@@ -293,11 +305,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statement</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>6</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>6</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A6">
@@ -311,17 +325,21 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statements</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>7</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>7</em>
+                                        .
+                                     </p>
+                                  </semx>
                                   <br/>
-                                  <p id="_">
-                                     I recommend
-                                     <em>7a</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>7a</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A7">
@@ -335,11 +353,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Statement</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>8</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>8</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A7">
@@ -542,11 +562,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>1</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>1</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A1">
@@ -560,11 +582,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>2</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>2</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A2">
@@ -578,11 +602,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>3</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>3</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A3">
@@ -596,11 +622,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>4</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>4</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A4">
@@ -614,11 +642,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>5</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>5</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A5">
@@ -632,11 +662,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>6</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>6</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A6">
@@ -650,11 +682,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>7</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>7</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                             <tr id="A7">
@@ -668,11 +702,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                             <tr>
                                <th>Description</th>
                                <td>
-                                  <p id="_">
-                                     I recommend
-                                     <em>8</em>
-                                     .
-                                  </p>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>8</em>
+                                        .
+                                     </p>
+                                  </semx>
                                </td>
                             </tr>
                          </tbody>
