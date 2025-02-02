@@ -947,6 +947,8 @@ May be electronic (e.g. Twitter direct message, email) or voice (e.g. a remark m
 typically cited as "personal communication")</a:documentation>
       <value>conversation</value>
       <a:documentation>An exchange of messages between two or more persons. May be electronic (e.g. web chat) or voice (e.g. phone call)</a:documentation>
+      <value>collection</value>
+      <a:documentation>A compound resource consisting of other resources, which are themselves presupposed to have their type specified..</a:documentation>
       <value>misc</value>
       <a:documentation>Bibliographic type not adequately described in the foregoing</a:documentation>
     </choice>
