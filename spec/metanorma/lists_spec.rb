@@ -52,7 +52,7 @@ RSpec.describe Metanorma::Iso do
             </li>
           </ul>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -168,7 +168,7 @@ RSpec.describe Metanorma::Iso do
             </li>
           </ol>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -191,7 +191,7 @@ RSpec.describe Metanorma::Iso do
             </li>
           </ul>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 end

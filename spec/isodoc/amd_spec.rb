@@ -768,7 +768,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
     input = <<~INPUT
-      <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+      <iso-standard xmlns="https://www.metanorma.org/ns/standoc">
         <bibdata type="standard">
           <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part  — Mass fraction of
                    extraneous matter, milled rice (nonglutinous), sample dividers and
@@ -917,7 +917,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     input = <<~INPUT
-      <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+      <iso-standard xmlns="https://www.metanorma.org/ns/standoc">
         <bibdata type="standard">
           <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part  — Mass fraction of
              extraneous matter, milled rice (nonglutinous), sample dividers and
@@ -1064,7 +1064,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
     input = <<~INPUT
-      <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+      <iso-standard xmlns="https://www.metanorma.org/ns/standoc">
         <bibdata type="standard">
           <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part  — Mass fraction of
                    extraneous matter, milled rice (nonglutinous), sample dividers and

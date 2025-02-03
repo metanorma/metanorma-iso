@@ -11,7 +11,7 @@ RSpec.describe Metanorma::Standoc do
       embed::spec/assets/iso.adoc[]
     INPUT
     output = <<~OUTPUT
-      <standard-document xmlns='https://www.metanorma.org/ns/standoc' type='semantic' version='#{Metanorma::Standoc::VERSION}'>
+      <metanorma xmlns='https://www.metanorma.org/ns/standoc' type='semantic' version='#{Metanorma::Standoc::VERSION}'>
        <bibdata type='standard'>
          <title language='en' format='text/plain'>Document title</title>
          <language>en</language>

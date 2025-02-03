@@ -166,7 +166,7 @@ end
 
 BLANK_HDR1 = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
-  <iso-standard xmlns="https://www.metanorma.org/ns/iso" type="semantic" version="#{Metanorma::Iso::VERSION}">
+  <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Iso::VERSION}">
     <bibdata type="standard">
       <contributor>
         <role type="author"/>
@@ -242,12 +242,12 @@ HDR
 
 BLANK_HDR = <<~"HDR".freeze
   #{BLANK_HDR1}
-  #{boilerplate(Nokogiri::XML("#{BLANK_HDR1}</iso-standard>"))}
+  #{boilerplate(Nokogiri::XML("#{BLANK_HDR1}</metanorma>"))}
 HDR
 
 BLANK_HDR_FR = <<~"HDR".freeze
   #{BLANK_HDR1.sub(%r{<language>en</language>}, '<language>fr</language>')}
-  #{boilerplate(Nokogiri::XML("#{BLANK_HDR1.sub(%r{<language>en</language>}, '<language>fr</language>')}</iso-standard>"), lang: 'fr')}
+  #{boilerplate(Nokogiri::XML("#{BLANK_HDR1.sub(%r{<language>en</language>}, '<language>fr</language>')}</metanorma>"), lang: 'fr')}
 HDR
 
 TERM_BOILERPLATE = <<~TERM.freeze
