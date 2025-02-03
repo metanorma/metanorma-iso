@@ -8,7 +8,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections/>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(strip_guid(output))
@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections/>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(strip_guid(output))

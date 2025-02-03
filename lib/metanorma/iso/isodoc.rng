@@ -1208,7 +1208,7 @@ numbers</a:documentation>
   </define>
   <define name="standard-document">
     <a:documentation>Representation of a standardisation document</a:documentation>
-    <element name="standard-document">
+    <element name="metanorma">
       <ref name="Root-Attributes"/>
       <ref name="bibdata">
         <a:documentation>Bibliographic description of the document itself, expressed in the Relaton model</a:documentation>

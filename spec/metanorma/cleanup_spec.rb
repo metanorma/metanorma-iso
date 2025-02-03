@@ -11,7 +11,7 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <clause id="_" inline-header="false" obligation="normative"/>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -40,7 +40,7 @@ RSpec.describe Metanorma::Iso do
             </term>
           </terms>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -115,7 +115,7 @@ RSpec.describe Metanorma::Iso do
              </term>
            </terms>
          </sections>
-       </iso-standard>
+       </metanorma>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
@@ -154,7 +154,7 @@ RSpec.describe Metanorma::Iso do
             </term>
           </terms>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -192,7 +192,7 @@ RSpec.describe Metanorma::Iso do
             </term>
           </terms>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -240,7 +240,7 @@ RSpec.describe Metanorma::Iso do
             </bibitem>
           </references>
         </bibliography>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -299,7 +299,7 @@ RSpec.describe Metanorma::Iso do
             </bibitem>
           </references>
         </bibliography>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -343,7 +343,7 @@ RSpec.describe Metanorma::Iso do
             </bibitem>
           </references>
         </bibliography>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -385,7 +385,7 @@ RSpec.describe Metanorma::Iso do
             </term>
           </terms>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -422,7 +422,7 @@ RSpec.describe Metanorma::Iso do
             </bibitem>
           </references>
         </bibliography>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -458,7 +458,7 @@ RSpec.describe Metanorma::Iso do
             </dl>
           </table>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -505,7 +505,7 @@ RSpec.describe Metanorma::Iso do
             </tbody>
           </table>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -553,7 +553,7 @@ RSpec.describe Metanorma::Iso do
             </tbody>
           </table>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -589,7 +589,7 @@ RSpec.describe Metanorma::Iso do
             </note>
           </table>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -634,7 +634,7 @@ RSpec.describe Metanorma::Iso do
             </dl>
           </formula>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -662,7 +662,7 @@ RSpec.describe Metanorma::Iso do
             </fn>
           </figure>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -690,7 +690,7 @@ RSpec.describe Metanorma::Iso do
             </dl>
           </figure>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -753,7 +753,7 @@ RSpec.describe Metanorma::Iso do
             </bibitem>
           </references>
         </bibliography>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -783,7 +783,7 @@ RSpec.describe Metanorma::Iso do
           <title>Clause</title>
           <p id="_">Text</p>
         </annex>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -852,7 +852,7 @@ RSpec.describe Metanorma::Iso do
             </clause>
           </clause>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -1098,7 +1098,7 @@ RSpec.describe Metanorma::Iso do
              </references>
            </clause>
          </bibliography>
-       </iso-standard>
+       </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -1142,7 +1142,7 @@ RSpec.describe Metanorma::Iso do
             </term>
           </terms>
         </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1200,7 +1200,7 @@ RSpec.describe Metanorma::Iso do
               </terms>
             </clause>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1268,7 +1268,7 @@ RSpec.describe Metanorma::Iso do
               </definitions>
             </clause>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1332,7 +1332,7 @@ RSpec.describe Metanorma::Iso do
               </definitions>
             </clause>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1405,7 +1405,7 @@ RSpec.describe Metanorma::Iso do
               </definitions>
             </clause>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1441,7 +1441,7 @@ RSpec.describe Metanorma::Iso do
               </references>
             </clause>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1482,7 +1482,7 @@ RSpec.describe Metanorma::Iso do
               </references>
             </clause>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1530,7 +1530,7 @@ RSpec.describe Metanorma::Iso do
             </term>
           </terms>
         </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1596,7 +1596,7 @@ RSpec.describe Metanorma::Iso do
               </terms>
             </terms>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
@@ -1701,7 +1701,7 @@ RSpec.describe Metanorma::Iso do
               </terms>
             </terms>
           </sections>
-        </iso-standard>
+        </metanorma>
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)

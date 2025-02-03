@@ -1082,7 +1082,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='presentation' version="#{Metanorma::Iso::VERSION}">
+      <metanorma xmlns='https://www.metanorma.org/ns/standoc' type='presentation' version="#{Metanorma::Iso::VERSION}">
            <bibdata type="standard">
               <contributor>
                  <role type="author"/>
@@ -1191,7 +1191,7 @@ RSpec.describe IsoDoc do
                  </fmt-xref-label>
               </terms>
            </sections>
-        </iso-standard>
+        </metanorma>
     OUTPUT
     output = <<~OUTPUT
        <html lang="en">
