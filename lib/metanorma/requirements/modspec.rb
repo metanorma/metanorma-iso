@@ -28,7 +28,7 @@ module Metanorma
             .each_with_object([]) do |t, m|
               id = t["original-id"] || t["id"]
               id and b = "<bookmark id='#{id}'/>"
-              m << b + t.at(ns(".//fmt-name")).children.to_xml
+              m << b + to_xml(t.at(ns(".//fmt-name")).children).strip
             end
         end
 
