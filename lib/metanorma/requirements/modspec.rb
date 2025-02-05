@@ -2,35 +2,19 @@ module Metanorma
   class Requirements
     class Modspec
       class Iso < ::Metanorma::Requirements::Modspec
-=begin
-        def recommendation_label(elem, type, xrefs)
-          lbl = super
-          title = elem.at(ns("./title"))
-          return lbl unless title &&
-            elem.ancestors("requirement, recommendation, permission").empty?
-
-          lbl += "<span class='fmt-caption-delim'>: </span>" if lbl
-          lbl += "<semx element='title' source='#{elem['id']}'>#{title.children.to_xml}</semx>"
-          require "debug"; binding.b
-          l10n(lbl)
-        end
-
-        # ISO labels modspec reqt as table, with reqt label as title
-        def recommendation_header(reqt, out)
-          n = reqt.at(ns("./fmt-name")) and out << n
-          out
-        end
-=end
-
-        def requirement_table_nested_cleanup(node, table)
-          table["type"] == "recommendclass" or return table
-          ins = table.at(ns("./tbody/tr[td/table]")) or return table
-          ins.replace(requirement_table_cleanup_nested_replacement(node, table))
-          table.xpath(ns("./tbody/tr[td/table]")).each(&:remove)
+        def requirement_table_nested_cleanup(node, out, table)
+          (out.xpath(ns(".//table")) - out.xpath(ns("./fmt-provision/table"))).each do |x|
+            x["unnumbered"] = "true"
+          end
+          table["type"] == "recommendclass" or return super # table
+          ins = table.at(ns("./tbody/tr[td/*/fmt-provision/table]")) or return table
+          ins.replace(requirement_table_cleanup_nested_replacement(node, out, table))
+          table.xpath(ns("./tbody/tr[td/*/fmt-provision/table]")).each(&:remove)
+          out.xpath(ns("./*/fmt-provision")).each(&:remove)
           table
         end
 
-        def requirement_table_cleanup_nested_replacement(node, table)
+        def requirement_table_cleanup_nested_replacement(node, out, table)
           label = "provision"
           node["type"] == "conformanceclass" and label = "conformancetest"
           n = nested_tables_names(table)
@@ -40,14 +24,18 @@ module Metanorma
         end
 
         def nested_tables_names(table)
-          table.xpath(ns("./tbody/tr/td/table"))
+          table.xpath(ns("./tbody/tr/td/*/fmt-provision/table"))
             .each_with_object([]) do |t, m|
-              m << t.at(ns(".//fmt-name")).children.to_xml
+              id = t["original-id"] || t["id"]
+              id and b = "<bookmark id='#{id}'/>"
+              m << b + to_xml(t.at(ns(".//fmt-name")).children).strip
             end
         end
 
         def postprocess_anchor_struct(block, anchor)
           super
+          t = block.at(ns("./fmt-provision/table")) and
+            anchor[:container] = t["id"]
           anchor[:modspec] = anchor[:xref_bare]
           if l = block.at(ns("./title"))
             anchor[:modspec] =

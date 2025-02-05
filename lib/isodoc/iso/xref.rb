@@ -197,15 +197,16 @@ module IsoDoc
       end
 
       def modspec_table_components_xrefs(table, table_label, container: false)
-        table.xpath(ns(".//tr[@id]")).each do |tr|
+        table.xpath(ns(".//tr[@id] | .//td[@id] | .//bookmark[@id]")).each do |tr|
           xref_to_modspec(tr["id"], table_label) or next
           container or @anchors[tr["id"]].delete(:container)
         end
       end
 
       def xref_to_modspec(id, table_label)
-        (@anchors[id] && !@anchors[id][:has_modspec]) or return
-        @anchors[id][:has_modspec] = true
+        #(@anchors[id] && !@anchors[id][:has_modspec]) or return
+        (@anchors[id] && !@anchors[id][:has_table_prefix]) or return
+        @anchors[id][:has_table_prefix] = true
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
         # @anchors[id][:xref] = l10n("#{table_label}<span class='fmt-comma'>,</span> #{x}")
 
@@ -215,6 +216,17 @@ module IsoDoc
         @anchors[id][:modspec] = @anchors_previous[id][:modspec]
         @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
         true
+      end
+
+      def bookmark_anchor_names(xml)
+        xml.xpath(ns(".//bookmark")).noblank.each do |n|
+          @anchors.dig(n["id"], :has_table_prefix) and next
+          _parent, id = id_ancestor(n)
+          # container = bookmark_container(parent)
+          @anchors[n["id"]] = { type: "bookmark", label: nil, value: nil,
+                                xref: @anchors.dig(id, :xref) || "???",
+                                container: @anchors.dig(id, :container) }
+        end
       end
 
       def hierarchical_table_names(clause, _num)
@@ -234,6 +246,12 @@ module IsoDoc
                           @labels["note_xref"], "note",
                           { unnum: false, container: true })
         end
+      end
+
+      # KILL
+      def sequential_permission_childrenx(elem, lbl, klass, container: false)
+        container = true
+        super
       end
     end
   end
