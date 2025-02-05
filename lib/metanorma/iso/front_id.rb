@@ -187,9 +187,10 @@ module Metanorma
 
       def iso_id_default(params)
         params_nolang = params.dup.tap { |hs| hs.delete(:language) }
-        params1 = if params[:unpublished]
-                    params_nolang.dup.tap { |hs| hs.delete(:year) }
-                  else params_nolang end
+        #params1 = if params[:unpublished]
+                    #params_nolang.dup.tap { |hs| hs.delete(:year) }
+                  #else params_nolang end
+        params1 = params_nolang
         params1.delete(:unpublished)
         pubid_select(params1).create(**params1)
       end
@@ -204,9 +205,10 @@ module Metanorma
       end
 
       def iso_id_with_lang(params)
-        params1 = if params[:unpublished]
-                    params.dup.tap { |hs| hs.delete(:year) }
-                  else params end
+        #params1 = if params[:unpublished]
+                    #params.dup.tap { |hs| hs.delete(:year) }
+                  #else params end
+        params1 = params
         params1.delete(:unpublished)
         pubid_select(params1).create(**params1)
       end
