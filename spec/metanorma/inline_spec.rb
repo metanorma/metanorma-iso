@@ -100,8 +100,8 @@ RSpec.describe Metanorma::Iso do
             <title>Section</title>
             <p id="_">Inline Reference to <xref target="reference"/>
               Footnoted Reference to <xref target="reference"/>
-              Inline Reference with Text to <xref target="reference">text</xref>
-              Footnoted Reference with Text to <xref target="reference">text</xref></p>
+              Inline Reference with Text to <xref target="reference"><display-text>text</display-text></xref>
+              Footnoted Reference with Text to <xref target="reference"><display-text>text</display-text></xref></p>
           </clause>
         </sections>
       </metanorma>

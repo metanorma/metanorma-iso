@@ -275,7 +275,7 @@ RSpec.describe Metanorma::Iso do
                     <referenceFrom>33</referenceFrom>
                   </locality>
                   <locality type="locality:entirety"/>
-                </localityStack>the reference</eref>
+                </localityStack><display-text>the reference</display-text></eref>
             </p>
           </foreword>
         </preface>

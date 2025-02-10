@@ -186,7 +186,7 @@ RSpec.describe Metanorma::Iso do
     INPUT
 
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
           <bibdata type="standard">
              <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
              <title language="en" format="text/plain" type="title-intro">Introduction</title>
@@ -448,7 +448,7 @@ RSpec.describe Metanorma::Iso do
       :amendment-number: 1
     INPUT
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}(E)</docidentifier>
@@ -531,7 +531,7 @@ RSpec.describe Metanorma::Iso do
       :amendment-number: 1
     INPUT
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/DAM 1:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/DAM 1:#{Date.today.year}(E)</docidentifier>
@@ -613,7 +613,7 @@ RSpec.describe Metanorma::Iso do
       :amendment-number: 1
     INPUT
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Amd 1:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1:#{Date.today.year}(E)</docidentifier>
@@ -696,7 +696,7 @@ RSpec.describe Metanorma::Iso do
       :corrigendum-number: 3
     INPUT
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}(E)</docidentifier>
@@ -779,7 +779,7 @@ RSpec.describe Metanorma::Iso do
       :corrigendum-number: 3
     INPUT
     output = <<~OUTPUT
-      <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Iso::VERSION}">
+      <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Iso::VERSION}" flavor="iso">
         <bibdata type='standard'>
           <docidentifier type='ISO' primary="true">ISO 17301-1:2030/FDCOR 3:#{Date.today.year}</docidentifier>
           <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}(E)</docidentifier>
@@ -861,7 +861,7 @@ RSpec.describe Metanorma::Iso do
       :corrigendum-number: 3
     INPUT
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Cor 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:#{Date.today.year}(E)</docidentifier>
@@ -946,7 +946,7 @@ RSpec.describe Metanorma::Iso do
       :updates-document-type: international-standard
     INPUT
     output = <<~OUTPUT
-      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc">
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
           <title language="en" format="text/plain" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
           <title language="fr" format="text/plain" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>

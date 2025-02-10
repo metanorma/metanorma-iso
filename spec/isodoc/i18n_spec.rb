@@ -2230,12 +2230,20 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="D">1</semx>
                 </fmt-xref-label>
                 <p id="E">
-                   <xref type="inline" target="ISO712">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ，
-                      <span class="citetbl">第1～1表</span>
-                   </xref>
+            <eref bibitemid="ISO712" type="inline" id="_">
+               <locality type="table">
+                  <referenceFrom>1</referenceFrom>
+                  <referenceTo>1</referenceTo>
+               </locality>
+            </eref>
+            <semx element="eref" source="_">
+               <fmt-xref type="inline" target="ISO712">
+                  <span class="stdpublisher">ISO </span>
+                  <span class="stddocNumber">712</span>
+                  ，
+                  <span class="citetbl">第1～1表</span>
+               </fmt-xref>
+            </semx>
                 </p>
              </clause>
              <clause id="H" obligation="normative" displayorder="7">
@@ -2694,27 +2702,41 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-        <foreword obligation="informative" displayorder="2">
-           <title id="_">Foreword</title>
-           <fmt-title depth="1">
-                 <semx element="title" source="_">Foreword</semx>
-           </fmt-title>
-           <p id="A">
-              <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO </span>
-                 <span class="stddocNumber">712</span>
-                 , Appendice 7
-              </xref>
-           </p>
-           <p id="B">
-              <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO </span>
-                 <span class="stddocNumber">712</span>
-                 ,
-                 <span class="citeapp">Annexe 7</span>
-              </xref>
-           </p>
-        </foreword>
+       <foreword obligation="informative" displayorder="2">
+          <title id="_">Foreword</title>
+          <fmt-title depth="1">
+             <semx element="title" source="_">Foreword</semx>
+          </fmt-title>
+          <p id="A">
+             <eref type="inline" bibitemid="ISO712" id="_">
+                <locality type="locality:appendix">
+                   <referenceFrom>7</referenceFrom>
+                </locality>
+             </eref>
+             <semx element="eref" source="_">
+                <fmt-xref type="inline" target="ISO712">
+                   <span class="stdpublisher">ISO </span>
+                   <span class="stddocNumber">712</span>
+                   , Appendice 7
+                </fmt-xref>
+             </semx>
+          </p>
+          <p id="B">
+             <eref type="inline" bibitemid="ISO712" id="_">
+                <locality type="annex">
+                   <referenceFrom>7</referenceFrom>
+                </locality>
+             </eref>
+             <semx element="eref" source="_">
+                <fmt-xref type="inline" target="ISO712">
+                   <span class="stdpublisher">ISO </span>
+                   <span class="stddocNumber">712</span>
+                   ,
+                   <span class="citeapp">Annexe 7</span>
+                </fmt-xref>
+             </semx>
+          </p>
+       </foreword>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new({}).convert("test", input, true))
