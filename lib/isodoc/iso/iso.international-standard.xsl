@@ -293,6 +293,9 @@
 	<xsl:variable name="i18n_locality_part"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">locality.part</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_secretariat"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">secretariat</xsl:with-param></xsl:call-template></xsl:variable>
 	<xsl:variable name="i18n_classification_UDC"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">classification-UDC</xsl:with-param></xsl:call-template></xsl:variable>
+	<xsl:variable name="i18n_draft_comment_1"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">draft_comment_1</xsl:with-param></xsl:call-template></xsl:variable>
+	<xsl:variable name="i18n_draft_comment_2"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">draft_comment_2</xsl:with-param></xsl:call-template></xsl:variable>
+	<xsl:variable name="i18n_draft_comment_3"><xsl:call-template name="getLocalizedString"><xsl:with-param name="key">draft_comment_3</xsl:with-param></xsl:call-template></xsl:variable>
 
 	<!-- Example:
 		<item level="1" id="Foreword" display="true">Foreword</item>
@@ -844,6 +847,9 @@
 			</xsl:variable>
 
 			<xsl:if test="$debug = 'true'">
+				<redirect:write file="updated_xml.xml">
+					<xsl:copy-of select="$updated_xml"/>
+				</redirect:write>
 				<xsl:message>End updated_xml</xsl:message>
 				<xsl:message>DEBUG: processing time <xsl:value-of select="java:getTime(java:java.util.Date.new()) - $startTime0"/> msec.</xsl:message>
 			</xsl:if>
@@ -1865,6 +1871,12 @@
 													<xsl:choose>
 														<xsl:when test="$stage-abbreviation = 'DIS'"> <!--  or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' -->
 															<xsl:choose>
+																<xsl:when test="$stagename_localized != '' and contains($stagename_localized, ' ')">
+																	<!-- Draft International Standard to DRAFT -->
+																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(substring-before($stagename_localized, ' ')))"/>
+																	<xsl:value-of select="$linebreak"/>
+																	<xsl:value-of select="substring-after($stagename_localized, ' ')"/>
+																</xsl:when>
 																<xsl:when test="contains($stagename, ' ')">
 																	<!-- Draft International Standard to DRAFT -->
 																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(substring-before($stagename, ' ')))"/>
@@ -1923,7 +1935,16 @@
 												<xsl:if test="$stage &gt;=60 and $substage != 0">
 													<xsl:attribute name="color"><xsl:value-of select="$color_red"/></xsl:attribute>
 												</xsl:if>
-												<xsl:value-of select="$docidentifierISO"/>
+												<xsl:choose>
+													<xsl:when test="contains($docidentifierISO, ' ')">
+														<xsl:value-of select="substring-before($docidentifierISO, ' ')"/>
+														<xsl:text>  </xsl:text>
+														<xsl:value-of select="substring-after($docidentifierISO, ' ')"/>
+													</xsl:when>
+													<xsl:otherwise>
+														<xsl:value-of select="$docidentifierISO"/>
+													</xsl:otherwise>
+												</xsl:choose>
 											</fo:block>
 										</fo:table-cell>
 									</fo:table-row>
@@ -2030,7 +2051,21 @@
 													<!-- Voting begins on: -->
 														<xsl:value-of select="concat($i18n_voting_begins_on, ':')"/>
 														<fo:block font-weight="bold">
-															<xsl:call-template name="insertVoteStarted"/>
+															<xsl:variable name="v_date">
+																<xsl:call-template name="split">
+																	<xsl:with-param name="pText">
+																		<xsl:call-template name="insertVoteStarted"/>
+																	</xsl:with-param>
+																	<xsl:with-param name="sep" select="'-'"/>
+																	<xsl:with-param name="keep_sep">true</xsl:with-param>
+																</xsl:call-template>
+															</xsl:variable>
+															<xsl:for-each select="xalan:nodeset($v_date)/item">
+																<xsl:choose>
+																	<xsl:when test=". = '-'"><fo:inline font-weight="normal"><xsl:value-of select="."/></fo:inline></xsl:when>
+																	<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+																</xsl:choose>
+															</xsl:for-each>
 														</fo:block>
 													</fo:block>
 
@@ -2038,7 +2073,21 @@
 														<!-- Voting terminates on: -->
 														<xsl:value-of select="concat($i18n_voting_terminates_on, ':')"/>
 														<fo:block font-weight="bold">
-															<xsl:call-template name="insertVoteEnded"/>
+															<xsl:variable name="v_date">
+																<xsl:call-template name="split">
+																	<xsl:with-param name="pText">
+																		<xsl:call-template name="insertVoteEnded"/>
+																	</xsl:with-param>
+																	<xsl:with-param name="sep" select="'-'"/>
+																	<xsl:with-param name="keep_sep">true</xsl:with-param>
+																</xsl:call-template>
+															</xsl:variable>
+															<xsl:for-each select="xalan:nodeset($v_date)/item">
+																<xsl:choose>
+																	<xsl:when test=". = '-'"><fo:inline font-weight="normal"><xsl:value-of select="."/></fo:inline></xsl:when>
+																	<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+																</xsl:choose>
+															</xsl:for-each>
 														</fo:block>
 													</fo:block>
 												</xsl:if>
@@ -2115,8 +2164,11 @@
 												</xsl:if>
 											</fo:block>
 										</fo:table-cell>
-										<fo:table-cell number-columns-spanned="2" padding-left="6mm" display-align="after">
-											<fo:block font-size="6.5pt" margin-right="15mm">
+										<fo:table-cell number-columns-spanned="2" padding-top="-3mm" padding-left="5mm" display-align="after">
+											<xsl:if test="$lang = 'fr'">
+												<xsl:attribute name="padding-top">-18mm</xsl:attribute>
+											</xsl:if>
+											<fo:block font-size="7pt" margin-right="20mm" font-family="Cambria">
 												<xsl:call-template name="insertDraftComments"/>
 											</fo:block>
 										</fo:table-cell>
@@ -3028,26 +3080,29 @@
 	<xsl:template name="insertDraftComments">
 		<xsl:if test="$stagename_abbreviation = 'DIS' or             $stage-abbreviation = 'DIS' or             $stage-abbreviation = 'DAMD' or             $stage-abbreviation = 'DAM' or             $stage-abbreviation = 'NWIP' or             $stage-abbreviation = 'NP' or             $stage-abbreviation = 'PWI' or             $stage-abbreviation = 'AWI' or             $stage-abbreviation = 'WD' or             $stage-abbreviation = 'CD'">
 			<fo:block margin-bottom="1.5mm">
-				<xsl:text>THIS DOCUMENT IS A DRAFT CIRCULATED FOR COMMENT AND APPROVAL. IT IS THEREFORE SUBJECT TO CHANGE AND MAY NOT BE REFERRED TO AS AN INTERNATIONAL STANDARD UNTIL PUBLISHED AS SUCH.</xsl:text>
+				<!-- <xsl:text>THIS DOCUMENT IS A DRAFT CIRCULATED FOR COMMENT AND APPROVAL. IT IS THEREFORE SUBJECT TO CHANGE AND MAY NOT BE REFERRED TO AS AN INTERNATIONAL STANDARD UNTIL PUBLISHED AS SUCH.</xsl:text> -->
+				<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($i18n_draft_comment_1))"/>
 			</fo:block>
 		</xsl:if>
 		<xsl:if test="$stagename_abbreviation = 'DIS' or            $stagename_abbreviation = 'FDIS' or            $stage-abbreviation = 'FDIS' or             $stage-abbreviation = 'DIS' or             $stage-abbreviation = 'FDAMD' or             $stage-abbreviation = 'FDAM' or             $stage-abbreviation = 'DAMD' or             $stage-abbreviation = 'DAM' or             $stage-abbreviation = 'NWIP' or             $stage-abbreviation = 'NP' or             $stage-abbreviation = 'PWI' or             $stage-abbreviation = 'AWI' or             $stage-abbreviation = 'WD' or             $stage-abbreviation = 'CD'">
 			<fo:block margin-bottom="1.5mm">
-				<xsl:text>RECIPIENTS OF THIS DRAFT ARE INVITED TO
+				<!-- <xsl:text>RECIPIENTS OF THIS DRAFT ARE INVITED TO
 									SUBMIT, WITH THEIR COMMENTS, NOTIFICATION
 									OF ANY RELEVANT PATENT RIGHTS OF WHICH
 									THEY ARE AWARE AND TO PROVIDE SUPPORTING
-									DOCUMENTATION.</xsl:text>
+									DOCUMENTATION.</xsl:text> -->
+				<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($i18n_draft_comment_2))"/>
 			</fo:block>
 			<fo:block>
-				<xsl:text>IN ADDITION TO THEIR EVALUATION AS
+				<!-- <xsl:text>IN ADDITION TO THEIR EVALUATION AS
 						BEING ACCEPTABLE FOR INDUSTRIAL, TECHNOLOGICAL,
 						COMMERCIAL AND USER PURPOSES,
 						DRAFT INTERNATIONAL STANDARDS MAY ON
 						OCCASION HAVE TO BE CONSIDERED IN THE
 						LIGHT OF THEIR POTENTIAL TO BECOME STANDARDS
 						TO WHICH REFERENCE MAY BE MADE IN
-						NATIONAL REGULATIONS.</xsl:text>
+						NATIONAL REGULATIONS.</xsl:text> -->
+				<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($i18n_draft_comment_3))"/>
 			</fo:block>
 		</xsl:if>
 	</xsl:template>
@@ -3133,7 +3188,10 @@
 							</xsl:if>
 							<fo:block>
 								<!-- <xsl:text>ISO/CEN PARALLEL PROCESSING</xsl:text>  -->
-								<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($i18n_iso_cen_parallel))"/>
+								<xsl:call-template name="add-letter-spacing">
+									<xsl:with-param name="text" select="java:toUpperCase(java:java.lang.String.new($i18n_iso_cen_parallel))"/>
+									<xsl:with-param name="letter-spacing" select="0.13"/>
+								</xsl:call-template>
 							</fo:block>
 						</fo:block-container>
 					</fo:block>
