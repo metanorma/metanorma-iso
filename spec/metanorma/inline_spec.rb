@@ -26,7 +26,7 @@ RSpec.describe Metanorma::Iso do
           <strike>strike</strike>
           <smallcap>smallcap</smallcap>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -48,7 +48,7 @@ RSpec.describe Metanorma::Iso do
           <hr/>
           <pagebreak/>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -66,7 +66,7 @@ RSpec.describe Metanorma::Iso do
             <link target="http://example.com"/>
             <link target="http://example.com">Link</link></p>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -79,7 +79,7 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <p id="_">Text <bookmark id="bookmark"/> Text</p>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -100,11 +100,11 @@ RSpec.describe Metanorma::Iso do
             <title>Section</title>
             <p id="_">Inline Reference to <xref target="reference"/>
               Footnoted Reference to <xref target="reference"/>
-              Inline Reference with Text to <xref target="reference">text</xref>
-              Footnoted Reference with Text to <xref target="reference">text</xref></p>
+              Inline Reference with Text to <xref target="reference"><display-text>text</display-text></xref>
+              Footnoted Reference with Text to <xref target="reference"><display-text>text</display-text></xref></p>
           </clause>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -137,7 +137,7 @@ RSpec.describe Metanorma::Iso do
             </bibitem>
           </references>
         </bibliography>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -153,7 +153,7 @@ RSpec.describe Metanorma::Iso do
               <p id="_">Footnote text</p></fn>
           </p>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 end

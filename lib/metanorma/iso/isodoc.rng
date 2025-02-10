@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v1.4.1 -->
+<!-- VERSION v2.0.0 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -459,11 +459,14 @@ gives an explicit page orientation</a:documentation>
           <a:documentation>Description of location in a reference, which can be combined with other locations in a single citation</a:documentation>
         </ref>
       </zeroOrMore>
-      <zeroOrMore>
-        <ref name="PureTextElement">
+      <optional>
+        <element name="display-text">
           <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>
-        </ref>
-      </zeroOrMore>
+          <oneOrMore>
+            <ref name="PureTextElement"/>
+          </oneOrMore>
+        </element>
+      </optional>
     </define>
   </include>
   <!-- end overrides -->
@@ -1205,10 +1208,13 @@ numbers</a:documentation>
         <value>presentation</value>
       </choice>
     </attribute>
+    <attribute name="flavor">
+      <a:documentation>Metanorma flavor, indicating SDO whose requiremnts the realisation aligns to</a:documentation>
+    </attribute>
   </define>
   <define name="standard-document">
     <a:documentation>Representation of a standardisation document</a:documentation>
-    <element name="standard-document">
+    <element name="metanorma">
       <ref name="Root-Attributes"/>
       <ref name="bibdata">
         <a:documentation>Bibliographic description of the document itself, expressed in the Relaton model</a:documentation>

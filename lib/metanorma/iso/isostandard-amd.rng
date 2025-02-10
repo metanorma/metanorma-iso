@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar ns="https://www.metanorma.org/ns/iso" xmlns="http://relaxng.org/ns/structure/1.0">
+<grammar ns="https://www.metanorma.org/ns/standoc" xmlns="http://relaxng.org/ns/structure/1.0">
   <!--
     VERSION v1.2.1
     default namespace isostandard = "https://www.metanorma.com/ns/iso"
   -->
   <include href="relaton-iso.rng"/>
   <include href="isostandard.rng">
-    <start>
-      <ref name="iso-standard"/>
-    </start>
     <define name="sections">
       <element name="sections">
         <oneOrMore>
@@ -33,8 +30,8 @@
         <ref name="Clause-Section"/>
       </element>
     </define>
-    <define name="iso-standard">
-      <element name="iso-standard">
+    <define name="standard-document">
+      <element name="metanorma">
         <ref name="Root-Attributes"/>
         <ref name="bibdata"/>
         <optional>
