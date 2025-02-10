@@ -632,12 +632,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <tr>
                          <th>Conformance test</th>
                          <td>
-                            <xref target="A2">
+                            <xref target="A2" id="_">
                                <span class="fmt-element-name">Conformance test</span>
                                <semx element="autonum" source="A2">1</semx>
                                <span class="fmt-caption-delim">: </span>
                                <semx element="title" source="A2">Second</semx>
                             </xref>
+                            <semx element="xref" source="_">
+                               <fmt-xref target="A2">
+                                  <span class="fmt-element-name">Conformance test</span>
+                                  <semx element="autonum" source="A2">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A2">Second</semx>
+                               </fmt-xref>
+                            </semx>
                          </td>
                       </tr>
                    </tbody>
@@ -675,12 +683,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <tr>
                          <th>Requirement</th>
                          <td>
-                            <xref target="A1">
+                            <xref target="A1" id="_">
                                <span class="fmt-element-name">Requirement</span>
                                <semx element="autonum" source="A1">1</semx>
                                <span class="fmt-caption-delim">: </span>
                                <semx element="title" source="A1">First</semx>
                             </xref>
+                            <semx element="xref" source="_">
+                               <fmt-xref target="A1">
+                                  <span class="fmt-element-name">Requirement</span>
+                                  <semx element="autonum" source="A1">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A1">First</semx>
+                               </fmt-xref>
+                            </semx>
                          </td>
                       </tr>
                    </tbody>
@@ -718,12 +734,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <tr>
                          <th>Conformance class</th>
                          <td>
-                            <xref target="A4">
+                            <xref target="A4" id="_">
                                <span class="fmt-element-name">Conformance class</span>
                                <semx element="autonum" source="A4">1</semx>
                                <span class="fmt-caption-delim">: </span>
                                <semx element="title" source="A4">Fourth</semx>
                             </xref>
+                            <semx element="xref" source="_">
+                               <fmt-xref target="A4">
+                                  <span class="fmt-element-name">Conformance class</span>
+                                  <semx element="autonum" source="A4">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A4">Fourth</semx>
+                               </fmt-xref>
+                            </semx>
                          </td>
                       </tr>
                    </tbody>
@@ -761,12 +785,20 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <tr>
                          <th>Requirements class</th>
                          <td>
-                            <xref target="A3">
+                            <xref target="A3" id="_">
                                <span class="fmt-element-name">Requirements class</span>
                                <semx element="autonum" source="A3">1</semx>
                                <span class="fmt-caption-delim">: </span>
                                <semx element="title" source="A3">Third</semx>
                             </xref>
+                            <semx element="xref" source="_">
+                               <fmt-xref target="A3">
+                                  <span class="fmt-element-name">Requirements class</span>
+                                  <semx element="autonum" source="A3">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A3">Third</semx>
+                               </fmt-xref>
+                            </semx>
                          </td>
                       </tr>
                    </tbody>

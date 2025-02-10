@@ -191,18 +191,26 @@ RSpec.describe IsoDoc do
                     <fmt-termsource status="modified">
                        [SOURCE:
                        <semx element="termsource" source="_">
-                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
+                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                              <locality type="clause">
                                 <referenceFrom>3.1</referenceFrom>
                              </locality>
-                             <span class="stdpublisher">ISO </span>
-                             <span class="stddocNumber">7301</span>
-                             :
-                             <span class="stdyear">2011</span>
-                             ,
-                             <span class="citesec">3.1</span>
                           </origin>
-                          , modified — <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
+                          <semx element="origin" source="_">
+                             <fmt-origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
+                                <locality type="clause">
+                                   <referenceFrom>3.1</referenceFrom>
+                                </locality>
+                                <span class="stdpublisher">ISO </span>
+                                <span class="stddocNumber">7301</span>
+                                :
+                                <span class="stdyear">2011</span>
+                                ,
+                                <span class="citesec">3.1</span>
+                             </fmt-origin>
+                          </semx>
+                          , modified —
+                          <semx element="modification" source="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</semx>
                        </semx>
                        ]
                     </fmt-termsource>
@@ -356,17 +364,24 @@ RSpec.describe IsoDoc do
                     <fmt-termsource status="identical">
                        [SOURCE:
                        <semx element="termsource" source="_">
-                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
+                          <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                              <locality type="clause">
                                 <referenceFrom>3.1</referenceFrom>
                              </locality>
-                             <span class="stdpublisher">ISO </span>
-                             <span class="stddocNumber">7301</span>
-                             :
-                             <span class="stdyear">2011</span>
-                             ,
-                             <span class="citesec">3.1</span>
                           </origin>
+                          <semx element="origin" source="_">
+                             <fmt-origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
+                                <locality type="clause">
+                                   <referenceFrom>3.1</referenceFrom>
+                                </locality>
+                                <span class="stdpublisher">ISO </span>
+                                <span class="stddocNumber">7301</span>
+                                :
+                                <span class="stdyear">2011</span>
+                                ,
+                                <span class="citesec">3.1</span>
+                             </fmt-origin>
+                          </semx>
                        </semx>
                        ]
                     </fmt-termsource>
@@ -961,43 +976,76 @@ RSpec.describe IsoDoc do
               <fmt-termsource status="identical">
                  [SOURCE:
                  <semx element="termsource" source="_">
-                    <origin citeas="">
+                    <origin citeas="" id="_">
                        <termref base="IEV" target="xyz">t1</termref>
                     </origin>
-                    — <semx element="modification" source="_">with adjustments</semx>
+                    <semx element="origin" source="_">
+                       <fmt-origin citeas="">
+                          <termref base="IEV" target="xyz">t1</termref>
+                       </fmt-origin>
+                    </semx>
+                    —
+                    <semx element="modification" source="_">with adjustments</semx>
                  </semx>
                  ;
                  <semx element="termsource" source="_">
-                    <origin citeas="">
+                    <origin citeas="" id="_">
                        <termref base="IEV" target="xyz"/>
                     </origin>
-                    , modified — <semx element="modification" source="_">with adjustments</semx>
+                    <semx element="origin" source="_">
+                       <fmt-origin citeas="">
+                          <termref base="IEV" target="xyz"/>
+                       </fmt-origin>
+                    </semx>
+                    , modified —
+                    <semx element="modification" source="_">with adjustments</semx>
                  </semx>
                  ;
                  <semx element="termsource" source="_">
-                    <origin citeas="">
+                    <origin citeas="" id="_">
                        <termref base="IEV" target="xyz"/>
                     </origin>
-                    , modified — <semx element="modification" source="_">with adjustments</semx>
+                    <semx element="origin" source="_">
+                       <fmt-origin citeas="">
+                          <termref base="IEV" target="xyz"/>
+                       </fmt-origin>
+                    </semx>
+                    , modified —
+                    <semx element="modification" source="_">with adjustments</semx>
                  </semx>
                  ;
                  <semx element="termsource" source="_">
-                    <origin citeas="">
+                    <origin citeas="" id="_">
                        <termref base="IEV" target="xyz">t1</termref>
                     </origin>
+                    <semx element="origin" source="_">
+                       <fmt-origin citeas="">
+                          <termref base="IEV" target="xyz">t1</termref>
+                       </fmt-origin>
+                    </semx>
                  </semx>
                  ;
                  <semx element="termsource" source="_">
-                    <origin citeas="">
+                    <origin citeas="" id="_">
                        <termref base="IEV" target="xyz"/>
                     </origin>
+                    <semx element="origin" source="_">
+                       <fmt-origin citeas="">
+                          <termref base="IEV" target="xyz"/>
+                       </fmt-origin>
+                    </semx>
                     , modified
                  </semx>
                  ;
                  <semx element="termsource" source="_">
-                    <origin citeas="">
+                    <origin citeas="" id="_">
                        <termref base="IEV" target="xyz"/>
                     </origin>
+                    <semx element="origin" source="_">
+                       <fmt-origin citeas="">
+                          <termref base="IEV" target="xyz"/>
+                       </fmt-origin>
+                    </semx>
                     , modified
                  </semx>
                  ]
