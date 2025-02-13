@@ -1094,67 +1094,79 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-              <foreword displayorder="2">
-                 <title id="_">Foreword</title>
-                 <fmt-title depth="1">
-                       <semx element="title" source="_">Foreword</semx>
-                 </fmt-title>
-                 <formula id="_" unnumbered="true">
-                    <stem type="AsciiMath">r = 1 %</stem>
-                    <p keep-with-next="true">where</p>
-                    <dl id="_" class="formula_dl">
-                       <dt>
-                          <stem type="AsciiMath">r</stem>
-                       </dt>
-                       <dd>
-                          <p id="_">is the repeatability limit.</p>
-                       </dd>
-                       <dt>
-                          <stem type="AsciiMath">s_1</stem>
-                       </dt>
-                       <dd>
-                          <p id="_">is the other repeatability limit.</p>
-                       </dd>
-                    </dl>
-                    <note id="_" autonum="">
-                       <fmt-name>
-                          <span class="fmt-caption-label">
-                             <span class="fmt-element-name">NOTE</span>
-                          </span>
-                  <span class="fmt-label-delim">
-                     <tab/>
-                  </span>
-                       </fmt-name>
-                       <fmt-xref-label>
-                          <span class="fmt-element-name">Note</span>
-                       </fmt-xref-label>
-                       <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
-                    </note>
-                 </formula>
-                 <formula id="_" autonum="1">
-                    <fmt-name>
-                       <span class="fmt-caption-label">
-                          <span class="fmt-autonum-delim">(</span>
-                          1
-                          <span class="fmt-autonum-delim">)</span>
-                       </span>
-                    </fmt-name>
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Formula</span>
-                       <span class="fmt-autonum-delim">(</span>
-                       <semx element="autonum" source="_">1</semx>
-                       <span class="fmt-autonum-delim">)</span>
-                    </fmt-xref-label>
-                    <stem type="AsciiMath">r = 1 %</stem>
-                 </formula>
-              </foreword>
-           </preface>
-        </iso-standard>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <formula id="_" unnumbered="true">
+                   <stem type="AsciiMath" id="_">r = 1 %</stem>
+                   <fmt-stem type="AsciiMath">
+                      <semx element="stem" source="_">r = 1 %</semx>
+                   </fmt-stem>
+                   <p keep-with-next="true">where</p>
+                   <dl id="_" class="formula_dl">
+                      <dt>
+                         <stem type="AsciiMath" id="_">r</stem>
+                         <fmt-stem type="AsciiMath">
+                            <semx element="stem" source="_">r</semx>
+                         </fmt-stem>
+                      </dt>
+                      <dd>
+                         <p id="_">is the repeatability limit.</p>
+                      </dd>
+                      <dt>
+                         <stem type="AsciiMath" id="_">s_1</stem>
+                         <fmt-stem type="AsciiMath">
+                            <semx element="stem" source="_">s_1</semx>
+                         </fmt-stem>
+                      </dt>
+                      <dd>
+                         <p id="_">is the other repeatability limit.</p>
+                      </dd>
+                   </dl>
+                   <note id="_" autonum="">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                         </span>
+                         <span class="fmt-label-delim">
+                            <tab/>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                      </fmt-xref-label>
+                      <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+                   </note>
+                </formula>
+                <formula id="_" autonum="1">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-autonum-delim">(</span>
+                         1
+                         <span class="fmt-autonum-delim">)</span>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Formula</span>
+                      <span class="fmt-autonum-delim">(</span>
+                      <semx element="autonum" source="_">1</semx>
+                      <span class="fmt-autonum-delim">)</span>
+                   </fmt-xref-label>
+                   <stem type="AsciiMath" id="_">r = 1 %</stem>
+                   <fmt-stem type="AsciiMath">
+                      <semx element="stem" source="_">r = 1 %</semx>
+                   </fmt-stem>
+                </formula>
+             </foreword>
+          </preface>
+       </iso-standard>
     OUTPUT
 
     html = <<~OUTPUT
@@ -1300,57 +1312,66 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-              <foreword displayorder="2">
-                 <title id="_">Foreword</title>
-                 <fmt-title depth="1">
-                       <semx element="title" source="_">Foreword</semx>
-                 </fmt-title>
-                 <formula id="_" unnumbered="true">
-                    <stem type="AsciiMath">r = 1 %</stem>
-                    <p>
-                       where
-                       <stem type="AsciiMath">r</stem>
-                       is the repeatability limit.
-                    </p>
-                    <note id="_" autonum="">
-                       <fmt-name>
-                          <span class="fmt-caption-label">
-                             <span class="fmt-element-name">NOTE</span>
-                          </span>
-                  <span class="fmt-label-delim">
-                     <tab/>
-                  </span>
-                       </fmt-name>
-                       <fmt-xref-label>
-                          <span class="fmt-element-name">Note</span>
-                       </fmt-xref-label>
-                       <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
-                    </note>
-                 </formula>
-                 <formula id="_" autonum="1">
-                    <fmt-name>
-                       <span class="fmt-caption-label">
-                          <span class="fmt-autonum-delim">(</span>
-                          1
-                          <span class="fmt-autonum-delim">)</span>
-                       </span>
-                    </fmt-name>
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Formula</span>
-                       <span class="fmt-autonum-delim">(</span>
-                       <semx element="autonum" source="_">1</semx>
-                       <span class="fmt-autonum-delim">)</span>
-                    </fmt-xref-label>
-                    <stem type="AsciiMath">r = 1 %</stem>
-                 </formula>
-              </foreword>
-           </preface>
-        </iso-standard>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <formula id="_" unnumbered="true">
+                   <stem type="AsciiMath" id="_">r = 1 %</stem>
+                   <fmt-stem type="AsciiMath">
+                      <semx element="stem" source="_">r = 1 %</semx>
+                   </fmt-stem>
+                   <p>
+                      where
+                      <stem type="AsciiMath" id="_">r</stem>
+                      <fmt-stem type="AsciiMath">
+                         <semx element="stem" source="_">r</semx>
+                      </fmt-stem>
+                      is the repeatability limit.
+                   </p>
+                   <note id="_" autonum="">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                         </span>
+                         <span class="fmt-label-delim">
+                            <tab/>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                      </fmt-xref-label>
+                      <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+                   </note>
+                </formula>
+                <formula id="_" autonum="1">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-autonum-delim">(</span>
+                         1
+                         <span class="fmt-autonum-delim">)</span>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Formula</span>
+                      <span class="fmt-autonum-delim">(</span>
+                      <semx element="autonum" source="_">1</semx>
+                      <span class="fmt-autonum-delim">)</span>
+                   </fmt-xref-label>
+                   <stem type="AsciiMath" id="_">r = 1 %</stem>
+                   <fmt-stem type="AsciiMath">
+                      <semx element="stem" source="_">r = 1 %</semx>
+                   </fmt-stem>
+                </formula>
+             </foreword>
+          </preface>
+       </iso-standard>
     OUTPUT
     html = <<~"OUTPUT"
       #{HTML_HDR}
@@ -1509,7 +1530,10 @@ RSpec.describe IsoDoc do
                       <dd>
                          <p id="_">
                             The time
-                            <stem type="AsciiMath">t_90</stem>
+                            <stem type="AsciiMath" id="_">t_90</stem>
+                            <fmt-stem type="AsciiMath">
+                               <semx element="stem" source="_">t_90</semx>
+                            </fmt-stem>
                             was estimated to be 18,2 min for this example.
                          </p>
                       </dd>
