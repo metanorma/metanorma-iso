@@ -207,20 +207,38 @@ module IsoDoc
       def table1(elem)
         table1_key(elem)
         if elem["class"] == "modspec"
-          n = elem.at(ns(".//fmt-name")).remove
-          n.name = "name"
+          if n = elem.at(ns(".//fmt-name"))
+            n.remove.name = "name"
           elem.add_first_child(n)
+          end
           elem.at(ns("./thead"))&.remove
           super
-          elem.at(ns("./name")).remove
+          elem.at(ns("./name"))&.remove
+          table1_fmt_xref_modspec(elem)
         else super
         end
+      end
+
+      def table1_fmt_xref_modspec(elem)
+        p = elem.parent.parent.at(ns("./fmt-xref-label"))
+        t = elem.at(ns("./fmt-xref-label"))&.remove or return
+        n = t.at(ns("./span[@class='fmt-element-name'][2]")) or return
+        while i = n.next
+          i.remove
+        end
+        n.remove
+        p.children.first.previous = to_xml(t.children)
       end
 
       def table1_key(elem)
         elem.xpath(ns(".//dl[@key = 'true'][not(./name)]")).each do |dl|
           dl.add_first_child "<name>#{@i18n.key}</name>"
         end
+      end
+
+      def labelled_ancestor(elem, exceptions = [])
+        elem["class"] == "modspec" and return false
+        super
       end
 
       def toc_title(docxml)
