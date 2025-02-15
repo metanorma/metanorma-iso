@@ -8,7 +8,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
+          <foreword displayorder="2" id="_"><fmt-title>Foreword</fmt-title>
             <p>
               <em>A</em>
               <strong>B</strong>
@@ -30,7 +30,7 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{HTML_HDR}
             <br/>
-            <div>
+            <div id="_">
               <h1 class="ForewordTitle">Foreword</h1>
               <p>
                 <i>A</i>
@@ -59,7 +59,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
+          <foreword displayorder="2" id="_"><fmt-title>Foreword</fmt-title>
             <p>
               <barry fred="http://example.com">example</barry>
             </p>
@@ -71,7 +71,7 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{HTML_HDR}
             <br/>
-            <div>
+            <div id="_">
               <h1 class="ForewordTitle">Foreword</h1>
               <p>
                 <para>
@@ -92,7 +92,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
+          <foreword displayorder="2" id="_"><fmt-title>Foreword</fmt-title>
             <p>
               <fmt-stem type="AsciiMath">A</fmt-stem>
               <fmt-stem type="MathML"><m:math><m:row>X</m:row></m:math></fmt-stem>
@@ -108,7 +108,7 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
         #{HTML_HDR.sub(/<html/, "<html xmlns:m='m'")}
               <br/>
-              <div>
+              <div id="_">
                 <h1 class="ForewordTitle">Foreword</h1>
                 <p>
                   <span class="stem">(#(A)#)</span>
@@ -133,7 +133,7 @@ RSpec.describe IsoDoc do
           <clause type="toc" id="_" displayorder="1">
             <fmt-title depth="1">Contents</fmt-title>
           </clause>
-          <foreword displayorder="2"><fmt-title>Foreword</fmt-title>
+          <foreword displayorder="2" id="_"><fmt-title>Foreword</fmt-title>
             <p><fmt-stem type="AsciiMath">A</fmt-stem>(#((Hello))#)</p>
           </foreword>
         </preface>
@@ -143,7 +143,7 @@ RSpec.describe IsoDoc do
     expect(Xml::C14n.format(output)).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{HTML_HDR}
               <br/>
-              <div>
+              <div id="_">
                 <h1 class="ForewordTitle">Foreword</h1>
               <p>
                 <span class="stem">(#(((A)#)))</span>
@@ -297,7 +297,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
-             <p displayorder="2">
+             <p displayorder="2" id="_">
                 <stem type="MathML" id="_">
                    <math xmlns="http://www.w3.org/1998/Math/MathML">
                       <mn>30000</mn>
@@ -582,7 +582,7 @@ RSpec.describe IsoDoc do
     presxml = <<~OUTPUT
        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
-             <foreword displayorder="1">
+             <foreword displayorder="1" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                       <semx element="title" source="_">Foreword</semx>
@@ -656,7 +656,8 @@ RSpec.describe IsoDoc do
          </bibliography>
        </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(strip_guid(output)))
+      .to be_equivalent_to Xml::C14n.format(presxml)
   end
 
   it "processes eref content" do
@@ -754,7 +755,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
-             <foreword displayorder="2">
+             <foreword displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>

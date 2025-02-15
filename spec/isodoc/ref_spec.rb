@@ -158,7 +158,7 @@ RSpec.describe IsoDoc do
               <clause type="toc" id="_" displayorder="1">
                  <fmt-title depth="1">Contents</fmt-title>
               </clause>
-              <foreword displayorder="2">
+              <foreword displayorder="2" id="_">
                  <title id="_">Foreword</title>
                  <fmt-title depth="1">
                     <semx element="title" source="_">Foreword</semx>
@@ -435,7 +435,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
                       <br/>
-                <div>
+                <div id="_">
                    <h1 class="ForewordTitle">Foreword</h1>
                    <p id="_">
                       <a href="#ISO712">
@@ -628,7 +628,7 @@ RSpec.describe IsoDoc do
       </clause>
    </preface>
    <bibliography>
-      <references normative="false" displayorder="2">
+      <references normative="false" displayorder="2" id="_">
          <fmt-title depth="1">Bibliography</fmt-title>
            <bibitem id='ignf' type='website'>
              <formattedref>
@@ -652,7 +652,8 @@ RSpec.describe IsoDoc do
          </bibliography>
        </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Xml::C14n.format(output)

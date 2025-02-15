@@ -69,7 +69,7 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:foreword")
     output = <<~OUTPUT
-       <foreword displayorder="1">
+       <foreword displayorder="1" id="_">
           <title id="_">Foreword</title>
           <fmt-title depth="1">
              <semx element="title" source="_">Foreword</semx>
@@ -242,7 +242,7 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:foreword")
     output = <<~OUTPUT
-      <foreword obligation="informative" displayorder="1">
+      <foreword obligation="informative" displayorder="1" id="_">
           <title id="_">Foreword</title>
           <fmt-title depth="1">
              <semx element="title" source="_">Foreword</semx>
@@ -526,13 +526,13 @@ RSpec.describe IsoDoc do
              </feedback-statement>
           </boilerplate>
           <preface>
-             <abstract obligation="informative" displayorder="1">
+             <abstract obligation="informative" displayorder="1" id="_">
                 <title id="_">Abstract</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Abstract</semx>
                 </fmt-title>
              </abstract>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
@@ -563,7 +563,7 @@ RSpec.describe IsoDoc do
                    <semx element="title" source="_">Note to reader</semx>
                 </fmt-title>
              </clause>
-             <acknowledgements obligation="informative" displayorder="6">
+             <acknowledgements obligation="informative" displayorder="6" id="_">
                 <title id="_">Acknowledgements</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Acknowledgements</semx>
@@ -741,11 +741,11 @@ RSpec.describe IsoDoc do
               </div>
             </div>
             <br/>
-            <div>
+            <div id="_">
               <h1 class="AbstractTitle">Abstract</h1>
             </div>
             <br/>
-            <div>
+            <div id="_">
               <h1 class="ForewordTitle">Foreword</h1>
               <p id="A">This is a preamble</p>
             </div>
@@ -765,7 +765,7 @@ RSpec.describe IsoDoc do
               <h1 class="IntroTitle">Note to reader</h1>
             </div>
             <br/>
-            <div class="Section3" id="">
+            <div class="Section3" id="_">
               <h1 class="IntroTitle">Acknowledgements</h1>
             </div>
             <div>
@@ -1320,7 +1320,17 @@ RSpec.describe IsoDoc do
           </p>
           <p class="zzSTDTitle2" displayorder="3">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p>
           <p class="zzSTDTitle2" displayorder="4">TECHNICAL CORRIGENDUM 2</p>
-          <clause displayorder="5"/>
+          <clause id="_" displayorder="5">
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="_">1</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="_">1</semx>
+                </fmt-xref-label>
+             </clause>
         </sections>
       </iso-standard>
     PRESXML
@@ -1333,8 +1343,8 @@ RSpec.describe IsoDoc do
              </p>
              <p class="zzSTDTitle2">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p>
              <p class="zzSTDTitle2">TECHNICAL CORRIGENDUM 2</p>
-             <div>
-               <h1/>
+             <div id="_">
+               <h1>1</h1>
              </div>
            </div>
          </body>
