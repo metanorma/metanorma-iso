@@ -94,7 +94,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
@@ -530,7 +530,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
             <br/>
-            <div>
+            <div id="_">
               <h1 class="ForewordTitle">Foreword</h1>
               <p id="A">This is a preamble</p>
             </div>
@@ -645,7 +645,7 @@ RSpec.describe IsoDoc do
       <p class="page-break">
         <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
       </p>
-            <div>
+            <div id="_">
               <h1 class="ForewordTitle">Foreword</h1>
               <p id="A" class='ForewordText'>This is a preamble</p>
             </div>
@@ -1082,7 +1082,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns='https://www.metanorma.org/ns/iso' type='presentation' version="#{Metanorma::Iso::VERSION}">
+      <metanorma xmlns='https://www.metanorma.org/ns/standoc' type='presentation' version="#{Metanorma::Iso::VERSION}" flavor="iso">
            <bibdata type="standard">
               <contributor>
                  <role type="author"/>
@@ -1191,7 +1191,7 @@ RSpec.describe IsoDoc do
                  </fmt-xref-label>
               </terms>
            </sections>
-        </iso-standard>
+        </metanorma>
     OUTPUT
     output = <<~OUTPUT
        <html lang="en">
@@ -1507,56 +1507,77 @@ RSpec.describe IsoDoc do
                  </li>
                  <li>
                     élongé,
-                    <xref target="_" pagenumber="true">
-                       <span class="fmt-element-name">Clause</span>
-                       <semx element="autonum" source="A">1</semx>
-                    </xref>
+                    <xref target="_" pagenumber="true" id="_"/>
+                    <semx element="xref" source="_">
+                       <fmt-xref target="_" pagenumber="true">
+                          <span class="fmt-element-name">Clause</span>
+                          <semx element="autonum" source="A">1</semx>
+                       </fmt-xref>
+                    </semx>
                  </li>
                  <li>
                     <em>Eman</em>
                     cipation,
-                    <xref target="_" pagenumber="true">
-                       <span class="fmt-element-name">Clause</span>
-                       <semx element="autonum" source="A">1</semx>
-                    </xref>
+                    <xref target="_" pagenumber="true" id="_"/>
+                    <semx element="xref" source="_">
+                       <fmt-xref target="_" pagenumber="true">
+                          <span class="fmt-element-name">Clause</span>
+                          <semx element="autonum" source="A">1</semx>
+                       </fmt-xref>
+                    </semx>
                     ,
-                    <xref target="_" pagenumber="true">
-                       <semx element="autonum" source="A">1</semx>
-                       <span class="fmt-autonum-delim">.</span>
-                       <semx element="autonum" source="B">1</semx>
-                    </xref>
+                    <xref target="_" pagenumber="true" id="_"/>
+                    <semx element="xref" source="_">
+                       <fmt-xref target="_" pagenumber="true">
+                          <semx element="autonum" source="A">1</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="B">1</semx>
+                       </fmt-xref>
+                    </semx>
                     <ul>
                        <li>
                           dans la France,
-                          <xref target="_" pagenumber="true">
-                             <span class="fmt-element-name">Clause</span>
-                             <semx element="autonum" source="A">1</semx>
-                          </xref>
+                          <xref target="_" pagenumber="true" id="_"/>
+                          <semx element="xref" source="_">
+                             <fmt-xref target="_" pagenumber="true">
+                                <span class="fmt-element-name">Clause</span>
+                                <semx element="autonum" source="A">1</semx>
+                             </fmt-xref>
+                          </semx>
                           <ul>
                              <li>
                                 à Paris,
-                                <xref target="_" pagenumber="true">
-                                   <semx element="autonum" source="A">1</semx>
-                                   <span class="fmt-autonum-delim">.</span>
-                                   <semx element="autonum" source="B">1</semx>
-                                </xref>
+                                <xref target="_" pagenumber="true" id="_"/>
+                                <semx element="xref" source="_">
+                                   <fmt-xref target="_" pagenumber="true">
+                                      <semx element="autonum" source="A">1</semx>
+                                      <span class="fmt-autonum-delim">.</span>
+                                      <semx element="autonum" source="B">1</semx>
+                                   </fmt-xref>
+                                </semx>
                              </li>
                              <li>
                                 en Bretagne,
-                                <xref target="_" pagenumber="true">
-                                   <span class="fmt-element-name">Clause</span>
-                                   <semx element="autonum" source="A">1</semx>
-                                </xref>
+                                <xref target="_" pagenumber="true" id="_"/>
+                                <semx element="xref" source="_">
+                                   <fmt-xref target="_" pagenumber="true">
+                                      <span class="fmt-element-name">Clause</span>
+                                      <semx element="autonum" source="A">1</semx>
+                                   </fmt-xref>
+                                </semx>
                              </li>
                           </ul>
                        </li>
                        <li>
                           dans les États-Unis,
-                          <xref target="_" pagenumber="true">
-                             <semx element="autonum" source="A">1</semx>
-                             <span class="fmt-autonum-delim">.</span>
-                             <semx element="autonum" source="B">1</semx>
-                          </xref>
+                          <xref target="_" pagenumber="true" id="_"/>
+                          <semx element="xref" source="_">
+                             <fmt-xref target="_" pagenumber="true">
+                                <semx element="autonum" source="A">1</semx>
+                                <span class="fmt-autonum-delim">.</span>
+                                <semx element="autonum" source="B">1</semx>
+                             </fmt-xref>
+                          </semx>
                        </li>
                     </ul>
                  </li>
@@ -1570,10 +1591,13 @@ RSpec.describe IsoDoc do
                           <ul>
                              <li>
                                 en allemand,
-                                <xref target="_" pagenumber="true">
-                                   <span class="fmt-element-name">Clause</span>
-                                   <semx element="autonum" source="A">1</semx>
-                                </xref>
+                                <xref target="_" pagenumber="true" id="_"/>
+                                <semx element="xref" source="_">
+                                   <fmt-xref target="_" pagenumber="true">
+                                      <span class="fmt-element-name">Clause</span>
+                                      <semx element="autonum" source="A">1</semx>
+                                   </fmt-xref>
+                                </semx>
                              </li>
                           </ul>
                        </li>
@@ -1581,11 +1605,14 @@ RSpec.describe IsoDoc do
                  </li>
                  <li>
                     zebra,
-                    <xref target="_" pagenumber="true">
-                       <semx element="autonum" source="A">1</semx>
-                       <span class="fmt-autonum-delim">.</span>
-                       <semx element="autonum" source="B">1</semx>
-                    </xref>
+                    <xref target="_" pagenumber="true" id="_"/>
+                    <semx element="xref" source="_">
+                       <fmt-xref target="_" pagenumber="true">
+                          <semx element="autonum" source="A">1</semx>
+                          <span class="fmt-autonum-delim">.</span>
+                          <semx element="autonum" source="B">1</semx>
+                       </fmt-xref>
+                    </semx>
                  </li>
               </ul>
            </indexsect>

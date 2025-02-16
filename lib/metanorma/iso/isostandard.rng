@@ -5,9 +5,6 @@
     default namespace isostandard = "https://www.metanorma.com/ns/iso"
   -->
   <include href="isodoc.rng">
-    <start>
-      <ref name="iso-standard"/>
-    </start>
     <define name="sections">
       <element name="sections">
         <zeroOrMore>
@@ -238,38 +235,38 @@
         </oneOrMore>
       </choice>
     </define>
+    <!--
+      We display the Normative References between scope and terms; but to keep the
+      grammar simple, we keep the references together
+    -->
+    <define name="standard-document">
+      <element name="metanorma">
+        <ref name="Root-Attributes"/>
+        <ref name="bibdata"/>
+        <zeroOrMore>
+          <ref name="termdocsource"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="misccontainer"/>
+        </optional>
+        <optional>
+          <ref name="boilerplate"/>
+        </optional>
+        <ref name="preface"/>
+        <oneOrMore>
+          <ref name="sections"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="annex"/>
+        </zeroOrMore>
+        <ref name="bibliography"/>
+        <zeroOrMore>
+          <ref name="indexsect"/>
+        </zeroOrMore>
+      </element>
+    </define>
   </include>
   <!-- end overrides -->
-  <!--
-    We display the Normative References between scope and terms; but to keep the
-    grammar simple, we keep the references together
-  -->
-  <define name="iso-standard">
-    <element name="iso-standard">
-      <ref name="Root-Attributes"/>
-      <ref name="bibdata"/>
-      <zeroOrMore>
-        <ref name="termdocsource"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="misccontainer"/>
-      </optional>
-      <optional>
-        <ref name="boilerplate"/>
-      </optional>
-      <ref name="preface"/>
-      <oneOrMore>
-        <ref name="sections"/>
-      </oneOrMore>
-      <zeroOrMore>
-        <ref name="annex"/>
-      </zeroOrMore>
-      <ref name="bibliography"/>
-      <zeroOrMore>
-        <ref name="indexsect"/>
-      </zeroOrMore>
-    </element>
-  </define>
   <define name="clause-hanging-paragraph-with-footnote">
     <element name="clause">
       <optional>

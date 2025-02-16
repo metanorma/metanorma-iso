@@ -89,11 +89,11 @@ RSpec.describe Metanorma::Iso do
         <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
         <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
         <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
-        <docidentifier type="ISO" primary="true">ISO/WD 1000-1.3</docidentifier>
+        <docidentifier type="ISO" primary="true">ISO/WD 1000-1.3:2000</docidentifier>
         <docidentifier type="iso-reference">ISO/WD 1000-1.3:2000(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:1000:-1:stage-20.20.v3:en</docidentifier>
         <docidentifier type='iso-undated'>ISO/WD 1000-1.3</docidentifier>
-        <docidentifier type="iso-with-lang">ISO/WD 1000-1.3(en)</docidentifier>
+        <docidentifier type="iso-with-lang">ISO/WD 1000-1.3:2000(en)</docidentifier>
         <docnumber>1000</docnumber>
                    <contributor>
            <role type="author"/>
@@ -919,11 +919,11 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       <bibdata type='standard'>
-        <docidentifier type='ISO' primary="true">ISO/FDTS 1000-1-1</docidentifier>
+        <docidentifier type='ISO' primary="true">ISO/FDTS 1000-1-1:2001</docidentifier>
         <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:ts:1000:-1-1:stage-50.00:en</docidentifier>
         <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>
-        <docidentifier type='iso-with-lang'>ISO/FDTS 1000-1-1(en)</docidentifier>
+        <docidentifier type='iso-with-lang'>ISO/FDTS 1000-1-1:2001(en)</docidentifier>
         <docnumber>1000</docnumber>
         <contributor>
           <role type='author'/>
@@ -1336,11 +1336,11 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
               <bibdata type="standard">
-              <docidentifier type='ISO' primary="true">ISO/FDIS 1000.2</docidentifier>
+              <docidentifier type='ISO' primary="true">ISO/FDIS 1000.2:#{Date.today.year}</docidentifier>
       <docidentifier type='iso-reference'>ISO/FDIS 1000.2:#{Date.today.year}(F)</docidentifier>
              <docidentifier type='URN'>urn:iso:std:iso:1000:stage-50.00.v2:fr</docidentifier>
               <docidentifier type='iso-undated'>ISO/FDIS 1000.2</docidentifier>
-      <docidentifier type='iso-with-lang'>ISO/FDIS 1000.2(fr)</docidentifier>
+      <docidentifier type='iso-with-lang'>ISO/FDIS 1000.2:#{Date.today.year}(fr)</docidentifier>
                 <docnumber>1000</docnumber>
                 <contributor>
                   <role type="author"/>

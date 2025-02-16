@@ -106,7 +106,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
@@ -470,7 +470,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
                       <br/>
-                <div>
+                <div id="_">
                    <h1 class="ForewordTitle">Foreword</h1>
                    <p id="A">This is a preamble</p>
                 </div>
@@ -587,7 +587,7 @@ RSpec.describe IsoDoc do
                 <p class="page-break">
                    <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
                 </p>
-                <div>
+                <div id="_">
                    <h1 class="ForewordTitle">Foreword</h1>
                    <p class="ForewordText" id="A">This is a preamble</p>
                 </div>
@@ -858,7 +858,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Table of contents</fmt-title>
              </clause>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                       <semx element="title" source="_">Foreword</semx>
@@ -1000,7 +1000,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Sommaire</fmt-title>
              </clause>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
@@ -1364,7 +1364,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR.gsub(/"en"/, '"fr"').sub(/Contents/, 'Sommaire')}
       <br/>
-             <div>
+             <div id="_">
                <h1 class="ForewordTitle">Foreword</h1>
                <p id="A">This is a preamble</p>
              </div>
@@ -1574,7 +1574,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Содержание</fmt-title>
              </clause>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
@@ -1938,7 +1938,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR.gsub(/"en"/, '"ru"').sub(/Contents/, 'Содержание')}
        <br/>
-             <div>
+             <div id="_">
                <h1 class="ForewordTitle">Foreword</h1>
                <p id="A">This is a preamble</p>
              </div>
@@ -2161,7 +2161,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">目　次</fmt-title>
              </clause>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
@@ -2230,12 +2230,20 @@ RSpec.describe IsoDoc do
                    <semx element="autonum" source="D">1</semx>
                 </fmt-xref-label>
                 <p id="E">
-                   <xref type="inline" target="ISO712">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ，
-                      <span class="citetbl">第1～1表</span>
-                   </xref>
+            <eref bibitemid="ISO712" type="inline" id="_">
+               <locality type="table">
+                  <referenceFrom>1</referenceFrom>
+                  <referenceTo>1</referenceTo>
+               </locality>
+            </eref>
+            <semx element="eref" source="_">
+               <fmt-xref type="inline" target="ISO712">
+                  <span class="stdpublisher">ISO </span>
+                  <span class="stddocNumber">712</span>
+                  ，
+                  <span class="citetbl">第1～1表</span>
+               </fmt-xref>
+            </semx>
                 </p>
              </clause>
              <clause id="H" obligation="normative" displayorder="7">
@@ -2545,7 +2553,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR.gsub(/"en"/, '"zh"').sub(/Contents/, '目　次')}
                    <br/>
-             <div>
+             <div id="_">
                <h1 class="ForewordTitle">Foreword</h1>
                <p id="A">This is a preamble</p>
              </div>
@@ -2694,27 +2702,41 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-        <foreword obligation="informative" displayorder="2">
-           <title id="_">Foreword</title>
-           <fmt-title depth="1">
-                 <semx element="title" source="_">Foreword</semx>
-           </fmt-title>
-           <p id="A">
-              <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO </span>
-                 <span class="stddocNumber">712</span>
-                 , Appendice 7
-              </xref>
-           </p>
-           <p id="B">
-              <xref type="inline" target="ISO712">
-                 <span class="stdpublisher">ISO </span>
-                 <span class="stddocNumber">712</span>
-                 ,
-                 <span class="citeapp">Annexe 7</span>
-              </xref>
-           </p>
-        </foreword>
+       <foreword obligation="informative" displayorder="2" id="_">
+          <title id="_">Foreword</title>
+          <fmt-title depth="1">
+             <semx element="title" source="_">Foreword</semx>
+          </fmt-title>
+          <p id="A">
+             <eref type="inline" bibitemid="ISO712" id="_">
+                <locality type="locality:appendix">
+                   <referenceFrom>7</referenceFrom>
+                </locality>
+             </eref>
+             <semx element="eref" source="_">
+                <fmt-xref type="inline" target="ISO712">
+                   <span class="stdpublisher">ISO </span>
+                   <span class="stddocNumber">712</span>
+                   , Appendice 7
+                </fmt-xref>
+             </semx>
+          </p>
+          <p id="B">
+             <eref type="inline" bibitemid="ISO712" id="_">
+                <locality type="annex">
+                   <referenceFrom>7</referenceFrom>
+                </locality>
+             </eref>
+             <semx element="eref" source="_">
+                <fmt-xref type="inline" target="ISO712">
+                   <span class="stdpublisher">ISO </span>
+                   <span class="stddocNumber">712</span>
+                   ,
+                   <span class="citeapp">Annexe 7</span>
+                </fmt-xref>
+             </semx>
+          </p>
+       </foreword>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new({}).convert("test", input, true))

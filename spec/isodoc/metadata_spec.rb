@@ -517,7 +517,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                <p class="zzSTDTitle1" displayorder="2">
            <span class="boldtitle">Specifications and test methods</span>
          </p>
-        <clause displayorder="3">
+        <clause displayorder="3" id="_">
            <title id="_">Clause 1</title>
             <fmt-title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
@@ -529,10 +529,20 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            <semx element="title" source="_">Clause 1</semx>
-          </fmt-title>
-        </clause>
-      </sections>
+                             <span class="fmt-caption-label">
+                    <semx element="autonum" source="_">1</semx>
+                 </span>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Clause 1</semx>
+              </fmt-title>
+              <fmt-xref-label>
+                 <span class="fmt-element-name">Clause</span>
+                 <semx element="autonum" source="_">1</semx>
+              </fmt-xref-label>
+           </clause>
+        </sections>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -566,7 +576,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                <p class="zzSTDTitle1" displayorder="2">
            <span class="boldtitle">Specifications and test methods</span>
          </p>
-        <clause displayorder="3">
+        <clause displayorder="3" id="_">
           <title id="_">Clause 1</title>
             <fmt-title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
@@ -578,10 +588,20 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            <semx element="title" source="_">Clause 1</semx>
-          </fmt-title>
-        </clause>
-      </sections>
+                            <span class="fmt-caption-label">
+                    <semx element="autonum" source="_">1</semx>
+                 </span>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Clause 1</semx>
+              </fmt-title>
+              <fmt-xref-label>
+                 <span class="fmt-element-name">Clause</span>
+                 <semx element="autonum" source="_">1</semx>
+              </fmt-xref-label>
+           </clause>
+        </sections>
     OUTPUT
     expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -615,7 +635,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
          <p class="zzSTDTitle1" displayorder="2">
            <span class="boldtitle">Specifications and test methods</span>
          </p>
-        <clause displayorder="3">
+        <clause displayorder="3" id="_">
            <title id="_">Clause 1</title>
             <fmt-title depth="1">
             <review date="#{Date.today}" reviewer="Metanorma" id="_">
@@ -627,10 +647,20 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </strong>
               </p>
             </review>
-            <semx element="title" source="_">Clause 1</semx>
-          </fmt-title>
-        </clause>
-      </sections>
+                <span class="fmt-caption-label">
+                    <semx element="autonum" source="_">1</semx>
+                 </span>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Clause 1</semx>
+              </fmt-title>
+              <fmt-xref-label>
+                 <span class="fmt-element-name">Clause</span>
+                 <semx element="autonum" source="_">1</semx>
+              </fmt-xref-label>
+           </clause>
+        </sections>
     OUTPUT
     expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -662,17 +692,27 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <sections>
-         <p class="zzSTDTitle1" displayorder="2">
-            <span class="boldtitle">Specifications and test methods</span>
-          </p>
-        <clause displayorder='3'>
+        <sections>
+           <p class="zzSTDTitle1" displayorder="2">
+              <span class="boldtitle">Specifications and test methods</span>
+           </p>
+           <clause id="_" displayorder="3">
               <title id="_">Clause 1</title>
-      <fmt-title depth="1">
-            <semx element="title" source="_">Clause 1</semx>
-      </fmt-title>
-        </clause>
-      </sections>
+              <fmt-title depth="1">
+                 <span class="fmt-caption-label">
+                    <semx element="autonum" source="_">1</semx>
+                 </span>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Clause 1</semx>
+              </fmt-title>
+              <fmt-xref-label>
+                 <span class="fmt-element-name">Clause</span>
+                 <semx element="autonum" source="_">1</semx>
+              </fmt-xref-label>
+           </clause>
+        </sections>
     OUTPUT
     expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -703,16 +743,26 @@ RSpec.describe IsoDoc::Iso::Metadata do
     INPUT
     output = <<~OUTPUT
       <sections>
-        <p class="zzSTDTitle1" displayorder="2">
-            <span class="boldtitle">Specifications and test methods</span>
-          </p>
-        <clause displayorder='3'>
+           <p class="zzSTDTitle1" displayorder="2">
+              <span class="boldtitle">Specifications and test methods</span>
+           </p>
+           <clause id="_" displayorder="3">
               <title id="_">Clause 1</title>
-      <fmt-title depth="1">
-            <semx element="title" source="_">Clause 1</semx>
-      </fmt-title>
-        </clause>
-      </sections>
+              <fmt-title depth="1">
+                 <span class="fmt-caption-label">
+                    <semx element="autonum" source="_">1</semx>
+                 </span>
+                 <span class="fmt-caption-delim">
+                    <tab/>
+                 </span>
+                 <semx element="title" source="_">Clause 1</semx>
+              </fmt-title>
+              <fmt-xref-label>
+                 <span class="fmt-element-name">Clause</span>
+                 <semx element="autonum" source="_">1</semx>
+              </fmt-xref-label>
+           </clause>
+        </sections>
     OUTPUT
     expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)

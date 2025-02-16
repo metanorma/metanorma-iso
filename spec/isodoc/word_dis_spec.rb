@@ -179,14 +179,14 @@ RSpec.describe IsoDoc do
           <p class="MsoNormal">
              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
-          <div>
+          <div><a name="_" id="_"/>
              <p class="ForewordTitle">Foreword</p>
              <p class="ForewordText">Para</p>
           </div>
           <p class="MsoNormal">
              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
-          <div class="Section3" id="">
+          <div class="Section3"><a name="_" id="_"/>
              <p class="IntroTitle">Foreword</p>
              <p class="MsoNormal">Para</p>
           </div>
@@ -201,7 +201,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(Xml::C14n.format(doc.to_xml))
+    expect(Xml::C14n.format(strip_guid(doc.to_xml)))
       .to be_equivalent_to Xml::C14n.format(word)
 
     input = <<~INPUT
@@ -229,14 +229,14 @@ RSpec.describe IsoDoc do
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
-         <div>
+         <div><a name="_" id="_"/>
            <p class='ForewordTitle'>Foreword</p>
            <p class='ForewordText'>Para</p>
          </div>
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
-         <div class='Section3' id=''>
+         <div class='Section3'><a name="_" id="_"/>
            <p class='IntroTitle'>Foreword</p>
            <p class='MsoBodyText'>Para</p>
          </div>
@@ -251,7 +251,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(Xml::C14n.format(doc.to_xml))
+    expect(Xml::C14n.format(strip_guid(doc.to_xml)))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -330,7 +330,7 @@ RSpec.describe IsoDoc do
         <p class='MsoBodyText'>
           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
         </p>
-        <div>
+        <div><a name="_" id="_"/>
           <p class='ForewordTitle'>Foreword</p>
           <p class='ForewordText'>
             <span class='ISOCode'>
@@ -383,7 +383,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(Xml::C14n.format(doc.to_xml))
+    expect(Xml::C14n.format(strip_guid(doc.to_xml)))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -420,7 +420,7 @@ RSpec.describe IsoDoc do
         <p class='MsoBodyText'>
           <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
         </p>
-        <div>
+        <div><a name="_" id="_"/>
            <p class="ForewordTitle">Foreword</p>
            <div align="center" class="table_container">
              <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
@@ -455,7 +455,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
-    expect(Xml::C14n.format(doc.to_xml))
+    expect(Xml::C14n.format(strip_guid(doc.to_xml)))
       .to be_equivalent_to Xml::C14n.format(word)
   end
 
@@ -1144,7 +1144,7 @@ RSpec.describe IsoDoc do
         </bibdata>
         <sections>
         <clause id="A" displayorder="1">
-        <formula id="B"><fmt-name>(A.1)</fmt-name><stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></stem></formula>
+        <formula id="B"><fmt-name>(A.1)</fmt-name><fmt-stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow><mi>S</mi></mrow><mrow><mrow><mi>s</mi><mi>l</mi><mo>,</mo><mo>max</mo></mrow></mrow></msub><mo>=</mo><mo>⌊</mo><mrow><mfrac><mrow><mrow><msub><mrow><mi>L</mi></mrow><mrow><mo>max</mo></mrow></msub><mo>×</mo><msub><mrow><mi>N</mi></mrow><mrow><mrow><mi>b</mi><mi>p</mi><mi>p</mi></mrow></mrow></msub></mrow></mrow><mrow><mn>8</mn></mrow></mfrac></mrow><mo> </mo><mo>⌋</mo></math><!-- (S)_((s l , max)) = |__ (((L)_((max)) xx (N)_((b p p))))/((8))  __| --><asciimath>S_{sl,max} = |__ {: { L_{:max:} xx N_{bpp} :} / 8 :}  __|</asciimath></fmt-stem></formula>
         </clause>
         </sections>
       </iso-standard>

@@ -31,7 +31,7 @@ RSpec.describe Metanorma::Iso do
             </tbody>
           </table>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Iso do
             </tbody>
           </table>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -109,7 +109,7 @@ RSpec.describe Metanorma::Iso do
             </tbody>
           </table>
         </sections>
-      </iso-standard>
+      </metanorma>
     OUTPUT
   end
 
@@ -284,7 +284,7 @@ RSpec.describe Metanorma::Iso do
              </tfoot>
            </table>
          </sections>
-       </iso-standard>
+       </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS)))).to be_equivalent_to Xml::C14n.format(output)
   end

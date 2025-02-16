@@ -9,7 +9,7 @@ RSpec.describe Metanorma::Iso::Processor do
   processor = registry.find_processor(:iso)
 
   inputxml = <<~INPUT
-    <iso-standard xmlns="http://riboseinc.com/isoxml">
+    <metanorma xmlns="http://riboseinc.com/isoxml">
     <bibdata type="standard">
     <title language="en" format="text/plain" type="main">English</title>
     <title language="en" format="text/plain" type="title-main">English</title>
@@ -100,7 +100,7 @@ RSpec.describe Metanorma::Iso::Processor do
               </term>
             </terms>
           </sections>
-    </iso-standard>
+    </metanorma>
   INPUT
 
   it "registers against metanorma" do
@@ -124,7 +124,7 @@ RSpec.describe Metanorma::Iso::Processor do
     output = <<~OUTPUT
         #{BLANK_HDR}
         <sections/>
-      </iso-standard>
+      </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(processor.input_to_isodoc(input, nil))))
       .to be_equivalent_to Xml::C14n.format(strip_guid(output))
