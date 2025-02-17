@@ -9,7 +9,7 @@ RSpec.describe Metanorma::Iso::Processor do
   processor = registry.find_processor(:iso)
 
   inputxml = <<~INPUT
-    <metanorma xmlns="http://riboseinc.com/isoxml">
+    <metanorma xmlns="http://riboseinc.com/isoxml" flavor="iso">
     <bibdata type="standard">
     <title language="en" format="text/plain" type="main">English</title>
     <title language="en" format="text/plain" type="title-main">English</title>
