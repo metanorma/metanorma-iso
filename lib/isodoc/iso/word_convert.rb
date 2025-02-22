@@ -249,6 +249,8 @@ module IsoDoc
         node.xpath(ns("./source")).each { |n| parse(n, out) }
         node.xpath(ns("./note[not(@type = 'units')]"))
           .each { |n| parse(n, out) }
+        node.xpath(ns("./fmt-footnote-container/fmt-fn-body"))
+          .each { |n| parse(n, out) }
       end
 
       include BaseConvert

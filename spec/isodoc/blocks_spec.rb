@@ -1537,7 +1537,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
-             <foreword displayorder="2" id="_">
+             <foreword id="_" displayorder="2">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
@@ -1547,7 +1547,7 @@ RSpec.describe IsoDoc do
                       Split-it-right
                       <em>sample</em>
                       divider
-                      <fn reference="1">
+                      <fn reference="1" original-reference="1" target="_" original-id="_">
                          <p>X</p>
                       </fn>
                    </name>
@@ -1561,7 +1561,7 @@ RSpec.describe IsoDoc do
                          Split-it-right
                          <em>sample</em>
                          divider
-                         <fn reference="1">
+                         <fn reference="1" original-reference="1" id="_" target="_">
                             <p>X</p>
                          </fn>
                       </semx>
@@ -1676,8 +1676,16 @@ RSpec.describe IsoDoc do
                          <span class="stddocTitle">Cereals and cereal products</span>
                       </em>
                    </formattedref>
+                   <title format="text/plain">Cereals or cereal products</title>
+                   <title type="main" format="text/plain">Cereals and cereal products</title>
                    <docidentifier type="ISO">ISO 712</docidentifier>
                    <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+                   <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                         <name>International Organization for Standardization</name>
+                      </organization>
+                   </contributor>
                    <biblio-tag>
                       <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">712</span>
@@ -1688,6 +1696,23 @@ RSpec.describe IsoDoc do
           </sections>
           <bibliography>
              </bibliography>
+          <fmt-footnote-container>
+             <fmt-fn-body id="_" target="_" reference="1">
+                <semx element="fn" source="_">
+                   <p>
+                      <span class="fmt-footnote-label">
+                         <sup>
+                            <semx element="autonum" source="_">1</semx>
+                         </sup>
+                         <span class="fmt-caption-delim">
+                            <tab/>
+                         </span>
+                      </span>
+                      X
+                   </p>
+                </semx>
+             </fmt-fn-body>
+          </fmt-footnote-container>
        </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
