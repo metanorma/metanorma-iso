@@ -131,6 +131,7 @@ module IsoDoc
         TOC
       end
 
+      # KILL
       def footnote_reference_format(link)
         link.children =
           "<span class='MsoFootnoteReference'>#{to_xml(link.children)}</span>)"

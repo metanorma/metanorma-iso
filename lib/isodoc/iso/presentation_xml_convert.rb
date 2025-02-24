@@ -142,16 +142,6 @@ module IsoDoc
         end
       end
 
-      #       def clause(docxml)
-      #         docxml.xpath(ns("//clause[not(ancestor::annex)] | " \
-      #                         "//terms | //definitions | //references | " \
-      #                         "//preface/introduction[clause]")).each do |f|
-      #           f.parent.name == "annex" &&
-      #             @xrefs.klass.single_term_clause?(f.parent) and next
-      #           clause1(f)
-      #         end
-      #       end
-
       def admonition1(elem)
         super
         admonition_outside_clauses(elem)
@@ -209,7 +199,7 @@ module IsoDoc
         if elem["class"] == "modspec"
           if n = elem.at(ns(".//fmt-name"))
             n.remove.name = "name"
-          elem.add_first_child(n)
+            elem.add_first_child(n)
           end
           elem.at(ns("./thead"))&.remove
           super
@@ -317,6 +307,16 @@ module IsoDoc
 
       def enable_indexsect
         true
+      end
+
+      def fn_ref_label(fnote)
+        if fnote.ancestors("table, figure").empty? ||
+            !fnote.ancestors("fmt-name").empty?
+          "<sup>#{fn_label(fnote)}" \
+            "<span class='fmt-caption-delim'>)</span></sup>"
+        else
+          super
+        end
       end
 
       include Init

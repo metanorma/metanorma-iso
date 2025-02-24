@@ -131,12 +131,22 @@ RSpec.describe IsoDoc do
                             Drago
                             <fn reference="a" id="_" target="_">
                                <p original-id="_">Parboiled rice.</p>
+                               <fmt-fn-label>
+                                  <sup>
+                                     <semx element="autonum" source="_">a</semx>
+                                  </sup>
+                               </fmt-fn-label>
                             </fn>
                          </td>
                          <td align="center">
                             Balilla
                             <fn reference="a" id="_" target="_">
                                <p id="_">Parboiled rice.</p>
+                               <fmt-fn-label>
+                                  <sup>
+                                     <semx element="autonum" source="_">a</semx>
+                                  </sup>
+                               </fmt-fn-label>
                             </fn>
                          </td>
                          <td align="center">Thaibonnet</td>
@@ -225,14 +235,14 @@ RSpec.describe IsoDoc do
                       <fmt-fn-body id="_" target="_" reference="a">
                          <semx element="fn" source="_">
                             <p id="_">
-                               <span class="fmt-footnote-label">
+                               <fmt-fn-label>
                                   <sup>
                                      <semx element="autonum" source="_">a</semx>
                                   </sup>
                                   <span class="fmt-caption-delim">
                                      <tab/>
                                   </span>
-                               </span>
+                               </fmt-fn-label>
                                Parboiled rice.
                             </p>
                          </semx>
