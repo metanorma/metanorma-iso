@@ -2599,7 +2599,7 @@ presxml = <<~INPUT
                       <fmt-fn-label>
                          <sup>
                             <semx element="autonum" source="_">1</semx>
-                            <span class="fmt-caption-delim">)</span>
+                            <span class="fmt-label-delim">)</span>
                          </sup>
                       </fmt-fn-label>
                    </fn>
@@ -2611,7 +2611,7 @@ presxml = <<~INPUT
                       <fmt-fn-label>
                          <sup>
                             <semx element="autonum" source="_">1</semx>
-                            <span class="fmt-caption-delim">)</span>
+                            <span class="fmt-label-delim">)</span>
                          </sup>
                       </fmt-fn-label>
                    </fn>
@@ -2623,7 +2623,7 @@ presxml = <<~INPUT
                       <fmt-fn-label>
                          <sup>
                             <semx element="autonum" source="_">2</semx>
-                            <span class="fmt-caption-delim">)</span>
+                            <span class="fmt-label-delim">)</span>
                          </sup>
                       </fmt-fn-label>
                    </fn>
@@ -2647,7 +2647,7 @@ presxml = <<~INPUT
                    <fmt-fn-label>
                       <sup>
                          <semx element="autonum" source="_">4</semx>
-                         <span class="fmt-caption-delim">)</span>
+                         <span class="fmt-label-delim">)</span>
                       </sup>
                    </fmt-fn-label>
                 </fn>
@@ -2659,7 +2659,7 @@ presxml = <<~INPUT
                    <fmt-fn-label>
                       <sup>
                          <semx element="autonum" source="_">1</semx>
-                         <span class="fmt-caption-delim">)</span>
+                         <span class="fmt-label-delim">)</span>
                       </sup>
                    </fmt-fn-label>
                 </fn>
@@ -2690,7 +2690,7 @@ presxml = <<~INPUT
                                <fmt-fn-label>
                                   <sup>
                                      <semx element="autonum" source="_">3</semx>
-                                     <span class="fmt-caption-delim">)</span>
+                                     <span class="fmt-label-delim">)</span>
                                   </sup>
                                </fmt-fn-label>
                             </fn>
@@ -2705,7 +2705,7 @@ presxml = <<~INPUT
                          <fmt-fn-label>
                             <sup>
                                <semx element="autonum" source="_">3</semx>
-                               <span class="fmt-caption-delim">)</span>
+                               <span class="fmt-label-delim">)</span>
                             </sup>
                          </fmt-fn-label>
                       </fn>

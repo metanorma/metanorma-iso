@@ -313,7 +313,7 @@ module IsoDoc
         if fnote.ancestors("table, figure").empty? ||
             !fnote.ancestors("fmt-name").empty?
           "<sup>#{fn_label(fnote)}" \
-            "<span class='fmt-caption-delim'>)</span></sup>"
+            "<span class='fmt-label-delim'>)</span></sup>"
         else
           super
         end

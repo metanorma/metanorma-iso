@@ -391,9 +391,7 @@ RSpec.describe IsoDoc do
                          </div>
                          <div id="fn:tableD-1a" class="TableFootnote">
                             <p id="_" class="TableFootnote">
-                               <span class="TableFootnoteRef">
-                                  <sup>a</sup>
-                               </span>
+                               <span class="TableFootnoteRef">a</span>
                                  Parboiled rice.
                             </p>
                          </div>
@@ -503,9 +501,7 @@ RSpec.describe IsoDoc do
                          <a name="ftntableD-1a" id="ftntableD-1a"/>
                          <p class="ForewordText">
                             <a name="_" id="_"/>
-                            <span class="TableFootnoteRef">
-                               <sup>a</sup>
-                            </span>
+                            <span class="TableFootnoteRef">a</span>
                             <span style="mso-tab-count:1">  </span>
                             Parboiled rice.
                          </p>
