@@ -599,7 +599,7 @@ It is included for convenience, in case processing the citation to extract the a
         <a:documentation>The caption of the block</a:documentation>
       </ref>
     </optional>
-    <ref name="sourecodebody">
+    <ref name="sourcecodebody">
       <a:documentation>The sourcecode content</a:documentation>
     </ref>
     <zeroOrMore>
@@ -620,7 +620,7 @@ and is intended to be referenced by a callout within the source code</a:document
         <a:documentation>The caption of the block</a:documentation>
       </ref>
     </optional>
-    <ref name="sourecodebody">
+    <ref name="sourcecodebody">
       <a:documentation>The sourcecode content</a:documentation>
     </ref>
     <zeroOrMore>
@@ -635,7 +635,7 @@ and is intended to be referenced by a callout within the source code</a:document
       </ref>
     </zeroOrMore>
   </define>
-  <define name="sourececodebody">
+  <define name="sourcecodebody">
     <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
 (The string should be treated as pre-formatted text, with whitespace treated as significant)</a:documentation>
     <element name="body">
