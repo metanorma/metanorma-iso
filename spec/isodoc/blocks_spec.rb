@@ -1532,7 +1532,7 @@ RSpec.describe IsoDoc do
             </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -1552,6 +1552,7 @@ RSpec.describe IsoDoc do
                          <fmt-fn-label>
                             <sup>
                                <semx element="autonum" source="_">1</semx>
+                               <span class="fmt-label-delim">)</span>
                             </sup>
                          </fmt-fn-label>
                       </fn>
@@ -1571,6 +1572,7 @@ RSpec.describe IsoDoc do
                             <fmt-fn-label>
                                <sup>
                                   <semx element="autonum" source="_">1</semx>
+                                  <span class="fmt-label-delim">)</span>
                                </sup>
                             </fmt-fn-label>
                          </fn>
