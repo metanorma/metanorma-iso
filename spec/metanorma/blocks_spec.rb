@@ -435,12 +435,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <sourcecode id="_" lang="ruby">
+          <sourcecode id="_" lang="ruby"><body>
             puts "Hello, world."
             %w{a b c}.each do |x|
               puts x
             end
-          </sourcecode>
+          </body></sourcecode>
         </sections>
       </metanorma>
     OUTPUT
@@ -464,12 +464,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <sourcecode id="_" lang="ruby">
+          <sourcecode id="_" lang="ruby"><body>
             puts "Hello, world." <callout target="_">1</callout>
             %w{a b c}.each do |x|
               puts x <callout target="_">2</callout>
             end
-            <annotation id="_">
+            </body><annotation id="_">
               <p id="_">This is one callout</p>
             </annotation>
             <annotation id="_">

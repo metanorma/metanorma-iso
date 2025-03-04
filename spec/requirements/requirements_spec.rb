@@ -215,365 +215,365 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-              <foreword id="A" displayorder="2">
-                 <title id="_">Preface</title>
-                 <fmt-title depth="1">
-                    <semx element="title" source="_">Preface</semx>
-                 </fmt-title>
-                 <permission model="ogc" autonum="1" original-id="A1">
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Table</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Permission</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       :
-                       <tt>
-                          <xref style="id" target="A1">
-                             <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                          </xref>
-                       </tt>
-                    </fmt-xref-label>
-                    <title>First</title>
-                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
-                    <inherit id="_">/ss/584/2015/level/1</inherit>
-                    <inherit id="_">
-                       <eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref>
-                    </inherit>
-                    <subject id="_">user</subject>
-                    <classification>
-                       <tag id="_">control-class</tag>
-                       <value id="_">Technical</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">priority</tag>
-                       <value id="_">P0</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">family</tag>
-                       <value id="_">System and Communications Protection</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">family</tag>
-                       <value id="_">System and Communications Protocols</value>
-                    </classification>
-                    <description id="_">
-                       <p original-id="_">
-                          I recommend
-                          <em>this</em>
-                          .
-                       </p>
-                    </description>
-                    <specification exclude="true" type="tabular">
-                       <p id="_">This is the object of the recommendation:</p>
-                       <table id="A1" unnumbered="true">
-                          <tbody>
-                             <tr>
-                                <td style="text-align:left;">Object</td>
-                                <td style="text-align:left;">Value</td>
-                                <td style="text-align:left;">Accomplished</td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </specification>
-                    <description id="_">
-                       <dl>
-                          <dt>A</dt>
-                          <dd>B</dd>
-                          <dt>C</dt>
-                          <dd>D</dd>
-                       </dl>
-                    </description>
-                    <measurement-target exclude="false" id="_">
-                       <p original-id="_">The measurement target shall be measured as:</p>
-                       <formula autonum="1" original-id="B">
-                          <stem type="AsciiMath">r/1 = 0</stem>
-                       </formula>
-                    </measurement-target>
-                    <verification exclude="false" id="_">
-                       <p original-id="_">The following code will be run for verification:</p>
-                       <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
-              if (success)
-              recommendation(label: success-response)
-              end
-            </sourcecode>
-                    </verification>
-                    <import exclude="true">
-                       <sourcecode id="_" autonum="2">success-response()</sourcecode>
-                    </import>
-                    <component class="test-purpose" id="_">
-                       <p>TEST PURPOSE</p>
-                    </component>
-                    <component class="test-method" id="_">
-                       <p>TEST METHOD</p>
-                    </component>
-                    <component class="conditions" id="_">
-                       <p>CONDITIONS</p>
-                    </component>
-                    <component class="part" id="_">
-                       <p>FIRST PART</p>
-                    </component>
-                    <component class="part" id="_">
-                       <p>SECOND PART</p>
-                    </component>
-                    <component class="part" id="_">
-                       <p>THIRD PART</p>
-                    </component>
-                    <component class="reference" id="_">
-                       <p>REFERENCE PART</p>
-                    </component>
-                    <component class="panda GHz express" id="_">
-                       <p>PANDA PART</p>
-                    </component>
-                    <fmt-provision>
-                       <table id="A1" type="recommend" class="modspec" autonum="1">
-                          <fmt-name>
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Table</span>
-                                <semx element="autonum" source="A1">1</semx>
-                             </span>
-                             <span class="fmt-caption-delim"> — </span>
-                             <semx element="name" source="_">
-                                <span class="fmt-caption-label">
-                                   <span class="fmt-element-name">Permission</span>
-                                   <semx element="autonum" source="A1">1</semx>
-                                   <span class="fmt-caption-delim">: </span>
-                                   <semx element="title" source="A1">First</semx>
-                                </span>
-                             </semx>
-                          </fmt-name>
-                          <tbody>
-                             <tr>
-                                <th>Identifier</th>
-                                <td>
-                                   <tt>
-                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                                   </tt>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Subject</th>
-                                <td>
-                                   <semx element="subject" source="_">user</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Prerequisites</th>
-                                <td>
-                                   <semx element="inherit" source="_">/ss/584/2015/level/1</semx>
-                                   <br/>
-                                   <semx element="inherit" source="_">
-                                      <eref type="inline" bibitemid="rfc2616" citeas="RFC 2616" id="_">RFC 2616 (HTTP/1.1)</eref>
-                                      <semx element="eref" source="_">
-                                         <fmt-xref type="inline" target="rfc2616">RFC 2616 (HTTP/1.1)</fmt-xref>
-                                      </semx>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Control-class</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">Technical</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Priority</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">P0</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Family</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">System and Communications Protection</semx>
-                                   <br/>
-                                   <semx element="value" source="_">System and Communications Protocols</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Statement</th>
-                                <td>
-                                   <semx element="description" source="_">
-                                      <p id="_">
-                                         I recommend
-                                         <em>this</em>
-                                         .
-                                      </p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>A</th>
-                                <td>B</td>
-                             </tr>
-                             <tr>
-                                <th>C</th>
-                                <td>D</td>
-                             </tr>
-                             <tr id="_">
-                                <td colspan="2" id="_">
-                                   <semx element="measurement-target" source="_">
-                                      <p id="_">The measurement target shall be measured as:</p>
-                                      <formula id="B" autonum="1">
-                                         <fmt-name>
-                                            <span class="fmt-caption-label">
-                                               <span class="fmt-autonum-delim">(</span>
-                                               1
-                                               <span class="fmt-autonum-delim">)</span>
-                                            </span>
-                                         </fmt-name>
-                                         <fmt-xref-label>
-                                            <span class="fmt-element-name">Formula</span>
-                                            <span class="fmt-autonum-delim">(</span>
-                                            <semx element="autonum" source="B">1</semx>
-                                            <span class="fmt-autonum-delim">)</span>
-                                         </fmt-xref-label>
-                                         <fmt-xref-label container="A">
-                                            <span class="fmt-xref-container">
-                                               <semx element="foreword" source="A">Preface</semx>
-                                            </span>
-                                            <span class="fmt-comma">,</span>
-                                            <span class="fmt-element-name">Formula</span>
-                                            <span class="fmt-autonum-delim">(</span>
-                                            <semx element="autonum" source="B">1</semx>
-                                            <span class="fmt-autonum-delim">)</span>
-                                         </fmt-xref-label>
-                                         <stem type="AsciiMath" id="_">r/1 = 0</stem>
-                                         <fmt-stem type="AsciiMath">
-                                            <semx element="stem" source="_">r/1 = 0</semx>
-                                         </fmt-stem>
-                                      </formula>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <td colspan="2" id="_">
-                                   <semx element="verification" source="_">
-                                      <p id="_">The following code will be run for verification:</p>
-                                      <sourcecode id="_" autonum="2">
-                                         CoreRoot(success): HttpResponse if (success) recommendation(label: success-response) end
-                                         <fmt-sourcecode autonum="2">CoreRoot(success): HttpResponse
-              if (success)
-              recommendation(label: success-response)
-              end
-            </fmt-sourcecode>
-                                      </sourcecode>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>Test purpose</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>TEST PURPOSE</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>Test method</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>TEST METHOD</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>Conditions</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>CONDITIONS</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>A</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>FIRST PART</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>B</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>SECOND PART</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>C</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>THIRD PART</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>Reference</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>REFERENCE PART</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <th>Panda GHz express</th>
-                                <td>
-                                   <semx element="component" source="_">
-                                      <p>PANDA PART</p>
-                                   </semx>
-                                </td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </fmt-provision>
-                 </permission>
-              </foreword>
-           </preface>
-           <bibliography>
-              <references id="_" obligation="informative" normative="false" displayorder="3">
-                 <title id="_">Bibliography</title>
-                 <fmt-title depth="1">
-                    <semx element="title" source="_">Bibliography</semx>
-                 </fmt-title>
-                 <bibitem id="rfc2616" type="standard">
-                    <formattedref>
-                       <smallcap>R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</smallcap>
-                       .
-                       <em>
-                          <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
-                       </em>
-                       .
-                    </formattedref>
-                    <docidentifier type="metanorma-ordinal">[1]</docidentifier>
-                    <docidentifier type="IETF">IETF RFC 2616</docidentifier>
-                    <docidentifier type="IETF" scope="anchor">IETF RFC2616</docidentifier>
-                    <docidentifier type="DOI">DOI 10.17487/RFC2616</docidentifier>
-                    <docidentifier scope="biblio-tag">IETF RFC 2616</docidentifier>
-                    <biblio-tag>
-                       [1]
-                       <tab/>
-                       <span class="stdpublisher">IETF </span>
-                       <span class="stdpublisher">RFC </span>
-                       <span class="stddocNumber">2616</span>
-                       ,
-                    </biblio-tag>
-                 </bibitem>
-              </references>
-           </bibliography>
-        </ogc-standard>
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="A" displayorder="2">
+                <title id="_">Preface</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
+                <permission model="ogc" autonum="1" original-id="A1">
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Permission</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      :
+                      <tt>
+                         <xref style="id" target="A1">
+                            <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                         </xref>
+                      </tt>
+                   </fmt-xref-label>
+                   <title>First</title>
+                   <identifier id="_">/ogc/recommendation/wfs/2</identifier>
+                   <inherit id="_">/ss/584/2015/level/1</inherit>
+                   <inherit id="_">
+                      <eref type="inline" bibitemid="rfc2616" citeas="RFC 2616">RFC 2616 (HTTP/1.1)</eref>
+                   </inherit>
+                   <subject id="_">user</subject>
+                   <classification>
+                      <tag id="_">control-class</tag>
+                      <value id="_">Technical</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">priority</tag>
+                      <value id="_">P0</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">family</tag>
+                      <value id="_">System and Communications Protection</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">family</tag>
+                      <value id="_">System and Communications Protocols</value>
+                   </classification>
+                   <description original-id="_">
+                      <p original-id="_">
+                         I recommend
+                         <em>this</em>
+                         .
+                      </p>
+                   </description>
+                   <specification exclude="true" type="tabular">
+                      <p id="_">This is the object of the recommendation:</p>
+                      <table id="A1" unnumbered="true">
+                         <tbody>
+                            <tr>
+                               <td style="text-align:left;">Object</td>
+                               <td style="text-align:left;">Value</td>
+                               <td style="text-align:left;">Accomplished</td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </specification>
+                   <description original-id="_">
+                      <dl>
+                         <dt>A</dt>
+                         <dd>B</dd>
+                         <dt>C</dt>
+                         <dd>D</dd>
+                      </dl>
+                   </description>
+                   <measurement-target exclude="false" original-id="_">
+                      <p original-id="_">The measurement target shall be measured as:</p>
+                      <formula autonum="1" original-id="B">
+                         <stem type="AsciiMath">r/1 = 0</stem>
+                      </formula>
+                   </measurement-target>
+                   <verification exclude="false" original-id="_">
+                      <p original-id="_">The following code will be run for verification:</p>
+                      <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
+             if (success)
+             recommendation(label: success-response)
+             end
+           </sourcecode>
+                   </verification>
+                   <import exclude="true">
+                      <sourcecode id="_" autonum="2">success-response()</sourcecode>
+                   </import>
+                   <component class="test-purpose" original-id="_">
+                      <p>TEST PURPOSE</p>
+                   </component>
+                   <component class="test-method" original-id="_">
+                      <p>TEST METHOD</p>
+                   </component>
+                   <component class="conditions" original-id="_">
+                      <p>CONDITIONS</p>
+                   </component>
+                   <component class="part" original-id="_">
+                      <p>FIRST PART</p>
+                   </component>
+                   <component class="part" original-id="_">
+                      <p>SECOND PART</p>
+                   </component>
+                   <component class="part" original-id="_">
+                      <p>THIRD PART</p>
+                   </component>
+                   <component class="reference" original-id="_">
+                      <p>REFERENCE PART</p>
+                   </component>
+                   <component class="panda GHz express" original-id="_">
+                      <p>PANDA PART</p>
+                   </component>
+                   <fmt-provision>
+                      <table id="A1" type="recommend" class="modspec" autonum="1">
+                         <fmt-name>
+                            <span class="fmt-caption-label">
+                               <span class="fmt-element-name">Table</span>
+                               <semx element="autonum" source="A1">1</semx>
+                            </span>
+                            <span class="fmt-caption-delim"> — </span>
+                            <semx element="name" source="_">
+                               <span class="fmt-caption-label">
+                                  <span class="fmt-element-name">Permission</span>
+                                  <semx element="autonum" source="A1">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A1">First</semx>
+                               </span>
+                            </semx>
+                         </fmt-name>
+                         <tbody>
+                            <tr>
+                               <th>Identifier</th>
+                               <td>
+                                  <tt>
+                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                                  </tt>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Subject</th>
+                               <td>
+                                  <semx element="subject" source="_">user</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Prerequisites</th>
+                               <td>
+                                  <semx element="inherit" source="_">/ss/584/2015/level/1</semx>
+                                  <br/>
+                                  <semx element="inherit" source="_">
+                                     <eref type="inline" bibitemid="rfc2616" citeas="RFC 2616" id="_">RFC 2616 (HTTP/1.1)</eref>
+                                     <semx element="eref" source="_">
+                                        <fmt-xref type="inline" target="rfc2616">RFC 2616 (HTTP/1.1)</fmt-xref>
+                                     </semx>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Control-class</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">Technical</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Priority</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">P0</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Family</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">System and Communications Protection</semx>
+                                  <br/>
+                                  <semx element="value" source="_">System and Communications Protocols</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Statement</th>
+                               <td>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>A</th>
+                               <td>B</td>
+                            </tr>
+                            <tr>
+                               <th>C</th>
+                               <td>D</td>
+                            </tr>
+                            <tr id="_">
+                               <td colspan="2">
+                                  <semx element="measurement-target" source="_">
+                                     <p id="_">The measurement target shall be measured as:</p>
+                                     <formula id="B" autonum="1">
+                                        <fmt-name>
+                                           <span class="fmt-caption-label">
+                                              <span class="fmt-autonum-delim">(</span>
+                                              1
+                                              <span class="fmt-autonum-delim">)</span>
+                                           </span>
+                                        </fmt-name>
+                                        <fmt-xref-label>
+                                           <span class="fmt-element-name">Formula</span>
+                                           <span class="fmt-autonum-delim">(</span>
+                                           <semx element="autonum" source="B">1</semx>
+                                           <span class="fmt-autonum-delim">)</span>
+                                        </fmt-xref-label>
+                                        <fmt-xref-label container="A">
+                                           <span class="fmt-xref-container">
+                                              <semx element="foreword" source="A">Preface</semx>
+                                           </span>
+                                           <span class="fmt-comma">,</span>
+                                           <span class="fmt-element-name">Formula</span>
+                                           <span class="fmt-autonum-delim">(</span>
+                                           <semx element="autonum" source="B">1</semx>
+                                           <span class="fmt-autonum-delim">)</span>
+                                        </fmt-xref-label>
+                                        <stem type="AsciiMath" id="_">r/1 = 0</stem>
+                                        <fmt-stem type="AsciiMath">
+                                           <semx element="stem" source="_">r/1 = 0</semx>
+                                        </fmt-stem>
+                                     </formula>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <td colspan="2">
+                                  <semx element="verification" source="_">
+                                     <p id="_">The following code will be run for verification:</p>
+                                     <sourcecode id="_" autonum="2">
+                                        CoreRoot(success): HttpResponse if (success) recommendation(label: success-response) end
+                                        <fmt-sourcecode autonum="2">CoreRoot(success): HttpResponse
+             if (success)
+             recommendation(label: success-response)
+             end
+           </fmt-sourcecode>
+                                     </sourcecode>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>Test purpose</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>TEST PURPOSE</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>Test method</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>TEST METHOD</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>Conditions</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>CONDITIONS</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>A</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>FIRST PART</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>B</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>SECOND PART</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>C</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>THIRD PART</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>Reference</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>REFERENCE PART</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <th>Panda GHz express</th>
+                               <td>
+                                  <semx element="component" source="_">
+                                     <p>PANDA PART</p>
+                                  </semx>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </fmt-provision>
+                </permission>
+             </foreword>
+          </preface>
+          <bibliography>
+             <references id="_" obligation="informative" normative="false" displayorder="3">
+                <title id="_">Bibliography</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Bibliography</semx>
+                </fmt-title>
+                <bibitem id="rfc2616" type="standard">
+                   <formattedref>
+                      <smallcap>R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</smallcap>
+                      .
+                      <em>
+                         <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
+                      </em>
+                      .
+                   </formattedref>
+                   <docidentifier type="metanorma-ordinal">[1]</docidentifier>
+                   <docidentifier type="IETF">IETF RFC 2616</docidentifier>
+                   <docidentifier type="IETF" scope="anchor">IETF RFC2616</docidentifier>
+                   <docidentifier type="DOI">DOI 10.17487/RFC2616</docidentifier>
+                   <docidentifier scope="biblio-tag">IETF RFC 2616</docidentifier>
+                   <biblio-tag>
+                      [1]
+                      <tab/>
+                      <span class="stdpublisher">IETF </span>
+                      <span class="stdpublisher">RFC </span>
+                      <span class="stddocNumber">2616</span>
+                      ,
+                   </biblio-tag>
+                </bibitem>
+             </references>
+          </bibliography>
+       </ogc-standard>
     OUTPUT
 
     html = <<~OUTPUT
@@ -990,235 +990,235 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
 
     presxml = <<~OUTPUT
        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-              <foreword id="A" displayorder="2">
-                 <title id="_">Preface</title>
-                 <fmt-title depth="1">
-                    <semx element="title" source="_">Preface</semx>
-                 </fmt-title>
-                 <permission model="ogc" type="verification" autonum="1" original-id="A1">
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Table</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Conformance test</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       :
-                       <tt>
-                          <xref style="id" target="A1">
-                             <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                          </xref>
-                       </tt>
-                    </fmt-xref-label>
-                    <title>First</title>
-                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
-                    <inherit id="_">/ss/584/2015/level/1</inherit>
-                    <subject id="_">user</subject>
-                    <classification>
-                       <tag id="_">control-class</tag>
-                       <value id="_">Technical</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">priority</tag>
-                       <value id="_">P0</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">family</tag>
-                       <value id="_">System and Communications Protection</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">family</tag>
-                       <value id="_">System and Communications Protocols</value>
-                    </classification>
-                    <description id="_">
-                       <p original-id="_">
-                          I recommend
-                          <em>this</em>
-                          .
-                       </p>
-                    </description>
-                    <specification exclude="true" type="tabular">
-                       <p id="_">This is the object of the recommendation:</p>
-                       <table id="_" unnumbered="true">
-                          <tbody>
-                             <tr>
-                                <td style="text-align:left;">Object</td>
-                                <td style="text-align:left;">Value</td>
-                                <td style="text-align:left;">Accomplished</td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </specification>
-                    <description id="_">
-                       <dl>
-                          <dt>A</dt>
-                          <dd>B</dd>
-                          <dt>C</dt>
-                          <dd>D</dd>
-                       </dl>
-                    </description>
-                    <measurement-target exclude="false" id="_">
-                       <p original-id="_">The measurement target shall be measured as:</p>
-                       <formula autonum="1" original-id="B">
-                          <stem type="AsciiMath">r/1 = 0</stem>
-                       </formula>
-                    </measurement-target>
-                    <verification exclude="false" id="_">
-                       <p original-id="_">The following code will be run for verification:</p>
-                       <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
-              if (success)
-              recommendation(label: success-response)
-              end
-            </sourcecode>
-                    </verification>
-                    <import exclude="true">
-                       <sourcecode id="_" autonum="2">success-response()</sourcecode>
-                    </import>
-                    <fmt-provision>
-                       <table id="A1" type="recommendtest" class="modspec" autonum="1">
-                          <fmt-name>
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Table</span>
-                                <semx element="autonum" source="A1">1</semx>
-                             </span>
-                             <span class="fmt-caption-delim"> — </span>
-                             <semx element="name" source="_">
-                                <span class="fmt-caption-label">
-                                   <span class="fmt-element-name">Conformance test</span>
-                                   <semx element="autonum" source="A1">1</semx>
-                                   <span class="fmt-caption-delim">: </span>
-                                   <semx element="title" source="A1">First</semx>
-                                </span>
-                             </semx>
-                          </fmt-name>
-                          <tbody>
-                             <tr>
-                                <th>Identifier</th>
-                                <td>
-                                   <tt>
-                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                                   </tt>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Subject</th>
-                                <td>
-                                   <semx element="subject" source="_">user</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Prerequisite</th>
-                                <td>
-                                   <semx element="inherit" source="_">/ss/584/2015/level/1</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Control-class</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">Technical</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Priority</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">P0</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Family</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">System and Communications Protection</semx>
-                                   <br/>
-                                   <semx element="value" source="_">System and Communications Protocols</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Description</th>
-                                <td>
-                                   <semx element="description" source="_">
-                                      <p id="_">
-                                         I recommend
-                                         <em>this</em>
-                                         .
-                                      </p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>A</th>
-                                <td>B</td>
-                             </tr>
-                             <tr>
-                                <th>C</th>
-                                <td>D</td>
-                             </tr>
-                             <tr id="_">
-                                <td colspan="2" id="_">
-                                   <semx element="measurement-target" source="_">
-                                      <p id="_">The measurement target shall be measured as:</p>
-                                      <formula id="B" autonum="1">
-                                         <fmt-name>
-                                            <span class="fmt-caption-label">
-                                               <span class="fmt-autonum-delim">(</span>
-                                               1
-                                               <span class="fmt-autonum-delim">)</span>
-                                            </span>
-                                         </fmt-name>
-                                         <fmt-xref-label>
-                                            <span class="fmt-element-name">Formula</span>
-                                            <span class="fmt-autonum-delim">(</span>
-                                            <semx element="autonum" source="B">1</semx>
-                                            <span class="fmt-autonum-delim">)</span>
-                                         </fmt-xref-label>
-                                         <fmt-xref-label container="A">
-                                            <span class="fmt-xref-container">
-                                               <semx element="foreword" source="A">Preface</semx>
-                                            </span>
-                                            <span class="fmt-comma">,</span>
-                                            <span class="fmt-element-name">Formula</span>
-                                            <span class="fmt-autonum-delim">(</span>
-                                            <semx element="autonum" source="B">1</semx>
-                                            <span class="fmt-autonum-delim">)</span>
-                                         </fmt-xref-label>
-                                         <stem type="AsciiMath" id="_">r/1 = 0</stem>
-                                         <fmt-stem type="AsciiMath">
-                                            <semx element="stem" source="_">r/1 = 0</semx>
-                                         </fmt-stem>
-                                      </formula>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <td colspan="2" id="_">
-                                   <semx element="verification" source="_">
-                                      <p id="_">The following code will be run for verification:</p>
-                                      <sourcecode id="_" autonum="2">
-                                         CoreRoot(success): HttpResponse if (success) recommendation(label: success-response) end
-                                         <fmt-sourcecode autonum="2">CoreRoot(success): HttpResponse
-              if (success)
-              recommendation(label: success-response)
-              end
-            </fmt-sourcecode>
-                                      </sourcecode>
-                                   </semx>
-                                </td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </fmt-provision>
-                 </permission>
-              </foreword>
-           </preface>
-        </ogc-standard>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="A" displayorder="2">
+                <title id="_">Preface</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
+                <permission model="ogc" type="verification" autonum="1" original-id="A1">
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Conformance test</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      :
+                      <tt>
+                         <xref style="id" target="A1">
+                            <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                         </xref>
+                      </tt>
+                   </fmt-xref-label>
+                   <title>First</title>
+                   <identifier id="_">/ogc/recommendation/wfs/2</identifier>
+                   <inherit id="_">/ss/584/2015/level/1</inherit>
+                   <subject id="_">user</subject>
+                   <classification>
+                      <tag id="_">control-class</tag>
+                      <value id="_">Technical</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">priority</tag>
+                      <value id="_">P0</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">family</tag>
+                      <value id="_">System and Communications Protection</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">family</tag>
+                      <value id="_">System and Communications Protocols</value>
+                   </classification>
+                   <description original-id="_">
+                      <p original-id="_">
+                         I recommend
+                         <em>this</em>
+                         .
+                      </p>
+                   </description>
+                   <specification exclude="true" type="tabular">
+                      <p id="_">This is the object of the recommendation:</p>
+                      <table id="_" unnumbered="true">
+                         <tbody>
+                            <tr>
+                               <td style="text-align:left;">Object</td>
+                               <td style="text-align:left;">Value</td>
+                               <td style="text-align:left;">Accomplished</td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </specification>
+                   <description original-id="_">
+                      <dl>
+                         <dt>A</dt>
+                         <dd>B</dd>
+                         <dt>C</dt>
+                         <dd>D</dd>
+                      </dl>
+                   </description>
+                   <measurement-target exclude="false" original-id="_">
+                      <p original-id="_">The measurement target shall be measured as:</p>
+                      <formula autonum="1" original-id="B">
+                         <stem type="AsciiMath">r/1 = 0</stem>
+                      </formula>
+                   </measurement-target>
+                   <verification exclude="false" original-id="_">
+                      <p original-id="_">The following code will be run for verification:</p>
+                      <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
+             if (success)
+             recommendation(label: success-response)
+             end
+           </sourcecode>
+                   </verification>
+                   <import exclude="true">
+                      <sourcecode id="_" autonum="2">success-response()</sourcecode>
+                   </import>
+                   <fmt-provision>
+                      <table id="A1" type="recommendtest" class="modspec" autonum="1">
+                         <fmt-name>
+                            <span class="fmt-caption-label">
+                               <span class="fmt-element-name">Table</span>
+                               <semx element="autonum" source="A1">1</semx>
+                            </span>
+                            <span class="fmt-caption-delim"> — </span>
+                            <semx element="name" source="_">
+                               <span class="fmt-caption-label">
+                                  <span class="fmt-element-name">Conformance test</span>
+                                  <semx element="autonum" source="A1">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A1">First</semx>
+                               </span>
+                            </semx>
+                         </fmt-name>
+                         <tbody>
+                            <tr>
+                               <th>Identifier</th>
+                               <td>
+                                  <tt>
+                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                                  </tt>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Subject</th>
+                               <td>
+                                  <semx element="subject" source="_">user</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Prerequisite</th>
+                               <td>
+                                  <semx element="inherit" source="_">/ss/584/2015/level/1</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Control-class</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">Technical</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Priority</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">P0</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Family</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">System and Communications Protection</semx>
+                                  <br/>
+                                  <semx element="value" source="_">System and Communications Protocols</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Description</th>
+                               <td>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>A</th>
+                               <td>B</td>
+                            </tr>
+                            <tr>
+                               <th>C</th>
+                               <td>D</td>
+                            </tr>
+                            <tr id="_">
+                               <td colspan="2">
+                                  <semx element="measurement-target" source="_">
+                                     <p id="_">The measurement target shall be measured as:</p>
+                                     <formula id="B" autonum="1">
+                                        <fmt-name>
+                                           <span class="fmt-caption-label">
+                                              <span class="fmt-autonum-delim">(</span>
+                                              1
+                                              <span class="fmt-autonum-delim">)</span>
+                                           </span>
+                                        </fmt-name>
+                                        <fmt-xref-label>
+                                           <span class="fmt-element-name">Formula</span>
+                                           <span class="fmt-autonum-delim">(</span>
+                                           <semx element="autonum" source="B">1</semx>
+                                           <span class="fmt-autonum-delim">)</span>
+                                        </fmt-xref-label>
+                                        <fmt-xref-label container="A">
+                                           <span class="fmt-xref-container">
+                                              <semx element="foreword" source="A">Preface</semx>
+                                           </span>
+                                           <span class="fmt-comma">,</span>
+                                           <span class="fmt-element-name">Formula</span>
+                                           <span class="fmt-autonum-delim">(</span>
+                                           <semx element="autonum" source="B">1</semx>
+                                           <span class="fmt-autonum-delim">)</span>
+                                        </fmt-xref-label>
+                                        <stem type="AsciiMath" id="_">r/1 = 0</stem>
+                                        <fmt-stem type="AsciiMath">
+                                           <semx element="stem" source="_">r/1 = 0</semx>
+                                        </fmt-stem>
+                                     </formula>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <td colspan="2">
+                                  <semx element="verification" source="_">
+                                     <p id="_">The following code will be run for verification:</p>
+                                     <sourcecode id="_" autonum="2">
+                                        CoreRoot(success): HttpResponse if (success) recommendation(label: success-response) end
+                                        <fmt-sourcecode autonum="2">CoreRoot(success): HttpResponse
+             if (success)
+             recommendation(label: success-response)
+             end
+           </fmt-sourcecode>
+                                     </sourcecode>
+                                  </semx>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </fmt-provision>
+                </permission>
+             </foreword>
+          </preface>
+       </ogc-standard>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -1283,235 +1283,235 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
     presxml = <<~OUTPUT
        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-              <foreword id="A" displayorder="2">
-                 <title id="_">Preface</title>
-                 <fmt-title depth="1">
-                    <semx element="title" source="_">Preface</semx>
-                 </fmt-title>
-                 <permission model="ogc" type="abstracttest" autonum="1" original-id="A1">
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Table</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Abstract test</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       :
-                       <tt>
-                          <xref style="id" target="A1">
-                             <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                          </xref>
-                       </tt>
-                    </fmt-xref-label>
-                    <title>First</title>
-                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
-                    <inherit id="_">/ss/584/2015/level/1</inherit>
-                    <subject id="_">user</subject>
-                    <classification>
-                       <tag id="_">control-class</tag>
-                       <value id="_">Technical</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">priority</tag>
-                       <value id="_">P0</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">family</tag>
-                       <value id="_">System and Communications Protection</value>
-                    </classification>
-                    <classification>
-                       <tag id="_">family</tag>
-                       <value id="_">System and Communications Protocols</value>
-                    </classification>
-                    <description id="_">
-                       <p original-id="_">
-                          I recommend
-                          <em>this</em>
-                          .
-                       </p>
-                    </description>
-                    <specification exclude="true" type="tabular">
-                       <p id="_">This is the object of the recommendation:</p>
-                       <table id="_" unnumbered="true">
-                          <tbody>
-                             <tr>
-                                <td style="text-align:left;">Object</td>
-                                <td style="text-align:left;">Value</td>
-                                <td style="text-align:left;">Accomplished</td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </specification>
-                    <description id="_">
-                       <dl>
-                          <dt>A</dt>
-                          <dd>B</dd>
-                          <dt>C</dt>
-                          <dd>D</dd>
-                       </dl>
-                    </description>
-                    <measurement-target exclude="false" id="_">
-                       <p original-id="_">The measurement target shall be measured as:</p>
-                       <formula autonum="1" original-id="B">
-                          <stem type="AsciiMath">r/1 = 0</stem>
-                       </formula>
-                    </measurement-target>
-                    <verification exclude="false" id="_">
-                       <p original-id="_">The following code will be run for verification:</p>
-                       <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
-              if (success)
-              recommendation(label: success-response)
-              end
-            </sourcecode>
-                    </verification>
-                    <import exclude="true">
-                       <sourcecode id="_" autonum="2">success-response()</sourcecode>
-                    </import>
-                    <fmt-provision>
-                       <table id="A1" type="recommendtest" class="modspec" autonum="1">
-                          <fmt-name>
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Table</span>
-                                <semx element="autonum" source="A1">1</semx>
-                             </span>
-                             <span class="fmt-caption-delim"> — </span>
-                             <semx element="name" source="_">
-                                <span class="fmt-caption-label">
-                                   <span class="fmt-element-name">Abstract test</span>
-                                   <semx element="autonum" source="A1">1</semx>
-                                   <span class="fmt-caption-delim">: </span>
-                                   <semx element="title" source="A1">First</semx>
-                                </span>
-                             </semx>
-                          </fmt-name>
-                          <tbody>
-                             <tr>
-                                <th>Identifier</th>
-                                <td>
-                                   <tt>
-                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                                   </tt>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Subject</th>
-                                <td>
-                                   <semx element="subject" source="_">user</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Prerequisite</th>
-                                <td>
-                                   <semx element="inherit" source="_">/ss/584/2015/level/1</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Control-class</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">Technical</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Priority</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">P0</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>
-                                   <semx element="tag" source="_">Family</semx>
-                                </th>
-                                <td>
-                                   <semx element="value" source="_">System and Communications Protection</semx>
-                                   <br/>
-                                   <semx element="value" source="_">System and Communications Protocols</semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Description</th>
-                                <td>
-                                   <semx element="description" source="_">
-                                      <p id="_">
-                                         I recommend
-                                         <em>this</em>
-                                         .
-                                      </p>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>A</th>
-                                <td>B</td>
-                             </tr>
-                             <tr>
-                                <th>C</th>
-                                <td>D</td>
-                             </tr>
-                             <tr id="_">
-                                <td colspan="2" id="_">
-                                   <semx element="measurement-target" source="_">
-                                      <p id="_">The measurement target shall be measured as:</p>
-                                      <formula id="B" autonum="1">
-                                         <fmt-name>
-                                            <span class="fmt-caption-label">
-                                               <span class="fmt-autonum-delim">(</span>
-                                               1
-                                               <span class="fmt-autonum-delim">)</span>
-                                            </span>
-                                         </fmt-name>
-                                         <fmt-xref-label>
-                                            <span class="fmt-element-name">Formula</span>
-                                            <span class="fmt-autonum-delim">(</span>
-                                            <semx element="autonum" source="B">1</semx>
-                                            <span class="fmt-autonum-delim">)</span>
-                                         </fmt-xref-label>
-                                         <fmt-xref-label container="A">
-                                            <span class="fmt-xref-container">
-                                               <semx element="foreword" source="A">Preface</semx>
-                                            </span>
-                                            <span class="fmt-comma">,</span>
-                                            <span class="fmt-element-name">Formula</span>
-                                            <span class="fmt-autonum-delim">(</span>
-                                            <semx element="autonum" source="B">1</semx>
-                                            <span class="fmt-autonum-delim">)</span>
-                                         </fmt-xref-label>
-                                         <stem type="AsciiMath" id="_">r/1 = 0</stem>
-                                         <fmt-stem type="AsciiMath">
-                                            <semx element="stem" source="_">r/1 = 0</semx>
-                                         </fmt-stem>
-                                      </formula>
-                                   </semx>
-                                </td>
-                             </tr>
-                             <tr id="_">
-                                <td colspan="2" id="_">
-                                   <semx element="verification" source="_">
-                                      <p id="_">The following code will be run for verification:</p>
-                                      <sourcecode id="_" autonum="2">
-                                         CoreRoot(success): HttpResponse if (success) recommendation(label: success-response) end
-                                         <fmt-sourcecode autonum="2">CoreRoot(success): HttpResponse
-              if (success)
-              recommendation(label: success-response)
-              end
-            </fmt-sourcecode>
-                                      </sourcecode>
-                                   </semx>
-                                </td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </fmt-provision>
-                 </permission>
-              </foreword>
-           </preface>
-        </ogc-standard>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="A" displayorder="2">
+                <title id="_">Preface</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
+                <permission model="ogc" type="abstracttest" autonum="1" original-id="A1">
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Abstract test</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      :
+                      <tt>
+                         <xref style="id" target="A1">
+                            <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                         </xref>
+                      </tt>
+                   </fmt-xref-label>
+                   <title>First</title>
+                   <identifier id="_">/ogc/recommendation/wfs/2</identifier>
+                   <inherit id="_">/ss/584/2015/level/1</inherit>
+                   <subject id="_">user</subject>
+                   <classification>
+                      <tag id="_">control-class</tag>
+                      <value id="_">Technical</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">priority</tag>
+                      <value id="_">P0</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">family</tag>
+                      <value id="_">System and Communications Protection</value>
+                   </classification>
+                   <classification>
+                      <tag id="_">family</tag>
+                      <value id="_">System and Communications Protocols</value>
+                   </classification>
+                   <description original-id="_">
+                      <p original-id="_">
+                         I recommend
+                         <em>this</em>
+                         .
+                      </p>
+                   </description>
+                   <specification exclude="true" type="tabular">
+                      <p id="_">This is the object of the recommendation:</p>
+                      <table id="_" unnumbered="true">
+                         <tbody>
+                            <tr>
+                               <td style="text-align:left;">Object</td>
+                               <td style="text-align:left;">Value</td>
+                               <td style="text-align:left;">Accomplished</td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </specification>
+                   <description original-id="_">
+                      <dl>
+                         <dt>A</dt>
+                         <dd>B</dd>
+                         <dt>C</dt>
+                         <dd>D</dd>
+                      </dl>
+                   </description>
+                   <measurement-target exclude="false" original-id="_">
+                      <p original-id="_">The measurement target shall be measured as:</p>
+                      <formula autonum="1" original-id="B">
+                         <stem type="AsciiMath">r/1 = 0</stem>
+                      </formula>
+                   </measurement-target>
+                   <verification exclude="false" original-id="_">
+                      <p original-id="_">The following code will be run for verification:</p>
+                      <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
+             if (success)
+             recommendation(label: success-response)
+             end
+           </sourcecode>
+                   </verification>
+                   <import exclude="true">
+                      <sourcecode id="_" autonum="2">success-response()</sourcecode>
+                   </import>
+                   <fmt-provision>
+                      <table id="A1" type="recommendtest" class="modspec" autonum="1">
+                         <fmt-name>
+                            <span class="fmt-caption-label">
+                               <span class="fmt-element-name">Table</span>
+                               <semx element="autonum" source="A1">1</semx>
+                            </span>
+                            <span class="fmt-caption-delim"> — </span>
+                            <semx element="name" source="_">
+                               <span class="fmt-caption-label">
+                                  <span class="fmt-element-name">Abstract test</span>
+                                  <semx element="autonum" source="A1">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A1">First</semx>
+                               </span>
+                            </semx>
+                         </fmt-name>
+                         <tbody>
+                            <tr>
+                               <th>Identifier</th>
+                               <td>
+                                  <tt>
+                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                                  </tt>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Subject</th>
+                               <td>
+                                  <semx element="subject" source="_">user</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Prerequisite</th>
+                               <td>
+                                  <semx element="inherit" source="_">/ss/584/2015/level/1</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Control-class</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">Technical</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Priority</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">P0</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>
+                                  <semx element="tag" source="_">Family</semx>
+                               </th>
+                               <td>
+                                  <semx element="value" source="_">System and Communications Protection</semx>
+                                  <br/>
+                                  <semx element="value" source="_">System and Communications Protocols</semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Description</th>
+                               <td>
+                                  <semx element="description" source="_">
+                                     <p id="_">
+                                        I recommend
+                                        <em>this</em>
+                                        .
+                                     </p>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>A</th>
+                               <td>B</td>
+                            </tr>
+                            <tr>
+                               <th>C</th>
+                               <td>D</td>
+                            </tr>
+                            <tr id="_">
+                               <td colspan="2">
+                                  <semx element="measurement-target" source="_">
+                                     <p id="_">The measurement target shall be measured as:</p>
+                                     <formula id="B" autonum="1">
+                                        <fmt-name>
+                                           <span class="fmt-caption-label">
+                                              <span class="fmt-autonum-delim">(</span>
+                                              1
+                                              <span class="fmt-autonum-delim">)</span>
+                                           </span>
+                                        </fmt-name>
+                                        <fmt-xref-label>
+                                           <span class="fmt-element-name">Formula</span>
+                                           <span class="fmt-autonum-delim">(</span>
+                                           <semx element="autonum" source="B">1</semx>
+                                           <span class="fmt-autonum-delim">)</span>
+                                        </fmt-xref-label>
+                                        <fmt-xref-label container="A">
+                                           <span class="fmt-xref-container">
+                                              <semx element="foreword" source="A">Preface</semx>
+                                           </span>
+                                           <span class="fmt-comma">,</span>
+                                           <span class="fmt-element-name">Formula</span>
+                                           <span class="fmt-autonum-delim">(</span>
+                                           <semx element="autonum" source="B">1</semx>
+                                           <span class="fmt-autonum-delim">)</span>
+                                        </fmt-xref-label>
+                                        <stem type="AsciiMath" id="_">r/1 = 0</stem>
+                                        <fmt-stem type="AsciiMath">
+                                           <semx element="stem" source="_">r/1 = 0</semx>
+                                        </fmt-stem>
+                                     </formula>
+                                  </semx>
+                               </td>
+                            </tr>
+                            <tr id="_">
+                               <td colspan="2">
+                                  <semx element="verification" source="_">
+                                     <p id="_">The following code will be run for verification:</p>
+                                     <sourcecode id="_" autonum="2">
+                                        CoreRoot(success): HttpResponse if (success) recommendation(label: success-response) end
+                                        <fmt-sourcecode autonum="2">CoreRoot(success): HttpResponse
+             if (success)
+             recommendation(label: success-response)
+             end
+           </fmt-sourcecode>
+                                     </sourcecode>
+                                  </semx>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </fmt-provision>
+                </permission>
+             </foreword>
+          </preface>
+       </ogc-standard>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -1553,7 +1553,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
            <preface>
               <clause type="toc" id="_" displayorder="1">
                  <fmt-title depth="1">Contents</fmt-title>
@@ -1582,15 +1582,15 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                     <inherit id="_">/ss/584/2015/level/1</inherit>
                     <inherit id="_">/ss/584/2015/level/2</inherit>
                     <subject id="_">user</subject>
-                    <permission model="ogc" autonum="1-1" original-id="A2" id="_">
+                    <permission model="ogc" autonum="1-1" original-id="A2">
                        <title>First #1</title>
                        <identifier original-id="_">/ogc/recommendation/wfs/10</identifier>
                     </permission>
-                    <requirement model="ogc" autonum="1-1" original-id="A3" id="_">
+                    <requirement model="ogc" autonum="1-1" original-id="A3">
                        <title>First #2</title>
                        <identifier original-id="_">Requirement 1</identifier>
                     </requirement>
-                    <recommendation model="ogc" autonum="1-1" original-id="A4" id="_">
+                    <recommendation model="ogc" autonum="1-1" original-id="A4">
                        <title>First #3</title>
                        <identifier original-id="_">Recommendation 1</identifier>
                     </recommendation>
@@ -1809,7 +1809,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     INPUT
 
     presxml = <<~OUTPUT
-        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
            <preface>
               <clause type="toc" id="_" displayorder="1">
                  <fmt-title depth="1">Contents</fmt-title>
@@ -1852,13 +1852,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                        <tag>indirect-dependency</tag>
                        <value id="_">ABC</value>
                     </classification>
-                    <permission model="ogc" autonum="1-1" original-id="A2" id="_">
+                    <permission model="ogc" autonum="1-1" original-id="A2">
                        <identifier original-id="_">Permission 1</identifier>
                     </permission>
-                    <requirement model="ogc" autonum="1-1" original-id="A3" id="_">
+                    <requirement model="ogc" autonum="1-1" original-id="A3">
                        <identifier original-id="_">Requirement 1</identifier>
                     </requirement>
-                    <recommendation model="ogc" autonum="1-1" original-id="A4" id="_">
+                    <recommendation model="ogc" autonum="1-1" original-id="A4">
                        <identifier original-id="_">Recommendation 1</identifier>
                     </recommendation>
                     <fmt-provision>
@@ -2218,13 +2218,13 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                        <tag>indirect-dependency</tag>
                        <value id="_">ABC</value>
                     </classification>
-                    <permission model="ogc" autonum="1-1" original-id="A2" id="_">
+                    <permission model="ogc" autonum="1-1" original-id="A2">
                        <identifier original-id="_">Permission 1</identifier>
                     </permission>
-                    <requirement model="ogc" autonum="1-1" original-id="A3" id="_">
+                    <requirement model="ogc" autonum="1-1" original-id="A3">
                        <identifier original-id="_">Requirement 1</identifier>
                     </requirement>
-                    <recommendation model="ogc" autonum="1-1" original-id="A4" id="_">
+                    <recommendation model="ogc" autonum="1-1" original-id="A4">
                        <identifier original-id="_">Recommendation 1</identifier>
                     </recommendation>
                     <fmt-provision>
@@ -2555,7 +2555,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                     <inherit id="_">/ss/584/2015/level/1</inherit>
                     <inherit id="_">/ss/584/2015/level/2</inherit>
                     <subject id="_">user</subject>
-                    <permission model="ogc" autonum="1-1" original-id="A2" id="_">
+                    <permission model="ogc" autonum="1-1" original-id="A2">
                        <title>First #1</title>
                        <identifier original-id="_">Permission 1</identifier>
                     </permission>
@@ -2759,15 +2759,15 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                     <inherit id="_">/ss/584/2015/level/1</inherit>
                     <inherit id="_">/ss/584/2015/level/2</inherit>
                     <subject id="_">user</subject>
-                    <permission model="ogc" autonum="1-1" original-id="A2" id="_">
+                    <permission model="ogc" autonum="1-1" original-id="A2">
                        <title>First #1</title>
                        <identifier original-id="_">Permission 1</identifier>
                     </permission>
-                    <requirement model="ogc" autonum="1-1" original-id="A3" id="_">
+                    <requirement model="ogc" autonum="1-1" original-id="A3">
                        <title>First #2</title>
                        <identifier original-id="_">Requirement 1</identifier>
                     </requirement>
-                    <recommendation model="ogc" autonum="1-1" original-id="A4" id="_">
+                    <recommendation model="ogc" autonum="1-1" original-id="A4">
                        <title>First #3</title>
                        <identifier original-id="_">Recommendation 1</identifier>
                     </recommendation>
@@ -2937,7 +2937,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
            <preface>
               <clause type="toc" id="_" displayorder="1">
                  <fmt-title depth="1">Contents</fmt-title>
@@ -2965,7 +2965,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                     <identifier id="_">/ogc/recommendation/wfs/2</identifier>
                     <inherit id="_">/ss/584/2015/level/1</inherit>
                     <subject id="_">user</subject>
-                    <description id="_">
+                    <description original-id="_">
                        <p original-id="_">
                           I recommend
                           <em>this</em>
@@ -2987,16 +2987,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                           </tbody>
                        </table>
                     </specification>
-                    <description id="_">
+                    <description original-id="_">
                        <p original-id="_">As for the measurement targets,</p>
                     </description>
-                    <measurement-target exclude="false" id="_">
+                    <measurement-target exclude="false" original-id="_">
                        <p original-id="_">The measurement target shall be measured as:</p>
                        <formula autonum="1" original-id="B">
                           <stem type="AsciiMath">r/1 = 0</stem>
                        </formula>
                     </measurement-target>
-                    <verification exclude="false" id="_">
+                    <verification exclude="false" original-id="_">
                        <p original-id="_">The following code will be run for verification:</p>
                        <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
               if (success)
@@ -3060,7 +3060,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                 </td>
                              </tr>
                              <tr id="_">
-                                <td colspan="2" id="_">
+                                <td colspan="2">
                                    <semx element="measurement-target" source="_">
                                       <p id="_">The measurement target shall be measured as:</p>
                                       <formula id="B" autonum="1">
@@ -3096,7 +3096,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                 </td>
                              </tr>
                              <tr id="_">
-                                <td colspan="2" id="_">
+                                <td colspan="2">
                                    <semx element="verification" source="_">
                                       <p id="_">The following code will be run for verification:</p>
                                       <sourcecode id="_" autonum="2">
@@ -3207,7 +3207,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                     <identifier id="_">/ogc/recommendation/wfs/2</identifier>
                     <inherit id="_">/ss/584/2015/level/1</inherit>
                     <subject id="_">user</subject>
-                    <description id="_">
+                    <description original-id="_">
                        <p original-id="_">
                           I recommend
                           <em>this</em>
@@ -3229,16 +3229,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                           </tbody>
                        </table>
                     </specification>
-                    <description id="_">
+                    <description original-id="_">
                        <p original-id="_">As for the measurement targets,</p>
                     </description>
-                    <measurement-target exclude="false" id="_">
+                    <measurement-target exclude="false" original-id="_">
                        <p original-id="_">The measurement target shall be measured as:</p>
                        <formula autonum="1" original-id="C">
                           <stem type="AsciiMath">r/1 = 0</stem>
                        </formula>
                     </measurement-target>
-                    <verification exclude="false" id="_">
+                    <verification exclude="false" original-id="_">
                        <p original-id="_">The following code will be run for verification:</p>
                        <sourcecode autonum="2" original-id="_">CoreRoot(success): HttpResponse
               if (success)
@@ -3304,7 +3304,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                 </td>
                              </tr>
                              <tr id="_">
-                                <td colspan="2" id="_">
+                                <td colspan="2">
                                    <semx element="measurement-target" source="_">
                                       <p id="_">The measurement target shall be measured as:</p>
                                       <formula id="C" autonum="1">
@@ -3340,7 +3340,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                                 </td>
                              </tr>
                              <tr id="_">
-                                <td colspan="2" id="_">
+                                <td colspan="2">
                                    <semx element="verification" source="_">
                                       <p id="_">The following code will be run for verification:</p>
                                       <sourcecode id="_" autonum="2">

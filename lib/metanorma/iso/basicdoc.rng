@@ -599,17 +599,9 @@ It is included for convenience, in case processing the citation to extract the a
         <a:documentation>The caption of the block</a:documentation>
       </ref>
     </optional>
-    <oneOrMore>
-      <choice>
-        <text>
-          <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
-(The string should be treated as pre-formatted text, with whitespace treated as significant)</a:documentation>
-        </text>
-        <ref name="callout">
-          <a:documentation>Zero or more cross-references; these are intended to be embedded within the content string, and link to annotations</a:documentation>
-        </ref>
-      </choice>
-    </oneOrMore>
+    <ref name="sourcecodebody">
+      <a:documentation>The sourcecode content</a:documentation>
+    </ref>
     <zeroOrMore>
       <ref name="annotation">
         <a:documentation>Annotations to the source code; each annotation consists of zero or more paragraphs,
@@ -628,17 +620,9 @@ and is intended to be referenced by a callout within the source code</a:document
         <a:documentation>The caption of the block</a:documentation>
       </ref>
     </optional>
-    <oneOrMore>
-      <choice>
-        <text>
-          <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
-(The string should be treated as pre-formatted text, with whitespace treated as significant)</a:documentation>
-        </text>
-        <ref name="callout">
-          <a:documentation>Zero or more cross-references; these are intended to be embedded within the content string, and link to annotations</a:documentation>
-        </ref>
-      </choice>
-    </oneOrMore>
+    <ref name="sourcecodebody">
+      <a:documentation>The sourcecode content</a:documentation>
+    </ref>
     <zeroOrMore>
       <ref name="annotation">
         <a:documentation>Annotations to the source code; each annotation consists of zero or more paragraphs,
@@ -650,6 +634,20 @@ and is intended to be referenced by a callout within the source code</a:document
         <a:documentation>Notes whose scope is the current block</a:documentation>
       </ref>
     </zeroOrMore>
+  </define>
+  <define name="sourcecodebody">
+    <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
+(The string should be treated as pre-formatted text, with whitespace treated as significant)</a:documentation>
+    <element name="body">
+      <oneOrMore>
+        <choice>
+          <text/>
+          <ref name="callout">
+            <a:documentation>Zero or more cross-references; these are intended to be embedded within the content string, and link to annotations</a:documentation>
+          </ref>
+        </choice>
+      </oneOrMore>
+    </element>
   </define>
   <define name="pre">
     <a:documentation>Pre-formatted block. Wrapper for text to be rendered with fixed-width typeface, and preserving spaces including line breaks. 
@@ -1672,18 +1670,25 @@ which can be bookmarks as well as block or section references</a:documentation>
     </optional>
   </define>
   <define name="XrefBody">
-    <oneOrMore>
-      <ref name="PureTextElement">
-        <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>
-      </ref>
-    </oneOrMore>
+    <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>
+    <optional>
+      <element name="display-text">
+        <oneOrMore>
+          <ref name="PureTextElement"/>
+        </oneOrMore>
+      </element>
+    </optional>
   </define>
   <define name="ErefBody">
-    <oneOrMore>
-      <ref name="PureTextElement">
-        <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>
-      </ref>
-    </oneOrMore>
+    <optional>
+      <element name="display-text">
+        <oneOrMore>
+          <ref name="PureTextElement">
+            <a:documentation>The textual content of the element. The `text` is what we wish to show the link as (e.g., the "content" of `&lt;xx&gt;my link text&lt;/xx&gt;`)</a:documentation>
+          </ref>
+        </oneOrMore>
+      </element>
+    </optional>
   </define>
   <define name="fn">
     <a:documentation>Inline reference to a paragraph or paragraphs, appearing as a footnote.

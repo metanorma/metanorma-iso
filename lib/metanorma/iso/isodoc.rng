@@ -245,23 +245,9 @@
           <a:documentation>The caption of the block</a:documentation>
         </ref>
       </optional>
-      <oneOrMore>
-        <choice>
-          <text>
-            <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
-(The string should be treated as pre-formatted text, with whitespace treated as significant)</a:documentation>
-          </text>
-          <ref name="callout">
-            <a:documentation>Zero or more cross-references; these are intended to be embedded within the content string, and link to annotations</a:documentation>
-          </ref>
-          <ref name="xref">
-            <a:documentation>Hyperlink of code segment to another part of the document</a:documentation>
-          </ref>
-          <ref name="eref">
-            <a:documentation>Hyperlink of code segment to external bibliographic resource</a:documentation>
-          </ref>
-        </choice>
-      </oneOrMore>
+      <ref name="sourcecodebody">
+        <a:documentation>The sourcecode content</a:documentation>
+      </ref>
       <zeroOrMore>
         <ref name="annotation">
           <a:documentation>Annotations to the source code; each annotation consists of zero or more paragraphs,
@@ -276,6 +262,26 @@ and is intended to be referenced by a callout within the source code</a:document
       <ref name="TermSource">
         <a:documentation>A source for the block</a:documentation>
       </ref>
+    </define>
+    <define name="sourcecodebody">
+      <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
+(The string should be treated as pre-formatted text, with whitespace treated as significant)</a:documentation>
+      <element name="body">
+        <oneOrMore>
+          <choice>
+            <text/>
+            <ref name="callout">
+              <a:documentation>Zero or more cross-references; these are intended to be embedded within the content string, and link to annotations</a:documentation>
+            </ref>
+            <ref name="xref">
+              <a:documentation>Hyperlink of code segment to another part of the document</a:documentation>
+            </ref>
+            <ref name="eref">
+              <a:documentation>Hyperlink of code segment to external bibliographic resource</a:documentation>
+            </ref>
+          </choice>
+        </oneOrMore>
+      </element>
     </define>
     <define name="sections">
       <element name="sections">

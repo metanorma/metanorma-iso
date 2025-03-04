@@ -61,97 +61,97 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
                    <inherit id="_">/ss/584/2015/level/1</inherit>
                    <subject id="_">user</subject>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>1</em>
                          .
                       </p>
                    </description>
-                   <component class="test-purpose" id="A1">
+                   <component class="test-purpose" original-id="A1">
                       <p>TEST PURPOSE</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>2</em>
                          .
                       </p>
                    </description>
-                   <component class="guidance" id="A7">
+                   <component class="guidance" original-id="A7">
                       <p>GUIDANCE #1</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>2a</em>
                          .
                       </p>
                    </description>
-                   <component class="conditions" id="A2">
+                   <component class="conditions" original-id="A2">
                       <p>CONDITIONS</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>3</em>
                          .
                       </p>
                    </description>
-                   <component class="part" id="A3">
+                   <component class="part" original-id="A3">
                       <p>FIRST PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>4</em>
                          .
                       </p>
                    </description>
-                   <component class="part" id="A4">
+                   <component class="part" original-id="A4">
                       <p>SECOND PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>5</em>
                          .
                       </p>
                    </description>
-                   <component class="test-method" id="A5">
+                   <component class="test-method" original-id="A5">
                       <p>TEST METHOD</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>6</em>
                          .
                       </p>
                    </description>
-                   <component class="part" id="A6">
+                   <component class="part" original-id="A6">
                       <p>THIRD PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>7</em>
                          .
                       </p>
                    </description>
-                   <component class="guidance" id="A8">
+                   <component class="guidance" original-id="A8">
                       <p>GUIDANCE #2</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>7a</em>
                          .
                       </p>
                    </description>
-                   <component class="panda GHz express" id="A7">
+                   <component class="panda GHz express" original-id="A7">
                       <p>PANDA PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>8</em>
@@ -446,77 +446,77 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
                    <inherit id="_">/ss/584/2015/level/1</inherit>
                    <subject id="_">user</subject>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>1</em>
                          .
                       </p>
                    </description>
-                   <component class="test-purpose" id="A1">
+                   <component class="test-purpose" original-id="A1">
                       <p>TEST PURPOSE</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>2</em>
                          .
                       </p>
                    </description>
-                   <component class="conditions" id="A2">
+                   <component class="conditions" original-id="A2">
                       <p>CONDITIONS</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>3</em>
                          .
                       </p>
                    </description>
-                   <component class="part" id="A3">
+                   <component class="part" original-id="A3">
                       <p>FIRST PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>4</em>
                          .
                       </p>
                    </description>
-                   <component class="part" id="A4">
+                   <component class="part" original-id="A4">
                       <p>SECOND PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>5</em>
                          .
                       </p>
                    </description>
-                   <component class="test-method" id="A5">
+                   <component class="test-method" original-id="A5">
                       <p>TEST METHOD</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>6</em>
                          .
                       </p>
                    </description>
-                   <component class="part" id="A6">
+                   <component class="part" original-id="A6">
                       <p>THIRD PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>7</em>
                          .
                       </p>
                    </description>
-                   <component class="panda GHz express" id="A7">
+                   <component class="panda GHz express" original-id="A7">
                       <p>PANDA PART</p>
                    </component>
-                   <description id="_">
+                   <description original-id="_">
                       <p original-id="_">
                          I recommend
                          <em>8</em>
@@ -763,7 +763,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
             </ogc-standard>
     INPUT
     presxml = <<~PRESXML
-      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -781,10 +781,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <span class="fmt-element-name">Requirement</span>
                       <semx element="autonum" source="A1">1</semx>
                    </fmt-xref-label>
-                   <component exclude="false" class="test method type" id="_">
+                   <component exclude="false" class="test method type" original-id="_">
                       <p original-id="_">Manual Inspection</p>
                    </component>
-                   <component exclude="false" class="test-method" id="_">
+                   <component exclude="false" class="test-method" original-id="_">
                       <p original-id="1">
                          <component exclude="false" class="step" id="_">
                             <p original-id="2">For each UML class defined or referenced in the Tunnel Package:</p>
