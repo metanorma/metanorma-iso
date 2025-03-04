@@ -8,7 +8,7 @@
 */
 
 
-@import 'base_style/all';
+@use 'base_style/all' as *;
 
 body {
     @include bodyStyle1(null, 1.3, -internal-root-color, #ffffff, 300);
