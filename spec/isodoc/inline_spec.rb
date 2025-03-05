@@ -2879,96 +2879,96 @@ presxml = <<~INPUT
                 <p class="page-break">
                    <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
                 </p>
-                <div id="F">
-                   <h1 class="ForewordTitle">Foreword</h1>
-                   <p class="ForewordText">
-                      A.
-                      <span style="mso-bookmark:_Ref">
-                         <a class="FootnoteRef" href="#ftn1" epub:type="footnote">
-                            <sup>1)</sup>
-                         </a>
-                      </span>
-                   </p>
-                   <p class="ForewordText">
-                      B.
+             <div id="F">
+                <h1 class="ForewordTitle">Foreword</h1>
+                <p class="ForewordText">
+                   A.
+                   <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
+                      <a class="FootnoteRef" epub:type="footnote" href="#ftn1">1</a>
+                      )
+                   </span>
+                </p>
+                <p class="ForewordText">
+                   B.
+                   <span class="MsoFootnoteReference">
                       <span style="mso-element:field-begin"/>
                       NOTEREF _Ref \\f \\h
                       <span style="mso-element:field-separator"/>
-                      <span class="MsoFootnoteReference">1</span>
+                      1
                       <span style="mso-element:field-end"/>
                       )
-                   </p>
-                   <p class="ForewordText">
-                      C.
-                      <span style="mso-bookmark:_Ref">
-                         <a class="FootnoteRef" href="#ftn2" epub:type="footnote">
-                            <sup>2)</sup>
-                         </a>
-                      </span>
-                   </p>
-                </div>
-                <p> </p>
+                   </span>
+                </p>
+                <p class="ForewordText">
+                   C.
+                   <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
+                      <a class="FootnoteRef" epub:type="footnote" href="#ftn2">2</a>
+                      )
+                   </span>
+                </p>
              </div>
-             <p class="section-break">
-                <br clear="all" class="section"/>
-             </p>
-             <div class="WordSection3">
-                <p>
-                   B.
+             <p> </p>
+          </div>
+          <p class="section-break">
+             <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection3">
+             <p>
+                B.
+                <span class="MsoFootnoteReference">
                    <span style="mso-element:field-begin"/>
                    NOTEREF _Ref \\f \\h
                    <span style="mso-element:field-separator"/>
-                   <span class="MsoFootnoteReference">1</span>
+                   1
                    <span style="mso-element:field-end"/>
                    )
-                </p>
-                <div>
-                   <h1>
-                      1
-                      <span style="mso-tab-count:1">  </span>
-                      Normative References
-                   </h1>
-                   <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-                   <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ,
-                      <i>
-                         <span class="stddocTitle">
-                            Cereals and cereal products
-                            <span style="mso-bookmark:_Ref">
-                               <a class="FootnoteRef" href="#ftn3" epub:type="footnote">
-                                  <sup>3)</sup>
-                               </a>
-                            </span>
+                </span>
+             </p>
+             <div>
+                <h1>
+                   1
+                   <span style="mso-tab-count:1">  </span>
+                   Normative References
+                </h1>
+                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+                <p id="ISO712" class="NormRef">
+                   <span class="stdpublisher">ISO </span>
+                   <span class="stddocNumber">712</span>
+                   ,
+                   <i>
+                      <span class="stddocTitle">
+                         Cereals and cereal products
+                         <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
+                            <a class="FootnoteRef" epub:type="footnote" href="#ftn3">3</a>
+                            )
                          </span>
-                      </i>
-                   </p>
-                </div>
-                <div id="A">
-                   <h1>2</h1>
-                   <span style="mso-bookmark:_Ref">
-                      <a class="FootnoteRef" href="#ftn4" epub:type="footnote">
-                         <sup>4)</sup>
-                      </a>
-                   </span>
-                </div>
-                <aside id="ftn1">
-                   <p id="_">Formerly denoted as 15 % (m/m).</p>
-                </aside>
-                <aside id="ftn2">
-                   <p id="_">Hello! denoted as 15 % (m/m).</p>
-                </aside>
-                <aside id="ftn3">
-                   <p id="_">ISO is a standards organisation.</p>
-                </aside>
-                <aside id="ftn4">
-                   <p id="_">Third footnote.</p>
-                </aside>
+                      </span>
+                   </i>
+                </p>
              </div>
-             <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-             <div class="colophon"/>
-          </body>
+             <div id="A">
+                <h1>2</h1>
+                <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
+                   <a class="FootnoteRef" epub:type="footnote" href="#ftn4">4</a>
+                   )
+                </span>
+             </div>
+             <aside id="ftn1">
+                <p id="_">Formerly denoted as 15 % (m/m).</p>
+             </aside>
+             <aside id="ftn2">
+                <p id="_">Hello! denoted as 15 % (m/m).</p>
+             </aside>
+             <aside id="ftn3">
+                <p id="_">ISO is a standards organisation.</p>
+             </aside>
+             <aside id="ftn4">
+                <p id="_">Third footnote.</p>
+             </aside>
+          </div>
+          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+          <div class="colophon"/>
+       </body>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
