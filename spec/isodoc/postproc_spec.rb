@@ -226,7 +226,7 @@ RSpec.describe IsoDoc do
                   <bookmark id="Q"/>
                   to this
                   <fn reference="1">
-                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label>1</fmt-fn-label></fn>
                 </fmt-title>
               </clause>
               <clause id="O" inline-header="false" obligation="normative">
@@ -235,7 +235,7 @@ RSpec.describe IsoDoc do
                   Clause 4.2</fmt-title>
                 <p>A
                   <fn reference="1">
-                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label>1</fmt-fn-label></fn>
                 </p>
               </clause>
             </clause>
@@ -330,8 +330,8 @@ RSpec.describe IsoDoc do
                           Introduction
                           <bookmark id="Q"/>
                           to this
-                          <fn reference="1">
-                            <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                          <fn reference="1" id="F1">
+                            <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F1">1</semx></fmt-fn-label></fn>
                         </fmt-title>
                       </clause>
                       <clause id="O" inline-header="false" obligation="normative">
@@ -339,8 +339,8 @@ RSpec.describe IsoDoc do
                           <tab/>
                           Clause 4.2</fmt-title>
                         <p>A
-                          <fn reference="1">
-                            <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+                          <fn reference="1" id="F2">
+                            <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F2">1</semx></fmt-fn-label></fn>
                         </p>
                       </clause>
                     </clause>
@@ -409,185 +409,53 @@ RSpec.describe IsoDoc do
          <p class="MsoNormal"> </p>
        </div>
       OUTPUT
-  end
 
-  it "reorders footnote numbers" do
-    FileUtils.rm_rf "test.html"
-    input = <<~INPUT
+          FileUtils.rm_rf "test.doc"
+    IsoDoc::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup)
+    .convert("test", <<~INPUT, false)
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
           <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-            <fmt-title>1
-              <tab/>
-              Clause 4</fmt-title>
-            <fn reference="3">
-              <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">This is a footnote.</p>
-            </fn>
+            <fmt-title>Clause 4</fmt-title>
             <clause id="N" inline-header="false" obligation="normative">
-              <fmt-title>1.1 <tab/>
-                Introduction to this
-                <fn reference="2">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
+              <fmt-title>Introduction
+                <bookmark id="Q"/>
+                to this
+                <fn reference="1" id="F1">
+                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F1">1</semx></fmt-fn-label></fn>
               </fmt-title>
             </clause>
             <clause id="O" inline-header="false" obligation="normative">
-              <fmt-title>1.2 <tab/>
-                Clause 4.2</fmt-title>
+              <fmt-title>Clause 4.2</fmt-title>
               <p>A
-                <fn reference="1">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-              </p>
+                <fn reference="1" id="F2">
+                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F2">1</semx></fmt-fn-label></fn>
+                </p>
+                <clause id="P" inline-header="false" obligation="normative">
+                  <fmt-title>Clause 4.2.1</fmt-title>
+                </clause>
+              </clause>
             </clause>
-          </clause>
-        </sections>
-      </iso-standard>
-    INPUT
+          </sections>
+        </iso-standard>
+      INPUT
+    word = File.read("test.doc")
+      .sub(/^.*<div class="WordSection2">/m,
+           '<div class="WordSection2">')
+      .sub(%r{<p class="MsoNormal">\s*<br clear="all" class="section"/>\s*</p>\s*<div class="WordSection3">.*$}m, "")
 
-    IsoDoc::Iso::HtmlConvert
-      .new(WORD_HTML_CSS_WORDINTRO.dup)
-      .convert("test", input, false)
+    expect(Xml::C14n.format(word.gsub(/_Toc\d\d+/, "_Toc")
+      .gsub(/<o:p>&#xA0;<\/o:p>/, "")))
+      .to be_equivalent_to Xml::C14n.format(<<~'OUTPUT')
+        <div class="WordSection2">
+         An empty word intro page.
 
-    html = File.read("test.html", encoding: "UTF-8")
-      .sub(/^.*<main class="main-section">/m,
-           '<main xmlns:epub="epub" class="main-section">')
-      .sub(%r{</main>.*$}m, "</main>")
+         <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"/><span style="mso-spacerun:yes"> </span>TOC \o "1-2" \h \z \u <span style="mso-element:field-separator"/></span><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Introduction
 
-    expect(Xml::C14n.format(strip_guid(html))).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-      <main xmlns:epub="epub" class="main-section">
-          <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-          <div id="A">
-            <h1 id="_">
-              <a class="anchor" href="#A"/>
-              <a class="header" href="#A">1
-                 
-                Clause 4</a>
-            </h1>
-            <a class="FootnoteRef" href="#fn:3" id="fnref:1">
-              <sup>1)</sup>
-            </a>
-            <div id="N">
-              <h2 id="_">
-                <a class="anchor" href="#N"/>
-                <a class="header" href="#N">1.1  
-                  Introduction to this
-                  <a class="FootnoteRef" href="#fn:2" id="fnref:2"><sup>2)</sup></a></a>
-              </h2>
-            </div>
-            <div id="O">
-              <h2 id="_">
-                <a class="anchor" href="#O"/>
-                <a class="header" href="#O">1.2  
-                  Clause 4.2</a>
-              </h2>
-              <p>A
-                  <a class="FootnoteRef" href="#fn:2"><sup>2)</sup></a></p>
-            </div>
-          </div>
-          <aside id="fn:3" class="footnote">
-            <p id="_"><a class="FootnoteRef" href="#fn:3"><sup>1)</sup></a>This is a footnote.</p>
-            <a href="#fnref:1">↩</a>
-          </aside>
-          <aside id="fn:2" class="footnote">
-            <p id="_"><a class="FootnoteRef" href="#fn:2"><sup>2)</sup></a>Formerly denoted as 15 % (m/m).</p>
-            <a href="#fnref:2">↩</a>
-          </aside>
-        </main>
-    OUTPUT
+                   to this
 
-    FileUtils.rm_rf "test.doc"
-    IsoDoc::Iso::WordConvert
-      .new(WORD_HTML_CSS_WORDINTRO.dup)
-      .convert("test", input, false)
-
-    html = File.read("test.doc", encoding: "UTF-8")
-      .sub(/^.*<div class="WordSection3"/m,
-           '<body xmlns:epub="epub"><div class="WordSection3"')
-      .sub(%r{</body>.*$}m, "</body>")
-      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")
-
-    expect(Xml::C14n.format(html)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
-        <body xmlns:epub="epub">
-        <div class="WordSection3">
-          <div>
-            <a id="A" name="A"/>
-            <h1>1
-              <span style="mso-tab-count:1">  </span>
-              Clause 4</h1>
-            <span style="mso-bookmark:_Ref">
-              <a class="FootnoteRef" epub:type="footnote" href="#_ftn1" id="_ftnref1" name="_ftnref1" style="mso-footnote-id:ftn1" title="">
-                <span class="MsoFootnoteReference">
-                  <span style="mso-special-character:footnote"/>
-                </span>
-                <span class="MsoFootnoteReference">)</span>
-              </a>
-            </span>
-            <div>
-              <a id="N" name="N"/>
-              <h2>1.1
-                <span style="mso-tab-count:1">  </span>
-                Introduction to this
-                <span style="mso-bookmark:_Ref">
-                  <a class="FootnoteRef" epub:type="footnote" href="#_ftn2" id="_ftnref2" name="_ftnref2" style="mso-footnote-id:ftn2" title="">
-                    <span class="MsoFootnoteReference">
-                      <span style="mso-special-character:footnote"/></span>
-                    <span class="MsoFootnoteReference">)</span>
-                  </a>
-                </span>
-              </h2>
-            </div>
-            <div>
-              <a id="O" name="O"/>
-              <h2>1.2
-                <span style="mso-tab-count:1">  </span>
-                Clause 4.2</h2>
-              <p class="MsoNormal">A
-                <span style="mso-bookmark:_Ref">
-                  <a class="FootnoteRef" epub:type="footnote" href="#_ftn3" id="_ftnref3" name="_ftnref3" style="mso-footnote-id:ftn3" title="">
-                    <span class="MsoFootnoteReference">
-                      <span style="mso-special-character:footnote"/></span>
-                    <span class="MsoFootnoteReference">)</span>
-                  </a>
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-        <div class="colophon"/>
-        <div style="mso-element:footnote-list">
-          <div id="ftn1" style="mso-element:footnote">
-            <p class="MsoFootnoteText">
-              <a id="_ff27c067-2785-4551-96cf-0a73530ff1e6" name="_ff27c067-2785-4551-96cf-0a73530ff1e6"/>
-              <a href="#_ftn1" id="_ftnref1" name="_ftnref1" style="mso-footnote-id:ftn1" title="">
-                <span class="MsoFootnoteReference">
-                  <span style="mso-special-character:footnote"/>
-                </span>
-                <span class="MsoFootnoteReference">)</span>
-              </a>This is a footnote.</p>
-          </div>
-          <div id="ftn2" style="mso-element:footnote">
-            <p class="MsoFootnoteText">
-              <a id="_ff27c067-2785-4551-96cf-0a73530ff1e6" name="_ff27c067-2785-4551-96cf-0a73530ff1e6"/>
-              <a href="#_ftn2" id="_ftnref2" name="_ftnref2" style="mso-footnote-id:ftn2" title="">
-                <span class="MsoFootnoteReference">
-                  <span style="mso-special-character:footnote"/>
-                </span>
-                <span class="MsoFootnoteReference">)</span>
-              </a>Formerly denoted as 15 % (m/m).</p>
-          </div>
-          <div id="ftn3" style="mso-element:footnote">
-            <p class="MsoFootnoteText">
-              <a id="_ff27c067-2785-4551-96cf-0a73530ff1e6" name="_ff27c067-2785-4551-96cf-0a73530ff1e6"/>
-              <a href="#_ftn3" id="_ftnref3" name="_ftnref3" style="mso-footnote-id:ftn3" title="">
-                <span class="MsoFootnoteReference">
-                  <span style="mso-special-character:footnote"/>
-                </span>
-                <span class="MsoFootnoteReference">)</span>
-              </a>Formerly denoted as 15 % (m/m).</p>
-          </div>
-        </div>
-      </body>
-    OUTPUT
+                 <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-end"/></span><span lang="EN-GB" xml:lang="EN-GB"><o:p class="MsoNormal"> </o:p></span></p><p class="MsoNormal"> </p></div>
+      OUTPUT
   end
 
   it "processes IsoXML terms for HTML" do
@@ -926,53 +794,4 @@ RSpec.describe IsoDoc do
     expect(word).to include('<p class="zzWarning">This document is not ' \
                             "an ISO International Standard")
   end
-
-  it "populates Word ToC" do
-    FileUtils.rm_rf "test.doc"
-    IsoDoc::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup)
-      .convert("test", <<~INPUT, false)
-        <iso-standard xmlns="http://riboseinc.com/isoxml">
-          <sections>
-            <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-              <fmt-title>Clause 4</fmt-title>
-              <clause id="N" inline-header="false" obligation="normative">
-                <fmt-title>Introduction
-                  <bookmark id="Q"/>
-                  to this
-                  <fn reference="1">
-                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </fmt-title>
-              </clause>
-              <clause id="O" inline-header="false" obligation="normative">
-                <fmt-title>Clause 4.2</fmt-title>
-                <p>A
-                  <fn reference="1">
-                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p></fn>
-                </p>
-                <clause id="P" inline-header="false" obligation="normative">
-                  <fmt-title>Clause 4.2.1</fmt-title>
-                </clause>
-              </clause>
-            </clause>
-          </sections>
-        </iso-standard>
-      INPUT
-    word = File.read("test.doc")
-      .sub(/^.*<div class="WordSection2">/m,
-           '<div class="WordSection2">')
-      .sub(%r{<p class="MsoNormal">\s*<br clear="all" class="section"/>\s*</p>\s*<div class="WordSection3">.*$}m, "")
-
-    expect(Xml::C14n.format(word.gsub(/_Toc\d\d+/, "_Toc")
-      .gsub(/<o:p>&#xA0;<\/o:p>/, "")))
-      .to be_equivalent_to Xml::C14n.format(<<~'OUTPUT')
-        <div class="WordSection2">
-         An empty word intro page.
-
-         <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"/><span style="mso-spacerun:yes"> </span>TOC \o "1-2" \h \z \u <span style="mso-element:field-separator"/></span><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Introduction
-
-                   to this
-
-                 <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-end"/></span><span lang="EN-GB" xml:lang="EN-GB"><o:p class="MsoNormal"> </o:p></span></p><p class="MsoNormal"> </p></div>
-      OUTPUT
   end
-end
