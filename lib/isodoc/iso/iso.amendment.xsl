@@ -9335,7 +9335,7 @@
 		</fo:table-cell>
 	</xsl:template> <!-- td -->
 
-	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example']" priority="2">
+	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example'] |       *[local-name()='table']/*[local-name()='tfoot']//*[local-name()='note' or local-name() = 'example']" priority="2">
 
 				<fo:block xsl:use-attribute-sets="table-note-style">
 					<xsl:copy-of select="@id"/>
@@ -9356,7 +9356,7 @@
 
 	</xsl:template> <!-- table/note -->
 
-	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name()='example']/*[local-name()='p']" priority="2">
+	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name()='example']/*[local-name()='p'] |  *[local-name()='table']/*[local-name()='tfoot']//*[local-name()='note' or local-name()='example']/*[local-name()='p']" priority="2">
 		<xsl:apply-templates/>
 	</xsl:template>
 
@@ -9815,6 +9815,13 @@
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'div'][@class = 'footnotes-go-here']" priority="3">
+		<xsl:for-each select="ancestor::*[local-name()='table'][1]">
+			<xsl:call-template name="table_fn_display"/>
+		</xsl:for-each>
+	</xsl:template>
+
 	<!-- ===================== -->
 	<!-- END Footnotes processing  -->
 	<!-- ===================== -->
@@ -10105,6 +10112,8 @@
 											<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
 										</xsl:call-template>
 
+										<!-- https://github.com/metanorma/metanorma-plateau/issues/171 -->
+
 										<fo:table-body>
 
 											<!-- DEBUG -->
@@ -10180,6 +10189,7 @@
 		<xsl:param name="process">false</xsl:param>
 		<xsl:if test="$process = 'true'">
 			<fo:block xsl:use-attribute-sets="dl-name-style">
+
 				<xsl:apply-templates/>
 			</fo:block>
 		</xsl:if>
@@ -15320,7 +15330,7 @@
 
 	</xsl:template>
 
-	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name']">
+	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name'] |  *[local-name() = 'table']/*[local-name() = 'tfoot']//*[local-name() = 'example']/*[local-name() = 'name']">
 		<fo:inline xsl:use-attribute-sets="example-name-style">
 
 			<xsl:apply-templates/>
