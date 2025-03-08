@@ -9335,6 +9335,7 @@
 		</fo:table-cell>
 	</xsl:template> <!-- td -->
 
+	<!-- table/note, table/example, table/tfoot//note, table/tfoot//example -->
 	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example'] |       *[local-name()='table']/*[local-name()='tfoot']//*[local-name()='note' or local-name() = 'example']" priority="2">
 
 				<fo:block xsl:use-attribute-sets="table-note-style">
@@ -10106,13 +10107,11 @@
 										<xsl:variable name="isContainsKeepTogetherTag" select="normalize-space($isContainsKeepTogetherTag_)"/>
 										<!-- isContainsExpressReference=<xsl:value-of select="$isContainsExpressReference"/> -->
 
-										<xsl:call-template name="setColumnWidth_dl">
-											<xsl:with-param name="colwidths" select="$colwidths"/>
-											<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
-											<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
-										</xsl:call-template>
-
-										<!-- https://github.com/metanorma/metanorma-plateau/issues/171 -->
+												<xsl:call-template name="setColumnWidth_dl">
+													<xsl:with-param name="colwidths" select="$colwidths"/>
+													<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
+													<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
+												</xsl:call-template>
 
 										<fo:table-body>
 
@@ -10145,6 +10144,14 @@
 		</xsl:if>
 
 	</xsl:template> <!-- END: dl -->
+
+	<xsl:template match="@*|node()" mode="dt_clean">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" mode="dt_clean"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'asciimath']" mode="dt_clean"/>
 
 	<!-- caption for figure key and another caption, https://github.com/metanorma/isodoc/issues/607 -->
 	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'p'][@keep-with-next = 'true' and *[local-name() = 'strong']]" priority="3">
@@ -10185,6 +10192,7 @@
 	<!-- ignore 'p' with 'where' in formula, before 'dl' -->
 	<xsl:template match="*[local-name() = 'formula']/*[local-name() = 'p' and @keep-with-next = 'true' and following-sibling::*[1][local-name() = 'dl']]"/>
 
+	<!-- dl/name -->
 	<xsl:template match="*[local-name() = 'dl']/*[local-name() = 'name']">
 		<xsl:param name="process">false</xsl:param>
 		<xsl:if test="$process = 'true'">
@@ -13840,10 +13848,10 @@
 							<xsl:when test="@type = 'section-title'">
 								<xsl:value-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/preceding-sibling::node()"/>
 								<xsl:text>: </xsl:text>
-								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name = 'fmt-xref-label')]"/>
+								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name() = 'fmt-xref-label')]"/>
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name = 'fmt-xref-label')]"/>
+								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name() = 'fmt-xref-label')]"/>
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:when>
@@ -15305,6 +15313,7 @@
 
 	</xsl:template>
 
+	<!-- example/name -->
 	<xsl:template match="*[local-name() = 'example']/*[local-name() = 'name']">
 		<xsl:param name="fo_element">block</xsl:param>
 
@@ -15330,6 +15339,7 @@
 
 	</xsl:template>
 
+	<!-- table/example/name, table/tfoot//example/name -->
 	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name'] |  *[local-name() = 'table']/*[local-name() = 'tfoot']//*[local-name() = 'example']/*[local-name() = 'name']">
 		<fo:inline xsl:use-attribute-sets="example-name-style">
 
