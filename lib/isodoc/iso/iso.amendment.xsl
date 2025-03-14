@@ -8267,9 +8267,13 @@
 
 					<xsl:variable name="isNoteOrFnExist" select="./*[local-name()='note'][not(@type = 'units')] or ./*[local-name()='example'] or .//*[local-name()='fn'][local-name(..) != 'name'] or ./*[local-name()='source']"/>
 					<xsl:if test="$isNoteOrFnExist = 'true'">
-
-								<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute><!-- set 0pt border, because there is a separete table below for footer -->
-
+						<!-- <xsl:choose>
+							<xsl:when test="$namespace = 'plateau'"></xsl:when>
+							<xsl:otherwise>
+								
+							</xsl:otherwise>
+						</xsl:choose> -->
+						<xsl:attribute name="border-bottom">0pt solid black</xsl:attribute><!-- set 0pt border, because there is a separete table below for footer -->
 					</xsl:if>
 
 					<xsl:choose>
@@ -8327,13 +8331,26 @@
 
 				<xsl:variable name="colgroup" select="*[local-name()='colgroup']"/>
 
-						<xsl:for-each select="*[local-name()='tbody']"><!-- select context to tbody -->
-							<xsl:call-template name="insertTableFooterInSeparateTable">
-								<xsl:with-param name="table_attributes" select="$table_attributes"/>
-								<xsl:with-param name="colwidths" select="$colwidths"/>
-								<xsl:with-param name="colgroup" select="$colgroup"/>
-							</xsl:call-template>
-						</xsl:for-each>
+				<!-- https://github.com/metanorma/metanorma-plateau/issues/171 -->
+
+				<xsl:for-each select="*[local-name()='tbody']"><!-- select context to tbody -->
+					<xsl:call-template name="insertTableFooterInSeparateTable">
+						<xsl:with-param name="table_attributes" select="$table_attributes"/>
+						<xsl:with-param name="colwidths" select="$colwidths"/>
+						<xsl:with-param name="colgroup" select="$colgroup"/>
+					</xsl:call-template>
+				</xsl:for-each>
+
+				<!-- https://github.com/metanorma/metanorma-plateau/issues/171
+				<xsl:if test="$namespace = 'plateau'">
+					<xsl:apply-templates select="*[not(local-name()='thead') and not(local-name()='tbody') and not(local-name()='tfoot') and not(local-name()='name')]" />
+					<xsl:for-each select="*[local-name()='tbody']"> - select context to tbody -
+						<xsl:variable name="table_fn_block">
+							<xsl:call-template name="table_fn_display" />
+						</xsl:variable>
+						<xsl:copy-of select="$table_fn_block"/>
+					</xsl:for-each>
+				</xsl:if> -->
 
 				<xsl:if test="*[local-name()='bookmark']"> <!-- special case: table/bookmark -->
 					<fo:block keep-with-previous="always" line-height="0.1">
@@ -9289,6 +9306,17 @@
 				<xsl:attribute name="text-align">left</xsl:attribute>
 			</xsl:if>
 
+			<xsl:if test="$isGenerateTableIF = 'false'">
+				<xsl:if test="@colspan and *[local-name() = 'note'][@type = 'units']">
+					<xsl:attribute name="text-align">right</xsl:attribute>
+					<xsl:attribute name="border">none</xsl:attribute>
+					<xsl:attribute name="border-bottom"><xsl:value-of select="$table-border"/></xsl:attribute>
+					<xsl:attribute name="border-top">1pt solid white</xsl:attribute>
+					<xsl:attribute name="border-left">1pt solid white</xsl:attribute>
+					<xsl:attribute name="border-right">1pt solid white</xsl:attribute>
+				</xsl:if>
+			</xsl:if>
+
 			<fo:block role="SKIP">
 
 				<xsl:if test="$isGenerateTableIF = 'true'">
@@ -9307,7 +9335,8 @@
 		</fo:table-cell>
 	</xsl:template> <!-- td -->
 
-	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example']" priority="2">
+	<!-- table/note, table/example, table/tfoot//note, table/tfoot//example -->
+	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name() = 'example'] |       *[local-name()='table']/*[local-name()='tfoot']//*[local-name()='note' or local-name() = 'example']" priority="2">
 
 				<fo:block xsl:use-attribute-sets="table-note-style">
 					<xsl:copy-of select="@id"/>
@@ -9328,7 +9357,7 @@
 
 	</xsl:template> <!-- table/note -->
 
-	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name()='example']/*[local-name()='p']" priority="2">
+	<xsl:template match="*[local-name()='table']/*[local-name()='note' or local-name()='example']/*[local-name()='p'] |  *[local-name()='table']/*[local-name()='tfoot']//*[local-name()='note' or local-name()='example']/*[local-name()='p']" priority="2">
 		<xsl:apply-templates/>
 	</xsl:template>
 
@@ -9548,20 +9577,33 @@
 			</xsl:for-each>
 		</xsl:variable>
 
+		<!-- <test><xsl:copy-of select="$references"/></test> -->
+
 		<xsl:for-each select="xalan:nodeset($references)//fn">
 			<xsl:variable name="reference" select="@reference"/>
 			<xsl:if test="not(preceding-sibling::*[@reference = $reference])"> <!-- only unique reference puts in note-->
 
 						<fo:block xsl:use-attribute-sets="table-fn-style">
 							<xsl:call-template name="refine_table-fn-style"/>
+
+							<!-- https://github.com/metanorma/metanorma-plateau/issues/171 -->
+
 							<fo:inline id="{@id}" xsl:use-attribute-sets="table-fn-number-style">
 								<xsl:call-template name="refine_table-fn-number-style"/>
+
+								<!-- <xsl:if test="$namespace = 'plateau'">
+									<xsl:text>※</xsl:text>
+								</xsl:if> -->
 
 								<xsl:value-of select="@reference"/>
 
 								<!-- commented https://github.com/metanorma/isodoc/issues/614 -->
 								<!-- <xsl:if test="$namespace = 'itu'">
 									<xsl:text>)</xsl:text>
+								</xsl:if> -->
+
+								<!-- <xsl:if test="$namespace = 'plateau'">
+									<xsl:text>：</xsl:text>
 								</xsl:if> -->
 
 							</fo:inline>
@@ -9694,6 +9736,7 @@
 										<fo:table-row>
 											<fo:table-cell>
 												<fo:block>
+
 													<fo:inline id="{@id}" xsl:use-attribute-sets="figure-fn-number-style">
 														<xsl:value-of select="@reference"/>
 													</fo:inline>
@@ -9706,6 +9749,7 @@
 																<xsl:attribute name="margin-bottom">0</xsl:attribute>
 
 													</xsl:if>
+
 													<xsl:copy-of select="./node()"/>
 												</fo:block>
 											</fo:table-cell>
@@ -9752,6 +9796,9 @@
 					</xsl:attribute>
 				</xsl:if>
 
+				<!-- <xsl:if test="$namespace = 'plateau'">
+					<xsl:text>※</xsl:text>
+				</xsl:if> -->
 				<xsl:value-of select="@reference"/>
 
 				<!-- commented, https://github.com/metanorma/isodoc/issues/614 -->
@@ -9771,6 +9818,13 @@
 			<xsl:apply-templates/>
 		</fo:inline>
 	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'div'][@class = 'footnotes-go-here']" priority="3">
+		<xsl:for-each select="ancestor::*[local-name() = 'table'][1]/*[local-name() = 'tbody']">
+			<xsl:call-template name="table_fn_display"/>
+		</xsl:for-each>
+	</xsl:template>
+
 	<!-- ===================== -->
 	<!-- END Footnotes processing  -->
 	<!-- ===================== -->
@@ -10055,11 +10109,11 @@
 										<xsl:variable name="isContainsKeepTogetherTag" select="normalize-space($isContainsKeepTogetherTag_)"/>
 										<!-- isContainsExpressReference=<xsl:value-of select="$isContainsExpressReference"/> -->
 
-										<xsl:call-template name="setColumnWidth_dl">
-											<xsl:with-param name="colwidths" select="$colwidths"/>
-											<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
-											<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
-										</xsl:call-template>
+												<xsl:call-template name="setColumnWidth_dl">
+													<xsl:with-param name="colwidths" select="$colwidths"/>
+													<xsl:with-param name="maxlength_dt" select="$maxlength_dt"/>
+													<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
+												</xsl:call-template>
 
 										<fo:table-body>
 
@@ -10092,6 +10146,14 @@
 		</xsl:if>
 
 	</xsl:template> <!-- END: dl -->
+
+	<xsl:template match="@*|node()" mode="dt_clean">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" mode="dt_clean"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'asciimath']" mode="dt_clean"/>
 
 	<!-- caption for figure key and another caption, https://github.com/metanorma/isodoc/issues/607 -->
 	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'p'][@keep-with-next = 'true' and *[local-name() = 'strong']]" priority="3">
@@ -10132,10 +10194,12 @@
 	<!-- ignore 'p' with 'where' in formula, before 'dl' -->
 	<xsl:template match="*[local-name() = 'formula']/*[local-name() = 'p' and @keep-with-next = 'true' and following-sibling::*[1][local-name() = 'dl']]"/>
 
+	<!-- dl/name -->
 	<xsl:template match="*[local-name() = 'dl']/*[local-name() = 'name']">
 		<xsl:param name="process">false</xsl:param>
 		<xsl:if test="$process = 'true'">
 			<fo:block xsl:use-attribute-sets="dl-name-style">
+
 				<xsl:apply-templates/>
 			</fo:block>
 		</xsl:if>
@@ -12691,7 +12755,7 @@
 				</xsl:if>
 			</xsl:if>
 
-	</xsl:template>
+	</xsl:template> <!-- refine_note_block_style -->
 
 	<xsl:template match="*[local-name() = 'note']/*[local-name() = 'p']">
 		<xsl:variable name="num"><xsl:number/></xsl:variable>
@@ -13786,10 +13850,10 @@
 							<xsl:when test="@type = 'section-title'">
 								<xsl:value-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/preceding-sibling::node()"/>
 								<xsl:text>: </xsl:text>
-								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name = 'fmt-xref-label')]"/>
+								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name() = 'fmt-xref-label')]"/>
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name = 'fmt-xref-label')]"/>
+								<xsl:copy-of select="*[local-name() = 'span'][@class = 'fmt-caption-delim'][1]/following-sibling::node()[not(local-name() = 'fmt-xref-label')]"/>
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:when>
@@ -15251,6 +15315,7 @@
 
 	</xsl:template>
 
+	<!-- example/name -->
 	<xsl:template match="*[local-name() = 'example']/*[local-name() = 'name']">
 		<xsl:param name="fo_element">block</xsl:param>
 
@@ -15276,7 +15341,8 @@
 
 	</xsl:template>
 
-	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name']">
+	<!-- table/example/name, table/tfoot//example/name -->
+	<xsl:template match="*[local-name() = 'table']/*[local-name() = 'example']/*[local-name() = 'name'] |  *[local-name() = 'table']/*[local-name() = 'tfoot']//*[local-name() = 'example']/*[local-name() = 'name']">
 		<fo:inline xsl:use-attribute-sets="example-name-style">
 
 			<xsl:apply-templates/>
