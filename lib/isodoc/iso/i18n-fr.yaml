@@ -55,14 +55,14 @@ stage_dict:
   "20": Brouillon de travail
   "30": Projet de comité
   "40": 
-    international-standard: Brouillon de la norme internationale
-    technical-specification: Brouillon de la spécification technique
-    technical-report: Brouillon du rapport technique
-    publicly-available-specification: Brouillon de la spécification disponible publiquement
-    international-workshop-agreement: Brouillon de l’accord internationale d’atelier
-    guide: Brouillon du guide
-    amendment: Brouillon de l’amendement
-    technical-corrigendum: Brouillon du rectificatif technique
+    international-standard: Projet Norme internationale
+    technical-specification: Project Spécification technique
+    technical-report: Projet Rapport technique
+    publicly-available-specification: Projet Spécification disponible publiquement
+    international-workshop-agreement: Projet Accord internationale d’atelier
+    guide: Projet Guide
+    amendment: Projet Amendement
+    technical-corrigendum: Projet Rectificatif technique
   "50": 
     international-standard: Version finale de la norme internationale
     technical-specification: Version finale de la spécification technique
