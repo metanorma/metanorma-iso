@@ -557,11 +557,122 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       </em>
                       .
                    </formattedref>
+                   <fetched/>
+                   <title format="text/plain" language="en" script="Latn">Hypertext Transfer Protocol — HTTP/1.1</title>
                    <docidentifier type="metanorma-ordinal">[1]</docidentifier>
                    <docidentifier type="IETF">IETF RFC 2616</docidentifier>
                    <docidentifier type="IETF" scope="anchor">IETF RFC2616</docidentifier>
                    <docidentifier type="DOI">DOI 10.17487/RFC2616</docidentifier>
                    <docidentifier scope="biblio-tag">IETF RFC 2616</docidentifier>
+                   <date type="published">
+                      <on>1999-06</on>
+                   </date>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en">R. Fielding</completename>
+                         </name>
+                         <affiliation>
+                            <organization>
+                               <name>IETF</name>
+                               <abbreviation>IETF</abbreviation>
+                            </organization>
+                         </affiliation>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en">J. Gettys</completename>
+                         </name>
+                         <affiliation>
+                            <organization>
+                               <name>IETF</name>
+                               <abbreviation>IETF</abbreviation>
+                            </organization>
+                         </affiliation>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en">J. Mogul</completename>
+                         </name>
+                         <affiliation>
+                            <organization>
+                               <name>IETF</name>
+                               <abbreviation>IETF</abbreviation>
+                            </organization>
+                         </affiliation>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en">H. Frystyk</completename>
+                         </name>
+                         <affiliation>
+                            <organization>
+                               <name>IETF</name>
+                               <abbreviation>IETF</abbreviation>
+                            </organization>
+                         </affiliation>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en">L. Masinter</completename>
+                         </name>
+                         <affiliation>
+                            <organization>
+                               <name>IETF</name>
+                               <abbreviation>IETF</abbreviation>
+                            </organization>
+                         </affiliation>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en">P. Leach</completename>
+                         </name>
+                         <affiliation>
+                            <organization>
+                               <name>IETF</name>
+                               <abbreviation>IETF</abbreviation>
+                            </organization>
+                         </affiliation>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en">T. Berners-Lee</completename>
+                         </name>
+                         <affiliation>
+                            <organization>
+                               <name>IETF</name>
+                               <abbreviation>IETF</abbreviation>
+                            </organization>
+                         </affiliation>
+                      </person>
+                   </contributor>
+                   <language>en</language>
+                   <script>Latn</script>
+                   <abstract format="text/plain" language="en" script="Latn">HTTP has been in use by the World-Wide Web global information initiative since 1990. This specification defines the protocol referred to as “HTTP/1.1”, and is an update to RFC 2068. [STANDARDS-TRACK]</abstract>
+                   <series type="main">
+                      <title format="text/plain" language="en" script="Latn">RFC</title>
+                      <number>2616</number>
+                   </series>
+                   <place>Fremont, CA</place>
                    <biblio-tag>
                       [1]
                       <tab/>
@@ -3119,7 +3230,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </ogc-standard>
     OUTPUT
 
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"))))

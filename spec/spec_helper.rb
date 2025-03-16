@@ -63,6 +63,8 @@ def strip_guid(xml)
     .gsub(%r{ src='cid:[^.]+.gif'}, ' src="_.gif"')
     .gsub(%r{<fetched>20[0-9-]+</fetched>}, "<fetched/>")
     .gsub(%r{ schema-version="[^"]+"}, "")
+    .gsub(%r[ _Ref\d+{8,10}], " _Ref")
+    .gsub(%r[:_Ref\d+{8,10}], ":_Ref")
 end
 
 def metadata(hash)

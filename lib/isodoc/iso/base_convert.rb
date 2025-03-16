@@ -142,6 +142,8 @@ module IsoDoc
         node.xpath(ns("./note[not(@type = 'units')]")).each do |n|
           parse(n, out)
         end
+        node.xpath(ns("./fmt-footnote-container/fmt-fn-body"))
+          .each { |n| parse(n, out) }
       end
 
       def figure_parse1(node, out)

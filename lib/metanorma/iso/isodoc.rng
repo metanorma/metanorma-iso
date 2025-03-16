@@ -33,6 +33,15 @@
         </zeroOrMore>
       </element>
     </define>
+    <define name="fn" combine="interleave">
+      <optional>
+        <attribute name="hiddenref">
+          <a:documentation>If true, number the footnote as normal, but suppress display of the footnote reference in the document body.
+This is done if the footnote reference is already presented in some other form, e.g. within a figure image.</a:documentation>
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+    </define>
     <define name="index-primary">
       <element name="primary">
         <oneOrMore>
