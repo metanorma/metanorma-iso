@@ -131,6 +131,7 @@ module IsoDoc
         TOC
       end
 
+      # KILL
       def footnote_reference_format(link)
         link.children =
           "<span class='MsoFootnoteReference'>#{to_xml(link.children)}</span>)"
@@ -248,6 +249,8 @@ module IsoDoc
         (dl = node.at(ns("./dl"))) && parse(dl, out)
         node.xpath(ns("./source")).each { |n| parse(n, out) }
         node.xpath(ns("./note[not(@type = 'units')]"))
+          .each { |n| parse(n, out) }
+        node.xpath(ns("./fmt-footnote-container/fmt-fn-body"))
           .each { |n| parse(n, out) }
       end
 

@@ -34,7 +34,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
