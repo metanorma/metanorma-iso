@@ -16215,15 +16215,20 @@
 		<xsl:variable name="list_level">
 			<xsl:choose>
 				<xsl:when test="$list_level_ &lt;= 3"><xsl:value-of select="$list_level_"/></xsl:when>
-				<xsl:otherwise><xsl:value-of select="$list_level_ mod 3"/></xsl:otherwise>
+				<xsl:when test="$ul_labels/label[@level = 3]"><xsl:value-of select="$list_level_ mod 3"/></xsl:when>
+				<xsl:when test="$list_level_ mod 2 = 0">2</xsl:when>
+				<xsl:otherwise><xsl:value-of select="$list_level_ mod 2"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="$ul_labels/label[not(@level)]"> <!-- one label for all levels -->
 				<xsl:apply-templates select="$ul_labels/label[not(@level)]" mode="ul_labels"/>
 			</xsl:when>
-			<xsl:when test="$list_level mod 3 = 0">
+			<xsl:when test="$list_level mod 3 = 0 and $ul_labels/label[@level = 3]">
 				<xsl:apply-templates select="$ul_labels/label[@level = 3]" mode="ul_labels"/>
+			</xsl:when>
+			<xsl:when test="$list_level mod 3 = 0">
+				<xsl:apply-templates select="$ul_labels/label[@level = 1]" mode="ul_labels"/>
 			</xsl:when>
 			<xsl:when test="$list_level mod 2 = 0">
 				<xsl:apply-templates select="$ul_labels/label[@level = 2]" mode="ul_labels"/>
