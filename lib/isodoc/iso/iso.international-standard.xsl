@@ -9226,6 +9226,8 @@
 
 	<xsl:template name="setTableRowAttributes">
 
+		<xsl:call-template name="setColors"/>
+
 	</xsl:template> <!-- setTableRowAttributes -->
 	<!-- ===================== -->
 	<!-- END Table's row processing -->
@@ -9277,6 +9279,7 @@
 			</xsl:attribute>
 		</xsl:if>
 		<xsl:call-template name="display-align"/>
+		<xsl:call-template name="setColors"/>
 	</xsl:template>
 
 	<xsl:template name="display-align">
@@ -9292,6 +9295,29 @@
 		</xsl:if>
 	</xsl:template>
 
+	<xsl:template name="setColors">
+		<xsl:variable name="styles__">
+			<xsl:call-template name="split">
+				<xsl:with-param name="pText" select="concat(@style,';')"/>
+				<xsl:with-param name="sep" select="';'"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="quot">"</xsl:variable>
+		<xsl:variable name="styles_">
+			<xsl:for-each select="xalan:nodeset($styles__)/item">
+				<xsl:variable name="key" select="normalize-space(substring-before(., ':'))"/>
+				<xsl:variable name="value" select="normalize-space(substring-after(translate(.,$quot,''), ':'))"/>
+				<xsl:if test="$key = 'color' or $key = 'background-color'">
+					<style name="{$key}"><xsl:value-of select="$value"/></style>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="styles" select="xalan:nodeset($styles_)"/>
+		<xsl:for-each select="$styles/style">
+			<xsl:attribute name="{@name}"><xsl:value-of select="."/></xsl:attribute>
+		</xsl:for-each>
+	</xsl:template>
+
 	<!-- cell in table body, footer -->
 	<xsl:template match="*[local-name()='td']" name="td">
 		<fo:table-cell xsl:use-attribute-sets="table-cell-style"> <!-- text-align="{@align}" -->
@@ -9303,11 +9329,11 @@
 
 			<xsl:call-template name="refine_table-cell-style"/>
 
+			<xsl:call-template name="setTableCellAttributes"/>
+
 			<xsl:if test=".//*[local-name() = 'table']"> <!-- if there is nested table -->
 				<xsl:attribute name="padding-right">1mm</xsl:attribute>
 			</xsl:if>
-
-			<xsl:call-template name="setTableCellAttributes"/>
 
 			<xsl:if test="$isGenerateTableIF = 'true'">
 				<xsl:attribute name="border">1pt solid black</xsl:attribute> <!-- border is mandatory, to determine page width -->
