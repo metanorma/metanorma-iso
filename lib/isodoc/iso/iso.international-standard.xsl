@@ -3229,11 +3229,11 @@
 
 						<xsl:if test="count(*) = 1 and *[local-name() = 'title']"> <!-- if there isn't user ToC -->
 
-							<!-- <xsl:if test="$debug = 'true'">
+							<xsl:if test="$debug = 'true'">
 								<redirect:write file="contents_.xml">
 									<xsl:copy-of select="$contents"/>
 								</redirect:write>
-							</xsl:if> -->
+							</xsl:if>
 
 							<xsl:variable name="margin-left">12</xsl:variable>
 
@@ -14065,6 +14065,8 @@
 	<xsl:template match="*[local-name() = 'origin']" mode="contents"/>
 	<xsl:template match="*[local-name() = 'erefstack ']" mode="contents"/>
 
+	<xsl:template match="*[local-name() = 'requirement'] |             *[local-name() = 'recommendation'] |              *[local-name() = 'permission']" mode="contents" priority="3"/>
+
 	<xsl:template match="*[local-name() = 'stem']" mode="bookmarks"/>
 	<xsl:template match="*[local-name() = 'fmt-stem']" mode="bookmarks">
 		<xsl:apply-templates mode="bookmarks"/>
@@ -14085,6 +14087,8 @@
 	<xsl:template match="*[local-name() = 'link']" mode="bookmarks"/>
 	<xsl:template match="*[local-name() = 'origin']" mode="bookmarks"/>
 	<xsl:template match="*[local-name() = 'erefstack ']" mode="bookmarks"/>
+
+	<xsl:template match="*[local-name() = 'requirement'] |             *[local-name() = 'recommendation'] |              *[local-name() = 'permission']" mode="bookmarks" priority="3"/>
 
 	<!-- Bookmarks -->
 	<xsl:template name="addBookmarks">
