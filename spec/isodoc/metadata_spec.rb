@@ -99,56 +99,56 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </metanorma-extension>
       </iso-standard>
     INPUT
-    output = 
-      {:accesseddate=>"2012",
-      :activateddate=>"2013",
-      :agency=>"ISO",
-      :approvalgroup=>"ABC",
-      :createddate=>"2010&#x2013;2011",
-      :docnumber=>"ISO/PreCD3 17301-1",
-      :docnumber_lang=>"ISO/PreCD3 17301-1 (E)",
-      :docnumber_reference=>"ISO/PreCD3 17301-1:2000 (E)",
-      :docnumeric=>"1730",
-      :docsubtitle=>"C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>&#xa0;&#x2014; Partie&#xa0;1: Riz H<sup>2</sup>",
-      :docsubtitleintro=>"C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>",
-      :docsubtitlemain=>"Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>",
-      :docsubtitlepart=>"Riz H<sup>2</sup>",
-      :docsubtitlepartlabel=>"Partie&#xa0;1",
-      :doctitle=>"Cereals and pulses H<sup>2</sup>&#xa0;&#x2014; Specifications and test methods H<sup>2</sup>&#xa0;&#x2014; Part&#xa0;1: Rice H<sup>2</sup>",
-      :doctitleintro=>"Cereals and pulses H<sup>2</sup>",
-      :doctitlemain=>"Specifications and test methods H<sup>2</sup>",
-      :doctitlepart=>"Rice H<sup>2</sup>",
-      :doctitlepartlabel=>"Part&#xa0;1",
-      :doctype=>"International Standard",
-      :doctype_display=>"International Standard",
-      :document_scheme=>"1951",
-      :docyear=>"2016",
-      :draft=>"0.4",
-      :draftinfo=>" (draft 0.4, 2016-05-01)",
-      :edition=>"2",
-      :editorialgroup=>"DEF",
-      :fast_track=>"true",
-      :horizontal=>"true",
-      :keywords=>["kw2", "kw1"],
-      :lang=>"en",
-      :obsoleteddate=>"2014",
-      :"presentation_metadata_document-scheme"=>["1951"],
-      :publisheddate=>"2011",
-      :publisher=>"International Organization for Standardization",
-      :revdate=>"2016-05-01",
-      :revdate_monthyear=>"May 2016",
-      :sc=>"SC 4",
-      :script=>"Latn",
-      :secretariat=>"GB",
-      :stage=>"30",
-      :stage_int=>30,
-      :stageabbr=>"CD",
-      :statusabbr=>"PreCD3",
-      :substage_int=>"92",
-      :tc=>"TC 34",
-      :tc_docnumber=>["17301", "17302"],
-      :unpublished=>true,
-      :wg=>"WG 3"}
+    output =
+      { accesseddate: "2012",
+        activateddate: "2013",
+        agency: "ISO",
+        approvalgroup: "ABC",
+        createddate: "2010&#x2013;2011",
+        docnumber: "ISO/PreCD3 17301-1",
+        docnumber_lang: "ISO/PreCD3 17301-1 (E)",
+        docnumber_reference: "ISO/PreCD3 17301-1:2000 (E)",
+        docnumeric: "1730",
+        docsubtitle: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>&#xa0;&#x2014; Partie&#xa0;1: Riz H<sup>2</sup>",
+        docsubtitleintro: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>",
+        docsubtitlemain: "Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>",
+        docsubtitlepart: "Riz H<sup>2</sup>",
+        docsubtitlepartlabel: "Partie&#xa0;1",
+        doctitle: "Cereals and pulses H<sup>2</sup>&#xa0;&#x2014; Specifications and test methods H<sup>2</sup>&#xa0;&#x2014; Part&#xa0;1: Rice H<sup>2</sup>",
+        doctitleintro: "Cereals and pulses H<sup>2</sup>",
+        doctitlemain: "Specifications and test methods H<sup>2</sup>",
+        doctitlepart: "Rice H<sup>2</sup>",
+        doctitlepartlabel: "Part&#xa0;1",
+        doctype: "International Standard",
+        doctype_display: "International Standard",
+        document_scheme: "1951",
+        docyear: "2016",
+        draft: "0.4",
+        draftinfo: " (draft 0.4, 2016-05-01)",
+        edition: "2",
+        editorialgroup: "DEF",
+        fast_track: "true",
+        horizontal: "true",
+        keywords: ["kw2", "kw1"],
+        lang: "en",
+        obsoleteddate: "2014",
+        "presentation_metadata_document-scheme": ["1951"],
+        publisheddate: "2011",
+        publisher: "International Organization for Standardization",
+        revdate: "2016-05-01",
+        revdate_monthyear: "May 2016",
+        sc: "SC 4",
+        script: "Latn",
+        secretariat: "GB",
+        stage: "30",
+        stage_int: 30,
+        stageabbr: "CD",
+        statusabbr: "PreCD3",
+        substage_int: "92",
+        tc: "TC 34",
+        tc_docnumber: ["17301", "17302"],
+        unpublished: true,
+        wg: "WG 3" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -227,35 +227,35 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
-    output = 
-      {:agency=>"ISO/IEC",
-      :docnumber=>"ISO/IEC/CD 17301-1-3",
-      :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
-      :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
-      :docsubtitlepartlabel=>"Partie&#xa0;1&#x2013;3",
-      :doctitle=>"Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
-      :doctitleintro=>"Cereals and pulses",
-      :doctitlemain=>"Specifications and test methods",
-      :doctitlepart=>"Rice",
-      :doctitlepartlabel=>"Part&#xa0;1&#x2013;3",
-      :doctype=>"International Standard",
-      :doctype_display=>"International Standard",
-      :docyear=>"2016",
-      :ics=>"1.2.3, 1.2.3",
-      :lang=>"en",
-      :obsoletes=>"IEC 8121",
-      :obsoletes_part=>"3.1",
-      :publisher=>"International Organization for Standardization and International Electrotechnical Commission",
-      :sc=>"DEF 4",
-      :script=>"Latn",
-      :stage=>"60",
-      :stage_int=>60,
-      :statusabbr=>"IS",
-      :substage_int=>"92",
-      :tc=>"ABC 34",
-      :tc_docnumber=>["17301"],
-      :unpublished=>false,
-      :wg=>"GHI 3"}
+    output =
+      { agency: "ISO/IEC",
+        docnumber: "ISO/IEC/CD 17301-1-3",
+        docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
+        docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
+        docsubtitlepartlabel: "Partie&#xa0;1&#x2013;3",
+        doctitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
+        doctitleintro: "Cereals and pulses",
+        doctitlemain: "Specifications and test methods",
+        doctitlepart: "Rice",
+        doctitlepartlabel: "Part&#xa0;1&#x2013;3",
+        doctype: "International Standard",
+        doctype_display: "International Standard",
+        docyear: "2016",
+        ics: "1.2.3, 1.2.3",
+        lang: "en",
+        obsoletes: "IEC 8121",
+        obsoletes_part: "3.1",
+        publisher: "International Organization for Standardization and International Electrotechnical Commission",
+        sc: "DEF 4",
+        script: "Latn",
+        stage: "60",
+        stage_int: 60,
+        statusabbr: "IS",
+        substage_int: "92",
+        tc: "ABC 34",
+        tc_docnumber: ["17301"],
+        unpublished: false,
+        wg: "GHI 3" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -339,38 +339,38 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output =
-      {:agency=>"ISO/IEC",
-      :docnumber=>"ISO/IEC/CD 17301-1-3",
-      :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
-      :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
-      :docsubtitle=>"Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
-      :docsubtitleintro=>"Cereals and pulses",
-      :docsubtitlemain=>"Specifications and test methods",
-      :docsubtitlepart=>"Rice",
-      :docsubtitlepartlabel=>"Part&#xa0;1&#x2013;3",
-      :doctitle=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&#xa0;&#x2014; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&#xa0;&#x2014; Partie&#xa0;1&#x2013;3: Riz",
-      :doctitleintro=>"C&#xe9;r&#xe9;ales et l&#xe9;gumineuses",
-      :doctitlemain=>"Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai",
-      :doctitlepart=>"Riz",
-      :doctitlepartlabel=>"Partie&#xa0;1&#x2013;3",
-      :doctype=>"International Standard",
-      :doctype_display=>"Standard International",
-      :docyear=>"2016",
-      :ics=>"1.2.3, 1.2.3",
-      :lang=>"fr",
-      :obsoletes=>"IEC 8121",
-      :obsoletes_part=>"3.1",
-      :publisher=>"International Organization for Standardization et International Electrotechnical Commission",
-      :sc=>"DEF 4",
-      :script=>"Latn",
-      :stage=>"60",
-      :stage_int=>60,
-      :statusabbr=>"IS",
-      :substage_int=>"92",
-      :tc=>"ABC 34",
-      :tc_docnumber=>["17301"],
-      :unpublished=>false,
-      :wg=>"GHI 3"}
+      { agency: "ISO/IEC",
+        docnumber: "ISO/IEC/CD 17301-1-3",
+        docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
+        docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
+        docsubtitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
+        docsubtitleintro: "Cereals and pulses",
+        docsubtitlemain: "Specifications and test methods",
+        docsubtitlepart: "Rice",
+        docsubtitlepartlabel: "Part&#xa0;1&#x2013;3",
+        doctitle: "C&#xe9;r&#xe9;ales et l&#xe9;gumineuses&#xa0;&#x2014; Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai&#xa0;&#x2014; Partie&#xa0;1&#x2013;3: Riz",
+        doctitleintro: "C&#xe9;r&#xe9;ales et l&#xe9;gumineuses",
+        doctitlemain: "Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai",
+        doctitlepart: "Riz",
+        doctitlepartlabel: "Partie&#xa0;1&#x2013;3",
+        doctype: "International Standard",
+        doctype_display: "Standard International",
+        docyear: "2016",
+        ics: "1.2.3, 1.2.3",
+        lang: "fr",
+        obsoletes: "IEC 8121",
+        obsoletes_part: "3.1",
+        publisher: "International Organization for Standardization et International Electrotechnical Commission",
+        sc: "DEF 4",
+        script: "Latn",
+        stage: "60",
+        stage_int: 60,
+        statusabbr: "IS",
+        substage_int: "92",
+        tc: "ABC 34",
+        tc_docnumber: ["17301"],
+        unpublished: false,
+        wg: "GHI 3" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -456,39 +456,39 @@ RSpec.describe IsoDoc::Iso::Metadata do
         </bibdata>
       </iso-standard>
     INPUT
-    output = 
-      {:agency=>"ISO/IEC",
-      :docnumber=>"ISO/IEC/CD 17301-1-3",
-      :docnumber_lang=>"ISO/IEC/CD 17301-1-3 (E)",
-      :docnumber_reference=>"ISO/IEC/CD 17301-1-3 (E)",
-      :docsubtitle=>"Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
-      :docsubtitleintro=>"Cereals and pulses",
-      :docsubtitlemain=>"Specifications and test methods",
-      :docsubtitlepart=>"Rice",
-      :docsubtitlepartlabel=>"Part&#xa0;1&#x2013;3",
-      :doctitle=>"&#x417;&#x435;&#x440;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x438; &#x431;&#x43e;&#x431;&#x43e;&#x432;&#x44b;&#x435;&#xa0;&#x2014; &#x422;&#x435;&#x445;&#x43d;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43a;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43a;&#x438; &#x438; &#x43c;&#x435;&#x442;&#x43e;&#x434;&#x44b; &#x438;&#x441;&#x43f;&#x44b;&#x442;&#x430;&#x43d;&#x438;&#x439;&#xa0;&#x2014; Часть&#xa0;1&#x2013;3: &#x420;&#x438;&#x441;",
-      :doctitleintro=>"&#x417;&#x435;&#x440;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x438; &#x431;&#x43e;&#x431;&#x43e;&#x432;&#x44b;&#x435;",
-      :doctitlemain=>"&#x422;&#x435;&#x445;&#x43d;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43a;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43a;&#x438; &#x438; &#x43c;&#x435;&#x442;&#x43e;&#x434;&#x44b; &#x438;&#x441;&#x43f;&#x44b;&#x442;&#x430;&#x43d;&#x438;&#x439;",
-      :doctitlepart=>"&#x420;&#x438;&#x441;",
-      :doctitlepartlabel=>"Часть&#xa0;1&#x2013;3",
-      :doctype=>"International Standard",
-      :doctype_display=>"International Standard",
-      :docyear=>"2016",
-      :ics=>"1.2.3, 1.2.3",
-      :lang=>"ru",
-      :obsoletes=>"IEC 8121",
-      :obsoletes_part=>"3.1",
-      :publisher=>"International Organization for Standardization &#x438; International Electrotechnical Commission",
-      :sc=>"DEF 4",
-      :script=>"Cyrl",
-      :stage=>"60",
-      :stage_int=>60,
-      :statusabbr=>"IS",
-      :substage_int=>"92",
-      :tc=>"ABC 34",
-      :tc_docnumber=>["17301"],
-      :unpublished=>false,
-      :wg=>"GHI 3"}
+    output =
+      { agency: "ISO/IEC",
+        docnumber: "ISO/IEC/CD 17301-1-3",
+        docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
+        docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
+        docsubtitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
+        docsubtitleintro: "Cereals and pulses",
+        docsubtitlemain: "Specifications and test methods",
+        docsubtitlepart: "Rice",
+        docsubtitlepartlabel: "Part&#xa0;1&#x2013;3",
+        doctitle: "&#x417;&#x435;&#x440;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x438; &#x431;&#x43e;&#x431;&#x43e;&#x432;&#x44b;&#x435;&#xa0;&#x2014; &#x422;&#x435;&#x445;&#x43d;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43a;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43a;&#x438; &#x438; &#x43c;&#x435;&#x442;&#x43e;&#x434;&#x44b; &#x438;&#x441;&#x43f;&#x44b;&#x442;&#x430;&#x43d;&#x438;&#x439;&#xa0;&#x2014; Часть&#xa0;1&#x2013;3: &#x420;&#x438;&#x441;",
+        doctitleintro: "&#x417;&#x435;&#x440;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x438; &#x431;&#x43e;&#x431;&#x43e;&#x432;&#x44b;&#x435;",
+        doctitlemain: "&#x422;&#x435;&#x445;&#x43d;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43a;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43a;&#x438; &#x438; &#x43c;&#x435;&#x442;&#x43e;&#x434;&#x44b; &#x438;&#x441;&#x43f;&#x44b;&#x442;&#x430;&#x43d;&#x438;&#x439;",
+        doctitlepart: "&#x420;&#x438;&#x441;",
+        doctitlepartlabel: "Часть&#xa0;1&#x2013;3",
+        doctype: "International Standard",
+        doctype_display: "International Standard",
+        docyear: "2016",
+        ics: "1.2.3, 1.2.3",
+        lang: "ru",
+        obsoletes: "IEC 8121",
+        obsoletes_part: "3.1",
+        publisher: "International Organization for Standardization &#x438; International Electrotechnical Commission",
+        sc: "DEF 4",
+        script: "Cyrl",
+        stage: "60",
+        stage_int: 60,
+        statusabbr: "IS",
+        substage_int: "92",
+        tc: "ABC 34",
+        tc_docnumber: ["17301"],
+        unpublished: false,
+        wg: "GHI 3" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -692,27 +692,27 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-        <sections>
-           <p class="zzSTDTitle1" displayorder="2">
-              <span class="boldtitle">Specifications and test methods</span>
-           </p>
-           <clause id="_" displayorder="3">
-              <title id="_">Clause 1</title>
-              <fmt-title depth="1">
-                 <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">1</semx>
-                 </span>
-                 <span class="fmt-caption-delim">
-                    <tab/>
-                 </span>
-                 <semx element="title" source="_">Clause 1</semx>
-              </fmt-title>
-              <fmt-xref-label>
-                 <span class="fmt-element-name">Clause</span>
-                 <semx element="autonum" source="_">1</semx>
-              </fmt-xref-label>
-           </clause>
-        </sections>
+      <sections>
+         <p class="zzSTDTitle1" displayorder="2">
+            <span class="boldtitle">Specifications and test methods</span>
+         </p>
+         <clause id="_" displayorder="3">
+            <title id="_">Clause 1</title>
+            <fmt-title depth="1">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="_">1</semx>
+               </span>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Clause 1</semx>
+            </fmt-title>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="_">1</semx>
+            </fmt-xref-label>
+         </clause>
+      </sections>
     OUTPUT
     expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
