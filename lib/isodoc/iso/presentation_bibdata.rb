@@ -74,11 +74,11 @@ module IsoDoc
 
       def bibdata_i18n_stage1(stage, type, lang, i18n)
         stagetype = i18n.get.dig("stage_dict", stage.text, type&.text) or return
-        tag_translate(stage, lang, stagetype)
         h = i18n.get.dig("stage_draft_variants", stagetype) and h.each do |k, v|
-          tag_translate(stage.next, lang, v)
-          stage.next.next["type"] = k
+          tag_translate(stage, lang, v)
+          stage.next["type"] = k
         end
+        tag_translate(stage, lang, stagetype)
       end
     end
   end

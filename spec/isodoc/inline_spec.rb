@@ -2799,26 +2799,26 @@ presxml = <<~INPUT
                    <h1 class="ForewordTitle">Foreword</h1>
                    <p>
                       A.
-                      <a class="FootnoteRef" href="#fn:1">
+                      <a class="FootnoteRef" href="#fn:_">
                          <sup>1)</sup>
                       </a>
                    </p>
                    <p>
                       B.
-                      <a class="FootnoteRef" href="#fn:1">
+                      <a class="FootnoteRef" href="#fn:_">
                          <sup>1)</sup>
                       </a>
                    </p>
                    <p>
                       C.
-                      <a class="FootnoteRef" href="#fn:2">
+                      <a class="FootnoteRef" href="#fn:_">
                          <sup>2)</sup>
                       </a>
                    </p>
                 </div>
                 <p>
                    B.
-                   <a class="FootnoteRef" href="#fn:1">
+                   <a class="FootnoteRef" href="#fn:_">
                       <sup>1)</sup>
                    </a>
                 </p>
@@ -2832,7 +2832,7 @@ presxml = <<~INPUT
                       <i>
                          <span class="stddocTitle">
                             Cereals and cereal products
-                            <a class="FootnoteRef" href="#fn:3">
+                            <a class="FootnoteRef" href="#fn:_">
                                <sup>3)</sup>
                             </a>
                          </span>
@@ -2841,20 +2841,20 @@ presxml = <<~INPUT
                 </div>
                 <div id="A">
                    <h1>2</h1>
-                   <a class="FootnoteRef" href="#fn:4">
+                   <a class="FootnoteRef" href="#fn:_">
                       <sup>4)</sup>
                    </a>
                 </div>
-                <aside id="fn:1" class="footnote">
+                <aside id="fn:_" class="footnote">
                    <p id="_">Formerly denoted as 15 % (m/m).</p>
                 </aside>
-                <aside id="fn:2" class="footnote">
+                <aside id="fn:_" class="footnote">
                    <p id="_">Hello! denoted as 15 % (m/m).</p>
                 </aside>
-                <aside id="fn:3" class="footnote">
+                <aside id="fn:_" class="footnote">
                    <p id="_">ISO is a standards organisation.</p>
                 </aside>
-                <aside id="fn:4" class="footnote">
+                <aside id="fn:_" class="footnote">
                    <p id="_">Third footnote.</p>
                 </aside>
              </div>
@@ -2862,29 +2862,29 @@ presxml = <<~INPUT
        </html>
     OUTPUT
     doc = <<~OUTPUT
-          <body lang="EN-US" link="blue" vlink="#954F72">
-             <div class="WordSection1">
-                <p> </p>
-             </div>
-             <p class="section-break">
-                <br clear="all" class="section"/>
+       <body lang="EN-US" link="blue" vlink="#954F72">
+          <div class="WordSection1">
+             <p> </p>
+          </div>
+          <p class="section-break">
+             <br clear="all" class="section"/>
+          </p>
+          <div class="WordSection2">
+             <p class="page-break">
+                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
              </p>
-             <div class="WordSection2">
-                <p class="page-break">
-                   <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-                </p>
-                <div id="_" class="TOC">
-                   <p class="zzContents">Contents</p>
-                </div>
-                <p class="page-break">
-                   <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-                </p>
+             <div id="_" class="TOC">
+                <p class="zzContents">Contents</p>
+             </div>
+             <p class="page-break">
+                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+             </p>
              <div id="F">
                 <h1 class="ForewordTitle">Foreword</h1>
                 <p class="ForewordText">
                    A.
                    <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                      <a class="FootnoteRef" epub:type="footnote" href="#ftn1">1</a>
+                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">1</a>
                       )
                    </span>
                 </p>
@@ -2902,7 +2902,7 @@ presxml = <<~INPUT
                 <p class="ForewordText">
                    C.
                    <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                      <a class="FootnoteRef" epub:type="footnote" href="#ftn2">2</a>
+                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">2</a>
                       )
                    </span>
                 </p>
@@ -2939,7 +2939,7 @@ presxml = <<~INPUT
                       <span class="stddocTitle">
                          Cereals and cereal products
                          <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                            <a class="FootnoteRef" epub:type="footnote" href="#ftn3">3</a>
+                            <a class="FootnoteRef" epub:type="footnote" href="#fn:_">3</a>
                             )
                          </span>
                       </span>
@@ -2949,20 +2949,20 @@ presxml = <<~INPUT
              <div id="A">
                 <h1>2</h1>
                 <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                   <a class="FootnoteRef" epub:type="footnote" href="#ftn4">4</a>
+                   <a class="FootnoteRef" epub:type="footnote" href="#fn:_">4</a>
                    )
                 </span>
              </div>
-             <aside id="ftn1">
+             <aside id="fn:_">
                 <p id="_">Formerly denoted as 15 % (m/m).</p>
              </aside>
-             <aside id="ftn2">
+             <aside id="fn:_">
                 <p id="_">Hello! denoted as 15 % (m/m).</p>
              </aside>
-             <aside id="ftn3">
+             <aside id="fn:_">
                 <p id="_">ISO is a standards organisation.</p>
              </aside>
-             <aside id="ftn4">
+             <aside id="fn:_">
                 <p id="_">Third footnote.</p>
              </aside>
           </div>

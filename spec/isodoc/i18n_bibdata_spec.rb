@@ -195,7 +195,7 @@ RSpec.describe IsoDoc do
           <script current="true">Latn</script>
           <status>
              <stage abbreviation="CD" language="">40</stage>
-             <stage abbreviation="CD" language="">Draft Technical Report</stage>
+             <stage abbreviation="CD" language="en">Draft Technical Report</stage>
              <stage abbreviation="CD" language="en" type="firstpage">DRAFT Technical Report</stage>
              <stage abbreviation="CD" language="en" type="coverpage">
                 DRAFT
@@ -219,7 +219,7 @@ RSpec.describe IsoDoc do
          <script current="true">Latn</script>
          <status>
             <stage abbreviation="CD" language="">40</stage>
-            <stage abbreviation="CD" language="">Projet Rapport technique</stage>
+            <stage abbreviation="CD" language="fr">Projet Rapport technique</stage>
             <stage abbreviation="CD" language="fr" type="firstpage">PROJET de Rapport technique</stage>
             <stage abbreviation="CD" language="fr" type="coverpage">
                PROJET
@@ -239,18 +239,18 @@ RSpec.describe IsoDoc do
       .at("//xmlns:bibdata").to_xml)))
       .to be_equivalent_to Xml::C14n.format(presxml)
     presxml = <<~OUTPUT
-       <bibdata>
-          <language current="true">de</language>
-          <script current="true">Latn</script>
-          <status>
-             <stage abbreviation="CD" language="">40</stage>
-             <stage abbreviation="CD" language="de">Entwurf des technischen Berichts</stage>
-          </status>
-          <ext>
-             <doctype language="">technical-report</doctype>
-             <doctype language="de">Technischer Bericht</doctype>
-          </ext>
-       </bibdata>
+      <bibdata>
+         <language current="true">de</language>
+         <script current="true">Latn</script>
+         <status>
+            <stage abbreviation="CD" language="">40</stage>
+            <stage abbreviation="CD" language="de">Entwurf des technischen Berichts</stage>
+         </status>
+         <ext>
+            <doctype language="">technical-report</doctype>
+            <doctype language="de">Technischer Bericht</doctype>
+         </ext>
+      </bibdata>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new({}).convert("test", input.sub("<language>en</language>",
