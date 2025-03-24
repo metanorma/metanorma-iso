@@ -41,14 +41,19 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       #{BLANK_HDR}
-        <sections>
-          <p id="foreword">Foreword</p>
-          <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
-          <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
-          <p id="_">For further information on the Foreword, see <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p>
-        </review>
-        </sections>
-      </metanorma>
+          <sections>
+             <p id="foreword">Foreword</p>
+          </sections>
+          <review-container>
+             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
+                <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
+                <p id="_">
+                   For further information on the Foreword, see
+                   <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong>
+                </p>
+             </review>
+          </review-container>
+       </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -76,16 +81,20 @@ RSpec.describe Metanorma::Iso do
       ****
     INPUT
     output = <<~OUTPUT
-      <metanorma>
-        <sections>
-          <p id="foreword">Foreword</p>
-          <review date="20170101T00:00:00Z" from="foreword" id="_" reviewer="ISO" to="foreword" type="todo">
-            <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
-            <p id="_">For further information on the Foreword, see
-              <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong></p>
-          </review>
-        </sections>
-      </metanorma>
+       <metanorma>
+          <sections>
+             <p id="foreword">Foreword</p>
+          </sections>
+          <review-container>
+             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
+                <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
+                <p id="_">
+                   For further information on the Foreword, see
+                   <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong>
+                </p>
+             </review>
+          </review-container>
+       </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(input)
       .sub(/^.+<sections>/m, "<metanorma><sections>")))

@@ -17,7 +17,7 @@
   these elements; we just want one namespace for any child grammars
   of this.
 -->
-<!-- VERSION v2.0.0 -->
+<!-- VERSION v2.0.2 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
@@ -422,6 +422,21 @@ normative or informative references, some split references into sections organiz
           </ref>
         </oneOrMore>
       </choice>
+    </define>
+    <define name="TdAttributes" combine="interleave">
+      <attribute name="style">
+        <a:documentation>CSS style: only background-color supported</a:documentation>
+      </attribute>
+    </define>
+    <define name="ThAttributes" combine="interleave">
+      <attribute name="style">
+        <a:documentation>CSS style: only background-color supported</a:documentation>
+      </attribute>
+    </define>
+    <define name="TrAttributes">
+      <attribute name="style">
+        <a:documentation>CSS style: only background-color supported</a:documentation>
+      </attribute>
     </define>
     <define name="table-note">
       <element name="note">
