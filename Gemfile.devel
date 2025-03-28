@@ -1,3 +1,2 @@
-gem "html2doc", git: "https://github.com/metanorma/html2doc", branch: "fix/fn-numbering"
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/refactor-comments"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/refactor-comments"

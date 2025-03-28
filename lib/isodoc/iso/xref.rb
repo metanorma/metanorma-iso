@@ -247,12 +247,6 @@ module IsoDoc
                           { unnum: false, container: true })
         end
       end
-
-      # KILL
-      def sequential_permission_childrenx(elem, lbl, klass, container: false)
-        container = true
-        super
-      end
     end
   end
 end
