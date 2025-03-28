@@ -21,9 +21,8 @@ module IsoDoc
       end
 
       def font_choice(options)
-        if options[:script] == "Hans" then '"Source Han Sans",serif'
-        else '"Cambria",serif'
-        end
+        options[:script] == "Hans" and return '"Source Han Sans",serif'
+        '"Cambria",serif'
       end
 
       def default_fonts(options)
@@ -55,8 +54,7 @@ module IsoDoc
         if @dis && use_dis?(input_filename, file)
           swap_renderer(self, @dis, file, input_filename, debug)
           @dis.convert(input_filename, file, debug, output_filename)
-        else
-          super
+        else super
         end
       end
 
@@ -90,17 +88,14 @@ module IsoDoc
 
       def colophon_section(_isoxml, out)
         stage = @meta.get[:stage_int]
-        return if !stage.nil? && stage < 60
-
+        !stage.nil? && stage < 60 and return
         br(out, "left")
         out.div class: "colophon" do |div|
         end
       end
 
       def indexsect_section(isoxml, out)
-        isoxml.xpath(ns("//indexsect")).each do |i|
-          indexsect(i, out)
-        end
+        isoxml.xpath(ns("//indexsect")).each { |i| indexsect(i, out) }
       end
 
       def indexsect(elem, out)
@@ -129,12 +124,6 @@ module IsoDoc
             1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1" <span
             style='mso-element:field-separator'></span></span>
         TOC
-      end
-
-      # KILL
-      def footnote_reference_format(link)
-        link.children =
-          "<span class='MsoFootnoteReference'>#{to_xml(link.children)}</span>)"
       end
 
       def bibliography_attrs
