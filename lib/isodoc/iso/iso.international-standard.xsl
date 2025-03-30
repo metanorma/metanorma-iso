@@ -12280,24 +12280,26 @@
 			<xsl:apply-templates select="." mode="mathml"/>
 		</xsl:variable>
 
-		<fo:instream-foreign-object fox:alt-text="Math">
+		<fo:instream-foreign-object fox:alt-text="Math" fox:actual-text="Math">
 
 			<xsl:call-template name="refine_mathml_insteam_object_style"/>
 
-			<!-- put MathML in Actual Text -->
-			<!-- DEBUG: mathml_content=<xsl:value-of select="$mathml_content"/> -->
-			<xsl:attribute name="fox:actual-text">
-				<xsl:value-of select="$mathml_content"/>
-			</xsl:attribute>
-
-			<!-- <xsl:if test="$add_math_as_text = 'true'"> -->
-			<xsl:if test="normalize-space($asciimath_text_) != ''">
-			<!-- put Mathin Alternate Text -->
-				<xsl:attribute name="fox:alt-text">
-					<xsl:value-of select="$asciimath_text_"/>
+			<xsl:if test="$isGenerateTableIF = 'false'">
+				<!-- put MathML in Actual Text -->
+				<!-- DEBUG: mathml_content=<xsl:value-of select="$mathml_content"/> -->
+				<xsl:attribute name="fox:actual-text">
+					<xsl:value-of select="$mathml_content"/>
 				</xsl:attribute>
+
+				<!-- <xsl:if test="$add_math_as_text = 'true'"> -->
+				<xsl:if test="normalize-space($asciimath_text_) != ''">
+				<!-- put Mathin Alternate Text -->
+					<xsl:attribute name="fox:alt-text">
+						<xsl:value-of select="$asciimath_text_"/>
+					</xsl:attribute>
+				</xsl:if>
+				<!-- </xsl:if> -->
 			</xsl:if>
-			<!-- </xsl:if> -->
 
 			<xsl:copy-of select="xalan:nodeset($mathml)"/>
 
