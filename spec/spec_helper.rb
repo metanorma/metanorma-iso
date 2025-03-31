@@ -52,12 +52,12 @@ def presxml_options
 end
 
 def strip_guid(xml)
-  xml.gsub(%r{ id=['"](fn:|ftn)?_[^"']+['"]}, ' id="_"')
-    .gsub(%r{ from="_[^"]+"}, ' from="_"')
-    .gsub(%r{ to="_[^"]+"}, ' to="_"')
+  xml.gsub(%r{ id=['"]_[^"']+['"]}, ' id="_"')
+    .gsub(%r{ id="(fn:|ftn)_[^"]+"}, ' id="fn:_"')
     .gsub(%r{ name="_[^"]+"}, ' name="_"')
     .gsub(%r{ original-id="_[^"]+"}, ' original-id="_"')
-    .gsub(%r{ href="#(fn:|ftn)?_[^"]+"}, ' href="#_"')
+    .gsub(%r{ href="#_[^"]+"}, ' href="#_"')
+    .gsub(%r{ href="#(fn:|ftn)_[^"]+"}, ' href="#fn:_"')
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
     .gsub(%r{ source="_[^"]+"}, ' source="_"')
     .gsub(%r{ container="_[^"]+"}, ' container="_"')

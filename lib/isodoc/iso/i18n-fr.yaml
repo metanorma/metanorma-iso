@@ -83,6 +83,31 @@ stage_dict:
     technical-corrigendum: Rectificatif technique
   "90": Révision
   "95": Retrait
+stage_draft_variants:
+  Projet Norme internationale:
+    coverpage: PROJET<br/>Norme internationale
+    firstpage: PROJET de Norme internationale
+  Project Spécification technique:
+    coverpage: PROJET<br/>Spécification technique
+    firstpage: PROJET de Spécification technique
+  Projet Rapport technique:
+    coverpage: PROJET<br/>Rapport technique
+    firstpage: PROJET de Rapport technique
+  Projet Spécification disponible publiquement:
+    coverpage: PROJET<br/>Spécification disponible publiquement
+    firstpage: PROJET de Spécification disponible publiquement
+  Projet Accord internationale d’atelier:
+    coverpage: PROJET<br/>Accord internationale d’atelier
+    firstpage: PROJET de Accord internationale d’atelier
+  Projet Guide:
+    coverpage: PROJET<br/>Guide
+    firstpage: PROJET de Guide
+  Projet Amendement:
+    coverpage: PROJET<br/>Amendement
+    firstpage: PROJET de Amendement
+  Projet Rectificatif technique:
+    coverpage: PROJET<br/>Rectificatif technique
+    firstpage: PROJET de Rectificatif technique
 locality:
   appendix: Appendice
 requirements:

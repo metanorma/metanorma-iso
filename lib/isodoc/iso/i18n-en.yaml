@@ -88,6 +88,61 @@ stage_dict:
     directive: Directive
   "90": Review
   "95": Withdrawal
+stage_draft_variants:
+  Draft International Standard:
+    coverpage: DRAFT<br/>International Standard
+    firstpage: DRAFT International Standard
+  Draft Technical Specification:
+    coverpage: DRAFT<br/>Technical Specification
+    firstpage: DRAFT Technical Specification
+  Draft Technical Report:
+    coverpage: DRAFT<br/>Technical Report
+    firstpage: DRAFT Technical Report
+  Draft Publicly Available Specification:
+    coverpage: DRAFT<br/>Publicly Available Specification
+    firstpage: DRAFT Publicly Available Specification
+  Draft International Workshop Agreement:
+    coverpage: DRAFT<br/>International Workshop Agreement
+    firstpage: DRAFT International Workshop Agreement
+  Draft Guide:
+    coverpage: DRAFT<br/>Guide
+    firstpage: DRAFT Guide
+  Draft Amendment:
+    coverpage: DRAFT<br/>Amendment
+    firstpage: DRAFT Amendment
+  Draft Technical Corrigendum:
+    coverpage: DRAFT<br/>Technical Corrigendum
+    firstpage: DRAFT Technical Corrigendum
+  Draft Directive:
+    coverpage: DRAFT<br/>Directive
+    firstpage: DRAFT Directive
+  Final Draft International Standard:
+    coverpage: FINAL DRAFT<br/>International Standard
+    firstpage: FINAL DRAFT International Standard
+  Final Draft Technical Specification:
+    coverpage: FINAL DRAFT<br/>Technical Specification
+    firstpage: FINAL DRAFT Technical Specification
+  Final Draft Technical Report:
+    coverpage: FINAL DRAFT<br/>Technical Report
+    firstpage: FINAL DRAFT Technical Report
+  Final Draft Publicly Available Specification:
+    coverpage: FINAL DRAFT<br/>Publicly Available Specification
+    firstpage: FINAL DRAFT Publicly Available Specification
+  Final Draft International Workshop Agreement:
+    coverpage: FINAL DRAFT<br/>International Workshop Agreement
+    firstpage: FINAL DRAFT International Workshop Agreement
+  Final Draft Guide:
+    coverpage: FINAL DRAFT<br/>Guide
+    firstpage: FINAL DRAFT Guide
+  Final Draft Amendment:
+    coverpage: FINAL DRAFT<br/>Amendment
+    firstpage: FINAL DRAFT Amendment
+  Final Draft Technical Corrigendum:
+    coverpage: FINAL DRAFT<br/>Technical Corrigendum
+    firstpage: FINAL DRAFT Technical Corrigendum
+  Final Draft Directive:
+    coverpage: FINAL DRAFT<br/>Directive
+    firstpage: FINAL DRAFT Directive
 locality:
   appendix: Appendix
 requirements:
