@@ -857,6 +857,7 @@ in case the table cannot be rendered accessibly (HTML 5)</a:documentation>
   <define name="tr">
     <a:documentation>Sequence of cells to be displayed as a row in a table</a:documentation>
     <element name="tr">
+      <ref name="TrAttributes"/>
       <oneOrMore>
         <choice>
           <ref name="td">
@@ -868,6 +869,9 @@ in case the table cannot be rendered accessibly (HTML 5)</a:documentation>
         </choice>
       </oneOrMore>
     </element>
+  </define>
+  <define name="TrAttributes">
+    <empty/>
   </define>
   <define name="tr-no-id">
     <a:documentation>Sequence of cells to be displayed as a row in a table: optional ID attributes recursively (for use in Relaton, metadata)</a:documentation>

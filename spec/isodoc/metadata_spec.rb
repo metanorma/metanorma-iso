@@ -506,49 +506,87 @@ RSpec.describe IsoDoc::Iso::Metadata do
               </ext>
           </bibdata>
           <sections>
-            <clause>
+            <clause id="C">
               <title>Clause 1</title>
             </clause>
           </sections>
+          <review-container>
+          <review reviewer="Me" from="C" to="C" date="1">Hello</review>
+          </review-container>
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <sections>
-               <p class="zzSTDTitle1" displayorder="2">
-           <span class="boldtitle">Specifications and test methods</span>
-         </p>
-        <clause displayorder="3" id="_">
-           <title id="_">Clause 1</title>
-            <fmt-title depth="1">
-            <review date="#{Date.today}" reviewer="Metanorma" id="_">
-              <p>
-                <strong>
-                  Metadata warnings:
-                  <strong/>
-                  <p>Secretariat is missing.</p>
-                </strong>
-              </p>
-            </review>
-                             <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">1</semx>
-                 </span>
-                 <span class="fmt-caption-delim">
-                    <tab/>
-                 </span>
-                 <semx element="title" source="_">Clause 1</semx>
-              </fmt-title>
-              <fmt-xref-label>
-                 <span class="fmt-element-name">Clause</span>
-                 <semx element="autonum" source="_">1</semx>
-              </fmt-xref-label>
-           </clause>
-        </sections>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata type="standard">
+             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+             <status>
+                <stage abbreviation="CD" language="">30</stage>
+                <stage abbreviation="CD" language="en">Committee draft</stage>
+             </status>
+             <date type="published">2000</date>
+             <ext>
+                <editorialgroup identifier="">
+                 </editorialgroup>
+             </ext>
+          </bibdata>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <p class="zzSTDTitle1" displayorder="2">
+                <span class="boldtitle">Specifications and test methods</span>
+             </p>
+             <clause id="C" displayorder="3">
+                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
+                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="1"/>
+                <title id="_">
+                   Clause 1
+                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="1"/>
+                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
+                </title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="C">1</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Clause 1</semx>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="C">1</semx>
+                </fmt-xref-label>
+             </clause>
+          </sections>
+          <review-container>
+             <review date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
+                <p>
+                   <strong>Metadata warnings:</strong>
+                </p>
+                <p>Secretariat is missing.</p>
+             </review>
+             <fmt-review-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
+                <semx element="review" source="_">
+                   <p>
+                      <strong>Metadata warnings:</strong>
+                   </p>
+                   <p>Secretariat is missing.</p>
+                </semx>
+             </fmt-review-body>
+             <review reviewer="Me" from="C" to="C" date="1" id="_">Hello</review>
+             <fmt-review-body reviewer="Me" from="_" to="_" date="1" id="_">
+                <semx element="review" source="_">Hello</semx>
+             </fmt-review-body>
+          </review-container>
+       </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true),
-    )
-      .at("//xmlns:sections").to_xml)))
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))
+    xml.at("//xmlns:localized-strings")&.remove
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
@@ -565,50 +603,78 @@ RSpec.describe IsoDoc::Iso::Metadata do
               </ext>
           </bibdata>
           <sections>
-            <clause>
+            <clause id="C">
               <title>Clause 1</title>
             </clause>
           </sections>
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <sections>
-               <p class="zzSTDTitle1" displayorder="2">
-           <span class="boldtitle">Specifications and test methods</span>
-         </p>
-        <clause displayorder="3" id="_">
-          <title id="_">Clause 1</title>
-            <fmt-title depth="1">
-            <review date="#{Date.today}" reviewer="Metanorma" id="_">
-              <p>
-                <strong>
-                  Metadata warnings:
-                  <strong/>
-                  <p>Document date is missing.</p>
-                </strong>
-              </p>
-            </review>
-                            <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">1</semx>
-                 </span>
-                 <span class="fmt-caption-delim">
-                    <tab/>
-                 </span>
-                 <semx element="title" source="_">Clause 1</semx>
-              </fmt-title>
-              <fmt-xref-label>
-                 <span class="fmt-element-name">Clause</span>
-                 <semx element="autonum" source="_">1</semx>
-              </fmt-xref-label>
-           </clause>
-        </sections>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata type="standard">
+             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+             <status>
+                <stage abbreviation="CD" language="">30</stage>
+                <stage abbreviation="CD" language="en">Committee draft</stage>
+             </status>
+             <ext>
+                <editorialgroup identifier="">
+                 </editorialgroup>
+                <secretariat>BSI</secretariat>
+             </ext>
+          </bibdata>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <p class="zzSTDTitle1" displayorder="2">
+                <span class="boldtitle">Specifications and test methods</span>
+             </p>
+             <clause id="C" displayorder="3">
+                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
+                <title id="_">
+                   Clause 1
+                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
+                </title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="C">1</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Clause 1</semx>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="C">1</semx>
+                </fmt-xref-label>
+             </clause>
+          </sections>
+          <review-container>
+             <review date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
+                <p>
+                   <strong>Metadata warnings:</strong>
+                </p>
+                <p>Document date is missing.</p>
+             </review>
+             <fmt-review-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
+                <semx element="review" source="_">
+                   <p>
+                      <strong>Metadata warnings:</strong>
+                   </p>
+                   <p>Document date is missing.</p>
+                </semx>
+             </fmt-review-body>
+          </review-container>
+       </iso-standard>
     OUTPUT
-    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true),
-    )
-  .at("//xmlns:sections")
-      .at("//xmlns:sections").to_xml)))
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))
+    xml.at("//xmlns:localized-strings")&.remove
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
@@ -624,50 +690,77 @@ RSpec.describe IsoDoc::Iso::Metadata do
               </ext>
           </bibdata>
           <sections>
-            <clause>
+            <clause id="C">
               <title>Clause 1</title>
             </clause>
           </sections>
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <sections>
-         <p class="zzSTDTitle1" displayorder="2">
-           <span class="boldtitle">Specifications and test methods</span>
-         </p>
-        <clause displayorder="3" id="_">
-           <title id="_">Clause 1</title>
-            <fmt-title depth="1">
-            <review date="#{Date.today}" reviewer="Metanorma" id="_">
-              <p>
-                <strong>
-                  Metadata warnings:
-                  <strong/>
-                  <p>Editorial groups are missing.</p>
-                </strong>
-              </p>
-            </review>
-                <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">1</semx>
-                 </span>
-                 <span class="fmt-caption-delim">
-                    <tab/>
-                 </span>
-                 <semx element="title" source="_">Clause 1</semx>
-              </fmt-title>
-              <fmt-xref-label>
-                 <span class="fmt-element-name">Clause</span>
-                 <semx element="autonum" source="_">1</semx>
-              </fmt-xref-label>
-           </clause>
-        </sections>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata type="standard">
+             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+             <status>
+                <stage abbreviation="CD" language="">30</stage>
+                <stage abbreviation="CD" language="en">Committee draft</stage>
+             </status>
+             <date type="published">2000</date>
+             <ext>
+                <secretariat>BSI</secretariat>
+             </ext>
+          </bibdata>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <p class="zzSTDTitle1" displayorder="2">
+                <span class="boldtitle">Specifications and test methods</span>
+             </p>
+             <clause id="C" displayorder="3">
+                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
+                <title id="_">
+                   Clause 1
+                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
+                </title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="C">1</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Clause 1</semx>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="C">1</semx>
+                </fmt-xref-label>
+             </clause>
+          </sections>
+          <review-container>
+             <review date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
+                <p>
+                   <strong>Metadata warnings:</strong>
+                </p>
+                <p>Editorial groups are missing.</p>
+             </review>
+             <fmt-review-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
+                <semx element="review" source="_">
+                   <p>
+                      <strong>Metadata warnings:</strong>
+                   </p>
+                   <p>Editorial groups are missing.</p>
+                </semx>
+             </fmt-review-body>
+          </review-container>
+       </iso-standard>
     OUTPUT
-    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true),
-    )
-  .at("//xmlns:sections")
-      .at("//xmlns:sections").to_xml)))
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))
+    xml.at("//xmlns:localized-strings")&.remove
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
@@ -692,33 +785,52 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <sections>
-         <p class="zzSTDTitle1" displayorder="2">
-            <span class="boldtitle">Specifications and test methods</span>
-         </p>
-         <clause id="_" displayorder="3">
-            <title id="_">Clause 1</title>
-            <fmt-title depth="1">
-               <span class="fmt-caption-label">
-                  <semx element="autonum" source="_">1</semx>
-               </span>
-               <span class="fmt-caption-delim">
-                  <tab/>
-               </span>
-               <semx element="title" source="_">Clause 1</semx>
-            </fmt-title>
-            <fmt-xref-label>
-               <span class="fmt-element-name">Clause</span>
-               <semx element="autonum" source="_">1</semx>
-            </fmt-xref-label>
-         </clause>
-      </sections>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata type="standard">
+             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+             <status>
+                <stage abbreviation="CD" language="">30</stage>
+                <stage abbreviation="CD" language="en">Committee draft</stage>
+             </status>
+             <date type="published">2000</date>
+             <ext>
+                <editorialgroup identifier="">
+                 </editorialgroup>
+                <secretariat>BSI</secretariat>
+             </ext>
+          </bibdata>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <p class="zzSTDTitle1" displayorder="2">
+                <span class="boldtitle">Specifications and test methods</span>
+             </p>
+             <clause id="_" displayorder="3">
+                <title id="_">Clause 1</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="_">1</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Clause 1</semx>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="_">1</semx>
+                </fmt-xref-label>
+             </clause>
+          </sections>
+       </iso-standard>
     OUTPUT
-    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true),
-    )
-      .at("//xmlns:sections").to_xml)))
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))
+    xml.at("//xmlns:localized-strings")&.remove
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
@@ -742,33 +854,51 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-      <sections>
-           <p class="zzSTDTitle1" displayorder="2">
-              <span class="boldtitle">Specifications and test methods</span>
-           </p>
-           <clause id="_" displayorder="3">
-              <title id="_">Clause 1</title>
-              <fmt-title depth="1">
-                 <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">1</semx>
-                 </span>
-                 <span class="fmt-caption-delim">
-                    <tab/>
-                 </span>
-                 <semx element="title" source="_">Clause 1</semx>
-              </fmt-title>
-              <fmt-xref-label>
-                 <span class="fmt-element-name">Clause</span>
-                 <semx element="autonum" source="_">1</semx>
-              </fmt-xref-label>
-           </clause>
-        </sections>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata type="standard">
+             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+             <status>
+                <stage abbreviation="CD" language="">90</stage>
+                <stage abbreviation="CD" language="en">Review</stage>
+             </status>
+             <ext>
+                <editorialgroup identifier="">
+                 </editorialgroup>
+                <secretariat>BSI</secretariat>
+             </ext>
+          </bibdata>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <p class="zzSTDTitle1" displayorder="2">
+                <span class="boldtitle">Specifications and test methods</span>
+             </p>
+             <clause id="_" displayorder="3">
+                <title id="_">Clause 1</title>
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="_">1</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Clause 1</semx>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="_">1</semx>
+                </fmt-xref-label>
+             </clause>
+          </sections>
+       </iso-standard>
     OUTPUT
-    expect(strip_guid(Xml::C14n.format(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true),
-    )
-  .at("//xmlns:sections").to_xml)))
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true))
+    xml.at("//xmlns:localized-strings")&.remove
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
   end
 end
